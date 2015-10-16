@@ -1,0 +1,41 @@
+<controller>
+	<method name="authenticate_user" property="before_filter">
+		<input>session_token</input>
+		<query>
+			<text>
+			SELECT  `users`.* FROM `users`  WHERE `users`.`session_token` = '98G3Kssce4GjikFFPxuSY6iQn07Lo0Ul8TNEImTjBYUHn89Xh6PGcmemgiTM'  ORDER BY `users`.`id` ASC LIMIT 1
+			</text>
+			<table>users</table>
+			<operation>SELECT</operation>
+			<param>session_token</param>
+			<field>ALL</field>
+		</query>
+	</method>
+	
+	<method name="increase_traffic_counter" property="before_filter">
+		<query>
+			<text>
+			SELECT  `keystores`.* FROM `keystores`  WHERE `keystores`.`key` = 'traffic:date'  ORDER BY `keystores`.`key` ASC LIMIT 1 FOR UPDATE
+			</text>
+			<table>keystores</table>
+			<operation>SELECT</operation>
+			<field>ALL</field>
+		</query>
+		<query>
+			<text>
+			SELECT  `keystores`.* FROM `keystores`  WHERE `keystores`.`key` = 'traffic:hits'  ORDER BY `keystores`.`key` ASC LIMIT 1 FOR UPDATE
+			</text>
+			<table>keystores</table>
+			<operation>SELECT</operation>
+			<field>ALL</field>
+		</query>
+		<query>
+			<text>
+			UPDATE `keystores` SET `value` = 1443728598 WHERE `keystores`.`key` = 'traffic:date'
+			</text>
+			<table>keystores</table>
+			<operation>UPDATE</operation>
+			<field>ALL</field>
+		</query>		
+	</method>
+</controller>	

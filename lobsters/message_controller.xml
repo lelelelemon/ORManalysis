@@ -1,0 +1,37 @@
+<controller>
+	<method name="create">
+		<input>recipient_name</input>
+		<input>subject</input>
+		<input>body</input>
+		<input>user.id</input>
+		<input>user.undeleted_received_messages</input>
+		<query>
+			<text>
+			SELECT  `users`.* FROM `users`  WHERE `users`.`username` = 'test'  ORDER BY `users`.`id` ASC LIMIT 1
+			</text>
+			<table>users</table>
+			<operation>SELECT</operation>
+			<param>user.id</param>
+			<field>ALL</field>
+			<return>recipient_id</return>
+		</query>
+		<call class="message" class_type="model" function_name="assign_short_id">
+			<return>short_id</return>
+		</call>
+		<call class="message" class_type="model" function_name="validates_presence_of_recipient">
+			<feed>recipient_id</feed>
+		</call>
+		<call class="message" class_type="model" function_name="validates_presence_of_author">
+			<feed>user.id</feed>
+		</call>
+		<call class="message" class_type="model" function_name="save" function_property="builtin">
+			<feed>recipient_id</feed>
+			<feed>subject</feed>
+			<feed>body</feed>
+			<feed>user.id</feed>
+		</call>
+		<call class="message" class_type="model" function_name="update_unread_counts" function_property="after_save">
+			<feed>recipient_id</feed>
+		</call>
+	</method>
+</controller>
