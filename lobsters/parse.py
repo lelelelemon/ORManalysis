@@ -6,9 +6,6 @@ models = {}
 views = {}
 controllers = {}
 
-f = open("simple.diag", "w")
-f.write("blockdiag {\n")
-
 global_node_labels = []
 for i in range(128):
 	letter1 = chr(65+i/26)
@@ -16,19 +13,22 @@ for i in range(128):
 	label = letter1+letter2
 	global_node_labels.append(label)
 
+f = open("temp.diag", "w")
 global_node_cnt = 0
 
 class baseRoot:
 	queries = [] #type: class Query
 	methods = {}
 	var_list = []
+	class_name = ""
 	def __init__(self):
 		self.queries = []
 		self.methods = {}
-	def __init__(self, cnode):
+	def __init__(self, cnode, class_name=""):
 		self.queries = []
 		self.methods = {}
 		self.parseRoot(cnode)
+		self.class_name = class_name
 	def appendMethod(self, mnode):
 		m = Method(mnode.attrib["name"])
 		m.parseMethod(mnode)
@@ -59,16 +59,17 @@ class CallGraphNode:
 		self.label = global_node_labels[global_node_cnt]
 		global_node_cnt = global_node_cnt + 1
 	def addChild(self, child):
+		global f
 		self.children.append(child)
 		edge_label = ""
-		for i in self.inputs:
-			edge_label = edge_label + self.inputs[i] + ", "
+		for i in child.inputs:
+			edge_label = edge_label + child.inputs[i] + ", "
 		reverse_edge_label = ""
-		for i in self.outputs:
-			reverse_edge_label = reverse_edge_label + self.outputs[i] + ", "
+		for o in child.outputs:
+			reverse_edge_label = reverse_edge_label + child.outputs[o] + ", "
 		#f.write("\t"+self.label+" -> "+child.label+";\n")
-		f.write("\t"+self.label+" -> "+child.label+" [label = \""+edge_label+"\"];\n");
-		f.write("\t"+child.label+" -> "+self.label+" [label = \""+edge_label+"\"];\n");
+		f.write("\t"+self.label+" -> "+child.label+" [label = \""+edge_label+"\", fontsize = 10];\n");
+		f.write("\t"+child.label+" -> "+self.label+" [label = \""+reverse_edge_label+"\", fontsize = 10];\n");
 	def mergeInputs(self, inputs):
 		for i in inputs:
 			self.inputs[i] = i
@@ -76,12 +77,11 @@ class CallGraphNode:
 		for o in outputs:
 			self.outputs[o] = o
 	def setValues(self, node_type, level, inputs, outputs):
+		global f
 		self.node_type = node_type
 		self.level = level
 		self.mergeInputs(inputs)
 		self.mergeOutputs(outputs)
-		print "self.output: ",
-		print self.outputs
 		if node_type.__class__.__name__ == "Query":
 			f.write("\t"+self.label+" [label = \""+node_type.operation+"_"+node_type.table+"\", color = blue];\n")
 		elif node_type.__class__.__name__ == "Action":	
@@ -96,20 +96,21 @@ class Query:
 	table = "table"
 	operation = ""
 	field = []
-	param = []
+	params = []
 	returnv = []
 #	def __init__(self, text):
 #		self.text = text
 	def __init__(self, qnode):
 		self.field = []
-		self.param = []
+		self.params = []
+		self.returnv = []
 		self.parseQuery(qnode)
 	def appendTable(self, table):
 		self.table = table
 	def appendField(self, field):
 		self.field = field
-	def appendParam(self, param):
-		self.param = param
+	def appendParam(self, params):
+		self.params = params
 	def appendReturnv(self, returnv):
 		self.returnv = returnv
 	def parseQuery(self, qnode):
@@ -121,9 +122,12 @@ class Query:
 					self.field.append(single_field.text)
 		if qnode.find("table")!=None:
 			self.table = qnode.find("table").text
+		if qnode.find("input")!=None:
+			for single_param in qnode.iter("input"):
+				self.params.append(single_param.text)
 		if qnode.find("param")!=None:
 			for single_param in qnode.iter("param"):
-				self.param.append(single_param.text)
+				self.params.append(single_param.text)
 		if qnode.find("return")!=None:
 			for single_return in qnode.iter("return"):
 				self.returnv.append(single_return.text)
@@ -131,12 +135,7 @@ class Query:
 			self.operation = qnode.find("operation").text
 	def traceExecution(self, inputs, gnode):
 		new_node = CallGraphNode(gnode.caller)
-		print "params:",
-		print self.param
-		print self.text
-		print "returns:",
-		print self.returnv
-		new_node.setValues(self, gnode.level+1, inputs, self.returnv)
+		new_node.setValues(self, gnode.level+1, self.params, self.returnv)
 		gnode.addChild(new_node)
 		return self.returnv
 	def selfPrint(self):
@@ -189,7 +188,7 @@ class Call:
 		else:
 			print "Unrecognized call"
 		new_node.caller = caller
-		#new_node.mergeOutputs(returnv)
+		new_node.mergeOutputs(returnv)
 		gnode.addChild(new_node)
 		return returnv
 	def selfPrint(self):
@@ -213,7 +212,6 @@ class Action:
 				self.output.append(single_output.text)
 	def traceExecution(self, inputs, gnode):
 		new_node = CallGraphNode(gnode.caller)
-		print "\t%s"%self.behavior
 		new_node.setValues(self, gnode.level+1, [], self.output)
 		gnode.addChild(new_node)
 		return self.output
@@ -224,20 +222,28 @@ class Action:
 class Method:
 	name = "name"
 	property_name = ""
+	attributes = {}
 	inputs = []
+	returns = []
+	variables = {}
 	action_list = [] #actions include action, query, call
 	def __init__(self, name):
 		self.name = name
 		self.action_list = []
 		self.inputs = []
+		self.returns = []
+		self.variables = {}
 #	def __init__(self, mnode):
 #		self.parseMethod(mnode)
 	def parseMethod(self, mnode):
 		if mnode.attrib.get("property") != None:
 			property_name = mnode.attrib["property"]
+		self.attributes = mnode.attrib
 		for child in mnode:
 			if child.tag == "input":
 				self.inputs.append(child.text)
+			elif child.tag == "return":
+				self.returns.append(child.text)
 			elif child.tag == "query":
 				self.action_list.append(Query(child))
 			elif child.tag == "call":
@@ -247,22 +253,20 @@ class Method:
 			else:
 				print "unrecognized tag: %s"%child.tag
 	def traceExecution(self, inputs, gnode):
-		print "method inputs:",
-		for i in inputs:
-			print i,
-		print ""
 		active_params = []
 		for action in self.action_list:
-			if action.__class__.__name__ == "Query":
-				print "* * * DB_QUERY: * * *"
-			elif action.__class__.__name__ == "Call":
-				print "Call"
-			elif action.__class__.__name__ == "Action":
-				print "Action"
-			else:
-				print "Unrecognized action!"
+		#	if action.__class__.__name__ == "Query":
+		#		print "* * * DB_QUERY: * * *"
+		#	elif action.__class__.__name__ == "Call":
+		#		print "Call"
+		#	elif action.__class__.__name__ == "Action":
+		#		print "Action"
+		#	else:
+		#		print "Unrecognized action!"
 			active_params = active_params + action.traceExecution(inputs, gnode)
-		return active_params
+		for a in active_params:
+			self.variables[a] = a
+		return self.returns
 	def selfPrint(self):
 		print "Method"
 		print "\tname = %s, property = %s"%(self.name, self.property_name)
@@ -284,12 +288,18 @@ class View(baseRoot):
 	name = "View"
 	def traceUserAction(self, gnode):
 		for m in self.methods:
+			global f
 			print self.methods[m].name
-			returnv = self.methods[m].traceExecution([], gnode)
-			print "$$ final return values:"
-			for r in returnv:
-				print r,
-			print ""
+			if "user_action" in self.methods[m].attributes.keys() and self.methods[m].attributes["user_action"] == "true":
+				fname="%s_%s.diag"%(self.class_name, self.methods[m].name)				
+				f = open(fname, "w")
+				f.write("blockdiag {\n")
+				f.write("\tnode_width = 200;\n\tnode_height=100;\n")
+				f.write("\tspan_width = 240;\n\tspan_height=120;\n")
+				f.write("\tdefault_fontsize = 20;\n")
+				f.write("\t"+gnode.label+" [label = \""+self.class_name+"_view\"];\n")
+				returnv = self.methods[m].traceExecution([], gnode)
+				f.write("}\n")
 	
 def printBlank(n):
 	for i in range(n):
@@ -331,29 +341,35 @@ for subdir, dirs, files in os.walk(rootdir):
 				model_name = filename[0:filename.find("model")-1]
 				tree = ET.parse(filepath)
 				root = tree.getroot()
-				m = Model(root)
+				m = Model(root, model_name)
 				models[model_name] = m
 			elif "controller" in filename:
 				controller_name = filename[0:filename.find("controller")-1]
 				tree = ET.parse(filepath)
 				root = tree.getroot()
-				c = Controller(root)
+				c = Controller(root, controller_name)
 				controllers[controller_name] = c
 			elif "view" in filename:
 				view_name = filename[0:filename.find("view")-1]
+				print "view_name=%s"%view_name
 				tree = ET.parse(filepath)
 				root = tree.getroot()
-				v = View(root)
+				v = View(root, view_name)
 				views[view_name] = v
 				#v.selfPrint()
 			else:
 				print "Unrecognized xml file"
 
+## print all view methods
+#for v in views:
+#	root = CallGraphNode(views[v])
+#	global f
+#	views[v].traceUserAction(root)
+#	printGraph(root)	
 
-for v in views:
-	root = CallGraphNode(views[v])
-	f.write("\t"+root.label+" [label = \""+v+"_view\"];\n")
-	views[v].traceUserAction(root)
-	printGraph(root)	
+## only print methods within specific view (single file)
+view_name='message'
+root = CallGraphNode(views[view_name])
+views[view_name].traceUserAction(root)
+#printGraph(root)
 
-f.write("}\n")

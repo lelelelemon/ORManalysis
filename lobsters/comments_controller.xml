@@ -7,7 +7,7 @@
 			SELECT  `comments`.* FROM `comments`  WHERE `comments`.`is_deleted` = 0 AND `comments`.`is_moderated` = 0 AND (story_id NOT IN (SELECT story_id FROM hidden_stories WHERE user_id = 2))  ORDER BY created_at DESC LIMIT 20 OFFSET 0
 			</text>
 			<output>story_id</output>
-			<output>comment_id</input>
+			<output>comment_id</output>
 		</query>
 		<query>
 			<text>
@@ -28,7 +28,7 @@
 			<input>comment_id</input>
 		</query>
 	</method>
-	<method name="find_comment">
+	<method name="find_comment" line="https://github.com/jcs/lobsters/blob/master/app/controllers/comments_controller.rb#L309">
 		<input>short_id</input>
 		<input>user_id</input>
 		<query>
@@ -47,13 +47,13 @@
 			<input>user_id</input>
 			<input>comment_story_id</input>
 		</query>
-		<query>
-		</query>
 	</method>
 	<method name="reply">
 		<input>short_id</input>
+		<input>user_id</input>
 		<call class="comments" class_type="controller" function_name="find_comment">
 			<feed>short_id</feed>
+			<feed>user_id</feed>
 		</call>
 		<call class="comments" class_type="view" function_name="commentbox" property="render">
 		</call>
@@ -79,7 +79,7 @@
 			</text>
 			<input>story.id</input>
 			<input>parent_comment_short_id</input>
-			<output>comment.parrent_comment_id</input>
+			<output>comment.parrent_comment_id</output>
 		</query>
 		<query line="https://github.com/jcs/lobsters/blob/master/app/controllers/comments_controller.rb#L38">
 			<text>
@@ -104,7 +104,7 @@
 			<feed>comment.parent_comment_id</feed>
 			<feed>new_short_id</feed>
 			<feed>story.id</feed>
-			<feed>user_id<feed>
+			<feed>user_id</feed>
 		</call>
 	</method>
 </controller>

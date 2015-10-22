@@ -1,0 +1,59 @@
+<model>
+	<method name="calculated_hotness">
+		<input>story_id</input>
+		<input>user_id</input>
+		<query line="https://github.com/jcs/lobsters/blob/master/app/models/story.rb#L176">
+			<text>
+			SELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.`id` = `taggings`.`tag_id` WHERE `taggings`.`story_id` = 1
+			</text>
+			<input>story_id</input>
+		</query>
+		<query>
+			<text>
+			SELECT `comments`.`upvotes`, `comments`.`downvotes` FROM `comments`  WHERE `comments`.`story_id` = 1 AND (user_id != 1)
+			</text>
+			<input>story_id</input>
+			<input>user_id</input>
+		</query>
+		<return>hotness</return>
+	</method>
+	<method name="recalculate_hotness">
+		<input>story_id</input>
+		<input>user_id</input>
+		<call class="story" class_type="model" function_name="calculated_hotness">
+			<feed>story_id</feed>
+			<feed>user_id</feed>
+		</call>
+		<query>
+			<text>
+			UPDATE `stories` SET `stories`.`hotness` = -16730.5827776 WHERE `stories`.`id` = 1
+			</text>
+			<input>hotness</input>
+		</query>
+	</method>
+	<method name="update_comments_count">
+		<input>story_id</input>
+		<input>user_id</input>
+		<query line="https://github.com/jcs/lobsters/blob/master/app/models/story.rb#L651">
+			<text>
+			SELECT `stories`.`id` FROM `stories`  WHERE `stories`.`merged_story_id` = 1
+			</text>
+			<input>story_id</input>
+		</query>
+		<action>
+			<description>comments.count{|c| !c.is_gone? }</description>
+			<return>comments_count</return>
+		</action>
+		<query>
+			<text>
+			UPDATE `stories` SET `stories`.`comments_count` = 2 WHERE `stories`.`id` = 1
+			</text>
+			<input>comments_count</input>
+		</query>
+		<call class="story" class_type="model" function_name="recalculate_hotness">
+			<feed>story_id</feed>
+			<feed>user_id</feed>
+		</call>
+	</method>
+</model>
+
