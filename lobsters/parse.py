@@ -63,13 +63,13 @@ class CallGraphNode:
 		self.children.append(child)
 		edge_label = ""
 		for i in child.inputs:
-			edge_label = edge_label + child.inputs[i] + ", "
+			edge_label = edge_label + child.inputs[i] + "\n"
 		reverse_edge_label = ""
 		for o in child.outputs:
-			reverse_edge_label = reverse_edge_label + child.outputs[o] + ", "
+			reverse_edge_label = reverse_edge_label + child.outputs[o] + "\n"
 		#f.write("\t"+self.label+" -> "+child.label+";\n")
 		f.write("\t"+self.label+" -> "+child.label+" [label = \""+edge_label+"\", fontsize = 10];\n");
-		f.write("\t"+child.label+" -> "+self.label+" [label = \""+reverse_edge_label+"\", fontsize = 10];\n");
+		f.write("\t"+child.label+" -> "+self.label+" [label = \""+reverse_edge_label+"\", fontsize = 10, textcolor=red];\n");
 	def mergeInputs(self, inputs):
 		for i in inputs:
 			self.inputs[i] = i
@@ -130,6 +130,9 @@ class Query:
 				self.params.append(single_param.text)
 		if qnode.find("return")!=None:
 			for single_return in qnode.iter("return"):
+				self.returnv.append(single_return.text)
+		if qnode.find("output")!=None:
+			for single_return in qnode.iter("output"):
 				self.returnv.append(single_return.text)
 		if qnode.find("operation")!=None:
 			self.operation = qnode.find("operation").text
@@ -368,8 +371,8 @@ for subdir, dirs, files in os.walk(rootdir):
 #	printGraph(root)	
 
 ## only print methods within specific view (single file)
-view_name='message'
+view_name='comments'
 root = CallGraphNode(views[view_name])
 views[view_name].traceUserAction(root)
-#printGraph(root)
+printGraph(root)
 
