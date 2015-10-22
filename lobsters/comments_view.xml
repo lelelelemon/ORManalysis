@@ -1,0 +1,44 @@
+<view>
+	<method name="GET" user_action="true">
+		<call class="application" class_type="controller" function_name="authenticate_user">
+		</call>
+		<call class="application" class_type="controller" function_name="increase_traffic_counter">
+		</call>
+		<call class="comments" class_type="controller" function_name="index">
+		</call>	
+	</method>
+	<method name="reply_GET" user_action="true">
+		<call class="application" class_type="controller" function_name="authenticate_user">
+		</call>
+		<call class="application" class_type="controller" function_name="increase_traffic_counter">
+		</call>
+		<call class="comments" class_type="controller" function_name="reply">
+			<feed>short_id</feed>
+		</call>
+	</method>
+	<method name="commentbox" user_action="false">
+		<query>
+			<text>
+			SELECT  `stories`.* FROM `stories`  WHERE `stories`.`id` = 2 LIMIT 1
+			</text>
+			<input>short_id</input>
+		</query>
+		<query>
+			<text>
+			SELECT  1 AS one FROM `hats`  WHERE `hats`.`user_id` = 2 LIMIT 1
+			</text>
+			<input>user_id</input>
+		</query>
+	</method>
+	<method name="reply_POST" user_action="true">
+		<call class="application" class_type="controller" function_name="authenticate_user">
+		</call>
+		<call class="application" class_type="controller" function_name="increase_traffic_counter">
+		</call>
+		<call class="comments" class_type="controller" function_name="create">
+			<feed>story_id</feed>
+			<feed>parent_comment_short_id</feed>
+			<feed>comment</feed>
+		</call>
+	</method>
+</view>

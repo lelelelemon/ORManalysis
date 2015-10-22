@@ -1,0 +1,36 @@
+<model>
+	<method name="assign_short_id_and_upvote">
+		<output>new_short_id</output>
+	</method>
+	<method name="assign_initial_confidence">
+		<output>initial_confidence</output>
+	</method>
+	<method name="assign_thread_id" line="https://github.com/jcs/lobsters/blob/master/app/models/comment.rb#L157">
+		<query>
+			<text>
+			SELECT  1 AS one FROM `comments`  WHERE `comments`.`short_id` = 'oawqkn' LIMIT 1
+			</text>
+			<input>new_short_id</input>
+		</query>
+		<output>new_thread_id</output>
+	</method>
+	<method name="save">
+	</method>
+		<query>
+			<text>
+			INSERT INTO `comments` (`comment`, `confidence`, `created_at`, `markeddown_comment`, `parent_comment_id`, `short_id`, `story_id`, `thread_id`, `updated_at`, `upvotes`, `user_id`) VALUES ('reply to discuss 1', 0.182884783413889, '2015-10-22 04:41:15', 'reply to discuss 1', 1, 'oawqkn', 1, 1, '2015-10-22 04:41:15', 1, 2)
+			</text>
+			<input>comment</input>
+			<input>initial_confidence</input>
+			<input>comment.parent_comment_id</input>
+			<input>new_short_id</input>
+			<input>story.id</input>
+			<input>user_id</input>
+		</query>
+	</method>
+	<method name="deliver_reply_notifications">
+		<input></input>
+		<call class="vote" class_type="model" function_name="vote_thusly_on_story_or_comment_for_user_because">
+		</call>
+	</method>
+</model>
