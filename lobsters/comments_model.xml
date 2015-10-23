@@ -31,6 +31,9 @@
 		<input>story.id</input>
 		<input>user_id</input>
 		<call class="vote" class_type="model" function_name="vote_thusly_on_story_or_comment_for_user_because">
+			<feed>user_id</feed>
+			<feed>comment_id</feed>
+			<feed>story.id</feed>
 		</call>
 		<call class="story" class_type="model" function_name="update_comments_count">
 			<feed>story.id</feed>
@@ -42,6 +45,15 @@
 			<text>
 			INSERT INTO keystores (`key`, `value`) VALUES ('user:2:comments_posted', 1) ON DUPLICATE KEY UPDATE `value` = `value` + 1
 			</text>
+		</query>
+	</method>
+	<method name="give_upvote_or_downvote_and_recalculate_confidence">
+		<input>comment_id</input>
+		<query>
+			<text>
+			UPDATE comments SET upvotes = COALESCE(upvotes, 0) + -1, downvotes = COALESCE(downvotes, 0) + 0, confidence = '0' WHERE id = 3
+			</text>
+			<input>comment_id</input>
 		</query>
 	</method>
 </model>

@@ -8,6 +8,34 @@
 			<input>user_id</input>
 			<input>comment_id</input>
 			<input>story_id</input>
+			<output>vote_id</output>
 		</query>
+		<condition name="!vote.new_record">
+			<condition name="vote==0">
+				<query line="https://github.com/jcs/lobsters/blob/master/app/models/vote.rb#L99">
+					<text>
+					DELETE FROM `votes` WHERE `votes`.`id` = 5
+					</text>
+					<input>vote_id</input>
+					<table>votes</table>
+					<operation>DELETE</operation>
+				</query>
+			</condition>
+			<query line="https://github.com/jcs/lobsters/blob/master/app/models/vote.rb#L118">
+				<text>
+				SELECT  `comments`.* FROM `comments`  WHERE `comments`.`id` = 3 LIMIT 1
+				</text>
+				<input>comment_id</input>
+				<table>comments</table>
+				<operation>SELECT</operation>
+			</query>
+			<call class="comments" class_type="model" function_name="give_upvote_or_downvote_and_recalculate_confidence">
+				<feed>comment_id</feed>
+			</call>
+			<call class="story" class_type="model" function_name="recalculate_hotness">
+				<feed>story_id</feed>
+				<feed>user_id</feed>
+			</call>
+		</condition>
 	</method>
 </model>

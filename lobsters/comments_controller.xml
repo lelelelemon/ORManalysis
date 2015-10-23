@@ -112,5 +112,22 @@
 			<feed>story.id</feed>
 			<feed>user_id</feed>
 		</call>
+		<call class="comments" class_type="model" function_name="record_initial_upvote">
+			<feed>story.id</feed>
+			<feed>user_id</feed>
+		</call>
+		<call class="comments" class_type="model" function_name="mark_submitter">
+		</call>
+	</method>
+	<method name="unvote">
+		<call class="comments" class_type="controller" function_name="find_comment">
+		</call>
+		<call class="vote" class_type="model" function_name="vote_thusly_on_story_or_comment_for_user_because">
+			<feed>user_id</feed>
+			<feed>comment_story_id</feed>
+			<feed>story_id</feed>
+			<condition>!vote.new_record</condition>
+			<condition>vote==0</condition>
+		</call>
 	</method>
 </controller>

@@ -41,19 +41,38 @@ class baseRoot:
 		for key in self.methods:
 			print "***** key = %s *****"%key
 
+class baseAction:
+	inputs = []
+	returns = []
+	def __init__(self):
+		self.inputs = []
+		self.returns = []
+	
+class MethodAction:
+	conditions = []
+	action = baseAction()
+	def __init__(self, action, condition=[]):
+		self.conditions = []
+		self.action = action
+		for c in condition:
+			self.conditions.append(c)
+		#if len(self.conditions)!=0:
+		#	print "Action has condition:",
+		#	print self.conditions
+
 class CallGraphNode:
 	level = 0
 	node_type = ""
 	caller = "" # Model/View/Controller instance
 	inputs = {} #This should be a hash set, but I am not familiar with that, so I simply used dict.
-	outputs = {} #Should be hash set. key = value
+	returns = {} #Should be hash set. key = value
 	children = []
 	label = ""
 	def __init__(self, caller):
 		self.caller = caller
 		self.level = 0
 		self.inputs = {}
-		self.outputs = {}
+		self.returns = {}
 		self.children = []
 		global global_node_cnt
 		self.label = global_node_labels[global_node_cnt]
@@ -65,23 +84,24 @@ class CallGraphNode:
 		for i in child.inputs:
 			edge_label = edge_label + child.inputs[i] + "\n"
 		reverse_edge_label = ""
-		for o in child.outputs:
-			reverse_edge_label = reverse_edge_label + child.outputs[o] + "\n"
+		for o in child.returns:
+			reverse_edge_label = reverse_edge_label + child.returns[o] + "\n"
 		#f.write("\t"+self.label+" -> "+child.label+";\n")
 		f.write("\t"+self.label+" -> "+child.label+" [label = \""+edge_label+"\", fontsize = 10];\n");
-		f.write("\t"+child.label+" -> "+self.label+" [label = \""+reverse_edge_label+"\", fontsize = 10, textcolor=red];\n");
+		if len(child.returns)!=0:
+			f.write("\t"+child.label+" -> "+self.label+" [label = \""+reverse_edge_label+"\", fontsize = 10, textcolor=red];\n");
 	def mergeInputs(self, inputs):
 		for i in inputs:
 			self.inputs[i] = i
-	def mergeOutputs(self, outputs):
-		for o in outputs:
-			self.outputs[o] = o
-	def setValues(self, node_type, level, inputs, outputs):
+	def mergeOutputs(self, returns):
+		for o in returns:
+			self.returns[o] = o
+	def setValues(self, node_type, level, inputs, returns):
 		global f
 		self.node_type = node_type
 		self.level = level
 		self.mergeInputs(inputs)
-		self.mergeOutputs(outputs)
+		self.mergeOutputs(returns)
 		if node_type.__class__.__name__ == "Query":
 			f.write("\t"+self.label+" [label = \""+node_type.operation+"_"+node_type.table+"\", color = blue];\n")
 		elif node_type.__class__.__name__ == "Action":	
@@ -91,28 +111,26 @@ class CallGraphNode:
 		else:
 			f.write("unrecognized")
 
-class Query:
+class Query(baseAction):
 	text = "SELECT"
 	table = "table"
 	operation = ""
 	field = []
-	params = []
-	returnv = []
 #	def __init__(self, text):
 #		self.text = text
 	def __init__(self, qnode):
 		self.field = []
-		self.params = []
-		self.returnv = []
+		self.inputs = []
+		self.returns = []
 		self.parseQuery(qnode)
 	def appendTable(self, table):
 		self.table = table
 	def appendField(self, field):
 		self.field = field
 	def appendParam(self, params):
-		self.params = params
+		self.inputs = params
 	def appendReturnv(self, returnv):
-		self.returnv = returnv
+		self.returns = returnv
 	def parseQuery(self, qnode):
 		assert(qnode.find("text") != None)
 		self.text = qnode.find("text").text
@@ -124,33 +142,34 @@ class Query:
 			self.table = qnode.find("table").text
 		if qnode.find("input")!=None:
 			for single_param in qnode.iter("input"):
-				self.params.append(single_param.text)
+				self.inputs.append(single_param.text)
 		if qnode.find("param")!=None:
 			for single_param in qnode.iter("param"):
-				self.params.append(single_param.text)
+				self.inputs.append(single_param.text)
 		if qnode.find("return")!=None:
 			for single_return in qnode.iter("return"):
-				self.returnv.append(single_return.text)
+				self.returns.append(single_return.text)
 		if qnode.find("output")!=None:
 			for single_return in qnode.iter("output"):
-				self.returnv.append(single_return.text)
+				self.returns.append(single_return.text)
 		if qnode.find("operation")!=None:
 			self.operation = qnode.find("operation").text
 	def traceExecution(self, inputs, gnode):
 		new_node = CallGraphNode(gnode.caller)
-		new_node.setValues(self, gnode.level+1, self.params, self.returnv)
+		new_node.setValues(self, gnode.level+1, self.inputs, self.returns)
 		gnode.addChild(new_node)
-		return self.returnv
+		return self.returns
 	def selfPrint(self):
 		print "Query:"
 		print "\ttext = %s"%self.text
 		print "\ttable = %s"%self.table
 	
-class Call:
+class Call(baseAction):
 	class_name = "class_name"
 	class_type = "model"
 	function_name = "function"
 	feeds = []
+	call_conditions = []
 #	def __init__(self, attrib):
 #		if attrib.find("class") != None:
 #			class_name = attrib["class"]
@@ -160,38 +179,45 @@ class Call:
 #			function_name = attrib["function_name"]
 	def __init__(self, cnode):
 		self.feeds = []
+		self.call_conditions = []
 		self.parseCall(cnode)
 	def parseCall(self, cnode):
 		self.class_name = cnode.attrib["class"]
 		self.class_type = cnode.attrib["class_type"]
 		self.function_name = cnode.attrib["function_name"]
+		#self.call_conditions = []
 		if cnode.find("feed") != None:
 			for single_feed in cnode.iter("feed"):
 				self.feeds.append(single_feed.text)
+		if cnode.find("condition") != None:
+			for single_condition in cnode.iter("condition"):
+				self.call_conditions.append(single_condition.text)
 	def traceExecution(self, inputs, gnode):
 		returnv = []
 		caller = gnode.caller 	
 		new_node = CallGraphNode(gnode.caller)
 		new_node.setValues(self, gnode.level+1, self.feeds, [])
 		if self.class_type == "model":
-			print "%s_model methods: %s"%(self.class_name, self.function_name)
+			#print "%s_model methods: %s"%(self.class_name, self.function_name)
 			m = models[self.class_name].methods[self.function_name]	
 			caller = models[self.class_name]
-			returnv = m.traceExecution(self.feeds, new_node)
+			returnv = m.traceExecution(self.feeds, new_node, self.call_conditions)
 		elif self.class_type == "controller":
-			print "%s_controller methods: %s"%(self.class_name, self.function_name)
+			#print "%s_controller methods: %s"%(self.class_name, self.function_name)
 			m = controllers[self.class_name].methods[self.function_name]
 			caller = controllers[self.class_name]
-			returnv = m.traceExecution(self.feeds, new_node)
+			returnv = m.traceExecution(self.feeds, new_node, self.call_conditions)
 		elif self.class_type == "view":
-			print "%s_view methods: %s"%(self.class_name, self.function_name)
+			#print "%s_view methods: %s"%(self.class_name, self.function_name)
 			m = views[self.class_name].methods[self.function_name]
 			caller = views[self.class_name]
-			returnv = m.traceExecution(self.feeds, new_node)
+			returnv = m.traceExecution(self.feeds, new_node, self.call_conditions)
 		else:
 			print "Unrecognized call"
 		new_node.caller = caller
 		new_node.mergeOutputs(returnv)
+		for r in returnv:
+			self.returns.append(r)
 		gnode.addChild(new_node)
 		return returnv
 	def selfPrint(self):
@@ -202,22 +228,21 @@ class Call:
 			print item,
 		print ""
 
-class Action:
+class Action(baseAction):
 	behavior = "Nothing"
-	output = []
 #	def __init__(self, behavior):
 #		behavior = self.behavior
 	def __init__(self, anode):
 		self.behavior = anode.find("description").text
-		self.output = []
+		self.returns = []
 		if anode.find("return") != None:
 			for single_output in anode.iter("return"):
-				self.output.append(single_output.text)
+				self.returns.append(single_output.text)
 	def traceExecution(self, inputs, gnode):
 		new_node = CallGraphNode(gnode.caller)
-		new_node.setValues(self, gnode.level+1, [], self.output)
+		new_node.setValues(self, gnode.level+1, [], self.returns)
 		gnode.addChild(new_node)
-		return self.output
+		return self.returns
 	def selfPrint(self):
 		print "Action"
 		print "\t%s"%self.behavior
@@ -226,9 +251,9 @@ class Method:
 	name = "name"
 	property_name = ""
 	attributes = {}
+	variables = {}
 	inputs = []
 	returns = []
-	variables = {}
 	action_list = [] #actions include action, query, call
 	def __init__(self, name):
 		self.name = name
@@ -238,7 +263,7 @@ class Method:
 		self.variables = {}
 #	def __init__(self, mnode):
 #		self.parseMethod(mnode)
-	def parseMethod(self, mnode):
+	def parseMethod(self, mnode, condition=[]):
 		if mnode.attrib.get("property") != None:
 			property_name = mnode.attrib["property"]
 		self.attributes = mnode.attrib
@@ -248,14 +273,25 @@ class Method:
 			elif child.tag == "return":
 				self.returns.append(child.text)
 			elif child.tag == "query":
-				self.action_list.append(Query(child))
+				self.action_list.append(MethodAction(Query(child), condition))
 			elif child.tag == "call":
-				self.action_list.append(Call(child))
+				self.action_list.append(MethodAction(Call(child), condition))
 			elif child.tag == "action":
-				self.action_list.append(Action(child))
+				self.action_list.append(MethodAction(Action(child), condition))
+			elif child.tag == "condition":
+				condition.append(child.attrib["name"])
+				#print "Method %s has condition:"%(self.name),
+				#print condition
+				self.parseMethod(child, condition)
+				condition.pop()	
 			else:
 				print "unrecognized tag: %s"%child.tag
-	def traceExecution(self, inputs, gnode):
+	def matchCondition(self, condition, action):
+		for c in action.conditions:
+			if c not in condition:
+				return 0
+		return 1
+	def traceExecution(self, inputs, gnode, condition=[]):
 		active_params = []
 		for action in self.action_list:
 		#	if action.__class__.__name__ == "Query":
@@ -266,7 +302,17 @@ class Method:
 		#		print "Action"
 		#	else:
 		#		print "Unrecognized action!"
-			active_params = active_params + action.traceExecution(inputs, gnode)
+		#	if len(action.conditions)!=0:
+		#		print "--%s (%s) cond:"%(self.name, action.action.__class__.__name__),
+		#		print action.conditions
+			if self.matchCondition(condition, action) != 0:
+				active_params = active_params + action.action.traceExecution(inputs, gnode)
+			else:
+				print "%s (%s) expected cond:"%(self.name, action.action.__class__.__name__),
+				print action.conditions
+				print "actual cond:",
+				print condition
+				print "Condition doens't match!"
 		for a in active_params:
 			self.variables[a] = a
 		return self.returns
@@ -328,7 +374,7 @@ def printGraph(node):
 	print ""
 	printBlank(node.level)
 	print "  -- output: ",
-	printDict(node.outputs)
+	printDict(node.returns)
 	print ""
 	for child in node.children:
 		printGraph(child)
@@ -354,7 +400,6 @@ for subdir, dirs, files in os.walk(rootdir):
 				controllers[controller_name] = c
 			elif "view" in filename:
 				view_name = filename[0:filename.find("view")-1]
-				print "view_name=%s"%view_name
 				tree = ET.parse(filepath)
 				root = tree.getroot()
 				v = View(root, view_name)
@@ -374,5 +419,5 @@ for subdir, dirs, files in os.walk(rootdir):
 view_name='comments'
 root = CallGraphNode(views[view_name])
 views[view_name].traceUserAction(root)
-printGraph(root)
+#printGraph(root)
 

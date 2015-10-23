@@ -44,4 +44,14 @@
 			<feed>comment</feed>
 		</call>
 	</method>
+	<method name="unvote_POST" user_action="true">
+		<call class="application" class_type="controller" function_name="authenticate_user">
+		</call>
+		<call class="application" class_type="controller" function_name="increase_traffic_counter">
+		</call>
+		<call class="comments" class_type="controller" function_name="unvote">
+			<feed>short_id</feed>
+			<feed>user_id</feed>
+		</call>
+	</method>
 </view>
