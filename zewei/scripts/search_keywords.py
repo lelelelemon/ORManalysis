@@ -1,19 +1,27 @@
+#!/usr/bin/python
 import fnmatch, os, sys
 
-if len(sys.argv) != 3:
-	print "Usage: search_keywords.py keywords_file src_dir"
+if len(sys.argv) != 4:
+	print "Usage: search_keywords.py keywords_file src_dir output_file"
 	exit()
 
 keywords_file = sys.argv[1]
 src_dir = sys.argv[2]
+output_file = sys.argv[3]
 
-keywords = []
+keywords = {}
 with open(keywords_file, "rb") as fp:
 	for line in fp:
 		#windows \r\n
-		if line[len(line)-2:] == '\r\n':
-			line = line[:len(line)-2] 
-		keywords.append(line)
+		if line[len(line)-1:] == '\n':
+			line = line[:len(line)-1] 
+		if line[len(line)-1:] == '\r':
+			line = line[:len(line)-1]
+		keywords[line] = 0
+
+print keywords
+
+fout = open(output_file, "wb")
 
 for root, dirnames, filenames in os.walk(src_dir):
 	#print root, dirnames, filenames
@@ -28,6 +36,7 @@ for root, dirnames, filenames in os.walk(src_dir):
 					for keyword in keywords:
 						if keyword in line:
 							
+							keywords[keyword] += 1	
 							#delete all spaces in the front
 							space_num = 0
 							while line[space_num] == ' ':
@@ -42,6 +51,10 @@ for root, dirnames, filenames in os.walk(src_dir):
 							if line[len(line)-1:] == "\n":
 								line = line[:len(line)-1]
 
-							print "keyword: " + keyword
-							print filename + " line " + str(line_num) + ": " + line
+							fout.write("keyword: " + keyword + "\n")
+							fout.write(filename + " line " + str(line_num) + ": " + line + "\n")
 
+for keyword in keywords:
+	fout.write(keyword + ": " + str(keywords[keyword]) + "\n")
+
+fout.close()
