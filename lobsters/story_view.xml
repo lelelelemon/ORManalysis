@@ -1,0 +1,28 @@
+<view>
+	<method name="create_POST" user_action="true">
+		<call class="application" class_type="controller" function_name="authenticate_user">
+			<feed property="session_cached">session_token</feed>
+		</call>
+		<call class="application" class_type="controller" function_name="increase_traffic_counter">
+		</call>
+		<call class="story" class_type="controller" function_name="create">
+			<feed>story_url</feed>
+			<feed>story_title</feed>
+			<feed>story_tags_a</feed>
+			<feed>story_description</feed>
+			<feed>user_is_author</feed>
+		</call>
+		<call class="story" class_type="view" function_name="show_GET">
+		</call>
+	</method>
+	<method name="show_GET">
+		<call class="application" class_type="controller" function_name="authenticate_user">
+			<feed property="session_cached">session_token</feed>
+		</call>
+		<call class="application" class_type="controller" function_name="increase_traffic_counter">
+		</call>
+		<call class="story" class_type="controller" function_name="show">
+			<feed>short_id</feed>
+		</call>
+	</method>
+</view>

@@ -69,7 +69,7 @@
 		<input>parent_comment_short_id</input>
 		<input>user_id</input>
 		<input>comment</input>
-		<query>
+		<query line="https://github.com/jcs/lobsters/blob/master/app/controllers/comments_controller.rb#L13">
 			<text>
 			SELECT  `stories`.* FROM `stories`  WHERE `stories`.`short_id` = 'xu86ww'  ORDER BY `stories`.`id` ASC LIMIT 1
 			</text>
@@ -95,28 +95,11 @@
 			<input>comment.parrent_comment_id</input>
 			<input>user_id</input>
 		</query>
-		<call class="comments" class_type="model" function_name="assign_short_id_and_upvote">
-			<return>new_short_id</return>
-		</call>
-		<call class="comments" class_type="model" function_name="assign_initial_confidence">
-			<return>initial_confidence</return>
-		</call>
-		<call class="comments" class_type="model" function_name="assign_thread_id">
-			<return>new_thread_id</return>
-		</call>
 		<call class="comments" class_type="model" function_name="save">
 			<feed>comment</feed>
-			<feed>initial_confidence</feed>
 			<feed>comment.parent_comment_id</feed>
-			<feed>new_short_id</feed>
 			<feed>story.id</feed>
 			<feed>user_id</feed>
-		</call>
-		<call class="comments" class_type="model" function_name="record_initial_upvote">
-			<feed>story.id</feed>
-			<feed>user_id</feed>
-		</call>
-		<call class="comments" class_type="model" function_name="mark_submitter">
 		</call>
 	</method>
 	<method name="unvote">

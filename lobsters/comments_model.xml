@@ -15,6 +15,19 @@
 		<return>new_thread_id</return>
 	</method>
 	<method name="save">
+		<input>comment</input>
+		<input>comment.parent_comment_id</input>
+		<input>story.id</input>
+		<input>user_id</input>
+		<call class="comments" class_type="model" function_name="assign_short_id_and_upvote">
+			<return>new_short_id</return>
+		</call>
+		<call class="comments" class_type="model" function_name="assign_initial_confidence">
+			<return>initial_confidence</return>
+		</call>
+		<call class="comments" class_type="model" function_name="assign_thread_id">
+			<return>new_thread_id</return>
+		</call>
 		<query>
 			<text>
 			INSERT INTO `comments` (`comment`, `confidence`, `created_at`, `markeddown_comment`, `parent_comment_id`, `short_id`, `story_id`, `thread_id`, `updated_at`, `upvotes`, `user_id`) VALUES ('reply to discuss 1', 0.182884783413889, '2015-10-22 04:41:15', 'reply to discuss 1', 1, 'oawqkn', 1, 1, '2015-10-22 04:41:15', 1, 2)
@@ -26,6 +39,13 @@
 			<input>story.id</input>
 			<input>user_id</input>
 		</query>
+		<call class="comments" class_type="model" function_name="record_initial_upvote">
+			<feed>story.id</feed>
+			<feed>user_id</feed>
+		</call>
+		<call class="comments" class_type="model" function_name="mark_submitter">
+			<feed>user_id</feed>
+		</call>
 	</method>
 	<method name="record_initial_upvote">
 		<input>story.id</input>
@@ -34,6 +54,7 @@
 			<feed>user_id</feed>
 			<feed>comment_id</feed>
 			<feed>story.id</feed>
+			<condition>vote.new_record</condition>
 		</call>
 		<call class="story" class_type="model" function_name="update_comments_count">
 			<feed>story.id</feed>
@@ -45,6 +66,9 @@
 			<text>
 			INSERT INTO keystores (`key`, `value`) VALUES ('user:2:comments_posted', 1) ON DUPLICATE KEY UPDATE `value` = `value` + 1
 			</text>
+			<input>user_id</input>
+			<table>keystores</table>
+			<operation>INSERT</operation>
 		</query>
 	</method>
 	<method name="give_upvote_or_downvote_and_recalculate_confidence">

@@ -416,7 +416,7 @@ for subdir, dirs, files in os.walk(rootdir):
 #	printGraph(root)	
 
 ## only print methods within specific view (single file)
-view_name='comments'
+view_name='story'
 root = CallGraphNode(views[view_name])
 views[view_name].traceUserAction(root)
 #printGraph(root)
