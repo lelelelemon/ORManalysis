@@ -1,6 +1,11 @@
 #include<stdio.h>
 
 int main(int argc, char** argv){
+	
+	if (argc != 3){
+		printf("Usage: extract_ruby input output\n");
+		return 1;
+	} 
     
     char *input_file = argv[1], *output_file = argv[2];
     

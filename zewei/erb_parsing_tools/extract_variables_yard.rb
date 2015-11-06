@@ -23,6 +23,7 @@ file = File.open(in_filename, "r")
 contents = file.read
 ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 
+#cong's code
 def traverse_ast(astnode, level)
 	@blank = ""
 	for i in (0...level)
@@ -56,7 +57,7 @@ def traverse_ast_variables(astnode, variable_array)
 end
 
 variable_array = []
-traverse_ast(ast, 0)
+#traverse_ast(ast, 0)
 traverse_ast_variables(ast, variable_array)
 #puts variable_array
 out = File.open(out_filename, "w")
