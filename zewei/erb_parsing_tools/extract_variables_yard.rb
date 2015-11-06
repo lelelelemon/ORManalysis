@@ -43,8 +43,11 @@ end
 def traverse_ast_variables(astnode, variable_array)
 	astnode.type 
 	if astnode.type == :ivar
-		variable_array << astnode.source
+		variable_array << "<ivar>#{astnode.source}</ivar>"
 		#puts astnode.source
+	elsif astnode.type == :call
+		variable_array << "<call>#{astnode.source}</call>"
+
 	end
 	
 	astnode.children.each do |child|
@@ -53,9 +56,11 @@ def traverse_ast_variables(astnode, variable_array)
 end
 
 variable_array = []
+traverse_ast(ast, 0)
 traverse_ast_variables(ast, variable_array)
 #puts variable_array
+out = File.open(out_filename, "w")
 variable_array.uniq.each do |x|
-	puts "<ivar>#{x}</ivar>"
+	out << "#{x}\n"
 end
 
