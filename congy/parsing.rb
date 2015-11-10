@@ -794,7 +794,7 @@ def trace_function(start_class, start_function, params, returnv, level)
 		if call.isQuery
 			puts "#{@blank}  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}}"
 		elsif callerv != nil
-			trace_function(callerv_name, call.getFuncName, params, returnv, level+1)
+			trace_function(callerv_name, call.getFuncName, params, pass_returnv, level+1)
 		end
 	end	
 end
@@ -881,20 +881,16 @@ options = {}
 opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage: opt_parser [OPTIONS]"
 
-  opt.on("-p","--print [:ALL]",String,"print out variable and function call names of class specified; or type all to print out all classes") do |class_name|
+  opt.on("-p","--print [CLASS_NAME]",String,"print out variable and function call names of class specified; or type all to print out all classes","example: --print CommentsController or --print all") do |class_name|
 		options[:class_name] = class_name
-		puts "#{class_name}"
-    #print_classes(class_name)
   end
 
-	opt.on("-v","--print-types [:ALL]",String,"print out type information of each variable of function call") do |class_name|
+	opt.on("-v","--print-types [CLASS_NAME]",String,"print out type information of each variable of function call","example: --print CommentsController or --print all") do |class_name|
 		options[:class_name_for_type] = class_name
-    #print_classes(class_name)
   end
 
-	opt.on("-t","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified") do |trace_input|
+	opt.on("-t","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified","example: --trace CommentsController,create") do |trace_input|
 		options[:trace_input] = trace_input
-		puts " -- #{trace_input[0]} , #{trace_input[1]}"
   end
 
   opt.on("-x","--xml","generate xml file, make sure directory xmls/ exists") do
