@@ -1,0 +1,117 @@
+def transform_controller_name(name)
+	i = name.index("Controller")
+	new_name = "#{(name[0...i-1]).downcase}_controller"
+	return new_name
+end
+
+def is_ast_node(node)
+	if node != nil and node.class.to_s == "YARD::Parser::Ruby::AstNode"
+		return true
+	elsif node != nil
+		return node.class.ancestors.include?YARD::Parser::Ruby::AstNode
+	else
+		return false
+	end
+end
+
+def searchVarRef(node)
+	if is_ast_node(node)==false
+		return nil
+	end
+	if node.type.to_s == "var_ref"
+		return node
+	end
+	if node.children[0] != nil
+		node.children.each do |child| 
+			v = searchVarRef(child)
+			if v != nil
+				return v
+			end
+		end
+	else
+		return nil
+	end
+	return nil
+end
+
+def searchARef(node)
+	if is_ast_node(node)==false
+		reutnr nil
+	end
+	if node.type.to_s == "aref"
+		return node
+	end
+	if node.children[0] != nil
+		node.children.each do |child| 
+			v = searchARef(child)
+			if v != nil
+				return v
+			end
+		end
+	else
+		return nil
+	end
+	return nil
+end
+
+#read variable class list
+def check_class_match(name)
+	if $class_map.has_key?(name)
+		return true
+	end
+	return false
+end
+
+def transform_var_name(name)
+	$class_map.each do |keyc, arrayc|
+		cname = name
+		if name[0] == '@'
+			cname = name[1..name.length-1]
+			#puts "After truncate, #{name} -> #{cname}"
+		end
+		if keyc.downcase == cname.downcase
+			return keyc
+		end
+	end
+	#$class_map.each do |keyc, arrayc|
+	#	if keyc.include?("Controller")==false and keyc.downcase.include?(cname.downcase)
+	#		return keyc
+	#	end
+	#end	
+	return nil
+end
+
+#parse specific node
+def get_left_most_leaf(node)
+	rv = node	
+	while is_ast_node(rv) do
+		if rv.children.length > 0
+			rv = rv.children[0]
+		else
+			break
+		end
+	end
+	return rv
+end
+
+def get_mvc_name(filename)
+	i = filename.rindex('/')
+	j = filename.index('.')
+	n = filename[i+1..j-1]
+	return n
+end
+
+def set_class(ast, is_controller)
+	class_name = ast.children[0].children[0].source.to_s
+	if is_controller
+		$cur_class = Controller_class.new(class_name)
+	else
+		$cur_class = Model_class.new(class_name)
+	end
+	if ast.children[0].children[1].type.to_s == "const_path_ref" or ast.children[0].children[1].type.to_s  == "var_ref"
+		$cur_class.setUpperClass(ast.children[0].children[1].source.to_s)
+		#puts "class #{class_name} < #{$cur_class.getUpperClass}"
+	end
+	$class_map[class_name] = $cur_class
+end
+
