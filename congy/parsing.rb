@@ -163,10 +163,14 @@ class Function_call
 	end
 
 	def print
+		temp_params = ""
+		@params.each do |param|
+			temp_params += "#{param.getVar}, "
+		end
 		if @is_query
-			puts "++ CALL DB QUERY: #{@obj_name} . #{@func_name}"
+			puts "++ CALL DB QUERY: #{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv})"
 		else
-			puts "#{@obj_name} . #{@func_name}"
+			puts "#{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv})"
 		end
 	end
 end
@@ -497,6 +501,7 @@ def get_left_most_leaf(node)
 	return rv
 end
 
+
 def parse_attrib_node(astnode)
 #TODO: currently only handles single attribute node
 	return get_left_most_leaf(astnode).source.to_s
@@ -541,10 +546,10 @@ end
 
 #parse assignment, put the assigned value into method's variable list
 def parse_assign(astnode, method)
-	@node = astnode
-	while @node.children.length != 0 do
-		@node = @node.children[0]
-	end		
+	@node = astnode.children[0]
+	#while @node.children.length != 0 do
+	#	@node = @node.children[0]
+	#end		
 	method.getVars[@node.source.to_s] = astnode.source
 	return @node.source.to_s
 end
@@ -552,13 +557,14 @@ end
 #parse method call, check if it is query related
 def parse_method_call(astnode, method)
 	@node = astnode
-	while @node.children.length != 0 do
-		@node = @node.children[0]
-	end
+	#while @node.children.length != 0 do
+	#	@node = @node.children[0]
+	#end
+	@node = astnode.children[0]
 	if astnode.children[1] != nil and astnode.children[1].type.to_s == "ident"
 
 		@node2 = astnode.children[1]
-		fcall = Function_call.new(@node.source, @node2.source)
+		fcall = Function_call.new(@node.source.tr("\n",""), @node2.source)
 		
 		#if @node.type.to_s == "const" and check_table_name(@node.source.to_s)
 		if check_method_keyword(@node2.source) then
@@ -572,12 +578,16 @@ def parse_method_call(astnode, method)
 		end	
 		method.getCalls.push(fcall)
 		$cur_funccall = fcall
+	elsif (astnode.type.to_s == "call" or astnode.type.to_s == "vcall") and astnode.children[0].type.to_s == "ident"
+		fcall = Function_call.new("self", astnode.children[0].source)
+		method.getCalls.push(fcall)
 	elsif astnode.type.to_s == "command"
 		parse_attrib(astnode)
 		$cur_funccall  = nil
 	else
 		$cur_funccall = nil
 	end
+	return $cur_funccall
 end
 
 def traverse_ast(astnode, level)
@@ -610,20 +620,23 @@ def traverse_ast(astnode, level)
 			i = i + 1
 		end
 	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
-		parse_method_call(astnode, $cur_method)
+		temp_funccall = parse_method_call(astnode, $cur_method)
 		if $cur_position == "INCONDITION" and $cur_funccall != nil
 			$cur_funccall.setReturnValue("true")
 		end
 		astnode.children.each do |child|
 			traverse_ast(child, level+1)
 		end
+		return temp_funccall
 	elsif (astnode.type.to_s == "assign" or astnode.type.to_s == "opassign")
 		assigned_var = parse_assign(astnode, $cur_method)
 		astnode.children.each do |child|
 			if child.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
-				traverse_ast(child, level+1)
-				if $cur_funccall != nil
-					$cur_funccall.setReturnValue(assigned_var)
+				temp_funccall = traverse_ast(child, level+1)
+				if assigned_var == "comment.current_vote"
+				end
+				if temp_funccall != nil
+					temp_funccall.setReturnValue(assigned_var)
 				end
 			else
 				traverse_ast(child, level+1)
@@ -635,8 +648,6 @@ def traverse_ast(astnode, level)
 		end
 	end
 	
-	astnode.children.each do |child|
-	end
 end
 
 #find the proper upper class
@@ -879,7 +890,7 @@ end
 options = {}
 
 opt_parser = OptionParser.new do |opt|
-  opt.banner = "Usage: opt_parser [OPTIONS]"
+  opt.banner = "Usage: ruby parsing.rb [OPTIONS]"
 
   opt.on("-p","--print [CLASS_NAME]",String,"print out variable and function call names of class specified; or type all to print out all classes","example: --print CommentsController or --print all") do |class_name|
 		options[:class_name] = class_name
@@ -899,7 +910,6 @@ opt_parser = OptionParser.new do |opt|
 
 	opt.on("-d","--dir DIR",String,"the application directory, for example, -d /home/congy/lobsters/app, by default it is ./, where the controllers/models of lobsters application is located") do |dir|
    	options[:dir] = dir
-		puts "DIR = #{dir}" 
   end
 
   opt.on("-h","--help","help") do

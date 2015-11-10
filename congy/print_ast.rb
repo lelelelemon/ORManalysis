@@ -15,7 +15,7 @@ PATH_ORDER = [
 ]
 
 
-file = File.open("models/keystore.rb", "r")
+file = File.open("controllers/comments_controller.rb", "r")
 contents = file.read
 ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 
