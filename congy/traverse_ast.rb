@@ -41,10 +41,13 @@ def traverse_ast(astnode, level)
 		astnode.children.each do |child|
 			if child.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
 				temp_funccall = traverse_ast(child, level+1)
-				if assigned_var == "comment.current_vote"
-				end
 				if temp_funccall != nil
-					temp_funccall.setReturnValue(assigned_var)
+					temp_funccall.setReturnValue(assigned_var)			
+					#if it is a new method, then we know the class type of the variable. This is kind of type inference
+					if ["new", "new!"].include?temp_funccall.getFuncName
+						#puts "NEW method: #{assigned_var} = #{temp_funccall.getObjName} . new"
+						$cur_class.addFuncVar($cur_method.getName, assigned_var, temp_funccall.getObjName)
+					end
 				end
 			else
 				traverse_ast(child, level+1)

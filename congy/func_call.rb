@@ -94,6 +94,9 @@ class Function_call
 			if caller_class == nil
 				caller_class = findNonRecordedCaller
 			end
+			if caller_class == nil
+				caller_class = search_distinct_func_name(calling_func)
+			end
 			#puts "#{calling_func_class}.#{calling_func} issues call #{@obj_name} [of class #{caller_class}] . #{@func_name}"
 			#puts ""
 		end	

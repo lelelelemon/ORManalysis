@@ -115,3 +115,18 @@ def set_class(ast, is_controller)
 	$class_map[class_name] = $cur_class
 end
 
+def search_distinct_func_name(func_name)
+	count = 0
+	class_name = ""
+	$class_map.each do |keyc, valuec|
+		if valuec.getMethods[func_name] != nil
+			class_name = keyc
+			count += 1
+		end
+	end
+	if count == 1
+		return class_name
+	else
+		return nil
+	end
+end

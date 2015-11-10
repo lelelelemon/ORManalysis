@@ -99,6 +99,15 @@ def parse_attrib(astnode)
 			end
 			#Class_class.@method is a hash map, so add == set+insert 
 			$cur_class.addMethod(temp_method)
+		when "after_save","before_save"
+			if astnode.children[1].type.to_s == "list"
+				astnode.children[1].children.each do |child|
+					if child.type.to_s == "symbol_literal"
+						fcall = Function_call.new("self", get_left_most_leaf(child).source.to_s)
+						$cur_class.addSave(fcall)
+					end
+				end
+			end
 		#else
 	end
 end

@@ -81,14 +81,14 @@ def adjust_calls
 #					#end
 #				end	
 #			end
-			upper_class = $class_map[valuec.getUpperClass] 
-			if upper_class != nil and upper_class.getBeforeFilter.length > 0
-				upper_class.getBeforeFilter.each do |filter|
-					fc = Function_call.new(upper_class.getName, filter)
-					#puts "\t # \t insert call: #{upper_class.getName} . #{fc.getFuncName}"
-					value.getCalls.insert(0, fc)
-				end	
-			end
+#			upper_class = $class_map[valuec.getUpperClass] 
+#			if upper_class != nil and upper_class.getBeforeFilter.length > 0
+#				upper_class.getBeforeFilter.each do |filter|
+#					fc = Function_call.new(upper_class.getName, filter)
+#					#puts "\t # \t insert call: #{upper_class.getName} . #{fc.getFuncName}"
+#					value.getCalls.insert(0, fc)
+#				end	
+#			end
 		end
 	end
 end
@@ -116,7 +116,18 @@ def trace_function(start_class, start_function, params, returnv, level)
 		end
 		pass_returnv = call.getReturnValue
 		if call.isQuery
-			puts "#{@blank}  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}}"
+			puts "#{@blank}level #{level}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}}"
+			if ["save", "save!"].include?call.getFuncName
+				if class_handler.getFuncVarMap[start_function]!= nil
+					caller_class = class_handler.getFuncVarMap[start_function].search_var(call.getObjName)
+					if caller_class != nil
+						#puts "save class: #{call.getObjName} (#{caller_class})"
+						$class_map[caller_class].getSave.each do |save_action|
+							trace_function(caller_class, save_action.getFuncName, "", "", level+2)
+						end
+					end
+				end
+			end
 		elsif callerv != nil
 			trace_function(callerv_name, call.getFuncName, params, pass_returnv, level+1)
 		end
