@@ -800,7 +800,7 @@ def trace_function(start_class, start_function, params, returnv, level)
 end
 
 #iterate over all controllers
-$app_dir = "/home/congy/ruby_source/yard/benchmarks"
+$app_dir = "./"
 $controller_files = ""
 $model_files = ""
 
@@ -901,7 +901,7 @@ opt_parser = OptionParser.new do |opt|
    	options[:xml] = true 
   end
 
-	opt.on("-d","--dir DIR",String,"the application directory, for example, -d /home/congy/lobsters/app") do |dir|
+	opt.on("-d","--dir DIR",String,"the application directory, for example, -d /home/congy/lobsters/app, by default it is ./, where the controllers/models of lobsters application is located") do |dir|
    	options[:dir] = dir
 		puts "DIR = #{dir}" 
   end
