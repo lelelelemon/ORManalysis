@@ -1,5 +1,6 @@
 require 'yard'
 require 'logger'
+require 'optparse'
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',
@@ -314,6 +315,37 @@ class Class_class
 	end
 	def getBeforeFilter
 		@before_filter
+	end
+	def print_var_types
+		puts "######## BEGIN ########"
+		puts "Class: #{@name}"
+		@func_var_map.each do |key2, value2|
+			print "function #{value2.get_name} : "
+			value2.get_var_map.each do |key3, value3|
+				print "#{key3}(#{value3}), "
+			end
+			puts ""
+			puts "----"
+		end
+		puts "###### END #######"
+		puts ""
+	end
+	def print_calls
+		puts "######## BEGIN ########"
+		puts "Class: #{@name}"
+		
+		@methods.each do |key, array|
+			puts "Method #{key}:\n"
+			print "\t ** variables: {"
+			array.getVars.each do |key2, array2|
+				print "#{key2}, "
+			end
+			puts "}"
+			array.getCalls.each do |each_call|
+				print "\t "
+				each_call.print
+			end
+		end
 	end
 end
 $cur_class = Class_class.new("empty_class")
@@ -768,111 +800,150 @@ def trace_function(start_class, start_function, params, returnv, level)
 end
 
 #iterate over all controllers
-Dir.glob('/home/congy/ruby_source/yard/benchmarks/controllers/*.rb') do |item|
-	next if item == '.' or item == '..'
-	# clear global variables
-	$cur_method = Method_class.new("empty_class")
-	#$method_map.clear
+$app_dir = "/home/congy/ruby_source/yard/benchmarks"
+$controller_files = ""
+$model_files = ""
 
-	#read file
-	file = File.open(item, "r")
-	contents = file.read
-
-	#iterate over AST
-	ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-	
-	set_class(ast, true)
-	level = 0
-	traverse_ast(ast, level)
-
-end
-
-#iterate over all models
-Dir.glob('/home/congy/ruby_source/yard/benchmarks/models/*.rb') do |item|
-	next if item == '.' or item == '..'
-	# clear global variables
-	$cur_method = Method_class.new("empty_class")
-	#$method_map.clear
-
-	#read file
-	file = File.open(item, "r")
-	contents = file.read
-	
-	#iterate over AST
-	ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-	
-	set_class(ast, false)
-	level = 0
-	traverse_ast(ast, level)
-
-end
-
-read_dynamic_typing_info
-resolve_upper_class
-retrieve_func_calls
-
-def print_classes
-	$class_map.each do |keyc, valuec|
-		puts "######## BEGIN ########"
-		puts "Class: #{keyc}"
-		valuec.getFuncVarMap.each do |key2, value2|
-			print "function #{value2.get_name} : "
-			value2.get_var_map.each do |key3, value3|
-				print "#{key3}(#{value3}), "
-			end
-			puts ""
-			puts "----"
-		end
-		puts "###### END #######"
-		puts ""
-	end	
-	
-	$class_map.each do |keyc, arrayc|
-		puts "######## BEGIN ########"
-		puts "Class: #{keyc}"
-	
-		arrayc.getMethods.each do |key, array|
-			puts "Method #{key}:\n"
-			print "\t ** variables: {"
-			array.getVars.each do |key2, array2|
-				print "#{key2}, "
-			end
-			puts "}"
-			array.getCalls.each do |each_call|
-				print "\t "
-				each_call.print
-			end
-		end
-		puts "######## END ########\n\n"
-	
+def read_ruby_files(application_dir=nil)
+	if application_dir != nil
+		$app_dir = application_dir
 	end
-end
-
-
-def parse_options
-  case ARGV[0]
-  when "-h", "--help"
-		puts " ========================="
-		puts " 1. -p or --print: print out information of all classes"
-		puts " 2. -x or --xml: generate xml file, make sure directory xmls/ exists"
-		puts " 3. -t or --trace: needs two arguments, class_name function_name; will print out call graph of the function specified"
-		puts " ========================="
-  when "-x", "--xml"
-		#puts "xml:"
-		generate_xml_files
-	when "-p", "--print"
-		#puts "print: "
-		print_classes
-	when "-t", "--trace"
-		#puts "trace: "
-		start_class = ARGV[1].to_s
-		start_function = ARGV[2].to_s
-		adjust_calls
+	$controller_files = "#{$app_dir}/controllers/*.rb"
+	$model_files = "#{$app_dir}/models/*.rb"
+	
+	Dir.glob($controller_files) do |item|
+		next if item == '.' or item == '..'
+		# clear global variables
+		$cur_method = Method_class.new("empty_class")
+		#$method_map.clear
+	
+		#read file
+		file = File.open(item, "r")
+		contents = file.read
+	
+		#iterate over AST
+		ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
+		
+		set_class(ast, true)
 		level = 0
-		trace_function(start_class, start_function, "", "", level)
+		traverse_ast(ast, level)
+	
+	end
+	
+	#iterate over all models
+	Dir.glob($model_files) do |item|
+		next if item == '.' or item == '..'
+		# clear global variables
+		$cur_method = Method_class.new("empty_class")
+		#$method_map.clear
+	
+		#read file
+		file = File.open(item, "r")
+		contents = file.read
+		
+		#iterate over AST
+		ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
+		
+		set_class(ast, false)
+		level = 0
+		traverse_ast(ast, level)
+	
+	end
+	
+	read_dynamic_typing_info
+	resolve_upper_class
+	retrieve_func_calls
+end
+
+
+def print_classes(class_name=nil)
+	if class_name == nil
+		$class_map.each do |keyc, valuec|
+			valuec.print_calls
+		end	
 	else
-		puts "Wrong argument! use ruby parsing.rb --help for more information"
+		$class_map[class_name].print_calls
 	end
 end
 
-parse_options
+def print_types(class_name=nil)
+	if class_name == nil
+		$class_map.each do |keyc, valuec|
+			valuec.print_types
+		end	
+	else
+		$class_map[class_name].print_types
+	end
+end
+
+options = {}
+
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: opt_parser [OPTIONS]"
+
+  opt.on("-p","--print [:ALL]",String,"print out variable and function call names of class specified; or type all to print out all classes") do |class_name|
+		options[:class_name] = class_name
+		puts "#{class_name}"
+    #print_classes(class_name)
+  end
+
+	opt.on("-v","--print-types [:ALL]",String,"print out type information of each variable of function call") do |class_name|
+		options[:class_name_for_type] = class_name
+    #print_classes(class_name)
+  end
+
+	opt.on("-t","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified") do |trace_input|
+		options[:trace_input] = trace_input
+		puts " -- #{trace_input[0]} , #{trace_input[1]}"
+  end
+
+  opt.on("-x","--xml","generate xml file, make sure directory xmls/ exists") do
+   	options[:xml] = true 
+  end
+
+	opt.on("-d","--dir DIR",String,"the application directory, for example, -d /home/congy/lobsters/app") do |dir|
+   	options[:dir] = dir
+		puts "DIR = #{dir}" 
+  end
+
+  opt.on("-h","--help","help") do
+    puts opt_parser
+  end
+end
+
+opt_parser.parse!
+
+if options[:dir] != nil
+	puts "dir = #{options[:dir]}"
+	read_ruby_files(options[:dir])
+else
+	read_ruby_files
+end
+
+if options[:class_name] != nil
+	if options[:class_name] == "all"
+		print_classes
+	else
+		print_classes(options[:class_name])
+	end
+end
+
+if options[:class_name_for_type] != nil
+	if options[:class_name_for_type] == "all"
+		print_types
+	else
+		print_types(options[:class_name_for_type])
+	end
+end
+
+if options[:trace_input] != nil
+	start_class = options[:trace_input][0]
+	start_function = options[:trace_input][1]
+	adjust_calls
+	level = 0
+	trace_function(start_class, start_function, "", "", level)
+end
+
+if options[:xml] == true
+	generate_xml_files
+end
