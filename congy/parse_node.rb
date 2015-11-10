@@ -8,34 +8,97 @@ def parse_attrib(astnode)
 		when "has_many"
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
-					$cur_class.addHasMany(parse_attrib_node(child))
+					if child.type.to_s == "symbol_literal"
+						$cur_class.addHasMany(parse_attrib_node(child))
+					end
 				end
 			end
 		when "belongs_to"
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
-					$cur_class.addBelongsTo(parse_attrib_node(child))
+					if child.type.to_s == "symbol_literal"
+						$cur_class.addBelongsTo(parse_attrib_node(child))
+					end
 				end
 			end
 		when "has_one"
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
-					$cur_class.addHasOne(parse_attrib_node(child))
+					if child.type.to_s == "symbol_literal"
+						$cur_class.addHasOne(parse_attrib_node(child))
+					end
 				end
 			end
 		when "attr_accessor"
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
-					$cur_class.addVariable(get_left_most_leaf(child).source.to_s)
+					if child.type.to_s == "symbol_literal"
+						$cur_class.addVariable(get_left_most_leaf(child).source.to_s)
+					end
 				end
 			end
 		when "before_filter"
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
-					$cur_class.addBeforeFilter(get_left_most_leaf(child).source.to_s)
+					if child.type.to_s == "symbol_literal"
+						$cur_class.addBeforeFilter(get_left_most_leaf(child).source.to_s)
 					#puts "#{$cur_class.getName} add before filter: #{get_left_most_leaf(child).source.to_s}"
+					end
 				end
 			end
+		when "before_validation"
+			method_list = Array.new
+			if astnode.children[1].type.to_s == "list"
+				astnode.children[1].children.each do |child|
+					if child.type.to_s == "symbol_literal"
+						method_list.push(get_left_most_leaf(child).source.to_s)
+					end
+				end
+			end
+			last_child = astnode.children[1].children[astnode.children[1].children.length-1]
+			if last_child.source.include?(":on =>")
+				#only one [:on]
+				if last_child.children[0].type.to_s == "assoc" and last_child.children[0].children[1].type.to_s == "symbol_literal"
+					on_method = get_left_most_leaf(last_child.children[0].children[1]).source.to_s
+					if on_method == "create"
+						temp_method = nil
+						if $cur_class.getMethod("new") == nil
+							temp_method = Method_class.new("new")
+						else
+							temp_method = $cur_class.getMethod("new")
+						end
+						method_list.each do |each_method|
+							fcall = Function_call.new("self", each_method)
+							temp_method.getCalls.push(fcall)
+						end
+						$cur_class.addMethod(temp_method)
+					end
+				end
+			else
+				temp_method = Method_class.new("valid?")
+				method_list.each do |each_method|
+					fcall = Function_call.new("self", each_method)
+					temp_method.getCalls.push(fcall)
+				end
+				$cur_class.addMethod(temp_method)
+			end
+		when "after_create","before_create"
+			temp_method = nil
+			if $cur_class.getMethod("new") == nil
+				temp_method = Method_class.new("new")
+			else
+				temp_method = $cur_class.getMethod("new")
+			end
+			if astnode.children[1].type.to_s == "list"
+				astnode.children[1].children.each do |child|
+					if child.type.to_s == "symbol_literal"
+						fcall = Function_call.new("self", get_left_most_leaf(child).source.to_s)
+						temp_method.getCalls.push(fcall)
+					end
+				end
+			end
+			#Class_class.@method is a hash map, so add == set+insert 
+			$cur_class.addMethod(temp_method)
 		#else
 	end
 end

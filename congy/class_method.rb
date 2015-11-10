@@ -51,6 +51,9 @@ class Class_class
 	def addMethod(meth)
 		@methods[meth.getName] = meth
 	end
+	def getMethod(name)
+		@methods[name]
+	end
 	def getMethod(meth_name)
 		@methods[meth_name]
 	end
