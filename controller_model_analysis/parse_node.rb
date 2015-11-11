@@ -5,30 +5,30 @@ end
 
 def parse_attrib(astnode)
 	case astnode.children[0].source.to_s
-		when "has_many"
-			if astnode.children[1].type.to_s == "list"
-				astnode.children[1].children.each do |child|
-					if child.type.to_s == "symbol_literal"
-						$cur_class.addHasMany(parse_attrib_node(child))
-					end
-				end
-			end
-		when "belongs_to"
-			if astnode.children[1].type.to_s == "list"
-				astnode.children[1].children.each do |child|
-					if child.type.to_s == "symbol_literal"
-						$cur_class.addBelongsTo(parse_attrib_node(child))
-					end
-				end
-			end
-		when "has_one"
-			if astnode.children[1].type.to_s == "list"
-				astnode.children[1].children.each do |child|
-					if child.type.to_s == "symbol_literal"
-						$cur_class.addHasOne(parse_attrib_node(child))
-					end
-				end
-			end
+		#when "has_many"
+		#	if astnode.children[1].type.to_s == "list"
+		#		astnode.children[1].children.each do |child|
+		#			if child.type.to_s == "symbol_literal"
+		#				$cur_class.addHasMany(parse_attrib_node(child))
+		#			end
+		#		end
+		#	end
+		#when "belongs_to"
+		#	if astnode.children[1].type.to_s == "list"
+		#		astnode.children[1].children.each do |child|
+		#			if child.type.to_s == "symbol_literal"
+		#				$cur_class.addBelongsTo(parse_attrib_node(child))
+		#			end
+		#		end
+		#	end
+		#when "has_one"
+		#	if astnode.children[1].type.to_s == "list"
+		#		astnode.children[1].children.each do |child|
+		#			if child.type.to_s == "symbol_literal"
+		#				$cur_class.addHasOne(parse_attrib_node(child))
+		#			end
+		#		end
+		#	end
 		when "attr_accessor"
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|

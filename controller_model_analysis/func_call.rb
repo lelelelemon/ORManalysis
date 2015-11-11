@@ -95,7 +95,6 @@ class Function_call
 				caller_class = findNonRecordedCaller
 			end
 			if caller_class == nil
-				puts "FInd caller: #{@obj_name} . #{@func_name}"
 				if $class_map[@obj_name] != nil
 					caller_class = @obj_name
 				end

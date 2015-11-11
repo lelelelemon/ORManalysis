@@ -105,7 +105,6 @@ def trace_function(start_class, start_function, params, returnv, level)
 	end
 	puts "#{@blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
 	function_handler.getCalls.each do |call|
-		puts "search call: #{call.getObjName}. #{call.getFuncName}"
 		callerv_name = call.findCaller(start_class, start_function)
 		callerv = $class_map[callerv_name]
 		pass_params = ""

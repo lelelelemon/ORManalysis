@@ -2,10 +2,19 @@ def read_dynamic_typing_info
 	Dir.glob($log_files) do |item|
 		next if item == '.' or item == '..'
 		class_name = get_mvc_name(item)
+		class_handler = nil
 		if $class_map.has_key?(class_name) == false
+			$class_map.each do |keyc, valuec|
+				if keyc.include?("::") and remove_module_info(keyc) == class_name
+					class_handler = valuec
+				end
+			end
+		else
+			class_handler = $class_map[class_name]
+		end
+		if class_handler == nil
 			abort("Class #{class_name} (#{item}) cannot be found!")
 		end
-		class_handler = $class_map[class_name]
 		file = File.open(item, "r")
 		file.each_line do |line|
 			c_array = line.split(": ")
@@ -18,6 +27,30 @@ def read_dynamic_typing_info
 			#	puts "FUNCTION #{func_name} DOESN'T HAVE VARS"
 			end
 		end	
+	end
+end
+
+def read_each_class(class_list, module_name, is_controller)
+	class_list.each do |class_node|
+		if module_name == ""
+			class_name = class_node.children[0].source.to_s
+		else
+			class_name = "#{module_name}::#{class_node.children[0].source.to_s}"
+		end
+		#puts "\t -- class_name = #{class_name}"
+		#puts ""
+		if is_controller
+			$cur_class = Controller_class.new(class_name)
+		else
+			$cur_class = Model_class.new(class_name)
+		end
+		if class_node.children[1].type.to_s == "const_path_ref" or class_node.children[1].type.to_s  == "var_ref"
+			$cur_class.setUpperClass(class_node.children[1].source.to_s)
+		#puts "class #{class_name} < #{$cur_class.getUpperClass}"
+		end
+		$class_map[class_name] = $cur_class
+		level = 0
+		traverse_ast(class_node, level)
 	end
 end
 
@@ -51,58 +84,71 @@ def read_key_words
 	end
 end
 
+def handle_single_file(item, is_controller)
+	$cur_method = Method_class.new("empty_class")
+	#puts "filename = #{item}"
+	file = File.open(item, "r")
+	contents = file.read
+	ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
+	class_list = Array.new
+	module_node = get_module_node(ast)
+	module_name = ""
+	if module_node != nil
+		module_name = get_left_most_leaf(module_node).source.to_s
+	end
+	get_class_list(ast, class_list)
+	if class_list.length == 0
+		if module_node != nil
+			class_list.push(module_node)
+			read_each_class(class_list, "", is_controller)
+		else
+			abort("Neither class nor module can be found")
+		end
+	else
+		read_each_class(class_list, module_name, is_controller)
+	end
+end
+
+
 def read_ruby_files(application_dir=nil)
 	
 	if application_dir != nil
 		$app_dir = application_dir
 	end
-	$controller_files = "#{$app_dir}/controllers/*.rb"
-	$model_files = "#{$app_dir}/models/*.rb"
+	$controller_files = "#{$app_dir}/controllers/"
+	$model_files = "#{$app_dir}/models/"
 	$log_files = "#{$app_dir}/logs/*.log"
 	$table_file = "#{$app_dir}/table_name.txt"
 	
 	read_table_names($table_file)
 	read_key_words
 
-	Dir.glob($controller_files) do |item|
+	Dir.foreach($controller_files) do |item|
 		next if item == '.' or item == '..'
-		# clear global variables
-		$cur_method = Method_class.new("empty_class")
-		#$method_map.clear
-	
-		#read file
-		file = File.open(item, "r")
-		contents = file.read
-	
-		#iterate over AST
-		ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-		
-		set_class(ast, true)
-		level = 0
-		traverse_ast(ast, level)
-	
+		if item.include?(".rb") == false
+			dir_name = "#{$controller_files}/#{item}/*.rb"
+			Dir.glob(dir_name) do |item1|
+				handle_single_file(item1, true)
+			end
+		else
+			fname = "#{$controller_files}/#{item}"
+			handle_single_file(fname, true)
+		end
 	end
 	
 	#iterate over all models
-	Dir.glob($model_files) do |item|
+	Dir.foreach($model_files) do |item|
 		next if item == '.' or item == '..'
-		# clear global variables
-		$cur_method = Method_class.new("empty_class")
-		#$method_map.clear
-	
-		#read file
-		file = File.open(item, "r")
-		contents = file.read
-		
-		#iterate over AST
-		ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-		
-		set_class(ast, false)
-		level = 0
-		traverse_ast(ast, level)
-	
+		if item.include?(".rb") == false
+			dir_name = "#{$model_files}/#{item}/*.rb"
+			Dir.glob(dir_name) do |item1|
+				handle_single_file(item1, false)
+			end
+		else
+			fname = "#{$model_files}/#{item}"
+			handle_single_file(fname, false)
+		end
 	end
-
 	
 	read_dynamic_typing_info
 	resolve_upper_class
@@ -113,93 +159,71 @@ end
 def read_ruby_files_with_template(application_dir, template_name)
 	$app_dir = application_dir
 	
-	$controller_files = "#{$app_dir}/#{template_name}-demo/controllers/*.rb"
-	$model_files = "#{$app_dir}/#{template_name}-demo/models/*.rb"
+	#read demo
+	$controller_files = "#{$app_dir}/#{template_name}-demo/controllers/"
+	$model_files = "#{$app_dir}/#{template_name}-demo/models/"
 	$log_files = "#{$app_dir}/logs/*.log"
 	$table_file = "#{$app_dir}/table_name.txt"
 
 	read_table_names($table_file)
 	read_key_words
 
-	Dir.glob($controller_files) do |item|
+	Dir.foreach($controller_files) do |item|
 		next if item == '.' or item == '..'
-		# clear global variables
-		$cur_method = Method_class.new("empty_class")
-		#$method_map.clear
-	
-		#read file
-		file = File.open(item, "r")
-		contents = file.read
-	
-		#iterate over AST
-		ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-		
-		set_class(ast, true)
-		level = 0
-		traverse_ast(ast, level)
-	
+		if item.include?(".rb") == false
+			dir_name = "#{$controller_files}/#{item}/*.rb"
+			Dir.glob(dir_name) do |item1|
+				handle_single_file(item1, true)
+			end
+		else
+			fname = "#{$controller_files}/#{item}"
+			handle_single_file(fname, true)
+		end
 	end
 	
 	#iterate over all models
-	Dir.glob($model_files) do |item|
+	Dir.foreach($model_files) do |item|
 		next if item == '.' or item == '..'
-		# clear global variables
-		$cur_method = Method_class.new("empty_class")
-		#$method_map.clear
-	
-		#read file
-		file = File.open(item, "r")
-		contents = file.read
-		
-		#iterate over AST
-		ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-		
-		set_class(ast, false)
-		level = 0
-		traverse_ast(ast, level)
-	
+		if item.include?(".rb") == false
+			dir_name = "#{$model_files}/#{item}/*.rb"
+			Dir.glob(dir_name) do |item1|
+				handle_single_file(item1, false)
+			end
+		else
+			fname = "#{$model_files}/#{item}"
+			handle_single_file(fname, false)
+		end
 	end
 
-	$controller_files = "#{$app_dir}/#{template_name}/controllers/*.rb"
-	$model_files = "#{$app_dir}/#{template_name}/models/*.rb"
+	#read template
+	$controller_files = "#{$app_dir}/#{template_name}/controllers/"
+	$model_files = "#{$app_dir}/#{template_name}/models/"
 
-	Dir.glob($controller_files) do |item|
+	Dir.foreach($controller_files) do |item|
 		next if item == '.' or item == '..'
-		# clear global variables
-		$cur_method = Method_class.new("empty_class")
-		#$method_map.clear
-	
-		#read file
-		file = File.open(item, "r")
-		contents = file.read
-	
-		#iterate over AST
-		ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-		
-		set_class_with_template(ast, true)
-		level = 0
-		traverse_ast(ast, level)
-	
+		if item.include?(".rb") == false
+			dir_name = "#{$controller_files}/#{item}/*.rb"
+			Dir.glob(dir_name) do |item1|
+				handle_single_file(item1, true)
+			end
+		else
+			fname = "#{$controller_files}/#{item}"
+			handle_single_file(fname, true)
+		end
 	end
 	
 	#iterate over all models
-	Dir.glob($model_files) do |item|
+	Dir.foreach($model_files) do |item|
 		next if item == '.' or item == '..'
-		# clear global variables
-		$cur_method = Method_class.new("empty_class")
-		#$method_map.clear
-	
-		#read file
-		file = File.open(item, "r")
-		contents = file.read
-		
-		#iterate over AST
-		ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-		
-		set_class_with_template(ast, false)
-		level = 0
-		traverse_ast(ast, level)
-	
+		if item.include?(".rb") == false
+			dir_name = "#{$model_files}/#{item}/*.rb"
+			Dir.glob(dir_name) do |item1|
+				handle_single_file(item1, false)
+			end
+		else
+			fname = "#{$model_files}/#{item}"
+			handle_single_file(fname, false)
+		end
 	end
 
 end

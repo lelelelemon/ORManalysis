@@ -101,36 +101,10 @@ def get_mvc_name(filename)
 	return n
 end
 
-def set_class(ast, is_controller)
-	class_node = get_class_node(ast)
-	class_name = get_left_most_leaf(class_node).source.to_s
-	if is_controller
-		$cur_class = Controller_class.new(class_name)
-	else
-		$cur_class = Model_class.new(class_name)
-	end
-	if class_node.children[1].type.to_s == "const_path_ref" or ast.children[0].children[1].type.to_s  == "var_ref"
-		$cur_class.setUpperClass(class_node.children[1].source.to_s)
-		#puts "class #{class_name} < #{$cur_class.getUpperClass}"
-	end
-	$class_map[class_name] = $cur_class
-end
-
-def set_class_with_template(ast, is_controller)
-	module_node = get_module_node(ast)
-	class_node = get_class_node(ast)
-	module_name = get_left_most_leaf(module_node).source.to_s
-	class_name = get_left_most_leaf(class_node).source.to_s
-	if is_controller
-		$cur_class = Controller_class.new("#{module_name}::#{class_name}")
-	else
-		$cur_class = Model_class.new("#{module_name}::#{class_name}")
-	end
-	if class_node.children[1].type.to_s == "const_path_ref" or class_node.children[1].type.to_s  == "var_ref"
-		$cur_class.setUpperClass(class_node.children[1].source.to_s)
-		#puts "class #{class_name} < #{$cur_class.getUpperClass}"
-	end
-	$class_map["#{module_name}::#{class_name}"] = $cur_class
+def remove_module_info(name)
+	i = name.rindex(':')
+	n = name[i+1..name.length-1]
+	return n
 end
 
 def get_module_node(astnode)
@@ -157,6 +131,16 @@ def get_class_node(astnode)
 			end
 		end
 		return nil
+	end
+end
+
+def get_class_list(astnode, class_list)
+	if astnode.type.to_s == "class"
+		class_list.push(astnode)
+	else
+		astnode.children.each do |child|
+			get_class_list(child, class_list)
+		end
 	end
 end
 
