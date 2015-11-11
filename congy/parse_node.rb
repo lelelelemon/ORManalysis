@@ -55,11 +55,24 @@ def parse_attrib(astnode)
 					end
 				end
 			end
-			last_child = astnode.children[1].children[astnode.children[1].children.length-1]
-			if last_child.source.include?(":on =>")
+			#TODO: handle before_validation do block
+			on_child = nil
+			astnode.children.each do |achild|
+				if achild.source.include?(":on =>")
+					on_child = achild
+				end
+			end
+			if on_child == nil
+				astnode.children[1].children.each do |achild|
+					if achild.source.include?(":on =>")
+						on_child = achild
+					end
+				end
+			end
+			if on_child != nil
 				#only one [:on]
-				if last_child.children[0].type.to_s == "assoc" and last_child.children[0].children[1].type.to_s == "symbol_literal"
-					on_method = get_left_most_leaf(last_child.children[0].children[1]).source.to_s
+				if on_child.children[0].type.to_s == "assoc" and on_child.children[0].children[1].type.to_s == "symbol_literal"
+					on_method = get_left_most_leaf(on_child.children[0].children[1]).source.to_s
 					if on_method == "create"
 						temp_method = nil
 						if $cur_class.getMethod("new") == nil

@@ -1,5 +1,5 @@
-def read_dynamic_typing_info
-	Dir.glob('/home/congy/ruby_source/yard/benchmarks/logs/*.log') do |item|
+def read_dynamic_typing_info(filepath)
+	Dir.glob('/*.log') do |item|
 		next if item == '.' or item == '..'
 		class_name = get_mvc_name(item)
 		if $class_map.has_key?(class_name) == false

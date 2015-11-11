@@ -135,9 +135,10 @@ def trace_function(start_class, start_function, params, returnv, level)
 end
 
 #iterate over all controllers
-$app_dir = "./"
+$app_dir = "./lobsters"
 $controller_files = ""
 $model_files = ""
+$log_files = ""
 
 def read_ruby_files(application_dir=nil)
 	read_table_names
@@ -148,6 +149,7 @@ def read_ruby_files(application_dir=nil)
 	end
 	$controller_files = "#{$app_dir}/controllers/*.rb"
 	$model_files = "#{$app_dir}/models/*.rb"
+	$log_files = "#{$app_dir}/logs/*.log"
 	
 	Dir.glob($controller_files) do |item|
 		next if item == '.' or item == '..'
@@ -188,7 +190,7 @@ def read_ruby_files(application_dir=nil)
 	
 	end
 	
-	read_dynamic_typing_info
+	read_dynamic_typing_info($log_files)
 	resolve_upper_class
 	retrieve_func_calls
 end
@@ -235,7 +237,7 @@ opt_parser = OptionParser.new do |opt|
    	options[:xml] = true 
   end
 
-	opt.on("-d","--dir DIR",String,"the application directory, for example, -d /home/congy/lobsters/app, by default it is ./, where the controllers/models of lobsters application is located") do |dir|
+	opt.on("-d","--dir DIR",String,"the application directory, for example, -d /home/congy/lobsters/app, by default it is ./losters, where the controllers/models/logs of lobsters application is located") do |dir|
    	options[:dir] = dir
   end
 

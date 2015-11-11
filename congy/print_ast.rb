@@ -15,7 +15,7 @@ PATH_ORDER = [
 ]
 
 
-file = File.open("models/story.rb", "r")
+file = File.open("models/comment.rb", "r")
 contents = file.read
 ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 
