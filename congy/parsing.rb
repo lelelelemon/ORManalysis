@@ -139,18 +139,21 @@ $app_dir = "./lobsters"
 $controller_files = ""
 $model_files = ""
 $log_files = ""
+$table_file = ""
 
 def read_ruby_files(application_dir=nil)
-	read_table_names
-	read_key_words
-
+	
 	if application_dir != nil
 		$app_dir = application_dir
 	end
 	$controller_files = "#{$app_dir}/controllers/*.rb"
 	$model_files = "#{$app_dir}/models/*.rb"
 	$log_files = "#{$app_dir}/logs/*.log"
+	$table_file = "#{$app_dir}/table_name.txt"
 	
+	read_table_names($table_file)
+	read_key_words
+
 	Dir.glob($controller_files) do |item|
 		next if item == '.' or item == '..'
 		# clear global variables
@@ -189,8 +192,9 @@ def read_ruby_files(application_dir=nil)
 		traverse_ast(ast, level)
 	
 	end
+
 	
-	read_dynamic_typing_info($log_files)
+	read_dynamic_typing_info
 	resolve_upper_class
 	retrieve_func_calls
 end

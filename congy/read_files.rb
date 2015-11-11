@@ -1,5 +1,5 @@
-def read_dynamic_typing_info(filepath)
-	Dir.glob('/*.log') do |item|
+def read_dynamic_typing_info
+	Dir.glob($log_files) do |item|
 		next if item == '.' or item == '..'
 		class_name = get_mvc_name(item)
 		if $class_map.has_key?(class_name) == false
@@ -22,8 +22,8 @@ def read_dynamic_typing_info(filepath)
 end
 
 #read table name list 
-def read_table_names
-	file_table = File.open("table_name.txt")
+def read_table_names(filepath)
+	file_table = File.open(filepath)
 	file_table.each do |line|
 		$table_names = $table_names.push(line.chomp)
 	end
@@ -34,7 +34,7 @@ def read_table_names
 			return false
 		end
 	end
-	#puts "Tables = #{$table_names}"
+	puts "Tables = #{$table_names}"
 end
 
 #read keywords list

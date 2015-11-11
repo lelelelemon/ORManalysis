@@ -96,7 +96,7 @@ end
 
 def get_mvc_name(filename)
 	i = filename.rindex('/')
-	j = filename.index('.')
+	j = filename.rindex('.')
 	n = filename[i+1..j-1]
 	return n
 end
