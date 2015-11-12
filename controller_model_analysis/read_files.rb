@@ -150,7 +150,9 @@ def read_ruby_files(application_dir=nil)
 		end
 	end
 	
-	read_dynamic_typing_info
+	if $type_inference == false
+		read_dynamic_typing_info
+	end
 	resolve_upper_class
 	retrieve_func_calls
 end
@@ -226,4 +228,9 @@ def read_ruby_files_with_template(application_dir, template_name)
 		end
 	end
 
+	if $type_inference == false
+		read_dynamic_typing_info
+	end
+	resolve_upper_class
+	retrieve_func_calls
 end

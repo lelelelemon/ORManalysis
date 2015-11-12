@@ -141,6 +141,7 @@ $model_files = ""
 $log_files = ""
 $table_file = ""
 
+$type_inference = false
 
 def print_classes(class_name=nil)
 	if class_name == nil
@@ -191,6 +192,10 @@ opt_parser = OptionParser.new do |opt|
 		options[:template] = tplt
 	end
 
+	opt.on("-i", "--only-type-inference","Only do type inference, and search method by name upon function call.","Using this option the script may not be able to resolve every function call, but no need for dynamic type logs.") do |inference|
+		options[:inference] = true
+	end
+
   opt.on("-h","--help","help") do
 		options[:help] = true
     puts opt_parser
@@ -201,6 +206,10 @@ opt_parser.parse!
 
 if options[:help]
 	exit
+end
+
+if options[:inference] == true
+	$type_inference = true
 end
 
 if options[:dir] != nil
