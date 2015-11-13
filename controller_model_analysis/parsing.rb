@@ -102,6 +102,14 @@ def trace_function(start_class, start_function, params, returnv, level)
 	class_handler = $class_map[start_class]
 	function_handler = class_handler.getMethods[start_function]
 	if function_handler == nil
+		if is_transaction_function(start_function)
+			if start_function.include?("begin")
+				puts "#{blank}======transaction begin====="
+			else
+				puts "#{blank}======transaction end====="
+			end
+		end
+		#puts "function #{start_class}.#{start_function} cannot be found"
 		return 
 	end
 	puts "#{blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
@@ -124,9 +132,10 @@ def trace_function(start_class, start_function, params, returnv, level)
 			if caller_class == nil
 				caller_class = call.getTableName
 			end
-			puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
+
 			if trigger_save?(call)
-				
+				#puts "#{blank}=====transaction begin====="
+				puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
 				if caller_class != nil
 					$class_map[caller_class].getSave.each do |save_action|
 						temp_name = "#{caller_class}.#{save_action.getFuncName}"
@@ -136,11 +145,17 @@ def trace_function(start_class, start_function, params, returnv, level)
 						end
 					end
 				end
+				#puts "#{blank}=====transaction end====="
+			else
+				puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
 			end
+
 		elsif callerv != nil
 			temp_name = "#{callerv_name}.#{call.getFuncName}"
 			if $non_repeat_list.include?(temp_name) == false
-				$non_repeat_list.push(temp_name)
+				if is_repeatable_function(call.getFuncName)==false
+					$non_repeat_list.push(temp_name)
+				end
 				trace_function(callerv_name, call.getFuncName, params, pass_returnv, level+1)
 			end
 		end

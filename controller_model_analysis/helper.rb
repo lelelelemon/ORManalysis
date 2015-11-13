@@ -14,6 +14,22 @@ def is_ast_node(node)
 	end
 end
 
+def is_transaction_function(fname)
+	if ["transaction_begin","transaction_end"].include?(fname)
+		return true
+	else
+		return false
+	end
+end
+
+def is_repeatable_function(fname)
+	if is_transaction_function(fname)
+		return true
+	else
+		return false
+	end
+end
+
 def searchTableName(name)
 	_name = name
 	if name.index('.') != nil

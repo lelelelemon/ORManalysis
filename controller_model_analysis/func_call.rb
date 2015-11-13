@@ -117,7 +117,7 @@ class Function_call
 				end
 			end
 			if caller_class == nil
-				caller_class = search_distinct_func_name(calling_func)
+				caller_class = search_distinct_func_name(@func_name)
 			end
 			#puts "#{calling_func_class}.#{calling_func} issues call #{@obj_name} [of class #{caller_class}] . #{@func_name}"
 			#puts ""

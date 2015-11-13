@@ -32,8 +32,24 @@ def traverse_ast(astnode, level)
 		if $cur_position == "INCONDITION" and $cur_funccall != nil
 			$cur_funccall.setReturnValue("true")
 		end
-		astnode.children.each do |child|
-			traverse_ast(child, level+1)
+		
+		if temp_funccall != nil and temp_funccall.getFuncName == "transaction"
+			#puts "#{$cur_class.getName}.#{$cur_method.getName} calls transaction!"
+			astnode.children.each do |child|
+				if child.type.to_s == "do_block"
+					fcall1 = Function_call.new("self", "transaction_begin")
+					$cur_method.getCalls.push(fcall1)	
+					traverse_ast(child, level+1)
+					fcall2 = Function_call.new("self", "transaction_end")
+					$cur_method.getCalls.push(fcall2)
+				else
+					traverse_ast(child, level+1)
+				end
+			end
+		else
+			astnode.children.each do |child|
+				traverse_ast(child, level+1)
+			end
 		end
 		return temp_funccall
 	elsif (astnode.type.to_s == "assign" or astnode.type.to_s == "opassign")

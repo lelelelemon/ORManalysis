@@ -198,7 +198,7 @@ def parse_method_call(astnode, method)
 	elsif $cur_method != nil and astnode.children[0].type.to_s == "ident"
 		fcall = Function_call.new("self", astnode.children[0].source)
 		method.getCalls.push(fcall)
-
+		$cur_funccall = fcall
 	elsif astnode.type.to_s == "command"
 		parse_attrib(astnode)
 		$cur_funccall  = nil
