@@ -79,7 +79,6 @@ def read_key_words
 end
 
 def handle_single_file(item, is_controller)
-	$cur_method = Method_class.new("empty_class")
 	#puts "filename = #{item}"
 	file = File.open(item, "r")
 	contents = file.read

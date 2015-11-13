@@ -25,7 +25,7 @@ PATH_ORDER = [
 $cur_funccall = nil
 $cur_position = ""
 
-$cur_method = Method_class.new("empty_class")
+$cur_method = nil
 
 $cur_class = Class_class.new("empty_class")
 $class_map = Hash.new

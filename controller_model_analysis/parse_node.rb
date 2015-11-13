@@ -142,7 +142,8 @@ def parse_method_call(astnode, method)
 	#	@node = @node.children[0]
 	#end
 	@node = astnode.children[0]
-	if astnode.children[1] != nil and astnode.children[1].type.to_s == "ident"
+	#function call: caller.func(params)
+	if method != nil and astnode.children[1] != nil and astnode.children[1].type.to_s == "ident"
 
 		@node2 = astnode.children[1]
 		fcall = Function_call.new(@node.source.tr("\n",""), @node2.source)
@@ -172,9 +173,11 @@ def parse_method_call(astnode, method)
 		end	
 		method.getCalls.push(fcall)
 		$cur_funccall = fcall
-	elsif (astnode.type.to_s == "call" or astnode.type.to_s == "vcall") and astnode.children[0].type.to_s == "ident"
+	
+	elsif $cur_method != nil and astnode.children[0].type.to_s == "ident"
 		fcall = Function_call.new("self", astnode.children[0].source)
 		method.getCalls.push(fcall)
+
 	elsif astnode.type.to_s == "command"
 		parse_attrib(astnode)
 		$cur_funccall  = nil

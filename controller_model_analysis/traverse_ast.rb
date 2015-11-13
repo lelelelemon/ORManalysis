@@ -14,6 +14,7 @@ def traverse_ast(astnode, level)
 		astnode.children.each do |child|
 			traverse_ast(child, level+1)
 		end
+		$cur_method = nil
 	elsif astnode.class.to_s == "YARD::Parser::Ruby::ConditionNode"
 		i = 0
 		astnode.children.each do |child|
@@ -36,24 +37,26 @@ def traverse_ast(astnode, level)
 		end
 		return temp_funccall
 	elsif (astnode.type.to_s == "assign" or astnode.type.to_s == "opassign")
-		assigned_var = parse_assign(astnode, $cur_method)
-		astnode.children.each do |child|
-			if child.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
-				temp_funccall = traverse_ast(child, level+1)
-				if temp_funccall != nil
-					temp_funccall.setReturnValue(assigned_var)			
-					#if it is a new method, then we know the class type of the variable. This is kind of type inference
-					if ["new", "new!"].include?temp_funccall.getFuncName
-						$cur_class.addMethodVar($cur_method.getName, assigned_var, temp_funccall.getObjName)
+		if $cur_method != nil
+			assigned_var = parse_assign(astnode, $cur_method)
+			astnode.children.each do |child|
+				if child.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
+					temp_funccall = traverse_ast(child, level+1)
+					if temp_funccall != nil
+						temp_funccall.setReturnValue(assigned_var)			
+						#if it is a new method, then we know the class type of the variable. This is kind of type inference
+						if ["new", "new!"].include?temp_funccall.getFuncName
+							$cur_class.addMethodVar($cur_method.getName, assigned_var, temp_funccall.getObjName)
+						end
+						#if temp_funccall.isQuery and searchTableName(temp_funccall.getObjName) != nil
+						if searchTableName(temp_funccall.getObjName) != nil
+							#puts "NEW method: (#{$cur_class.getName}.#{$cur_method.getName}) #{assigned_var} = (#{temp_funccall.getObjName}) =====> #{searchTableName(temp_funccall.getObjName)} . #{temp_funccall.getFuncName}"
+							$cur_class.addMethodVar($cur_method.getName, assigned_var, searchTableName(temp_funccall.getObjName))
+						end
 					end
-					#if temp_funccall.isQuery and searchTableName(temp_funccall.getObjName) != nil
-					if searchTableName(temp_funccall.getObjName) != nil
-						#puts "NEW method: (#{$cur_class.getName}.#{$cur_method.getName}) #{assigned_var} = (#{temp_funccall.getObjName}) =====> #{searchTableName(temp_funccall.getObjName)} . #{temp_funccall.getFuncName}"
-						$cur_class.addMethodVar($cur_method.getName, assigned_var, searchTableName(temp_funccall.getObjName))
-					end
+				else
+					traverse_ast(child, level+1)
 				end
-			else
-				traverse_ast(child, level+1)
 			end
 		end
 	else
