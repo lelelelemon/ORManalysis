@@ -48,13 +48,30 @@ def parse_attrib(astnode)
 			end
 		when "before_validation"
 			method_list = Array.new
-			if astnode.children[1].type.to_s == "list"
-				astnode.children[1].children.each do |child|
-					if child.type.to_s == "symbol_literal"
-						method_list.push(get_left_most_leaf(child).source.to_s)
+			#process_list
+			list_child = nil
+			astnode.children.each do |child|
+				if child.type.to_s == "list" and child.source.to_s.include?("=>")==false
+					list_child = child
+				end
+			end
+			if list_child != nil
+				if astnode.children[1].type.to_s == "list"
+					astnode.children[1].children.each do |child|
+						if child.type.to_s == "symbol_literal"
+							method_list.push(get_left_most_leaf(child).source.to_s)
+						end
 					end
 				end
 			end
+			#process block
+			block_child = nil
+			astnode.children.each do |child|
+				if child.type.to_s == "do_block"
+					block_child = child
+				end
+			end
+
 			#TODO: handle before_validation do block
 			on_child = nil
 			astnode.children.each do |achild|
@@ -87,14 +104,19 @@ def parse_attrib(astnode)
 						$cur_class.addMethod(temp_method)
 					end
 				end
-			else
-				temp_method = Method_class.new("valid?")
-				method_list.each do |each_method|
-					fcall = Function_call.new("self", each_method)
-					temp_method.getCalls.push(fcall)
-				end
-				$cur_class.addMethod(temp_method)
 			end
+			
+			#before validation is called for every valid?
+			temp_method = Method_class.new("valid?")
+			method_list.each do |each_method|
+				fcall = Function_call.new("self", each_method)
+				temp_method.getCalls.push(fcall)
+			end
+			$cur_class.addMethod(temp_method)
+			if block_child != nil
+				$cur_method = temp_method
+			end
+			
 		when "after_create","before_create"
 			temp_method = nil
 			if $cur_class.getMethod("new") == nil
@@ -147,7 +169,6 @@ def parse_method_call(astnode, method)
 
 		@node2 = astnode.children[1]
 		fcall = Function_call.new(@node.source.tr("\n",""), @node2.source)
-		
 		#if @node.type.to_s == "const" and check_table_name(@node.source.to_s)
 		if check_method_keyword(@node2.source) then
 			fcall.setTableName(searchSelf(fcall.getObjName, $cur_class.getName))
