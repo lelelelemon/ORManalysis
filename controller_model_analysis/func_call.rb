@@ -1,6 +1,6 @@
 #class Function_param
 #class Function_call
-#class Function_vars
+#class Method_vars
 
 class Function_param
 	def initialize(assign_str)
@@ -36,8 +36,19 @@ class Function_call
 		@obj_name = obj
 		@func_name = funcname
 		@is_query = false
+		@query_type = ""
+		@table_name = nil
 		@params = Array.new
 		@returnv = ""
+	end
+	def setQueryType(type)
+		@query_type = type
+	end
+	def getQueryType
+		@query_type
+	end
+	def getTableName
+		@table_name
 	end
 	def setReturnValue(rv)
 		@returnv = rv
@@ -47,6 +58,12 @@ class Function_call
 	end
 	def setIsQuery
 		@is_query = true
+		if searchTableName(@obj_name) != nil
+			@table_name = searchTableName(@obj_name)
+		end
+	end
+	def setTableName(tbl_name)
+		@table_name = tbl_name
 	end
 	def isQuery
 		@is_query
@@ -73,8 +90,8 @@ class Function_call
 			if @obj_name == "self"
 				caller_class = calling_func_class
 			end
-			if $class_map[calling_func_class].getFuncVarMap.has_key?(calling_func)
-				func_var = $class_map[calling_func_class].getFuncVarMap[calling_func].get_var_map
+			if $class_map[calling_func_class].getMethodVarMap.has_key?(calling_func)
+				func_var = $class_map[calling_func_class].getMethodVarMap[calling_func].get_var_map
 				if func_var != nil and func_var.has_key?(@obj_name)
 					caller_class = func_var[@obj_name]
 				end
@@ -82,8 +99,8 @@ class Function_call
 			if caller_class == nil
 				derived_classes = search_derived_class($class_map[calling_func_class])
 				derived_classes.each do |derived_class|
-					if derived_class.getFuncVarMap.has_key?(calling_func)
-						func_var = derived_class.getFuncVarMap[calling_func].get_var_map
+					if derived_class.getMethodVarMap.has_key?(calling_func)
+						func_var = derived_class.getMethodVarMap[calling_func].get_var_map
 						if func_var != nil and func_var.has_key?(@obj_name)
 							caller_class = func_var[@obj_name]
 							break
@@ -171,7 +188,7 @@ class Function_call
 	end
 end
 
-class Function_vars
+class Method_vars
 	def initialize(f_name)
 		@var_map = Hash.new
 		@name = f_name
@@ -180,7 +197,9 @@ class Function_vars
 		@name
 	end
 	def insert_var(v_name, v_class)
-		@var_map[v_name] = v_class
+		if @var_map.has_key?(v_name) == false
+			@var_map[v_name] = v_class
+		end
 	end	
 	def search_var(v_name)
 		if @var_map.has_key?(v_name)

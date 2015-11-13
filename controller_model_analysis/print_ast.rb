@@ -15,7 +15,7 @@ PATH_ORDER = [
 ]
 
 
-file = File.open("./publify//models//article/factory.rb", "r")
+file = File.open("./lobsters/models/story.rb", "r")
 contents = file.read
 ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 

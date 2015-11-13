@@ -8,7 +8,6 @@ def traverse_ast(astnode, level)
 		if @method_name == "self"
 			@method_name = astnode.children[2].source.to_s
 		end
-		#$method_map[$cur_method.getName] = $cur_method
 		$cur_method = Method_class.new(@method_name)
 		$cur_class.addMethod($cur_method)
 		#puts "def method_name = #{@method_name}"
@@ -45,8 +44,12 @@ def traverse_ast(astnode, level)
 					temp_funccall.setReturnValue(assigned_var)			
 					#if it is a new method, then we know the class type of the variable. This is kind of type inference
 					if ["new", "new!"].include?temp_funccall.getFuncName
-						#puts "NEW method: #{assigned_var} = #{temp_funccall.getObjName} . new"
-						$cur_class.addFuncVar($cur_method.getName, assigned_var, temp_funccall.getObjName)
+						$cur_class.addMethodVar($cur_method.getName, assigned_var, temp_funccall.getObjName)
+					end
+					#if temp_funccall.isQuery and searchTableName(temp_funccall.getObjName) != nil
+					if searchTableName(temp_funccall.getObjName) != nil
+						#puts "NEW method: (#{$cur_class.getName}.#{$cur_method.getName}) #{assigned_var} = (#{temp_funccall.getObjName}) =====> #{searchTableName(temp_funccall.getObjName)} . #{temp_funccall.getFuncName}"
+						$cur_class.addMethodVar($cur_method.getName, assigned_var, searchTableName(temp_funccall.getObjName))
 					end
 				end
 			else

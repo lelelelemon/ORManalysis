@@ -25,7 +25,7 @@ class Class_class
 		@variable = Array.new
 		@upper_class = ""
 		@upper_class_instance = nil
-		@func_var_map = Hash.new
+		@method_var_map = Hash.new
 		@before_filter = Array.new
 		@save_actions = Array.new
 		#@after_create = Array.new
@@ -75,17 +75,17 @@ class Class_class
 	#end
 	
 	#mappings of function name ane variable type list
-	def addFuncVar(func_name, var_name, class_name)
-		if @func_var_map.has_key?(func_name)
-			@func_var_map[func_name].insert_var(var_name, class_name)
+	def addMethodVar(func_name, var_name, class_name)
+		if @method_var_map.has_key?(func_name)
+			@method_var_map[func_name].insert_var(var_name, class_name)
 		else
-			temp_f = Function_vars.new(func_name)
+			temp_f = Method_vars.new(func_name)
 			temp_f.insert_var(var_name, class_name)
-			@func_var_map[func_name] = temp_f
+			@method_var_map[func_name] = temp_f
 		end
 	end
-	def getFuncVarMap
-		@func_var_map
+	def getMethodVarMap
+		@method_var_map
 	end
 		
 	def addBeforeFilter(filter_name)
@@ -97,7 +97,7 @@ class Class_class
 	def print_var_types
 		puts "######## BEGIN ########"
 		puts "Class: #{@name}"
-		@func_var_map.each do |key2, value2|
+		@method_var_map.each do |key2, value2|
 			print "function #{value2.get_name} : "
 			value2.get_var_map.each do |key3, value3|
 				print "#{key3}(#{value3}), "

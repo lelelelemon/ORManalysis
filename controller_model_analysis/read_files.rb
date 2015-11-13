@@ -22,7 +22,7 @@ def read_dynamic_typing_info
 			if c_array.length > 1
 				var_name = c_array[1].split(" -> ")[0].chomp
 				class_name = c_array[1].split(" -> ")[1].chomp
-				class_handler.addFuncVar(func_name, var_name, class_name)	
+				class_handler.addMethodVar(func_name, var_name, class_name)	
 			#elsif
 			#	puts "FUNCTION #{func_name} DOESN'T HAVE VARS"
 			end
@@ -73,14 +73,8 @@ end
 #read keywords list
 def read_key_words
 	File.open("keywords.txt").each do |line|
-		$key_words = $key_words.push(line.chomp)
-	end
-	def check_method_keyword(varname)
-		if $key_words.include?(varname) then
-			return true
-		else
-			return false
-		end
+		line_array = line.chomp.split(' ')
+		$key_words[line_array[0]] = line_array[1]
 	end
 end
 

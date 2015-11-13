@@ -149,7 +149,20 @@ def parse_method_call(astnode, method)
 		
 		#if @node.type.to_s == "const" and check_table_name(@node.source.to_s)
 		if check_method_keyword(@node2.source) then
+			fcall.setTableName(searchSelf(fcall.getObjName, $cur_class.getName))
 			fcall.setIsQuery
+			fcall.setQueryType(check_method_keyword(@node2.source))
+
+			if @node2.source == "execute"
+				query = astnode.children[2].source
+				if query.include?("UPDATE")
+					fcall.setQueryType("UPDATE")
+				elsif query.include?("SELECT")
+					fcall.setQueryType("SELECT")
+				elsif query.include?("INSERT")
+					fcall.setQueryType("INSERT")
+				end
+			end
 			#	puts "++ CALL DB Queries: #{@node.source} . #{@node2.source}"
 			#	translate_query(@node, @node2, astnode)
 		end

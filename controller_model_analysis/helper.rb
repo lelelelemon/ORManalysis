@@ -14,6 +14,26 @@ def is_ast_node(node)
 	end
 end
 
+def searchTableName(name)
+	_name = name
+	if name.index('.') != nil
+		_name = name[0..(name.index('.')-1)]
+	end
+	if $table_names.include?(_name)
+		return _name
+	end
+	return nil
+end
+def searchSelf(name, class_name)
+	if name.index('.') != nil and name[0..(name.index('.')-1)] == "self"
+		return class_name
+	end
+	if name == "self"
+		return class_name
+	end
+	return nil
+end
+
 def searchVarRef(node)
 	if is_ast_node(node)==false
 		return nil
@@ -52,6 +72,20 @@ def searchARef(node)
 		return nil
 	end
 	return nil
+end
+
+def check_method_keyword(k)
+	return $key_words[k]
+end
+
+def trigger_save?(call)
+	if ["INSERT", "UPDATE"].include?call.getQueryType	
+		return true
+	end
+	if ["save", "save!"].include?call.getFuncName
+		return true
+	end
+	return false
 end
 
 #read variable class list

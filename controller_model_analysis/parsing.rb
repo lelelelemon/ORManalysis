@@ -34,7 +34,7 @@ $class_map = Hash.new
 $table_names = Array.new
 
 #read keywords list
-$key_words = Array.new
+$key_words = Hash.new
 
 #when issuing a function call, find the caller's class
 def retrieve_func_calls
@@ -93,17 +93,18 @@ def adjust_calls
 	end
 end
 
+$non_repeat_list = Array.new
 def trace_function(start_class, start_function, params, returnv, level)
-	@blank = ""
+	blank = ""
 	for i in (0...level)
-		@blank = @blank + "   "
+		blank = blank + "\t"
 	end
 	class_handler = $class_map[start_class]
 	function_handler = class_handler.getMethods[start_function]
 	if function_handler == nil
 		return 
 	end
-	puts "#{@blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
+	puts "#{blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
 	function_handler.getCalls.each do |call|
 		callerv_name = call.findCaller(start_class, start_function)
 		callerv = $class_map[callerv_name]
@@ -116,20 +117,32 @@ def trace_function(start_class, start_function, params, returnv, level)
 		end
 		pass_returnv = call.getReturnValue
 		if call.isQuery
-			puts "#{@blank}level #{level}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}}"
-			if ["save", "save!"].include?call.getFuncName
-				if class_handler.getFuncVarMap[start_function]!= nil
-					caller_class = class_handler.getFuncVarMap[start_function].search_var(call.getObjName)
-					if caller_class != nil
-						#puts "save class: #{call.getObjName} (#{caller_class})"
-						$class_map[caller_class].getSave.each do |save_action|
+			caller_class = nil
+			if class_handler.getMethodVarMap[start_function] != nil
+				caller_class = class_handler.getMethodVarMap[start_function].search_var(call.getObjName)
+			end
+			if caller_class == nil
+				caller_class = call.getTableName
+			end
+			puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
+			if trigger_save?(call)
+				
+				if caller_class != nil
+					$class_map[caller_class].getSave.each do |save_action|
+						temp_name = "#{caller_class}.#{save_action.getFuncName}"
+						if $non_repeat_list.include?(temp_name) == false
+							$non_repeat_list.push(temp_name)
 							trace_function(caller_class, save_action.getFuncName, "", "", level+2)
 						end
 					end
 				end
 			end
 		elsif callerv != nil
-			trace_function(callerv_name, call.getFuncName, params, pass_returnv, level+1)
+			temp_name = "#{callerv_name}.#{call.getFuncName}"
+			if $non_repeat_list.include?(temp_name) == false
+				$non_repeat_list.push(temp_name)
+				trace_function(callerv_name, call.getFuncName, params, pass_returnv, level+1)
+			end
 		end
 	end	
 end
