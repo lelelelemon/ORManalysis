@@ -112,7 +112,16 @@ def trace_function(start_class, start_function, params, returnv, level)
 		#puts "function #{start_class}.#{start_function} cannot be found"
 		return 
 	end
+
+	#handles before_filter
+	before_filter_name = "#{start_class}.before_filter"
+	if $non_repeat_list.include?(before_filter_name) == false
+		$non_repeat_list.push(before_filter_name)
+		trace_function(start_class, "before_filter", "", "", level)
+	end
+	
 	puts "#{blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
+
 	function_handler.getCalls.each do |call|
 		callerv_name = call.findCaller(start_class, start_function)
 		callerv = $class_map[callerv_name]

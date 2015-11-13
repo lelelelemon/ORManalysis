@@ -15,7 +15,7 @@ PATH_ORDER = [
 ]
 
 
-file = File.open("./lobsters/models/keystore.rb", "r")
+file = File.open("./shoppe/shoppe-demo/controllers/products_controller.rb", "r")
 contents = file.read
 ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 

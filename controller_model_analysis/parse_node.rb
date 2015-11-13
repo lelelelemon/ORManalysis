@@ -38,6 +38,19 @@ def parse_attrib(astnode)
 				end
 			end
 		when "before_filter"
+			#process block
+			block_child = nil
+			astnode.children.each do |child|
+				if child.type.to_s == "do_block"
+					block_child = child
+				end
+			end
+			if block_child != nil
+				temp_method = Method_class.new("before_filter")
+				$cur_method = temp_method
+				$cur_class.addMethod(temp_method)
+			end
+	
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
 					if child.type.to_s == "symbol_literal"
@@ -164,6 +177,7 @@ def parse_method_call(astnode, method)
 	#	@node = @node.children[0]
 	#end
 	@node = astnode.children[0]
+
 	#function call: caller.func(params)
 	if method != nil and astnode.children[1] != nil and astnode.children[1].type.to_s == "ident"
 
@@ -195,11 +209,11 @@ def parse_method_call(astnode, method)
 		method.getCalls.push(fcall)
 		$cur_funccall = fcall
 	
-	elsif $cur_method != nil and astnode.children[0].type.to_s == "ident"
+	elsif method != nil and astnode.children[0].type.to_s == "ident"
 		fcall = Function_call.new("self", astnode.children[0].source)
 		method.getCalls.push(fcall)
 		$cur_funccall = fcall
-	elsif astnode.type.to_s == "command"
+	elsif astnode.type.to_s == "command" or (astnode.children[0].type.to_s == "ident" and in_key_words(astnode.children[0].source.to_s))
 		parse_attrib(astnode)
 		$cur_funccall  = nil
 	else

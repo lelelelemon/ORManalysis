@@ -30,6 +30,16 @@ def is_repeatable_function(fname)
 	end
 end
 
+def in_key_words(w)
+	if ["before_filter", "before_save", "before_validation",
+			"before_create",
+			"after_save", "after_validation", "after_create"].include?(w)
+		return true
+	else
+		return false
+	end
+end
+
 def searchTableName(name)
 	_name = name
 	if name.index('.') != nil
