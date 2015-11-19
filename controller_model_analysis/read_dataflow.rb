@@ -114,15 +114,31 @@ class Basic_block
 		@instructions = Array.new
 		@calls = Array.new
 		@index = index.to_i
+		@label_n = 0
 	end
 	def addInstr(instr)
 		@instructions.push(instr)
 	end
+	def getInstr
+		@instructions
+	end
 	def addOutgoings(node)
 		@outgoings.push(node)
 	end
+	def getOutgoings
+		@outgoings
+	end
+	def getIndex
+		@index
+	end
 	def addDatadeps(dep)
 		@datadeps.push(dep)
+	end
+	def setLableN(n)
+		@label_n = n
+	end
+	def getLabelN
+		@label_n
 	end
 	def searchDepLocally(instr, var=nil)
 		instr.getDeps.each do |dep|

@@ -232,3 +232,17 @@ def search_distinct_func_name(func_name)
 		return nil
 	end
 end
+
+def call_match_name(caller_name, funcname, f_handler)
+	f_handler.getCalls.each do |call|
+		if call.getObjName.include?(caller_name) and funcname == call.getFuncName
+				return call 
+		end
+	end
+	return nil
+end
+
+#Graphviz doesn't recognize special characters
+def simplify(name)
+	return name.delete('!').delete('?')
+end

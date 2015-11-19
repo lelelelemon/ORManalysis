@@ -10,6 +10,7 @@ load 'generate_xml.rb'
 load 'read_files.rb'
 load 'traverse_ast.rb'
 load 'read_dataflow.rb'
+load 'trace_flow.rb'
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',
@@ -225,7 +226,7 @@ opt_parser = OptionParser.new do |opt|
 		options[:class_name_for_type] = class_name
   end
 
-	opt.on("-t","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified","example: --trace CommentsController,create") do |trace_input|
+	opt.on("-r","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified","example: --trace CommentsController,create") do |trace_input|
 		options[:trace_input] = trace_input
   end
 
@@ -251,6 +252,10 @@ opt_parser = OptionParser.new do |opt|
 
 	opt.on("-s", "--print-instr [CLASS_NAME]",String,"Print instructions and CFG of all methods in the specified class") do |class_name|
 		options[:printinstr] = class_name
+	end
+
+	opt.on("-t", "--trace-dataflow CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name,function_name; print call graph and data flow to a file, use graphviz to visualize") do |trace_input|
+		options[:trace] = trace_input
 	end
 
   opt.on("-h","--help","help") do
@@ -320,6 +325,27 @@ if options[:trace_input] != nil
 	adjust_calls
 	level = 0
 	trace_function(start_class, start_function, "", "", level)
+end
+
+if options[:trace] != nil
+	if options[:read_flow] == nil or options[:read_flow] == false
+		if options[:dir] != nil
+			read_dataflow(options[:dir])
+		else
+			read_dataflow
+		end
+	end
+	start_class = options[:trace][0]
+	start_function = options[:trace][1]
+	adjust_calls
+	level = 0
+
+	graph_fname = "./#{start_class}_#{start_function}_graph.log"
+	$graph_file = File.open(graph_fname, "w");
+
+	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
+	trace_flow(start_class, start_function, "", "", level)
+	$graph_file.write("}")
 end
 
 if options[:xml] == true
