@@ -194,12 +194,23 @@ end
 def print_types(class_name=nil)
 	if class_name == nil
 		$class_map.each do |keyc, valuec|
-			valuec.print_types
+			valuec.print_var_types
 		end	
 	else
 		$class_map[class_name].print_var_types
 	end
 end
+
+def print_instructions(class_name=nil)
+if class_name == nil
+		$class_map.each do |keyc, valuec|
+			valuec.print_instructions
+		end	
+	else
+		$class_map[class_name].print_instructions
+	end
+end
+
 
 options = {}
 
@@ -234,6 +245,14 @@ opt_parser = OptionParser.new do |opt|
 		options[:inference] = true
 	end
 
+	opt.on("-f", "--read-flow","Read dataflow and control flow file") do |flow|
+		options[:readflow] = true
+	end
+
+	opt.on("-s", "--print-instr [CLASS_NAME]",String,"Print instructions and CFG of all methods in the specified class") do |class_name|
+		options[:printinstr] = class_name
+	end
+
   opt.on("-h","--help","help") do
 		options[:help] = true
     puts opt_parser
@@ -250,6 +269,7 @@ if options[:inference] == true
 	$type_inference = true
 end
 
+
 if options[:dir] != nil
 	puts "dir = #{options[:dir]}"
 	if options[:template] != nil
@@ -260,6 +280,15 @@ if options[:dir] != nil
 else
 	read_ruby_files
 end
+
+if options[:readflow] == true
+	if options[:dir] != nil
+		read_dataflow(options[:dir])
+	else
+		read_dataflow
+	end
+end
+
 
 if options[:class_name] != nil
 	if options[:class_name] == "all"
@@ -274,6 +303,14 @@ if options[:class_name_for_type] != nil
 		print_types
 	else
 		print_types(options[:class_name_for_type])
+	end
+end
+
+if options[:printinstr] != nil
+	if options[:printinstr] == "all"
+		print_instructions
+	else
+		print_instructions(options[:printinstr])
 	end
 end
 

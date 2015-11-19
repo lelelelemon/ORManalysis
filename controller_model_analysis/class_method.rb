@@ -19,6 +19,9 @@ class Method_class
 	def setCFG(cfg)
 		@cfg = cfg
 	end
+	def getCFG
+		@cfg
+	end
 end
 
 class Class_class
@@ -126,6 +129,17 @@ class Class_class
 			array.getCalls.each do |each_call|
 				print "\t "
 				each_call.print
+			end
+		end
+	end
+
+	def print_instructions
+		@methods.each do |key, array|
+			puts "SET METHOD: name = #{key}"
+			if array.getCFG != nil
+				array.getCFG.getBB.each do |bb|
+					bb.self_print
+				end
 			end
 		end
 	end

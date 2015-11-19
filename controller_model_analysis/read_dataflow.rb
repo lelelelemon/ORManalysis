@@ -208,20 +208,55 @@ def read_dataflow(application_dir=nil)
 	if application_dir != nil
 		$app_dir = application_dir
 	end
+
+	$dataflow_files = "#{$app_dir}/dataflow/controllers/*.log"
+
 	Dir.glob($dataflow_files) do |item|
 		next if item == '.' or item == '..'
-		class_name = ""
+		class_name = get_mvc_name2(item)
+		handle_single_dataflow_file(item, class_name)
+		$class_map[class_name].getMethods.each do |key, meth|
+			if meth.getCFG != nil
+				meth.getCFG.getBB.each do |bb|
+					bb.findCalls
+				end	
+			end
+		end
+	end
+
+	$dataflow_files = "#{$app_dir}/dataflow/models/*.log"
+
+	Dir.glob($dataflow_files) do |item|
+		next if item == '.' or item == '..'
+		class_name = get_mvc_name2(item)
+		handle_single_dataflow_file(item, class_name)
+		$class_map[class_name].getMethods.each do |key, meth|
+			if meth.getCFG != nil
+				meth.getCFG.getBB.each do |bb|
+					bb.findCalls
+				end
+			end	
+		end
 	end
 end
 
-def handle_single_dataflow_file(item)
+def find_method(class_name, method_name)
+	return ($class_map[class_name].getMethods)[method_name]	
+end
+
+def handle_single_dataflow_file(item, class_name)
 		file = File.open(item, "r")
 		file.each_line do |line|
 			if line.include?("SET IRMethod")
 				i = line.index(" = ")
-				func_name = line[i+3...line.length]
+				func_name = line[i+3...line.length-1]
 				$cur_cfg = CFG.new
-				$cfg_map[func_name] = $cur_cfg
+				#$cfg_map[func_name] = $cur_cfg
+				m = find_method(class_name, func_name)
+				m.setCFG($cur_cfg)
+
+			elsif line.include?("JRUBY")
+				nil
 			elsif line.include?("BB ")
 				$cur_bb = Basic_block.new(line.split(' ')[1].to_s)
 				$cur_cfg.addBB($cur_bb)

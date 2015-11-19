@@ -163,6 +163,15 @@ end
 
 def get_mvc_name2(filename)
 	i = filename.rindex('/')
+	j = filename.rindex('.')
+	n = filename[i+1..j-1]
+	n[0] = n[0].upcase
+	if n.include?('_')
+		k = n.index('_')
+		n[k+1] = n[k+1].upcase
+		n = n.delete('_')
+	end
+	return n
 end
 
 def remove_module_info(name)
