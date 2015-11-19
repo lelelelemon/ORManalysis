@@ -9,6 +9,7 @@ load 'parse_node.rb'
 load 'generate_xml.rb'
 load 'read_files.rb'
 load 'traverse_ast.rb'
+load 'read_dataflow.rb'
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',

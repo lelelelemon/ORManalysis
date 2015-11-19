@@ -161,6 +161,10 @@ def get_mvc_name(filename)
 	return n
 end
 
+def get_mvc_name2(filename)
+	i = filename.rindex('/')
+end
+
 def remove_module_info(name)
 	i = name.rindex(':')
 	n = name[i+1..name.length-1]

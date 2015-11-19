@@ -1,0 +1,112 @@
+JRUBY: Parse, file = ./app/models/invitation_request.rb
+SET IRMethod, name = verified_count
+BB 1
+	outgoing:3 2 
+	datadep:
+	instructions:
+BB 2
+	outgoing:3 
+	datadep:
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (InvitationRequest) 
+		 7: 
+		 8: %v_3->where %v_4[2.7,] %v_3[2.6,] 
+		 9: %v_5->count %v_5[2.8,] 
+		 10: RETURN %v_6[2.9,] 
+BB 3
+	outgoing:
+	datadep:
+	instructions:
+
+SET IRMethod, name = create_code
+BB 1
+	outgoing:6 2 
+	datadep:
+	instructions:
+BB 2
+	outgoing:3 
+	datadep:
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+BB 3
+	outgoing:5 4 
+	datadep:
+	instructions:
+		 0: %v_3->each 
+		 1: 
+BB 4
+	outgoing:5 
+	datadep:
+	instructions:
+		 0: 
+		 1: %v_5[4.0,] 
+BB 5
+	outgoing:6 
+	datadep:
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing:
+	datadep:
+	instructions:
+
+SET IRMethod, name = markeddown_memo
+BB 1
+	outgoing:3 2 
+	datadep:
+	instructions:
+BB 2
+	outgoing:3 
+	datadep:
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Markdowner) 
+		 7: %self->memo %self[2.0,] 
+		 8: %v_3->to_html %v_4[2.7,] %v_3[2.6,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing:
+	datadep:
+	instructions:
+
+SET IRMethod, name = send_email
+BB 1
+	outgoing:3 2 
+	datadep:
+	instructions:
+BB 2
+	outgoing:3 
+	datadep:
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (InvitationRequestMailer) 
+		 7: %v_3->invitation_request %self[2.0,] %v_3[2.6,] 
+		 8: %v_4->deliver %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing:
+	datadep:
+	instructions:
+

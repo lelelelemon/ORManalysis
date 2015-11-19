@@ -5,6 +5,7 @@ class Method_class
 		@variables = Hash.new
 		@name = name
 		@calls = Array.new
+		@cfg = nil
 	end
 	def getVars
 		@variables
@@ -14,6 +15,9 @@ class Method_class
 	end
 	def getCalls
 		@calls
+	end
+	def setCFG(cfg)
+		@cfg = cfg
 	end
 end
 
