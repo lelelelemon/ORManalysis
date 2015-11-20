@@ -15,7 +15,7 @@ def traverse_ast(astnode, level)
 			traverse_ast(child, level+1)
 		end
 		$cur_method = nil
-	elsif astnode.class.to_s == "YARD::Parser::Ruby::ConditionNode"
+	elsif astnode.class.to_s == "YARD::Parser::Ruby::ConditionalNode"
 		i = 0
 		astnode.children.each do |child|
 			if i==0
@@ -29,8 +29,8 @@ def traverse_ast(astnode, level)
 		end
 	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
 		temp_funccall = parse_method_call(astnode, $cur_method)
-		if $cur_position == "INCONDITION" and $cur_funccall != nil
-			$cur_funccall.setReturnValue("true")
+		if $cur_position == "INCONDITION" and temp_funccall != nil
+			temp_funccall.setReturnValue("true")
 		end
 		
 		if temp_funccall != nil and temp_funccall.getFuncName == "transaction"

@@ -1,6 +1,10 @@
 
 $graph_file = nil
 
+$last_caller_string = ""
+$QUERY_COLOR = "orange"
+$FLOWEDGE_COLOR = "blue"
+
 #TODO: a lot of duplicated code
 
 def trace_flow(start_class, start_function, params, returnv, level)
@@ -31,14 +35,19 @@ def trace_flow(start_class, start_function, params, returnv, level)
 	if $non_repeat_list.include?(before_filter_name) == false
 		$non_repeat_list.push(before_filter_name)
 
-		from_name = "#{start_class}_#{simplify(start_function)}_BB1"
-		to_name = "#{start_class}_before_filter_BB1"
-
-		$graph_file.write("#{from_name} -> #{to_name}; \n")
 		trace_flow(start_class, "before_filter", "", "", level)
 	end
 
 	puts "#{blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
+
+	if $last_caller_string.length > 0	
+		_to_name = "#{start_class}_#{simplify(start_function)}_BB1" 
+		$graph_file.write("#{$last_caller_string} -> #{_to_name} [label = \"#{params}\"]; \n")
+		if returnv.length > 0
+			$graph_file.write("#{_to_name} -> #{$last_caller_string} [label = \"r: (#{returnv})\"]; \n")
+		end
+	end
+	
 	label_list = Array.new
 
 	if function_handler.getCFG != nil
@@ -84,7 +93,11 @@ def trace_flow(start_class, start_function, params, returnv, level)
 							if trigger_save?(call)
 
 								puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
-								label += "<f#{l_index}> [QUERY]#{instr.getResolvedCaller}.#{instr.getFuncname} | "
+								if instr.getResolvedCaller.length > 0
+									label += "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{instr.getResolvedCaller}.#{instr.getFuncname} </td></tr>\n"
+								else
+									label += "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{call.getObjName}.#{instr.getFuncname} </td></tr>\n"
+								end
 								l_index += 1
 
 								if caller_class != nil
@@ -93,8 +106,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 										if $non_repeat_list.include?(temp_name) == false
 											$non_repeat_list.push(temp_name)
 
-											from_name = "\"#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex}\":<f#{l_index-1}>"
-											to_name = "#{caller_class}_#{simplify(save_action.getFuncName)}_BB1"
+											$last_caller_string = "#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex}:f#{l_index-1}"
 
 											$graph_file.write("#{from_name} -> #{to_name}; \n")
 											trace_flow(caller_class, save_action.getFuncName, "", "", level+2)
@@ -103,13 +115,17 @@ def trace_flow(start_class, start_function, params, returnv, level)
 								end
 							else
 								puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
-								label += "<f#{l_index}> [QUERY]#{instr.getResolvedCaller}.#{instr.getFuncname} | "
+								if instr.getResolvedCaller.length > 0
+									label += "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{instr.getResolvedCaller}.#{instr.getFuncname} </td></tr>\n"
+								else
+									label += "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{call.getObjName}.#{instr.getFuncname} </td></tr>\n"
+								end
 								l_index += 1
 							end
 						elsif callerv != nil
 							temp_name = "#{callerv_name}.#{call.getFuncName}"
 
-							label +=  "<f#{l_index}> #{temp_name} | "
+							label +=  "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\"> #{temp_name} </td></tr>\n"
 							l_index += 1
 
 							if $non_repeat_list.include?(temp_name) == false
@@ -117,24 +133,19 @@ def trace_flow(start_class, start_function, params, returnv, level)
 									$non_repeat_list.push(temp_name)
 								end
 
-								from_name = "\"#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex}\":<f#{l_index-1}>"
-								to_name = "#{callerv_name}_#{simplify(call.getFuncName)}_BB1"
+								$last_caller_string = "#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex}:f#{l_index-1}"
 
-								$graph_file.write("#{from_name} -> #{to_name} [label = \"#{params}\"]; \n")
-								if pass_returnv.length > 0
-									$graph_file.write("#{to_name} -> #{from_name} [label = \"#{pass_returnv}\"]; \n")
-								end
 								trace_flow(callerv_name, call.getFuncName, params, pass_returnv, level+1)
 							end
 						end
 					end
 				end
 			end
-					
-			label = label + "<f#{l_index}>"
-			label = "\t\tlabel = \"#{label}\"\n"
-			label = "\t\"#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex}\" [\n" + label
-			label = label + "\t\tshape = \"record\"\n"
+				
+			label = label + "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\"> (nil) </td></tr>"	
+			label = "\t\tlabel = <<table border=\"2\">\n#{label}\n\t\t</table>>\n"
+			label = "\t#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex} [\n" + label
+			label = label + "\t\tshape = none\n"
 			label = label + "\t];\n"
 			bb.setLableN(l_index)			
 	
@@ -171,7 +182,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 				if trigger_save?(call)
 					#puts "#{blank}=====transaction begin====="
 					puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
-					label += "<f#{l_index}> [QUERY]#{instr.getResolvedCaller}.#{instr.getFuncname} | "
+					label += "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{call.getObjName}.#{instr.getFuncname} </td></tr>\n"
 					l_index += 1
 
 					if caller_class != nil
@@ -180,10 +191,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 							if $non_repeat_list.include?(temp_name) == false
 								$non_repeat_list.push(temp_name)
 
-								from_name = "\"#{start_class}_#{simplify(start_function)}_BB1\":<f#{l_index-1}>"
-								to_name = "#{caller_class}_#{simplify(save_action.getFuncName)}_BB1"
-
-								$graph_file.write("#{from_name} -> #{to_name}; \n")
+								$last_caller_string = "#{start_class}_#{simplify(start_function)}_BB1:f#{l_index-1}"
 
 								trace_flow(caller_class, save_action.getFuncName, "", "", level+2)
 							end
@@ -192,13 +200,13 @@ def trace_flow(start_class, start_function, params, returnv, level)
 					#puts "#{blank}=====transaction end====="
 				else
 					puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
-					label += "<f#{l_index}> [QUERY]#{instr.getResolvedCaller}.#{instr.getFuncname} | "
+					label += "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{call.getObjName}.#{instr.getFuncname} </td></tr>\n"
 					l_index += 1
 				end
 
 			elsif callerv != nil
 				temp_name = "#{callerv_name}.#{call.getFuncName}"
-				label +=  "<f#{l_index}> #{temp_name} | "
+				label +=  "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\"> #{temp_name}</td></tr>\n"
 				l_index += 1
 
 				if $non_repeat_list.include?(temp_name) == false
@@ -206,21 +214,17 @@ def trace_flow(start_class, start_function, params, returnv, level)
 						$non_repeat_list.push(temp_name)
 					end
 
-					from_name = "\"#{start_class}_#{simplify(start_function)}_BB1\":<f#{l_index-1}>"
-					to_name = "#{callerv_name}_#{simplify(call.getFuncName)}_BB1"
+					$last_caller_string = "#{start_class}_#{simplify(start_function)}_BB1:f#{l_index-1}"
 
-					$graph_file.write("#{from_name} -> #{to_name} [label = \"#{params}\"]; \n")
-					if pass_returnv.length > 0
-						$graph_file.write("#{to_name} -> #{from_name} [label = \"#{pass_returnv}\"]; \n")
-					end
 					trace_flow(callerv_name, call.getFuncName, params, pass_returnv, level+1)
 				end
 			end
 		end	
-		label = label + "<f#{l_index}>"
-		label = "\t\tlabel = \"#{label}\"\n"
-		label = "\t\"#{start_class}_#{simplify(start_function)}_BB1\" [\n" + label
-		label = label + "\t\tshape = \"record\"\n"
+	
+		label = label + "\t\t\t<tr><td port=\"f#{l_index}\" border=\"1\"> (nil) </td></tr>\n"		
+		label = "\t\tlabel = <<table border=\"2\">\n#{label}\n\t\t</table>>\n"
+		label = "\t#{start_class}_#{simplify(start_function)}_BB1 [\n" + label
+		label = label + "\t\tshape = none\n"
 		label = label + "\t];\n"
 		
 		label_list.push(label)
@@ -241,7 +245,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 			bb.getOutgoings.each do |to_bb|
 				from_bb_name = "#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex}"
 				to_bb_name = "#{start_class}_#{simplify(start_function)}_BB#{to_bb}"
-				$graph_file.write("\t\"#{from_bb_name}\":f#{bb.getLabelN} -> \"#{to_bb_name}\":f0 [ color=blue ];\n")
+				$graph_file.write("\t#{from_bb_name}:f#{bb.getLabelN} -> #{to_bb_name}:f0 [ color=#{$FLOWEDGE_COLOR} ];\n")
 			end
 		end
 	end	
