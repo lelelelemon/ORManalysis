@@ -108,7 +108,6 @@ def trace_flow(start_class, start_function, params, returnv, level)
 
 											$last_caller_string = "#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex}:f#{l_index-1}"
 
-											$graph_file.write("#{from_name} -> #{to_name}; \n")
 											trace_flow(caller_class, save_action.getFuncName, "", "", level+2)
 										end
 									end

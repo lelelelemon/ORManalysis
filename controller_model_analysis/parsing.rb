@@ -258,6 +258,10 @@ opt_parser = OptionParser.new do |opt|
 		options[:trace] = trace_input
 	end
 
+	opt.on("-o", "--output-dir DIR",String,"Output directory for graphviz files") do |output_dir|
+		options[:output] = output_dir
+	end
+
   opt.on("-h","--help","help") do
 		options[:help] = true
     puts opt_parser
@@ -340,7 +344,11 @@ if options[:trace] != nil
 	adjust_calls
 	level = 0
 
-	graph_fname = "./#{start_class}_#{start_function}_graph.log"
+	output_dir = "."
+	if options[:output] != nil
+		output_dir = options[:output]
+	end
+	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_graph.log"
 	$graph_file = File.open(graph_fname, "w");
 
 	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
