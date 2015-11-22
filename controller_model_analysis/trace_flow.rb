@@ -7,7 +7,20 @@ $FLOWEDGE_COLOR = "blue"
 
 $label = ""
 $l_index = 0
+$label_stack = Array.new
+$l_index_stack = Array.new
 $blank = ""
+
+$closure_stack = Array.new
+def get_closure_tag
+	r = ""
+	i = 0
+	$closure_stack.each do |c|
+		r += "closure#{i}_"
+		i += 1
+	end
+	return r
+end
 #TODO: a lot of duplicated code
 
 def handle_single_call_node(start_class, start_function, class_handler, call, level, simplified_caller=nil)
@@ -75,12 +88,14 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 		end
 end
 
-def set_node_label(start_class, start_function, bb_index)
+def set_node_label(start_class, start_function, bb_index, label_list)
 		$label = $label + "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\"> (nil) </td></tr>\n"		
 		$label = "\t\tlabel = <<table border=\"2\">\n#{$label}\n\t\t</table>>\n"
-		$label = "\t#{start_class}_#{simplify(start_function)}_BB#{bb_index} [\n" + $label
+		$label = "\t#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb_index} [\n" + $label
 		$label = $label + "\t\tshape = none\n"
 		$label = $label + "\t];\n"
+
+		label_list.push($label)		
 end
 
 
@@ -114,15 +129,18 @@ def handle_single_bb(start_class, start_function, class_handler, bb, label_list,
 			end
 		end
 			
-		set_node_label(start_class, start_function, bb.getIndex)			
+		set_node_label(start_class, start_function, bb.getIndex, label_list)			
 		bb.setLabelN($l_index)			
 	
-		label_list.push($label)
 
 	elsif bb.instance_of?Closure
+		$closure_stack.push(bb)
+		$label_stack.push($label)
 		bb.getBB.each do |inner_bb|
 			handle_single_bb(start_class, start_function, class_handler, inner_bb, label_list, function_handler, level)
 		end
+		$label_stack.pop
+		$closure_stack.pop
 	end
 
 end
@@ -130,8 +148,8 @@ end
 def write_single_bb(start_class, start_function, bb)
 	if bb.instance_of?Basic_block
 		bb.getOutgoings.each do |to_bb|
-			from_bb_name = "#{start_class}_#{simplify(start_function)}_BB#{bb.getIndex}"
-			to_bb_name = "#{start_class}_#{simplify(start_function)}_BB#{to_bb}"
+			from_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb.getIndex}"
+			to_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{to_bb}"
 			$graph_file.write("\t#{from_bb_name}:f#{bb.getLabelN} -> #{to_bb_name}:f0 [ color=#{$FLOWEDGE_COLOR} ];\n")
 		end
 	elsif bb.instance_of?Closure
@@ -204,9 +222,8 @@ def trace_flow(start_class, start_function, params, returnv, level)
 
 		end	
 	
-		set_node_label(start_class, start_function, 1)
+		set_node_label(start_class, start_function, 1, label_list)
 		
-		label_list.push($label)
 		
 	end
 
