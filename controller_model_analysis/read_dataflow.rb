@@ -134,7 +134,7 @@ class Basic_block
 	def addDatadeps(dep)
 		@datadeps.push(dep)
 	end
-	def setLableN(n)
+	def setLabelN(n)
 		@label_n = n
 	end
 	def getLabelN
@@ -204,6 +204,28 @@ class CFG
 	end
 end
 
+class Closure < CFG
+	def initialize
+		super
+	end
+	def getLastBB
+		return @bb[-1]
+	end
+	def getFirstBB
+		return @bb[0]
+	end
+	def self_print
+		puts "CLOSURE BEGIN"
+		getBB.each do |bb|
+			bb.self_print
+		end
+		puts "CLOSURE END"
+	end
+end
+
+$cur_bb_stack = Array.new
+$cur_cfg_stack = Array.new
+
 $cur_cfg = nil
 $cfg_map = Hash.new
 $cur_bb = nil
@@ -217,6 +239,16 @@ def find_first_nonempty_ele(attrs)
 		index += 1
 	end
 	return -1	
+end
+
+def recursive_findcall(bb)
+	if bb.instance_of?Basic_block
+		bb.findCalls
+	elsif bb.instance_of?Closure
+		bb.getBB.each do |inner_bb|
+			recursive_findcall(inner_bb)
+		end
+	end
 end
 
 def read_dataflow(application_dir=nil)
@@ -234,7 +266,7 @@ def read_dataflow(application_dir=nil)
 		$class_map[class_name].getMethods.each do |key, meth|
 			if meth.getCFG != nil
 				meth.getCFG.getBB.each do |bb|
-					bb.findCalls
+					recursive_findcall(bb)
 				end	
 			end
 		end
@@ -249,7 +281,7 @@ def read_dataflow(application_dir=nil)
 		$class_map[class_name].getMethods.each do |key, meth|
 			if meth.getCFG != nil
 				meth.getCFG.getBB.each do |bb|
-					bb.findCalls
+					recursive_findcall(bb)
 				end
 			end	
 		end
@@ -273,6 +305,19 @@ def handle_single_dataflow_file(item, class_name)
 
 			elsif line.include?("JRUBY")
 				nil
+			elsif line.include?("CLOSURE BEGIN")
+				temp_cfg = Closure.new
+				$cur_cfg.addBB(temp_cfg)
+				$cur_bb_stack.push($cur_bb)
+				$cur_cfg_stack.push($cur_cfg)
+				$cur_cfg = temp_cfg
+				
+			elsif line.include?("CLOSURE END")
+				$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB)
+				$cur_bb = $cur_bb_stack[-1]
+				$cur_cfg = $cur_cfg_stack[-1]
+				$cur_bb_stack.pop
+				$cur_cfg_stack.pop
 			elsif line.include?("BB ")
 				$cur_bb = Basic_block.new(line.split(' ')[1].to_s)
 				$cur_cfg.addBB($cur_bb)
