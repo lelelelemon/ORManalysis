@@ -23,7 +23,7 @@ def get_closure_tag
 end
 #TODO: a lot of duplicated code
 
-def handle_single_call_node(start_class, start_function, class_handler, call, level, simplified_caller=nil)
+def handle_single_call_node(start_class, start_function, class_handler, call, level, bb_index, simplified_caller=nil)
 		callerv_name = call.findCaller(start_class, start_function)
 		callerv = $class_map[callerv_name]
 		pass_params = ""
@@ -62,9 +62,14 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 
-							$last_caller_string = "#{start_class}_#{simplify(start_function)}_BB1:f#{$l_index-1}"
+							$last_caller_string = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
 
+							
+							$label_stack.push($label)
+							$l_index_stack.push($l_index)
 							trace_flow(caller_class, save_action.getFuncName, "", "", level+2)
+							$label = $label_stack.pop
+							$l_index = $l_index_stack.pop
 						end
 					end
 				end
@@ -81,16 +86,20 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 					$non_repeat_list.push(temp_name)
 				end
 
-				$last_caller_string = "#{start_class}_#{simplify(start_function)}_BB1:f#{$l_index-1}"
+				$last_caller_string = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
 
+				$label_stack.push($label)
+				$l_index_stack.push($l_index)
 				trace_flow(callerv_name, call.getFuncName, pass_params, pass_returnv, level+1)
+				$label = $label_stack.pop
+				$l_index = $l_index_stack.pop
 			end
 		end
 end
 
 def set_node_label(start_class, start_function, bb_index, label_list)
 		$label = $label + "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\"> (nil) </td></tr>\n"		
-		$label = "\t\tlabel = <<table border=\"2\">\n#{$label}\n\t\t</table>>\n"
+		$label = "\t\tlabel = <<table border=\"2\">\n#{$label}\t\t</table>>\n"
 		$label = "\t#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb_index} [\n" + $label
 		$label = $label + "\t\tshape = none\n"
 		$label = $label + "\t];\n"
@@ -98,64 +107,80 @@ def set_node_label(start_class, start_function, bb_index, label_list)
 		label_list.push($label)		
 end
 
-
 def handle_single_bb(start_class, start_function, class_handler, bb, label_list, function_handler, level)
-
-	$lable = ""
+	$label = ""
 	$l_index = 0
+	bb.getInstr.each do |instr|
+		handle_single_instr(start_class, start_function, class_handler, bb, instr, label_list, function_handler, level)
+	end
 
-	if bb.instance_of?Basic_block
-		bb.getInstr.each do |instr|
-			
-			if instr.instance_of?Call_instr
-				#match instr's call to funccall in Method_class
-				call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
-				#if call == nil
-				#	puts "Name doesn't match: #{instr.toString}" 
-				#end
-				if call != nil
+	set_node_label(start_class, start_function, bb.getIndex, label_list)			
+	bb.setLabelN($l_index)			
+end
 
-					#puts "Map to #{call.getObjName}.#{call.getFuncName}"
-					#print "\t -- "
-					#call.print
-					
-					if instr.getResolvedCaller.length > 0
-						handle_single_call_node(start_class, start_function, class_handler, call, level, instr.getResolvedCaller)
-					else
-						handle_single_call_node(start_class, start_function, class_handler, call, level)				
-					end
-	
-				end
+def handle_single_instr(start_class, start_function, class_handler, bb, instr, label_list, function_handler, level)
+
+	if instr.instance_of?Call_instr
+		#match instr's call to funccall in Method_class
+		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
+		#if call == nil
+		#	puts "Name doesn't match: #{instr.toString}" 
+		#end
+		if call != nil
+
+			#puts "Map to #{call.getObjName}.#{call.getFuncName}"
+			#print "\t -- "
+			#call.print
+		
+			instr.setFTag($l_index)		
+			if instr.getResolvedCaller.length > 0
+				handle_single_call_node(start_class, start_function, class_handler, call, level, bb.getIndex, instr.getResolvedCaller)
+			else
+				handle_single_call_node(start_class, start_function, class_handler, call, level, bb.getIndex)				
 			end
-		end
-			
-		set_node_label(start_class, start_function, bb.getIndex, label_list)			
-		bb.setLabelN($l_index)			
 	
-
-	elsif bb.instance_of?Closure
-		$closure_stack.push(bb)
+		end
+	end
+		
+	if instr.hasClosure?
+		cl = instr.getClosure
+		$l_index_stack.push($l_index)	
+		$closure_stack.push(cl)
 		$label_stack.push($label)
-		bb.getBB.each do |inner_bb|
+		cl.getBB.each do |inner_bb|
 			handle_single_bb(start_class, start_function, class_handler, inner_bb, label_list, function_handler, level)
 		end
-		$label_stack.pop
 		$closure_stack.pop
+		$l_index = $l_index_stack.pop
+		$label = $label_stack.pop
 	end
 
 end
 
 def write_single_bb(start_class, start_function, bb)
-	if bb.instance_of?Basic_block
-		bb.getOutgoings.each do |to_bb|
-			from_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb.getIndex}"
-			to_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{to_bb}"
-			$graph_file.write("\t#{from_bb_name}:f#{bb.getLabelN} -> #{to_bb_name}:f0 [ color=#{$FLOWEDGE_COLOR} ];\n")
+	from_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb.getIndex}"
+	
+	bb.getOutgoings.each do |to_bb|
+		to_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{to_bb}"
+		$graph_file.write("\t#{from_bb_name}:f#{bb.getLabelN} -> #{to_bb_name}:f0 [ color=#{$FLOWEDGE_COLOR} ];\n")
+	end
+
+	index = 0
+	bb.getInstr.each do |instr|
+		if instr.hasClosure?
+			cl = instr.getClosure
+			$closure_stack.push(cl)
+			to_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB1"
+			to_end_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{cl.getBB.length+1}"
+			$graph_file.write("\t#{from_bb_name}:f#{instr.getFTag} -> #{to_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
+			$graph_file.write("\t#{to_end_bb_name}:f0 -> #{from_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
+
+			cl.getBB.each do |inner_bb|
+				write_single_bb(start_class, start_function, inner_bb)
+			end
+			$closure_stack.pop
 		end
-	elsif bb.instance_of?Closure
-		bb.getBB.each do |inner_bb|
-			write_single_bb(start_class, start_function, inner_bb)
-		end
+		index = index + 1
 	end
 end
 
@@ -194,7 +219,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 	puts "#{$blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
 
 	if $last_caller_string.length > 0	
-		_to_name = "#{start_class}_#{simplify(start_function)}_BB1" 
+		_to_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB1" 
 		$graph_file.write("#{$last_caller_string} -> #{_to_name} [label = \"#{params}\"]; \n")
 		if returnv.length > 0
 			$graph_file.write("#{_to_name} -> #{$last_caller_string} [label = \"r: (#{returnv})\"]; \n")
@@ -205,8 +230,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 
 	if function_handler.getCFG != nil
 		function_handler.getCFG.getBB.each do |bb|
-				
-				handle_single_bb(start_class, start_function, class_handler, bb, label_list, function_handler, level)
+			handle_single_bb(start_class, start_function, class_handler, bb, label_list, function_handler, level)
 			
 		end
 
@@ -218,9 +242,9 @@ def trace_flow(start_class, start_function, params, returnv, level)
 
 		function_handler.getCalls.each do |call|
 		
-			handle_single_call_node(start_class, start_function, class_handler, call, level)
+			handle_single_call_node(start_class, start_function, class_handler, call, level, 1)
 
-		end	
+		end
 	
 		set_node_label(start_class, start_function, 1, label_list)
 		

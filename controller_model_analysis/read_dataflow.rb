@@ -21,6 +21,32 @@ class Instruction
 	def initialize
 		@deps = Array.new	
 		@resolved = false
+		@has_closure = false
+		@closure = nil
+		@index = 0
+		@f_tag = 0
+	end
+	def setFTag(f)
+		@f_tag = f
+	end
+	def getFTag
+		@f_tag
+	end
+	def addClosure(cl)
+		@closure = cl
+		@has_closure = true
+	end
+	def hasClosure?
+		@has_closure
+	end
+	def getClosure
+		@closure
+	end
+	def setIndex(ind)
+		@index = ind
+	end
+	def getIndex
+		@index
 	end
 	def addDatadep(dep_string, vname)
 		ary = dep_string.split('.')
@@ -122,6 +148,9 @@ class Basic_block
 	def getInstr
 		@instructions
 	end
+	def getLastInstr
+		@instructions[-1]
+	end
 	def addOutgoings(node)
 		@outgoings.push(node)
 	end
@@ -173,6 +202,11 @@ class Basic_block
 			elsif instr.instance_of?Const_instr
 				instr.setResolved
 			end
+			if instr.hasClosure?
+				instr.getClosure.getBB.each do |bb|
+					bb.findCalls
+				end
+			end
 		end
 	end
 	def self_print
@@ -187,6 +221,9 @@ class Basic_block
 		index = 0
 		@instructions.each do |instr|
 			puts "    #{index}: #{instr.toString}"
+			if instr.hasClosure?
+				instr.getClosure.self_print
+			end
 			index = index + 1
 		end
 	end
@@ -201,6 +238,11 @@ class CFG
 	end
 	def addBB(basicb)
 		@bb.push(basicb)
+	end
+	def findCalls
+		getBB.each do |bb|
+			bb.findCalls
+		end	
 	end
 end
 
@@ -241,16 +283,6 @@ def find_first_nonempty_ele(attrs)
 	return -1	
 end
 
-def recursive_findcall(bb)
-	if bb.instance_of?Basic_block
-		bb.findCalls
-	elsif bb.instance_of?Closure
-		bb.getBB.each do |inner_bb|
-			recursive_findcall(inner_bb)
-		end
-	end
-end
-
 def read_dataflow(application_dir=nil)
 
 	if application_dir != nil
@@ -265,9 +297,7 @@ def read_dataflow(application_dir=nil)
 		handle_single_dataflow_file(item, class_name)
 		$class_map[class_name].getMethods.each do |key, meth|
 			if meth.getCFG != nil
-				meth.getCFG.getBB.each do |bb|
-					recursive_findcall(bb)
-				end	
+				meth.getCFG.findCalls
 			end
 		end
 	end
@@ -280,9 +310,7 @@ def read_dataflow(application_dir=nil)
 		handle_single_dataflow_file(item, class_name)
 		$class_map[class_name].getMethods.each do |key, meth|
 			if meth.getCFG != nil
-				meth.getCFG.getBB.each do |bb|
-					recursive_findcall(bb)
-				end
+				meth.getCFG.findCalls
 			end	
 		end
 	end
@@ -306,15 +334,14 @@ def handle_single_dataflow_file(item, class_name)
 			elsif line.include?("JRUBY")
 				nil
 			elsif line.include?("CLOSURE BEGIN")
-				temp_cfg = Closure.new
-				$cur_cfg.addBB(temp_cfg)
 				$cur_bb_stack.push($cur_bb)
 				$cur_cfg_stack.push($cur_cfg)
-				$cur_cfg = temp_cfg
+				$cur_cfg = Closure.new
 				
 			elsif line.include?("CLOSURE END")
-				$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB)
+				$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB.getIndex)
 				$cur_bb = $cur_bb_stack[-1]
+				$cur_bb.getLastInstr.addClosure($cur_cfg)
 				$cur_cfg = $cur_cfg_stack[-1]
 				$cur_bb_stack.pop
 				$cur_cfg_stack.pop
@@ -379,6 +406,7 @@ def handle_single_dataflow_file(item, class_name)
 								end
 								index += 1
 							end
+							cur_instr.setIndex($cur_bb.getInstr.length)
 							$cur_bb.addInstr(cur_instr)	
 						end
 					end
@@ -387,17 +415,9 @@ def handle_single_dataflow_file(item, class_name)
 		end
 end
 
-def retrive_calls
-	$cfg_map.each do |keyc, valuec|
-		valuec.getBB.each do |bb|
-			bb.findCalls
-		end
-	end	
-end
 
 
 #read_dataflow
-#retrive_calls
 
 #$cfg_map.each do |keyc, valuec|
 #	puts "SET IRMethod, name = #{keyc}"
