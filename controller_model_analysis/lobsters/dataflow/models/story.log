@@ -39,17 +39,17 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: u->gsub %cl_1_4[3.2,] 
+		 3: u->gsub %cl_1_4[3.2,] u[2.2,] 
 		 4: urls2->push %cl_1_5[3.3,] 
 		 5: 
 		 6: 
 		 7: 
-		 8: u->gsub %cl_1_8[3.7,] 
+		 8: u->gsub u[2.2,] %cl_1_8[3.7,] 
 		 9: urls2->push %cl_1_9[3.8,] 
 		 10: RETURN %cl_1_10[3.9,] 
 BB 4
@@ -85,16 +85,16 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: u->gsub %cl_2_4[3.2,] 
+		 3: u->gsub %cl_2_4[3.2,] u[2.2,] 
 		 4: urls2->push %cl_2_5[3.3,] 
 		 5: 
 		 6: 
-		 7: %cl_2_7[3.6,] 
+		 7: u[2.2,] %cl_2_7[3.6,] 
 		 8: urls2->push %cl_2_8[3.7,] 
 		 9: RETURN %cl_2_9[3.8,] 
 BB 4
@@ -130,11 +130,11 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: 
+		 2: u[2.2,] 
 CLOSURE BEGIN
 BB 1
 	outgoing: 6 2 
@@ -160,7 +160,7 @@ CLOSURE END
 		 3: urls2->push %cl_3_4[3.2,] 
 		 4: 
 		 5: 
-		 6: 
+		 6: u[2.2,] 
 CLOSURE BEGIN
 BB 1
 	outgoing: 6 2 
@@ -224,10 +224,10 @@ CLOSURE END
 		 37: %v_18[2.35,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: RETURN 
+		 1: RETURN s[2.36,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -276,10 +276,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: s->recalculate_hotness! 
+		 1: s->recalculate_hotness! s[2.2,] 
 		 2: RETURN %cl_1_3[3.1,] 
 BB 4
 	outgoing: 6 
@@ -393,13 +393,13 @@ BB 4
 		 1: %v_3[4.0,] 
 BB 5
 	outgoing: 6 7 11 
-	datadep: 
+	datadep: 2 2 4 2 4 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
 		 3: 
-		 4: %self->tags 
+		 4: %self->tags %self[2.0,2.0,] 
 		 5: %v_7->map %v_7[5.4,] 
 CLOSURE BEGIN
 BB 1
@@ -417,10 +417,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->tag 
+		 1: t->tag t[2.2,] 
 		 2: RETURN %cl_1_3[3.1,] 
 BB 4
 	outgoing: 6 
@@ -439,27 +439,27 @@ CLOSURE END
 		 8: 
 		 9: %v_11[5.8,] 
 		 10: 
-		 11: 
-		 12: 
+		 11: options[4.1,2.5,] 
+		 12: options[4.1,2.5,] 
 BB 6
 	outgoing: 7 11 
-	datadep: 
+	datadep: 4 2 
 	instructions:
-		 0: 
+		 0: options[4.1,2.5,] 
 		 1: %v_13[6.0,] 
 BB 7
 	outgoing: 8 9 
-	datadep: 
+	datadep: 6 5 
 	instructions:
-		 0: 
+		 0: %v_12[6.1,5.11,] 
 BB 8
 	outgoing: 10 11 
-	datadep: 
+	datadep: 4 2 4 2 5 5 
 	instructions:
 		 0: 
-		 1: 
+		 1: options[4.1,2.5,4.1,2.5,] 
 		 2: 
-		 3: h->push %v_15[8.2,] 
+		 3: h->push %v_15[8.2,] h[5.9,5.9,] 
 		 4: 
 BB 9
 	outgoing: 10 
@@ -468,13 +468,13 @@ BB 9
 		 0: 
 BB 10
 	outgoing: 11 13 
-	datadep: 
+	datadep: 5 5 5 5 
 	instructions:
 		 0: 
 		 1: 
 		 2: %v_17[10.1,] 
 		 3: 
-		 4: h->each 
+		 4: h->each h[5.9,5.9,5.9,5.9,] 
 CLOSURE BEGIN
 BB 1
 	outgoing: 15 2 
@@ -491,58 +491,58 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 13 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: (Symbol) 
-		 2: k->is_a? %cl_2_3[3.1,] 
+		 2: k->is_a? k[2.2,] %cl_2_3[3.1,] 
 		 3: %cl_2_4[3.2,] 
 BB 4
 	outgoing: 12 13 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->send 
-		 2: %cl_2_5[4.1,] 
+		 1: %self->send k[2.2,] %self[2.0,] 
+		 2: k[2.2,] %cl_2_5[4.1,] 
 		 3: 
 BB 5
 	outgoing: 6 10 13 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: (Hash) 
-		 2: k->is_a? %cl_2_6[5.1,] 
+		 2: k->is_a? k[2.2,] %cl_2_6[5.1,] 
 		 3: %cl_2_7[5.2,] 
 BB 6
 	outgoing: 7 8 13 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: k->values 
+		 1: k->values k[2.2,] 
 		 2: %cl_2_8->first %cl_2_8[6.1,] 
 		 3: (Symbol) 
 		 4: %cl_2_9->is_a? %cl_2_9[6.2,] %cl_2_10[6.3,] 
 		 5: %cl_2_11[6.4,] 
 BB 7
 	outgoing: 9 13 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: k->keys 
+		 1: k->keys k[2.2,] 
 		 2: %cl_2_12->first %cl_2_12[7.1,] 
-		 3: k->values 
+		 3: k->values k[2.2,] 
 		 4: %cl_2_14->first %cl_2_14[7.3,] 
-		 5: %self->send %cl_2_15[7.4,] 
+		 5: %self->send %cl_2_15[7.4,] %self[2.0,] 
 		 6: %cl_2_16[7.5,] %cl_2_13[7.2,] 
 		 7: 
 BB 8
 	outgoing: 9 13 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: k->keys 
+		 1: k->keys k[2.2,] 
 		 2: %cl_2_17->first %cl_2_17[8.1,] 
-		 3: k->values 
+		 3: k->values k[2.2,] 
 		 4: %cl_2_19->first %cl_2_19[8.3,] 
 		 5: %cl_2_18[8.2,] %cl_2_20[8.4,] 
 		 6: %cl_2_20[8.4,] 
@@ -558,14 +558,14 @@ BB 10
 		 0: 
 BB 11
 	outgoing: 15 
-	datadep: 
+	datadep: 10 8 7 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_2_16[10.0,8.6,7.5,] 
 BB 12
 	outgoing: 15 
-	datadep: 
+	datadep: 4 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_2_5[4.1,] 
 BB 13
 	outgoing: 15 
 	datadep: 
@@ -678,10 +678,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->hotness_mod 
+		 1: t->hotness_mod t[2.2,] 
 		 2: %cl_1_3[3.1,] 
 		 3: RETURN %cl_1_4[3.2,] 
 BB 4
@@ -713,10 +713,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->hotness_mod 
+		 1: t->hotness_mod t[2.2,] 
 		 2: %cl_2_3[3.1,] 
 		 3: %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_4[3.2,] 
@@ -755,12 +755,12 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: c->upvotes 
+		 1: c->upvotes c[2.2,] 
 		 2: %cl_3_3[3.1,] 
-		 3: c->downvotes 
+		 3: c->downvotes c[2.2,] 
 		 4: %cl_3_4[3.2,] %cl_3_5[3.3,] 
 		 5: RETURN %cl_3_6[3.4,] 
 BB 4
@@ -803,10 +803,10 @@ BB 3
 		 3: 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self->score 
+		 1: %self->score %self[2.0,] 
 		 2: %v_26[4.1,] 
 		 3: %v_27[4.2,] 
 BB 5
@@ -826,22 +826,22 @@ BB 6
 		 2: 
 BB 7
 	outgoing: 8 
-	datadep: 
+	datadep: 6 5 
 	instructions:
-		 0: 
+		 0: %v_28[6.2,5.2,] 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 3 6 5 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: %v_29[8.1,] 
 		 3: %v_30[8.2,] 
 		 4: 
-		 5: 
-		 6: %v_31[8.5,] 
+		 5: sign[3.1,6.1,5.1,] order[2.31,2.31,2.31,] 
+		 6: base[2.6,2.6,2.6,] %v_31[8.5,] 
 		 7: 
-		 8: %self->created_at 
+		 8: %self->created_at %self[2.0,2.0,2.0,] 
 		 9: %v_33[8.8,] 
 BB 9
 	outgoing: 10 
@@ -852,11 +852,11 @@ BB 9
 		 2: %v_35[9.1,] 
 BB 10
 	outgoing: 12 
-	datadep: 
+	datadep: 9 8 8 8 8 8 
 	instructions:
-		 0: %v_33->to_f 
-		 1: %v_36[10.0,] 
-		 2: %v_37[10.1,] 
+		 0: %v_33->to_f %v_33[9.2,8.8,] 
+		 1: %v_36[10.0,] window[8.3,8.3,] 
+		 2: %v_37[10.1,] %v_32[8.6,8.6,] 
 		 3: %v_38[10.2,] 
 		 4: %v_39[10.3,] 
 		 5: RETURN %v_40[10.4,] 
@@ -885,40 +885,40 @@ BB 2
 		 8: %v_3[2.7,] 
 BB 3
 	outgoing: 4 7 
-	datadep: 
+	datadep: 2 2 
 	instructions:
-		 0: 
-		 1: 
+		 0: user[2.5,] 
+		 1: user[2.5,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: user->is_moderator? 
+		 0: user->is_moderator? user[2.5,] 
 		 1: %v_5[4.0,] 
 BB 5
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
-		 0: user->id 
-		 1: %self->user_id 
+		 0: user->id user[2.5,] 
+		 1: %self->user_id %self[2.0,] 
 		 2: %v_6[5.0,] %v_7[5.1,] 
 		 3: %v_8[5.2,] 
 BB 6
 	outgoing: 7 
-	datadep: 
+	datadep: 5 4 
 	instructions:
-		 0: 
+		 0: %v_5[5.3,4.0,] 
 BB 7
 	outgoing: 8 
-	datadep: 
+	datadep: 6 3 
 	instructions:
-		 0: %v_4->! 
+		 0: %v_4->! %v_4[6.0,3.0,] 
 		 1: %v_9[7.0,] 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 7 2 
 	instructions:
-		 0: 
+		 0: %v_3[7.1,2.7,] 
 BB 9
 	outgoing: 12 
 	datadep: 
@@ -956,17 +956,17 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->user 
+		 0: %self->user %self[2.0,] 
 		 1: %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 2 2 2 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.1,2.6,] 
 		 1: 
-		 2: %self->taggings 
+		 2: %self->taggings %self[2.0,2.0,] 
 		 3: %v_5->each %v_5[4.2,] 
 CLOSURE BEGIN
 BB 1
@@ -984,16 +984,16 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 14 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->tag 
+		 1: t->tag t[2.2,] 
 		 2: %cl_1_3->valid_for? %cl_1_3[3.1,] 
 		 3: %cl_1_4->! %cl_1_4[3.2,] 
 		 4: %cl_1_5[3.3,] 
 BB 4
 	outgoing: 13 14 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: u->username 
@@ -1001,55 +1001,55 @@ BB 4
 		 3: %cl_1_7[4.2,] 
 		 4: 
 		 5: 
-		 6: t->tag 
+		 6: t->tag t[2.2,] 
 		 7: %cl_1_10->tag %cl_1_10[4.6,] 
 		 8: %cl_1_9[4.4,] 
 		 9: %cl_1_12[4.8,] %cl_1_8[4.3,] 
-		 10: %self->raise %cl_1_13[4.9,] 
+		 10: %self->raise %self[2.0,] %cl_1_13[4.9,] 
 		 11: 
 BB 5
 	outgoing: 6 7 14 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->tag 
+		 1: t->tag t[2.2,] 
 		 2: %cl_1_15->inactive? %cl_1_15[5.1,] 
 		 3: %cl_1_16[5.2,] 
 BB 6
 	outgoing: 7 14 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: t->new_record? 
+		 0: t->new_record? t[2.2,] 
 		 1: %cl_1_17->! %cl_1_17[6.0,] 
 		 2: %cl_1_18[6.1,] 
 BB 7
 	outgoing: 8 9 
-	datadep: 
+	datadep: 6 5 
 	instructions:
-		 0: 
+		 0: %cl_1_16[6.2,5.2,] 
 BB 8
 	outgoing: 9 14 
-	datadep: 
+	datadep: 2 2 
 	instructions:
-		 0: t->marked_for_destruction? 
+		 0: t->marked_for_destruction? t[2.2,2.2,] 
 		 1: %cl_1_19->! %cl_1_19[8.0,] 
 		 2: %cl_1_20[8.1,] 
 BB 9
 	outgoing: 10 11 
-	datadep: 
+	datadep: 8 6 5 
 	instructions:
-		 0: 
+		 0: %cl_1_16[8.2,6.2,5.2,] 
 BB 10
 	outgoing: 12 14 
-	datadep: 
+	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: u->username 
 		 2: 
-		 3: t->tag 
+		 3: t->tag t[2.2,2.2,2.2,] 
 		 4: %cl_1_23->tag %cl_1_23[10.3,] 
 		 5: %cl_1_22[10.2,] 
-		 6: %self->raise %cl_1_25[10.5,] 
+		 6: %self->raise %cl_1_25[10.5,] %self[2.0,2.0,2.0,] 
 		 7: 
 BB 11
 	outgoing: 12 
@@ -1058,14 +1058,14 @@ BB 11
 		 0: 
 BB 12
 	outgoing: 16 
-	datadep: 
+	datadep: 11 10 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_1_26[11.0,10.6,] 
 BB 13
 	outgoing: 16 
-	datadep: 
+	datadep: 4 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_1_14[4.10,] 
 BB 14
 	outgoing: 16 
 	datadep: 
@@ -1079,7 +1079,7 @@ BB 16
 	instructions:
 CLOSURE END
 		 4: 
-		 5: %self->taggings 
+		 5: %self->taggings %self[2.0,2.0,] 
 		 6: %v_7->reject %v_7[4.5,] 
 CLOSURE BEGIN
 BB 1
@@ -1097,23 +1097,23 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->marked_for_destruction? 
+		 1: t->marked_for_destruction? t[2.2,] 
 		 2: %cl_2_3[3.1,] 
 BB 4
 	outgoing: 6 8 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: t->tag 
+		 0: t->tag t[2.2,] 
 		 1: %cl_2_4->is_media? %cl_2_4[4.0,] 
 		 2: RETURN %cl_2_5[4.1,] 
 BB 5
 	outgoing: 8 
-	datadep: 
+	datadep: 3 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_2_3[3.1,] 
 BB 6
 	outgoing: 8 
 	datadep: 
@@ -1131,10 +1131,10 @@ CLOSURE END
 		 9: %v_10[4.8,] 
 BB 5
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->errors 
+		 1: %self->errors %self[2.0,2.0,] 
 		 2: 
 		 3: 
 		 4: %v_13[5.3,] %v_12[5.2,] 
@@ -1253,44 +1253,44 @@ BB 3
 		 0: 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->description 
+		 1: %self->description %self[2.0,2.0,] 
 		 2: %v_3->present? %v_3[4.1,] 
 		 3: %v_4[4.2,] 
 BB 5
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->markeddown_description 
+		 1: %self->markeddown_description %self[2.0,2.0,] 
 		 2: 
 		 3: 
 		 4: %v_5->gsub %v_5[5.1,] %v_7[5.3,] 
 		 5: 
 BB 6
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->story_cache 
+		 1: %self->story_cache %self[2.0,2.0,] 
 		 2: %v_9[6.1,] 
 BB 7
 	outgoing: 8 9 
-	datadep: 
+	datadep: 6 5 3 2 3 2 
 	instructions:
-		 0: 
+		 0: %v_8[6.2,5.4,] 
 		 1: 
-		 2: 
+		 2: chars[3.0,2.5,3.0,2.5,] 
 		 3: %v_10[7.2,] 
 BB 8
 	outgoing: 10 
-	datadep: 
+	datadep: 7 3 2 3 2 
 	instructions:
 		 0: 
-		 1: s->to_s 
-		 2: %v_11[8.1,] 
+		 1: s->to_s s[7.0,] 
+		 2: %v_11[8.1,] chars[3.0,2.5,3.0,2.5,] 
 		 3: 
 		 4: 
 		 5: %v_12->gsub %v_14[8.4,] %v_12[8.2,] 
@@ -1303,12 +1303,12 @@ BB 9
 		 0: 
 BB 10
 	outgoing: 11 
-	datadep: 
+	datadep: 8 7 
 	instructions:
 		 0: 
 		 1: (HTMLEntities) 
 		 2: %v_16->new %v_16[10.1,] 
-		 3: s->to_s 
+		 3: s->to_s s[8.6,7.0,] 
 		 4: %v_17->decode %v_17[10.2,] %v_18[10.3,] 
 		 5: RETURN %v_19[10.4,] 
 BB 11
@@ -1343,10 +1343,10 @@ BB 3
 		 2: RETURN 
 BB 4
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self->url 
+		 1: %self->url %self[2.0,] 
 		 2: 
 		 3: 
 		 4: %v_6->gsub %v_8[4.3,] %v_6[4.1,] 
@@ -1410,11 +1410,11 @@ BB 2
 		 8: %v_4[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: (StoryCacher) 
-		 2: %self->url 
+		 2: %self->url %self[2.0,] 
 		 3: %v_5->get_story_text %v_5[3.1,] %v_6[3.2,] 
 		 4: %v_7[3.3,] 
 		 5: RETURN %v_7[3.3,] 
@@ -1534,31 +1534,31 @@ BB 2
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: 
+		 0: %self[2.0,] 
 		 1: %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.1,2.7,] 
 BB 5
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: (HiddenStory) 
-		 1: %self->id 
+		 1: %self->id %self[2.0,2.0,] 
 		 2: 
 		 3: %v_6->where %v_8[5.2,] %v_6[5.0,] 
 		 4: %v_9->count %v_9[5.3,] 
-		 5: %v_10[5.4,] 
+		 5: %self[2.0,2.0,] %v_10[5.4,] 
 		 6: RETURN %v_10[5.4,] 
 BB 6
 	outgoing: 7 
-	datadep: 
+	datadep: 3 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %v_5[3.0,] 
 BB 7
 	outgoing: 
 	datadep: 
@@ -1587,54 +1587,54 @@ BB 3
 		 0: 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: %v_3[4.1,] 
 		 3: 
-		 4: %self->user 
+		 4: %self->user %self[2.0,2.0,] 
 		 5: %v_4->is_active? %v_4[4.4,] 
 		 6: %v_5->! %v_5[4.5,] 
 		 7: %v_6[4.6,] 
 BB 5
 	outgoing: 13 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
 		 1: 
-		 2: c->push %v_7[5.1,] 
+		 2: c->push c[4.2,] %v_7[5.1,] 
 		 3: 
 BB 6
 	outgoing: 7 8 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->user 
+		 1: %self->user %self[2.0,2.0,] 
 		 2: %v_9->is_new? %v_9[6.1,] 
 		 3: %v_10[6.2,] 
 BB 7
 	outgoing: 12 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
 		 1: 
-		 2: c->push %v_11[7.1,] 
+		 2: c->push c[4.2,] %v_11[7.1,] 
 		 3: 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->user_is_author? 
+		 1: %self->user_is_author? %self[2.0,2.0,] 
 		 2: %v_13[8.1,] 
 BB 9
 	outgoing: 11 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
 		 1: 
-		 2: c->push %v_14[9.1,] 
+		 2: c->push %v_14[9.1,] c[4.2,] 
 		 3: 
 BB 10
 	outgoing: 11 
@@ -1643,21 +1643,21 @@ BB 10
 		 0: 
 BB 11
 	outgoing: 12 
-	datadep: 
+	datadep: 10 9 
 	instructions:
-		 0: 
+		 0: %v_15[10.0,9.2,] 
 BB 12
 	outgoing: 13 
-	datadep: 
+	datadep: 11 7 
 	instructions:
-		 0: 
+		 0: %v_12[11.0,7.2,] 
 BB 13
 	outgoing: 14 
-	datadep: 
+	datadep: 4 4 
 	instructions:
 		 0: 
 		 1: 
-		 2: c->join %v_16[13.1,] 
+		 2: c->join %v_16[13.1,] c[4.2,4.2,] 
 		 3: RETURN %v_17[13.2,] 
 BB 14
 	outgoing: 
@@ -1705,15 +1705,15 @@ BB 2
 		 8: user[2.5,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: user->is_moderator? 
+		 0: user->is_moderator? user[2.5,] 
 		 1: %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.1,2.7,] 
 BB 5
 	outgoing: 14 
 	datadep: 
@@ -1722,30 +1722,30 @@ BB 5
 		 1: RETURN 
 BB 6
 	outgoing: 7 8 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
-		 2: 
+		 1: user[2.5,2.5,] 
+		 2: user[2.5,2.5,] 
 BB 7
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
-		 0: user->id 
-		 1: %self->user_id 
+		 0: user->id user[2.5,2.5,] 
+		 1: %self->user_id %self[2.0,2.0,] 
 		 2: %v_8[7.1,] %v_7[7.0,] 
 		 3: %v_9[7.2,] 
 BB 8
 	outgoing: 9 12 
-	datadep: 
+	datadep: 7 6 
 	instructions:
-		 0: 
+		 0: %v_6[7.3,6.1,] 
 BB 9
 	outgoing: 10 11 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->is_moderated? 
+		 1: %self->is_moderated? %self[2.0,2.0,2.0,2.0,] 
 		 2: %v_10[9.1,] 
 BB 10
 	outgoing: 14 
@@ -1755,13 +1755,13 @@ BB 10
 		 1: RETURN 
 BB 11
 	outgoing: 14 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (Time) 
 		 2: %v_12->now %v_12[11.1,] 
 		 3: %v_13->to_i %v_13[11.2,] 
-		 4: %self->created_at 
+		 4: %self->created_at %self[2.0,2.0,2.0,2.0,] 
 		 5: %v_15->to_i %v_15[11.4,] 
 		 6: %v_14[11.3,] %v_16[11.5,] 
 		 7: (MAX_EDIT_MINS) 
@@ -1901,16 +1901,16 @@ BB 2
 		 9: %v_4[2.8,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->is_unavailable 
+		 0: %self->is_unavailable %self[2.0,] 
 		 1: %v_5->! %v_5[3.0,] 
 		 2: %v_6[3.1,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_4[3.2,2.8,] 
 BB 5
 	outgoing: 7 
 	datadep: 
@@ -1925,10 +1925,10 @@ BB 6
 		 0: 
 BB 7
 	outgoing: 8 
-	datadep: 
+	datadep: 6 5 6 5 
 	instructions:
-		 0: 
-		 1: RETURN 
+		 0: %v_8[6.0,5.1,] 
+		 1: RETURN %v_8[6.0,5.1,] 
 BB 8
 	outgoing: 
 	datadep: 
@@ -1954,15 +1954,15 @@ BB 2
 		 8: user[2.5,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: user->is_moderator? 
+		 0: user->is_moderator? user[2.5,] 
 		 1: %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.1,2.7,] 
 BB 5
 	outgoing: 14 
 	datadep: 
@@ -1971,36 +1971,36 @@ BB 5
 		 1: RETURN 
 BB 6
 	outgoing: 7 8 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
-		 2: 
+		 1: user[2.5,2.5,] 
+		 2: user[2.5,2.5,] 
 BB 7
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
-		 0: user->id 
-		 1: %self->user_id 
+		 0: user->id user[2.5,2.5,] 
+		 1: %self->user_id %self[2.0,2.0,] 
 		 2: %v_8[7.1,] %v_7[7.0,] 
 		 3: %v_9[7.2,] 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 7 6 
 	instructions:
-		 0: 
+		 0: %v_6[7.3,6.1,] 
 BB 9
 	outgoing: 10 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
-		 0: %self->is_moderated? 
+		 0: %self->is_moderated? %self[2.0,2.0,2.0,2.0,] 
 		 1: %v_10->! %v_10[9.0,] 
 		 2: %v_11[9.1,] 
 BB 10
 	outgoing: 11 12 
-	datadep: 
+	datadep: 9 7 6 
 	instructions:
-		 0: 
+		 0: %v_6[9.2,7.3,6.1,] 
 BB 11
 	outgoing: 14 
 	datadep: 
@@ -2037,30 +2037,30 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->editor 
+		 0: %self->editor %self[2.0,] 
 		 1: %v_4->! %v_4[3.0,] 
 		 2: %v_5[3.1,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.2,2.6,] 
 BB 5
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
-		 0: %self->editor 
+		 0: %self->editor %self[2.0,2.0,] 
 		 1: %v_6->id %v_6[5.0,] 
-		 2: %self->user_id 
+		 2: %self->user_id %self[2.0,2.0,] 
 		 3: %v_8[5.2,] %v_7[5.1,] 
 		 4: %v_9[5.3,] 
 BB 6
 	outgoing: 7 8 
-	datadep: 
+	datadep: 5 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[5.4,3.2,2.6,] 
 BB 7
 	outgoing: 23 
 	datadep: 
@@ -2069,12 +2069,12 @@ BB 7
 		 1: RETURN 
 BB 8
 	outgoing: 10 11 
-	datadep: 
+	datadep: 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->changes 
-		 3: %self->tagging_changes 
+		 2: %self->changes %self[2.0,2.0,2.0,2.0,] 
+		 3: %self->tagging_changes %self[2.0,2.0,2.0,2.0,] 
 		 4: %v_11->merge %v_11[8.2,] %v_12[8.3,] 
 		 5: %v_13[8.4,] 
 		 6: 
@@ -2092,7 +2092,7 @@ BB 10
 		 1: RETURN 
 BB 11
 	outgoing: 13 14 
-	datadep: 
+	datadep: 2 2 2 2 2 2 2 2 8 
 	instructions:
 		 0: 
 		 1: 
@@ -2100,27 +2100,27 @@ BB 11
 		 3: %v_19->new %v_19[11.2,] 
 		 4: %v_20[11.3,] 
 		 5: 
-		 6: %self->editor 
+		 6: %self->editor %self[2.0,2.0,2.0,2.0,] 
 		 7: %v_21->try %v_21[11.6,] 
 		 8: %v_22[11.7,] 
 		 9: 
-		 10: %self->id 
+		 10: %self->id %self[2.0,2.0,2.0,2.0,] 
 		 11: %v_23[11.10,] 
 		 12: 
 		 13: 
-		 14: %v_24[11.13,] 
+		 14: %v_24[11.13,] all_changes[8.5,] 
 		 15: %v_25[11.14,] 
 BB 13
 	outgoing: 14 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
-		 0: %self->is_expired? 
+		 0: %self->is_expired? %self[2.0,2.0,2.0,2.0,] 
 		 1: %v_26[13.0,] 
 BB 14
 	outgoing: 15 16 
-	datadep: 
+	datadep: 13 11 
 	instructions:
-		 0: 
+		 0: %v_25[13.1,11.14,] 
 BB 15
 	outgoing: 22 
 	datadep: 
@@ -2131,24 +2131,24 @@ BB 15
 		 3: 
 BB 16
 	outgoing: 17 18 
-	datadep: 
+	datadep: 8 8 
 	instructions:
 		 0: 
 		 1: 
-		 2: %v_28[16.1,] 
+		 2: %v_28[16.1,] all_changes[8.5,8.5,] 
 		 3: %v_29[16.2,] 
 BB 17
 	outgoing: 18 
-	datadep: 
+	datadep: 2 2 2 2 2 2 
 	instructions:
-		 0: %self->is_expired? 
+		 0: %self->is_expired? %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
 		 1: %v_30->! %v_30[17.0,] 
 		 2: %v_31[17.1,] 
 BB 18
 	outgoing: 19 20 
-	datadep: 
+	datadep: 17 16 
 	instructions:
-		 0: 
+		 0: %v_29[17.2,16.2,] 
 BB 19
 	outgoing: 21 
 	datadep: 
@@ -2159,10 +2159,10 @@ BB 19
 		 3: 
 BB 20
 	outgoing: 21 
-	datadep: 
+	datadep: 8 8 8 
 	instructions:
 		 0: 
-		 1: all_changes->map 
+		 1: all_changes->map all_changes[8.5,8.5,8.5,] 
 CLOSURE BEGIN
 BB 1
 	outgoing: 12 2 
@@ -2180,32 +2180,32 @@ BB 2
 		 5: 
 BB 3
 	outgoing: 4 8 10 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %cl_1_3[3.1,] 
+		 2: k[2.2,] %cl_1_3[3.1,] 
 		 3: %cl_1_4[3.2,] 
 BB 4
 	outgoing: 5 6 10 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: v[2.3,] 
 		 2: %cl_1_5[4.1,] 
 BB 5
 	outgoing: 7 10 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->merged_into_story 
+		 2: %self->merged_into_story %self[2.0,] 
 		 3: %cl_1_7->short_id %cl_1_7[5.2,] 
 		 4: 
 		 5: %cl_1_6[5.1,] %cl_1_9[5.4,] 
 		 6: 
 		 7: 
-		 8: %self->merged_into_story 
+		 8: %self->merged_into_story %self[2.0,] 
 		 9: %cl_1_12->title %cl_1_12[5.8,] 
 		 10: 
 		 11: %cl_1_14[5.10,] %cl_1_11[5.6,] 
@@ -2220,20 +2220,20 @@ BB 6
 		 2: %cl_1_17[6.1,] 
 BB 7
 	outgoing: 12 
-	datadep: 
+	datadep: 6 5 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_1_16[6.2,5.12,] 
 BB 8
 	outgoing: 10 12 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: 
+		 3: v[2.3,] 
 		 4: %cl_1_20->inspect %cl_1_20[8.3,] 
 		 5: 
-		 6: 
+		 6: v[2.3,] 
 		 7: %cl_1_23->inspect %cl_1_23[8.6,] 
 		 8: %cl_1_18[8.1,] %cl_1_19[8.2,] %cl_1_22[8.5,] 
 		 9: RETURN %cl_1_25[8.8,] 
@@ -2255,15 +2255,15 @@ CLOSURE END
 		 5: %v_35[20.3,] 
 BB 21
 	outgoing: 22 
-	datadep: 
+	datadep: 20 19 
 	instructions:
-		 0: 
+		 0: %v_32[20.5,19.1,] 
 BB 22
 	outgoing: 23 
-	datadep: 
+	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->moderation_reason 
+		 1: %self->moderation_reason %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
 		 2: %v_36[22.1,] 
 		 3: 
 		 4: m->save m[22.2,] 
@@ -2426,10 +2426,10 @@ BB 4
 		 0: 
 BB 5
 	outgoing: 6 
-	datadep: 
+	datadep: 4 3 4 3 
 	instructions:
-		 0: 
-		 1: RETURN 
+		 0: %v_8[4.0,3.4,] 
+		 1: RETURN %v_8[4.0,3.4,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -2519,10 +2519,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 7 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: chr->ord 
+		 1: chr->ord chr[2.2,] 
 		 2: %cl_1_3[3.1,] 
 		 3: %cl_1_4[3.2,] 
 BB 4
@@ -2534,10 +2534,10 @@ BB 4
 		 2: RETURN 
 BB 5
 	outgoing: 9 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: RETURN 
+		 1: RETURN chr[2.2,] 
 BB 7
 	outgoing: 9 
 	datadep: 
@@ -2675,10 +2675,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->tag 
+		 1: t->tag t[2.2,] 
 		 2: %cl_1_3->tag %cl_1_3[3.1,] 
 		 3: RETURN %cl_1_4[3.2,] 
 BB 4
@@ -2710,10 +2710,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 7 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->tag 
+		 1: t->tag t[2.2,] 
 		 2: %cl_2_3->is_media? %cl_2_3[3.1,] 
 		 3: %cl_2_4[3.2,] 
 BB 4
@@ -2778,10 +2778,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: tg->new_record? 
+		 1: tg->new_record? tg[2.2,] 
 		 2: RETURN %cl_1_3[3.1,] 
 BB 4
 	outgoing: 6 
@@ -2812,10 +2812,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: tg->tag 
+		 1: tg->tag tg[2.2,] 
 		 2: %cl_2_3->tag %cl_2_3[3.1,] 
 		 3: RETURN %cl_2_4[3.2,] 
 BB 4
@@ -2852,10 +2852,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: tg->marked_for_destruction? 
+		 1: tg->marked_for_destruction? tg[2.2,] 
 		 2: RETURN %cl_3_3[3.1,] 
 BB 4
 	outgoing: 6 
@@ -2886,10 +2886,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: tg->tag 
+		 1: tg->tag tg[2.2,] 
 		 2: %cl_4_3->tag %cl_4_3[3.1,] 
 		 3: RETURN %cl_4_4[3.2,] 
 BB 4
@@ -2951,20 +2951,20 @@ BB 2
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: 
+		 0: %self[2.0,] 
 		 1: %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.1,2.7,] 
 BB 5
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
-		 0: %self->taggings 
+		 0: %self->taggings %self[2.0,2.0,] 
 		 1: %v_6->map %v_6[5.0,] 
 CLOSURE BEGIN
 BB 1
@@ -2982,10 +2982,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: t->tag 
+		 1: t->tag t[2.2,] 
 		 2: %cl_1_3->tag %cl_1_3[3.1,] 
 		 3: RETURN %cl_1_4[3.2,] 
 BB 4
@@ -3000,13 +3000,13 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: %v_7[5.1,] 
+		 2: %self[2.0,2.0,] %v_7[5.1,] 
 		 3: RETURN %v_7[5.1,] 
 BB 6
 	outgoing: 7 
-	datadep: 
+	datadep: 3 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %v_5[3.0,] 
 BB 7
 	outgoing: 
 	datadep: 
@@ -3046,20 +3046,20 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 7 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: tagging->tag 
+		 1: tagging->tag tagging[2.2,] 
 		 2: %cl_1_3->tag %cl_1_3[3.1,] 
 		 3: new_tag_names_a->include? %cl_1_4[3.2,] 
 		 4: %cl_1_5->! %cl_1_5[3.3,] 
 		 5: %cl_1_6[3.4,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: tagging->mark_for_destruction 
+		 1: tagging->mark_for_destruction tagging[2.2,] 
 		 2: 
 BB 5
 	outgoing: 9 
@@ -3068,9 +3068,9 @@ BB 5
 		 0: RETURN 
 BB 6
 	outgoing: 9 
-	datadep: 
+	datadep: 4 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_1_7[4.1,] 
 BB 7
 	outgoing: 9 
 	datadep: 
@@ -3101,27 +3101,27 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 12 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: tag_name->to_s 
+		 1: tag_name->to_s tag_name[2.2,] 
 		 2: 
 		 3: %cl_2_3[3.1,] %cl_2_4[3.2,] 
 		 4: %cl_2_5[3.3,] 
 BB 4
 	outgoing: 5 12 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->tags 
+		 0: %self->tags %self[2.0,] 
 		 1: 
 		 2: %cl_2_6->exists? %cl_2_6[4.0,] %cl_2_7[4.1,] 
 		 3: %cl_2_8->! %cl_2_8[4.2,] 
 		 4: %cl_2_9[4.3,] 
 BB 5
 	outgoing: 6 10 
-	datadep: 
+	datadep: 4 3 
 	instructions:
-		 0: 
+		 0: %cl_2_5[4.4,3.3,] 
 BB 6
 	outgoing: 7 8 12 
 	datadep: 
@@ -3136,14 +3136,14 @@ BB 6
 		 7: %cl_2_14[6.5,] 
 BB 7
 	outgoing: 9 12 
-	datadep: 
+	datadep: 2 2 6 
 	instructions:
 		 0: 
-		 1: %self->taggings 
+		 1: %self->taggings %self[2.0,2.0,] 
 		 2: %cl_2_15->build %cl_2_15[7.1,] 
 		 3: %cl_2_16[7.2,] 
 		 4: 
-		 5: t->id 
+		 5: t->id t[6.6,] 
 		 6: %cl_2_17[7.5,] 
 		 7: 
 BB 8
@@ -3153,9 +3153,9 @@ BB 8
 		 0: 
 BB 9
 	outgoing: 14 
-	datadep: 
+	datadep: 8 7 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_2_17[8.0,7.5,] 
 BB 10
 	outgoing: 14 
 	datadep: 
@@ -3227,30 +3227,30 @@ BB 2
 		 12: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: u->match 
+		 1: u->match u[2.11,] 
 		 2: %v_10[3.1,] 
 BB 4
 	outgoing: 3 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
 		 3: 
-		 4: u->gsub! %v_11[4.2,] %v_12[4.3,] 
+		 4: u->gsub! u[2.11,] %v_11[4.2,] %v_12[4.3,] 
 		 5: 
 BB 6
 	outgoing: 8 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
 		 3: 
-		 4: u->gsub %v_15[6.3,] 
+		 4: u->gsub %v_15[6.3,] u[2.11,] 
 		 5: 
 		 6: 
 		 7: %v_16->gsub %v_16[6.4,] %v_18[6.6,] 
@@ -3301,16 +3301,16 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->unavailable_at 
+		 0: %self->unavailable_at %self[2.0,] 
 		 1: %v_4->! %v_4[3.0,] 
 		 2: %v_5[3.1,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.2,2.6,] 
 BB 5
 	outgoing: 13 
 	datadep: 
@@ -3322,23 +3322,23 @@ BB 5
 		 4: RETURN %v_7[5.2,] 
 BB 6
 	outgoing: 7 8 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->unavailable_at 
+		 1: %self->unavailable_at %self[2.0,2.0,] 
 		 2: %v_8[6.1,] 
 BB 7
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 
 	instructions:
-		 0: %self->is_unavailable 
+		 0: %self->is_unavailable %self[2.0,2.0,] 
 		 1: %v_9->! %v_9[7.0,] 
 		 2: %v_10[7.1,] 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 7 6 
 	instructions:
-		 0: 
+		 0: %v_8[7.2,6.1,] 
 BB 9
 	outgoing: 11 
 	datadep: 
@@ -3354,9 +3354,9 @@ BB 10
 		 0: 
 BB 11
 	outgoing: 13 
-	datadep: 
+	datadep: 10 9 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %v_11[10.0,9.2,] 
 BB 13
 	outgoing: 
 	datadep: 
@@ -3399,10 +3399,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: c->is_gone? 
+		 1: c->is_gone? c[2.2,] 
 		 2: %cl_1_3->! %cl_1_3[3.1,] 
 		 3: RETURN %cl_1_4[3.2,] 
 BB 4
@@ -3446,10 +3446,10 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self->merged_into_story 
+		 1: %self->merged_into_story %self[2.0,] 
 		 2: %v_4->update_comments_count! %v_4[3.1,] 
 		 3: RETURN %v_5[3.2,] 
 BB 4
@@ -3482,23 +3482,23 @@ BB 2
 		 8: u[2.5,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: u->match 
+		 1: u->match u[2.5,] 
 		 2: %v_5[3.1,] 
 		 3: %v_5[3.1,] 
 BB 4
 	outgoing: 5 9 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.3,2.7,] 
 BB 5
 	outgoing: 6 7 
-	datadep: 
+	datadep: 3 3 
 	instructions:
 		 0: 
-		 1: 
+		 1: m[3.2,] 
 		 2: 
 		 3: %v_6->split %v_6[5.1,] %v_7[5.2,] 
 		 4: %v_8[5.3,] 
@@ -3520,11 +3520,11 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: p->match 
+		 2: p->match p[2.2,] 
 		 3: RETURN %cl_1_4[3.2,] 
 BB 4
 	outgoing: 6 
@@ -3539,16 +3539,16 @@ BB 6
 	instructions:
 CLOSURE END
 		 7: 
-		 8: 
+		 8: m[3.2,] 
 		 9: params->any? params[5.4,] 
 		 10: %v_11[5.9,] 
 BB 6
 	outgoing: 8 
-	datadep: 
+	datadep: 5 
 	instructions:
 		 0: 
 		 1: 
-		 2: params->join %v_13[6.1,] 
+		 2: params->join %v_13[6.1,] params[5.4,] 
 		 3: %v_14[6.2,] %v_12[6.0,] 
 		 4: 
 BB 7
@@ -3559,9 +3559,9 @@ BB 7
 		 1: %v_16[7.0,] 
 BB 8
 	outgoing: 10 
-	datadep: 
+	datadep: 7 6 5 5 
 	instructions:
-		 0: 
+		 0: %v_15[7.1,6.3,] %v_10[5.8,5.8,] 
 		 1: %v_17[8.0,] 
 		 2: 
 BB 9
@@ -3571,10 +3571,10 @@ BB 9
 		 0: 
 BB 10
 	outgoing: 11 
-	datadep: 
+	datadep: 8 2 2 
 	instructions:
 		 0: 
-		 1: u->to_s 
+		 1: u->to_s u[8.1,2.5,2.5,] 
 		 2: %v_18->strip %v_18[10.1,] 
 		 3: %v_19[10.2,] 
 		 4: RETURN %v_19[10.2,] 
@@ -3610,33 +3610,33 @@ BB 3
 		 2: RETURN 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
-		 0: 
-		 1: 
+		 0: user[2.5,] 
+		 1: user[2.5,] 
 BB 5
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: user->is_moderator? 
+		 0: user->is_moderator? user[2.5,] 
 		 1: %v_6[5.0,] 
 BB 6
 	outgoing: 7 8 
-	datadep: 
+	datadep: 5 4 
 	instructions:
-		 0: 
+		 0: %v_5[5.1,4.0,] 
 BB 7
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 
 	instructions:
-		 0: %self->url 
+		 0: %self->url %self[2.0,2.0,] 
 		 1: %v_7->present? %v_7[7.0,] 
 		 2: %v_8[7.1,] 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 7 5 4 
 	instructions:
-		 0: 
+		 0: %v_5[7.2,5.1,4.0,] 
 BB 9
 	outgoing: 11 
 	datadep: 
@@ -3652,9 +3652,9 @@ BB 10
 		 1: 
 BB 11
 	outgoing: 13 
-	datadep: 
+	datadep: 10 9 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %v_9[10.1,9.1,] 
 BB 13
 	outgoing: 
 	datadep: 
@@ -3680,15 +3680,15 @@ BB 2
 		 8: %v_4[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->comments_path 
+		 0: %self->comments_path %self[2.0,] 
 		 1: RETURN %v_5[3.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->url 
+		 0: %self->url %self[2.0,] 
 		 1: RETURN %v_6[4.0,] 
 BB 6
 	outgoing: 
@@ -3715,15 +3715,15 @@ BB 2
 		 8: %v_4[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->comments_url 
+		 0: %self->comments_url %self[2.0,] 
 		 1: RETURN %v_5[3.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->url 
+		 0: %self->url %self[2.0,] 
 		 1: RETURN %v_6[4.0,] 
 BB 6
 	outgoing: 
@@ -3775,28 +3775,28 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 13 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: v->reason 
+		 1: v->reason v[2.2,] 
 		 2: %cl_1_4->to_s %cl_1_4[3.1,] 
 		 3: %cl_1_5[3.2,] 
 		 4: %cl_1_3[3.3,] 
 BB 4
 	outgoing: 5 13 
-	datadep: 
+	datadep: 3 
 	instructions:
-		 0: 
+		 0: %cl_1_5[3.2,] 
 		 1: 
 BB 5
 	outgoing: 6 7 13 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: v->reason 
+		 1: v->reason v[2.2,2.2,] 
 		 2: %cl_1_6->to_s %cl_1_6[5.1,] 
 		 3: %cl_1_7[5.2,] 
-		 4: v->vote 
+		 4: v->vote v[2.2,2.2,] 
 		 5: %cl_1_8[5.3,] %cl_1_9[5.4,] 
 		 6: %cl_1_7[5.2,] %cl_1_8[5.3,5.5,] 
 		 7: 
@@ -3810,34 +3810,34 @@ BB 6
 		 1: %cl_1_12[6.0,] 
 BB 7
 	outgoing: 8 11 
-	datadep: 
+	datadep: 6 5 
 	instructions:
-		 0: 
+		 0: %cl_1_11[6.1,5.8,] 
 BB 8
 	outgoing: 9 10 13 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: v->reason 
+		 1: v->reason v[2.2,2.2,2.2,] 
 		 2: %cl_1_14->to_s %cl_1_14[8.1,] 
 		 3: %cl_1_15[8.2,] 
 		 4: %cl_1_13[8.3,] 
 BB 9
 	outgoing: 10 13 
-	datadep: 
+	datadep: 8 
 	instructions:
 		 0: 
-		 1: %cl_1_16[9.0,] 
+		 1: %cl_1_15[8.2,] %cl_1_16[9.0,] 
 		 2: %cl_1_16[9.0,] 
 BB 10
 	outgoing: 12 13 
-	datadep: 
+	datadep: 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: v->reason 
+		 1: v->reason v[2.2,2.2,2.2,2.2,] 
 		 2: %cl_1_17->to_s %cl_1_17[10.1,] 
 		 3: %cl_1_18[10.2,] 
-		 4: v->user 
+		 4: v->user v[2.2,2.2,2.2,2.2,] 
 		 5: %cl_1_20->username %cl_1_20[10.4,] 
 		 6: %cl_1_19->push %cl_1_19[10.3,] %cl_1_21[10.5,] 
 		 7: 
@@ -3848,9 +3848,9 @@ BB 11
 		 0: RETURN 
 BB 12
 	outgoing: 15 
-	datadep: 
+	datadep: 10 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_1_22[10.6,] 
 BB 13
 	outgoing: 15 
 	datadep: 
@@ -3883,27 +3883,27 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 20 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %cl_2_3[3.1,] 
+		 2: k[2.2,] %cl_2_3[3.1,] 
 		 3: %cl_2_4[3.2,] 
 BB 4
 	outgoing: 19 20 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: 
+		 2: k[2.2,] 
 		 3: %cl_2_5[4.1,] 
 		 4: 
 BB 5
 	outgoing: 6 7 20 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: k[2.2,] 
 		 2: 
 		 3: %cl_2_9[5.2,] 
 		 4: 
@@ -3912,14 +3912,14 @@ BB 5
 		 7: %cl_2_12[5.6,] 
 BB 6
 	outgoing: 7 20 
-	datadep: 
+	datadep: 5 
 	instructions:
-		 0: 
+		 0: %cl_2_11[5.5,] 
 BB 7
 	outgoing: 8 11 20 
-	datadep: 
+	datadep: 2 2 6 5 
 	instructions:
-		 0: 
+		 0: k[2.2,2.2,] %cl_2_12[6.0,5.6,] 
 		 1: %cl_2_13[7.0,] 
 BB 8
 	outgoing: 9 10 20 
@@ -3930,30 +3930,30 @@ BB 8
 		 2: %cl_2_15[8.1,] 
 BB 9
 	outgoing: 10 20 
-	datadep: 
+	datadep: 8 
 	instructions:
-		 0: 
+		 0: %cl_2_14[8.0,] 
 BB 10
 	outgoing: 11 20 
-	datadep: 
+	datadep: 9 8 2 2 2 
 	instructions:
-		 0: 
+		 0: %cl_2_15[9.0,8.1,] k[2.2,2.2,2.2,] 
 		 1: %cl_2_16[10.0,] 
 BB 11
 	outgoing: 12 13 
-	datadep: 
+	datadep: 10 7 
 	instructions:
-		 0: 
+		 0: %cl_2_13[10.1,7.0,] 
 BB 12
 	outgoing: 13 
-	datadep: 
+	datadep: 2 2 
 	instructions:
-		 0: 
+		 0: k[2.2,2.2,] 
 BB 13
 	outgoing: 14 15 20 
-	datadep: 
+	datadep: 12 10 7 5 5 5 5 
 	instructions:
-		 0: 
+		 0: %cl_2_13[12.0,10.1,7.0,] %cl_2_10[5.3,5.3,5.3,5.3,] 
 		 1: 
 		 2: 
 		 3: 
@@ -3965,15 +3965,15 @@ BB 14
 		 1: %cl_2_19[14.0,] 
 BB 15
 	outgoing: 16 17 
-	datadep: 
+	datadep: 14 13 
 	instructions:
-		 0: 
+		 0: %cl_2_18[14.1,13.2,] 
 BB 16
 	outgoing: 18 20 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: k[2.2,2.2,2.2,2.2,] 
 		 2: 
 		 3: %cl_2_21->join %cl_2_22[16.2,] %cl_2_21[16.1,] 
 		 4: 
@@ -3987,15 +3987,15 @@ BB 17
 		 1: %cl_2_26[17.0,] 
 BB 18
 	outgoing: 20 22 
-	datadep: 
+	datadep: 17 16 13 13 13 13 
 	instructions:
-		 0: 
+		 0: %cl_2_25[17.1,16.5,] %cl_2_17[13.0,13.0,13.0,13.0,] 
 		 1: RETURN %cl_2_27[18.0,] 
 BB 19
 	outgoing: 22 
-	datadep: 
+	datadep: 4 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_2_7[4.3,] 
 BB 20
 	outgoing: 22 
 	datadep: 
@@ -4035,9 +4035,9 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 15 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: 
+		 0: %self[2.0,] 
 		 1: RETURN %v_4[3.0,] 
 BB 4
 	outgoing: 6 
@@ -4048,7 +4048,7 @@ BB 4
 		 2: 
 BB 6
 	outgoing: 8 9 
-	datadep: 
+	datadep: 2 2 2 4 
 	instructions:
 		 0: 
 		 1: 
@@ -4058,21 +4058,21 @@ BB 6
 		 5: 
 		 6: 
 		 7: 
-		 8: %self->url 
+		 8: %self->url %self[2.0,] 
 		 9: 
 		 10: 
 		 11: (Rails) 
 		 12: %v_13->application %v_13[6.11,] 
 		 13: %v_14->domain %v_14[6.12,] 
 		 14: 
-		 15: %self->fetching_ip 
+		 15: %self->fetching_ip %self[2.0,] 
 		 16: %v_16[6.14,] 
 		 17: 
 		 18: s->fetch %v_19[6.17,] s[6.4,] %v_11[6.8,] 
-		 19: %v_20[6.18,] 
+		 19: %self[2.0,] %v_20[6.18,] 
 		 20: %v_20[6.18,] 
 		 21: 
-		 22: 
+		 22: %v_6[4.2,] 
 BB 8
 	outgoing: 14 
 	datadep: 
@@ -4088,16 +4088,16 @@ BB 9
 		 3: %v_22[9.2,] 
 BB 10
 	outgoing: 13 15 
-	datadep: 
+	datadep: 9 
 	instructions:
-		 0: 
+		 0: %v_21[9.1,] 
 BB 11
 	outgoing: 12 13 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
 		 1: 
-		 2: 
+		 2: %v_6[4.2,] 
 BB 12
 	outgoing: 14 
 	datadep: 
@@ -4105,17 +4105,17 @@ BB 12
 		 0: 
 BB 13
 	outgoing: 15 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
-		 1: %v_23[13.0,] 
+		 1: %v_6[4.2,] %v_23[13.0,] 
 		 2: %v_23[13.0,] 
 BB 14
 	outgoing: 15 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,] 
 		 2: RETURN %v_25[14.1,] 
 BB 15
 	outgoing: 
@@ -4141,21 +4141,21 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: 
+		 0: %self[2.0,] 
 		 1: RETURN %v_4[3.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: (Nokogiri) 
-		 3: %self->fetched_content 
+		 3: %self->fetched_content %self[2.0,] 
 		 4: %v_7->to_s %v_7[4.3,] 
 		 5: %v_6->HTML %v_8[4.4,] %v_6[4.2,] 
-		 6: %v_9[4.5,] 
+		 6: %self[2.0,] %v_9[4.5,] 
 		 7: RETURN %v_9[4.5,] 
 BB 6
 	outgoing: 
@@ -4187,10 +4187,10 @@ BB 2
 		 13: %v_6[2.12,] 
 BB 3
 	outgoing: 31 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: RETURN 
+		 1: RETURN title[2.7,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -4200,12 +4200,12 @@ BB 4
 		 2: 
 BB 6
 	outgoing: 8 9 
-	datadep: 
+	datadep: 2 4 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: doc->at_css %v_11[6.2,] 
+		 3: doc->at_css doc[2.10,] %v_11[6.2,] 
 		 4: %v_12->attributes %v_12[6.3,] 
 		 5: 
 		 6: %v_13[6.4,] %v_14[6.5,] 
@@ -4213,7 +4213,7 @@ BB 6
 		 8: %v_16[6.7,] 
 		 9: %v_16[6.7,] 
 		 10: 
-		 11: 
+		 11: %v_8[4.2,] 
 BB 8
 	outgoing: 14 
 	datadep: 
@@ -4229,16 +4229,16 @@ BB 9
 		 3: %v_18[9.2,] 
 BB 10
 	outgoing: 13 31 
-	datadep: 
+	datadep: 9 
 	instructions:
-		 0: 
+		 0: %v_17[9.1,] 
 BB 11
 	outgoing: 12 13 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
 		 1: 
-		 2: 
+		 2: %v_8[4.2,] 
 BB 12
 	outgoing: 14 
 	datadep: 
@@ -4246,17 +4246,17 @@ BB 12
 		 0: 
 BB 13
 	outgoing: 31 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
-		 1: %v_19[13.0,] 
+		 1: %v_19[13.0,] %v_8[4.2,] 
 		 2: %v_19[13.0,] 
 BB 14
 	outgoing: 15 25 
-	datadep: 
+	datadep: 6 6 
 	instructions:
 		 0: 
-		 1: title->to_s 
+		 1: title->to_s title[6.8,6.8,] 
 		 2: 
 		 3: %v_21[14.1,] %v_22[14.2,] 
 		 4: %v_23[14.3,] 
@@ -4268,12 +4268,12 @@ BB 15
 		 1: 
 BB 17
 	outgoing: 18 19 
-	datadep: 
+	datadep: 2 15 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: doc->at_css %v_27[17.2,] 
+		 3: doc->at_css %v_27[17.2,] doc[2.10,] 
 		 4: %v_28->attributes %v_28[17.3,] 
 		 5: 
 		 6: %v_29[17.4,] %v_30[17.5,] 
@@ -4281,7 +4281,7 @@ BB 17
 		 8: %v_32[17.7,] 
 		 9: %v_32[17.7,] 
 		 10: 
-		 11: 
+		 11: %v_24[15.1,] 
 BB 18
 	outgoing: 24 
 	datadep: 
@@ -4297,16 +4297,16 @@ BB 19
 		 3: %v_34[19.2,] 
 BB 20
 	outgoing: 23 31 
-	datadep: 
+	datadep: 19 
 	instructions:
-		 0: 
+		 0: %v_33[19.1,] 
 BB 21
 	outgoing: 22 23 
-	datadep: 
+	datadep: 15 
 	instructions:
 		 0: 
 		 1: 
-		 2: 
+		 2: %v_24[15.1,] 
 BB 22
 	outgoing: 24 
 	datadep: 
@@ -4314,10 +4314,10 @@ BB 22
 		 0: 
 BB 23
 	outgoing: 31 
-	datadep: 
+	datadep: 15 
 	instructions:
 		 0: 
-		 1: %v_35[23.0,] 
+		 1: %v_35[23.0,] %v_24[15.1,] 
 		 2: %v_35[23.0,] 
 BB 24
 	outgoing: 26 
@@ -4331,20 +4331,20 @@ BB 25
 		 0: 
 BB 26
 	outgoing: 27 28 
-	datadep: 
+	datadep: 17 6 17 6 
 	instructions:
 		 0: 
-		 1: title->to_s 
+		 1: title->to_s title[17.8,6.8,17.8,6.8,] 
 		 2: 
 		 3: %v_37[26.1,] %v_38[26.2,] 
 		 4: %v_39[26.3,] 
 BB 27
 	outgoing: 29 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: doc->at_css %v_40[27.1,] 
+		 2: doc->at_css doc[2.10,] %v_40[27.1,] 
 		 3: %v_41->try %v_41[27.2,] 
 		 4: %v_42->to_s %v_42[27.3,] 
 		 5: %v_43[27.4,] 
@@ -4356,10 +4356,10 @@ BB 28
 		 0: 
 BB 29
 	outgoing: 31 
-	datadep: 
+	datadep: 27 17 6 17 6 
 	instructions:
 		 0: 
-		 1: RETURN 
+		 1: RETURN title[27.5,17.8,6.8,17.8,6.8,] 
 BB 31
 	outgoing: 
 	datadep: 
@@ -4384,17 +4384,17 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 29 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: 
+		 0: %self[2.0,] 
 		 1: RETURN %v_4[3.0,] 
 BB 4
 	outgoing: 6 26 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->parsed_content 
+		 2: %self->parsed_content %self[2.0,] 
 		 3: %v_6[4.2,] 
 		 4: %v_6[4.2,] 
 BB 6
@@ -4405,12 +4405,12 @@ BB 6
 		 1: 
 BB 8
 	outgoing: 9 10 20 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: doc->at_css %v_10[8.2,] 
+		 3: doc->at_css doc[4.3,] %v_10[8.2,] 
 		 4: %v_11->attributes %v_11[8.3,] 
 		 5: 
 		 6: %v_13[8.5,] %v_12[8.4,] 
@@ -4421,55 +4421,55 @@ BB 8
 		 11: %v_17[8.10,] 
 BB 9
 	outgoing: 10 20 
-	datadep: 
+	datadep: 8 
 	instructions:
 		 0: 
 		 1: (URI) 
-		 2: %v_18->parse %v_18[9.1,] 
+		 2: %v_18->parse %v_18[9.1,] cu[8.8,] 
 		 3: %v_19[9.2,] 
 		 4: %v_19[9.2,] 
 BB 10
 	outgoing: 11 12 
-	datadep: 
+	datadep: 9 8 
 	instructions:
-		 0: 
+		 0: %v_17[9.4,8.10,] 
 BB 11
 	outgoing: 12 20 
-	datadep: 
+	datadep: 9 
 	instructions:
-		 0: ucu->scheme 
+		 0: ucu->scheme ucu[9.3,] 
 		 1: %v_20->present? %v_20[11.0,] 
 		 2: %v_21[11.1,] 
 BB 12
 	outgoing: 13 14 
-	datadep: 
+	datadep: 11 9 8 
 	instructions:
-		 0: 
+		 0: %v_17[11.2,9.4,8.10,] 
 BB 13
 	outgoing: 14 20 
-	datadep: 
+	datadep: 9 9 
 	instructions:
-		 0: ucu->host 
+		 0: ucu->host ucu[9.3,9.3,] 
 		 1: %v_22->present? %v_22[13.0,] 
 		 2: %v_23[13.1,] 
 BB 14
 	outgoing: 15 17 
-	datadep: 
+	datadep: 13 11 9 8 
 	instructions:
-		 0: 
+		 0: %v_17[13.2,11.2,9.4,8.10,] 
 BB 15
 	outgoing: 16 20 
-	datadep: 
+	datadep: 8 8 8 8 8 8 6 6 6 6 
 	instructions:
 		 0: 
-		 1: 
+		 1: cu[8.8,8.8,8.8,8.8,8.8,8.8,] 
 		 2: 
-		 3: 
+		 3: %v_7[6.1,6.1,6.1,6.1,] 
 BB 16
 	outgoing: 29 
-	datadep: 
+	datadep: 15 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %v_24[15.1,] 
 BB 17
 	outgoing: 18 
 	datadep: 
@@ -4477,11 +4477,11 @@ BB 17
 		 0: 
 BB 18
 	outgoing: 19 20 
-	datadep: 
+	datadep: 17 6 6 6 6 
 	instructions:
-		 0: 
+		 0: %v_25[17.0,] 
 		 1: 
-		 2: 
+		 2: %v_7[6.1,6.1,6.1,6.1,] 
 BB 19
 	outgoing: 25 
 	datadep: 
@@ -4497,16 +4497,16 @@ BB 20
 		 3: %v_27[20.2,] 
 BB 21
 	outgoing: 24 29 
-	datadep: 
+	datadep: 20 
 	instructions:
-		 0: 
+		 0: %v_26[20.1,] 
 BB 22
 	outgoing: 23 24 
-	datadep: 
+	datadep: 6 
 	instructions:
 		 0: 
 		 1: 
-		 2: 
+		 2: %v_7[6.1,] 
 BB 23
 	outgoing: 25 
 	datadep: 
@@ -4514,10 +4514,10 @@ BB 23
 		 0: 
 BB 24
 	outgoing: 29 
-	datadep: 
+	datadep: 6 
 	instructions:
 		 0: 
-		 1: %v_28[24.0,] 
+		 1: %v_28[24.0,] %v_7[6.1,] 
 		 2: %v_28[24.0,] 
 BB 25
 	outgoing: 27 
@@ -4531,10 +4531,10 @@ BB 26
 		 0: 
 BB 27
 	outgoing: 29 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self->url 
+		 1: %self->url %self[2.0,] 
 		 2: RETURN %v_30[27.1,] 
 BB 29
 	outgoing: 

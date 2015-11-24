@@ -43,21 +43,21 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->deleted_by_recipient? 
+		 0: %self->deleted_by_recipient? %self[2.0,] 
 		 1: %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: 
+		 0: %v_3[3.1,2.6,] 
 BB 5
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->destroy 
+		 1: %self->destroy %self[2.0,2.0,] 
 		 2: RETURN %v_5[5.1,] 
 BB 6
 	outgoing: 8 
@@ -118,11 +118,11 @@ BB 3
 		 0: RETURN 
 BB 4
 	outgoing: 6 16 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->recipient 
+		 2: %self->recipient %self[2.0,] 
 		 3: %v_7->email_messages? %v_7[4.2,] 
 		 4: %v_8[4.3,] 
 BB 6
@@ -133,16 +133,16 @@ BB 6
 		 1: 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 2 2 6 
 	instructions:
 		 0: 
 		 1: 
 		 2: (EmailMessage) 
-		 3: %self->recipient 
-		 4: %v_12->notify %v_13[8.3,] %v_12[8.2,] 
+		 3: %self->recipient %self[2.0,] 
+		 4: %v_12->notify %v_13[8.3,] %self[2.0,] %v_12[8.2,] 
 		 5: %v_14->deliver %v_14[8.4,] 
 		 6: %v_15[8.5,] 
-		 7: 
+		 7: %v_9[6.1,] 
 BB 9
 	outgoing: 15 
 	datadep: 
@@ -157,12 +157,12 @@ BB 10
 		 2: %v_17[10.1,] 
 BB 11
 	outgoing: 14 21 
-	datadep: 
+	datadep: 10 
 	instructions:
-		 0: 
+		 0: %v_16[10.0,] 
 BB 12
 	outgoing: 13 14 
-	datadep: 
+	datadep: 2 6 
 	instructions:
 		 0: 
 		 1: %v_18[12.0,] 
@@ -170,13 +170,13 @@ BB 12
 		 3: (Rails) 
 		 4: %v_19->logger %v_19[12.3,] 
 		 5: 
-		 6: %self->recipient 
+		 6: %self->recipient %self[2.0,] 
 		 7: %v_22->email %v_22[12.6,] 
 		 8: 
 		 9: %v_24[12.8,] %v_21[12.5,] 
 		 10: %v_20->error %v_25[12.9,] %v_20[12.4,] 
 		 11: %v_26[12.10,] 
-		 12: 
+		 12: %v_9[6.1,] 
 BB 13
 	outgoing: 15 
 	datadep: 
@@ -184,10 +184,10 @@ BB 13
 		 0: 
 BB 14
 	outgoing: 21 
-	datadep: 
+	datadep: 6 
 	instructions:
 		 0: 
-		 1: %v_27[14.0,] 
+		 1: %v_27[14.0,] %v_9[6.1,] 
 		 2: %v_27[14.0,] 
 BB 15
 	outgoing: 17 
@@ -201,18 +201,18 @@ BB 16
 		 0: 
 BB 17
 	outgoing: 18 19 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self->recipient 
+		 1: %self->recipient %self[2.0,] 
 		 2: %v_29->pushover_messages? %v_29[17.1,] 
 		 3: %v_30[17.2,] 
 BB 18
 	outgoing: 21 
-	datadep: 
+	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->recipient 
+		 1: %self->recipient %self[2.0,] 
 		 2: 
 		 3: (Rails) 
 		 4: %v_32->application %v_32[18.3,] 
@@ -220,17 +220,17 @@ BB 18
 		 6: 
 		 7: %v_35[18.6,] 
 		 8: 
-		 9: %self->author 
+		 9: %self->author %self[2.0,] 
 		 10: %v_37->username %v_37[18.9,] 
 		 11: 
-		 12: %self->subject 
+		 12: %self->subject %self[2.0,] 
 		 13: %v_39[18.11,] 
 		 14: %v_36[18.7,] %v_41[18.13,] 
-		 15: %self->plaintext_body 
-		 16: %self->url 
+		 15: %self->plaintext_body %self[2.0,] 
+		 16: %self->url %self[2.0,] 
 		 17: 
 		 18: 
-		 19: %self->author 
+		 19: %self->author %self[2.0,] 
 		 20: %v_46->username %v_46[18.19,] 
 		 21: %v_45[18.17,] 
 		 22: 
@@ -272,21 +272,21 @@ BB 2
 		 14: %v_6[2.12,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: u->id 
+		 1: u->id u[2.13,] 
 		 2: %v_7[3.1,] 
 		 3: 
-		 4: %self[3.2,] 
-		 5: 
-		 6: RETURN 
+		 4: %self[3.2,] username[2.5,] 
+		 5: username[2.5,] 
+		 6: RETURN username[2.5,] 
 BB 4
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->errors 
+		 1: %self->errors %self[2.0,2.7,] 
 		 2: 
 		 3: %v_9->add %v_9[4.1,] %v_10[4.2,] 
 		 4: RETURN %v_11[4.3,] 

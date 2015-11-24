@@ -49,33 +49,33 @@ BB 2
 		 12: %v_8[2.11,] 
 BB 3
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,] 
 		 2: %v_9->delete! %v_9[3.1,] 
 		 3: 
-		 4: %self->reset_session 
+		 4: %self->reset_session %self[2.0,] 
 		 5: 
-		 6: %self->flash 
+		 6: %self->flash %self[2.0,] 
 		 7: 
 		 8: %v_13[3.7,] 
 		 9: 
 		 10: 
-		 11: %self->redirect_to %v_14[3.10,] 
+		 11: %self->redirect_to %v_14[3.10,] %self[2.0,] 
 		 12: RETURN %v_15[3.11,] 
 BB 4
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->flash 
+		 2: %self->flash %self[2.0,] 
 		 3: 
 		 4: %v_18[4.3,] 
 		 5: 
-		 6: %self->settings_path 
-		 7: %self->redirect_to %v_19[4.6,] 
+		 6: %self->settings_path %self[2.0,] 
+		 7: %self->redirect_to %self[2.0,] %v_19[4.6,] 
 		 8: RETURN %v_20[4.7,] 
 BB 7
 	outgoing: 
@@ -103,23 +103,23 @@ BB 2
 		 9: %v_5[2.8,] 
 BB 3
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash 
+		 1: %self->flash %self[2.0,] 
 		 2: 
 		 3: %v_7[3.2,] 
 		 4: 
 		 5: 
-		 6: %self->redirect_to %v_8[3.5,] 
+		 6: %self->redirect_to %self[2.0,] %v_8[3.5,] 
 		 7: RETURN %v_9[3.6,] 
 BB 4
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->session 
+		 2: %self->session %self[2.0,] 
 		 3: (SecureRandom) 
 		 4: %v_12->hex %v_12[4.3,] 
 		 5: %v_13[4.4,] 
@@ -133,7 +133,7 @@ BB 4
 		 13: %v_18[4.12,] 
 		 14: 
 		 15: 
-		 16: %self->session 
+		 16: %self->session %self[2.0,] 
 		 17: %v_21[4.16,] 
 		 18: %v_20[4.14,] 
 		 19: %v_19[4.13,] %v_23[4.18,] 
@@ -145,7 +145,7 @@ BB 4
 		 25: %v_28[4.24,] 
 		 26: 
 		 27: %v_14->subscription_url %v_14[4.7,] %v_30[4.26,] 
-		 28: %self->redirect_to %v_31[4.27,] 
+		 28: %self->redirect_to %self[2.0,] %v_31[4.27,] 
 		 29: RETURN %v_32[4.28,] 
 BB 7
 	outgoing: 
@@ -175,23 +175,23 @@ BB 2
 		 11: %v_7[2.10,] 
 BB 3
 	outgoing: 16 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash 
+		 1: %self->flash %self[2.0,] 
 		 2: 
 		 3: %v_9[3.2,] 
 		 4: 
 		 5: 
-		 6: %self->redirect_to %v_10[3.5,] 
+		 6: %self->redirect_to %self[2.0,] %v_10[3.5,] 
 		 7: RETURN %v_11[3.6,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->params 
+		 2: %self->params %self[2.0,] 
 		 3: %v_13[4.2,] 
 		 4: %v_14->to_s %v_14[4.3,] 
 		 5: %v_15->present? %v_15[4.4,] 
@@ -199,46 +199,46 @@ BB 4
 		 7: %v_17[4.6,] 
 BB 6
 	outgoing: 16 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash 
+		 1: %self->flash %self[2.0,] 
 		 2: 
 		 3: %v_19[6.2,] 
 		 4: 
 		 5: 
-		 6: %self->redirect_to %v_20[6.5,] 
+		 6: %self->redirect_to %self[2.0,] %v_20[6.5,] 
 		 7: RETURN %v_21[6.6,] 
 BB 7
 	outgoing: 9 10 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->params 
+		 2: %self->params %self[2.0,] 
 		 3: %v_23[7.2,] 
 		 4: %v_24->to_s %v_24[7.3,] 
-		 5: %self->session 
+		 5: %self->session %self[2.0,] 
 		 6: %v_26[7.5,] 
 		 7: %v_27->to_s %v_27[7.6,] 
 		 8: %v_25[7.4,] %v_28[7.7,] 
 		 9: %v_29[7.8,] 
 BB 9
 	outgoing: 11 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->params 
+		 2: %self->params %self[2.0,] 
 		 3: %v_31[9.2,] 
 		 4: %v_32->inspect %v_32[9.3,] 
 		 5: 
 		 6: %v_30[9.1,] %v_34[9.5,] 
-		 7: %self->session 
+		 7: %self->session %self[2.0,] 
 		 8: %v_36[9.7,] 
 		 9: %v_37->inspect %v_37[9.8,] 
 		 10: %v_35[9.6,] %v_38[9.9,] 
-		 11: %self->raise %v_39[9.10,] 
+		 11: %self->raise %self[2.0,] %v_39[9.10,] 
 		 12: 
 BB 10
 	outgoing: 11 
@@ -247,37 +247,37 @@ BB 10
 		 0: 
 BB 11
 	outgoing: 12 13 
-	datadep: 
+	datadep: 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->params 
+		 1: %self[2.0,2.0,] 
+		 2: %self->params %self[2.0,2.0,] 
 		 3: %v_42[11.2,] 
 		 4: %v_43->to_s %v_43[11.3,] 
 		 5: %v_44[11.4,] 
 		 6: 
-		 7: 
+		 7: %self[2.0,2.0,] 
 		 8: %v_45->save! %v_45[11.7,] 
 		 9: 
-		 10: 
+		 10: %self[2.0,2.0,] 
 		 11: %v_47->pushover_user_key %v_47[11.10,] 
 		 12: %v_48->present? %v_48[11.11,] 
 		 13: %v_49[11.12,] 
 BB 12
 	outgoing: 14 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash 
+		 1: %self->flash %self[2.0,2.0,] 
 		 2: 
 		 3: %v_51[12.2,] 
 		 4: 
 BB 13
 	outgoing: 14 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash 
+		 1: %self->flash %self[2.0,2.0,] 
 		 2: 
 		 3: 
 		 4: %v_53[13.2,] %v_54[13.3,] 
@@ -285,11 +285,11 @@ BB 13
 		 6: %v_55[13.4,] 
 BB 14
 	outgoing: 16 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->redirect_to %v_56[14.1,] 
+		 2: %self->redirect_to %self[2.0,2.0,2.0,2.0,] %v_56[14.1,] 
 		 3: RETURN %v_57[14.2,] 
 BB 16
 	outgoing: 
@@ -321,16 +321,16 @@ BB 2
 		 13: %v_7[2.12,] 
 BB 3
 	outgoing: 5 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash 
+		 1: %self->flash %self[2.0,] 
 		 2: %v_8->now %v_8[3.1,] 
 		 3: 
 		 4: %v_10[3.3,] 
 		 5: 
-		 6: 
-		 7: %v_11[3.6,] 
+		 6: %self[2.0,] 
+		 7: %self[2.0,] %v_11[3.6,] 
 		 8: 
 BB 4
 	outgoing: 5 
@@ -339,12 +339,12 @@ BB 4
 		 0: 
 BB 5
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: %self->render %v_13[5.2,] 
+		 3: %self->render %v_13[5.2,] %self[2.0,2.0,] 
 		 4: RETURN %v_14[5.3,] 
 BB 6
 	outgoing: 

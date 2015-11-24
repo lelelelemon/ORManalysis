@@ -32,13 +32,13 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: u->stories 
+		 1: u->stories u[2.2,] 
 		 2: %cl_1_3->map %cl_1_3[3.1,] 
 		 3: %cl_1_4->sum %cl_1_4[3.2,] 
-		 4: u->comments 
+		 4: u->comments u[2.2,] 
 		 5: %cl_1_6->map %cl_1_6[3.4,] 
 		 6: %cl_1_7->sum %cl_1_7[3.5,] 
 		 7: %cl_1_5[3.3,] %cl_1_8[3.6,] 
@@ -98,34 +98,34 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 8 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: v->class 
+		 1: v->class v[2.2,] 
 		 2: (ActiveModel) 
 		 3: %cl_1_4[3.2,] 
 		 4: %cl_1_5[3.3,] 
 BB 4
 	outgoing: 5 8 
-	datadep: 
+	datadep: 3 
 	instructions:
-		 0: 
+		 0: %cl_1_4[3.2,] 
 BB 5
 	outgoing: 6 7 8 
-	datadep: 
+	datadep: 4 3 
 	instructions:
-		 0: 
+		 0: %cl_1_5[4.0,3.3,] 
 		 1: %cl_1_6[5.0,] 
 BB 6
 	outgoing: 7 8 
-	datadep: 
+	datadep: 4 3 
 	instructions:
-		 0: 
+		 0: %cl_1_5[4.0,3.3,] 
 BB 7
 	outgoing: 8 10 
-	datadep: 
+	datadep: 3 3 3 3 6 5 
 	instructions:
-		 0: 
+		 0: %cl_1_3[3.1,3.1,3.1,3.1,] %cl_1_6[6.0,5.0,] 
 		 1: RETURN %cl_1_7[7.0,] 
 BB 8
 	outgoing: 10 
@@ -173,21 +173,21 @@ BB 3
 		 1: %v_3[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: %v_4[4.1,] 
 		 3: 
-		 4: %self->is_admin? 
+		 4: %self->is_admin? %self[2.0,2.0,] 
 		 5: %v_5->! %v_5[4.4,] 
 		 6: %v_6[4.5,] 
 BB 5
 	outgoing: 7 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
-		 1: attrs->push 
+		 1: attrs->push attrs[4.2,] 
 		 2: 
 BB 6
 	outgoing: 7 
@@ -196,16 +196,16 @@ BB 6
 		 0: 
 BB 7
 	outgoing: 8 
-	datadep: 
+	datadep: 4 4 2 2 2 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: attrs->push 
+		 1: attrs->push attrs[4.2,4.2,] 
 		 2: 
 		 3: 
-		 4: %v_9[7.3,] 
+		 4: %v_0[2.1,2.1,2.1,2.1,] %current_module[2.3,2.3,2.3,2.3,] %v_9[7.3,] 
 		 5: %v_10[7.4,] 
 		 6: 
-		 7: %self->avatar_url 
+		 7: %self->avatar_url %self[2.0,2.0,2.0,2.0,] 
 		 8: %v_11[7.7,] 
 		 9: 
 		 10: RETURN h[7.5,7.8,] 
@@ -246,18 +246,18 @@ BB 4
 		 4: %v_5[4.3,] 
 BB 5
 	outgoing: 6 
-	datadep: 
+	datadep: 4 
 	instructions:
-		 0: 
+		 0: %v_4[4.2,] 
 BB 6
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 2 2 5 4 4 4 
 	instructions:
-		 0: %self->email 
+		 0: %self->email %self[2.0,2.0,2.0,2.0,] 
 		 1: %v_6->strip %v_6[6.0,] 
 		 2: %v_7->downcase %v_7[6.1,] 
-		 3: %v_5->hexdigest %v_8[6.2,] 
-		 4: %v_9[6.3,] 
+		 3: %v_5->hexdigest %v_5[5.0,4.3,] %v_8[6.2,] 
+		 4: %v_3[4.1,4.1,] %v_9[6.3,] 
 		 5: 
 		 6: 
 		 7: %v_11[6.5,] 
@@ -297,12 +297,12 @@ BB 3
 		 2: RETURN 
 BB 4
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: k->to_f 
-		 2: %self->stories_submitted_count 
-		 3: %self->comments_posted_count 
+		 1: k->to_f k[2.7,] 
+		 2: %self->stories_submitted_count %self[2.0,] 
+		 3: %self->comments_posted_count %self[2.0,] 
 		 4: %v_8[4.2,] %v_9[4.3,] 
 		 5: %v_7[4.1,] %v_10[4.4,] 
 		 6: RETURN %v_11[4.5,] 
@@ -391,18 +391,18 @@ BB 3
 		 1: RETURN 
 BB 4
 	outgoing: 5 12 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: (Story) 
-		 2: obj->is_a? %v_5[4.1,] 
+		 2: obj->is_a? %v_5[4.1,] obj[2.5,] 
 		 3: %v_6[4.2,] 
 BB 5
 	outgoing: 6 7 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: obj->is_downvotable? 
+		 1: obj->is_downvotable? obj[2.5,] 
 		 2: %v_7[5.1,] 
 BB 6
 	outgoing: 24 
@@ -412,10 +412,10 @@ BB 6
 		 1: RETURN 
 BB 7
 	outgoing: 8 9 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: obj->vote 
+		 1: obj->vote obj[2.5,] 
 		 2: %v_9[7.1,] 
 		 3: %v_10[7.2,] 
 BB 8
@@ -437,18 +437,18 @@ BB 11
 		 0: 
 BB 12
 	outgoing: 13 20 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: (Comment) 
-		 2: obj->is_a? %v_12[12.1,] 
+		 2: obj->is_a? obj[2.5,] %v_12[12.1,] 
 		 3: %v_13[12.2,] 
 BB 13
 	outgoing: 14 15 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: obj->is_downvotable? 
+		 1: obj->is_downvotable? obj[2.5,] 
 		 2: %v_14[13.1,] 
 BB 14
 	outgoing: 24 
@@ -458,10 +458,10 @@ BB 14
 		 1: RETURN 
 BB 15
 	outgoing: 16 17 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: obj->current_vote 
+		 1: obj->current_vote obj[2.5,] 
 		 2: %v_16->try %v_16[15.1,] 
 		 3: %v_17->to_i %v_17[15.2,] 
 		 4: %v_18[15.3,] 
@@ -490,14 +490,14 @@ BB 20
 		 0: 
 BB 21
 	outgoing: 22 
-	datadep: 
+	datadep: 20 17 
 	instructions:
-		 0: 
+		 0: %v_15[20.0,17.1,] 
 BB 22
 	outgoing: 24 
-	datadep: 
+	datadep: 21 9 
 	instructions:
-		 0: 
+		 0: %v_8[21.0,9.1,] 
 		 1: 
 		 2: RETURN 
 BB 24
@@ -676,10 +676,10 @@ BB 2
 		 3: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->comments 
+		 1: %self->comments %self[2.0,] 
 		 2: %cl_1_3->each %cl_1_3[3.1,] 
 CLOSURE BEGIN
 BB 1
@@ -697,10 +697,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: c->delete_for_user 
+		 1: c->delete_for_user %self[2.0,] c[2.2,] 
 		 2: RETURN %cl_2_3[3.1,] 
 BB 4
 	outgoing: 6 
@@ -715,7 +715,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 3: 
-		 4: %self->sent_messages 
+		 4: %self->sent_messages %self[2.0,] 
 		 5: %cl_1_5->each %cl_1_5[3.4,] 
 CLOSURE BEGIN
 BB 1
@@ -753,7 +753,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 6: 
-		 7: %self->received_messages 
+		 7: %self->received_messages %self[2.0,] 
 		 8: %cl_1_7->each %cl_1_7[3.7,] 
 CLOSURE BEGIN
 BB 1
@@ -791,7 +791,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 9: 
-		 10: %self->invitations 
+		 10: %self->invitations %self[2.0,] 
 		 11: %cl_1_9->destroy_all %cl_1_9[3.10,] 
 		 12: 
 		 13: 
@@ -877,15 +877,15 @@ BB 2
 		 7: %v_3[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->is_banned? 
+		 0: %self->is_banned? %self[2.0,] 
 		 1: %v_4[3.0,] 
 BB 4
 	outgoing: 5 
-	datadep: 
+	datadep: 3 2 
 	instructions:
-		 0: %v_3->! 
+		 0: %v_3->! %v_3[3.1,2.6,] 
 		 1: RETURN %v_5[4.0,] 
 BB 5
 	outgoing: 
@@ -1023,12 +1023,12 @@ BB 2
 		 9: %v_4[2.8,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: (Pushover) 
-		 2: %self->pushover_user_key 
-		 3: %v_5->push %v_5[3.1,] %v_6[3.2,] 
+		 2: %self->pushover_user_key %self[2.0,] 
+		 3: %v_5->push %v_5[3.1,] %v_6[3.2,] params[2.5,] 
 		 4: RETURN %v_7[3.3,] 
 BB 4
 	outgoing: 6 

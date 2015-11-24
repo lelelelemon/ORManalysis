@@ -34,11 +34,11 @@ BB 2
 		 24: %v_10[2.23,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->params 
+		 1: %self[2.0,] 
+		 2: %self->params %self[2.0,] 
 		 3: %v_12[3.2,] 
 		 4: %v_13[3.3,] 
 		 5: RETURN %v_13[3.3,] 
@@ -134,12 +134,12 @@ BB 2
 		 30: %v_14[2.29,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash 
+		 1: %self->flash %self[2.0,] 
 		 2: 
-		 3: 
+		 3: %self[2.0,] 
 		 4: %v_17->recipient %v_17[3.3,] 
 		 5: %v_18->username %v_18[3.4,] 
 		 6: %v_19->to_s %v_19[3.5,] 
@@ -149,16 +149,16 @@ BB 3
 		 10: %v_23[3.9,] 
 		 11: 
 		 12: 
-		 13: %self->redirect_to %v_24[3.12,] 
+		 13: %self->redirect_to %v_24[3.12,] %self[2.0,] 
 		 14: RETURN %v_25[3.13,] 
 BB 4
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: %self->render %v_28[4.2,] 
+		 3: %self->render %self[2.0,] %v_28[4.2,] 
 		 4: RETURN %v_29[4.3,] 
 BB 6
 	outgoing: 
@@ -200,41 +200,41 @@ BB 2
 		 23: %v_13[2.22,] 
 BB 3
 	outgoing: 5 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: 
+		 0: %self[2.0,] 
 		 1: %v_14->recipient %v_14[3.0,] 
 		 2: %v_15->username %v_15[3.1,] 
 		 3: 
 BB 4
 	outgoing: 5 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: 
+		 0: %self[2.0,] 
 		 1: %v_17->author %v_17[4.0,] 
 		 2: %v_18->username %v_18[4.1,] 
 		 3: %v_19[4.2,] 
 BB 5
 	outgoing: 6 7 
-	datadep: 
+	datadep: 4 3 2 2 2 2 
 	instructions:
-		 0: 
+		 0: %v_16[4.3,3.2,] 
 		 1: 
-		 2: 
+		 2: %self[2.0,2.0,] 
 		 3: %v_20->recipient_user_id %v_20[5.2,] 
-		 4: 
+		 4: %self[2.0,2.0,] 
 		 5: %v_22->id %v_22[5.4,] 
 		 6: %v_21[5.3,] %v_23[5.5,] 
 		 7: %v_24[5.6,] 
 BB 6
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] 
 		 2: 
 		 3: 
-		 4: 
+		 4: %self[2.0,2.0,] 
 		 5: %v_26->save %v_26[6.4,] 
 		 6: 
 BB 7
@@ -244,32 +244,32 @@ BB 7
 		 0: 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,2.0,2.0,] 
 		 2: %v_28->subject %v_28[8.1,] 
 		 3: 
 		 4: %v_29->match %v_29[8.2,] 
 		 5: %v_31[8.4,] 
 BB 9
 	outgoing: 12 
-	datadep: 
+	datadep: 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
-		 2: 
+		 1: %self[2.0,2.0,2.0,2.0,] 
+		 2: %self[2.0,2.0,2.0,2.0,] 
 		 3: %v_33->subject %v_33[9.2,] 
 		 4: %v_34[9.3,] 
 		 5: RETURN %v_34[9.3,] 
 BB 10
 	outgoing: 12 
-	datadep: 
+	datadep: 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,2.0,2.0,] 
 		 2: 
-		 3: 
+		 3: %self[2.0,2.0,2.0,2.0,] 
 		 4: %v_37->subject %v_37[10.3,] 
 		 5: %v_36[10.2,] 
 		 6: %v_39[10.5,] 
@@ -302,10 +302,10 @@ BB 2
 		 11: %v_7[2.10,] 
 BB 3
 	outgoing: 5 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,] 
 		 2: 
 		 3: 
 		 4: 
@@ -316,21 +316,21 @@ BB 4
 		 0: 
 BB 5
 	outgoing: 6 7 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] 
 		 2: %v_10->recipient_user_id %v_10[5.1,] 
-		 3: 
+		 3: %self[2.0,2.0,] 
 		 4: %v_12->id %v_12[5.3,] 
 		 5: %v_13[5.4,] %v_11[5.2,] 
 		 6: %v_14[5.5,] 
 BB 6
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] 
 		 2: 
 		 3: 
 		 4: 
@@ -341,37 +341,37 @@ BB 7
 		 0: 
 BB 8
 	outgoing: 9 10 
-	datadep: 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,2.0,2.0,] 
 		 2: %v_17->save! %v_17[8.1,] 
 		 3: 
-		 4: %self->flash 
+		 4: %self->flash %self[2.0,2.0,2.0,2.0,] 
 		 5: 
 		 6: %v_20[8.5,] 
 		 7: 
-		 8: 
+		 8: %self[2.0,2.0,2.0,2.0,] 
 		 9: %v_21->author_user_id %v_21[8.8,] 
-		 10: 
+		 10: %self[2.0,2.0,2.0,2.0,] 
 		 11: %v_23->id %v_23[8.10,] 
 		 12: %v_24[8.11,] %v_22[8.9,] 
 		 13: %v_25[8.12,] 
 BB 9
 	outgoing: 12 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->redirect_to %v_26[9.1,] 
+		 2: %self->redirect_to %self[2.0,2.0,2.0,2.0,] %v_26[9.1,] 
 		 3: RETURN %v_27[9.2,] 
 BB 10
 	outgoing: 12 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self->redirect_to %v_29[10.1,] 
+		 2: %self->redirect_to %self[2.0,2.0,2.0,2.0,] %v_29[10.1,] 
 		 3: RETURN %v_30[10.2,] 
 BB 12
 	outgoing: 
@@ -414,33 +414,33 @@ BB 2
 		 5: 
 BB 3
 	outgoing: 4 5 21 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: v->to_s 
+		 1: v->to_s v[2.3,] 
 		 2: 
 		 3: %cl_1_3[3.1,] %cl_1_4[3.2,] 
 		 4: %cl_1_5[3.3,] 
 BB 4
 	outgoing: 5 21 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: k->match 
+		 1: k->match k[2.2,] 
 		 2: %cl_1_7[4.1,] 
 		 3: %cl_1_7[4.1,] 
 BB 5
 	outgoing: 6 19 
-	datadep: 
+	datadep: 4 3 
 	instructions:
-		 0: 
+		 0: %cl_1_5[4.3,3.3,] 
 BB 6
 	outgoing: 7 17 21 
-	datadep: 
+	datadep: 4 
 	instructions:
 		 0: 
 		 1: (Message) 
-		 2: 
+		 2: m[4.2,] 
 		 3: 
 		 4: %cl_1_8->where %cl_1_10[6.3,] %cl_1_8[6.1,] 
 		 5: %cl_1_11->first %cl_1_11[6.4,] 
@@ -448,13 +448,13 @@ BB 6
 		 7: %cl_1_12[6.5,] 
 BB 7
 	outgoing: 8 9 21 
-	datadep: 
+	datadep: 6 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
-		 3: message->author_user_id 
-		 4: 
+		 3: message->author_user_id message[6.6,] 
+		 4: %self[2.0,2.0,] 
 		 5: %cl_1_14->id %cl_1_14[7.4,] 
 		 6: %cl_1_15[7.5,] %cl_1_13[7.3,] 
 		 7: %cl_1_16[7.6,] 
@@ -475,11 +475,11 @@ BB 9
 		 0: 
 BB 10
 	outgoing: 11 12 21 
-	datadep: 
+	datadep: 8 6 2 2 2 
 	instructions:
 		 0: 
-		 1: message->recipient_user_id 
-		 2: 
+		 1: message->recipient_user_id message[8.1,6.6,] 
+		 2: %self[2.0,2.0,2.0,] 
 		 3: %cl_1_19->id %cl_1_19[10.2,] 
 		 4: %cl_1_18[10.1,] %cl_1_20[10.3,] 
 		 5: %cl_1_21[10.4,] 
@@ -500,16 +500,16 @@ BB 12
 		 0: 
 BB 13
 	outgoing: 14 15 
-	datadep: 
+	datadep: 11 8 7 
 	instructions:
 		 0: 
-		 1: 
+		 1: ok[11.3,8.3,7.1,] 
 BB 14
 	outgoing: 16 21 
-	datadep: 
+	datadep: 11 8 6 
 	instructions:
 		 0: 
-		 1: message->save! 
+		 1: message->save! message[11.1,8.1,6.6,] 
 		 2: 
 		 3: 
 		 4: %cl_1_24[14.3,] 
@@ -531,9 +531,9 @@ BB 17
 		 0: 
 BB 18
 	outgoing: 23 
-	datadep: 
+	datadep: 17 15 14 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %cl_1_24[17.0,15.0,14.3,] 
 BB 19
 	outgoing: 23 
 	datadep: 
@@ -571,17 +571,17 @@ BB 4
 		 1: %v_10[4.0,] 
 BB 5
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %v_11[5.0,] 
+		 1: %v_6[2.12,2.12,] %v_7[2.13,2.13,] %v_11[5.0,] 
 		 2: %v_12[5.1,] 
 		 3: 
-		 4: 
+		 4: %self[2.0,2.0,] 
 		 5: %v_13->update_unread_message_count! %v_13[5.4,] 
 		 6: 
 		 7: 
-		 8: %self->redirect_to %v_15[5.7,] 
+		 8: %self->redirect_to %self[2.0,2.0,] %v_15[5.7,] 
 		 9: RETURN %v_16[5.8,] 
 BB 7
 	outgoing: 
@@ -662,46 +662,46 @@ BB 2
 		 9: %v_5[2.8,] 
 BB 3
 	outgoing: 4 
-	datadep: 
+	datadep: 2 
 	instructions:
-		 0: %self->params 
+		 0: %self->params %self[2.0,] 
 		 1: %v_6[3.0,] 
 		 2: %v_7[3.1,] 
 BB 4
 	outgoing: 5 11 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %v_3->where %v_8[4.0,] 
+		 1: %v_3->where %v_3[2.6,2.6,] %v_8[4.0,] 
 		 2: %v_9->first %v_9[4.1,] 
-		 3: %v_10[4.2,] 
+		 3: %self[2.0,2.0,] %v_10[4.2,] 
 		 4: %v_10[4.2,] 
 BB 5
 	outgoing: 6 7 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] 
 		 2: %v_11->author_user_id %v_11[5.1,] 
-		 3: 
+		 3: %self[2.0,2.0,] 
 		 4: %v_13->id %v_13[5.3,] 
 		 5: %v_14[5.4,] %v_12[5.2,] 
 		 6: %v_15[5.5,] 
 BB 6
 	outgoing: 7 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
-		 0: 
+		 0: %self[2.0,2.0,] 
 		 1: %v_16->recipient_user_id %v_16[6.0,] 
-		 2: 
+		 2: %self[2.0,2.0,] 
 		 3: %v_18->id %v_18[6.2,] 
 		 4: %v_17[6.1,] %v_19[6.3,] 
 		 5: %v_20[6.4,] 
 BB 7
 	outgoing: 8 9 
-	datadep: 
+	datadep: 6 5 
 	instructions:
-		 0: 
+		 0: %v_15[6.5,5.5,] 
 BB 8
 	outgoing: 14 
 	datadep: 
@@ -721,15 +721,15 @@ BB 11
 		 0: 
 BB 12
 	outgoing: 14 
-	datadep: 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash 
+		 1: %self->flash %self[2.0,2.0,] 
 		 2: 
 		 3: %v_23[12.2,] 
 		 4: 
 		 5: 
-		 6: %self->redirect_to %v_24[12.5,] 
+		 6: %self->redirect_to %v_24[12.5,] %self[2.0,2.0,] 
 		 7: 
 		 8: RETURN 
 BB 14

@@ -23,13 +23,13 @@ BB 3
 		 1: %v_3[3.0,] 
 BB 4
 	outgoing: 5 
-	datadep: 
+	datadep: 2 2 2 2 2 2 3 2 3 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] user[2.5,2.5,] 
 		 2: 
-		 3: 
-		 4: RETURN 
+		 3: %self[2.0,2.0,] params[3.1,2.6,] 
+		 4: RETURN params[3.1,2.6,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -88,14 +88,14 @@ BB 2
 		 11: %v_4[2.10,] 
 BB 3
 	outgoing: 5 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: (Story) 
 		 1: %v_5->arel_table %v_5[3.0,] 
 		 2: %v_6[3.1,] 
-		 3: %self->hidden_arel 
+		 3: %self->hidden_arel %self[2.0,] 
 		 4: %v_7->in %v_8[3.3,] %v_7[3.2,] 
-		 5: hidden->where %v_9[3.4,] 
+		 5: hidden->where %v_9[3.4,] hidden[2.7,] 
 		 6: %v_10[3.5,] 
 		 7: 
 BB 4
@@ -105,21 +105,21 @@ BB 4
 		 0: 
 BB 5
 	outgoing: 6 7 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] 
 		 2: %v_11[5.1,] 
 		 3: %v_12->try %v_12[5.2,] 
 		 4: %v_13[5.3,] 
 BB 6
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 2 2 3 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] 
 		 2: %v_14[6.1,] 
-		 3: %self->filter_tags %v_15[6.2,] 
+		 3: %self->filter_tags %self[2.0,2.0,] %v_15[6.2,] hidden[3.6,2.7,] 
 		 4: %v_16[6.3,] 
 		 5: 
 BB 7
@@ -129,11 +129,11 @@ BB 7
 		 0: 
 BB 8
 	outgoing: 9 
-	datadep: 
+	datadep: 6 3 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: hidden->order %v_17[8.1,] 
+		 2: hidden->order %v_17[8.1,] hidden[6.4,3.6,2.7,] 
 		 3: RETURN %v_18[8.2,] 
 BB 9
 	outgoing: 
@@ -237,7 +237,7 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 18 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: stories->select 
@@ -246,7 +246,7 @@ BB 3
 		 4: %cl_1_5[3.3,] 
 		 5: 
 		 6: (RECENT_DAYS_OLD) 
-		 7: %cl_1_7[3.6,] 
+		 7: %cl_1_7[3.6,] x[2.2,] 
 		 8: %cl_1_8->days %cl_1_8[3.7,] 
 		 9: %cl_1_9->ago %cl_1_9[3.8,] 
 		 10: %cl_1_6->gt %cl_1_6[3.4,] %cl_1_10[3.9,] 
@@ -270,10 +270,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: s->score 
+		 1: s->score s[2.2,] 
 		 2: (HOT_STORY_POINTS) 
 		 3: %cl_2_3[3.1,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] 
@@ -297,15 +297,15 @@ CLOSURE END
 		 20: %cl_1_18[3.19,] 
 BB 4
 	outgoing: 5 18 
-	datadep: 
+	datadep: 3 
 	instructions:
-		 0: 
+		 0: %cl_1_17[3.18,] 
 BB 5
 	outgoing: 6 16 18 
-	datadep: 
+	datadep: 4 3 3 3 
 	instructions:
-		 0: 
-		 1: %cl_1_19[5.0,] 
+		 0: %cl_1_18[4.0,3.19,] 
+		 1: %cl_1_19[5.0,] %cl_1_16[3.17,3.17,] 
 		 2: %cl_1_20[5.1,] 
 BB 6
 	outgoing: 7 8 18 
@@ -317,56 +317,56 @@ BB 6
 		 3: %cl_1_23[6.2,] 
 BB 7
 	outgoing: 8 18 
-	datadep: 
+	datadep: 6 
 	instructions:
-		 0: 
+		 0: %cl_1_22[6.1,] 
 BB 8
 	outgoing: 9 18 
-	datadep: 
+	datadep: 7 6 3 3 3 3 3 3 3 3 3 3 3 3 
 	instructions:
-		 0: 
+		 0: %cl_1_23[7.0,6.2,] 
 		 1: %cl_1_24[8.0,] 
 		 2: %cl_1_25[8.1,] 
-		 3: %cl_1_21[8.2,] 
+		 3: %cl_1_21[8.2,] story_ids[3.15,3.15,3.15,3.15,] 
 		 4: %cl_1_26[8.3,] 
 		 5: 
 		 6: %cl_1_26->length %cl_1_26[8.3,] 
 		 7: %cl_1_28[8.6,] 
-		 8: story_ids->length 
+		 8: story_ids->length story_ids[3.15,3.15,3.15,3.15,] 
 		 9: %cl_1_29[8.7,] %cl_1_30[8.8,] 
-		 10: %cl_1_27[8.9,] 
+		 10: %cl_1_27[8.9,] story_ids[3.15,3.15,3.15,3.15,] 
 		 11: %cl_1_31[8.10,] 
 		 12: 
 BB 9
 	outgoing: 10 11 18 
-	datadep: 
+	datadep: 8 
 	instructions:
-		 0: keep_ids->length 
+		 0: keep_ids->length keep_ids[8.4,] 
 		 1: (StoriesPaginator) 
 		 2: %cl_1_34[9.1,] 
 		 3: %cl_1_35[9.2,] 
 BB 10
 	outgoing: 11 18 
-	datadep: 
+	datadep: 9 
 	instructions:
-		 0: 
+		 0: %cl_1_34[9.1,] 
 BB 11
 	outgoing: 12 14 18 
-	datadep: 
+	datadep: 10 9 9 9 
 	instructions:
-		 0: 
-		 1: %cl_1_36[11.0,] 
+		 0: %cl_1_35[10.0,9.2,] 
+		 1: %cl_1_36[11.0,] %cl_1_33[9.0,9.0,] 
 		 2: %cl_1_37[11.1,] 
 BB 12
 	outgoing: 13 18 
-	datadep: 
+	datadep: 8 8 8 8 8 8 
 	instructions:
 		 0: 
 		 1: 
-		 2: story_ids->shuffle! 
+		 2: story_ids->shuffle! story_ids[8.11,8.11,] 
 		 3: 
-		 4: story_ids->shift 
-		 5: keep_ids->push %cl_1_39[12.4,] 
+		 4: story_ids->shift story_ids[8.11,8.11,] 
+		 5: keep_ids->push keep_ids[8.4,8.4,] %cl_1_39[12.4,] 
 BB 13
 	outgoing: 9 
 	datadep: 
@@ -414,11 +414,11 @@ BB 4
 		 1: %v_6[4.0,] 
 BB 5
 	outgoing: 6 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: stories->order %v_7[5.1,] 
+		 2: stories->order stories[2.7,2.7,] %v_7[5.1,] 
 		 3: RETURN %v_8[5.2,] 
 BB 6
 	outgoing: 
@@ -558,9 +558,9 @@ BB 2
 		 9: %v_3[2.8,] 
 BB 3
 	outgoing: 5 
-	datadep: 
+	datadep: 2 2 
 	instructions:
-		 0: %self->filter_hidden 
+		 0: %self->filter_hidden %self[2.0,] scope[2.5,] 
 		 1: %v_4[3.0,] 
 		 2: 
 BB 4
@@ -570,21 +570,21 @@ BB 4
 		 0: 
 BB 5
 	outgoing: 6 7 
-	datadep: 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] 
 		 2: %v_5[5.1,] 
 		 3: %v_6->try %v_6[5.2,] 
 		 4: %v_7[5.3,] 
 BB 6
 	outgoing: 8 
-	datadep: 
+	datadep: 2 2 2 2 3 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %self[2.0,2.0,] 
 		 2: %v_8[6.1,] 
-		 3: %self->filter_tags %v_9[6.2,] 
+		 3: %self->filter_tags %self[2.0,2.0,] scope[3.1,2.5,] %v_9[6.2,] 
 		 4: %v_10[6.3,] 
 		 5: 
 BB 7
@@ -594,10 +594,10 @@ BB 7
 		 0: 
 BB 8
 	outgoing: 9 
-	datadep: 
+	datadep: 6 3 2 
 	instructions:
 		 0: 
-		 1: RETURN 
+		 1: RETURN scope[6.4,3.1,2.5,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -651,14 +651,14 @@ BB 2
 		 8: %v_3[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: (HiddenStory) 
 		 1: %v_4->arel_table %v_4[3.0,] 
 		 2: (HiddenStory) 
 		 3: %v_6->arel_table %v_6[3.2,] 
 		 4: %v_7[3.3,] 
-		 5: 
+		 5: %self[2.0,] 
 		 6: %v_9->id %v_9[3.5,] 
 		 7: %v_8->eq %v_8[3.4,] %v_10[3.6,] 
 		 8: %v_5->where %v_5[3.1,] %v_11[3.7,] 
