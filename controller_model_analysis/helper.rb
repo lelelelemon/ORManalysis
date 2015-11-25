@@ -114,6 +114,12 @@ def trigger_save?(call)
 	return false
 end
 
+def trigger_create?(call)
+	if ["INSERT"].include?call.getQueryType	
+		return true
+	end
+end
+
 #read variable class list
 def check_class_match(name)
 	if $class_map.has_key?(name)
@@ -244,5 +250,10 @@ end
 
 #Graphviz doesn't recognize special characters
 def simplify(name)
-	return name.delete('!').delete('?')
+	n = name.delete('!').delete('?')
+	return n
+end
+
+def simplify1(name)
+	return name.tr(".","_")
 end

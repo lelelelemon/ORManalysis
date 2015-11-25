@@ -25,6 +25,20 @@ class Instruction
 		@closure = nil
 		@index = 0
 		@f_tag = 0
+		@bb = nil
+		@inode = nil
+	end
+	def setINode(i)
+		@inode = i
+	end
+	def getINode
+		@inode
+	end
+	def setBB(_bb)
+		@bb = _bb
+	end
+	def getBB
+		@bb
 	end
 	def setFTag(f)
 		@f_tag = f
@@ -78,6 +92,13 @@ class Call_instr < Instruction
 		@caller = _caller;
 		@funcname = _funcname	
 		@resolved_caller = ""
+		@call_handler = nil
+	end
+	def setCallHandler(h)
+		@call_handler = h
+	end
+	def getCallHandler
+		@call_handler
 	end
 	def getCaller
 		@caller
@@ -141,9 +162,24 @@ class Basic_block
 		@calls = Array.new
 		@index = index.to_i
 		@label_n = 0
+		@cfg = nil
+		@return_list = Array.new
+	end
+	def addReturn(r)
+		@return_list.push(r)
+	end
+	def getReturns
+		@return_list
+	end	
+	def addCFG(cfg)
+		@cfg = cfg
+	end
+	def getCFG
+		@cfg
 	end
 	def addInstr(instr)
 		@instructions.push(instr)
+		instr.setBB(self)
 	end
 	def getInstr
 		@instructions
@@ -232,17 +268,33 @@ end
 class CFG
 	def initialize
 		@bb = Array.new
+		@return_list = Array.new
+	end
+	def addReturn(r)
+		@return_list.push(r)
+	end
+	def getReturns
+		@return_list
 	end
 	def getBB
 		@bb
 	end
 	def addBB(basicb)
 		@bb.push(basicb)
+		basicb.addCFG(self)
 	end
 	def findCalls
 		getBB.each do |bb|
 			bb.findCalls
 		end	
+	end
+	def getBBByIndex(i)
+		@bb.each do |b|
+			if b.getIndex == i
+				return b
+			end
+		end
+		return nil
 	end
 end
 

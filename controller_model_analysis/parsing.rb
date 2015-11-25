@@ -11,6 +11,7 @@ load 'read_files.rb'
 load 'traverse_ast.rb'
 load 'read_dataflow.rb'
 load 'trace_flow.rb'
+load 'query_flow.rb'
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',
@@ -144,15 +145,24 @@ def trace_function(start_class, start_function, params, returnv, level)
 				caller_class = call.getTableName
 			end
 
-			if trigger_save?(call)
+			if trigger_save?(call) or trigger_create?(call)
 				#puts "#{blank}=====transaction begin====="
 				puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
-				if caller_class != nil
+				if caller_class != nil and trigger_save?(call)
 					$class_map[caller_class].getSave.each do |save_action|
 						temp_name = "#{caller_class}.#{save_action.getFuncName}"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 							trace_function(caller_class, save_action.getFuncName, "", "", level+2)
+						end
+					end
+				end
+				if caller_class != nil and trigger_create?(call)	
+					$class_map[caller_class].getCreate.each do |create_action|
+						temp_name = "#{caller_class}.#{create_action.getFuncName}"
+						if $non_repeat_list.include?(temp_name) == false
+							$non_repeat_list.push(temp_name)
+							trace_function(caller_class, create_action.getFuncName, "", "", level+2)
 						end
 					end
 				end
@@ -203,7 +213,7 @@ def print_types(class_name=nil)
 end
 
 def print_instructions(class_name=nil)
-if class_name == nil
+	if class_name == nil
 		$class_map.each do |keyc, valuec|
 			valuec.print_instructions
 		end	
@@ -256,6 +266,10 @@ opt_parser = OptionParser.new do |opt|
 
 	opt.on("-t", "--trace-dataflow CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name,function_name; print call graph and data flow to a file, use graphviz to visualize") do |trace_input|
 		options[:trace] = trace_input
+	end
+
+	opt.on("-g", "--query-graph CLASS_NAME,FUNCTION_NAME",Array,"print out flow graph only containing queries") do |q_input|
+		options[:query_graph] = q_input
 	end
 
 	opt.on("-o", "--output-dir DIR",String,"Output directory for graphviz files") do |output_dir|
@@ -316,6 +330,13 @@ if options[:class_name_for_type] != nil
 end
 
 if options[:printinstr] != nil
+	if options[:read_flow] == nil or options[:read_flow] == false
+		if options[:dir] != nil
+			read_dataflow(options[:dir])
+		else
+			read_dataflow
+		end
+	end
 	if options[:printinstr] == "all"
 		print_instructions
 	else
@@ -354,6 +375,33 @@ if options[:trace] != nil
 	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
 	trace_flow(start_class, start_function, "", "", level)
 	$graph_file.write("}")
+end
+
+
+if options[:query_graph] != nil
+	if options[:read_flow] == nil or options[:read_flow] == false
+		if options[:dir] != nil
+			read_dataflow(options[:dir])
+		else
+			read_dataflow
+		end
+	end
+	start_class = options[:query_graph][0]
+	start_function = options[:query_graph][1]
+	adjust_calls
+	level = 0
+
+	output_dir = "."
+	if options[:output] != nil
+		output_dir = options[:output]
+	end
+	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_Qgraph.log"
+	$graph_file = File.open(graph_fname, "w");
+
+	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
+	print_graph(start_class, start_function)
+	$graph_file.write("}");
+
 end
 
 if options[:xml] == true

@@ -35,6 +35,7 @@ class Class_class
 		@method_var_map = Hash.new
 		@before_filter = Array.new
 		@save_actions = Array.new
+		@create_actions = Array.new
 		#@after_create = Array.new
 		#@after_destroy = Array.new
 	end
@@ -76,6 +77,12 @@ class Class_class
 	end
 	def getSave
 		@save_actions
+	end
+	def addCreate(func)
+		@create_actions.push(func)
+	end
+	def getCreate
+		@create_actions
 	end
 	#def addBeforeValidation(valid_name)
 	#	@before_validation.push(valid_name)

@@ -55,7 +55,7 @@ def parse_attrib(astnode)
 				astnode.children[1].children.each do |child|
 					if child.type.to_s == "symbol_literal"
 						$cur_class.addBeforeFilter(get_left_most_leaf(child).source.to_s)
-					#puts "#{$cur_class.getName} add before filter: #{get_left_most_leaf(child).source.to_s}"
+					puts "#{$cur_class.getName} add before filter: #{get_left_most_leaf(child).source.to_s}"
 					end
 				end
 			end
@@ -141,7 +141,8 @@ def parse_attrib(astnode)
 				astnode.children[1].children.each do |child|
 					if child.type.to_s == "symbol_literal"
 						fcall = Function_call.new("self", get_left_most_leaf(child).source.to_s)
-						temp_method.getCalls.push(fcall)
+						#temp_method.getCalls.push(fcall)
+						$cur_class.addCreate(fcall)
 					end
 				end
 			end
@@ -209,7 +210,7 @@ def parse_method_call(astnode, method)
 		method.getCalls.push(fcall)
 		$cur_funccall = fcall
 	
-	elsif method != nil and astnode.children[0].type.to_s == "ident"
+	elsif method != nil and astnode.type.to_s != "command" and astnode.children[0].type.to_s == "ident"
 		fcall = Function_call.new("self", astnode.children[0].source)
 		method.getCalls.push(fcall)
 		$cur_funccall = fcall
