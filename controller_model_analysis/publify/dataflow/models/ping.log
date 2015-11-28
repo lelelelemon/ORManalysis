@@ -1,0 +1,812 @@
+SET IRMethod, name = send_pingback_or_trackback
+BB 1
+	outgoing: 21 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+BB 4
+	outgoing: 5 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: (Net) 
+		 3: %v_6[4.2,] 
+		 4: %v_7[4.3,] 
+BB 5
+	outgoing: 6 10 
+	datadep: 4 
+	instructions:
+		 0: %v_6[4.2,] 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 2 2 5 4 2 2 2 2 
+	instructions:
+		 0: (URI) 
+		 1: %self->ping %self[2.0,2.0,] 
+		 2: %v_9->url %v_9[6.1,] 
+		 3: %v_8->parse %v_8[6.0,] %v_10[6.2,] 
+		 4: %v_7->get_response %v_7[5.0,4.3,] %v_11[6.3,] 
+		 5: %self[2.0,2.0,] %v_12[6.4,] 
+		 6: 
+		 7: %self->send_pingback %self[2.0,2.0,] 
+		 8: BRANCH %v_13[6.7,] 
+BB 7
+	outgoing: 8 10 
+	datadep: 2 2 
+	instructions:
+		 0: %self->send_trackback %self[2.0,2.0,] 
+		 1: %v_14[7.0,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 7 6 2 2 2 
+	instructions:
+		 0: %v_13[7.1,6.7,] 
+		 1: %v_3[2.5,2.5,2.5,] 
+BB 9
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: 
+BB 10
+	outgoing: 11 12 19 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Timeout) 
+		 2: %v_16[10.1,] 
+		 3: %v_17[10.2,] 
+BB 11
+	outgoing: 12 19 
+	datadep: 10 
+	instructions:
+		 0: %v_16[10.1,] 
+BB 12
+	outgoing: 13 17 19 
+	datadep: 10 10 
+	instructions:
+		 0: %v_15[10.0,10.0,] 
+		 1: BRANCH %v_18[12.0,] 
+BB 13
+	outgoing: 14 15 19 
+	datadep: 10 10 
+	instructions:
+		 0: %v_15[10.0,10.0,] 
+		 1: BRANCH %v_19[13.0,] 
+BB 14
+	outgoing: 19 21 
+	datadep: 10 10 
+	instructions:
+		 0: %v_15[10.0,10.0,] 
+BB 15
+	outgoing: 16 19 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %v_20[15.0,] 
+		 2: 
+		 3: (Rails) 
+		 4: %v_21->logger %v_21[15.3,] 
+		 5: 
+		 6: %v_23[15.5,] 
+		 7: %v_22->info %v_24[15.6,] %v_22[15.4,] 
+		 8: %v_25[15.7,] 
+		 9: %v_3[2.5,2.5,] 
+BB 16
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: 
+BB 17
+	outgoing: 18 19 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: (Rails) 
+		 2: %v_26->logger %v_26[17.1,] 
+		 3: 
+		 4: %v_27->info %v_27[17.2,] %v_28[17.3,] 
+		 5: 
+		 6: 
+		 7: %v_3[2.5,2.5,] 
+BB 18
+	outgoing: 21 
+	datadep: 17 
+	instructions:
+		 0: RETURN %v_30[17.6,] 
+BB 19
+	outgoing: 21 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_3[2.5,] %v_31[19.0,] 
+		 2: %v_31[19.0,] 
+BB 20
+	outgoing: 21 
+	datadep: 8 15 
+	instructions:
+		 0: RETURN %v_5[8.0,15.8,] 
+BB 21
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = pingback_url
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->response %self[2.0,] 
+		 7: 
+		 8: %v_4[2.7,] %v_3[2.6,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->response %self[2.0,] 
+		 2: 
+		 3: %v_6[3.1,] %v_7[3.2,] 
+		 4: RETURN %v_8[3.3,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->response %self[2.0,] 
+		 2: %v_9->body %v_9[4.1,] 
+		 3: 
+		 4: %v_10[4.2,] 
+		 5: BRANCH %v_12[4.4,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Regexp) 
+		 2: %v_13->last_match %v_13[5.1,] 
+		 3: %v_14[5.2,] 
+		 4: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 9 
+	datadep: 6 5 
+	instructions:
+		 0: RETURN %v_15[6.0,5.3,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = send_xml_rpc
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->ping %self[2.0,] 
+		 8: 
+		 9: %v_4[2.8,] args[2.5,] 
+		 10: %v_3->send %v_3[2.7,] 
+		 11: RETURN %v_6[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = trackback_url
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->response %self[2.0,] 
+		 7: %v_3->body %v_3[2.6,] 
+		 8: 
+		 9: %v_4->scan %v_4[2.7,] 
+		 10: %v_6[2.9,] 
+		 11: 
+		 12: %v_6->each %v_6[2.9,] 
+CLOSURE BEGIN
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (REXML) 
+		 2: %cl_1_3[3.1,] 
+		 3: %cl_1_4[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 
+	instructions:
+		 0: %cl_1_3[3.1,] 
+BB 5
+	outgoing: 6 8 
+	datadep: 4 3 2 2 
+	instructions:
+		 0: %cl_1_4->new %cl_1_4[4.0,3.2,] rdf[2.2,2.2,] 
+		 1: %cl_1_5[5.0,] 
+		 2: 
+		 3: %cl_1_5->elements %cl_1_5[5.0,] 
+		 4: 
+		 5: %cl_1_6[5.3,] %cl_1_7[5.4,] 
+CLOSURE BEGIN
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: rdfs->size 
+		 2: %cl_2_3[3.1,] 
+		 3: BRANCH %cl_2_4[3.2,] 
+BB 4
+	outgoing: 5 9 
+	datadep: 2 2 
+	instructions:
+		 0: desc->attributes desc[2.2,] 
+		 1: 
+		 2: %cl_2_5[4.0,] %cl_2_6[4.1,] 
+		 3: %self->ping %self[2.0,] 
+		 4: %cl_2_8->url %cl_2_8[4.3,] 
+		 5: %cl_2_7[4.2,] %cl_2_9[4.4,] 
+		 6: %cl_2_10[4.5,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 4 3 
+	instructions:
+		 0: BRANCH %cl_2_4[4.6,3.2,] 
+BB 6
+	outgoing: 9 11 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: desc->attributes desc[2.2,2.2,] 
+		 2: 
+		 3: %cl_2_11[6.1,] %cl_2_12[6.2,] 
+		 4: 
+		 5: %cl_2_13[6.3,] 
+BB 7
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_15[9.0,] 
+		 2: RETURN %cl_2_16[9.1,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %cl_1_8[5.5,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_9[6.0,] 
+		 2: RETURN %cl_1_10[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 13: 
+		 14: %self[2.0,] 
+		 15: %v_8->url %v_8[2.14,] 
+		 16: RETURN %v_9[2.15,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_10[4.0,] 
+		 2: RETURN %v_11[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = send_pingback
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->pingback_url %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->pingback_url %self[2.0,] 
+		 2: 
+		 3: %self->origin_url %self[2.0,] 
+		 4: %self->ping %self[2.0,] 
+		 5: %v_7->url %v_7[3.4,] 
+		 6: %self->send_xml_rpc %self[2.0,] %v_4[3.1,] %v_5[3.2,] %v_8[3.5,] %v_6[3.3,] 
+		 7: 
+		 8: 
+		 9: RETURN 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = send_trackback
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->trackback_url %self[2.0,] 
+		 7: %self->origin_url %self[2.0,] 
+		 8: %self->do_send_trackback %self[2.0,] %v_4[2.7,] %v_3[2.6,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = do_send_trackback
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: (URI) 
+		 9: %v_3->parse trackback_url[2.5,] %v_3[2.8,] 
+		 10: %v_4[2.9,] 
+		 11: 
+		 12: 
+		 13: (CGI) 
+		 14: %self->article %self[2.0,] 
+		 15: %v_7->title %v_7[2.14,] 
+		 16: %v_6->escape %v_8[2.15,] %v_6[2.13,] 
+		 17: %v_5[2.12,] 
+		 18: %v_10[2.17,] 
+		 19: 
+		 20: 
+		 21: (CGI) 
+		 22: %self->article %self[2.0,] 
+		 23: %v_13->html %v_13[2.22,] 
+		 24: %v_14->strip_html %v_14[2.23,] 
+		 25: 
+		 26: %v_15[2.24,] %v_16[2.25,] 
+		 27: %v_12->escape %v_17[2.26,] %v_12[2.21,] 
+		 28: %v_11[2.20,] 
+		 29: %v_19[2.28,] post[2.18,] 
+		 30: 
+		 31: 
+		 32: %v_21[2.31,] 
+		 33: post[2.18,] %v_22[2.32,] 
+		 34: 
+		 35: 
+		 36: (CGI) 
+		 37: %self->blog %self[2.0,] 
+		 38: %v_26->blog_name %v_26[2.37,] 
+		 39: %v_25->escape %v_25[2.36,] %v_27[2.38,] 
+		 40: %v_24[2.35,] 
+		 41: %v_29[2.40,] post[2.18,] 
+		 42: 
+		 43: trackback_uri->path trackback_uri[2.10,] 
+		 44: %v_31[2.43,] 
+		 45: 
+		 46: trackback_uri->query trackback_uri[2.10,] 
+		 47: BRANCH %v_32[2.46,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: trackback_uri->query trackback_uri[2.10,] 
+		 2: %v_33[3.0,] 
+		 3: %v_35[3.2,] path[2.44,] 
+		 4: %v_36[3.3,] 
+		 5: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Net) 
+		 2: %v_37[5.1,] 
+		 3: %v_38[5.2,] 
+BB 6
+	outgoing: 7 
+	datadep: 5 
+	instructions:
+		 0: %v_37[5.1,] 
+BB 7
+	outgoing: 8 
+	datadep: 2 2 2 2 2 2 2 2 6 5 
+	instructions:
+		 0: trackback_uri->host trackback_uri[2.10,2.10,2.10,2.10,] 
+		 1: trackback_uri->port trackback_uri[2.10,2.10,2.10,2.10,] 
+		 2: %v_38->start %v_38[6.0,5.2,] %v_39[7.0,] %v_40[7.1,] 
+CLOSURE BEGIN
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: http->post %cl_1_5[3.3,] http[2.2,] 
+		 5: RETURN %cl_1_6[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %v_41[7.2,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = initialize
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: %self[2.0,] origin_url[2.5,] 
+		 9: 
+		 10: ping[2.6,] %self[2.0,] 
+		 11: 
+		 12: ping->article ping[2.6,] 
+		 13: %v_3->default_text_filter %v_3[2.12,] 
+		 14: 
+		 15: ping->article ping[2.6,] 
+		 16: %v_5->text_filter %v_5[2.15,] 
+		 17: 
+		 18: ping->article ping[2.6,] 
+		 19: %v_7[2.18,] 
+		 20: 
+		 21: %self->article %self[2.0,2.19,] 
+		 22: %v_8->blog %v_8[2.21,] 
+		 23: %v_9[2.22,] 
+		 24: RETURN %v_9[2.22,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = send_pingback_or_trackback
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: (Thread) 
+		 8: (Pinger) 
+		 9: %v_4->new %self[2.0,] %v_4[2.8,] origin_url[2.5,] 
+		 10: %v_5[2.9,] %v_3[2.7,] 
+		 11: %v_6[2.10,] 
+		 12: 
+		 13: RETURN %v_6[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = send_weblogupdatesping
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: (Thread) 
+		 9: %self->article %self[2.0,] 
+		 10: %v_4->blog %v_4[2.9,] 
+		 11: %v_5->blog_name %v_5[2.10,] 
+		 12: %v_3[2.8,] %v_6[2.11,] 
+CLOSURE BEGIN
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->url %self[2.0,] 
+		 2: 
+		 3: %self->send_xml_rpc %cl_1_3[3.1,] %cl_1_4[3.2,] %self[2.0,] blog_name[2.2,] 
+		 4: RETURN %cl_1_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 13: %v_7[2.12,] 
+		 14: 
+		 15: RETURN %v_7[2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = send_xml_rpc
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+BB 4
+	outgoing: 5 6 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: (XMLRPC) 
+		 3: %v_6[4.2,] 
+		 4: %v_7[4.3,] 
+BB 5
+	outgoing: 6 8 
+	datadep: 4 
+	instructions:
+		 0: %v_6[4.2,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 2 2 5 4 2 2 2 2 
+	instructions:
+		 0: (URI) 
+		 1: %v_8->parse xml_rpc_url[2.5,2.5,] %v_8[6.0,] 
+		 2: %v_9->to_s %v_9[6.1,] 
+		 3: %v_7[5.0,4.3,] %v_10[6.2,] 
+		 4: %v_11[6.3,] 
+		 5: 
+		 6: 
+		 7: args[2.7,2.7,] %v_12[6.6,] 
+		 8: %v_11->call %v_11[6.3,] 
+		 9: %v_14[6.8,] 
+		 10: %v_3[2.8,2.8,] 
+BB 7
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+BB 8
+	outgoing: 9 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_15[8.0,] 
+		 2: BRANCH %v_16[8.1,] 
+BB 9
+	outgoing: 12 14 
+	datadep: 8 
+	instructions:
+		 0: %v_15[8.0,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %v_17[10.0,] 
+		 2: 
+		 3: %self->logger %self[2.0,] 
+		 4: %v_18->error %v_18[10.3,] e[10.1,] 
+		 5: %v_19[10.4,] 
+		 6: %v_3[2.8,] 
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+BB 12
+	outgoing: 14 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_3[2.8,] %v_20[12.0,] 
+		 2: %v_20[12.0,] 
+BB 13
+	outgoing: 14 
+	datadep: 6 10 
+	instructions:
+		 0: RETURN %v_5[6.9,10.5,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+

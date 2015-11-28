@@ -651,3 +651,656 @@ BB 26
 	datadep: 
 	instructions:
 
+SET IRMethod, name = logout
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->reset_session %self[2.0,] 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+BB 5
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->redirect_to %self[2.0,2.0,] %v_5[5.1,] 
+		 3: RETURN %v_6[5.2,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = index
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] %v_3[2.6,] 
+		 8: 
+		 9: %self[2.0,] 
+		 10: %v_5[2.9,] 
+		 11: %v_5[2.9,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] 
+		 1: %v_6[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_4[3.1,2.10,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: %self->request %self[2.0,2.0,] 
+		 1: %v_7->referer %v_7[5.0,] 
+		 2: %self[2.0,2.0,] %v_8[5.1,] 
+		 3: %v_8[5.1,] 
+BB 6
+	outgoing: 7 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self->render %self[2.0,2.0,2.0,2.0,] %v_10[6.2,] 
+		 4: RETURN %v_11[6.3,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = login
+BB 1
+	outgoing: 32 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: %v_4->to_s %v_4[2.7,] 
+		 9: 
+		 10: %v_5->match %v_5[2.8,] 
+		 11: BRANCH %v_7[2.10,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (User) 
+		 2: %self->params %self[2.0,] 
+		 3: %v_9[3.2,] 
+		 4: 
+		 5: %v_8->where %v_8[3.1,] %v_11[3.4,] 
+		 6: %v_12->first %v_12[3.5,] 
+		 7: %v_13[3.6,] 
+		 8: 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (User) 
+		 2: %self->params %self[2.0,] 
+		 3: %v_15[4.2,] 
+		 4: 
+		 5: %v_14->where %v_14[4.1,] %v_17[4.4,] 
+		 6: %v_18->first %v_18[4.5,] 
+		 7: %v_19[4.6,] 
+		 8: %v_19[4.6,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 4 3 4 3 
+	instructions:
+		 0: 
+		 1: user[4.7,3.7,] 
+		 2: BRANCH user[4.7,3.7,] 
+BB 6
+	outgoing: 7 
+	datadep: 4 3 
+	instructions:
+		 0: user->is_active? user[4.7,3.7,] 
+		 1: %v_21[6.0,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 6 5 
+	instructions:
+		 0: BRANCH %v_20[6.1,5.1,] 
+BB 8
+	outgoing: 9 
+	datadep: 2 2 2 2 4 3 4 3 
+	instructions:
+		 0: %self->params %self[2.0,2.0,2.0,2.0,] 
+		 1: %v_22[8.0,] 
+		 2: %v_23->to_s %v_23[8.1,] 
+		 3: user->try %v_24[8.2,] user[4.7,3.7,4.7,3.7,] 
+		 4: %v_25[8.3,] 
+BB 9
+	outgoing: 10 30 
+	datadep: 8 6 5 
+	instructions:
+		 0: BRANCH %v_20[8.4,6.1,5.1,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 2 2 2 2 2 2 4 3 4 3 4 3 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->session %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: user->session_token user[4.7,3.7,4.7,3.7,4.7,3.7,] 
+		 3: %v_27[10.2,] 
+		 4: 
+		 5: %self->session %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 6: %v_28[10.5,] 
+		 7: %v_29[10.6,] 
+		 8: %v_29[10.6,] 
+		 9: %v_29->present? %v_29[10.6,] 
+		 10: BRANCH %v_31[10.9,] 
+BB 11
+	outgoing: 32 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 10 
+	instructions:
+		 0: 
+		 1: %self->session %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: %v_32->delete %v_32[11.1,] 
+		 3: 
+		 4: %self->redirect_to %self[2.0,2.0,2.0,2.0,2.0,2.0,] rd[10.7,] 
+		 5: RETURN %v_34[11.4,] 
+BB 12
+	outgoing: 13 27 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: %v_36[12.1,] 
+		 3: %v_37->present? %v_37[12.2,] 
+		 4: BRANCH %v_38[12.3,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 15
+	outgoing: 16 18 21 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: (URI) 
+		 3: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 4: %v_43[15.3,] 
+		 5: %v_42->parse %v_42[15.2,] %v_44[15.4,] 
+		 6: %v_45[15.5,] 
+		 7: 
+		 8: %v_45->host %v_45[15.5,] 
+		 9: (Rails) 
+		 10: %v_47->application %v_47[15.9,] 
+		 11: %v_48->domain %v_48[15.10,] 
+		 12: %v_46[15.8,] %v_49[15.11,] 
+		 13: BRANCH %v_50[15.12,] 
+BB 16
+	outgoing: 17 21 
+	datadep: 15 2 2 2 2 2 2 13 
+	instructions:
+		 0: 
+		 1: ru->to_s ru[15.6,] 
+		 2: %self->redirect_to %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_51[16.1,] 
+		 3: %v_52[16.2,] 
+		 4: %v_39[13.1,] 
+BB 17
+	outgoing: 32 
+	datadep: 16 
+	instructions:
+		 0: RETURN %v_53[16.3,] 
+BB 18
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: 
+BB 19
+	outgoing: 20 21 
+	datadep: 18 13 
+	instructions:
+		 0: %v_54[18.0,] 
+		 1: %v_39[13.1,] 
+BB 20
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: 
+BB 21
+	outgoing: 22 23 25 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_55[21.0,] 
+		 2: BRANCH %v_56[21.1,] 
+BB 22
+	outgoing: 25 32 
+	datadep: 21 
+	instructions:
+		 0: %v_55[21.0,] 
+BB 23
+	outgoing: 24 25 
+	datadep: 13 
+	instructions:
+		 0: 
+		 1: %v_57[23.0,] 
+		 2: 
+		 3: (Rails) 
+		 4: %v_58->logger %v_58[23.3,] 
+		 5: 
+		 6: %v_60[23.5,] 
+		 7: %v_59->error %v_59[23.4,] %v_61[23.6,] 
+		 8: %v_62[23.7,] 
+		 9: %v_39[13.1,] 
+BB 24
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: 
+BB 25
+	outgoing: 32 
+	datadep: 13 
+	instructions:
+		 0: 
+		 1: %v_39[13.1,] %v_63[25.0,] 
+		 2: %v_63[25.0,] 
+BB 26
+	outgoing: 28 
+	datadep: 
+	instructions:
+		 0: 
+BB 27
+	outgoing: 28 
+	datadep: 
+	instructions:
+		 0: 
+BB 28
+	outgoing: 32 
+	datadep: 27 19 23 2 2 2 2 2 2 
+	instructions:
+		 0: %v_41[27.0,19.0,23.8,] 
+		 1: 
+		 2: 
+		 3: %self->redirect_to %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_65[28.2,] 
+		 4: RETURN %v_66[28.3,] 
+BB 30
+	outgoing: 32 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->flash %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_68->now %v_68[30.2,] 
+		 4: 
+		 5: %v_70[30.4,] 
+		 6: 
+		 7: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 8: %v_71[30.7,] 
+		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_72[30.8,] 
+		 10: 
+		 11: %self->index %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 12: RETURN %v_73[30.11,] 
+BB 32
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = forgot_password
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] %v_3[2.6,] 
+		 8: 
+		 9: 
+		 10: 
+		 11: %self->render %self[2.0,] %v_5[2.10,] 
+		 12: RETURN %v_6[2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = reset_password
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: 
+		 8: %self->params %self[2.0,] 
+		 9: %v_5[2.8,] 
+		 10: %v_6->to_s %v_6[2.9,] 
+		 11: %self->params %self[2.0,] 
+		 12: %v_8[2.11,] 
+		 13: %v_9->to_s %v_9[2.12,] 
+		 14: %v_3->where %v_4[2.7,] %v_3[2.6,] %v_7[2.10,] %v_10[2.13,] 
+		 15: %v_11->first %v_11[2.14,] 
+		 16: %self[2.0,] %v_12[2.15,] 
+		 17: 
+		 18: 
+		 19: %self[2.0,] 
+		 20: %v_13->! %v_13[2.19,] 
+		 21: BRANCH %v_14[2.20,] 
+BB 3
+	outgoing: 7 
+	datadep: 2 2 
+	instructions:
+		 0: %self->flash %self[2.0,] 
+		 1: %v_15->now %v_15[3.0,] 
+		 2: 
+		 3: %v_17[3.2,] 
+		 4: 
+		 5: %self->forgot_password %self[2.0,] 
+		 6: RETURN %v_18[3.5,] 
+BB 4
+	outgoing: 7 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] 
+		 3: %self->request %self[2.0,] 
+		 4: %v_21->remote_ip %v_21[4.3,] 
+		 5: %v_20->initiate_password_reset_for_ip %v_20[4.2,] %v_22[4.4,] 
+		 6: 
+		 7: %self->flash %self[2.0,] 
+		 8: %v_24->now %v_24[4.7,] 
+		 9: 
+		 10: 
+		 11: %v_26[4.9,] %v_27[4.10,] 
+		 12: %v_28[4.11,] 
+		 13: 
+		 14: %self->index %self[2.0,] 
+		 15: RETURN %v_29[4.14,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_new_password
+BB 1
+	outgoing: 26 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] %v_3[2.6,] 
+		 8: 
+		 9: %self->params %self[2.0,] 
+		 10: %v_4[2.9,] 
+		 11: %v_5->to_s %v_5[2.10,] 
+		 12: 
+		 13: %v_6->match %v_6[2.11,] 
+		 14: %v_8[2.13,] 
+		 15: BRANCH %v_8[2.13,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (Time) 
+		 2: %v_9->now %v_9[3.1,] 
+		 3: (Time) 
+		 4: m[2.14,] 
+		 5: %v_12->to_i %v_12[3.4,] 
+		 6: %v_11->at %v_13[3.5,] %v_11[3.3,] 
+		 7: %v_14[3.6,] %v_10[3.2,] 
+		 8: 
+		 9: %v_15[3.7,] %v_16[3.8,] 
+		 10: %v_17[3.9,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_8[3.10,2.13,] 
+BB 5
+	outgoing: 7 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (User) 
+		 2: %self->params %self[2.0,2.0,] 
+		 3: %v_19[5.2,] 
+		 4: %v_20->to_s %v_20[5.3,] 
+		 5: 
+		 6: %v_18->where %v_18[5.1,] %v_22[5.5,] 
+		 7: %v_23->first %v_23[5.6,] 
+		 8: %v_24[5.7,] %self[2.0,2.0,] 
+		 9: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 9 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,2.0,2.0,] 
+		 2: BRANCH %v_25[7.1,] 
+BB 8
+	outgoing: 9 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,2.0,2.0,] 
+		 1: %v_26->is_banned? %v_26[8.0,] 
+		 2: %v_27->! %v_27[8.1,] 
+		 3: %v_28[8.2,] 
+BB 9
+	outgoing: 10 24 
+	datadep: 8 7 
+	instructions:
+		 0: BRANCH %v_25[8.3,7.1,] 
+BB 10
+	outgoing: 11 22 
+	datadep: 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: %v_29[10.1,] 
+		 3: %v_30->present? %v_30[10.2,] 
+		 4: BRANCH %v_31[10.3,] 
+BB 11
+	outgoing: 12 13 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_33[11.2,] 
+		 4: %v_34[11.3,] 
+		 5: 
+		 6: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 7: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 8: %v_36[11.7,] 
+		 9: %v_37[11.8,] 
+		 10: 
+		 11: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 12: 
+		 13: 
+		 14: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 15: 
+		 16: 
+		 17: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 18: %v_40->is_active? %v_40[11.17,] 
+		 19: %v_41->! %v_41[11.18,] 
+		 20: BRANCH %v_42[11.19,] 
+BB 12
+	outgoing: 13 
+	datadep: 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 1: %v_43->is_banned? %v_43[12.0,] 
+		 2: %v_44->! %v_44[12.1,] 
+		 3: %v_45[12.2,] 
+BB 13
+	outgoing: 14 15 
+	datadep: 12 11 
+	instructions:
+		 0: BRANCH %v_42[12.3,11.19,] 
+BB 14
+	outgoing: 16 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: 
+		 3: 
+		 4: 
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: 
+BB 16
+	outgoing: 17 18 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: %v_48->save %v_48[16.1,] 
+		 3: BRANCH %v_49[16.2,] 
+BB 17
+	outgoing: 18 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 1: %v_50->is_active? %v_50[17.0,] 
+		 2: %v_51[17.1,] 
+BB 18
+	outgoing: 19 20 
+	datadep: 17 16 
+	instructions:
+		 0: BRANCH %v_49[17.2,16.2,] 
+BB 19
+	outgoing: 26 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->session %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_53->session_token %v_53[19.2,] 
+		 4: %v_54[19.3,] 
+		 5: 
+		 6: 
+		 7: %self->redirect_to %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] %v_55[19.6,] 
+		 8: RETURN %v_56[19.7,] 
+BB 20
+	outgoing: 23 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: 
+		 3: %v_59[20.2,] 
+		 4: %v_59[20.2,] 
+		 5: 
+BB 22
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: 
+BB 23
+	outgoing: 26 
+	datadep: 22 20 
+	instructions:
+		 0: RETURN %v_57[22.0,20.4,] 
+BB 24
+	outgoing: 26 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: 
+		 3: 
+		 4: %v_61[24.2,] %v_62[24.3,] 
+		 5: %v_63[24.4,] 
+		 6: 
+		 7: %self->forgot_password_path %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 8: %self->redirect_to %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] %v_64[24.7,] 
+		 9: RETURN %v_65[24.8,] 
+BB 26
+	outgoing: 
+	datadep: 
+	instructions:
+

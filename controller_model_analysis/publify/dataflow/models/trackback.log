@@ -1,0 +1,314 @@
+SET IRMethod, name = initialize
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %v_3[2.6,] 
+		 8: 
+		 9: args[2.5,] 
+		 10: block[2.7,] 
+		 11: 
+		 12: %self->title %self[2.0,] 
+		 13: BRANCH %v_6[2.12,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: %self->url %self[2.0,] 
+		 1: %self[2.0,] %v_8[3.0,] 
+		 2: %v_8[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->blog_name %self[2.0,2.0,] 
+		 2: BRANCH %v_9[4.1,] 
+BB 5
+	outgoing: 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,] %v_11[5.0,] 
+		 2: RETURN %v_11[5.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 4 
+	instructions:
+		 0: RETURN %v_9[4.1,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = process_trackback
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->excerpt %self[2.0,] 
+		 7: %v_3->length %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->excerpt %self[2.0,] 
+		 2: 
+		 3: %v_6[3.1,] %v_7[3.2,] 
+		 4: 
+		 5: %v_8[3.3,] %v_9[3.4,] 
+		 6: %v_10[3.5,] 
+		 7: RETURN %v_10[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = article_allows_feedback?
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->article %self[2.0,] 
+		 7: %v_3->allow_pings? %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->errors %self[2.0,] 
+		 3: 
+		 4: %v_6->add %v_6[4.2,] %v_7[4.3,] 
+		 5: 
+		 6: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = blog_allows_feedback?
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->blog %self[2.0,] 
+		 7: %v_3->global_pings_disable %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->errors %self[2.0,] 
+		 3: 
+		 4: %v_6->add %v_6[3.2,] %v_7[3.3,] 
+		 5: 
+		 6: RETURN 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = originator
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->blog_name %self[2.0,] 
+		 7: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = body
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->excerpt %self[2.0,] 
+		 7: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = body=
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: newval[2.5,] 
+		 8: RETURN newval[2.5,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = rss_author
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: RETURN 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = rss_title
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->feed_title %self[2.0,] 
+		 8: xml->title xml[2.5,] %v_3[2.7,] 
+		 9: RETURN %v_4[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = feed_title
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->blog_name %self[2.0,] 
+		 8: 
+		 9: %self->title %self[2.0,] 
+		 10: 
+		 11: %self->article %self[2.0,] 
+		 12: %v_8->title %v_8[2.11,] 
+		 13: %v_5[2.8,] %v_3[2.6,] %v_7[2.10,] 
+		 14: RETURN %v_10[2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

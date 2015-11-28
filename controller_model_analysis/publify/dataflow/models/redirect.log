@@ -1,0 +1,243 @@
+SET IRMethod, name = full_to_path
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->to_path %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: 
+		 9: 
+		 10: %v_3[2.6,] 
+		 11: BRANCH %v_5[2.10,] 
+BB 3
+	outgoing: 11 
+	datadep: 2 
+	instructions:
+		 0: RETURN path[2.7,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: (Blog) 
+		 3: %v_7->default %v_7[4.2,] 
+		 4: %v_8->root_path %v_8[4.3,] 
+		 5: %v_9[4.4,] 
+		 6: 
+		 7: %v_9->nil? %v_9[4.4,] 
+		 8: BRANCH %v_10[4.7,] 
+BB 6
+	outgoing: 7 
+	datadep: 4 2 4 
+	instructions:
+		 0: url_root->length url_root[4.5,] 
+		 1: path[2.7,] %v_11[6.0,] 
+		 2: url_root[4.5,] %v_12[6.1,] 
+		 3: %v_13[6.2,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 6 4 
+	instructions:
+		 0: BRANCH %v_10[6.3,4.7,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 9
+	outgoing: 10 
+	datadep: 2 2 4 4 
+	instructions:
+		 0: (File) 
+		 1: %v_15->join path[2.7,2.7,] %v_15[9.0,] url_root[4.5,4.5,] 
+		 2: %v_16[9.1,] 
+		 3: %v_16[9.1,] 
+BB 10
+	outgoing: 11 
+	datadep: 9 2 2 
+	instructions:
+		 0: 
+		 1: RETURN path[9.2,2.7,2.7,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = shorten
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->random_token %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: %self->class %self[2.0,] 
+		 1: %v_4->find_by_from_path %v_4[3.0,] temp_token[2.7,] 
+		 2: %v_5->nil? %v_5[3.1,] 
+		 3: %v_6[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.3,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: RETURN temp_token[2.7,2.7,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->shorten %self[2.0,2.0,] 
+		 2: RETURN %v_8[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = to_url
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Blog) 
+		 7: %v_3->default %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: 
+		 10: (File) 
+		 11: %v_4->custom_url_shortener %v_4[2.7,] 
+		 12: %v_6->blank? %v_6[2.11,] 
+		 13: BRANCH %v_7[2.12,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: blog->base_url blog[2.8,] 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: blog->custom_url_shortener blog[2.8,] 
+		 1: %v_9[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 2 2 2 4 3 
+	instructions:
+		 0: %self->from_path %self[2.0,2.0,] 
+		 1: %v_5->join %v_5[2.10,2.10,] %v_8[4.1,3.0,] %v_10[5.0,] 
+		 2: RETURN %v_11[5.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = random_token
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %v_3[2.6,] 
+		 8: 
+		 9: 
+		 10: %v_4[2.9,] 
+		 11: 
+		 12: %self->srand %self[2.0,] 
+		 13: 
+		 14: 
+CLOSURE BEGIN
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: characters->length 
+		 2: %self->rand %cl_1_3[3.1,] %self[2.0,] 
+		 3: %cl_1_4[3.2,] 
+		 4: 
+		 5: %cl_1_4[3.2,3.2,] 
+		 6: %cl_1_5[3.5,] 
+		 7: %cl_1_6[3.6,] 
+		 8: %cl_1_7[3.7,] 
+		 9: RETURN %cl_1_7[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 15: 
+		 16: RETURN temp_token[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
