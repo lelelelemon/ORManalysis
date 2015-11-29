@@ -1,0 +1,13 @@
+ form_for @story do |f| 
+ render :partial => "stories/form", :locals => { :story => @story,
+        :f => f } 
+ submit_tag "Submit" 
+ render :partial => "global/markdownhelp",
+            :locals => { :allow_images => true } 
+ end 
+ if @story.previewing && @story.valid? 
+ render :template => "stories/show" 
+ end 
+ if @story.previewing 
+ else 
+ end 

@@ -1,0 +1,33 @@
+ @title 
+ @user_count 
+ raw @newest.map{|u| "<a href=\"/u/#{u.username}\" class=\"" <<
+    (u.is_new?? "new_user" : "") << "\">#{u.username}</a> " <<
+    "(#{u.karma})" }.join(", ") 
+ subtree = @users_by_parent[nil] 
+ ancestors = [] 
+ while subtree 
+ if (user = subtree.pop) 
+ user.username 
+ if !user.is_active? 
+ elsif user.is_new? 
+ end 
+ user.username 
+ if user.is_admin? 
+ else 
+ user.karma 
+ if user.is_moderator? 
+ end 
+ end 
+ if (children = @users_by_parent[user.id]) 
+ # drill down deeper in the tree 
+ ancestors << subtree 
+ subtree = children 
+ else 
+ end 
+ else 
+ # climb back out 
+ subtree = ancestors.pop 
+ if subtree 
+ end 
+ end 
+ end 

@@ -112,8 +112,31 @@ class Function_call
 				caller_class = findNonRecordedCaller
 			end
 			if caller_class == nil
-				if $class_map[@obj_name] != nil
-					caller_class = @obj_name
+				simplified_obj_name = @obj_name.delete('@').delete('$')
+				if $class_map[simplified_obj_name] != nil
+						caller_class = simplified_obj_name
+				else
+					$class_map.each do |cc, cv|
+						if cc.downcase==simplified_obj_name.downcase
+							caller_class = cc
+						end
+						if cc.include?("::") and caller_class == nil
+							c_list = cc.split("::")
+							c_list.each do |cc1|
+								if cc1.downcase == simplified_obj_name.downcase
+									caller_class = cc
+								end
+							end
+						end
+					end
+				end
+				#if $class_map[@obj_name.delete('@').delete('$')] != nil
+				#	caller_class = @obj_name
+				#end
+			end
+			if caller_class == nil
+				if @obj_name.include?("scope") and $class_map[calling_func_class] != nil and $class_map[calling_func_class].getMethods.find(@func_name) != nil
+					caller_class = calling_func_class
 				end
 			end
 			if caller_class == nil

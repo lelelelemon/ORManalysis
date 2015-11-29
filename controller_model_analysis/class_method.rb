@@ -36,6 +36,7 @@ class Class_class
 		@before_filter = Array.new
 		@save_actions = Array.new
 		@create_actions = Array.new
+		@scope_list = Array.new
 		#@after_create = Array.new
 		#@after_destroy = Array.new
 	end
@@ -83,6 +84,12 @@ class Class_class
 	end
 	def getCreate
 		@create_actions
+	end
+	def addScope(s)
+		@scope_list.push(s)
+	end
+	def getScope
+		@scope_list
 	end
 	#def addBeforeValidation(valid_name)
 	#	@before_validation.push(valid_name)

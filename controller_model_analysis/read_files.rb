@@ -13,6 +13,17 @@ def read_dynamic_typing_info
 			class_handler = $class_map[class_name]
 		end
 		if class_handler == nil
+			$class_map.each do |kc, vc|
+				#puts "#{kc}"
+				n_split = kc.split("::")
+				n_split.each do |nn|
+					if class_name == nn
+						class_handler = vc
+					end
+				end
+		end
+		end
+		if class_handler == nil
 			abort("Class #{class_name} (#{item}) cannot be found!")
 		end
 		file = File.open(item, "r")
@@ -32,7 +43,7 @@ end
 
 def read_each_class(class_list, module_name, is_controller)
 	class_list.each do |class_node|
-		if module_name == ""
+		if module_name == "" or class_node.children[0].source.to_s.include?(module_name)
 			class_name = class_node.children[0].source.to_s
 		else
 			class_name = "#{module_name}::#{class_node.children[0].source.to_s}"
@@ -98,6 +109,10 @@ def handle_single_file(item, is_controller)
 			abort("Neither class nor module can be found")
 		end
 	else
+		#puts "class_list:"
+		#class_list.each do |c|
+		#	puts "\t--#{c.children[0].source.to_s}"
+		#end
 		read_each_class(class_list, module_name, is_controller)
 	end
 end
@@ -148,6 +163,7 @@ def read_ruby_files(application_dir=nil)
 	end
 	resolve_upper_class
 	retrieve_func_calls
+
 end
 
 

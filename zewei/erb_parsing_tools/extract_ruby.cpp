@@ -13,6 +13,7 @@ int main(int argc, char** argv){
     FILE* fout = fopen(output_file, "wb");
     
     char a = fgetc(fin), b = fgetc(fin), c = fgetc(fin);
+
     while (a != EOF){
       if (a == '<' && b == '%'){
       	if (c == '='){
@@ -34,19 +35,19 @@ int main(int argc, char** argv){
                 fputc(a, fout);
                 a = b;
                 b = fgetc(fin);      
-            }   
+            }
             fputc('\n', fout);
             a = fgetc(fin);
             b = fgetc(fin);
             c = fgetc(fin);
-		}
+				}
       } else {
         a = b;
         b = c;
         c = fgetc(fin); 
       }
     }
-    
+   
     fclose(fin);
     fclose(fout);
 }

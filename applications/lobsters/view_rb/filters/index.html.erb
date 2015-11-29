@@ -1,0 +1,18 @@
+ if !@user 
+ end 
+ form_tag "/filters", :method => :post do 
+ @tags.each do |tag| 
+ check_box_tag "tags[]", tag.tag,
+          @filtered_tags.include?(tag) 
+ link_to tag.tag, tag_path(tag), :class => tag.css_class 
+ tag.description 
+ if tag.hotness_mod != 0 
+ tag.hotness_mod > 0 ? "+" : ""
+
+              tag.hotness_mod 
+ end 
+
+          tag.stories_count 
+ end 
+ submit_tag "Save Filters" 
+ end 

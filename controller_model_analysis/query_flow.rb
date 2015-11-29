@@ -9,8 +9,12 @@ class INode
 		@index = $ins_cnt
 		@label = ""
 		@in_closure = false
+		@closure_stack = Array.new
 		if $closure_stack.length > 0
 			@in_closure = true
+			$closure_stack.each do |cl|
+				@closure_stack.push(cl)
+			end
 		end
 	end
 	def getInClosure
@@ -58,6 +62,40 @@ end
 $root = nil
 $ins_cnt = 0
 $node_list = Array.new
+
+#format: from_inode_index*to_inode_index*vname
+$dataflow_edges = Hash.new
+class Edge
+	def initialize(fromn, ton, vname)
+		@from_node = fromn
+		@to_node = ton
+		@vname = vname
+	end
+	def getFromNode
+		@from_node
+	end
+	def getToNode
+		@to_node
+	end
+	def getVname
+		@vname
+	end
+end
+
+def add_dataflow_edge(node)
+	to_ins = node.getInstr
+	to_ins.getDeps.each do |dep|
+		if dep.getInstrHandler == nil
+			puts "Handler nil: BB#{dep.getBlock}.#{dep.getInstr}"
+		end
+		#TODO: getINode == nil, if this instr hasn't been handled yet...
+		if dep.getInstrHandler.getINode != nil
+			edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}*#{dep.getVname}"
+			edge = Edge.new(dep.getInstrHandler.getINode, node, dep.getVname)
+			$dataflow_edges[edge_name] = edge
+		end
+	end
+end
 
 def handle_single_call_node2(start_class, start_function, class_handler, call, level)
 	
@@ -127,6 +165,11 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 				cur_cfg = trace_query_flow(callerv_name, call.getFuncName, pass_params, pass_returnv, level+1)
 				if cur_cfg != nil
 					temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
+					cur_cfg.getReturns.each do |rt|
+						dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
+						edge = Edge.new(rt, temp_node, "returnv")
+						$dataflow_edges[dataflow_edge_name] = edge
+					end
 				end
 			end
 		end
@@ -134,7 +177,6 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 end
 
 def handle_single_instr2(start_class, start_function, class_handler, function_handler, instr, level, return_list)
-	$ins_cnt += 1
 	node = INode.new(instr)
 	puts "\t\tInstr: ##{node.getIndex} #{node.getInstr.toString}, r_list.size = #{return_list.length}"
 	return_list.each do |r|
@@ -142,6 +184,8 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	end
 	$cur_node = node
 	$node_list.push($cur_node)
+	add_dataflow_edge(node)
+	$ins_cnt += 1
 
 	if instr.instance_of?Call_instr
 		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
@@ -361,6 +405,11 @@ end
 #	end
 #end
 
+def print_dataflow_graph
+	$dataflow_edges.each do |key, value|
+		puts "#{key}"
+	end
+end
 
 def print_graph(start_class, start_function)
 
@@ -369,7 +418,9 @@ def print_graph(start_class, start_function)
 	$root = cfg.getBB[0].getInstr[0].getINode	
 
 	#$graph_file.write
-	#traverse_instr_tree($root, 0)	
+	#traverse_instr_tree($root, 0)
+
+	#start constructing query graph	
 	construct_query_graph
 	$node_list.each do |n|
 		if n.isQuery?
@@ -380,6 +431,10 @@ def print_graph(start_class, start_function)
 			end
 		end
 	end
+	##end constructing query graph
+
+	#print_dataflow_graph
+
 	#$node_list.each do |n|
 	#	print "node #{n.getIndex}: "
 	#	n.getChildren.each do |c|

@@ -29,6 +29,28 @@ def parse_attrib(astnode)
 		#			end
 		#		end
 		#	end
+		when "scope"
+			scope_func_list = Array.new
+			if astnode.children[1].type.to_s == "list"
+				astnode.children[1].children.each do |child|
+					if child.type.to_s == "symbol_literal"
+						scope_func_list.push(get_left_most_leaf(child).source.to_s)
+						$cur_class.addScope(get_left_most_leaf(child).source.to_s)
+					elsif child.type.to_s == "lambda" and scope_func_list.length > 0
+						$cur_method = Method_class.new(scope_func_list[-1])
+						$cur_class.addMethod($cur_method)
+						traverse_ast(child, 3)
+						$cur_method = nil
+					elsif child.type.to_s == "fcall" and scope_func_list.length > 0		
+						$cur_method = Method_class.new(scope_func_list[-1])
+						$cur_class.addMethod($cur_method)
+						child.children.each do |c1|
+							traverse_ast(c1, 3)
+						end
+						$cur_method = nil
+					end
+				end
+			end
 		when "attr_accessor"
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
@@ -180,17 +202,27 @@ def parse_method_call(astnode, method)
 	@node = astnode.children[0]
 
 	#function call: caller.func(params)
-	if method != nil and astnode.children[1] != nil and astnode.children[1].type.to_s == "ident"
-
-		@node2 = astnode.children[1]
-		fcall = Function_call.new(@node.source.tr("\n",""), @node2.source)
+	cond1 = (astnode.children[1] != nil and astnode.children[1].type.to_s == "ident")
+	#function call: func(param)
+	cond2 = (astnode.type.to_s != "command" and astnode.children[0].type.to_s == "ident")
+	if method != nil and (cond1 or cond2)
+	
+		fcall = nil
+		node2 = nil
+		if cond1
+			node2 = astnode.children[1]
+			fcall = Function_call.new(@node.source.tr("\n",""), node2.source)
+		elsif cond2
+			node2 = astnode.children[0]
+			fcall = Function_call.new("self", node2.source)
+		end
 		#if @node.type.to_s == "const" and check_table_name(@node.source.to_s)
-		if check_method_keyword(@node2.source) then
+		if check_method_keyword(node2.source) then
 			fcall.setTableName(searchSelf(fcall.getObjName, $cur_class.getName))
 			fcall.setIsQuery
-			fcall.setQueryType(check_method_keyword(@node2.source))
+			fcall.setQueryType(check_method_keyword(node2.source))
 
-			if @node2.source == "execute"
+			if node2.source == "execute"
 				query = astnode.children[2].source
 				if query.include?("UPDATE")
 					fcall.setQueryType("UPDATE")
@@ -209,11 +241,7 @@ def parse_method_call(astnode, method)
 		end	
 		method.getCalls.push(fcall)
 		$cur_funccall = fcall
-	
-	elsif method != nil and astnode.type.to_s != "command" and astnode.children[0].type.to_s == "ident"
-		fcall = Function_call.new("self", astnode.children[0].source)
-		method.getCalls.push(fcall)
-		$cur_funccall = fcall
+
 	elsif astnode.type.to_s == "command" or (astnode.children[0].type.to_s == "ident" and in_key_words(astnode.children[0].source.to_s))
 		parse_attrib(astnode)
 		$cur_funccall  = nil

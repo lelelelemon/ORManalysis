@@ -5,6 +5,13 @@ class Data_dependency
 		@block = block
 		@instr = instr
 		@vname = vname
+		@instr_handler = nil
+	end
+	def setInstrHandler(h)
+		@instr_handler = h
+	end
+	def getInstrHandler
+		@instr_handler
 	end
 	def getBlock
 		@block
@@ -14,6 +21,13 @@ class Data_dependency
 	end
 	def getVname
 		@vname
+	end
+	def equals(d)
+		if d.getBlock == @block and d.getInstr == @instr and d.getVname == @vname
+			return true
+		else
+			return false
+		end
 	end
 end
 
@@ -62,10 +76,21 @@ class Instruction
 	def getIndex
 		@index
 	end
-	def addDatadep(dep_string, vname)
+	def addDatadep(dep_string, vname, handler = nil)
 		ary = dep_string.split('.')
 		dep = Data_dependency.new(ary[0].to_i, ary[1].to_i, vname)
-		@deps.push(dep)
+		if handler != nil
+			dep.setInstrHandler(handler)
+		end
+		exist = false
+		@deps.each do |d|
+			if d.equals(dep)
+				exist = true
+			end
+		end
+		if exist == false
+			@deps.push(dep)
+		end
 	end
 	def getDeps
 		@deps
@@ -149,6 +174,17 @@ class Return_instr < Instruction
 	end
 	def toString
 		s = "RETURN "
+		s = s + super
+		return s
+	end
+end
+
+class Branch_instr < Instruction
+	def initialize
+		super
+	end
+	def toString
+		s = "BRANCH "
 		s = s + super
 		return s
 	end
@@ -369,6 +405,7 @@ def read_dataflow(application_dir=nil)
 end
 
 def find_method(class_name, method_name)
+	puts "class_name = #{class_name}, method_name = #{method_name}"
 	return ($class_map[class_name].getMethods)[method_name]	
 end
 
@@ -391,7 +428,7 @@ def handle_single_dataflow_file(item, class_name)
 				$cur_cfg = Closure.new
 				
 			elsif line.include?("CLOSURE END")
-				$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB.getIndex)
+				#$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB.getIndex)
 				$cur_bb = $cur_bb_stack[-1]
 				$cur_bb.getLastInstr.addClosure($cur_cfg)
 				$cur_cfg = $cur_cfg_stack[-1]
@@ -443,7 +480,18 @@ def handle_single_dataflow_file(item, class_name)
 										v_name = single_attr[0...bracket_begin]
 										deps.each do |dep|
 											if dep.length > 0
+												dep_str = dep.split('.')
+												#dep_instr = nil
+												#if $cur_cfg.getBBByIndex(dep_str[0].to_i) != nil
+												#	$cur_cfg.getBBByIndex(dep_str[0].to_i).getInstr[dep_str[1].to_i]
+												#else
+												#	puts "block #{dep_str[0].to_i}  doesn't exist"
+												#end
+												#if dep_instr != nil
 												cur_instr.addDatadep(dep, v_name)
+												#else
+												#	puts "DEP instructions cannot be found: #{dep_str[0].to_i}.#{dep_str[1].to_i}"
+												#end
 											end
 										end
 
@@ -465,6 +513,38 @@ def handle_single_dataflow_file(item, class_name)
 				end
 			end
 		end
+
+		$class_map.each do |keyc, valuec|
+			valuec.getMethods.each do |key, value|
+				cfg = value.getCFG
+				if cfg != nil
+					calculate_depinstr_for_cfg(cfg)
+				end
+			end
+		end	
+end
+
+def calculate_depinstr_for_cfg(cfg)
+	
+	cfg.getBB.each do |bb|
+		#puts "\tBB#{bb.getIndex}:"
+		bb.getInstr.each do |instr|
+			#print "\t\tinstr: #{instr.toString}"
+			instr.getDeps.each do |d|
+				#print "#{d.getBlock}.#{d.getInstr}, "
+				dep_instr = cfg.getBBByIndex(d.getBlock.to_i).getInstr[d.getInstr.to_i]
+				if dep_instr != nil
+					d.setInstrHandler(dep_instr)
+				else
+					puts "DEP instr nil: #{keyc}.#{key}: BB#{d.getBlock.to_i}.#{d.getInstr.to_i}"
+				end 
+			end	
+			#puts ""
+			if instr.hasClosure?
+				calculate_depinstr_for_cfg(instr.getClosure)
+			end
+		end
+	end
 end
 
 

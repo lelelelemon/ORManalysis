@@ -1,3 +1,5 @@
+$cur_class_stack = Array.new
+
 def traverse_ast(astnode, level)
 	@blank = ""
 	for i in (0...level)
@@ -26,6 +28,13 @@ def traverse_ast(astnode, level)
 				traverse_ast(child, level+1)
 			end
 			i = i + 1
+		end
+	elsif astnode.class.to_s == "YARD::Parser::Ruby::KeywordNode"
+		if astnode.type.to_s == "super"
+			if $cur_method != nil
+				fcall = Function_call.new($cur_class.getUpperClass, $cur_method.getName)
+				$cur_method.getCalls.push(fcall)
+			end 
 		end
 	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
 		temp_funccall = parse_method_call(astnode, $cur_method)

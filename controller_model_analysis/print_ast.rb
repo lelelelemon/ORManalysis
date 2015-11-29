@@ -15,7 +15,7 @@ PATH_ORDER = [
 ]
 
 
-file = File.open("./lobsters/controllers/comments_controller.rb", "r")
+file = File.open("./publify/models/content.rb", "r")
 contents = file.read
 ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 

@@ -12,9 +12,12 @@ $l_index_stack = Array.new
 $blank = ""
 
 $closure_stack = Array.new
+
 def get_closure_tag
 	r = ""
 	i = 0
+	r += $closure_stack[-1]
+	r += "_"
 	$closure_stack.each do |c|
 		r += "closure#{i}_"
 		i += 1
@@ -194,6 +197,10 @@ def write_single_bb(start_class, start_function, bb)
 			cl.getBB.each do |inner_bb|
 				write_single_bb(start_class, start_function, inner_bb)
 			end
+			cl_last_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{cl.getBB[-1].getIndex}"
+			cl_first_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{cl.getBB[0].getIndex}"
+			$graph_file.write("\t#{cl_last_bb_name} -> #{cl_first_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
+
 			$closure_stack.pop
 		end
 		index = index + 1

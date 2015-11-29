@@ -1,0 +1,38 @@
+ comment.short_id if comment.persisted? 
+ form_for comment,
+:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
+ if comment.errors.any? 
+ errors_for comment 
+ end 
+ hidden_field_tag "story_id", comment.story.short_id 
+ if comment.parent_comment 
+ hidden_field_tag "parent_comment_short_id",
+      comment.parent_comment.short_id 
+ end 
+ text_area_tag "comment", comment.comment, :rows => 5,
+      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
+      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
+      
+ if @user 
+ end 
+ button_tag "#{comment.new_record?? "Post" : "Update"}",
+        :class => "comment-post", :type => "button",
+        :disabled => !@user 
+ button_tag "Preview", :class => "comment-preview",
+        :type => "button", :disabled => !@user 
+ if comment.persisted? || comment.parent_comment_id 
+ button_tag "Cancel", :class => "comment-cancel",
+          :type => "button" 
+ end 
+ if @user && @user.hats.any? 
+ select_tag "hat_id",
+          options_from_collection_for_select(@user.hats, "id", "hat",
+          comment.hat_id), :include_blank => true 
+ end 
+ if @user 
+ render :partial => "global/markdownhelp" 
+ end 
+ end 
+ if defined?(show_comment) && show_comment.valid? 
+ render "comments/comment", :comment => show_comment 
+ end 

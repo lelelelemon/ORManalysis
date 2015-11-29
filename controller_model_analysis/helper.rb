@@ -214,12 +214,11 @@ def get_class_node(astnode)
 end
 
 def get_class_list(astnode, class_list)
-	if astnode.type.to_s == "class"
+	if astnode.type.to_s == "class" or astnode.type.to_s == "module"
 		class_list.push(astnode)
-	else
-		astnode.children.each do |child|
-			get_class_list(child, class_list)
-		end
+	end
+	astnode.children.each do |child|
+		get_class_list(child, class_list)
 	end
 end
 

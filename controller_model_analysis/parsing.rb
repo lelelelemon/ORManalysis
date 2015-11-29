@@ -137,7 +137,7 @@ def trace_function(start_class, start_function, params, returnv, level)
 		end
 		pass_returnv = call.getReturnValue
 		if call.isQuery
-			caller_class = nil
+			caller_class = callerv
 			if class_handler.getMethodVarMap[start_function] != nil
 				caller_class = class_handler.getMethodVarMap[start_function].search_var(call.getObjName)
 			end
@@ -146,11 +146,13 @@ def trace_function(start_class, start_function, params, returnv, level)
 			end
 
 			if trigger_save?(call) or trigger_create?(call)
+				puts "Trigger save: #{call.getObjName} (#{caller_class==nil})"
 				#puts "#{blank}=====transaction begin====="
 				puts "#{blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
 				if caller_class != nil and trigger_save?(call)
 					$class_map[caller_class].getSave.each do |save_action|
 						temp_name = "#{caller_class}.#{save_action.getFuncName}"
+						puts "Trigger save: #{temp_name}"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 							trace_function(caller_class, save_action.getFuncName, "", "", level+2)
@@ -184,7 +186,7 @@ def trace_function(start_class, start_function, params, returnv, level)
 end
 
 #iterate over all controllers
-$app_dir = "./lobsters"
+$app_dir = "../applications/lobsters"
 $controller_files = ""
 $model_files = ""
 $log_files = ""
