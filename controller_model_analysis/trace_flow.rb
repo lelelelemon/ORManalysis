@@ -16,7 +16,9 @@ $closure_stack = Array.new
 def get_closure_tag
 	r = ""
 	i = 0
-	r += $closure_stack[-1]
+	if $closure_stack.length > 0
+		r += "#{$closure_stack[-1].getRand}"
+	end
 	r += "_"
 	$closure_stack.each do |c|
 		r += "closure#{i}_"
@@ -116,11 +118,23 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 		end
 end
 
-def set_node_label(start_class, start_function, bb_index, label_list)
+def set_node_label(start_class, start_function, bb, label_list)
 		$label = $label + "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\"> (nil) </td></tr>\n"		
 		$label = "\t\tlabel = <<table border=\"2\">\n#{$label}\t\t</table>>\n"
-		$label = "\t#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb_index} [\n" + $label
+
+		if bb == nil #No CFG found
+			$label = "\t#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB1 [\n" + $label
+		else
+			$label = "\t#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb.getIndex} [\n" + $label
+		end
+
 		$label = $label + "\t\tshape = none\n"
+
+		#view output/rendering
+		if bb != nil and bb.getCFG.instance_of?Closure and bb.getCFG.getViewCode
+			$label = $label + "\t\tcolor = pink\n"
+		end
+		
 		$label = $label + "\t];\n"
 
 		label_list.push($label)		
@@ -133,7 +147,7 @@ def handle_single_bb(start_class, start_function, class_handler, bb, label_list,
 		handle_single_instr(start_class, start_function, class_handler, bb, instr, label_list, function_handler, level)
 	end
 
-	set_node_label(start_class, start_function, bb.getIndex, label_list)			
+	set_node_label(start_class, start_function, bb, label_list)			
 	bb.setLabelN($l_index)			
 end
 
@@ -269,7 +283,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 
 		end
 	
-		set_node_label(start_class, start_function, 1, label_list)
+		set_node_label(start_class, start_function, nil, label_list)
 		
 		
 	end

@@ -25,7 +25,8 @@ class MessagesController < ApplicationController
 
     @new_message = Message.new
 
-     if @direction == :out 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @direction == :out 
  else 
  end 
  if @direction == :out 
@@ -72,6 +73,7 @@ class MessagesController < ApplicationController
  submit_tag "Send Message" 
  end 
 
+end
   end
 
   def create
@@ -89,7 +91,8 @@ class MessagesController < ApplicationController
         @new_message.recipient.username.to_s << "."
       return redirect_to "/messages"
     else
-       if @direction == :out 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @direction == :out 
  else 
  end 
  if @direction == :out 
@@ -136,6 +139,7 @@ class MessagesController < ApplicationController
  submit_tag "Send Message" 
  end 
 
+end
     end
   end
 

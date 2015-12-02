@@ -77,7 +77,7 @@ def parse_attrib(astnode)
 				astnode.children[1].children.each do |child|
 					if child.type.to_s == "symbol_literal"
 						$cur_class.addBeforeFilter(get_left_most_leaf(child).source.to_s)
-					puts "#{$cur_class.getName} add before filter: #{get_left_most_leaf(child).source.to_s}"
+						#puts "#{$cur_class.getName} add before filter: #{get_left_most_leaf(child).source.to_s}"
 					end
 				end
 			end

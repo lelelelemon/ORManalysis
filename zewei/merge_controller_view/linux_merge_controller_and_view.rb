@@ -1,4 +1,4 @@
-require "YARD"
+require 'yard'
 #the base_path and the controller name should be passed in as parameters
 $base_path = "../../applications/lobsters"
 $rb_view_name = "view_rb"
@@ -63,7 +63,9 @@ def traverse_routes_mapping(astnode, base_path, controller_name)
 				view_contents = view_file.read
 
 				puts "view_file = #{path}"
-				
+
+				view_contents = "ruby_code_from_view.ruby_code_from_view do |rb_from_view| \n#{view_contents}\nend"				
+
 				if astnode.parent.source.start_with?("return")
 					$render_view_mapping[astnode.parent.source] = view_contents
 				else

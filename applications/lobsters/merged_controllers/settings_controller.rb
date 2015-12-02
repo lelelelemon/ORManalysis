@@ -71,7 +71,8 @@ class SettingsController < ApplicationController
       @user = @edit_user
     end
 
-     @user.username 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ @user.username 
  form_for @edit_user, :url => settings_path, :method => :post,
   :html => { :id => "edit_user" } do |f| 
  error_messages_for f.object 
@@ -134,6 +135,7 @@ class SettingsController < ApplicationController
  end 
  render :partial => "users/invitationform" 
 
+end
   end
 
 private

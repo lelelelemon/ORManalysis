@@ -353,8 +353,13 @@ end
 
 class Closure < CFG
 	def initialize
+		r = Random.new
+		@rnd = r.rand(1...1048576)
 		@view_code = false
 		super
+	end
+	def getRand
+		@rnd
 	end
 	def setViewCode
 		@view_code = true
@@ -401,7 +406,7 @@ def read_dataflow(application_dir=nil)
 		$app_dir = application_dir
 	end
 
-	$dataflow_files = "#{$app_dir}/dataflow/controllers/*.log"
+	$dataflow_files = "#{$app_dir}/dataflow/merged_controllers/*.log"
 
 	Dir.glob($dataflow_files) do |item|
 		next if item == '.' or item == '..'
@@ -429,7 +434,7 @@ def read_dataflow(application_dir=nil)
 end
 
 def find_method(class_name, method_name)
-	puts "class_name = #{class_name}, method_name = #{method_name}"
+	#puts "class_name = #{class_name}, method_name = #{method_name}"
 	return ($class_map[class_name].getMethods)[method_name]	
 end
 

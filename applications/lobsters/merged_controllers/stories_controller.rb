@@ -24,7 +24,8 @@ class StoriesController < ApplicationController
       end
     end
 
-     form_for @story do |f| 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ form_for @story do |f| 
  render :partial => "stories/form", :locals => { :story => @story,
         :f => f } 
  submit_tag "Submit" 
@@ -38,6 +39,7 @@ class StoriesController < ApplicationController
  else 
  end 
 
+end
   end
 
   def destroy
@@ -137,7 +139,8 @@ class StoriesController < ApplicationController
 
     @story.seen_previous = true
 
-     form_for @story do |f| 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ form_for @story do |f| 
  render :partial => "stories/form", :locals => { :story => @story,
         :f => f } 
  submit_tag "Submit" 
@@ -150,7 +153,8 @@ class StoriesController < ApplicationController
  if @story.previewing 
  else 
  end 
-, :layout => false
+
+end
   end
 
   def show
@@ -187,7 +191,8 @@ class StoriesController < ApplicationController
 
         load_user_votes
 
-         render :partial => "stories/listdetail",
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ render :partial => "stories/listdetail",
     :locals => { :story => @story, :single_story => true } 
  if @story.markeddown_description.present? 
  raw @story.markeddown_description 
@@ -219,6 +224,7 @@ class StoriesController < ApplicationController
  end 
  end 
 
+end
       }
       format.json {
         render :json => @story.as_json(:with_comments => @comments)
@@ -258,7 +264,8 @@ class StoriesController < ApplicationController
     if @story.save
       return redirect_to @story.comments_path
     else
-       form_for @story, :url => story_path(@story.short_id),
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ form_for @story, :url => story_path(@story.short_id),
   :method => :put, :html => { :id => "edit_story" } do |f| 
  render :partial => "stories/form", :locals => { :story => @story,
       :f => f } 
@@ -285,6 +292,7 @@ class StoriesController < ApplicationController
           :locals => { :allow_images => true } 
  end 
 
+end
     end
   end
 

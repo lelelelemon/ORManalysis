@@ -12,7 +12,8 @@ class LoginController < ApplicationController
   def index
     @title = "Login"
     @referer ||= request.referer
-     form_tag login_path do 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ form_tag login_path do 
  label_tag :email, "E-mail or Username:" 
  text_field_tag :email, "", :size => 30, :autofocus => "autofocus" 
  label_tag :password, "Password:" 
@@ -27,6 +28,7 @@ class LoginController < ApplicationController
  end 
  end 
 
+end
   end
 
   def login
@@ -64,12 +66,14 @@ class LoginController < ApplicationController
 
   def forgot_password
     @title = "Reset Password"
-     form_tag reset_password_path do 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ form_tag reset_password_path do 
  label_tag :email, "E-mail or Username:" 
  text_field_tag :email, "", :size => 30 
  submit_tag "Reset Password" 
  end 
 
+end
   end
 
   def reset_password

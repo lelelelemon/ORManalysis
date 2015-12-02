@@ -32,7 +32,8 @@ class HomeController < ApplicationController
     @heading = @title = "Hidden Stories"
     @cur_url = "/hidden"
 
-     if @cur_url == "/recent" 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
  render :partial => "stories/listdetail", :collection => @stories,
@@ -54,6 +55,7 @@ class HomeController < ApplicationController
  @page + 1 
  end 
 
+end
   end
 
   def index
@@ -70,7 +72,8 @@ class HomeController < ApplicationController
     @cur_url = "/"
 
     respond_to do |format|
-      format.html {  if @cur_url == "/recent" 
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
  render :partial => "stories/listdetail", :collection => @stories,
@@ -91,7 +94,8 @@ class HomeController < ApplicationController
       @page + 1 
  @page + 1 
  end 
- }
+
+end }
       format.rss {
         if @user && params[:token].present?
           @title = "Private feed for #{@user.username}"
@@ -115,7 +119,8 @@ class HomeController < ApplicationController
       :href => "/newest.rss#{@user ? "?token=#{@user.rss_token}" : ""}" }
 
     respond_to do |format|
-      format.html {  if @cur_url == "/recent" 
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
  render :partial => "stories/listdetail", :collection => @stories,
@@ -136,7 +141,8 @@ class HomeController < ApplicationController
       @page + 1 
  @page + 1 
  end 
- }
+
+end }
       format.rss {
         if @user && params[:token].present?
           @title += " - Private feed for #{@user.username}"
@@ -161,7 +167,8 @@ class HomeController < ApplicationController
     @newest = true
     @for_user = by_user.username
 
-     if @cur_url == "/recent" 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
  render :partial => "stories/listdetail", :collection => @stories,
@@ -183,6 +190,7 @@ class HomeController < ApplicationController
  @page + 1 
  end 
 
+end
   end
 
   def recent
@@ -202,7 +210,8 @@ class HomeController < ApplicationController
     @rss_link = { :title => "RSS 2.0 - Newest Items",
       :href => "/newest.rss#{@user ? "?token=#{@user.rss_token}" : ""}" }
 
-     if @cur_url == "/recent" 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
  render :partial => "stories/listdetail", :collection => @stories,
@@ -224,6 +233,7 @@ class HomeController < ApplicationController
  @page + 1 
  end 
 
+end
   end
 
   def tagged
@@ -240,7 +250,8 @@ class HomeController < ApplicationController
       :href => "/t/#{@tag.tag}.rss" }
 
     respond_to do |format|
-      format.html {  if @cur_url == "/recent" 
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
  render :partial => "stories/listdetail", :collection => @stories,
@@ -261,7 +272,8 @@ class HomeController < ApplicationController
       @page + 1 
  @page + 1 
  end 
- }
+
+end }
       format.rss { render :action => "rss", :layout => false }
       format.json { render :json => @stories }
     end
@@ -290,7 +302,8 @@ class HomeController < ApplicationController
       @heading = @title = "Top Stories of the Past " << length[:intv]
     end
 
-     if @cur_url == "/recent" 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
  render :partial => "stories/listdetail", :collection => @stories,
@@ -312,6 +325,7 @@ class HomeController < ApplicationController
  @page + 1 
  end 
 
+end
   end
 
   def upvoted
@@ -326,7 +340,8 @@ class HomeController < ApplicationController
       :href => "/upvoted.rss#{(@user ? "?token=#{@user.rss_token}" : "")}" }
 
     respond_to do |format|
-      format.html {  if @cur_url == "/recent" 
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
  render :partial => "stories/listdetail", :collection => @stories,
@@ -347,7 +362,8 @@ class HomeController < ApplicationController
       @page + 1 
  @page + 1 
  end 
- }
+
+end }
       format.rss {
         if @user && params[:token].present?
           @title += " - Private feed for #{@user.username}"

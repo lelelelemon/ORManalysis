@@ -2,7 +2,9 @@ load 'read_dataflow.rb'
 
 class INode
 	def initialize(instr)
-		instr.setINode(self)
+		if instr != nil
+			instr.setINode(self)
+		end
  		@instr = instr
 		@isQuery = false
 		@children = Array.new
@@ -76,10 +78,14 @@ $dataflow_source = INode.new(nil)
 #format: from_inode_index*to_inode_index
 $dataflow_edges = Hash.new
 class Edge
-	def initialize(fromn, ton, vname)
+	def initialize(fromn, ton, vname, isBranching=false)
 		@from_node = fromn
 		@to_node = ton
 		@vname = vname
+		@is_branching = isBranching
+	end
+	def getIsBranching
+		@is_branching
 	end
 	def getFromNode
 		@from_node
@@ -281,6 +287,20 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 		#puts "BB's return length = #{bb.getReturns.length}"
 		bb.getOutgoings.each do |o|
 			o_bb = cfg.getBBByIndex(o)
+			
+			#Add data flow for branching instr
+			if bb.getInstr[-1].instance_of?Branch_instr
+				o_bb.getInstr.each do |ins|
+					edge_name = "#{bb.getInstr[-1].getINode.getIndex}*#{ins.getINode.getIndex}"
+					edge = Edge.new(bb.getInstr[-1].getINode, ins.getInode, "_branch_", true)	
+					if $dataflow_edges[edge_name] == nil
+						$dataflow_edges[edge_name] = Array.new
+					end
+					$dataflow_edges[edge_name].push(edge)
+				end
+			end		
+	
+			#Add edge to instruction node
 			bb.getReturns.each do |r|
 				r.addChild(o_bb.getInstr[0].getINode)
 				#puts "ADD BLOCK CONNECT: #{r.getIndex} -> #{o_bb.getInstr[0].getINode.getIndex}"	

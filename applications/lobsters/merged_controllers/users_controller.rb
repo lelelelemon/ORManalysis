@@ -6,7 +6,8 @@ class UsersController < ApplicationController
     @title = "User #{@showing_user.username}"
 
     respond_to do |format|
-      format.html {  if !@showing_user.is_active? 
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ if !@showing_user.is_active? 
  elsif @showing_user.is_new? 
  else 
  end 
@@ -110,7 +111,8 @@ class UsersController < ApplicationController
  end 
  end 
  end 
- }
+
+end }
       format.json { render :json => @showing_user }
     end
   end
@@ -122,7 +124,8 @@ class UsersController < ApplicationController
       @users = User.order("karma DESC, id ASC").to_a
       @user_count = @users.length
       @title << " By Karma"
-       @title 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ @title 
  @user_count 
  @users.each do |user| 
  user.username 
@@ -138,12 +141,14 @@ class UsersController < ApplicationController
  end 
  end 
 
+end
     elsif params[:moderators]
       @users = User.where("is_admin = 1 OR is_moderator = 1").
         order("id ASC").to_a
       @user_count = @users.length
       @title = "Moderators and Administrators"
-       @title 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ @title 
  @user_count 
  @users.each do |user| 
  user.username 
@@ -159,6 +164,7 @@ class UsersController < ApplicationController
  end 
  end 
 
+end
     else
       users = User.order("id DESC").to_a
       @user_count = users.length

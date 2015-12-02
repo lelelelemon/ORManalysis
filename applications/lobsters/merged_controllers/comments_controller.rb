@@ -41,7 +41,8 @@ class CommentsController < ApplicationController
         comment.errors.add(:comment, "^You have already posted a comment " <<
           "here recently.")
 
-         comment.short_id if comment.persisted? 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
  if comment.errors.any? 
@@ -80,14 +81,17 @@ class CommentsController < ApplicationController
  render "comments/comment", :comment => show_comment 
  end 
 
+end
       end
     end
 
     if comment.valid? && params[:preview].blank? && comment.save
       comment.current_vote = { :vote => 1 }
 
-       render "comments/comment", :comment => comment 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ render "comments/comment", :comment => comment 
 
+end
     else
       comment.upvotes = 1
       comment.current_vote = { :vote => 1 }
@@ -101,7 +105,8 @@ class CommentsController < ApplicationController
       return render :text => "can't find comment", :status => 400
     end
 
-     comment.short_id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
 "upvoted" : "downvoted") : "" 
@@ -173,6 +178,7 @@ class CommentsController < ApplicationController
  raw comment.markeddown_comment 
  end 
 
+end
   end
 
   def show_short_id
@@ -196,7 +202,8 @@ class CommentsController < ApplicationController
       return render :text => "can't find comment", :status => 400
     end
 
-     comment.short_id if comment.persisted? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
  if comment.errors.any? 
@@ -235,6 +242,7 @@ class CommentsController < ApplicationController
  render "comments/comment", :comment => show_comment 
  end 
 
+end
   end
 
   def reply
@@ -246,7 +254,8 @@ class CommentsController < ApplicationController
     comment.story = parent_comment.story
     comment.parent_comment = parent_comment
 
-     comment.short_id if comment.persisted? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
  if comment.errors.any? 
@@ -285,6 +294,7 @@ class CommentsController < ApplicationController
  render "comments/comment", :comment => show_comment 
  end 
 
+end
   end
 
   def delete
@@ -294,7 +304,8 @@ class CommentsController < ApplicationController
 
     comment.delete_for_user(@user)
 
-     comment.short_id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
 "upvoted" : "downvoted") : "" 
@@ -366,6 +377,7 @@ class CommentsController < ApplicationController
  raw comment.markeddown_comment 
  end 
 
+end
   end
 
   def undelete
@@ -375,7 +387,8 @@ class CommentsController < ApplicationController
 
     comment.undelete_for_user(@user)
 
-     comment.short_id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
 "upvoted" : "downvoted") : "" 
@@ -447,6 +460,7 @@ class CommentsController < ApplicationController
  raw comment.markeddown_comment 
  end 
 
+end
   end
 
   def update
@@ -465,7 +479,8 @@ class CommentsController < ApplicationController
         [comment.id])
       comment.current_vote = votes[comment.id]
 
-       comment.short_id 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
 "upvoted" : "downvoted") : "" 
@@ -537,6 +552,7 @@ class CommentsController < ApplicationController
  raw comment.markeddown_comment 
  end 
 
+end
     else
       comment.current_vote = { :vote => 1 }
 
@@ -624,7 +640,8 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html {  @comments.each do |comment| 
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ @comments.each do |comment| 
  render "comments/comment", :comment => comment,
       :show_story => true 
  end 
@@ -638,7 +655,8 @@ class CommentsController < ApplicationController
  @page + 1 
  @page + 1 
  end 
- }
+
+end }
       format.rss {
         if @user && params[:token].present?
           @title = "Private comments feed for #{@user.username}"
@@ -706,7 +724,8 @@ private
     comment.previewing = true
     comment.is_deleted = false # show normal preview for deleted comments
 
-     comment.short_id if comment.persisted? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
  if comment.errors.any? 
@@ -745,6 +764,7 @@ private
  render "comments/comment", :comment => show_comment 
  end 
 
+end
   end
 
   def find_comment

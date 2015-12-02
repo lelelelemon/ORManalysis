@@ -30,7 +30,8 @@ class SignupController < ApplicationController
     @new_user = User.new
     @new_user.email = @invitation.email
 
-     form_for @new_user, { :url => signup_path,
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ form_for @new_user, { :url => signup_path,
   :autocomplete => "off" } do |f| 
  hidden_field_tag "invitation_code", @invitation.code 
  error_messages_for(@new_user) 
@@ -55,6 +56,7 @@ class SignupController < ApplicationController
  submit_tag "Signup" 
  end 
 
+end
   end
 
   def signup
@@ -78,7 +80,8 @@ class SignupController < ApplicationController
 
       return redirect_to "/signup/invite"
     else
-       form_for @new_user, { :url => signup_path,
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ form_for @new_user, { :url => signup_path,
   :autocomplete => "off" } do |f| 
  hidden_field_tag "invitation_code", @invitation.code 
  error_messages_for(@new_user) 
@@ -103,6 +106,7 @@ class SignupController < ApplicationController
  submit_tag "Signup" 
  end 
 
+end
     end
   end
 
