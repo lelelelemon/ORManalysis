@@ -10,12 +10,19 @@ class INode
 		@label = ""
 		@in_closure = false
 		@closure_stack = Array.new
+		@dataflow_edges = Array.new
 		if $closure_stack.length > 0
 			@in_closure = true
 			$closure_stack.each do |cl|
 				@closure_stack.push(cl)
 			end
 		end
+	end
+	def addDataflowEdge(edge)
+		@dataflow_edges.push(edge)
+	end
+	def getDataflowEdges
+		@dataflow_edges
 	end
 	def getInClosure
 		@in_closure
@@ -61,9 +68,12 @@ end
 
 $root = nil
 $ins_cnt = 0
+#store all instruction node
 $node_list = Array.new
+#the very source of dataflow, all nodes using user input connect to this node
+$dataflow_source = INode.new(nil)
 
-#format: from_inode_index*to_inode_index*vname
+#format: from_inode_index*to_inode_index
 $dataflow_edges = Hash.new
 class Edge
 	def initialize(fromn, ton, vname)
@@ -84,15 +94,30 @@ end
 
 def add_dataflow_edge(node)
 	to_ins = node.getInstr
+	if to_ins.getFromUserInput
+		edge_name = "user_input*#{node.getIndex}"
+		edge = Edge.new(nil, node, "param")
+		$dataflow_source.addDataflowEdge(edge)	
+		if $dataflow_edges[edge_name] == nil
+			$dataflow_edges[edge_name] = Array.new
+		end
+		$dataflow_edges[edge_name].push(edge)
+		return
+	end
+
 	to_ins.getDeps.each do |dep|
 		if dep.getInstrHandler == nil
 			puts "Handler nil: BB#{dep.getBlock}.#{dep.getInstr}"
 		end
 		#TODO: getINode == nil, if this instr hasn't been handled yet...
 		if dep.getInstrHandler.getINode != nil
-			edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}*#{dep.getVname}"
+			edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"
 			edge = Edge.new(dep.getInstrHandler.getINode, node, dep.getVname)
-			$dataflow_edges[edge_name] = edge
+			dep.getInstrHandler.getINode.addDataflowEdge(edge)
+			if $dataflow_edges[edge_name] == nil
+				$dataflow_edges[edge_name] = Array.new
+			end
+			$dataflow_edges[edge_name].push(edge)
 		end
 	end
 end
@@ -407,7 +432,7 @@ end
 
 def print_dataflow_graph
 	$dataflow_edges.each do |key, value|
-		puts "#{key}"
+		puts "#{key} (#{value.getVname})"
 	end
 end
 

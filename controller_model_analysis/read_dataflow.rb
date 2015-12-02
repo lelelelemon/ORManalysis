@@ -1,5 +1,8 @@
 $dataflow_files = "./lobsters/dataflow/*.log"
 
+#Indicate the rendered code replaced by view ruby code
+$view_ruby_code = false
+
 class Data_dependency
 	def initialize(block, instr, vname)
 		@block = block
@@ -37,10 +40,24 @@ class Instruction
 		@resolved = false
 		@has_closure = false
 		@closure = nil
+		@from_user_input = false
 		@index = 0
 		@f_tag = 0
 		@bb = nil
 		@inode = nil
+	end
+	def setFromUserInput
+		@from_user_input = true
+	end
+	def getFromUserInput
+		@from_user_input
+	end
+	def getToUserOutput
+		if @bb.getCFG.instance_of?Closure
+			@bb.getCFG.getViewCode
+		else
+			return false
+		end
 	end
 	def setINode(i)
 		@inode = i
@@ -336,7 +353,14 @@ end
 
 class Closure < CFG
 	def initialize
+		@view_code = false
 		super
+	end
+	def setViewCode
+		@view_code = true
+	end
+	def getViewCode
+		@view_code
 	end
 	def getLastBB
 		return @bb[-1]
@@ -426,6 +450,10 @@ def handle_single_dataflow_file(item, class_name)
 				$cur_bb_stack.push($cur_bb)
 				$cur_cfg_stack.push($cur_cfg)
 				$cur_cfg = Closure.new
+				if $view_ruby_code
+					$cur_cfg.setViewCode
+					$view_ruby_code = false
+				end
 				
 			elsif line.include?("CLOSURE END")
 				#$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB.getIndex)
@@ -471,6 +499,12 @@ def handle_single_dataflow_file(item, class_name)
 										#fc_array[0]: caller
 										#fc_array[1]: function_name
 										cur_instr = Call_instr.new(fc_array[0], fc_array[1])
+										if cur_instr.getCaller == "self" and cur_instr.getFuncname == "param"
+												cur_instr.setFromUserInput
+										end
+										if cur_instr.getFuncname == "ruby_code_from_view"
+												$view_ruby_code = true
+										end
 										
 									elsif single_attr.include?('[') and single_attr.include?(']')
 										bracket_begin = single_attr.index('[')
