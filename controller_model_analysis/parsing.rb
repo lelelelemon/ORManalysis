@@ -12,6 +12,8 @@ load 'traverse_ast.rb'
 load 'read_dataflow.rb'
 load 'trace_flow.rb'
 load 'query_flow.rb'
+load 'dataflow_component.rb'
+load 'compute_stats.rb'
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',
@@ -234,10 +236,6 @@ opt_parser = OptionParser.new do |opt|
 		options[:class_name] = class_name
   end
 
-	opt.on("-v","--print-types [CLASS_NAME]",String,"print out type information of each variable of function call","example: --print CommentsController or --print all") do |class_name|
-		options[:class_name_for_type] = class_name
-  end
-
 	opt.on("-r","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified","example: --trace CommentsController,create") do |trace_input|
 		options[:trace_input] = trace_input
   end
@@ -258,20 +256,24 @@ opt_parser = OptionParser.new do |opt|
 		options[:inference] = true
 	end
 
-	opt.on("-f", "--read-flow","Read dataflow and control flow file") do |flow|
-		options[:readflow] = true
-	end
 
-	opt.on("-s", "--print-instr [CLASS_NAME]",String,"Print instructions and CFG of all methods in the specified class") do |class_name|
+	opt.on("-n", "--print-instr [CLASS_NAME]",String,"Print instructions and CFG of all methods in the specified class") do |class_name|
 		options[:printinstr] = class_name
 	end
 
 	opt.on("-t", "--trace-dataflow CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name,function_name; print call graph and data flow to a file, use graphviz to visualize") do |trace_input|
-		options[:trace] = trace_input
+		options[:trace_flow] = true
+		options[:trace]  = trace_input
 	end
 
 	opt.on("-g", "--query-graph CLASS_NAME,FUNCTION_NAME",Array,"print out flow graph only containing queries") do |q_input|
-		options[:query_graph] = q_input
+		options[:query_graph] = true
+		options[:trace] = q_input
+	end
+
+	opt.on("-s", "--stats CLASS_NAME,FUNCTION_NAME",Array,"print some stats, including query_num, dataflow grap from user input to user output, etc. Needs two argument") do |stats|
+			options[:stats] = true
+			options[:trace] = stats
 	end
 
 	opt.on("-o", "--output-dir DIR",String,"Output directory for graphviz files") do |output_dir|
@@ -301,18 +303,13 @@ if options[:dir] != nil
 		read_ruby_files_with_template(options[:dir], options[:template])
 	else
 		read_ruby_files(options[:dir])
+		read_dataflow(options[:dir])
 	end
 else
 	read_ruby_files
+	read_dataflow
 end
-
-if options[:readflow] == true
-	if options[:dir] != nil
-		read_dataflow(options[:dir])
-	else
-		read_dataflow
-	end
-end
+adjust_calls
 
 
 if options[:class_name] != nil
@@ -332,13 +329,6 @@ if options[:class_name_for_type] != nil
 end
 
 if options[:printinstr] != nil
-	if options[:read_flow] == nil or options[:read_flow] == false
-		if options[:dir] != nil
-			read_dataflow(options[:dir])
-		else
-			read_dataflow
-		end
-	end
 	if options[:printinstr] == "all"
 		print_instructions
 	else
@@ -349,62 +339,40 @@ end
 if options[:trace_input] != nil
 	start_class = options[:trace_input][0]
 	start_function = options[:trace_input][1]
-	adjust_calls
 	level = 0
 	trace_function(start_class, start_function, "", "", level)
 end
 
-if options[:trace] != nil
-	if options[:read_flow] == nil or options[:read_flow] == false
-		if options[:dir] != nil
-			read_dataflow(options[:dir])
-		else
-			read_dataflow
-		end
-	end
+
+$output_dir = "."
+if options[:output] != nil
+	$output_dir = options[:output]
+end
+
+
+if options[:trace_flow] or options[:stats] or options[:query_graph]
 	start_class = options[:trace][0]
 	start_function = options[:trace][1]
-	adjust_calls
 	level = 0
 
-	output_dir = "."
-	if options[:output] != nil
-		output_dir = options[:output]
-	end
-	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_graph.log"
-	$graph_file = File.open(graph_fname, "w");
+	if options[:trace_flow]
+		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
+		$graph_file = File.open(graph_fname, "w");
 
-	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
-	trace_flow(start_class, start_function, "", "", level)
-	$graph_file.write("}")
+		$graph_file.write("digraph #{start_class}_#{start_function} {\n")
+		trace_flow(start_class, start_function, "", "", level)
+		$graph_file.write("}")
+	end
+
+	if options[:query_graph]
+		print_query_graph($output_dir, start_class, start_function)
+	end
+
+	if options[:stats]
+		compute_dataflow_stat($output_dir, start_class, start_function)
+	end
 end
 
-
-if options[:query_graph] != nil
-	if options[:read_flow] == nil or options[:read_flow] == false
-		if options[:dir] != nil
-			read_dataflow(options[:dir])
-		else
-			read_dataflow
-		end
-	end
-	start_class = options[:query_graph][0]
-	start_function = options[:query_graph][1]
-	adjust_calls
-	level = 0
-
-	output_dir = "."
-	if options[:output] != nil
-		output_dir = options[:output]
-	end
-	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_Qgraph.log"
-	$graph_file = File.open(graph_fname, "w");
-
-	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
-	print_graph(start_class, start_function)
-	$graph_file.write("}");
-
-end
 
 if options[:xml] == true
 	generate_xml_files

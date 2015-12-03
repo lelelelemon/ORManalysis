@@ -134,6 +134,18 @@ def set_node_label(start_class, start_function, bb, label_list)
 		if bb != nil and bb.getCFG.instance_of?Closure and bb.getCFG.getViewCode
 			$label = $label + "\t\tcolor = pink\n"
 		end
+		#include "param", from user input
+		if bb != nil 
+			include_user_input = false
+			bb.getInstr.each do |ins|
+				if ins.getFromUserInput
+					include_user_input = true
+				end
+			end
+			if include_user_input
+				$label = $label + "\t\tcolor = green\n"
+			end
+		end
 		
 		$label = $label + "\t];\n"
 
@@ -177,6 +189,9 @@ def handle_single_instr(start_class, start_function, class_handler, bb, instr, l
 		
 	if instr.hasClosure?
 		cl = instr.getClosure
+		if cl.getViewCode
+			puts "FIND VIEW CODE!"
+		end
 		$l_index_stack.push($l_index)	
 		$closure_stack.push(cl)
 		$label_stack.push($label)
@@ -224,6 +239,9 @@ end
 
 def trace_flow(start_class, start_function, params, returnv, level)
 	class_handler = $class_map[start_class]
+	if class_handler == nil
+		puts "CLass handler not found: #{start_class}"
+	end
 	function_handler = class_handler.getMethods[start_function]
 
 	$blank = ""

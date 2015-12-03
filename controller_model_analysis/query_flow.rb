@@ -13,6 +13,7 @@ class INode
 		@in_closure = false
 		@closure_stack = Array.new
 		@dataflow_edges = Array.new
+		@backward_dataflow_edges = Array.new
 		if $closure_stack.length > 0
 			@in_closure = true
 			$closure_stack.each do |cl|
@@ -22,6 +23,13 @@ class INode
 	end
 	def addDataflowEdge(edge)
 		@dataflow_edges.push(edge)
+		edge.getToNode.addBackwardEdge(edge)
+	end
+	def addBackwardEdge(edge)
+		@backward_dataflow_edges.push(edge)
+	end
+	def getBackwardEdges
+		@backward_dataflow_edges
 	end
 	def getDataflowEdges
 		@dataflow_edges
@@ -42,10 +50,16 @@ class INode
 			else
 				@label = "#{@instr.getCallHandler.getObjName}.#{@instr.getFuncname}"
 			end
+		elsif @instr.instance_of?Call_instr
+			if @instr.getCallHandler != nil
+				@label = "#{@instr.getCallHandler.getObjName}.#{@instr.getFuncname}"
+			else
+				@label = "#{@instr.getFuncname}"
+			end
 		end
 	end
 	def getLabel
-		return @label
+		@label
 	end
 	def getInstr
 		@instr
@@ -69,6 +83,7 @@ end
 
 
 $root = nil
+$cfg
 $ins_cnt = 0
 #store all instruction node
 $node_list = Array.new
@@ -209,7 +224,11 @@ end
 
 def handle_single_instr2(start_class, start_function, class_handler, function_handler, instr, level, return_list)
 	node = INode.new(instr)
-	puts "\t\tInstr: ##{node.getIndex} #{node.getInstr.toString}, r_list.size = #{return_list.length}"
+	blank = ""
+	for i in (0...level)
+		blank = blank + "\t"
+	end
+	puts "#{blank}Instr: ##{node.getIndex} #{node.getInstr.toString} (#{node.getInstr.getFromUserInput})"
 	return_list.each do |r|
 		r.addChild(node)
 	end
@@ -409,82 +428,3 @@ def is_directly_connected(node1, node2)
 	return false
 end
 
-def construct_query_graph
-	$node_list.each do |n1|
-		if n1.isQuery?
-			$node_list.each do |n2|
-				if n2.isQuery?
-					connected = false
-					$global_check = Hash.new
-					if is_directly_connected(n1, n2)
-						$graph_file.write("n#{n1.getIndex} -> n#{n2.getIndex}\n")
-					end
-				end
-			end
-		end
-	end		
-end
-
-#def construct_query_graph(node)
-#	if node.isQuery? and $cur_query_stack.length > 0
-#		edge_name = "#{$cur_query_stack[-1].getIndex}_#{node.getIndex}"
-#		if $query_edges.include?(edge_name) == false
-#			$query_edges.push(edge_name)
-#			$graph_file.write("n#{$cur_query_stack[-1].getIndex} -> n#{node.getIndex};\n")
-#		end
-#	end
-#	if $global_check.has_key?(node.getIndex)
-#		return
-#	end
-#	$global_check[node.getIndex] = node
-#	if node.isQuery?
-#		$cur_query_stack.push(node)
-#		node.getChildren.each do |c|
-#			construct_query_graph(c)
-#		end
-#		$cur_query_stack.pop
-#	else
-#		node.getChildren.each do |c|
-#			construct_query_graph(c)
-#		end
-#	end
-#end
-
-def print_dataflow_graph
-	$dataflow_edges.each do |key, value|
-		puts "#{key} (#{value.getVname})"
-	end
-end
-
-def print_graph(start_class, start_function)
-
-	cfg = trace_query_flow(start_class, start_function, "", "", 0)
-
-	$root = cfg.getBB[0].getInstr[0].getINode	
-
-	#$graph_file.write
-	#traverse_instr_tree($root, 0)
-
-	#start constructing query graph	
-	construct_query_graph
-	$node_list.each do |n|
-		if n.isQuery?
-			if n.getInClosure == false
-				$graph_file.write("\tn#{n.getIndex} [label = \"#{n.getLabel}\"]; \n")
-			else
-				$graph_file.write("\tn#{n.getIndex} [label = \"#{n.getLabel}\" style=filled color=orange]; \n")
-			end
-		end
-	end
-	##end constructing query graph
-
-	#print_dataflow_graph
-
-	#$node_list.each do |n|
-	#	print "node #{n.getIndex}: "
-	#	n.getChildren.each do |c|
-	#		print "#{c.getIndex}, "
-	#	end
-	#	puts ""
-	#end
-end

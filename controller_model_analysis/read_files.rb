@@ -90,7 +90,6 @@ def read_key_words
 end
 
 def handle_single_file(item, is_controller)
-	#puts "filename = #{item}"
 	file = File.open(item, "r")
 	contents = file.read
 	ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
