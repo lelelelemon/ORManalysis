@@ -24,26 +24,26 @@ BB 2
 		 14: %v_5->new %v_5[2.12,] %v_6[2.13,] 
 		 15: %self[2.0,] %v_7[2.14,] 
 		 16: 
-		 17: %self[2.0,] 
+		 17: @story[2.15 ] 
 		 18: %self[2.0,] 
 		 19: %v_9->id %v_9[2.18,] 
 		 20: %v_8[2.17,] %v_10[2.19,] 
 		 21: 
-		 22: %self[2.0,] 
+		 22: @story[2.15 2.17 ] 
 		 23: %v_11->valid? %v_11[2.22,] 
 		 24: BRANCH %v_12[2.23,] 
 BB 3
 	outgoing: 4 5 
 	datadep: 2 
 	instructions:
-		 0: %self[2.0,] 
+		 0: %self[2.0,] @story[2.15 2.17 2.22 ] 
 		 1: %v_13->already_posted_story %v_13[3.0,] 
 		 2: BRANCH %v_14[3.1,] 
 BB 4
 	outgoing: 5 
 	datadep: 2 
 	instructions:
-		 0: %self[2.0,] 
+		 0: %self[2.0,] @story[3.0 ] 
 		 1: %v_15->seen_previous %v_15[4.0,] 
 		 2: %v_16->! %v_16[4.1,] 
 		 3: %v_17[4.2,] 
@@ -63,7 +63,7 @@ BB 7
 	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,] @story[2.15 2.17 2.22 4.0 3.0 ] 
 		 2: %v_19->save %v_19[7.1,] 
 		 3: BRANCH %v_20[7.2,] 
 BB 8
@@ -80,7 +80,7 @@ BB 8
 		 7: 
 		 8: %v_21->count! %v_26[8.6,] %v_27[8.7,] %v_21[8.1,] 
 		 9: 
-		 10: %self[2.0,2.0,2.0,] 
+		 10: %self[2.0,2.0,2.0,] @story[7.1 ] 
 		 11: %v_29->comments_path %v_29[8.10,] 
 		 12: %self->redirect_to %self[2.0,2.0,2.0,] %v_30[8.11,] 
 		 13: RETURN %v_31[8.12,] 
@@ -118,7 +118,7 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 12 
-	datadep: 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
 		 1: %self[2.0,] 
@@ -169,14 +169,14 @@ BB 6
 	instructions:
 CLOSURE END
 		 3: 
-		 4: %self[2.0,] 
+		 4: @story[3.1 ] 
 		 5: %cl_1_5->previewing %cl_1_5[3.4,] 
 		 6: BRANCH %cl_1_6[3.5,] 
 BB 4
 	outgoing: 5 12 
 	datadep: 2 
 	instructions:
-		 0: %self[2.0,] 
+		 0: %self[2.0,] @story[3.1 3.4 ] 
 		 1: %cl_1_7->valid? %cl_1_7[4.0,] 
 		 2: %cl_1_8[4.1,] 
 BB 5
@@ -203,7 +203,7 @@ BB 8
 	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,] @story[4.0 3.1 3.4 4.0 3.1 3.4 ] 
 		 2: %cl_1_12->previewing %cl_1_12[8.1,] 
 		 3: BRANCH %cl_1_13[8.2,] 
 BB 9
@@ -274,15 +274,15 @@ BB 3
 		 7: RETURN %v_10[3.6,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self[2.0,] 
+		 2: %self[2.0,] @story[2.6 ] 
 		 3: %v_12[4.2,] 
 		 4: 
-		 5: %self[2.0,] 
-		 6: %self[2.0,] 
+		 5: @story[4.2 ] 
+		 6: %self[2.0,] @user[2.7 ] 
 		 7: %v_13[4.5,] %v_14[4.6,] 
 		 8: 
 		 9: %self->params %self[2.0,] 
@@ -293,9 +293,9 @@ BB 6
 	outgoing: 7 
 	datadep: 2 2 
 	instructions:
-		 0: %self[2.0,] 
+		 0: %self[2.0,] @story[4.2 4.5 ] 
 		 1: %v_18->user_id %v_18[6.0,] 
-		 2: %self[2.0,] 
+		 2: %self[2.0,] @user[4.6 ] 
 		 3: %v_20->id %v_20[6.2,] 
 		 4: %v_19[6.1,] %v_21[6.3,] 
 		 5: %v_22[6.4,] 
@@ -309,7 +309,7 @@ BB 8
 	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @story[6.0 4.2 4.5 ] 
 		 2: %self->params %self[2.0,2.0,] 
 		 3: %v_24[8.2,] 
 		 4: %v_25[8.3,] %v_23[8.1,] 
@@ -321,14 +321,14 @@ BB 9
 		 0: 
 BB 10
 	outgoing: 11 
-	datadep: 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,] @story[8.1 6.0 4.2 4.5 ] 
 		 2: 
 		 3: %v_26->save %v_26[10.1,] %v_27[10.2,] 
 		 4: 
-		 5: %self[2.0,2.0,2.0,] 
+		 5: @story[10.1 ] 
 		 6: %v_29->comments_path %v_29[10.5,] 
 		 7: %self->redirect_to %self[2.0,2.0,2.0,] %v_30[10.6,] 
 		 8: RETURN %v_31[10.7,] 
@@ -378,16 +378,16 @@ BB 4
 		 2: 
 		 3: %self[2.0,] %v_12[4.2,] 
 		 4: 
-		 5: %self[2.0,] 
+		 5: %self[2.0,] @story[2.6 ] 
 		 6: %v_13->merged_into_story %v_13[4.5,] 
 		 7: BRANCH %v_14[4.6,] 
 BB 6
 	outgoing: 9 
-	datadep: 2 2 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
-		 2: %self[2.0,] 
+		 1: %self[2.0,] @story[4.5 ] 
+		 2: @story[6.1 ] 
 		 3: %v_16->merged_into_story %v_16[6.2,] 
 		 4: %v_17->short_id %v_17[6.3,] 
 		 5: %v_15[6.1,] %v_18[6.4,] 
@@ -513,7 +513,7 @@ BB 2
 		 13: %v_5->new %v_5[2.12,] 
 		 14: %self[2.0,] %v_6[2.13,] 
 		 15: 
-		 16: %self[2.0,] 
+		 16: @story[2.14 ] 
 		 17: %self->request %self[2.0,] 
 		 18: %v_8->remote_ip %v_8[2.17,] 
 		 19: %v_9[2.18,] %v_7[2.16,] 
@@ -524,15 +524,15 @@ BB 2
 		 24: BRANCH %v_12[2.23,] 
 BB 3
 	outgoing: 4 5 
-	datadep: 2 2 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
+		 1: %self[2.0,] @story[2.14 2.16 ] 
 		 2: %self->params %self[2.0,] 
 		 3: %v_14[3.2,] 
 		 4: %v_13[3.1,] %v_15[3.3,] 
 		 5: 
-		 6: %self[2.0,] 
+		 6: @story[3.1 ] 
 		 7: %v_16->fetched_canonical_url %v_16[3.6,] 
 		 8: %v_17[3.7,] 
 		 9: %v_17[3.7,] 
@@ -542,7 +542,7 @@ BB 4
 	outgoing: 5 
 	datadep: 2 3 
 	instructions:
-		 0: %self[2.0,] 
+		 0: %self[2.0,] @story[3.1 3.6 ] 
 		 1: %v_20->url %v_20[4.0,] 
 		 2: cu[3.8,] %v_21[4.1,] 
 		 3: %v_22[4.2,] 
@@ -563,7 +563,7 @@ BB 6
 		 5: %v_25[6.3,] %v_26[6.4,] 
 		 6: %v_24[6.2,] %v_27[6.5,] 
 		 7: 
-		 8: %self[2.0,2.0,] 
+		 8: %self[2.0,2.0,] @story[4.0 3.1 3.6 ] 
 		 9: %v_28[6.8,] cu[3.8,3.8,] 
 		 10: cu[3.8,3.8,] 
 		 11: 
@@ -578,7 +578,7 @@ BB 8
 	instructions:
 		 0: 
 		 1: (Story) 
-		 2: %self[2.0,2.0,2.0,] 
+		 2: %self[2.0,2.0,2.0,] @story[6.8 4.0 3.1 3.6 ] 
 		 3: %v_31->url %v_31[8.2,] 
 		 4: %v_30->find_similar_by_url %v_30[8.1,] %v_32[8.3,] 
 		 5: %v_33[8.4,] 
@@ -607,7 +607,7 @@ BB 11
 	datadep: 2 2 2 8 8 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,] @story[8.2 ] 
 		 2: %v_40[11.1,] s[8.5,] 
 		 3: s[8.5,] 
 		 4: 
@@ -618,15 +618,15 @@ BB 13
 		 0: 
 BB 14
 	outgoing: 15 16 
-	datadep: 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,] 
-		 2: %self[2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,] @story[11.1 8.2 ] 
+		 2: @story[14.1 ] 
 		 3: %v_42->fetched_title %v_42[14.2,] 
 		 4: %v_41[14.1,] %v_43[14.3,] 
 		 5: 
-		 6: %self[2.0,2.0,2.0,] 
+		 6: @story[14.1 14.2 ] 
 		 7: %v_44->title %v_44[14.6,] 
 		 8: %v_45->present? %v_45[14.7,] 
 		 9: %v_46->! %v_46[14.8,] 
@@ -649,7 +649,7 @@ BB 17
 	datadep: 2 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,] @story[14.1 14.2 14.6 14.1 14.2 14.6 ] 
 		 2: %self->params %self[2.0,2.0,2.0,2.0,2.0,] 
 		 3: %v_52[17.2,] 
 		 4: %v_51[17.1,] %v_53[17.3,] 
@@ -694,27 +694,27 @@ BB 2
 		 8: %v_3->new %v_4[2.7,] %v_3[2.6,] 
 		 9: %self[2.0,] %v_5[2.8,] 
 		 10: 
-		 11: %self[2.0,] 
+		 11: @story[2.9 ] 
 		 12: %self[2.0,] 
 		 13: %v_7->id %v_7[2.12,] 
 		 14: %v_8[2.13,] %v_6[2.11,] 
 		 15: 
-		 16: %self[2.0,] 
+		 16: @story[2.9 2.11 ] 
 		 17: %v_9[2.16,] 
 		 18: 
-		 19: %self[2.0,] 
+		 19: @story[2.9 2.11 2.16 ] 
 		 20: (Vote) 
 		 21: 
 		 22: %v_11->new %v_11[2.20,] %v_12[2.21,] 
 		 23: %v_13[2.22,] %v_10[2.19,] 
 		 24: 
-		 25: %self[2.0,] 
+		 25: @story[2.9 2.11 2.16 2.19 ] 
 		 26: %v_14[2.25,] 
 		 27: 
-		 28: %self[2.0,] 
+		 28: @story[2.9 2.11 2.16 2.19 2.25 ] 
 		 29: %v_15->valid? %v_15[2.28,] 
 		 30: 
-		 31: %self[2.0,] 
+		 31: @story[2.9 2.11 2.16 2.19 2.25 2.28 ] 
 		 32: %v_17[2.31,] 
 		 33: 
 		 34: %self->ruby_code_from_view %self[2.0,] 
@@ -735,7 +735,7 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 12 
-	datadep: 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
 		 1: %self[2.0,] 
@@ -786,14 +786,14 @@ BB 6
 	instructions:
 CLOSURE END
 		 3: 
-		 4: %self[2.0,] 
+		 4: @story[3.1 ] 
 		 5: %cl_1_5->previewing %cl_1_5[3.4,] 
 		 6: BRANCH %cl_1_6[3.5,] 
 BB 4
 	outgoing: 5 12 
 	datadep: 2 
 	instructions:
-		 0: %self[2.0,] 
+		 0: %self[2.0,] @story[3.1 3.4 ] 
 		 1: %cl_1_7->valid? %cl_1_7[4.0,] 
 		 2: %cl_1_8[4.1,] 
 BB 5
@@ -820,7 +820,7 @@ BB 8
 	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,] @story[4.0 3.1 3.4 4.0 3.1 3.4 ] 
 		 2: %cl_1_12->previewing %cl_1_12[8.1,] 
 		 3: BRANCH %cl_1_13[8.2,] 
 BB 9
@@ -880,23 +880,23 @@ BB 2
 		 11: %v_7->first! %v_7[2.10,] 
 		 12: %self[2.0,] %v_8[2.11,] 
 		 13: 
-		 14: %self[2.0,] 
+		 14: @story[2.12 ] 
 		 15: %v_9->merged_into_story %v_9[2.14,] 
 		 16: BRANCH %v_10[2.15,] 
 BB 3
 	outgoing: 15 
-	datadep: 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
 		 1: %self->flash %self[2.0,] 
 		 2: 
-		 3: %self[2.0,] 
+		 3: %self[2.0,] @story[2.12 2.14 ] 
 		 4: %v_13->title %v_13[3.3,] 
 		 5: 
 		 6: %v_14[3.4,] %v_15[3.5,] %v_12[3.2,] 
 		 7: %v_16[3.6,] %v_11[3.1,] 
 		 8: 
-		 9: %self[2.0,] 
+		 9: @story[3.3 ] 
 		 10: %v_17->merged_into_story %v_17[3.9,] 
 		 11: %v_18->comments_path %v_18[3.10,] 
 		 12: %self->redirect_to %self[2.0,] %v_19[3.11,] 
@@ -907,7 +907,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: 
-		 2: %self[2.0,] 
+		 2: %self[2.0,] @story[2.12 2.14 ] 
 		 3: %self[2.0,] 
 		 4: %v_22->can_be_seen_by_user? %v_22[4.2,] %v_23[4.3,] 
 		 5: BRANCH %v_24[4.4,] 
@@ -916,7 +916,7 @@ BB 6
 	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
+		 1: %self[2.0,] @story[4.2 ] 
 		 2: %v_25->title %v_25[6.1,] 
 		 3: %self[2.0,] %v_26[6.2,] 
 		 4: 
@@ -930,17 +930,17 @@ BB 7
 		 3: %v_27[7.1,] 
 BB 8
 	outgoing: 9 13 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @story[6.1 4.2 ] 
 		 2: %v_28->short_id_url %v_28[8.1,] 
 		 3: %self[2.0,2.0,] %v_29[8.2,] 
 		 4: 
-		 5: %self[2.0,2.0,] 
+		 5: @story[8.1 ] 
 		 6: %v_30->merged_comments %v_30[8.5,] 
 		 7: %v_31->includes %v_31[8.6,] 
-		 8: %self[2.0,2.0,] 
+		 8: %self[2.0,2.0,] @user[4.3 4.3 ] 
 		 9: %v_32->arrange_for_user %v_32[8.7,] %v_33[8.8,] 
 		 10: %self[2.0,2.0,] %v_34[8.9,] 
 		 11: 
@@ -952,7 +952,7 @@ BB 9
 	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @comments[8.10 ] 
 BB 10
 	outgoing: 12 11 
 	datadep: 9 2 2 
@@ -1094,7 +1094,7 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 34 
-	datadep: 2 2 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
@@ -1103,7 +1103,7 @@ BB 3
 		 4: %cl_4_3[3.1,] %cl_4_5[3.3,] 
 		 5: %self->render %self[2.0,] %cl_4_6[3.4,] 
 		 6: 
-		 7: %self[2.0,] 
+		 7: @story[3.2 ] 
 		 8: %cl_4_8->markeddown_description %cl_4_8[3.7,] 
 		 9: %cl_4_9->present? %cl_4_9[3.8,] 
 		 10: BRANCH %cl_4_10[3.9,] 
@@ -1112,7 +1112,7 @@ BB 4
 	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
+		 1: %self[2.0,] @story[3.2 3.7 ] 
 		 2: %cl_4_11->markeddown_description %cl_4_11[4.1,] 
 		 3: %self->raw %self[2.0,] %cl_4_12[4.2,] 
 		 4: 
@@ -1126,14 +1126,14 @@ BB 6
 	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @story[4.1 3.2 3.7 ] 
 		 2: %cl_4_14->is_unavailable %cl_4_14[6.1,] 
 		 3: BRANCH %cl_4_15[6.2,] 
 BB 7
 	outgoing: 8 34 
 	datadep: 2 2 
 	instructions:
-		 0: %self[2.0,2.0,] 
+		 0: %self[2.0,2.0,] @story[6.1 ] 
 		 1: %cl_4_16->story_cache %cl_4_16[7.0,] 
 		 2: %cl_4_17->present? %cl_4_17[7.1,] 
 		 3: %cl_4_18[7.2,] 
@@ -1144,14 +1144,14 @@ BB 8
 		 0: BRANCH %cl_4_15[7.3,6.2,] 
 BB 9
 	outgoing: 11 34 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,2.0,] @story[7.0 6.1 ] 
 		 2: %cl_4_19->unavailable_at %cl_4_19[9.1,] 
 		 3: %self->time_ago_in_words_label %self[2.0,2.0,2.0,2.0,] %cl_4_20[9.2,] 
 		 4: 
-		 5: %self[2.0,2.0,2.0,2.0,] 
+		 5: @story[9.1 ] 
 		 6: %cl_4_22->story_cache %cl_4_22[9.5,] 
 		 7: %self->simple_format %self[2.0,2.0,2.0,2.0,] %cl_4_23[9.6,] 
 		 8: 
@@ -1165,7 +1165,7 @@ BB 11
 	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] @story[9.1 9.5 7.0 6.1 ] 
 		 2: %cl_4_25->previewing %cl_4_25[11.1,] 
 		 3: %cl_4_26->! %cl_4_26[11.2,] 
 		 4: BRANCH %cl_4_27[11.3,] 
@@ -1174,7 +1174,7 @@ BB 12
 	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] @story[11.1 ] 
 		 2: %cl_4_28->is_gone? %cl_4_28[12.1,] 
 		 3: %cl_4_29->! %cl_4_29[12.2,] 
 		 4: BRANCH %cl_4_30[12.3,] 
@@ -1182,7 +1182,7 @@ BB 13
 	outgoing: 14 34 
 	datadep: 2 2 2 2 2 2 
 	instructions:
-		 0: %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 0: %self[2.0,2.0,2.0,2.0,2.0,2.0,] @story[12.1 ] 
 		 1: %cl_4_31->previewing %cl_4_31[13.0,] 
 		 2: %cl_4_32->! %cl_4_32[13.1,] 
 		 3: %cl_4_33[13.2,] 
@@ -1237,18 +1237,18 @@ BB 19
 		 4: BRANCH %cl_4_43[19.2,] 
 BB 20
 	outgoing: 21 22 34 
-	datadep: 19 2 2 2 2 2 2 2 2 2 2 2 2 2 2 19 2 2 2 2 2 2 2 2 2 2 2 2 2 2 19 2 2 2 2 2 2 2 2 2 2 2 2 2 2 19 17 
+	datadep: 19 2 2 2 2 2 2 2 2 2 2 2 2 2 2 19 19 2 2 2 2 2 2 2 2 2 2 2 2 2 2 19 17 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
 		 3: comment->story_id comment[19.3,] 
-		 4: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 4: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] @story[13.0 12.1 13.0 12.1 ] 
 		 5: %cl_4_46->id %cl_4_46[20.4,] 
 		 6: %cl_4_47[20.5,] %cl_4_45[20.3,] 
 		 7: 
 		 8: comment->story_id comment[19.3,] 
-		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 9: @story[20.4 ] 
 		 10: %cl_4_50->id %cl_4_50[20.9,] 
 		 11: %cl_4_49[20.8,] %cl_4_51[20.10,] 
 		 12: %cl_4_48[20.6,] comment[19.3,] %cl_4_52[20.11,] 
@@ -1429,8 +1429,8 @@ BB 3
 	outgoing: 4 
 	datadep: 2 2 
 	instructions:
-		 0: %self[2.0,] 
-		 1: %self[2.0,] 
+		 0: %self[2.0,] @story[2.6 ] 
+		 1: %self[2.0,] @user[2.7 ] 
 		 2: %v_6->is_undeletable_by_user? %v_6[3.0,] %v_7[3.1,] 
 		 3: %v_8[3.2,] 
 BB 4
@@ -1453,22 +1453,22 @@ BB 5
 		 7: RETURN %v_13[5.6,] 
 BB 6
 	outgoing: 8 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self[2.0,2.0,] 
+		 2: %self[2.0,2.0,] @story[3.0 2.6 ] 
 		 3: %v_15[6.2,] 
 		 4: 
-		 5: %self[2.0,2.0,] 
-		 6: %self[2.0,2.0,] 
+		 5: @story[6.2 ] 
+		 6: %self[2.0,2.0,] @user[3.1 2.7 ] 
 		 7: %v_16[6.5,] %v_17[6.6,] 
 		 8: 
-		 9: %self[2.0,2.0,] 
+		 9: @story[6.2 6.5 ] 
 		 10: 
 		 11: %v_18->save %v_18[6.9,] %v_19[6.10,] 
 		 12: 
-		 13: %self[2.0,2.0,] 
+		 13: @story[6.2 6.5 6.9 ] 
 		 14: %v_21->comments_path %v_21[6.13,] 
 		 15: %self->redirect_to %self[2.0,2.0,] %v_22[6.14,] 
 		 16: RETURN %v_23[6.15,] 
@@ -1511,19 +1511,19 @@ BB 3
 		 7: RETURN %v_10[3.6,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 2 2 2 2 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: 
-		 2: %self[2.0,] 
+		 2: %self[2.0,] @story[2.6 ] 
 		 3: %v_12[4.2,] 
 		 4: 
-		 5: %self[2.0,] 
-		 6: %self[2.0,] 
+		 5: @story[4.2 ] 
+		 6: %self[2.0,] @user[2.7 ] 
 		 7: %v_13[4.5,] %v_14[4.6,] 
 		 8: 
-		 9: %self[2.0,] 
-		 10: %self[2.0,] 
+		 9: @story[4.2 4.5 ] 
+		 10: @user[4.6 ] 
 		 11: %v_15->url_is_editable_by_user? %v_15[4.9,] %v_16[4.10,] 
 		 12: BRANCH %v_17[4.11,] 
 BB 6
@@ -1531,7 +1531,7 @@ BB 6
 	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
+		 1: %self[2.0,] @story[4.2 4.5 4.9 ] 
 		 2: %self->story_params %self[2.0,] 
 		 3: %v_18[6.1,] %v_19[6.2,] 
 		 4: 
@@ -1540,7 +1540,7 @@ BB 7
 	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
+		 1: %self[2.0,] @story[4.2 4.5 4.9 ] 
 		 2: %self->story_params %self[2.0,] 
 		 3: %v_21->except %v_21[7.2,] 
 		 4: %v_20[7.1,] %v_22[7.3,] 
@@ -1550,7 +1550,7 @@ BB 8
 	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @story[7.1 6.1 ] 
 		 2: %v_23->save %v_23[8.1,] 
 		 3: BRANCH %v_24[8.2,] 
 BB 9
@@ -1558,7 +1558,7 @@ BB 9
 	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @story[8.1 ] 
 		 2: %v_25->comments_path %v_25[9.1,] 
 		 3: %self->redirect_to %self[2.0,2.0,] %v_26[9.2,] 
 		 4: RETURN %v_27[9.3,] 
@@ -1585,11 +1585,11 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
 		 1: %self[2.0,] 
-		 2: %self[2.0,] 
+		 2: @story[3.1 ] 
 		 3: %cl_1_4->short_id %cl_1_4[3.2,] 
 		 4: %self->story_path %self[2.0,] %cl_1_5[3.3,] 
 		 5: 
@@ -1655,9 +1655,9 @@ BB 4
 		 24: %cl_2_28[4.23,] 
 		 25: f->label %cl_2_27[4.22,] %cl_2_29[4.24,] f[2.2,] 
 		 26: 
-		 27: %self[2.0,] 
+		 27: %self[2.0,] @story[3.2 ] 
 		 28: %cl_2_31->user_id %cl_2_31[4.27,] 
-		 29: %self[2.0,] 
+		 29: %self[2.0,] @user[3.7 ] 
 		 30: %cl_2_33->id %cl_2_33[4.29,] 
 		 31: %cl_2_34[4.30,] %cl_2_32[4.28,] 
 		 32: BRANCH %cl_2_35[4.31,] 
@@ -1698,7 +1698,7 @@ BB 9
 		 1: 
 		 2: %self->submit_tag %self[2.0,] %cl_2_43[9.1,] 
 		 3: 
-		 4: %self[2.0,] 
+		 4: %self[2.0,] @story[3.2 4.27 4.27 ] 
 		 5: %cl_2_45->short_id %cl_2_45[9.4,] 
 		 6: %self->story_path %self[2.0,] %cl_2_46[9.5,] 
 		 7: 
@@ -1926,7 +1926,7 @@ BB 12
 		 1: 
 		 2: (Vote) 
 		 3: story->id story[2.7,2.7,] 
-		 4: %self[2.0,2.0,] 
+		 4: %self[2.0,2.0,] @user[9.2 ] 
 		 5: %v_29->id %v_29[12.4,] 
 		 6: %self->params %self[2.0,2.0,] 
 		 7: %v_31[12.6,] 
@@ -2128,7 +2128,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: (Vote) 
-		 2: %self[2.0,2.0,] 
+		 2: %self[2.0,2.0,] @user[2.14 2.14 ] 
 		 3: %v_11->id %v_11[5.2,] 
 		 4: story->id story[2.12,2.12,] 
 		 5: %v_13[5.4,] %v_12[5.3,] 
@@ -2202,7 +2202,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: (Story) 
-		 2: %self[2.0,] 
+		 2: %self[2.0,] @user[2.6 ] 
 		 3: %v_14->id %v_14[6.2,] 
 		 4: 
 		 5: %self->params %self[2.0,] 
@@ -2230,7 +2230,7 @@ BB 9
 	instructions:
 		 0: 
 		 1: 
-		 2: %self[2.0,2.0,2.0,2.0,] 
+		 2: %self[2.0,2.0,2.0,2.0,] @story[8.3 5.3 ] 
 		 3: %v_23->! %v_23[9.2,] 
 		 4: BRANCH %v_24[9.3,] 
 BB 10
@@ -2280,7 +2280,7 @@ BB 3
 	datadep: 2 2 
 	instructions:
 		 0: (Vote) 
-		 1: %self[2.0,] 
+		 1: %self[2.0,] @user[2.7 ] 
 		 2: %v_5->id %v_5[3.1,] 
 		 3: %self[2.0,] 
 		 4: %v_7->id %v_7[3.3,] 
@@ -2294,7 +2294,7 @@ BB 4
 	datadep: 2 3 3 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
+		 1: %self[2.0,] @story[3.3 ] 
 		 2: v->vote v[3.8,] 
 		 3: v->reason v[3.8,] 
 		 4: %v_13[4.2,] %v_14[4.3,] 
@@ -2307,19 +2307,19 @@ BB 5
 		 0: 
 BB 6
 	outgoing: 9 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
-		 2: %self[2.0,2.0,] 
-		 3: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @story[4.1 3.3 ] 
+		 2: @story[6.1 ] 
+		 3: %self[2.0,2.0,] @user[3.1 3.1 ] 
 		 4: %v_17->is_hidden_by_user? %v_17[6.2,] %v_18[6.3,] 
 		 5: %v_16[6.1,] %v_19[6.4,] 
 		 6: 
 		 7: (Vote) 
-		 8: %self[2.0,2.0,] 
+		 8: @user[6.3 ] 
 		 9: %v_21->id %v_21[6.8,] 
-		 10: %self[2.0,2.0,] 
+		 10: @story[6.1 6.2 ] 
 		 11: %v_23->id %v_23[6.10,] 
 		 12: %v_20->comment_votes_by_user_for_story_hash %v_24[6.11,] %v_20[6.7,] %v_22[6.9,] 
 		 13: %v_25[6.12,] %self[2.0,2.0,] 
@@ -2354,7 +2354,7 @@ BB 4
 	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
+		 1: %self[2.0,] @votes[3.1 ] 
 		 2: c->id c[2.2,] 
 		 3: %cl_1_6[4.1,] %cl_1_7[4.2,] 
 		 4: c[2.2,] %cl_1_8[4.3,] 
