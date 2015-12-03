@@ -7,11 +7,11 @@ require "YARD"
 # 	end
 # end
 
-def traverse_routes_mapping(astnode, base_path, controller_name)
+def traverse_routes_mapping(astnode, base_path, controller_name, default)
 	cur_astnode = astnode
 	if cur_astnode == nil 
 		return
-	elsif cur_astnode.source.start_with?("def ") && !cur_astnode.source.include?("render ")
+	elsif default == true && cur_astnode.source.start_with?("def ") && !cur_astnode.source.include?("render ")
 		#puts cur_astnode.source 
 		view_name = cur_astnode[0].source
 		#puts view_name
@@ -62,7 +62,7 @@ def traverse_routes_mapping(astnode, base_path, controller_name)
 			end
 		end
 	else
-		cur_astnode.children.each {|x| traverse_routes_mapping(x, base_path, controller_name) }
+		cur_astnode.children.each {|x| traverse_routes_mapping(x, base_path, controller_name, default) }
 	end
 end
 
@@ -112,16 +112,29 @@ controller_ast = YARD::Parser::Ruby::RubyParser.parse(controller_contents).root
 
 #the render statement and the render view is a hash mapping
 $render_view_mapping = Hash.new
-traverse_routes_mapping(controller_ast, base_path, controller_name)
+traverse_routes_mapping(controller_ast, base_path, controller_name, true)
 
 #replace all render statement by the view file 
 $render_view_mapping.each do |key, value|
 	controller_contents.gsub! key, value
 end
 
+
+#go for a second round to replace all renders inside view files
+controller_ast = YARD::Parser::Ruby::RubyParser.parse(controller_contents).root
+
+#the render statement and the render view is a hash mapping
+$render_view_mapping = Hash.new
+traverse_routes_mapping(controller_ast, base_path, controller_name, false)
+
+#replace all render statement by the view file 
 $render_view_mapping.each do |key, value|
 	controller_contents.gsub! key, value
 end
+
+# $render_view_mapping.each do |key, value|
+# 	controller_contents.gsub! key, value
+# end
 
 #all render statement in controller content has been replaced by the embedded ruby code in the view file
 puts controller_contents
