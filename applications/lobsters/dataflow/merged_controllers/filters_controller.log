@@ -80,21 +80,21 @@ BB 3
 		 1: 
 BB 4
 	outgoing: 5 
-	datadep: 
+	datadep: 2 
 	instructions:
 		 0: (Tag) 
 		 1: %v_7->active %v_7[4.0,] 
-		 2: 
+		 2: tags_param[2.8,] 
 		 3: %v_8->where %v_8[4.1,] %v_9[4.2,] 
 		 4: %v_10->to_a %v_10[4.3,] 
 		 5: %v_11[4.4,] 
 BB 5
 	outgoing: 6 7 
-	datadep: 4 3 4 3 2 2 
+	datadep: 4 3 2 2 4 3 2 2 
 	instructions:
 		 0: %v_6[4.5,3.0,] 
 		 1: 
-		 2: %v_6->keep_if %v_6[4.5,3.0,] 
+		 2: %v_6->keep_if %self[2.0,2.0,] %v_6[4.5,3.0,] 
 CLOSURE BEGIN
 BB 1
 	outgoing: 6 2 
@@ -138,7 +138,7 @@ BB 6
 	datadep: 2 2 5 5 
 	instructions:
 		 0: %self[2.0,2.0,] 
-		 1: new_tags[5.0,] 
+		 1: %v_14[6.0,] new_tags[5.0,] 
 		 2: new_tags[5.0,] 
 		 3: 
 BB 7
@@ -152,7 +152,7 @@ BB 7
 		 4: new_tags->map new_tags[5.0,] 
 		 5: 
 		 6: %v_19->join %v_19[7.4,] %v_20[7.5,] 
-		 7: %v_18[7.3,] %v_21[7.6,] 
+		 7: %v_17[7.2,] %v_18[7.3,] %v_21[7.6,] 
 		 8: %v_21[7.6,] 
 BB 8
 	outgoing: 9 
@@ -161,7 +161,7 @@ BB 8
 		 0: 
 		 1: %self->flash %self[2.0,2.0,2.0,2.0,] 
 		 2: 
-		 3: %v_23[8.2,] 
+		 3: %v_22[8.1,] %v_23[8.2,] 
 		 4: 
 		 5: %self->filters_path %self[2.0,2.0,2.0,2.0,] 
 		 6: %self->redirect_to %v_24[8.5,] %self[2.0,2.0,2.0,2.0,] 
