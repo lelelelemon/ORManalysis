@@ -189,9 +189,6 @@ def handle_single_instr(start_class, start_function, class_handler, bb, instr, l
 		
 	if instr.hasClosure?
 		cl = instr.getClosure
-		if cl.getViewCode
-			puts "FIND VIEW CODE!"
-		end
 		$l_index_stack.push($l_index)	
 		$closure_stack.push(cl)
 		$label_stack.push($label)

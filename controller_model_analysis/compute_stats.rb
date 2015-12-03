@@ -193,11 +193,13 @@ def compute_backward_singlenode(node)
 	end
 	$computed_node.push(node)
 	node.getBackwardEdges.each do |e|
-		$graph_file.write("\tn#{e.getFromNode.getIndex} -> n#{e.getToNode.getIndex}")
-		if e.getIsBranching
-			$graph_file.write(" [color=#{$FLOWEDGE_COLOR}];")
+		if e.getFromNode != nil and e.getToNode != nil
+			$graph_file.write("\tn#{e.getFromNode.getIndex} -> n#{e.getToNode.getIndex}")
+			if e.getIsBranching
+				$graph_file.write(" [color=#{$FLOWEDGE_COLOR}];")
+			end
+			$graph_file.write("\n");
+			compute_backward_singlenode(e.getFromNode)
 		end
-		$graph_file.write("\n");
-		compute_backward_singlenode(e.getFromNode)
 	end
 end

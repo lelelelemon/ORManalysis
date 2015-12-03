@@ -228,7 +228,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	for i in (0...level)
 		blank = blank + "\t"
 	end
-	puts "#{blank}Instr: ##{node.getIndex} #{node.getInstr.toString} (#{node.getInstr.getFromUserInput})"
+	#puts "#{blank}Instr: ##{node.getIndex} #{node.getInstr.toString} (#{node.getInstr.getFromUserInput})"
 	return_list.each do |r|
 		r.addChild(node)
 	end
@@ -253,7 +253,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	if instr.hasClosure?
 		cl = instr.getClosure
 		temp_node = $cur_node
-		puts "CLOSURE: "
+		#puts "CLOSURE: "
 		$closure_stack.push(cl)
 		handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
 		$closure_stack.pop
@@ -268,11 +268,11 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 end
 
 def handle_single_bb2(start_class, start_function, class_handler, function_handler, bb, level)
-	print "\tBB: #{bb.getIndex}, outgoings:"
-	bb.getOutgoings.each do |o|
-		print "#{o}, "
-	end
-	puts ""
+#	print "\tBB: #{bb.getIndex}, outgoings:"
+#	bb.getOutgoings.each do |o|
+#		print "#{o}, "
+#	end
+#	puts ""
 
 	r_list = Array.new	
 	if bb.getInstr.length == 0
@@ -296,7 +296,7 @@ def handle_single_bb2(start_class, start_function, class_handler, function_handl
 end
 
 def handle_single_cfg2(start_class, start_function, class_handler, function_handler, cfg, level)
-	puts "CFG: #{class_handler.getName}.#{function_handler.getName}"
+	#puts "CFG: #{class_handler.getName}.#{function_handler.getName}"
 	
 	cfg.getBB.each do |bb|
 		handle_single_bb2(start_class, start_function, class_handler, function_handler, bb, level)
@@ -397,7 +397,7 @@ def traverse_instr_tree(node, level)
 		for i in (0...level)
 			blank = blank + " "
 		end
-		puts "#{blank}#{c.getInstr.toString}"
+		#puts "#{blank}#{c.getInstr.toString}"
 		traverse_instr_tree(c, level + 1)
 	end
 end
