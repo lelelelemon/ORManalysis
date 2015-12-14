@@ -256,3 +256,7 @@ end
 def simplify1(name)
 	return name.tr(".","_")
 end
+
+def remove_special_chars(n)
+	return n.delete('\n').delete('<').delete('>').delete('&')
+end

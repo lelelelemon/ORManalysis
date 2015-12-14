@@ -14,6 +14,8 @@ class INode
 		@closure_stack = Array.new
 		@dataflow_edges = Array.new
 		@backward_dataflow_edges = Array.new
+		r = Random.new
+		@rnd = r.rand(1...1024)
 		if $closure_stack.length > 0
 			@in_closure = true
 			$closure_stack.each do |cl|
@@ -56,14 +58,25 @@ class INode
 
 		if @instr.instance_of?Call_instr 
 			if@instr.getCallHandler != nil
-				@label = "#{@instr.getCallHandler.getObjName}.#{@instr.getFuncname}"
+				@label = "#{remove_special_chars(@instr.getCallHandler.getObjName)}.#{@instr.getFuncname}"
 			else
-				@label = "#{@instr.getCaller}.#{@instr.getFuncname}"
+				@label = "#{remove_special_chars(@instr.getCaller)}.#{@instr.getFuncname}"
 			end
 		end
 	end
 	def getLabel
 		@label
+	end
+	def getSimplifiedLabel
+		if isQuery?
+			if @instr.getResolvedCaller.length > 0
+				return "#{@instr.getResolvedCaller}.#{@instr.getFuncname.delete('!').delete('?')}"
+			else
+				return "#{@rnd}.#{@instr.getFuncname.delete('!').delete('?')}"
+			end
+		else
+			return ""
+		end
 	end
 	def getInstr
 		@instr
@@ -218,7 +231,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 					cur_cfg.getExplicitReturn.each do |rt|
 						dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
 						edge = Edge.new(rt, temp_node, "returnv")
-						puts "Add return instr: #{callerv_name}.#{call.getFuncName} #{rt.getIndex} -> #{temp_node.getIndex}"
+						#puts "Add return instr: #{callerv_name}.#{call.getFuncName} #{rt.getIndex} -> #{temp_node.getIndex}"
 						
 						rt.getInstr.getINode.addDataflowEdge(edge)
 						$dataflow_edges[dataflow_edge_name] = edge
@@ -364,19 +377,24 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 		return nil 
 	end
 
-		
-	#before_filter_name = "#{start_class}.before_filter"
-	#if $non_repeat_list.include?(before_filter_name) == false
-	#	$non_repeat_list.push(before_filter_name)
+	
+	#TODO: Before filter is not handled here, since most of them just do validation and are not involved in dataflow	
+	before_filter_name = "#{start_class}.before_filter"
+	if $non_repeat_list.include?(before_filter_name) == false
+		$non_repeat_list.push(before_filter_name)
 
-	#	cur_cfg = trace_query_flow(start_class, "before_filter", "", "", level)
-	#	
-	#	if ($cur_node != nil)
-	#		$cur_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
-	#	else
-	#		root = cur_cfg.getBB[0].getInstr[0]
-	#	end
-	#end
+		cfg = CFG.new
+		bb = Basic_block.new(1)
+		filter_handler = $class_map[start_class].getMethods["before_filter"]
+		if filter_handler != nil	
+			filter_handler.getCalls.each do |c|
+				call_instr = Call_instr.new(c.getObjName, c.getFuncName)
+				bb.addInstr(call_instr)
+			end
+			cfg.addBB(bb)
+			handle_single_cfg2(start_class, "before_filter", class_handler, filter_handler, cfg, level)
+		end
+	end
 
 	if function_handler.getCFG != nil
 		handle_single_cfg2(start_class, start_function, class_handler, function_handler, function_handler.getCFG, level)

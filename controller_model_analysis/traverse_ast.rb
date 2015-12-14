@@ -87,7 +87,7 @@ def traverse_ast(astnode, level)
 				end
 			end
 		end
-	else
+	elsif astnode.class.to_s != "Symbol"
 		astnode.children.each do |child|
 			traverse_ast(child, level+1)
 		end
