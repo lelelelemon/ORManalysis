@@ -1,0 +1,186 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: 
+		 8: %v_3->where %v_4[2.7,] %v_3[2.6,] 
+		 9: %v_5->count %v_5[2.8,] 
+		 10: %self[2.0,] %v_6[2.9,] @total_users[] 
+		 11: 
+		 12: (User) 
+		 13: 
+		 14: %v_7->where %v_8[2.13,] %v_7[2.12,] 
+		 15: %v_9->count %v_9[2.14,] 
+		 16: %self[2.0,] %v_10[2.15,] @unactivated_users[] 
+		 17: 
+		 18: 
+		 19: %v_11->ago %v_11[2.18,] 
+		 20: %v_12->midnight %v_12[2.19,] 
+		 21: (Date) 
+		 22: %v_14->today %v_14[2.21,] 
+		 23: %v_15->midnight %v_15[2.22,] 
+		 24: %self->find_new_users %v_13[2.20,] %self[2.0,] %v_16[2.23,] 
+		 25: %self[2.0,] %v_17[2.24,] @yesterday_new_users[] 
+		 26: 
+		 27: (Date) 
+		 28: %v_18->today %v_18[2.27,] 
+		 29: %v_19->midnight %v_19[2.28,] 
+		 30: (Date) 
+		 31: %v_21->today %v_21[2.30,] 
+		 32: %v_22->tomorrow %v_22[2.31,] 
+		 33: %v_23->midnight %v_23[2.32,] 
+		 34: %self->find_new_users %v_24[2.33,] %self[2.0,] %v_20[2.29,] 
+		 35: %v_25[2.34,] %self[2.0,] @today_new_users[] 
+		 36: 
+		 37: (Activity) 
+		 38: 
+		 39: %v_26->group %v_26[2.37,] %v_27[2.38,] 
+		 40: 
+		 41: 
+		 42: %v_30->ago %v_30[2.41,] 
+		 43: %v_28->having %v_28[2.39,] %v_29[2.40,] %v_31[2.42,] 
+		 44: %v_32->count %v_32[2.43,] 
+		 45: %v_33->keys %v_33[2.44,] 
+		 46: %v_34->size %v_34[2.45,] 
+		 47: %v_35[2.46,] %self[2.0,] @active_users_count[] 
+		 48: 
+		 49: (User) 
+		 50: 
+		 51: %v_37->ago %v_37[2.50,] 
+		 52: %v_38[2.51,] 
+		 53: %v_36->find_by_activity %v_36[2.49,] %v_39[2.52,] 
+		 54: %self[2.0,] %v_40[2.53,] @active_users[] 
+		 55: 
+		 56: (User) 
+		 57: 
+		 58: %v_41->where %v_41[2.56,] %v_42[2.57,] 
+		 59: %v_43->count %v_43[2.58,] 
+		 60: @total_users[2.10,] 
+		 61: %v_45->to_f %v_45[2.60,] 
+		 62: %v_46[2.61,] %v_44[2.59,] 
+		 63: %v_47[2.62,] 
+		 64: %self[2.0,] %v_48[2.63,] @percent_reporting_zip[] 
+		 65: 
+		 66: (User) 
+		 67: 
+		 68: %v_49->where %v_49[2.66,] %v_50[2.67,] 
+		 69: %v_51->count %v_51[2.68,] 
+		 70: %v_52[2.69,] 
+		 71: 
+		 72: (User) 
+		 73: 
+		 74: (User) 
+		 75: %v_55[2.74,] 
+		 76: %v_56[2.75,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %v_55[2.74,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 2 2 2 3 2 2 2 2 2 
+	instructions:
+		 0: %v_53->where %v_53[2.72,2.72,] %v_54[2.73,2.73,] %v_56[3.0,2.75,] 
+		 1: %v_57->count %v_57[4.0,] 
+		 2: users_reporting_gender->to_f users_reporting_gender[2.70,2.70,] 
+		 3: %v_58[4.1,] %v_59[4.2,] 
+		 4: %v_60[4.3,] 
+		 5: %self[2.0,2.0,] %v_61[4.4,] @percent_male[] 
+		 6: 
+		 7: (User) 
+		 8: 
+		 9: (User) 
+		 10: %v_64[4.9,] 
+		 11: %v_65[4.10,] 
+BB 5
+	outgoing: 6 
+	datadep: 4 
+	instructions:
+		 0: %v_64[4.9,] 
+BB 6
+	outgoing: 7 
+	datadep: 4 4 4 4 5 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: %v_62->where %v_62[4.7,4.7,] %v_63[4.8,4.8,] %v_65[5.0,4.10,] 
+		 1: %v_66->count %v_66[6.0,] 
+		 2: users_reporting_gender->to_f users_reporting_gender[2.70,2.70,2.70,2.70,] 
+		 3: %v_68[6.2,] %v_67[6.1,] 
+		 4: %v_69[6.3,] 
+		 5: %self[2.0,2.0,2.0,2.0,] %v_70[6.4,] @percent_female[] 
+		 6: 
+		 7: (User) 
+		 8: %v_71->find_featured %v_71[6.7,] 
+		 9: %self[2.0,2.0,2.0,2.0,] %v_72[6.8,] @featured_writers[] 
+		 10: 
+		 11: (Post) 
+		 12: %v_73->includes %v_73[6.11,] 
+		 13: 
+		 14: (Time) 
+		 15: %v_76->now %v_76[6.14,] 
+		 16: %v_77->beginning_of_month %v_77[6.15,] 
+		 17: (Time) 
+		 18: %v_79->now %v_79[6.17,] 
+		 19: %v_80->end_of_month %v_80[6.18,] 
+		 20: 
+		 21: %v_81[6.19,] %v_82[6.20,] 
+		 22: %v_74->where %v_83[6.21,] %v_74[6.12,] %v_75[6.13,] %v_78[6.16,] 
+		 23: %v_84->includes %v_84[6.22,] 
+		 24: %self[2.0,2.0,2.0,2.0,] %v_85[6.23,] @posts[] 
+		 25: RETURN %v_85[6.23,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_new_users
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: limit[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (User) 
+		 2: %v_3->active %v_3[4.1,] 
+		 3: to[2.6,2.6,] from[2.5,2.5,] 
+		 4: %v_5[4.3,] 
+		 5: %v_4->where %v_4[4.2,] %v_6[4.4,] 
+		 6: RETURN %v_7[4.5,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+

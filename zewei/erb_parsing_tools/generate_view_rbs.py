@@ -5,7 +5,7 @@ import string
 #old file: lobsters/views/messages/index.html.erb
 #new file: lobsters/view_rb/messages/index/html.erb
 
-rootdir = "../../applications/boxroom/views/"
+rootdir = "../../applications/communityengine/views/"
 
 for subdir, dirs, files in os.walk(rootdir):
     for file in files:

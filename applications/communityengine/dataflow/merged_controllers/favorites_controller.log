@@ -1,0 +1,210 @@
+SET IRMethod, name = create
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: %v_4->classify %v_4[2.7,] 
+		 9: %v_5->constantize %v_5[2.8,] 
+		 10: %self->params %self[2.0,] 
+		 11: %v_7[2.10,] 
+		 12: %v_6->find %v_8[2.11,] %v_6[2.9,] 
+		 13: %self[2.0,] %v_9[2.12,] @favoritable[] 
+		 14: 
+		 15: (Favorite) 
+		 16: %self->request %self[2.0,] 
+		 17: %v_11->remote_ip %v_11[2.16,] 
+		 18: @favoritable[2.13,] 
+		 19: %v_13[2.18,] %v_12[2.17,] 
+		 20: %v_10->new %v_14[2.19,] %v_10[2.15,] 
+		 21: %self[2.0,] %v_15[2.20,] @favorite[] 
+		 22: 
+		 23: @favorite[2.21,] 
+		 24: %self->current_user %self[2.0,] 
+		 25: BRANCH %v_17[2.24,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 3 2 2 2 2 2 2 2 
+	instructions:
+		 0: %v_16[2.23,2.23,] %v_17[3.0,2.24,] 
+		 1: 
+		 2: %self[2.0,2.0,] @favorite[2.21,2.23,2.21,2.23,] 
+		 3: %v_18->save %v_18[4.2,] 
+		 4: 
+		 5: %self->respond_to %self[2.0,2.0,2.0,2.0,] 
+CLOSURE BEGIN: @favorite[4.2,] @favoritable[2.13,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: format->js format[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %v_20[4.5,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->current_user %self[2.0,] 
+		 7: %v_3->favorites %v_3[2.6,] 
+		 8: %self->params %self[2.0,] 
+		 9: %v_5[2.8,] 
+		 10: %v_4->find %v_4[2.7,] %v_6[2.9,] 
+		 11: %self[2.0,] %v_7[2.10,] @favorite[] 
+		 12: 
+		 13: @favorite[2.11,] 
+		 14: %v_8->destroy %v_8[2.13,] 
+		 15: 
+		 16: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @favorite[2.11,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: format->js format[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 17: RETURN %v_10[2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @user[] 
+		 7: %v_3->favorites %v_3[2.6,] 
+		 8: %self->params %self[2.0,] 
+		 9: %v_5[2.8,] 
+		 10: %v_4->find %v_4[2.7,] %v_6[2.9,] 
+		 11: %self[2.0,] %v_7[2.10,] @favorite[] 
+		 12: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = index
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Favorite) 
+		 7: %v_3->recent %v_3[2.6,] 
+		 8: %self[2.0,] @user[] 
+		 9: %v_4->by_user %v_4[2.7,] %v_5[2.8,] 
+		 10: %self->params %self[2.0,] 
+		 11: %v_7[2.10,] 
+		 12: %v_6->page %v_8[2.11,] %v_6[2.9,] 
+		 13: %self[2.0,] %v_9[2.12,] @favorites[] 
+		 14: RETURN %v_9[2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

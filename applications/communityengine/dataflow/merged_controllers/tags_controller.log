@@ -1,0 +1,1170 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 4 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Tag) 
+		 7: %v_3->active %v_3[2.6,] 
+		 8: %v_4->all %v_4[2.7,] 
+		 9: %v_5[2.8,] 
+		 10: %self->render %self[2.0,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 4
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = cache_action?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->logged_in? %self[2.0,] 
+		 7: %v_3->! %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_5[3.0,] 
+		 2: %v_6->blank? %v_6[3.1,] 
+		 3: RETURN %v_7[3.2,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_4[2.7,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = auto_complete_for_tag_name
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (ActsAsTaggableOn) 
+		 7: %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %v_3[2.6,] 
+BB 4
+	outgoing: 5 
+	datadep: 3 2 2 2 2 2 2 2 
+	instructions:
+		 0: %v_4->pluck %v_4[3.0,2.7,] 
+		 1: %self[2.0,2.0,] %v_5[4.0,] @tag_names[] 
+		 2: 
+		 3: %self->respond_to %self[2.0,2.0,2.0,2.0,] 
+CLOSURE BEGIN: @tag_names[4.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: format->json %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tag_names[] 
+		 2: %cl_2_3->to_json %cl_2_3[3.1,] 
+		 3: %cl_2_4[3.2,] 
+		 4: %self->render %self[2.0,] %cl_2_5[3.3,] 
+		 5: RETURN %cl_2_6[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_7[4.0,] 
+		 2: RETURN %cl_2_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %v_6[4.3,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = index
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] 
+		 7: %v_3->to_a %v_3[2.6,] 
+		 8: %self[2.0,] %v_4[2.7,] @tags[] 
+		 9: 
+		 10: 
+		 11: %self->popular_tags %self[2.0,] %v_5[2.10,] 
+		 12: %v_6->to_a %v_6[2.11,] 
+		 13: %self[2.0,] %v_7[2.12,] @user_tags[] 
+		 14: 
+		 15: 
+		 16: %self->popular_tags %self[2.0,] %v_8[2.15,] 
+		 17: %v_9->to_a %v_9[2.16,] 
+		 18: %self[2.0,] %v_10[2.17,] @post_tags[] 
+		 19: 
+		 20: 
+		 21: %self->popular_tags %self[2.0,] %v_11[2.20,] 
+		 22: %v_12->to_a %v_12[2.21,] 
+		 23: %v_13[2.22,] %self[2.0,] @photo_tags[] 
+		 24: 
+		 25: 
+		 26: %self->popular_tags %v_14[2.25,] %self[2.0,] 
+		 27: %v_15->to_a %v_15[2.26,] 
+		 28: %self[2.0,] %v_16[2.27,] @clipping_tags[] 
+		 29: RETURN %v_16[2.27,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = manage
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (ActsAsTaggableOn) 
+		 7: %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %v_3[2.6,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 3 2 2 2 2 2 2 2 
+	instructions:
+		 0: %self->params %self[2.0,2.0,] 
+		 1: %v_5[4.0,] 
+		 2: %v_4->search %v_4[3.0,2.7,] %v_6[4.1,] 
+		 3: %self[2.0,2.0,] %v_7[4.2,] @search[] 
+		 4: 
+		 5: @search[4.3,] 
+		 6: %v_8->result %v_8[4.5,] 
+		 7: %self[2.0,2.0,] %v_9[4.6,] @tags[] 
+		 8: 
+		 9: @tags[4.7,] 
+		 10: 
+		 11: %v_10->order %v_10[4.9,] %v_11[4.10,] 
+		 12: %v_12->distinct %v_12[4.11,] 
+		 13: %self->params %self[2.0,2.0,] 
+		 14: %v_14[4.13,] 
+		 15: %v_13->page %v_13[4.12,] %v_15[4.14,] 
+		 16: %v_16[4.15,] 
+		 17: @tags[4.7,4.9,] 
+		 18: RETURN %v_17[4.16,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = edit
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (ActsAsTaggableOn) 
+		 7: %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %v_3[2.6,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 3 2 2 2 
+	instructions:
+		 0: (URI) 
+		 1: %self->params %self[2.0,2.0,] 
+		 2: %v_6[4.1,] 
+		 3: %v_5->decode %v_5[4.0,] %v_7[4.2,] 
+		 4: %v_4->find_by_name %v_4[3.0,2.7,] %v_8[4.3,] 
+		 5: %self[2.0,2.0,] %v_9[4.4,] @tag[] 
+		 6: RETURN %v_9[4.4,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (ActsAsTaggableOn) 
+		 7: %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %v_3[2.6,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 3 2 2 2 2 2 2 2 
+	instructions:
+		 0: (URI) 
+		 1: %self->params %self[2.0,2.0,] 
+		 2: %v_6[4.1,] 
+		 3: %v_5->decode %v_5[4.0,] %v_7[4.2,] 
+		 4: %v_4->find_by_name %v_4[3.0,2.7,] %v_8[4.3,] 
+		 5: %self[2.0,2.0,] %v_9[4.4,] @tag[] 
+		 6: 
+		 7: %self->respond_to %self[2.0,2.0,2.0,2.0,] 
+CLOSURE BEGIN: @tag[4.5,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tag[] 
+		 2: %self->params %self[2.0,] 
+		 3: %cl_1_4[3.2,] 
+		 4: %cl_1_5->permit %cl_1_5[3.3,] 
+		 5: %cl_1_3->update_attributes %cl_1_3[3.1,] %cl_1_6[3.4,] 
+		 6: BRANCH %cl_1_7[3.5,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: 
+		 3: %cl_1_8[4.1,] %cl_1_9[4.2,] 
+		 4: 
+		 5: format->html %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: @tag[3.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->admin_tags_url %self[2.0,] 
+		 2: %self->redirect_to %cl_2_3[3.1,] %self[2.0,] 
+		 3: RETURN %cl_2_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+		 7: format->xml %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: @tag[3.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->render %self[2.0,] %cl_3_3[3.1,] 
+		 3: RETURN %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: 
+BB 5
+	outgoing: 7 9 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: format->html %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: @tag[3.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_4_3[3.1,] 
+		 3: %self->render %self[2.0,] %cl_4_4[3.2,] 
+		 4: RETURN %cl_4_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_6[4.0,] 
+		 2: RETURN %cl_4_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: 
+		 3: format->xml %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: @tag[3.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tag[] 
+		 2: %cl_5_3->errors %cl_5_3[3.1,] 
+		 3: %cl_5_4->to_xml %cl_5_4[3.2,] 
+		 4: %cl_5_5[3.3,] 
+		 5: %self->render %self[2.0,] %cl_5_6[3.4,] 
+		 6: RETURN %cl_5_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_8[4.0,] 
+		 2: RETURN %cl_5_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_1_13[5.3,] 
+BB 6
+	outgoing: 9 
+	datadep: 4 
+	instructions:
+		 0: RETURN %cl_1_11[4.7,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_14[7.0,] 
+		 2: RETURN %cl_1_15[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_10[4.7,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (ActsAsTaggableOn) 
+		 7: %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %v_3[2.6,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 3 2 2 2 2 2 2 2 
+	instructions:
+		 0: (URI) 
+		 1: %self->params %self[2.0,2.0,] 
+		 2: %v_6[4.1,] 
+		 3: %v_5->decode %v_5[4.0,] %v_7[4.2,] 
+		 4: %v_4->find_by_name %v_4[3.0,2.7,] %v_8[4.3,] 
+		 5: %self[2.0,2.0,] %v_9[4.4,] @tag[] 
+		 6: 
+		 7: @tag[4.5,] 
+		 8: %v_10->destroy %v_10[4.7,] 
+		 9: 
+		 10: %self->respond_to %self[2.0,2.0,2.0,2.0,] 
+CLOSURE BEGIN: @tag[4.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: format->html %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: 
+		 3: %cl_2_3[3.1,] %cl_2_4[3.2,] 
+		 4: 
+		 5: %self->admin_tags_url %self[2.0,] 
+		 6: %self->redirect_to %self[2.0,] %cl_2_5[3.5,] 
+		 7: RETURN %cl_2_6[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_7[4.0,] 
+		 2: RETURN %cl_2_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: 
+		 3: format->xml %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->render %self[2.0,] %cl_3_3[3.1,] 
+		 3: RETURN %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_1_4[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 11: RETURN %v_12[4.10,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show
+BB 1
+	outgoing: 36 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (ActsAsTaggableOn) 
+		 7: %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %v_3[2.6,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 2 3 2 
+	instructions:
+		 0: (URI) 
+		 1: %self->params %self[2.0,2.0,] 
+		 2: %v_6[4.1,] 
+		 3: %v_5->decode %v_5[4.0,] %v_7[4.2,] 
+		 4: %v_4->from %v_4[3.0,2.7,] %v_8[4.3,] 
+		 5: %v_9[4.4,] 
+		 6: 
+		 7: (ActsAsTaggableOn) 
+		 8: %v_10[4.7,] 
+		 9: %v_11[4.8,] 
+BB 5
+	outgoing: 6 
+	datadep: 4 
+	instructions:
+		 0: %v_10[4.7,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 4 4 5 4 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %v_11->where tag_array[4.5,4.5,] %v_11[5.0,4.8,] %v_12[6.0,] 
+		 2: %v_13[6.1,] %self[2.0,2.0,2.0,2.0,] @tags[] 
+		 3: 
+		 4: @tags[6.2,] 
+		 5: %v_14->nil? %v_14[6.4,] 
+		 6: BRANCH %v_15[6.5,] 
+BB 7
+	outgoing: 8 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,2.0,2.0,] @tags[6.2,6.4,] 
+		 1: %v_16->empty? %v_16[7.0,] 
+		 2: %v_17[7.1,] 
+BB 8
+	outgoing: 9 13 
+	datadep: 7 6 
+	instructions:
+		 0: BRANCH %v_15[7.2,6.5,] 
+BB 9
+	outgoing: 10 12 
+	datadep: 2 2 2 2 2 2 4 4 4 4 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: tag_array[4.5,4.5,4.5,4.5,] 
+		 3: %v_19->l_with_args %v_19[9.2,] 
+		 4: %v_18[9.1,] %v_20[9.3,] 
+		 5: 
+		 6: 
+		 7: %self->redirect_to %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_21[9.6,] 
+		 8: BRANCH %v_22[9.7,] 
+BB 10
+	outgoing: 36 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+BB 14
+	outgoing: 15 34 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] @tags[7.0,6.2,6.4,] 
+		 2: %v_23->first %v_23[14.1,] 
+		 3: %v_24->related_tags %v_24[14.2,] 
+		 4: %v_25[14.3,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @related_tags[] 
+		 5: 
+		 6: @tags[14.1,] 
+		 7: %v_26->collect %v_26[14.6,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+CLOSURE BEGIN: @users[] @tags[14.1,] @tags_raw[] @posts[] @related_tags[14.4,] @photos[] @pages[] @clippings[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: t->name t[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: 
+		 9: %v_27->join %v_27[14.7,] %v_28[14.8,] 
+		 10: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_29[14.9,] @tags_raw[] 
+		 11: 
+		 12: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 13: %v_30[14.12,] 
+		 14: BRANCH %v_31[14.13,] 
+BB 15
+	outgoing: 16 24 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: %v_32[15.1,] 
+		 3: 
+		 4: %v_36[15.3,] %v_33[15.2,] 
+		 5: BRANCH %v_35[15.4,] 
+BB 16
+	outgoing: 17 25 
+	datadep: 15 
+	instructions:
+		 0: 
+		 1: %v_38[16.0,] %v_33[15.2,] 
+		 2: BRANCH %v_37[16.1,] 
+BB 17
+	outgoing: 18 26 
+	datadep: 15 
+	instructions:
+		 0: 
+		 1: %v_40[17.0,] %v_33[15.2,] 
+		 2: BRANCH %v_39[17.1,] 
+BB 18
+	outgoing: 19 27 
+	datadep: 15 
+	instructions:
+		 0: 
+		 1: %v_42[18.0,] %v_33[15.2,] 
+		 2: BRANCH %v_41[18.1,] 
+BB 19
+	outgoing: 20 28 
+	datadep: 15 
+	instructions:
+		 0: 
+		 1: %v_44[19.0,] %v_33[15.2,] 
+		 2: BRANCH %v_43[19.1,] 
+BB 20
+	outgoing: 21 29 
+	datadep: 15 
+	instructions:
+		 0: 
+		 1: %v_46[20.0,] %v_33[15.2,] 
+		 2: BRANCH %v_45[20.1,] 
+BB 21
+	outgoing: 22 30 
+	datadep: 15 
+	instructions:
+		 0: 
+		 1: %v_48[21.0,] %v_33[15.2,] 
+		 2: BRANCH %v_47[21.1,] 
+BB 22
+	outgoing: 23 31 
+	datadep: 15 
+	instructions:
+		 0: 
+		 1: %v_50[22.0,] %v_33[15.2,] 
+		 2: BRANCH %v_49[22.1,] 
+BB 23
+	outgoing: 33 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: %v_165[23.3,] %v_166[23.4,] %v_163[23.1,] %v_164[23.2,] 
+		 6: %v_163[23.1,] 
+		 7: %v_164[23.2,] 
+		 8: %v_165[23.3,] 
+		 9: %v_166[23.4,] 
+		 10: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_163[23.1,] @clippings[] 
+		 11: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_164[23.2,] @posts[] 
+		 12: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_165[23.3,] @photos[] 
+		 13: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_166[23.4,] @users[] 
+		 14: %v_167[23.5,] 
+		 15: 
+BB 24
+	outgoing: 33 
+	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Post) 
+		 2: %v_51->recent %v_51[24.1,] 
+		 3: %v_52->tagged_with %v_52[24.2,] tag_array[4.5,4.5,4.5,4.5,] 
+		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 5: %v_54[24.4,] 
+		 6: %v_53->page %v_53[24.3,] %v_55[24.5,] 
+		 7: %v_56[24.6,] 
+		 8: %v_57[24.7,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @posts[] 
+		 9: %v_57[24.7,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @pages[] 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: %v_58[24.11,] %v_59[24.12,] %v_60[24.13,] 
+		 15: %v_58[24.11,] 
+		 16: %v_59[24.12,] 
+		 17: %v_60[24.13,] 
+		 18: %v_58[24.11,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @photos[] 
+		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_59[24.12,] @users[] 
+		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_60[24.13,] @clippings[] 
+		 21: %v_61[24.14,] 
+		 22: 
+BB 25
+	outgoing: 33 
+	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Post) 
+		 2: %v_65->recent %v_65[25.1,] 
+		 3: %v_66->tagged_with tag_array[4.5,4.5,4.5,4.5,] %v_66[25.2,] 
+		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 5: %v_68[25.4,] 
+		 6: %v_67->page %v_69[25.5,] %v_67[25.3,] 
+		 7: %v_70[25.6,] 
+		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_71[25.7,] @posts[] 
+		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_71[25.7,] @pages[] 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: %v_72[25.11,] %v_73[25.12,] %v_74[25.13,] 
+		 15: %v_72[25.11,] 
+		 16: %v_73[25.12,] 
+		 17: %v_74[25.13,] 
+		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_72[25.11,] @photos[] 
+		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_73[25.12,] @users[] 
+		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_74[25.13,] @clippings[] 
+		 21: %v_75[25.14,] 
+		 22: 
+BB 26
+	outgoing: 33 
+	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Photo) 
+		 2: %v_79->recent %v_79[26.1,] 
+		 3: %v_80->tagged_with %v_80[26.2,] tag_array[4.5,4.5,4.5,4.5,] 
+		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 5: %v_82[26.4,] 
+		 6: %v_81->page %v_81[26.3,] %v_83[26.5,] 
+		 7: %v_84[26.6,] 
+		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_85[26.7,] @photos[] 
+		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_85[26.7,] @pages[] 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: %v_86[26.11,] %v_87[26.12,] %v_88[26.13,] 
+		 15: %v_86[26.11,] 
+		 16: %v_87[26.12,] 
+		 17: %v_88[26.13,] 
+		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_86[26.11,] @posts[] 
+		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_87[26.12,] @users[] 
+		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_88[26.13,] @clippings[] 
+		 21: %v_89[26.14,] 
+		 22: 
+BB 27
+	outgoing: 33 
+	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Photo) 
+		 2: %v_93->recent %v_93[27.1,] 
+		 3: %v_94->tagged_with %v_94[27.2,] tag_array[4.5,4.5,4.5,4.5,] 
+		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 5: %v_96[27.4,] 
+		 6: %v_95->page %v_95[27.3,] %v_97[27.5,] 
+		 7: %v_98[27.6,] 
+		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_99[27.7,] @photos[] 
+		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_99[27.7,] @pages[] 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: %v_101[27.12,] %v_102[27.13,] %v_100[27.11,] 
+		 15: %v_100[27.11,] 
+		 16: %v_101[27.12,] 
+		 17: %v_102[27.13,] 
+		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_100[27.11,] @posts[] 
+		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_101[27.12,] @users[] 
+		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_102[27.13,] @clippings[] 
+		 21: %v_103[27.14,] 
+		 22: 
+BB 28
+	outgoing: 33 
+	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (User) 
+		 2: %v_107->recent %v_107[28.1,] 
+		 3: %v_108->tagged_with %v_108[28.2,] tag_array[4.5,4.5,4.5,4.5,] 
+		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 5: %v_110[28.4,] 
+		 6: %v_109->page %v_109[28.3,] %v_111[28.5,] 
+		 7: %v_112[28.6,] 
+		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_113[28.7,] @users[] 
+		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_113[28.7,] @pages[] 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: %v_116[28.13,] %v_114[28.11,] %v_115[28.12,] 
+		 15: %v_114[28.11,] 
+		 16: %v_115[28.12,] 
+		 17: %v_116[28.13,] 
+		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_114[28.11,] @posts[] 
+		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_115[28.12,] @photos[] 
+		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_116[28.13,] @clippings[] 
+		 21: %v_117[28.14,] 
+		 22: 
+BB 29
+	outgoing: 33 
+	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (User) 
+		 2: %v_121->recent %v_121[29.1,] 
+		 3: %v_122->tagged_with tag_array[4.5,4.5,4.5,4.5,] %v_122[29.2,] 
+		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 5: %v_124[29.4,] 
+		 6: %v_123->page %v_125[29.5,] %v_123[29.3,] 
+		 7: %v_126[29.6,] 
+		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_127[29.7,] @users[] 
+		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_127[29.7,] @pages[] 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: %v_129[29.12,] %v_128[29.11,] %v_130[29.13,] 
+		 15: %v_128[29.11,] 
+		 16: %v_129[29.12,] 
+		 17: %v_130[29.13,] 
+		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_128[29.11,] @posts[] 
+		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_129[29.12,] @photos[] 
+		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_130[29.13,] @clippings[] 
+		 21: %v_131[29.14,] 
+		 22: 
+BB 30
+	outgoing: 33 
+	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Clipping) 
+		 2: %v_135->recent %v_135[30.1,] 
+		 3: %v_136->tagged_with %v_136[30.2,] tag_array[4.5,4.5,4.5,4.5,] 
+		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 5: %v_138[30.4,] 
+		 6: %v_137->page %v_139[30.5,] %v_137[30.3,] 
+		 7: %v_140[30.6,] 
+		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_141[30.7,] @clippings[] 
+		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_141[30.7,] @pages[] 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: %v_143[30.12,] %v_144[30.13,] %v_142[30.11,] 
+		 15: %v_142[30.11,] 
+		 16: %v_143[30.12,] 
+		 17: %v_144[30.13,] 
+		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_142[30.11,] @posts[] 
+		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_143[30.12,] @photos[] 
+		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_144[30.13,] @users[] 
+		 21: %v_145[30.14,] 
+		 22: 
+BB 31
+	outgoing: 33 
+	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Clipping) 
+		 2: %v_149->recent %v_149[31.1,] 
+		 3: %v_150->tagged_with %v_150[31.2,] tag_array[4.5,4.5,4.5,4.5,] 
+		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 5: %v_152[31.4,] 
+		 6: %v_151->page %v_151[31.3,] %v_153[31.5,] 
+		 7: %v_154[31.6,] 
+		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_155[31.7,] @clippings[] 
+		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_155[31.7,] @pages[] 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: %v_158[31.13,] %v_156[31.11,] %v_157[31.12,] 
+		 15: %v_156[31.11,] 
+		 16: %v_157[31.12,] 
+		 17: %v_158[31.13,] 
+		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_156[31.11,] @posts[] 
+		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_157[31.12,] @photos[] 
+		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_158[31.13,] @users[] 
+		 21: %v_159[31.14,] 
+		 22: 
+BB 33
+	outgoing: 36 
+	datadep: 24 25 26 27 28 29 30 31 23 
+	instructions:
+		 0: RETURN %v_34[24.21,25.21,26.21,27.21,28.21,29.21,30.21,31.21,23.14,] 
+BB 34
+	outgoing: 36 
+	datadep: 4 4 4 4 2 2 2 2 2 2 4 4 4 4 2 2 2 2 2 2 4 4 4 4 2 2 2 2 2 2 4 4 4 4 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Post) 
+		 2: %v_172->recent %v_172[34.1,] 
+		 3: %v_173[34.2,] 
+		 4: %v_174->tagged_with tag_array[4.5,4.5,4.5,4.5,] %v_174[34.3,] 
+		 5: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_175[34.4,] @posts[] 
+		 6: 
+		 7: (Photo) 
+		 8: %v_176->recent %v_176[34.7,] 
+		 9: %v_177[34.8,] 
+		 10: %v_178->tagged_with %v_178[34.9,] tag_array[4.5,4.5,4.5,4.5,] 
+		 11: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_179[34.10,] @photos[] 
+		 12: 
+		 13: (User) 
+		 14: %v_180->recent %v_180[34.13,] 
+		 15: %v_181[34.14,] 
+		 16: %v_182->tagged_with %v_182[34.15,] tag_array[4.5,4.5,4.5,4.5,] 
+		 17: %v_183[34.16,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @users[] 
+		 18: 
+		 19: (Clipping) 
+		 20: %v_184->recent %v_184[34.19,] 
+		 21: %v_185[34.20,] 
+		 22: %v_186->tagged_with tag_array[4.5,4.5,4.5,4.5,] %v_186[34.21,] 
+		 23: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_187[34.22,] @clippings[] 
+		 24: RETURN %v_187[34.22,] 
+BB 36
+	outgoing: 
+	datadep: 
+	instructions:
+

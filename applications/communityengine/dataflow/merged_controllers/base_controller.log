@@ -1,0 +1,1081 @@
+SET IRMethod, name = cache_action?
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->logged_in? %self[2.0,] 
+		 7: %v_3->! %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->controller_name %self[2.0,] 
+		 1: 
+		 2: %v_5->eql? %v_5[3.0,] %v_6[3.1,] 
+		 3: %v_7[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_4[3.3,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 2 2 
+	instructions:
+		 0: %self->params %self[2.0,2.0,] 
+		 1: %v_8[5.0,] 
+		 2: %v_9->blank? %v_9[5.1,] 
+		 3: RETURN %v_10[5.2,] 
+BB 6
+	outgoing: 7 
+	datadep: 3 2 
+	instructions:
+		 0: RETURN %v_4[3.3,2.7,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = rss_site_index
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: %v_4[2.7,] %v_5[2.8,] %v_3[2.6,] 
+		 10: %self->redirect_to %self[2.0,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = plaxo
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->render %self[2.0,] %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = site_index
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Post) 
+		 7: %v_3->find_recent %v_3[2.6,] 
+		 8: %self[2.0,] %v_4[2.7,] @posts[] 
+		 9: 
+		 10: %self->configatron %self[2.0,] 
+		 11: %v_5->community_name %v_5[2.10,] 
+		 12: 
+		 13: %v_6[2.11,] %v_7[2.12,] 
+		 14: 
+		 15: %v_8[2.13,] %v_9[2.14,] 
+		 16: %self[2.0,] %v_10[2.15,] @rss_title[] 
+		 17: 
+		 18: %self->rss_url %self[2.0,] 
+		 19: %self[2.0,] %v_11[2.18,] @rss_url[] 
+		 20: 
+		 21: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @rss_title[2.16,] @rss_url[2.19,] @posts[2.8,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: format->html %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->get_additional_homepage_data %self[2.0,] 
+		 2: RETURN %cl_2_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: 
+		 3: format->rss %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @posts[] 
+		 2: %self->configatron %self[2.0,] 
+		 3: %cl_3_4->community_name %cl_3_4[3.2,] 
+		 4: 
+		 5: %cl_3_5[3.3,] %cl_3_6[3.4,] 
+		 6: 
+		 7: %cl_3_7[3.5,] %cl_3_8[3.6,] 
+		 8: %self->recent_url %self[2.0,] 
+		 9: %cl_3_9[3.7,] %cl_3_10[3.8,] 
+		 10: (Proc) 
+		 11: %cl_3_12->new %self[2.0,] %cl_3_12[3.10,] 
+CLOSURE BEGIN: @posts[3.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: post->user post[2.2,] 
+		 2: %self->user_post_url %self[2.0,] %cl_4_3[3.1,] post[2.2,] 
+		 3: RETURN %cl_4_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_5[4.0,] 
+		 2: RETURN %cl_4_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 12: %cl_3_13[3.11,] 
+		 13: %cl_3_14[3.12,] %cl_3_11[3.9,] 
+		 14: %self->render_rss_feed_for %self[2.0,] %cl_3_3[3.1,] %cl_3_15[3.13,] 
+		 15: RETURN %cl_3_16[3.14,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_17[4.0,] 
+		 2: RETURN %cl_3_18[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_1_4[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 22: RETURN %v_12[2.21,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = footer_content
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->get_recent_footer_content %self[2.0,] 
+		 7: 
+		 8: 
+		 9: %v_4[2.8,] 
+		 10: %self->render %self[2.0,] %v_5[2.9,] 
+		 11: BRANCH %v_6[2.10,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 5
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_6[2.10,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = homepage_features
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (HomepageFeature) 
+		 7: %v_3->find_features %v_3[2.6,] 
+		 8: %self[2.0,] %v_4[2.7,] @homepage_features[] 
+		 9: 
+		 10: @homepage_features[2.8,] 
+		 11: %v_5->shift %v_5[2.10,] 
+		 12: 
+		 13: 
+		 14: @homepage_features[2.8,2.10,] 
+		 15: %v_8[2.14,] %v_7[2.13,] 
+		 16: %self->render %self[2.0,] %v_9[2.15,] 
+		 17: BRANCH %v_10[2.16,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 5
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_10[2.16,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = advertise
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = uses_tiny_mce
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %v_4[4.0,] 
+		 2: 
+		 3: %self->block_given? %self[2.0,2.0,] 
+		 4: BRANCH %v_5[4.3,] 
+BB 5
+	outgoing: 7 
+	datadep: 4 
+	instructions:
+		 0: 
+		 1: block->call block[4.1,] 
+		 2: %v_6[5.1,] 
+		 3: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (TinyMCE) 
+		 2: %v_7[7.1,] 
+		 3: %v_8[7.2,] 
+BB 8
+	outgoing: 9 
+	datadep: 7 
+	instructions:
+		 0: %v_7[7.1,] 
+BB 9
+	outgoing: 10 
+	datadep: 8 7 5 5 3 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 5 5 3 2 3 2 
+	instructions:
+		 0: %v_8->configuration %v_8[8.0,7.2,] 
+		 1: options->delete options[5.2,5.2,3.1,2.5,3.1,2.5,] 
+		 2: %v_9->merge %v_9[9.0,] %v_10[9.1,] 
+		 3: %v_11->options %v_11[9.2,] 
+		 4: %v_12[9.3,] 
+		 5: 
+		 6: %v_12->stringify_keys! %v_12[9.3,] 
+		 7: 
+		 8: (Proc) 
+		 9: %v_14->new %v_14[9.8,] %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: c->instance_variable_get c[2.2,] 
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+BB 5
+	outgoing: 6 8 
+	datadep: 4 3 4 3 2 2 2 2 
+	instructions:
+		 0: %cl_1_3[4.1,3.1,] 
+		 1: 
+		 2: %cl_1_3->merge %cl_1_3[4.1,3.1,] 
+		 3: c->instance_variable_set %cl_1_5[5.2,] c[2.2,2.2,] 
+		 4: 
+		 5: c->instance_variable_set c[2.2,2.2,] 
+		 6: RETURN %cl_1_7[5.5,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_8[6.0,] 
+		 2: RETURN %cl_1_9[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 10: %v_15[9.9,] 
+		 11: 
+		 12: %self->before_action %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] %v_15[9.9,] options[5.2,5.2,3.1,2.5,3.1,2.5,] 
+		 13: RETURN %v_16[9.12,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = admin_required
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->current_user %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->current_user %self[2.0,] 
+		 1: %v_4->admin? %v_4[3.0,] 
+		 2: %v_5[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.2,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %v_6[5.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: %self->access_denied %self[2.0,2.0,] 
+		 1: RETURN %v_7[6.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = admin_or_moderator_required
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->current_user %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 2 
+	instructions:
+		 0: %self->current_user %self[2.0,] 
+		 1: %v_4->admin? %v_4[3.0,] 
+		 2: BRANCH %v_5[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->current_user %self[2.0,] 
+		 1: %v_6->moderator? %v_6[4.0,] 
+		 2: %v_7[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 4 3 
+	instructions:
+		 0: %v_5[4.2,3.1,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 5 2 
+	instructions:
+		 0: BRANCH %v_3[5.0,2.6,] 
+BB 7
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %v_8[7.0,] 
+BB 8
+	outgoing: 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: %self->access_denied %self[2.0,2.0,2.0,] 
+		 1: RETURN %v_9[8.0,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_user
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: %v_3->active %v_3[2.6,] 
+		 8: %self->params %self[2.0,] 
+		 9: %v_5[2.8,] 
+		 10: BRANCH %v_6[2.9,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_7[3.0,] 
+		 2: %v_8[3.1,] 
+BB 4
+	outgoing: 5 13 
+	datadep: 2 2 3 2 2 2 
+	instructions:
+		 0: %v_4->find %v_4[2.7,2.7,] %v_6[3.2,2.9,] 
+		 1: %self[2.0,2.0,] %v_9[4.0,] @user[] 
+		 2: BRANCH %v_9[4.0,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,] @user[4.1,] 
+		 2: BRANCH %v_10[5.1,] 
+BB 6
+	outgoing: 7 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,] @user[5.1,] 
+		 1: %self->current_user %self[2.0,2.0,] 
+		 2: %v_11->eql? %v_11[6.0,] %v_12[6.1,] 
+		 3: %v_13[6.2,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 2 2 2 2 6 5 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,2.0,2.0,] %v_10[6.3,5.1,] @is_current_user[] 
+		 1: 
+		 2: %self->logged_in? %self[2.0,2.0,2.0,2.0,] 
+		 3: BRANCH %v_14[7.2,] 
+BB 8
+	outgoing: 9 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,2.0,2.0,] @user[6.0,5.1,] 
+		 1: %v_15->profile_public? %v_15[8.0,] 
+		 2: %v_16[8.1,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 8 7 
+	instructions:
+		 0: BRANCH %v_14[8.2,7.2,] 
+BB 10
+	outgoing: 15 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] @user[8.0,6.0,5.1,] 
+		 2: RETURN %v_17[10.1,] 
+BB 11
+	outgoing: 14 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 2: 
+		 3: %v_19[11.1,] %v_20[11.2,] 
+		 4: 
+		 5: %self->access_denied %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 6: %v_21[11.5,] 
+		 7: 
+BB 13
+	outgoing: 15 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,2.0,] 
+		 2: 
+		 3: %v_22[13.1,] %v_23[13.2,] 
+		 4: 
+		 5: %self->access_denied %self[2.0,2.0,] 
+		 6: RETURN %v_24[13.5,] 
+BB 14
+	outgoing: 15 
+	datadep: 11 
+	instructions:
+		 0: RETURN %v_18[11.6,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = require_current_user
+BB 1
+	outgoing: 20 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] 
+		 7: %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[] 
+		 1: %v_5[3.0,] 
+BB 4
+	outgoing: 5 8 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: (User) 
+		 1: %self->params %self[2.0,2.0,] 
+		 2: %v_7[5.1,] 
+		 3: BRANCH %v_8[5.2,] 
+BB 6
+	outgoing: 7 
+	datadep: 2 2 
+	instructions:
+		 0: %self->params %self[2.0,2.0,] 
+		 1: %v_9[6.0,] 
+		 2: %v_10[6.1,] 
+BB 7
+	outgoing: 8 
+	datadep: 6 5 5 5 2 2 2 2 
+	instructions:
+		 0: %v_6->find %v_8[6.2,5.2,] %v_6[5.0,5.0,] 
+		 1: %self[2.0,2.0,2.0,2.0,] %v_11[7.0,] @user[3.0,3.0,] 
+		 2: %v_11[7.0,] 
+BB 8
+	outgoing: 9 12 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->admin? %self[2.0,2.0,] 
+		 2: BRANCH %v_12[8.1,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 2 2 
+	instructions:
+		 0: %self[2.0,2.0,] @user[7.1,3.0,] 
+		 1: BRANCH %v_13[9.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,] @user[9.0,] 
+		 1: %self->current_user %self[2.0,2.0,] 
+		 2: %v_14->eql? %v_14[10.0,] %v_15[10.1,] 
+		 3: %v_16[10.2,] 
+BB 11
+	outgoing: 12 
+	datadep: 10 9 
+	instructions:
+		 0: %v_13[10.3,9.0,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 11 8 
+	instructions:
+		 0: BRANCH %v_12[11.0,8.1,] 
+BB 13
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 14
+	outgoing: 15 17 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %v_18[14.1,] %v_19[14.2,] 
+		 4: %self->redirect_to %self[2.0,2.0,] %v_20[14.3,] 
+		 5: BRANCH %v_21[14.4,] 
+BB 15
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 17
+	outgoing: 18 
+	datadep: 14 
+	instructions:
+		 0: %v_21[14.4,] 
+BB 18
+	outgoing: 20 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,2.0,2.0,] @user[10.0,9.0,7.1,10.0,9.0,7.1,3.0,3.0,] 
+		 2: RETURN %v_22[18.1,] 
+BB 20
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = popular_tags
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: limit[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: type[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (ActsAsTaggableOn) 
+		 2: %v_3[6.1,] 
+		 3: %v_4[6.2,] 
+BB 7
+	outgoing: 8 
+	datadep: 6 
+	instructions:
+		 0: %v_3[6.1,] 
+BB 8
+	outgoing: 9 
+	datadep: 7 6 3 2 3 2 3 2 5 4 5 4 
+	instructions:
+		 0: %v_4->popular %v_4[7.0,6.2,] limit[3.0,2.5,3.0,2.5,3.0,2.5,] type[5.0,4.0,5.0,4.0,] 
+		 1: RETURN %v_5[8.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get_recent_footer_content
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Clipping) 
+		 7: 
+		 8: %v_3->find_recent %v_4[2.7,] %v_3[2.6,] 
+		 9: %self[2.0,] %v_5[2.8,] @recent_clippings[] 
+		 10: 
+		 11: (Photo) 
+		 12: 
+		 13: %v_6->find_recent %v_6[2.11,] %v_7[2.12,] 
+		 14: %self[2.0,] %v_8[2.13,] @recent_photos[] 
+		 15: 
+		 16: (Comment) 
+		 17: 
+		 18: %v_9->find_recent %v_9[2.16,] %v_10[2.17,] 
+		 19: %self[2.0,] %v_11[2.18,] @recent_comments[] 
+		 20: 
+		 21: %self[2.0,] 
+		 22: %v_12->to_a %v_12[2.21,] 
+		 23: %v_13[2.22,] %self[2.0,] @popular_tags[] 
+		 24: 
+		 25: (User) 
+		 26: 
+		 27: %v_14->recent_activity %v_14[2.25,] %v_15[2.26,] 
+		 28: %self[2.0,] %v_16[2.27,] @recent_activity[] 
+		 29: RETURN %v_16[2.27,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get_additional_homepage_data
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (HomepageFeature) 
+		 7: %v_3->find_features %v_3[2.6,] 
+		 8: %self[2.0,] %v_4[2.7,] @homepage_features[] 
+		 9: 
+		 10: @homepage_features[2.8,] 
+		 11: %v_5->collect %self[2.0,] %v_5[2.10,] 
+CLOSURE BEGIN: @active_users[] @popular_posts[] @popular_polls[] @homepage_features_data[] @topics[] @homepage_features[2.8,] @featured_posts[] @featured_writers[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: f->id f[2.2,] 
+		 2: f->image f[2.2,] 
+		 3: %cl_1_4->url %cl_1_4[3.2,] 
+		 4: %cl_1_3[3.1,] %cl_1_5[3.3,] 
+		 5: RETURN %cl_1_6[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 12: %self[2.0,] %v_6[2.11,] @homepage_features_data[] 
+		 13: 
+		 14: (User) 
+		 15: 
+		 16: %v_7->find_by_activity %v_8[2.15,] %v_7[2.14,] 
+		 17: %self[2.0,] %v_9[2.16,] @active_users[] 
+		 18: 
+		 19: (User) 
+		 20: %v_10->find_featured %v_10[2.19,] 
+		 21: %self[2.0,] %v_11[2.20,] @featured_writers[] 
+		 22: 
+		 23: (Post) 
+		 24: %v_12->find_featured %v_12[2.23,] 
+		 25: %v_13[2.24,] %self[2.0,] @featured_posts[] 
+		 26: 
+		 27: (Topic) 
+		 28: 
+		 29: %v_14->order %v_14[2.27,] %v_15[2.28,] 
+		 30: %v_16[2.29,] 
+		 31: %self[2.0,] %v_17[2.30,] @topics[] 
+		 32: 
+		 33: (Post) 
+		 34: 
+		 35: %v_18->find_popular %v_18[2.33,] %v_19[2.34,] 
+		 36: %self[2.0,] %v_20[2.35,] @popular_posts[] 
+		 37: 
+		 38: (Poll) 
+		 39: 
+		 40: %v_21->find_popular %v_21[2.38,] %v_22[2.39,] 
+		 41: %self[2.0,] %v_23[2.40,] @popular_polls[] 
+		 42: RETURN %v_23[2.40,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = initialize_header_tabs
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] %v_3[2.6,] @header_tabs[] 
+		 8: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = initialize_admin_tabs
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] %v_3[2.6,] @admin_nav_links[] 
+		 8: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

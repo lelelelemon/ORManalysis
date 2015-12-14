@@ -1,0 +1,1119 @@
+SET IRMethod, name = deny
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @user[] 
+		 11: 
+		 12: @user[2.10,] 
+		 13: %v_7->friendships %v_7[2.12,] 
+		 14: %self->params %self[2.0,] 
+		 15: %v_9[2.14,] 
+		 16: %v_8->find %v_8[2.13,] %v_10[2.15,] 
+		 17: %self[2.0,] %v_11[2.16,] @friendship[] 
+		 18: 
+		 19: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @user[2.10,] @friendship[2.17,] 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @friendship[] 
+		 2: (FriendshipStatus) 
+		 3: %cl_1_4[3.2,] 
+		 4: %cl_1_5[3.3,] 
+		 5: %cl_1_3->update_attributes %cl_1_3[3.1,] %cl_1_6[3.4,] 
+		 6: BRANCH %cl_1_7[3.5,] 
+BB 4
+	outgoing: 5 9 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @friendship[3.1,] 
+		 1: %cl_1_8->reverse %cl_1_8[4.0,] 
+		 2: (FriendshipStatus) 
+		 3: %cl_1_10[4.2,] 
+		 4: %cl_1_11[4.3,] 
+		 5: %cl_1_9->update_attributes %cl_1_12[4.4,] %cl_1_9[4.1,] 
+		 6: %cl_1_13[4.5,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 4 3 
+	instructions:
+		 0: BRANCH %cl_1_7[4.6,3.5,] 
+BB 6
+	outgoing: 8 9 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,2.0,] 
+		 2: 
+		 3: %cl_1_14[6.1,] %cl_1_15[6.2,] 
+		 4: 
+		 5: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+CLOSURE BEGIN: @friendship[4.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: %self->denied_user_friendships_path %cl_2_3[3.1,] %self[2.0,] 
+		 3: %self->redirect_to %self[2.0,] %cl_2_4[3.2,] 
+		 4: RETURN %cl_2_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_6[4.0,] 
+		 2: RETURN %cl_2_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+BB 7
+	outgoing: 9 11 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+CLOSURE BEGIN: @friendship[4.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_3_3[3.1,] 
+		 3: %self->render %self[2.0,] %cl_3_4[3.2,] 
+		 4: RETURN %cl_3_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_6[4.0,] 
+		 2: RETURN %cl_3_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_17[7.1,] 
+BB 8
+	outgoing: 11 
+	datadep: 6 
+	instructions:
+		 0: RETURN %cl_1_16[6.5,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_18[9.0,] 
+		 2: RETURN %cl_1_19[9.1,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 20: RETURN %v_12[2.19,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = accept
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @user[] 
+		 11: 
+		 12: @user[2.10,] 
+		 13: %v_7->friendships_not_initiated_by_me %v_7[2.12,] 
+		 14: %self->params %self[2.0,] 
+		 15: %v_9[2.14,] 
+		 16: %v_8->find %v_8[2.13,] %v_10[2.15,] 
+		 17: %self[2.0,] %v_11[2.16,] @friendship[] 
+		 18: 
+		 19: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @user[2.10,] @friendship[2.17,] 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @friendship[] 
+		 2: (FriendshipStatus) 
+		 3: %cl_1_4[3.2,] 
+		 4: %cl_1_5[3.3,] 
+		 5: %cl_1_3->update_attributes %cl_1_3[3.1,] %cl_1_6[3.4,] 
+		 6: BRANCH %cl_1_7[3.5,] 
+BB 4
+	outgoing: 5 9 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @friendship[3.1,] 
+		 1: %cl_1_8->reverse %cl_1_8[4.0,] 
+		 2: (FriendshipStatus) 
+		 3: %cl_1_10[4.2,] 
+		 4: %cl_1_11[4.3,] 
+		 5: %cl_1_9->update_attributes %cl_1_12[4.4,] %cl_1_9[4.1,] 
+		 6: %cl_1_13[4.5,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 4 3 
+	instructions:
+		 0: BRANCH %cl_1_7[4.6,3.5,] 
+BB 6
+	outgoing: 8 9 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,2.0,] 
+		 2: 
+		 3: %cl_1_14[6.1,] %cl_1_15[6.2,] 
+		 4: 
+		 5: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+CLOSURE BEGIN: @friendship[4.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: %self->accepted_user_friendships_path %cl_2_3[3.1,] %self[2.0,] 
+		 3: %self->redirect_to %self[2.0,] %cl_2_4[3.2,] 
+		 4: RETURN %cl_2_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_6[4.0,] 
+		 2: RETURN %cl_2_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+BB 7
+	outgoing: 9 11 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+CLOSURE BEGIN: @friendship[4.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_3_3[3.1,] 
+		 3: %self->render %self[2.0,] %cl_3_4[3.2,] 
+		 4: RETURN %cl_3_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_6[4.0,] 
+		 2: RETURN %cl_3_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_17[7.1,] 
+BB 8
+	outgoing: 11 
+	datadep: 6 
+	instructions:
+		 0: RETURN %cl_1_16[6.5,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_18[9.0,] 
+		 2: RETURN %cl_1_19[9.1,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 20: RETURN %v_12[2.19,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = denied
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @user[] 
+		 11: 
+		 12: @user[2.10,] 
+		 13: %v_7->friendships %v_7[2.12,] 
+		 14: 
+		 15: (FriendshipStatus) 
+		 16: %v_10[2.15,] 
+		 17: %v_11->id %v_11[2.16,] 
+		 18: %v_8->where %v_8[2.13,] %v_9[2.14,] %v_12[2.17,] 
+		 19: %self->params %self[2.0,] 
+		 20: %v_14[2.19,] 
+		 21: %v_13->page %v_13[2.18,] %v_15[2.20,] 
+		 22: %self[2.0,] %v_16[2.21,] @friendships[] 
+		 23: 
+		 24: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @friendships[2.22,] @user[2.10,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: format->html format[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 25: RETURN %v_17[2.24,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = accepted
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @user[] 
+		 11: 
+		 12: @user[2.10,] 
+		 13: %v_7->accepted_friendships %v_7[2.12,] 
+		 14: %v_8->count %v_8[2.13,] 
+		 15: %self[2.0,] %v_9[2.14,] @friend_count[] 
+		 16: 
+		 17: @user[2.10,2.12,] 
+		 18: %v_10->pending_friendships %v_10[2.17,] 
+		 19: %v_11->count %v_11[2.18,] 
+		 20: %self[2.0,] %v_12[2.19,] @pending_friendships_count[] 
+		 21: 
+		 22: @user[2.10,2.12,2.17,] 
+		 23: %v_13->friendships %v_13[2.22,] 
+		 24: %v_14->accepted %v_14[2.23,] 
+		 25: %self->params %self[2.0,] 
+		 26: %v_16[2.25,] 
+		 27: %v_15->page %v_15[2.24,] %v_17[2.26,] 
+		 28: %v_18[2.27,] 
+		 29: %self[2.0,] %v_19[2.28,] @friendships[] 
+		 30: 
+		 31: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @pending_friendships_count[2.20,] @friendships[2.29,] @user[2.10,] @friend_count[2.15,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: format->html format[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 32: RETURN %v_20[2.31,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = pending
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @user[] 
+		 11: 
+		 12: @user[2.10,] 
+		 13: %v_7->friendships %v_7[2.12,] 
+		 14: 
+		 15: (FriendshipStatus) 
+		 16: %v_10[2.15,] 
+		 17: %v_11->id %v_11[2.16,] 
+		 18: %v_8->where %v_8[2.13,] %v_9[2.14,] %v_12[2.17,] 
+		 19: %v_13[2.18,] %self[2.0,] @friendships[] 
+		 20: 
+		 21: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @friendships[2.19,] @user[2.10,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: format->html format[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 22: RETURN %v_14[2.21,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Friendship) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @friendship[] 
+		 11: 
+		 12: @friendship[2.10,] 
+		 13: %v_7->user %v_7[2.12,] 
+		 14: %self[2.0,] %v_8[2.13,] @user[] 
+		 15: 
+		 16: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @user[2.14,] @friendship[2.10,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: format->html format[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 17: RETURN %v_9[2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @user[] 
+		 11: 
+		 12: (Friendship) 
+		 13: %self->params %self[2.0,] 
+		 14: %v_8[2.13,] 
+		 15: %self->params %self[2.0,] 
+		 16: %v_10[2.15,] 
+		 17: %v_9[2.14,] %v_11[2.16,] 
+		 18: %v_7->new %v_7[2.12,] %v_12[2.17,] 
+		 19: %v_13[2.18,] %self[2.0,] @friendship[] 
+		 20: 
+		 21: @friendship[2.19,] 
+		 22: (FriendshipStatus) 
+		 23: %v_15[2.22,] 
+		 24: %v_16->id %v_16[2.23,] 
+		 25: %v_14[2.21,] %v_17[2.24,] 
+		 26: 
+		 27: (Friendship) 
+		 28: %v_18->new %v_18[2.27,] 
+		 29: %v_19[2.28,] 
+		 30: 
+		 31: (FriendshipStatus) 
+		 32: %v_20[2.31,] 
+		 33: %v_21->id %v_21[2.32,] 
+		 34: reverse_friendship[2.29,] %v_22[2.33,] 
+		 35: 
+		 36: @friendship[2.19,2.21,] 
+		 37: %v_23->friend_id %v_23[2.36,] 
+		 38: @friendship[2.19,2.21,2.36,] 
+		 39: %v_25->user_id %v_25[2.38,] 
+		 40: %v_24[2.37,] %v_26[2.39,] 
+		 41: %v_24[2.37,] 
+		 42: %v_26[2.39,] 
+		 43: %v_24[2.37,] reverse_friendship[2.29,2.34,] 
+		 44: reverse_friendship[2.29,2.34,2.43,] %v_29[2.42,] 
+		 45: 
+		 46: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @user[2.10,] @friendship[2.19,] 
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 12 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @friendship[] 
+		 2: %cl_1_3->save %cl_1_3[3.1,] 
+		 3: BRANCH %cl_1_4[3.2,] 
+BB 4
+	outgoing: 5 12 
+	datadep: 
+	instructions:
+		 0: reverse_friendship->save 
+		 1: %cl_1_5[4.0,] 
+BB 5
+	outgoing: 6 10 
+	datadep: 4 3 
+	instructions:
+		 0: BRANCH %cl_1_4[4.1,3.2,] 
+BB 6
+	outgoing: 7 8 12 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,] @friendship[3.1,3.1,] 
+		 2: %cl_1_6->friend %cl_1_6[6.1,] 
+		 3: %cl_1_7->notify_friend_requests? %cl_1_7[6.2,] 
+		 4: BRANCH %cl_1_8[6.3,] 
+BB 7
+	outgoing: 9 12 
+	datadep: 2 2 
+	instructions:
+		 0: (UserNotifier) 
+		 1: %self[2.0,2.0,] @friendship[6.1,] 
+		 2: %cl_1_9->friendship_request %cl_1_10[7.1,] %cl_1_9[7.0,] 
+		 3: %cl_1_11->deliver %cl_1_11[7.2,] 
+		 4: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 11 12 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: format->html %self[2.0,2.0,2.0,] format[2.2,2.2,2.2,] 
+CLOSURE BEGIN: @friendship[7.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: %self[2.0,] @friendship[] 
+		 3: %cl_2_4->friend %cl_2_4[3.2,] 
+		 4: %cl_2_5->login %cl_2_5[3.3,] 
+		 5: %cl_2_6[3.4,] 
+		 6: %cl_2_7->l_with_args %cl_2_7[3.5,] 
+		 7: %cl_2_3[3.1,] %cl_2_8[3.6,] 
+		 8: 
+		 9: %self[2.0,] @user[] 
+		 10: %self->accepted_user_friendships_path %self[2.0,] %cl_2_9[3.9,] 
+		 11: %self->redirect_to %self[2.0,] %cl_2_10[3.10,] 
+		 12: RETURN %cl_2_11[3.11,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_12[4.0,] 
+		 2: RETURN %cl_2_13[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: 
+		 3: format->js %self[2.0,2.0,2.0,] format[2.2,2.2,2.2,] 
+CLOSURE BEGIN: @friendship[7.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @friendship[] 
+		 4: %cl_3_5->friend %cl_3_5[3.3,] 
+		 5: %cl_3_6->login %cl_3_6[3.4,] 
+		 6: 
+		 7: %cl_3_3[3.1,] %cl_3_4[3.2,] %cl_3_7[3.5,] %cl_3_8[3.6,] 
+		 8: %self[2.0,] %cl_3_9[3.7,] @text[] 
+		 9: RETURN %cl_3_9[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_10[4.0,] 
+		 2: RETURN %cl_3_11[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: 
+BB 10
+	outgoing: 12 14 
+	datadep: 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,2.0,] 
+		 2: %cl_1_15->now %cl_1_15[10.1,] 
+		 3: 
+		 4: %cl_1_16[10.2,] %cl_1_17[10.3,] 
+		 5: 
+		 6: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+CLOSURE BEGIN: @friendship[7.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: %self->user_friendships_path %self[2.0,] %cl_4_3[3.1,] 
+		 3: %self->redirect_to %self[2.0,] %cl_4_4[3.2,] 
+		 4: RETURN %cl_4_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_6[4.0,] 
+		 2: RETURN %cl_4_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: 
+		 8: format->js %self[2.0,2.0,] format[2.2,2.2,] 
+CLOSURE BEGIN: @friendship[7.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_5_3[3.1,] %cl_5_4[3.2,] 
+		 4: %self[2.0,] %cl_5_5[3.3,] @text[] 
+		 5: RETURN %cl_5_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_6[4.0,] 
+		 2: RETURN %cl_5_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 9: RETURN %cl_1_19[10.8,] 
+BB 11
+	outgoing: 14 
+	datadep: 9 
+	instructions:
+		 0: RETURN %cl_1_14[9.3,] 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_20[12.0,] 
+		 2: RETURN %cl_1_21[12.1,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 47: RETURN %v_30[2.46,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (User) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @user[] 
+		 11: 
+		 12: (Friendship) 
+		 13: %self->params %self[2.0,] 
+		 14: %v_8[2.13,] 
+		 15: %v_7->find %v_9[2.14,] %v_7[2.12,] 
+		 16: %self[2.0,] %v_10[2.15,] @friendship[] 
+		 17: 
+		 18: (Friendship) 
+		 19: %v_11->transaction %self[2.0,] %v_11[2.18,] 
+CLOSURE BEGIN: @user[2.10,] @friendship[2.16,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @friendship[] 
+		 2: %cl_1_3->destroy %cl_1_3[3.1,] 
+		 3: 
+		 4: @friendship[3.1,] 
+		 5: %cl_1_5->reverse %cl_1_5[3.4,] 
+		 6: %cl_1_6->destroy %cl_1_6[3.5,] 
+		 7: RETURN %cl_1_7[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 20: 
+		 21: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @user[2.10,] @friendship[2.16,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: format->html %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: %self->accepted_user_friendships_path %self[2.0,] %cl_3_3[3.1,] 
+		 3: %self->redirect_to %self[2.0,] %cl_3_4[3.2,] 
+		 4: RETURN %cl_3_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_6[4.0,] 
+		 2: RETURN %cl_3_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_2_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 22: RETURN %v_13[2.21,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = friendship_params
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: %v_4->permit %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

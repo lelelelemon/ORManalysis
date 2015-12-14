@@ -1,11 +1,15 @@
 require 'yard'
 #the base_path and the controller name should be passed in as parameters
-$base_path = "../../applications/boxroom"
+$base_path = "../../applications/communityengine"
 $rb_view_name = "view_rb"
 
 def get_controller_name_from_path(filename)
+	puts "filename = #{filename}"
 	i = filename.rindex('/')
 	j = filename.rindex("_controller.rb")
+	if j==nil or i==nil
+		return nil
+	end
 	n = filename[i+1..j-1]
 	return n
 end
@@ -26,12 +30,12 @@ def traverse_routes_mapping(astnode, base_path, controller_name)
 		end
 
 		#TODO: How to handle nil node here??
-		if cur_astnode == nil
+		if cur_astnode == nil or cur_astnode.class.to_s == "Symbol"
 			return
 		end	
 		cur_astnode.children.each do |x|
 
-			if x[0][0].source == ":partial" || x[0][0].source == ":action" || x[0][0].source == ":template"
+			if x[0] != nil and x[0][0] != nil and x[0][0].class.to_s != "String" and x[0][0].source == ":partial" || x[0][0].source == ":action" || x[0][0].source == ":template"
 
 				view_name = x[0][1].source
 				if view_name.include? '/'
@@ -92,6 +96,8 @@ Dir.glob($controller_files) do |item|
 	#the render statement and the render view is a hash mapping
 	$render_view_mapping = Hash.new
 	controller_name = get_controller_name_from_path(item)
+	if controller_name == nil
+	else
 	puts "Running controller: #{controller_name}"
 	
 	traverse_routes_mapping(controller_ast, $base_path, controller_name)
@@ -107,6 +113,6 @@ Dir.glob($controller_files) do |item|
 
 	controller_file.close
 	output_file.close
-
+	end
 end
 

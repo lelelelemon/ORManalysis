@@ -1,0 +1,227 @@
+SET IRMethod, name = create
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->request %self[2.0,] 
+		 7: %v_3->env %v_3[2.6,] 
+		 8: 
+		 9: %v_4[2.7,] %v_5[2.8,] 
+		 10: %v_6[2.9,] 
+		 11: 
+		 12: 
+		 13: %v_6[2.9,] %v_7[2.12,] 
+		 14: %v_8->to_s %v_8[2.13,] 
+		 15: %v_9->capitalize %v_9[2.14,] 
+		 16: %v_10[2.15,] 
+		 17: 
+		 18: (Authorization) 
+		 19: %self->current_user %self[2.0,] 
+		 20: %v_11->find_or_create_from_hash %v_11[2.18,] omniauth[2.10,] %v_12[2.19,] 
+		 21: %v_13[2.20,] %self[2.0,] @auth[] 
+		 22: 
+		 23: %self->logged_in? %self[2.0,] 
+		 24: BRANCH %v_14[2.23,] 
+BB 3
+	outgoing: 8 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: 
+		 3: provider_name[2.16,] 
+		 4: %self->t %self[2.0,] %v_16[3.2,] %v_17[3.3,] 
+		 5: %v_15[3.1,] %v_18[3.4,] 
+		 6: 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @auth[2.21,] 
+		 2: %v_19->valid? %v_19[4.1,] 
+		 3: BRANCH %v_20[4.2,] 
+BB 5
+	outgoing: 7 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: 
+		 3: provider_name[2.16,] 
+		 4: %self->t %self[2.0,] %v_22[5.2,] %v_23[5.3,] 
+		 5: %v_24[5.4,] %v_21[5.1,] 
+		 6: 
+		 7: (UserSession) 
+		 8: %self[2.0,] @auth[4.1,] 
+		 9: %v_26->user %v_26[5.8,] 
+		 10: %v_25->create %v_25[5.7,] %v_27[5.9,] 
+		 11: %v_28[5.10,] 
+		 12: 
+		 13: %v_28->user %v_28[5.10,] 
+		 14: %self[2.0,] %v_29[5.13,] 
+		 15: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 
+	datadep: 6 5 
+	instructions:
+		 0: %v_29[6.0,5.13,] 
+BB 8
+	outgoing: 9 12 
+	datadep: 5 2 2 
+	instructions:
+		 0: 
+		 1: %self->logged_in? %self[5.14,2.0,2.0,] 
+		 2: BRANCH %v_30[8.1,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 5 2 2 
+	instructions:
+		 0: 
+		 1: %self->request %self[5.14,2.0,2.0,] 
+		 2: %v_31->env %v_31[9.1,] 
+		 3: 
+		 4: %v_32[9.2,] %v_33[9.3,] 
+		 5: BRANCH %v_34[9.4,] 
+BB 10
+	outgoing: 11 
+	datadep: 5 2 2 5 2 2 
+	instructions:
+		 0: %self->current_user %self[5.14,2.0,2.0,] 
+		 1: %self->user_path %v_35[10.0,] %self[5.14,2.0,2.0,] 
+		 2: %v_36[10.1,] 
+BB 11
+	outgoing: 14 
+	datadep: 5 2 5 2 2 2 10 9 
+	instructions:
+		 0: %self->redirect_to %self[5.14,2.0,5.14,2.0,2.0,2.0,] %v_34[10.2,9.4,] 
+		 1: RETURN %v_37[11.0,] 
+BB 12
+	outgoing: 14 
+	datadep: 5 2 2 5 2 2 5 2 2 5 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[5.14,2.0,2.0,] 
+		 2: %self[5.14,2.0,2.0,] @auth[5.8,2.21,4.1,] 
+		 3: %v_39->user %v_39[12.2,] 
+		 4: %v_40->errors %v_40[12.3,] 
+		 5: %v_41->full_messages %v_41[12.4,] 
+		 6: %v_42->to_sentence %v_42[12.5,] 
+		 7: %v_38[12.1,] %v_43[12.6,] 
+		 8: 
+		 9: %self->login_path %self[5.14,2.0,2.0,] 
+		 10: %self->redirect_to %self[5.14,2.0,2.0,] %v_44[12.9,] 
+		 11: RETURN %v_45[12.10,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = failure
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->flash %self[2.0,] 
+		 7: 
+		 8: %self->t %self[2.0,] %v_4[2.7,] 
+		 9: %v_5[2.8,] %v_3[2.6,] 
+		 10: 
+		 11: %self->home_url %self[2.0,] 
+		 12: %self->redirect_to %self[2.0,] %v_6[2.11,] 
+		 13: RETURN %v_7[2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->current_user %self[2.0,] 
+		 7: %v_3->authorizations %v_3[2.6,] 
+		 8: %self->params %self[2.0,] 
+		 9: %v_5[2.8,] 
+		 10: %v_4->find %v_4[2.7,] %v_6[2.9,] 
+		 11: %self[2.0,] %v_7[2.10,] @authorization[] 
+		 12: 
+		 13: @authorization[2.11,] 
+		 14: %v_8->destroy %v_8[2.13,] 
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: 
+		 3: %self[2.0,] @authorization[2.11,2.13,] 
+		 4: %v_12->provider %v_12[3.3,] 
+		 5: %v_13->to_s %v_13[3.4,] 
+		 6: %v_14->capitalize %v_14[3.5,] 
+		 7: %v_15[3.6,] 
+		 8: %self->t %self[2.0,] %v_16[3.7,] %v_11[3.2,] 
+		 9: %v_17[3.8,] %v_10[3.1,] 
+		 10: 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: %self[2.0,] @authorization[2.11,2.13,] 
+		 3: %v_19->errors %v_19[4.2,] 
+		 4: %v_20->full_messages %v_20[4.3,] 
+		 5: %v_21->to_sentence %v_21[4.4,] 
+		 6: %v_18[4.1,] %v_22[4.5,] 
+		 7: %v_22[4.5,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->edit_account_user_path %self[2.0,2.0,] 
+		 2: %self->redirect_to %self[2.0,2.0,] %v_23[5.1,] 
+		 3: RETURN %v_24[5.2,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

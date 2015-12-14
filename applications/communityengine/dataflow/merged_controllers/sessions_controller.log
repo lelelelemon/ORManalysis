@@ -1,0 +1,205 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %v_3[2.6,] 
+		 8: %self->redirect_to %self[2.0,] %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->current_user %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: %self->current_user %self[2.0,] 
+		 1: %self->user_path %self[2.0,] %v_4[3.0,] 
+		 2: %self->redirect_to %self[2.0,] %v_5[3.1,] 
+		 3: BRANCH %v_6[3.2,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+BB 8
+	outgoing: 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: (UserSession) 
+		 2: %v_7->new %v_7[8.1,] 
+		 3: %self[2.0,2.0,] %v_8[8.2,] @user_session[] 
+		 4: RETURN %v_8[8.2,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (UserSession) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %self->params %self[2.0,] 
+		 10: %v_6[2.9,] 
+		 11: %self->params %self[2.0,] 
+		 12: %v_8[2.11,] 
+		 13: %v_5[2.8,] %v_9[2.12,] %v_7[2.10,] 
+		 14: %v_3->new %v_3[2.6,] %v_10[2.13,] 
+		 15: %self[2.0,] %v_11[2.14,] @user_session[] 
+		 16: 
+		 17: @user_session[2.15,] 
+		 18: %v_12->save %v_12[2.17,] 
+		 19: BRANCH %v_13[2.18,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user_session[2.15,2.17,] 
+		 2: %v_14->record %v_14[3.1,] 
+		 3: %self[2.0,] %v_15[3.2,] 
+		 4: 
+		 5: %self->flash %self[3.3,] 
+		 6: 
+		 7: %v_16[3.5,] %v_17[3.6,] 
+		 8: 
+		 9: %self->current_user %self[3.3,] 
+		 10: %self->dashboard_user_path %self[3.3,] %v_18[3.9,] 
+		 11: %self->redirect_back_or_default %self[3.3,] %v_19[3.10,] 
+		 12: RETURN %v_20[3.11,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: 
+		 3: %v_21[4.1,] %v_22[4.2,] 
+		 4: 
+		 5: %self->params %self[2.0,] 
+		 6: %v_23[4.5,] 
+		 7: %v_24[4.6,] 
+		 8: %self->render %v_25[4.7,] %self[2.0,] 
+		 9: RETURN %v_26[4.8,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->current_user_session %self[2.0,] 
+		 7: %v_3->nil? %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: %self->new_session_path %self[2.0,] 
+		 1: %self->redirect_to %self[2.0,] %v_5[3.0,] 
+		 2: BRANCH %v_6[3.1,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+BB 8
+	outgoing: 9 
+	datadep: 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->current_user_session %self[2.0,2.0,] 
+		 2: %v_7->destroy %v_7[8.1,] 
+		 3: 
+		 4: %self->reset_session %self[2.0,2.0,] 
+		 5: 
+		 6: %self->flash %self[2.0,2.0,] 
+		 7: 
+		 8: %v_10[8.6,] %v_11[8.7,] 
+		 9: 
+		 10: %self->new_session_path %self[2.0,2.0,] 
+		 11: %self->redirect_to %self[2.0,2.0,] %v_12[8.10,] 
+		 12: RETURN %v_13[8.11,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
