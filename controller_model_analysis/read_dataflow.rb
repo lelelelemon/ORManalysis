@@ -76,15 +76,39 @@ def handle_single_dataflow_file(item, class_name)
 
 			elsif line.include?("JRUBY")
 				nil
-			elsif line.include?("CLOSURE BEGIN")
+			elsif line.include?("CLOSURE BEGIN:")
 				$cur_bb_stack.push($cur_bb)
 				$cur_cfg_stack.push($cur_cfg)
+				temp_cfg = $cur_cfg
 				$cur_cfg = Closure.new
-				if $view_ruby_code
+				if $view_ruby_code or (temp_cfg.instance_of?Closure and temp_cfg.getViewCode)
 					$cur_cfg.setViewCode
 					$view_ruby_code = false
 				end
-				
+	
+				#Variable def table
+				#Handled separately because the def stmt are not in the same closure
+				attrs = line.split(" ")
+				index = 0	
+				attrs.each do |single_attr|
+					if index > 1 #Avoid handling 'CLOSURE' 'BEGIN:' 
+						bracket_begin = single_attr.index('[')
+						bracket_end = single_attr.index(']')
+						dep_string = single_attr[bracket_begin+1...bracket_end-1]
+						deps = dep_string.split(',')
+						v_name = single_attr[0...bracket_begin]
+						deps.each do |dep|
+							if dep.length > 0
+								#find instr handler here
+								dep_str = dep.split('.')
+								dep_instr = temp_cfg.getBBByIndex(dep_str[0].to_i).getInstr[dep_str[1].to_i]
+								#puts "READ DATAFLOW: add to var table: #{v_name} (#{dep_instr.toString})"
+								$cur_cfg.addToVarDefTable(v_name, dep, dep_instr)
+							end
+						end
+					end
+					index = index + 1
+				end
 			elsif line.include?("CLOSURE END")
 				#$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB.getIndex)
 				$cur_bb = $cur_bb_stack[-1]
@@ -139,28 +163,43 @@ def handle_single_dataflow_file(item, class_name)
 									elsif single_attr.include?('[') and single_attr.include?(']')
 										bracket_begin = single_attr.index('[')
 										bracket_end = single_attr.index(']')
-										dep_string = single_attr[bracket_begin+1...bracket_end-1]
-										deps = dep_string.split(',')
-										v_name = single_attr[0...bracket_begin]
-										deps.each do |dep|
-											if dep.length > 0
-												dep_str = dep.split('.')
-												#dep_instr = nil
-												#if $cur_cfg.getBBByIndex(dep_str[0].to_i) != nil
-												#	$cur_cfg.getBBByIndex(dep_str[0].to_i).getInstr[dep_str[1].to_i]
-												#else
-												#	puts "block #{dep_str[0].to_i}  doesn't exist"
-												#end
-												#if dep_instr != nil
-												cur_instr.addDatadep(dep, v_name)
-												#else
-												#	puts "DEP instructions cannot be found: #{dep_str[0].to_i}.#{dep_str[1].to_i}"
-												#end
+										#no explicit define is found, for named vairables like @message
+										if bracket_begin == bracket_end - 1 
+											if $cur_cfg.instance_of?Closure
+												v_name = single_attr[0...bracket_begin]
+												#puts "Find use without def: #{v_name} (#{$cur_bb.getIndex}.#{$cur_bb.getInstr.length})"
+												$cur_cfg.getVarDefs(v_name).each do |v|
+													cur_instr.addDatadep("", v_name, v.getInstrHandler)
+													#puts "\t\thandler: #{v.getInstrHandler.toString}"
+												end
+											end
+										else
+											dep_string = single_attr[bracket_begin+1...bracket_end-1]
+											deps = dep_string.split(',')
+											v_name = single_attr[0...bracket_begin]
+											deps.each do |dep|
+												if dep.length > 0
+													#dep_str = dep.split('.')
+													#dep_instr = nil
+													#if $cur_cfg.getBBByIndex(dep_str[0].to_i) != nil
+													#	$cur_cfg.getBBByIndex(dep_str[0].to_i).getInstr[dep_str[1].to_i]
+													#else
+													#	puts "block #{dep_str[0].to_i}  doesn't exist"
+													#end
+													#if dep_instr != nil
+													cur_instr.addDatadep(dep, v_name)
+													#else
+													#	puts "DEP instructions cannot be found: #{dep_str[0].to_i}.#{dep_str[1].to_i}"
+													#end
+												end
 											end
 										end
 
 									elsif single_attr == "RETURN"
 										cur_instr = Return_instr.new
+									
+									elsif single_attr == "BRANCH"
+										cur_instr = Branch_instr.new
 
 									elsif single_attr.include?('(') and single_attr.include?(')')
 										bracket_begin = single_attr.index('(')
@@ -196,7 +235,17 @@ def calculate_depinstr_for_cfg(cfg)
 			#print "\t\tinstr: #{instr.toString}"
 			instr.getDeps.each do |d|
 				#print "#{d.getBlock}.#{d.getInstr}, "
-				dep_instr = cfg.getBBByIndex(d.getBlock.to_i).getInstr[d.getInstr.to_i]
+				dep_instr = d.getInstrHandler
+				if d.getBlock == -1 and d.getInstr == -1
+					#no explicit define, look for cfg var table
+					#if dep_instr != nil
+					#	puts "No explicit def, handler = #{dep_instr.toString}"
+					#else
+					#	puts "No explicit def, handler = nil"
+					#end
+				else
+					dep_instr = cfg.getBBByIndex(d.getBlock.to_i).getInstr[d.getInstr.to_i]
+				end
 				if dep_instr != nil
 					d.setInstrHandler(dep_instr)
 				else

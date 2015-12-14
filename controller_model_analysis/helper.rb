@@ -240,7 +240,7 @@ end
 
 def call_match_name(caller_name, funcname, f_handler)
 	f_handler.getCalls.each do |call|
-		if call.getObjName.include?(caller_name) and funcname == call.getFuncName
+		if (call.getObjName.include?(caller_name) or caller_name.include?(call.getObjName)) and funcname == call.getFuncName
 				return call 
 		end
 	end

@@ -58,6 +58,13 @@ def resolve_upper_class
 	$class_map.each do |keyc, valuec|
 		if $class_map.has_key?(valuec.getUpperClass)
 			valuec.setUpperClassInstance($class_map[valuec.getUpperClass])
+			if $class_map[valuec.getUpperClass] != nil
+				#puts "Set parent class: #{keyc} < #{valuec.getUpperClass}"
+				parent = $class_map[valuec.getUpperClass]
+				valuec.mergeBeforeFilter(parent)
+				valuec.mergeSave(parent)
+				valuec.mergeCreate(parent)
+			end
 		end
 	end
 end
@@ -72,31 +79,6 @@ def search_derived_class(class_handler)
 	return derived_classes
 end
 
-
-def adjust_calls
-	$class_map.each do |keyc, valuec|
-		valuec.getMethods.each do |key, value|
-			#TODO: before filter calling function itself is not handled, loops may be generated
-#			if valuec.getBeforeFilter.length > 0
-#				valuec.getBeforeFilter.each do |filter|
-#					fc = Function_call.new("self", filter)
-#					puts "\t # \t insert call: #{valuec.getName} . #{fc.getFuncName}"
-#					#if fc.getFuncName != key
-#					#	value.getCalls.insert(0, fc)
-#					#end
-#				end	
-#			end
-#			upper_class = $class_map[valuec.getUpperClass] 
-#			if upper_class != nil and upper_class.getBeforeFilter.length > 0
-#				upper_class.getBeforeFilter.each do |filter|
-#					fc = Function_call.new(upper_class.getName, filter)
-#					#puts "\t # \t insert call: #{upper_class.getName} . #{fc.getFuncName}"
-#					value.getCalls.insert(0, fc)
-#				end	
-#			end
-		end
-	end
-end
 
 $non_repeat_list = Array.new
 def trace_function(start_class, start_function, params, returnv, level)
@@ -309,7 +291,6 @@ else
 	read_ruby_files
 	read_dataflow
 end
-adjust_calls
 
 
 if options[:class_name] != nil

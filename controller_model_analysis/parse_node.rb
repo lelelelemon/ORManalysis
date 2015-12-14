@@ -60,6 +60,12 @@ def parse_attrib(astnode)
 				end
 			end
 		when "before_filter"
+			temp_method = $cur_class.getMethod("before_filter")
+			if temp_method == nil
+				temp_method = Method_class.new("before_filter")
+			end
+			$cur_class.addMethod(temp_method)
+
 			#process block
 			block_child = nil
 			astnode.children.each do |child|
@@ -68,15 +74,16 @@ def parse_attrib(astnode)
 				end
 			end
 			if block_child != nil
-				temp_method = Method_class.new("before_filter")
 				$cur_method = temp_method
-				$cur_class.addMethod(temp_method)
 			end
 	
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
 					if child.type.to_s == "symbol_literal"
-						$cur_class.addBeforeFilter(get_left_most_leaf(child).source.to_s)
+						#$cur_class.addBeforeFilter(get_left_most_leaf(child).source.to_s)
+						
+						fcall = Function_call.new("self", get_left_most_leaf(child).source.to_s)
+						temp_method.getCalls.push(fcall)
 						#puts "#{$cur_class.getName} add before filter: #{get_left_most_leaf(child).source.to_s}"
 					end
 				end
@@ -200,7 +207,9 @@ def parse_method_call(astnode, method)
 	#	@node = @node.children[0]
 	#end
 	@node = astnode.children[0]
-
+	#if astnode.children[1]!= nil and astnode.children[1].source.to_s == "find_or_create_key_for_update"
+	#	puts "@ @ @ @ @ @ @"
+	#end
 	#function call: caller.func(params)
 	cond1 = (astnode.children[1] != nil and astnode.children[1].type.to_s == "ident")
 	#function call: func(param)

@@ -77,6 +77,10 @@ class Function_call
 	def getFuncName
 		@func_name
 	end
+	#TODO: this is a trick that we shouldn't use... 
+	#user.where(...)
+	#We search sting match: user -> User
+	#then assume user's type is User
 	def findNonRecordedCaller
 		caller_class = transform_var_name(@obj_name)
 		#if caller_class != nil
@@ -84,33 +88,58 @@ class Function_call
 		#end
 		return caller_class
 	end
+	#For example:
+	#class C
+	#	def foo(p)
+	#  puts "FOO: #{p}"
+	# end
+	#end
+	#class A
+	# def meth
+	#		c.foo(1)
+	# end
+	#end
+	#
+	# @obj_name = c
+	# @func_name = foo
+	#findCaller(A, meth) returns C
 	def findCaller(calling_func_class, calling_func)
 		caller_class = nil
 		if @is_query == false
-			if @obj_name == "self"
+			if @obj_name == "self" 
 				caller_class = calling_func_class
+				if $class_map[caller_class].getMethod(@func_name) == nil
+					caller_class = $class_map[calling_func_class].getUpperClass
+					#TODO: I hate this, but exception handler should anyway appear somewhere...
+					if $class_map[caller_class] == nil
+						caller_class = nil
+					end
+				end
 			end
+			#Luckily, the log records the type of c
 			if $class_map[calling_func_class].getMethodVarMap.has_key?(calling_func)
 				func_var = $class_map[calling_func_class].getMethodVarMap[calling_func].get_var_map
 				if func_var != nil and func_var.has_key?(@obj_name)
 					caller_class = func_var[@obj_name]
 				end
 			end
+			#TODO: Have no idea why I search derived class??
 			if caller_class == nil
-				derived_classes = search_derived_class($class_map[calling_func_class])
-				derived_classes.each do |derived_class|
-					if derived_class.getMethodVarMap.has_key?(calling_func)
-						func_var = derived_class.getMethodVarMap[calling_func].get_var_map
-						if func_var != nil and func_var.has_key?(@obj_name)
-							caller_class = func_var[@obj_name]
-							break
-						end
-					end
-				end
+			#	derived_classes = search_derived_class($class_map[calling_func_class])
+			#	derived_classes.each do |derived_class|
+			#		if derived_class.getMethodVarMap.has_key?(calling_func)
+			#			func_var = derived_class.getMethodVarMap[calling_func].get_var_map
+			#			if func_var != nil and func_var.has_key?(@obj_name)
+			#				caller_class = func_var[@obj_name]
+			#				break
+			#			end
+			#		end
+			#	end
 			end
 			if caller_class == nil
 				caller_class = findNonRecordedCaller
 			end
+			#still obj_name brutal match, deleting special characters
 			if caller_class == nil
 				simplified_obj_name = @obj_name.delete('@').delete('$')
 				if $class_map[simplified_obj_name] != nil
@@ -134,6 +163,7 @@ class Function_call
 				#	caller_class = @obj_name
 				#end
 			end
+			#Rails specific, method can be defined in scope
 			if caller_class == nil
 				if @obj_name.include?("scope") and $class_map[calling_func_class] != nil and $class_map[calling_func_class].getMethods.find(@func_name) != nil
 					caller_class = calling_func_class

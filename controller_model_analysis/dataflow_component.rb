@@ -90,8 +90,19 @@ class Instruction
 		@index
 	end
 	def addDatadep(dep_string, vname, handler = nil)
+		if dep_string == ""
+			#no explicit def is found in the closure
+			dep = Data_dependency.new(-1, -1, vname)
+			if handler != nil
+				#puts "#{vname} is defined by #{handler.toString}"
+				dep.setInstrHandler(handler)
+			end
+			@deps.push(dep)
+			return
+		end
 		ary = dep_string.split('.')
 		dep = Data_dependency.new(ary[0].to_i, ary[1].to_i, vname)
+		#if handler == nil, the dep will be handled in calculate_depinstr_for_cfg in read_dataflow.rb
 		if handler != nil
 			dep.setInstrHandler(handler)
 		end
@@ -115,7 +126,7 @@ class Instruction
 		@resolved = true
 	end
 	def toString
-		s = ""
+		s = " (#{@bb.getIndex}.#{@index}) "
 		@deps.each do |dep|
 			s = s + "#{dep.getVname}[#{dep.getBlock}.#{dep.getInstr}] "
 		end
@@ -137,6 +148,13 @@ class Call_instr < Instruction
 	end
 	def getCallHandler
 		@call_handler
+	end
+	def isQuery
+		if @call_handler != nil
+			return @call_handler.isQuery
+		else
+			return false
+		end
 	end
 	def getCaller
 		@caller
@@ -213,6 +231,13 @@ class Basic_block
 		@label_n = 0
 		@cfg = nil
 		@return_list = Array.new
+		@explicit_return = Array.new
+	end
+	def addExplicitReturn(r)
+		@explicit_return.push(r)
+	end
+	def getExplicitReturn
+		@explicit_return
 	end
 	def addReturn(r)
 		@return_list.push(r)
@@ -317,7 +342,16 @@ end
 class CFG
 	def initialize
 		@bb = Array.new
+		#return_list is the return point in control flow, including both "RETURN" instr and exit point in CFG
 		@return_list = Array.new
+		#explicit_return is the return point in data flow, only include "RETURN" instr
+		@explicit_return = Array.new
+	end
+	def addExplicitReturn(r)
+		@explicit_return.push(r)
+	end
+	def getExplicitReturn
+		@explicit_return
 	end
 	def addReturn(r)
 		@return_list.push(r)
@@ -352,7 +386,23 @@ class Closure < CFG
 		r = Random.new
 		@rnd = r.rand(1...1048576)
 		@view_code = false
+		@var_def_table = Array.new 
 		super
+	end
+	def addToVarDefTable(vname, dep, handler)	
+		ary = dep.split('.')
+		dep = Data_dependency.new(ary[0].to_i, ary[1].to_i, vname)
+		dep.setInstrHandler(handler)
+		@var_def_table.push(dep)
+	end
+	def getVarDefs(vname)
+		r = Array.new
+		@var_def_table.each do |v|
+			if v.getVname == vname
+				r.push(v)
+			end
+		end
+		return r
 	end
 	def getRand
 		@rnd

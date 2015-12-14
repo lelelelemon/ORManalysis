@@ -44,17 +44,21 @@ class INode
 		return false
 	end
 	def setLabel
-		if isQuery?
-			if @instr.getResolvedCaller.length > 0
-				@label = "#{@instr.getResolvedCaller}.#{@instr.getFuncname}"
-			else
+		#if isQuery?
+			#if @instr.getResolvedCaller.length > 0
+			#	@label = "#{@instr.getResolvedCaller}.#{@instr.getFuncname}"
+			#else
+			#	@label = "#{@instr.getCaller}.#{@instr.getFuncname}"
+			#end
+		#elsif @instr.instance_of?Call_instr
+		#	@label = "#{@instr.getCaller}.#{@instr.getFuncname}"
+		#end
+
+		if @instr.instance_of?Call_instr 
+			if@instr.getCallHandler != nil
 				@label = "#{@instr.getCallHandler.getObjName}.#{@instr.getFuncname}"
-			end
-		elsif @instr.instance_of?Call_instr
-			if @instr.getCallHandler != nil
-				@label = "#{@instr.getCallHandler.getObjName}.#{@instr.getFuncname}"
 			else
-				@label = "#{@instr.getFuncname}"
+				@label = "#{@instr.getCaller}.#{@instr.getFuncname}"
 			end
 		end
 	end
@@ -211,9 +215,12 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 				cur_cfg = trace_query_flow(callerv_name, call.getFuncName, pass_params, pass_returnv, level+1)
 				if cur_cfg != nil
 					temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
-					cur_cfg.getReturns.each do |rt|
+					cur_cfg.getExplicitReturn.each do |rt|
 						dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
 						edge = Edge.new(rt, temp_node, "returnv")
+						puts "Add return instr: #{callerv_name}.#{call.getFuncName} #{rt.getIndex} -> #{temp_node.getIndex}"
+						
+						rt.getInstr.getINode.addDataflowEdge(edge)
 						$dataflow_edges[dataflow_edge_name] = edge
 					end
 				end
@@ -280,11 +287,12 @@ def handle_single_bb2(start_class, start_function, class_handler, function_handl
 		bb.addInstr(empty_instr)	
 	end
 	bb.getInstr.each do |instr|
-		r_list = handle_single_instr2(start_class, start_function, class_handler, function_handler, instr, level, r_list)	
+		r_list = handle_single_instr2(start_class, start_function, class_handler, function_handler, instr, level, r_list)
 	end
 	bb.getInstr.each do |instr|
 		if instr.instance_of?Return_instr
 			r_list.push(instr.getINode)
+			bb.addExplicitReturn(instr.getINode)
 		end
 	end
 
@@ -311,7 +319,7 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 			if bb.getInstr[-1].instance_of?Branch_instr
 				o_bb.getInstr.each do |ins|
 					edge_name = "#{bb.getInstr[-1].getINode.getIndex}*#{ins.getINode.getIndex}"
-					edge = Edge.new(bb.getInstr[-1].getINode, ins.getInode, "_branch_", true)	
+					edge = Edge.new(bb.getInstr[-1].getINode, ins.getINode, "_branch_", true)	
 					if $dataflow_edges[edge_name] == nil
 						$dataflow_edges[edge_name] = Array.new
 					end
@@ -324,12 +332,17 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 				r.addChild(o_bb.getInstr[0].getINode)
 				#puts "ADD BLOCK CONNECT: #{r.getIndex} -> #{o_bb.getInstr[0].getINode.getIndex}"	
 			end
-		end
-	end
 
-	#TODO: now assume the last BB is the only outage of CFG
-	cfg.getBB[-1].getReturns.each do |r|
-		cfg.addReturn(r)
+			bb.getExplicitReturn.each do |r|
+				cfg.addExplicitReturn(r)
+			end
+			
+			#control flow outage point
+			#TODO: return instr is not handled, sometimes the outage point may be return instrs
+			if bb.getOutgoings.length == 0
+				cfg.addReturn(r)
+			end
+		end
 	end
 
 end

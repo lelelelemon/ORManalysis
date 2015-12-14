@@ -79,11 +79,21 @@ class Class_class
 	def getSave
 		@save_actions
 	end
+	def mergeSave(c)
+		c.getSave.each do |s|
+			@save_actions.push(s)
+		end
+	end
 	def addCreate(func)
 		@create_actions.push(func)
 	end
 	def getCreate
 		@create_actions
+	end
+	def mergeCreate(c)
+		c.getCreate.each do |cr|
+			@create_actions.push(cr)
+		end
 	end
 	def addScope(s)
 		@scope_list.push(s)
@@ -114,6 +124,17 @@ class Class_class
 	end
 	def getBeforeFilter
 		@before_filter
+	end
+	def mergeBeforeFilter(c)
+		if c.getMethod("before_filter") != nil
+			if @methods["before_filter"] == nil
+				@methods["before_filter"] = c.getMethod("before_filter")
+			else
+				c.getMethod("before_filter").getCalls.each do |call|
+					@methods["before_filter"].getCalls.insert(0, call)
+				end
+			end
+		end
 	end
 	def print_var_types
 		puts "######## BEGIN ########"
