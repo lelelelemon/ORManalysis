@@ -99,6 +99,7 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 
 		elsif callerv != nil
 			temp_name = "#{callerv_name}.#{call.getFuncName}"
+
 			$label +=  "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\"> #{temp_name}</td></tr>\n"
 			$l_index += 1
 
@@ -171,6 +172,8 @@ def handle_single_instr(start_class, start_function, class_handler, bb, instr, l
 		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
 		#if call == nil
 		#	puts "Name doesn't match: #{instr.toString}" 
+		#else
+		#	puts "match call: #{instr.toString}"
 		#end
 		if call != nil
 
@@ -237,7 +240,7 @@ end
 def trace_flow(start_class, start_function, params, returnv, level)
 	class_handler = $class_map[start_class]
 	if class_handler == nil
-		puts "CLass handler not found: #{start_class}"
+		puts "Class handler not found: #{start_class}"
 	end
 	function_handler = class_handler.getMethods[start_function]
 
@@ -289,6 +292,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 	#Function is not specifically defined, like .new .valid?, etc
 	else
 
+		#puts "#{start_class}.#{start_function} is not matched"
 		$label = ""
 		$l_index = 0
 

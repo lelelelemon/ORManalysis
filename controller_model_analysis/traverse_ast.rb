@@ -35,6 +35,10 @@ def traverse_ast(astnode, level)
 				fcall = Function_call.new($cur_class.getUpperClass, $cur_method.getName)
 				$cur_method.getCalls.push(fcall)
 			end 
+		else
+			astnode.children.each do |child|
+				traverse_ast(child, level+1)
+			end
 		end
 	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
 		temp_funccall = parse_method_call(astnode, $cur_method)
@@ -43,11 +47,10 @@ def traverse_ast(astnode, level)
 		end
 		
 		if temp_funccall != nil and temp_funccall.getFuncName == "transaction"
-			#puts "#{$cur_class.getName}.#{$cur_method.getName} calls transaction!"
 			astnode.children.each do |child|
 				if child.type.to_s == "do_block"
 					fcall1 = Function_call.new("self", "transaction_begin")
-					$cur_method.getCalls.push(fcall1)	
+					$cur_method.getCalls.push(fcall1)
 					traverse_ast(child, level+1)
 					fcall2 = Function_call.new("self", "transaction_end")
 					$cur_method.getCalls.push(fcall2)
