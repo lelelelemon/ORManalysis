@@ -1,0 +1,239 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Tag) 
+		 7: 
+		 8: %v_3->order %v_4[2.7,] %v_3[2.6,] 
+		 9: %self->params %self[2.0,] 
+		 10: %v_6[2.9,] 
+		 11: %v_5->page %v_5[2.8,] %v_7[2.10,] 
+		 12: %self->this_blog %self[2.0,] 
+		 13: %v_9->admin_display_elements %v_9[2.12,] 
+		 14: %v_8->per %v_8[2.11,] %v_10[2.13,] 
+		 15: %self[2.0,] %v_11[2.14,] @tags[] 
+		 16: 
+		 17: (Tag) 
+		 18: %v_12->new %v_12[2.17,] 
+		 19: %v_13[2.18,] %self[2.0,] @tag[] 
+		 20: RETURN %v_13[2.18,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = edit
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Tag) 
+		 7: 
+		 8: %v_3->order %v_4[2.7,] %v_3[2.6,] 
+		 9: %self->params %self[2.0,] 
+		 10: %v_6[2.9,] 
+		 11: %v_5->page %v_5[2.8,] %v_7[2.10,] 
+		 12: %self->this_blog %self[2.0,] 
+		 13: %v_9->admin_display_elements %v_9[2.12,] 
+		 14: %v_8->per %v_8[2.11,] %v_10[2.13,] 
+		 15: %self[2.0,] %v_11[2.14,] @tags[] 
+		 16: RETURN %v_11[2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Tag) 
+		 7: %self->tag_params %self[2.0,] 
+		 8: %v_3->new %v_4[2.7,] %v_3[2.6,] 
+		 9: %self[2.0,] %v_5[2.8,] @tag[] 
+		 10: 
+		 11: @tag[2.9,] 
+		 12: %v_6->save %v_6[2.11,] 
+		 13: BRANCH %v_7[2.12,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->admin_tags_url %self[2.0,] 
+		 2: 
+		 3: %v_9[3.2,] 
+		 4: %self->redirect_to %self[2.0,] %v_8[3.1,] %v_10[3.3,] 
+		 5: RETURN %v_11[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->render %self[2.0,] 
+		 2: RETURN %v_12[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @tag[] 
+		 7: %v_3->name %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: 
+		 10: @tag[2.6,] 
+		 11: %self->tag_params %self[2.0,] 
+		 12: %v_5->update %v_5[2.10,] %v_6[2.11,] 
+		 13: BRANCH %v_7[2.12,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Redirect) 
+		 2: 
+		 3: old_name[2.8,] %v_9[3.2,] 
+		 4: %self[2.0,] @tag[2.6,2.10,] 
+		 5: %v_11->permalink_url %v_11[3.4,] 
+		 6: %v_10[3.3,] %v_12[3.5,] 
+		 7: %v_8->create %v_13[3.6,] %v_8[3.1,] 
+		 8: 
+		 9: %self->admin_tags_url %self[2.0,] 
+		 10: (I18n) 
+		 11: 
+		 12: %v_16->t %v_16[3.10,] %v_17[3.11,] 
+		 13: %v_18[3.12,] 
+		 14: %self->redirect_to %self[2.0,] %v_15[3.9,] %v_19[3.13,] 
+		 15: RETURN %v_20[3.14,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->render %self[2.0,] 
+		 2: RETURN %v_21[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Tag) 
+		 7: %self->destroy_a %self[2.0,] %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_tag
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Tag) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @tag[] 
+		 11: RETURN %v_6[2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = tag_params
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3->require %v_3[2.6,] 
+		 8: %v_4->permit %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

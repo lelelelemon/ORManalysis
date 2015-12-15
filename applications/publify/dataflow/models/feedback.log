@@ -106,13 +106,13 @@ BB 4
 		 2: BRANCH %v_3[4.1,] 
 BB 5
 	outgoing: 8 
-	datadep: 3 2 
+	datadep: 3 2 2 2 
 	instructions:
 		 0: 
 		 1: (Article) 
 		 2: %v_4->find article_id[3.0,2.6,] %v_4[5.1,] 
 		 3: 
-		 4: %v_6[5.3,] 
+		 4: %v_6[5.3,] type[2.5,2.5,] 
 		 5: %v_5->send %v_5[5.2,] %v_7[5.4,] 
 		 6: RETURN %v_8[5.5,] 
 BB 6
@@ -192,7 +192,7 @@ BB 6
 		 4: %v_5->downcase %v_5[6.3,] 
 		 5: 
 		 6: %self->id %self[2.0,2.0,2.0,2.0,] 
-		 7: %v_7[6.5,] 
+		 7: %v_8[6.6,] %v_6[6.4,] %v_7[6.5,] 
 		 8: %v_3->permalink_url %v_3[6.1,] %v_9[6.7,] only_path[5.0,4.0,] 
 		 9: RETURN %v_10[6.8,] 
 BB 7
@@ -271,13 +271,13 @@ BB 6
 		 1: RETURN %v_9[6.0,] 
 BB 7
 	outgoing: 9 
-	datadep: 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: %self->url %self[2.0,] 
 		 2: %v_11->to_s %v_11[7.1,] 
 		 3: %v_10[7.0,] %v_12[7.2,] 
-		 4: %v_13[7.3,] 
+		 4: %v_13[7.3,] %self[2.0,] 
 		 5: RETURN %v_13[7.3,] 
 BB 9
 	outgoing: 
@@ -371,7 +371,7 @@ BB 2
 		 10: %self->email %self[2.0,] 
 		 11: %self->url %self[2.0,] 
 		 12: %self->body %self[2.0,] 
-		 13: 
+		 13: %v_5[2.8,] %v_8[2.11,] %v_9[2.12,] %v_6[2.9,] %v_7[2.10,] 
 		 14: RETURN %v_10[2.13,] 
 BB 3
 	outgoing: 
@@ -573,10 +573,10 @@ BB 9
 		 0: 
 BB 10
 	outgoing: 11 12 
-	datadep: 7 7 9 8 5 5 
+	datadep: 2 2 2 2 7 7 9 8 5 5 
 	instructions:
-		 0: %v_10[7.7,7.7,] %v_12[9.0,8.0,] 
-CLOSURE BEGIN
+		 0: %self[2.0,2.0,2.0,2.0,] %v_10[7.7,7.7,] %v_12[9.0,8.0,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -591,12 +591,12 @@ BB 2
 		 3: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: %self->spam_fields %self[2.0,] 
-		 2: %cl_1_3->any? %cl_1_3[3.1,] 
-CLOSURE BEGIN
+		 2: %cl_1_3->any? %cl_1_3[3.1,] %self[2.0,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -667,9 +667,9 @@ BB 13
 		 0: %v_15[12.2,] 
 BB 14
 	outgoing: 15 16 18 
-	datadep: 12 12 
+	datadep: 12 12 13 12 
 	instructions:
-		 0: %v_14[12.1,12.1,] 
+		 0: %v_14[12.1,12.1,] %v_16[13.0,12.3,] 
 		 1: BRANCH %v_17[14.0,] 
 BB 15
 	outgoing: 18 22 
@@ -777,10 +777,10 @@ BB 11
 		 0: 
 BB 12
 	outgoing: 13 14 
-	datadep: 8 8 11 10 6 6 
+	datadep: 2 2 2 2 8 8 11 10 6 6 
 	instructions:
-		 0: %v_10[8.2,8.2,] %v_12[11.0,10.0,] 
-CLOSURE BEGIN
+		 0: %self[2.0,2.0,2.0,2.0,] %v_10[8.2,8.2,] %v_12[11.0,10.0,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -840,9 +840,9 @@ BB 15
 		 0: %v_15[14.2,] 
 BB 16
 	outgoing: 17 18 20 
-	datadep: 14 14 
+	datadep: 14 14 15 14 
 	instructions:
-		 0: %v_14[14.1,14.1,] 
+		 0: %v_14[14.1,14.1,] %v_16[15.0,14.3,] 
 		 1: BRANCH %v_17[16.0,] 
 BB 17
 	outgoing: 20 22 
@@ -1092,10 +1092,10 @@ BB 10
 		 0: 
 BB 11
 	outgoing: 12 13 
-	datadep: 7 7 10 9 5 5 
+	datadep: 2 2 7 7 10 9 5 5 
 	instructions:
-		 0: %v_9[7.2,7.2,] %v_11[10.0,9.0,] 
-CLOSURE BEGIN
+		 0: %self[2.0,2.0,] %v_9[7.2,7.2,] %v_11[10.0,9.0,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1157,9 +1157,9 @@ BB 14
 		 0: %v_14[13.2,] 
 BB 15
 	outgoing: 16 17 19 
-	datadep: 13 13 
+	datadep: 13 13 14 13 
 	instructions:
-		 0: %v_13[13.1,13.1,] 
+		 0: %v_13[13.1,13.1,] %v_15[14.0,13.3,] 
 		 1: BRANCH %v_16[15.0,] 
 BB 16
 	outgoing: 19 23 

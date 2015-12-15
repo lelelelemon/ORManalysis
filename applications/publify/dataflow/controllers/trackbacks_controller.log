@@ -13,8 +13,8 @@ BB 2
 		 3: 
 		 4: 
 		 5: 
-		 6: %self[2.0,] 
-CLOSURE BEGIN
+		 6: %self[2.0,2.0,] 
+CLOSURE BEGIN: @error_message[] 
 BB 1
 	outgoing: 30 2 
 	datadep: 
@@ -74,7 +74,7 @@ BB 9
 		 2: %self->this_blog %self[2.0,] 
 		 3: %self->trackback_params %self[2.0,] 
 		 4: %cl_1_15->ping_article! %cl_1_15[9.2,] %cl_1_16[9.3,] 
-		 5: %self[2.0,] %cl_1_17[9.4,] 
+		 5: %self[2.0,] %cl_1_17[9.4,] @trackback[] 
 		 6: %cl_1_17[9.4,] 
 		 7: %cl_1_12[7.1,] 
 BB 10
@@ -109,9 +109,9 @@ BB 14
 		 0: %cl_1_21[13.0,] 
 BB 15
 	outgoing: 16 22 24 
-	datadep: 11 11 11 11 
+	datadep: 11 11 11 11 14 13 12 11 12 11 
 	instructions:
-		 0: %cl_1_18[11.0,11.0,11.0,11.0,] 
+		 0: %cl_1_18[11.0,11.0,11.0,11.0,] %cl_1_22[14.0,13.1,] %cl_1_20[12.0,11.2,12.0,11.2,] 
 		 1: BRANCH %cl_1_23[15.0,] 
 BB 16
 	outgoing: 17 18 24 
@@ -127,9 +127,9 @@ BB 17
 		 0: %cl_1_24[16.0,] 
 BB 18
 	outgoing: 19 20 24 
-	datadep: 11 11 11 11 11 11 
+	datadep: 17 16 11 11 11 11 11 11 
 	instructions:
-		 0: %cl_1_18[11.0,11.0,11.0,11.0,11.0,11.0,] 
+		 0: %cl_1_25[17.0,16.1,] %cl_1_18[11.0,11.0,11.0,11.0,11.0,11.0,] 
 		 1: BRANCH %cl_1_26[18.0,] 
 BB 19
 	outgoing: 24 30 
@@ -159,7 +159,7 @@ BB 22
 		 2: %self->params %self[2.0,2.0,2.0,] 
 		 3: %cl_1_30[22.2,] 
 		 4: 
-		 5: %cl_1_29[22.1,] %cl_1_32[22.4,] 
+		 5: %cl_1_29[22.1,] %cl_1_32[22.4,] %cl_1_31[22.3,] 
 		 6: %self->throw %self[2.0,2.0,2.0,] %cl_1_33[22.5,] 
 		 7: %cl_1_34[22.6,] 
 		 8: %cl_1_12[7.1,7.1,7.1,] 
@@ -202,10 +202,10 @@ BB 30
 	datadep: 
 	instructions:
 CLOSURE END
-		 7: %self[2.0,] %v_3[2.6,] 
+		 7: %self[2.0,] %v_3[2.6,] @error_message[] 
 		 8: 
-		 9: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN
+		 9: %self->respond_to %self[2.0,2.0,] 
+CLOSURE BEGIN: @error_message[2.7,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -221,11 +221,11 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: format->xml format[2.2,] 
-CLOSURE BEGIN
+		 1: format->xml %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -246,7 +246,7 @@ BB 3
 		 1: 
 		 2: 
 		 3: 
-		 4: 
+		 4: %cl_3_4[3.2,] %cl_3_5[3.3,] 
 		 5: %self->render %self[2.0,] %cl_3_3[3.1,] %cl_3_6[3.4,] 
 		 6: RETURN %cl_3_7[3.5,] 
 BB 4
@@ -262,8 +262,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 2: 
-		 3: format->html format[2.2,] 
-CLOSURE BEGIN
+		 3: format->html %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -334,7 +334,7 @@ BB 2
 		 7: %v_3->permit %v_3[2.6,] 
 		 8: %self->request %self[2.0,] 
 		 9: %v_5->remote_ip %v_5[2.8,] 
-		 10: 
+		 10: %v_6[2.9,] 
 		 11: %v_4->merge %v_4[2.7,] %v_7[2.10,] 
 		 12: RETURN %v_8[2.11,] 
 BB 3

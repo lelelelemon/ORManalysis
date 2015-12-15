@@ -14,11 +14,11 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: %self[2.0,] %v_3[2.6,] 
+		 7: %self[2.0,] %v_3[2.6,] @title[] 
 		 8: 
-		 9: %self[2.0,] 
+		 9: %self[2.0,] @user[] 
 		 10: %v_4->dup %v_4[2.9,] 
-		 11: %self[2.0,] %v_5[2.10,] 
+		 11: %self[2.0,] %v_5[2.10,] @edit_user[] 
 		 12: RETURN %v_5[2.10,] 
 BB 3
 	outgoing: 
@@ -40,7 +40,7 @@ BB 2
 		 3: 
 		 4: 
 		 5: 
-		 6: %self[2.0,] 
+		 6: %self[2.0,] @user[] 
 		 7: %self->params %self[2.0,] 
 		 8: %v_4[2.7,] 
 		 9: %v_5[2.8,] 
@@ -52,7 +52,7 @@ BB 3
 	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @user[2.6 ] 
+		 1: %self[2.0,] @user[2.6,] 
 		 2: %v_9->delete! %v_9[3.1,] 
 		 3: 
 		 4: %self->reset_session %self[2.0,] 
@@ -250,16 +250,16 @@ BB 11
 	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @user[] 
 		 2: %self->params %self[2.0,2.0,] 
 		 3: %v_42[11.2,] 
 		 4: %v_43->to_s %v_43[11.3,] 
 		 5: %v_41[11.1,] %v_44[11.4,] 
 		 6: 
-		 7: @user[11.1 ] 
+		 7: @user[11.1,] 
 		 8: %v_45->save! %v_45[11.7,] 
 		 9: 
-		 10: @user[11.1 11.7 ] 
+		 10: @user[11.1,11.7,] 
 		 11: %v_47->pushover_user_key %v_47[11.10,] 
 		 12: %v_48->present? %v_48[11.11,] 
 		 13: BRANCH %v_49[11.12,] 
@@ -311,11 +311,11 @@ BB 2
 		 3: 
 		 4: 
 		 5: 
-		 6: %self[2.0,] 
+		 6: %self[2.0,] @user[] 
 		 7: %v_3->clone %v_3[2.6,] 
-		 8: %self[2.0,] %v_4[2.7,] 
+		 8: %self[2.0,] %v_4[2.7,] @edit_user[] 
 		 9: 
-		 10: @edit_user[2.8 ] 
+		 10: @edit_user[2.8,] 
 		 11: %self->user_params %self[2.0,] 
 		 12: %v_5->update_attributes %v_5[2.10,] %v_6[2.11,] 
 		 13: BRANCH %v_7[2.12,] 
@@ -329,8 +329,8 @@ BB 3
 		 3: 
 		 4: %v_9[3.2,] %v_10[3.3,] 
 		 5: 
-		 6: %self[2.0,] @edit_user[2.8 2.10 ] 
-		 7: %self[2.0,] %v_11[3.6,] @user[2.6 ] 
+		 6: %self[2.0,] @edit_user[2.8,2.10,] 
+		 7: %self[2.0,] %v_11[3.6,] @user[2.6,] 
 		 8: 
 BB 4
 	outgoing: 5 

@@ -27,7 +27,7 @@ def read_dataflow(application_dir=nil)
 		$app_dir = application_dir
 	end
 
-	$dataflow_files = "#{$app_dir}/dataflow/merged_controllers/*.log"
+	$dataflow_files = "#{$app_dir}/dataflow/#{$merged_controllers}/*.log"
 
 	Dir.glob($dataflow_files) do |item|
 		next if item == '.' or item == '..'

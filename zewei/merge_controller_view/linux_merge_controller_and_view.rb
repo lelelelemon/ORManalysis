@@ -1,6 +1,6 @@
 require 'yard'
 #the base_path and the controller name should be passed in as parameters
-$base_path = "../../applications/communityengine"
+$base_path = "../../applications/publify"
 $rb_view_name = "view_rb"
 
 def get_controller_name_from_path(filename)
@@ -45,11 +45,12 @@ def traverse_routes_mapping(astnode, base_path, controller_name)
 					view_name = view_name[1]
 				end
 
-				view_name = view_name.delete("\"").delete("\'")
+				view_name = view_name.delete("\"").delete("\'").delete(":")
 				puts "view_name = #{view_name}"
 				#TODO: previously it was ".html.erb.rb", why .rb?
 				# determine the view file location and name
 				path = base_path + "/#{$rb_view_name}/" + controller_name + "/_" + view_name + ".html.erb"
+				puts "----#{path}"
 				if !File.exist?(path)
 					path = base_path + "/#{$rb_view_name}/" + controller_name + "/" + view_name + ".html.erb"
 				end

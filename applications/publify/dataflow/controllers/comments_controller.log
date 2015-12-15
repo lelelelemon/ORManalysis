@@ -13,10 +13,10 @@ BB 2
 		 3: 
 		 4: 
 		 5: 
-		 6: %self[2.0,] 
+		 6: %self[2.0,] @article[] 
 		 7: %self->new_comment_defaults %self[2.0,] 
-		 8: %v_4[2.7,] %v_3[2.6,] 
-CLOSURE BEGIN
+		 8: %self[2.0,] %v_4[2.7,] %v_3[2.6,] 
+CLOSURE BEGIN: @article[2.6,] @comment[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -52,7 +52,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 9: %self[2.0,] %v_5[2.8,] 
+		 9: %self[2.0,] %v_5[2.8,] @comment[] 
 		 10: 
 		 11: %self->current_user %self[2.0,] 
 		 12: %v_6->nil? %v_6[2.11,] 
@@ -91,10 +91,10 @@ BB 7
 	outgoing: 9 
 	datadep: 2 2 2 2 
 	instructions:
-		 0: %self[2.0,2.0,] 
+		 0: %self[2.0,2.0,] @comment[2.9,2.9,] 
 		 1: %self->current_user %self[2.0,2.0,] 
 		 2: %v_18->id %v_18[7.1,] 
-		 3: %v_19[7.2,] 
+		 3: %v_17[7.0,] %v_19[7.2,] 
 		 4: 
 BB 8
 	outgoing: 9 
@@ -108,23 +108,23 @@ BB 9
 		 0: %v_19[8.0,7.2,] 
 BB 10
 	outgoing: 11 12 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] 
+		 1: %self[2.0,2.0,] @comment[7.0,2.9,2.9,] 
 		 2: %self->set_cookies_for %self[2.0,2.0,] %v_20[10.1,] 
 		 3: 
 		 4: 
 		 5: %v_22[10.4,] 
 		 6: 
-		 7: %self[2.0,2.0,] 
+		 7: @comment[10.1,] 
 		 8: %self->recaptcha_ok_for? %self[2.0,2.0,] %v_23[10.7,] 
 		 9: BRANCH %v_24[10.8,] 
 BB 11
 	outgoing: 12 
 	datadep: 2 2 
 	instructions:
-		 0: %self[2.0,2.0,] 
+		 0: %self[2.0,2.0,] @comment[10.1,10.7,] 
 		 1: %v_25->save %v_25[11.0,] 
 		 2: %v_26[11.1,] 
 BB 12
@@ -147,11 +147,11 @@ BB 14
 		 0: 
 BB 15
 	outgoing: 16 
-	datadep: 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->respond_to %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
-CLOSURE BEGIN
+		 1: %self->respond_to %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
+CLOSURE BEGIN: @article[2.6,] @comment[11.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -167,11 +167,11 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: format->js format[2.2,] 
-CLOSURE BEGIN
+		 1: format->js %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -204,8 +204,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 2: 
-		 3: format->html format[2.2,] 
-CLOSURE BEGIN
+		 3: format->html %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -224,7 +224,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (URI) 
-		 2: %self[2.0,] 
+		 2: %self[2.0,] @article[] 
 		 3: %cl_4_4->permalink_url %cl_4_4[3.2,] 
 		 4: %cl_4_3->parse %cl_4_3[3.1,] %cl_4_5[3.3,] 
 		 5: %cl_4_6->path %cl_4_6[3.4,] 
@@ -276,7 +276,7 @@ BB 2
 		 3: 
 		 4: 
 		 5: 
-		 6: %self[2.0,] 
+		 6: %self[2.0,] @article[] 
 		 7: %v_3->comments_closed? %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -284,7 +284,7 @@ BB 3
 	datadep: 2 
 	instructions:
 		 0: 
-		 1: 
+		 1: %v_5[3.0,] 
 		 2: %self->render %self[2.0,] %v_6[3.1,] 
 		 3: RETURN %v_7[3.2,] 
 BB 4
@@ -315,7 +315,7 @@ BB 7
 		 2: (Comment) 
 		 3: %self->comment_params %self[2.0,] 
 		 4: %v_15->new %v_15[7.2,] %v_16[7.3,] 
-		 5: %self[2.0,] %v_17[7.4,] 
+		 5: %self[2.0,] %v_17[7.4,] @comment[] 
 		 6: RETURN %v_17[7.4,] 
 BB 9
 	outgoing: 
@@ -349,9 +349,9 @@ BB 2
 		 15: BRANCH %v_7[2.11,] 
 BB 3
 	outgoing: 4 
-	datadep: 2 
+	datadep: 2 2 
 	instructions:
-		 0: 
+		 0: comment[2.5,] 
 		 1: %self->verify_recaptcha %self[2.0,] %v_9[3.0,] 
 		 2: %v_10[3.1,] 
 BB 4
@@ -393,7 +393,7 @@ BB 2
 		 6: %self->request %self[2.0,] 
 		 7: %v_3->remote_ip %v_3[2.6,] 
 		 8: 
-		 9: %self[2.0,] 
+		 9: %self[2.0,] @current_user[] 
 		 10: %self->request %self[2.0,] 
 		 11: %v_7->env %v_7[2.10,] 
 		 12: 
@@ -402,9 +402,9 @@ BB 2
 		 15: %v_11->env %v_11[2.14,] 
 		 16: 
 		 17: %v_13[2.16,] %v_12[2.15,] 
-		 18: %self[2.0,] 
+		 18: %self[2.0,] @article[] 
 		 19: %v_15->permalink_url %v_15[2.18,] 
-		 20: 
+		 20: %v_14[2.17,] %v_16[2.19,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_10[2.13,] 
 		 21: %v_17->stringify_keys %v_17[2.20,] 
 		 22: RETURN %v_18[2.21,] 
 BB 3
@@ -489,7 +489,7 @@ BB 2
 		 7: %self->params %self[2.0,] 
 		 8: %v_4[2.7,] 
 		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
-		 10: %self[2.0,] %v_6[2.9,] 
+		 10: %self[2.0,] %v_6[2.9,] @article[] 
 		 11: RETURN %v_6[2.9,] 
 BB 3
 	outgoing: 
@@ -518,7 +518,7 @@ BB 3
 	outgoing: 4 
 	datadep: 2 
 	instructions:
-		 0: %self[2.0,] 
+		 0: %self[2.0,] @comment_params[] 
 		 1: %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -532,7 +532,7 @@ BB 5
 		 0: %self->params %self[2.0,2.0,] 
 		 1: %v_6->require %v_6[5.0,] 
 		 2: %v_7->permit %v_7[5.1,] 
-		 3: %self[2.0,2.0,] %v_8[5.2,] 
+		 3: %self[2.0,2.0,] %v_8[5.2,] @comment_params[3.0,] 
 		 4: RETURN %v_8[5.2,] 
 BB 6
 	outgoing: 7 

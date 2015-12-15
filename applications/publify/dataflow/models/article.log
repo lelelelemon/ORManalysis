@@ -15,8 +15,8 @@ BB 2
 		 5: 
 		 6: 
 		 7: 
-		 8: 
-		 9: 
+		 8: %v_4[2.7,] %v_3[2.6,] 
+		 9: %v_5[2.8,] 
 		 10: %self->where %self[2.0,] %v_6[2.9,] 
 		 11: RETURN %v_7[2.10,] 
 BB 3
@@ -41,8 +41,8 @@ BB 2
 		 5: 
 		 6: 
 		 7: 
-		 8: 
-		 9: 
+		 8: %v_4[2.7,] %v_3[2.6,] 
+		 9: %v_5[2.8,] 
 		 10: %self->where %self[2.0,] %v_6[2.9,] 
 		 11: RETURN %v_7[2.10,] 
 BB 3
@@ -88,13 +88,13 @@ BB 5
 		 0: RETURN 
 BB 6
 	outgoing: 8 
-	datadep: 2 2 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: %self->title %self[2.0,2.0,] 
 		 3: %v_9->to_permalink %v_9[6.2,] 
-		 4: %v_10[6.3,] 
+		 4: %self[2.0,2.0,] %v_10[6.3,] 
 		 5: RETURN %v_10[6.3,] 
 BB 8
 	outgoing: 
@@ -118,7 +118,7 @@ BB 2
 		 5: 
 		 6: (Article) 
 		 7: %self->id %self[2.0,] 
-		 8: 
+		 8: %v_4[2.7,] 
 		 9: %v_3->exists? %v_5[2.8,] %v_3[2.6,] 
 		 10: RETURN %v_6[2.9,] 
 BB 3
@@ -257,7 +257,7 @@ BB 4
 		 6: 
 		 7: 
 		 8: 
-		 9: 
+		 9: %v_8[4.5,] %v_9[4.6,] %v_7[4.4,] %v_10[4.7,] %v_11[4.8,] 
 		 10: params[3.1,2.5,] 
 		 11: %v_12->include? %v_13[4.10,] %v_12[4.9,] 
 		 12: BRANCH %v_14[4.11,] 
@@ -332,7 +332,7 @@ BB 7
 	outgoing: 8 
 	datadep: 2 2 2 2 
 	instructions:
-		 0: %self[2.0,2.0,2.0,2.0,] 
+		 0: %self[2.0,2.0,2.0,2.0,] @cached_permalink_url[] 
 		 1: %v_5[7.0,] 
 BB 8
 	outgoing: 9 10 
@@ -344,24 +344,24 @@ BB 9
 	datadep: 2 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_6[9.0,] 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_6[9.0,] @cached_permalink_url[7.0,] 
 		 2: %v_6[9.0,] 
 BB 10
 	outgoing: 11 12 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 2 2 2 3 2 3 2 3 2 3 2 5 4 5 4 5 4 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
-		 2: 
+		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] @cached_permalink_url[9.1,7.0,] 
+		 2: anchor[3.0,2.5,3.0,2.5,3.0,2.5,3.0,2.5,] only_path[5.0,4.0,5.0,4.0,5.0,4.0,] 
 		 3: %v_9[10.2,] %v_7[10.1,] 
 		 4: BRANCH %v_8[10.3,] 
 BB 11
 	outgoing: 13 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 10 10 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 3 2 3 2 3 2 5 4 5 4 5 4 10 10 
 	instructions:
 		 0: %self->blog %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
 		 1: %self->permalink_url_options %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] 
-		 2: 
+		 2: anchor[3.0,2.5,3.0,2.5,3.0,2.5,3.0,2.5,] only_path[5.0,4.0,5.0,4.0,5.0,4.0,] 
 		 3: %v_10->url_for %v_10[11.0,] %v_11[11.1,] %v_12[11.2,] 
 		 4: %v_13[11.3,] %v_9[10.2,] %v_7[10.1,] 
 		 5: RETURN %v_13[11.3,] 
@@ -403,12 +403,12 @@ BB 3
 		 2: %v_5[3.0,] 
 BB 4
 	outgoing: 5 
-	datadep: 3 2 
+	datadep: 3 2 2 2 
 	instructions:
 		 0: 
 		 1: files->values files[3.1,2.5,] 
-		 2: %v_6->each %v_6[4.1,] 
-CLOSURE BEGIN
+		 2: %v_6->each %self[2.0,2.0,] %v_6[4.1,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -544,7 +544,7 @@ BB 2
 		 6: %self->blog %self[2.0,] 
 		 7: 
 		 8: %self->id %self[2.0,] 
-		 9: %v_4[2.7,] 
+		 9: %v_4[2.7,] %v_5[2.8,] 
 		 10: 
 		 11: %v_3->url_for %v_3[2.6,] %v_6[2.9,] %v_7[2.10,] 
 		 12: RETURN %v_8[2.11,] 
@@ -571,7 +571,7 @@ BB 2
 		 6: %self->blog %self[2.0,] 
 		 7: 
 		 8: %self->id %self[2.0,] 
-		 9: %v_4[2.7,] 
+		 9: %v_4[2.7,] %v_5[2.8,] 
 		 10: 
 		 11: %v_3->url_for %v_3[2.6,] %v_6[2.9,] %v_7[2.10,] 
 		 12: RETURN %v_8[2.11,] 
@@ -598,7 +598,7 @@ BB 2
 		 6: %self->blog %self[2.0,] 
 		 7: 
 		 8: %self->id %self[2.0,] 
-		 9: %v_4[2.7,] 
+		 9: %v_4[2.7,] %v_5[2.8,] 
 		 10: 
 		 11: %v_3->url_for %v_3[2.6,] %v_6[2.9,] %v_7[2.10,] 
 		 12: RETURN %v_8[2.11,] 
@@ -628,7 +628,7 @@ BB 2
 		 9: 
 		 10: 
 		 11: format->gsub %v_6[2.10,] format[2.5,] 
-		 12: %v_4[2.8,] 
+		 12: %v_4[2.8,] %v_3[2.7,] %v_7[2.11,] 
 		 13: RETURN %v_8[2.12,] 
 BB 3
 	outgoing: 
@@ -655,14 +655,14 @@ BB 2
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 2 
+	datadep: 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: %self->blog %self[2.0,] 
 		 3: %v_6->urls_to_ping_for %self[2.0,] %v_6[3.2,] 
-		 4: %v_7->each %v_7[3.3,] 
-CLOSURE BEGIN
+		 4: %v_7->each %self[2.0,] %v_7[3.3,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 15 2 
 	datadep: 
@@ -749,8 +749,8 @@ BB 15
 CLOSURE END
 		 5: 
 		 6: %self->html_urls_to_ping %self[2.0,] 
-		 7: %v_9->each %v_9[3.6,] 
-CLOSURE BEGIN
+		 7: %v_9->each %self[2.0,] %v_9[3.6,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 15 2 
 	datadep: 
@@ -922,12 +922,12 @@ BB 2
 		 8: 
 		 9: %v_4->where %v_4[2.7,] %v_5[2.8,] 
 		 10: 
-		 11: 
+		 11: %v_7[2.10,] 
 		 12: %v_6->where %v_8[2.11,] %v_6[2.9,] 
 		 13: %v_9[2.12,] 
 		 14: 
-		 15: %v_9->map %v_9[2.12,] 
-CLOSURE BEGIN
+		 15: %v_9->map %self[2.0,] %v_9[2.12,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -949,7 +949,7 @@ BB 3
 		 1: d->published_at d[2.2,] 
 		 2: 
 		 3: %cl_1_3->strftime %cl_1_3[3.1,] %cl_1_4[3.2,] 
-		 4: 
+		 4: %cl_1_5[3.3,] 
 		 5: RETURN %cl_1_6[3.4,] 
 BB 4
 	outgoing: 6 
@@ -1000,10 +1000,10 @@ BB 2
 		 18: BRANCH %v_9[2.17,] 
 BB 3
 	outgoing: 5 
-	datadep: 2 
+	datadep: 2 2 
 	instructions:
 		 0: params[2.5,] 
-		 1: %v_10[3.0,] 
+		 1: req_params[2.15,] %v_10[3.0,] 
 		 2: 
 BB 4
 	outgoing: 5 
@@ -1018,9 +1018,9 @@ BB 5
 		 1: BRANCH date_range[2.12,2.12,] 
 BB 6
 	outgoing: 8 
-	datadep: 2 2 2 2 
+	datadep: 3 2 2 2 2 2 
 	instructions:
-		 0: date_range[2.12,2.12,] 
+		 0: req_params[3.1,2.15,] date_range[2.12,2.12,] 
 		 1: date_range[2.12,2.12,] 
 		 2: 
 BB 7
@@ -1066,13 +1066,13 @@ BB 13
 		 3: BRANCH %v_17[13.2,] 
 BB 15
 	outgoing: 16 17 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 6 3 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (CGI) 
 		 2: params[2.5,2.5,2.5,2.5,] 
 		 3: %v_18->escape %v_18[15.1,] %v_19[15.2,] 
-		 4: %v_20[15.3,] 
+		 4: req_params[6.0,3.1,2.15,] %v_20[15.3,] 
 		 5: 
 		 6: %self->published %self[2.0,2.0,2.0,2.0,] 
 		 7: %v_21->find_by req_params[15.4,] %v_21[15.6,] 
@@ -1344,8 +1344,8 @@ BB 2
 		 8: 
 		 9: %self->html %self[2.0,] 
 		 10: 
-		 11: %v_4[2.9,] 
-CLOSURE BEGIN
+		 11: %self[2.0,] %v_4[2.9,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -1568,7 +1568,7 @@ BB 2
 		 9: %v_4[2.8,] 
 		 10: 
 		 11: %v_4[2.8,] 
-		 12: %v_5[2.11,] 
+		 12: %self[2.0,] %v_5[2.11,] 
 		 13: 
 		 14: parts[2.9,] 
 		 15: BRANCH %v_6[2.14,] 
@@ -1580,9 +1580,9 @@ BB 3
 		 1: %v_7[3.0,] 
 BB 4
 	outgoing: 5 
-	datadep: 3 2 3 2 
+	datadep: 2 2 2 2 3 2 3 2 
 	instructions:
-		 0: %v_6[3.1,2.14,] 
+		 0: %self[2.0,2.12,2.0,2.12,] %v_6[3.1,2.14,] 
 		 1: RETURN %v_6[3.1,2.14,] 
 BB 5
 	outgoing: 
@@ -1819,9 +1819,9 @@ BB 6
 		 2: %v_8[6.1,] 
 BB 7
 	outgoing: 10 
-	datadep: 6 5 6 5 
+	datadep: 2 2 2 2 6 5 6 5 
 	instructions:
-		 0: %v_6[6.2,5.1,] 
+		 0: %self[2.0,2.0,2.0,2.0,] %v_6[6.2,5.1,] 
 		 1: RETURN %v_6[6.2,5.1,] 
 BB 8
 	outgoing: 10 
@@ -1922,8 +1922,8 @@ BB 2
 		 7: %v_3[2.6,] 
 		 8: 
 		 9: %self->html_urls %self[2.0,] 
-		 10: %v_4->delete_if %v_4[2.9,] 
-CLOSURE BEGIN
+		 10: %v_4->delete_if %self[2.0,] %v_4[2.9,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1957,8 +1957,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 11: %v_5->uniq %v_5[2.10,] 
-		 12: %v_6->each %v_6[2.11,] 
-CLOSURE BEGIN
+		 12: %v_6->each %self[2.0,] %v_6[2.11,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1974,12 +1974,12 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: %self->pings %self[2.0,] 
 		 2: 
-		 3: 
+		 3: %cl_2_4[3.2,] url_to_ping[2.2,] 
 		 4: %cl_2_3->build %cl_2_3[3.1,] %cl_2_5[3.3,] 
 		 5: %cl_2_6[3.4,] 
 		 6: RETURN %cl_2_7[3.5,] 

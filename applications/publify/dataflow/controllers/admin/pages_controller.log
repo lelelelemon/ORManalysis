@@ -1,0 +1,491 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_5[3.0,] 
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_7[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 2 4 3 2 2 2 2 2 2 
+	instructions:
+		 0: %self[2.0,2.0,] %v_6[4.1,3.1,] @search[] 
+		 1: 
+		 2: (Page) 
+		 3: @search[5.0,] 
+		 4: %v_8->search_with %v_8[5.2,] %v_9[5.3,] 
+		 5: %self->params %self[2.0,2.0,] 
+		 6: %v_11[5.5,] 
+		 7: %v_10->page %v_10[5.4,] %v_12[5.6,] 
+		 8: %self->this_blog %self[2.0,2.0,] 
+		 9: %v_14->admin_display_elements %v_14[5.8,] 
+		 10: %v_13->per %v_13[5.7,] %v_15[5.9,] 
+		 11: %self[2.0,2.0,] %v_16[5.10,] @pages[] 
+		 12: RETURN %v_16[5.10,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Page) 
+		 7: %v_3->new %v_3[2.6,] 
+		 8: %self[2.0,] %v_4[2.7,] @page[] 
+		 9: 
+		 10: @page[2.8,] 
+		 11: %v_7->text_filter %v_7[2.10,] 
+		 12: BRANCH %v_5[2.11,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: %self->default_textfilter %self[2.0,] 
+		 1: %v_8[3.0,] %v_7[2.10,] 
+		 2: %v_8[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,] @page[2.8,2.10,2.8,2.10,] 
+		 2: %v_9[4.1,] 
+		 3: 
+		 4: @page[4.1,] 
+		 5: %self->current_user %self[2.0,2.0,] 
+		 6: %v_11->id %v_11[4.5,] 
+		 7: %v_10[4.4,] %v_12[4.6,] 
+		 8: RETURN %v_12[4.6,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = edit
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @page[] 
+		 7: %v_5->text_filter %v_5[2.6,] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 2 
+	instructions:
+		 0: %self->default_textfilter %self[2.0,] 
+		 1: %v_5[2.6,] %v_6[3.0,] 
+		 2: RETURN %v_6[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_3[2.7,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Page) 
+		 7: %self->page_params %self[2.0,] 
+		 8: %v_3->new %v_4[2.7,] %v_3[2.6,] 
+		 9: %self[2.0,] %v_5[2.8,] @page[] 
+		 10: 
+		 11: @page[2.9,] 
+		 12: (Time) 
+		 13: %v_7->now %v_7[2.12,] 
+		 14: %v_8[2.13,] %v_6[2.11,] 
+		 15: 
+		 16: @page[2.9,2.11,] 
+		 17: %self->current_user %self[2.0,] 
+		 18: %v_10->id %v_10[2.17,] 
+		 19: %v_9[2.16,] %v_11[2.18,] 
+		 20: 
+		 21: @page[2.9,2.11,2.16,] 
+		 22: %v_12->save %v_12[2.21,] 
+		 23: BRANCH %v_13[2.22,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->admin_pages_url %self[2.0,] 
+		 2: (I18n) 
+		 3: 
+		 4: %v_15->t %v_15[3.2,] %v_16[3.3,] 
+		 5: %v_17[3.4,] 
+		 6: %self->redirect_to %v_14[3.1,] %self[2.0,] %v_18[3.5,] 
+		 7: RETURN %v_19[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->render %self[2.0,] 
+		 2: RETURN %v_20[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @page[] 
+		 7: %v_5->text_filter %v_5[2.6,] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: %self->default_textfilter %self[2.0,] 
+		 1: %v_5[2.6,] %v_6[3.0,] 
+		 2: %v_6[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,2.0,] @page[2.6,2.6,] 
+		 2: %self->page_params %self[2.0,2.0,] 
+		 3: %v_7->update %v_8[4.2,] %v_7[4.1,] 
+		 4: BRANCH %v_9[4.3,] 
+BB 5
+	outgoing: 8 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->admin_pages_url %self[2.0,2.0,] 
+		 2: (I18n) 
+		 3: 
+		 4: %v_11->t %v_11[5.2,] %v_12[5.3,] 
+		 5: %v_13[5.4,] 
+		 6: %self->redirect_to %v_14[5.5,] %self[2.0,2.0,] %v_10[5.1,] 
+		 7: RETURN %v_15[5.6,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->render %self[2.0,2.0,] 
+		 2: RETURN %v_16[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Page) 
+		 7: %self->destroy_a %self[2.0,] %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = default_textfilter
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->current_user %self[2.0,] 
+		 7: %v_3->text_filter %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->blog %self[2.0,] 
+		 1: %v_5->text_filter %v_5[3.0,] 
+		 2: RETURN %v_6[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_4[2.7,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_macro
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (TextFilter) 
+		 7: %v_3->macro_filters %v_3[2.6,] 
+		 8: %self[2.0,] %v_4[2.7,] @macros[] 
+		 9: RETURN %v_4[2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_images
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Resource) 
+		 7: %v_3->images %v_3[2.6,] 
+		 8: %v_4->by_created_at %v_4[2.7,] 
+		 9: %v_5[2.8,] 
+		 10: %v_6[2.9,] 
+		 11: %self[2.0,] %v_7[2.10,] @images[] 
+		 12: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get_layout
+BB 1
+	outgoing: 13 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->action_name %self[2.0,] 
+		 7: 
+		 8: %v_3[2.6,] %v_6[2.7,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 4 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_3[2.6,] %v_8[3.0,] 
+		 2: BRANCH %v_7[3.1,] 
+BB 4
+	outgoing: 5 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_3[2.6,] %v_10[4.0,] 
+		 2: BRANCH %v_9[4.1,] 
+BB 5
+	outgoing: 6 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_3[2.6,] %v_12[5.0,] 
+		 2: BRANCH %v_11[5.1,] 
+BB 6
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_16[6.1,] 
+		 3: RETURN %v_16[6.1,] 
+BB 7
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_13[7.1,] 
+		 3: RETURN %v_13[7.1,] 
+BB 8
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_14[8.0,] 
+		 2: RETURN %v_14[8.0,] 
+BB 9
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_15[9.0,] 
+		 2: RETURN %v_15[9.0,] 
+BB 10
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: RETURN 
+BB 13
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_page
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Page) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
+		 10: %self[2.0,] %v_6[2.9,] @page[] 
+		 11: RETURN %v_6[2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = page_params
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3->require %v_3[2.6,] 
+		 8: %v_4->permit %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

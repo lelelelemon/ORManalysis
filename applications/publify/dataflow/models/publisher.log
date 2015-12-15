@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: %self[2.0,] user[2.5,] 
+		 7: %self[2.0,] user[2.5,] @user[] 
 		 8: RETURN user[2.5,] 
 BB 3
 	outgoing: 
@@ -37,8 +37,8 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Note) 
-		 7: %v_3->new %v_3[2.6,] 
-CLOSURE BEGIN
+		 7: %v_3->new %self[2.0,] %v_3[2.6,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -57,12 +57,12 @@ BB 3
 	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
-		 2: %cl_1_3[3.1,] 
+		 1: %self[2.0,] @user[] 
+		 2: %cl_1_3[3.1,] note[2.2,] 
 		 3: 
-		 4: %self[2.0,] 
+		 4: @user[3.1,] 
 		 5: %cl_1_4->text_filter %cl_1_4[3.4,] 
-		 6: %cl_1_5[3.5,] 
+		 6: %cl_1_5[3.5,] note[3.2,] 
 		 7: RETURN %cl_1_5[3.5,] 
 BB 4
 	outgoing: 6 

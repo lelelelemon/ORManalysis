@@ -46,7 +46,7 @@ BB 3
 	outgoing: 4 
 	datadep: 2 
 	instructions:
-		 0: %self[2.0,] 
+		 0: %self[2.0,] @fields[] 
 		 1: %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -55,11 +55,11 @@ BB 4
 		 0: BRANCH %v_3[3.1,2.7,] 
 BB 5
 	outgoing: 7 
-	datadep: 2 2 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: (Hash) 
-		 1: %v_6->new %v_6[5.0,] 
-CLOSURE BEGIN
+		 1: %v_6->new %self[2.0,2.0,] %v_6[5.0,] 
+CLOSURE BEGIN: @fields[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -92,7 +92,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: %self[2.0,2.0,] %v_7[5.1,] 
+		 2: %self[2.0,2.0,] %v_7[5.1,] @fields[3.0,] 
 		 3: RETURN %v_7[5.1,] 
 BB 6
 	outgoing: 7 
@@ -147,15 +147,15 @@ BB 6
 		 3: %v_4[6.2,] 
 		 4: 
 		 5: name->to_s name[2.5,2.5,2.5,2.5,] 
-		 6: %v_5[6.5,] 
+		 6: item[6.3,] %v_5[6.5,] 
 		 7: 
-		 8: type[3.0,2.6,3.0,2.6,] 
+		 8: item[6.3,6.6,] type[3.0,2.6,3.0,2.6,] 
 		 9: 
-		 10: default[5.0,4.0,] 
+		 10: item[6.3,6.6,6.8,] default[5.0,4.0,] 
 		 11: 
 		 12: %self->fields %self[2.0,2.0,2.0,2.0,] 
 		 13: name->to_s name[2.5,2.5,2.5,2.5,] 
-		 14: item[6.3,6.6,6.8,6.10,] %v_7[6.13,] 
+		 14: item[6.3,6.6,6.8,6.10,] %v_6[6.12,] %v_7[6.13,] 
 		 15: 
 		 16: %self->add_setting_accessor %self[2.0,2.0,2.0,2.0,] item[6.3,6.6,6.8,6.10,] 
 		 17: RETURN %v_8[6.16,] 
@@ -232,8 +232,8 @@ BB 2
 		 5: 
 		 6: 
 		 7: item->name item[2.5,] 
-		 8: %self->send %self[2.0,] %v_3[2.7,] 
-CLOSURE BEGIN
+		 8: %self->send %self[2.0,2.0,] %v_3[2.7,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -292,14 +292,14 @@ CLOSURE END
 		 12: BRANCH %v_6[2.11,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
 		 1: item->name item[2.5,] 
 		 2: 
 		 3: %v_8[3.2,] %v_7[3.1,] 
-		 4: %self->send %self[2.0,] %v_9[3.3,] 
-CLOSURE BEGIN
+		 4: %self->send %self[2.0,2.0,] %v_9[3.3,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -381,9 +381,9 @@ BB 2
 		 6: 
 		 7: item->name item[2.5,] 
 		 8: 
-		 9: %v_4[2.8,] 
-		 10: %self->send %self[2.0,] %v_5[2.9,] 
-CLOSURE BEGIN
+		 9: %v_4[2.8,] %v_3[2.7,] 
+		 10: %self->send %self[2.0,2.0,] %v_5[2.9,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -420,7 +420,7 @@ BB 5
 		 2: item->name 
 		 3: item->name 
 		 4: %self->canonicalize %self[2.0,2.0,] %cl_1_8[5.3,] newvalue[2.2,2.2,] 
-		 5: %cl_1_7[5.2,] %cl_1_9[5.4,] 
+		 5: %cl_1_6[5.1,] %cl_1_7[5.2,] %cl_1_9[5.4,] 
 		 6: %cl_1_9[5.4,] 
 		 7: 
 		 8: RETURN %cl_1_9[5.4,] 

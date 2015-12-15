@@ -26,6 +26,7 @@ PATH_ORDER = [
   'lib/yard/serializers/base.rb',
   'lib/**/*.rb'
 ]
+$merged_controllers="controllers"
 
 $cur_funccall = nil
 $cur_position = ""

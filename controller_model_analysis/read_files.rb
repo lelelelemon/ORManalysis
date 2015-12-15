@@ -122,7 +122,7 @@ def read_ruby_files(application_dir=nil)
 	if application_dir != nil
 		$app_dir = application_dir
 	end
-	$controller_files = "#{$app_dir}/merged_controllers/"
+	$controller_files = "#{$app_dir}/#{$merged_controllers}/"
 	$model_files = "#{$app_dir}/models/"
 	$log_files = "#{$app_dir}/logs/*.log"
 	$table_file = "#{$app_dir}/table_name.txt"

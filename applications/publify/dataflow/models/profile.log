@@ -50,10 +50,10 @@ BB 2
 		 7: BRANCH perms[2.5,] 
 BB 3
 	outgoing: 5 
-	datadep: 2 
+	datadep: 2 2 
 	instructions:
-		 0: perms->map perms[2.5,] 
-CLOSURE BEGIN
+		 0: perms->map %self[2.0,] perms[2.5,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -108,10 +108,10 @@ BB 4
 		 0: 
 BB 5
 	outgoing: 6 
-	datadep: 3 2 3 2 
+	datadep: 2 2 3 2 3 2 
 	instructions:
 		 0: 
-		 1: perms[3.2,2.5,] 
+		 1: %self[2.0,2.0,] perms[3.2,2.5,] 
 		 2: RETURN perms[3.2,2.5,] 
 BB 6
 	outgoing: 
@@ -134,8 +134,8 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->modules %self[2.0,] 
-		 7: %v_3->map %v_3[2.6,] 
-CLOSURE BEGIN
+		 7: %v_3->map %self[2.0,] %v_3[2.6,] 
+CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
 	datadep: 
