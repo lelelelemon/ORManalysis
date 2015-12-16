@@ -160,6 +160,10 @@ def read_ruby_files(application_dir=nil)
 	if $type_inference == false
 		read_dynamic_typing_info
 	end
+
+	
+	#TODO: It should recursively resolve upper class, here I just hope the inherit length is less than 2...
+	resolve_upper_class
 	resolve_upper_class
 	retrieve_func_calls
 
@@ -239,6 +243,7 @@ def read_ruby_files_with_template(application_dir, template_name)
 	if $type_inference == false
 		read_dynamic_typing_info
 	end
+	resolve_upper_class
 	resolve_upper_class
 	retrieve_func_calls
 end

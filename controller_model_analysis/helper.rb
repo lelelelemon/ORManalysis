@@ -45,8 +45,10 @@ def searchTableName(name)
 	if name.index('.') != nil
 		_name = name[0..(name.index('.')-1)]
 	end
-	if $table_names.include?(_name)
-		return _name
+	$table_names.each do |t|
+		if t.downcase == _name.delete('@').downcase
+			return t
+		end
 	end
 	return nil
 end
@@ -128,12 +130,20 @@ def check_class_match(name)
 	return false
 end
 
+def classname_partial_match(name)
+	$class_map.each do |keyc, arrayc|
+		if keyc.include?(name)
+			return arrayc
+		end
+	end
+	return nil
+end
+
 def transform_var_name(name)
 	$class_map.each do |keyc, arrayc|
 		cname = name
 		if name[0] == '@'
 			cname = name[1..name.length-1]
-			#puts "After truncate, #{name} -> #{cname}"
 		end
 		if keyc.downcase == cname.downcase
 			return keyc
@@ -243,6 +253,9 @@ def call_match_name(caller_name, funcname, f_handler)
 		if (call.getObjName.include?(caller_name) or caller_name.include?(call.getObjName)) and funcname == call.getFuncName
 				return call 
 		end
+		if funcname == "super" and call.isSuperFunc
+				return call
+		end
 	end
 	return nil
 end
@@ -258,5 +271,9 @@ def simplify1(name)
 end
 
 def remove_special_chars(n)
-	return n.delete('\n').delete('<').delete('>').delete('&')
+	return n.delete("\n").delete('<').tr('>','I').delete('&').delete(':').tr('.','_').delete(' ')
+end
+
+def graph_write(file, word)
+	file.write(word.gsub("::",""))
 end

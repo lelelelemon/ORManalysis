@@ -15,7 +15,7 @@ PATH_ORDER = [
 ]
 
 
-file = File.open("../applications/publify/controllers/xml_controller.rb", "r")
+file = File.open("../applications/publify/models/article.rb", "r")
 contents = file.read
 ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 

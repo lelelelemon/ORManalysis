@@ -48,15 +48,15 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 				caller_class = call.getTableName
 			end
 
-			#if trigger_save?(call)
-				#puts "#{$blank}=====transaction begin====="
-			#end
+			if trigger_save?(call) or trigger_create?(call)
+				puts "=====transaction begin====="
+			end
 
 			puts "#{$blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
 			if simplified_caller != nil
 				$label += "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{simplified_caller}.#{call.getFuncName} </td></tr>\n"
 			else
-				$label += "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{call.getObjName}.#{call.getFuncName} </td></tr>\n"
+				$label += "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{remove_special_chars(call.getObjName)}.#{call.getFuncName} </td></tr>\n"
 			end
 			$l_index += 1
 
@@ -94,7 +94,7 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 						end
 					end
 				end
-				#puts "#{$blank}=====transaction end====="
+				puts "=====transaction end====="
 			end
 
 		elsif callerv != nil
@@ -171,7 +171,7 @@ def handle_single_instr(start_class, start_function, class_handler, bb, instr, l
 		#match instr's call to funccall in Method_class
 		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
 		#if call == nil
-		#	puts "Name doesn't match: #{instr.toString}" 
+		#	puts "Name doesn't match: #{instr.toString} (#{instr.getResolvedCaller})" 
 		#else
 		#	puts "match call: #{instr.toString}"
 		#end
@@ -210,7 +210,7 @@ def write_single_bb(start_class, start_function, bb)
 	
 	bb.getOutgoings.each do |to_bb|
 		to_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{to_bb}"
-		$graph_file.write("\t#{from_bb_name} -> #{to_bb_name} [ color=#{$FLOWEDGE_COLOR} ];\n")
+		graph_write($graph_file, "\t#{from_bb_name} -> #{to_bb_name} [ color=#{$FLOWEDGE_COLOR} ];\n")
 	end
 
 	index = 0
@@ -220,15 +220,15 @@ def write_single_bb(start_class, start_function, bb)
 			$closure_stack.push(cl)
 			to_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB1"
 			to_end_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{cl.getLastBB.getIndex}"
-			$graph_file.write("\t#{from_bb_name}:f#{instr.getFTag} -> #{to_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
-			$graph_file.write("\t#{to_end_bb_name}:f0 -> #{from_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
+			graph_write($graph_file, "\t#{from_bb_name}:f#{instr.getFTag} -> #{to_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
+			graph_write($graph_file, "\t#{to_end_bb_name}:f0 -> #{from_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
 
 			cl.getBB.each do |inner_bb|
 				write_single_bb(start_class, start_function, inner_bb)
 			end
 			cl_last_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{cl.getBB[-1].getIndex}"
 			cl_first_bb_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{cl.getBB[0].getIndex}"
-			$graph_file.write("\t#{cl_last_bb_name} -> #{cl_first_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
+			graph_write($graph_file, "\t#{cl_last_bb_name} -> #{cl_first_bb_name} [color=#{$FLOWEDGE_COLOR} ];\n")
 
 			$closure_stack.pop
 		end
@@ -240,9 +240,24 @@ end
 def trace_flow(start_class, start_function, params, returnv, level)
 	class_handler = $class_map[start_class]
 	if class_handler == nil
-		puts "Class handler not found: #{start_class}"
+		#class_handler = classname_partial_match(start_class)
+		#puts "start_class = #{start_class}, start_func = #{start_function}"
+		#if class_handler == nil
+		#	puts "Class handler not found: #{start_class}"
+			function_handler = nil
+		#else
+		#	puts "partial match found: #{class_handler.getName}"
+		#	function_handler = class_handler.getMethods[start_function]
+		#end
+	else
+		function_handler = class_handler.getMethods[start_function]
 	end
-	function_handler = class_handler.getMethods[start_function]
+	if class_handler != nil and function_handler == nil
+		if $class_map[class_handler.getUpperClass] != nil
+			function_handler = $class_map[class_handler.getUpperClass].getMethod(start_function)
+		end
+	end
+
 
 	$blank = ""
 	for i in (0...level)
@@ -261,7 +276,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 		return 
 	end	
 
-	#$graph_file.write("subgraph cluster_#{start_class}_#{start_function}")
+	#graph_write($graph_file, "subgraph cluster_#{start_class}_#{start_function}")
 
 	#handles before_filter
 	before_filter_name = "#{start_class}.before_filter"
@@ -275,9 +290,9 @@ def trace_flow(start_class, start_function, params, returnv, level)
 
 	if $last_caller_string.length > 0	
 		_to_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB1" 
-		$graph_file.write("#{$last_caller_string} -> #{_to_name} [label = \"#{params}\"]; \n")
+		graph_write($graph_file, "#{$last_caller_string} -> #{_to_name} [label = \"#{params}\"]; \n")
 		if returnv.length > 0
-			$graph_file.write("#{_to_name} -> #{$last_caller_string} [label = \"r: (#{returnv})\"]; \n")
+			graph_write($graph_file, "#{_to_name} -> #{$last_caller_string} [label = \"r: (#{returnv})\"]; \n")
 		end
 	end
 	
@@ -310,10 +325,10 @@ def trace_flow(start_class, start_function, params, returnv, level)
 	#puts "#{$blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
 	#puts "#{$blank}(write subgraph #{start_class}_#{start_function})"
 
-	$graph_file.write("subgraph cluster_#{start_class}_#{simplify(start_function)} {\n")
-	$graph_file.write("\tcolor=red;\n\tnode [style=filled];\n\tlabel = \"#{start_class}_#{start_function}\"\n")	
+	graph_write($graph_file, "subgraph cluster_#{start_class}_#{simplify(start_function)} {\n")
+	graph_write($graph_file, "\tcolor=red;\n\tnode [style=filled];\n\tlabel = \"#{start_class}_#{start_function}\"\n")	
 	label_list.each do |label|
-		$graph_file.write("#{label}")
+		graph_write($graph_file, "#{label}")
 	end
 
 	if function_handler.getCFG != nil	
@@ -322,5 +337,5 @@ def trace_flow(start_class, start_function, params, returnv, level)
 		end
 	end	
 
-	$graph_file.write("}\n")
+	graph_write($graph_file, "}\n")
 end

@@ -59,7 +59,7 @@ def parse_attrib(astnode)
 					end
 				end
 			end
-		when "before_filter"
+		when "before_filter","before_action"
 			temp_method = $cur_class.getMethod("before_filter")
 			if temp_method == nil
 				temp_method = Method_class.new("before_filter")

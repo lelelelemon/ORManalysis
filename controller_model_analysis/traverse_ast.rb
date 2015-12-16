@@ -32,7 +32,9 @@ def traverse_ast(astnode, level)
 	elsif astnode.class.to_s == "YARD::Parser::Ruby::KeywordNode"
 		if astnode.type.to_s == "super"
 			if $cur_method != nil
-				fcall = Function_call.new($cur_class.getUpperClass, $cur_method.getName)
+				#fcall = Function_call.new($cur_class.getUpperClass, $cur_method.getName)
+				#puts "SUPER: #{$cur_class.getName} < #{$cur_class.getUpperClass} . #{$cur_method.getName}"
+				fcall = Function_call.new("self", "super")
 				$cur_method.getCalls.push(fcall)
 			end 
 		else

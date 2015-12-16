@@ -30,7 +30,7 @@ def construct_query_graph
 					connected = false
 					$global_check = Hash.new
 					if is_directly_connected(n1, n2)
-						$graph_file.write("n#{n1.getIndex} -> n#{n2.getIndex}\n")
+						graph_write($graph_file, "n#{n1.getIndex} -> n#{n2.getIndex}\n")
 					end
 				end
 			end
@@ -43,9 +43,9 @@ def print_query_graph(output_dir, start_class, start_function)
 	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_Qgraph.log"
 	$graph_file = File.open(graph_fname, "w");
 
-	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
+	graph_write($graph_file, "digraph #{remove_special_chars(start_class)}_#{start_function} {\n")
 	print_graph2(start_class, start_function)
-	$graph_file.write("}");
+	graph_write($graph_file, "}");
 
 	$graph_file.close
 end
@@ -64,9 +64,9 @@ def print_graph2(start_class, start_function)
 	$node_list.each do |n|
 		if n.isQuery?
 			if n.getInClosure == false
-				$graph_file.write("\tn#{n.getIndex} [label=<<i>#{n.getLabel}</i>>]; \n")
+				graph_write($graph_file, "\tn#{n.getIndex} [label=<<i>#{n.getLabel}</i>>]; \n")
 			else
-				$graph_file.write("\tn#{n.getIndex} [label=<<i>#{n.getLabel}</i>> style=filled color=orange]; \n")
+				graph_write($graph_file, "\tn#{n.getIndex} [label=<<i>#{n.getLabel}</i>> style=filled color=orange]; \n")
 			end
 		end
 	end
@@ -103,6 +103,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function)
 		n.setLabel
 		#puts "#{n.getIndex}: #{n.getInstr.toString}"
 	end
+
+	graph_fname = "#{output_dir}/backward_forward.log"
+	$graph_file = File.open(graph_fname, "w")
+
 	
 	$node_list.each do |n|
 		if n.isQuery?
@@ -110,7 +114,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function)
 			$cnt_determines = 0
 			$cnt_depends_on_cflow = 0
 			$cnt_determines_cflow = 0
-			compute_dataflow_forward(output_dir, start_class, start_function, n)	
+			compute_dataflow_forward(output_dir, start_class, start_function, n)
 			compute_dataflow_backward(output_dir, start_class, start_function, n)
 			$query_depends_on.push($cnt_depends_on)
 			$query_determines.push($cnt_determines)
@@ -133,35 +137,35 @@ def compute_dataflow_stat(output_dir, start_class, start_function)
 		if n.isQuery?
 			total_query_num += 1
 			if n.getInstr.getCallHandler != nil
-				$graph_file.write("#{n.getInstr.getCallHandler.getObjName}.#{n.getInstr.getFuncname}")
+				graph_write($graph_file, "#{n.getInstr.getCallHandler.getObjName}.#{n.getInstr.getFuncname}")
 			else
-				$graph_file.write("#{n.getInstr.getCaller}.#{n.getInstr.getFuncname}")
+				graph_write($graph_file, "#{n.getInstr.getCaller}.#{n.getInstr.getFuncname}")
 			end
 			if n.getInClosure
 				query_in_closure += 1
 				if n.getInstr.getToUserOutput
-					$graph_file.write(" (v)")
+					graph_write($graph_file, " (v)")
 					query_in_view += 1
 				end
-				$graph_file.write(" (c)")
+				graph_write($graph_file, " (c)")
 			end
-			$graph_file.write("\n")
+			graph_write($graph_file, "\n")
 		end
 	end
-	$graph_file.write("\n")
-	$graph_file.write("query in total: #{total_query_num}\n")
-	$graph_file.write("query in view: #{query_in_view}\n")
-	$graph_file.write("query in closure: #{query_in_closure}\n")
+	graph_write($graph_file, "\n")
+	graph_write($graph_file, "query in total: #{total_query_num}\n")
+	graph_write($graph_file, "query in view: #{query_in_view}\n")
+	graph_write($graph_file, "query in closure: #{query_in_closure}\n")
 	if $query_depends_on.length > 0	
-		$graph_file.write("query backward dependencies: #{($query_depends_on.inject{|sum,x| sum + x })/($query_depends_on.length)}\n")
+		graph_write($graph_file, "query backward dependencies: #{($query_depends_on.inject{|sum,x| sum + x })/($query_depends_on.length)}\n")
 	end
 	
 	if $query_determines.length > 0
-		$graph_file.write("query forward dependencies: #{($query_determines.inject{|sum,x| sum + x })/$query_determines.length}\n")
+		graph_write($graph_file, "query forward dependencies: #{($query_determines.inject{|sum,x| sum + x })/$query_determines.length}\n")
 	end
 	
 	if $query_determines_cflow.length + $query_depends_on_cflow.length > 0
-		$graph_file.write("query controlflow_dep: #{($query_depends_on_cflow.inject{|sum,x| sum + x }+$query_determines_cflow.inject{|sum,x| sum + x })/($query_depends_on_cflow.length+$query_determines_cflow.length)}\n")
+		graph_write($graph_file, "query controlflow_dep: #{($query_depends_on_cflow.inject{|sum,x| sum + x }+$query_determines_cflow.inject{|sum,x| sum + x })/($query_depends_on_cflow.length+$query_determines_cflow.length)}\n")
 	end
 		
 	$graph_file.close
@@ -173,68 +177,73 @@ def compute_dataflow_stat(output_dir, start_class, start_function)
 end
 
 def compute_dataflow_forward(output_dir, start_class, start_function, start_node)	
-	graph_fname = "#{output_dir}/FORWARD_#{start_class}_#{start_function}_#{start_node.getSimplifiedLabel}#{start_node.getIndex}.log"
+	#graph_fname = "#{output_dir}/FORWARD_#{start_class}_#{start_function}_#{start_node.getSimplifiedLabel}#{start_node.getIndex}.log"
 
-	$graph_file = File.open(graph_fname, "w");
+	#$graph_file = File.open(graph_fname, "w");
 	
-	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
+	graph_write($graph_file, "digraph #{remove_special_chars(start_class)}_#{start_function}_forward_#{start_node.object_id} {\n")
+
+	#dname = "digraph #{start_class}_#{start_function}_forward_#{start_node.getLabel} {\n"
+	#graph_write($graph_file, "#{remove_special_chars(dname)}")
 
 	$computed_node = Array.new	
 	compute_forward_singlenode(start_node)
 
 	$computed_node.each do |c|
 		if c == start_node	
-			$graph_file.write("\tn#{c.getIndex} [label=<<i>#{c.getLabel}</i>> color=crimson shape=doubleoctagon]; \n")	
+			graph_write($graph_file, "\tn#{c.getIndex} [label=<<i>#{c.getLabel}</i>> color=crimson shape=doubleoctagon]; \n")	
 		else
 			$cnt_determines += 1
-			$graph_file.write("\tn#{c.getIndex} [");
+			graph_write($graph_file, "\tn#{c.getIndex} [");
 			if c.getInstr.instance_of?Call_instr 
-				$graph_file.write("label = <<i>#{c.getLabel}</i>> ")
+				graph_write($graph_file, "label = <<i>#{c.getLabel}</i>> ")
 			end
 			if c.getInstr.getToUserOutput
-				$graph_file.write("color=#{$USERINOUTCOLOR} ")
+				graph_write($graph_file, "color=#{$USERINOUTCOLOR} ")
 			elsif c.getInstr.instance_of?Call_instr and c.getInstr.isQuery
-				$graph_file.write("color=#{$QNODECOLOR} ")
+				graph_write($graph_file, "color=#{$QNODECOLOR} ")
 			end
-			$graph_file.write("]\n")
+			graph_write($graph_file, "]\n")
 		end
 	end
 	
-	$graph_file.write("}")
-	$graph_file.close
+	graph_write($graph_file, "}\n\n")
+	#$graph_file.close
 end
 
 
 def compute_dataflow_backward(output_dir, start_class, start_function, start_node)	
-	graph_fname = "#{output_dir}/BACKWARD_#{start_class}_#{start_function}_#{start_node.getSimplifiedLabel}#{start_node.getIndex}.log"
+	#graph_fname = "#{output_dir}/BACKWARD_#{start_class}_#{start_function}_#{start_node.getSimplifiedLabel}#{start_node.getIndex}.log"
 
-	$graph_file = File.open(graph_fname, "w");
+	#$graph_file = File.open(graph_fname, "w");
 	
-	$graph_file.write("digraph #{start_class}_#{start_function} {\n")
+	graph_write($graph_file, "digraph #{remove_special_chars(start_class)}_#{start_function}_backward_#{start_node.object_id} {\n")
+	#dname = "digraph #{start_class}_#{start_function}_backward_#{start_node.getLabel} {\n"
+	#graph_write($graph_file, "#{remove_special_chars(dname)}")
 
 	$computed_node = Array.new	
 	compute_backward_singlenode(start_node)
 
 	$computed_node.each do |c|
 		if c == start_node	
-			$graph_file.write("\tn#{c.getIndex} [label=<<i>#{c.getLabel}</i>> color=crimson shape=doubleoctagon]; \n")
+			graph_write($graph_file, "\tn#{c.getIndex} [label=<<i>#{c.getLabel}</i>> color=crimson shape=doubleoctagon]; \n")
 		else
 			$cnt_depends_on += 1
-			$graph_file.write("\tn#{c.getIndex} [");
+			graph_write($graph_file, "\tn#{c.getIndex} [");
 			if c.getInstr.instance_of?Call_instr 
-				$graph_file.write("label = <<i>#{c.getLabel}</i>> ")
+				graph_write($graph_file, "label = <<i>#{c.getLabel}</i>> ")
 			end
 			if c.getInstr.getFromUserInput
-				$graph_file.write("color=#{$USERINOUTCOLOR} ")
+				graph_write($graph_file, "color=#{$USERINOUTCOLOR} ")
 			elsif c.getInstr.instance_of?Call_instr and c.getInstr.isQuery
-				$graph_file.write("color=#{$QNODECOLOR} ")
+				graph_write($graph_file, "color=#{$QNODECOLOR} ")
 			end
-			$graph_file.write("]\n")
+			graph_write($graph_file, "]\n")
 		end
 	end
 	
-	$graph_file.write("}")
-	$graph_file.close
+	graph_write($graph_file, "}\n\n")
+	#$graph_file.close
 end
 
 def compute_forward_singlenode(node)
@@ -243,12 +252,12 @@ def compute_forward_singlenode(node)
 	end
 	$computed_node.push(node)
 	node.getDataflowEdges.each do |e|
-		$graph_file.write("\tn#{e.getFromNode.getIndex} -> n#{e.getToNode.getIndex}")
+		graph_write($graph_file, "\tn#{e.getFromNode.getIndex} -> n#{e.getToNode.getIndex}")
 		if e.getIsBranching
 			$cnt_determins_cflow += 1
-			$graph_file.write(" [color=#{$FLOWEDGE_COLOR}];")
+			graph_write($graph_file, " [color=#{$FLOWEDGE_COLOR}];")
 		end
-		$graph_file.write("\n");
+		graph_write($graph_file, "\n");
 		compute_forward_singlenode(e.getToNode)
 	end
 end
@@ -261,12 +270,12 @@ def compute_backward_singlenode(node)
 	$computed_node.push(node)
 	node.getBackwardEdges.each do |e|
 		if e.getFromNode != nil and e.getToNode != nil
-			$graph_file.write("\tn#{e.getFromNode.getIndex} -> n#{e.getToNode.getIndex}")
+			graph_write($graph_file, "\tn#{e.getFromNode.getIndex} -> n#{e.getToNode.getIndex}")
 			if e.getIsBranching
 				$cnt_depends_on_cflow += 1
-				$graph_file.write(" [color=#{$FLOWEDGE_COLOR}];")
+				graph_write($graph_file, " [color=#{$FLOWEDGE_COLOR}];")
 			end
-			$graph_file.write("\n");
+			graph_write($graph_file, "\n");
 			compute_backward_singlenode(e.getFromNode)
 		end
 	end

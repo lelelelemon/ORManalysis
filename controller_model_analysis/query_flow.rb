@@ -363,7 +363,11 @@ end
 def trace_query_flow(start_class, start_function, params, returnv, level)
 	
 	class_handler = $class_map[start_class]
-	function_handler = class_handler.getMethods[start_function]
+	if class_handler != nil
+		function_handler = class_handler.getMethods[start_function]
+	else
+		function_handler = nil
+	end
 
 	if function_handler == nil
 		if is_transaction_function(start_function)

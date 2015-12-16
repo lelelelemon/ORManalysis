@@ -26,7 +26,7 @@ PATH_ORDER = [
   'lib/yard/serializers/base.rb',
   'lib/**/*.rb'
 ]
-$merged_controllers="controllers"
+$merged_controllers="merged_controllers"
 
 $cur_funccall = nil
 $cur_position = ""
@@ -262,6 +262,10 @@ opt_parser = OptionParser.new do |opt|
 	opt.on("-o", "--output-dir DIR",String,"Output directory for graphviz files") do |output_dir|
 		options[:output] = output_dir
 	end
+	
+	opt.on("-b", "--print-all","Print all calls, only for debug") do |print_all|
+		options[:print_all] = true
+	end
 
   opt.on("-h","--help","help") do
 		options[:help] = true
@@ -341,7 +345,7 @@ if options[:trace_flow] or options[:stats] or options[:query_graph]
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w");
 
-		$graph_file.write("digraph #{start_class}_#{start_function} {\n")
+		$graph_file.write("digraph #{remove_special_chars(start_class)}_#{start_function} {\n")
 		trace_flow(start_class, start_function, "", "", level)
 		$graph_file.write("}")
 	end
@@ -358,4 +362,14 @@ end
 
 if options[:xml] == true
 	generate_xml_files
+end
+
+if options[:print_all] == true
+	$class_map.each do |keyc, valuec|
+		print "#{keyc}: "
+		valuec.getCreate.each do |c|
+			print "#{c.getFuncName}, "
+		end
+		puts ""
+	end
 end

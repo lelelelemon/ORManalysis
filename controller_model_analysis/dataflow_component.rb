@@ -162,6 +162,9 @@ class Call_instr < Instruction
 	def getFuncname
 		@funcname
 	end
+	def setFuncname(f)
+		@funcname = f
+	end
 	def setResolvedCaller(_caller)
 		@resolved_caller = _caller
 		@resolved = true
@@ -346,6 +349,13 @@ class CFG
 		@return_list = Array.new
 		#explicit_return is the return point in data flow, only include "RETURN" instr
 		@explicit_return = Array.new
+		@m_handler = nil
+	end
+	def setMHandler(m)
+		@m_handler = m
+	end
+	def getMHandler
+		@m_handler
 	end
 	def addExplicitReturn(r)
 		@explicit_return.push(r)
