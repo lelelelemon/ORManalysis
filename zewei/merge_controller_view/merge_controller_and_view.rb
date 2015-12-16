@@ -1,4 +1,4 @@
-require "YARD"
+require "yard"
 
 # def traverse_method_node(astnode, base_path, controller_name)
 # 	method_name astnode[1].source
@@ -16,15 +16,15 @@ def traverse_routes_mapping(astnode, base_path, controller_name, default)
 		#puts cur_astnode.source 
 		view_name = cur_astnode[0].source
 		#puts view_name
-		path = base_path + "\\app\\views\\" + controller_name + "\\_" + view_name + ".html.erb.rb"
+		path = base_path + "/app/views/" + controller_name + "/_" + view_name + ".html.erb.rb"
 		if !File.exist?(path)
-			path = base_path + "\\app\\views\\" + controller_name + "\\" + view_name + ".html.erb.rb"
+			path = base_path + "/app/views/" + controller_name + "/" + view_name + ".html.erb.rb"
 		end
 		if !File.exist?(path)
-			path = base_path + "\\app\\views\\" + controller_name + "\\_" + view_name + ".js.erb.rb"
+			path = base_path + "/app/views/" + controller_name + "/_" + view_name + ".js.erb.rb"
 		end
 		if !File.exist?(path)
-			path = base_path + "\\app\\views\\" + controller_name + "\\" + view_name + ".js.erb.rb"
+			path = base_path + "/app/views/" + controller_name + "/" + view_name + ".js.erb.rb"
 		end
 		if !File.exist?(path)
 			return
@@ -58,7 +58,6 @@ def traverse_routes_mapping(astnode, base_path, controller_name, default)
 			cur_astnode.children.each do |x|
 				if x[0][0].source == ":partial" || x[0][0].source == ":action" || x[0][0].source == ":template"
 					view_name = x[0][1].source
-					#puts "view_name" + view_name
 					add_render_view(astnode, base_path, controller_name, view_name)
 				end
 			end
@@ -71,6 +70,7 @@ end
 #
 def add_render_view (astnode, base_path, controller_name, view_name)
 	view_name.gsub! "\"", ""
+	view_name.gsub! "'", ""
 	if view_name.include? '/'
 		
 		view_name = view_name.split('/')
@@ -81,17 +81,17 @@ def add_render_view (astnode, base_path, controller_name, view_name)
 	# puts "view_name: " + view_name
 
 	# determine the view file location and name
-	path = base_path + "\\app\\views\\" + controller_name + "\\_" + view_name + ".html.erb.rb"
+	path = base_path + "/app/views/" + controller_name + "/_" + view_name + ".html.erb.rb"
 	# puts astnode.source
 	# puts path
 	if !File.exist?(path)
-		path = base_path + "\\app\\views\\" + controller_name + "\\" + view_name + ".html.erb.rb"
+		path = base_path + "/app/views/" + controller_name + "/" + view_name + ".html.erb.rb"
 	end
 	if !File.exist?(path)
-		path = base_path + "\\app\\views\\" + controller_name + "\\_" + view_name + ".js.erb.rb"
+		path = base_path + "/app/views/" + controller_name + "/_" + view_name + ".js.erb.rb"
 	end
 	if !File.exist?(path)
-		path = base_path + "\\app\\views\\" + controller_name + "\\" + view_name + ".js.erb.rb"
+		path = base_path + "/app/views/" + controller_name + "/" + view_name + ".js.erb.rb"
 	end
 	if !File.exist?(path)
 		return
@@ -113,9 +113,12 @@ end
 base_path = ARGV[0]
 controller_name = ARGV[1]
 
+
 #read the controller file and parse it
 controller_file = File.open(File.join(base_path, controller_name+"_controller.rb"), "r")
 controller_contents = controller_file.read
+
+
 controller_ast = YARD::Parser::Ruby::RubyParser.parse(controller_contents).root
 
 #the render statement and the render view is a hash mapping
@@ -127,9 +130,17 @@ $render_view_mapping.each do |key, value|
 	controller_contents.gsub! key, value
 end
 
-
 #go for a second round to replace all renders inside view files
 controller_ast = YARD::Parser::Ruby::RubyParser.parse(controller_contents).root
+
+#the render statement and the render view is a hash mapping
+$render_view_mapping = Hash.new
+traverse_routes_mapping(controller_ast, base_path[0..-17], controller_name, false)
+
+#replace all render statement by the view file 
+$render_view_mapping.each do |key, value|
+	controller_contents.gsub! key, value
+end
 
 #the render statement and the render view is a hash mapping
 $render_view_mapping = Hash.new
@@ -145,6 +156,7 @@ end
 # end
 
 #all render statement in controller content has been replaced by the embedded ruby code in the view file
+
 puts controller_contents
 
 controller_file.close

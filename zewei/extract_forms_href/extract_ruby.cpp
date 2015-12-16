@@ -18,25 +18,35 @@ int main(int argc, char** argv){
       	if (c == '='){
             a = fgetc(fin);
             b = fgetc(fin);
-            while (a != '%' || b != '>'){
+	    c = fgetc(fin);
+            while ((a != '%' || b != '>') && (a != '-' || b != '%' || c != '>')){
                 fputc(a, fout);
                 a = b;
-                b = fgetc(fin);      
+		b = c;
+                c = fgetc(fin);      
             }   
             fputc('\n', fout);
-            a = fgetc(fin);
+	    if (c != '>') 
+		a = c;
+	    else 
+            	a = fgetc(fin);
             b = fgetc(fin);
             c = fgetc(fin);
         } else {
-        	a = c;
+            a = c;
             b = fgetc(fin);
-            while (a != '%' || b != '>'){
+	    c = fgetc(fin);
+            while ((a != '%' || b != '>') && (a != '-' || b != '%' || c != '>')){
                 fputc(a, fout);
                 a = b;
-                b = fgetc(fin);      
+		b = c;
+                c = fgetc(fin);      
             }   
             fputc('\n', fout);
-            a = fgetc(fin);
+            if (c != '>')
+		a = fgetc(fin);
+	    else 
+		a = fgetc(fin);
             b = fgetc(fin);
             c = fgetc(fin);
 		}
