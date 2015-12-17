@@ -1,4 +1,6 @@
 load 'read_dataflow.rb'
+$in_view = false
+$in_loop = Array.new
 
 class INode
 	def initialize(instr)
@@ -11,6 +13,8 @@ class INode
 		@index = $ins_cnt
 		@label = ""
 		@in_closure = false
+		@in_view = $in_view	
+		@in_loop = ($in_loop.length > 0)	
 		@closure_stack = Array.new
 		@dataflow_edges = Array.new
 		@backward_dataflow_edges = Array.new
@@ -22,6 +26,12 @@ class INode
 				@closure_stack.push(cl)
 			end
 		end
+	end
+	def getInView
+		@in_view
+	end
+	def getInLoop
+		@in_loop
 	end
 	def addDataflowEdge(edge)
 		@dataflow_edges.push(edge)
@@ -274,11 +284,21 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		cl = instr.getClosure
 		temp_node = $cur_node
 		#puts "CLOSURE: "
+		if cl.getViewClosure
+			$in_view = true
+		else
+			$in_loop.push(true)
+		end
 		$closure_stack.push(cl)
 		handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
 		$closure_stack.pop
 		cl.getReturns.each do |r|
 			new_return_l.push(r)
+		end
+		if cl.getViewClosure
+			$in_view = false
+		else
+			$in_loop.pop
 		end
 		temp_node.addChild(cl.getBB[0].getInstr[0].getINode)
 	elsif

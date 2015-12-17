@@ -143,7 +143,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function)
 			end
 			if n.getInClosure
 				query_in_closure += 1
-				if n.getInstr.getToUserOutput
+				if n.getInView
 					graph_write($graph_file, " (v)")
 					query_in_view += 1
 				end
@@ -190,8 +190,13 @@ def compute_dataflow_forward(output_dir, start_class, start_function, start_node
 	compute_forward_singlenode(start_node)
 
 	$computed_node.each do |c|
-		if c == start_node	
-			graph_write($graph_file, "\tn#{c.getIndex} [label=<<i>#{c.getLabel}</i>> color=crimson shape=doubleoctagon]; \n")	
+		if c == start_node
+      if c.getInView
+              color = "blue"
+      else
+              color = "crimson"
+      end	
+			graph_write($graph_file, "\tn#{c.getIndex} [label=<<i>#{c.getLabel}</i>> color=#{color} shape=doubleoctagon]; \n")	
 		else
 			$cnt_determines += 1
 			graph_write($graph_file, "\tn#{c.getIndex} [");
@@ -225,8 +230,13 @@ def compute_dataflow_backward(output_dir, start_class, start_function, start_nod
 	compute_backward_singlenode(start_node)
 
 	$computed_node.each do |c|
-		if c == start_node	
-			graph_write($graph_file, "\tn#{c.getIndex} [label=<<i>#{c.getLabel}</i>> color=crimson shape=doubleoctagon]; \n")
+		if c == start_node
+			if c.getInView
+              color = "blue"
+      else
+              color = "crimson"
+      end	
+			graph_write($graph_file, "\tn#{c.getIndex} [label=<<i>#{c.getLabel}</i>> color=#{color} shape=doubleoctagon]; \n")
 		else
 			$cnt_depends_on += 1
 			graph_write($graph_file, "\tn#{c.getIndex} [");

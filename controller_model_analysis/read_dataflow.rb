@@ -2,6 +2,7 @@ $dataflow_files = "./lobsters/dataflow/*.log"
 
 #Indicate the rendered code replaced by view ruby code
 $view_ruby_code = false
+$view_closure = false
 
 $cur_bb_stack = Array.new
 $cur_cfg_stack = Array.new
@@ -82,8 +83,10 @@ def handle_single_dataflow_file(item, class_name)
 				temp_cfg = $cur_cfg
 				$cur_cfg = Closure.new
 				if $view_ruby_code or (temp_cfg.instance_of?Closure and temp_cfg.getViewCode)
-					$cur_cfg.setViewCode
-					$view_ruby_code = false
+					if $view_closure
+					  $cur_cfg.setViewClosure
+					  $view_closure = false
+					end
 				end
 	
 				#Variable def table
@@ -113,6 +116,9 @@ def handle_single_dataflow_file(item, class_name)
 				#$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB.getIndex)
 				$cur_bb = $cur_bb_stack[-1]
 				$cur_bb.getLastInstr.addClosure($cur_cfg)
+				if $cur_cfg.getViewClosure
+				  $view_ruby_code = false
+				end
 				$cur_cfg = $cur_cfg_stack[-1]
 				$cur_bb_stack.pop
 				$cur_cfg_stack.pop
@@ -158,6 +164,7 @@ def handle_single_dataflow_file(item, class_name)
 										end
 										if cur_instr.getFuncname == "ruby_code_from_view"
 												$view_ruby_code = true
+												$view_closure = true
 										end
 										
 									elsif single_attr.include?('[') and single_attr.include?(']')

@@ -396,8 +396,15 @@ class Closure < CFG
 		r = Random.new
 		@rnd = r.rand(1...1048576)
 		@view_code = false
+		@view_closure = false
 		@var_def_table = Array.new 
 		super
+	end
+	def setViewClosure
+	  @view_closure = true
+	end
+	def getViewClosure
+	   @view_closure
 	end
 	def addToVarDefTable(vname, dep, handler)	
 		ary = dep.split('.')
