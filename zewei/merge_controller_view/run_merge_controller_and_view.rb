@@ -1,5 +1,5 @@
 
-require "FileUtils"
+require "fileutils"
 
 
 controller_folder = ARGV[0]

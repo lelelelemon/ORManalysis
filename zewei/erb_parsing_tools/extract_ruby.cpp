@@ -13,41 +13,50 @@ int main(int argc, char** argv){
     FILE* fout = fopen(output_file, "wb");
     
     char a = fgetc(fin), b = fgetc(fin), c = fgetc(fin);
-
     while (a != EOF){
       if (a == '<' && b == '%'){
       	if (c == '='){
             a = fgetc(fin);
             b = fgetc(fin);
-            while (a != '%' || b != '>'){
+	    c = fgetc(fin);
+            while ((a != '%' || b != '>') && (a != '-' || b != '%' || c != '>')){
                 fputc(a, fout);
                 a = b;
-                b = fgetc(fin);      
+		b = c;
+                c = fgetc(fin);      
             }   
             fputc('\n', fout);
-            a = fgetc(fin);
+	    if (c != '>') 
+		a = c;
+	    else 
+            	a = fgetc(fin);
             b = fgetc(fin);
             c = fgetc(fin);
         } else {
-        	a = c;
+            a = c;
             b = fgetc(fin);
-            while (a != '%' || b != '>'){
+	    c = fgetc(fin);
+            while ((a != '%' || b != '>') && (a != '-' || b != '%' || c != '>')){
                 fputc(a, fout);
                 a = b;
-                b = fgetc(fin);      
-            }
+		b = c;
+                c = fgetc(fin);      
+            }   
             fputc('\n', fout);
-            a = fgetc(fin);
+            if (c != '>')
+		a = fgetc(fin);
+	    else 
+		a = fgetc(fin);
             b = fgetc(fin);
             c = fgetc(fin);
-				}
+		}
       } else {
         a = b;
         b = c;
         c = fgetc(fin); 
       }
     }
-   
+    
     fclose(fin);
     fclose(fout);
 }
