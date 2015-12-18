@@ -28,7 +28,7 @@ def read_dataflow(application_dir=nil)
 		$app_dir = application_dir
 	end
 
-	$dataflow_files = "#{$app_dir}/dataflow/#{$merged_controllers}/*.log"
+	$dataflow_files = "#{$app_dir}/dataflow/merged_controllers/*.log"
 
 	Dir.glob($dataflow_files) do |item|
 		next if item == '.' or item == '..'
@@ -83,10 +83,12 @@ def handle_single_dataflow_file(item, class_name)
 				temp_cfg = $cur_cfg
 				$cur_cfg = Closure.new
 				if $view_ruby_code or (temp_cfg.instance_of?Closure and temp_cfg.getViewCode)
+					$cur_cfg.setViewCode
 					if $view_closure
-					  $cur_cfg.setViewClosure
-					  $view_closure = false
+						$cur_cfg.setViewClosure
+						$view_closure = false
 					end
+					#$view_ruby_code = false
 				end
 	
 				#Variable def table
@@ -116,9 +118,11 @@ def handle_single_dataflow_file(item, class_name)
 				#$cur_cfg.getLastBB.addOutgoings($cur_cfg.getFirstBB.getIndex)
 				$cur_bb = $cur_bb_stack[-1]
 				$cur_bb.getLastInstr.addClosure($cur_cfg)
-				if $cur_cfg.getViewClosure
-				  $view_ruby_code = false
+
+				if $cur_cfg.getViewClosure	
+					$view_ruby_code = false
 				end
+
 				$cur_cfg = $cur_cfg_stack[-1]
 				$cur_bb_stack.pop
 				$cur_cfg_stack.pop

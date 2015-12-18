@@ -18,7 +18,6 @@ class Method_class
 	end
 	def setCFG(cfg)
 		@cfg = cfg
-		cfg.setMHandler(self)
 	end
 	def getCFG
 		@cfg
@@ -82,9 +81,7 @@ class Class_class
 	end
 	def mergeSave(c)
 		c.getSave.each do |s|
-			if @save_actions.include?(s)==false
-				@save_actions.push(s)
-			end
+			@save_actions.push(s)
 		end
 	end
 	def addCreate(func)
@@ -94,10 +91,8 @@ class Class_class
 		@create_actions
 	end
 	def mergeCreate(c)
-		c.getCreate.each do |cr|	
-			if @create_actions.include?(cr)==false
-				@create_actions.push(cr)
-			end
+		c.getCreate.each do |cr|
+			@create_actions.push(cr)
 		end
 	end
 	def addScope(s)
@@ -136,15 +131,7 @@ class Class_class
 				@methods["before_filter"] = c.getMethod("before_filter")
 			else
 				c.getMethod("before_filter").getCalls.each do |call|
-					exist = false
-					@methods["before_filter"].getCalls.each do |inner_call|
-						if inner_call.getFuncName == call.getFuncName
-							exist = true
-						end
-					end
-					if exist == false
-						@methods["before_filter"].getCalls.insert(0, call)
-					end
+					@methods["before_filter"].getCalls.insert(0, call)
 				end
 			end
 		end

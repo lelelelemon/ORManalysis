@@ -1,6 +1,5 @@
 load 'read_dataflow.rb'
 $in_view = false
-$in_loop = Array.new
 
 class INode
 	def initialize(instr)
@@ -13,8 +12,11 @@ class INode
 		@index = $ins_cnt
 		@label = ""
 		@in_closure = false
-		@in_view = $in_view	
-		@in_loop = ($in_loop.length > 0)	
+		if $in_view
+			@in_view = true
+		else
+			@in_view = false
+		end
 		@closure_stack = Array.new
 		@dataflow_edges = Array.new
 		@backward_dataflow_edges = Array.new
@@ -29,9 +31,6 @@ class INode
 	end
 	def getInView
 		@in_view
-	end
-	def getInLoop
-		@in_loop
 	end
 	def addDataflowEdge(edge)
 		@dataflow_edges.push(edge)
@@ -286,8 +285,6 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		#puts "CLOSURE: "
 		if cl.getViewClosure
 			$in_view = true
-		else
-			$in_loop.push(true)
 		end
 		$closure_stack.push(cl)
 		handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
@@ -297,8 +294,6 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		end
 		if cl.getViewClosure
 			$in_view = false
-		else
-			$in_loop.pop
 		end
 		temp_node.addChild(cl.getBB[0].getInstr[0].getINode)
 	elsif
@@ -383,11 +378,7 @@ end
 def trace_query_flow(start_class, start_function, params, returnv, level)
 	
 	class_handler = $class_map[start_class]
-	if class_handler != nil
-		function_handler = class_handler.getMethods[start_function]
-	else
-		function_handler = nil
-	end
+	function_handler = class_handler.getMethods[start_function]
 
 	if function_handler == nil
 		if is_transaction_function(start_function)
