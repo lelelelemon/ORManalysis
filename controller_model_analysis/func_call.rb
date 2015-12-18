@@ -40,6 +40,8 @@ class Function_call
 		@table_name = nil
 		@params = Array.new
 		@returnv = ""
+		#TODO: this is bad, super should be a derived class of Function_call
+		@super_fname = ""
 	end
 	def setQueryType(type)
 		@query_type = type
@@ -75,7 +77,10 @@ class Function_call
 		@obj_name
 	end
 	def getFuncName
-		@func_name
+		return @func_name
+	end
+	def isSuperFunc
+		@func_name == "super"
 	end
 	#TODO: this is a trick that we shouldn't use... 
 	#user.where(...)
@@ -104,6 +109,7 @@ class Function_call
 	# @func_name = foo
 	#findCaller(A, meth) returns C
 	def findCaller(calling_func_class, calling_func)
+
 		caller_class = nil
 		if @is_query == false
 			if @obj_name == "self" 
@@ -123,6 +129,18 @@ class Function_call
 					caller_class = func_var[@obj_name]
 				end
 			end
+
+			#dealing with "super"
+			#if @func_name == "super"
+			#	if $class_map[calling_func_class].getUpperClass != ""
+			#		upper_cname = $class_map[calling_func_class].getUpperClass
+			#		if $class_map[upper_cname] != nil and $class_map[upper_cname].getMethod(calling_func) != nil
+			#			caller_class = upper_cname
+			#			@super_fname = calling_func
+			#		else
+			#		end
+			#	end
+			#end
 			#TODO: Have no idea why I search derived class??
 			if caller_class == nil
 			#	derived_classes = search_derived_class($class_map[calling_func_class])
@@ -175,6 +193,15 @@ class Function_call
 			#puts "#{calling_func_class}.#{calling_func} issues call #{@obj_name} [of class #{caller_class}] . #{@func_name}"
 			#puts ""
 		end	
+		#if @is_query == false and caller_class != nil
+		#	if $class_map[caller_class] != nil and $class_map[caller_class].getMethod(@func_name) == nil
+		#		parent = $class_map[caller_class].getUpperClass
+		#		if parent != nil and $class_map[parent] != nil and $class_map[parent].getMethod(@func_name) != nil
+		#			caller_class = parent
+		#		end
+		#	end
+		#end
+
 		return caller_class
 	end
 
@@ -236,7 +263,8 @@ class Function_call
 		if @is_query
 			puts "++ CALL DB QUERY: #{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv})"
 		else
-			puts "#{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv})"
+			#puts "#{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv})"
+			puts ""
 		end
 	end
 end
