@@ -57,6 +57,9 @@ end
 #find the proper upper class
 def resolve_upper_class
 	$class_map.each do |keyc, valuec|
+		#TODO: should change the name of "resolve_upper_class"
+		#adjustFilters remove filter name which has :on=> properties and insert into according :on=> functions
+		#valuec.adjustFilters
 		if $class_map.has_key?(valuec.getUpperClass)
 			valuec.setUpperClassInstance($class_map[valuec.getUpperClass])
 			if $class_map[valuec.getUpperClass] != nil

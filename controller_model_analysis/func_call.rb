@@ -40,8 +40,15 @@ class Function_call
 		@table_name = nil
 		@params = Array.new
 		@returnv = ""
+		@on = Array.new
 		#TODO: this is bad, super should be a derived class of Function_call
 		@super_fname = ""
+	end
+	def addOn(on_meth)
+		@on.push(on_meth)
+	end
+	def getOn
+		@on
 	end
 	def setQueryType(type)
 		@query_type = type
@@ -260,11 +267,18 @@ class Function_call
 		@params.each do |param|
 			temp_params += "#{param.getVar}, "
 		end
+		on_list = ""
+		if @on.length > 0
+			on_list = " :on => ["
+			@on.each do |o|
+				on_list = "#{on_list}#{o}, "
+			end
+		end
 		if @is_query
 			puts "++ CALL DB QUERY: #{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv})"
 		else
-			#puts "#{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv})"
-			puts ""
+			puts "#{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv}) #{on_list}"
+			#puts ""
 		end
 	end
 end

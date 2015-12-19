@@ -6,6 +6,7 @@ class Method_class
 		@name = name
 		@calls = Array.new
 		@cfg = nil
+		#only for before_xxx calls
 	end
 	def getVars
 		@variables
@@ -15,6 +16,11 @@ class Method_class
 	end
 	def getCalls
 		@calls
+	end
+	def addCall(c)
+		if @calls.include?(c) == false
+			@calls.push(c)
+		end
 	end
 	def setCFG(cfg)
 		@cfg = cfg
@@ -38,6 +44,19 @@ class Class_class
 		@save_actions = Array.new
 		@create_actions = Array.new
 		@scope_list = Array.new
+		
+		filter_meth = Method_class.new("before_filter")
+		@methods[filter_meth.getName] = filter_meth
+		save_meth = Method_class.new("before_save")
+		@methods[save_meth.getName] = save_meth
+		valid_meth = Method_class.new("before_validation")
+		@methods[valid_meth.getName] = valid_meth
+		create_meth = Method_class.new("before_create")
+		@methods[create_meth.getName] = create_meth
+		#If there is keyword "only":
+		#Final pass, remove from "before_xxx" list and insert into the function
+		#If there is keyword "on":
+		#Remove from original list and insert into according list
 		#@after_create = Array.new
 		#@after_destroy = Array.new
 	end
@@ -105,6 +124,30 @@ class Class_class
 	end
 	def getScope
 		@scope_list
+	end
+
+	#A pass that adjust filter calls, for keywords only, on
+	def adjustSingleFilter(filter_name)
+		meth = @methods[filter_name]
+		remove_list = Array.new
+		meth.getCalls.each do |c|
+			if c.getOn.length > 0
+				c.getOn.each do |on|
+					if @methods[on] == nil
+						puts "Defined #{filter_name} :on => #{on}, but method #{on} is not explicitly defined"
+					else
+						@methods[on].insertCall(c)
+					end
+				end
+				remove_list.push(c)
+			end
+		end
+		remove_list.each do |r|
+			meth.getCalls.delete(r)
+		end
+	end
+	def adjustFilters
+		adjustSingleFilter("before_filter")
 	end
 	#def addBeforeValidation(valid_name)
 	#	@before_validation.push(valid_name)

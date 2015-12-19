@@ -3,6 +3,93 @@ def parse_attrib_node(astnode)
 	return get_left_most_leaf(astnode).source.to_s
 end
 
+def find_property(node, keyword)
+	if node == nil
+		return nil
+	end
+	if node.source.include?(keyword)
+		return node
+	end
+	node.children.each do |child|
+		n = find_property(child, keyword)
+		if n != nil
+			return n
+		end
+	end
+	return nil
+end
+
+def addOnList(list, node)
+	node.children.each do |c|
+		if c.type.to_s == "assoc"
+			#the first child is "only" or "on"
+			if c.children[1].type.to_s == "list"
+				c.children[1].children.each do |e|
+					f_name = get_left_most_leaf(e).source.to_s
+					list.push(f_name)
+				end
+			elsif c.children[1].type.to_s == "array"
+				if c.children[1].children[0].type.to_s == "list"
+					c.children[1].children[0].children.each do |e|
+						f_name = get_left_most_leaf(e).source.to_s
+						list.push(f_name)
+					end
+				end
+			elsif c.children[1].type.to_s == "symbol_literal"
+				f_name = get_left_most_leaf(c.children[1]).source.to_s
+				list.push(f_name)
+			end
+		end
+	end
+end
+
+def parse_keyword(astnode, meth)
+	#process block
+	block_child = nil
+	astnode.children.each do |child|
+		if child.type.to_s == "do_block"
+			block_child = child
+		end
+	end
+	if block_child != nil
+		temp_method = Method_class.new("#{meth.getName}_do_block")
+		$cur_method = temp_method
+		fcall = Function_call.new("self", temp_method.getName)
+		meth.addCall(fcall)
+	end
+	on_list = Array.new
+	fcall_list = Array.new
+	if astnode.children[1].type.to_s == "list"
+		astnode.children[1].children.each do |child|
+			if child.type.to_s == "symbol_literal"
+				#$cur_class.addBeforeFilter(get_left_most_leaf(child).source.to_s)
+				
+				fcall = Function_call.new("self", get_left_most_leaf(child).source.to_s)
+				fcall_list.push(fcall)
+				#puts "#{$cur_class.getName} add before filter: #{get_left_most_leaf(child).source.to_s}"
+			elsif child.source.to_s.include?(":only") or child.source.to_s.include?(":on")
+				addOnList(on_list, child)
+				#print "#{$cur_class.getName} . (#{meth.getName}). on_list: "
+				#on_list.each do |o|
+				#	print "#{o}, "
+				#end
+				#puts ""
+			end
+		end
+	end
+	if on_list.length > 0
+		fcall_list.each do |f|
+			on_list.each do |o|
+				f.addOn(o)
+			end
+		end
+	end
+	fcall_list.each do |f|
+		meth.addCall(f)
+		#puts "\t#{f.getFuncName}"
+	end
+end
+
 def parse_attrib(astnode)
 	case astnode.children[0].source.to_s
 		#when "has_many"
@@ -60,132 +147,13 @@ def parse_attrib(astnode)
 				end
 			end
 		when "before_filter","before_action"
-			temp_method = $cur_class.getMethod("before_filter")
-			if temp_method == nil
-				temp_method = Method_class.new("before_filter")
-			end
-			$cur_class.addMethod(temp_method)
-
-			#process block
-			block_child = nil
-			astnode.children.each do |child|
-				if child.type.to_s == "do_block"
-					block_child = child
-				end
-			end
-			if block_child != nil
-				$cur_method = temp_method
-			end
-	
-			if astnode.children[1].type.to_s == "list"
-				astnode.children[1].children.each do |child|
-					if child.type.to_s == "symbol_literal"
-						#$cur_class.addBeforeFilter(get_left_most_leaf(child).source.to_s)
-						
-						fcall = Function_call.new("self", get_left_most_leaf(child).source.to_s)
-						temp_method.getCalls.push(fcall)
-						#puts "#{$cur_class.getName} add before filter: #{get_left_most_leaf(child).source.to_s}"
-					end
-				end
-			end
+			parse_keyword(astnode, $cur_class.getMethod("before_filter"))
 		when "before_validation"
-			method_list = Array.new
-			#process_list
-			list_child = nil
-			astnode.children.each do |child|
-				if child.type.to_s == "list" and child.source.to_s.include?("=>")==false
-					list_child = child
-				end
-			end
-			if list_child != nil
-				if astnode.children[1].type.to_s == "list"
-					astnode.children[1].children.each do |child|
-						if child.type.to_s == "symbol_literal"
-							method_list.push(get_left_most_leaf(child).source.to_s)
-						end
-					end
-				end
-			end
-			#process block
-			block_child = nil
-			astnode.children.each do |child|
-				if child.type.to_s == "do_block"
-					block_child = child
-				end
-			end
-
-			#TODO: handle before_validation do block
-			on_child = nil
-			astnode.children.each do |achild|
-				if achild.source.include?(":on =>")
-					on_child = achild
-				end
-			end
-			if on_child == nil
-				astnode.children[1].children.each do |achild|
-					if achild.source.include?(":on =>")
-						on_child = achild
-					end
-				end
-			end
-			if on_child != nil
-				#only one [:on]
-				if on_child.children[0].type.to_s == "assoc" and on_child.children[0].children[1].type.to_s == "symbol_literal"
-					on_method = get_left_most_leaf(on_child.children[0].children[1]).source.to_s
-					if on_method == "create"
-						temp_method = nil
-						if $cur_class.getMethod("new") == nil
-							temp_method = Method_class.new("new")
-						else
-							temp_method = $cur_class.getMethod("new")
-						end
-						method_list.each do |each_method|
-							fcall = Function_call.new("self", each_method)
-							temp_method.getCalls.push(fcall)
-						end
-						$cur_class.addMethod(temp_method)
-					end
-				end
-			end
-			
-			#before validation is called for every valid?
-			temp_method = Method_class.new("valid?")
-			method_list.each do |each_method|
-				fcall = Function_call.new("self", each_method)
-				temp_method.getCalls.push(fcall)
-			end
-			$cur_class.addMethod(temp_method)
-			if block_child != nil
-				$cur_method = temp_method
-			end
-			
+			parse_keyword(astnode, $cur_class.getMethod("before_validation"))
 		when "after_create","before_create"
-			temp_method = nil
-			if $cur_class.getMethod("new") == nil
-				temp_method = Method_class.new("new")
-			else
-				temp_method = $cur_class.getMethod("new")
-			end
-			if astnode.children[1].type.to_s == "list"
-				astnode.children[1].children.each do |child|
-					if child.type.to_s == "symbol_literal"
-						fcall = Function_call.new("self", get_left_most_leaf(child).source.to_s)
-						#temp_method.getCalls.push(fcall)
-						$cur_class.addCreate(fcall)
-					end
-				end
-			end
-			#Class_class.@method is a hash map, so add == set+insert 
-			$cur_class.addMethod(temp_method)
+			parse_keyword(astnode, $cur_class.getMethod("before_create"))
 		when "after_save","before_save"
-			if astnode.children[1].type.to_s == "list"
-				astnode.children[1].children.each do |child|
-					if child.type.to_s == "symbol_literal"
-						fcall = Function_call.new("self", get_left_most_leaf(child).source.to_s)
-						$cur_class.addSave(fcall)
-					end
-				end
-			end
+			parse_keyword(astnode, $cur_class.getMethod("before_save"))
 		#else
 	end
 end
