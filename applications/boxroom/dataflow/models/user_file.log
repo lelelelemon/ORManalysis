@@ -1,0 +1,102 @@
+SET IRMethod, name = copy
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->dup %self[2.0,] 
+		 8: %v_3[2.7,] 
+		 9: 
+		 10: target_folder[2.5,] %v_3[2.7,] 
+		 11: 
+		 12: new_file->save! new_file[2.8,] 
+		 13: 
+		 14: (Rails) 
+		 15: %v_5->root %v_5[2.14,] 
+		 16: 
+		 17: (Rails) 
+		 18: %v_8->env %v_8[2.17,] 
+		 19: 
+		 20: new_file->id new_file[2.8,] 
+		 21: 
+		 22: %v_9[2.18,] %v_6[2.15,] %v_7[2.16,] %v_10[2.19,] %v_11[2.20,] %v_12[2.21,] 
+		 23: %v_13[2.22,] 
+		 24: 
+		 25: (FileUtils) 
+		 26: %v_14->mkdir_p %v_13[2.22,] %v_14[2.25,] 
+		 27: 
+		 28: (FileUtils) 
+		 29: %self->attachment %self[2.0,] 
+		 30: %v_17->path %v_17[2.29,] 
+		 31: 
+		 32: new_file->id new_file[2.8,] 
+		 33: path[2.23,] %v_19[2.31,] %v_20[2.32,] 
+		 34: %v_16->cp_r %v_16[2.28,] %v_18[2.30,] %v_21[2.33,] 
+		 35: 
+		 36: RETURN new_file[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = move
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] target_folder[2.5,] 
+		 8: 
+		 9: %self->save! %self[2.0,2.7,] 
+		 10: RETURN %v_3[2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = extension
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (File) 
+		 7: %self->attachment_file_name %self[2.0,] 
+		 8: %v_3->extname %v_4[2.7,] %v_3[2.6,] 
+		 9: 
+		 10: %v_5[2.8,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
