@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def index
     @users = User.where.not(:name => nil).order('name')
     @new_users = User.where(:name => nil).order('email')
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:users) 
  content_for :title 
  image_tag('user_add.png', :alt => t(:create_a_new_user)) 
@@ -42,11 +43,12 @@ class UsersController < ApplicationController
  end 
  end 
  end 
-
+end
   end
 
   def new
     @user = User.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:new_user) 
  content_for :title 
   form_for @user do |f| 
@@ -77,7 +79,7 @@ class UsersController < ApplicationController
  link_to t(:back), users_url 
  end 
  end 
- 
+ end
 
   end
 
@@ -88,6 +90,7 @@ class UsersController < ApplicationController
       UserMailer.signup_email(@user).deliver_now
       redirect_to users_url
     else
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:new_user) 
  content_for :title 
   form_for @user do |f| 
@@ -119,12 +122,13 @@ class UsersController < ApplicationController
  end 
  end 
  
-
+end
     end
   end
 
   # Note: @user is set in require_existing_user
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, @title 
  content_for :title 
   form_for @user do |f| 
@@ -156,7 +160,7 @@ class UsersController < ApplicationController
  end 
  end 
  
-
+end
   end
 
   # Note: @user is set in require_existing_user
@@ -164,6 +168,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(permitted_params.user.merge({ :password_required => false }))
       redirect_to edit_user_url(@user), :notice => t(:your_changes_were_saved)
     else
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, @title 
  content_for :title 
   form_for @user do |f| 
@@ -195,7 +200,7 @@ class UsersController < ApplicationController
  end 
  end 
  
-
+end
     end
   end
 

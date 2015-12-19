@@ -4,6 +4,7 @@ class SignupController < ApplicationController
 
   # Note: @user is set in require_valid_token
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:sign_up) 
  content_for :title 
  form_for @user, :url => { :action => 'update' } do |f| 
@@ -19,7 +20,7 @@ class SignupController < ApplicationController
  f.submit t(:sign_up) 
  link_to t(:back), new_session_path 
  end 
-
+end
   end
 
   # Note: @user is set in require_valid_token
@@ -27,6 +28,7 @@ class SignupController < ApplicationController
     if @user.update_attributes(permitted_params.user.merge({ :password_required => true }))
       redirect_to new_session_url, :notice => t(:signed_up_successfully)
     else
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:sign_up) 
  content_for :title 
  form_for @user, :url => { :action => 'update' } do |f| 
@@ -42,7 +44,7 @@ class SignupController < ApplicationController
  f.submit t(:sign_up) 
  link_to t(:back), new_session_path 
  end 
-
+end
     end
   end
 

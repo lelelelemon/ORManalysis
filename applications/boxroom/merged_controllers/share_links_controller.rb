@@ -9,6 +9,7 @@ class ShareLinksController < ApplicationController
 
   def index
     @share_links = ShareLink.active_share_links
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:shared_files) 
  content_for :title 
  t('activerecord.models.user_file') 
@@ -25,7 +26,7 @@ class ShareLinksController < ApplicationController
  l share_link.link_expires_at, :format => :very_short 
  link_to image_tag('delete.png', :alt => t(:delete_item)), share_link_path(share_link), :method => :delete, :data => { :confirm => t(:are_you_sure) }, :title => t(:unshare) 
  end 
-
+end
   end
 
   # Note: @file is set in require_existing_file
@@ -36,6 +37,7 @@ class ShareLinksController < ApplicationController
   # Note: @file is set in require_existing_file
   def new
     @share_link = @file.share_links.build
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:share_file) 
  content_for :title 
  form_for [@file, @share_link], :url => { :action => 'create' } do |f| 
@@ -67,7 +69,7 @@ class ShareLinksController < ApplicationController
  f.submit t(:share) 
  link_to t(:back), @folder 
  end 
-
+end
   end
 
   # Note: @file and @folder are set in require_existing_file
@@ -79,6 +81,7 @@ class ShareLinksController < ApplicationController
       UserMailer.share_link_email(@share_link).deliver_now
       redirect_to @folder, :notice => t(:shared_successfully)
     else
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:share_file) 
  content_for :title 
  form_for [@file, @share_link], :url => { :action => 'create' } do |f| 
@@ -110,7 +113,7 @@ class ShareLinksController < ApplicationController
  f.submit t(:share) 
  link_to t(:back), @folder 
  end 
-
+end
     end
   end
 
