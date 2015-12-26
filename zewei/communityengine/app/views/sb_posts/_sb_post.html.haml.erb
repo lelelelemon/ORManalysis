@@ -1,0 +1,54 @@
+<tr>
+  <td id="post-body-<%= post.id %>">
+    <div class="editable">
+      <% if logged_in? %>
+        <%= link_to fa_icon("comment"), new_forum_topic_sb_post_path(post.topic.forum, post.topic), :class => 'reply-toggle' %>
+      <% end %>
+      <%= post.body.html_safe %>
+    </div>
+    <div class="editor hide"></div>
+  </td>
+  <td class="col-sm-3" style="border-left:0">
+    <ul class="list-unstyled">
+      <% if post.user %>
+        <li>
+          <%= link_to avatar_for(post.user), post.user     %>
+        </li>
+        <li>
+          <%= link_to truncate(h(post.username), :length => 15), user_path(post.user), :class => (post.topic.editable_by?(post.user) ? "admin" : nil) %>
+        </li>
+        <li>
+          <%= :post.l.pluralize %>
+          <span class="badge badge-info">
+            <%= post.user.sb_posts_count %>
+          </span>
+        </li>
+      <% else %>
+        <li>
+          <%= image_tag(configatron.photo.missing_thumb, :class => 'thumbnail')         %>
+        </li>
+        <li>
+          <%= truncate(h(post.username), :length => 15) %>
+        </li>
+      <% end %>
+      <li>
+        <a href="#<%= post.dom_id %>" rel="bookmark">
+          <abbr class="updated" title="<%= post.created_at.xmlschema %>">
+            <%= time_ago_in_words(post.created_at) %>
+          </abbr>
+        </a>
+      </li>
+      <% if logged_in? && post.editable_by?(current_user) %>
+        <li>
+          <%= ajax_spinner_for "edit-post-#{post.id}"    %>
+          <%= link_to :edit_post.l, edit_forum_topic_sb_post_path(@forum, @topic, post), :class => 'edit-via-ajax', :id => "edit-post-#{post.id}" %>
+        </li>
+      <% end %>
+      <% if admin? && post.user && !post.user.admin? %>
+        <li class="make-moderator-<%= post.user_id %>">
+          <%= render :partial => '/moderators/toggle', :locals => {:user => post.user, :forum => @forum} %>
+        </li>
+      <% end %>
+    </ul>
+  </td>
+</tr>

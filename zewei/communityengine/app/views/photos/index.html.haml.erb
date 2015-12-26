@@ -1,0 +1,40 @@
+<% @page_title=:users_photos.l(:user=>@user.login) %>
+<%= render :partial => 'posts/author_profile', :locals => {:user => @user} %>
+<% if @tags.any? %>
+  <% widget do %>
+    <h3>
+      <%= :tags.l %>
+    </h3>
+    <ul class="list-unstyled">
+      <% @tags.each do |tag| %>
+        <li>
+          <% if (tag.name.eql?(params[:tag_name]) ) %>
+            <a class="active label label-info" href="<%= user_photos_path(@user) %>">
+              <%= fa_icon "tag inverse", :text => tag.name %>
+            </a>
+          <% else %>
+            <a class="label label-info" href="<%= user_photos_path(:user_id => @user, :tag_name => tag.name) %>">
+              <%= fa_icon "tag inverse", :text => tag.name %>
+            </a>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+<ul class="list-unstyled thumbnails">
+  <% @photos.each do |photo| %>
+    <li class="col-sm-3">
+      <%= link_to image_tag(photo.photo.url(:medium)), user_photo_path(@user, photo), :class => 'thumbnail' %>
+      <% if @is_current_user %>
+        <%= link_to :show.l, user_photo_path(@user, photo), :class => 'btn btn-xs btn-default' %>
+        <%= link_to :edit.l, edit_user_photo_path(@user, photo), :class => 'btn btn-xs btn-warning' %>
+        <%= link_to :delete.l, user_photo_path(@user, photo), :method => 'delete', data: { confirm: :are_you_sure.l }, :class => 'btn btn-xs btn-danger' %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+<%= paginate @photos, :theme => 'bootstrap' %>
+<% if @is_current_user %>
+  <%= link_to :new_photo.l, new_user_photo_path(@user), :class => 'btn btn-success' %>
+<% end %>

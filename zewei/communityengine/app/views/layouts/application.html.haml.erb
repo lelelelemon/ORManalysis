@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <link href="<%= home_url %>favicon.ico" rel="shortcut icon"></link>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <%= csrf_meta_tag %>
+    <title>
+      <%= page_title %>
+    </title>
+    <% if @meta %>
+      <% @meta.each do |key| %>
+        <meta content="<%= key[1] %>" name="<%= key[0] %>"/>
+      <% end %>
+    <% end %>
+    <% if @rss_title && @rss_url %>
+      <%= auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) %>
+    <% end %>
+    <%= render :partial => "shared/scripts_and_styles" %>
+  </head>
+  <body>
+    <% unless configatron.auth_providers.facebook.key.blank? %>
+      <%= render :partial => 'facebook/fb_require' %>
+    <% end %>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <%= render :partial => "shared/header" %>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <%= render_jumbotron %>
+      </div>
+      <div class="row">
+        <div class="col-sm-9">
+          <h1>
+            <%= container_title %>
+          </h1>
+          <%= render :partial => "shared/messages" %>
+          <%= yield %>
+        </div>
+        <div class="col-sm-3 pull-right">
+          <%= render :partial => "shared/sidebar" %>
+        </div>
+      </div>
+      <% if show_footer_content? %>
+        <div class="row" id="footer-content">
+          <%= image_tag 'spinner.gif', :plugin => 'community_engine' %>
+          <%= :loading_recent_content.l %>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="col-sm-12">
+          <%= render :partial => 'shared/footer_links' %>
+          <p>
+            <%= :community_tagline.l %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <%= render :partial => "shared/end_javascript" %>
+    <%= yield :end_javascript %>
+  </body>
+</html>

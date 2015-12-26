@@ -1,0 +1,38 @@
+<% @page_title = @post.title %>
+<%= render :partial => 'author_profile', :locals => {:user => @user} %>
+<h2>
+  <%= :users_blog.l :user=>  @user.login %>
+</h2>
+<div class="clearfix">
+  <div class="col-sm-3 pull-right">
+    <div class="list-group">
+      <a class="list-group-item" href="<%= user_post_path(@user, @post) %>" rel="bookmark">
+        <%= fa_icon "calendar fw" %>
+        <abbr class="published" title="<%= @post.published_at %>">
+          <%= @post.published_at_display(:literal_date) %>
+        </abbr>
+      </a>
+      <% if @is_current_user || admin? || moderator? %>
+        <a class="list-group-item" href="<%= edit_user_post_path(@post.user, @post) %>">
+          <%= fa_icon "pencil-square-o fw", :text => :edit.l %>
+        </a>
+        <%= link_to fa_icon("trash-o fw", :text => :delete.l), user_post_path(@post.user, @post), {:method => :delete, data: { confirm: :permanently_delete_this_post.l }, :class => "list-group-item"} %>
+      <% end %>
+    </div>
+  </div>
+  <%= @post.post %>
+</div>
+<%= render :partial => 'polls/poll_ui', :locals => {:poll => @post.polls.first} unless @post.polls.empty? %>
+<% unless @post.tags.empty? %>
+  <div class="clearfix">
+    <ul class="list-unstyled">
+      <% @post.tags.each do |t| %>
+        <li>
+          <a class="label label-info" href="<%= tag_url(t) %>" rel="tag">
+            <%= fa_icon "tag inverse", :text => t.name %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
