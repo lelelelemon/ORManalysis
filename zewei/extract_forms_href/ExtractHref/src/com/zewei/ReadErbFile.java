@@ -21,10 +21,11 @@ public class ReadErbFile {
 	}
 	
 	public static void main(String[] args){
+		
+		System.out.println("route = Rails.application.routes");
 		try {
 			
-			String fileName = "C:\\Users\\jasonchuzewei\\Desktop\\DB_Performance_Proj\\play\\views\\extract_href_form\\_comment.html.erb";
-			//String fileName = "C:\\Users\\jasonchuzewei\\Desktop\\DB_Performance_Proj\\play\\lobsters\\app\\views\\comments\\_commentbox.html.erb";
+			String fileName = "C:\\Users\\jasonchuzewei\\Desktop\\DB_Performance_Proj\\play\\lobsters\\app\\views\\messages\\index.html.erb";
 			
 			String content = "<html>" + readFile(fileName, StandardCharsets.UTF_8) + "</html>";
 			
@@ -48,8 +49,14 @@ class HrefVisitor implements NodeVisitor{
 	@Override
 	public void head(Node n, int depth) {
 		if (n.hasAttr("href")){
-			System.out.println("href tag: " + n);
-			System.out.println("url: " + n.attr("href"));
+//			System.out.println("href tag: " + n);
+//			System.out.println("url: " + n.attr("href"));
+			
+			String url = n.attr("href");
+			url = url.replaceAll("<%=.*%>", "2");
+//			url = url.replace("%>", "");
+//			url = url.replace(" ", "");
+			System.out.println("route.recognize_path \"" + url + "\"");
 		}
 		
 	}
