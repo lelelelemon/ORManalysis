@@ -1,0 +1,210 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Note) 
+		 7: %v_3->published %v_3[2.6,] 
+		 8: %self->params %self[2.0,] 
+		 9: %v_5[2.8,] 
+		 10: %v_4->page %v_4[2.7,] %v_6[2.9,] 
+		 11: %self->this_blog %self[2.0,] 
+		 12: %v_8->limit_article_display %v_8[2.11,] 
+		 13: %v_7->per %v_9[2.12,] %v_7[2.10,] 
+		 14: %self[2.0,] %v_10[2.13,] @notes[] 
+		 15: 
+		 16: @notes[2.14,] 
+		 17: %v_11->empty? %v_11[2.16,] 
+		 18: BRANCH %v_12[2.17,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: 
+		 3: %v_13->t %v_13[3.1,] %v_14[3.2,] 
+		 4: %self[2.0,] %v_15[3.3,] @message[] 
+		 5: 
+		 6: %self->ruby_code_from_view %self[2.0,] 
+		 7: %v_16->ruby_code_from_view %self[2.0,] %v_16[3.6,] 
+CLOSURE BEGIN: @message[3.4,] @notes[2.14,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @message[] 
+		 7: RETURN %cl_1_3[2.6,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_17[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Note) 
+		 7: %v_3->published %v_3[2.6,] 
+		 8: (CGI) 
+		 9: %self->params %self[2.0,] 
+		 10: %v_6[2.9,] 
+		 11: %v_5->escape %v_5[2.8,] %v_7[2.10,] 
+		 12: %v_4->find_by_permalink %v_4[2.7,] %v_8[2.11,] 
+		 13: %self[2.0,] %v_9[2.12,] @note[] 
+		 14: 
+		 15: %self->ruby_code_from_view %self[2.0,] 
+		 16: %v_10->ruby_code_from_view %self[2.0,] %v_10[2.15,] 
+CLOSURE BEGIN: @reply[] @note[] @canonical_url[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->t %cl_1_3[3.1,] %self[2.0,] 
+		 3: 
+		 4: 
+		 5: %self->t %self[2.0,] %cl_1_5[3.4,] 
+		 6: RETURN %cl_1_6[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 17: 
+		 18: @note[2.13,] 
+		 19: 
+		 20: @note[2.13,2.18,] 
+		 21: %v_13->permalink_url %v_13[2.20,] 
+		 22: %v_14[2.21,] %self[2.0,] @canonical_url[] 
+		 23: 
+		 24: @note[2.13,2.18,2.20,] 
+		 25: %v_15->in_reply_to_message %v_15[2.24,] 
+		 26: %v_16->present? %v_16[2.25,] 
+		 27: BRANCH %v_17[2.26,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (JSON) 
+		 2: %self[2.0,] @note[2.13,2.18,2.20,2.24,] 
+		 3: %v_19->in_reply_to_message %v_19[3.2,] 
+		 4: %v_18->parse %v_18[3.1,] %v_20[3.3,] 
+		 5: %self[2.0,] %v_21[3.4,] @reply[] 
+		 6: 
+		 7: %self->render %self[2.0,] 
+		 8: RETURN %v_22[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_blog_infos
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->this_blog %self[2.0,] 
+		 7: %v_3->meta_keywords %v_3[2.6,] 
+		 8: %self[2.0,] %v_4[2.7,] @keywords[] 
+		 9: 
+		 10: %self->this_blog %self[2.0,] 
+		 11: %v_5->statuses_title_template %v_5[2.10,] 
+		 12: %self[2.0,] @notes[] 
+		 13: %self->this_blog %self[2.0,] 
+		 14: %self->params %self[2.0,] 
+		 15: %v_6->to_title %v_8[2.13,] %v_9[2.14,] %v_6[2.11,] %v_7[2.12,] 
+		 16: %self[2.0,] %v_10[2.15,] @page_title[] 
+		 17: 
+		 18: %self->this_blog %self[2.0,] 
+		 19: %v_11->statuses_desc_template %v_11[2.18,] 
+		 20: @notes[2.12,] 
+		 21: %self->this_blog %self[2.0,] 
+		 22: %self->params %self[2.0,] 
+		 23: %v_12->to_title %v_13[2.20,] %v_14[2.21,] %v_15[2.22,] %v_12[2.19,] 
+		 24: %self[2.0,] %v_16[2.23,] @description[] 
+		 25: RETURN %v_16[2.23,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
