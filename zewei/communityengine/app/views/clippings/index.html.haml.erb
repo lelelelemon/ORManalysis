@@ -1,0 +1,55 @@
+<% @section = 'my_clippings' %>
+<% if @is_current_user %>
+  <% widget :id => 'clipping_tools' do %>
+    <h4>
+      <div class="small">
+        <%= :bookmarklet.l %>
+      </div>
+    </h4>
+    <p>
+      <%= :drag_this_to_your_bookmarks_toolbar.l %>
+    </p>
+    <%= link_to "Clip it!", clippings_link, :class => 'btn btn-primary', :title=>"#{configatron.community_name} "+:scrapbook.l %>
+  <% end %>
+  <% widget do %>
+    <h4>
+      <div class="small">
+        <%= :help.l %>
+      </div>
+    </h4>
+    <p>
+      <%= :clippings_let_you_to_save_cool_images_from_around_the_web.l %>
+    </p>
+    <p>
+      <%= :drag_the_bookmarklet.l :site => 'Clip' %>
+    </p>
+    <p>
+      <%= :when_you_see_an_image_you_like_on_the_web.l :site => configatron.community_name %>
+    </p>
+  <% end %>
+<% end %>
+<%= render :partial => 'posts/author_profile', :locals => {:user => @user} %>
+<% widget :id => 'tag_list' do %>
+  <h4>
+    <div class="small">
+      <%= :tags.l %>
+    </div>
+  </h4>
+  <% tag_cloud @tags, %w(nube1 nube2 nube3 nube4 nube5) do |name, css_class| %>
+    <% css_class = css_class + (name.eql?(params[:tag_name]) ? " selected": "") %>
+    <%= link_to name, user_clippings_path(:user_id => @user, :tag_name => name), :class => css_class %>
+  <% end %>
+<% end %>
+<% if @clippings.any? %>
+  <ul class="list-unstyled thumbnails"></ul>
+  <% @clippings.each do |clipping| %>
+    <li class="col-sm-3">
+      <%= render :partial => 'clippings/clipping', :locals => {:clipping => clipping} %>
+    </li>
+  <% end %>
+  <%= paginate @clippings, :theme => 'bootstrap' %>
+<% else %>
+  <p>
+    <%= @is_current_user ? :you_have_no_clippings_use_the_bookmarklet_on_the_right_to_add_some.l : :no_clippings_yet.l %>
+  </p>
+<% end %>

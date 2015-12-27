@@ -1,0 +1,9 @@
+<% @page_title = "#{@user.login}'s "+:favorites.l %>
+<ul class="list-unstyled thumbnails">
+  <% @favorites.each do |f| %>
+    <li class="col-sm-4">
+      <%= render :partial => "favorite", :locals => {:favorite => f} %>
+    </li>
+  <% end %>
+</ul>
+<%= paginate @favorites, :theme => 'bootstrap'      %>

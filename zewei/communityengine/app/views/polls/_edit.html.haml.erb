@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label class="control-label" for="poll_question">
+    <%= :question.l %>
+  </label>
+  <%= text_field_tag 'poll[question]', poll.question, :class => 'text' %>
+</div>
+<div class="form-group">
+  <label class="control-label">
+    <%= :choices.l %>
+  </label>
+  <ol id="options">
+    <% poll.choices.each do |choice| %>
+      <li>
+        <%= text_field_tag "choices[]", choice.description, :class => 'text' %>
+      </li>
+    <% end %>
+  </ol>
+</div>

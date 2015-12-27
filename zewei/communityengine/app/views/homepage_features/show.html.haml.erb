@@ -1,0 +1,45 @@
+<% @page_title = @homepage_feature.title %>
+<p>
+  <%= link_to :back.l, homepage_features_path, :class => 'btn btn-default' %>
+  <%= link_to :edit.l, edit_homepage_feature_path(@homepage_feature), :class => 'btn btn-warning' %>
+  <%= link_to :delete.l, homepage_feature_path(@homepage_feature), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' %>
+</p>
+<dl class="dl-horizontal clearfix">
+  <% unless @homepage_feature.url.blank? %>
+    <dt>
+      <%= :url.l %>
+    </dt>
+    <dd>
+      <%= h @homepage_feature.url %>
+    </dd>
+  <% end %>
+  <% unless @homepage_feature.title.blank? %>
+    <dt>
+      <%= :title.l %>
+    </dt>
+    <dd>
+      <%= h @homepage_feature.title %>
+    </dd>
+  <% end %>
+  <% unless @homepage_feature.description.blank? %>
+    <dt>
+      <%= :description.l %>
+    </dt>
+    <dd>
+      <%= @homepage_feature.description.html_safe %>
+    </dd>
+  <% end %>
+  <dt>
+    <%= :created_at.l %>
+  </dt>
+  <dd>
+    <%= h @homepage_feature.created_at %>
+  </dd>
+  <dt>
+    <%= :updated_at.l %>
+  </dt>
+  <dd>
+    <%= h @homepage_feature.updated_at %>
+  </dd>
+</dl>
+<%= image_tag @homepage_feature.image.url(:large), :class => 'thumbnail' %>
