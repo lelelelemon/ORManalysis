@@ -247,7 +247,7 @@ def search_distinct_func_name(func_name)
 	count = 0
 	class_name = ""
 	$class_map.each do |keyc, valuec|
-		if valuec.getMethods[func_name] != nil
+		if valuec.getMethod(func_name) != nil
 			class_name = keyc
 			count += 1
 		end

@@ -49,6 +49,10 @@ def read_schema(app_dir)
 			attrs = temp_attrs.reject(&:empty?)
 			tbl_name = attrs[1].delete("\"").delete(",")
 			@cur_class = find_class(tbl_name)
+			t_field = Table_field.new("integer", "id")
+			if @cur_class != nil
+				@cur_class.addField(t_field)
+			end
 			if @cur_class == nil
 				puts "read schema: class #{tbl_name} (#{convert_tablename(tbl_name)}) cannot be found!"
 			end

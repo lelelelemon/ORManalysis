@@ -51,12 +51,14 @@ $key_words = Hash.new
 def retrieve_func_calls
 	$class_map.each do |keyc, valuec|
 		valuec.getMethods.each do |key, value|
-			#puts "Investigating #{keyc} . #{key}"
+			puts "Investigating #{keyc} . #{key}"
 			value.getCalls.each do |each_call|
 				each_call.findCaller(keyc, key)
-				#if each_call.caller == nil
-				#	puts "\t\tcaller not found: #{each_call.getObjName} . #{each_call.getFuncName}"
-				#end
+				if each_call.caller == nil
+					puts "\t\tcaller not found: #{each_call.getObjName} . #{each_call.getFuncName}"
+				elsif each_call.caller.getMethod(each_call.getFuncName) == nil and each_call.isQuery == false and each_call.isField == false
+					puts "\t\t* * function not found: #{each_call.getObjName} . #{each_call.getFuncName}"
+				end
 			end
 		end
 	end
@@ -77,6 +79,15 @@ def resolve_upper_class
 				valuec.mergeBeforeFilter(parent)
 				valuec.mergeSave(parent)
 				valuec.mergeCreate(parent)
+			end
+			
+			#create valid? function
+			if valuec.getMethod("valid?") == nil
+				temp_method = Method_class.new("valid?")
+				valuec.getMethod("before_validation").getCalls.each do |c|
+					temp_method.addCall(c)
+				end
+				valuec.addMethod(temp_method)
 			end
 		end
 	end
@@ -100,7 +111,7 @@ def trace_function(start_class, start_function, params, returnv, level)
 		blank = blank + "\t"
 	end
 	class_handler = $class_map[start_class]
-	function_handler = class_handler.getMethods[start_function]
+	function_handler = class_handler.getMethod(start_function)
 	if function_handler == nil
 		if is_transaction_function(start_function)
 			if start_function.include?("begin")
@@ -391,6 +402,11 @@ end
 if options[:print_all] == true
 	$class_map.each do |keyc, valuec|
 		puts "class #{keyc}"
+		if $table_names.find(keyc) != nil
+			valuec.getFields.each do |f|
+				puts "\t#{f.field_name} | #{f.type}"
+			end
+		end
 		#valuec.getMethods.each do |keym, valuem|
 		#	puts "\tdef #{keym}"
 		#end

@@ -56,7 +56,7 @@ def read_dataflow(application_dir=nil)
 end
 
 def find_method(class_name, method_name)
-	return ($class_map[class_name].getMethods)[method_name]	
+	return $class_map[class_name].getMethod(method_name)
 end
 
 def handle_single_dataflow_file(item, class_name)

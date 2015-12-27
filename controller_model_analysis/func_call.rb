@@ -77,6 +77,9 @@ class Function_call
 	def setTableName(tbl_name)
 		@table_name = tbl_name
 	end
+	def isField
+		@is_field
+	end
 	def isQuery
 		@is_query
 	end
@@ -196,7 +199,7 @@ class Function_call
 			end
 			#Rails specific, method can be defined in scope
 			if caller_class == nil
-				if @obj_name.include?("scope") and $class_map[calling_func_class] != nil and $class_map[calling_func_class].getMethods.find(@func_name) != nil
+				if @obj_name.include?("scope") and $class_map[calling_func_class] != nil and $class_map[calling_func_class].getMethod(@func_name) != nil
 					caller_class = calling_func_class
 				end
 			end
@@ -218,7 +221,7 @@ class Function_call
 			if @obj_name == "self"
 				caller_class = calling_func_class
 			end
-		end	
+		end
 		#if @is_query == false and caller_class != nil
 		#	if $class_map[caller_class] != nil and $class_map[caller_class].getMethod(@func_name) == nil
 		#		parent = $class_map[caller_class].getUpperClass
@@ -228,6 +231,21 @@ class Function_call
 		#	end
 		#end
 		self.caller = $class_map[caller_class]
+
+		#test if the function call is actually a field of a table
+		#tracking how the database return value is being used
+		if $table_names.find(caller_class) != nil and self.caller != nil
+			self.caller.getFields.each do |f|
+				#boolean field in table can append ?, for example, user.is_moderator?, when is_moderator is a boolean field in table User
+				if f.field_name == @func_name.delete('?')
+					@is_field = true
+					#puts "Found field: #{@obj_name}(#{caller_class}) . #{@func_name}"
+				end
+				if f.field_name.include?("_id") and f.field_name[0...-3] == @func_name.delete('?')
+					@is_field = true
+				end
+			end
+		end
 		return caller_class
 	end
 
