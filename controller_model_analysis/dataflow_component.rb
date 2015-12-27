@@ -310,6 +310,12 @@ class Basic_block
 						instr.setResolvedCaller(dep_instr.getResolvedString)
 					elsif instr.getCaller.include?('%')==false
 						instr.setResolvedCaller(instr.getCaller)
+					else
+						instr.getDeps.each do |d|
+							if d.getVname.include?('%') == false
+								instr.setResolvedCaller(d.getVname)
+							end
+						end
 					end
 				end
 			elsif instr.instance_of?Const_instr

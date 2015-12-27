@@ -23,7 +23,7 @@ def addOnList(list, node)
 	node.children.each do |c|
 		if c.type.to_s == "assoc"
 			#the first child is "only" or "on"
-			if c.children[1].type.to_s == "list"
+			if c.children[1].type.to_s == "list" or c.children[1].type.to_s == "binary"
 				c.children[1].children.each do |e|
 					f_name = get_left_most_leaf(e).source.to_s
 					list.push(f_name)
@@ -58,6 +58,7 @@ def parse_keyword(astnode, meth)
 		meth.addCall(fcall)
 	end
 	on_list = Array.new
+	cond_list = Array.new
 	fcall_list = Array.new
 	if astnode.children[1].type.to_s == "list"
 		astnode.children[1].children.each do |child|
@@ -74,8 +75,14 @@ def parse_keyword(astnode, meth)
 				#	print "#{o}, "
 				#end
 				#puts ""
+			elsif child.source.to_s.include?(":unless") or child.source.to_s.include?(":if")
+				addOnList(cond_list, child)
 			end
 		end
+	end
+	cond_list.each do |c|
+		fcall = Function_call.new("self", c)
+		fcall_list.push(fcall)
 	end
 	if on_list.length > 0
 		fcall_list.each do |f|
@@ -155,6 +162,19 @@ def parse_attrib(astnode)
 		when "after_save","before_save"
 			parse_keyword(astnode, $cur_class.getMethod("before_save"))
 		#else
+	end
+
+	if astnode.children[0].source.to_s.include?"validates"
+		parse_keyword(astnode, $cur_class.getMethod("before_validation"))
+		if ["validates_uniqueness_of", "validates_presence_of"].include?astnode.children[0].source.to_s
+			if $cur_class.getMethod("before_validation").hasCall?("self", "where") == false
+				fcall = Function_call.new("self", "where")
+				fcall.setIsQuery
+				fcall.setTableName($cur_class.getName)
+				fcall.setQueryType("SELECT")
+				$cur_class.getMethod("before_validation").addCall(fcall)
+			end
+		end
 	end
 end
 

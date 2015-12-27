@@ -56,7 +56,6 @@ def read_dataflow(application_dir=nil)
 end
 
 def find_method(class_name, method_name)
-	#puts "class_name = #{class_name}, method_name = #{method_name}"
 	return ($class_map[class_name].getMethods)[method_name]	
 end
 

@@ -1,4 +1,4 @@
-load 'read_dataflow.rb'
+#load 'read_dataflow.rb'
 $in_view = false
 $in_loop = Array.new
 
@@ -172,8 +172,10 @@ end
 
 def handle_single_call_node2(start_class, start_function, class_handler, call, level)
 	
-		callerv_name = call.findCaller(start_class, start_function)
-		callerv = $class_map[callerv_name]
+		#callerv_name = call.findCaller(start_class, start_function)
+		#callerv = $class_map[callerv_name]
+		#pre-computed after reading all files, in #read_file.rb
+		callerv = call.caller
 		pass_params = ""
 		pass_returnv = ""
 		call.getParams.each do |param|
@@ -196,14 +198,11 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 			if trigger_save?(call) or trigger_create?(call)
 				temp_actions = Array.new
 				if caller_class != nil and trigger_save?(call)
-					$class_map[caller_class].getSave.each do |save_action|
-						temp_actions.push(save_action)
-					end
+						temp_actions.push("before_save")
+						temp_actions.push("before_validation")
 				end
 				if caller_class != nil and trigger_create?(call)
-						$class_map[caller_class].getCreate.each do |create_action|
-							temp_actions.push(create_action)
-						end
+							temp_actions.push("before_create")
 				end
 
 				last_cfg = nil
@@ -228,14 +227,14 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 			end
 				
 		elsif callerv != nil	
-			temp_name = "#{callerv_name}.#{call.getFuncName}"
+			temp_name = "#{callerv.getName}.#{call.getFuncName}"
 
 			if $non_repeat_list.include?(temp_name) == false
 				if is_repeatable_function(call.getFuncName)==false
 					$non_repeat_list.push(temp_name)
 				end
 				temp_node = $cur_node	
-				cur_cfg = trace_query_flow(callerv_name, call.getFuncName, pass_params, pass_returnv, level+1)
+				cur_cfg = trace_query_flow(callerv.getName, call.getFuncName, pass_params, pass_returnv, level+1)
 				if cur_cfg != nil
 					temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
 					cur_cfg.getExplicitReturn.each do |rt|

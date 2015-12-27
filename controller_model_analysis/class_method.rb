@@ -22,6 +22,14 @@ class Method_class
 			@calls.push(c)
 		end
 	end
+	def hasCall?(objn, fcname)
+		@calls.each do |c|
+			if c.getObjName == objn and c.getFuncName == fcname
+				return true
+			end
+		end
+		return false
+	end
 	def setCFG(cfg)
 		@cfg = cfg
 		cfg.setMHandler(self)
@@ -37,13 +45,14 @@ class Class_class
 		@name = name
 		@belongs_to = Array.new
 		@variable = Array.new
-		@upper_class = ""
+		@upper_class = nil
 		@upper_class_instance = nil
 		@method_var_map = Hash.new
 		@before_filter = Array.new
 		@save_actions = Array.new
 		@create_actions = Array.new
 		@scope_list = Array.new
+		@fields = Array.new
 		
 		filter_meth = Method_class.new("before_filter")
 		@methods[filter_meth.getName] = filter_meth
@@ -59,6 +68,12 @@ class Class_class
 		#Remove from original list and insert into according list
 		#@after_create = Array.new
 		#@after_destroy = Array.new
+	end
+	def getFields
+		@fields
+	end
+	def addField(t_field)
+		@fields.push(t_field)
 	end
 	def getName
 		@name

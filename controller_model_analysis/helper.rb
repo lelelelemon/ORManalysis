@@ -52,6 +52,15 @@ def searchTableName(name)
 	end
 	return nil
 end
+
+def searchIncludeTableName(name)
+	$table_names.each do |t|
+		if name.downcase.include?(t.downcase)
+			return t
+		end
+	end
+end
+
 def searchSelf(name, class_name)
 	if name.index('.') != nil and name[0..(name.index('.')-1)] == "self"
 		return class_name
@@ -184,6 +193,8 @@ def get_mvc_name2(filename)
 	n[0] = n[0].upcase
 	if n.include?('_')
 		k = n.index('_')
+		n[k+1] = n[k+1].upcase
+		k = n.rindex('_')
 		n[k+1] = n[k+1].upcase
 		n = n.delete('_')
 	end
