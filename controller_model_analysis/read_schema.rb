@@ -4,23 +4,25 @@ require 'active_support/core_ext/string'
 $schema_file = "../applications/lobsters/schema.rb"
 def convert_tablename(name)
 	_name = Array.new
-	@upper = true
+	_word_list = Array.new
 	name.split('').each do |c|
 		if c == '_'
-			@upper = true
-		elsif @upper
-			_name.push(c.upcase)
-			@upper = false
+			_word_list.push(_name.join)
+			_name = Array.new
 		else
 			_name.push(c)
 		end
 	end
-	temp_name = _name.join
-	return temp_name.singularize
+	_word_list.push(_name.join)
+	_word_list.each do |w|
+		w[0] = w[0].capitalize
+	end
+	_word_list[-1] = _word_list[-1].singularize
+	temp_name = _word_list.join
+	return temp_name
 end
 
 def find_class(tbl_name)
-	puts "Find table name: #{tbl_name}"
 	c_name = convert_tablename(tbl_name)
 	#TODO: How about inherited class?
 	return $class_map[c_name]
@@ -50,6 +52,7 @@ def read_schema(app_dir)
 			if @cur_class == nil
 				puts "read schema: class #{tbl_name} (#{convert_tablename(tbl_name)}) cannot be found!"
 			end
+			$table_names.push(convert_tablename(tbl_name))
 		elsif line.delete(" ").delete("\n") == "end"
 			process_table_loop = false
 			@cur_class = nil
