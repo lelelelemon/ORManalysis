@@ -1,6 +1,7 @@
 require 'yard'
 require 'logger'
 require 'optparse'
+require 'date'
 
 load 'func_call.rb'
 load 'class_method.rb'
@@ -14,6 +15,9 @@ load 'trace_flow.rb'
 load 'query_flow.rb'
 load 'dataflow_component.rb'
 load 'compute_stats.rb'
+load 'random_path.rb'
+load 'util.rb'
+load 'read_schema.rb'
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',
@@ -27,6 +31,7 @@ PATH_ORDER = [
   'lib/**/*.rb'
 ]
 $merged_controllers="merged_controllers"
+$read_schema=true
 
 $cur_funccall = nil
 $cur_position = ""
@@ -46,8 +51,12 @@ $key_words = Hash.new
 def retrieve_func_calls
 	$class_map.each do |keyc, valuec|
 		valuec.getMethods.each do |key, value|
+			#puts "Investigating #{keyc} . #{key}"
 			value.getCalls.each do |each_call|
-				each_call.findCaller(keyc, value.getName)
+				each_call.findCaller(keyc, key)
+				#if each_call.caller == nil
+				#	puts "\t\tcaller not found: #{each_call.getObjName} . #{each_call.getFuncName}"
+				#end
 			end
 		end
 	end
@@ -215,6 +224,9 @@ end
 
 options = {}
 
+pgr = Random.new((DateTime.now.strftime('%Q')).to_i)
+$fast_random = Fast_random.new(pgr.rand(1...104829910))
+
 opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage: ruby parsing.rb [OPTIONS]"
 
@@ -222,7 +234,7 @@ opt_parser = OptionParser.new do |opt|
 		options[:class_name] = class_name
   end
 
-	opt.on("-r","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified","example: --trace CommentsController,create") do |trace_input|
+	opt.on("-c","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified","example: --trace CommentsController,create") do |trace_input|
 		options[:trace_input] = trace_input
   end
 
@@ -250,6 +262,11 @@ opt_parser = OptionParser.new do |opt|
 	opt.on("-t", "--trace-dataflow CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name,function_name; print call graph and data flow to a file, use graphviz to visualize") do |trace_input|
 		options[:trace_flow] = true
 		options[:trace]  = trace_input
+	end
+
+	opt.on("-r", "--random-path CLASS_NAME,FUNCTION_NAME", Array, "instead of calculate the complete control flow graph, select random path at each branch") do |random_path|
+		options[:random_path] = true
+		options[:trace] = random_path
 	end
 
 	opt.on("-g", "--query-graph CLASS_NAME,FUNCTION_NAME",Array,"print out flow graph only containing queries") do |q_input|
@@ -339,17 +356,21 @@ if options[:output] != nil
 end
 
 
-if options[:trace_flow] or options[:stats] or options[:query_graph]
+if options[:trace_flow] or options[:random_path] or options[:stats] or options[:query_graph]
 	start_class = options[:trace][0]
 	start_function = options[:trace][1]
 	level = 0
 
-	if options[:trace_flow]
+	if options[:trace_flow] or options[:random_path]
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w");
 
 		$graph_file.write("digraph #{remove_special_chars(start_class)}_#{start_function} {\n")
-		trace_flow(start_class, start_function, "", "", level)
+		if options[:random_path]
+			print_random_trace(start_class, start_function)
+		else
+			trace_flow(start_class, start_function, "", "", level)
+		end
 		$graph_file.write("}")
 	end
 
@@ -369,10 +390,14 @@ end
 
 if options[:print_all] == true
 	$class_map.each do |keyc, valuec|
-		print "#{keyc}: "
-		valuec.getCreate.each do |c|
-			print "#{c.getFuncName}, "
-		end
-		puts ""
+		puts "class #{keyc}"
+		#valuec.getMethods.each do |keym, valuem|
+		#	puts "\tdef #{keym}"
+		#end
+		#print "#{keyc}: "
+		#valuec.getCreate.each do |c|
+		#	print "#{c.getFuncName}, "
+		#end
+		#puts ""
 	end
 end

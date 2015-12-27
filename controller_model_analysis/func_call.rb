@@ -36,6 +36,7 @@ class Function_call
 		@obj_name = obj
 		@func_name = funcname
 		@is_query = false
+		@is_field = false
 		@query_type = ""
 		@table_name = nil
 		@params = Array.new
@@ -43,7 +44,9 @@ class Function_call
 		@on = Array.new
 		#TODO: this is bad, super should be a derived class of Function_call
 		@super_fname = ""
+		self.caller = nil
 	end
+	attr_accessor :caller
 	def addOn(on_meth)
 		@on.push(on_meth)
 	end
@@ -119,14 +122,17 @@ class Function_call
 
 		caller_class = nil
 		if @is_query == false
-			if @obj_name == "self" 
+			if @obj_name == "self"
 				caller_class = calling_func_class
-				if $class_map[caller_class].getMethod(@func_name) == nil
-					caller_class = $class_map[calling_func_class].getUpperClass
+				while $class_map[caller_class] != nil and $class_map[caller_class].getMethod(@func_name) == nil do
+					caller_class = $class_map[caller_class].getUpperClass
 					#TODO: I hate this, but exception handler should anyway appear somewhere...
-					if $class_map[caller_class] == nil
-						caller_class = nil
-					end
+					#if $class_map[caller_class] == nil
+					#	caller_class = nil
+					#end
+				end
+				if $class_map[caller_class] == nil
+					caller_class = calling_func_class
 				end
 			end
 			#Luckily, the log records the type of c
@@ -199,6 +205,19 @@ class Function_call
 			end
 			#puts "#{calling_func_class}.#{calling_func} issues call #{@obj_name} [of class #{caller_class}] . #{@func_name}"
 			#puts ""
+		else
+			caller_class = searchIncludeTableName(@obj_name)
+			if caller_class == nil
+				if $class_map[calling_func_class].getMethodVarMap.has_key?(calling_func)
+					func_var = $class_map[calling_func_class].getMethodVarMap[calling_func].get_var_map
+					if func_var != nil and func_var.has_key?(@obj_name)
+						caller_class = func_var[@obj_name]
+					end
+				end
+			end
+			if @obj_name == "self"
+				caller_class = calling_func_class
+			end
 		end	
 		#if @is_query == false and caller_class != nil
 		#	if $class_map[caller_class] != nil and $class_map[caller_class].getMethod(@func_name) == nil
@@ -208,7 +227,7 @@ class Function_call
 		#		end
 		#	end
 		#end
-
+		self.caller = $class_map[caller_class]
 		return caller_class
 	end
 
@@ -276,6 +295,8 @@ class Function_call
 		end
 		if @is_query
 			puts "++ CALL DB QUERY: #{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv})"
+		elsif @is_field
+			puts "xx fetch field: #{@obj_name} . #{@func_name}"
 		else
 			puts "#{@obj_name} . #{@func_name} (params: #{temp_params}, returnv: #{@returnv}) #{on_list}"
 			#puts ""
