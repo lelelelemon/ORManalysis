@@ -1,0 +1,34 @@
+= form_for @group, html: { multipart: true } do |form|
+  = error_messages_for(form)
+
+  .row
+    .col-lg-8
+      %ul.nav.nav-tabs
+        %li.active
+          = link_to t('groups.edit.tabs.details'), '#details', data: { toggle: 'tab' }
+        %li
+          = link_to t('groups.edit.tabs.meets'), '#meets', data: { toggle: 'tab' }
+        %li
+          = link_to t('groups.edit.tabs.features'), '#features', data: { toggle: 'tab' }
+        %li
+          = link_to t('groups.edit.tabs.security'), '#security', data: { toggle: 'tab' }
+        - if @logged_in.admin?(:manage_groups)
+          %li
+            = link_to t('groups.edit.tabs.advanced'), '#advanced', data: { toggle: 'tab' }
+
+      .tab-content
+        .tab-pane.active#details
+          = render partial: 'form_details', object: form, as: :form
+        .tab-pane#meets
+          = render partial: 'form_meets', object: form, as: :form
+        .tab-pane#features
+          = render partial: 'form_features', object: form, as: :form
+        .tab-pane#security
+          = render partial: 'form_security', object: form, as: :form
+        - if @logged_in.admin?(:manage_groups)
+          .tab-pane#advanced
+            = render partial: 'form_advanced', object: form, as: :form
+
+    .col-lg-4
+      = photo_upload_for @group do
+        %p= avatar_tag @group, size: :large

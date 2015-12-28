@@ -1,0 +1,71 @@
+- @title = t('checkin.heading')
+
+.row
+  .col-md-3
+    = form_tag search_path, :remote => true, :id => 'search-form' do |form|
+      = hidden_field_tag :select_family, true
+      .form-group
+        = label_tag :family_name, t('checkin.search.label')
+        = text_field_tag :family_name, '', autocomplete: 'off', class: 'form-control'
+      .form-group
+        = button_tag class: 'btn btn-info' do
+          = icon 'fa fa-search'
+          = t('checkin.search.button')
+    #results
+    #no_families_found{ style: 'display:none' }
+      %p
+        %em= t('checkin.search.none_found')
+    #clear_family_form{ style: 'display:none' }
+      = link_to administration_checkin_root_path, class: 'btn btn-warning btn' do
+        = icon 'fa fa-times-circle'
+        = t('checkin.search.clear')
+
+  .col-md-9
+    #checkin-notes.page-body
+      = render_page_content 'help/checkin'
+      .page-controls.push-down
+        = link_to new_checkin_family_path, class: 'btn btn-success' do
+          = icon 'fa fa-plus'
+          = t('checkin.add_family.button')
+        - if @logged_in.admin?(:manage_attendance)
+          = link_to administration_attendance_index_path, class: 'btn btn-info' do
+            = icon 'fa fa-bar-chart-o'
+            = t('checkin.attendance.button')
+        - if @logged_in.admin?(:manage_checkin)
+          = link_to administration_checkin_cards_path, class: 'btn btn-info' do
+            = icon 'fa fa-barcode'
+            = t('checkin.assigned_cards.button')
+          = link_to administration_checkin_times_path, class: 'btn btn-warning' do
+            = icon 'fa fa-clock-o'
+            = t('checkin.times.button')
+          = link_to administration_checkin_labels_path, class: 'btn btn-warning' do
+            = icon 'fa fa-square-o'
+            = t('checkin.labels.button')
+    #notice.callout.callout-info{ style: 'display:none' }
+    #barcode
+    #family
+    #select_family_form
+
+- content_for :js do
+  :javascript
+    $('#search-form').bind('ajax:loading', function(){
+      $('#loading').show();
+    }).bind('ajax:complete', function(){
+      $('#loading').hide();
+    }).bind('ajax:success', function(){
+      setTimeout(function(){
+        $('#checkin-notes').hide()
+        var fams = $('#results input');
+        if(fams.length == 1) selectFamily(fams.val());
+      }, 1);
+    });
+    function selectFamily(id) {
+      $('#loading').show();
+      $.get('#{escape_javascript checkin_families_path}/' + id + '.js', function(){
+        $('#loading').hide();
+      });
+    };
+    $('#results').on('click', 'input', function(){
+      selectFamily($(this).val());
+    });
+    $('#family_name').val('')[0].focus();

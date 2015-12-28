@@ -1,0 +1,10 @@
+- @groups.each do |group|
+  %label.select-a-group
+    = check_box_tag 'ids[]', group.id, false, style: 'float:left', data: { name: group.name }
+    .category
+      = group.category
+    .name
+      = group.name
+      - if group.link_code.present?
+        = icon 'fa fa-link'
+  %br

@@ -1,0 +1,9 @@
+- @title = link_to(@owner.name, @owner) + ' ' + t('.heading')
+
+- if @owner and @logged_in.can_create?(@owner.albums.new)
+  .page-controls
+    = link_to [:new, @owner, :album], class: 'btn btn-success' do
+      = icon 'fa fa-plus'
+      = t('albums.new.button')
+
+= render partial: 'albums'
