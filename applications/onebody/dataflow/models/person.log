@@ -1,0 +1,1267 @@
+SET IRMethod, name = logged_in
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Thread) 
+		 7: %v_3->current %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = logged_in=
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: (Thread) 
+		 8: %v_3->current %v_3[2.7,] 
+		 9: person[2.5,] %v_4[2.8,] 
+		 10: RETURN person[2.5,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = validate_email_unique
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->email %self[2.0,] 
+		 7: %v_3->blank? %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->deleted? %self[2.0,] 
+		 1: %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_4[3.1,2.7,] 
+BB 5
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 8 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: (Person) 
+		 3: %v_7->undeleted %v_7[6.2,] 
+		 4: %self->email %self[2.0,] 
+		 5: %v_9[6.4,] 
+		 6: %v_8->where %v_8[6.3,] %v_10[6.5,] 
+		 7: %v_11->where %v_11[6.6,] 
+		 8: %self->id %self[2.0,] 
+		 9: BRANCH %v_13[6.8,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 11 
+	datadep: 8 6 6 2 
+	instructions:
+		 0: %v_13[8.0,6.8,] 
+		 1: %v_12->not %v_14[9.0,] %v_12[6.7,] 
+		 2: %v_15->where %v_15[9.1,] 
+		 3: %self->family_id %self[2.0,] 
+		 4: BRANCH %v_17[9.3,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+BB 11
+	outgoing: 12 13 
+	datadep: 10 9 9 
+	instructions:
+		 0: %v_17[10.0,9.3,] 
+		 1: %v_16->not %v_16[9.2,] %v_18[11.0,] 
+		 2: %v_19->any? %v_19[11.1,] 
+		 3: BRANCH %v_20[11.2,] 
+BB 12
+	outgoing: 15 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->errors %self[2.0,] 
+		 3: %v_22->add %v_22[12.2,] 
+		 4: RETURN %v_23[12.3,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = guess_last_name
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->family %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->family %self[2.0,] 
+		 3: %v_5->last_name %v_5[3.2,] 
+		 4: %self[2.0,] %v_6[3.3,] 
+		 5: RETURN %v_6[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = others_with_same_email
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->family %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->email %self[2.0,] 
+		 3: %v_6->present? %v_6[3.2,] 
+		 4: BRANCH %v_7[3.3,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %v_5[4.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->family %self[2.0,] 
+		 3: %v_10->people %v_10[6.2,] 
+		 4: %v_11->undeleted %v_11[6.3,] 
+		 5: %self->email %self[2.0,] 
+		 6: %v_13[6.5,] 
+		 7: %v_12->where %v_14[6.6,] %v_12[6.4,] 
+		 8: %v_15->where %v_15[6.7,] 
+		 9: %self->id %self[2.0,] 
+		 10: %v_17[6.9,] 
+		 11: %v_16->not %v_16[6.8,] %v_18[6.10,] 
+		 12: RETURN %v_19[6.11,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %v_9[7.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = clear_primary_emailer_on_others
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->family %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->primary_emailer? %self[2.0,] 
+		 1: %v_4[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->family %self[2.0,] 
+		 3: %v_6->people %v_6[5.2,] 
+		 4: %v_7->undeleted %v_7[5.3,] 
+		 5: %self->email %self[2.0,] 
+		 6: %v_9[5.5,] 
+		 7: %v_8->where %v_8[5.4,] %v_10[5.6,] 
+		 8: %v_11->where %v_11[5.7,] 
+		 9: %self->id %self[2.0,] 
+		 10: %v_13[5.9,] 
+		 11: %v_12->not %v_14[5.10,] %v_12[5.8,] 
+		 12: 
+		 13: %v_15->update_all %v_15[5.11,] %v_16[5.12,] 
+		 14: RETURN %v_17[5.13,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = name
+BB 1
+	outgoing: 13 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] 
+		 7: %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @name[] 
+		 1: %v_5[3.0,] 
+BB 4
+	outgoing: 5 12 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->deleted? %self[2.0,] 
+		 2: BRANCH %v_6[5.1,] 
+BB 6
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+BB 7
+	outgoing: 8 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->suffix %self[2.0,] 
+		 2: BRANCH %v_8[7.1,] 
+BB 8
+	outgoing: 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->first_name %self[2.0,] 
+		 2: 
+		 3: %self->last_name %self[2.0,] 
+		 4: 
+		 5: %self->suffix %self[2.0,] 
+		 6: %v_13[8.5,] %v_9[8.1,] %v_10[8.2,] %v_11[8.3,] %v_12[8.4,] 
+		 7: 
+BB 9
+	outgoing: 10 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->first_name %self[2.0,] 
+		 2: 
+		 3: %self->last_name %self[2.0,] 
+		 4: %v_15[9.1,] %v_16[9.2,] %v_17[9.3,] 
+		 5: %v_18[9.4,] 
+BB 10
+	outgoing: 11 
+	datadep: 9 8 
+	instructions:
+		 0: %v_14[9.5,8.6,] 
+BB 11
+	outgoing: 13 
+	datadep: 2 10 6 10 6 
+	instructions:
+		 0: %self[2.0,] %v_7[10.0,6.1,] @name[3.0,] 
+		 1: RETURN %v_7[10.0,6.1,] 
+BB 12
+	outgoing: 13 
+	datadep: 3 
+	instructions:
+		 0: RETURN %v_5[3.0,] 
+BB 13
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_email
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->email %self[2.0,] 
+		 7: %v_3->present? %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: (Mail) 
+		 3: %v_6[3.2,] 
+		 4: %v_7[3.3,] 
+BB 4
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 7 
+	datadep: 3 
+	instructions:
+		 0: %v_6[3.2,] 
+BB 7
+	outgoing: 8 
+	datadep: 2 6 3 2 
+	instructions:
+		 0: %self->email %self[2.0,] 
+		 1: %v_7->new %v_8[7.0,] %v_7[6.0,3.3,] 
+		 2: %v_9->tap %self[2.0,] %v_9[7.1,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->name %self[2.0,] 
+		 2: %cl_1_3[3.1,] address[2.2,] 
+		 3: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %v_10[7.2,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = inspect
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->id %self[2.0,] 
+		 8: 
+		 9: %self->name %self[2.0,] 
+		 10: 
+		 11: %v_4[2.7,] %v_5[2.8,] %v_3[2.6,] %v_6[2.9,] %v_7[2.10,] 
+		 12: RETURN %v_8[2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = able_to_sign_in?
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->active? %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->pending? %self[2.0,] 
+		 1: %v_4[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.6,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self->adult_or_consent? %self[2.0,] 
+		 1: %v_5[5.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 5 3 2 
+	instructions:
+		 0: BRANCH %v_3[5.1,3.1,2.6,] 
+BB 7
+	outgoing: 9 
+	datadep: 2 
+	instructions:
+		 0: %self->email %self[2.0,] 
+		 1: %v_6->present? %v_6[7.0,] 
+		 2: RETURN %v_7[7.1,] 
+BB 8
+	outgoing: 9 
+	datadep: 5 3 2 
+	instructions:
+		 0: RETURN %v_3[5.1,3.1,2.6,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = messages_enabled?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->read_attribute %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->email %self[2.0,] 
+		 1: %v_4->present? %v_4[3.0,] 
+		 2: RETURN %v_5[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_3[2.6,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = parental_consent?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->parental_consent %self[2.0,] 
+		 7: %v_3->present? %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = adult_or_consent?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->adult? %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->parental_consent? %self[2.0,] 
+		 1: RETURN %v_4[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_3[2.6,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = visible?
+BB 1
+	outgoing: 17 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: fam[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 3 2 3 2 
+	instructions:
+		 0: 
+		 1: fam[3.0,2.5,] 
+		 2: fam[3.0,2.5,] 
+		 3: BRANCH fam[3.0,2.5,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self->family %self[2.0,] 
+		 1: %v_5[5.0,] 
+		 2: %v_5[5.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 5 3 2 5 3 2 
+	instructions:
+		 0: 
+		 1: fam[5.1,3.0,2.5,] 
+		 2: BRANCH fam[5.1,3.0,2.5,] 
+BB 7
+	outgoing: 8 
+	datadep: 5 3 2 
+	instructions:
+		 0: fam->visible? fam[5.1,3.0,2.5,] 
+		 1: %v_7[7.0,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 7 6 
+	instructions:
+		 0: BRANCH %v_6[7.1,6.1,] 
+BB 9
+	outgoing: 10 
+	datadep: 2 
+	instructions:
+		 0: %self->read_attribute %self[2.0,] 
+		 1: %v_8[9.0,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 9 7 6 
+	instructions:
+		 0: BRANCH %v_6[9.1,7.1,6.1,] 
+BB 11
+	outgoing: 12 
+	datadep: 2 
+	instructions:
+		 0: %self->adult_or_consent? %self[2.0,] 
+		 1: %v_9[11.0,] 
+BB 12
+	outgoing: 13 16 
+	datadep: 11 9 7 6 
+	instructions:
+		 0: BRANCH %v_6[11.1,9.1,7.1,6.1,] 
+BB 13
+	outgoing: 14 15 
+	datadep: 2 
+	instructions:
+		 0: %self->active? %self[2.0,] 
+		 1: BRANCH %v_10[13.0,] 
+BB 14
+	outgoing: 15 
+	datadep: 2 
+	instructions:
+		 0: %self->pending? %self[2.0,] 
+		 1: %v_11[14.0,] 
+BB 15
+	outgoing: 17 
+	datadep: 14 13 
+	instructions:
+		 0: RETURN %v_10[14.1,13.0,] 
+BB 16
+	outgoing: 17 
+	datadep: 11 9 7 6 
+	instructions:
+		 0: RETURN %v_6[11.1,9.1,7.1,6.1,] 
+BB 17
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = gender=
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: g->present? g[2.5,] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: g->capitalize g[2.5,] 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+BB 5
+	outgoing: 6 
+	datadep: 2 4 3 4 3 
+	instructions:
+		 0: %self[2.0,] %v_4[4.0,3.0,] 
+		 1: RETURN %v_4[4.0,3.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_feed_code
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+BB 3
+	outgoing: 5 4 
+	datadep: 2 
+	instructions:
+		 0: %self->loop %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (SecureRandom) 
+		 2: %cl_1_3[3.1,] 
+		 3: 
+		 4: %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 5: %self[2.0,] %cl_1_6[3.4,] 
+		 6: 
+		 7: (Person) 
+		 8: %self->feed_code %self[3.5,] 
+		 9: %cl_1_8[3.8,] 
+		 10: %cl_1_7->where %cl_1_7[3.7,] %cl_1_9[3.9,] 
+		 11: %cl_1_10->any? %cl_1_10[3.10,] 
+		 12: BRANCH %cl_1_11[3.11,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %cl_1_12[4.0,] 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_13[7.0,] 
+		 2: RETURN %cl_1_14[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_4[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 4 3 
+	instructions:
+		 0: RETURN %v_3[4.1,3.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show_attribute_to?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: %self->send %self[2.0,] attribute[2.5,] 
+		 9: %v_3->present? %v_3[2.8,] 
+		 10: BRANCH %v_4[2.9,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 2 2 
+	instructions:
+		 0: %self->share_attribute_with? %self[2.0,] attribute[2.5,] who[2.6,] 
+		 1: RETURN %v_5[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_4[2.9,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = share_attribute_with?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: 
+		 10: %v_4[2.9,] attribute[2.5,] %v_3[2.8,] 
+		 11: %self->respond_to? %self[2.0,] %v_5[2.10,] 
+		 12: %v_6->! %v_6[2.11,] 
+		 13: BRANCH %v_7[2.12,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: attribute[2.5,] %v_8[3.0,] %v_9[3.1,] 
+		 3: %self->send %self[2.0,] who[2.6,] %v_10[3.2,] 
+		 4: RETURN %v_11[3.3,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_7[2.12,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = age_group
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->classes %self[2.0,] 
+		 7: %v_3->to_s %v_3[2.6,] 
+		 8: 
+		 9: %v_4->split %v_4[2.7,] %v_5[2.8,] 
+		 10: 
+		 11: %v_6->grep %v_6[2.9,] 
+		 12: %v_8->first %v_8[2.11,] 
+		 13: %v_9[2.12,] 
+		 14: 
+		 15: BRANCH %v_9[2.12,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: code->match code[2.13,] 
+		 4: %v_12[3.3,] 
+		 5: RETURN %v_13[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = attendance_today
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->attendance_records %self[2.0,] 
+		 7: (Date) 
+		 8: %v_4->today %v_4[2.7,] 
+		 9: %v_3->on_date %v_5[2.8,] %v_3[2.6,] 
+		 10: %v_6->includes %v_6[2.9,] 
+		 11: %v_7->order %v_7[2.10,] 
+		 12: RETURN %v_8[2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->update_attribute %self[2.0,] 
+		 2: 
+		 3: %self->updates %self[2.0,] 
+		 4: %cl_1_4->destroy_all %cl_1_4[3.3,] 
+		 5: RETURN %cl_1_5[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = record_last_seen_stream_item
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: BRANCH stream_item[2.5,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: stream_item->created_at stream_item[2.5,] 
+		 3: %self->last_seen_stream_item %self[2.0,] 
+		 4: %v_5->try %v_5[3.3,] 
+		 5: BRANCH %v_6[3.4,] 
+BB 4
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Time) 
+		 1: %v_7->now %v_7[6.0,] 
+		 2: %v_8[6.1,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 3 6 3 
+	instructions:
+		 0: %v_4[3.2,] %v_6[6.2,3.4,] 
+		 1: BRANCH %v_9[7.0,] 
+BB 8
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 11 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->update_attribute stream_item[2.5,] %self[2.0,] 
+		 3: RETURN %v_11[9.2,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new_with_default_sharing
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: (HashWithIndifferentAccess) 
+		 8: %v_3->new %v_3[2.7,] attrs[2.5,] 
+		 9: %self->default_sharing_attributes %self[2.0,] 
+		 10: %v_4->merge %v_4[2.8,] %v_5[2.9,] 
+		 11: %self->new %self[2.0,] %v_6[2.10,] 
+		 12: RETURN %v_7[2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = default_sharing_attributes
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Setting) 
+		 7: %v_3->get %v_3[2.6,] 
+		 8: (Setting) 
+		 9: %v_5->get %v_5[2.8,] 
+		 10: (Setting) 
+		 11: %v_7->get %v_7[2.10,] 
+		 12: (Setting) 
+		 13: %v_9->get %v_9[2.12,] 
+		 14: (Setting) 
+		 15: %v_11->get %v_11[2.14,] 
+		 16: (Setting) 
+		 17: %v_13->get %v_13[2.16,] 
+		 18: (Setting) 
+		 19: %v_15->get %v_15[2.18,] 
+		 20: (Setting) 
+		 21: %v_17->get %v_17[2.20,] 
+		 22: %v_14[2.17,] %v_16[2.19,] %v_4[2.7,] %v_18[2.21,] %v_8[2.11,] %v_6[2.9,] %v_10[2.13,] %v_12[2.15,] 
+		 23: RETURN %v_19[2.22,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = business_categories
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->where %self[2.0,] %v_3[2.6,] 
+		 8: %v_4->order %v_4[2.7,] 
+		 9: 
+		 10: %v_5->pluck %v_5[2.8,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = custom_types
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->where %self[2.0,] %v_3[2.6,] 
+		 8: %v_4->order %v_4[2.7,] 
+		 9: 
+		 10: %v_5->pluck %v_5[2.8,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

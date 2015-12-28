@@ -1,0 +1,307 @@
+SET IRMethod, name = initialize
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: %self[2.0,] album[2.5,] @album[] 
+		 10: 
+		 11: %self[2.0,] params[2.6,] @params[] 
+		 12: 
+		 13: %self[2.0,] user[2.7,] @user[] 
+		 14: 
+		 15: %self[2.0,] @success[] 
+		 16: 
+		 17: %self[2.0,] @fail[] 
+		 18: 
+		 19: (ActiveModel) 
+		 20: %v_3[2.19,] 
+		 21: %v_4[2.20,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %v_3[2.19,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 3 2 2 
+	instructions:
+		 0: %v_4->new %self[2.0,] %v_4[3.0,2.20,] 
+		 1: %self[2.0,] %v_5[4.0,] @errors[] 
+		 2: RETURN %v_5[4.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = save
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] @album[] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @params[] 
+		 3: %v_10[3.2,] 
+		 4: %self->Array %self[2.0,] %v_11[3.3,] 
+		 5: %v_12->each %self[2.0,] %v_12[3.4,] 
+CLOSURE BEGIN: @album[2.7,] @fail[] @params[3.2,] @errors[] 
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 16 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @album[] 
+		 2: %cl_1_3->pictures %cl_1_3[3.1,] 
+		 3: %cl_1_4->new %cl_1_4[3.2,] 
+		 4: %cl_1_5[3.3,] 
+		 5: 
+		 6: (Authority) 
+		 7: %self[2.0,] @user[] 
+		 8: %cl_1_6->enforce %cl_1_5[3.3,] %cl_1_6[3.6,] %cl_1_7[3.7,] 
+		 9: 
+		 10: @user[3.7,] 
+		 11: picture[3.4,] %cl_1_9[3.10,] 
+		 12: 
+		 13: picture[3.4,3.11,] pic[2.2,] 
+		 14: 
+		 15: picture->save picture[3.4,3.11,3.13,] 
+		 16: 
+		 17: picture->photo picture[3.4,3.11,3.13,] 
+		 18: %cl_1_11->exists? %cl_1_11[3.17,] 
+		 19: BRANCH %cl_1_12[3.18,] 
+BB 4
+	outgoing: 15 16 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @success[] 
+		 2: %cl_1_13[4.1,] 
+		 3: @success[4.1,] 
+		 4: 
+BB 5
+	outgoing: 6 16 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @fail[] 
+		 2: %cl_1_15[5.1,] 
+		 3: @fail[5.1,] 
+		 4: 
+		 5: %self[2.0,] @errors[] 
+		 6: pic->original_filename pic[2.2,] 
+		 7: %cl_1_17->add %cl_1_18[5.6,] %cl_1_17[5.5,] 
+		 8: 
+		 9: 
+BB 6
+	outgoing: 8 9 
+	datadep: 3 3 3 5 
+	instructions:
+		 0: 
+		 1: picture->destroy picture[3.4,3.11,3.13,] 
+		 2: %cl_1_23[6.1,] 
+		 3: 
+		 4: %cl_1_20[5.9,] 
+BB 8
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 11 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_1_24[9.1,] 
+		 3: BRANCH %cl_1_25[9.2,] 
+BB 10
+	outgoing: 13 18 
+	datadep: 9 
+	instructions:
+		 0: %cl_1_24[9.1,] 
+BB 11
+	outgoing: 12 13 
+	datadep: 5 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_1_20[5.9,] 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+BB 13
+	outgoing: 16 18 
+	datadep: 5 
+	instructions:
+		 0: 
+		 1: %cl_1_26[13.0,] %cl_1_20[5.9,] 
+		 2: %cl_1_26[13.0,] 
+BB 14
+	outgoing: 18 
+	datadep: 6 11 
+	instructions:
+		 0: RETURN %cl_1_22[6.2,11.0,] 
+BB 15
+	outgoing: 18 
+	datadep: 4 
+	instructions:
+		 0: RETURN %cl_1_14[4.2,] 
+BB 16
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_28[16.0,] 
+		 2: RETURN %cl_1_29[16.1,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+		 7: %self[2.0,] @fail[] 
+		 8: %v_14[3.7,] 
+		 9: RETURN %v_15[3.8,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @errors[] 
+		 1: (I18n) 
+		 2: 
+		 3: %v_6->t %v_6[4.1,] %v_7[4.2,] 
+		 4: %v_5->add %v_5[4.0,] %v_8[4.3,] 
+		 5: 
+		 6: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = read_attribute_for_validation
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: %v_3[2.7,] attr[2.5,] 
+		 9: %v_4->to_sym %v_4[2.8,] 
+		 10: %self->instance_variable_get %self[2.0,] %v_5[2.9,] 
+		 11: RETURN %v_6[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = human_attribute_name
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: options[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: RETURN attr[2.5,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = lookup_ancestors
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] 
+		 7: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

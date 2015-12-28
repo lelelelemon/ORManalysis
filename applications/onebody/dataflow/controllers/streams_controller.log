@@ -1,0 +1,408 @@
+SET IRMethod, name = show
+BB 1
+	outgoing: 20 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @logged_in[] 
+		 7: %v_3->active? %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->params %self[2.0,] 
+		 3: %v_8[3.2,] 
+		 4: BRANCH %v_9[3.3,] 
+BB 4
+	outgoing: 20 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @logged_in[2.6,] 
+		 2: %self->redirect_to %self[2.0,] %v_6[4.1,] 
+		 3: 
+		 4: RETURN 
+BB 6
+	outgoing: 17 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (StreamItem) 
+		 2: 
+		 3: %v_11[6.2,] 
+		 4: %v_10->where %v_10[6.1,] %v_12[6.3,] 
+		 5: %self->params %self[2.0,] 
+		 6: %v_14[6.5,] 
+		 7: %v_13->find %v_13[6.4,] %v_15[6.6,] 
+		 8: %self[2.0,] %v_16[6.7,] @stream_group[] 
+		 9: 
+		 10: @stream_group[6.8,] 
+		 11: %v_17->items %v_17[6.10,] 
+		 12: %self[2.0,] %v_18[6.11,] @stream_items[] 
+		 13: 
+BB 7
+	outgoing: 8 12 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %v_19[7.1,] 
+		 3: BRANCH %v_20[7.2,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (Group) 
+		 2: %self->params %self[2.0,] 
+		 3: %v_22[8.2,] 
+		 4: %v_21->find %v_21[8.1,] %v_23[8.3,] 
+		 5: %v_24[8.4,] %self[2.0,] @group[] 
+		 6: 
+		 7: %self[2.0,] @logged_in[2.6,] 
+		 8: @group[8.5,] 
+		 9: %v_25->can_read? %v_25[8.7,] %v_26[8.8,] 
+		 10: BRANCH %v_27[8.9,] 
+BB 9
+	outgoing: 11 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @group[8.5,8.8,] 
+		 1: %v_28->stream_items %v_28[9.0,] 
+		 2: 
+BB 10
+	outgoing: 11 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @group[8.5,8.8,] 
+		 1: %v_30->stream_items %v_30[10.0,] 
+		 2: %v_31->none %v_31[10.1,] 
+		 3: %v_32[10.2,] 
+BB 11
+	outgoing: 16 
+	datadep: 2 10 9 
+	instructions:
+		 0: %self[2.0,] %v_29[10.3,9.1,] @stream_items[] 
+		 1: 
+BB 12
+	outgoing: 13 14 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (StreamItem) 
+		 2: %self[2.0,] @logged_in[2.6,] 
+		 3: %v_33->shared_with %v_33[12.1,] %v_34[12.2,] 
+		 4: %v_35[12.3,] %self[2.0,] @stream_items[] 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_36[12.6,] 
+		 8: BRANCH %v_37[12.7,] 
+BB 13
+	outgoing: 15 
+	datadep: 2 2 
+	instructions:
+		 0: %self[2.0,] @stream_items[12.4,] 
+		 1: %self->params %self[2.0,] 
+		 2: %v_39[13.1,] 
+		 3: %v_40[13.2,] 
+		 4: %v_38->where! %v_38[13.0,] %v_41[13.3,] 
+		 5: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+BB 15
+	outgoing: 16 
+	datadep: 14 13 
+	instructions:
+		 0: %v_42[14.0,13.4,] 
+BB 16
+	outgoing: 17 
+	datadep: 15 10 9 
+	instructions:
+		 0: %v_29[15.0,10.3,9.1,] 
+BB 17
+	outgoing: 18 19 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @stream_items[6.12,11.0,13.0,12.4,] 
+		 2: %v_43->count %v_43[17.1,] 
+		 3: %self[2.0,] %v_44[17.2,] @count[] 
+		 4: 
+		 5: @stream_items[17.1,] 
+		 6: %self->params %self[2.0,] 
+		 7: %v_46[17.6,] 
+		 8: %self->params %self[2.0,] 
+		 9: %v_48[17.8,] 
+		 10: BRANCH %v_49[17.9,] 
+BB 18
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: 
+BB 19
+	outgoing: 20 
+	datadep: 17 18 17 17 2 2 2 
+	instructions:
+		 0: %v_47[17.7,] %v_49[18.0,17.9,] 
+		 1: %v_45->paginate %v_50[19.0,] %v_45[17.5,] 
+		 2: %self[2.0,] %v_51[19.1,] @stream_items[17.1,17.5,17.1,17.5,] 
+		 3: 
+		 4: %self->record_last_seen_stream_item %self[2.0,] 
+		 5: 
+		 6: %self->respond_to %self[2.0,] 
+CLOSURE BEGIN: @logged_in[4.1,8.7,12.2,] @count[17.3,] @stream_items[19.2,] @group[9.0,10.0,] @stream_group[6.8,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: format->html format[2.2,] 
+		 2: 
+		 3: format->xml %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->render %cl_2_3[3.1,] %self[2.0,] 
+		 3: RETURN %cl_2_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: 
+		 5: format->json %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->html_for_json %self[2.0,] 
+		 2: %self[2.0,] @stream_items[] 
+		 3: %self[2.0,] @count[] 
+		 4: 
+		 5: @stream_items[3.2,] 
+		 6: %self->timeline_has_more? %self[2.0,] %cl_3_6[3.5,] 
+		 7: BRANCH %cl_3_7[3.6,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: %self[2.0,] @stream_items[3.2,3.5,] 
+		 1: %cl_3_8->current_page %cl_3_8[4.0,] 
+		 2: %cl_3_9[4.1,] 
+		 3: %self->next_timeline_url %self[2.0,] %cl_3_10[4.2,] 
+		 4: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 3 3 3 5 4 2 
+	instructions:
+		 0: %cl_3_3[3.1,] %cl_3_4[3.2,] %cl_3_5[3.3,] %cl_3_11[5.0,4.3,] 
+		 1: %cl_3_12[6.0,] 
+		 2: %self->render %self[2.0,] %cl_3_13[6.1,] 
+		 3: RETURN %cl_3_14[6.2,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_15[7.0,] 
+		 2: RETURN %cl_3_16[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %cl_1_5[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: RETURN %v_53[19.6,] 
+BB 20
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = html_for_json
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] @stream_group[] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: %self[2.0,] @stream_items[] 
+		 1: %v_4->map %self[2.0,] %v_4[3.0,] 
+CLOSURE BEGIN: @stream_items[3.0,] @stream_group[2.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: si->decorate si[2.2,] 
+		 2: %cl_1_3->to_html %cl_1_3[3.1,] 
+		 3: RETURN %cl_1_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: %v_5->join %v_5[3.1,] 
+		 3: RETURN %v_6[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->view_context %self[2.0,] 
+		 2: %self[2.0,] @stream_items[] 
+		 3: %v_7->timeline %v_8[4.2,] %v_7[4.1,] 
+		 4: RETURN %v_9[4.3,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = record_last_seen_stream_item
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @logged_in[] 
+		 7: %v_3->last_seen_stream_item %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: 
+		 10: @logged_in[2.6,] 
+		 11: %self[2.0,] @stream_items[] 
+		 12: %v_6->first %v_6[2.11,] 
+		 13: %v_5->record_last_seen_stream_item %v_5[2.10,] %v_7[2.12,] 
+		 14: 
+		 15: @logged_in[2.6,2.10,] 
+		 16: was[2.8,] %v_9[2.15,] 
+		 17: RETURN was[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

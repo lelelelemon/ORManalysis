@@ -1,0 +1,457 @@
+SET IRMethod, name = initialize
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] params[2.5,] @params[] 
+		 8: 
+		 9: (Site) 
+		 10: %v_3->current %v_3[2.9,] 
+		 11: %self[2.0,] %v_4[2.10,] @site[] 
+		 12: RETURN %v_4[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = execute!
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Person) 
+		 7: %v_3->transaction %self[2.0,] %v_3[2.6,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 12 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (Person) 
+		 2: %cl_1_3->new %cl_1_3[3.1,] 
+		 3: %cl_1_4[3.2,] %self[2.0,] @person[] 
+		 4: 
+		 5: %self->assign_params_to_person %self[2.0,] 
+		 6: 
+		 7: %self->update_host! %self[2.0,] 
+		 8: BRANCH %cl_1_6[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 5
+	outgoing: 12 14 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @site[] 
+		 2: %cl_1_8->errors %cl_1_8[5.1,] 
+		 3: 
+		 4: @site[5.1,] 
+		 5: %cl_1_10->errors %cl_1_10[5.4,] 
+		 6: %cl_1_11->values %cl_1_11[5.5,] 
+		 7: %cl_1_12->each %cl_1_12[5.6,] %self[2.0,] 
+CLOSURE BEGIN: @person[3.3,] @site[5.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @person[] 
+		 2: %cl_2_3->errors %cl_2_3[3.1,] 
+		 3: %cl_2_4->add %cl_2_4[3.2,] msg[2.2,] 
+		 4: RETURN %cl_2_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_6[4.0,] 
+		 2: RETURN %cl_2_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: 
+		 9: 
+		 10: 
+BB 6
+	outgoing: 7 8 12 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->update_person! %self[2.0,] 
+		 2: BRANCH %cl_1_14[6.1,] 
+BB 7
+	outgoing: 12 14 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->update_admin_settings! %self[2.0,] 
+		 2: 
+		 3: %self->update_stream_item! %self[2.0,] 
+		 4: 
+		 5: 
+		 6: RETURN 
+BB 8
+	outgoing: 9 10 12 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->puts %self[2.0,] %cl_1_18[8.1,] 
+		 3: 
+		 4: (ActiveRecord) 
+		 5: %cl_1_20[8.4,] 
+		 6: %cl_1_21[8.5,] 
+BB 9
+	outgoing: 10 12 
+	datadep: 8 
+	instructions:
+		 0: %cl_1_20[8.4,] 
+BB 10
+	outgoing: 12 14 
+	datadep: 2 9 8 
+	instructions:
+		 0: %self->raise %self[2.0,] %cl_1_21[9.0,8.5,] 
+		 1: 
+		 2: RETURN 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_23[12.0,] 
+		 2: RETURN %cl_1_24[12.1,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_4[2.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_5[4.0,] 
+		 2: RETURN %v_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = assign_params_to_person
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @person[] 
+		 7: %self[2.0,] @params[] 
+		 8: %v_4[2.7,] 
+		 9: %v_5[2.8,] 
+		 10: %v_3[2.6,] %v_6[2.9,] 
+		 11: 
+		 12: @person[2.6,] 
+		 13: @params[2.7,] 
+		 14: %v_8[2.13,] 
+		 15: %v_9[2.14,] 
+		 16: %v_7[2.12,] %v_10[2.15,] 
+		 17: 
+		 18: @person[2.6,2.12,] 
+		 19: @params[2.7,2.13,] 
+		 20: %v_12[2.19,] 
+		 21: %v_13[2.20,] 
+		 22: %v_14[2.21,] %v_11[2.18,] 
+		 23: RETURN %v_14[2.21,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_person!
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @person[] 
+		 7: %self[2.0,] @params[] 
+		 8: %v_4[2.7,] 
+		 9: %v_5[2.8,] 
+		 10: %v_6->presence %v_6[2.9,] 
+		 11: %v_3[2.6,] %v_7[2.10,] 
+		 12: 
+		 13: @person[2.6,] 
+		 14: @params[2.7,] 
+		 15: %v_9[2.14,] 
+		 16: %v_10[2.15,] 
+		 17: %v_11->presence %v_11[2.16,] 
+		 18: %v_8[2.13,] %v_12[2.17,] 
+		 19: 
+		 20: @person[2.6,2.13,] 
+		 21: %v_13->password %v_13[2.20,] 
+		 22: BRANCH %v_14[2.21,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @person[2.6,2.13,2.20,] 
+		 1: %v_15->password %v_15[3.0,] 
+		 2: @person[3.0,] 
+		 3: %v_17->password_confirmation %v_17[3.2,] 
+		 4: %v_16[3.1,] %v_18[3.3,] 
+		 5: %v_19[3.4,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_14[3.5,2.21,] 
+BB 5
+	outgoing: 8 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @person[3.0,3.2,2.6,2.13,2.20,] 
+		 3: %v_27->email %v_27[5.2,] 
+		 4: %v_28->present? %v_28[5.3,] 
+		 5: BRANCH %v_29[5.4,] 
+BB 6
+	outgoing: 11 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @person[3.0,3.2,2.6,2.13,2.20,] 
+		 2: %v_21->errors %v_21[6.1,] 
+		 3: (I18n) 
+		 4: 
+		 5: %v_23->t %v_24[6.4,] %v_23[6.3,] 
+		 6: %v_22->add %v_25[6.5,] %v_22[6.2,] 
+		 7: 
+		 8: RETURN 
+BB 8
+	outgoing: 11 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @person[5.2,] 
+		 3: %v_37[8.2,] 
+		 4: 
+		 5: @person[8.2,] 
+		 6: %v_38[8.5,] 
+		 7: 
+		 8: @person[8.2,8.5,] 
+		 9: (Family) 
+		 10: @person[8.2,8.5,8.8,] 
+		 11: %v_41->name %v_41[8.10,] 
+		 12: @person[8.2,8.5,8.8,8.10,] 
+		 13: %v_43->last_name %v_43[8.12,] 
+		 14: %v_42[8.11,] %v_44[8.13,] 
+		 15: %v_40->create! %v_40[8.9,] %v_45[8.14,] 
+		 16: %v_46[8.15,] %v_39[8.8,] 
+		 17: 
+		 18: @person[8.2,8.5,8.8,8.10,8.12,] 
+		 19: (Admin) 
+		 20: 
+		 21: %v_48->create! %v_48[8.19,] %v_49[8.20,] 
+		 22: %v_47[8.18,] %v_50[8.21,] 
+		 23: 
+		 24: @person[8.2,8.5,8.8,8.10,8.12,8.18,] 
+		 25: %v_51->save %v_51[8.24,] 
+		 26: RETURN %v_52[8.25,] 
+BB 9
+	outgoing: 11 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @person[5.2,] 
+		 2: %v_31->errors %v_31[9.1,] 
+		 3: (I18n) 
+		 4: 
+		 5: %v_33->t %v_33[9.3,] %v_34[9.4,] 
+		 6: %v_32->add %v_35[9.5,] %v_32[9.2,] 
+		 7: 
+		 8: RETURN 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_host!
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @params[] 
+		 7: %v_3[2.6,] 
+		 8: %v_4->present? %v_4[2.7,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @site[] 
+		 2: %self[2.0,] @params[2.6,] 
+		 3: %v_7[3.2,] 
+		 4: %v_8[3.3,] %v_6[3.1,] 
+		 5: 
+		 6: @site[3.1,] 
+		 7: %v_9->save %v_9[3.6,] 
+		 8: RETURN %v_10[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @person[] 
+		 2: %v_11->errors %v_11[4.1,] 
+		 3: (I18n) 
+		 4: 
+		 5: %v_13->t %v_13[4.3,] %v_14[4.4,] 
+		 6: %v_12->add %v_15[4.5,] %v_12[4.2,] 
+		 7: 
+		 8: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_admin_settings!
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Setting) 
+		 7: 
+		 8: 
+		 9: %self[2.0,] @person[] 
+		 10: %v_6->email %v_6[2.9,] 
+		 11: %v_3->set_global %v_4[2.7,] %v_5[2.8,] %v_3[2.6,] %v_7[2.10,] 
+		 12: 
+		 13: (Setting) 
+		 14: 
+		 15: 
+		 16: @person[2.9,] 
+		 17: %v_12->email %v_12[2.16,] 
+		 18: %v_9->set %v_13[2.17,] %v_9[2.13,] %v_10[2.14,] %v_11[2.15,] 
+		 19: RETURN %v_14[2.18,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_stream_item!
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @site[] 
+		 7: %self[2.0,] @person[] 
+		 8: %v_3->update_stream_item %v_4[2.7,] %v_3[2.6,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

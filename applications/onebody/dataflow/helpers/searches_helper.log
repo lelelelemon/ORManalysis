@@ -1,0 +1,188 @@
+SET IRMethod, name = show_birthdays?
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->params %self[2.0,] 
+		 3: %v_6[3.2,] 
+		 4: %v_7[3.3,] 
+		 5: %v_8->present? %v_8[3.4,] 
+		 6: BRANCH %v_9[3.5,] 
+BB 4
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 8 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_10[6.0,] 
+		 2: %v_11[6.1,] 
+		 3: %v_12->present? %v_12[6.2,] 
+		 4: RETURN %v_13[6.3,] 
+BB 7
+	outgoing: 8 
+	datadep: 3 
+	instructions:
+		 0: RETURN %v_9[3.5,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show_testimonies?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: %v_4->present? %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = types_for_select
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->t %self[2.0,] %v_3[2.6,] 
+		 8: %v_4->invert %v_4[2.7,] 
+		 9: %v_5->to_a %v_5[2.8,] 
+		 10: 
+		 11: (Setting) 
+		 12: %v_7->get %v_7[2.11,] 
+		 13: BRANCH %v_8[2.12,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: (Person) 
+		 1: %v_9->custom_types %v_9[3.0,] 
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_11[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 4 3 
+	instructions:
+		 0: %v_6[2.9,] %v_10[4.1,3.1,] 
+		 1: RETURN %v_12[5.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = search_path
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->params %self[2.0,] 
+		 8: %v_3[2.7,] 
+		 9: 
+		 10: %v_4[2.8,] %v_5[2.9,] 
+		 11: BRANCH %v_6[2.10,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_7[3.0,] 
+		 2: %v_8[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_6[3.2,2.10,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @family[] 
+		 1: %v_9[5.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 5 3 2 
+	instructions:
+		 0: BRANCH %v_6[5.1,3.2,2.10,] 
+BB 7
+	outgoing: 10 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: args[2.5,] 
+		 2: %self->family_search_path %self[2.0,] %v_10[7.1,] 
+		 3: RETURN %v_11[7.2,] 
+BB 8
+	outgoing: 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %v_0[2.1,] %self[2.0,] args[2.5,] 
+		 2: RETURN %v_12[8.1,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+

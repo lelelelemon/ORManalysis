@@ -1,0 +1,375 @@
+SET IRMethod, name = stream_item_url
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: stream_item->streamable_type stream_item[2.5,] 
+		 8: 
+		 9: %v_4[2.8,] %v_3[2.7,] 
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->root_url %self[2.0,] 
+		 2: RETURN %v_6[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: stream_item->streamable_type stream_item[2.5,] 
+		 2: %v_7->underscore %v_7[4.1,] 
+		 3: 
+		 4: %v_8[4.2,] %v_9[4.3,] 
+		 5: stream_item->streamable_id stream_item[2.5,] 
+		 6: %self->send %self[2.0,] %v_10[4.4,] %v_11[4.5,] 
+		 7: RETURN %v_12[4.6,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = stream_item_content
+BB 1
+	outgoing: 19 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: use_code[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: stream_item->body stream_item[2.5,] 
+		 2: BRANCH %v_3[4.1,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: stream_item->streamable_type stream_item[2.5,] 
+		 2: 
+		 3: %v_4[5.1,] %v_5[5.2,] 
+		 4: BRANCH %v_6[5.3,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->render_message_body stream_item[2.5,] %self[2.0,] 
+		 2: 
+BB 7
+	outgoing: 8 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: stream_item->body stream_item[2.5,] 
+		 2: %self->auto_link %self[2.0,] %v_8[7.1,] 
+		 3: %self->sanitize_html %self[2.0,] %v_9[7.2,] 
+		 4: %v_10[7.3,] 
+BB 8
+	outgoing: 13 
+	datadep: 7 6 
+	instructions:
+		 0: %v_7[7.4,6.1,] 
+		 1: 
+BB 9
+	outgoing: 10 11 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: stream_item->context stream_item[2.5,] 
+		 2: %v_11->any? %v_11[9.1,] 
+		 3: BRANCH %v_12[9.2,] 
+BB 10
+	outgoing: 12 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_13->tap %v_13[10.1,] %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: stream_item->context 
+		 2: 
+		 3: %cl_1_3[3.1,] %cl_1_4[3.2,] 
+		 4: %cl_1_5->to_a %cl_1_5[3.3,] 
+		 5: %cl_1_6->each %self[2.0,] %cl_1_6[3.4,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (Picture) 
+		 2: %cl_2_3->photo_url_from_parts extension[2.4,] %cl_2_3[3.1,] picture_id[2.2,] fingerprint[2.3,] 
+		 3: 
+		 4: %self->t %self[2.0,] %cl_2_5[3.3,] 
+		 5: 
+		 6: %cl_2_6[3.4,] %cl_2_7[3.5,] 
+		 7: %self->image_tag %self[2.0,] %cl_2_4[3.2,] %cl_2_8[3.6,] 
+		 8: stream_item->streamable_id 
+		 9: %self->album_picture_path %self[2.0,] picture_id[2.2,] %cl_2_10[3.8,] 
+		 10: 
+		 11: %self->t %self[2.0,] %cl_2_12[3.10,] 
+		 12: %cl_2_13[3.11,] 
+		 13: %self->link_to %self[2.0,] %cl_2_14[3.12,] %cl_2_11[3.9,] %cl_2_9[3.7,] 
+		 14: 
+		 15: %cl_2_15[3.13,] %cl_2_16[3.14,] 
+		 16: %cl_2_17[3.15,] 
+		 17: RETURN %cl_2_18[3.16,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_19[4.0,] 
+		 2: RETURN %cl_2_20[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %cl_1_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: %v_14[10.2,] 
+		 4: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 12
+	outgoing: 13 
+	datadep: 11 10 
+	instructions:
+		 0: %v_14[11.0,10.2,] 
+BB 13
+	outgoing: 14 15 
+	datadep: 3 2 3 2 
+	instructions:
+		 0: 
+		 1: use_code[3.0,2.6,] 
+		 2: BRANCH use_code[3.0,2.6,] 
+BB 14
+	outgoing: 15 
+	datadep: 8 10 
+	instructions:
+		 0: content[8.0,10.3,] 
+BB 15
+	outgoing: 16 17 
+	datadep: 14 13 
+	instructions:
+		 0: BRANCH %v_15[14.0,13.1,] 
+BB 16
+	outgoing: 18 
+	datadep: 2 8 10 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] content[8.0,10.3,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: BRANCH %cl_3_3[2.6,] 
+BB 4
+	outgoing: 5 6 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_3_5->include? %cl_3_5[4.1,] %cl_3_6[4.2,] 
+		 4: BRANCH %cl_3_7[4.3,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_9[6.0,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 4 6 5 2 
+	instructions:
+		 0: %cl_3_4[4.0,] %cl_3_8[6.1,5.0,] 
+		 1: 
+		 2: %cl_3_11[7.1,] %cl_3_10[7.0,] 
+		 3: %self[2.0,] @logged_in[] 
+		 4: %cl_3_13->feed_code %cl_3_13[7.3,] 
+		 5: %cl_3_14[7.4,] %cl_3_12[7.2,] 
+		 6: %cl_3_15[7.5,] 
+BB 8
+	outgoing: 9 11 
+	datadep: 7 2 7 2 
+	instructions:
+		 0: %cl_3_3[7.6,2.6,] 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %cl_3_17[8.3,] %cl_3_16[8.2,] %cl_3_3[7.6,2.6,] %cl_3_19[8.5,] %cl_3_18[8.4,] 
+		 7: RETURN %cl_3_20[8.6,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_21[9.0,] 
+		 2: RETURN %cl_3_22[9.1,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+BB 18
+	outgoing: 19 
+	datadep: 8 10 
+	instructions:
+		 0: 
+		 1: content->try content[8.0,10.3,] 
+		 2: RETURN %v_18[18.1,] 
+BB 19
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new_stream_activity
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: (StreamItem) 
+		 8: %v_3->shared_with person[2.5,] %v_3[2.7,] 
+		 9: 
+		 10: person->last_seen_stream_item person[2.5,] 
+		 11: %v_6->try %v_6[2.10,] 
+		 12: BRANCH %v_7[2.11,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (Time) 
+		 1: %v_8->now %v_8[3.0,] 
+		 2: %v_9[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 3 2 
+	instructions:
+		 0: %v_4->where %v_4[2.8,] %v_5[2.9,] %v_7[3.2,2.11,] 
+		 1: 
+		 2: %v_10->count %v_10[4.0,] %v_11[4.1,] 
+		 3: RETURN %v_12[4.2,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+

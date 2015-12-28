@@ -1,0 +1,217 @@
+SET IRMethod, name = validate_email_on_target
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->person %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->person %self[2.0,] 
+		 1: %v_4->email %v_4[3.0,] 
+		 2: %v_5->present? %v_5[3.1,] 
+		 3: %v_6[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.3,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %v_7[5.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 
+	instructions:
+		 0: %self->errors %self[2.0,] 
+		 1: %v_8->add %v_8[6.0,] 
+		 2: RETURN %v_9[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = validate_friends_enabled_on_target
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->person %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->person %self[2.0,] 
+		 1: %v_4->friends_enabled %v_4[3.0,] 
+		 2: %v_5[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.2,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %v_6[5.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 
+	instructions:
+		 0: %self->errors %self[2.0,] 
+		 1: %v_7->add %v_7[6.0,] 
+		 2: RETURN %v_8[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = send_request
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Notifier) 
+		 7: %self->from %self[2.0,] 
+		 8: %self->person %self[2.0,] 
+		 9: %v_3->friend_request %v_4[2.7,] %v_5[2.8,] %v_3[2.6,] 
+		 10: %v_6->deliver_now %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = accept
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Person) 
+		 7: %v_3->logged_in %v_3[2.6,] 
+		 8: %self->person %self[2.0,] 
+		 9: %v_4[2.7,] %v_5[2.8,] 
+		 10: BRANCH %v_6[2.9,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->raise %self[2.0,] %v_8[4.0,] 
+		 2: %v_9[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->person %self[2.0,] 
+		 2: %v_10->friendships %v_10[5.1,] 
+		 3: %self->from %self[2.0,] 
+		 4: %v_12[5.3,] 
+		 5: %v_11->create! %v_13[5.4,] %v_11[5.2,] 
+		 6: 
+		 7: %self->destroy %self[2.0,] 
+		 8: RETURN %v_15[5.7,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = reject
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Person) 
+		 7: %v_3->logged_in %v_3[2.6,] 
+		 8: %self->person %self[2.0,] 
+		 9: %v_4[2.7,] %v_5[2.8,] 
+		 10: BRANCH %v_6[2.9,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->raise %self[2.0,] %v_8[4.0,] 
+		 2: %v_9[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->update_attribute %self[2.0,] 
+		 2: RETURN %v_10[5.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -1,0 +1,622 @@
+SET IRMethod, name = timeline
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: stream_items->any? stream_items[2.5,] 
+		 10: BRANCH %v_3[2.9,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self->next_timeline_url %self[2.0,] 
+		 4: %v_4[3.1,] %v_5[3.2,] %v_6[3.3,] 
+		 5: %self->content_tag %self[2.0,] %v_7[3.4,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_1_3->tap %cl_1_3[3.1,] %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @stream_items[] 
+		 2: %cl_2_3->each_with_index %cl_2_3[3.1,] %self[2.0,] 
+CLOSURE BEGIN: @stream_items[3.1,] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: stream_item->decorate stream_item[2.2,] 
+		 2: %cl_3_3->publishable? %cl_3_3[3.1,] 
+		 3: BRANCH %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 5
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: stream_item->created_at stream_item[2.2,] 
+		 2: %cl_3_6[6.1,] 
+		 3: BRANCH %cl_3_7[6.2,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->timeline_date_label stream_item[2.2,] %self[2.0,] 
+		 2: %cl_3_8[7.1,] 
+		 3: 
+		 4: stream_item->created_at stream_item[2.2,] 
+		 5: %cl_3_10[7.4,] 
+		 6: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 12 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: stream_item->decorate stream_item[2.2,] 
+		 2: index[2.3,] 
+		 3: %cl_3_12[9.2,] 
+		 4: %cl_3_11->to_html %cl_3_13[9.3,] %cl_3_11[9.1,] 
+		 5: %cl_3_14[9.4,] 
+		 6: RETURN %cl_3_15[9.5,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_16[10.0,] 
+		 2: RETURN %cl_3_17[10.1,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_2_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: %cl_1_4->join %cl_1_4[3.2,] 
+		 4: %cl_1_5->html_safe %cl_1_5[3.3,] 
+		 5: RETURN %cl_1_6[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: %v_8->html_safe %v_8[3.5,] 
+		 7: 
+		 8: %self->timeline_has_more? %self[2.0,] stream_items[2.5,] 
+		 9: BRANCH %v_10[3.8,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self->timeline_load_more %self[2.0,] 
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_12[5.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 3 5 4 
+	instructions:
+		 0: %v_9[3.6,] %v_11[5.1,4.0,] 
+		 1: RETURN %v_13[6.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = timeline_none
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: label[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->t %self[2.0,] %v_3[3.0,] 
+		 2: %v_4[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 3 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_5[4.1,] 
+		 3: %self->content_tag label[3.2,2.5,] %self[2.0,] %v_6[4.2,] 
+		 4: RETURN %v_7[4.3,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = timeline_date_label
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: stream_item->created_at stream_item[2.5,] 
+		 8: %v_3->to_s %v_3[2.7,] 
+		 9: %v_4[2.8,] 
+		 10: 
+		 11: %self[2.0,] @last_date[] 
+		 12: %v_4[2.8,] %v_5[2.11,] 
+		 13: BRANCH %v_6[2.12,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] date[2.9,] @last_date[2.11,] 
+		 2: 
+		 3: 
+		 4: %v_7[3.3,] 
+		 5: %self->content_tag %self[2.0,] %v_8[3.4,] 
+CLOSURE BEGIN: @last_date[3.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_1_3[3.1,] 
+		 3: %self->content_tag %cl_1_4[3.2,] %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: stream_item->created_at 
+		 2: %cl_2_3->to_s %cl_2_3[3.1,] 
+		 3: RETURN %cl_2_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_1_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %v_9[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = timeline_has_more?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: stream_items->total_entries stream_items[2.5,] 
+		 8: stream_items->per_page stream_items[2.5,] 
+		 9: %v_4->to_f %v_4[2.8,] 
+		 10: %v_5[2.9,] %v_3[2.7,] 
+		 11: stream_items->current_page stream_items[2.5,] 
+		 12: %v_6[2.10,] %v_7[2.11,] 
+		 13: RETURN %v_8[2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = timeline_load_more
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %v_3[2.6,] 
+		 8: %self->content_tag %self[2.0,] %v_4[2.7,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: 
+		 3: %cl_1_3->t %cl_1_3[3.1,] %cl_1_4[3.2,] 
+		 4: 
+		 5: %self->timeline_page %self[2.0,] 
+		 6: %cl_1_7[3.5,] 
+		 7: %cl_1_6[3.4,] %cl_1_8[3.6,] 
+		 8: 
+		 9: %cl_1_10[3.8,] 
+		 10: %self->link_to %self[2.0,] %cl_1_5[3.3,] %cl_1_11[3.9,] %cl_1_9[3.7,] 
+		 11: RETURN %cl_1_12[3.10,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_13[4.0,] 
+		 2: RETURN %cl_1_14[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 9: 
+		 10: 
+		 11: %v_7[2.10,] 
+		 12: %self->content_tag %self[2.0,] %v_8[2.11,] %v_6[2.9,] 
+		 13: %v_5[2.8,] %v_9[2.12,] 
+		 14: RETURN %v_10[2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = timeline_page
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 
+	datadep: 3 2 
+	instructions:
+		 0: %v_4->to_i %v_4[3.0,2.7,] 
+		 1: RETURN %v_5[4.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = next_timeline_url
+BB 1
+	outgoing: 19 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: page[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->timeline_page %self[2.0,] 
+		 2: %v_3[4.1,] 
+		 3: %v_4[4.2,] 
+		 4: 
+		 5: %self->params %self[2.0,] 
+		 6: %v_5[4.5,] 
+		 7: 
+		 8: %v_6[4.6,] %v_7[4.7,] 
+		 9: BRANCH %v_8[4.8,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_9[5.0,] 
+		 2: %v_10[5.1,] 
+BB 6
+	outgoing: 7 10 
+	datadep: 5 4 
+	instructions:
+		 0: BRANCH %v_8[5.2,4.8,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @person[] 
+		 2: BRANCH %v_11[7.1,] 
+BB 8
+	outgoing: 9 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_12[8.0,] 
+		 2: %v_13[8.1,] 
+BB 9
+	outgoing: 19 
+	datadep: 4 2 8 7 
+	instructions:
+		 0: page[4.3,] 
+		 1: %self->person_stream_url %v_14[9.0,] %self[2.0,] %v_11[8.2,7.1,] 
+		 2: RETURN %v_15[9.1,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %v_16[10.1,] 
+		 3: 
+		 4: %v_17[10.2,] %v_18[10.3,] 
+		 5: BRANCH %v_19[10.4,] 
+BB 11
+	outgoing: 12 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_20[11.0,] 
+		 2: %v_21[11.1,] 
+BB 12
+	outgoing: 13 16 
+	datadep: 11 10 
+	instructions:
+		 0: BRANCH %v_19[11.2,10.4,] 
+BB 13
+	outgoing: 14 15 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @group[] 
+		 2: BRANCH %v_22[13.1,] 
+BB 14
+	outgoing: 15 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_23[14.0,] 
+		 2: %v_24[14.1,] 
+BB 15
+	outgoing: 17 
+	datadep: 4 2 14 13 
+	instructions:
+		 0: page[4.3,] 
+		 1: %self->group_stream_url %v_25[15.0,] %self[2.0,] %v_22[14.2,13.1,] 
+		 2: 
+BB 16
+	outgoing: 17 
+	datadep: 4 2 
+	instructions:
+		 0: 
+		 1: page[4.3,] 
+		 2: %self->stream_url %self[2.0,] %v_27[16.1,] 
+		 3: %v_28[16.2,] 
+BB 17
+	outgoing: 19 
+	datadep: 16 15 
+	instructions:
+		 0: RETURN %v_26[16.3,15.1,] 
+BB 19
+	outgoing: 
+	datadep: 
+	instructions:
+

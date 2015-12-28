@@ -1,0 +1,154 @@
+SET IRMethod, name = time_to_s
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->object %self[2.0,] 
+		 7: %v_3->time_to_s %v_3[2.6,] 
+		 8: 
+		 9: 
+		 10: %v_4->sub %v_4[2.7,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = group_times_as_json
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->object %self[2.0,] 
+		 7: %v_3->all_group_times %v_3[2.6,] 
+		 8: %v_4->includes %v_4[2.7,] 
+		 9: %v_5->references %v_5[2.8,] 
+		 10: %v_6->order %v_6[2.9,] 
+		 11: %v_7->map %self[2.0,] %v_7[2.10,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: gt->as_json gt[2.2,] 
+		 2: gt->checkin_folder gt[2.2,] 
+		 3: %cl_1_4->try %cl_1_4[3.2,] 
+		 4: gt->group gt[2.2,] 
+		 5: %cl_1_6->name %cl_1_6[3.4,] 
+		 6: %cl_1_7[3.5,] 
+		 7: %cl_1_5[3.3,] %cl_1_8[3.6,] 
+		 8: %cl_1_3->merge %cl_1_3[3.1,] %cl_1_9[3.7,] 
+		 9: RETURN %cl_1_10[3.8,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_11[4.0,] 
+		 2: RETURN %cl_1_12[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 12: RETURN %v_8[2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = as_json
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->object %self[2.0,] 
+		 7: %v_3->as_json %v_3[2.6,] 
+		 8: %self->time_to_s %self[2.0,] 
+		 9: %self->group_times_as_json %self[2.0,] 
+		 10: %v_6->group_by %self[2.0,] %v_6[2.9,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: gt[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 11: %v_5[2.8,] %v_7[2.10,] 
+		 12: %v_4->merge %v_4[2.7,] %v_8[2.11,] 
+		 13: RETURN %v_9[2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
