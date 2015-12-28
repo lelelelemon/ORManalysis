@@ -37,6 +37,7 @@ class Function_call
 		@func_name = funcname
 		@is_query = false
 		@is_field = false
+		@field = nil
 		@query_type = ""
 		@table_name = nil
 		@params = Array.new
@@ -80,6 +81,9 @@ class Function_call
 	def isField
 		@is_field
 	end
+	def getField
+		@field
+	end
 	def isQuery
 		@is_query
 	end
@@ -90,7 +94,11 @@ class Function_call
 		@obj_name
 	end
 	def getFuncName
-		return @func_name
+		if @func_name == "super"
+			return @super_fname
+		else
+			return @func_name
+		end
 	end
 	def isSuperFunc
 		@func_name == "super"
@@ -124,7 +132,6 @@ class Function_call
 	def findCaller(calling_func_class, calling_func)
 
 		caller_class = nil
-		if @is_query == false
 			if @obj_name == "self"
 				caller_class = calling_func_class
 				while $class_map[caller_class] != nil and $class_map[caller_class].getMethod(@func_name) == nil do
@@ -147,16 +154,17 @@ class Function_call
 			end
 
 			#dealing with "super"
-			#if @func_name == "super"
-			#	if $class_map[calling_func_class].getUpperClass != ""
-			#		upper_cname = $class_map[calling_func_class].getUpperClass
-			#		if $class_map[upper_cname] != nil and $class_map[upper_cname].getMethod(calling_func) != nil
-			#			caller_class = upper_cname
-			#			@super_fname = calling_func
-			#		else
-			#		end
-			#	end
-			#end
+			if @func_name == "super"
+				#puts "#{calling_func_class}.#{calling_func}, Found super"
+				if $class_map[calling_func_class].getUpperClass != nil
+					upper_cname = $class_map[calling_func_class].getUpperClass
+					if $class_map[upper_cname] != nil and $class_map[upper_cname].getMethod(calling_func) != nil
+						caller_class = upper_cname
+						@super_fname = calling_func
+					else
+					end
+				end
+			end
 			#TODO: Have no idea why I search derived class??
 			if caller_class == nil
 			#	derived_classes = search_derived_class($class_map[calling_func_class])
@@ -208,20 +216,6 @@ class Function_call
 			end
 			#puts "#{calling_func_class}.#{calling_func} issues call #{@obj_name} [of class #{caller_class}] . #{@func_name}"
 			#puts ""
-		else
-			caller_class = searchIncludeTableName(@obj_name)
-			if caller_class == nil
-				if $class_map[calling_func_class].getMethodVarMap.has_key?(calling_func)
-					func_var = $class_map[calling_func_class].getMethodVarMap[calling_func].get_var_map
-					if func_var != nil and func_var.has_key?(@obj_name)
-						caller_class = func_var[@obj_name]
-					end
-				end
-			end
-			if @obj_name == "self"
-				caller_class = calling_func_class
-			end
-		end
 		#if @is_query == false and caller_class != nil
 		#	if $class_map[caller_class] != nil and $class_map[caller_class].getMethod(@func_name) == nil
 		#		parent = $class_map[caller_class].getUpperClass
@@ -239,10 +233,12 @@ class Function_call
 				#boolean field in table can append ?, for example, user.is_moderator?, when is_moderator is a boolean field in table User
 				if f.field_name == @func_name.delete('?')
 					@is_field = true
+					@field = f
 					#puts "Found field: #{@obj_name}(#{caller_class}) . #{@func_name}"
 				end
 				if f.field_name.include?("_id") and f.field_name[0...-3] == @func_name.delete('?')
 					@is_field = true
+					@field = f
 				end
 			end
 		end
@@ -251,6 +247,9 @@ class Function_call
 
 	#when calling this function, the func_call handler hasn't been set up yet, so we delay figuring out the source of variables being passed
 	def parseParams(astnode)
+		if astnode == nil
+			return
+		end
 		if astnode.children[0].type.to_s == "list"
 			return parseParams(astnode.children[0])
 		end

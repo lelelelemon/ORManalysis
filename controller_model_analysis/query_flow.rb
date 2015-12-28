@@ -27,6 +27,9 @@ class INode
 			end
 		end
 	end
+	def getClosureStack
+		@closure_stack
+	end
 	def getInView
 		@in_view
 	end
@@ -51,7 +54,13 @@ class INode
 	end
 	def isQuery?
 		if @instr != nil and @instr.instance_of?Call_instr
-			return @instr.getCaller.isQuery
+			return @instr.isQuery
+		end
+		return false
+	end
+	def isField?
+		if @instr != nil and @instr.instance_of?Call_instr
+			return @instr.isField
 		end
 		return false
 	end
@@ -208,10 +217,10 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 				last_cfg = nil
 				temp_node = $cur_node
 				temp_actions.each do |action|
-						temp_name = "#{caller_class}.#{action.getFuncName}"
+						temp_name = "#{caller_class}.#{action}"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
-							cur_cfg = trace_query_flow(caller_class, action.getFuncName, "", "", level+2)
+							cur_cfg = trace_query_flow(caller_class, action, "", "", level+2)
 							if cur_cfg != nil
 								if last_cfg == nil
 									temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
@@ -282,13 +291,12 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	if instr.hasClosure?
 		cl = instr.getClosure
 		temp_node = $cur_node
-		#puts "CLOSURE: "
 		if cl.getViewClosure
 			$in_view = true
 		else
 			$in_loop.push(true)
 		end
-		$closure_stack.push(cl)
+		$closure_stack.push($cur_node)
 		handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
 		$closure_stack.pop
 		cl.getReturns.each do |r|

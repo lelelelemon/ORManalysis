@@ -156,6 +156,13 @@ class Call_instr < Instruction
 			return false
 		end
 	end
+	def isField
+		if @call_handler != nil
+			return @call_handler.isField
+		else
+			return false
+		end
+	end
 	def getCaller
 		@caller
 	end
@@ -247,6 +254,14 @@ class Basic_block
 	end
 	def getReturns
 		@return_list
+	end
+	def includeReturnInstr?
+		@instructions.each do |i|
+			if i.instance_of?Return_instr
+				return true
+			end
+		end
+		return false
 	end	
 	def addCFG(cfg)
 		@cfg = cfg
@@ -260,6 +275,16 @@ class Basic_block
 	end
 	def getInstr
 		@instructions
+	end
+	def getInstrNum
+		cnt = 0
+		@instructions.each do |i|
+			if i.hasClosure?
+				cnt = cnt + i.getClosure.getInstrNum
+			end
+			cnt += 1
+		end
+		return cnt
 	end
 	def getLastInstr
 		@instructions[-1]
@@ -356,6 +381,13 @@ class CFG
 		#explicit_return is the return point in data flow, only include "RETURN" instr
 		@explicit_return = Array.new
 		@m_handler = nil
+	end
+	def getInstrNum
+		cnt = 0
+		@bb.each do |b|
+			cnt = cnt +  b.getInstrNum
+		end
+		return cnt
 	end
 	def setMHandler(m)
 		@m_handler = m

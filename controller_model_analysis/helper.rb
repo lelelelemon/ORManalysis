@@ -33,7 +33,8 @@ end
 def in_key_words(w)
 	if ["before_filter", "before_save", "before_validation",
 			"before_create",
-			"after_save", "after_validation", "after_create"].include?(w)
+			"after_save", "after_validation", "after_create",
+			"destroy_all", "delete_all"].include?(w)
 		return true
 	else
 		return false
@@ -111,8 +112,12 @@ def searchARef(node)
 	return nil
 end
 
-def check_method_keyword(k)
-	return $key_words[k]
+def check_method_keyword(_caller, k)
+	if _caller.include?("Dir.glob") or _caller == "File"
+		return nil
+	else
+		return $key_words[k]
+	end
 end
 
 def trigger_save?(call)

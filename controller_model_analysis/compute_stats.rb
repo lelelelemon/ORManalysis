@@ -11,6 +11,26 @@ $query_depends_on_cflow = Array.new
 #forward
 $query_determines_cflow = Array.new
 
+def traceback_data_dep(cur_node, wihtin_bb=true)
+	@node_list = Array.new
+	@node_list.push(cur_node)
+	while @node_list.length > 0 do
+		node = @node_list.pop
+		node.getBackwardEdges.each do |e|
+			if e.getFromNode != nil and e.getToNode != nil
+				if e.getFromNode.isQuery?
+					return e.getFromNode	
+				else
+					#test is both nodes are in the same basic block, prevent from tracing too far
+					if e.getFromNode.getInstr.getBB == node.getInstr.getBB
+						@node_list.push(e.getFromNode)
+					end
+				end
+			end
+		end
+	end
+	return nil
+end
 
 def print_dataflow_graph
 	$node_list.each do |n|
@@ -89,14 +109,19 @@ $cnt_determines = 0
 $cnt_depends_on_cflow = 0
 $cnt_determines_cflow = 0
 
-def compute_dataflow_stat(output_dir, start_class, start_function)
+def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 
-	if $root == nil
+	if $root == nil and random == false
 		$cfg = trace_query_flow(start_class, start_function, "", "", 0)
 		if $cfg == nil
 			return
 		end
 		$root = $cfg.getBB[0].getInstr[0].getINode	
+	elsif random == true
+		if $root == nil
+			random_trace(start_class, start_function)
+		end
+		puts "Finish random trace: root = #{$root.getIndex}, list_length = #{$node_list.length}"
 	end
 	
 	$node_list.each do |n|
@@ -133,11 +158,17 @@ def compute_dataflow_stat(output_dir, start_class, start_function)
 	total_query_num = 0
 	query_in_closure = 0
 	query_in_view = 0
+	query_read = 0
+	query_write = 0
 	$node_list.each do |n|
 		if n.isQuery?
 			total_query_num += 1
 			if n.getInstr.getCallHandler != nil
-				graph_write($graph_file, "#{n.getInstr.getCallHandler.getObjName}.#{n.getInstr.getFuncname}")
+				@tbl_name = n.getInstr.getCallHandler.getTableName
+					if n.getInstr.getCallHandler.caller != nil
+						@tbl_name = n.getInstr.getCallHandler.caller.getName
+					end
+				graph_write($graph_file, "#{n.getInstr.getCallHandler.getObjName}.#{n.getInstr.getFuncname} <#{@tbl_name},#{n.getInstr.getCallHandler.getQueryType}>")
 			else
 				graph_write($graph_file, "#{n.getInstr.getCaller}.#{n.getInstr.getFuncname}")
 			end
@@ -147,26 +178,45 @@ def compute_dataflow_stat(output_dir, start_class, start_function)
 					graph_write($graph_file, " (v)")
 					query_in_view += 1
 				end
-				graph_write($graph_file, " (c)")
+				if n.getInView and n.getClosureStack.length == 1
+				else #n.getInView == false or n.getClosureStack.length > 1
+					graph_write($graph_file, " (c)")
+					n.getClosureStack.each do |cl|
+						q = traceback_data_dep(cl)
+						if q != nil
+							graph_write($graph_file, " [#{q.getLabel}]")
+						end
+					end
+				end
+			end
+			if ["SELECT","GROUP","JOIN"].include?n.getInstr.getCallHandler.getQueryType
+				query_read += 1
+			elsif ["DELETE","UPDATE","INSERT"].include?n.getInstr.getCallHandler.getQueryType
+				query_write += 1
 			end
 			graph_write($graph_file, "\n")
+	
+		elsif n.isField?
+			graph_write($graph_file, "+FIELD+ #{n.getInstr.getCallHandler.caller.getName}.#{n.getInstr.getCallHandler.getField.field_name} (#{n.getInstr.getCallHandler.getField.type})\n")
 		end
 	end
 	graph_write($graph_file, "\n")
 	graph_write($graph_file, "query in total: #{total_query_num}\n")
 	graph_write($graph_file, "query in view: #{query_in_view}\n")
 	graph_write($graph_file, "query in closure: #{query_in_closure}\n")
-	if $query_depends_on.length > 0	
-		graph_write($graph_file, "query backward dependencies: #{($query_depends_on.inject{|sum,x| sum + x })/($query_depends_on.length)}\n")
-	end
-	
-	if $query_determines.length > 0
-		graph_write($graph_file, "query forward dependencies: #{($query_determines.inject{|sum,x| sum + x })/$query_determines.length}\n")
-	end
-	
-	if $query_determines_cflow.length + $query_depends_on_cflow.length > 0
-		graph_write($graph_file, "query controlflow_dep: #{($query_depends_on_cflow.inject{|sum,x| sum + x }+$query_determines_cflow.inject{|sum,x| sum + x })/($query_depends_on_cflow.length+$query_determines_cflow.length)}\n")
-	end
+	graph_write($graph_file, "read queries: #{query_read}\n")
+	graph_write($graph_file, "write queries: #{query_write}\n")
+	#if $query_depends_on.length > 0	
+	#	graph_write($graph_file, "query backward dependencies: #{($query_depends_on.inject{|sum,x| sum + x })/($query_depends_on.length)}\n")
+	#end
+	#
+	#if $query_determines.length > 0
+	#	graph_write($graph_file, "query forward dependencies: #{($query_determines.inject{|sum,x| sum + x })/$query_determines.length}\n")
+	#end
+	#
+	#if $query_determines_cflow.length + $query_depends_on_cflow.length > 0
+	#	graph_write($graph_file, "query controlflow_dep: #{($query_depends_on_cflow.inject{|sum,x| sum + x }+$query_determines_cflow.inject{|sum,x| sum + x })/($query_depends_on_cflow.length+$query_determines_cflow.length)}\n")
+	#end
 		
 	$graph_file.close
 	#number of query functions

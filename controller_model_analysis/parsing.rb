@@ -32,6 +32,7 @@ PATH_ORDER = [
 ]
 $merged_controllers="merged_controllers"
 $read_schema=true
+$random_loop_number=5
 
 $cur_funccall = nil
 $cur_position = ""
@@ -51,14 +52,14 @@ $key_words = Hash.new
 def retrieve_func_calls
 	$class_map.each do |keyc, valuec|
 		valuec.getMethods.each do |key, value|
-			puts "Investigating #{keyc} . #{key}"
+			#puts "Investigating #{keyc} . #{key}"
 			value.getCalls.each do |each_call|
 				each_call.findCaller(keyc, key)
-				if each_call.caller == nil
-					puts "\t\tcaller not found: #{each_call.getObjName} . #{each_call.getFuncName}"
-				elsif each_call.caller.getMethod(each_call.getFuncName) == nil and each_call.isQuery == false and each_call.isField == false
-					puts "\t\t* * function not found: #{each_call.getObjName} . #{each_call.getFuncName}"
-				end
+				#if each_call.caller == nil
+				#	puts "\t\tcaller not found: #{each_call.getObjName} . #{each_call.getFuncName}"
+				#elsif each_call.caller.getMethod(each_call.getFuncName) == nil and each_call.isQuery == false and each_call.isField == false
+				#	puts "\t\t* * function not found: #{each_call.getObjName} . #{each_call.getFuncName}"
+				#end
 			end
 		end
 	end
@@ -272,17 +273,20 @@ opt_parser = OptionParser.new do |opt|
 
 	opt.on("-t", "--trace-dataflow CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name,function_name; print call graph and data flow to a file, use graphviz to visualize") do |trace_input|
 		options[:trace_flow] = true
-		options[:trace]  = trace_input
+		if options[:trace] == nil
+			options[:trace]  = trace_input
+		end
 	end
 
-	opt.on("-r", "--random-path CLASS_NAME,FUNCTION_NAME", Array, "instead of calculate the complete control flow graph, select random path at each branch") do |random_path|
+	opt.on("-r", "--random-path","instead of calculate the complete control flow graph, select random path at each branch") do |random_path|
 		options[:random_path] = true
-		options[:trace] = random_path
 	end
 
 	opt.on("-g", "--query-graph CLASS_NAME,FUNCTION_NAME",Array,"print out flow graph only containing queries") do |q_input|
 		options[:query_graph] = true
-		options[:trace] = q_input
+		if options[:trace] == nil
+			options[:trace] = q_input
+		end
 	end
 
 	opt.on("-s", "--stats CLASS_NAME,FUNCTION_NAME",Array,"print some stats, including query_num, dataflow grap from user input to user output, etc. Needs two argument") do |stats|
@@ -378,7 +382,7 @@ if options[:trace_flow] or options[:random_path] or options[:stats] or options[:
 
 		$graph_file.write("digraph #{remove_special_chars(start_class)}_#{start_function} {\n")
 		if options[:random_path]
-			print_random_trace(start_class, start_function)
+			#print_random_trace(start_class, start_function)
 		else
 			trace_flow(start_class, start_function, "", "", level)
 		end
@@ -390,7 +394,11 @@ if options[:trace_flow] or options[:random_path] or options[:stats] or options[:
 	end
 
 	if options[:stats]
-		compute_dataflow_stat($output_dir, start_class, start_function)
+		if options[:random_path]
+			compute_dataflow_stat($output_dir, start_class, start_function, true)
+		else
+			compute_dataflow_stat($output_dir, start_class, start_function)
+		end
 	end
 end
 

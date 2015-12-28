@@ -161,6 +161,14 @@ def parse_attrib(astnode)
 			parse_keyword(astnode, $cur_class.getMethod("before_create"))
 		when "after_save","before_save"
 			parse_keyword(astnode, $cur_class.getMethod("before_save"))
+		when "destroy_all","delete_all"
+			if $cur_method != nil
+				fcall = Function_call.new("self", "destroy_all")
+				fcall.setIsQuery
+				fcall.setTableName($cur_class.getName)
+				fcall.setQueryType("DELETE")
+				$cur_method.addCall(fcall)
+			end
 		#else
 	end
 
@@ -214,10 +222,10 @@ def parse_method_call(astnode, method)
 			fcall = Function_call.new("self", node2.source)
 		end
 		#if @node.type.to_s == "const" and check_table_name(@node.source.to_s)
-		if check_method_keyword(node2.source) then
+		if fcall != nil and check_method_keyword(fcall.getObjName, node2.source) then
 			fcall.setTableName(searchSelf(fcall.getObjName, $cur_class.getName))
 			fcall.setIsQuery
-			fcall.setQueryType(check_method_keyword(node2.source))
+			fcall.setQueryType(check_method_keyword(fcall.getObjName, node2.source))
 
 			if node2.source == "execute"
 				query = astnode.children[2].source

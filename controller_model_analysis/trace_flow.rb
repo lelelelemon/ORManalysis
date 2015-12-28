@@ -43,14 +43,10 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 		end
 		pass_returnv = call.getReturnValue
 		if call.isQuery
-			caller_class = nil
-			if class_handler.getMethodVarMap[start_function] != nil
-				caller_class = class_handler.getMethodVarMap[start_function].search_var(call.getObjName)
+			caller_class = ""
+			if callerv != nil
+				caller_class = callerv.getName
 			end
-			if caller_class == nil
-				caller_class = call.getTableName
-			end
-
 			if trigger_save?(call) or trigger_create?(call)
 				puts "=====transaction begin====="
 			end
@@ -64,9 +60,9 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 			$l_index += 1
 
 			if trigger_save?(call) or trigger_create?(call)
-				if caller_class != nil and trigger_save?(call)
+				if callerv != nil and trigger_save?(call)
 						#TODO: here we assume validation associate with 
-						temp_name = "#{caller_class}.before_save"
+						temp_name = "#{callerv.getName}.before_save"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 
@@ -74,12 +70,12 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 					
 							$label_stack.push($label)
 							$l_index_stack.push($l_index)
-							trace_flow(caller_class, "before_save", "", "", level+2)
+							trace_flow(callerv.getName, "before_save", "", "", level+2)
 							$label = $label_stack.pop
 							$l_index = $l_index_stack.pop
 						end
 
-						temp_name = "#{caller_class}.before_validation"
+						temp_name = "#{callerv.getName}.before_validation"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 
@@ -87,15 +83,15 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 					
 							$label_stack.push($label)
 							$l_index_stack.push($l_index)
-							trace_flow(caller_class, "before_validation", "", "", level+2)
+							trace_flow(callerv.getName, "before_validation", "", "", level+2)
 							$label = $label_stack.pop
 							$l_index = $l_index_stack.pop
 						end
 
 				end
 				
-				if caller_class != nil and trigger_create?(call)
-						temp_name = "#{caller_class}.before_create"
+				if callerv != nil and trigger_create?(call)
+						temp_name = "#{callerv.getName}.before_create"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 							
@@ -103,13 +99,16 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 							
 							$label_stack.push($label)
 							$l_index_stack.push($l_index)
-							trace_flow(caller_class, "before_create", "", "", level+2)
+							trace_flow(callerv.getName, "before_create", "", "", level+2)
 							$label = $label_stack.pop
 							$l_index = $l_index_stack.pop
 						end
 				end
 				puts "=====transaction end====="
 			end
+
+		elsif call.isField
+			puts "#{$blank}\tlevel #{(level+1)}:  +FIELD+ #{callerv.getName} . #{call.getFuncName}	(type: #{call.getField.type}) "
 
 		elsif callerv != nil
 			temp_name = "#{callerv.getName}.#{call.getFuncName}"
