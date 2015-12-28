@@ -41,7 +41,7 @@ def read_dynamic_typing_info
 	end
 end
 
-def read_each_class(class_list, module_name, is_controller)
+def read_each_class(class_list, module_name)
 	class_list.each do |class_node|
 		if module_name == "" or class_node.children[0].source.to_s.include?(module_name)
 			class_name = class_node.children[0].source.to_s
@@ -50,15 +50,18 @@ def read_each_class(class_list, module_name, is_controller)
 		end
 		#puts "\t -- class_name = #{class_name}"
 		#puts ""
-		if is_controller
-			$cur_class = Controller_class.new(class_name)
-		else
-			$cur_class = Model_class.new(class_name)
-		end
+		#if is_controller
+		#	$cur_class = Controller_class.new(class_name)
+		#else
+		#	$cur_class = Model_class.new(class_name)
+		#end
+		$cur_class = Class_class.new(class_name)
 		if class_node.children[1].type.to_s == "const_path_ref" or class_node.children[1].type.to_s  == "var_ref"
+			#upper_class = class_node.children[1].source.to_s
 			$cur_class.setUpperClass(class_node.children[1].source.to_s)
 		#puts "class #{class_name} < #{$cur_class.getUpperClass}"
 		end
+		
 		$class_map[class_name] = $cur_class
 		level = 0
 		traverse_ast(class_node, level)
@@ -89,7 +92,7 @@ def read_key_words
 	end
 end
 
-def handle_single_file(item, is_controller)
+def handle_single_file(item)
 	file = File.open(item, "r")
 	contents = file.read
 	ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
@@ -103,7 +106,7 @@ def handle_single_file(item, is_controller)
 	if class_list.length == 0
 		if module_node != nil
 			class_list.push(module_node)
-			read_each_class(class_list, "", is_controller)
+			read_each_class(class_list, "")
 		else
 			abort("Neither class nor module can be found")
 		end
@@ -112,7 +115,7 @@ def handle_single_file(item, is_controller)
 		#class_list.each do |c|
 		#	puts "\t--#{c.children[0].source.to_s}"
 		#end
-		read_each_class(class_list, module_name, is_controller)
+		read_each_class(class_list, module_name)
 	end
 end
 
@@ -122,38 +125,29 @@ def read_ruby_files(application_dir=nil)
 	if application_dir != nil
 		$app_dir = application_dir
 	end
-	$controller_files = "#{$app_dir}/#{$merged_controllers}/"
-	$model_files = "#{$app_dir}/models/"
 	$log_files = "#{$app_dir}/logs/*.log"
 	$table_file = "#{$app_dir}/table_name.txt"
 	
-	read_table_names($table_file)
+	#read_table_names($table_file)
 	read_key_words
 
-	Dir.foreach($controller_files) do |item|
+	Dir.foreach($app_dir) do |item|
 		next if item == '.' or item == '..'
-		if item.include?(".rb") == false
-			dir_name = "#{$controller_files}/#{item}/*.rb"
-			Dir.glob(dir_name) do |item1|
-				handle_single_file(item1, true)
+		#first level: all folders
+		if item.include?('.') == false
+			dir_name = "#{$app_dir}/#{item}"
+			Dir.foreach(dir_name) do |sub_item|
+				next if sub_item == '.' or sub_item == '..'
+				if sub_item.include?(".rb") == false
+					sub_dir_name = "#{dir_name}/#{sub_item}/*.rb"
+					Dir.glob(sub_dir_name) do |item1|
+						handle_single_file(item1)
+					end
+				else
+					fname = "#{dir_name}/#{sub_item}"
+					handle_single_file(fname)
+				end
 			end
-		else
-			fname = "#{$controller_files}/#{item}"
-			handle_single_file(fname, true)
-		end
-	end
-	
-	#iterate over all models
-	Dir.foreach($model_files) do |item|
-		next if item == '.' or item == '..'
-		if item.include?(".rb") == false
-			dir_name = "#{$model_files}/#{item}/*.rb"
-			Dir.glob(dir_name) do |item1|
-				handle_single_file(item1, false)
-			end
-		else
-			fname = "#{$model_files}/#{item}"
-			handle_single_file(fname, false)
 		end
 	end
 	
@@ -165,12 +159,16 @@ def read_ruby_files(application_dir=nil)
 	#TODO: It should recursively resolve upper class, here I just hope the inherit length is less than 2...
 	resolve_upper_class
 	resolve_upper_class
+	if $read_schema
+		read_schema($app_dir)
+	end
 	retrieve_func_calls
 
 end
 
 
 def read_ruby_files_with_template(application_dir, template_name)
+=begin
 	$app_dir = application_dir
 	
 	#read demo
@@ -245,5 +243,7 @@ def read_ruby_files_with_template(application_dir, template_name)
 	end
 	resolve_upper_class
 	resolve_upper_class
+	read_schema
 	retrieve_func_calls
+=end
 end

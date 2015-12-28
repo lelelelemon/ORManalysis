@@ -1,0 +1,26 @@
+<% @page_title= :get_started.l + ' ' + :invite_some_friends.l %>
+<% @page_title= :invite_some_customers.l if @user.vendor? %>
+<script src="http://www.plaxo.com/css/m/js/util.js" type="text/javascript"></script>
+<script src="http://www.plaxo.com/css/m/js/basic.js" type="text/javascript"></script>
+<script src="http://www.plaxo.com/css/m/js/abc_launcher.js" type="text/javascript"></script>
+<p>
+  <%= :invite_message.l(:site=> configatron.community_name) %>
+</p>
+<p>
+  <%= :people_who_sign_up_using_your_invitation_will_automatically_be_added_as_your_friends.l %>
+</p>
+<%= bootstrap_form_for :invitation, :url => user_invitations_path(:user_id => @user.id), :layout => :horizontal do |f| %>
+  <div class="pull-right">
+    <a href="#" onclick="showPlaxoABChooser('invitation_email_addresses', '/base/plaxo'); return false;">
+      <img alt="<%= :add_from_my_address_book.l %>" src="http://www.plaxo.com/images/abc/buttons/add_button.gif"/>
+    </a>
+  </div>
+  <%= f.text_area :email_addresses, :rows => 5, :label => :enter_e_mail_addresses.l, :help => :comma_separated.l %>
+  <%= f.text_area :message, :rows => 5, :label => :write_a_message.l, :value => "#{configatron.community_name} "+:is_great_check_it_out_youll_love_it.l+" #{}" %>
+  <%= f.form_group :submit_buttons_group do %>
+    <div class="btn-group">
+      <%= submit_tag :send_invitations.l, :class => 'btn btn-primary' %>
+      <%= link_to :skip_this_and_go_to_your_profile.l, user_path(@user), :class => 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>

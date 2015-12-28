@@ -1,0 +1,81 @@
+<% widget do %>
+  <p>
+    <%= :you_are_editing_your_profile.l %>
+  </p>
+  <p>
+    <%= link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) %>
+  </p>
+<% end %>
+<% widget do %>
+  <h4>
+    <div class="small">
+      <%= :tips.l %>
+    </div>
+  </h4>
+  <%= render :partial => 'shared/bio_help' %>
+  <%= :feel_free_to_embed_images_or_videos.l %>
+<% end %>
+<%= bootstrap_form_for @user, :layout => :horizontal, :html => {:multipart =>true} do |f| %>
+  <h2>
+    <%= :profile_photo.l %>
+  </h2>
+  <%= @user.vendor ? "<div class='right_corner'><div class='community_pro'></div></div>" : '' %>
+  <%= image_tag( @user.avatar_photo_url(:medium), :class => "thumbnail" ) %>
+  <%= f.fields_for :avatar, @avatar do |avatar_form| %>
+    <label>
+      <%= :choose_a_photo_for_your_profile.l %>
+    </label>
+    <%= avatar_form.file_field :photo, :size => '15' %>
+  <% end %>
+  <h2>
+    <%= :location.l %>
+  </h2>
+  <%= f.form_group :location, label: { :text => :location.l } do %>
+    <%= render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas} %>
+  <% end %>
+  <label>
+    <%= :zippostal_code.l %>
+  </label>
+  <%= f.text_field :zip, :hide_label => true %>
+  <h2>
+    <%= :birthday_gender.l %>
+  </h2>
+  <%= f.form_group :birthday_gender, label: { :text => :gender.l } do %>
+    <%= f.radio_button :gender, User::MALE, :label => :male.l, :inline => true %>
+    <%= f.radio_button :gender, User::FEMALE, :label => :female.l, :inline => true %>
+  <% end %>
+  <%= f.date_select :birthday, {:start_year => 1926, :end_year => Time.now.year - 1} %>
+  <h2>
+    <%= :about_me.l %>
+  </h2>
+  <%= f.text_area :description, :class => "rich_text_editor" %>
+  <h2>
+    <%= :tags.l %>
+  </h2>
+  <div id="user_tags">
+    <%= f.text_field :tag_list, {:autocomplete => "off"} %>
+    <%= f.form_group :tag_list_group do %>
+      <div class="help-block">
+        <%= :you_could_tag_yourself.l %>
+        <% if @user.vendor? %>
+          <%= :custom_friendly_local.l %>
+        <% else %>
+          <%= configatron.meta_keywords.split(",")[0..3].join(", ") %>
+        <% end %>
+        <br/>
+        <%= :tags_are_comma_separated_keywords_that_describe_you.l %>
+        <br/>
+        <%= :you_can_browse_all_content_and_users_on.l %>
+        <%= configatron.community_name %>
+        <%= :by_looking_at_the.l %>
+        <%= link_to :tags_page.l, tags_path %>
+      </div>
+    <% end %>
+    <% content_for :end_javascript do %>
+      <%= tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } %>
+    <% end %>
+  </div>
+  <%= f.form_group :save_group do %>
+    <%= f.primary :save_changes.l %>
+  <% end %>
+<% end %>

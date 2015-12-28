@@ -65,11 +65,16 @@ class ClipboardController < ApplicationController
   # Overrides require_#{method}_permission in ApplicationController.
   # Check if @folder can be read or deleted and redirects to the
   # current folder (identified by params[:folder_id]) if not.
-  %w{read delete}.each do |method|
-    define_method "require_#{method}_permission" do
-      unless current_user.send("can_#{method}", @folder)
+  def require_read_permission
+      if current_user.send("can_#{method}", @folder)==false
         redirect_to folder_url(params[:folder_id]), :alert => t(:no_permissions_for_this_type, :method => t(method), :type => t("this_#{params[:type]}"))
       end
-    end
   end
+
+	def require_delete_permission
+      if current_user.send("can_#{method}", @folder)==false
+        redirect_to folder_url(params[:folder_id]), :alert => t(:no_permissions_for_this_type, :method => t(method), :type => t("this_#{params[:type]}"))
+      end
+  end
+
 end

@@ -1,0 +1,102 @@
+<% widget do %>
+  <h4>
+    <div class="small">
+      <% if params[:type] %>
+        <%= (params[:type].downcase.pluralize + '_tagged').l %>
+      <% else %>
+        <%= :items_tagged.l %>
+      <% end %>
+    </div>
+  </h4>
+  <ul class="list-unstyled">
+    <% @tags.each do |tag| %>
+      <li>
+        <%= link_to h(tag.name), tag_path(tag) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<% if @related_tags.to_a.size > 0 %>
+  <% widget do %>
+    <h3>
+      <%= :related_tags.l %>
+    </h3>
+    <% tag_cloud @related_tags, %w(css1 css2 css3 css4 css5) do |tag, css_class| %>
+      <%= link_to h(tag.name), tag_path(tag), :class => css_class %>
+    <% end %>
+    <p>
+      <%= link_to fa_icon('plus-circle', :text => :all_tags.l), tags_path %>
+    </p>
+  <% end %>
+<% end %>
+<div class="clearfix">
+  <% if @posts.any? %>
+    <% unless params[:type]     %>
+      <h2>
+        <%= :posts.l %>
+      </h2>
+      <ul>
+        <% @posts.each do |post| %>
+          <li>
+            <%= link_to( truncate(post.display_title, :length => 75), user_post_path(post.user, post), :title => :by.l(:login => post.user.login) ) %>
+            <p class="post_excerpt">
+              <%= truncate_words(post.post, 35, '...' ) %>
+            </p>
+          </li>
+        <% end %>
+      </ul>
+      <%= link_to fa_icon('plus-circle', :text => :all_posts_tagged.l(:tag_name => @tags_raw)), show_tag_type_path(:id => @tags_raw, :type => 'Post') unless params[:type] %>
+    <% else %>
+      <%= render :partial => 'posts/post', :collection => @posts %>
+      <%= paginate @posts, :theme => 'bootstrap' %>
+    <% end %>
+  <% end %>
+</div>
+<div class="clearfix">
+  <% if @photos.any? %>
+    <h2>
+      <%= :photos.l(:count => @photos.size) %>
+    </h2>
+    <ul class="list-unstyled thumbnails">
+      <% @photos.each do |photo| %>
+        <li class="col-sm-3">
+          <%= link_to image_tag(photo.photo.url(:medium), :title => "#{photo.description} ("+:uploaded_by.l+" #{photo.user.login})"), user_photo_path(photo.user, photo), :class => "thumbnail" %>
+        </li>
+      <% end %>
+    </ul>
+    <%= link_to fa_icon('plus-circle', :text => :all_photos_tagged.l(:tag_name => @tags_raw)), show_tag_type_path(:id => @tags_raw, :type => 'Photo') unless params[:type] %>
+  <% end %>
+</div>
+<div class="clearfix">
+  <% if @users.any? %>
+    <h2>
+      <%= t('tags.show.users') %>
+    </h2>
+    <ul class="list-unstyled thumbnails">
+      <% @users.each do |user| %>
+        <li class="col-sm-3">
+          <%= link_to image_tag(user.avatar_photo_url(:medium)), user_path(user), :title => user.login, :class => "thumbnail" %>
+        </li>
+      <% end %>
+    </ul>
+    <%= link_to fa_icon('plus-circle', :text => :all_users_tagged.l(:tag_name => @tags_raw)), show_tag_type_path(:id => @tags_raw, :type => 'User') unless params[:type] %>
+  <% end %>
+</div>
+<div class="clearfix">
+  <% unless @clippings.empty? %>
+    <h2>
+      <%= :clippings.l %>
+    </h2>
+    <ul class="list-unstyled thumbnails">
+      <% @clippings.each do |clipping| %>
+        <li class="col-sm-3">
+          <%= render :partial => 'clippings/clipping', :locals => {:clipping => clipping} %>
+        </li>
+      <% end %>
+    </ul>
+    <%= link_to fa_icon('plus-circle', :text => :all_clippings_tagged.l(:tag_name => @tags_raw)), show_tag_type_path(:id => @tags_raw, :type => 'Clipping') unless params[:type] %>
+  <% end %>
+</div>
+<% if @pages && !params[:type].eql?('Post') %>
+  <%= paginate @pages, :theme => 'bootstrap' %>
+<% end %>

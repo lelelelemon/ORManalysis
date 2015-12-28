@@ -1,0 +1,81 @@
+<%= render :partial => 'shared/admin_nav' %>
+<% @page_title = :members.l %>
+<% box do %>
+  <%= bootstrap_form_tag :url => admin_users_url, :class => 'MainForm', :method => :get do |f| %>
+    <%= f.text_field :login %>
+    <%= f.text_field :email %>
+    <%= f.primary :search_users.l %>
+    <%= paginate @users, :theme => 'bootstrap' %>
+  <% end %>
+  <br/>
+  <%= bootstrap_form_tag :url => delete_selected_users_path, :method => :delete, :id => 'users' do %>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th></th>
+        <% if configatron.has_key?(:akismet_key) %>
+          <th></th>
+        <% end %>
+        <th></th>
+        <th></th>
+        <th>
+          <%= :login.l %>
+        </th>
+        <th>
+          <%= :e_mail.l %>
+        </th>
+        <th>
+          <%= :status.l %>
+        </th>
+        <th>
+          <%= :actions.l %>
+        </th>
+      </tr>
+      <% @users.each do |user| %>
+        <tr id="user-<%= user.id %>">
+          <td>
+            <%= link_to fa_icon("trash-o"), user_path(user), :method => :delete, :remote => true, :data => { :confirm => :are_you_sure_you_want_to_permanently_delete_this_user.l } %>
+          </td>
+          <% if configatron.has_key?(:akismet_key) %>
+            <td>
+              <%= link_to fa_icon("ban"), user_path(user, :spam => true), :method => :delete, :remote => true, data: { confirm: :are_you_sure_you_want_to_permanently_delete_this_user_and_mark_as_spam.l } %>
+            </td>
+          <% end %>
+          <td>
+            <%= check_box_tag "delete[]", user.id %>
+          </td>
+          <td>
+            <% if user.avatar %>
+              <%= image_tag user.avatar.photo.url(:thumb), :width => 25 %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to_if user.active?, user.login, user_path(user) %>
+          </td>
+          <td>
+            <%= h user.email %>
+          </td>
+          <td>
+            <%= user.active? ? :active.l : :inactive.l %>
+          </td>
+          <td>
+            <% if user.active? %>
+              <%= link_to :assume_id.l , assume_user_path(user), :method => 'post', :class => 'btn btn-default' %>
+            <% else %>
+              <%= link_to :activate.l, admin_activate_user_path(:id => user), :class => 'btn btn-success' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <% if @users.any? %>
+      <% if configatron.has_key?(:akismet_key) %>
+        <%= check_box_tag :spam %>
+        <%= :delete_selected_mark_as_spam.l %>
+        <br/>
+      <% end %>
+      <a class="btn btn-default check-all" href="#">Toggle all</a>
+      <%= submit_tag :delete_selected.l, :class => 'btn btn-danger' %>
+    <% end %>
+    <%= paginate @users, :theme => 'bootstrap' %>
+  <% end %>
+<% end %>

@@ -19,17 +19,48 @@ class User < ActiveRecord::Base
   after_create :create_root_folder_and_admins_group, :if => :is_admin
   before_destroy :dont_destroy_admin
 
-  %w{create read update delete}.each do |method|
-    define_method "can_#{method}" do |folder|
+	def can_create(folder)
       has_permission = false
 
       Permission.where(:group_id => groups, :folder_id => folder.id).each do |permission|
-        has_permission = permission.send("can_#{method}")
+        has_permission = permission.send("can_create")
         break if has_permission
       end
 
       has_permission
-    end
+  end
+	
+	def can_read(folder)
+      has_permission = false
+
+      Permission.where(:group_id => groups, :folder_id => folder.id).each do |permission|
+        has_permission = permission.send("can_read")
+        break if has_permission
+      end
+
+      has_permission
+  end
+	
+	def can_update(folder)
+      has_permission = false
+
+      Permission.where(:group_id => groups, :folder_id => folder.id).each do |permission|
+        has_permission = permission.send("can_update")
+        break if has_permission
+      end
+
+      has_permission
+  end
+
+	def can_delete(folder)
+      has_permission = false
+
+      Permission.where(:group_id => groups, :folder_id => folder.id).each do |permission|
+        has_permission = permission.send("can_delete")
+        break if has_permission
+      end
+
+      has_permission
   end
 
   def password

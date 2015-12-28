@@ -30,8 +30,10 @@ end
 #TODO: a lot of duplicated code
 
 def handle_single_call_node(start_class, start_function, class_handler, call, level, bb_index, simplified_caller=nil)
-		callerv_name = call.findCaller(start_class, start_function)
-		callerv = $class_map[callerv_name]
+		#callerv_name = call.findCaller(start_class, start_function)
+		#callerv = $class_map[callerv_name]
+		#pre-computed after reading all files, in #read_file.rb
+		callerv = call.caller
 		pass_params = ""
 		pass_returnv = ""
 		call.getParams.each do |param|
@@ -63,43 +65,54 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 
 			if trigger_save?(call) or trigger_create?(call)
 				if caller_class != nil and trigger_save?(call)
-					$class_map[caller_class].getSave.each do |save_action|
-						temp_name = "#{caller_class}.#{save_action.getFuncName}"
+						#TODO: here we assume validation associate with 
+						temp_name = "#{caller_class}.before_save"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 
-							$last_caller_string = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
+							$last_caller_string = "#{start_class}_before_save_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
 					
 							$label_stack.push($label)
 							$l_index_stack.push($l_index)
-							trace_flow(caller_class, save_action.getFuncName, "", "", level+2)
+							trace_flow(caller_class, "before_save", "", "", level+2)
 							$label = $label_stack.pop
 							$l_index = $l_index_stack.pop
 						end
-					end
+
+						temp_name = "#{caller_class}.before_validation"
+						if $non_repeat_list.include?(temp_name) == false
+							$non_repeat_list.push(temp_name)
+
+							$last_caller_string = "#{start_class}_before_validation_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
+					
+							$label_stack.push($label)
+							$l_index_stack.push($l_index)
+							trace_flow(caller_class, "before_validation", "", "", level+2)
+							$label = $label_stack.pop
+							$l_index = $l_index_stack.pop
+						end
+
 				end
 				
-				if caller_class != nil and trigger_create?(call)	
-					$class_map[caller_class].getCreate.each do |create_action|
-						temp_name = "#{caller_class}.#{create_action.getFuncName}"
+				if caller_class != nil and trigger_create?(call)
+						temp_name = "#{caller_class}.before_create"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 							
-							$last_caller_string = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
+							$last_caller_string = "#{start_class}_before_create_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
 							
 							$label_stack.push($label)
 							$l_index_stack.push($l_index)
-							trace_flow(caller_class, create_action.getFuncName, "", "", level+2)
+							trace_flow(caller_class, "before_create", "", "", level+2)
 							$label = $label_stack.pop
 							$l_index = $l_index_stack.pop
 						end
-					end
 				end
 				puts "=====transaction end====="
 			end
 
 		elsif callerv != nil
-			temp_name = "#{callerv_name}.#{call.getFuncName}"
+			temp_name = "#{callerv.getName}.#{call.getFuncName}"
 
 			$label +=  "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\"> #{temp_name}</td></tr>\n"
 			$l_index += 1
@@ -113,7 +126,7 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 
 				$label_stack.push($label)
 				$l_index_stack.push($l_index)
-				trace_flow(callerv_name, call.getFuncName, pass_params, pass_returnv, level+1)
+				trace_flow(callerv.getName, call.getFuncName, pass_params, pass_returnv, level+1)
 				$label = $label_stack.pop
 				$l_index = $l_index_stack.pop
 			end

@@ -1,0 +1,16 @@
+<% @section = 'posts' %>
+<% @page_title = :featured_posts.l %>
+<% widget do %>
+  <h4>
+    <div class="small">
+      <%= :featured_writers.l %>
+    </div>
+  </h4>
+  <ul class="list-unstyled">
+    <% @featured_writers.each do |user| %>
+      <%= render :partial => "users/sidebar_user", :locals => {:user => user} %>
+    <% end %>
+  </ul>
+<% end %>
+<%= render :partial => 'posts/post', :collection => @posts %>
+<%= paginate @posts, :theme => 'bootstrap' %>
