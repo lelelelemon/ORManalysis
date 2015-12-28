@@ -1,0 +1,124 @@
+SET IRMethod, name = initialize
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: %self[2.0,] model[2.5,] @model[] 
+		 9: 
+		 10: (HashWithIndifferentAccess) 
+		 11: %v_3->new attributes[2.6,] %v_3[2.10,] 
+		 12: %self[2.0,] %v_4[2.11,] @attributes[] 
+		 13: 
+		 14: %self->compare %self[2.0,] 
+		 15: RETURN %v_5[2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = changed?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @changed[] 
+		 7: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = compare
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @model[] 
+		 7: %self[2.0,] @attributes[] 
+		 8: %v_4[2.7,] %v_3[2.6,] 
+		 9: 
+		 10: @model[2.6,] 
+		 11: %v_5->changes %v_5[2.10,] 
+		 12: %self[2.0,] %v_6[2.11,] @changes[] 
+		 13: 
+		 14: @model[2.6,2.10,] 
+		 15: %v_7->changed? %v_7[2.14,] 
+		 16: %self[2.0,] %v_8[2.15,] @changed[] 
+		 17: 
+		 18: @model[2.6,2.10,2.14,] 
+		 19: %v_9->reload %v_9[2.18,] 
+		 20: 
+		 21: @changes[2.12,] 
+		 22: %v_11->select! %self[2.0,] %v_11[2.21,] 
+CLOSURE BEGIN: @changed[2.16,] @model[2.6,] @changes[2.12,] @attributes[2.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @attributes[] 
+		 2: %cl_1_3->key? %cl_1_3[3.1,] k[2.2,] 
+		 3: RETURN %cl_1_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 23: RETURN %v_12[2.22,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

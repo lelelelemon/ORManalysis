@@ -1,0 +1,707 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @logged_in[] 
+		 7: %self[2.0,] @group[] 
+		 8: %v_3->member_of? %v_4[2.7,] %v_3[2.6,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @group[2.7,] 
+		 1: %v_6->email? %v_6[3.0,] 
+		 2: %v_7[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_5[3.2,2.8,] 
+BB 5
+	outgoing: 8 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->messages %self[2.0,] 
+		 2: 
+		 3: %v_8->order %v_8[5.1,] %v_9[5.2,] 
+		 4: %self->params %self[2.0,] 
+		 5: %v_11[5.4,] 
+		 6: %v_10->page %v_10[5.3,] %v_12[5.5,] 
+		 7: %v_13[5.6,] %self[2.0,] @messages[] 
+		 8: RETURN %v_13[5.6,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->t %v_14[6.1,] %self[2.0,] 
+		 3: %v_15[6.2,] 
+		 4: %self->render %self[2.0,] %v_16[6.3,] 
+		 5: RETURN %v_17[6.4,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new
+BB 1
+	outgoing: 16 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] @group[] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 15 
+	datadep: 2 2 
+	instructions:
+		 0: %self[2.0,] @group[2.7,] 
+		 1: %v_4->messages %v_4[3.0,] 
+		 2: %v_5->new %v_5[3.1,] 
+		 3: %self[2.0,] %v_6[3.2,] @message[] 
+		 4: 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %v_7[4.1,] 
+		 3: BRANCH %v_8[4.2,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: (Person) 
+		 1: %self->params %self[2.0,] 
+		 2: %v_10[5.1,] 
+		 3: %v_9->find %v_9[5.0,] %v_11[5.2,] 
+		 4: %self[2.0,] %v_12[5.3,] @person[] 
+		 5: %v_12[5.3,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 5 4 
+	instructions:
+		 0: BRANCH %v_8[5.5,4.2,] 
+BB 7
+	outgoing: 14 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (Message) 
+		 2: %self[2.0,] @person[5.4,] 
+		 3: %v_14->id %v_14[7.2,] 
+		 4: %self->params %self[2.0,] 
+		 5: %v_16[7.4,] 
+		 6: %v_15[7.3,] %v_17[7.5,] 
+		 7: %v_13->new %v_13[7.1,] %v_18[7.6,] 
+		 8: %self[2.0,] %v_19[7.7,] @message[] 
+		 9: 
+BB 8
+	outgoing: 9 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %v_20[8.1,] 
+		 3: BRANCH %v_21[8.2,] 
+BB 9
+	outgoing: 10 
+	datadep: 2 2 
+	instructions:
+		 0: (Message) 
+		 1: %self->params %self[2.0,] 
+		 2: %v_23[9.1,] 
+		 3: %v_22->find %v_24[9.2,] %v_22[9.0,] 
+		 4: %v_25[9.3,] %self[2.0,] @parent[] 
+		 5: %v_25[9.3,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 9 8 
+	instructions:
+		 0: BRANCH %v_21[9.5,8.2,] 
+BB 11
+	outgoing: 13 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: (Message) 
+		 2: %self[2.0,] @parent[9.4,] 
+		 3: @parent[11.2,] 
+		 4: %v_28->group_id %v_28[11.3,] 
+		 5: 
+		 6: @parent[11.2,11.3,] 
+		 7: %v_31->subject %v_31[11.6,] 
+		 8: %v_30[11.5,] %v_32[11.7,] 
+		 9: %v_27[11.2,] %v_29[11.4,] %v_33[11.8,] 
+		 10: %v_26->new %v_26[11.1,] %v_34[11.9,] 
+		 11: %v_35[11.10,] %self[2.0,] @message[] 
+		 12: 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+BB 13
+	outgoing: 14 
+	datadep: 12 11 
+	instructions:
+		 0: %v_35[12.0,11.10,] 
+BB 14
+	outgoing: 15 
+	datadep: 13 7 
+	instructions:
+		 0: %v_19[13.0,7.7,] 
+BB 15
+	outgoing: 16 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: (Authority) 
+		 2: %self[2.0,] @message[3.3,7.8,11.11,] 
+		 3: %self->current_user %self[2.0,] 
+		 4: %v_36->enforce %v_36[15.1,] %v_37[15.2,] %v_38[15.3,] 
+		 5: RETURN %v_39[15.4,] 
+BB 16
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: m[2.8,] 
+		 2: %v_5->to_i %v_5[3.1,] 
+		 3: %v_6[3.2,] 
+		 4: BRANCH %v_7[3.3,] 
+BB 4
+	outgoing: 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->create_private_message %self[2.0,] 
+		 2: 
+BB 5
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: m[2.8,] 
+		 2: %v_9->to_i %v_9[5.1,] 
+		 3: %v_10[5.2,] 
+		 4: BRANCH %v_11[5.3,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->create_group_message %self[2.0,] 
+		 2: 
+BB 7
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->t %v_13[7.1,] %self[2.0,] 
+		 3: %self->raise %v_14[7.2,] %self[2.0,] 
+		 4: %v_15[7.3,] 
+BB 8
+	outgoing: 9 
+	datadep: 7 6 
+	instructions:
+		 0: %v_12[7.4,6.1,] 
+BB 9
+	outgoing: 12 
+	datadep: 8 4 
+	instructions:
+		 0: RETURN %v_8[8.0,4.1,] 
+BB 10
+	outgoing: 12 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->t %self[2.0,] %v_16[10.1,] 
+		 3: %self->raise %self[2.0,] %v_17[10.2,] 
+		 4: RETURN %v_18[10.3,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @message[] 
+		 7: %v_3->destroy %v_3[2.6,] 
+		 8: 
+		 9: @message[2.6,] 
+		 10: %v_5->group %v_5[2.9,] 
+		 11: BRANCH %v_6[2.10,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @message[2.6,2.9,] 
+		 1: %v_7->group %v_7[3.0,] 
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->stream_path %self[2.0,] 
+		 1: %v_9[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 4 3 
+	instructions:
+		 0: %self->redirect_to %self[2.0,] %v_8[4.1,3.1,] 
+		 1: RETURN %v_10[5.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = message_params
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3->require %v_3[2.6,] 
+		 8: %v_4->permit %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_private_message
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Person) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_5[2.8,] 
+		 10: %v_3->find %v_3[2.6,] %v_6[2.9,] 
+		 11: %self[2.0,] %v_7[2.10,] @person[] 
+		 12: 
+		 13: @person[2.11,] 
+		 14: %v_8->email %v_8[2.13,] 
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: %self[2.0,] @logged_in[] 
+		 1: %self[2.0,] @person[2.11,2.13,] 
+		 2: %v_10->can_read? %v_10[3.0,] %v_11[3.1,] 
+		 3: %v_12[3.2,] 
+BB 4
+	outgoing: 5 12 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_9[3.3,2.14,] 
+BB 5
+	outgoing: 6 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->send_message %self[2.0,] 
+		 2: BRANCH %v_13[5.1,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @preview[] 
+		 3: BRANCH %v_14[6.2,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 8
+	outgoing: 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->t %self[2.0,] %v_16[8.0,] 
+		 2: %v_17[8.1,] 
+		 3: %self->render %self[2.0,] %v_18[8.2,] 
+		 4: %v_19[8.3,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+BB 11
+	outgoing: 14 
+	datadep: 10 8 7 
+	instructions:
+		 0: RETURN %v_15[10.0,8.4,7.0,] 
+BB 12
+	outgoing: 14 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @person[3.1,2.11,2.13,] 
+		 3: %v_21->name %v_21[12.2,] 
+		 4: %v_22[12.3,] 
+		 5: %self->t %self[2.0,] %v_20[12.1,] %v_23[12.4,] 
+		 6: %v_24[12.5,] 
+		 7: %self->render %v_25[12.6,] %self[2.0,] 
+		 8: RETURN %v_26[12.7,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_group_message
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Group) 
+		 7: %self->params %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_5[2.8,] 
+		 10: %v_3->find %v_3[2.6,] %v_6[2.9,] 
+		 11: %self[2.0,] %v_7[2.10,] @group[] 
+		 12: 
+		 13: @group[2.11,] 
+		 14: %self[2.0,] @logged_in[] 
+		 15: %v_8->can_post? %v_8[2.13,] %v_9[2.14,] 
+		 16: BRANCH %v_10[2.15,] 
+BB 3
+	outgoing: 4 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->send_message %self[2.0,] 
+		 2: BRANCH %v_11[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @preview[] 
+		 3: BRANCH %v_12[4.2,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 6
+	outgoing: 7 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: %self->flash %self[2.0,] 
+		 1: 
+		 2: %self->t %self[2.0,] %v_15[6.1,] 
+		 3: %v_14[6.0,] %v_16[6.2,] 
+		 4: 
+		 5: %self[2.0,] @group[2.11,2.13,] 
+		 6: %self->redirect_to %self[2.0,] %v_17[6.5,] 
+		 7: %v_18[6.6,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 12 
+	datadep: 8 6 5 
+	instructions:
+		 0: RETURN %v_13[8.0,6.7,5.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->t %self[2.0,] %v_19[10.1,] 
+		 3: %v_20[10.2,] 
+		 4: %self->render %self[2.0,] %v_21[10.3,] 
+		 5: RETURN %v_22[10.4,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = send_message
+BB 1
+	outgoing: 19 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->message_params %self[2.0,] 
+		 7: %self[2.0,] @logged_in[] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->merge %v_5[2.8,] %v_3[2.6,] 
+		 10: %v_6[2.9,] 
+		 11: 
+		 12: %v_6[2.9,] 
+		 13: %v_7->present? %v_7[2.12,] 
+		 14: BRANCH %v_8[2.13,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: %self[2.0,] @logged_in[2.7,] 
+		 1: (Message) 
+		 2: attributes[2.10,] 
+		 3: %v_10->find %v_10[3.1,] %v_11[3.2,] 
+		 4: %v_9->can_read? %v_9[3.0,] %v_12[3.3,] 
+		 5: %v_13->! %v_13[3.4,] 
+		 6: %v_14[3.5,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_8[3.6,2.13,] 
+BB 5
+	outgoing: 19 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_15[5.1,] 
+		 3: %self->render %self[2.0,] %v_16[5.2,] 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 8 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->params %self[2.0,] 
+		 3: %v_19[6.2,] 
+		 4: BRANCH %v_20[6.3,] 
+BB 8
+	outgoing: 19 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: (Message) 
+		 2: %v_21->preview attributes[2.10,] %v_21[8.1,] 
+		 3: %self[2.0,] %v_22[8.2,] @preview[] 
+		 4: RETURN %v_22[8.2,] 
+BB 9
+	outgoing: 10 16 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (Message) 
+		 2: %self->params %self[2.0,] 
+		 3: %v_24[9.2,] 
+		 4: %v_25->to_a %v_25[9.3,] 
+		 5: %v_23->create_with_attachments %v_26[9.4,] attributes[2.10,] %v_23[9.1,] 
+		 6: %self[2.0,] %v_27[9.5,] @message[] 
+		 7: 
+		 8: @message[9.6,] 
+		 9: %v_28->errors %v_28[9.8,] 
+		 10: %v_29->any? %v_29[9.9,] 
+		 11: BRANCH %v_30[9.10,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @message[9.6,9.8,] 
+		 2: %v_31->errors %v_31[10.1,] 
+		 3: %v_32[10.2,] 
+		 4: BRANCH %v_33[10.3,] 
+BB 11
+	outgoing: 12 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @message[10.1,] 
+		 1: %v_34->errors %v_34[11.0,] 
+		 2: %v_35[11.1,] 
+		 3: 
+		 4: %v_36->include? %v_36[11.2,] %v_37[11.3,] 
+		 5: %v_38[11.4,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 11 10 
+	instructions:
+		 0: BRANCH %v_33[11.5,10.3,] 
+BB 13
+	outgoing: 15 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @message[11.0,10.1,] 
+		 2: %v_39->errors %v_39[13.1,] 
+		 3: %v_40[13.2,] 
+		 4: 
+		 5: %v_41->delete %v_41[13.3,] %v_42[13.4,] 
+		 6: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+BB 15
+	outgoing: 17 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_44[15.1,] 
+		 3: %self->render %self[2.0,] %v_45[15.2,] 
+		 4: 
+		 5: 
+		 6: 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 17
+	outgoing: 19 
+	datadep: 16 15 
+	instructions:
+		 0: RETURN %v_47[16.1,15.5,] 
+BB 19
+	outgoing: 
+	datadep: 
+	instructions:
+

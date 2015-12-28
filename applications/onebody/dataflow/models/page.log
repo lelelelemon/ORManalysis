@@ -1,0 +1,740 @@
+SET IRMethod, name = update_path
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->parent %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->parent %self[2.0,] 
+		 2: %v_4->path %v_4[3.1,] 
+		 3: 
+		 4: %v_5[3.2,] %v_6[3.3,] 
+		 5: %self->slug %self[2.0,] 
+		 6: %v_8[3.5,] %v_7[3.4,] 
+		 7: %self[2.0,] %v_9[3.6,] 
+		 8: RETURN %v_9[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->slug %self[2.0,] 
+		 2: %self[2.0,] %v_10[4.1,] 
+		 3: RETURN %v_10[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = name
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->title %self[2.0,] 
+		 7: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = home?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->path %self[2.0,] 
+		 7: 
+		 8: %v_4[2.7,] %v_3[2.6,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = body
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->read_attribute %self[2.0,] 
+		 7: %v_3->dup %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: cooked->gsub! cooked[2.8,] %v_6[3.2,] 
+		 4: 
+		 5: 
+		 6: %self[2.0,] cooked[2.8,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (Setting) 
+		 2: 
+		 3: %cl_1_7->to_sym %cl_1_7[4.2,] 
+		 4: 
+		 5: %cl_1_9->to_sym %cl_1_9[4.4,] 
+		 6: %cl_1_6->get %cl_1_6[4.1,] %cl_1_10[4.5,] %cl_1_8[4.3,] 
+		 7: %cl_1_11->to_s %cl_1_11[4.6,] 
+		 8: %cl_1_12[4.7,] 
+		 9: 
+		 10: %cl_1_3[2.5,] 
+BB 6
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 9 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_1_13[7.1,] 
+		 3: BRANCH %cl_1_14[7.2,] 
+BB 8
+	outgoing: 11 15 
+	datadep: 7 
+	instructions:
+		 0: %cl_1_13[7.1,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %cl_1_15[9.0,] 
+		 2: 
+		 3: %cl_1_3[2.5,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 11
+	outgoing: 13 15 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %cl_1_3[2.5,] %cl_1_16[11.0,] 
+		 2: %cl_1_16[11.0,] 
+BB 12
+	outgoing: 15 
+	datadep: 4 9 
+	instructions:
+		 0: RETURN %cl_1_5[4.8,9.1,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_18[13.0,] 
+		 2: RETURN %cl_1_19[13.1,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: RETURN %v_9[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = navigation_pages
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->home? %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Page) 
+		 2: %v_4->root_pages %v_4[3.1,] 
+		 3: RETURN %v_5[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->children %self[2.0,] 
+		 2: 
+		 3: %v_6->where %v_6[4.1,] %v_7[4.2,] 
+		 4: RETURN %v_8[4.3,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = for_members?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->path %self[2.0,] 
+		 7: 
+		 8: %v_3[2.6,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = cannot_destroy_system_page
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->system? %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->errors %self[2.0,] 
+		 2: 
+		 3: %v_4->add %v_4[3.1,] %v_5[3.2,] 
+		 4: 
+		 5: RETURN 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: (String) 
+		 9: id->is_a? id[2.5,] %v_3[2.8,] 
+		 10: BRANCH %v_4[2.9,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: id[2.5,] 
+		 2: %v_6[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_4[3.2,2.9,] 
+BB 5
+	outgoing: 8 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->find_by_path id[2.5,] %self[2.0,] 
+		 2: %v_7->tap %self[2.0,] %v_7[5.1,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: BRANCH page[2.2,] 
+BB 4
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %cl_1_3[4.0,] 
+BB 5
+	outgoing: 6 7 9 
+	datadep: 
+	instructions:
+		 0: (ActiveRecord) 
+		 1: %cl_1_4[5.0,] 
+		 2: %cl_1_5[5.1,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 5 
+	instructions:
+		 0: %cl_1_4[5.0,] 
+BB 7
+	outgoing: 9 11 
+	datadep: 2 6 5 
+	instructions:
+		 0: %self->raise %self[2.0,] %cl_1_5[6.0,5.1,] 
+		 1: RETURN %cl_1_6[7.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_7[9.0,] 
+		 2: RETURN %cl_1_8[9.1,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %v_8[5.2,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: id[2.5,] %v_0[2.1,] %current_module[2.3,] args[2.6,] 
+		 2: RETURN %v_9[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_by_id_or_path
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: (String) 
+		 8: id_or_path->is_a? id_or_path[2.5,] %v_3[2.7,] 
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: id_or_path[2.5,] 
+		 2: %v_6[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_4[3.2,2.8,] 
+BB 5
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: id_or_path[2.5,] 
+		 2: %self->where %self[2.0,] %v_7[5.1,] 
+		 3: %v_8->first %v_8[5.2,] 
+		 4: RETURN %v_9[5.3,] 
+BB 6
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: id_or_path[2.5,] 
+		 2: %self->where %self[2.0,] %v_10[6.1,] 
+		 3: %v_11->first %v_11[6.2,] 
+		 4: RETURN %v_12[6.3,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_by_path
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->normalize_path path[2.5,] %self[2.0,] 
+		 8: %v_3[2.7,] 
+		 9: %self->where %self[2.0,] %v_4[2.8,] 
+		 10: %v_5->first %v_5[2.9,] 
+		 11: RETURN %v_6[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = normalize_path
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->home_if_blank path[2.5,] %self[2.0,] 
+		 8: %v_3[2.7,] 
+		 9: 
+		 10: 
+		 11: 
+		 12: %v_3->sub %v_5[2.11,] %v_3[2.7,] 
+		 13: 
+		 14: 
+		 15: %v_6->sub %v_8[2.14,] %v_6[2.12,] 
+		 16: 
+		 17: 
+		 18: %v_9->gsub %v_9[2.15,] %v_11[2.17,] 
+		 19: 
+		 20: 
+		 21: %v_12->gsub %v_14[2.20,] %v_12[2.18,] 
+		 22: %v_15->downcase %v_15[2.21,] 
+		 23: RETURN %v_16[2.22,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = home_if_blank
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: path->to_s path[2.5,] 
+		 8: %v_3->empty? %v_3[2.7,] 
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %v_5[3.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: RETURN path[2.5,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = paths_and_ids
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->connection %self[2.0,] 
+		 7: 
+		 8: (Site) 
+		 9: %v_5->current %v_5[2.8,] 
+		 10: %v_6->id %v_6[2.9,] 
+		 11: 
+		 12: %v_4[2.7,] %v_8[2.11,] %v_7[2.10,] 
+		 13: %v_3->select_all %v_3[2.6,] %v_9[2.12,] 
+		 14: %v_10->map %self[2.0,] %v_10[2.13,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_1_3[3.1,] r[2.2,] 
+		 3: 
+		 4: %cl_1_5[3.3,] r[2.2,] 
+		 5: %cl_1_6->to_i %cl_1_6[3.4,] 
+		 6: %cl_1_4[3.2,] %cl_1_7[3.5,] 
+		 7: RETURN %cl_1_8[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_9[4.0,] 
+		 2: RETURN %cl_1_10[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 15: RETURN %v_11[2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = root_pages
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: include_home[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: published[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: navigation[6.0,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+BB 8
+	outgoing: 9 
+	datadep: 5 4 7 6 2 
+	instructions:
+		 0: 
+		 1: (Page) 
+		 2: published[5.0,4.0,] navigation[7.0,6.0,] 
+		 3: %v_3->where %v_4[8.2,] %v_3[8.1,] 
+		 4: %v_5->to_a %v_5[8.3,] 
+		 5: %v_6->select %self[2.0,] %v_6[8.4,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: BRANCH 
+BB 4
+	outgoing: 6 8 
+	datadep: 2 
+	instructions:
+		 0: p->home? p[2.2,] 
+		 1: %cl_1_4->! %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 5
+	outgoing: 8 
+	datadep: 2 
+	instructions:
+		 0: RETURN %cl_1_3[2.6,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_6[6.0,] 
+		 2: RETURN %cl_1_7[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %v_7[8.5,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+

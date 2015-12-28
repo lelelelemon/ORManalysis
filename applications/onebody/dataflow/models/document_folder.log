@@ -1,0 +1,194 @@
+SET IRMethod, name = parent_folders
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (DocumentFolder) 
+		 7: %self->parent_folder_ids %self[2.0,] 
+		 8: %v_3->find %v_4[2.7,] %v_3[2.6,] 
+		 9: %v_5->sort_by %self[2.0,] %v_5[2.8,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->parent_folder_ids %self[2.0,] 
+		 2: f->id f[2.2,] 
+		 3: %cl_1_3->index %cl_1_3[3.1,] %cl_1_4[3.2,] 
+		 4: RETURN %cl_1_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 10: RETURN %v_6[2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = all_group_ids
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->group_ids %self[2.0,] 
+		 7: %self->parent_folders %self[2.0,] 
+		 8: %v_4->flat_map %v_4[2.7,] 
+		 9: %v_5[2.8,] %v_3[2.6,] 
+		 10: %v_6->uniq %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = all_groups
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: (Group) 
+		 7: %self->all_group_ids %self[2.0,] 
+		 8: %v_4[2.7,] 
+		 9: %v_3->where %v_5[2.8,] %v_3[2.6,] 
+		 10: RETURN %v_6[2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = restricted?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->group_ids %self[2.0,] 
+		 7: %v_3->any? %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = hidden_at_all?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->hidden? %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self->parent_folders %self[2.0,] 
+		 1: %v_4->any? %v_4[3.0,] 
+		 2: RETURN %v_5[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_3[2.6,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = item_count
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->folders %self[2.0,] 
+		 7: %v_3->count %v_3[2.6,] 
+		 8: %self->documents %self[2.0,] 
+		 9: %v_5->count %v_5[2.8,] 
+		 10: %v_4[2.7,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

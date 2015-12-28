@@ -1,0 +1,281 @@
+SET IRMethod, name = guess_child
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->family %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->family %self[2.0,] 
+		 2: %v_4->people %v_4[3.1,] 
+		 3: %v_5->undeleted %v_5[3.2,] 
+		 4: %v_6->count %v_6[3.3,] 
+		 5: %v_7[3.4,] 
+		 6: %self[2.0,] %v_8[3.5,] 
+		 7: RETURN %v_8[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] 
+		 2: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_child
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->birthday %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self->birthday %self[2.0,] 
+		 1: %v_4->year %v_4[3.0,] 
+		 2: %v_5[3.1,] 
+		 3: %v_6[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.3,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: (Setting) 
+		 3: %v_8->get %v_8[5.2,] 
+		 4: %v_9->to_i %v_9[5.3,] 
+		 5: %self->at_least? %self[2.0,] %v_10[5.4,] 
+		 6: %v_11->! %v_11[5.5,] 
+		 7: %self[2.0,] %v_12[5.6,] 
+		 8: 
+		 9: RETURN 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = at_least?
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->years_of_age %self[2.0,] 
+		 8: %v_3[2.7,] 
+		 9: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: y[2.8,] age[2.5,] 
+		 3: RETURN %v_5[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = years_of_age
+BB 1
+	outgoing: 19 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: on[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (Date) 
+		 1: %v_3->current %v_3[3.0,] 
+		 2: %v_4[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->birthday %self[2.0,] 
+		 2: BRANCH %v_5[4.1,] 
+BB 5
+	outgoing: 8 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->birthday %self[2.0,] 
+		 3: %v_7->year %v_7[5.2,] 
+		 4: %v_8[5.3,] 
+		 5: BRANCH %v_9[5.4,] 
+BB 6
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 8
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 11 12 
+	datadep: 3 2 2 3 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: on->year on[3.2,2.5,] 
+		 3: %self->birthday %self[2.0,] 
+		 4: %v_12->year %v_12[9.3,] 
+		 5: %v_13[9.4,] %v_11[9.2,] 
+		 6: %v_14[9.5,] 
+		 7: 
+		 8: on->month on[3.2,2.5,] 
+		 9: %self->birthday %self[2.0,] 
+		 10: %v_16->month %v_16[9.9,] 
+		 11: %v_15[9.8,] %v_17[9.10,] 
+		 12: BRANCH %v_18[9.11,] 
+BB 11
+	outgoing: 13 
+	datadep: 9 
+	instructions:
+		 0: years[9.6,] 
+		 1: %v_19[11.0,] 
+		 2: 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+BB 13
+	outgoing: 14 15 
+	datadep: 3 2 2 
+	instructions:
+		 0: 
+		 1: on->month on[3.2,2.5,] 
+		 2: %self->birthday %self[2.0,] 
+		 3: %v_21->month %v_21[13.2,] 
+		 4: %v_20[13.1,] %v_22[13.3,] 
+		 5: BRANCH %v_23[13.4,] 
+BB 14
+	outgoing: 15 
+	datadep: 3 2 2 
+	instructions:
+		 0: on->day on[3.2,2.5,] 
+		 1: %self->birthday %self[2.0,] 
+		 2: %v_25->day %v_25[14.1,] 
+		 3: %v_24[14.0,] %v_26[14.2,] 
+		 4: %v_27[14.3,] 
+BB 15
+	outgoing: 16 17 
+	datadep: 14 13 
+	instructions:
+		 0: BRANCH %v_23[14.4,13.4,] 
+BB 16
+	outgoing: 18 
+	datadep: 11 9 
+	instructions:
+		 0: years[11.1,9.6,] 
+		 1: %v_28[16.0,] 
+		 2: 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+BB 18
+	outgoing: 19 
+	datadep: 16 11 9 
+	instructions:
+		 0: 
+		 1: RETURN years[16.1,11.1,9.6,] 
+BB 19
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = adult?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->child? %self[2.0,] 
+		 7: %v_3->! %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

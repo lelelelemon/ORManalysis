@@ -1,0 +1,324 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @group[] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @person[] 
+		 1: %v_4[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 3 2 2 2 2 2 
+	instructions:
+		 0: %self[2.0,] %v_3[3.1,2.6,] @owner[] 
+		 1: 
+		 2: %self->albums %self[2.0,] 
+		 3: %self->current_user %self[2.0,] 
+		 4: %v_5->readable_by %v_5[4.2,] %v_6[4.3,] 
+		 5: %self[2.0,] %v_7[4.4,] @albums[] 
+		 6: 
+		 7: %self->respond_to %self[2.0,] 
+CLOSURE BEGIN: @albums[4.5,] @person[3.0,] @group[2.6,] @owner[4.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: format->html format[2.2,] 
+		 2: 
+		 3: format->js %self[2.0,] format[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @albums[] 
+		 2: %cl_2_3->to_json %cl_2_3[3.1,] 
+		 3: %cl_2_4[3.2,] 
+		 4: %self->render %self[2.0,] %cl_2_5[3.3,] 
+		 5: RETURN %cl_2_6[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_7[4.0,] 
+		 2: RETURN %cl_2_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_1_4[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_8[4.7,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @album[] 
+		 7: %v_3->pictures %v_3[2.6,] 
+		 8: %v_4->order %v_4[2.7,] 
+		 9: %self->params %self[2.0,] 
+		 10: %v_6[2.9,] 
+		 11: %v_5->page %v_5[2.8,] %v_7[2.10,] 
+		 12: %self[2.0,] %v_8[2.11,] @pictures[] 
+		 13: RETURN %v_8[2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @album[] 
+		 7: %v_3->save %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: 
+		 3: %self->t %self[2.0,] %v_6[3.2,] 
+		 4: %v_5[3.1,] %v_7[3.3,] 
+		 5: 
+		 6: %self[2.0,] @album[2.6,] 
+		 7: %self->redirect_to %self[2.0,] %v_8[3.6,] 
+		 8: RETURN %v_9[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_10[4.1,] 
+		 3: %self->render %self[2.0,] %v_11[4.2,] 
+		 4: RETURN %v_12[4.3,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = edit
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @album[] 
+		 7: %self->album_params %self[2.0,] 
+		 8: %v_3->update_attributes %v_4[2.7,] %v_3[2.6,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->flash %self[2.0,] 
+		 2: 
+		 3: %self->t %self[2.0,] %v_7[3.2,] 
+		 4: %v_8[3.3,] %v_6[3.1,] 
+		 5: 
+		 6: %self[2.0,] @album[2.6,] 
+		 7: %self->redirect_to %self[2.0,] %v_9[3.6,] 
+		 8: RETURN %v_10[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_11[4.1,] 
+		 3: %self->render %self[2.0,] %v_12[4.2,] 
+		 4: RETURN %v_13[4.3,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @album[] 
+		 7: %v_3->owner %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: 
+		 10: @album[2.6,] 
+		 11: %v_5->destroy %v_5[2.10,] 
+		 12: 
+		 13: owner[2.8,] 
+		 14: %self->redirect_to %self[2.0,] %v_7[2.13,] 
+		 15: RETURN %v_8[2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = album_params
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3->require %v_3[2.6,] 
+		 8: %v_4->permit %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

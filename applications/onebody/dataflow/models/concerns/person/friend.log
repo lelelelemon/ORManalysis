@@ -1,0 +1,371 @@
+SET IRMethod, name = request_friendship_with
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->pending_friendship_requests %self[2.0,] 
+		 8: person->id person[2.5,] 
+		 9: %v_4[2.8,] 
+		 10: %v_3->where %v_5[2.9,] %v_3[2.7,] 
+		 11: %v_6->first %v_6[2.10,] 
+		 12: %v_7[2.11,] 
+		 13: BRANCH %v_7[2.11,] 
+BB 3
+	outgoing: 15 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: pending->accept pending[2.12,] 
+		 2: 
+		 3: (I18n) 
+		 4: 
+		 5: person->name person[2.5,] 
+		 6: %v_11[3.5,] 
+		 7: %v_9->t %v_9[3.3,] %v_10[3.4,] %v_12[3.6,] 
+		 8: RETURN %v_13[3.7,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->can_request_friendship_with? person[2.5,] %self[2.0,] 
+		 2: BRANCH %v_14[4.1,] 
+BB 5
+	outgoing: 13 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship_requests %self[2.0,] 
+		 2: person->id person[2.5,] 
+		 3: %v_16[5.2,] 
+		 4: %v_15->where %v_15[5.1,] %v_17[5.3,] 
+		 5: %v_18->delete_all %v_18[5.4,] 
+		 6: 
+		 7: person->friendship_requests person[2.5,] 
+		 8: %self[2.0,] 
+		 9: %v_20->create! %v_20[5.7,] %v_21[5.8,] 
+		 10: 
+		 11: (I18n) 
+		 12: 
+		 13: person->name person[2.5,] 
+		 14: %v_25[5.13,] 
+		 15: %v_23->t %v_24[5.12,] %v_26[5.14,] %v_23[5.11,] 
+		 16: 
+BB 6
+	outgoing: 7 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship_waiting_on? person[2.5,] %self[2.0,] 
+		 2: BRANCH %v_28[6.1,] 
+BB 7
+	outgoing: 12 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: 
+		 3: person->name person[2.5,] 
+		 4: %v_31[7.3,] 
+		 5: %v_29->t %v_29[7.1,] %v_30[7.2,] %v_32[7.4,] 
+		 6: 
+BB 8
+	outgoing: 9 10 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship_rejected_by? person[2.5,] %self[2.0,] 
+		 2: BRANCH %v_34[8.1,] 
+BB 9
+	outgoing: 11 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: 
+		 3: person->name person[2.5,] 
+		 4: %v_37[9.3,] 
+		 5: %v_35->t %v_35[9.1,] %v_36[9.2,] %v_38[9.4,] 
+		 6: 
+BB 10
+	outgoing: 11 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: 
+		 3: %v_40->t %v_40[10.1,] %v_41[10.2,] 
+		 4: %self->raise %self[2.0,] %v_42[10.3,] 
+		 5: %v_43[10.4,] 
+BB 11
+	outgoing: 12 
+	datadep: 10 9 
+	instructions:
+		 0: %v_39[10.5,9.5,] 
+BB 12
+	outgoing: 13 
+	datadep: 11 7 
+	instructions:
+		 0: %v_33[11.0,7.5,] 
+BB 13
+	outgoing: 15 
+	datadep: 12 5 
+	instructions:
+		 0: RETURN %v_27[12.0,5.15,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = can_request_friendship_with?
+BB 1
+	outgoing: 21 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: (Setting) 
+		 8: %v_3->get %v_3[2.7,] 
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: person[2.5,] %self[2.0,] 
+		 1: %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_4[3.1,2.8,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: person->family_id person[2.5,] 
+		 1: %self->family_id %self[2.0,] 
+		 2: %v_6[5.0,] %v_7[5.1,] 
+		 3: %v_8[5.2,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 5 3 2 
+	instructions:
+		 0: BRANCH %v_4[5.3,3.1,2.8,] 
+BB 7
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->friend? person[2.5,] %self[2.0,] 
+		 2: %v_9->! %v_9[7.1,] 
+		 3: %v_10[7.2,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 7 5 3 2 
+	instructions:
+		 0: BRANCH %v_4[7.3,5.3,3.1,2.8,] 
+BB 9
+	outgoing: 10 
+	datadep: 2 
+	instructions:
+		 0: %self->active? %self[2.0,] 
+		 1: %v_11[9.0,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 9 7 5 3 2 
+	instructions:
+		 0: BRANCH %v_4[9.1,7.3,5.3,3.1,2.8,] 
+BB 11
+	outgoing: 12 
+	datadep: 2 
+	instructions:
+		 0: person->active? person[2.5,] 
+		 1: %v_12[11.0,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 11 9 7 5 3 2 
+	instructions:
+		 0: BRANCH %v_4[11.1,9.1,7.3,5.3,3.1,2.8,] 
+BB 13
+	outgoing: 14 
+	datadep: 2 
+	instructions:
+		 0: person->email person[2.5,] 
+		 1: %v_13->present? %v_13[13.0,] 
+		 2: %v_14[13.1,] 
+BB 14
+	outgoing: 15 16 
+	datadep: 13 11 9 7 5 3 2 
+	instructions:
+		 0: BRANCH %v_4[13.2,11.1,9.1,7.3,5.3,3.1,2.8,] 
+BB 15
+	outgoing: 16 
+	datadep: 2 
+	instructions:
+		 0: person->friends_enabled person[2.5,] 
+		 1: %v_15[15.0,] 
+BB 16
+	outgoing: 17 18 
+	datadep: 15 13 11 9 7 5 3 2 
+	instructions:
+		 0: BRANCH %v_4[15.1,13.2,11.1,9.1,7.3,5.3,3.1,2.8,] 
+BB 17
+	outgoing: 18 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship_rejected_by? person[2.5,] %self[2.0,] 
+		 2: %v_16->! %v_16[17.1,] 
+		 3: %v_17[17.2,] 
+BB 18
+	outgoing: 19 20 
+	datadep: 17 15 13 11 9 7 5 3 2 
+	instructions:
+		 0: BRANCH %v_4[17.3,15.1,13.2,11.1,9.1,7.3,5.3,3.1,2.8,] 
+BB 19
+	outgoing: 21 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship_waiting_on? person[2.5,] %self[2.0,] 
+		 2: %v_18->! %v_18[19.1,] 
+		 3: RETURN %v_19[19.2,] 
+BB 20
+	outgoing: 21 
+	datadep: 17 15 13 11 9 7 5 3 2 
+	instructions:
+		 0: RETURN %v_4[17.3,15.1,13.2,11.1,9.1,7.3,5.3,3.1,2.8,] 
+BB 21
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = friendship_rejected_by?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: person->friendship_requests person[2.5,] 
+		 8: %self->id %self[2.0,] 
+		 9: %v_4[2.8,] 
+		 10: %v_3->where %v_5[2.9,] %v_3[2.7,] 
+		 11: %v_6->any? %v_6[2.10,] 
+		 12: RETURN %v_7[2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = friendship_waiting_on?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: person->friendship_requests person[2.5,] 
+		 8: %self->id %self[2.0,] 
+		 9: %v_4[2.8,] 
+		 10: %v_3->where %v_5[2.9,] %v_3[2.7,] 
+		 11: %v_6->any? %v_6[2.10,] 
+		 12: RETURN %v_7[2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = friend?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->friends %self[2.0,] 
+		 8: 
+		 9: person->id person[2.5,] 
+		 10: %v_4[2.8,] %v_5[2.9,] 
+		 11: %v_3->where %v_3[2.7,] %v_6[2.10,] 
+		 12: %v_7->count %v_7[2.11,] 
+		 13: %v_8[2.12,] 
+		 14: RETURN %v_9[2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy_friendships
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->friendships %self[2.0,] 
+		 7: %v_3->destroy_all %v_3[2.6,] 
+		 8: 
+		 9: %self->friendship_requests %self[2.0,] 
+		 10: %v_5->destroy_all %v_5[2.9,] 
+		 11: RETURN %v_6[2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
