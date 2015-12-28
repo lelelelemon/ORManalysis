@@ -1,0 +1,44 @@
+- @title = t('checkin.groups.index.heading', time: @time.to_s, campus: @time.campus)
+
+.row
+  .col-md-8
+    .checkin-groups-table-wrapper
+      = render partial: 'entries'
+    .checkin-group-folder-help.alert.alert-info
+      = icon 'fa fa-info-circle'
+      = t('checkin.groups.movement_help_html')
+
+  .col-md-4
+    .box.box-success
+      .box-header
+        %h3.box-title= t('checkin.groups.index.add_group.heading')
+      .box-body
+        = form_tag groups_path, remote: true, method: 'get', id: 'group-search' do
+          = hidden_field_tag :select_group, true
+          = hidden_field_tag :include_hidden, true
+          .form-group
+            = label_tag :name, t('name')
+            = text_field_tag :name, '', class: 'form-control'
+          .form-group
+            = button_tag t('checkin.groups.index.add_group.search'), class: 'btn btn-info'
+        #add_group{ style: "display:none" }
+          = form_tag administration_checkin_time_groups_path(@time), remote: true do
+            #group_results
+            .form-group#folder-select
+              = render partial: 'folder_select'
+            .form-group.push-down
+              = button_tag t('checkin.groups.index.add_group.button'), class: 'btn btn-success'
+        #no_group_results{ style: "display:none" }
+          = t('none')
+
+    .box.box-info
+      .box-header
+        %h3.box-title= t('checkin.groups.index.add_folder.heading')
+      .box-body
+        = form_tag administration_checkin_time_groups_path(@time), remote: true do
+          = hidden_field_tag :folder, true
+          .form-group
+            = label_tag :name, t('checkin.groups.index.add_folder.name')
+            = text_field_tag :name, '', class: 'form-control', id: 'folder_name'
+          .form-group
+            = button_tag t('checkin.groups.index.add_folder.button'), class: 'btn btn-success'

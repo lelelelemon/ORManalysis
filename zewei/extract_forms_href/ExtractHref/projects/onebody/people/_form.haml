@@ -1,0 +1,77 @@
+= form_for @person, html: { multipart: true } do |form|
+
+  .row
+    .col-lg-8
+      - unless @family.persisted?
+        .alert.alert-warning.alert-dismissable
+          = icon 'fa fa-warning'
+          %button{ class: 'close', aria: { hidden: true }, data: { dismiss: 'alert' }, type: 'button' } ×
+          %p= t('people.new.no_family_warning_html')
+
+      %p.discreet.small
+        = t('privacies.please_read_our_privacy_policy_html', url: help_path('privacy_policy'))
+
+      %ul.nav.nav-tabs
+        %li.active
+          = link_to t('people.edit.basics'), '#basics', data: { toggle: 'tab' }
+        %li
+          = link_to t('people.edit.about'), '#about', data: { toggle: 'tab' }
+        - if setting(:features, :business_directory)
+          %li
+            = link_to t('people.edit.business'), '#business', data: { toggle: 'tab' }
+        - if @logged_in.admin?(:edit_profiles)
+          %li
+            = link_to t('people.edit.person_type'), '#roles', data: { toggle: 'tab' }
+          %li
+            = link_to t('people.edit.status'), '#status', data: { toggle: 'tab' }
+
+      .tab-content
+        .tab-pane.active#basics
+          = render partial: 'form_basics', object: form, as: :form
+          .form-group= submit_or_save_button
+        .tab-pane#about
+          = render partial: 'form_about', object: form, as: :form
+          .form-group= submit_or_save_button
+        - if setting(:features, :business_directory)
+          .tab-pane#business
+            = render partial: 'form_business', object: form, as: :form
+            .form-group= submit_or_save_button
+        - if @logged_in.admin?(:edit_profiles)
+          .tab-pane#roles
+            = render partial: 'form_roles', object: form, as: :form
+            .form-group= submit_or_save_button
+          .tab-pane#status
+            = render partial: 'form_status', object: form, as: :form
+            .form-group= submit_or_save_button
+
+    .col-lg-4
+      %h3= t('people.edit.photo')
+      = photo_upload_for @person do
+        %p= avatar_tag @person, size: :large
+
+      %h3= t('people.edit.family_photo')
+      = photo_upload_for @family do
+        %p= family_avatar_tag @family, size: :large
+
+- content_for(:js) do
+  :javascript
+    $('#person_birthday').on('keyup changeDate', function(){
+      var val = $(this).val();
+      if(val == '' || val.match(/1900/)) {
+        $('#child-selection').show();
+      } else {
+        $('#child-selection select').val('');
+        $('#child-selection').hide();
+      }
+    }).trigger('keyup');
+
+    changes_made = false;
+    $(':input:not([type="file"])').bind('change', function(){
+      changes_made = true;
+    });
+
+    $('form').submit(function(){ changes_made = false });
+
+    window.onbeforeunload = function() {
+      if(changes_made) return '#{escape_javascript t('you_made_a_change_page')}';
+    }

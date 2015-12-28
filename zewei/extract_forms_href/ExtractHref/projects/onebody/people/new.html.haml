@@ -1,0 +1,8 @@
+- if @family.persisted?
+  - @title = t('people.new.heading', family: link_to(@family.try(:name), @family)).html_safe
+- else
+  - @title = t('people.new.heading_without_family')
+
+= error_messages_for(@person)
+
+= render partial: 'form'
