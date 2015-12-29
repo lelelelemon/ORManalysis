@@ -30,6 +30,25 @@ class FavoritesController < BaseController
 
   def index
     @favorites = Favorite.recent.by_user(@user).page(params[:page])
+ @page_title = "#{@user.login}'s "+:favorites.l 
+ @favorites.each do |f| 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ case favorite.favoritable.class.to_s.tableize 
+ when 'clippings' 
+ render :partial => "clippings/clipping", :locals => {:clipping => favorite.favoritable} 
+ when 'posts' 
+ render :partial => "posts/favorited_post", :locals => {:post => favorite.favoritable}     
+ end 
+ end 
+
+
+end
+
+ 
+# end 
+ paginate @favorites, :theme => 'bootstrap'      
+
   end
 
 

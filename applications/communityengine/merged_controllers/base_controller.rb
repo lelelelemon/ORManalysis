@@ -44,11 +44,126 @@ class BaseController < ApplicationController
           })
       end
     end
+ @page_title = configatron.community_name + ' ' + :home.l 
+ @meta = { :description => configatron.meta_description, :keywords => configatron.meta_keywords, :robots => configatron.robots_meta_list_content } 
+ unless logged_in? 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ jumbotron do 
+ :get_started_banner.l :site=>configatron.community_name 
+ link_to :sign_up.l, signup_path 
+ end 
+
+
+end
+
+ 
+ end 
+ box :class => "hfeed" do  
+ :recent_posts.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
+ link_to fa_icon('plus-circle', :text => :see_all_recent_posts.l), recent_path 
+ end 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ Category.all.each do |c| 
+ link_to c.name, category_path(c) 
+ end 
+ link_to :whats_popular.l, popular_url, {:class => 'popular'} 
+ Page.all.each do |page| 
+ if (logged_in? || page.page_public) 
+ link_to page.title, pages_path(page) 
+ end 
+ end 
+ end 
+
+
+end
+
+ 
+ widget do 
+ :whats_hot.l 
+ @popular_posts.each do |post| 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ link_to truncate(post.title, :length => 75), user_post_path(post.user, post) 
+
+
+end
+
+ 
+ end 
+ link_to fa_icon('plus-circle', :text => :see_all.l), popular_url 
+ end 
+ widget do 
+ :featured_writer.l 
+ @featured_writers.each do |user| 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ link_to image_tag(user.avatar_photo_url(:thumb), :alt => "#{user.login}"), user_path(user) 
+ link_to user.login, user_path(user), :class => 'url' 
+ if user.description 
+ truncate_words( user.description, 10, '...') 
+ end 
+
+
+end
+
+ 
+ end 
+ end 
+ widget do 
+ :active_users.l 
+ @active_users.each do |user| 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ link_to image_tag(user.avatar_photo_url(:thumb), :alt => "#{user.login}"), user_path(user) 
+ link_to user.login, user_path(user), :class => 'url' 
+ if user.description 
+ truncate_words( user.description, 10, '...') 
+ end 
+
+
+end
+
+ 
+ end 
+ end 
+
   end
 
   def footer_content
     get_recent_footer_content
-    render :partial => 'shared/footer_content' and return
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ :whats_fresh.l 
+ @recent_activity.each do |activity| 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
+ end 
+ link_to fa_icon('plus-circle', :text => :see_all_activity.l), activities_path 
+ :tags.l 
+ tag_cloud @popular_tags, %w(css1 css2 css3 css4 css5) do |tag, css_class| 
+ link_to tag.name, tag_path(tag.to_param), :class => css_class 
+ end 
+ link_to fa_icon('plus-circle', :text => :all_tags.l), tags_path 
+
+
+end
+
+
   end
 
   def homepage_features
@@ -58,6 +173,9 @@ class BaseController < ApplicationController
   end
 
   def advertise
+ @page_title = :advertise_on.l + " #{configatron.community_name}" 
+ mail_to "#{configatron.support_email}" 
+
   end
 
   protected

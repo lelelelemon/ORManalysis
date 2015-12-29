@@ -40,6 +40,32 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html
     end
+ @page_title = :denied_friendships.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ user = friendship.friend 
+ image_tag( user.avatar_photo_url(:medium)) 
+ link_to user.login, user_path(user) 
+ if user.metro_area       
+ "#{:from.l} #{user.location}" 
+ end 
+ friendship.friendship_status.name.l 
+ :requested.l 
+ time_ago_in_words friendship.created_at 
+ friendship_control_links(friendship) if @is_current_user 
+
+
+end
+
+ 
+
   end
 
 
@@ -53,6 +79,36 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html
     end
+ @page_title = :accepted_friendships.l(:count => @friend_count) 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
+ box :id => "friends" do 
+ link_to "(#{@pending_friendships_count} "+:pending.l+")", pending_user_friendships_path(@user) if  (@pending_friendships_count > 0) 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ user = friendship.friend 
+ image_tag( user.avatar_photo_url(:medium)) 
+ link_to user.login, user_path(user) 
+ if user.metro_area       
+ "#{:from.l} #{user.location}" 
+ end 
+ friendship.friendship_status.name.l 
+ :requested.l 
+ time_ago_in_words friendship.created_at 
+ friendship_control_links(friendship) if @is_current_user 
+
+
+end
+
+ 
+ paginate @friendships, :theme => 'bootstrap' 
+ end 
+
   end
 
   def pending
@@ -62,6 +118,32 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html
     end
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
+ @page_title= :pending_friendships.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ user = friendship.friend 
+ image_tag( user.avatar_photo_url(:medium)) 
+ link_to user.login, user_path(user) 
+ if user.metro_area       
+ "#{:from.l} #{user.location}" 
+ end 
+ friendship.friendship_status.name.l 
+ :requested.l 
+ time_ago_in_words friendship.created_at 
+ friendship_control_links(friendship) if @is_current_user 
+
+
+end
+
+ 
+
   end
 
   def show
@@ -71,6 +153,17 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html
     end
+ @page_title = :friendship_request_detail.l 
+ if @friendship.initiator? && @friendship.pending? 
+ :waiting_for.l  
+ @friendship.friend.login 
+ :to_accept.l 
+ elsif @friendship.pending? 
+ :this_friendship_is_pending.l  
+ link_to :click_to_accept_it.l, accept_user_friendship_path(@user, @friendship), :method => :put 
+ end 
+ link_to :back.l, accepted_user_friendships_path(@user) 
+
   end
 
 
@@ -96,6 +189,7 @@ class FriendshipsController < BaseController
         format.js {@text = "#{:friendship_request_failed.l}."}
       end
     end
+
   end
 
   def destroy

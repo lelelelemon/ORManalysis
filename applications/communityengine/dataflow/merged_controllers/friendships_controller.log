@@ -26,7 +26,7 @@ BB 2
 		 16: %v_8->find %v_8[2.13,] %v_10[2.15,] 
 		 17: %self[2.0,] %v_11[2.16,] @friendship[] 
 		 18: 
-		 19: %self->respond_to %self[2.0,2.0,] 
+		 19: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @user[2.10,] @friendship[2.17,] 
 BB 1
 	outgoing: 11 2 
@@ -70,14 +70,14 @@ BB 5
 		 0: BRANCH %cl_1_7[4.6,3.5,] 
 BB 6
 	outgoing: 8 9 
-	datadep: 2 2 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,2.0,] 
+		 1: %self->flash %self[2.0,] 
 		 2: 
 		 3: %cl_1_14[6.1,] %cl_1_15[6.2,] 
 		 4: 
-		 5: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+		 5: format->html %self[2.0,] format[2.2,] 
 CLOSURE BEGIN: @friendship[4.0,] 
 BB 1
 	outgoing: 6 2 
@@ -115,10 +115,10 @@ CLOSURE END
 		 6: 
 BB 7
 	outgoing: 9 11 
-	datadep: 2 2 2 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+		 1: format->html %self[2.0,] format[2.2,] 
 CLOSURE BEGIN: @friendship[4.0,] 
 BB 1
 	outgoing: 6 2 
@@ -205,7 +205,7 @@ BB 2
 		 16: %v_8->find %v_8[2.13,] %v_10[2.15,] 
 		 17: %self[2.0,] %v_11[2.16,] @friendship[] 
 		 18: 
-		 19: %self->respond_to %self[2.0,2.0,] 
+		 19: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @user[2.10,] @friendship[2.17,] 
 BB 1
 	outgoing: 11 2 
@@ -249,14 +249,14 @@ BB 5
 		 0: BRANCH %cl_1_7[4.6,3.5,] 
 BB 6
 	outgoing: 8 9 
-	datadep: 2 2 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,2.0,] 
+		 1: %self->flash %self[2.0,] 
 		 2: 
 		 3: %cl_1_14[6.1,] %cl_1_15[6.2,] 
 		 4: 
-		 5: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+		 5: format->html %self[2.0,] format[2.2,] 
 CLOSURE BEGIN: @friendship[4.0,] 
 BB 1
 	outgoing: 6 2 
@@ -294,10 +294,10 @@ CLOSURE END
 		 6: 
 BB 7
 	outgoing: 9 11 
-	datadep: 2 2 2 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+		 1: format->html %self[2.0,] format[2.2,] 
 CLOSURE BEGIN: @friendship[4.0,] 
 BB 1
 	outgoing: 6 2 
@@ -389,8 +389,8 @@ BB 2
 		 21: %v_13->page %v_13[2.18,] %v_15[2.20,] 
 		 22: %self[2.0,] %v_16[2.21,] @friendships[] 
 		 23: 
-		 24: %self->respond_to %self[2.0,2.0,] 
-CLOSURE BEGIN: @friendships[2.22,] @user[2.10,] 
+		 24: %self->respond_to %self[2.0,] 
+CLOSURE BEGIN: @page_title[] @friendships[2.22,] @user[2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -423,7 +423,130 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 25: RETURN %v_17[2.24,] 
+		 25: 
+		 26: 
+		 27: %self[2.0,] %v_18[2.26,] @page_title[] 
+		 28: 
+		 29: %self->ruby_code_from_view %self[2.0,] 
+		 30: %v_19->ruby_code_from_view %self[2.0,] %v_19[2.29,] 
+CLOSURE BEGIN: @page_title[2.27,] @friendships[2.22,] @user[2.10,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 31: 
+		 32: %self->ruby_code_from_view %self[2.0,] 
+		 33: %v_21->ruby_code_from_view %self[2.0,] %v_21[2.32,] 
+CLOSURE BEGIN: @page_title[2.27,] @friendships[2.22,] @user[2.10,] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship %self[2.0,] 
+		 2: %cl_3_3->friend %cl_3_3[3.1,] 
+		 3: %cl_3_4[3.2,] 
+		 4: 
+		 5: %cl_3_4->avatar_photo_url %cl_3_4[3.2,] 
+		 6: %self->image_tag %self[2.0,] %cl_3_5[3.5,] 
+		 7: 
+		 8: user->login user[3.3,] 
+		 9: %self->user_path %self[2.0,] user[3.3,] 
+		 10: %self->link_to %self[2.0,] %cl_3_7[3.8,] %cl_3_8[3.9,] 
+		 11: 
+		 12: user->metro_area user[3.3,] 
+		 13: BRANCH %cl_3_10[3.12,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 3 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: user->location user[3.3,] 
+		 4: %cl_3_13[4.3,] %cl_3_12[4.2,] %cl_3_11[4.1,] 
+		 5: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship %self[2.0,] 
+		 2: %cl_3_15->friendship_status %cl_3_15[6.1,] 
+		 3: %cl_3_16->name %cl_3_16[6.2,] 
+		 4: %cl_3_17->l %cl_3_17[6.3,] 
+		 5: 
+		 6: 
+		 7: 
+		 8: %self->friendship %self[2.0,] 
+		 9: %cl_3_20->created_at %cl_3_20[6.8,] 
+		 10: %self->time_ago_in_words %self[2.0,] %cl_3_21[6.9,] 
+		 11: 
+		 12: %self[2.0,] @is_current_user[] 
+		 13: BRANCH %cl_3_23[6.12,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 2 2 
+	instructions:
+		 0: %self->friendship %self[2.0,] 
+		 1: %self->friendship_control_links %self[2.0,] %cl_3_24[7.0,] 
+		 2: 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 12 
+	datadep: 7 
+	instructions:
+		 0: RETURN %cl_3_25[7.1,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_26[10.0,] 
+		 2: RETURN %cl_3_27[10.1,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 34: RETURN %v_22[2.33,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -469,8 +592,8 @@ BB 2
 		 28: %v_18[2.27,] 
 		 29: %self[2.0,] %v_19[2.28,] @friendships[] 
 		 30: 
-		 31: %self->respond_to %self[2.0,2.0,] 
-CLOSURE BEGIN: @pending_friendships_count[2.20,] @friendships[2.29,] @user[2.10,] @friend_count[2.15,] 
+		 31: %self->respond_to %self[2.0,] 
+CLOSURE BEGIN: @pending_friendships_count[2.20,] @page_title[] @friendships[2.29,] @user[2.10,] @friend_count[2.15,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -503,7 +626,200 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 32: RETURN %v_20[2.31,] 
+		 32: 
+		 33: @friend_count[2.15,] 
+		 34: %v_21[2.33,] 
+		 35: %v_22->l %v_22[2.34,] 
+		 36: %self[2.0,] %v_23[2.35,] @page_title[] 
+		 37: 
+		 38: %self->ruby_code_from_view %self[2.0,] 
+		 39: %v_24->ruby_code_from_view %v_24[2.38,] %self[2.0,] 
+CLOSURE BEGIN: @pending_friendships_count[2.20,] @page_title[2.36,] @friendships[2.29,] @user[2.10,] @friend_count[2.15,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 40: 
+		 41: 
+		 42: %v_26[2.41,] 
+		 43: %self[2.0,] %v_27[2.42,] 
+CLOSURE BEGIN: @pending_friendships_count[2.20,] @page_title[2.36,] @friendships[2.29,] @user[2.10,] @friend_count[2.15,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @pending_friendships_count[] 
+		 2: %cl_3_3[3.1,] 
+		 3: BRANCH %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @pending_friendships_count[3.1,] 
+		 2: 
+		 3: %cl_3_5[4.0,] %cl_3_6[4.1,] %cl_3_7[4.2,] 
+		 4: 
+		 5: %cl_3_9[4.4,] %cl_3_8[4.3,] 
+		 6: 
+		 7: %cl_3_11[4.6,] %cl_3_10[4.5,] 
+		 8: %self[2.0,] @user[] 
+		 9: %self->pending_user_friendships_path %self[2.0,] %cl_3_13[4.8,] 
+		 10: %self->link_to %self[2.0,] %cl_3_14[4.9,] %cl_3_12[4.7,] 
+		 11: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %cl_3_16->ruby_code_from_view %cl_3_16[6.1,] %self[2.0,] 
+CLOSURE BEGIN: @pending_friendships_count[4.1,] @friendships[] @user[4.8,] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship %self[2.0,] 
+		 2: %cl_4_3->friend %cl_4_3[3.1,] 
+		 3: %cl_4_4[3.2,] 
+		 4: 
+		 5: %cl_4_4->avatar_photo_url %cl_4_4[3.2,] 
+		 6: %self->image_tag %self[2.0,] %cl_4_5[3.5,] 
+		 7: 
+		 8: user->login user[3.3,] 
+		 9: %self->user_path %self[2.0,] user[3.3,] 
+		 10: %self->link_to %self[2.0,] %cl_4_8[3.9,] %cl_4_7[3.8,] 
+		 11: 
+		 12: user->metro_area user[3.3,] 
+		 13: BRANCH %cl_4_10[3.12,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 3 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: user->location user[3.3,] 
+		 4: %cl_4_13[4.3,] %cl_4_12[4.2,] %cl_4_11[4.1,] 
+		 5: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship %self[2.0,] 
+		 2: %cl_4_15->friendship_status %cl_4_15[6.1,] 
+		 3: %cl_4_16->name %cl_4_16[6.2,] 
+		 4: %cl_4_17->l %cl_4_17[6.3,] 
+		 5: 
+		 6: 
+		 7: 
+		 8: %self->friendship %self[2.0,] 
+		 9: %cl_4_20->created_at %cl_4_20[6.8,] 
+		 10: %self->time_ago_in_words %self[2.0,] %cl_4_21[6.9,] 
+		 11: 
+		 12: %self[2.0,] @is_current_user[] 
+		 13: BRANCH %cl_4_23[6.12,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 2 2 
+	instructions:
+		 0: %self->friendship %self[2.0,] 
+		 1: %self->friendship_control_links %self[2.0,] %cl_4_24[7.0,] 
+		 2: 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 12 
+	datadep: 7 
+	instructions:
+		 0: RETURN %cl_4_25[7.1,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_26[10.0,] 
+		 2: RETURN %cl_4_27[10.1,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+		 4: %self[2.0,] @friendships[] 
+		 5: 
+		 6: %cl_3_19[6.5,] 
+		 7: %self->paginate %self[2.0,] %cl_3_18[6.4,] %cl_3_20[6.6,] 
+		 8: RETURN %cl_3_21[6.7,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_22[7.0,] 
+		 2: RETURN %cl_3_23[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 44: RETURN %v_28[2.43,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -539,8 +855,8 @@ BB 2
 		 18: %v_8->where %v_8[2.13,] %v_9[2.14,] %v_12[2.17,] 
 		 19: %v_13[2.18,] %self[2.0,] @friendships[] 
 		 20: 
-		 21: %self->respond_to %self[2.0,2.0,] 
-CLOSURE BEGIN: @friendships[2.19,] @user[2.10,] 
+		 21: %self->respond_to %self[2.0,] 
+CLOSURE BEGIN: @page_title[] @friendships[2.19,] @user[2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -573,7 +889,130 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 22: RETURN %v_14[2.21,] 
+		 22: 
+		 23: %self->ruby_code_from_view %self[2.0,] 
+		 24: %v_15->ruby_code_from_view %v_15[2.23,] %self[2.0,] 
+CLOSURE BEGIN: @page_title[] @friendships[2.19,] @user[2.10,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 25: 
+		 26: 
+		 27: %self[2.0,] %v_17[2.26,] @page_title[] 
+		 28: 
+		 29: %self->ruby_code_from_view %self[2.0,] 
+		 30: %v_18->ruby_code_from_view %self[2.0,] %v_18[2.29,] 
+CLOSURE BEGIN: @page_title[2.27,] @friendships[2.19,] @user[2.10,] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship %self[2.0,] 
+		 2: %cl_3_3->friend %cl_3_3[3.1,] 
+		 3: %cl_3_4[3.2,] 
+		 4: 
+		 5: %cl_3_4->avatar_photo_url %cl_3_4[3.2,] 
+		 6: %self->image_tag %self[2.0,] %cl_3_5[3.5,] 
+		 7: 
+		 8: user->login user[3.3,] 
+		 9: %self->user_path %self[2.0,] user[3.3,] 
+		 10: %self->link_to %self[2.0,] %cl_3_7[3.8,] %cl_3_8[3.9,] 
+		 11: 
+		 12: user->metro_area user[3.3,] 
+		 13: BRANCH %cl_3_10[3.12,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 3 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: user->location user[3.3,] 
+		 4: %cl_3_13[4.3,] %cl_3_12[4.2,] %cl_3_11[4.1,] 
+		 5: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->friendship %self[2.0,] 
+		 2: %cl_3_15->friendship_status %cl_3_15[6.1,] 
+		 3: %cl_3_16->name %cl_3_16[6.2,] 
+		 4: %cl_3_17->l %cl_3_17[6.3,] 
+		 5: 
+		 6: 
+		 7: 
+		 8: %self->friendship %self[2.0,] 
+		 9: %cl_3_20->created_at %cl_3_20[6.8,] 
+		 10: %self->time_ago_in_words %self[2.0,] %cl_3_21[6.9,] 
+		 11: 
+		 12: %self[2.0,] @is_current_user[] 
+		 13: BRANCH %cl_3_23[6.12,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 2 2 
+	instructions:
+		 0: %self->friendship %self[2.0,] 
+		 1: %self->friendship_control_links %self[2.0,] %cl_3_24[7.0,] 
+		 2: 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 12 
+	datadep: 7 
+	instructions:
+		 0: RETURN %cl_3_25[7.1,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_26[10.0,] 
+		 2: RETURN %cl_3_27[10.1,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 31: RETURN %v_19[2.30,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -581,11 +1020,11 @@ BB 3
 
 SET IRMethod, name = show
 BB 1
-	outgoing: 3 2 
+	outgoing: 11 2 
 	datadep: 
 	instructions:
 BB 2
-	outgoing: 3 
+	outgoing: 3 4 
 	datadep: 
 	instructions:
 		 0: 
@@ -604,8 +1043,8 @@ BB 2
 		 13: %v_7->user %v_7[2.12,] 
 		 14: %self[2.0,] %v_8[2.13,] @user[] 
 		 15: 
-		 16: %self->respond_to %self[2.0,2.0,] 
-CLOSURE BEGIN: @user[2.14,] @friendship[2.10,] 
+		 16: %self->respond_to %self[2.0,] 
+CLOSURE BEGIN: @page_title[] @user[] @friendship[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -638,8 +1077,81 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 17: RETURN %v_9[2.16,] 
+		 17: 
+		 18: 
+		 19: %self[2.0,] %v_10[2.18,] @page_title[] 
+		 20: 
+		 21: @friendship[2.10,2.12,] 
+		 22: %v_11->initiator? %v_11[2.21,] 
+		 23: BRANCH %v_12[2.22,] 
 BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @friendship[2.10,2.12,2.21,] 
+		 1: %v_13->pending? %v_13[3.0,] 
+		 2: %v_14[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_12[3.2,2.22,] 
+BB 5
+	outgoing: 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @friendship[3.0,2.10,2.12,2.21,] 
+		 4: %v_16->friend %v_16[5.3,] 
+		 5: %v_17->login %v_17[5.4,] 
+		 6: 
+		 7: 
+		 8: 
+BB 6
+	outgoing: 7 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @friendship[3.0,2.10,2.12,2.21,] 
+		 2: %v_20->pending? %v_20[6.1,] 
+		 3: BRANCH %v_21[6.2,] 
+BB 7
+	outgoing: 9 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self[2.0,] @user[2.14,2.14,] 
+		 5: %self[2.0,] @friendship[6.1,] 
+		 6: %self->accept_user_friendship_path %v_24[7.4,] %v_25[7.5,] %self[2.0,] 
+		 7: 
+		 8: %self->link_to %self[2.0,] %v_26[7.6,] %v_27[7.7,] %v_23[7.3,] 
+		 9: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 
+	datadep: 8 7 
+	instructions:
+		 0: %v_28[8.0,7.8,] 
+BB 10
+	outgoing: 11 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @user[7.4,2.14,2.14,] 
+		 3: %self->accepted_user_friendships_path %self[2.0,] %v_30[10.2,] 
+		 4: %self->link_to %self[2.0,] %v_29[10.1,] %v_31[10.3,] 
+		 5: RETURN %v_32[10.4,] 
+BB 11
 	outgoing: 
 	datadep: 
 	instructions:
@@ -699,7 +1211,7 @@ BB 2
 		 43: %v_24[2.37,] reverse_friendship[2.29,2.34,] 
 		 44: reverse_friendship[2.29,2.34,2.43,] %v_29[2.42,] 
 		 45: 
-		 46: %self->respond_to %self[2.0,2.0,] 
+		 46: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @user[2.10,] @friendship[2.19,] 
 BB 1
 	outgoing: 14 2 
@@ -735,19 +1247,19 @@ BB 5
 		 0: BRANCH %cl_1_4[4.1,3.2,] 
 BB 6
 	outgoing: 7 8 12 
-	datadep: 2 2 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] @friendship[3.1,3.1,] 
+		 1: %self[2.0,] @friendship[3.1,3.1,] 
 		 2: %cl_1_6->friend %cl_1_6[6.1,] 
 		 3: %cl_1_7->notify_friend_requests? %cl_1_7[6.2,] 
 		 4: BRANCH %cl_1_8[6.3,] 
 BB 7
 	outgoing: 9 12 
-	datadep: 2 2 
+	datadep: 2 
 	instructions:
 		 0: (UserNotifier) 
-		 1: %self[2.0,2.0,] @friendship[6.1,] 
+		 1: %self[2.0,] @friendship[6.1,] 
 		 2: %cl_1_9->friendship_request %cl_1_10[7.1,] %cl_1_9[7.0,] 
 		 3: %cl_1_11->deliver %cl_1_11[7.2,] 
 		 4: 
@@ -758,10 +1270,10 @@ BB 8
 		 0: 
 BB 9
 	outgoing: 11 12 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,2.0,2.0,] format[2.2,2.2,2.2,] 
+		 1: format->html %self[2.0,] format[2.2,] 
 CLOSURE BEGIN: @friendship[7.1,] 
 BB 1
 	outgoing: 6 2 
@@ -805,7 +1317,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 2: 
-		 3: format->js %self[2.0,2.0,2.0,] format[2.2,2.2,2.2,] 
+		 3: format->js %self[2.0,] format[2.2,] 
 CLOSURE BEGIN: @friendship[7.1,] 
 BB 1
 	outgoing: 6 2 
@@ -848,15 +1360,15 @@ CLOSURE END
 		 4: 
 BB 10
 	outgoing: 12 14 
-	datadep: 2 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,2.0,] 
+		 1: %self->flash %self[2.0,] 
 		 2: %cl_1_15->now %cl_1_15[10.1,] 
 		 3: 
 		 4: %cl_1_16[10.2,] %cl_1_17[10.3,] 
 		 5: 
-		 6: format->html %self[2.0,2.0,] format[2.2,2.2,] 
+		 6: format->html %self[2.0,] format[2.2,] 
 CLOSURE BEGIN: @friendship[7.1,] 
 BB 1
 	outgoing: 6 2 
@@ -892,7 +1404,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 7: 
-		 8: format->js %self[2.0,2.0,] format[2.2,2.2,] 
+		 8: format->js %self[2.0,] format[2.2,] 
 CLOSURE BEGIN: @friendship[7.1,] 
 BB 1
 	outgoing: 6 2 
@@ -1019,7 +1531,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 20: 
-		 21: %self->respond_to %self[2.0,2.0,] 
+		 21: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @user[2.10,] @friendship[2.16,] 
 BB 1
 	outgoing: 6 2 

@@ -1,3 +1,7 @@
+require 'active_support'
+require 'active_support/inflector'
+require 'active_support/core_ext/string'
+
 def transform_controller_name(name)
 	i = name.index("Controller")
 	new_name = "#{(name[0...i-1]).downcase}_controller"
@@ -159,7 +163,7 @@ def transform_var_name(name)
 		if name[0] == '@'
 			cname = name[1..name.length-1]
 		end
-		if keyc.downcase == cname.downcase
+		if keyc.downcase == cname.downcase.singularize
 			return keyc
 		end
 	end

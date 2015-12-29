@@ -409,12 +409,12 @@ end
 
 if options[:print_all] == true
 	$class_map.each do |keyc, valuec|
-		puts "class #{keyc}"
-		if $table_names.find(keyc) != nil
-			valuec.getFields.each do |f|
-				puts "\t#{f.field_name} | #{f.type}"
-			end
-		end
+		#puts "class #{keyc}"
+		#if $table_names.find(keyc) != nil
+		#	valuec.getFields.each do |f|
+		#		puts "\t#{f.field_name} | #{f.type}"
+		#	end
+		#end
 		#valuec.getMethods.each do |keym, valuem|
 		#	puts "\tdef #{keym}"
 		#end
@@ -423,5 +423,9 @@ if options[:print_all] == true
 		#	print "#{c.getFuncName}, "
 		#end
 		#puts ""
+	end
+	_file = File.open("#{$app_dir}/table_name.txt", "w")
+	$table_names.each do |t|
+		_file.write("#{t}\n")
 	end
 end

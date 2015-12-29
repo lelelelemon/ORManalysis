@@ -1,10 +1,10 @@
 SET IRMethod, name = network
 BB 1
-	outgoing: 3 2 
+	outgoing: 9 2 
 	datadep: 
 	instructions:
 BB 2
-	outgoing: 3 
+	outgoing: 3 4 
 	datadep: 
 	instructions:
 		 0: 
@@ -19,8 +19,99 @@ BB 2
 		 9: %v_5[2.8,] 
 		 10: %v_3->network_activity %v_3[2.6,] %v_6[2.9,] 
 		 11: %self[2.0,] %v_7[2.10,] @activities[] 
-		 12: RETURN %v_7[2.10,] 
+		 12: 
+		 13: %self->ruby_code_from_view %self[2.0,] 
+		 14: %v_8->ruby_code_from_view %self[2.0,] %v_8[2.13,] 
+CLOSURE BEGIN: @user[2.6,] @activities[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 15: 
+		 16: @activities[2.11,] 
+		 17: %v_10->empty? %v_10[2.16,] 
+		 18: BRANCH %v_11[2.17,] 
 BB 3
+	outgoing: 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self->users_path %self[2.0,] 
+		 5: %self->link_to %v_13[3.3,] %v_14[3.4,] %self[2.0,] 
+		 6: RETURN %v_15[3.5,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self->ruby_code_from_view %self[2.0,] 
+		 4: %v_17->ruby_code_from_view %self[2.0,] %v_17[4.3,] 
+CLOSURE BEGIN: @user[2.6,] @activities[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 5: 
+		 6: %self[2.0,] @activities[2.11,2.16,] 
+		 7: %v_19->total_count %v_19[4.6,] 
+		 8: %v_20[4.7,] 
+		 9: BRANCH %v_21[4.8,] 
+BB 5
+	outgoing: 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @activities[4.6,] 
+		 2: 
+		 3: %v_23[5.2,] 
+		 4: %self->paginate %v_24[5.3,] %self[2.0,] %v_22[5.1,] 
+		 5: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 9 
+	datadep: 6 5 
+	instructions:
+		 0: RETURN %v_25[6.0,5.4,] 
+BB 9
 	outgoing: 
 	datadep: 
 	instructions:
@@ -50,7 +141,133 @@ BB 2
 		 13: %self[2.0,] 
 		 14: %v_8->to_a %v_8[2.13,] 
 		 15: %self[2.0,] %v_9[2.14,] @popular_tags[] 
-		 16: RETURN %v_9[2.14,] 
+		 16: 
+		 17: 
+		 18: %self[2.0,] %v_10[2.17,] @section[] 
+		 19: 
+		 20: 
+		 21: %self[2.0,] %v_11[2.20,] @page_title[] 
+		 22: 
+		 23: 
+		 24: 
+		 25: %self->ruby_code_from_view %self[2.0,] 
+		 26: %v_13->ruby_code_from_view %v_13[2.25,] %self[2.0,] 
+CLOSURE BEGIN: @page_title[2.21,] @activities[2.11,] @popular_tags[2.15,] @section[2.18,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 27: 
+		 28: @activities[2.11,] 
+		 29: 
+		 30: %v_16[2.29,] 
+		 31: %self->paginate %self[2.0,] %v_15[2.28,] %v_17[2.30,] 
+		 32: 
+		 33: %self->widget %self[2.0,] 
+CLOSURE BEGIN: @page_title[2.21,] @activities[2.11,] @popular_tags[2.15,] @section[2.18,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @popular_tags[] 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: %cl_2_5[3.4,] %cl_2_6[3.5,] %cl_2_7[3.6,] %cl_2_8[3.7,] %cl_2_9[3.8,] 
+		 10: %self->tag_cloud %self[2.0,] %cl_2_4[3.3,] %cl_2_10[3.9,] 
+CLOSURE BEGIN: @popular_tags[3.3,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: tag->name tag[2.2,] 
+		 2: tag->to_param tag[2.2,] 
+		 3: %self->tag_path %self[2.0,] %cl_3_4[3.2,] 
+		 4: css_class[2.3,] 
+		 5: %self->link_to %self[2.0,] %cl_3_3[3.1,] %cl_3_5[3.3,] %cl_3_6[3.4,] 
+		 6: RETURN %cl_3_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_8[4.0,] 
+		 2: RETURN %cl_3_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 11: 
+		 12: 
+		 13: 
+		 14: %cl_2_13->downcase %cl_2_13[3.13,] 
+		 15: %cl_2_14->capitalize %cl_2_14[3.14,] 
+		 16: %cl_2_15[3.15,] 
+		 17: %self->fa_icon %cl_2_16[3.16,] %self[2.0,] %cl_2_12[3.12,] 
+		 18: %self->tags_path %self[2.0,] 
+		 19: %self->link_to %self[2.0,] %cl_2_17[3.17,] %cl_2_18[3.18,] 
+		 20: RETURN %cl_2_19[3.19,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_20[4.0,] 
+		 2: RETURN %cl_2_21[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 34: RETURN %v_19[2.33,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -80,7 +297,7 @@ BB 2
 		 12: @activity[2.10,] 
 		 13: %v_7->destroy %v_7[2.12,] 
 		 14: 
-		 15: %self->respond_to %self[2.0,2.0,] 
+		 15: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @activity[2.10,] 
 BB 1
 	outgoing: 6 2 
@@ -216,13 +433,13 @@ BB 5
 		 1: 
 BB 6
 	outgoing: 7 9 
-	datadep: 2 2 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
 		 3: %v_13[6.2,] %v_12[6.1,] 
-		 4: %self->redirect_to %v_14[6.3,] %self[2.0,2.0,] 
+		 4: %self->redirect_to %v_14[6.3,] %self[2.0,] 
 		 5: BRANCH %v_15[6.4,] 
 BB 7
 	outgoing: 12 
@@ -236,10 +453,10 @@ BB 9
 		 0: %v_15[6.4,] 
 BB 10
 	outgoing: 12 
-	datadep: 2 2 2 2 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @user[] 
+		 1: %self[2.0,] @user[] 
 		 2: RETURN %v_16[10.1,] 
 BB 12
 	outgoing: 

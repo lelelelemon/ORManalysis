@@ -38,29 +38,391 @@ class EventsController < BaseController
     @is_admin_user = (current_user && current_user.admin?)
     @event = Event.find(params[:id])
     @comments = @event.comments.includes(:user).order('created_at DESC').limit(20)
+ @section = 'events' 
+ @page_title = @event.name 
+ widget do 
+ if @is_admin_user 
+ link_to :administer_events.l, admin_events_path 
+ end 
+ link_to fa_icon('plus-circle', :text => :see_all_events.l), events_path 
+ end 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :subscribe_to.l + ' ' + :events.l 
+ :subscribe_events_instructions.l 
+ link_to image_tag('icons/ical.gif'), ical_events_url(:protocol => 'webcal://', :format=>'ics') 
+ link_to image_tag("http://www.google.com/calendar/images/ext/gc_button1.gif"), "http://www.google.com/calendar/render?cid=#{ical_events_url(:format=>'ics')}", :target=>'_blank' 
+ end 
+
+
+end
+
+ 
+ if (logged_in? && (@event.user.eql?(current_user) || admin?)) 
+ link_to :back.l, events_path, :class => 'btn btn-default' 
+ link_to :clone.l, clone_event_path(@event), :class => 'btn btn-success' 
+ link_to :edit.l, edit_event_path(@event), :class => 'btn btn-warning' 
+ link_to :delete.l, event_path(@event), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ end 
+ :when.l 
+ @event.time_and_date 
+ unless @event.location.blank? 
+ :where.l+":" 
+ @event.location 
+ link_to :map_it.l, "http://www.google.com/maps?q=#{URI::encode(@event.location)}", :title=>:map_it.l, :target=>'_blank' 
+ end 
+ if @event.allow_rsvp? 
+ :rsvps.l 
+ attending = @event.attendees_count == 1 ? :is_attending_this_event.l : :are_attending_this_event.l 
+ pluralize(@event.attendees_count, 'person') + ' ' + attending 
+ if @event.end_time > Time.now 
+ if rsvp = @event.rsvped?(current_user) 
+ link_to :retract_rsvp.l, [@event, rsvp], data: { confirm: :are_you_sure.l }, :method=>:delete, :class => 'btn btn-primary btn-xs' 
+ link_to :update_rsvp.l, edit_event_rsvp_url(@event, rsvp), :class => 'btn btn-primary btn-xs' 
+ else 
+ link_to :rsvp.l, new_event_rsvp_url(@event), :class => 'btn btn-primary btn-xs' 
+ end 
+ end 
+ end 
+ @event.description.html_safe unless @event.description.blank? 
+ unless @event.attendees.blank? 
+ :attendees.l 
+ @event.attendees.each do |user| 
+ link_to h(user.display_name), user_path(user) 
+ if (count = @event.attendees_for_user(user)) > 1 
+ "+#{count-1}" 
+ end 
+ end 
+ end 
+ :event_comments.l 
+ :add_your_comment.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if logged_in? || configatron.allow_anonymous_commenting 
+ bootstrap_form_for(:comment, :url => commentable_comments_path(commentable.class.to_s.tableize, commentable), :remote => true, :layout => :horizontal, :html => {:id => 'comment'}) do |f| 
+ f.text_area :comment, :rows => 5, :style => 'width: 99%', :class => "rich_text_editor", :help => :comment_character_limit.l 
+ if !logged_in? && configatron.recaptcha_pub_key && configatron.recaptcha_priv_key 
+ f.text_field :author_name 
+ f.text_field :author_email, :required => true 
+ f.form_group do 
+ f.check_box :notify_by_email, :label => :notify_me_of_follow_ups_via_email.l 
+ if commentable.respond_to?(:send_comment_notifications?) && !commentable.send_comment_notifications? 
+ :comment_notifications_off.l 
+ end 
+ end 
+ f.text_field :author_url, :label => :comment_web_site_label.l 
+ f.form_group do 
+ recaptcha_tags :ajax => true 
+ end 
+ end 
+ f.form_group :submit_group do 
+ f.primary :add_comment.l, data: { disable_with: "Please wait..." } 
+ end 
+ end 
+ else 
+ link_to :log_in_to_leave_a_comment.l, new_commentable_comment_path(commentable.class, commentable.id), :class => 'btn btn-primary' 
+ link_to :create_an_account.l, signup_path, :class => 'btn btn-primary' 
+ end 
+
+
+end
+
+ 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ comment.id 
+ if comment.pending? 
+ end 
+ if comment.user 
+ link_to image_tag(comment.user.avatar_photo_url(:medium), :alt => comment.user.login, :class => "img-responsive"), user_path(comment.user), :rel => 'bookmark', :title => :users_profile.l(:user => comment.user.login), :class => 'list-group-item' 
+ user_path(comment.user) 
+ fa_icon "hand-o-right fw", :text => comment.user.login 
+ commentable_url(comment) 
+ fa_icon "calendar" 
+ comment.created_at 
+ I18n.l(comment.created_at, :format => :short_literal_date) 
+ if logged_in? && (current_user.admin? || current_user.moderator?) 
+ link_to fa_icon("pencil-square-o fw", :text => :edit.l), edit_commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :class => 'edit-via-ajax list-group-item' 
+ end 
+ if ( comment.can_be_deleted_by(current_user) ) 
+ link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item" 
+ end 
+ comment.comment.html_safe 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '50', :width => '50', :class => "img-responsive") 
+ if comment.author_url.blank? 
+ h comment.username 
+ else 
+ link_to fa_icon('hand-o-right', :text => h(comment.username)), h(comment.author_url) 
+ end 
+ commentable_url(comment) 
+ fa_icon "calendar fw" 
+ comment.created_at 
+ I18n.l(comment.created_at, :format => :short_literal_date) 
+ if logged_in? && (current_user.admin? || current_user.moderator?) 
+ link_to fa_icon("pencil-square-o fw", :text => :edit.l), edit_commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :class => 'edit-via-ajax list-group-item' 
+ end 
+ if ( comment.can_be_deleted_by(current_user) ) 
+ link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item" 
+ end 
+ comment.comment.html_safe 
+ end 
+
+
+end
+
+ 
+ more_comments_links(@event) 
+
   end
 
   def index
     @is_admin_user = (current_user && current_user.admin?)
     @events = Event.upcoming.page(params[:page])
+ @section = 'events' 
+ @page_title = :events.l 
+ :find_out_where_to_be_and_when_to_be_there.l 
+ if @is_admin_user 
+ widget do 
+ link_to_unless_current :past_events.l, past_events_path 
+ link_to_unless_current :upcoming_events.l, events_path 
+ link_to :administer_events.l, admin_events_path 
+ end 
+ end 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :subscribe_to.l + ' ' + :events.l 
+ :subscribe_events_instructions.l 
+ link_to image_tag('icons/ical.gif'), ical_events_url(:protocol => 'webcal://', :format=>'ics') 
+ link_to image_tag("http://www.google.com/calendar/images/ext/gc_button1.gif"), "http://www.google.com/calendar/render?cid=#{ical_events_url(:format=>'ics')}", :target=>'_blank' 
+ end 
+
+
+end
+
+ 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ event.name 
+ !event.metro_area.nil? ? " (#{event.metro_area.to_s})" : '' 
+ if (logged_in? && (event.user.eql?(current_user) || admin?)) 
+ link_to :show.l, event_path(event), :class => 'btn btn-default' 
+ link_to :clone.l, clone_event_path(event), :class => 'btn btn-success' 
+ link_to :edit.l, edit_event_path(event), :class => 'btn btn-warning' 
+ link_to :delete.l, event_path(event), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ end 
+ :when.l 
+ event.time_and_date 
+ unless event.location.blank? 
+ :where.l+":" 
+ event.location 
+ link_to :map_it.l, "http://www.google.com/maps?q=#{URI::encode(event.location)}", :title=>:map_it.l, :target=>'_blank' 
+ end 
+ if event.allow_rsvp? 
+ :rsvps.l 
+ attending = event.attendees_count == 1 ? :is_attending_this_event.l : :are_attending_this_event.l 
+ pluralize(event.attendees_count, 'person') + ' ' + attending 
+ if event.end_time > Time.now 
+ if rsvp = event.rsvped?(current_user) 
+ link_to :retract_rsvp.l, [event, rsvp], data: { confirm: :are_you_sure.l }, :method=>:delete, :class => 'btn btn-primary btn-xs' 
+ link_to :update_rsvp.l, edit_event_rsvp_url(event, rsvp), :class => 'btn btn-primary btn-xs' 
+ else 
+ link_to :rsvp.l, new_event_rsvp_url(event), :class => 'btn btn-primary btn-xs' 
+ end 
+ end 
+ end 
+ if show_details_link 
+ link_to :event_details.l, event_url(event) 
+ end 
+
+
+end
+
+ 
+ paginate @events , :theme => 'bootstrap'     
+
   end
 
   def past
     @is_admin_user = (current_user && current_user.admin?)
     @events = Event.past.page(params[:page])
-    render :template => 'events/index'
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @section = 'events' 
+ @page_title = :events.l 
+ :find_out_where_to_be_and_when_to_be_there.l 
+ if @is_admin_user 
+ widget do 
+ link_to_unless_current :past_events.l, past_events_path 
+ link_to_unless_current :upcoming_events.l, events_path 
+ link_to :administer_events.l, admin_events_path 
+ end 
+ end 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :subscribe_to.l + ' ' + :events.l 
+ :subscribe_events_instructions.l 
+ link_to image_tag('icons/ical.gif'), ical_events_url(:protocol => 'webcal://', :format=>'ics') 
+ link_to image_tag("http://www.google.com/calendar/images/ext/gc_button1.gif"), "http://www.google.com/calendar/render?cid=#{ical_events_url(:format=>'ics')}", :target=>'_blank' 
+ end 
+
+
+end
+
+ 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ event.name 
+ !event.metro_area.nil? ? " (#{event.metro_area.to_s})" : '' 
+ if (logged_in? && (event.user.eql?(current_user) || admin?)) 
+ link_to :show.l, event_path(event), :class => 'btn btn-default' 
+ link_to :clone.l, clone_event_path(event), :class => 'btn btn-success' 
+ link_to :edit.l, edit_event_path(event), :class => 'btn btn-warning' 
+ link_to :delete.l, event_path(event), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ end 
+ :when.l 
+ event.time_and_date 
+ unless event.location.blank? 
+ :where.l+":" 
+ event.location 
+ link_to :map_it.l, "http://www.google.com/maps?q=#{URI::encode(event.location)}", :title=>:map_it.l, :target=>'_blank' 
+ end 
+ if event.allow_rsvp? 
+ :rsvps.l 
+ attending = event.attendees_count == 1 ? :is_attending_this_event.l : :are_attending_this_event.l 
+ pluralize(event.attendees_count, 'person') + ' ' + attending 
+ if event.end_time > Time.now 
+ if rsvp = event.rsvped?(current_user) 
+ link_to :retract_rsvp.l, [event, rsvp], data: { confirm: :are_you_sure.l }, :method=>:delete, :class => 'btn btn-primary btn-xs' 
+ link_to :update_rsvp.l, edit_event_rsvp_url(event, rsvp), :class => 'btn btn-primary btn-xs' 
+ else 
+ link_to :rsvp.l, new_event_rsvp_url(event), :class => 'btn btn-primary btn-xs' 
+ end 
+ end 
+ end 
+ if show_details_link 
+ link_to :event_details.l, event_url(event) 
+ end 
+
+
+end
+
+ 
+ paginate @events , :theme => 'bootstrap'     
+
+
+end
+
+
   end
 
   def new
     @event = Event.new
     @metro_areas, @states = setup_metro_area_choices_for(current_user)
     @metro_area_id, @state_id, @country_id = setup_location_for(current_user)
+ @page_title = :new_event.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for(@event, :layout => :horizontal) do |f| 
+ f.text_field :name 
+ f.text_area :description, :rows => 10, :class => "rich_text_editor" 
+ f.datetime_select :start_time 
+ f.datetime_select :end_time 
+ f.form_group :rsvp, :help => :when_checked_users_will_be_able_to_rsvp_for_this_event.l do 
+ f.check_box :allow_rsvp 
+ end 
+ f.text_field :location 
+ f.form_group :location_group, :label => {:text => :metro_area.l} do 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ :country.l 
+ select_tag(:country_id, options_from_collection_for_select(Country.find_countries_with_metros, "id", "name", selected_country), {:include_blank => true, :class => "form-control"}) 
+ :state.l 
+ select_tag(:state_id, options_from_collection_for_select(states, "id", "name", (selected_state rescue nil)), {:disabled => states.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ :metro_area.l 
+ select_tag(:metro_area_id, options_from_collection_for_select(metro_areas, "id", "name", (selected_metro_area rescue nil)), {:disabled => metro_areas.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ js ||= nil 
+ if js 
+ else 
+ content_for :end_javascript do 
+ end 
+ end 
+
+
+end
+
+ 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
   end
 
   def edit
     @event = Event.find(params[:id])
     @metro_areas, @states = setup_metro_area_choices_for(@event)
     @metro_area_id, @state_id, @country_id = setup_location_for(@event)
+ @page_title = :edit_event.l 
+ link_to :back.l, events_path, :class => 'btn btn-default' 
+ link_to :show.l, event_path(@event), :class => 'btn btn-primary' 
+ link_to :clone.l, clone_event_path(@event), :class => 'btn btn-success' 
+ link_to :delete.l, event_path(@event), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for(@event, :layout => :horizontal) do |f| 
+ f.text_field :name 
+ f.text_area :description, :rows => 10, :class => "rich_text_editor" 
+ f.datetime_select :start_time 
+ f.datetime_select :end_time 
+ f.form_group :rsvp, :help => :when_checked_users_will_be_able_to_rsvp_for_this_event.l do 
+ f.check_box :allow_rsvp 
+ end 
+ f.text_field :location 
+ f.form_group :location_group, :label => {:text => :metro_area.l} do 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ :country.l 
+ select_tag(:country_id, options_from_collection_for_select(Country.find_countries_with_metros, "id", "name", selected_country), {:include_blank => true, :class => "form-control"}) 
+ :state.l 
+ select_tag(:state_id, options_from_collection_for_select(states, "id", "name", (selected_state rescue nil)), {:disabled => states.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ :metro_area.l 
+ select_tag(:metro_area_id, options_from_collection_for_select(metro_areas, "id", "name", (selected_metro_area rescue nil)), {:disabled => metro_areas.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ js ||= nil 
+ if js 
+ else 
+ content_for :end_javascript do 
+ end 
+ end 
+
+
+end
+
+ 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
   end
 
   def create
@@ -84,7 +446,57 @@ class EventsController < BaseController
             @state_id = params[:state_id].to_i
             @country_id = params[:country_id].to_i
           end
-          render :action => "new"
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title = :new_event.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for(@event, :layout => :horizontal) do |f| 
+ f.text_field :name 
+ f.text_area :description, :rows => 10, :class => "rich_text_editor" 
+ f.datetime_select :start_time 
+ f.datetime_select :end_time 
+ f.form_group :rsvp, :help => :when_checked_users_will_be_able_to_rsvp_for_this_event.l do 
+ f.check_box :allow_rsvp 
+ end 
+ f.text_field :location 
+ f.form_group :location_group, :label => {:text => :metro_area.l} do 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ :country.l 
+ select_tag(:country_id, options_from_collection_for_select(Country.find_countries_with_metros, "id", "name", selected_country), {:include_blank => true, :class => "form-control"}) 
+ :state.l 
+ select_tag(:state_id, options_from_collection_for_select(states, "id", "name", (selected_state rescue nil)), {:disabled => states.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ :metro_area.l 
+ select_tag(:metro_area_id, options_from_collection_for_select(metro_areas, "id", "name", (selected_metro_area rescue nil)), {:disabled => metro_areas.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ js ||= nil 
+ if js 
+ else 
+ content_for :end_javascript do 
+ end 
+ end 
+
+
+end
+
+ 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+
         }
       end
     end
@@ -109,7 +521,61 @@ class EventsController < BaseController
             @state_id = params[:state_id].to_i
             @country_id = params[:country_id].to_i
           end
-          render :action => "edit"
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title = :edit_event.l 
+ link_to :back.l, events_path, :class => 'btn btn-default' 
+ link_to :show.l, event_path(@event), :class => 'btn btn-primary' 
+ link_to :clone.l, clone_event_path(@event), :class => 'btn btn-success' 
+ link_to :delete.l, event_path(@event), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for(@event, :layout => :horizontal) do |f| 
+ f.text_field :name 
+ f.text_area :description, :rows => 10, :class => "rich_text_editor" 
+ f.datetime_select :start_time 
+ f.datetime_select :end_time 
+ f.form_group :rsvp, :help => :when_checked_users_will_be_able_to_rsvp_for_this_event.l do 
+ f.check_box :allow_rsvp 
+ end 
+ f.text_field :location 
+ f.form_group :location_group, :label => {:text => :metro_area.l} do 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ :country.l 
+ select_tag(:country_id, options_from_collection_for_select(Country.find_countries_with_metros, "id", "name", selected_country), {:include_blank => true, :class => "form-control"}) 
+ :state.l 
+ select_tag(:state_id, options_from_collection_for_select(states, "id", "name", (selected_state rescue nil)), {:disabled => states.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ :metro_area.l 
+ select_tag(:metro_area_id, options_from_collection_for_select(metro_areas, "id", "name", (selected_metro_area rescue nil)), {:disabled => metro_areas.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ js ||= nil 
+ if js 
+ else 
+ content_for :end_javascript do 
+ end 
+ end 
+
+
+end
+
+ 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+
         }
       end
     end
@@ -128,7 +594,57 @@ class EventsController < BaseController
     @event = Event.find(params[:id]).clone
     @metro_areas, @states = setup_metro_area_choices_for(@event)
     @metro_area_id, @state_id, @country_id = setup_location_for(@event)
-    render :template => 'events/new'
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title = :new_event.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for(@event, :layout => :horizontal) do |f| 
+ f.text_field :name 
+ f.text_area :description, :rows => 10, :class => "rich_text_editor" 
+ f.datetime_select :start_time 
+ f.datetime_select :end_time 
+ f.form_group :rsvp, :help => :when_checked_users_will_be_able_to_rsvp_for_this_event.l do 
+ f.check_box :allow_rsvp 
+ end 
+ f.text_field :location 
+ f.form_group :location_group, :label => {:text => :metro_area.l} do 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ :country.l 
+ select_tag(:country_id, options_from_collection_for_select(Country.find_countries_with_metros, "id", "name", selected_country), {:include_blank => true, :class => "form-control"}) 
+ :state.l 
+ select_tag(:state_id, options_from_collection_for_select(states, "id", "name", (selected_state rescue nil)), {:disabled => states.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ :metro_area.l 
+ select_tag(:metro_area_id, options_from_collection_for_select(metro_areas, "id", "name", (selected_metro_area rescue nil)), {:disabled => metro_areas.empty?, :class => "form-control" }) 
+ ajax_spinner_for 'location_chooser' 
+ js ||= nil 
+ if js 
+ else 
+ content_for :end_javascript do 
+ end 
+ end 
+
+
+end
+
+ 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+
   end
 
   protected

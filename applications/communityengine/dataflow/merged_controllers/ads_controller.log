@@ -36,8 +36,8 @@ BB 2
 		 26: %v_16[2.25,] 
 		 27: @ads[2.20,] 
 		 28: 
-		 29: %self->respond_to %self[2.0,2.0,] 
-CLOSURE BEGIN: @search[2.10,] @result[2.14,] @ads[2.20,] 
+		 29: %self->respond_to %self[2.0,] 
+CLOSURE BEGIN: @search[2.10,] @result[2.14,] @page_title[] @ads[2.20,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -70,7 +70,341 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 30: RETURN %v_18[2.29,] 
+		 30: 
+		 31: 
+		 32: %self[2.0,] %v_19[2.31,] @page_title[] 
+		 33: 
+		 34: %self->ruby_code_from_view %self[2.0,] 
+		 35: %v_20->ruby_code_from_view %self[2.0,] %v_20[2.34,] 
+CLOSURE BEGIN: @search[2.10,] @result[2.14,] @page_title[2.32,] @ads[2.20,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self->homepage_features_path %self[2.0,] 
+		 5: %self->link_to_unless_current %self[2.0,] %cl_3_4[3.3,] %cl_3_5[3.4,] 
+		 6: 
+		 7: 
+		 8: %self->categories_path %self[2.0,] 
+		 9: %self->link_to_unless_current %self[2.0,] %cl_3_7[3.7,] %cl_3_8[3.8,] 
+		 10: 
+		 11: 
+		 12: %self->metro_areas_path %self[2.0,] 
+		 13: %self->link_to_unless_current %self[2.0,] %cl_3_11[3.12,] %cl_3_10[3.11,] 
+		 14: 
+		 15: 
+		 16: %self->admin_events_path %self[2.0,] 
+		 17: %self->link_to_unless_current %self[2.0,] %cl_3_14[3.16,] %cl_3_13[3.15,] 
+		 18: 
+		 19: 
+		 20: %self->statistics_path %self[2.0,] 
+		 21: %self->link_to_unless_current %cl_3_17[3.20,] %cl_3_16[3.19,] %self[2.0,] 
+		 22: 
+		 23: 
+		 24: %self->ads_path %self[2.0,] 
+		 25: %self->link_to_unless_current %self[2.0,] %cl_3_19[3.23,] %cl_3_20[3.24,] 
+		 26: 
+		 27: 
+		 28: %self->admin_comments_path %self[2.0,] 
+		 29: %self->link_to_unless_current %self[2.0,] %cl_3_23[3.28,] %cl_3_22[3.27,] 
+		 30: 
+		 31: 
+		 32: %self->admin_tags_path %self[2.0,] 
+		 33: %self->link_to_unless_current %self[2.0,] %cl_3_26[3.32,] %cl_3_25[3.31,] 
+		 34: 
+		 35: 
+		 36: %self->admin_pages_path %self[2.0,] 
+		 37: %self->link_to_unless_current %cl_3_28[3.35,] %self[2.0,] %cl_3_29[3.36,] 
+		 38: 
+		 39: 
+		 40: %self->admin_users_path %self[2.0,] 
+		 41: %self->link_to_unless_current %self[2.0,] %cl_3_31[3.39,] %cl_3_32[3.40,] 
+		 42: 
+		 43: %self[2.0,] @admin_nav_links[] 
+		 44: %cl_3_34->any? %cl_3_34[3.43,] 
+		 45: BRANCH %cl_3_35[3.44,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @admin_nav_links[3.43,] 
+		 2: %cl_3_36->each %self[2.0,] %cl_3_36[4.1,] 
+CLOSURE BEGIN: @admin_nav_links[4.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: link[2.2,] 
+		 2: link[2.2,] 
+		 3: %self->link_to %self[2.0,] %cl_4_3[3.1,] %cl_4_4[3.2,] 
+		 4: RETURN %cl_4_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_6[4.0,] 
+		 2: RETURN %cl_4_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->admin_clear_cache_path %self[2.0,] 
+		 3: 
+		 4: %cl_3_40[6.3,] 
+		 5: %cl_3_41[6.4,] 
+		 6: %self->link_to %cl_3_39[6.2,] %cl_3_38[6.1,] %self[2.0,] %cl_3_42[6.5,] 
+		 7: RETURN %cl_3_43[6.6,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_44[7.0,] 
+		 2: RETURN %cl_3_45[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_2_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 36: 
+		 37: 
+		 38: 
+		 39: @search[2.10,2.12,] 
+		 40: %self->ads_path %self[2.0,] 
+		 41: %v_24[2.40,] 
+		 42: %self->bootstrap_form_for %v_25[2.41,] %self[2.0,] %v_23[2.39,] 
+CLOSURE BEGIN: @search[2.10,] @result[2.14,] @page_title[2.32,] @ads[2.20,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_5_3[3.1,] 
+		 3: f->text_field f[2.2,] %cl_5_4[3.2,] 
+		 4: 
+		 5: 
+		 6: %cl_5_6[3.5,] 
+		 7: f->text_field %cl_5_7[3.6,] f[2.2,] 
+		 8: 
+		 9: %self[2.0,] f[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: f->primary %cl_6_3[3.1,] 
+		 3: RETURN %cl_6_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_5[4.0,] 
+		 2: RETURN %cl_6_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 10: RETURN %cl_5_9[3.9,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_10[4.0,] 
+		 2: RETURN %cl_5_11[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 43: 
+		 44: @search[2.10,2.12,2.39,] 
+		 45: 
+		 46: %self->sort_link %self[2.0,] %v_27[2.44,] %v_28[2.45,] 
+		 47: 
+		 48: @search[2.10,2.12,2.39,2.44,] 
+		 49: 
+		 50: %self->sort_link %self[2.0,] %v_30[2.48,] %v_31[2.49,] 
+		 51: 
+		 52: @search[2.10,2.12,2.39,2.44,2.48,] 
+		 53: 
+		 54: %self->sort_link %self[2.0,] %v_33[2.52,] %v_34[2.53,] 
+		 55: 
+		 56: 
+		 57: 
+		 58: @ads[2.20,2.27,] 
+		 59: %v_38->each %self[2.0,] %v_38[2.58,] 
+CLOSURE BEGIN: @search[2.10,] @result[2.14,] @page_title[2.32,] @ads[2.20,] 
+BB 1
+	outgoing: 4 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: ad->name ad[2.2,] 
+		 7: %self->h %self[2.0,] %cl_7_3[2.6,] 
+		 8: %self->ad_path %self[2.0,] ad[2.2,] 
+		 9: %self->link_to %self[2.0,] %cl_7_5[2.8,] %cl_7_4[2.7,] 
+		 10: 
+		 11: ad->published? ad[2.2,] 
+		 12: %self->h %self[2.0,] %cl_7_7[2.11,] 
+		 13: 
+		 14: ad->location ad[2.2,] 
+		 15: %self->h %self[2.0,] %cl_7_9[2.14,] 
+		 16: 
+		 17: 
+		 18: %self->ad_path %self[2.0,] ad[2.2,] 
+		 19: 
+		 20: %cl_7_13[2.19,] 
+		 21: %self->link_to %self[2.0,] %cl_7_14[2.20,] %cl_7_11[2.17,] %cl_7_12[2.18,] 
+		 22: 
+		 23: 
+		 24: %self->edit_ad_path %self[2.0,] ad[2.2,] 
+		 25: 
+		 26: %cl_7_18[2.25,] 
+		 27: %self->link_to %self[2.0,] %cl_7_19[2.26,] %cl_7_16[2.23,] %cl_7_17[2.24,] 
+		 28: 
+		 29: 
+		 30: %self->ad_path %self[2.0,] ad[2.2,] 
+		 31: 
+		 32: %cl_7_23[2.31,] 
+		 33: 
+		 34: %cl_7_25[2.33,] %cl_7_24[2.32,] 
+		 35: %self->link_to %self[2.0,] %cl_7_26[2.34,] %cl_7_21[2.29,] %cl_7_22[2.30,] 
+		 36: RETURN %cl_7_27[2.35,] 
+BB 4
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 60: 
+		 61: @ads[2.20,2.27,2.58,] 
+		 62: 
+		 63: %v_40[2.62,] 
+		 64: %self->paginate %self[2.0,] %v_39[2.61,] %v_41[2.63,] 
+		 65: 
+		 66: 
+		 67: %self->new_ad_path %self[2.0,] 
+		 68: 
+		 69: %v_45[2.68,] 
+		 70: %self->link_to %v_46[2.69,] %self[2.0,] %v_43[2.66,] %v_44[2.67,] 
+		 71: RETURN %v_47[2.70,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -78,11 +412,11 @@ BB 3
 
 SET IRMethod, name = show
 BB 1
-	outgoing: 3 2 
+	outgoing: 6 2 
 	datadep: 
 	instructions:
 BB 2
-	outgoing: 3 
+	outgoing: 3 4 
 	datadep: 
 	instructions:
 		 0: 
@@ -97,8 +431,8 @@ BB 2
 		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
 		 10: %self[2.0,] %v_6[2.9,] @ad[] 
 		 11: 
-		 12: %self->respond_to %self[2.0,2.0,] 
-CLOSURE BEGIN: @ad[2.10,] 
+		 12: %self->respond_to %self[2.0,] 
+CLOSURE BEGIN: @ad[] @page_title[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -131,8 +465,93 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 13: RETURN %v_7[2.12,] 
+		 13: 
+		 14: @ad[2.10,] 
+		 15: %v_8->name %v_8[2.14,] 
+		 16: %self[2.0,] %v_9[2.15,] @page_title[] 
+		 17: 
+		 18: 
+		 19: %self->ads_path %self[2.0,] 
+		 20: 
+		 21: %v_12[2.20,] 
+		 22: %self->link_to %v_13[2.21,] %self[2.0,] %v_10[2.18,] %v_11[2.19,] 
+		 23: 
+		 24: 
+		 25: @ad[2.10,2.14,] 
+		 26: %self->edit_ad_path %self[2.0,] %v_16[2.25,] 
+		 27: 
+		 28: %v_18[2.27,] 
+		 29: %self->link_to %self[2.0,] %v_15[2.24,] %v_17[2.26,] %v_19[2.28,] 
+		 30: 
+		 31: 
+		 32: @ad[2.10,2.14,2.25,] 
+		 33: %self->ad_path %self[2.0,] %v_22[2.32,] 
+		 34: 
+		 35: %v_24[2.34,] 
+		 36: 
+		 37: %v_25[2.35,] %v_26[2.36,] 
+		 38: %self->link_to %self[2.0,] %v_27[2.37,] %v_21[2.31,] %v_23[2.33,] 
+		 39: 
+		 40: 
+		 41: 
+		 42: @ad[2.10,2.14,2.25,2.32,] 
+		 43: %v_30->name %v_30[2.42,] 
+		 44: %self->h %self[2.0,] %v_31[2.43,] 
+		 45: 
+		 46: 
+		 47: 
+		 48: @ad[2.10,2.14,2.25,2.32,2.42,] 
+		 49: %v_34->html %v_34[2.48,] 
+		 50: %self->raw %v_35[2.49,] %self[2.0,] 
+		 51: 
+		 52: 
+		 53: 
+		 54: @ad[2.10,2.14,2.25,2.32,2.42,2.48,] 
+		 55: %v_38->frequency %v_38[2.54,] 
+		 56: %self->h %self[2.0,] %v_39[2.55,] 
+		 57: 
+		 58: 
+		 59: 
+		 60: @ad[2.10,2.14,2.25,2.32,2.42,2.48,2.54,] 
+		 61: %v_42->published? %v_42[2.60,] 
+		 62: 
+		 63: 
+		 64: 
+		 65: @ad[2.10,2.14,2.25,2.32,2.42,2.48,2.54,2.60,] 
+		 66: %v_45->time_constrained? %v_45[2.65,] 
+		 67: BRANCH %v_46[2.66,] 
 BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @ad[2.10,2.14,2.25,2.32,2.42,2.48,2.54,2.60,2.65,] 
+		 1: %v_47->start_date %v_47[3.0,] 
+		 2: %v_48->to_formatted_s %v_48[3.1,] 
+		 3: 
+		 4: @ad[3.0,] 
+		 5: %v_51->end_date %v_51[3.4,] 
+		 6: %v_52->to_formatted_s %v_52[3.5,] 
+		 7: %v_49[3.2,] %v_50[3.3,] %v_53[3.6,] 
+		 8: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_55[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 4 3 2 2 
+	instructions:
+		 0: %self->h %self[2.0,] %v_54[4.1,3.7,] 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self[2.0,] @ad[3.0,3.4,2.10,2.14,2.25,2.32,2.42,2.48,2.54,2.60,2.65,] 
+		 5: %v_58->location %v_58[5.4,] 
+		 6: %self->h %self[2.0,] %v_59[5.5,] 
+		 7: RETURN %v_60[5.6,] 
+BB 6
 	outgoing: 
 	datadep: 
 	instructions:
@@ -155,7 +574,193 @@ BB 2
 		 6: (Ad) 
 		 7: %v_3->new %v_3[2.6,] 
 		 8: %self[2.0,] %v_4[2.7,] @ad[] 
-		 9: RETURN %v_4[2.7,] 
+		 9: 
+		 10: 
+		 11: %self[2.0,] %v_5[2.10,] @page_title[] 
+		 12: 
+		 13: 
+		 14: %self->ads_path %self[2.0,] 
+		 15: 
+		 16: %v_8[2.15,] 
+		 17: %self->link_to %self[2.0,] %v_9[2.16,] %v_6[2.13,] %v_7[2.14,] 
+		 18: 
+		 19: %self->ruby_code_from_view %self[2.0,] 
+		 20: %v_11->ruby_code_from_view %self[2.0,] %v_11[2.19,] 
+CLOSURE BEGIN: @ad[2.8,] @page_title[2.11,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @ad[] 
+		 2: 
+		 3: %self->bootstrap_form_for %cl_1_3[3.1,] %cl_1_4[3.2,] %self[2.0,] 
+CLOSURE BEGIN: @ad[3.1,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: f->text_field f[2.2,] 
+		 2: 
+		 3: 
+		 4: %cl_2_4[3.3,] 
+		 5: f->text_area %cl_2_5[3.4,] f[2.2,] 
+		 6: 
+		 7: (Ad) 
+		 8: %cl_2_7->frequencies_for_select %cl_2_7[3.7,] 
+		 9: f->select f[2.2,] %cl_2_8[3.8,] 
+		 10: 
+		 11: (Ad) 
+		 12: %cl_2_10->audiences_for_select %cl_2_10[3.11,] 
+		 13: f->select %cl_2_11[3.12,] f[2.2,] 
+		 14: 
+		 15: %self[2.0,] f[2.2,] 
+CLOSURE BEGIN: @ad[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_3_3[3.1,] %cl_3_4[3.2,] 
+		 4: %cl_3_5[3.3,] 
+		 5: f->check_box %cl_3_6[3.4,] 
+		 6: 
+		 7: 
+		 8: 
+		 9: %cl_3_9[3.8,] %cl_3_8[3.7,] 
+		 10: %cl_3_10[3.9,] 
+		 11: f->check_box %cl_3_11[3.10,] 
+		 12: RETURN %cl_3_12[3.11,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_13[4.0,] 
+		 2: RETURN %cl_3_14[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 16: 
+		 17: %self[2.0,] @ad[] 
+		 18: %cl_2_14->time_constrained? %cl_2_14[3.17,] 
+		 19: BRANCH %cl_2_15[3.18,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_17[5.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: f->datetime_select f[2.2,] 
+		 2: 
+		 3: f->datetime_select f[2.2,] 
+		 4: 
+		 5: %self[2.0,] 
+CLOSURE BEGIN: @ad[3.17,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+		 7: f->text_field f[2.2,] 
+		 8: 
+		 9: 
+		 10: f->primary %cl_2_22[6.9,] f[2.2,] 
+		 11: RETURN %cl_2_23[6.10,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_24[7.0,] 
+		 2: RETURN %cl_2_25[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_1_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 21: RETURN %v_12[2.20,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -181,7 +786,209 @@ BB 2
 		 8: %v_4[2.7,] 
 		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
 		 10: %self[2.0,] %v_6[2.9,] @ad[] 
-		 11: RETURN %v_6[2.9,] 
+		 11: 
+		 12: 
+		 13: %self[2.0,] %v_7[2.12,] @page_title[] 
+		 14: 
+		 15: 
+		 16: %self->ads_path %self[2.0,] 
+		 17: 
+		 18: %v_10[2.17,] 
+		 19: %self->link_to %self[2.0,] %v_8[2.15,] %v_9[2.16,] %v_11[2.18,] 
+		 20: 
+		 21: 
+		 22: @ad[2.10,] 
+		 23: %self->ad_path %v_14[2.22,] %self[2.0,] 
+		 24: 
+		 25: %v_16[2.24,] 
+		 26: %self->link_to %v_13[2.21,] %self[2.0,] %v_15[2.23,] %v_17[2.25,] 
+		 27: 
+		 28: 
+		 29: @ad[2.10,2.22,] 
+		 30: %self->ad_path %self[2.0,] %v_20[2.29,] 
+		 31: 
+		 32: %v_22[2.31,] 
+		 33: 
+		 34: %v_24[2.33,] %v_23[2.32,] 
+		 35: %self->link_to %v_25[2.34,] %self[2.0,] %v_19[2.28,] %v_21[2.30,] 
+		 36: 
+		 37: %self->ruby_code_from_view %self[2.0,] 
+		 38: %v_27->ruby_code_from_view %self[2.0,] %v_27[2.37,] 
+CLOSURE BEGIN: @ad[2.10,] @page_title[2.13,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @ad[] 
+		 2: 
+		 3: %self->bootstrap_form_for %cl_1_3[3.1,] %cl_1_4[3.2,] %self[2.0,] 
+CLOSURE BEGIN: @ad[3.1,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: f->text_field f[2.2,] 
+		 2: 
+		 3: 
+		 4: %cl_2_4[3.3,] 
+		 5: f->text_area %cl_2_5[3.4,] f[2.2,] 
+		 6: 
+		 7: (Ad) 
+		 8: %cl_2_7->frequencies_for_select %cl_2_7[3.7,] 
+		 9: f->select f[2.2,] %cl_2_8[3.8,] 
+		 10: 
+		 11: (Ad) 
+		 12: %cl_2_10->audiences_for_select %cl_2_10[3.11,] 
+		 13: f->select %cl_2_11[3.12,] f[2.2,] 
+		 14: 
+		 15: %self[2.0,] f[2.2,] 
+CLOSURE BEGIN: @ad[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_3_3[3.1,] %cl_3_4[3.2,] 
+		 4: %cl_3_5[3.3,] 
+		 5: f->check_box %cl_3_6[3.4,] 
+		 6: 
+		 7: 
+		 8: 
+		 9: %cl_3_9[3.8,] %cl_3_8[3.7,] 
+		 10: %cl_3_10[3.9,] 
+		 11: f->check_box %cl_3_11[3.10,] 
+		 12: RETURN %cl_3_12[3.11,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_13[4.0,] 
+		 2: RETURN %cl_3_14[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 16: 
+		 17: %self[2.0,] @ad[] 
+		 18: %cl_2_14->time_constrained? %cl_2_14[3.17,] 
+		 19: BRANCH %cl_2_15[3.18,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_17[5.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: f->datetime_select f[2.2,] 
+		 2: 
+		 3: f->datetime_select f[2.2,] 
+		 4: 
+		 5: %self[2.0,] 
+CLOSURE BEGIN: @ad[3.17,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+		 7: f->text_field f[2.2,] 
+		 8: 
+		 9: 
+		 10: f->primary %cl_2_22[6.9,] f[2.2,] 
+		 11: RETURN %cl_2_23[6.10,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_24[7.0,] 
+		 2: RETURN %cl_2_25[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_1_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 39: RETURN %v_28[2.38,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -207,7 +1014,7 @@ BB 2
 		 8: %v_3->new %v_4[2.7,] %v_3[2.6,] 
 		 9: %self[2.0,] %v_5[2.8,] @ad[] 
 		 10: 
-		 11: %self->respond_to %self[2.0,2.0,] 
+		 11: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @ad[2.9,] 
 BB 1
 	outgoing: 9 2 
@@ -296,20 +1103,236 @@ BB 2
 		 3: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %cl_3_3->ruby_code_from_view %cl_3_3[3.1,] %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
 	instructions:
 		 0: 
 		 1: 
-		 2: %cl_3_3[3.1,] 
-		 3: %self->render %self[2.0,] %cl_3_4[3.2,] 
-		 4: RETURN %cl_3_5[3.3,] 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] %cl_4_3[3.1,] @page_title[] 
+		 3: 
+		 4: 
+		 5: %self->ads_path %self[2.0,] 
+		 6: 
+		 7: %cl_4_6[3.6,] 
+		 8: %self->link_to %self[2.0,] %cl_4_4[3.4,] %cl_4_5[3.5,] %cl_4_7[3.7,] 
+		 9: 
+		 10: %self->ruby_code_from_view %self[2.0,] 
+		 11: %cl_4_9->ruby_code_from_view %self[2.0,] %cl_4_9[3.10,] 
+CLOSURE BEGIN: @page_title[3.2,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @ad[] 
+		 2: 
+		 3: %self->bootstrap_form_for %self[2.0,] %cl_5_3[3.1,] %cl_5_4[3.2,] 
+CLOSURE BEGIN: @ad[3.1,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: f->text_field f[2.2,] 
+		 2: 
+		 3: 
+		 4: %cl_6_4[3.3,] 
+		 5: f->text_area f[2.2,] %cl_6_5[3.4,] 
+		 6: 
+		 7: (Ad) 
+		 8: %cl_6_7->frequencies_for_select %cl_6_7[3.7,] 
+		 9: f->select %cl_6_8[3.8,] f[2.2,] 
+		 10: 
+		 11: (Ad) 
+		 12: %cl_6_10->audiences_for_select %cl_6_10[3.11,] 
+		 13: f->select f[2.2,] %cl_6_11[3.12,] 
+		 14: 
+		 15: %self[2.0,] f[2.2,] 
+CLOSURE BEGIN: @ad[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_7_3[3.1,] %cl_7_4[3.2,] 
+		 4: %cl_7_5[3.3,] 
+		 5: f->check_box %cl_7_6[3.4,] 
+		 6: 
+		 7: 
+		 8: 
+		 9: %cl_7_9[3.8,] %cl_7_8[3.7,] 
+		 10: %cl_7_10[3.9,] 
+		 11: f->check_box %cl_7_11[3.10,] 
+		 12: RETURN %cl_7_12[3.11,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %cl_3_6[4.0,] 
-		 2: RETURN %cl_3_7[4.1,] 
+		 1: %cl_7_13[4.0,] 
+		 2: RETURN %cl_7_14[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 16: 
+		 17: %self[2.0,] @ad[] 
+		 18: %cl_6_14->time_constrained? %cl_6_14[3.17,] 
+		 19: BRANCH %cl_6_15[3.18,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_17[5.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: f->datetime_select f[2.2,] 
+		 2: 
+		 3: f->datetime_select f[2.2,] 
+		 4: 
+		 5: %self[2.0,] 
+CLOSURE BEGIN: @ad[3.17,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+		 7: f->text_field f[2.2,] 
+		 8: 
+		 9: 
+		 10: f->primary f[2.2,] %cl_6_22[6.9,] 
+		 11: RETURN %cl_6_23[6.10,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_24[7.0,] 
+		 2: RETURN %cl_6_25[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_5_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_6[4.0,] 
+		 2: RETURN %cl_5_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 12: RETURN %cl_4_10[3.11,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_11[4.0,] 
+		 2: RETURN %cl_4_12[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -360,7 +1383,7 @@ BB 2
 		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
 		 10: %self[2.0,] %v_6[2.9,] @ad[] 
 		 11: 
-		 12: %self->respond_to %self[2.0,2.0,] 
+		 12: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @ad[2.10,] 
 BB 1
 	outgoing: 9 2 
@@ -450,20 +1473,252 @@ BB 2
 		 3: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %cl_3_3->ruby_code_from_view %cl_3_3[3.1,] %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
 	instructions:
 		 0: 
 		 1: 
-		 2: %cl_3_3[3.1,] 
-		 3: %self->render %self[2.0,] %cl_3_4[3.2,] 
-		 4: RETURN %cl_3_5[3.3,] 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] %cl_4_3[3.1,] @page_title[] 
+		 3: 
+		 4: 
+		 5: %self->ads_path %self[2.0,] 
+		 6: 
+		 7: %cl_4_6[3.6,] 
+		 8: %self->link_to %self[2.0,] %cl_4_4[3.4,] %cl_4_5[3.5,] %cl_4_7[3.7,] 
+		 9: 
+		 10: 
+		 11: %self[2.0,] @ad[] 
+		 12: %self->ad_path %self[2.0,] %cl_4_10[3.11,] 
+		 13: 
+		 14: %cl_4_12[3.13,] 
+		 15: %self->link_to %self[2.0,] %cl_4_9[3.10,] %cl_4_13[3.14,] %cl_4_11[3.12,] 
+		 16: 
+		 17: 
+		 18: @ad[3.11,] 
+		 19: %self->ad_path %self[2.0,] %cl_4_16[3.18,] 
+		 20: 
+		 21: %cl_4_18[3.20,] 
+		 22: 
+		 23: %cl_4_19[3.21,] %cl_4_20[3.22,] 
+		 24: %self->link_to %cl_4_17[3.19,] %self[2.0,] %cl_4_15[3.17,] %cl_4_21[3.23,] 
+		 25: 
+		 26: %self->ruby_code_from_view %self[2.0,] 
+		 27: %cl_4_23->ruby_code_from_view %self[2.0,] %cl_4_23[3.26,] 
+CLOSURE BEGIN: @page_title[3.2,] @ad[3.11,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @ad[] 
+		 2: 
+		 3: %self->bootstrap_form_for %self[2.0,] %cl_5_3[3.1,] %cl_5_4[3.2,] 
+CLOSURE BEGIN: @ad[3.1,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: f->text_field f[2.2,] 
+		 2: 
+		 3: 
+		 4: %cl_6_4[3.3,] 
+		 5: f->text_area f[2.2,] %cl_6_5[3.4,] 
+		 6: 
+		 7: (Ad) 
+		 8: %cl_6_7->frequencies_for_select %cl_6_7[3.7,] 
+		 9: f->select %cl_6_8[3.8,] f[2.2,] 
+		 10: 
+		 11: (Ad) 
+		 12: %cl_6_10->audiences_for_select %cl_6_10[3.11,] 
+		 13: f->select f[2.2,] %cl_6_11[3.12,] 
+		 14: 
+		 15: %self[2.0,] f[2.2,] 
+CLOSURE BEGIN: @ad[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_7_3[3.1,] %cl_7_4[3.2,] 
+		 4: %cl_7_5[3.3,] 
+		 5: f->check_box %cl_7_6[3.4,] 
+		 6: 
+		 7: 
+		 8: 
+		 9: %cl_7_9[3.8,] %cl_7_8[3.7,] 
+		 10: %cl_7_10[3.9,] 
+		 11: f->check_box %cl_7_11[3.10,] 
+		 12: RETURN %cl_7_12[3.11,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %cl_3_6[4.0,] 
-		 2: RETURN %cl_3_7[4.1,] 
+		 1: %cl_7_13[4.0,] 
+		 2: RETURN %cl_7_14[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 16: 
+		 17: %self[2.0,] @ad[] 
+		 18: %cl_6_14->time_constrained? %cl_6_14[3.17,] 
+		 19: BRANCH %cl_6_15[3.18,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_17[5.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: f->datetime_select f[2.2,] 
+		 2: 
+		 3: f->datetime_select f[2.2,] 
+		 4: 
+		 5: %self[2.0,] 
+CLOSURE BEGIN: @ad[3.17,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+		 7: f->text_field f[2.2,] 
+		 8: 
+		 9: 
+		 10: f->primary f[2.2,] %cl_6_22[6.9,] 
+		 11: RETURN %cl_6_23[6.10,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_24[7.0,] 
+		 2: RETURN %cl_6_25[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_5_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_6[4.0,] 
+		 2: RETURN %cl_5_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 28: RETURN %cl_4_24[3.27,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_25[4.0,] 
+		 2: RETURN %cl_4_26[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -517,7 +1772,7 @@ BB 2
 		 12: @ad[2.10,] 
 		 13: %v_7->destroy %v_7[2.12,] 
 		 14: 
-		 15: %self->respond_to %self[2.0,2.0,] 
+		 15: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @ad[2.10,] 
 BB 1
 	outgoing: 6 2 

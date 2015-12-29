@@ -10,6 +10,45 @@ class SessionsController < BaseController
   def new
     redirect_to user_path(current_user) and return if current_user
     @user_session = UserSession.new
+ @page_title=:log_in_to_site.l(:site => configatron.community_name) 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :help.l 
+ :dont_have_an_account.l 
+ link_to :click_here_to_sign_up.l, signup_path 
+ :forgot_your_password.l 
+ link_to :click_here_to_retrieve_it.l, forgot_password_url 
+ :forgot_your_username.l 
+ link_to :click_here_to_retrieve_it.l, forgot_username_url 
+ end 
+
+
+end
+
+ 
+ if configatron.auth_providers.to_hash.keys.any?       
+ widget do 
+ t 'sessions.new.omniauth.header' 
+ configatron.auth_providers.to_hash.keys.each do |provider| 
+ alt = t('sessions.new.omniauth.button_alt', :provider => provider) 
+ link_to(image_tag("auth/#{provider.to_s}_64.png", :alt => alt), "/auth/#{provider.to_s}", :title => alt) 
+ end 
+ end 
+ end 
+ bootstrap_form_tag :url => sessions_path, :layout => :horizontal do |f| 
+ f.email_field :email, value: params[:email] 
+ f.password_field :password 
+ f.form_group :remember_group do 
+ f.check_box :check_box do 
+ :remember_me.l 
+ end 
+ end 
+ f.form_group :submit_group do 
+ f.primary :log_in.l 
+ end 
+ end 
+
   end
 
   def create

@@ -32,7 +32,329 @@ BB 2
 		 22: %v_16[2.21,] 
 		 23: %v_15->page %v_15[2.20,] %v_17[2.22,] 
 		 24: %self[2.0,] %v_18[2.23,] @photos_no_albums[] 
-		 25: RETURN %v_18[2.23,] 
+		 25: 
+		 26: 
+		 27: %self[2.0,] %v_19[2.26,] @page_title[] 
+		 28: 
+		 29: %self->widget %self[2.0,] 
+CLOSURE BEGIN: @albums[2.13,] @page_title[2.27,] @photos_no_albums[2.24,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self->current_user %self[2.0,] 
+		 5: %self->user_photos_path %self[2.0,] %cl_1_5[3.4,] 
+		 6: %self->link_to %cl_1_4[3.3,] %self[2.0,] %cl_1_6[3.5,] 
+		 7: 
+		 8: 
+		 9: %self->current_user %self[2.0,] 
+		 10: %self->new_user_photo_path %self[2.0,] %cl_1_9[3.9,] 
+		 11: %self->link_to %self[2.0,] %cl_1_10[3.10,] %cl_1_8[3.8,] 
+		 12: 
+		 13: 
+		 14: %self->current_user %self[2.0,] 
+		 15: %self->new_user_album_path %self[2.0,] %cl_1_13[3.14,] 
+		 16: %self->link_to %cl_1_14[3.15,] %self[2.0,] %cl_1_12[3.13,] 
+		 17: RETURN %cl_1_15[3.16,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_16[4.0,] 
+		 2: RETURN %cl_1_17[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 30: 
+		 31: 
+		 32: 
+		 33: 
+		 34: 
+		 35: 
+		 36: 
+		 37: 
+		 38: 
+		 39: 
+		 40: 
+		 41: @albums[2.13,] 
+		 42: %v_26->each %v_26[2.41,] %self[2.0,] 
+CLOSURE BEGIN: @albums[2.13,] @page_title[2.27,] @photos_no_albums[2.24,] 
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 13 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: album->title album[2.2,] 
+		 2: %self->current_user %self[2.0,] 
+		 3: %self->user_album_path %self[2.0,] %cl_2_4[3.2,] album[2.2,] 
+		 4: %self->link_to %cl_2_3[3.1,] %self[2.0,] %cl_2_5[3.3,] 
+		 5: 
+		 6: album->photos album[2.2,] 
+		 7: %cl_2_7[3.6,] 
+		 8: BRANCH %cl_2_8[3.7,] 
+BB 4
+	outgoing: 6 13 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: album->photos album[2.2,] 
+		 2: %cl_2_9[4.1,] 
+		 3: %cl_2_10->photo %cl_2_10[4.2,] 
+		 4: %cl_2_11->url %cl_2_11[4.3,] 
+		 5: 
+		 6: %cl_2_13[4.5,] 
+		 7: %self->image_tag %self[2.0,] %cl_2_14[4.6,] %cl_2_12[4.4,] 
+		 8: %self->current_user %self[2.0,] 
+		 9: album->photos album[2.2,] 
+		 10: %cl_2_17[4.9,] 
+		 11: %self->user_photo_path %cl_2_16[4.8,] %self[2.0,] %cl_2_18[4.10,] 
+		 12: %self->link_to %cl_2_15[4.7,] %self[2.0,] %cl_2_19[4.11,] 
+		 13: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 13 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: album->photos album[2.2,] 
+		 2: %cl_2_21[6.1,] 
+		 3: BRANCH %cl_2_22[6.2,] 
+BB 7
+	outgoing: 9 13 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: album->photos album[2.2,] 
+		 2: %cl_2_23[7.1,] 
+		 3: %cl_2_24->photo %cl_2_24[7.2,] 
+		 4: %cl_2_25->url %cl_2_25[7.3,] 
+		 5: 
+		 6: %cl_2_27[7.5,] 
+		 7: %self->image_tag %cl_2_26[7.4,] %self[2.0,] %cl_2_28[7.6,] 
+		 8: %self->current_user %self[2.0,] 
+		 9: album->photos album[2.2,] 
+		 10: %cl_2_31[7.9,] 
+		 11: %self->user_photo_path %self[2.0,] %cl_2_30[7.8,] %cl_2_32[7.10,] 
+		 12: %self->link_to %self[2.0,] %cl_2_29[7.7,] %cl_2_33[7.11,] 
+		 13: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 11 13 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: album->photos album[2.2,] 
+		 2: %cl_2_35[9.1,] 
+		 3: BRANCH %cl_2_36[9.2,] 
+BB 10
+	outgoing: 12 13 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: album->photos album[2.2,] 
+		 2: %cl_2_37[10.1,] 
+		 3: %cl_2_38->photo %cl_2_38[10.2,] 
+		 4: %cl_2_39->url %cl_2_39[10.3,] 
+		 5: 
+		 6: %cl_2_41[10.5,] 
+		 7: %self->image_tag %self[2.0,] %cl_2_40[10.4,] %cl_2_42[10.6,] 
+		 8: %self->current_user %self[2.0,] 
+		 9: album->photos album[2.2,] 
+		 10: %cl_2_45[10.9,] 
+		 11: %self->user_photo_path %self[2.0,] %cl_2_46[10.10,] %cl_2_44[10.8,] 
+		 12: %self->link_to %self[2.0,] %cl_2_47[10.11,] %cl_2_43[10.7,] 
+		 13: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 12
+	outgoing: 13 15 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: album->created_at album[2.2,] 
+		 2: 
+		 3: album->created_at album[2.2,] 
+		 4: 
+		 5: %cl_2_50->strftime %cl_2_51[12.4,] %cl_2_50[12.3,] 
+		 6: 
+		 7: 
+		 8: %self->current_user %self[2.0,] 
+		 9: %self->user_album_path %self[2.0,] album[2.2,] %cl_2_54[12.8,] 
+		 10: 
+		 11: %cl_2_56[12.10,] 
+		 12: %self->link_to %self[2.0,] %cl_2_57[12.11,] %cl_2_55[12.9,] %cl_2_53[12.7,] 
+		 13: 
+		 14: 
+		 15: %self->current_user %self[2.0,] 
+		 16: %self->edit_user_album_path %self[2.0,] album[2.2,] %cl_2_60[12.15,] 
+		 17: 
+		 18: %cl_2_62[12.17,] 
+		 19: %self->link_to %cl_2_59[12.14,] %self[2.0,] %cl_2_63[12.18,] %cl_2_61[12.16,] 
+		 20: 
+		 21: 
+		 22: %self->current_user %self[2.0,] 
+		 23: %self->new_user_album_photo_path %self[2.0,] album[2.2,] %cl_2_66[12.22,] 
+		 24: 
+		 25: %cl_2_68[12.24,] 
+		 26: %self->link_to %self[2.0,] %cl_2_69[12.25,] %cl_2_67[12.23,] %cl_2_65[12.21,] 
+		 27: 
+		 28: 
+		 29: %self->current_user %self[2.0,] 
+		 30: %self->user_album_path %self[2.0,] album[2.2,] %cl_2_72[12.29,] 
+		 31: 
+		 32: %cl_2_74[12.31,] 
+		 33: 
+		 34: %cl_2_75[12.32,] %cl_2_76[12.33,] 
+		 35: %self->link_to %self[2.0,] %cl_2_73[12.30,] %cl_2_71[12.28,] %cl_2_77[12.34,] 
+		 36: RETURN %cl_2_78[12.35,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_79[13.0,] 
+		 2: RETURN %cl_2_80[13.1,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 43: 
+		 44: @albums[2.13,2.41,] 
+		 45: 
+		 46: %v_29[2.45,] 
+		 47: %self->paginate %self[2.0,] %v_28[2.44,] %v_30[2.46,] 
+		 48: 
+		 49: 
+		 50: %self->current_user %self[2.0,] 
+		 51: %self->new_user_album_path %self[2.0,] %v_33[2.50,] 
+		 52: 
+		 53: %v_35[2.52,] 
+		 54: %self->link_to %v_36[2.53,] %self[2.0,] %v_32[2.49,] %v_34[2.51,] 
+		 55: 
+		 56: 
+		 57: 
+		 58: @photos_no_albums[2.24,] 
+		 59: %v_39->each %self[2.0,] %v_39[2.58,] 
+CLOSURE BEGIN: @albums[2.13,] @page_title[2.27,] @photos_no_albums[2.24,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: photo->photo photo[2.2,] 
+		 2: %cl_3_3->url %cl_3_3[3.1,] 
+		 3: %self->image_tag %self[2.0,] %cl_3_4[3.2,] 
+		 4: %self->current_user %self[2.0,] 
+		 5: %self->user_photo_path %self[2.0,] photo[2.2,] %cl_3_6[3.4,] 
+		 6: 
+		 7: %cl_3_8[3.6,] 
+		 8: %self->link_to %self[2.0,] %cl_3_9[3.7,] %cl_3_5[3.3,] %cl_3_7[3.5,] 
+		 9: 
+		 10: 
+		 11: %self->current_user %self[2.0,] 
+		 12: %self->user_photo_path %self[2.0,] photo[2.2,] %cl_3_12[3.11,] 
+		 13: 
+		 14: %cl_3_14[3.13,] 
+		 15: %self->link_to %self[2.0,] %cl_3_15[3.14,] %cl_3_13[3.12,] %cl_3_11[3.10,] 
+		 16: 
+		 17: 
+		 18: %self->current_user %self[2.0,] 
+		 19: %self->edit_user_photo_path %self[2.0,] %cl_3_18[3.18,] photo[2.2,] 
+		 20: 
+		 21: %cl_3_20[3.20,] 
+		 22: %self->link_to %cl_3_17[3.17,] %self[2.0,] %cl_3_19[3.19,] %cl_3_21[3.21,] 
+		 23: 
+		 24: 
+		 25: %self->current_user %self[2.0,] 
+		 26: %self->edit_user_photo_path %self[2.0,] %cl_3_24[3.25,] photo[2.2,] 
+		 27: 
+		 28: %cl_3_26[3.27,] 
+		 29: 
+		 30: %cl_3_28[3.29,] %cl_3_27[3.28,] 
+		 31: %self->link_to %self[2.0,] %cl_3_25[3.26,] %cl_3_29[3.30,] %cl_3_23[3.24,] 
+		 32: RETURN %cl_3_30[3.31,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_31[4.0,] 
+		 2: RETURN %cl_3_32[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 60: 
+		 61: @photos_no_albums[2.24,2.58,] 
+		 62: 
+		 63: %v_42[2.62,] 
+		 64: %self->paginate %self[2.0,] %v_41[2.61,] %v_43[2.63,] 
+		 65: 
+		 66: 
+		 67: %self->current_user %self[2.0,] 
+		 68: %self->new_user_photo_path %v_46[2.67,] %self[2.0,] 
+		 69: 
+		 70: %v_48[2.69,] 
+		 71: %self->link_to %v_47[2.68,] %self[2.0,] %v_49[2.70,] %v_45[2.66,] 
+		 72: RETURN %v_50[2.71,] 
 BB 3
 	outgoing: 
 	datadep: 

@@ -25,17 +25,122 @@ class TagsController < BaseController
     @photo_tags = popular_tags(75, 'Photo').to_a
 
     @clipping_tags = popular_tags(75, 'Clipping').to_a
+ @page_title= :browse_content_by_tags.l 
+ widget do  
+ :what_are_tags.l 
+ :tags_are_one_word_descriptors_users_assign_to_blog_posts_pictures_and_clippings_on.l+" #{configatron.community_name}." 
+ :bigger_font_size_more_popular_tag.l 
+ end 
+ widget do  
+ :search.l 
+ bootstrap_form_tag :url => search_tags_path, :method => 'get', :class => 'form' do 
+ text_field_tag 'id', params[:id], :autocomplete => "off", :placeholder => 'search tags' 
+ content_for :end_javascript do 
+ tag_auto_complete_field 'id', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
+ end 
+ submit_tag :go.l, :class => 'btn btn-primary' 
+ end 
+ end 
+ tag_cloud @tags, %w(css1 css2 css3 css4 css5) do |tag, css_class| 
+ link_to tag.name, tag_url(tag.to_param), :class => css_class 
+ end 
+
   end
 
   def manage
     @search = ActsAsTaggableOn::Tag.search(params[:q])
     @tags = @search.result
     @tags = @tags.order('name ASC').distinct.page(params[:page]).per(100)
+ @page_title=:tags.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :admin.l 
+ link_to_unless_current :features.l, homepage_features_path 
+ link_to_unless_current :categories.l, categories_path 
+ link_to_unless_current :metro_areas.l, metro_areas_path 
+ link_to_unless_current :events.l, admin_events_path 
+ link_to_unless_current :statistics.l, statistics_path 
+ link_to_unless_current :ads.l, ads_path 
+ link_to_unless_current :comments.l, admin_comments_path 
+ link_to_unless_current :tags.l, admin_tags_path 
+ link_to_unless_current :admin_pages.l, admin_pages_path 
+ link_to_unless_current :members.l, admin_users_path 
+ if @admin_nav_links.any? 
+ @admin_nav_links.each do |link| 
+ link_to link[:name], link[:url] 
+ end 
+ end 
+ link_to :cache_clear_link.l, admin_clear_cache_path, data: { confirm: :are_you_sure.l } 
+ end 
+
+
+end
+
+ 
+ box do 
+ :search.l 
+ bootstrap_form_for @search, :url => admin_tags_path, :layout => :horizontal do |f| 
+ f.text_field :name_start, :label => :name.l 
+ f.form_group :submit_group do 
+ f.primary :search.l 
+ end 
+ end 
+ end 
+ sort_link @search, :name, :name.l 
+ sort_link @search, :taggings_count, :taggings.l 
+ :actions.l 
+ for tag in @tags 
+ tag.name 
+ tag.taggings.count 
+ link_to :show.l, tag_path(tag), :class => 'btn btn-default' 
+ link_to :edit.l, edit_tag_path(tag), :class => 'btn btn-warning' 
+ link_to :destroy.l, tag_path(tag), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ end 
+ paginate @tags, :theme => 'bootstrap' 
+
   end
 
 
   def edit
     @tag = ActsAsTaggableOn::Tag.find_by_name(URI::decode(params[:id]))
+ @page_title=:editing_tag.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :admin.l 
+ link_to_unless_current :features.l, homepage_features_path 
+ link_to_unless_current :categories.l, categories_path 
+ link_to_unless_current :metro_areas.l, metro_areas_path 
+ link_to_unless_current :events.l, admin_events_path 
+ link_to_unless_current :statistics.l, statistics_path 
+ link_to_unless_current :ads.l, ads_path 
+ link_to_unless_current :comments.l, admin_comments_path 
+ link_to_unless_current :tags.l, admin_tags_path 
+ link_to_unless_current :admin_pages.l, admin_pages_path 
+ link_to_unless_current :members.l, admin_users_path 
+ if @admin_nav_links.any? 
+ @admin_nav_links.each do |link| 
+ link_to link[:name], link[:url] 
+ end 
+ end 
+ link_to :cache_clear_link.l, admin_clear_cache_path, data: { confirm: :are_you_sure.l } 
+ end 
+
+
+end
+
+ 
+ link_to :back.l, admin_tags_path, :class => 'btn btn-default' 
+ link_to :show.l, tag_path(@tag), :class => 'btn btn-primary' 
+ link_to :delete.l, tag_path(@tag), :method => 'delete', data: { confirm: :are_you_sure.l }, :class => 'btn btn-danger' 
+ bootstrap_form_for :tag, :url => tag_path(@tag), :layout => :horizontal, :html => {:method => 'put'} do |f| 
+ f.text_field :name 
+ f.form_group :submit_group do 
+ f.primary :update.l 
+ end 
+ end 
+
   end
 
   def update
@@ -47,7 +152,49 @@ class TagsController < BaseController
         format.html { redirect_to admin_tags_url }
         format.xml  { render :nothing => true }
       else
-        format.html { render :action => "edit" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title=:editing_tag.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :admin.l 
+ link_to_unless_current :features.l, homepage_features_path 
+ link_to_unless_current :categories.l, categories_path 
+ link_to_unless_current :metro_areas.l, metro_areas_path 
+ link_to_unless_current :events.l, admin_events_path 
+ link_to_unless_current :statistics.l, statistics_path 
+ link_to_unless_current :ads.l, ads_path 
+ link_to_unless_current :comments.l, admin_comments_path 
+ link_to_unless_current :tags.l, admin_tags_path 
+ link_to_unless_current :admin_pages.l, admin_pages_path 
+ link_to_unless_current :members.l, admin_users_path 
+ if @admin_nav_links.any? 
+ @admin_nav_links.each do |link| 
+ link_to link[:name], link[:url] 
+ end 
+ end 
+ link_to :cache_clear_link.l, admin_clear_cache_path, data: { confirm: :are_you_sure.l } 
+ end 
+
+
+end
+
+ 
+ link_to :back.l, admin_tags_path, :class => 'btn btn-default' 
+ link_to :show.l, tag_path(@tag), :class => 'btn btn-primary' 
+ link_to :delete.l, tag_path(@tag), :method => 'delete', data: { confirm: :are_you_sure.l }, :class => 'btn btn-danger' 
+ bootstrap_form_for :tag, :url => tag_path(@tag), :layout => :horizontal, :html => {:method => 'put'} do |f| 
+ f.text_field :name 
+ f.form_group :submit_group do 
+ f.primary :update.l 
+ end 
+ end 
+
+
+end
+
+ }
         format.xml  { render :xml => @tag.errors.to_xml }
       end
     end
@@ -100,6 +247,74 @@ class TagsController < BaseController
       @users      = User.recent.limit(10).tagged_with(tag_array)
       @clippings  = Clipping.recent.limit(10).tagged_with(tag_array)
     end
+ widget do 
+ if params[:type] 
+ (params[:type].downcase.pluralize + '_tagged').l 
+ else 
+ :items_tagged.l 
+ end 
+ @tags.each do |tag| 
+ link_to h(tag.name), tag_path(tag) 
+ end 
+ end 
+ if @related_tags.to_a.size > 0 
+ widget do 
+ :related_tags.l 
+ tag_cloud @related_tags, %w(css1 css2 css3 css4 css5) do |tag, css_class| 
+ link_to h(tag.name), tag_path(tag), :class => css_class 
+ end 
+ link_to fa_icon('plus-circle', :text => :all_tags.l), tags_path 
+ end 
+ end 
+ if @posts.any? 
+ unless params[:type]     
+ :posts.l 
+ @posts.each do |post| 
+ link_to( truncate(post.display_title, :length => 75), user_post_path(post.user, post), :title => :by.l(:login => post.user.login) ) 
+ truncate_words(post.post, 35, '...' ) 
+ end 
+ link_to fa_icon('plus-circle', :text => :all_posts_tagged.l(:tag_name => @tags_raw)), show_tag_type_path(:id => @tags_raw, :type => 'Post') unless params[:type] 
+ else 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
+ end 
+ end 
+ if @photos.any? 
+ :photos.l(:count => @photos.size) 
+ @photos.each do |photo| 
+ link_to image_tag(photo.photo.url(:medium), :title => "#{photo.description} ("+:uploaded_by.l+" #{photo.user.login})"), user_photo_path(photo.user, photo), :class => "thumbnail" 
+ end 
+ link_to fa_icon('plus-circle', :text => :all_photos_tagged.l(:tag_name => @tags_raw)), show_tag_type_path(:id => @tags_raw, :type => 'Photo') unless params[:type] 
+ end 
+ if @users.any? 
+ t('tags.show.users') 
+ @users.each do |user| 
+ link_to image_tag(user.avatar_photo_url(:medium)), user_path(user), :title => user.login, :class => "thumbnail" 
+ end 
+ link_to fa_icon('plus-circle', :text => :all_users_tagged.l(:tag_name => @tags_raw)), show_tag_type_path(:id => @tags_raw, :type => 'User') unless params[:type] 
+ end 
+ unless @clippings.empty? 
+ :clippings.l 
+ @clippings.each do |clipping| 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
+ end 
+ link_to fa_icon('plus-circle', :text => :all_clippings_tagged.l(:tag_name => @tags_raw)), show_tag_type_path(:id => @tags_raw, :type => 'Clipping') unless params[:type] 
+ end 
+ if @pages && !params[:type].eql?('Post') 
+ paginate @pages, :theme => 'bootstrap' 
+ end 
+
   end
 
 end

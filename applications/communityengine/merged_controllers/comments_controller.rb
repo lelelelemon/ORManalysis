@@ -39,6 +39,7 @@ class CommentsController < BaseController
     respond_to do |format|
       format.js
     end
+
   end
 
   def index
@@ -91,6 +92,90 @@ class CommentsController < BaseController
       flash[:notice] = :no_comments_found.l_with_args(:type => commentable_type_humanized)
       redirect_to home_path
     end
+ render :partial => 'posts/author_profile', :locals => {:user => @user} if @user 
+ @page_title = :comments.l + " on " + @title 
+ if @comments.empty? 
+ :no_comments_found.l_with_args(:type => @commentable.class.to_s.underscore) 
+ else  
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ comment.id 
+ if comment.pending? 
+ end 
+ if comment.user 
+ link_to image_tag(comment.user.avatar_photo_url(:medium), :alt => comment.user.login, :class => "img-responsive"), user_path(comment.user), :rel => 'bookmark', :title => :users_profile.l(:user => comment.user.login), :class => 'list-group-item' 
+ user_path(comment.user) 
+ fa_icon "hand-o-right fw", :text => comment.user.login 
+ commentable_url(comment) 
+ fa_icon "calendar" 
+ comment.created_at 
+ I18n.l(comment.created_at, :format => :short_literal_date) 
+ if logged_in? && (current_user.admin? || current_user.moderator?) 
+ link_to fa_icon("pencil-square-o fw", :text => :edit.l), edit_commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :class => 'edit-via-ajax list-group-item' 
+ end 
+ if ( comment.can_be_deleted_by(current_user) ) 
+ link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item" 
+ end 
+ comment.comment.html_safe 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '50', :width => '50', :class => "img-responsive") 
+ if comment.author_url.blank? 
+ h comment.username 
+ else 
+ link_to fa_icon('hand-o-right', :text => h(comment.username)), h(comment.author_url) 
+ end 
+ commentable_url(comment) 
+ fa_icon "calendar fw" 
+ comment.created_at 
+ I18n.l(comment.created_at, :format => :short_literal_date) 
+ if logged_in? && (current_user.admin? || current_user.moderator?) 
+ link_to fa_icon("pencil-square-o fw", :text => :edit.l), edit_commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :class => 'edit-via-ajax list-group-item' 
+ end 
+ if ( comment.can_be_deleted_by(current_user) ) 
+ link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item" 
+ end 
+ comment.comment.html_safe 
+ end 
+
+
+end
+
+ 
+ end 
+ :add_your_comment.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if logged_in? || configatron.allow_anonymous_commenting 
+ bootstrap_form_for(:comment, :url => commentable_comments_path(commentable.class.to_s.tableize, commentable), :remote => true, :layout => :horizontal, :html => {:id => 'comment'}) do |f| 
+ f.text_area :comment, :rows => 5, :style => 'width: 99%', :class => "rich_text_editor", :help => :comment_character_limit.l 
+ if !logged_in? && configatron.recaptcha_pub_key && configatron.recaptcha_priv_key 
+ f.text_field :author_name 
+ f.text_field :author_email, :required => true 
+ f.form_group do 
+ f.check_box :notify_by_email, :label => :notify_me_of_follow_ups_via_email.l 
+ if commentable.respond_to?(:send_comment_notifications?) && !commentable.send_comment_notifications? 
+ :comment_notifications_off.l 
+ end 
+ end 
+ f.text_field :author_url, :label => :comment_web_site_label.l 
+ f.form_group do 
+ recaptcha_tags :ajax => true 
+ end 
+ end 
+ f.form_group :submit_group do 
+ f.primary :add_comment.l, data: { disable_with: "Please wait..." } 
+ end 
+ end 
+ else 
+ link_to :log_in_to_leave_a_comment.l, new_commentable_comment_path(commentable.class, commentable.id), :class => 'btn btn-primary' 
+ link_to :create_an_account.l, signup_path, :class => 'btn btn-primary' 
+ end 
+
+
+end
+
+   
+
   end
 
   def new

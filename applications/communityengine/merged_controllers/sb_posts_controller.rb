@@ -27,6 +27,38 @@ class SbPostsController < BaseController
     @posts = SbPost.with_query_options.where(conditions).page(params[:page])
 
     @users = User.distinct.where(:id => @posts.collect(&:user_id).uniq).to_a.index_by(&:id)
+ @section = 'forums' 
+ @page_title = search_posts_title 
+ box do  
+ link_to :forums.l, forums_path 
+ if params[:q].blank? 
+ @page_title 
+ else 
+ "#{:searching_for.l} '#{h params[:q]}'" 
+ end 
+ link_to fa_icon("rss"), all_sb_posts_path(:format => 'rss') 
+ :post_found.l(:count => @posts.size) 
+ for post in @posts do 
+ unless post == @posts.to_a.first 
+ end 
+ post.dom_id 
+ post.created_at.xmlschema 
+ time_ago_in_words(post.created_at) 
+ if post.user 
+ avatar_for post.user     
+ link_to truncate(h(post.username), :length => 15), user_path(post.user), :class => (post.topic.editable_by?(post.user) ? "admin" : nil) 
+ pluralize post.user.sb_posts_count, :post.l 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '32', :width => '32', :class => 'photo')         
+ truncate(h(post.username), :length => 15) 
+ end 
+ link_to(h(post.forum_name), forum_path(post.forum)) 
+ link_to h(post.topic_title), forum_topic_path(post.forum, post.topic) 
+ raw post.body 
+ end 
+ paginate @posts, :theme => 'bootstrap' 
+ end 
+
   end
 
   def search
@@ -96,6 +128,13 @@ class SbPostsController < BaseController
       format.html
       format.js
     end
+ bootstrap_form_for post, :url => sb_post_path(:forum_id => post.forum_id, :topic_id => post.topic_id, :id => post), :layout => :horizontal, :html => {:class => "submit-via-ajax", :id => "edit-form-"+post.id.to_s} do |f| 
+ f.text_area :body, :rows => 10, :id => "edit_post_body_" + post.id.to_s, :class => "rich_text_editor" 
+ ajax_spinner_for "edit-form-" + post.id.to_s 
+ submit_tag :save_changes.l, :class => 'btn btn-primary' 
+ link_to :cancel.l, '#', :class => 'btn btn-default editor-cancel', 'data-target' => "post-body-#{post.id}" 
+ end 
+
   end
 
   def update
