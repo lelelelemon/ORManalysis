@@ -18,11 +18,62 @@ class AdminController < BaseController
 
   def events
     @events = Event.order('start_time DESC').page(params[:page])
+
   end
 
   def messages
     @user = current_user
     @messages = Message.order('created_at DESC').page(params[:page]).per(50)
+ @page_title = :sent_messages.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :admin.l 
+ link_to_unless_current :features.l, homepage_features_path 
+ link_to_unless_current :categories.l, categories_path 
+ link_to_unless_current :metro_areas.l, metro_areas_path 
+ link_to_unless_current :events.l, admin_events_path 
+ link_to_unless_current :statistics.l, statistics_path 
+ link_to_unless_current :ads.l, ads_path 
+ link_to_unless_current :comments.l, admin_comments_path 
+ link_to_unless_current :tags.l, admin_tags_path 
+ link_to_unless_current :admin_pages.l, admin_pages_path 
+ link_to_unless_current :members.l, admin_users_path 
+ if @admin_nav_links.any? 
+ @admin_nav_links.each do |link| 
+ link_to link[:name], link[:url] 
+ end 
+ end 
+ link_to :cache_clear_link.l, admin_clear_cache_path, data: { confirm: :are_you_sure.l } 
+ end 
+
+
+end
+
+ 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title = :sent_messages.l 
+ if @messages.empty? 
+ :no_messages.l 
+ else 
+ @messages.each do |message| 
+ check_box_tag "delete[]", message.id 
+ :to.l 
+ link_to h(message.recipient.login), user_path(message.recipient) 
+ link_to image_tag( message.recipient.avatar_photo_url(:thumb), :alt => message.recipient.login , :class => 'thumbnail'), user_path(message.recipient), :title => :users_profile.l(:user => message.recipient.login) 
+ link_to h(message.subject), user_message_path(message.sender, message) 
+ time_ago_in_words_or_date(message.created_at) 
+ end 
+ submit_tag :delete_selected.l, :class => 'btn btn-danger' 
+ paginate @messages, :theme => 'bootstrap' 
+ end 
+
+
+end
+
+ 
+
   end
 
   def users
@@ -50,6 +101,71 @@ class AdminController < BaseController
     @search = Comment.search(params[:q])
     @comments = @search.result.distinct
     @comments = @comments.order("created_at DESC").page(params[:page]).per(100)
+ @page_title = 'Comments' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :admin.l 
+ link_to_unless_current :features.l, homepage_features_path 
+ link_to_unless_current :categories.l, categories_path 
+ link_to_unless_current :metro_areas.l, metro_areas_path 
+ link_to_unless_current :events.l, admin_events_path 
+ link_to_unless_current :statistics.l, statistics_path 
+ link_to_unless_current :ads.l, ads_path 
+ link_to_unless_current :comments.l, admin_comments_path 
+ link_to_unless_current :tags.l, admin_tags_path 
+ link_to_unless_current :admin_pages.l, admin_pages_path 
+ link_to_unless_current :members.l, admin_users_path 
+ if @admin_nav_links.any? 
+ @admin_nav_links.each do |link| 
+ link_to link[:name], link[:url] 
+ end 
+ end 
+ link_to :cache_clear_link.l, admin_clear_cache_path, data: { confirm: :are_you_sure.l } 
+ end 
+
+
+end
+
+ 
+ bootstrap_form_for @search, :url => admin_comments_path, :layout => :horizontal do |f| 
+ :search.l 
+ f.text_field :author_email_or_user_email_cont, :label => :email.l 
+ f.form_group :submit_group  do 
+ f.primary :search.l 
+ end 
+ end 
+ bootstrap_form_tag :url => delete_selected_comments_path, :method => :delete, :id => 'comments' do 
+ :delete.l 
+ :author.l 
+ :body_text.l 
+ :on_commentable.l 
+ :actions.l 
+ @comments.each do |comment| 
+ comment.id 
+ check_box_tag "delete[]", comment.id 
+ if comment.user 
+ link_to h(comment.user.login), user_path(comment.user) 
+ comment.user.email 
+ else 
+ link_to_unless(comment.author_url.blank?, h(comment.username), h(comment.author_url)){ h(comment.username) } 
+ comment.author_email 
+ "(#{comment.author_url})" 
+ end 
+ comment.comment.html_safe 
+ if comment.commentable_name.blank? 
+ link_to comment.commentable_type, commentable_url(comment) 
+ else 
+ link_to comment.commentable_name, commentable_url(comment) 
+ end 
+ link_to :delete.l, commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, :remote => true, :data => { :confirm => :are_you_sure_you_want_to_permanently_delete_this_comment.l }, :class => 'btn btn-danger' 
+ end 
+ if @comments.any? 
+ submit_tag :delete_selected.l, :class => 'btn btn-danger' 
+ end 
+ end 
+ paginate @comments, :theme => 'bootstrap' 
+
   end
 
   def activate_user

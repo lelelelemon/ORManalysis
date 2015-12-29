@@ -3,6 +3,30 @@ class PasswordResetsController < BaseController
   before_action :load_user_using_perishable_token, :only => [ :edit, :update ]
 
   def new
+ @page_title=:forgot_your_password.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :help.l 
+ :dont_have_an_account.l 
+ link_to :click_here_to_sign_up.l, signup_path 
+ :forgot_your_password.l 
+ link_to :click_here_to_retrieve_it.l, forgot_password_url 
+ :forgot_your_username.l 
+ link_to :click_here_to_retrieve_it.l, forgot_username_url 
+ end 
+
+
+end
+
+ 
+ bootstrap_form_tag :url => password_resets_path, :layout => :horizontal do |f| 
+ f.email_field :email, :label => :enter_your_email_address.l 
+ f.form_group :submit_group do 
+ f.primary :reset_my_password.l 
+ end 
+ end 
+
   end
 
   def create
@@ -21,6 +45,15 @@ class PasswordResetsController < BaseController
   end
 
   def edit
+ @page_title=:forgot_your_password.l 
+ bootstrap_form_tag :url => password_reset_path, :method => :put, :layout => :horizontal do |f| 
+ f.password_field :password 
+ f.password_field :password_confirmation, :label => :confirm_password.l 
+ f.form_group :submit_group do 
+ f.primary :reset_my_password.l 
+ end 
+ end 
+
   end
 
   def update

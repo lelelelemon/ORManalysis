@@ -38,6 +38,41 @@ class AlbumsController < BaseController
   # GET /albums/1/edit
   def edit
     @album = Album.find(params[:id])
+ @page_title = :edit_album.l 
+ widget do 
+ :album_tip.l :community_name => configatron.community_name 
+ end 
+ link_to :back.l, user_photo_manager_index_path(current_user), :class => 'btn btn-default' 
+ link_to :show.l, user_album_path(current_user, @album), :class => 'btn btn-primary' 
+ link_to :add_photos.l, new_user_album_photo_path(@album.user,@album), :class => 'btn btn-primary' 
+ link_to :delete.l, user_album_path(current_user, @album), :method => 'delete', data: { confirm: :are_you_sure.l }, :class => 'btn btn-danger' 
+ "Album Details" 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @album.new_record? 
+ url = user_albums_path(@user) 
+ object = @album 
+ button1 = :create_and_add_photos.l 
+ button2 = :create_album.l 
+ else 
+ url = user_album_path(@user, @album) 
+ object = [@user, @album] 
+ button1 = :edit_and_add_photos.l 
+ button2 = :edit_album.l 
+ end 
+ bootstrap_form_for object, :url => url, :layout => :horizontal do |f| 
+ f.text_field :title 
+ f.text_area :description 
+ hidden_field_tag :go_to 
+ f.primary button2, :onclick => "Form.getInputs(this.form, null, 'go_to')[0].value = 'only_create'" 
+ f.primary button1 
+ end 
+
+
+end
+
+ 
+
   end
 
   # POST /albums
@@ -55,7 +90,44 @@ class AlbumsController < BaseController
           format.html { redirect_to(new_user_album_photo_path(current_user, @album)) }
         end
       else
-        format.html { render :action => 'new' }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title= :new_album.l 
+ widget do  
+ :album_tip.l :community_name => configatron.community_name 
+ end 
+ link_to :back.l, user_photo_manager_index_path(current_user), :class => 'btn btn-default' 
+ 'Album Details' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @album.new_record? 
+ url = user_albums_path(@user) 
+ object = @album 
+ button1 = :create_and_add_photos.l 
+ button2 = :create_album.l 
+ else 
+ url = user_album_path(@user, @album) 
+ object = [@user, @album] 
+ button1 = :edit_and_add_photos.l 
+ button2 = :edit_album.l 
+ end 
+ bootstrap_form_for object, :url => url, :layout => :horizontal do |f| 
+ f.text_field :title 
+ f.text_area :description 
+ hidden_field_tag :go_to 
+ f.primary button2, :onclick => "Form.getInputs(this.form, null, 'go_to')[0].value = 'only_create'" 
+ f.primary button1 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+ }
       end 
     end
   end
@@ -74,7 +146,47 @@ class AlbumsController < BaseController
           format.html { redirect_to(new_user_album_photo_path(current_user, @album)) }
         end
       else
-        format.html { render :action => "edit" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title = :edit_album.l 
+ widget do 
+ :album_tip.l :community_name => configatron.community_name 
+ end 
+ link_to :back.l, user_photo_manager_index_path(current_user), :class => 'btn btn-default' 
+ link_to :show.l, user_album_path(current_user, @album), :class => 'btn btn-primary' 
+ link_to :add_photos.l, new_user_album_photo_path(@album.user,@album), :class => 'btn btn-primary' 
+ link_to :delete.l, user_album_path(current_user, @album), :method => 'delete', data: { confirm: :are_you_sure.l }, :class => 'btn btn-danger' 
+ "Album Details" 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @album.new_record? 
+ url = user_albums_path(@user) 
+ object = @album 
+ button1 = :create_and_add_photos.l 
+ button2 = :create_album.l 
+ else 
+ url = user_album_path(@user, @album) 
+ object = [@user, @album] 
+ button1 = :edit_and_add_photos.l 
+ button2 = :edit_album.l 
+ end 
+ bootstrap_form_for object, :url => url, :layout => :horizontal do |f| 
+ f.text_field :title 
+ f.text_area :description 
+ hidden_field_tag :go_to 
+ f.primary button2, :onclick => "Form.getInputs(this.form, null, 'go_to')[0].value = 'only_create'" 
+ f.primary button1 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+ }
         format.xml  { render :xml => @album.errors, :status => :unprocessable_entity }
       end
     end

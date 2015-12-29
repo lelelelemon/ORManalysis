@@ -13,10 +13,36 @@ class RsvpsController < BaseController
   # GET /rsvps/new
   def new
     @rsvp = @event.rsvps.new
+ @page_title= :rsvp_for.l + ' ' + @event.name 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for([@event, @rsvp], :layout => :horizontal) do |f| 
+ f.text_field :attendees_count, :label => :number_of_attendees.l 
+ f.primary :update.l 
+ end 
+
+
+end
+
+ 
+
   end
 
   # GET /posts/1;edit
   def edit
+ @page_title= :edit_rsvp_for.l + ' ' + @event.name 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for([@event, @rsvp], :layout => :horizontal) do |f| 
+ f.text_field :attendees_count, :label => :number_of_attendees.l 
+ f.primary :update.l 
+ end 
+
+
+end
+
+ 
+
   end
 
   # POST /rsvps
@@ -30,7 +56,25 @@ class RsvpsController < BaseController
         format.html { redirect_to [@event] }
         format.js
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title= :rsvp_for.l + ' ' + @event.name 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for([@event, @rsvp], :layout => :horizontal) do |f| 
+ f.text_field :attendees_count, :label => :number_of_attendees.l 
+ f.primary :update.l 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+ }
         format.js        
       end
     end
@@ -45,7 +89,25 @@ class RsvpsController < BaseController
         flash[:notice] = :your_rsvp_was_successfully_updated.l
         format.html { redirect_to [@event] }
       else
-        format.html { render :action => "edit" }  
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title= :edit_rsvp_for.l + ' ' + @event.name 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for([@event, @rsvp], :layout => :horizontal) do |f| 
+ f.text_field :attendees_count, :label => :number_of_attendees.l 
+ f.primary :update.l 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+ }  
       end
     end
   end

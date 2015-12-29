@@ -16,6 +16,12 @@ class PhotosController < BaseController
 
   def recent
     @photos = Photo.recent.page(params[:page])
+ @page_title=:recent_photos.l 
+ @photos.each do |photo| 
+ link_to image_tag(photo.photo.url(:medium)), user_photo_path(photo.user, photo), :class => 'thumbnail' 
+ end 
+ paginate @photos, :theme => 'bootstrap' 
+
   end
 
   def index
@@ -61,6 +67,15 @@ class PhotosController < BaseController
     respond_to do |format|
       format.js
     end
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
+ paginate @photos, :per_page => 20 
+
   end
 
   # GET /photos/1
@@ -79,6 +94,144 @@ class PhotosController < BaseController
     respond_to do |format|
       format.html # show.rhtml
     end
+ @page_title = @photo.display_name 
+ if @related.any? 
+ widget do 
+ :related_photos_all_members.l 
+ @related.each do |photo| 
+ link_to image_tag( photo.photo.url(:thumb), :class => "thumbnail"), user_photo_path(photo.user, photo), {:title => :photo_from_user.l_with_args(:photo_description => h(photo.description), :user => photo.user.login)} 
+ end 
+ end 
+ end 
+ if @is_current_user 
+ widget do 
+ link_to :make_this_my_profile_photo.l, change_profile_photo_user_path(@user, :photo_id => @photo), :method => :patch 
+ end 
+ link_to :back.l, user_photos_path(@user), :class => 'btn btn-default' 
+ link_to :edit.l, edit_user_photo_path(@user, @photo), :class => 'btn btn-warning' 
+ link_to :delete.l, user_photo_path(@user, @photo), :method => :delete, data: { confirm: :are_you_sure.l }, :class => 'btn btn-danger' 
+ end 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :author.l 
+ link_to tag(:img, :src => user.avatar_photo_url(:medium), "alt"=>"#{user.login}", :class => "img-responsive"), user_path(user), :title => "#{user.login}'s"+ :profile.l 
+ link_to user.login, user_path(user), :class => 'url' 
+ if user.featured_writer?       
+ :featured_writer.l 
+ end 
+ if user.description 
+ truncate_words( user.description, 12, '...') 
+ end 
+ :member_since.l+" #{I18n.l(user.created_at, :format => :short_published_date)}" 
+ if user.posts.count == 1 
+ link_to :singular_posts.l(:count => user.posts.count), user_posts_path(user) 
+ else 
+ link_to :plural_posts.l(:count => user.posts.count), user_posts_path(user) 
+ end 
+ link_to fa_icon('rss', :text => :rss_feed.l), user_posts_path(user, :format => :rss) 
+ end 
+
+
+end
+
+ 
+ if @photo.album 
+ "#{:album.l}: #{link_to @photo.album.title, user_album_path(@user, @photo.album)}".html_safe 
+ link_to "<img src='#{@photo.previous_in_album.photo.url(:thumb)}' class='thumbnail' /><br />&laquo; ".html_safe + :previous.l, user_photo_path(@user, @photo.previous_in_album) if @photo.previous_in_album 
+ link_to "<img src='#{@photo.next_in_album.photo.url(:thumb)}' class='thumbnail' /><br />".html_safe + :next.l + "&raquo;".html_safe, user_photo_path(@user, @photo.next_in_album) if @photo.next_in_album 
+ elsif @previous || @next 
+ link_to "<img src='#{@previous.photo.url(:thumb)}' class='thumbnail' /><br />&laquo; ".html_safe + :previous.l, user_photo_path(@user, @previous) if @previous 
+ link_to "<img src='#{@next.photo.url(:thumb)}' class='thumbnail' /><br />".html_safe + :next.l + "&raquo;".html_safe, user_photo_path(@user, @next) if @next 
+ end 
+ image_tag @photo.photo(:large), :class => "thumbnail" 
+ h @photo.description 
+ for tag in @photo.tags 
+ user_photos_path(@photo.user, :tag_name => tag.name) 
+ fa_icon "tag inverse", :text => tag.name 
+ end 
+ box :id => 'comments' do 
+ :photo_comments.l 
+ :add_your_comment.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if logged_in? || configatron.allow_anonymous_commenting 
+ bootstrap_form_for(:comment, :url => commentable_comments_path(commentable.class.to_s.tableize, commentable), :remote => true, :layout => :horizontal, :html => {:id => 'comment'}) do |f| 
+ f.text_area :comment, :rows => 5, :style => 'width: 99%', :class => "rich_text_editor", :help => :comment_character_limit.l 
+ if !logged_in? && configatron.recaptcha_pub_key && configatron.recaptcha_priv_key 
+ f.text_field :author_name 
+ f.text_field :author_email, :required => true 
+ f.form_group do 
+ f.check_box :notify_by_email, :label => :notify_me_of_follow_ups_via_email.l 
+ if commentable.respond_to?(:send_comment_notifications?) && !commentable.send_comment_notifications? 
+ :comment_notifications_off.l 
+ end 
+ end 
+ f.text_field :author_url, :label => :comment_web_site_label.l 
+ f.form_group do 
+ recaptcha_tags :ajax => true 
+ end 
+ end 
+ f.form_group :submit_group do 
+ f.primary :add_comment.l, data: { disable_with: "Please wait..." } 
+ end 
+ end 
+ else 
+ link_to :log_in_to_leave_a_comment.l, new_commentable_comment_path(commentable.class, commentable.id), :class => 'btn btn-primary' 
+ link_to :create_an_account.l, signup_path, :class => 'btn btn-primary' 
+ end 
+
+
+end
+
+ 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ comment.id 
+ if comment.pending? 
+ end 
+ if comment.user 
+ link_to image_tag(comment.user.avatar_photo_url(:medium), :alt => comment.user.login, :class => "img-responsive"), user_path(comment.user), :rel => 'bookmark', :title => :users_profile.l(:user => comment.user.login), :class => 'list-group-item' 
+ user_path(comment.user) 
+ fa_icon "hand-o-right fw", :text => comment.user.login 
+ commentable_url(comment) 
+ fa_icon "calendar" 
+ comment.created_at 
+ I18n.l(comment.created_at, :format => :short_literal_date) 
+ if logged_in? && (current_user.admin? || current_user.moderator?) 
+ link_to fa_icon("pencil-square-o fw", :text => :edit.l), edit_commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :class => 'edit-via-ajax list-group-item' 
+ end 
+ if ( comment.can_be_deleted_by(current_user) ) 
+ link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item" 
+ end 
+ comment.comment.html_safe 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '50', :width => '50', :class => "img-responsive") 
+ if comment.author_url.blank? 
+ h comment.username 
+ else 
+ link_to fa_icon('hand-o-right', :text => h(comment.username)), h(comment.author_url) 
+ end 
+ commentable_url(comment) 
+ fa_icon "calendar fw" 
+ comment.created_at 
+ I18n.l(comment.created_at, :format => :short_literal_date) 
+ if logged_in? && (current_user.admin? || current_user.moderator?) 
+ link_to fa_icon("pencil-square-o fw", :text => :edit.l), edit_commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :class => 'edit-via-ajax list-group-item' 
+ end 
+ if ( comment.can_be_deleted_by(current_user) ) 
+ link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item" 
+ end 
+ comment.comment.html_safe 
+ end 
+
+
+end
+
+ 
+ more_comments_links(@photo) 
+ end 
+
   end
 
   # GET /photos/new
@@ -95,6 +248,49 @@ class PhotosController < BaseController
   def edit
     @photo = Photo.find(params[:id])
     @user = @photo.user
+ @page_title= :editing_photo.l 
+ widget do 
+ :help.l 
+ :tags_are_keywords_you_use_to_organize_your_photos.l 
+ end 
+ link_to :back.l, user_photos_path(@user), :class => 'btn btn-default' 
+ link_to :show.l, user_photo_path(@user, @photo), :class => 'btn btn-primary' 
+ link_to :delete.l, user_photo_path(@user, @photo), :method => :delete, data: { confirm: :are_you_sure_you_want_to_delete_this_photo.l }, :class => 'btn btn-danger' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @photo.new_record? 
+ object = @photo 
+ url = user_photos_path 
+ else 
+ object = [@user, @photo] 
+ url = user_photo_path(@user, @photo) 
+ end 
+ bootstrap_form_for object, :url => url, :layout => :horizontal  do |f| 
+ if @photo.photo_file_name.blank? 
+ f.file_field :photo 
+ :megabyte_upload_limit.l(:count => configatron.photo.validation_options.max_size) 
+ else 
+ image_tag( @photo.photo.url(:large), :id => 'photo', :class => 'thumbnail' ) 
+ end 
+ f.text_field :tag_list, :autocomplete => "off", :label => :tags.l, :help => :optional_keywords_describing_this_photo_separated_by_commas.l 
+ content_for :end_javascript do 
+ tag_auto_complete_field 'photo_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
+ end 
+ f.text_field :name 
+ f.text_area :description, :rows => 5 
+ unless params[:album_id] || current_user.albums.empty? 
+ f.select(:album_id, current_user.albums.collect {|album| [album.title, album.id ] }, { :include_blank => true }) 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
   end
 
   # POST /photos
@@ -150,7 +346,55 @@ class PhotosController < BaseController
       if @photo.update_attributes(photo_params)
         format.html { redirect_to user_photo_url(@photo.user, @photo) }
       else
-        format.html { render :action => "edit" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title= :editing_photo.l 
+ widget do 
+ :help.l 
+ :tags_are_keywords_you_use_to_organize_your_photos.l 
+ end 
+ link_to :back.l, user_photos_path(@user), :class => 'btn btn-default' 
+ link_to :show.l, user_photo_path(@user, @photo), :class => 'btn btn-primary' 
+ link_to :delete.l, user_photo_path(@user, @photo), :method => :delete, data: { confirm: :are_you_sure_you_want_to_delete_this_photo.l }, :class => 'btn btn-danger' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @photo.new_record? 
+ object = @photo 
+ url = user_photos_path 
+ else 
+ object = [@user, @photo] 
+ url = user_photo_path(@user, @photo) 
+ end 
+ bootstrap_form_for object, :url => url, :layout => :horizontal  do |f| 
+ if @photo.photo_file_name.blank? 
+ f.file_field :photo 
+ :megabyte_upload_limit.l(:count => configatron.photo.validation_options.max_size) 
+ else 
+ image_tag( @photo.photo.url(:large), :id => 'photo', :class => 'thumbnail' ) 
+ end 
+ f.text_field :tag_list, :autocomplete => "off", :label => :tags.l, :help => :optional_keywords_describing_this_photo_separated_by_commas.l 
+ content_for :end_javascript do 
+ tag_auto_complete_field 'photo_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
+ end 
+ f.text_field :name 
+ f.text_area :description, :rows => 5 
+ unless params[:album_id] || current_user.albums.empty? 
+ f.select(:album_id, current_user.albums.collect {|album| [album.title, album.id ] }, { :include_blank => true }) 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+ }
       end
     end
   end

@@ -4,6 +4,48 @@ class MetroAreasController < BaseController
 
   def index
     @metro_areas = MetroArea.includes(:country).order("countries.name, metro_areas.name DESC").references(:countries).page(params[:page])
+ @page_title = :metro_areas.l 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :admin.l 
+ link_to_unless_current :features.l, homepage_features_path 
+ link_to_unless_current :categories.l, categories_path 
+ link_to_unless_current :metro_areas.l, metro_areas_path 
+ link_to_unless_current :events.l, admin_events_path 
+ link_to_unless_current :statistics.l, statistics_path 
+ link_to_unless_current :ads.l, ads_path 
+ link_to_unless_current :comments.l, admin_comments_path 
+ link_to_unless_current :tags.l, admin_tags_path 
+ link_to_unless_current :admin_pages.l, admin_pages_path 
+ link_to_unless_current :members.l, admin_users_path 
+ if @admin_nav_links.any? 
+ @admin_nav_links.each do |link| 
+ link_to link[:name], link[:url] 
+ end 
+ end 
+ link_to :cache_clear_link.l, admin_clear_cache_path, data: { confirm: :are_you_sure.l } 
+ end 
+
+
+end
+
+ 
+ :name.l 
+ :state.l 
+ :country.l 
+ :actions.l 
+ for metro_area in @metro_areas 
+ link_to metro_area.name, metro_area 
+ metro_area.state.name if metro_area.state 
+ metro_area.country.name 
+ link_to :show.l, metro_area_path(metro_area), :class => 'btn btn-default' 
+ link_to :edit.l, edit_metro_area_path(metro_area), :class => 'btn btn-warning' 
+ link_to :delete.l, metro_area_path(metro_area), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ end 
+ paginate @metro_areas, :theme => 'bootstrap' 
+ link_to :new_metro_area.l, new_metro_area_path, :class => 'btn btn-success' 
+
   end
   
   def show
@@ -17,10 +59,48 @@ class MetroAreasController < BaseController
   
   def new
     @metro_area = MetroArea.new
+ @page_title= :new_metro_area.l 
+ link_to :back.l, metro_areas_path, :class => 'btn btn-default' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for @metro_area, :layout => :horizontal do |f| 
+ f.collection_select :country_id, Country.order('name ASC'), :id, :name 
+ f.collection_select :state_id, State.all, :id, :name, :include_blank => true 
+ f.text_field :name 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
   end
   
   def edit
     @metro_area = MetroArea.find(params[:id])
+ @page_title= :editing_metro_area.l 
+ link_to :back.l, metro_areas_path, :class => 'btn btn-default' 
+ link_to :show.l, metro_area_path(@metro_area), :class => 'btn btn-primary' 
+ link_to :delete.l, metro_area_path(@metro_area), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for @metro_area, :layout => :horizontal do |f| 
+ f.collection_select :country_id, Country.order('name ASC'), :id, :name 
+ f.collection_select :state_id, State.all, :id, :name, :include_blank => true 
+ f.text_field :name 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
   end
 
   def create
@@ -36,7 +116,30 @@ class MetroAreasController < BaseController
           render :nothing => true, :status => "201 Created"
         end
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title= :new_metro_area.l 
+ link_to :back.l, metro_areas_path, :class => 'btn btn-default' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for @metro_area, :layout => :horizontal do |f| 
+ f.collection_select :country_id, Country.order('name ASC'), :id, :name 
+ f.collection_select :state_id, State.all, :id, :name, :include_blank => true 
+ f.text_field :name 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+ }
         format.xml  { render :xml => @metro_area.errors.to_xml }
       end
     end
@@ -50,7 +153,32 @@ class MetroAreasController < BaseController
         format.html { redirect_to metro_area_url(@metro_area) }
         format.xml  { render :nothing => true }
       else
-        format.html { render :action => "edit" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ @page_title= :editing_metro_area.l 
+ link_to :back.l, metro_areas_path, :class => 'btn btn-default' 
+ link_to :show.l, metro_area_path(@metro_area), :class => 'btn btn-primary' 
+ link_to :delete.l, metro_area_path(@metro_area), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ bootstrap_form_for @metro_area, :layout => :horizontal do |f| 
+ f.collection_select :country_id, Country.order('name ASC'), :id, :name 
+ f.collection_select :state_id, State.all, :id, :name, :include_blank => true 
+ f.text_field :name 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
+
+
+end
+
+ }
         format.xml  { render :xml => @metro_area.errors.to_xml }        
       end
     end
