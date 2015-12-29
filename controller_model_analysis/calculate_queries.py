@@ -6,11 +6,14 @@ base_path = "../applications/%s/results/"%sys.argv[1]
 txn = []
 lcnt = []
 total = []
+total_min = 100
+total_max = 0
 view = []
 reads = []
 writes = []
 tables = {}
 tbl_fields = {}
+table_queries = {}
 #key: tablename.field
 tbl_fields_type = {}
 
@@ -28,6 +31,7 @@ for line in tablename_fp:
 	tables[line]["JOIN"] = 0
 	tables[line]["GROUP"] = 0
 	tbl_fields[line] = {}
+	table_queries[line] = []
 
 tables["UNKNOWN"] = {}
 tables["UNKNOWN"]["SELECT"] = 0
@@ -38,6 +42,7 @@ tables["UNKNOWN"]["INSERT"] = 0
 tables["UNKNOWN"]["TXN"] = 0
 tables["UNKNOWN"]["JOIN"] = 0
 tables["UNKNOWN"]["GROUP"] = 0
+table_queries["UNKNOWN"] = []
 
 for subdir, folders, files in os.walk(base_path):
 	for fn in files:
@@ -62,7 +67,14 @@ for subdir, folders, files in os.walk(base_path):
 				line = line.replace("\n","")
 				chs = line.split(" ")
 				if "query in total:" in line:
+					t = int(chs[-1], 10)
+					if t == 0:
+						print "ZERO: %s"%subdir
 					total.append(int(chs[-1], 10))
+					if t < total_min:
+						total_min = t
+					if t > total_max:
+						total_max = t
 				elif "query in view:" in line:
 					view.append(int(chs[-1], 10))
 				elif "read queries:" in line:
@@ -81,17 +93,38 @@ for subdir, folders, files in os.walk(base_path):
 						else:
 							tbl_fields[table][field] = tbl_fields[table][field] + 1
 				elif len(line) > 0:
-					for c in chs:
-						if "<" in c and ">" in c:
-							info = c.split(",")
-							table = info[0].replace("<","")
-							op = info[1].replace(">","")
-							if len(table) == 0:
-								table = "UNKNOWN"
-							if tables.has_key(table):
-								tables[table][op] = tables[table][op] + 1
+					if "<" in line and ">" in line:
+						for c in chs:
+							if "<" in c and ">" in c:
+								info = c.split(",")
+								if len(info) == 2:
+									table = info[0].replace("<","")
+									op = info[1].replace(">","")
+									if len(table) == 0:
+										table = "UNKNOWN"
+									if tables.has_key(table):
+										tables[table][op] = tables[table][op] + 1
+										query = line[0:line.index("<")-1]
+										if query not in table_queries[table]:
+											table_queries[table].append(query)
 						
+						
+
+#print "Average txn length: %f"%(float(sum(lcnt)) / float(len(lcnt)))
+
+print "Average query in total: %f"%(float(sum(total)) / float(len(total)))
+print "\tmin: %d, max: %d"%(total_min, total_max)
+
+print "Average query in view: %f"%(float(sum(view)) / float(len(view)))
+
+print "Average read queries: %f"%(float(sum(reads)) / float(len(view)))
+
+print "Avery write queries: %f"%(float(sum(writes)) / float(len(view)))
+
+print "Controller functions: %d"%len(total)
+
 for k,v in tables.items():
+	print "===================="
 	print "Table %s:"%k
 	for k1, v1 in v.items():
 		if v1 > 0:
@@ -100,16 +133,9 @@ for k,v in tables.items():
 		for k1, v1 in tbl_fields[k].items():
 			if v1 > 0:
 				f = "%s.%s"%(k, k1)
-				print "\t\tfield %s (type: %s) accessed %d times"%(k1, tbl_fields_type[f], v1)
+				print "\t\tfield %s\t[type: %s] accessed %d times"%(k1, tbl_fields_type[f], v1)
+	print "Have %d types of queries:"%(len(table_queries[k]))
+	for q in table_queries[k]:
+		print "\t%s"%q
+	print ""
 
-print "Average txn length: %f"%(float(sum(lcnt)) / float(len(lcnt)))
-
-print "Average query in total: %f"%(float(sum(total)) / float(len(total)))
-
-print "Average query in view: %f"%(float(sum(view)) / float(len(view)))
-
-print "Average read queries: %f"%(float(sum(reads)) / float(len(view)))
-
-print "Avery write queries: %f"%(float(sum(writes)) / float(len(view)))
-
-print "Controller functions: %d"%len(total) 

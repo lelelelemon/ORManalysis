@@ -181,12 +181,12 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				if n.getInView and n.getClosureStack.length == 1
 				else #n.getInView == false or n.getClosureStack.length > 1
 					graph_write($graph_file, " (c)")
-					n.getClosureStack.each do |cl|
-						q = traceback_data_dep(cl)
-						if q != nil
-							graph_write($graph_file, " [#{q.getLabel}]")
-						end
-					end
+					#n.getClosureStack.each do |cl|
+					#	q = traceback_data_dep(cl)
+					#	if q != nil
+					#		graph_write($graph_file, " [#{q.getLabel}]")
+					#	end
+					#end
 				end
 			end
 			if ["SELECT","GROUP","JOIN"].include?n.getInstr.getCallHandler.getQueryType

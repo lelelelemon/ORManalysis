@@ -69,7 +69,7 @@ def handle_single_dataflow_file(item, class_name)
 				#$cfg_map[func_name] = $cur_cfg
 				m = find_method(class_name, func_name)
 				if m == nil
-					puts "Function not found: #{class_name} . #{func_name}"
+					#puts "Function not found: #{class_name} . #{func_name}"
 				else
 						m.setCFG($cur_cfg)
 				end

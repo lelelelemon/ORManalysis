@@ -411,27 +411,13 @@ end
     if @post.send_to(params[:emails], params[:message], (current_user || nil))
       flash[:notice] = "Your message has been sent."
       respond_to do |format|
-        format.html {ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
 
-
-
-end
-
-}
-        format.js
       end
     else
       flash[:error] = "You entered invalid addresses: "+ @post.invalid_emails.join(', ')+". Please correct these and try again."
 
       respond_to do |format|
-        format.html {ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
 
-
-
-end
-
-, :status => 500}
-        format.js
       end
     end
   end

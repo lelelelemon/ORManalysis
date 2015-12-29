@@ -46,7 +46,7 @@ class FavoritesController < BaseController
 end
 
  
- end 
+# end 
  paginate @favorites, :theme => 'bootstrap'      
 
   end

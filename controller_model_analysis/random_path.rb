@@ -12,6 +12,8 @@ class Txn_end_node < INode
 	end
 end
 
+$processed_bb_list = Array.new
+
 def randomp_handle_single_call_node(start_class, start_function, class_handler, call)
 	callerv = call.caller
 	#callerv_name = call.findCaller(start_class, start_function)
@@ -35,24 +37,27 @@ def randomp_handle_single_call_node(start_class, start_function, class_handler, 
 			$node_list.push($cur_node)
 		end
 
-		temp_actions = Array.new
-		if trigger_save?(call)
-			temp_actions.push("before_save")
-			temp_actions.push("before_validation")
-		end
-		if trigger_create?(call)
-			temp_actions.push("before_create")
-		end
-		last_cfg = nil
-		temp_node = $cur_node
-		temp_actions.each do |action|
-			temp_name = "#{callerv.getName}.#{action}"
-			if $non_repeat_list.include?(temp_name) == false
-				$non_repeat_list.push(temp_name)
-				last_node = randomp_trace_flow(callerv.getName, action, "", "")
-				temp_node.addChild(last_node)
+		if callerv != nil
+			temp_actions = Array.new
+			if trigger_save?(call)
+				temp_actions.push("before_save")
+				temp_actions.push("before_validation")
+			end
+			if trigger_create?(call)
+				temp_actions.push("before_create")
+			end
+			last_cfg = nil
+			temp_node = $cur_node
+			temp_actions.each do |action|
+				temp_name = "#{callerv.getName}.#{action}"
+				if $non_repeat_list.include?(temp_name) == false
+					$non_repeat_list.push(temp_name)
+					last_node = randomp_trace_flow(callerv.getName, action, "", "")
+					temp_node.addChild(last_node)
+				end
 			end
 		end
+		
 		if trigger_save?(call) or trigger_create?(call)
 			node = Txn_end_node.new
 			$cur_node.addChild(node)
@@ -95,7 +100,7 @@ def randomp_handle_single_instr(start_class, start_function, class_handler, func
 				if call.caller != nil
 					caller_name = call.caller.getName
 				end
-				puts "\t\t\tHandle call instr(#{$ins_cnt-1}): #{call.getObjName}(#{caller_name}) -> #{instr.getFuncname}"
+				#puts "\t\t\tHandle call instr(#{$ins_cnt-1}): #{call.getObjName}(#{caller_name}) -> #{instr.getFuncname}"
 				instr.setCallHandler(call)
 				if instr.getResolvedCaller.include?("self")
 					instr.setResolvedCaller(start_class)
@@ -116,9 +121,9 @@ def randomp_handle_single_instr(start_class, start_function, class_handler, func
 			$in_loop.push(true)
 		end
 		$closure_stack.push($cur_node)
-		puts "\tclosure begin:"
+		#puts "\tclosure begin:"
 		last_node = randomp_handle_single_cfg(start_class, start_function, class_handler, function_handler, cl)
-		puts "\tclosure end"
+		#puts "\tclosure end"
 		$closure_stack.pop
 		if cl.getViewClosure
 			$in_view = false
@@ -136,7 +141,7 @@ def randomp_handle_single_bb(start_class, start_function, class_handler, functio
 		#TODO: How to deal with empty instr? should be a Call_instr
 		bb.addInstr(empty_instr)
 	end
-	puts "\t\tHandle BB #{bb.getIndex}"
+	#puts "\t\tHandle BB #{bb.getIndex}"
 	bb.getInstr.each do |instr|
 		#Assume every randomp_handle_single_instr call will set $cur_node to the current instr node
 		randomp_handle_single_instr(start_class, start_function, class_handler, function_handler, instr)
@@ -154,6 +159,11 @@ def randomp_handle_single_cfg(start_class, start_function, class_handler, functi
 	
 	while temp_BB.getOutgoings.length > 0 do
 		bb_list.push(temp_BB)
+		if $processed_bb_list.include?(temp_BB)
+			return $cur_node
+		end
+		$processed_bb_list.push(temp_BB)
+
 		#puts "Rand seed: #{(DateTime.now.strftime('%s')).to_i}"
 		#XXX: I don't know why in the dataflow the first BB can always go to the last BB, even no branch
 		#To make sure the function gets executed, if BB.index == 1, only select from the last outgoing
@@ -198,7 +208,7 @@ def randomp_trace_flow(start_class, start_function, params, returnv)
 	if function_handler == nil
 		return nil
 	end
-	puts "Function: #{start_class}.#{start_function}"
+	#puts "Function: #{start_class}.#{start_function}"
 
 	before_filter_name = "#{start_class}.before_filter"
 	if $non_repeat_list.include?(before_filter_name) == false
@@ -281,6 +291,7 @@ def random_trace(start_class, start_function)
 		$node_list = Array.new
 		$root = nil
 		randomp_trace_flow(start_class, start_function, "", "")
+=begin
 		$node_list.each do |n|
 			if n.instance_of?Txn_begin_node 
 				puts "=====transaction begin====="
@@ -302,4 +313,5 @@ def random_trace(start_class, start_function)
 				end
 			end				
 		end
+=end
 end
