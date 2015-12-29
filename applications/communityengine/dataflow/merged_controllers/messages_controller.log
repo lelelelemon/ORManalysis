@@ -1,1448 +1,3 @@
-SET IRMethod, name = index
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 4 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: 
-		 7: %self[2.0,] %v_3[2.6,] @cur_url[] 
-		 8: 
-		 9: 
-		 10: %self[2.0,] %v_4[2.9,] @title[] 
-		 11: 
-		 12: (Message) 
-		 13: %v_5->new %v_5[2.12,] 
-		 14: %self[2.0,] %v_6[2.13,] @new_message[] 
-		 15: 
-		 16: %self[2.0,] @direction[] 
-		 17: 
-		 18: %self[2.0,] @user[] 
-		 19: %v_7->undeleted_received_messages %v_7[2.18,] 
-		 20: %self[2.0,] %v_8[2.19,] @messages[] 
-		 21: 
-		 22: %self->params %self[2.0,] 
-		 23: %v_9[2.22,] 
-		 24: BRANCH %v_10[2.23,] 
-BB 3
-	outgoing: 6 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,] @new_message[2.14,] 
-		 2: %self->params %self[2.0,] 
-		 3: %v_12[3.2,] 
-		 4: %v_13[3.3,] %v_11[3.1,] 
-		 5: RETURN %v_13[3.3,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: RETURN 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = sent
-BB 1
-	outgoing: 3 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: 
-		 7: %self[2.0,] %v_3[2.6,] @cur_url[] 
-		 8: 
-		 9: 
-		 10: %self[2.0,] %v_4[2.9,] @title[] 
-		 11: 
-		 12: %self[2.0,] @direction[] 
-		 13: 
-		 14: %self[2.0,] @user[] 
-		 15: %v_5->undeleted_sent_messages %v_5[2.14,] 
-		 16: %self[2.0,] %v_6[2.15,] @messages[] 
-		 17: 
-		 18: (Message) 
-		 19: %v_7->new %v_7[2.18,] 
-		 20: %self[2.0,] %v_8[2.19,] @new_message[] 
-		 21: 
-		 22: %self->ruby_code_from_view %self[2.0,] 
-		 23: %v_9->ruby_code_from_view %self[2.0,] %v_9[2.22,] 
-CLOSURE BEGIN: @title[2.10,] @direction[2.12,] @user[2.14,] @new_message[2.20,] @messages[2.16,] @cur_url[2.7,] 
-BB 1
-	outgoing: 18 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-BB 3
-	outgoing: 4 5 16 
-	datadep: 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,] @direction[] 
-		 2: %cl_1_3[3.1,] 
-		 3: BRANCH %cl_1_4[3.2,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 5
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-BB 6
-	outgoing: 7 8 16 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,] @direction[3.1,3.1,] 
-		 2: %cl_1_6[6.1,] 
-		 3: BRANCH %cl_1_7[6.2,] 
-BB 7
-	outgoing: 9 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 8
-	outgoing: 9 
-	datadep: 
-	instructions:
-		 0: 
-BB 9
-	outgoing: 10 11 16 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @messages[] 
-		 2: %cl_1_9->any? %cl_1_9[9.1,] 
-		 3: BRANCH %cl_1_10[9.2,] 
-BB 10
-	outgoing: 15 16 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self->batch_delete_messages_path %self[2.0,2.0,2.0,2.0,] 
-		 2: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] %cl_1_11[10.1,] 
-CLOSURE BEGIN: @direction[] @new_message[] @messages[9.1,] 
-BB 1
-	outgoing: 12 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-BB 3
-	outgoing: 4 5 10 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: %cl_2_4[3.2,] 
-		 4: %self->check_box_tag %cl_2_3[3.1,] %self[2.0,] %cl_2_5[3.3,] 
-		 5: 
-		 6: %self[2.0,] @direction[] 
-		 7: %cl_2_7[3.6,] 
-		 8: BRANCH %cl_2_8[3.7,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 5
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_2_10[5.0,] 
-BB 6
-	outgoing: 7 8 10 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,] @direction[3.6,3.6,] 
-		 2: %cl_2_11[6.1,] 
-		 3: BRANCH %cl_2_12[6.2,] 
-BB 7
-	outgoing: 9 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 8
-	outgoing: 9 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_2_14[8.0,] 
-BB 9
-	outgoing: 10 12 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @messages[] 
-		 2: %cl_2_15->includes %cl_2_15[9.1,] 
-		 3: %cl_2_16->each %cl_2_16[9.2,] %self[2.0,2.0,2.0,2.0,] 
-CLOSURE BEGIN: @direction[6.1,] @messages[9.1,] 
-BB 1
-	outgoing: 12 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-BB 3
-	outgoing: 4 5 10 
-	datadep: 2 
-	instructions:
-		 0: 
-		 1: message->has_been_read? message[2.2,] 
-		 2: BRANCH %cl_3_3[3.1,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 5
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_3_5[5.0,] 
-BB 6
-	outgoing: 7 8 10 
-	datadep: 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: 
-		 2: message->short_id message[2.2,2.2,] 
-		 3: %cl_3_6[6.1,] %cl_3_7[6.2,] 
-		 4: %self->check_box_tag %self[2.0,2.0,] %cl_3_8[6.3,] 
-		 5: 
-		 6: %self[2.0,2.0,] @direction[] 
-		 7: %cl_3_10[6.6,] 
-		 8: BRANCH %cl_3_11[6.7,] 
-BB 7
-	outgoing: 9 10 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: message->author message[2.2,2.2,] 
-		 2: %cl_3_12->username %cl_3_12[7.1,] 
-		 3: 
-		 4: message->author message[2.2,2.2,] 
-		 5: %cl_3_14->username %cl_3_14[7.4,] 
-		 6: 
-BB 8
-	outgoing: 9 10 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: message->recipient message[2.2,2.2,] 
-		 2: %cl_3_16->username %cl_3_16[8.1,] 
-		 3: 
-		 4: message->recipient message[2.2,2.2,] 
-		 5: %cl_3_18->username %cl_3_18[8.4,] 
-		 6: %cl_3_19[8.5,] 
-BB 9
-	outgoing: 10 12 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: message->created_at message[2.2,2.2,2.2,2.2,] 
-		 2: %self->time_ago_in_words_label %self[2.0,2.0,2.0,2.0,] %cl_3_20[9.1,] 
-		 3: 
-		 4: message->short_id message[2.2,2.2,2.2,2.2,] 
-		 5: 
-		 6: message->subject message[2.2,2.2,2.2,2.2,] 
-		 7: RETURN %cl_3_23[9.6,] 
-BB 10
-	outgoing: 12 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_3_24[10.0,] 
-		 2: RETURN %cl_3_25[10.1,] 
-BB 12
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 4: 
-		 5: 
-		 6: %self->submit_tag %self[2.0,2.0,2.0,2.0,] %cl_2_18[9.5,] 
-		 7: RETURN %cl_2_19[9.6,] 
-BB 10
-	outgoing: 12 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_2_20[10.0,] 
-		 2: RETURN %cl_2_21[10.1,] 
-BB 12
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 3: 
-BB 11
-	outgoing: 12 13 16 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @direction[6.1,6.1,] 
-		 2: %cl_1_13[11.1,] 
-		 3: BRANCH %cl_1_14[11.2,] 
-BB 12
-	outgoing: 14 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 13
-	outgoing: 14 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_1_16[13.0,] 
-BB 14
-	outgoing: 15 
-	datadep: 13 12 
-	instructions:
-		 0: %cl_1_15[13.1,12.0,] 
-BB 15
-	outgoing: 16 18 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @new_message[] 
-		 2: 
-		 3: %self->form_for %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] %cl_1_18[15.2,] %cl_1_17[15.1,] 
-CLOSURE BEGIN: @direction[11.1,] @new_message[15.1,] @messages[9.1,] 
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-BB 3
-	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,] @new_message[] 
-		 2: %self->error_messages_for %self[2.0,] %cl_4_3[3.1,] 
-		 3: 
-		 4: 
-		 5: 
-		 6: %cl_4_6[3.5,] 
-		 7: f->label f[2.2,] %cl_4_5[3.4,] %cl_4_7[3.6,] 
-		 8: 
-		 9: 
-		 10: %cl_4_9[3.9,] 
-		 11: f->text_field %cl_4_10[3.10,] f[2.2,] 
-		 12: 
-		 13: 
-		 14: 
-		 15: %cl_4_13[3.14,] 
-		 16: f->label %cl_4_14[3.15,] f[2.2,] %cl_4_12[3.13,] 
-		 17: 
-		 18: 
-		 19: 
-		 20: %cl_4_17[3.19,] %cl_4_16[3.18,] 
-		 21: f->text_field %cl_4_18[3.20,] f[2.2,] 
-		 22: 
-		 23: 
-		 24: 
-		 25: %cl_4_21[3.24,] 
-		 26: f->label %cl_4_20[3.23,] f[2.2,] %cl_4_22[3.25,] 
-		 27: 
-		 28: 
-		 29: 
-		 30: %cl_4_25[3.29,] %cl_4_24[3.28,] 
-		 31: f->text_area %cl_4_26[3.30,] f[2.2,] 
-		 32: 
-		 33: 
-		 34: %self->submit_tag %cl_4_28[3.33,] %self[2.0,] 
-		 35: RETURN %cl_4_29[3.34,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_4_30[4.0,] 
-		 2: RETURN %cl_4_31[4.1,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 4: RETURN %cl_1_19[15.3,] 
-BB 16
-	outgoing: 18 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_1_20[16.0,] 
-		 2: RETURN %cl_1_21[16.1,] 
-BB 18
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 24: RETURN %v_10[2.23,] 
-BB 3
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = create
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 4 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: 
-		 7: %self[2.0,] %v_3[2.6,] @cur_url[] 
-		 8: 
-		 9: 
-		 10: %self[2.0,] %v_4[2.9,] @title[] 
-		 11: 
-		 12: (Message) 
-		 13: %self->message_params %self[2.0,] 
-		 14: %v_5->new %v_5[2.12,] %v_6[2.13,] 
-		 15: %self[2.0,] %v_7[2.14,] @new_message[] 
-		 16: 
-		 17: @new_message[2.15,] 
-		 18: %self[2.0,] @user[] 
-		 19: %v_9->id %v_9[2.18,] 
-		 20: %v_8[2.17,] %v_10[2.19,] 
-		 21: 
-		 22: %self[2.0,] @direction[] 
-		 23: 
-		 24: @user[2.18,] 
-		 25: %v_11->undeleted_received_messages %v_11[2.24,] 
-		 26: %self[2.0,] %v_12[2.25,] @messages[] 
-		 27: 
-		 28: @new_message[2.15,2.17,] 
-		 29: %v_13->save %v_13[2.28,] 
-		 30: BRANCH %v_14[2.29,] 
-BB 3
-	outgoing: 6 
-	datadep: 2 2 2 
-	instructions:
-		 0: 
-		 1: %self->flash %self[2.0,] 
-		 2: 
-		 3: %self[2.0,] @new_message[2.15,2.17,2.28,] 
-		 4: %v_17->recipient %v_17[3.3,] 
-		 5: %v_18->username %v_18[3.4,] 
-		 6: %v_19->to_s %v_19[3.5,] 
-		 7: %v_16[3.2,] %v_20[3.6,] 
-		 8: 
-		 9: %v_21[3.7,] %v_22[3.8,] 
-		 10: %v_15[3.1,] %v_23[3.9,] 
-		 11: 
-		 12: 
-		 13: %self->redirect_to %v_24[3.12,] %self[2.0,] 
-		 14: RETURN %v_25[3.13,] 
-BB 4
-	outgoing: 6 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: %self->ruby_code_from_view %self[2.0,] 
-		 2: %v_27->ruby_code_from_view %self[2.0,] %v_27[4.1,] 
-CLOSURE BEGIN: @title[2.10,] @direction[2.22,] @user[2.18,] @new_message[3.3,] @messages[2.26,] @cur_url[2.7,] 
-BB 1
-	outgoing: 18 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-BB 3
-	outgoing: 4 5 16 
-	datadep: 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,] @direction[] 
-		 2: %cl_1_3[3.1,] 
-		 3: BRANCH %cl_1_4[3.2,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 5
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-BB 6
-	outgoing: 7 8 16 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,] @direction[3.1,3.1,] 
-		 2: %cl_1_6[6.1,] 
-		 3: BRANCH %cl_1_7[6.2,] 
-BB 7
-	outgoing: 9 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 8
-	outgoing: 9 
-	datadep: 
-	instructions:
-		 0: 
-BB 9
-	outgoing: 10 11 16 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @messages[] 
-		 2: %cl_1_9->any? %cl_1_9[9.1,] 
-		 3: BRANCH %cl_1_10[9.2,] 
-BB 10
-	outgoing: 15 16 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self->batch_delete_messages_path %self[2.0,2.0,2.0,2.0,] 
-		 2: %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] %cl_1_11[10.1,] 
-CLOSURE BEGIN: @direction[] @new_message[] @messages[9.1,] 
-BB 1
-	outgoing: 12 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-BB 3
-	outgoing: 4 5 10 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: %cl_2_4[3.2,] 
-		 4: %self->check_box_tag %cl_2_3[3.1,] %self[2.0,] %cl_2_5[3.3,] 
-		 5: 
-		 6: %self[2.0,] @direction[] 
-		 7: %cl_2_7[3.6,] 
-		 8: BRANCH %cl_2_8[3.7,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 5
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_2_10[5.0,] 
-BB 6
-	outgoing: 7 8 10 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,] @direction[3.6,3.6,] 
-		 2: %cl_2_11[6.1,] 
-		 3: BRANCH %cl_2_12[6.2,] 
-BB 7
-	outgoing: 9 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 8
-	outgoing: 9 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_2_14[8.0,] 
-BB 9
-	outgoing: 10 12 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @messages[] 
-		 2: %cl_2_15->includes %cl_2_15[9.1,] 
-		 3: %cl_2_16->each %cl_2_16[9.2,] %self[2.0,2.0,2.0,2.0,] 
-CLOSURE BEGIN: @direction[6.1,] @messages[9.1,] 
-BB 1
-	outgoing: 12 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-BB 3
-	outgoing: 4 5 10 
-	datadep: 2 
-	instructions:
-		 0: 
-		 1: message->has_been_read? message[2.2,] 
-		 2: BRANCH %cl_3_3[3.1,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 5
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_3_5[5.0,] 
-BB 6
-	outgoing: 7 8 10 
-	datadep: 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: 
-		 2: message->short_id message[2.2,2.2,] 
-		 3: %cl_3_6[6.1,] %cl_3_7[6.2,] 
-		 4: %self->check_box_tag %self[2.0,2.0,] %cl_3_8[6.3,] 
-		 5: 
-		 6: %self[2.0,2.0,] @direction[] 
-		 7: %cl_3_10[6.6,] 
-		 8: BRANCH %cl_3_11[6.7,] 
-BB 7
-	outgoing: 9 10 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: message->author message[2.2,2.2,] 
-		 2: %cl_3_12->username %cl_3_12[7.1,] 
-		 3: 
-		 4: message->author message[2.2,2.2,] 
-		 5: %cl_3_14->username %cl_3_14[7.4,] 
-		 6: 
-BB 8
-	outgoing: 9 10 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: message->recipient message[2.2,2.2,] 
-		 2: %cl_3_16->username %cl_3_16[8.1,] 
-		 3: 
-		 4: message->recipient message[2.2,2.2,] 
-		 5: %cl_3_18->username %cl_3_18[8.4,] 
-		 6: %cl_3_19[8.5,] 
-BB 9
-	outgoing: 10 12 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: message->created_at message[2.2,2.2,2.2,2.2,] 
-		 2: %self->time_ago_in_words_label %self[2.0,2.0,2.0,2.0,] %cl_3_20[9.1,] 
-		 3: 
-		 4: message->short_id message[2.2,2.2,2.2,2.2,] 
-		 5: 
-		 6: message->subject message[2.2,2.2,2.2,2.2,] 
-		 7: RETURN %cl_3_23[9.6,] 
-BB 10
-	outgoing: 12 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_3_24[10.0,] 
-		 2: RETURN %cl_3_25[10.1,] 
-BB 12
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 4: 
-		 5: 
-		 6: %self->submit_tag %self[2.0,2.0,2.0,2.0,] %cl_2_18[9.5,] 
-		 7: RETURN %cl_2_19[9.6,] 
-BB 10
-	outgoing: 12 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_2_20[10.0,] 
-		 2: RETURN %cl_2_21[10.1,] 
-BB 12
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 3: 
-BB 11
-	outgoing: 12 13 16 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @direction[6.1,6.1,] 
-		 2: %cl_1_13[11.1,] 
-		 3: BRANCH %cl_1_14[11.2,] 
-BB 12
-	outgoing: 14 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 13
-	outgoing: 14 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_1_16[13.0,] 
-BB 14
-	outgoing: 15 
-	datadep: 13 12 
-	instructions:
-		 0: %cl_1_15[13.1,12.0,] 
-BB 15
-	outgoing: 16 18 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @new_message[] 
-		 2: 
-		 3: %self->form_for %self[2.0,2.0,2.0,2.0,2.0,2.0,2.0,2.0,] %cl_1_18[15.2,] %cl_1_17[15.1,] 
-CLOSURE BEGIN: @direction[11.1,] @new_message[15.1,] @messages[9.1,] 
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-BB 3
-	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,] @new_message[] 
-		 2: %self->error_messages_for %self[2.0,] %cl_4_3[3.1,] 
-		 3: 
-		 4: 
-		 5: 
-		 6: %cl_4_6[3.5,] 
-		 7: f->label f[2.2,] %cl_4_5[3.4,] %cl_4_7[3.6,] 
-		 8: 
-		 9: 
-		 10: %cl_4_9[3.9,] 
-		 11: f->text_field %cl_4_10[3.10,] f[2.2,] 
-		 12: 
-		 13: 
-		 14: 
-		 15: %cl_4_13[3.14,] 
-		 16: f->label %cl_4_14[3.15,] f[2.2,] %cl_4_12[3.13,] 
-		 17: 
-		 18: 
-		 19: 
-		 20: %cl_4_17[3.19,] %cl_4_16[3.18,] 
-		 21: f->text_field %cl_4_18[3.20,] f[2.2,] 
-		 22: 
-		 23: 
-		 24: 
-		 25: %cl_4_21[3.24,] 
-		 26: f->label %cl_4_20[3.23,] f[2.2,] %cl_4_22[3.25,] 
-		 27: 
-		 28: 
-		 29: 
-		 30: %cl_4_25[3.29,] %cl_4_24[3.28,] 
-		 31: f->text_area %cl_4_26[3.30,] f[2.2,] 
-		 32: 
-		 33: 
-		 34: %self->submit_tag %cl_4_28[3.33,] %self[2.0,] 
-		 35: RETURN %cl_4_29[3.34,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_4_30[4.0,] 
-		 2: RETURN %cl_4_31[4.1,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 4: RETURN %cl_1_19[15.3,] 
-BB 16
-	outgoing: 18 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_1_20[16.0,] 
-		 2: RETURN %cl_1_21[16.1,] 
-BB 18
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 3: RETURN %v_28[4.2,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = show
-BB 1
-	outgoing: 12 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 4 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: 
-		 7: %self[2.0,] %v_3[2.6,] @cur_url[] 
-		 8: 
-		 9: %self[2.0,] @message[] 
-		 10: %v_4->subject %v_4[2.9,] 
-		 11: %self[2.0,] %v_5[2.10,] @title[] 
-		 12: 
-		 13: (Message) 
-		 14: %v_6->new %v_6[2.13,] 
-		 15: %self[2.0,] %v_7[2.14,] @new_message[] 
-		 16: 
-		 17: @new_message[2.15,] 
-		 18: @message[2.9,] 
-		 19: %v_9->author_user_id %v_9[2.18,] 
-		 20: %self[2.0,] @user[] 
-		 21: %v_11->id %v_11[2.20,] 
-		 22: %v_10[2.19,] %v_12[2.21,] 
-		 23: BRANCH %v_13[2.22,] 
-BB 3
-	outgoing: 5 
-	datadep: 2 
-	instructions:
-		 0: %self[2.0,] @message[2.9,2.18,] 
-		 1: %v_14->recipient %v_14[3.0,] 
-		 2: %v_15->username %v_15[3.1,] 
-		 3: 
-BB 4
-	outgoing: 5 
-	datadep: 2 
-	instructions:
-		 0: %self[2.0,] @message[2.9,2.18,] 
-		 1: %v_17->author %v_17[4.0,] 
-		 2: %v_18->username %v_18[4.1,] 
-		 3: %v_19[4.2,] 
-BB 5
-	outgoing: 6 7 
-	datadep: 4 3 2 2 2 2 2 2 
-	instructions:
-		 0: %v_16[4.3,3.2,] %v_8[2.17,2.17,] 
-		 1: 
-		 2: %self[2.0,2.0,] @message[4.0,3.0,] 
-		 3: %v_20->recipient_user_id %v_20[5.2,] 
-		 4: %self[2.0,2.0,] @user[2.20,2.20,] 
-		 5: %v_22->id %v_22[5.4,] 
-		 6: %v_21[5.3,] %v_23[5.5,] 
-		 7: BRANCH %v_24[5.6,] 
-BB 6
-	outgoing: 8 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,] @message[5.2,] 
-		 2: %v_25[6.1,] 
-		 3: 
-		 4: @message[6.1,] 
-		 5: %v_26->save %v_26[6.4,] 
-		 6: 
-BB 7
-	outgoing: 8 
-	datadep: 
-	instructions:
-		 0: 
-BB 8
-	outgoing: 9 10 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @message[6.1,6.4,5.2,] 
-		 2: %v_28->subject %v_28[8.1,] 
-		 3: 
-		 4: %v_29->match %v_29[8.2,] 
-		 5: BRANCH %v_31[8.4,] 
-BB 9
-	outgoing: 12 
-	datadep: 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @new_message[2.15,2.17,2.15,2.17,2.15,2.17,2.15,2.17,] 
-		 2: %self[2.0,2.0,2.0,2.0,] @message[8.1,] 
-		 3: %v_33->subject %v_33[9.2,] 
-		 4: %v_32[9.1,] %v_34[9.3,] 
-		 5: RETURN %v_34[9.3,] 
-BB 10
-	outgoing: 12 
-	datadep: 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @new_message[2.15,2.17,2.15,2.17,2.15,2.17,2.15,2.17,] 
-		 2: 
-		 3: %self[2.0,2.0,2.0,2.0,] @message[8.1,] 
-		 4: %v_37->subject %v_37[10.3,] 
-		 5: %v_36[10.2,] %v_38[10.4,] 
-		 6: %v_35[10.1,] %v_39[10.5,] 
-		 7: RETURN %v_39[10.5,] 
-BB 12
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = destroy
-BB 1
-	outgoing: 12 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 4 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: %self[2.0,] @message[] 
-		 7: %v_3->author_user_id %v_3[2.6,] 
-		 8: %self[2.0,] @user[] 
-		 9: %v_5->id %v_5[2.8,] 
-		 10: %v_4[2.7,] %v_6[2.9,] 
-		 11: BRANCH %v_7[2.10,] 
-BB 3
-	outgoing: 5 
-	datadep: 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,] @message[2.6,] 
-		 2: %v_8[3.1,] 
-		 3: 
-		 4: 
-BB 4
-	outgoing: 5 
-	datadep: 
-	instructions:
-		 0: 
-BB 5
-	outgoing: 6 7 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,] @message[3.1,2.6,] 
-		 2: %v_10->recipient_user_id %v_10[5.1,] 
-		 3: %self[2.0,2.0,] @user[2.8,2.8,] 
-		 4: %v_12->id %v_12[5.3,] 
-		 5: %v_13[5.4,] %v_11[5.2,] 
-		 6: BRANCH %v_14[5.5,] 
-BB 6
-	outgoing: 8 
-	datadep: 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,] @message[5.1,] 
-		 2: %v_15[6.1,] 
-		 3: 
-		 4: 
-BB 7
-	outgoing: 8 
-	datadep: 
-	instructions:
-		 0: 
-BB 8
-	outgoing: 9 10 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @message[6.1,5.1,] 
-		 2: %v_17->save! %v_17[8.1,] 
-		 3: 
-		 4: %self->flash %self[2.0,2.0,2.0,2.0,] 
-		 5: 
-		 6: %v_19[8.4,] %v_20[8.5,] 
-		 7: 
-		 8: @message[8.1,] 
-		 9: %v_21->author_user_id %v_21[8.8,] 
-		 10: %self[2.0,2.0,2.0,2.0,] @user[5.3,5.3,] 
-		 11: %v_23->id %v_23[8.10,] 
-		 12: %v_24[8.11,] %v_22[8.9,] 
-		 13: BRANCH %v_25[8.12,] 
-BB 9
-	outgoing: 12 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: 
-		 2: %self->redirect_to %self[2.0,2.0,2.0,2.0,] %v_26[9.1,] 
-		 3: RETURN %v_27[9.2,] 
-BB 10
-	outgoing: 12 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: 
-		 2: %self->redirect_to %self[2.0,2.0,2.0,2.0,] %v_29[10.1,] 
-		 3: RETURN %v_30[10.2,] 
-BB 12
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = batch_delete
-BB 1
-	outgoing: 7 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 4 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: 
-		 7: 
-		 8: %self->params %self[2.0,] 
-		 9: %v_3->each %self[2.0,] %v_3[2.8,] 
-CLOSURE BEGIN: @user[] 
-BB 1
-	outgoing: 23 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-BB 3
-	outgoing: 4 5 21 
-	datadep: 2 
-	instructions:
-		 0: 
-		 1: v->to_s v[2.3,] 
-		 2: 
-		 3: %cl_1_3[3.1,] %cl_1_4[3.2,] 
-		 4: BRANCH %cl_1_5[3.3,] 
-BB 4
-	outgoing: 5 21 
-	datadep: 2 
-	instructions:
-		 0: 
-		 1: k->match k[2.2,] 
-		 2: %cl_1_7[4.1,] 
-		 3: %cl_1_7[4.1,] 
-BB 5
-	outgoing: 6 19 
-	datadep: 4 3 
-	instructions:
-		 0: BRANCH %cl_1_5[4.3,3.3,] 
-BB 6
-	outgoing: 7 17 21 
-	datadep: 4 
-	instructions:
-		 0: 
-		 1: (Message) 
-		 2: m[4.2,] 
-		 3: %cl_1_9[6.2,] 
-		 4: %cl_1_8->where %cl_1_10[6.3,] %cl_1_8[6.1,] 
-		 5: %cl_1_11->first %cl_1_11[6.4,] 
-		 6: %cl_1_12[6.5,] 
-		 7: BRANCH %cl_1_12[6.5,] 
-BB 7
-	outgoing: 8 9 21 
-	datadep: 6 2 2 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: message->author_user_id message[6.6,] 
-		 4: %self[2.0,2.0,] @user[] 
-		 5: %cl_1_14->id %cl_1_14[7.4,] 
-		 6: %cl_1_15[7.5,] %cl_1_13[7.3,] 
-		 7: BRANCH %cl_1_16[7.6,] 
-BB 8
-	outgoing: 10 21 
-	datadep: 6 
-	instructions:
-		 0: 
-		 1: message[6.6,] 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-BB 9
-	outgoing: 10 
-	datadep: 
-	instructions:
-		 0: 
-BB 10
-	outgoing: 11 12 21 
-	datadep: 8 6 2 2 2 
-	instructions:
-		 0: 
-		 1: message->recipient_user_id message[8.1,6.6,] 
-		 2: %self[2.0,2.0,2.0,] @user[7.4,7.4,] 
-		 3: %cl_1_19->id %cl_1_19[10.2,] 
-		 4: %cl_1_18[10.1,] %cl_1_20[10.3,] 
-		 5: BRANCH %cl_1_21[10.4,] 
-BB 11
-	outgoing: 13 21 
-	datadep: 8 6 
-	instructions:
-		 0: 
-		 1: message[8.1,6.6,] 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-BB 12
-	outgoing: 13 
-	datadep: 
-	instructions:
-		 0: 
-BB 13
-	outgoing: 14 15 
-	datadep: 11 8 7 
-	instructions:
-		 0: 
-		 1: BRANCH ok[11.3,8.3,7.1,] 
-BB 14
-	outgoing: 16 21 
-	datadep: 11 8 6 
-	instructions:
-		 0: 
-		 1: message->save! message[11.1,8.1,6.6,] 
-		 2: 
-		 3: 
-		 4: %cl_1_24[14.3,] 
-		 5: 
-BB 15
-	outgoing: 16 
-	datadep: 
-	instructions:
-		 0: 
-BB 16
-	outgoing: 18 
-	datadep: 
-	instructions:
-		 0: 
-BB 17
-	outgoing: 18 
-	datadep: 
-	instructions:
-		 0: 
-BB 18
-	outgoing: 23 
-	datadep: 17 15 14 
-	instructions:
-		 0: RETURN %cl_1_24[17.0,15.0,14.3,] 
-BB 19
-	outgoing: 23 
-	datadep: 
-	instructions:
-		 0: RETURN 
-BB 21
-	outgoing: 23 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %cl_1_25[21.0,] 
-		 2: RETURN %cl_1_26[21.1,] 
-BB 23
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 10: 
-		 11: %self->flash %self[2.0,] 
-		 12: 
-		 13: 
-		 14: deleted[2.6,] 
-		 15: BRANCH %v_8[2.14,] 
-BB 3
-	outgoing: 5 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 4
-	outgoing: 5 
-	datadep: 
-	instructions:
-		 0: 
-		 1: %v_10[4.0,] 
-BB 5
-	outgoing: 7 
-	datadep: 2 2 4 3 2 2 2 2 2 2 2 2 2 2 
-	instructions:
-		 0: 
-		 1: deleted[2.6,2.6,] %v_9[4.1,3.0,] %v_6[2.12,2.12,] %v_7[2.13,2.13,] %v_11[5.0,] 
-		 2: %v_5[2.11,2.11,] %v_12[5.1,] 
-		 3: 
-		 4: %self[2.0,2.0,] @user[] 
-		 5: %v_13->update_unread_message_count! %v_13[5.4,] 
-		 6: 
-		 7: 
-		 8: %self->redirect_to %self[2.0,2.0,] %v_15[5.7,] 
-		 9: RETURN %v_16[5.8,] 
-BB 7
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = keep_as_new
-BB 1
-	outgoing: 4 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 4 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: %self[2.0,] @message[] 
-		 7: %v_3[2.6,] 
-		 8: 
-		 9: @message[2.6,] 
-		 10: %v_4->save %v_4[2.9,] 
-		 11: 
-		 12: 
-		 13: %self->redirect_to %self[2.0,] %v_6[2.12,] 
-		 14: RETURN %v_7[2.13,] 
-BB 4
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = message_params
-BB 1
-	outgoing: 3 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: %self->params %self[2.0,] 
-		 7: %v_3->require %v_3[2.6,] 
-		 8: %v_4->permit %v_4[2.7,] 
-		 9: RETURN %v_5[2.8,] 
-BB 3
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = find_message
-BB 1
-	outgoing: 14 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 4 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: (Message) 
-		 7: %self->params %self[2.0,] 
-		 8: %v_4[2.7,] 
-		 9: BRANCH %v_5[2.8,] 
-BB 3
-	outgoing: 4 
-	datadep: 2 
-	instructions:
-		 0: %self->params %self[2.0,] 
-		 1: %v_6[3.0,] 
-		 2: %v_7[3.1,] 
-BB 4
-	outgoing: 5 11 
-	datadep: 3 2 2 2 2 2 
-	instructions:
-		 0: %v_5[3.2,2.8,] 
-		 1: %v_3->where %v_3[2.6,2.6,] %v_8[4.0,] 
-		 2: %v_9->first %v_9[4.1,] 
-		 3: %self[2.0,2.0,] %v_10[4.2,] @message[] 
-		 4: BRANCH %v_10[4.2,] 
-BB 5
-	outgoing: 6 7 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self[2.0,2.0,] @message[4.3,] 
-		 2: %v_11->author_user_id %v_11[5.1,] 
-		 3: %self[2.0,2.0,] @user[] 
-		 4: %v_13->id %v_13[5.3,] 
-		 5: %v_14[5.4,] %v_12[5.2,] 
-		 6: BRANCH %v_15[5.5,] 
-BB 6
-	outgoing: 7 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: %self[2.0,2.0,] @message[5.1,] 
-		 1: %v_16->recipient_user_id %v_16[6.0,] 
-		 2: %self[2.0,2.0,] @user[5.3,] 
-		 3: %v_18->id %v_18[6.2,] 
-		 4: %v_17[6.1,] %v_19[6.3,] 
-		 5: %v_20[6.4,] 
-BB 7
-	outgoing: 8 9 
-	datadep: 6 5 
-	instructions:
-		 0: BRANCH %v_15[6.5,5.5,] 
-BB 8
-	outgoing: 14 
-	datadep: 
-	instructions:
-		 0: 
-		 1: RETURN 
-BB 9
-	outgoing: 12 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-BB 11
-	outgoing: 12 
-	datadep: 
-	instructions:
-		 0: 
-BB 12
-	outgoing: 14 
-	datadep: 2 2 2 2 
-	instructions:
-		 0: 
-		 1: %self->flash %self[2.0,2.0,] 
-		 2: 
-		 3: %v_22[12.1,] %v_23[12.2,] 
-		 4: 
-		 5: 
-		 6: %self->redirect_to %v_24[12.5,] %self[2.0,2.0,] 
-		 7: 
-		 8: RETURN 
-BB 14
-	outgoing: 
-	datadep: 
-	instructions:
-
 SET IRMethod, name = auto_complete_for_username
 BB 1
 	outgoing: 3 2 
@@ -1468,7 +23,7 @@ BB 2
 		 13: %v_9->pluck %v_9[2.12,] 
 		 14: %self[2.0,] %v_10[2.13,] @usernames[] 
 		 15: 
-		 16: %self->respond_to %self[2.0,2.0,] 
+		 16: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @user[2.9,] @usernames[2.14,] 
 BB 1
 	outgoing: 6 2 
@@ -1545,7 +100,7 @@ BB 3
 
 SET IRMethod, name = index
 BB 1
-	outgoing: 6 2 
+	outgoing: 9 2 
 	datadep: 
 	instructions:
 BB 2
@@ -1564,7 +119,7 @@ BB 2
 		 9: %v_4[2.7,] %v_5[2.8,] 
 		 10: BRANCH %v_6[2.9,] 
 BB 3
-	outgoing: 6 
+	outgoing: 5 
 	datadep: 2 2 2 
 	instructions:
 		 0: 
@@ -1575,9 +130,9 @@ BB 3
 		 5: %v_8->page %v_8[3.2,] %v_10[3.4,] 
 		 6: %v_11[3.5,] 
 		 7: %self[2.0,] %v_12[3.6,] @messages[] 
-		 8: RETURN %v_12[3.6,] 
+		 8: 
 BB 4
-	outgoing: 6 
+	outgoing: 5 
 	datadep: 2 2 2 
 	instructions:
 		 0: 
@@ -1590,15 +145,376 @@ BB 4
 		 7: %v_16->page %v_16[4.4,] %v_18[4.6,] 
 		 8: %v_19[4.7,] 
 		 9: %self[2.0,] %v_20[4.8,] @messages[] 
-		 10: RETURN %v_20[4.8,] 
+		 10: %v_20[4.8,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %v_21->ruby_code_from_view %self[2.0,] %v_21[5.1,] 
+CLOSURE BEGIN: @user[] @messages[3.7,4.9,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @user[] 
+		 4: %self->user_messages_path %self[2.0,] %cl_2_4[3.3,] 
+		 5: 
+		 6: 
+		 7: 
+		 8: @user[3.3,] 
+		 9: %cl_2_7->unread_messages? %cl_2_7[3.8,] 
+		 10: BRANCH %cl_2_8[3.9,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[3.3,3.8,] 
+		 2: %cl_2_9->unread_message_count %cl_2_9[4.1,] 
+		 3: %cl_2_10[4.2,] 
+		 4: 
+		 5: 
+		 6: %self->fa_icon %self[2.0,] %cl_2_12[4.5,] 
+		 7: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
 BB 6
+	outgoing: 7 9 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @user[4.1,3.3,3.8,] 
+		 3: 
+		 4: %self->user_messages_path %cl_2_15[6.2,] %cl_2_16[6.3,] %self[2.0,] 
+		 5: %self->link_to %self[2.0,] %cl_2_14[6.1,] %cl_2_17[6.4,] 
+		 6: 
+		 7: 
+		 8: @user[6.2,] 
+		 9: %self->new_user_message_path %self[2.0,] %cl_2_20[6.8,] 
+		 10: %self->link_to %self[2.0,] %cl_2_19[6.7,] %cl_2_21[6.9,] 
+		 11: RETURN %cl_2_22[6.10,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_23[7.0,] 
+		 2: RETURN %cl_2_24[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+		 4: %self->params %self[2.0,] 
+		 5: %v_23[5.4,] 
+		 6: 
+		 7: %v_24[5.5,] %v_25[5.6,] 
+		 8: BRANCH %v_26[5.7,] 
+BB 6
+	outgoing: 9 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[4.1,3.1,] 
+		 2: %self->delete_selected_user_messages_path %self[2.0,] %v_27[6.1,] 
+		 3: %v_28[6.2,] 
+		 4: %self[2.0,] %v_29[6.3,] 
+CLOSURE BEGIN: @user[6.1,] @messages[3.7,4.9,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %cl_3_3->ruby_code_from_view %cl_3_3[3.1,] %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] %cl_4_3[3.1,] @page_title[] 
+		 3: 
+		 4: %self[2.0,] @messages[] 
+		 5: %cl_4_4->empty? %cl_4_4[3.4,] 
+		 6: BRANCH %cl_4_5[3.5,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+BB 5
+	outgoing: 7 9 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @messages[3.4,] 
+		 2: %cl_4_7->each %self[2.0,] %cl_4_7[5.1,] 
+CLOSURE BEGIN: @page_title[3.2,] @messages[5.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: message->id message[2.2,] 
+		 3: %self->check_box_tag %self[2.0,] %cl_5_3[3.1,] %cl_5_4[3.2,] 
+		 4: 
+		 5: 
+		 6: 
+		 7: message->recipient message[2.2,] 
+		 8: %cl_5_7->login %cl_5_7[3.7,] 
+		 9: %self->h %self[2.0,] %cl_5_8[3.8,] 
+		 10: message->recipient message[2.2,] 
+		 11: %self->user_path %self[2.0,] %cl_5_10[3.10,] 
+		 12: %self->link_to %self[2.0,] %cl_5_9[3.9,] %cl_5_11[3.11,] 
+		 13: 
+		 14: message->recipient message[2.2,] 
+		 15: %cl_5_13->avatar_photo_url %cl_5_13[3.14,] 
+		 16: message->recipient message[2.2,] 
+		 17: %cl_5_15->login %cl_5_15[3.16,] 
+		 18: 
+		 19: %cl_5_16[3.17,] %cl_5_17[3.18,] 
+		 20: %self->image_tag %self[2.0,] %cl_5_18[3.19,] %cl_5_14[3.15,] 
+		 21: message->recipient message[2.2,] 
+		 22: %self->user_path %self[2.0,] %cl_5_20[3.21,] 
+		 23: message->recipient message[2.2,] 
+		 24: %cl_5_22->login %cl_5_22[3.23,] 
+		 25: %cl_5_23[3.24,] 
+		 26: %cl_5_24->l %cl_5_24[3.25,] 
+		 27: %cl_5_25[3.26,] 
+		 28: %self->link_to %self[2.0,] %cl_5_19[3.20,] %cl_5_26[3.27,] %cl_5_21[3.22,] 
+		 29: 
+		 30: message->subject message[2.2,] 
+		 31: %self->h %self[2.0,] %cl_5_28[3.30,] 
+		 32: message->sender message[2.2,] 
+		 33: %self->user_message_path %self[2.0,] message[2.2,] %cl_5_30[3.32,] 
+		 34: %self->link_to %self[2.0,] %cl_5_29[3.31,] %cl_5_31[3.33,] 
+		 35: 
+		 36: message->created_at message[2.2,] 
+		 37: %self->time_ago_in_words_or_date %self[2.0,] %cl_5_33[3.36,] 
+		 38: RETURN %cl_5_34[3.37,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_35[4.0,] 
+		 2: RETURN %cl_5_36[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+		 4: 
+		 5: 
+		 6: %cl_4_10[5.5,] 
+		 7: %self->submit_tag %self[2.0,] %cl_4_9[5.4,] %cl_4_11[5.6,] 
+		 8: 
+		 9: @messages[5.1,] 
+		 10: 
+		 11: %cl_4_14[5.10,] 
+		 12: %self->paginate %self[2.0,] %cl_4_15[5.11,] %cl_4_13[5.9,] 
+		 13: RETURN %cl_4_16[5.12,] 
+BB 6
+	outgoing: 9 
+	datadep: 4 
+	instructions:
+		 0: RETURN %cl_4_6[4.1,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_17[7.0,] 
+		 2: RETURN %cl_4_18[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 5: RETURN %v_30[6.4,] 
+BB 7
+	outgoing: 9 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[4.1,3.1,] 
+		 2: %self->delete_message_threads_user_messages_path %self[2.0,] %v_31[7.1,] 
+		 3: %v_32[7.2,] 
+		 4: %self[2.0,] %v_33[7.3,] 
+CLOSURE BEGIN: @user[6.1,7.1,] @messages[3.7,4.9,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %cl_6_3->ruby_code_from_view %self[2.0,] %cl_6_3[3.1,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_6_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_5[4.0,] 
+		 2: RETURN %cl_6_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 5: RETURN %v_34[7.4,] 
+BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 
 SET IRMethod, name = show
 BB 1
-	outgoing: 6 2 
+	outgoing: 15 2 
 	datadep: 
 	instructions:
 BB 2
@@ -1636,20 +552,445 @@ BB 4
 		 0: %self->current_user %self[2.0,] 
 		 1: %v_13[4.0,] 
 BB 5
-	outgoing: 6 
-	datadep: 2 2 2 2 4 3 2 2 2 2 2 2 2 2 
+	outgoing: 6 7 
+	datadep: 2 2 4 3 2 2 2 2 
 	instructions:
-		 0: %v_8->for %v_8[2.13,2.13,] %v_9[2.14,2.14,] %v_12[4.1,3.1,] 
-		 1: %v_14[5.0,] %self[2.0,2.0,] @message_thread[] 
+		 0: %v_8->for %v_8[2.13,] %v_9[2.14,] %v_12[4.1,3.1,] 
+		 1: %v_14[5.0,] %self[2.0,] @message_thread[] 
 		 2: 
 		 3: (Message) 
-		 4: %self[2.0,2.0,] @user[2.9,2.9,] 
+		 4: %self[2.0,] @user[2.9,2.9,] 
 		 5: @message_thread[5.1,] 
-		 6: %self->params %self[2.0,2.0,] 
+		 6: %self->params %self[2.0,] 
 		 7: %v_15->new_reply %v_15[5.3,] %v_16[5.4,] %v_17[5.5,] %v_18[5.6,] 
-		 8: %self[2.0,2.0,] %v_19[5.7,] @reply[] 
-		 9: RETURN %v_19[5.7,] 
+		 8: %self[2.0,] %v_19[5.7,] @reply[] 
+		 9: 
+		 10: 
+		 11: @message_thread[5.1,5.5,] 
+		 12: BRANCH %v_20[5.11,] 
 BB 6
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: %self[2.0,] @message_thread[5.1,5.5,5.11,] 
+		 1: %v_21->parent_message %v_21[6.0,] 
+		 2: %v_22->sender %v_22[6.1,] 
+		 3: %v_23->login %v_23[6.2,] 
+		 4: 
+		 5: %v_24[6.3,] %v_25[6.4,] 
+		 6: @message_thread[6.0,] 
+		 7: %v_27->parent_message %v_27[6.6,] 
+		 8: %v_28->subject %v_28[6.7,] 
+		 9: %v_26[6.5,] %v_29[6.8,] 
+		 10: %self[2.0,] %v_30[6.9,] @page_title[] 
+		 11: 
+BB 7
+	outgoing: 8 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @message[3.0,2.11,2.14,] 
+		 2: %v_31->subject %v_31[7.1,] 
+		 3: %self[2.0,] %v_32[7.2,] @page_title[] 
+		 4: %v_32[7.2,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %v_33->ruby_code_from_view %self[2.0,] %v_33[8.1,] 
+CLOSURE BEGIN: @message[] @page_title[6.10,7.3,] @reply[] @user[] @message_thread[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @user[] 
+		 4: %self->user_messages_path %self[2.0,] %cl_2_4[3.3,] 
+		 5: 
+		 6: 
+		 7: 
+		 8: @user[3.3,] 
+		 9: %cl_2_7->unread_messages? %cl_2_7[3.8,] 
+		 10: BRANCH %cl_2_8[3.9,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[3.3,3.8,] 
+		 2: %cl_2_9->unread_message_count %cl_2_9[4.1,] 
+		 3: %cl_2_10[4.2,] 
+		 4: 
+		 5: 
+		 6: %self->fa_icon %self[2.0,] %cl_2_12[4.5,] 
+		 7: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @user[4.1,3.3,3.8,] 
+		 3: 
+		 4: %self->user_messages_path %cl_2_15[6.2,] %cl_2_16[6.3,] %self[2.0,] 
+		 5: %self->link_to %self[2.0,] %cl_2_14[6.1,] %cl_2_17[6.4,] 
+		 6: 
+		 7: 
+		 8: @user[6.2,] 
+		 9: %self->new_user_message_path %self[2.0,] %cl_2_20[6.8,] 
+		 10: %self->link_to %self[2.0,] %cl_2_19[6.7,] %cl_2_21[6.9,] 
+		 11: RETURN %cl_2_22[6.10,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_23[7.0,] 
+		 2: RETURN %cl_2_24[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+		 4: 
+		 5: %self[2.0,] @message_thread[6.0,6.6,5.1,5.5,5.11,] 
+		 6: BRANCH %v_35[8.5,] 
+BB 9
+	outgoing: 11 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: %self[2.0,] @message_thread[8.5,] 
+		 3: %v_37->parent_message %v_37[9.2,] 
+		 4: %v_38->created_at %v_38[9.3,] 
+		 5: 
+		 6: %v_36->l %v_36[9.1,] %v_39[9.4,] %v_40[9.5,] 
+		 7: %self->h %self[2.0,] %v_41[9.6,] 
+		 8: 
+		 9: @message_thread[9.2,] 
+		 10: %v_43->parent_message %v_43[9.9,] 
+		 11: %v_44->body %v_44[9.10,] 
+		 12: %self->auto_link %self[2.0,] %v_45[9.11,] 
+		 13: 
+		 14: @message_thread[9.2,9.9,] 
+		 15: %v_47->parent_message %v_47[9.14,] 
+		 16: %v_48->children %v_48[9.15,] 
+		 17: %v_49[9.16,] 
+		 18: 
+		 19: %v_49->each %self[2.0,] %v_49[9.16,] 
+CLOSURE BEGIN: @message[] @page_title[6.10,7.3,] @reply[] @user[] @message_thread[9.2,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: child->created_at child[2.2,] 
+		 3: 
+		 4: %cl_3_3->l %cl_3_3[3.1,] %cl_3_4[3.2,] %cl_3_5[3.3,] 
+		 5: %self->h %self[2.0,] %cl_3_6[3.4,] 
+		 6: 
+		 7: child->sender child[2.2,] 
+		 8: %cl_3_8->login %cl_3_8[3.7,] 
+		 9: 
+		 10: child->body child[2.2,] 
+		 11: %self->auto_link %self[2.0,] %cl_3_10[3.10,] 
+		 12: RETURN %cl_3_11[3.11,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_12[4.0,] 
+		 2: RETURN %cl_3_13[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 20: 
+BB 10
+	outgoing: 11 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: %self[2.0,] @message[7.1,3.0,2.11,2.14,] 
+		 3: %v_52->created_at %v_52[10.2,] 
+		 4: 
+		 5: %v_51->l %v_51[10.1,] %v_53[10.3,] %v_54[10.4,] 
+		 6: %self->h %self[2.0,] %v_55[10.5,] 
+		 7: 
+		 8: @message[10.2,] 
+		 9: %v_57->body %v_57[10.8,] 
+		 10: %self->auto_link %v_58[10.9,] %self[2.0,] 
+		 11: %v_59[10.10,] 
+BB 11
+	outgoing: 12 13 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @reply[5.8,5.8,5.8,5.8,] 
+		 3: BRANCH %v_60[11.2,] 
+BB 12
+	outgoing: 15 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[5.4,5.4,5.4,5.4,] 
+		 2: %self[2.0,] @message[10.2,10.8,7.1,3.0,2.11,2.14,] 
+		 3: %v_63[12.2,] 
+		 4: %self->new_user_message_path %self[2.0,] %v_62[12.1,] %v_64[12.3,] 
+		 5: 
+		 6: %v_66[12.5,] 
+		 7: %self->link_to %self[2.0,] %v_61[12.0,] %v_65[12.4,] %v_67[12.6,] 
+		 8: 
+		 9: %self->ruby_code_from_view %self[2.0,] 
+		 10: %v_69->ruby_code_from_view %v_69[12.9,] %self[2.0,] 
+CLOSURE BEGIN: @message[12.2,] @page_title[6.10,7.3,] @reply[11.2,] @user[12.1,] @message_thread[9.2,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->user %self[2.0,] 
+		 2: %self->message %self[2.0,] 
+		 3: %cl_4_3[3.1,] %cl_4_4[3.2,] 
+		 4: 
+		 5: %self->bootstrap_form_for %self[2.0,] %cl_4_5[3.3,] %cl_4_6[3.4,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->message %self[2.0,] 
+		 2: %cl_5_3->reply_to %cl_5_3[3.1,] 
+		 3: BRANCH %cl_5_4[3.2,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: f->hidden_field f[2.2,] 
+		 2: 
+		 3: f->hidden_field f[2.2,] 
+		 4: 
+BB 5
+	outgoing: 6 10 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: %cl_5_7[5.1,] %cl_5_8[5.2,] %cl_5_9[5.3,] %cl_5_10[5.4,] 
+		 6: f->text_field f[2.2,] %cl_5_11[5.5,] 
+		 7: 
+		 8: %self[2.0,] 
+CLOSURE BEGIN: @reply[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %cl_6_4[3.2,] %cl_6_5[3.3,] 
+		 5: 
+		 6: %cl_6_7[3.5,] 
+		 7: %cl_6_6[3.4,] %cl_6_8[3.6,] 
+		 8: %self->tag_auto_complete_field %self[2.0,] %cl_6_9[3.7,] %cl_6_3[3.1,] 
+		 9: RETURN %cl_6_10[3.8,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_11[4.0,] 
+		 2: RETURN %cl_6_12[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 9: %cl_5_13[5.8,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @reply[] 
+		 3: BRANCH %cl_5_14[6.2,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 2 
+	instructions:
+		 0: f->hidden_field f[2.2,] 
+		 1: 
+BB 8
+	outgoing: 9 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: f->text_field f[2.2,] 
+		 2: %cl_5_16[8.1,] 
+BB 9
+	outgoing: 10 12 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_5_17[9.1,] %cl_5_18[9.2,] 
+		 4: f->text_area %cl_5_19[9.3,] f[2.2,] 
+		 5: 
+		 6: 
+		 7: f->primary f[2.2,] %cl_5_21[9.6,] 
+		 8: RETURN %cl_5_22[9.7,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_23[10.0,] 
+		 2: RETURN %cl_5_24[10.1,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %cl_4_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_8[4.0,] 
+		 2: RETURN %cl_4_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 11: RETURN %v_70[12.10,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 15
 	outgoing: 
 	datadep: 
 	instructions:
@@ -1695,15 +1036,297 @@ BB 4
 		 0: 
 BB 5
 	outgoing: 6 
-	datadep: 2 2 2 2 3 2 2 
+	datadep: 2 2 3 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (Message) 
-		 2: %self[2.0,2.0,] @user[] 
-		 3: %self->params %self[2.0,2.0,] 
+		 2: %self[2.0,] @user[] 
+		 3: %self->params %self[2.0,] 
 		 4: %v_12->new_reply %v_13[5.2,] %v_14[5.3,] message_thread[3.10,] %v_12[5.1,] 
-		 5: %self[2.0,2.0,] %v_15[5.4,] @message[] 
-		 6: RETURN %v_15[5.4,] 
+		 5: %self[2.0,] %v_15[5.4,] @message[] 
+		 6: 
+		 7: 
+		 8: %self[2.0,] %v_16[5.7,] @page_title[] 
+		 9: 
+		 10: %self->ruby_code_from_view %self[2.0,] 
+		 11: %v_17->ruby_code_from_view %self[2.0,] %v_17[5.10,] 
+CLOSURE BEGIN: @message[5.5,] @page_title[5.8,] @user[5.2,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @user[] 
+		 4: %self->user_messages_path %self[2.0,] %cl_2_4[3.3,] 
+		 5: 
+		 6: 
+		 7: 
+		 8: @user[3.3,] 
+		 9: %cl_2_7->unread_messages? %cl_2_7[3.8,] 
+		 10: BRANCH %cl_2_8[3.9,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[3.3,3.8,] 
+		 2: %cl_2_9->unread_message_count %cl_2_9[4.1,] 
+		 3: %cl_2_10[4.2,] 
+		 4: 
+		 5: 
+		 6: %self->fa_icon %self[2.0,] %cl_2_12[4.5,] 
+		 7: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @user[4.1,3.3,3.8,] 
+		 3: 
+		 4: %self->user_messages_path %cl_2_15[6.2,] %cl_2_16[6.3,] %self[2.0,] 
+		 5: %self->link_to %self[2.0,] %cl_2_14[6.1,] %cl_2_17[6.4,] 
+		 6: 
+		 7: 
+		 8: @user[6.2,] 
+		 9: %self->new_user_message_path %self[2.0,] %cl_2_20[6.8,] 
+		 10: %self->link_to %self[2.0,] %cl_2_19[6.7,] %cl_2_21[6.9,] 
+		 11: RETURN %cl_2_22[6.10,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_23[7.0,] 
+		 2: RETURN %cl_2_24[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 12: 
+		 13: %self->ruby_code_from_view %self[2.0,] 
+		 14: %v_19->ruby_code_from_view %self[2.0,] %v_19[5.13,] 
+CLOSURE BEGIN: @message[5.5,] @page_title[5.8,] @user[5.2,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self->user %self[2.0,] 
+		 2: %self->message %self[2.0,] 
+		 3: %cl_3_3[3.1,] %cl_3_4[3.2,] 
+		 4: 
+		 5: %self->bootstrap_form_for %self[2.0,] %cl_3_5[3.3,] %cl_3_6[3.4,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->message %self[2.0,] 
+		 2: %cl_4_3->reply_to %cl_4_3[3.1,] 
+		 3: BRANCH %cl_4_4[3.2,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: f->hidden_field f[2.2,] 
+		 2: 
+		 3: f->hidden_field f[2.2,] 
+		 4: 
+BB 5
+	outgoing: 6 10 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: %cl_4_8[5.2,] %cl_4_10[5.4,] %cl_4_9[5.3,] %cl_4_7[5.1,] 
+		 6: f->text_field f[2.2,] %cl_4_11[5.5,] 
+		 7: 
+		 8: %self[2.0,] 
+CLOSURE BEGIN: @reply[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %cl_5_4[3.2,] %cl_5_5[3.3,] 
+		 5: 
+		 6: %cl_5_7[3.5,] 
+		 7: %cl_5_8[3.6,] %cl_5_6[3.4,] 
+		 8: %self->tag_auto_complete_field %self[2.0,] %cl_5_9[3.7,] %cl_5_3[3.1,] 
+		 9: RETURN %cl_5_10[3.8,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_11[4.0,] 
+		 2: RETURN %cl_5_12[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 9: %cl_4_13[5.8,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @reply[] 
+		 3: BRANCH %cl_4_14[6.2,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 2 
+	instructions:
+		 0: f->hidden_field f[2.2,] 
+		 1: 
+BB 8
+	outgoing: 9 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: f->text_field f[2.2,] 
+		 2: %cl_4_16[8.1,] 
+BB 9
+	outgoing: 10 12 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_4_18[9.2,] %cl_4_17[9.1,] 
+		 4: f->text_area %cl_4_19[9.3,] f[2.2,] 
+		 5: 
+		 6: 
+		 7: f->primary %cl_4_21[9.6,] f[2.2,] 
+		 8: RETURN %cl_4_22[9.7,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_23[10.0,] 
+		 2: RETURN %cl_4_24[10.1,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %cl_3_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_8[4.0,] 
+		 2: RETURN %cl_3_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 15: RETURN %v_20[5.14,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -1815,16 +1438,16 @@ BB 12
 		 0: %v_35[9.2,] 
 BB 13
 	outgoing: 14 16 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,2.0,] 
+		 1: %self->flash %self[2.0,] 
 		 2: 
 		 3: %v_36[13.1,] %v_37[13.2,] 
 		 4: 
-		 5: %self[2.0,2.0,] @user[7.19,7.19,] 
-		 6: %self->user_messages_path %self[2.0,2.0,] %v_38[13.5,] 
-		 7: %self->redirect_to %self[2.0,2.0,] %v_39[13.6,] 
+		 5: %self[2.0,] @user[7.19,7.19,] 
+		 6: %self->user_messages_path %self[2.0,] %v_38[13.5,] 
+		 7: %self->redirect_to %self[2.0,] %v_39[13.6,] 
 		 8: BRANCH %v_40[13.7,] 
 BB 14
 	outgoing: 18 
@@ -1943,12 +1566,12 @@ BB 5
 		 0: 
 BB 6
 	outgoing: 9 
-	datadep: 2 2 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] @user[] 
-		 2: %self->user_messages_path %self[2.0,2.0,] %v_12[6.1,] 
-		 3: %self->redirect_to %v_13[6.2,] %self[2.0,2.0,] 
+		 1: %self[2.0,] @user[] 
+		 2: %self->user_messages_path %self[2.0,] %v_12[6.1,] 
+		 3: %self->redirect_to %v_13[6.2,] %self[2.0,] 
 		 4: RETURN %v_14[6.3,] 
 BB 7
 	outgoing: 9 
@@ -2060,12 +1683,12 @@ BB 5
 		 0: 
 BB 6
 	outgoing: 9 
-	datadep: 2 2 2 2 2 2 
+	datadep: 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,] @user[] 
-		 2: %self->user_messages_path %self[2.0,2.0,] %v_12[6.1,] 
-		 3: %self->redirect_to %v_13[6.2,] %self[2.0,2.0,] 
+		 1: %self[2.0,] @user[] 
+		 2: %self->user_messages_path %self[2.0,] %v_12[6.1,] 
+		 3: %self->redirect_to %v_13[6.2,] %self[2.0,] 
 		 4: RETURN %v_14[6.3,] 
 BB 7
 	outgoing: 9 
@@ -2133,16 +1756,16 @@ BB 4
 		 0: BRANCH %v_3[3.1,2.6,] 
 BB 5
 	outgoing: 6 7 
-	datadep: 2 2 
+	datadep: 2 
 	instructions:
-		 0: %self[2.0,2.0,] @user[] 
+		 0: %self[2.0,] @user[] 
 		 1: BRANCH %v_5[5.0,] 
 BB 6
 	outgoing: 7 
-	datadep: 2 2 2 2 
+	datadep: 2 2 
 	instructions:
-		 0: %self[2.0,2.0,] @user[5.0,] 
-		 1: %self->current_user %self[2.0,2.0,] 
+		 0: %self[2.0,] @user[5.0,] 
+		 1: %self->current_user %self[2.0,] 
 		 2: %v_6->eql? %v_6[6.0,] %v_7[6.1,] 
 		 3: %v_8[6.2,] 
 BB 7
@@ -2163,13 +1786,13 @@ BB 9
 		 1: 
 BB 10
 	outgoing: 11 13 
-	datadep: 2 2 
+	datadep: 2 
 	instructions:
 		 0: 
 		 1: 
 		 2: 
 		 3: %v_10[10.1,] %v_11[10.2,] 
-		 4: %self->redirect_to %self[2.0,2.0,] %v_12[10.3,] 
+		 4: %self->redirect_to %self[2.0,] %v_12[10.3,] 
 		 5: BRANCH %v_13[10.4,] 
 BB 11
 	outgoing: 16 
@@ -2183,10 +1806,10 @@ BB 13
 		 0: %v_13[10.4,] 
 BB 14
 	outgoing: 16 
-	datadep: 2 2 2 2 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,] @user[6.0,5.0,6.0,5.0,] 
+		 1: %self[2.0,] @user[6.0,5.0,6.0,5.0,] 
 		 2: RETURN %v_14[14.1,] 
 BB 16
 	outgoing: 

@@ -91,14 +91,14 @@ BB 3
 		 0: %v_55[2.74,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 2 2 2 2 3 2 2 2 2 2 
+	datadep: 2 2 3 2 2 2 
 	instructions:
-		 0: %v_53->where %v_53[2.72,2.72,] %v_54[2.73,2.73,] %v_56[3.0,2.75,] 
+		 0: %v_53->where %v_53[2.72,] %v_54[2.73,] %v_56[3.0,2.75,] 
 		 1: %v_57->count %v_57[4.0,] 
-		 2: users_reporting_gender->to_f users_reporting_gender[2.70,2.70,] 
+		 2: users_reporting_gender->to_f users_reporting_gender[2.70,] 
 		 3: %v_58[4.1,] %v_59[4.2,] 
 		 4: %v_60[4.3,] 
-		 5: %self[2.0,2.0,] %v_61[4.4,] @percent_male[] 
+		 5: %self[2.0,] %v_61[4.4,] @percent_male[] 
 		 6: 
 		 7: (User) 
 		 8: 
@@ -112,18 +112,18 @@ BB 5
 		 0: %v_64[4.9,] 
 BB 6
 	outgoing: 7 
-	datadep: 4 4 4 4 5 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 4 5 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 	instructions:
-		 0: %v_62->where %v_62[4.7,4.7,] %v_63[4.8,4.8,] %v_65[5.0,4.10,] 
+		 0: %v_62->where %v_62[4.7,] %v_63[4.8,] %v_65[5.0,4.10,] 
 		 1: %v_66->count %v_66[6.0,] 
-		 2: users_reporting_gender->to_f users_reporting_gender[2.70,2.70,2.70,2.70,] 
+		 2: users_reporting_gender->to_f users_reporting_gender[2.70,] 
 		 3: %v_68[6.2,] %v_67[6.1,] 
 		 4: %v_69[6.3,] 
-		 5: %self[2.0,2.0,2.0,2.0,] %v_70[6.4,] @percent_female[] 
+		 5: %self[2.0,] %v_70[6.4,] @percent_female[] 
 		 6: 
 		 7: (User) 
 		 8: %v_71->find_featured %v_71[6.7,] 
-		 9: %self[2.0,2.0,2.0,2.0,] %v_72[6.8,] @featured_writers[] 
+		 9: %self[2.0,] %v_72[6.8,] @featured_writers[] 
 		 10: 
 		 11: (Post) 
 		 12: %v_73->includes %v_73[6.11,] 
@@ -138,8 +138,395 @@ BB 6
 		 21: %v_81[6.19,] %v_82[6.20,] 
 		 22: %v_74->where %v_83[6.21,] %v_74[6.12,] %v_75[6.13,] %v_78[6.16,] 
 		 23: %v_84->includes %v_84[6.22,] 
-		 24: %self[2.0,2.0,2.0,2.0,] %v_85[6.23,] @posts[] 
-		 25: RETURN %v_85[6.23,] 
+		 24: %self[2.0,] %v_85[6.23,] @posts[] 
+		 25: 
+		 26: %self->ruby_code_from_view %self[2.0,] 
+		 27: %v_86->ruby_code_from_view %self[2.0,] %v_86[6.26,] 
+CLOSURE BEGIN: @active_users[] @page_title[] @unactivated_users[] @percent_male[] @active_users_count[] @total_users[] @today_new_users[] @posts[6.24,] @featured_writers[6.9,] @yesterday_new_users[] @percent_reporting_zip[] @percent_female[6.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self->homepage_features_path %self[2.0,] 
+		 5: %self->link_to_unless_current %self[2.0,] %cl_2_4[3.3,] %cl_2_5[3.4,] 
+		 6: 
+		 7: 
+		 8: %self->categories_path %self[2.0,] 
+		 9: %self->link_to_unless_current %self[2.0,] %cl_2_7[3.7,] %cl_2_8[3.8,] 
+		 10: 
+		 11: 
+		 12: %self->metro_areas_path %self[2.0,] 
+		 13: %self->link_to_unless_current %self[2.0,] %cl_2_11[3.12,] %cl_2_10[3.11,] 
+		 14: 
+		 15: 
+		 16: %self->admin_events_path %self[2.0,] 
+		 17: %self->link_to_unless_current %self[2.0,] %cl_2_13[3.15,] %cl_2_14[3.16,] 
+		 18: 
+		 19: 
+		 20: %self->statistics_path %self[2.0,] 
+		 21: %self->link_to_unless_current %cl_2_16[3.19,] %self[2.0,] %cl_2_17[3.20,] 
+		 22: 
+		 23: 
+		 24: %self->ads_path %self[2.0,] 
+		 25: %self->link_to_unless_current %self[2.0,] %cl_2_19[3.23,] %cl_2_20[3.24,] 
+		 26: 
+		 27: 
+		 28: %self->admin_comments_path %self[2.0,] 
+		 29: %self->link_to_unless_current %self[2.0,] %cl_2_22[3.27,] %cl_2_23[3.28,] 
+		 30: 
+		 31: 
+		 32: %self->admin_tags_path %self[2.0,] 
+		 33: %self->link_to_unless_current %cl_2_26[3.32,] %self[2.0,] %cl_2_25[3.31,] 
+		 34: 
+		 35: 
+		 36: %self->admin_pages_path %self[2.0,] 
+		 37: %self->link_to_unless_current %self[2.0,] %cl_2_28[3.35,] %cl_2_29[3.36,] 
+		 38: 
+		 39: 
+		 40: %self->admin_users_path %self[2.0,] 
+		 41: %self->link_to_unless_current %self[2.0,] %cl_2_31[3.39,] %cl_2_32[3.40,] 
+		 42: 
+		 43: %self[2.0,] @admin_nav_links[] 
+		 44: %cl_2_34->any? %cl_2_34[3.43,] 
+		 45: BRANCH %cl_2_35[3.44,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @admin_nav_links[3.43,] 
+		 2: %cl_2_36->each %self[2.0,] %cl_2_36[4.1,] 
+CLOSURE BEGIN: @admin_nav_links[4.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: link[2.2,] 
+		 2: link[2.2,] 
+		 3: %self->link_to %self[2.0,] %cl_3_3[3.1,] %cl_3_4[3.2,] 
+		 4: RETURN %cl_3_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_6[4.0,] 
+		 2: RETURN %cl_3_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->admin_clear_cache_path %self[2.0,] 
+		 3: 
+		 4: %cl_2_40[6.3,] 
+		 5: %cl_2_41[6.4,] 
+		 6: %self->link_to %cl_2_38[6.1,] %self[2.0,] %cl_2_39[6.2,] %cl_2_42[6.5,] 
+		 7: RETURN %cl_2_43[6.6,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_44[7.0,] 
+		 2: RETURN %cl_2_45[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 28: 
+		 29: 
+		 30: %self[2.0,] %v_88[6.29,] @page_title[] 
+		 31: 
+		 32: 
+		 33: 
+		 34: %self[2.0,] @total_users[2.10,2.60,2.10,2.60,2.10,2.60,2.10,2.60,] 
+		 35: 
+		 36: 
+		 37: %self[2.0,] @unactivated_users[2.16,2.16,2.16,2.16,] 
+		 38: 
+		 39: 
+		 40: %self[2.0,] @today_new_users[2.35,2.35,2.35,2.35,] 
+		 41: %v_94->size %v_94[6.40,] 
+		 42: 
+		 43: @today_new_users[6.40,] 
+		 44: %v_96->each %self[2.0,] %v_96[6.43,] 
+CLOSURE BEGIN: @active_users[] @page_title[6.30,] @unactivated_users[6.37,] @percent_male[] @active_users_count[] @total_users[6.34,] @today_new_users[6.40,] @posts[6.24,] @featured_writers[6.9,] @yesterday_new_users[] @percent_reporting_zip[] @percent_female[6.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: user->login user[2.2,] 
+		 2: %self->user_path %self[2.0,] user[2.2,] 
+		 3: %self->link_to %self[2.0,] %cl_4_3[3.1,] %cl_4_4[3.2,] 
+		 4: RETURN %cl_4_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_6[4.0,] 
+		 2: RETURN %cl_4_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 45: 
+		 46: 
+		 47: 
+		 48: %self[2.0,] @yesterday_new_users[2.25,2.25,2.25,2.25,] 
+		 49: %v_99->size %v_99[6.48,] 
+		 50: 
+		 51: @yesterday_new_users[6.48,] 
+		 52: %v_101->each %self[2.0,] %v_101[6.51,] 
+CLOSURE BEGIN: @active_users[] @page_title[6.30,] @unactivated_users[6.37,] @percent_male[] @active_users_count[] @total_users[6.34,] @today_new_users[6.40,] @posts[6.24,] @featured_writers[6.9,] @yesterday_new_users[6.48,] @percent_reporting_zip[] @percent_female[6.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: user->login user[2.2,] 
+		 2: %self->user_path %self[2.0,] user[2.2,] 
+		 3: %self->link_to %self[2.0,] %cl_5_3[3.1,] %cl_5_4[3.2,] 
+		 4: RETURN %cl_5_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_6[4.0,] 
+		 2: RETURN %cl_5_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 53: 
+		 54: 
+		 55: 
+		 56: %self[2.0,] @active_users_count[2.47,2.47,2.47,2.47,] 
+		 57: 
+		 58: %self->pluralize %self[2.0,] %v_105[6.57,] %v_104[6.56,] 
+		 59: 
+		 60: @active_users_count[6.56,] 
+		 61: @total_users[6.34,] 
+		 62: %v_108->to_f %v_108[6.61,] 
+		 63: %v_109[6.62,] %v_107[6.60,] 
+		 64: %v_110[6.63,] 
+		 65: 
+		 66: %self->number_to_percentage %self[2.0,] %v_112[6.65,] %v_111[6.64,] 
+		 67: 
+		 68: 
+		 69: 
+		 70: %v_114[6.68,] %v_115[6.69,] 
+		 71: 
+		 72: %v_116[6.70,] %v_117[6.71,] 
+		 73: 
+		 74: 
+		 75: 
+		 76: 
+		 77: 
+		 78: %self[2.0,] @active_users[2.54,2.54,2.54,2.54,] 
+		 79: %v_121->each %self[2.0,] %v_121[6.78,] 
+CLOSURE BEGIN: @active_users[6.78,] @page_title[6.30,] @unactivated_users[6.37,] @percent_male[] @active_users_count[6.56,] @total_users[6.34,] @today_new_users[6.40,] @posts[6.24,] @featured_writers[6.9,] @yesterday_new_users[6.48,] @percent_reporting_zip[] @percent_female[6.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: user->login user[2.2,] 
+		 2: user->id user[2.2,] 
+		 3: %self->user_path %self[2.0,] %cl_6_4[3.2,] 
+		 4: %self->link_to %self[2.0,] %cl_6_3[3.1,] %cl_6_5[3.3,] 
+		 5: 
+		 6: user->activities_count user[2.2,] 
+		 7: RETURN %cl_6_7[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_8[4.0,] 
+		 2: RETURN %cl_6_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 80: 
+		 81: 
+		 82: 
+		 83: %self[2.0,] @percent_reporting_zip[2.64,2.64,2.64,2.64,] 
+		 84: 
+		 85: %self->number_to_percentage %self[2.0,] %v_125[6.84,] %v_124[6.83,] 
+		 86: 
+		 87: 
+		 88: 
+		 89: %self[2.0,] @percent_male[4.5,4.5,] 
+		 90: %self->number_to_percentage %self[2.0,] %v_128[6.89,] 
+		 91: 
+		 92: 
+		 93: 
+		 94: @percent_female[6.5,] 
+		 95: %self->number_to_percentage %self[2.0,] %v_131[6.94,] 
+		 96: 
+		 97: 
+		 98: 
+		 99: @featured_writers[6.9,] 
+		 100: %v_134->each %self[2.0,] %v_134[6.99,] 
+CLOSURE BEGIN: @active_users[6.78,] @page_title[6.30,] @unactivated_users[6.37,] @percent_male[6.89,] @active_users_count[6.56,] @total_users[6.34,] @today_new_users[6.40,] @posts[6.24,] @featured_writers[6.9,] @yesterday_new_users[6.48,] @percent_reporting_zip[6.83,] @percent_female[6.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: w->login w[2.2,] 
+		 2: %self->statistics_user_path %self[2.0,] w[2.2,] 
+		 3: %self->link_to %self[2.0,] %cl_7_3[3.1,] %cl_7_4[3.2,] 
+		 4: RETURN %cl_7_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_7_6[4.0,] 
+		 2: RETURN %cl_7_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 101: RETURN %v_135[6.100,] 
 BB 7
 	outgoing: 
 	datadep: 
@@ -170,12 +557,12 @@ BB 3
 		 0: 
 BB 4
 	outgoing: 5 
-	datadep: 2 2 2 2 
+	datadep: 2 2 
 	instructions:
 		 0: 
 		 1: (User) 
 		 2: %v_3->active %v_3[4.1,] 
-		 3: to[2.6,2.6,] from[2.5,2.5,] 
+		 3: to[2.6,] from[2.5,] 
 		 4: %v_5[4.3,] 
 		 5: %v_4->where %v_4[4.2,] %v_6[4.4,] 
 		 6: RETURN %v_7[4.5,] 

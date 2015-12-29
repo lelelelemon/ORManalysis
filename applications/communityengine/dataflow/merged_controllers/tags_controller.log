@@ -1,29 +1,3 @@
-SET IRMethod, name = index
-BB 1
-	outgoing: 4 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 4 
-	datadep: 
-	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
-		 6: (Tag) 
-		 7: %v_3->active %v_3[2.6,] 
-		 8: %v_4->all %v_4[2.7,] 
-		 9: %v_5[2.8,] 
-		 10: %self->render %self[2.0,] %v_6[2.9,] 
-		 11: RETURN %v_7[2.10,] 
-BB 4
-	outgoing: 
-	datadep: 
-	instructions:
-
 SET IRMethod, name = cache_action?
 BB 1
 	outgoing: 5 2 
@@ -85,12 +59,12 @@ BB 3
 		 0: %v_3[2.6,] 
 BB 4
 	outgoing: 5 
-	datadep: 3 2 2 2 2 2 2 2 
+	datadep: 3 2 2 2 
 	instructions:
 		 0: %v_4->pluck %v_4[3.0,2.7,] 
-		 1: %self[2.0,2.0,] %v_5[4.0,] @tag_names[] 
+		 1: %self[2.0,] %v_5[4.0,] @tag_names[] 
 		 2: 
-		 3: %self->respond_to %self[2.0,2.0,2.0,2.0,] 
+		 3: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @tag_names[4.1,] 
 BB 1
 	outgoing: 6 2 
@@ -203,7 +177,225 @@ BB 2
 		 26: %self->popular_tags %v_14[2.25,] %self[2.0,] 
 		 27: %v_15->to_a %v_15[2.26,] 
 		 28: %self[2.0,] %v_16[2.27,] @clipping_tags[] 
-		 29: RETURN %v_16[2.27,] 
+		 29: 
+		 30: 
+		 31: %self[2.0,] %v_17[2.30,] @page_title[] 
+		 32: 
+		 33: %self->widget %self[2.0,] 
+CLOSURE BEGIN: @page_title[2.31,] @tags[2.8,] @user_tags[2.13,] @post_tags[2.18,] @clipping_tags[2.28,] @photo_tags[2.23,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: %self->configatron %self[2.0,] 
+		 6: %cl_1_6->community_name %cl_1_6[3.5,] 
+		 7: 
+		 8: %cl_1_5[3.4,] %cl_1_7[3.6,] %cl_1_8[3.7,] 
+		 9: %cl_1_4[3.3,] %cl_1_9[3.8,] 
+		 10: 
+		 11: 
+		 12: RETURN %cl_1_11[3.11,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_12[4.0,] 
+		 2: RETURN %cl_1_13[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 34: 
+		 35: %self->widget %self[2.0,] 
+CLOSURE BEGIN: @page_title[2.31,] @tags[2.8,] @user_tags[2.13,] @post_tags[2.18,] @clipping_tags[2.28,] @photo_tags[2.23,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self->search_tags_path %self[2.0,] 
+		 4: 
+		 5: 
+		 6: %cl_2_4[3.3,] %cl_2_5[3.4,] %cl_2_6[3.5,] 
+		 7: %self[2.0,] %cl_2_7[3.6,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->params %self[2.0,] 
+		 3: %cl_3_4[3.2,] 
+		 4: 
+		 5: 
+		 6: %cl_3_6[3.4,] %cl_3_7[3.5,] 
+		 7: %self->text_field_tag %self[2.0,] %cl_3_3[3.1,] %cl_3_5[3.3,] %cl_3_8[3.6,] 
+		 8: 
+		 9: %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %cl_4_4[3.2,] %cl_4_5[3.3,] 
+		 5: 
+		 6: %cl_4_7[3.5,] 
+		 7: %cl_4_8[3.6,] %cl_4_6[3.4,] 
+		 8: %self->tag_auto_complete_field %self[2.0,] %cl_4_3[3.1,] %cl_4_9[3.7,] 
+		 9: RETURN %cl_4_10[3.8,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_11[4.0,] 
+		 2: RETURN %cl_4_12[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 10: 
+		 11: 
+		 12: 
+		 13: %cl_3_12[3.12,] 
+		 14: %self->submit_tag %self[2.0,] %cl_3_13[3.13,] %cl_3_11[3.11,] 
+		 15: RETURN %cl_3_14[3.14,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_15[4.0,] 
+		 2: RETURN %cl_3_16[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %cl_2_8[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_9[4.0,] 
+		 2: RETURN %cl_2_10[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 36: 
+		 37: @tags[2.8,] 
+		 38: 
+		 39: 
+		 40: 
+		 41: 
+		 42: 
+		 43: %v_24[2.41,] %v_25[2.42,] %v_21[2.38,] %v_22[2.39,] %v_23[2.40,] 
+		 44: %self->tag_cloud %self[2.0,] %v_26[2.43,] %v_20[2.37,] 
+CLOSURE BEGIN: @page_title[2.31,] @tags[2.8,] @user_tags[2.13,] @post_tags[2.18,] @clipping_tags[2.28,] @photo_tags[2.23,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: tag->name tag[2.2,] 
+		 2: tag->to_param tag[2.2,] 
+		 3: %self->tag_url %self[2.0,] %cl_5_4[3.2,] 
+		 4: css_class[2.3,] 
+		 5: %self->link_to %self[2.0,] %cl_5_3[3.1,] %cl_5_5[3.3,] %cl_5_6[3.4,] 
+		 6: RETURN %cl_5_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_8[4.0,] 
+		 2: RETURN %cl_5_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 45: RETURN %v_27[2.44,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -234,27 +426,373 @@ BB 3
 		 0: %v_3[2.6,] 
 BB 4
 	outgoing: 5 
-	datadep: 2 2 3 2 2 2 2 2 2 2 
+	datadep: 2 3 2 2 2 2 2 2 2 2 2 2 2 2 
 	instructions:
-		 0: %self->params %self[2.0,2.0,] 
+		 0: %self->params %self[2.0,] 
 		 1: %v_5[4.0,] 
 		 2: %v_4->search %v_4[3.0,2.7,] %v_6[4.1,] 
-		 3: %self[2.0,2.0,] %v_7[4.2,] @search[] 
+		 3: %self[2.0,] %v_7[4.2,] @search[] 
 		 4: 
 		 5: @search[4.3,] 
 		 6: %v_8->result %v_8[4.5,] 
-		 7: %self[2.0,2.0,] %v_9[4.6,] @tags[] 
+		 7: %self[2.0,] %v_9[4.6,] @tags[] 
 		 8: 
 		 9: @tags[4.7,] 
 		 10: 
 		 11: %v_10->order %v_10[4.9,] %v_11[4.10,] 
 		 12: %v_12->distinct %v_12[4.11,] 
-		 13: %self->params %self[2.0,2.0,] 
+		 13: %self->params %self[2.0,] 
 		 14: %v_14[4.13,] 
 		 15: %v_13->page %v_13[4.12,] %v_15[4.14,] 
 		 16: %v_16[4.15,] 
 		 17: @tags[4.7,4.9,] 
-		 18: RETURN %v_17[4.16,] 
+		 18: 
+		 19: 
+		 20: %self[2.0,] %v_18[4.19,] @page_title[] 
+		 21: 
+		 22: %self->ruby_code_from_view %self[2.0,] 
+		 23: %v_19->ruby_code_from_view %self[2.0,] %v_19[4.22,] 
+CLOSURE BEGIN: @search[4.3,] @page_title[4.20,] @tags[4.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self->homepage_features_path %self[2.0,] 
+		 5: %self->link_to_unless_current %self[2.0,] %cl_2_4[3.3,] %cl_2_5[3.4,] 
+		 6: 
+		 7: 
+		 8: %self->categories_path %self[2.0,] 
+		 9: %self->link_to_unless_current %self[2.0,] %cl_2_7[3.7,] %cl_2_8[3.8,] 
+		 10: 
+		 11: 
+		 12: %self->metro_areas_path %self[2.0,] 
+		 13: %self->link_to_unless_current %self[2.0,] %cl_2_11[3.12,] %cl_2_10[3.11,] 
+		 14: 
+		 15: 
+		 16: %self->admin_events_path %self[2.0,] 
+		 17: %self->link_to_unless_current %self[2.0,] %cl_2_13[3.15,] %cl_2_14[3.16,] 
+		 18: 
+		 19: 
+		 20: %self->statistics_path %self[2.0,] 
+		 21: %self->link_to_unless_current %cl_2_16[3.19,] %self[2.0,] %cl_2_17[3.20,] 
+		 22: 
+		 23: 
+		 24: %self->ads_path %self[2.0,] 
+		 25: %self->link_to_unless_current %self[2.0,] %cl_2_19[3.23,] %cl_2_20[3.24,] 
+		 26: 
+		 27: 
+		 28: %self->admin_comments_path %self[2.0,] 
+		 29: %self->link_to_unless_current %self[2.0,] %cl_2_22[3.27,] %cl_2_23[3.28,] 
+		 30: 
+		 31: 
+		 32: %self->admin_tags_path %self[2.0,] 
+		 33: %self->link_to_unless_current %cl_2_26[3.32,] %self[2.0,] %cl_2_25[3.31,] 
+		 34: 
+		 35: 
+		 36: %self->admin_pages_path %self[2.0,] 
+		 37: %self->link_to_unless_current %self[2.0,] %cl_2_28[3.35,] %cl_2_29[3.36,] 
+		 38: 
+		 39: 
+		 40: %self->admin_users_path %self[2.0,] 
+		 41: %self->link_to_unless_current %self[2.0,] %cl_2_31[3.39,] %cl_2_32[3.40,] 
+		 42: 
+		 43: %self[2.0,] @admin_nav_links[] 
+		 44: %cl_2_34->any? %cl_2_34[3.43,] 
+		 45: BRANCH %cl_2_35[3.44,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @admin_nav_links[3.43,] 
+		 2: %cl_2_36->each %self[2.0,] %cl_2_36[4.1,] 
+CLOSURE BEGIN: @admin_nav_links[4.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: link[2.2,] 
+		 2: link[2.2,] 
+		 3: %self->link_to %self[2.0,] %cl_3_3[3.1,] %cl_3_4[3.2,] 
+		 4: RETURN %cl_3_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_6[4.0,] 
+		 2: RETURN %cl_3_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->admin_clear_cache_path %self[2.0,] 
+		 3: 
+		 4: %cl_2_40[6.3,] 
+		 5: %cl_2_41[6.4,] 
+		 6: %self->link_to %cl_2_38[6.1,] %self[2.0,] %cl_2_39[6.2,] %cl_2_42[6.5,] 
+		 7: RETURN %cl_2_43[6.6,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_44[7.0,] 
+		 2: RETURN %cl_2_45[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 24: 
+		 25: %self->box %self[2.0,] 
+CLOSURE BEGIN: @search[4.3,] @page_title[4.20,] @tags[4.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @search[] 
+		 4: %self->admin_tags_path %self[2.0,] 
+		 5: %cl_4_5[3.4,] 
+		 6: %self->bootstrap_form_for %self[2.0,] %cl_4_4[3.3,] %cl_4_6[3.5,] 
+CLOSURE BEGIN: @search[3.3,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_5_3[3.1,] 
+		 3: f->text_field f[2.2,] %cl_5_4[3.2,] 
+		 4: 
+		 5: %self[2.0,] f[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: f->primary %cl_6_3[3.1,] 
+		 3: RETURN %cl_6_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_5[4.0,] 
+		 2: RETURN %cl_6_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %cl_5_6[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_7[4.0,] 
+		 2: RETURN %cl_5_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: RETURN %cl_4_7[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_8[4.0,] 
+		 2: RETURN %cl_4_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 26: 
+		 27: @search[4.3,4.5,] 
+		 28: 
+		 29: %self->sort_link %self[2.0,] %v_22[4.27,] %v_23[4.28,] 
+		 30: 
+		 31: @search[4.3,4.5,4.27,] 
+		 32: 
+		 33: %self->sort_link %v_25[4.31,] %self[2.0,] %v_26[4.32,] 
+		 34: 
+		 35: 
+		 36: 
+		 37: @tags[4.7,4.9,4.17,] 
+		 38: %v_30->each %self[2.0,] %v_30[4.37,] 
+CLOSURE BEGIN: @search[4.3,] @page_title[4.20,] @tags[4.7,] 
+BB 1
+	outgoing: 4 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: tag->name tag[2.2,] 
+		 7: 
+		 8: tag->taggings tag[2.2,] 
+		 9: %cl_7_4->count %cl_7_4[2.8,] 
+		 10: 
+		 11: 
+		 12: %self->tag_path tag[2.2,] %self[2.0,] 
+		 13: 
+		 14: %cl_7_8[2.13,] 
+		 15: %self->link_to %self[2.0,] %cl_7_9[2.14,] %cl_7_6[2.11,] %cl_7_7[2.12,] 
+		 16: 
+		 17: 
+		 18: %self->edit_tag_path tag[2.2,] %self[2.0,] 
+		 19: 
+		 20: %cl_7_13[2.19,] 
+		 21: %self->link_to %self[2.0,] %cl_7_14[2.20,] %cl_7_11[2.17,] %cl_7_12[2.18,] 
+		 22: 
+		 23: 
+		 24: %self->tag_path tag[2.2,] %self[2.0,] 
+		 25: 
+		 26: %cl_7_18[2.25,] 
+		 27: 
+		 28: %cl_7_20[2.27,] %cl_7_19[2.26,] 
+		 29: %self->link_to %self[2.0,] %cl_7_16[2.23,] %cl_7_17[2.24,] %cl_7_21[2.28,] 
+		 30: RETURN %cl_7_22[2.29,] 
+BB 4
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 39: 
+		 40: @tags[4.7,4.9,4.17,4.37,] 
+		 41: 
+		 42: %v_32[4.41,] 
+		 43: %self->paginate %self[2.0,] %v_31[4.40,] %v_33[4.42,] 
+		 44: RETURN %v_34[4.43,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -285,15 +823,287 @@ BB 3
 		 0: %v_3[2.6,] 
 BB 4
 	outgoing: 5 
-	datadep: 2 2 3 2 2 2 
+	datadep: 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 
 	instructions:
 		 0: (URI) 
-		 1: %self->params %self[2.0,2.0,] 
+		 1: %self->params %self[2.0,] 
 		 2: %v_6[4.1,] 
 		 3: %v_5->decode %v_5[4.0,] %v_7[4.2,] 
 		 4: %v_4->find_by_name %v_4[3.0,2.7,] %v_8[4.3,] 
-		 5: %self[2.0,2.0,] %v_9[4.4,] @tag[] 
-		 6: RETURN %v_9[4.4,] 
+		 5: %self[2.0,] %v_9[4.4,] @tag[] 
+		 6: 
+		 7: 
+		 8: %self[2.0,] %v_10[4.7,] @page_title[] 
+		 9: 
+		 10: %self->ruby_code_from_view %self[2.0,] 
+		 11: %v_11->ruby_code_from_view %self[2.0,] %v_11[4.10,] 
+CLOSURE BEGIN: @page_title[4.8,] @tag[4.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self->homepage_features_path %self[2.0,] 
+		 5: %self->link_to_unless_current %self[2.0,] %cl_2_4[3.3,] %cl_2_5[3.4,] 
+		 6: 
+		 7: 
+		 8: %self->categories_path %self[2.0,] 
+		 9: %self->link_to_unless_current %self[2.0,] %cl_2_7[3.7,] %cl_2_8[3.8,] 
+		 10: 
+		 11: 
+		 12: %self->metro_areas_path %self[2.0,] 
+		 13: %self->link_to_unless_current %self[2.0,] %cl_2_11[3.12,] %cl_2_10[3.11,] 
+		 14: 
+		 15: 
+		 16: %self->admin_events_path %self[2.0,] 
+		 17: %self->link_to_unless_current %self[2.0,] %cl_2_13[3.15,] %cl_2_14[3.16,] 
+		 18: 
+		 19: 
+		 20: %self->statistics_path %self[2.0,] 
+		 21: %self->link_to_unless_current %cl_2_16[3.19,] %self[2.0,] %cl_2_17[3.20,] 
+		 22: 
+		 23: 
+		 24: %self->ads_path %self[2.0,] 
+		 25: %self->link_to_unless_current %self[2.0,] %cl_2_19[3.23,] %cl_2_20[3.24,] 
+		 26: 
+		 27: 
+		 28: %self->admin_comments_path %self[2.0,] 
+		 29: %self->link_to_unless_current %self[2.0,] %cl_2_22[3.27,] %cl_2_23[3.28,] 
+		 30: 
+		 31: 
+		 32: %self->admin_tags_path %self[2.0,] 
+		 33: %self->link_to_unless_current %cl_2_26[3.32,] %self[2.0,] %cl_2_25[3.31,] 
+		 34: 
+		 35: 
+		 36: %self->admin_pages_path %self[2.0,] 
+		 37: %self->link_to_unless_current %self[2.0,] %cl_2_28[3.35,] %cl_2_29[3.36,] 
+		 38: 
+		 39: 
+		 40: %self->admin_users_path %self[2.0,] 
+		 41: %self->link_to_unless_current %self[2.0,] %cl_2_31[3.39,] %cl_2_32[3.40,] 
+		 42: 
+		 43: %self[2.0,] @admin_nav_links[] 
+		 44: %cl_2_34->any? %cl_2_34[3.43,] 
+		 45: BRANCH %cl_2_35[3.44,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @admin_nav_links[3.43,] 
+		 2: %cl_2_36->each %self[2.0,] %cl_2_36[4.1,] 
+CLOSURE BEGIN: @admin_nav_links[4.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: link[2.2,] 
+		 2: link[2.2,] 
+		 3: %self->link_to %self[2.0,] %cl_3_3[3.1,] %cl_3_4[3.2,] 
+		 4: RETURN %cl_3_5[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_6[4.0,] 
+		 2: RETURN %cl_3_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->admin_clear_cache_path %self[2.0,] 
+		 3: 
+		 4: %cl_2_40[6.3,] 
+		 5: %cl_2_41[6.4,] 
+		 6: %self->link_to %cl_2_38[6.1,] %self[2.0,] %cl_2_39[6.2,] %cl_2_42[6.5,] 
+		 7: RETURN %cl_2_43[6.6,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_44[7.0,] 
+		 2: RETURN %cl_2_45[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 12: 
+		 13: 
+		 14: %self->admin_tags_path %self[2.0,] 
+		 15: 
+		 16: %v_15[4.15,] 
+		 17: %self->link_to %v_13[4.13,] %v_14[4.14,] %self[2.0,] %v_16[4.16,] 
+		 18: 
+		 19: 
+		 20: @tag[4.5,] 
+		 21: %self->tag_path %self[2.0,] %v_19[4.20,] 
+		 22: 
+		 23: %v_21[4.22,] 
+		 24: %self->link_to %self[2.0,] %v_18[4.19,] %v_20[4.21,] %v_22[4.23,] 
+		 25: 
+		 26: 
+		 27: @tag[4.5,4.20,] 
+		 28: %self->tag_path %v_25[4.27,] %self[2.0,] 
+		 29: 
+		 30: 
+		 31: %v_28[4.30,] 
+		 32: 
+		 33: %v_27[4.29,] %v_29[4.31,] %v_30[4.32,] 
+		 34: %self->link_to %v_24[4.26,] %self[2.0,] %v_26[4.28,] %v_31[4.33,] 
+		 35: 
+		 36: @tag[4.5,4.20,4.27,] 
+		 37: %self->tag_path %self[2.0,] %v_33[4.36,] 
+		 38: 
+		 39: %v_35[4.38,] 
+		 40: %v_36[4.39,] %v_34[4.37,] 
+		 41: %self->bootstrap_form_for %self[2.0,] %v_37[4.40,] 
+CLOSURE BEGIN: @page_title[4.8,] @tag[4.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: f->text_field f[2.2,] 
+		 2: 
+		 3: %self[2.0,] f[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: f->primary %cl_5_3[3.1,] 
+		 3: RETURN %cl_5_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_5[4.0,] 
+		 2: RETURN %cl_5_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_4_4[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_5[4.0,] 
+		 2: RETURN %cl_4_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 42: RETURN %v_38[4.41,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -324,16 +1134,16 @@ BB 3
 		 0: %v_3[2.6,] 
 BB 4
 	outgoing: 5 
-	datadep: 2 2 3 2 2 2 2 2 2 2 
+	datadep: 2 3 2 2 2 
 	instructions:
 		 0: (URI) 
-		 1: %self->params %self[2.0,2.0,] 
+		 1: %self->params %self[2.0,] 
 		 2: %v_6[4.1,] 
 		 3: %v_5->decode %v_5[4.0,] %v_7[4.2,] 
 		 4: %v_4->find_by_name %v_4[3.0,2.7,] %v_8[4.3,] 
-		 5: %self[2.0,2.0,] %v_9[4.4,] @tag[] 
+		 5: %self[2.0,] %v_9[4.4,] @tag[] 
 		 6: 
-		 7: %self->respond_to %self[2.0,2.0,2.0,2.0,] 
+		 7: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @tag[4.5,] 
 BB 1
 	outgoing: 9 2 
@@ -459,20 +1269,322 @@ BB 2
 		 3: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %cl_4_3->ruby_code_from_view %self[2.0,] %cl_4_3[3.1,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
 	instructions:
 		 0: 
 		 1: 
-		 2: %cl_4_3[3.1,] 
-		 3: %self->render %self[2.0,] %cl_4_4[3.2,] 
-		 4: RETURN %cl_4_5[3.3,] 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] %cl_5_3[3.1,] @page_title[] 
+		 3: 
+		 4: %self->ruby_code_from_view %self[2.0,] 
+		 5: %cl_5_4->ruby_code_from_view %self[2.0,] %cl_5_4[3.4,] 
+CLOSURE BEGIN: @page_title[3.2,] @tag[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self->homepage_features_path %self[2.0,] 
+		 5: %self->link_to_unless_current %self[2.0,] %cl_7_5[3.4,] %cl_7_4[3.3,] 
+		 6: 
+		 7: 
+		 8: %self->categories_path %self[2.0,] 
+		 9: %self->link_to_unless_current %self[2.0,] %cl_7_7[3.7,] %cl_7_8[3.8,] 
+		 10: 
+		 11: 
+		 12: %self->metro_areas_path %self[2.0,] 
+		 13: %self->link_to_unless_current %self[2.0,] %cl_7_10[3.11,] %cl_7_11[3.12,] 
+		 14: 
+		 15: 
+		 16: %self->admin_events_path %self[2.0,] 
+		 17: %self->link_to_unless_current %self[2.0,] %cl_7_14[3.16,] %cl_7_13[3.15,] 
+		 18: 
+		 19: 
+		 20: %self->statistics_path %self[2.0,] 
+		 21: %self->link_to_unless_current %self[2.0,] %cl_7_16[3.19,] %cl_7_17[3.20,] 
+		 22: 
+		 23: 
+		 24: %self->ads_path %self[2.0,] 
+		 25: %self->link_to_unless_current %self[2.0,] %cl_7_20[3.24,] %cl_7_19[3.23,] 
+		 26: 
+		 27: 
+		 28: %self->admin_comments_path %self[2.0,] 
+		 29: %self->link_to_unless_current %self[2.0,] %cl_7_22[3.27,] %cl_7_23[3.28,] 
+		 30: 
+		 31: 
+		 32: %self->admin_tags_path %self[2.0,] 
+		 33: %self->link_to_unless_current %self[2.0,] %cl_7_25[3.31,] %cl_7_26[3.32,] 
+		 34: 
+		 35: 
+		 36: %self->admin_pages_path %self[2.0,] 
+		 37: %self->link_to_unless_current %self[2.0,] %cl_7_29[3.36,] %cl_7_28[3.35,] 
+		 38: 
+		 39: 
+		 40: %self->admin_users_path %self[2.0,] 
+		 41: %self->link_to_unless_current %self[2.0,] %cl_7_31[3.39,] %cl_7_32[3.40,] 
+		 42: 
+		 43: %self[2.0,] @admin_nav_links[] 
+		 44: %cl_7_34->any? %cl_7_34[3.43,] 
+		 45: BRANCH %cl_7_35[3.44,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @admin_nav_links[3.43,] 
+		 2: %cl_7_36->each %self[2.0,] %cl_7_36[4.1,] 
+CLOSURE BEGIN: @admin_nav_links[4.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: link[2.2,] 
+		 2: link[2.2,] 
+		 3: %self->link_to %self[2.0,] %cl_8_4[3.2,] %cl_8_3[3.1,] 
+		 4: RETURN %cl_8_5[3.3,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %cl_4_6[4.0,] 
-		 2: RETURN %cl_4_7[4.1,] 
+		 1: %cl_8_6[4.0,] 
+		 2: RETURN %cl_8_7[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->admin_clear_cache_path %self[2.0,] 
+		 3: 
+		 4: %cl_7_40[6.3,] 
+		 5: %cl_7_41[6.4,] 
+		 6: %self->link_to %self[2.0,] %cl_7_42[6.5,] %cl_7_38[6.1,] %cl_7_39[6.2,] 
+		 7: RETURN %cl_7_43[6.6,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_7_44[7.0,] 
+		 2: RETURN %cl_7_45[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %cl_6_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_6_4[4.0,] 
+		 2: RETURN %cl_6_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+		 7: 
+		 8: %self->admin_tags_path %self[2.0,] 
+		 9: 
+		 10: %cl_5_8[3.9,] 
+		 11: %self->link_to %self[2.0,] %cl_5_7[3.8,] %cl_5_9[3.10,] %cl_5_6[3.7,] 
+		 12: 
+		 13: 
+		 14: %self[2.0,] @tag[] 
+		 15: %self->tag_path %self[2.0,] %cl_5_12[3.14,] 
+		 16: 
+		 17: %cl_5_14[3.16,] 
+		 18: %self->link_to %self[2.0,] %cl_5_13[3.15,] %cl_5_15[3.17,] %cl_5_11[3.13,] 
+		 19: 
+		 20: 
+		 21: @tag[3.14,] 
+		 22: %self->tag_path %self[2.0,] %cl_5_18[3.21,] 
+		 23: 
+		 24: 
+		 25: %cl_5_21[3.24,] 
+		 26: 
+		 27: %cl_5_23[3.26,] %cl_5_20[3.23,] %cl_5_22[3.25,] 
+		 28: %self->link_to %self[2.0,] %cl_5_17[3.20,] %cl_5_19[3.22,] %cl_5_24[3.27,] 
+		 29: 
+		 30: @tag[3.14,3.21,] 
+		 31: %self->tag_path %self[2.0,] %cl_5_26[3.30,] 
+		 32: 
+		 33: %cl_5_28[3.32,] 
+		 34: %cl_5_27[3.31,] %cl_5_29[3.33,] 
+		 35: %self->bootstrap_form_for %self[2.0,] %cl_5_30[3.34,] 
+CLOSURE BEGIN: @page_title[3.2,] @tag[3.14,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: f->text_field f[2.2,] 
+		 2: 
+		 3: %self[2.0,] f[2.2,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: f->primary %cl_10_3[3.1,] 
+		 3: RETURN %cl_10_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_10_5[4.0,] 
+		 2: RETURN %cl_10_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: RETURN %cl_9_4[3.3,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_9_5[4.0,] 
+		 2: RETURN %cl_9_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 36: RETURN %cl_5_31[3.35,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_32[4.0,] 
+		 2: RETURN %cl_5_33[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_4_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_5[4.0,] 
+		 2: RETURN %cl_4_6[4.1,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -499,18 +1611,18 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self[2.0,] @tag[] 
-		 2: %cl_5_3->errors %cl_5_3[3.1,] 
-		 3: %cl_5_4->to_xml %cl_5_4[3.2,] 
-		 4: %cl_5_5[3.3,] 
-		 5: %self->render %self[2.0,] %cl_5_6[3.4,] 
-		 6: RETURN %cl_5_7[3.5,] 
+		 2: %cl_11_3->errors %cl_11_3[3.1,] 
+		 3: %cl_11_4->to_xml %cl_11_4[3.2,] 
+		 4: %cl_11_5[3.3,] 
+		 5: %self->render %self[2.0,] %cl_11_6[3.4,] 
+		 6: RETURN %cl_11_7[3.5,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %cl_5_8[4.0,] 
-		 2: RETURN %cl_5_9[4.1,] 
+		 1: %cl_11_8[4.0,] 
+		 2: RETURN %cl_11_9[4.1,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -565,19 +1677,19 @@ BB 3
 		 0: %v_3[2.6,] 
 BB 4
 	outgoing: 5 
-	datadep: 2 2 3 2 2 2 2 2 2 2 
+	datadep: 2 3 2 2 2 
 	instructions:
 		 0: (URI) 
-		 1: %self->params %self[2.0,2.0,] 
+		 1: %self->params %self[2.0,] 
 		 2: %v_6[4.1,] 
 		 3: %v_5->decode %v_5[4.0,] %v_7[4.2,] 
 		 4: %v_4->find_by_name %v_4[3.0,2.7,] %v_8[4.3,] 
-		 5: %self[2.0,2.0,] %v_9[4.4,] @tag[] 
+		 5: %self[2.0,] %v_9[4.4,] @tag[] 
 		 6: 
 		 7: @tag[4.5,] 
 		 8: %v_10->destroy %v_10[4.7,] 
 		 9: 
-		 10: %self->respond_to %self[2.0,2.0,2.0,2.0,] 
+		 10: %self->respond_to %self[2.0,] 
 CLOSURE BEGIN: @tag[4.5,] 
 BB 1
 	outgoing: 6 2 
@@ -691,7 +1803,7 @@ BB 5
 
 SET IRMethod, name = show
 BB 1
-	outgoing: 36 2 
+	outgoing: 71 2 
 	datadep: 
 	instructions:
 BB 2
@@ -714,10 +1826,10 @@ BB 3
 		 0: %v_3[2.6,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 2 2 3 2 
+	datadep: 2 3 2 
 	instructions:
 		 0: (URI) 
-		 1: %self->params %self[2.0,2.0,] 
+		 1: %self->params %self[2.0,] 
 		 2: %v_6[4.1,] 
 		 3: %v_5->decode %v_5[4.0,] %v_7[4.2,] 
 		 4: %v_4->from %v_4[3.0,2.7,] %v_8[4.3,] 
@@ -733,20 +1845,20 @@ BB 5
 		 0: %v_10[4.7,] 
 BB 6
 	outgoing: 7 8 
-	datadep: 4 4 5 4 2 2 2 2 
+	datadep: 4 5 4 2 
 	instructions:
 		 0: 
-		 1: %v_11->where tag_array[4.5,4.5,] %v_11[5.0,4.8,] %v_12[6.0,] 
-		 2: %v_13[6.1,] %self[2.0,2.0,2.0,2.0,] @tags[] 
+		 1: %v_11->where tag_array[4.5,] %v_11[5.0,4.8,] %v_12[6.0,] 
+		 2: %v_13[6.1,] %self[2.0,] @tags[] 
 		 3: 
 		 4: @tags[6.2,] 
 		 5: %v_14->nil? %v_14[6.4,] 
 		 6: BRANCH %v_15[6.5,] 
 BB 7
 	outgoing: 8 
-	datadep: 2 2 2 2 
+	datadep: 2 
 	instructions:
-		 0: %self[2.0,2.0,2.0,2.0,] @tags[6.2,6.4,] 
+		 0: %self[2.0,] @tags[6.2,6.4,] 
 		 1: %v_16->empty? %v_16[7.0,] 
 		 2: %v_17[7.1,] 
 BB 8
@@ -756,19 +1868,19 @@ BB 8
 		 0: BRANCH %v_15[7.2,6.5,] 
 BB 9
 	outgoing: 10 12 
-	datadep: 2 2 2 2 2 2 4 4 4 4 2 2 2 2 2 2 
+	datadep: 2 4 2 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
-		 2: tag_array[4.5,4.5,4.5,4.5,] 
+		 1: %self->flash %self[2.0,] 
+		 2: tag_array[4.5,] 
 		 3: %v_19->l_with_args %v_19[9.2,] 
 		 4: %v_18[9.1,] %v_20[9.3,] 
 		 5: 
 		 6: 
-		 7: %self->redirect_to %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_21[9.6,] 
+		 7: %self->redirect_to %self[2.0,] %v_21[9.6,] 
 		 8: BRANCH %v_22[9.7,] 
 BB 10
-	outgoing: 36 
+	outgoing: 71 
 	datadep: 
 	instructions:
 		 0: RETURN 
@@ -784,17 +1896,17 @@ BB 13
 		 0: 
 BB 14
 	outgoing: 15 34 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 2 
 	instructions:
 		 0: 
-		 1: %self[2.0,2.0,2.0,2.0,2.0,2.0,] @tags[7.0,6.2,6.4,] 
+		 1: %self[2.0,] @tags[7.0,6.2,6.4,] 
 		 2: %v_23->first %v_23[14.1,] 
 		 3: %v_24->related_tags %v_24[14.2,] 
-		 4: %v_25[14.3,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @related_tags[] 
+		 4: %v_25[14.3,] %self[2.0,] @related_tags[] 
 		 5: 
 		 6: @tags[14.1,] 
-		 7: %v_26->collect %v_26[14.6,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
-CLOSURE BEGIN: @users[] @tags[14.1,] @tags_raw[] @posts[] @related_tags[14.4,] @photos[] @pages[] @clippings[] 
+		 7: %v_26->collect %v_26[14.6,] %self[2.0,] 
+CLOSURE BEGIN: @users[] @tags[14.1,] @tags_raw[] @posts[] @related_tags[] @photos[] @pages[] @clippings[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -829,17 +1941,17 @@ BB 6
 CLOSURE END
 		 8: 
 		 9: %v_27->join %v_27[14.7,] %v_28[14.8,] 
-		 10: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_29[14.9,] @tags_raw[] 
+		 10: %self[2.0,] %v_29[14.9,] @tags_raw[] 
 		 11: 
-		 12: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 12: %self->params %self[2.0,] 
 		 13: %v_30[14.12,] 
 		 14: BRANCH %v_31[14.13,] 
 BB 15
 	outgoing: 16 24 
-	datadep: 2 2 2 2 2 2 
+	datadep: 2 
 	instructions:
 		 0: 
-		 1: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 1: %self->params %self[2.0,] 
 		 2: %v_32[15.1,] 
 		 3: 
 		 4: %v_36[15.3,] %v_33[15.2,] 
@@ -895,7 +2007,7 @@ BB 22
 		 2: BRANCH %v_49[22.1,] 
 BB 23
 	outgoing: 33 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 2 2 2 2 
 	instructions:
 		 0: 
 		 1: 
@@ -907,26 +2019,26 @@ BB 23
 		 7: %v_164[23.2,] 
 		 8: %v_165[23.3,] 
 		 9: %v_166[23.4,] 
-		 10: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_163[23.1,] @clippings[] 
-		 11: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_164[23.2,] @posts[] 
-		 12: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_165[23.3,] @photos[] 
-		 13: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_166[23.4,] @users[] 
+		 10: %self[2.0,] %v_163[23.1,] @clippings[] 
+		 11: %self[2.0,] %v_164[23.2,] @posts[] 
+		 12: %self[2.0,] %v_165[23.3,] @photos[] 
+		 13: %self[2.0,] %v_166[23.4,] @users[] 
 		 14: %v_167[23.5,] 
 		 15: 
 BB 24
 	outgoing: 33 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (Post) 
 		 2: %v_51->recent %v_51[24.1,] 
-		 3: %v_52->tagged_with %v_52[24.2,] tag_array[4.5,4.5,4.5,4.5,] 
-		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_52->tagged_with %v_52[24.2,] tag_array[4.5,] 
+		 4: %self->params %self[2.0,] 
 		 5: %v_54[24.4,] 
 		 6: %v_53->page %v_53[24.3,] %v_55[24.5,] 
 		 7: %v_56[24.6,] 
-		 8: %v_57[24.7,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @posts[] 
-		 9: %v_57[24.7,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @pages[] 
+		 8: %v_57[24.7,] %self[2.0,] @posts[] 
+		 9: %v_57[24.7,] %self[2.0,] @pages[] 
 		 10: 
 		 11: 
 		 12: 
@@ -935,25 +2047,25 @@ BB 24
 		 15: %v_58[24.11,] 
 		 16: %v_59[24.12,] 
 		 17: %v_60[24.13,] 
-		 18: %v_58[24.11,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @photos[] 
-		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_59[24.12,] @users[] 
-		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_60[24.13,] @clippings[] 
+		 18: %v_58[24.11,] %self[2.0,] @photos[] 
+		 19: %self[2.0,] %v_59[24.12,] @users[] 
+		 20: %self[2.0,] %v_60[24.13,] @clippings[] 
 		 21: %v_61[24.14,] 
 		 22: 
 BB 25
 	outgoing: 33 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (Post) 
 		 2: %v_65->recent %v_65[25.1,] 
-		 3: %v_66->tagged_with tag_array[4.5,4.5,4.5,4.5,] %v_66[25.2,] 
-		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_66->tagged_with tag_array[4.5,] %v_66[25.2,] 
+		 4: %self->params %self[2.0,] 
 		 5: %v_68[25.4,] 
 		 6: %v_67->page %v_69[25.5,] %v_67[25.3,] 
 		 7: %v_70[25.6,] 
-		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_71[25.7,] @posts[] 
-		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_71[25.7,] @pages[] 
+		 8: %self[2.0,] %v_71[25.7,] @posts[] 
+		 9: %self[2.0,] %v_71[25.7,] @pages[] 
 		 10: 
 		 11: 
 		 12: 
@@ -962,25 +2074,25 @@ BB 25
 		 15: %v_72[25.11,] 
 		 16: %v_73[25.12,] 
 		 17: %v_74[25.13,] 
-		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_72[25.11,] @photos[] 
-		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_73[25.12,] @users[] 
-		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_74[25.13,] @clippings[] 
+		 18: %self[2.0,] %v_72[25.11,] @photos[] 
+		 19: %self[2.0,] %v_73[25.12,] @users[] 
+		 20: %self[2.0,] %v_74[25.13,] @clippings[] 
 		 21: %v_75[25.14,] 
 		 22: 
 BB 26
 	outgoing: 33 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (Photo) 
 		 2: %v_79->recent %v_79[26.1,] 
-		 3: %v_80->tagged_with %v_80[26.2,] tag_array[4.5,4.5,4.5,4.5,] 
-		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_80->tagged_with %v_80[26.2,] tag_array[4.5,] 
+		 4: %self->params %self[2.0,] 
 		 5: %v_82[26.4,] 
 		 6: %v_81->page %v_81[26.3,] %v_83[26.5,] 
 		 7: %v_84[26.6,] 
-		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_85[26.7,] @photos[] 
-		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_85[26.7,] @pages[] 
+		 8: %self[2.0,] %v_85[26.7,] @photos[] 
+		 9: %self[2.0,] %v_85[26.7,] @pages[] 
 		 10: 
 		 11: 
 		 12: 
@@ -989,25 +2101,25 @@ BB 26
 		 15: %v_86[26.11,] 
 		 16: %v_87[26.12,] 
 		 17: %v_88[26.13,] 
-		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_86[26.11,] @posts[] 
-		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_87[26.12,] @users[] 
-		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_88[26.13,] @clippings[] 
+		 18: %self[2.0,] %v_86[26.11,] @posts[] 
+		 19: %self[2.0,] %v_87[26.12,] @users[] 
+		 20: %self[2.0,] %v_88[26.13,] @clippings[] 
 		 21: %v_89[26.14,] 
 		 22: 
 BB 27
 	outgoing: 33 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (Photo) 
 		 2: %v_93->recent %v_93[27.1,] 
-		 3: %v_94->tagged_with %v_94[27.2,] tag_array[4.5,4.5,4.5,4.5,] 
-		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_94->tagged_with %v_94[27.2,] tag_array[4.5,] 
+		 4: %self->params %self[2.0,] 
 		 5: %v_96[27.4,] 
 		 6: %v_95->page %v_95[27.3,] %v_97[27.5,] 
 		 7: %v_98[27.6,] 
-		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_99[27.7,] @photos[] 
-		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_99[27.7,] @pages[] 
+		 8: %self[2.0,] %v_99[27.7,] @photos[] 
+		 9: %self[2.0,] %v_99[27.7,] @pages[] 
 		 10: 
 		 11: 
 		 12: 
@@ -1016,25 +2128,25 @@ BB 27
 		 15: %v_100[27.11,] 
 		 16: %v_101[27.12,] 
 		 17: %v_102[27.13,] 
-		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_100[27.11,] @posts[] 
-		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_101[27.12,] @users[] 
-		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_102[27.13,] @clippings[] 
+		 18: %self[2.0,] %v_100[27.11,] @posts[] 
+		 19: %self[2.0,] %v_101[27.12,] @users[] 
+		 20: %self[2.0,] %v_102[27.13,] @clippings[] 
 		 21: %v_103[27.14,] 
 		 22: 
 BB 28
 	outgoing: 33 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (User) 
 		 2: %v_107->recent %v_107[28.1,] 
-		 3: %v_108->tagged_with %v_108[28.2,] tag_array[4.5,4.5,4.5,4.5,] 
-		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_108->tagged_with %v_108[28.2,] tag_array[4.5,] 
+		 4: %self->params %self[2.0,] 
 		 5: %v_110[28.4,] 
 		 6: %v_109->page %v_109[28.3,] %v_111[28.5,] 
 		 7: %v_112[28.6,] 
-		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_113[28.7,] @users[] 
-		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_113[28.7,] @pages[] 
+		 8: %self[2.0,] %v_113[28.7,] @users[] 
+		 9: %self[2.0,] %v_113[28.7,] @pages[] 
 		 10: 
 		 11: 
 		 12: 
@@ -1043,25 +2155,25 @@ BB 28
 		 15: %v_114[28.11,] 
 		 16: %v_115[28.12,] 
 		 17: %v_116[28.13,] 
-		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_114[28.11,] @posts[] 
-		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_115[28.12,] @photos[] 
-		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_116[28.13,] @clippings[] 
+		 18: %self[2.0,] %v_114[28.11,] @posts[] 
+		 19: %self[2.0,] %v_115[28.12,] @photos[] 
+		 20: %self[2.0,] %v_116[28.13,] @clippings[] 
 		 21: %v_117[28.14,] 
 		 22: 
 BB 29
 	outgoing: 33 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (User) 
 		 2: %v_121->recent %v_121[29.1,] 
-		 3: %v_122->tagged_with tag_array[4.5,4.5,4.5,4.5,] %v_122[29.2,] 
-		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_122->tagged_with tag_array[4.5,] %v_122[29.2,] 
+		 4: %self->params %self[2.0,] 
 		 5: %v_124[29.4,] 
 		 6: %v_123->page %v_125[29.5,] %v_123[29.3,] 
 		 7: %v_126[29.6,] 
-		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_127[29.7,] @users[] 
-		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_127[29.7,] @pages[] 
+		 8: %self[2.0,] %v_127[29.7,] @users[] 
+		 9: %self[2.0,] %v_127[29.7,] @pages[] 
 		 10: 
 		 11: 
 		 12: 
@@ -1070,25 +2182,25 @@ BB 29
 		 15: %v_128[29.11,] 
 		 16: %v_129[29.12,] 
 		 17: %v_130[29.13,] 
-		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_128[29.11,] @posts[] 
-		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_129[29.12,] @photos[] 
-		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_130[29.13,] @clippings[] 
+		 18: %self[2.0,] %v_128[29.11,] @posts[] 
+		 19: %self[2.0,] %v_129[29.12,] @photos[] 
+		 20: %self[2.0,] %v_130[29.13,] @clippings[] 
 		 21: %v_131[29.14,] 
 		 22: 
 BB 30
 	outgoing: 33 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (Clipping) 
 		 2: %v_135->recent %v_135[30.1,] 
-		 3: %v_136->tagged_with %v_136[30.2,] tag_array[4.5,4.5,4.5,4.5,] 
-		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_136->tagged_with %v_136[30.2,] tag_array[4.5,] 
+		 4: %self->params %self[2.0,] 
 		 5: %v_138[30.4,] 
 		 6: %v_137->page %v_139[30.5,] %v_137[30.3,] 
 		 7: %v_140[30.6,] 
-		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_141[30.7,] @clippings[] 
-		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_141[30.7,] @pages[] 
+		 8: %self[2.0,] %v_141[30.7,] @clippings[] 
+		 9: %self[2.0,] %v_141[30.7,] @pages[] 
 		 10: 
 		 11: 
 		 12: 
@@ -1097,25 +2209,25 @@ BB 30
 		 15: %v_142[30.11,] 
 		 16: %v_143[30.12,] 
 		 17: %v_144[30.13,] 
-		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_142[30.11,] @posts[] 
-		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_143[30.12,] @photos[] 
-		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_144[30.13,] @users[] 
+		 18: %self[2.0,] %v_142[30.11,] @posts[] 
+		 19: %self[2.0,] %v_143[30.12,] @photos[] 
+		 20: %self[2.0,] %v_144[30.13,] @users[] 
 		 21: %v_145[30.14,] 
 		 22: 
 BB 31
 	outgoing: 33 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 4 2 2 2 2 2 2 
 	instructions:
 		 0: 
 		 1: (Clipping) 
 		 2: %v_149->recent %v_149[31.1,] 
-		 3: %v_150->tagged_with %v_150[31.2,] tag_array[4.5,4.5,4.5,4.5,] 
-		 4: %self->params %self[2.0,2.0,2.0,2.0,2.0,2.0,] 
+		 3: %v_150->tagged_with %v_150[31.2,] tag_array[4.5,] 
+		 4: %self->params %self[2.0,] 
 		 5: %v_152[31.4,] 
 		 6: %v_151->page %v_151[31.3,] %v_153[31.5,] 
 		 7: %v_154[31.6,] 
-		 8: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_155[31.7,] @clippings[] 
-		 9: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_155[31.7,] @pages[] 
+		 8: %self[2.0,] %v_155[31.7,] @clippings[] 
+		 9: %self[2.0,] %v_155[31.7,] @pages[] 
 		 10: 
 		 11: 
 		 12: 
@@ -1124,46 +2236,740 @@ BB 31
 		 15: %v_156[31.11,] 
 		 16: %v_157[31.12,] 
 		 17: %v_158[31.13,] 
-		 18: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_156[31.11,] @posts[] 
-		 19: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_157[31.12,] @photos[] 
-		 20: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_158[31.13,] @users[] 
+		 18: %self[2.0,] %v_156[31.11,] @posts[] 
+		 19: %self[2.0,] %v_157[31.12,] @photos[] 
+		 20: %self[2.0,] %v_158[31.13,] @users[] 
 		 21: %v_159[31.14,] 
 		 22: 
 BB 33
-	outgoing: 36 
-	datadep: 24 25 26 27 28 29 30 31 23 
+	outgoing: 35 
+	datadep: 
 	instructions:
-		 0: RETURN %v_34[24.21,25.21,26.21,27.21,28.21,29.21,30.21,31.21,23.14,] 
+		 0: 
 BB 34
-	outgoing: 36 
-	datadep: 4 4 4 4 2 2 2 2 2 2 4 4 4 4 2 2 2 2 2 2 4 4 4 4 2 2 2 2 2 2 4 4 4 4 2 2 2 2 2 2 
+	outgoing: 35 
+	datadep: 4 2 4 2 4 2 4 2 
 	instructions:
 		 0: 
 		 1: (Post) 
 		 2: %v_172->recent %v_172[34.1,] 
 		 3: %v_173[34.2,] 
-		 4: %v_174->tagged_with tag_array[4.5,4.5,4.5,4.5,] %v_174[34.3,] 
-		 5: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_175[34.4,] @posts[] 
+		 4: %v_174->tagged_with tag_array[4.5,] %v_174[34.3,] 
+		 5: %self[2.0,] %v_175[34.4,] @posts[] 
 		 6: 
 		 7: (Photo) 
 		 8: %v_176->recent %v_176[34.7,] 
 		 9: %v_177[34.8,] 
-		 10: %v_178->tagged_with %v_178[34.9,] tag_array[4.5,4.5,4.5,4.5,] 
-		 11: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_179[34.10,] @photos[] 
+		 10: %v_178->tagged_with %v_178[34.9,] tag_array[4.5,] 
+		 11: %self[2.0,] %v_179[34.10,] @photos[] 
 		 12: 
 		 13: (User) 
 		 14: %v_180->recent %v_180[34.13,] 
 		 15: %v_181[34.14,] 
-		 16: %v_182->tagged_with %v_182[34.15,] tag_array[4.5,4.5,4.5,4.5,] 
-		 17: %v_183[34.16,] %self[2.0,2.0,2.0,2.0,2.0,2.0,] @users[] 
+		 16: %v_182->tagged_with %v_182[34.15,] tag_array[4.5,] 
+		 17: %v_183[34.16,] %self[2.0,] @users[] 
 		 18: 
 		 19: (Clipping) 
 		 20: %v_184->recent %v_184[34.19,] 
 		 21: %v_185[34.20,] 
-		 22: %v_186->tagged_with tag_array[4.5,4.5,4.5,4.5,] %v_186[34.21,] 
-		 23: %self[2.0,2.0,2.0,2.0,2.0,2.0,] %v_187[34.22,] @clippings[] 
-		 24: RETURN %v_187[34.22,] 
+		 22: %v_186->tagged_with tag_array[4.5,] %v_186[34.21,] 
+		 23: %self[2.0,] %v_187[34.22,] @clippings[] 
+		 24: %v_187[34.22,] 
+BB 35
+	outgoing: 36 37 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: @users[] @tags[14.1,] @tags_raw[] @posts[] @related_tags[] @photos[] @pages[] @clippings[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %cl_2_3[3.1,] 
+		 3: BRANCH %cl_2_4[3.2,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %cl_2_5[4.1,] 
+		 3: %cl_2_6->downcase %cl_2_6[4.2,] 
+		 4: %cl_2_7->pluralize %cl_2_7[4.3,] 
+		 5: 
+		 6: %cl_2_8[4.4,] %cl_2_9[4.5,] 
+		 7: %cl_2_10->l %cl_2_10[4.6,] 
+		 8: 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %cl_2_12[5.1,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tags[] 
+		 2: %cl_2_13->each %cl_2_13[6.1,] %self[2.0,] 
+CLOSURE BEGIN: @tags[6.1,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: tag->name tag[2.2,] 
+		 2: %self->h %self[2.0,] %cl_3_3[3.1,] 
+		 3: %self->tag_path tag[2.2,] %self[2.0,] 
+		 4: %self->link_to %self[2.0,] %cl_3_4[3.2,] %cl_3_5[3.3,] 
+		 5: RETURN %cl_3_6[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_7[4.0,] 
+		 2: RETURN %cl_3_8[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_2_14[6.2,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_15[7.0,] 
+		 2: RETURN %cl_2_16[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: 
+		 3: %self[2.0,] @related_tags[14.4,14.4,] 
+		 4: %v_189->to_a %v_189[35.3,] 
+		 5: %v_190->size %v_190[35.4,] 
+		 6: %v_191[35.5,] 
+		 7: BRANCH %v_192[35.6,] 
 BB 36
+	outgoing: 38 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->widget %self[2.0,] 
+CLOSURE BEGIN: @users[] @tags[14.1,] @tags_raw[] @posts[] @related_tags[35.3,] @photos[] @pages[] @clippings[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @related_tags[] 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: %cl_4_8[3.7,] %cl_4_9[3.8,] %cl_4_5[3.4,] %cl_4_6[3.5,] %cl_4_7[3.6,] 
+		 10: %self->tag_cloud %self[2.0,] %cl_4_10[3.9,] %cl_4_4[3.3,] 
+CLOSURE BEGIN: @related_tags[3.3,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: tag->name tag[2.2,] 
+		 2: %self->h %self[2.0,] %cl_5_3[3.1,] 
+		 3: %self->tag_path tag[2.2,] %self[2.0,] 
+		 4: css_class[2.3,] 
+		 5: %self->link_to %self[2.0,] %cl_5_4[3.2,] %cl_5_5[3.3,] %cl_5_6[3.4,] 
+		 6: RETURN %cl_5_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_5_8[4.0,] 
+		 2: RETURN %cl_5_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 11: 
+		 12: 
+		 13: 
+		 14: %cl_4_13[3.13,] 
+		 15: %self->fa_icon %self[2.0,] %cl_4_14[3.14,] %cl_4_12[3.12,] 
+		 16: %self->tags_path %self[2.0,] 
+		 17: %self->link_to %self[2.0,] %cl_4_16[3.16,] %cl_4_15[3.15,] 
+		 18: RETURN %cl_4_17[3.17,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_18[4.0,] 
+		 2: RETURN %cl_4_19[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: 
+BB 37
+	outgoing: 38 
+	datadep: 
+	instructions:
+		 0: 
+BB 38
+	outgoing: 39 46 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @posts[34.5,34.5,24.8,25.8,26.18,27.18,28.18,29.18,30.18,31.18,23.11,24.8,25.8,26.18,27.18,28.18,29.18,30.18,31.18,23.11,] 
+		 2: %v_194->any? %v_194[38.1,] 
+		 3: BRANCH %v_195[38.2,] 
+BB 39
+	outgoing: 40 41 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %v_196[39.1,] 
+		 3: BRANCH %v_197[39.2,] 
+BB 40
+	outgoing: 45 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %v_198->ruby_code_from_view %self[2.0,] %v_198[40.1,] 
+CLOSURE BEGIN: @users[] @tags[14.1,] @tags_raw[] @posts[] @related_tags[35.3,] @photos[] @pages[] @clippings[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+BB 41
+	outgoing: 42 43 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @posts[38.1,] 
+		 4: %v_201->each %self[2.0,] %v_201[41.3,] 
+CLOSURE BEGIN: @users[] @tags[14.1,] @tags_raw[] @posts[41.3,] @related_tags[35.3,] @photos[] @pages[] @clippings[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: post->display_title post[2.2,] 
+		 2: 
+		 3: %self->truncate %self[2.0,] %cl_7_3[3.1,] %cl_7_4[3.2,] 
+		 4: post->user post[2.2,] 
+		 5: %self->user_post_path %self[2.0,] post[2.2,] %cl_7_6[3.4,] 
+		 6: post->user post[2.2,] 
+		 7: %cl_7_8->login %cl_7_8[3.6,] 
+		 8: %cl_7_9[3.7,] 
+		 9: %cl_7_10->l %cl_7_10[3.8,] 
+		 10: %cl_7_11[3.9,] 
+		 11: %self->link_to %self[2.0,] %cl_7_5[3.3,] %cl_7_7[3.5,] %cl_7_12[3.10,] 
+		 12: 
+		 13: post->post post[2.2,] 
+		 14: 
+		 15: %self->truncate_words %self[2.0,] %cl_7_14[3.13,] %cl_7_15[3.14,] 
+		 16: RETURN %cl_7_16[3.15,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_7_17[4.0,] 
+		 2: RETURN %cl_7_18[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_203[41.6,] 
+		 8: BRANCH %v_204[41.7,] 
+BB 42
+	outgoing: 44 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 43
+	outgoing: 44 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tags_raw[14.10,14.10,14.10,14.10,] 
+		 2: %v_207[43.1,] 
+		 3: %v_208->l %v_208[43.2,] 
+		 4: %v_209[43.3,] 
+		 5: %self->fa_icon %self[2.0,] %v_206[43.0,] %v_210[43.4,] 
+		 6: @tags_raw[43.1,] 
+		 7: 
+		 8: %v_213[43.7,] %v_212[43.6,] 
+		 9: %self->show_tag_type_path %self[2.0,] %v_214[43.8,] 
+		 10: %self->link_to %self[2.0,] %v_215[43.9,] %v_211[43.5,] 
+		 11: %v_216[43.10,] 
+BB 44
+	outgoing: 45 
+	datadep: 43 42 
+	instructions:
+		 0: %v_205[43.11,42.0,] 
+BB 45
+	outgoing: 47 
+	datadep: 
+	instructions:
+		 0: 
+BB 46
+	outgoing: 47 
+	datadep: 
+	instructions:
+		 0: 
+BB 47
+	outgoing: 48 52 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @photos[34.11,34.11,24.18,25.18,26.8,27.8,28.19,29.19,30.19,31.19,23.12,24.18,25.18,26.8,27.8,28.19,29.19,30.19,31.19,23.12,] 
+		 2: %v_217->any? %v_217[47.1,] 
+		 3: BRANCH %v_218[47.2,] 
+BB 48
+	outgoing: 49 50 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @photos[47.1,] 
+		 2: %v_219->size %v_219[48.1,] 
+		 3: %v_220[48.2,] 
+		 4: %v_221->l %v_221[48.3,] 
+		 5: 
+		 6: @photos[48.1,] 
+		 7: %v_223->each %self[2.0,] %v_223[48.6,] 
+CLOSURE BEGIN: @users[] @tags[14.1,] @tags_raw[] @posts[41.3,] @related_tags[35.3,] @photos[48.1,] @pages[] @clippings[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: photo->photo photo[2.2,] 
+		 2: %cl_8_3->url %cl_8_3[3.1,] 
+		 3: photo->description photo[2.2,] 
+		 4: 
+		 5: %cl_8_5[3.3,] %cl_8_6[3.4,] 
+		 6: 
+		 7: %cl_8_8[3.6,] %cl_8_7[3.5,] 
+		 8: 
+		 9: photo->user photo[2.2,] 
+		 10: %cl_8_11->login %cl_8_11[3.9,] 
+		 11: 
+		 12: %cl_8_10[3.8,] %cl_8_12[3.10,] %cl_8_13[3.11,] 
+		 13: %cl_8_9[3.7,] %cl_8_14[3.12,] 
+		 14: %cl_8_15[3.13,] 
+		 15: %self->image_tag %self[2.0,] %cl_8_4[3.2,] %cl_8_16[3.14,] 
+		 16: photo->user photo[2.2,] 
+		 17: %self->user_photo_path %self[2.0,] %cl_8_18[3.16,] photo[2.2,] 
+		 18: 
+		 19: %cl_8_20[3.18,] 
+		 20: %self->link_to %self[2.0,] %cl_8_21[3.19,] %cl_8_19[3.17,] %cl_8_17[3.15,] 
+		 21: RETURN %cl_8_22[3.20,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_8_23[4.0,] 
+		 2: RETURN %cl_8_24[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: 
+		 9: %self->params %self[2.0,] 
+		 10: %v_225[48.9,] 
+		 11: BRANCH %v_226[48.10,] 
+BB 49
+	outgoing: 51 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 50
+	outgoing: 51 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tags_raw[43.1,43.6,14.10,14.10,14.10,14.10,] 
+		 2: %v_229[50.1,] 
+		 3: %v_230->l %v_230[50.2,] 
+		 4: %v_231[50.3,] 
+		 5: %self->fa_icon %self[2.0,] %v_228[50.0,] %v_232[50.4,] 
+		 6: @tags_raw[50.1,] 
+		 7: 
+		 8: %v_235[50.7,] %v_234[50.6,] 
+		 9: %self->show_tag_type_path %self[2.0,] %v_236[50.8,] 
+		 10: %self->link_to %self[2.0,] %v_237[50.9,] %v_233[50.5,] 
+		 11: %v_238[50.10,] 
+BB 51
+	outgoing: 53 
+	datadep: 
+	instructions:
+		 0: 
+BB 52
+	outgoing: 53 
+	datadep: 
+	instructions:
+		 0: 
+BB 53
+	outgoing: 54 58 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @users[34.17,34.17,24.19,25.19,26.19,27.19,28.8,29.8,30.20,31.20,23.13,24.19,25.19,26.19,27.19,28.8,29.8,30.20,31.20,23.13,] 
+		 2: %v_239->any? %v_239[53.1,] 
+		 3: BRANCH %v_240[53.2,] 
+BB 54
+	outgoing: 55 56 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->t %self[2.0,] %v_241[54.1,] 
+		 3: 
+		 4: %self[2.0,] @users[53.1,] 
+		 5: %v_243->each %self[2.0,] %v_243[54.4,] 
+CLOSURE BEGIN: @users[54.4,] @tags[14.1,] @tags_raw[] @posts[41.3,] @related_tags[35.3,] @photos[48.1,] @pages[] @clippings[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: user->avatar_photo_url user[2.2,] 
+		 2: %self->image_tag %self[2.0,] %cl_9_3[3.1,] 
+		 3: %self->user_path %self[2.0,] user[2.2,] 
+		 4: user->login user[2.2,] 
+		 5: 
+		 6: %cl_9_7[3.5,] %cl_9_6[3.4,] 
+		 7: %self->link_to %self[2.0,] %cl_9_8[3.6,] %cl_9_4[3.2,] %cl_9_5[3.3,] 
+		 8: RETURN %cl_9_9[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_9_10[4.0,] 
+		 2: RETURN %cl_9_11[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+		 7: %self->params %self[2.0,] 
+		 8: %v_245[54.7,] 
+		 9: BRANCH %v_246[54.8,] 
+BB 55
+	outgoing: 57 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 56
+	outgoing: 57 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tags_raw[50.1,50.6,43.1,43.6,14.10,14.10,14.10,14.10,] 
+		 2: %v_249[56.1,] 
+		 3: %v_250->l %v_250[56.2,] 
+		 4: %v_251[56.3,] 
+		 5: %self->fa_icon %self[2.0,] %v_248[56.0,] %v_252[56.4,] 
+		 6: @tags_raw[56.1,] 
+		 7: 
+		 8: %v_255[56.7,] %v_254[56.6,] 
+		 9: %self->show_tag_type_path %self[2.0,] %v_256[56.8,] 
+		 10: %self->link_to %self[2.0,] %v_257[56.9,] %v_253[56.5,] 
+		 11: %v_258[56.10,] 
+BB 57
+	outgoing: 59 
+	datadep: 
+	instructions:
+		 0: 
+BB 58
+	outgoing: 59 
+	datadep: 
+	instructions:
+		 0: 
+BB 59
+	outgoing: 60 61 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @clippings[34.23,34.23,24.20,25.20,26.20,27.20,28.20,29.20,30.8,31.8,23.10,24.20,25.20,26.20,27.20,28.20,29.20,30.8,31.8,23.10,] 
+		 2: %v_259->empty? %v_259[59.1,] 
+		 3: BRANCH %v_260[59.2,] 
+BB 60
+	outgoing: 65 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 61
+	outgoing: 62 63 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %self[2.0,] @clippings[59.1,] 
+		 4: %v_263->each %self[2.0,] %v_263[61.3,] 
+CLOSURE BEGIN: @users[54.4,] @tags[14.1,] @tags_raw[] @posts[41.3,] @related_tags[35.3,] @photos[48.1,] @pages[] @clippings[61.3,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view %self[2.0,] 
+		 2: %cl_10_3->ruby_code_from_view %self[2.0,] %cl_10_3[3.1,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_10_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_10_5[4.0,] 
+		 2: RETURN %cl_10_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_265[61.6,] 
+		 8: BRANCH %v_266[61.7,] 
+BB 62
+	outgoing: 64 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 63
+	outgoing: 64 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tags_raw[56.1,56.6,50.1,50.6,43.1,43.6,14.10,14.10,14.10,14.10,] 
+		 2: %v_269[63.1,] 
+		 3: %v_270->l %v_270[63.2,] 
+		 4: %v_271[63.3,] 
+		 5: %self->fa_icon %v_272[63.4,] %self[2.0,] %v_268[63.0,] 
+		 6: @tags_raw[63.1,] 
+		 7: 
+		 8: %v_275[63.7,] %v_274[63.6,] 
+		 9: %self->show_tag_type_path %self[2.0,] %v_276[63.8,] 
+		 10: %self->link_to %self[2.0,] %v_277[63.9,] %v_273[63.5,] 
+		 11: %v_278[63.10,] 
+BB 64
+	outgoing: 65 
+	datadep: 63 62 
+	instructions:
+		 0: %v_267[63.11,62.0,] 
+BB 65
+	outgoing: 66 67 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @pages[24.9,25.9,26.9,27.9,28.9,29.9,30.9,31.9,24.9,25.9,26.9,27.9,28.9,29.9,30.9,31.9,] 
+		 2: BRANCH %v_279[65.1,] 
+BB 66
+	outgoing: 67 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_280[66.0,] 
+		 2: 
+		 3: %v_281->eql? %v_282[66.2,] %v_281[66.1,] 
+		 4: %v_283->! %v_283[66.3,] 
+		 5: %v_284[66.4,] 
+BB 67
+	outgoing: 68 69 
+	datadep: 66 65 
+	instructions:
+		 0: BRANCH %v_279[66.5,65.1,] 
+BB 68
+	outgoing: 71 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @pages[65.1,65.1,] 
+		 2: 
+		 3: %v_286[68.2,] 
+		 4: %self->paginate %self[2.0,] %v_287[68.3,] %v_285[68.1,] 
+		 5: RETURN %v_288[68.4,] 
+BB 69
+	outgoing: 71 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 71
 	outgoing: 
 	datadep: 
 	instructions:

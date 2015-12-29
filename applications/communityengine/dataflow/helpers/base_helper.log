@@ -1,0 +1,3477 @@
+SET IRMethod, name = commentable_url
+BB 1
+	outgoing: 17 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: comment->recipient comment[2.5,] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 
+	instructions:
+		 0: comment->commentable comment[2.5,] 
+		 1: %v_4[3.0,] 
+BB 4
+	outgoing: 5 12 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: comment->commentable_type comment[2.5,] 
+		 2: 
+		 3: %v_5[5.1,] %v_6[5.2,] 
+		 4: BRANCH %v_7[5.3,] 
+BB 6
+	outgoing: 11 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: comment->recipient comment[2.5,] 
+		 2: comment->commentable comment[2.5,] 
+		 3: %v_8[6.1,] %v_9[6.2,] 
+		 4: %self->polymorphic_url %self[2.0,] %v_10[6.3,] 
+		 5: 
+		 6: comment->id comment[2.5,] 
+		 7: %v_13[6.6,] %v_12[6.5,] 
+		 8: %v_14[6.7,] %v_11[6.4,] 
+		 9: 
+BB 7
+	outgoing: 8 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: BRANCH comment[2.5,] 
+BB 8
+	outgoing: 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: comment->recipient comment[2.5,] 
+		 2: %self->user_url %self[2.0,] %v_16[8.1,] 
+		 3: 
+		 4: comment->id comment[2.5,] 
+		 5: %v_18[8.3,] %v_19[8.4,] 
+		 6: %v_17[8.2,] %v_20[8.5,] 
+		 7: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+BB 10
+	outgoing: 11 
+	datadep: 9 8 
+	instructions:
+		 0: %v_21[9.0,8.6,] 
+BB 11
+	outgoing: 17 
+	datadep: 10 6 
+	instructions:
+		 0: RETURN %v_15[10.0,6.8,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: comment->commentable comment[2.5,] 
+		 2: BRANCH %v_22[12.1,] 
+BB 13
+	outgoing: 15 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: comment->commentable comment[2.5,] 
+		 2: %self->polymorphic_url %self[2.0,] %v_23[13.1,] 
+		 3: 
+		 4: comment->id comment[2.5,] 
+		 5: %v_25[13.3,] %v_26[13.4,] 
+		 6: %v_24[13.2,] %v_27[13.5,] 
+		 7: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+BB 15
+	outgoing: 17 
+	datadep: 14 13 
+	instructions:
+		 0: RETURN %v_28[14.0,13.6,] 
+BB 17
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = forum_page?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: %v_4[2.7,] %v_5[2.8,] %v_3[2.6,] 
+		 10: %self->controller %self[2.0,] 
+		 11: %v_7->controller_name %v_7[2.10,] 
+		 12: %v_6->include? %v_8[2.11,] %v_6[2.9,] 
+		 13: RETURN %v_9[2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = is_current_user_and_featured?
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: u[2.5,] 
+		 8: BRANCH u[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: %self->current_user %self[2.0,] 
+		 1: u->eql? %v_4[3.0,] u[2.5,] 
+		 2: %v_5[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_3[3.2,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 2 
+	instructions:
+		 0: u->featured_writer? u[2.5,] 
+		 1: RETURN %v_6[5.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 3 2 
+	instructions:
+		 0: RETURN %v_3[3.2,2.7,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = rounded
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: 
+		 1: %v_4[4.0,] 
+		 2: 
+		 3: 
+		 4: %v_5[4.3,] 
+		 5: %v_6->merge %v_6[4.4,] options[3.1,2.5,] 
+		 6: %v_7[4.5,] 
+		 7: 
+		 8: %v_7[4.5,] 
+		 9: 
+		 10: %v_8[4.8,] %v_9[4.9,] 
+		 11: BRANCH %v_10[4.10,] 
+BB 5
+	outgoing: 7 
+	datadep: 4 4 
+	instructions:
+		 0: 
+		 1: options[4.6,] 
+		 2: %v_11[5.0,] %v_12[5.1,] 
+		 3: %v_13[5.2,] options[4.6,] 
+		 4: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 
+	datadep: 2 5 4 2 2 4 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_14[7.1,] 
+		 3: 
+		 4: options->collect %self[2.0,] options[5.3,4.6,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] val[2.3,] key[2.2,] 
+		 5: %cl_1_6[3.4,] 
+		 6: RETURN %cl_1_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 5: 
+		 6: 
+		 7: str[7.2,] %v_16[7.6,] 
+		 8: 
+		 9: 
+		 10: str[7.2,] %v_18[7.9,] 
+		 11: 
+		 12: str->html_safe str[7.2,] 
+		 13: %self->concat %self[2.0,] %v_20[7.12,] 
+		 14: 
+		 15: %v_0[2.1,] content[4.1,] 
+		 16: 
+		 17: 
+		 18: %v_23->html_safe %v_23[7.17,] 
+		 19: %self->concat %v_24[7.18,] %self[2.0,] 
+		 20: RETURN %v_25[7.19,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = block_to_partial
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: html_options[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 3 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %v_4[4.0,] 
+		 2: 
+		 3: %self->capture %self[2.0,] block[4.1,] 
+		 4: %v_5[4.3,] html_options[3.1,2.6,] 
+		 5: partial_name[2.5,] %v_6[4.4,] 
+		 6: %self->render %self[2.0,] %v_7[4.5,] 
+		 7: %self->concat %self[2.0,] %v_8[4.6,] 
+		 8: RETURN %v_9[4.7,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = box
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: html_options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 3 2 
+	instructions:
+		 0: 
+		 1: %v_4[4.0,] 
+		 2: 
+		 3: 
+		 4: %self->block_to_partial %self[2.0,] %v_5[4.3,] html_options[3.1,2.5,] block[4.1,] 
+		 5: RETURN %v_6[4.4,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = widget
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: html_options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_4[4.0,] 
+		 2: 
+		 3: %self[2.0,] 
+		 4: %v_6[4.3,] 
+		 5: %v_6[4.3,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @widgets[] 
+		 1: %v_7[5.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 5 4 
+	instructions:
+		 0: BRANCH %v_5[5.1,4.4,] 
+BB 7
+	outgoing: 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] %v_8[7.0,] @widgets[5.0,] 
+		 2: %v_8[7.0,] 
+BB 8
+	outgoing: 10 
+	datadep: 2 2 4 3 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @widgets[7.1,5.0,] 
+		 2: 
+		 3: %self->capture %self[2.0,] block[4.1,] 
+		 4: html_options[3.1,2.5,] %v_11[8.3,] 
+		 5: %v_10[8.2,] %v_12[8.4,] 
+		 6: %self->render %v_13[8.5,] %self[2.0,] 
+		 7: %v_14[8.6,] %v_9[8.1,] 
+		 8: 
+		 9: 
+		 10: RETURN %v_16[8.9,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = render_widgets
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] @widgets[] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @widgets[2.7,] 
+		 1: %v_4->html_safe %v_4[3.0,] 
+		 2: RETURN %v_5[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = jumbotron
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: html_options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 2 3 2 2 2 
+	instructions:
+		 0: 
+		 1: %v_4[4.0,] 
+		 2: 
+		 3: 
+		 4: %self->capture %self[2.0,] block[4.1,] 
+		 5: html_options[3.1,2.5,] %v_6[4.4,] 
+		 6: %v_5[4.3,] %v_7[4.5,] 
+		 7: %self->render %self[2.0,] %v_8[4.6,] 
+		 8: %self[2.0,] %v_9[4.7,] @jumbotron[] 
+		 9: 
+		 10: 
+		 11: RETURN %v_10[4.10,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = render_jumbotron
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self[2.0,] @jumbotron[] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @jumbotron[2.7,] 
+		 1: %v_4->html_safe %v_4[3.0,] 
+		 2: RETURN %v_5[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = city_cloud
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: 
+		 10: 
+		 11: 
+		 12: 
+		 13: 
+		 14: cities->each %self[2.0,] cities[2.5,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: c->users c[2.2,] 
+		 2: %cl_1_3->size %cl_1_3[3.1,] 
+		 3: %cl_1_4->to_i %cl_1_4[3.2,] 
+		 4: %cl_1_5[3.3,] 
+		 5: BRANCH %cl_1_6[3.4,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 2 
+	instructions:
+		 0: c->users c[2.2,] 
+		 1: %cl_1_7->size %cl_1_7[4.0,] 
+		 2: %cl_1_8->to_i %cl_1_8[4.1,] 
+		 3: %cl_1_9[4.2,] 
+		 4: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: c->users c[2.2,] 
+		 2: %cl_1_10->size %cl_1_10[6.1,] 
+		 3: %cl_1_11->to_i %cl_1_11[6.2,] 
+		 4: %cl_1_12[6.3,] 
+		 5: BRANCH %cl_1_13[6.4,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 2 
+	instructions:
+		 0: c->users c[2.2,] 
+		 1: %cl_1_14->size %cl_1_14[7.0,] 
+		 2: %cl_1_15->to_i %cl_1_15[7.1,] 
+		 3: %cl_1_16[7.2,] 
+		 4: 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 12 
+	datadep: 7 
+	instructions:
+		 0: RETURN %cl_1_16[7.2,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_17[10.0,] 
+		 2: RETURN %cl_1_18[10.1,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 15: 
+		 16: max[2.11,] min[2.12,] 
+		 17: classes->size classes[2.6,] 
+		 18: %v_8[2.17,] %v_7[2.16,] 
+		 19: %v_9[2.18,] 
+		 20: %v_10[2.19,] 
+		 21: 
+		 22: cities->each %self[2.0,] cities[2.5,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: c->users c[2.2,] 
+		 2: %cl_2_4->size %cl_2_4[3.1,] 
+		 3: %cl_2_5->to_i %cl_2_5[3.2,] 
+		 4: %cl_2_6[3.3,] 
+		 5: %cl_2_7[3.4,] 
+		 6: %cl_2_8[3.5,] 
+		 7: c[2.2,] %cl_2_9[3.6,] 
+		 8: %cl_2_0[2.1,] %cl_2_10[3.7,] 
+		 9: RETURN %cl_2_3[3.8,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_11[4.0,] 
+		 2: RETURN %cl_2_12[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 23: RETURN %v_11[2.22,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = truncate_words
+BB 1
+	outgoing: 13 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: length[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: end_string[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[5.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: text->blank? text[2.5,] 
+		 2: BRANCH %v_4[6.1,] 
+BB 7
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 8
+	outgoing: 10 11 
+	datadep: 2 2 3 2 3 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->strip_tags %self[2.0,] text[2.5,] 
+		 3: %v_6->split %v_6[8.2,] 
+		 4: %v_7[8.3,] 
+		 5: 
+		 6: length[3.0,2.6,] 
+		 7: %v_9[8.6,] 
+		 8: words[8.4,] %v_8[8.7,] 
+		 9: 
+		 10: %v_10->join %v_10[8.8,] %v_11[8.9,] 
+		 11: words->length words[8.4,] 
+		 12: %v_13[8.11,] length[3.0,2.6,] 
+		 13: BRANCH %v_14[8.12,] 
+BB 10
+	outgoing: 12 
+	datadep: 5 4 
+	instructions:
+		 0: end_string[5.1,4.0,] 
+		 1: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_16[11.0,] 
+BB 12
+	outgoing: 13 
+	datadep: 11 10 8 
+	instructions:
+		 0: %v_15[11.1,10.0,] %v_12[8.10,] 
+		 1: %v_17[12.0,] 
+		 2: 
+		 3: %v_17->html_safe %v_17[12.0,] 
+		 4: RETURN %v_18[12.3,] 
+BB 13
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = truncate_words_with_highlight
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: %self->excerpt phrase[2.6,] %self[2.0,] text[2.5,] 
+		 9: %v_3[2.8,] 
+		 10: 
+		 11: %self->truncate_words %self[2.0,] %v_3[2.8,] 
+		 12: %self->highlight phrase[2.6,] %self[2.0,] %v_4[2.11,] 
+		 13: RETURN %v_5[2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = excerpt_with_jump
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: end_string[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: text->blank? text[2.5,] 
+		 2: BRANCH %v_4[4.1,] 
+BB 5
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 8 9 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->Hpricot %self[2.0,] text[2.5,] 
+		 3: %v_6[6.2,] 
+		 4: 
+		 5: 
+		 6: %v_6->at %v_6[6.2,] %v_7[6.5,] 
+		 7: %v_8[6.6,] 
+		 8: 
+		 9: BRANCH %v_8[6.6,] 
+BB 8
+	outgoing: 11 
+	datadep: 6 3 2 
+	instructions:
+		 0: 
+		 1: paragraph->to_html paragraph[6.7,] 
+		 2: end_string[3.1,2.6,] %v_9[8.1,] 
+		 3: RETURN %v_10[8.2,] 
+BB 9
+	outgoing: 11 
+	datadep: 2 3 2 2 
+	instructions:
+		 0: 
+		 1: %self->truncate_words %self[2.0,] end_string[3.1,2.6,] text[2.5,] 
+		 2: RETURN %v_11[9.1,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = page_title
+BB 1
+	outgoing: 77 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %v_3->html_safe %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: 
+		 10: %self->configatron %self[2.0,] 
+		 11: %v_5->community_name %v_5[2.10,] 
+		 12: %v_6[2.11,] 
+		 13: 
+		 14: 
+		 15: 
+		 16: %self->configatron %self[2.0,] 
+		 17: %v_9->community_tagline %v_9[2.16,] 
+		 18: %v_8[2.15,] %v_7[2.14,] divider[2.8,] %v_10[2.17,] 
+		 19: %v_11[2.18,] 
+		 20: 
+		 21: app_base[2.12,] 
+		 22: 
+		 23: %self->controller %self[2.0,] 
+		 24: %v_12->controller_name %v_12[2.23,] 
+		 25: 
+		 26: %v_13[2.24,] %v_16[2.25,] 
+		 27: BRANCH %v_15[2.26,] 
+BB 3
+	outgoing: 4 13 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_13[2.24,] %v_18[3.0,] 
+		 2: BRANCH %v_17[3.1,] 
+BB 4
+	outgoing: 5 19 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_13[2.24,] %v_20[4.0,] 
+		 2: BRANCH %v_19[4.1,] 
+BB 5
+	outgoing: 6 28 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_13[2.24,] %v_22[5.0,] 
+		 2: BRANCH %v_21[5.1,] 
+BB 6
+	outgoing: 7 36 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_24[6.0,] %v_13[2.24,] 
+		 2: BRANCH %v_23[6.1,] 
+BB 7
+	outgoing: 8 42 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_13[2.24,] %v_26[7.0,] 
+		 2: BRANCH %v_25[7.1,] 
+BB 8
+	outgoing: 9 48 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_13[2.24,] %v_28[8.0,] 
+		 2: BRANCH %v_27[8.1,] 
+BB 9
+	outgoing: 10 62 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_13[2.24,] %v_30[9.0,] 
+		 2: BRANCH %v_29[9.1,] 
+BB 10
+	outgoing: 11 68 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_13[2.24,] %v_32[10.0,] 
+		 2: BRANCH %v_31[10.1,] 
+BB 11
+	outgoing: 70 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 12
+	outgoing: 70 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: title[2.21,] tagline[2.19,] 
+		 2: %v_33[12.1,] 
+		 3: %v_33[12.1,] 
+		 4: 
+BB 13
+	outgoing: 14 15 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @page[] 
+		 2: BRANCH %v_34[13.1,] 
+BB 14
+	outgoing: 15 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @page[13.1,] 
+		 1: %v_35->title %v_35[14.0,] 
+		 2: %v_36[14.1,] 
+BB 15
+	outgoing: 16 17 
+	datadep: 14 13 
+	instructions:
+		 0: BRANCH %v_34[14.2,13.1,] 
+BB 16
+	outgoing: 18 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @page[14.0,13.1,] 
+		 2: %v_37->title %v_37[16.1,] 
+		 3: %v_38[16.2,] divider[2.8,] 
+		 4: %v_39[16.3,] app_base[2.12,] 
+		 5: %v_40[16.4,] tagline[2.19,] 
+		 6: %v_41[16.5,] 
+		 7: 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+BB 18
+	outgoing: 70 
+	datadep: 17 16 
+	instructions:
+		 0: %v_41[17.0,16.5,] 
+		 1: 
+BB 19
+	outgoing: 20 21 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @post[] 
+		 2: BRANCH %v_42[19.1,] 
+BB 20
+	outgoing: 21 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @post[19.1,] 
+		 1: %v_43->title %v_43[20.0,] 
+		 2: %v_44[20.1,] 
+BB 21
+	outgoing: 22 26 
+	datadep: 20 19 
+	instructions:
+		 0: BRANCH %v_42[20.2,19.1,] 
+BB 22
+	outgoing: 23 24 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @post[20.0,19.1,] 
+		 2: %v_45->title %v_45[22.1,] 
+		 3: %v_46[22.2,] divider[2.8,] 
+		 4: %v_47[22.3,] app_base[2.12,] 
+		 5: %v_48[22.4,] tagline[2.19,] 
+		 6: %v_49[22.5,] 
+		 7: 
+		 8: @post[22.1,] 
+		 9: %v_50->tags %v_50[22.8,] 
+		 10: %v_51->empty? %v_51[22.9,] 
+		 11: BRANCH %v_52[22.10,] 
+BB 23
+	outgoing: 25 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 24
+	outgoing: 25 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: divider[2.8,] %v_54[24.0,] %v_55[24.1,] 
+		 3: %self[2.0,] @post[22.1,22.8,] 
+		 4: %v_57->tags %v_57[24.3,] 
+		 5: 
+		 6: %v_58[24.4,] %v_59[24.5,] 
+		 7: 
+		 8: %v_60->join %v_60[24.6,] %v_61[24.7,] 
+		 9: %v_62[24.8,] %v_56[24.2,] 
+		 10: %v_63[24.9,] 
+BB 25
+	outgoing: 27 
+	datadep: 22 24 23 2 2 2 
+	instructions:
+		 0: title[22.6,] %v_53[24.10,23.0,] 
+		 1: %v_64[25.0,] 
+		 2: 
+		 3: %self[2.0,] @post[24.3,22.1,22.8,] 
+		 4: %v_65->user %v_65[25.3,] 
+		 5: @post[25.3,] 
+		 6: %self->user_post_url %self[2.0,] %v_66[25.4,] %v_67[25.5,] 
+		 7: %v_68[25.6,] %self[2.0,] @canonical_url[] 
+		 8: 
+BB 26
+	outgoing: 27 
+	datadep: 
+	instructions:
+		 0: 
+BB 27
+	outgoing: 70 
+	datadep: 26 25 
+	instructions:
+		 0: %v_68[26.0,25.6,] 
+		 1: 
+BB 28
+	outgoing: 29 30 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: BRANCH %v_69[28.1,] 
+BB 29
+	outgoing: 30 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[28.1,] 
+		 1: %v_70->new_record? %v_70[29.0,] 
+		 2: %v_71->! %v_71[29.1,] 
+		 3: %v_72[29.2,] 
+BB 30
+	outgoing: 31 32 
+	datadep: 29 28 
+	instructions:
+		 0: BRANCH %v_69[29.3,28.1,] 
+BB 31
+	outgoing: 32 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[29.0,28.1,] 
+		 1: %v_73->login %v_73[31.0,] 
+		 2: %v_74[31.1,] 
+BB 32
+	outgoing: 33 34 
+	datadep: 31 29 28 
+	instructions:
+		 0: BRANCH %v_69[31.2,29.3,28.1,] 
+BB 33
+	outgoing: 35 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[31.0,29.0,28.1,] 
+		 2: %v_75->login %v_75[33.1,] 
+		 3: %v_76[33.2,] 
+		 4: 
+		 5: app_base[2.12,] divider[2.8,] 
+		 6: tagline[2.19,] %v_77[33.5,] 
+		 7: title[33.3,] %v_78[33.6,] 
+		 8: %v_79[33.7,] 
+		 9: 
+		 10: @user[33.1,] 
+		 11: %self->user_url %self[2.0,] %v_80[33.10,] 
+		 12: %self[2.0,] %v_81[33.11,] @canonical_url[] 
+		 13: 
+BB 34
+	outgoing: 35 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_82[34.1,] divider[2.8,] 
+		 3: %v_83[34.2,] app_base[2.12,] 
+		 4: %v_84[34.3,] tagline[2.19,] 
+		 5: %v_85[34.4,] 
+		 6: %v_85[34.4,] 
+BB 35
+	outgoing: 70 
+	datadep: 34 33 
+	instructions:
+		 0: %v_81[34.6,33.11,] 
+		 1: 
+BB 36
+	outgoing: 37 38 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: BRANCH %v_86[36.1,] 
+BB 37
+	outgoing: 38 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[36.1,] 
+		 1: %v_87->login %v_87[37.0,] 
+		 2: %v_88[37.1,] 
+BB 38
+	outgoing: 39 40 
+	datadep: 37 36 
+	instructions:
+		 0: BRANCH %v_86[37.2,36.1,] 
+BB 39
+	outgoing: 41 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[37.0,36.1,] 
+		 2: %v_89->login %v_89[39.1,] 
+		 3: %v_90[39.2,] 
+		 4: %v_91->l %v_91[39.3,] 
+		 5: %v_92[39.4,] divider[2.8,] 
+		 6: %v_93[39.5,] app_base[2.12,] 
+		 7: %v_94[39.6,] tagline[2.19,] 
+		 8: %v_95[39.7,] 
+		 9: 
+BB 40
+	outgoing: 41 
+	datadep: 
+	instructions:
+		 0: 
+BB 41
+	outgoing: 70 
+	datadep: 40 39 
+	instructions:
+		 0: %v_95[40.0,39.7,] 
+		 1: 
+BB 42
+	outgoing: 43 44 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: BRANCH %v_96[42.1,] 
+BB 43
+	outgoing: 44 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[42.1,] 
+		 1: %v_97->login %v_97[43.0,] 
+		 2: %v_98[43.1,] 
+BB 44
+	outgoing: 45 46 
+	datadep: 43 42 
+	instructions:
+		 0: BRANCH %v_96[43.2,42.1,] 
+BB 45
+	outgoing: 47 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[43.0,42.1,] 
+		 2: %v_99->login %v_99[45.1,] 
+		 3: %v_100[45.2,] 
+		 4: %v_101->l %v_101[45.3,] 
+		 5: %v_102[45.4,] divider[2.8,] 
+		 6: %v_103[45.5,] app_base[2.12,] 
+		 7: %v_104[45.6,] tagline[2.19,] 
+		 8: %v_105[45.7,] 
+		 9: 
+BB 46
+	outgoing: 47 
+	datadep: 
+	instructions:
+		 0: 
+BB 47
+	outgoing: 70 
+	datadep: 46 45 
+	instructions:
+		 0: %v_105[46.0,45.7,] 
+		 1: 
+BB 48
+	outgoing: 49 50 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->controller %self[2.0,] 
+		 2: %v_106->action_name %v_106[48.1,] 
+		 3: 
+		 4: %v_107[48.2,] %v_110[48.3,] 
+		 5: BRANCH %v_109[48.4,] 
+BB 49
+	outgoing: 61 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: app_base[2.12,] %v_156[49.3,] tagline[2.19,] %v_154[49.1,] divider[2.8,] %v_155[49.2,] 
+		 5: %v_157[49.4,] 
+		 6: %v_157[49.4,] 
+		 7: 
+BB 50
+	outgoing: 51 52 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %v_111[50.1,] 
+		 3: BRANCH %v_112[50.2,] 
+BB 51
+	outgoing: 53 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: 
+		 3: %self->params %self[2.0,] 
+		 4: %v_115[51.3,] 
+		 5: %v_116->downcase %v_116[51.4,] 
+		 6: %v_117->pluralize %v_117[51.5,] 
+		 7: %v_118[51.6,] %v_114[51.2,] 
+		 8: 
+		 9: %v_119[51.7,] %v_120[51.8,] 
+		 10: %self[2.0,] @tags[] 
+		 11: %v_122->map %v_122[51.10,] 
+		 12: 
+		 13: %v_123->join %v_123[51.11,] %v_124[51.12,] 
+		 14: %v_125[51.13,] 
+		 15: %v_113->translate %v_126[51.14,] %v_113[51.1,] %v_121[51.9,] 
+		 16: %v_127[51.15,] 
+		 17: 
+BB 52
+	outgoing: 53 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tags[] 
+		 2: %v_128->map %v_128[52.1,] 
+		 3: 
+		 4: %v_129->join %v_129[52.2,] %v_130[52.3,] 
+		 5: %v_131[52.4,] 
+		 6: %v_132->l %v_132[52.5,] 
+		 7: %v_133[52.6,] 
+		 8: %v_133[52.6,] 
+BB 53
+	outgoing: 54 55 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @related_tags[] 
+		 2: BRANCH %v_134[53.1,] 
+BB 54
+	outgoing: 56 
+	datadep: 2 52 51 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self[2.0,] @related_tags[53.1,] 
+		 5: 
+		 6: %v_138->join %v_138[54.4,] %v_139[54.5,] 
+		 7: 
+		 8: %v_140[54.6,] %v_136[54.2,] %v_137[54.3,] %v_135[54.0,] %v_141[54.7,] 
+		 9: title[52.7,51.16,] %v_142[54.8,] 
+		 10: %v_143[54.9,] 
+		 11: 
+BB 55
+	outgoing: 56 
+	datadep: 
+	instructions:
+		 0: 
+BB 56
+	outgoing: 57 58 
+	datadep: 2 2 54 52 51 2 
+	instructions:
+		 0: 
+		 1: app_base[2.12,] divider[2.8,] 
+		 2: title[54.10,52.7,51.16,] %v_144[56.1,] 
+		 3: %v_145[56.2,] 
+		 4: 
+		 5: %self[2.0,] @tags_raw[] 
+		 6: BRANCH %v_146[56.5,] 
+BB 57
+	outgoing: 59 
+	datadep: 2 2 2 
+	instructions:
+		 0: (URI) 
+		 1: (URI) 
+		 2: %self[2.0,] @tags_raw[56.5,] 
+		 3: %v_148->escape %v_149[57.2,] %v_148[57.1,] 
+		 4: 
+		 5: %v_147->escape %v_150[57.3,] %v_147[57.0,] 
+		 6: %self->tag_url %self[2.0,] %v_152[57.5,] 
+		 7: %self[2.0,] %v_153[57.6,] @canonical_url[] 
+		 8: 
+BB 58
+	outgoing: 59 
+	datadep: 
+	instructions:
+		 0: 
+BB 59
+	outgoing: 61 
+	datadep: 58 57 
+	instructions:
+		 0: %v_153[58.0,57.6,] 
+		 1: 
+BB 61
+	outgoing: 70 
+	datadep: 59 49 
+	instructions:
+		 0: %v_108[59.0,49.6,] 
+		 1: 
+BB 62
+	outgoing: 63 64 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @category[] 
+		 2: BRANCH %v_158[62.1,] 
+BB 63
+	outgoing: 64 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @category[62.1,] 
+		 1: %v_159->name %v_159[63.0,] 
+		 2: %v_160[63.1,] 
+BB 64
+	outgoing: 65 66 
+	datadep: 63 62 
+	instructions:
+		 0: BRANCH %v_158[63.2,62.1,] 
+BB 65
+	outgoing: 67 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @category[63.0,62.1,] 
+		 2: %v_161->name %v_161[65.1,] 
+		 3: %v_162[65.2,] 
+		 4: %v_163->l %v_163[65.3,] 
+		 5: divider[2.8,] %v_164[65.4,] 
+		 6: app_base[2.12,] %v_165[65.5,] 
+		 7: tagline[2.19,] %v_166[65.6,] 
+		 8: %v_167[65.7,] 
+		 9: 
+BB 66
+	outgoing: 67 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_168[66.1,] divider[2.8,] 
+		 3: %v_169[66.2,] app_base[2.12,] 
+		 4: %v_170[66.3,] tagline[2.19,] 
+		 5: %v_171[66.4,] 
+		 6: %v_171[66.4,] 
+BB 67
+	outgoing: 70 
+	datadep: 66 65 
+	instructions:
+		 0: %v_167[66.6,65.7,] 
+		 1: 
+BB 68
+	outgoing: 70 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_172[68.1,] divider[2.8,] 
+		 3: %v_173[68.2,] app_base[2.12,] 
+		 4: tagline[2.19,] %v_174[68.3,] 
+		 5: %v_175[68.4,] 
+		 6: %v_175[68.4,] 
+		 7: 
+BB 70
+	outgoing: 71 72 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @page_title[] 
+		 3: BRANCH %v_176[70.2,] 
+BB 71
+	outgoing: 76 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: %self[2.0,] @page_title[70.2,] 
+		 1: divider[2.8,] %v_177[71.0,] 
+		 2: app_base[2.12,] %v_178[71.1,] 
+		 3: tagline[2.19,] %v_179[71.2,] 
+		 4: %v_180[71.3,] 
+		 5: 
+BB 72
+	outgoing: 73 74 
+	datadep: 12 68 16 25 34 33 33 39 45 49 66 65 56 2 2 
+	instructions:
+		 0: 
+		 1: title[12.2,68.5,16.6,25.1,34.5,33.3,33.8,39.8,45.8,49.5,66.5,65.8,56.3,2.21,] app_base[2.12,] 
+		 2: BRANCH %v_181[72.1,] 
+BB 73
+	outgoing: 75 
+	datadep: 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %v_183[73.2,] %v_182[73.1,] 
+		 4: %self->controller %self[2.0,] 
+		 5: %v_185->controller_name %v_185[73.4,] 
+		 6: %v_184[73.3,] %v_186[73.5,] 
+		 7: %v_187[73.6,] divider[2.8,] 
+		 8: app_base[2.12,] %v_188[73.7,] 
+		 9: %v_189[73.8,] tagline[2.19,] 
+		 10: %v_190[73.9,] 
+		 11: 
+BB 74
+	outgoing: 75 
+	datadep: 
+	instructions:
+		 0: 
+BB 75
+	outgoing: 76 
+	datadep: 74 73 
+	instructions:
+		 0: %v_190[74.0,73.9,] 
+BB 76
+	outgoing: 77 
+	datadep: 71 73 12 68 16 25 34 33 33 39 45 49 66 65 56 2 
+	instructions:
+		 0: 
+		 1: RETURN title[71.4,73.10,12.2,68.5,16.6,25.1,34.5,33.3,33.8,39.8,45.8,49.5,66.5,65.8,56.3,2.21,] 
+BB 77
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = container_title
+BB 1
+	outgoing: 72 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->configatron %self[2.0,] 
+		 7: %v_3->community_name %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+		 9: 
+		 10: %v_4[2.7,] 
+		 11: 
+		 12: %self->controller %self[2.0,] 
+		 13: %v_5->controller_name %v_5[2.12,] 
+		 14: 
+		 15: %v_9[2.14,] %v_6[2.13,] 
+		 16: BRANCH %v_8[2.15,] 
+BB 3
+	outgoing: 4 17 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_6[2.13,] %v_11[3.0,] 
+		 2: BRANCH %v_10[3.1,] 
+BB 4
+	outgoing: 5 23 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_13[4.0,] %v_6[2.13,] 
+		 2: BRANCH %v_12[4.1,] 
+BB 5
+	outgoing: 6 31 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_15[5.0,] %v_6[2.13,] 
+		 2: BRANCH %v_14[5.1,] 
+BB 6
+	outgoing: 7 37 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_17[6.0,] %v_6[2.13,] 
+		 2: BRANCH %v_16[6.1,] 
+BB 7
+	outgoing: 8 43 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_19[7.0,] %v_6[2.13,] 
+		 2: BRANCH %v_18[7.1,] 
+BB 8
+	outgoing: 9 57 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_6[2.13,] %v_21[8.0,] 
+		 2: BRANCH %v_20[8.1,] 
+BB 9
+	outgoing: 10 63 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %v_6[2.13,] %v_23[9.0,] 
+		 2: BRANCH %v_22[9.1,] 
+BB 10
+	outgoing: 65 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 11
+	outgoing: 12 13 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @page[] 
+		 2: BRANCH %v_24[11.1,] 
+BB 12
+	outgoing: 13 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @page[11.1,] 
+		 1: %v_25->title %v_25[12.0,] 
+		 2: %v_26[12.1,] 
+BB 13
+	outgoing: 14 15 
+	datadep: 12 11 
+	instructions:
+		 0: BRANCH %v_24[12.2,11.1,] 
+BB 14
+	outgoing: 16 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @page[12.0,11.1,] 
+		 2: %v_27->title %v_27[14.1,] 
+		 3: %v_28[14.2,] 
+		 4: 
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: 
+BB 16
+	outgoing: 65 
+	datadep: 15 14 
+	instructions:
+		 0: %v_28[15.0,14.2,] 
+		 1: 
+BB 17
+	outgoing: 18 19 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @post[] 
+		 2: BRANCH %v_29[17.1,] 
+BB 18
+	outgoing: 19 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @post[17.1,] 
+		 1: %v_30->title %v_30[18.0,] 
+		 2: %v_31[18.1,] 
+BB 19
+	outgoing: 20 21 
+	datadep: 18 17 
+	instructions:
+		 0: BRANCH %v_29[18.2,17.1,] 
+BB 20
+	outgoing: 22 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @post[18.0,17.1,] 
+		 2: %v_32->title %v_32[20.1,] 
+		 3: %v_33[20.2,] 
+		 4: 
+		 5: @post[20.1,] 
+		 6: %v_34->user %v_34[20.5,] 
+		 7: @post[20.1,20.5,] 
+		 8: %self->user_post_url %v_35[20.6,] %v_36[20.7,] %self[2.0,] 
+		 9: %self[2.0,] %v_37[20.8,] @canonical_url[] 
+		 10: 
+BB 21
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: 
+BB 22
+	outgoing: 65 
+	datadep: 21 20 
+	instructions:
+		 0: %v_37[21.0,20.8,] 
+		 1: 
+BB 23
+	outgoing: 24 25 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: BRANCH %v_38[23.1,] 
+BB 24
+	outgoing: 25 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[23.1,] 
+		 1: %v_39->new_record? %v_39[24.0,] 
+		 2: %v_40->! %v_40[24.1,] 
+		 3: %v_41[24.2,] 
+BB 25
+	outgoing: 26 27 
+	datadep: 24 23 
+	instructions:
+		 0: BRANCH %v_38[24.3,23.1,] 
+BB 26
+	outgoing: 27 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[24.0,23.1,] 
+		 1: %v_42->login %v_42[26.0,] 
+		 2: %v_43[26.1,] 
+BB 27
+	outgoing: 28 29 
+	datadep: 26 24 23 
+	instructions:
+		 0: BRANCH %v_38[26.2,24.3,23.1,] 
+BB 28
+	outgoing: 30 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[26.0,24.0,23.1,] 
+		 2: %v_44->login %v_44[28.1,] 
+		 3: %v_45[28.2,] 
+		 4: 
+		 5: @user[28.1,] 
+		 6: %self->user_url %v_46[28.5,] %self[2.0,] 
+		 7: %v_47[28.6,] %self[2.0,] @canonical_url[] 
+		 8: 
+BB 29
+	outgoing: 30 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_48[29.1,] 
+		 3: %v_48[29.1,] 
+BB 30
+	outgoing: 65 
+	datadep: 29 28 
+	instructions:
+		 0: %v_47[29.3,28.6,] 
+		 1: 
+BB 31
+	outgoing: 32 33 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: BRANCH %v_49[31.1,] 
+BB 32
+	outgoing: 33 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[31.1,] 
+		 1: %v_50->login %v_50[32.0,] 
+		 2: %v_51[32.1,] 
+BB 33
+	outgoing: 34 35 
+	datadep: 32 31 
+	instructions:
+		 0: BRANCH %v_49[32.2,31.1,] 
+BB 34
+	outgoing: 36 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[32.0,31.1,] 
+		 2: %v_52->login %v_52[34.1,] 
+		 3: %v_53[34.2,] 
+		 4: %v_54->l %v_54[34.3,] 
+		 5: %v_55[34.4,] 
+		 6: 
+BB 35
+	outgoing: 36 
+	datadep: 
+	instructions:
+		 0: 
+BB 36
+	outgoing: 65 
+	datadep: 35 34 
+	instructions:
+		 0: %v_55[35.0,34.4,] 
+		 1: 
+BB 37
+	outgoing: 38 39 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[] 
+		 2: BRANCH %v_56[37.1,] 
+BB 38
+	outgoing: 39 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @user[37.1,] 
+		 1: %v_57->login %v_57[38.0,] 
+		 2: %v_58[38.1,] 
+BB 39
+	outgoing: 40 41 
+	datadep: 38 37 
+	instructions:
+		 0: BRANCH %v_56[38.2,37.1,] 
+BB 40
+	outgoing: 42 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @user[38.0,37.1,] 
+		 2: %v_59->login %v_59[40.1,] 
+		 3: %v_60[40.2,] 
+		 4: %v_61->l %v_61[40.3,] 
+		 5: %v_62[40.4,] 
+		 6: 
+BB 41
+	outgoing: 42 
+	datadep: 
+	instructions:
+		 0: 
+BB 42
+	outgoing: 65 
+	datadep: 41 40 
+	instructions:
+		 0: %v_62[41.0,40.4,] 
+		 1: 
+BB 43
+	outgoing: 44 45 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->controller %self[2.0,] 
+		 2: %v_63->action_name %v_63[43.1,] 
+		 3: 
+		 4: %v_64[43.2,] %v_67[43.3,] 
+		 5: BRANCH %v_66[43.4,] 
+BB 44
+	outgoing: 56 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_109[44.1,] 
+		 3: %v_109[44.1,] 
+		 4: 
+BB 45
+	outgoing: 46 47 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %v_68[45.1,] 
+		 3: BRANCH %v_69[45.2,] 
+BB 46
+	outgoing: 48 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: 
+		 3: %self->params %self[2.0,] 
+		 4: %v_72[46.3,] 
+		 5: %v_73->downcase %v_73[46.4,] 
+		 6: %v_74->pluralize %v_74[46.5,] 
+		 7: %v_71[46.2,] %v_75[46.6,] 
+		 8: 
+		 9: %v_76[46.7,] %v_77[46.8,] 
+		 10: %self[2.0,] @tags[] 
+		 11: %v_79->map %v_79[46.10,] 
+		 12: 
+		 13: %v_80->join %v_80[46.11,] %v_81[46.12,] 
+		 14: %v_82[46.13,] 
+		 15: %v_70->translate %v_70[46.1,] %v_83[46.14,] %v_78[46.9,] 
+		 16: %v_84[46.15,] 
+		 17: 
+BB 47
+	outgoing: 48 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tags[] 
+		 2: %v_85->map %v_85[47.1,] 
+		 3: 
+		 4: %v_86->join %v_86[47.2,] %v_87[47.3,] 
+		 5: %v_88[47.4,] 
+		 6: %v_89->l %v_89[47.5,] 
+		 7: %v_90[47.6,] 
+		 8: %v_90[47.6,] 
+BB 48
+	outgoing: 49 50 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @related_tags[] 
+		 2: BRANCH %v_91[48.1,] 
+BB 49
+	outgoing: 51 
+	datadep: 2 47 46 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: %self[2.0,] @related_tags[48.1,] 
+		 5: 
+		 6: %v_95->join %v_95[49.4,] %v_96[49.5,] 
+		 7: 
+		 8: %v_92[49.0,] %v_93[49.2,] %v_94[49.3,] %v_97[49.6,] %v_98[49.7,] 
+		 9: title[47.7,46.16,] %v_99[49.8,] 
+		 10: %v_100[49.9,] 
+		 11: 
+BB 50
+	outgoing: 51 
+	datadep: 
+	instructions:
+		 0: 
+BB 51
+	outgoing: 52 53 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @tags_raw[] 
+		 2: BRANCH %v_101[51.1,] 
+BB 52
+	outgoing: 54 
+	datadep: 2 2 2 
+	instructions:
+		 0: (URI) 
+		 1: (URI) 
+		 2: %self[2.0,] @tags_raw[51.1,] 
+		 3: %v_103->escape %v_103[52.1,] %v_104[52.2,] 
+		 4: 
+		 5: %v_102->escape %v_105[52.3,] %v_102[52.0,] 
+		 6: %self->tag_url %self[2.0,] %v_107[52.5,] 
+		 7: %self[2.0,] %v_108[52.6,] @canonical_url[] 
+		 8: 
+BB 53
+	outgoing: 54 
+	datadep: 
+	instructions:
+		 0: 
+BB 54
+	outgoing: 56 
+	datadep: 53 52 
+	instructions:
+		 0: %v_108[53.0,52.6,] 
+		 1: 
+BB 56
+	outgoing: 65 
+	datadep: 54 44 
+	instructions:
+		 0: %v_65[54.0,44.3,] 
+		 1: 
+BB 57
+	outgoing: 58 59 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @category[] 
+		 2: BRANCH %v_110[57.1,] 
+BB 58
+	outgoing: 59 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @category[57.1,] 
+		 1: %v_111->name %v_111[58.0,] 
+		 2: %v_112[58.1,] 
+BB 59
+	outgoing: 60 61 
+	datadep: 58 57 
+	instructions:
+		 0: BRANCH %v_110[58.2,57.1,] 
+BB 60
+	outgoing: 62 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self[2.0,] @category[58.0,57.1,] 
+		 2: %v_113->name %v_113[60.1,] 
+		 3: %v_114[60.2,] 
+		 4: %v_115->l %v_115[60.3,] 
+		 5: %v_116[60.4,] 
+		 6: 
+BB 61
+	outgoing: 62 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_117[61.1,] 
+		 3: %v_117[61.1,] 
+BB 62
+	outgoing: 65 
+	datadep: 61 60 
+	instructions:
+		 0: %v_116[61.3,60.4,] 
+		 1: 
+BB 63
+	outgoing: 65 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_118[63.1,] 
+		 3: %v_118[63.1,] 
+		 4: 
+BB 65
+	outgoing: 66 67 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self[2.0,] @page_title[] 
+		 3: BRANCH %v_119[65.2,] 
+BB 66
+	outgoing: 71 
+	datadep: 2 
+	instructions:
+		 0: %self[2.0,] @page_title[65.2,] 
+		 1: %v_120[66.0,] 
+		 2: 
+BB 67
+	outgoing: 68 69 
+	datadep: 2 63 14 20 29 28 34 40 44 61 60 2 49 47 46 
+	instructions:
+		 0: 
+		 1: app_base[2.8,] title[63.2,14.3,20.3,29.2,28.3,34.5,40.5,44.2,61.2,60.5,2.10,49.10,47.7,46.16,] 
+		 2: BRANCH %v_121[67.1,] 
+BB 68
+	outgoing: 70 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %v_123[68.2,] %v_122[68.1,] 
+		 4: %self->controller %self[2.0,] 
+		 5: %v_125->controller_name %v_125[68.4,] 
+		 6: %v_126[68.5,] %v_124[68.3,] 
+		 7: %v_127[68.6,] 
+		 8: 
+BB 69
+	outgoing: 70 
+	datadep: 
+	instructions:
+		 0: 
+BB 70
+	outgoing: 71 
+	datadep: 69 68 
+	instructions:
+		 0: %v_127[69.0,68.6,] 
+BB 71
+	outgoing: 72 
+	datadep: 66 68 63 14 20 29 28 34 40 44 61 60 2 49 47 46 
+	instructions:
+		 0: 
+		 1: RETURN title[66.1,68.7,63.2,14.3,20.3,29.2,28.3,34.5,40.5,44.2,61.2,60.5,2.10,49.10,47.7,46.16,] 
+BB 72
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_friend_link
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: user[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 
+	datadep: 3 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_3[4.1,] 
+		 3: 
+		 4: 
+		 5: user[3.0,2.5,] 
+		 6: %v_4[4.4,] %v_5[4.5,] 
+		 7: %self->render %self[2.0,] %v_6[4.6,] 
+		 8: %v_7[4.7,] html[4.2,] 
+		 9: 
+		 10: html->html_safe html[4.2,] 
+		 11: RETURN %v_9[4.10,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = topnav_tab
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: options->delete options[2.6,] 
+		 9: %v_3[2.8,] 
+		 10: %v_4[2.9,] 
+		 11: 
+		 12: options[2.6,] 
+		 13: BRANCH %v_5[2.12,] 
+BB 3
+	outgoing: 4 
+	datadep: 2 2 
+	instructions:
+		 0: options->delete options[2.6,] 
+		 1: %v_6->to_a %v_6[3.0,] 
+		 2: %self[2.0,] @section[] 
+		 3: %v_7->include? %v_8[3.2,] %v_7[3.1,] 
+		 4: %v_9[3.3,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 3 2 
+	instructions:
+		 0: BRANCH %v_5[3.4,2.12,] 
+BB 5
+	outgoing: 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: classes[2.10,] %v_10[5.0,] 
+		 2: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 
+	datadep: 2 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: classes->join %v_13[7.2,] classes[2.10,] 
+		 4: 
+		 5: %v_14[7.3,] %v_15[7.4,] %v_12[7.1,] 
+		 6: %self->content_tag %self[2.0,] name[2.5,] 
+		 7: options->delete options[2.6,] 
+		 8: %self->link_to %self[2.0,] %v_17[7.6,] %v_18[7.7,] options[2.6,] 
+		 9: %v_16[7.5,] %v_19[7.8,] 
+		 10: 
+		 11: %v_20[7.9,] %v_21[7.10,] 
+		 12: %v_22[7.11,] 
+		 13: 
+		 14: %v_22->html_safe %v_22[7.11,] 
+		 15: RETURN %v_23[7.14,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = more_comments_links
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: %v_4[2.8,] 
+		 10: %self->fa_icon %self[2.0,] %v_5[2.9,] %v_3[2.7,] 
+		 11: commentable->class commentable[2.5,] 
+		 12: %v_7->to_s %v_7[2.11,] 
+		 13: %v_8->tableize %v_8[2.12,] 
+		 14: commentable->to_param commentable[2.5,] 
+		 15: %self->commentable_comments_url %self[2.0,] %v_9[2.13,] %v_10[2.14,] 
+		 16: %self->link_to %self[2.0,] %v_6[2.10,] %v_11[2.15,] 
+		 17: %v_12[2.16,] 
+		 18: 
+		 19: 
+		 20: %v_13->html_safe %v_13[2.19,] 
+		 21: %v_14[2.20,] html[2.17,] 
+		 22: %v_15[2.21,] 
+		 23: 
+		 24: 
+		 25: 
+		 26: %v_17[2.25,] 
+		 27: %self->fa_icon %self[2.0,] %v_16[2.24,] %v_18[2.26,] 
+		 28: commentable->class commentable[2.5,] 
+		 29: %v_20->to_s %v_20[2.28,] 
+		 30: %v_21->tableize %v_21[2.29,] 
+		 31: commentable->to_param commentable[2.5,] 
+		 32: 
+		 33: %self->commentable_comments_url %v_24[2.32,] %self[2.0,] %v_22[2.30,] %v_23[2.31,] 
+		 34: %self->link_to %v_25[2.33,] %self[2.0,] %v_19[2.27,] 
+		 35: %v_26[2.34,] html[2.17,2.22,] 
+		 36: %v_27[2.35,] 
+		 37: 
+		 38: %v_27->html_safe %v_27[2.35,] 
+		 39: RETURN %v_28[2.38,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show_footer_content?
+BB 1
+	outgoing: 4 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: RETURN 
+BB 4
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = clippings_link
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: %self->home_url %self[2.0,] 
+		 8: 
+		 9: %v_4[2.7,] %v_5[2.8,] %v_3[2.6,] 
+		 10: RETURN %v_6[2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = paginating_links
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: options[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: html_options[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_4[5.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_5[6.1,] 
+		 3: %self->paginate %self[2.0,] paginator[2.5,] %v_6[6.2,] 
+		 4: RETURN %v_7[6.3,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = last_active
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->session %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: (Time) 
+		 1: %v_5->now %v_5[3.0,] 
+		 2: %v_6->utc %v_6[3.1,] 
+		 3: %v_3[2.6,] %v_7[3.2,] 
+		 4: RETURN %v_7[3.2,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 
+	instructions:
+		 0: RETURN %v_4[2.7,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = ajax_spinner_for
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: spinner[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 3 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: id->to_s id[2.5,] 
+		 3: 
+		 4: %v_5[4.2,] %v_6[4.3,] 
+		 5: %v_4[4.1,] %v_7[4.4,] 
+		 6: %self->image_tag %self[2.0,] spinner[3.1,2.6,] %v_8[4.5,] 
+		 7: RETURN %v_9[4.6,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = avatar_for
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: size[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: user->avatar_photo_url user[2.5,] 
+		 2: 
+		 3: %v_4[4.2,] 
+		 4: %self->image_tag %self[2.0,] %v_5[4.3,] %v_3[4.1,] 
+		 5: RETURN %v_6[4.4,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = search_posts_title
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self->params %self[2.0,] 
+		 7: %v_3[2.6,] 
+		 8: %v_4->blank? %v_4[2.7,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: 
+		 2: %self->params %self[2.0,] 
+		 3: %v_9[4.2,] 
+		 4: %self->h %self[2.0,] %v_10[4.3,] 
+		 5: 
+		 6: %v_8[4.1,] %v_11[4.4,] %v_12[4.5,] 
+		 7: %v_13[4.6,] %v_7[4.0,] 
+		 8: %v_14[4.7,] 
+BB 5
+	outgoing: 6 
+	datadep: 2 4 3 
+	instructions:
+		 0: %v_6->tap %self[2.0,] %v_6[4.8,3.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %cl_1_3[3.1,] 
+		 3: BRANCH %cl_1_4[3.2,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (User) 
+		 2: %self->params %self[2.0,] 
+		 3: %cl_1_7[4.2,] 
+		 4: %cl_1_6->find %cl_1_6[4.1,] %cl_1_8[4.3,] 
+		 5: %cl_1_9->display_name %cl_1_9[4.4,] 
+		 6: %self->h %self[2.0,] %cl_1_10[4.5,] 
+		 7: %cl_1_5[4.0,] %cl_1_11[4.6,] 
+		 8: %cl_1_12[4.7,] title[2.2,] 
+		 9: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %cl_1_14[6.1,] 
+		 3: BRANCH %cl_1_15[6.2,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 2 2 2 
+	instructions:
+		 0: 
+		 1: (Forum) 
+		 2: %self->params %self[2.0,] 
+		 3: %cl_1_18[7.2,] 
+		 4: %cl_1_17->find %cl_1_19[7.3,] %cl_1_17[7.1,] 
+		 5: %cl_1_20->name %cl_1_20[7.4,] 
+		 6: %self->h %self[2.0,] %cl_1_21[7.5,] 
+		 7: %cl_1_16[7.0,] %cl_1_22[7.6,] 
+		 8: %cl_1_23[7.7,] title[2.2,] 
+		 9: 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 12 
+	datadep: 7 
+	instructions:
+		 0: RETURN %cl_1_24[7.8,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_25[10.0,] 
+		 2: RETURN %cl_1_26[10.1,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 1: RETURN %v_15[5.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = search_user_posts_path
+BB 1
+	outgoing: 17 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: rss[2.5,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+BB 5
+	outgoing: 6 7 15 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: %v_3[5.1,] 
+		 3: %v_4->blank? %v_4[5.2,] 
+		 4: BRANCH %v_5[5.3,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 7
+	outgoing: 8 15 
+	datadep: 2 
+	instructions:
+		 0: %self->params %self[2.0,] 
+		 1: %v_7[7.0,] 
+		 2: %v_8[7.1,] 
+		 3: %v_9[7.2,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 7 6 4 2 
+	instructions:
+		 0: %v_6[7.3,6.0,] 
+		 1: 
+		 2: BRANCH rss[4.0,2.5,] 
+BB 9
+	outgoing: 11 15 
+	datadep: 8 
+	instructions:
+		 0: options[8.0,] 
+		 1: 
+		 2: 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+BB 11
+	outgoing: 12 13 15 
+	datadep: 2 9 8 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %v_11[11.1,] %v_12[11.2,] 
+		 4: %v_13->each %v_13[11.3,] %self[2.0,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: %cl_1_1[2.2,] 
+		 4: %cl_1_2[2.3,] 
+		 5: %cl_1_2[2.3,] 
+		 6: 
+		 7: 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->params %self[2.0,] 
+		 2: param_key[2.5,] %cl_1_5[3.1,] 
+		 3: BRANCH %cl_1_6[3.2,] 
+BB 4
+	outgoing: 7 9 
+	datadep: 2 2 2 2 2 
+	instructions:
+		 0: 
+		 1: route_key[2.4,] %cl_1_7[4.0,] 
+		 2: %self->params %self[2.0,] 
+		 3: param_key[2.5,] %cl_1_9[4.2,] 
+		 4: param_key[2.5,] %cl_1_10[4.3,] 
+		 5: options->update %cl_1_11[4.4,] 
+		 6: %self->send %self[2.0,] %cl_1_12[4.5,] %cl_1_8[4.1,] 
+		 7: 
+		 8: %cl_1_13[4.6,] 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_15[7.0,] 
+		 2: RETURN %cl_1_16[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 5: 
+		 6: options[9.0,8.0,] 
+		 7: BRANCH %v_15[11.6,] 
+BB 12
+	outgoing: 14 15 
+	datadep: 2 9 8 
+	instructions:
+		 0: %self->search_all_sb_posts_path %self[2.0,] options[9.0,8.0,] 
+		 1: 
+BB 13
+	outgoing: 15 17 
+	datadep: 2 2 9 8 
+	instructions:
+		 0: 
+		 1: %self->prefix %self[2.0,] 
+		 2: 
+		 3: %v_17[13.0,] %v_18[13.1,] %v_19[13.2,] 
+		 4: %self->send %self[2.0,] options[9.0,8.0,] %v_20[13.3,] 
+		 5: RETURN %v_21[13.4,] 
+BB 14
+	outgoing: 17 
+	datadep: 12 
+	instructions:
+		 0: RETURN %v_16[12.0,] 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_22[15.0,] 
+		 2: RETURN %v_23[15.1,] 
+BB 17
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = time_ago_in_words
+BB 1
+	outgoing: 23 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: to_time[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (Time) 
+		 1: %v_3->now %v_3[3.0,] 
+		 2: %v_4[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: include_seconds[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: from_time->respond_to? from_time[2.5,] 
+		 2: BRANCH %v_5[6.1,] 
+BB 7
+	outgoing: 9 
+	datadep: 2 
+	instructions:
+		 0: from_time->to_time from_time[2.5,] 
+		 1: %v_6[7.0,] 
+		 2: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 11 
+	datadep: 3 2 
+	instructions:
+		 0: 
+		 1: to_time->respond_to? to_time[3.2,2.6,] 
+		 2: BRANCH %v_7[9.1,] 
+BB 10
+	outgoing: 12 
+	datadep: 3 2 
+	instructions:
+		 0: to_time->to_time to_time[3.2,2.6,] 
+		 1: %v_8[10.0,] 
+		 2: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 12
+	outgoing: 13 17 
+	datadep: 7 2 10 3 2 
+	instructions:
+		 0: 
+		 1: from_time[7.1,2.5,] to_time[10.1,3.2,2.6,] 
+		 2: %v_9->abs %v_9[12.1,] 
+		 3: %v_10[12.2,] 
+		 4: %v_11->round %v_11[12.3,] 
+		 5: %v_12[12.4,] 
+		 6: 
+		 7: %v_12[12.4,] 
+		 8: BRANCH %v_14[12.7,] 
+BB 13
+	outgoing: 14 18 
+	datadep: 12 
+	instructions:
+		 0: 
+		 1: %v_16[13.0,] distance_in_minutes[12.5,] 
+		 2: BRANCH %v_15[13.1,] 
+BB 14
+	outgoing: 15 19 
+	datadep: 12 
+	instructions:
+		 0: 
+		 1: %v_18[14.0,] distance_in_minutes[12.5,] 
+		 2: BRANCH %v_17[14.1,] 
+BB 15
+	outgoing: 16 20 
+	datadep: 12 
+	instructions:
+		 0: 
+		 1: distance_in_minutes[12.5,] %v_20[15.0,] 
+		 2: BRANCH %v_19[15.1,] 
+BB 16
+	outgoing: 23 
+	datadep: 7 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: 
+		 3: %v_34->l %v_35[16.2,] from_time[7.1,2.5,] %v_34[16.1,] 
+		 4: %v_36[16.3,] 
+		 5: RETURN %v_36[16.3,] 
+BB 17
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_21[17.1,] 
+		 3: RETURN %v_21[17.1,] 
+BB 18
+	outgoing: 23 
+	datadep: 12 
+	instructions:
+		 0: 
+		 1: distance_in_minutes[12.5,] 
+		 2: %v_22->l %v_22[18.1,] 
+		 3: %v_23[18.2,] 
+		 4: RETURN %v_23[18.2,] 
+BB 19
+	outgoing: 23 
+	datadep: 12 
+	instructions:
+		 0: 
+		 1: distance_in_minutes->to_f distance_in_minutes[12.5,] 
+		 2: %v_24[19.1,] 
+		 3: %v_25->round %v_25[19.2,] 
+		 4: %v_26[19.3,] 
+		 5: %v_27->l %v_27[19.4,] 
+		 6: %v_28[19.5,] 
+		 7: RETURN %v_28[19.5,] 
+BB 20
+	outgoing: 23 
+	datadep: 12 
+	instructions:
+		 0: 
+		 1: distance_in_minutes->to_f distance_in_minutes[12.5,] 
+		 2: %v_29[20.1,] 
+		 3: %v_30->round %v_30[20.2,] 
+		 4: %v_31[20.3,] 
+		 5: %v_32->l %v_32[20.4,] 
+		 6: %v_33[20.5,] 
+		 7: RETURN %v_33[20.5,] 
+BB 23
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = time_ago_in_words_or_date
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: date->to_date date[2.5,] 
+		 8: (Time) 
+		 9: %v_4->now %v_4[2.8,] 
+		 10: %v_5->to_date %v_5[2.9,] 
+		 11: %v_3->eql? %v_3[2.7,] %v_6[2.10,] 
+		 12: BRANCH %v_7[2.11,] 
+BB 3
+	outgoing: 9 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: date->to_time date[2.5,] 
+		 3: %v_9->localtime %v_9[3.2,] 
+		 4: 
+		 5: %v_8->l %v_8[3.1,] %v_10[3.3,] %v_11[3.4,] 
+		 6: %v_12[3.5,] 
+		 7: RETURN %v_12[3.5,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: date->to_date date[2.5,] 
+		 2: (Time) 
+		 3: %v_14->now %v_14[4.2,] 
+		 4: %v_15->to_date %v_15[4.3,] 
+		 5: %v_16[4.4,] 
+		 6: %v_13->eql? %v_13[4.1,] %v_17[4.5,] 
+		 7: BRANCH %v_18[4.6,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_19[5.1,] 
+		 3: 
+BB 6
+	outgoing: 7 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: (I18n) 
+		 2: date->to_date date[2.5,] 
+		 3: 
+		 4: %v_20->l %v_20[6.1,] %v_21[6.2,] %v_22[6.3,] 
+		 5: %v_23[6.4,] 
+		 6: %v_23[6.4,] 
+BB 7
+	outgoing: 9 
+	datadep: 6 5 
+	instructions:
+		 0: RETURN %v_19[6.6,5.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = profile_completeness
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: 
+		 8: 
+		 9: %v_4[2.8,] 
+		 10: %self->edit_user_path %self[2.0,] %v_5[2.9,] user[2.5,] 
+		 11: %self->link_to %self[2.0,] %v_3[2.7,] %v_6[2.10,] 
+		 12: 
+		 13: user->avatar user[2.5,] 
+		 14: %v_8->nil? %v_8[2.13,] 
+		 15: %v_9->! %v_9[2.14,] 
+		 16: %v_7[2.11,] %v_10[2.15,] 
+		 17: 
+		 18: 
+		 19: %v_13[2.18,] 
+		 20: %self->edit_user_path %v_14[2.19,] %self[2.0,] user[2.5,] 
+		 21: %self->link_to %self[2.0,] %v_15[2.20,] %v_12[2.17,] 
+		 22: 
+		 23: user->description user[2.5,] 
+		 24: %v_17->blank? %v_17[2.23,] 
+		 25: %v_18->! %v_18[2.24,] 
+		 26: %v_16[2.21,] %v_19[2.25,] 
+		 27: 
+		 28: 
+		 29: %v_22[2.28,] 
+		 30: %self->edit_user_path %self[2.0,] user[2.5,] %v_23[2.29,] 
+		 31: %self->link_to %v_24[2.30,] %self[2.0,] %v_21[2.27,] 
+		 32: 
+		 33: user->metro_area user[2.5,] 
+		 34: %v_26->nil? %v_26[2.33,] 
+		 35: %v_27->! %v_27[2.34,] 
+		 36: %v_25[2.31,] %v_28[2.35,] 
+		 37: 
+		 38: 
+		 39: %v_31[2.38,] 
+		 40: %self->edit_user_path %self[2.0,] user[2.5,] %v_32[2.39,] 
+		 41: %self->link_to %self[2.0,] %v_30[2.37,] %v_33[2.40,] 
+		 42: user->tags user[2.5,] 
+		 43: %v_35->any? %v_35[2.42,] 
+		 44: %v_36[2.43,] %v_34[2.41,] 
+		 45: 
+		 46: %self->new_invitation_path %self[2.0,] 
+		 47: %self->link_to %self[2.0,] %v_38[2.45,] %v_39[2.46,] 
+		 48: user->invitations user[2.5,] 
+		 49: %v_41->any? %v_41[2.48,] 
+		 50: %v_40[2.47,] %v_42[2.49,] 
+		 51: %v_37[2.44,] %v_29[2.36,] %v_20[2.26,] %v_43[2.50,] %v_11[2.16,] 
+		 52: %v_44[2.51,] 
+		 53: 
+		 54: %v_44->select %self[2.0,] %v_44[2.51,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: s[2.2,] 
+		 2: %cl_1_3->eql? %cl_1_3[3.1,] 
+		 3: RETURN %cl_1_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 55: %v_45->sum %self[2.0,] %v_45[2.54,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: s[2.2,] 
+		 2: RETURN %cl_2_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 56: %v_46[2.55,] 
+		 57: 
+		 58: segments->select %self[2.0,] segments[2.52,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: s[2.2,] 
+		 2: %cl_3_3->! %cl_3_3[3.1,] 
+		 3: RETURN %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 59: %v_47[2.58,] 
+		 60: 
+		 61: segments->sum %self[2.0,] segments[2.52,] 
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+BB 3
+	outgoing: 4 6 
+	datadep: 2 
+	instructions:
+		 0: 
+		 1: s[2.2,] 
+		 2: RETURN %cl_4_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %cl_4_4[4.0,] 
+		 2: RETURN %cl_4_5[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 62: %v_48[2.61,] 
+		 63: 
+		 64: completed_score->to_f completed_score[2.56,] 
+		 65: total->to_f total[2.62,] 
+		 66: %v_49[2.64,] %v_50[2.65,] 
+		 67: %v_51[2.66,] 
+		 68: %v_52[2.67,] 
+		 69: 
+		 70: total[2.62,] incomplete[2.59,] %v_52[2.67,] 
+		 71: RETURN %v_53[2.70,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = possesive
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: user->gender user[2.5,] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 2 
+	instructions:
+		 0: user->male? user[2.5,] 
+		 1: BRANCH %v_4[3.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_6[5.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 5 4 
+	instructions:
+		 0: RETURN %v_5[5.1,4.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %v_7[7.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = tiny_mce_init_if_needed
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @uses_tiny_mce[] 
+		 7: %v_3->blank? %v_3[2.6,] 
+		 8: %v_4->! %v_4[2.7,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 2 2 
+	instructions:
+		 0: 
+		 1: %self->tiny_mce_js %self[2.0,] 
+		 2: %self->javascript_tag %self[2.0,] %v_6[3.1,] 
+		 3: RETURN %v_7[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = tiny_mce_js
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: %self[2.0,] @tiny_mce_configuration[] 
+		 7: 
+		 8: %v_4[2.7,] %v_3[2.6,] 
+		 9: %v_5[2.8,] 
+		 10: 
+		 11: 
+		 12: 
+		 13: @tiny_mce_configuration[2.6,] 
+		 14: %v_8->to_json %v_8[2.13,] 
+		 15: 
+		 16: %v_9[2.14,] %v_6[2.11,] %v_7[2.12,] selector[2.9,] %v_10[2.15,] 
+		 17: %v_11->html_safe %v_11[2.16,] 
+		 18: RETURN %v_12[2.17,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = flash_class
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: level[2.5,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 7 
+	datadep: 2 
+	instructions:
+		 0: level[2.5,] 
+		 1: BRANCH %v_5[3.0,] 
+BB 4
+	outgoing: 5 8 
+	datadep: 2 
+	instructions:
+		 0: level[2.5,] 
+		 1: BRANCH %v_6[4.0,] 
+BB 5
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+BB 6
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_7[6.1,] 
+		 3: RETURN %v_7[6.1,] 
+BB 7
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_8[7.1,] 
+		 3: RETURN %v_8[7.1,] 
+BB 8
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: %v_9[8.1,] 
+		 3: RETURN %v_9[8.1,] 
+BB 10
+	outgoing: 11 
+	datadep: 5 
+	instructions:
+		 0: RETURN %v_3[5.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = tag_auto_complete_field
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: 
+		 3: 
+		 4: 
+		 5: 
+		 6: 
+		 7: options[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 3 2 2 3 2 2 
+	instructions:
+		 0: 
+		 1: options[3.1,2.6,] 
+		 2: 
+		 3: %v_4[4.1,] %v_5[4.2,] 
+		 4: 
+		 5: 
+		 6: %v_6[4.5,] 
+		 7: 
+		 8: 
+		 9: id[2.5,] options[3.1,2.6,] 
+		 10: %v_8[4.9,] %v_7[4.8,] 
+		 11: %self->render %self[2.0,] %v_9[4.10,] 
+		 12: %v_10[4.11,] html[4.6,] 
+		 13: 
+		 14: html->html_safe html[4.6,] 
+		 15: RETURN %v_12[4.14,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
