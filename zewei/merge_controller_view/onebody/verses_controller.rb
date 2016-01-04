@@ -89,6 +89,9 @@ class VersesController < ApplicationController
       format.html { redirect_to @verse }
       format.js
     end
+ @verse.id 
+ escape_javascript render(partial: 'tags/tags_with_delete', locals: {object: @verse.reload}) 
+
   end
 
   def destroy

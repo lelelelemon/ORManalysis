@@ -47,6 +47,15 @@ class Administration::Checkin::GroupsController < ApplicationController
         @entries = @time.entries
       end
     end
+ escape_javascript render(partial: 'entries') 
+ @added.each do |group_time| 
+ dom_id(group_time) 
+ if group_time.checkin_folder_id 
+ dom_id(group_time.checkin_folder) 
+ end 
+ end 
+ escape_javascript render(partial: 'folder_select') 
+
   end
 
   def update
@@ -54,6 +63,14 @@ class Administration::Checkin::GroupsController < ApplicationController
       @group_time.attributes = params.permit(:label_id, :print_extra_nametag)
       @group_time.save
     end
+ if not @group_time 
+ t('There_was_an_error') 
+ elsif @group_time.errors.any? 
+ escape_javascript @group_time.errors.values.join('; ') 
+ else 
+ dom_id(@group_time) 
+ end 
+
   end
 
   def destroy
@@ -63,6 +80,15 @@ class Administration::Checkin::GroupsController < ApplicationController
       format.html { redirect_to administration_checkin_time_groups_path(@entry.time) }
       format.js
     end
+ if @entry.is_a?(CheckinFolder) 
+ @entry.class.name.underscore 
+ @entry.id 
+ @entry.id 
+ else 
+ @entry.class.name.underscore 
+ @entry.id 
+ end 
+
   end
 
   def reorder
@@ -82,6 +108,9 @@ class Administration::Checkin::GroupsController < ApplicationController
         @entries = @time.entries
       end
     end
+ escape_javascript render(partial: 'entries') 
+ dom_id(@entry) 
+
   end
 
   private

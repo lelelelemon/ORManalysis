@@ -72,6 +72,8 @@ class Administration::AttendanceController < ApplicationController
   def destroy
     @record = AttendanceRecord.find(params[:id])
     @record.destroy
+ @record.id 
+
   end
 
   private

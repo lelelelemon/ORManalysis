@@ -45,6 +45,12 @@ class MessagesController < ApplicationController
     else
       raise t('messages.missing_param')
     end
+ if @preview 
+ escape_javascript t('messages.from') + ': ' + h(@preview.from) 
+ escape_javascript t('messages.subject') + ': ' + h(@preview.subject) 
+ escape_javascript simple_format(auto_link(h(get_email_body(@preview)))) 
+ end 
+
   end
 
   def show
