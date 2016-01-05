@@ -64,7 +64,7 @@ urls = [
     post "/stories/fetch_url_attributes", :format => "json"
     post "/stories/preview" => "stories#preview"
 =end
-"\"/comments/hmjnmu\"",
+"/comments/hmjnmu",
 #"/comments/hmjnmu/reply",
 =begin
     resources :comments do
@@ -150,7 +150,7 @@ urls.each do |url|
 	#	$stdout = File.new(targetdir + url, "w")
 	#	$stdout.sync = true
 
-		target = open(targetdir + url, "w")
+		target = open(targetdir + url + ".rb", "w")
 		target.write(app.response.body)
 		target.close()
 	rescue
