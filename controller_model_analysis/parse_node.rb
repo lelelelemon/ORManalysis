@@ -227,7 +227,7 @@ def parse_method_call(astnode, method)
 			fcall.setIsQuery
 			fcall.setQueryType(check_method_keyword(fcall.getObjName, node2.source))
 
-			if node2.source == "execute"
+			if node2.source == "execute" and astnode.children[2] != nil
 				query = astnode.children[2].source
 				if query.include?("UPDATE")
 					fcall.setQueryType("UPDATE")

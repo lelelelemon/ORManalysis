@@ -54,7 +54,7 @@ def read_schema(app_dir)
 				@cur_class.addField(t_field)
 			end
 			if @cur_class == nil
-				puts "read schema: class #{tbl_name} (#{convert_tablename(tbl_name)}) cannot be found!"
+				#puts "read schema: class #{tbl_name} (#{convert_tablename(tbl_name)}) cannot be found!"
 			end
 			$table_names.push(convert_tablename(tbl_name))
 		elsif line.delete(" ").delete("\n") == "end"

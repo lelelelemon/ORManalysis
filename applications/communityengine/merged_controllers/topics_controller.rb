@@ -154,7 +154,7 @@ end
 
 end
 
-nd 
+end 
  paginate @posts, :theme => 'bootstrap' 
  if logged_in? || configatron.allow_anonymous_forum_posting 
  if @topic.locked? 

@@ -18,8 +18,8 @@ class AlbumsController < ApplicationController
  @album.description 
  pagination @pictures 
  @pictures.each do |picture| 
- link_to image_tag(picture.photo.url(:small), alt: t('pictures.click_to_enlarge'), class: 'picture-small thumbnail'), | 
- end 
+ #link_to image_tag(picture.photo.url(:small), alt: t('pictures.click_to_enlarge'), class: 'picture-small thumbnail'), | 
+ #end 
  end 
  if @pictures.empty? 
  t('pictures.none') 
@@ -31,8 +31,8 @@ class AlbumsController < ApplicationController
  end 
  end 
  if @album.cover 
- link_to image_tag(@album.cover.photo.url(:large), alt: t('pictures.click_to_enlarge'), class: 'picture thumbnail'), | 
- end 
+ #link_to image_tag(@album.cover.photo.url(:large), alt: t('pictures.click_to_enlarge'), class: 'picture thumbnail'), | 
+ #end 
  else 
  image_tag 'picture.large.jpg', class: 'picture thumbnail' 
  end 

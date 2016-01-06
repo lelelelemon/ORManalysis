@@ -109,6 +109,10 @@ class Function_call
 	#then assume user's type is User
 	def findNonRecordedCaller
 		caller_class = transform_var_name(@obj_name)
+		if @obj_name.include?(".")
+			_list = @obj_name.split('.')
+			caller_class = transform_var_name(_list[-1])
+		end
 		#if caller_class != nil
 		#	puts "\t\t-- find Non Recorded caller: #{@obj_name}.class = #{caller_class}"
 		#end

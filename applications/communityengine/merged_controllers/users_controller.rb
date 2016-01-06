@@ -1,6 +1,7 @@
 class UsersController < BaseController
   include Viewable
   cache_sweeper :taggable_sweeper, :only => [:activate, :update, :destroy]
+	before_action :fixaround_save_user
 
   uses_tiny_mce do
     {:only => [:new, :create, :update, :edit, :welcome_about], :options => configatron.default_mce_options}
@@ -22,7 +23,9 @@ class UsersController < BaseController
                                                 :crop_profile_photo, :upload_profile_photo]
   before_action :admin_required, :only => [:assume, :destroy, :featured, :toggle_featured, :toggle_moderator]
   before_action :admin_or_current_user_required, :only => [:statistics]
-
+	def fixaround_save_user
+		user.save
+	end
   def activate
     redirect_to signup_path and return if params[:id].blank?
     @user = User.find_by_activation_code(params[:id])

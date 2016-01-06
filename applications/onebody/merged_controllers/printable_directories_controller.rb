@@ -3,16 +3,16 @@ class PrintableDirectoriesController < ApplicationController
 
   def new
  @title = t('printable_directories.heading') 
- form_tag printable_directory_path, method: 'post' do 
- t('printable_directories.click_to_have_custom_pdf_via_email') 
- check_box_tag 'with_pictures', true, false 
- t('printable_directories.include_family_pictures') 
- t('printable_directories.will_take_longer') 
- button_tag class: 'btn btn-success' do 
- icon 'fa fa-envelope' 
- t('printable_directories.email_custom_directory') 
- end 
- end 
+ #form_tag printable_directory_path, method: 'post' do 
+ #t('printable_directories.click_to_have_custom_pdf_via_email') 
+ #check_box_tag 'with_pictures', true, false 
+ #t('printable_directories.include_family_pictures') 
+ #t('printable_directories.will_take_longer') 
+ #button_tag class: 'btn btn-success' do 
+ #icon 'fa fa-envelope' 
+ #t('printable_directories.email_custom_directory') 
+ #end 
+ #end 
 
   end
 
