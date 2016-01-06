@@ -18,31 +18,31 @@ BB 2
 		 8: %v_4[2.7,] 
 		 9: 
 		 10: %self->moderator_user_id %self[2.0,] 
-		 11: m[2.8,] %v_5[2.10,] 
+		 11: ATTRASSIGN m->author_user_id m[2.8,] %v_5[2.10,] 
 		 12: 
-		 13: m[2.8,2.11,] 
+		 13: ATTRASSIGN m->deleted_by_author m[2.8,2.11,] 
 		 14: 
-		 15: %self->story %self[2.0,] 
+		 15: %self->story %self[2.0,2.10,] 
 		 16: BRANCH %v_6[2.15,] 
 BB 3
 	outgoing: 4 5 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: %self->story %self[2.0,] 
 		 2: %v_7->user_id %v_7[3.1,] 
-		 3: m[2.8,2.11,2.13,] %v_8[3.2,] 
+		 3: ATTRASSIGN m->recipient_user_id m[2.8,2.11,2.13,] %v_8[3.2,] 
 		 4: 
 		 5: 
-		 6: m[3.3,] %v_9[3.5,] 
+		 6: ATTRASSIGN m->subject m[3.3,] %v_9[3.5,] 
 		 7: 
 		 8: 
-		 9: %self->story %self[2.0,] 
+		 9: %self->story %self[3.1,2.0,] 
 		 10: %v_11->title %v_11[3.9,] 
 		 11: 
-		 12: %v_13[3.11,] %v_10[3.8,] %v_12[3.10,] 
+		 12: %v_10[3.8,] %v_12[3.10,] %v_13[3.11,] 
 		 13: 
-		 14: %self->story %self[2.0,] 
+		 14: %self->story %self[3.1,3.9,2.0,] 
 		 15: %v_15->comments_url %v_15[3.14,] 
 		 16: 
 		 17: %v_16[3.15,] %v_17[3.16,] 
@@ -53,18 +53,18 @@ BB 3
 		 22: %v_21[3.20,] %v_22[3.21,] 
 		 23: 
 		 24: 
-		 25: %self->action %self[2.0,] 
+		 25: %self->action %self[3.1,3.9,3.14,2.0,] 
 		 26: 
 		 27: %v_24[3.23,] %v_25[3.25,] %v_26[3.26,] 
-		 28: %v_27[3.27,] %v_23[3.22,] 
-		 29: m[3.3,3.6,] %v_28[3.28,] 
+		 28: %v_23[3.22,] %v_27[3.27,] 
+		 29: ATTRASSIGN m->body m[3.3,3.6,] %v_28[3.28,] 
 		 30: 
-		 31: %self->reason %self[2.0,] 
+		 31: %self->reason %self[3.1,3.9,3.14,3.25,2.0,] 
 		 32: %v_29->present? %v_29[3.31,] 
 		 33: BRANCH %v_30[3.32,] 
 BB 4
 	outgoing: 6 
-	datadep: 3 3 3 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: m->body m[3.3,3.6,3.29,] 
@@ -93,53 +93,53 @@ BB 6
 		 0: 
 BB 7
 	outgoing: 8 12 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: %self->comment %self[2.0,] 
 		 2: BRANCH %v_43[7.1,] 
 BB 8
 	outgoing: 9 10 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: %self->comment %self[2.0,] 
 		 2: %v_44->user_id %v_44[8.1,] 
-		 3: m[2.8,2.11,2.13,] %v_45[8.2,] 
+		 3: ATTRASSIGN m->recipient_user_id m[2.8,2.11,2.13,] %v_45[8.2,] 
 		 4: 
 		 5: 
-		 6: %v_46[8.5,] m[8.3,] 
+		 6: ATTRASSIGN m->subject m[8.3,] %v_46[8.5,] 
 		 7: 
 		 8: 
-		 9: %self->comment %self[2.0,] 
+		 9: %self->comment %self[8.1,2.0,] 
 		 10: %v_48->story %v_48[8.9,] 
 		 11: %v_49->title %v_49[8.10,] 
 		 12: 
 		 13: %v_47[8.8,] %v_50[8.11,] %v_51[8.12,] 
 		 14: 
-		 15: %self->comment %self[2.0,] 
+		 15: %self->comment %self[8.1,8.9,2.0,] 
 		 16: %v_53->story %v_53[8.15,] 
 		 17: %v_54->comments_url %v_54[8.16,] 
 		 18: 
 		 19: %v_55[8.17,] %v_56[8.18,] 
-		 20: %v_57[8.19,] %v_52[8.13,] 
+		 20: %v_52[8.13,] %v_57[8.19,] 
 		 21: 
 		 22: %v_58[8.20,] %v_59[8.21,] 
 		 23: 
 		 24: 
-		 25: %self->comment %self[2.0,] 
+		 25: %self->comment %self[8.1,8.9,8.15,2.0,] 
 		 26: %v_62->comment %v_62[8.25,] 
 		 27: 
 		 28: %v_61[8.23,] %v_63[8.26,] %v_64[8.27,] 
 		 29: %v_60[8.22,] %v_65[8.28,] 
-		 30: m[8.3,8.6,] %v_66[8.29,] 
+		 30: ATTRASSIGN m->body m[8.3,8.6,] %v_66[8.29,] 
 		 31: 
-		 32: %self->reason %self[2.0,] 
+		 32: %self->reason %self[8.1,8.9,8.15,8.25,2.0,] 
 		 33: %v_67->present? %v_67[8.32,] 
 		 34: BRANCH %v_68[8.33,] 
 BB 9
 	outgoing: 11 
-	datadep: 8 8 8 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: m->body m[8.3,8.6,8.30,] 
@@ -154,7 +154,7 @@ BB 9
 		 10: %self->reason %self[2.0,] 
 		 11: 
 		 12: %v_76[9.8,] %v_77[9.10,] %v_78[9.11,] 
-		 13: %v_79[9.12,] %v_75[9.7,] 
+		 13: %v_75[9.7,] %v_79[9.12,] 
 		 14: 
 BB 10
 	outgoing: 11 
@@ -163,7 +163,7 @@ BB 10
 		 0: 
 BB 11
 	outgoing: 14 
-	datadep: 10 9 
+	datadep: 
 	instructions:
 		 0: %v_80[10.0,9.13,] 
 BB 12
@@ -174,16 +174,16 @@ BB 12
 		 1: RETURN 
 BB 14
 	outgoing: 15 
-	datadep: 3 3 3 3 3 3 8 8 8 8 8 8 3 3 3 3 3 3 8 8 8 8 8 8 
+	datadep: 
 	instructions:
 		 0: 
-		 1: m->body m[3.3,3.6,3.29,3.3,3.6,3.29,8.3,8.6,8.30,8.3,8.6,8.30,] 
+		 1: m->body m[3.3,3.6,3.29,8.3,8.6,8.30,] 
 		 2: 
 		 3: %v_81[14.1,] %v_82[14.2,] 
 		 4: 
 		 5: %v_83[14.3,] %v_84[14.4,] 
 		 6: 
-		 7: m->save m[3.3,3.6,3.29,3.3,3.6,3.29,8.3,8.6,8.30,8.3,8.6,8.30,] 
+		 7: m->save m[14.1,3.3,3.6,3.29,8.3,8.6,8.30,] 
 		 8: RETURN %v_86[14.7,] 
 BB 15
 	outgoing: 

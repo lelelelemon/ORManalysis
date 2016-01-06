@@ -19,10 +19,10 @@ BB 2
 		 9: %v_3[2.8,] 
 		 10: 
 		 11: (Vote) 
-		 12: stories[2.6,] user[2.5,] 
+		 12: user[2.5,] stories[2.6,] 
 		 13: %v_4->where %v_4[2.11,] %v_5[2.12,] 
-		 14: %v_6->each %self[2.0,] %v_6[2.13,] 
-CLOSURE BEGIN: 
+		 14: %v_6->each %v_6[2.13,] %self[2.0,] 
+CLOSURE BEGIN: v[] votes[2.9,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -38,14 +38,14 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: v->story_id v[2.2,] 
-		 2: v->vote v[2.2,] 
-		 3: v->reason v[2.2,] 
+		 2: v->vote v[3.1,2.2,] 
+		 3: v->reason v[3.1,3.2,2.2,] 
 		 4: %cl_1_4[3.2,] %cl_1_5[3.3,] 
-		 5: %cl_1_3[3.1,] %cl_1_6[3.4,] 
+		 5: votes[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: RETURN %cl_1_6[3.4,] 
 BB 4
 	outgoing: 6 
@@ -91,8 +91,8 @@ BB 2
 		 13: %v_4->where %v_4[2.11,] %v_5[2.12,] 
 		 14: 
 		 15: %v_6->where %v_6[2.13,] %v_7[2.14,] 
-		 16: %v_8->each %self[2.0,] %v_8[2.15,] 
-CLOSURE BEGIN: 
+		 16: %v_8->each %v_8[2.15,] %self[2.0,] 
+CLOSURE BEGIN: v[] votes[2.9,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -108,14 +108,14 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: v->comment_id v[2.2,] 
-		 2: v->vote v[2.2,] 
-		 3: v->reason v[2.2,] 
+		 2: v->vote v[3.1,2.2,] 
+		 3: v->reason v[3.1,3.2,2.2,] 
 		 4: %cl_1_4[3.2,] %cl_1_5[3.3,] 
-		 5: %cl_1_3[3.1,] %cl_1_6[3.4,] 
+		 5: votes[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: RETURN %cl_1_6[3.4,] 
 BB 4
 	outgoing: 6 
@@ -164,7 +164,7 @@ BB 3
 		 2: RETURN 
 BB 4
 	outgoing: 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: user_id[2.5,] story_ids[2.6,] 
@@ -172,8 +172,8 @@ BB 4
 		 3: %v_6[4.2,] 
 		 4: 
 		 5: 
-		 6: %self[2.0,] %v_6[4.2,] %v_7[4.5,] 
-CLOSURE BEGIN: 
+		 6: %v_6[4.2,] %v_7[4.5,] %self[4.2,2.0,] 
+CLOSURE BEGIN: v[] memo[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -190,14 +190,14 @@ BB 2
 		 5: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: v->story_id v[2.3,] 
-		 2: v->vote v[2.3,] 
-		 3: v->reason v[2.3,] 
+		 2: v->vote v[3.1,2.3,] 
+		 3: v->reason v[3.1,3.2,2.3,] 
 		 4: %cl_1_4[3.2,] %cl_1_5[3.3,] 
-		 5: %cl_1_3[3.1,] memo[2.2,] %cl_1_6[3.4,] 
+		 5: memo[2.2,] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: 
 		 7: RETURN memo[3.5,] 
 BB 4
@@ -246,16 +246,16 @@ BB 3
 		 2: RETURN 
 BB 4
 	outgoing: 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: comment_ids[2.6,] user_id[2.5,] 
+		 1: user_id[2.5,] comment_ids[2.6,] 
 		 2: %self->where %self[2.0,] %v_5[4.1,] 
 		 3: %v_6[4.2,] 
 		 4: 
 		 5: 
-		 6: %self[2.0,] %v_6[4.2,] %v_7[4.5,] 
-CLOSURE BEGIN: 
+		 6: %v_6[4.2,] %v_7[4.5,] %self[4.2,2.0,] 
+CLOSURE BEGIN: v[] memo[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -272,14 +272,14 @@ BB 2
 		 5: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: v->comment_id v[2.3,] 
-		 2: v->vote v[2.3,] 
-		 3: v->reason v[2.3,] 
+		 2: v->vote v[3.1,2.3,] 
+		 3: v->reason v[3.1,3.2,2.3,] 
 		 4: %cl_1_4[3.2,] %cl_1_5[3.3,] 
-		 5: %cl_1_3[3.1,] memo[2.2,] %cl_1_6[3.4,] 
+		 5: memo[2.2,] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: 
 		 7: RETURN memo[3.5,] 
 BB 4
@@ -328,12 +328,12 @@ BB 3
 		 0: 
 BB 4
 	outgoing: 5 6 
-	datadep: 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Vote) 
-		 2: story_id[2.6,2.6,] comment_id[2.7,2.7,] user_id[2.8,2.8,] 
-		 3: %v_3->where %v_4[4.2,] %v_3[4.1,] 
+		 2: user_id[2.8,] story_id[2.6,] comment_id[2.7,] 
+		 3: %v_3->where %v_3[4.1,] %v_4[4.2,] 
 		 4: %v_5->first_or_initialize %v_5[4.3,] 
 		 5: %v_6[4.4,] 
 		 6: 
@@ -342,14 +342,14 @@ BB 4
 		 9: BRANCH %v_8[4.8,] 
 BB 5
 	outgoing: 6 
-	datadep: 4 2 2 
+	datadep: 
 	instructions:
 		 0: v->vote v[4.5,] 
-		 1: %v_9[5.0,] vote[2.5,2.5,] 
+		 1: %v_9[5.0,] vote[2.5,] 
 		 2: %v_10[5.1,] 
 BB 6
 	outgoing: 7 8 
-	datadep: 5 4 
+	datadep: 
 	instructions:
 		 0: BRANCH %v_8[5.2,4.8,] 
 BB 7
@@ -360,7 +360,7 @@ BB 7
 		 1: RETURN 
 BB 8
 	outgoing: 10 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: 
@@ -369,8 +369,8 @@ BB 8
 		 4: 
 		 5: 
 		 6: (Vote) 
-		 7: %v_12->transaction %self[2.0,2.0,2.0,2.0,] %v_12[8.6,] 
-CLOSURE BEGIN: 
+		 7: %v_12->transaction %v_12[8.6,] %self[2.0,] 
+CLOSURE BEGIN: vote[2.5,] v[4.5,] upvote[8.2,] downvote[8.4,] reason[2.9,] update_counters[3.0,2.10,] user_id[2.8,] c[] s[] 
 BB 1
 	outgoing: 46 2 
 	datadep: 
@@ -388,14 +388,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: 
+		 1: vote[] 
 		 2: BRANCH %cl_1_3[3.1,] 
 BB 4
 	outgoing: 5 6 44 
 	datadep: 
 	instructions:
 		 0: 
-		 1: v->vote 
+		 1: v->vote v[] 
 		 2: %cl_1_4[4.1,] 
 		 3: BRANCH %cl_1_5[4.2,] 
 BB 5
@@ -411,11 +411,11 @@ BB 6
 		 0: 
 BB 7
 	outgoing: 8 9 44 
-	datadep: 6 5 
+	datadep: 
 	instructions:
 		 0: %cl_1_6[6.0,5.0,] 
 		 1: 
-		 2: v->vote 
+		 2: v->vote v[] 
 		 3: %cl_1_7[7.2,] 
 		 4: BRANCH %cl_1_8[7.3,] 
 BB 8
@@ -431,18 +431,18 @@ BB 9
 		 0: 
 BB 10
 	outgoing: 27 44 
-	datadep: 9 8 
+	datadep: 
 	instructions:
 		 0: %cl_1_9[9.0,8.0,] 
 		 1: 
-		 2: v->destroy! 
+		 2: v->destroy! v[] 
 		 3: 
 BB 11
 	outgoing: 12 19 44 
 	datadep: 
 	instructions:
 		 0: 
-		 1: v->new_record? 
+		 1: v->new_record? v[] 
 		 2: %cl_1_11->! %cl_1_11[11.1,] 
 		 3: BRANCH %cl_1_12[11.2,] 
 BB 12
@@ -450,7 +450,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: v->vote 
+		 1: v->vote v[] 
 		 2: %cl_1_13[12.1,] 
 		 3: BRANCH %cl_1_14[12.2,] 
 BB 13
@@ -466,11 +466,11 @@ BB 14
 		 0: 
 BB 15
 	outgoing: 16 17 44 
-	datadep: 14 13 
+	datadep: 
 	instructions:
 		 0: %cl_1_15[14.0,13.0,] 
 		 1: 
-		 2: v->vote 
+		 2: v->vote v[] 
 		 3: %cl_1_16[15.2,] 
 		 4: BRANCH %cl_1_17[15.3,] 
 BB 16
@@ -486,7 +486,7 @@ BB 17
 		 0: 
 BB 18
 	outgoing: 20 
-	datadep: 17 16 
+	datadep: 
 	instructions:
 		 0: %cl_1_18[17.0,16.0,] 
 		 1: 
@@ -500,7 +500,7 @@ BB 20
 	datadep: 
 	instructions:
 		 0: 
-		 1: 
+		 1: vote[] 
 		 2: BRANCH %cl_1_19[20.1,] 
 BB 21
 	outgoing: 23 
@@ -515,12 +515,12 @@ BB 22
 		 0: 
 BB 23
 	outgoing: 24 25 44 
-	datadep: 15 15 15 15 22 21 
+	datadep: 
 	instructions:
-		 0: upvote[15.0,15.0,15.0,15.0,] %cl_1_20[22.0,21.0,] 
+		 0: upvote[15.0,] %cl_1_20[22.0,21.0,] 
 		 1: %cl_1_21[23.0,] 
 		 2: 
-		 3: 
+		 3: vote[] 
 		 4: BRANCH %cl_1_22[23.3,] 
 BB 24
 	outgoing: 26 
@@ -535,14 +535,14 @@ BB 25
 		 0: 
 BB 26
 	outgoing: 27 44 
-	datadep: 25 24 18 18 18 18 
+	datadep: 
 	instructions:
-		 0: %cl_1_23[25.0,24.0,] downvote[18.0,18.0,18.0,18.0,] 
+		 0: downvote[18.0,] %cl_1_23[25.0,24.0,] 
 		 1: %cl_1_24[26.0,] 
 		 2: 
-		 3: 
+		 3: ATTRASSIGN v->vote v[] vote[] 
 		 4: 
-		 5: v[26.3,] 
+		 5: ATTRASSIGN v->reason v[26.3,] reason[] 
 		 6: 
 		 7: v->save! v[26.3,26.5,] 
 		 8: %cl_1_25[26.7,] 
@@ -551,40 +551,40 @@ BB 27
 	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: BRANCH 
+		 1: update_counters[] 
+		 2: BRANCH update_counters[] 
 BB 28
 	outgoing: 29 30 44 
-	datadep: 26 10 
+	datadep: 
 	instructions:
 		 0: downvote[26.1,10.0,] 
 		 1: BRANCH %cl_1_27[28.0,] 
 BB 29
 	outgoing: 30 44 
-	datadep: 23 23 7 7 
+	datadep: 
 	instructions:
-		 0: upvote[23.1,23.1,7.0,7.0,] 
+		 0: upvote[23.1,7.0,] 
 		 1: %cl_1_28[29.0,] 
 BB 30
 	outgoing: 31 
-	datadep: 29 28 
+	datadep: 
 	instructions:
 		 0: %cl_1_27[29.1,28.0,] 
 BB 31
 	outgoing: 32 42 
-	datadep: 30 27 
+	datadep: 
 	instructions:
 		 0: BRANCH %cl_1_26[30.0,27.1,] 
 BB 32
 	outgoing: 33 37 44 
-	datadep: 26 26 
+	datadep: 
 	instructions:
 		 0: 
 		 1: v->comment_id v[26.3,26.5,] 
 		 2: BRANCH %cl_1_29[32.1,] 
 BB 33
 	outgoing: 34 35 44 
-	datadep: 26 26 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Comment) 
@@ -593,18 +593,18 @@ BB 33
 		 4: %cl_1_32[33.3,] 
 		 5: 
 		 6: %cl_1_32->user_id %cl_1_32[33.3,] 
-		 7: %cl_1_33[33.6,] 
+		 7: %cl_1_33[33.6,] user_id[] 
 		 8: BRANCH %cl_1_34[33.7,] 
 BB 34
 	outgoing: 36 44 
-	datadep: 33 23 23 7 7 26 10 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (User) 
 		 2: c->user_id c[33.4,] 
-		 3: upvote[23.1,23.1,7.0,7.0,] downvote[26.1,10.0,] 
+		 3: upvote[23.1,7.0,] downvote[26.1,10.0,] 
 		 4: %cl_1_37[34.3,] 
-		 5: %cl_1_35->update_counters %cl_1_36[34.2,] %cl_1_35[34.1,] %cl_1_38[34.4,] 
+		 5: %cl_1_35->update_counters %cl_1_35[34.1,] %cl_1_36[34.2,] %cl_1_38[34.4,] 
 		 6: 
 BB 35
 	outgoing: 36 
@@ -613,14 +613,14 @@ BB 35
 		 0: 
 BB 36
 	outgoing: 41 44 
-	datadep: 23 23 7 7 23 23 7 7 33 33 26 10 26 10 
+	datadep: 
 	instructions:
 		 0: 
-		 1: c->give_upvote_or_downvote_and_recalculate_confidence! upvote[23.1,23.1,7.0,7.0,23.1,23.1,7.0,7.0,] c[33.4,33.4,] downvote[26.1,10.0,26.1,10.0,] 
+		 1: c->give_upvote_or_downvote_and_recalculate_confidence! c[33.4,] upvote[23.1,7.0,] downvote[26.1,10.0,] 
 		 2: 
 BB 37
 	outgoing: 38 39 44 
-	datadep: 26 26 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Story) 
@@ -629,18 +629,18 @@ BB 37
 		 4: %cl_1_43[37.3,] 
 		 5: 
 		 6: %cl_1_43->user_id %cl_1_43[37.3,] 
-		 7: %cl_1_44[37.6,] 
+		 7: %cl_1_44[37.6,] user_id[] 
 		 8: BRANCH %cl_1_45[37.7,] 
 BB 38
 	outgoing: 40 44 
-	datadep: 37 23 23 7 7 26 10 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (User) 
 		 2: s->user_id s[37.4,] 
-		 3: upvote[23.1,23.1,7.0,7.0,] downvote[26.1,10.0,] 
+		 3: upvote[23.1,7.0,] downvote[26.1,10.0,] 
 		 4: %cl_1_48[38.3,] 
-		 5: %cl_1_46->update_counters %cl_1_47[38.2,] %cl_1_46[38.1,] %cl_1_49[38.4,] 
+		 5: %cl_1_46->update_counters %cl_1_46[38.1,] %cl_1_47[38.2,] %cl_1_49[38.4,] 
 		 6: 
 BB 39
 	outgoing: 40 
@@ -649,14 +649,14 @@ BB 39
 		 0: 
 BB 40
 	outgoing: 41 44 
-	datadep: 23 23 7 7 23 23 7 7 26 10 26 10 37 37 
+	datadep: 
 	instructions:
 		 0: 
-		 1: s->give_upvote_or_downvote_and_recalculate_hotness! upvote[23.1,23.1,7.0,7.0,23.1,23.1,7.0,7.0,] downvote[26.1,10.0,26.1,10.0,] s[37.4,37.4,] 
+		 1: s->give_upvote_or_downvote_and_recalculate_hotness! s[37.4,] upvote[23.1,7.0,] downvote[26.1,10.0,] 
 		 2: %cl_1_51[40.1,] 
 BB 41
 	outgoing: 46 
-	datadep: 40 36 
+	datadep: 
 	instructions:
 		 0: RETURN %cl_1_40[40.2,36.1,] 
 BB 42

@@ -15,8 +15,8 @@ BB 2
 		 5: 
 		 6: (User) 
 		 7: %v_3->all %v_3[2.6,] 
-		 8: %v_4->each %self[2.0,] %v_4[2.7,] 
-CLOSURE BEGIN: 
+		 8: %v_4->each %v_4[2.7,] %self[2.0,] 
+CLOSURE BEGIN: u[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -32,19 +32,19 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: u->stories u[2.2,] 
 		 2: %cl_1_3->map %cl_1_3[3.1,] 
 		 3: %cl_1_4->sum %cl_1_4[3.2,] 
-		 4: u->comments u[2.2,] 
+		 4: u->comments u[3.1,2.2,] 
 		 5: %cl_1_6->map %cl_1_6[3.4,] 
 		 6: %cl_1_7->sum %cl_1_7[3.5,] 
 		 7: %cl_1_5[3.3,] %cl_1_8[3.6,] 
-		 8: u[2.2,] %cl_1_9[3.7,] 
+		 8: ATTRASSIGN u->karma u[3.1,3.4,2.2,] %cl_1_9[3.7,] 
 		 9: 
-		 10: u->save! u[3.8,] 
+		 10: u->save! u[3.1,3.4,3.8,] 
 		 11: RETURN %cl_1_10[3.10,] 
 BB 4
 	outgoing: 6 
@@ -81,8 +81,8 @@ BB 2
 		 5: 
 		 6: (User) 
 		 7: %v_3->validators_on %v_3[2.6,] 
-		 8: %v_4->select %self[2.0,] %v_4[2.7,] 
-CLOSURE BEGIN: 
+		 8: %v_4->select %v_4[2.7,] %self[2.0,] 
+CLOSURE BEGIN: v[] 
 BB 1
 	outgoing: 10 2 
 	datadep: 
@@ -98,7 +98,7 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 5 8 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: v->class v[2.2,] 
@@ -107,25 +107,25 @@ BB 3
 		 4: %cl_1_5[3.3,] 
 BB 4
 	outgoing: 5 8 
-	datadep: 3 
+	datadep: 
 	instructions:
 		 0: %cl_1_4[3.2,] 
 BB 5
 	outgoing: 6 7 8 
-	datadep: 4 3 
+	datadep: 
 	instructions:
 		 0: %cl_1_5[4.0,3.3,] 
 		 1: %cl_1_6[5.0,] 
 BB 6
 	outgoing: 7 8 
-	datadep: 4 3 
+	datadep: 
 	instructions:
 		 0: %cl_1_5[4.0,3.3,] 
 BB 7
 	outgoing: 8 10 
-	datadep: 3 3 3 3 6 5 
+	datadep: 
 	instructions:
-		 0: %cl_1_3[3.1,3.1,3.1,3.1,] %cl_1_6[6.0,5.0,] 
+		 0: %cl_1_3[3.1,] %cl_1_6[6.0,5.0,] 
 		 1: RETURN %cl_1_7[7.0,] 
 BB 8
 	outgoing: 10 
@@ -173,18 +173,18 @@ BB 3
 		 1: %v_3[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: 
 		 2: %v_4[4.1,] 
 		 3: 
-		 4: %self->is_admin? %self[2.0,2.0,] 
+		 4: %self->is_admin? %self[2.0,] 
 		 5: %v_5->! %v_5[4.4,] 
 		 6: BRANCH %v_6[4.5,] 
 BB 5
 	outgoing: 7 
-	datadep: 4 
+	datadep: 
 	instructions:
 		 0: 
 		 1: attrs->push attrs[4.2,] 
@@ -196,16 +196,16 @@ BB 6
 		 0: 
 BB 7
 	outgoing: 8 
-	datadep: 4 4 4 4 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: attrs->push attrs[4.2,4.2,] 
+		 1: attrs->push attrs[4.2,] 
 		 2: 
-		 3: attrs[4.2,4.2,] 
-		 4: %v_0[2.1,2.1,2.1,2.1,] %current_module[2.3,2.3,2.3,2.3,] %v_9[7.3,] 
+		 3: attrs[7.1,4.2,] 
+		 4: %current_module[2.3,] %v_9[7.3,] %v_0[2.1,] 
 		 5: %v_10[7.4,] 
 		 6: 
-		 7: %self->avatar_url %self[2.0,2.0,2.0,2.0,] 
+		 7: %self->avatar_url %self[2.0,] 
 		 8: h[7.5,] %v_11[7.7,] 
 		 9: 
 		 10: RETURN h[7.5,7.8,] 
@@ -246,21 +246,21 @@ BB 4
 		 4: %v_5[4.3,] 
 BB 5
 	outgoing: 6 
-	datadep: 4 
+	datadep: 
 	instructions:
 		 0: %v_4[4.2,] 
 BB 6
 	outgoing: 7 
-	datadep: 2 2 2 2 5 4 4 4 3 2 3 2 
+	datadep: 
 	instructions:
-		 0: %self->email %self[2.0,2.0,2.0,2.0,] 
+		 0: %self->email %self[2.0,] 
 		 1: %v_6->strip %v_6[6.0,] 
 		 2: %v_7->downcase %v_7[6.1,] 
 		 3: %v_5->hexdigest %v_5[5.0,4.3,] %v_8[6.2,] 
-		 4: %v_3[4.1,4.1,] %v_9[6.3,] 
+		 4: %v_3[4.1,] %v_9[6.3,] 
 		 5: 
 		 6: 
-		 7: size[3.0,2.5,3.0,2.5,] %v_11[6.5,] 
+		 7: %v_11[6.5,] size[3.0,2.5,] 
 		 8: %v_10[6.4,] %v_12[6.7,] 
 		 9: RETURN %v_13[6.8,] 
 BB 7
@@ -297,12 +297,12 @@ BB 3
 		 2: RETURN 
 BB 4
 	outgoing: 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: k->to_f k[2.7,] 
 		 2: %self->stories_submitted_count %self[2.0,] 
-		 3: %self->comments_posted_count %self[2.0,] 
+		 3: %self->comments_posted_count %self[4.2,2.0,] 
 		 4: %v_8[4.2,] %v_9[4.3,] 
 		 5: %v_7[4.1,] %v_10[4.4,] 
 		 6: RETURN %v_11[4.5,] 
@@ -330,32 +330,32 @@ BB 2
 		 7: 
 		 8: (Time) 
 		 9: %v_3->now %v_3[2.8,] 
-		 10: %self[2.0,] %v_4[2.9,] 
+		 10: ATTRASSIGN %self->banned_at %self[2.0,] %v_4[2.9,] 
 		 11: 
 		 12: banner->id banner[2.5,] 
-		 13: %self[2.0,2.10,] %v_5[2.12,] 
+		 13: ATTRASSIGN %self->banned_by_user_id %self[2.0,2.10,] %v_5[2.12,] 
 		 14: 
-		 15: reason[2.6,] %self[2.0,2.10,2.13,] 
+		 15: ATTRASSIGN %self->banned_reason %self[2.0,2.10,2.13,] reason[2.6,] 
 		 16: 
 		 17: %self->delete! %self[2.0,2.10,2.13,2.15,] 
 		 18: 
 		 19: (BanNotification) 
-		 20: %v_7->notify banner[2.5,] reason[2.6,] %self[2.0,2.10,2.13,2.15,] %v_7[2.19,] 
+		 20: %v_7->notify %v_7[2.19,] %self[2.0,2.10,2.13,2.15,2.17,] banner[2.5,2.12,] reason[2.6,] 
 		 21: 
 		 22: (Moderation) 
 		 23: %v_9->new %v_9[2.22,] 
 		 24: %v_10[2.23,] 
 		 25: 
-		 26: banner->id banner[2.5,] 
-		 27: m[2.24,] %v_11[2.26,] 
+		 26: banner->id banner[2.5,2.12,] 
+		 27: ATTRASSIGN m->moderator_user_id m[2.24,] %v_11[2.26,] 
 		 28: 
-		 29: %self->id %self[2.0,2.10,2.13,2.15,] 
-		 30: m[2.24,2.27,] %v_12[2.29,] 
+		 29: %self->id %self[2.0,2.10,2.13,2.15,2.17,] 
+		 30: ATTRASSIGN m->user_id m[2.24,2.27,] %v_12[2.29,] 
 		 31: 
 		 32: 
-		 33: %v_13[2.32,] m[2.24,2.27,2.30,] 
+		 33: ATTRASSIGN m->action m[2.24,2.27,2.30,] %v_13[2.32,] 
 		 34: 
-		 35: reason[2.6,] m[2.24,2.27,2.30,2.33,] 
+		 35: ATTRASSIGN m->reason m[2.24,2.27,2.30,2.33,] reason[2.6,] 
 		 36: 
 		 37: m->save! m[2.24,2.27,2.30,2.33,2.35,] 
 		 38: 
@@ -391,15 +391,15 @@ BB 3
 		 1: RETURN 
 BB 4
 	outgoing: 5 12 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Story) 
-		 2: obj->is_a? %v_5[4.1,] obj[2.5,] 
+		 2: obj->is_a? obj[2.5,] %v_5[4.1,] 
 		 3: BRANCH %v_6[4.2,] 
 BB 5
 	outgoing: 6 7 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: obj->is_downvotable? obj[2.5,] 
@@ -412,7 +412,7 @@ BB 6
 		 1: RETURN 
 BB 7
 	outgoing: 8 9 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: obj->vote obj[2.5,] 
@@ -437,7 +437,7 @@ BB 11
 		 0: 
 BB 12
 	outgoing: 13 20 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Comment) 
@@ -445,7 +445,7 @@ BB 12
 		 3: BRANCH %v_13[12.2,] 
 BB 13
 	outgoing: 14 15 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: obj->is_downvotable? obj[2.5,] 
@@ -458,7 +458,7 @@ BB 14
 		 1: RETURN 
 BB 15
 	outgoing: 16 17 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: obj->current_vote obj[2.5,] 
@@ -490,12 +490,12 @@ BB 20
 		 0: 
 BB 21
 	outgoing: 22 
-	datadep: 20 17 
+	datadep: 
 	instructions:
 		 0: %v_15[20.0,17.1,] 
 BB 22
 	outgoing: 24 
-	datadep: 21 9 
+	datadep: 
 	instructions:
 		 0: %v_8[21.0,9.1,] 
 		 1: 
@@ -525,12 +525,12 @@ BB 2
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Utils) 
 		 2: %v_5[3.1,] 
-		 3: %self[2.0,] %v_6[3.2,] 
+		 3: ATTRASSIGN %self->session_token %self[2.0,] %v_6[3.2,] 
 		 4: RETURN %v_6[3.2,] 
 BB 4
 	outgoing: 6 
@@ -562,12 +562,12 @@ BB 2
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Utils) 
 		 2: %v_5[3.1,] 
-		 3: %self[2.0,] %v_6[3.2,] 
+		 3: ATTRASSIGN %self->mailing_list_token %self[2.0,] %v_6[3.2,] 
 		 4: RETURN %v_6[3.2,] 
 BB 4
 	outgoing: 6 
@@ -599,12 +599,12 @@ BB 2
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Utils) 
 		 2: %v_5[3.1,] 
-		 3: %self[2.0,] %v_6[3.2,] 
+		 3: ATTRASSIGN %self->rss_token %self[2.0,] %v_6[3.2,] 
 		 4: RETURN %v_6[3.2,] 
 BB 4
 	outgoing: 6 
@@ -660,8 +660,8 @@ BB 2
 		 4: 
 		 5: 
 		 6: (User) 
-		 7: %v_3->transaction %self[2.0,] %v_3[2.6,] 
-CLOSURE BEGIN: 
+		 7: %v_3->transaction %v_3[2.6,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -676,12 +676,12 @@ BB 2
 		 3: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: %self->comments %self[2.0,] 
-		 2: %cl_1_3->each %cl_1_3[3.1,] %self[2.0,] 
-CLOSURE BEGIN: 
+		 2: %cl_1_3->each %cl_1_3[3.1,] %self[3.1,2.0,] 
+CLOSURE BEGIN: c[] %self[3.1,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -697,10 +697,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: c->delete_for_user %self[2.0,] c[2.2,] 
+		 1: c->delete_for_user c[2.2,] %self[2.0,] 
 		 2: RETURN %cl_2_3[3.1,] 
 BB 4
 	outgoing: 6 
@@ -715,9 +715,9 @@ BB 6
 	instructions:
 CLOSURE END
 		 3: 
-		 4: %self->sent_messages %self[2.0,] 
-		 5: %cl_1_5->each %cl_1_5[3.4,] %self[2.0,] 
-CLOSURE BEGIN: 
+		 4: %self->sent_messages %self[3.1,2.0,] 
+		 5: %cl_1_5->each %cl_1_5[3.4,] %self[3.1,3.4,2.0,] 
+CLOSURE BEGIN: m[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -733,10 +733,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: m[2.2,] 
+		 1: ATTRASSIGN m->deleted_by_author m[2.2,] 
 		 2: 
 		 3: m->save m[3.1,] 
 		 4: RETURN %cl_3_3[3.3,] 
@@ -753,9 +753,9 @@ BB 6
 	instructions:
 CLOSURE END
 		 6: 
-		 7: %self->received_messages %self[2.0,] 
-		 8: %cl_1_7->each %self[2.0,] %cl_1_7[3.7,] 
-CLOSURE BEGIN: 
+		 7: %self->received_messages %self[3.1,3.4,2.0,] 
+		 8: %cl_1_7->each %cl_1_7[3.7,] %self[3.1,3.4,3.7,2.0,] 
+CLOSURE BEGIN: m[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -771,10 +771,10 @@ BB 2
 		 4: 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: m[2.2,] 
+		 1: ATTRASSIGN m->deleted_by_recipient m[2.2,] 
 		 2: 
 		 3: m->save m[3.1,] 
 		 4: RETURN %cl_4_3[3.3,] 
@@ -791,18 +791,18 @@ BB 6
 	instructions:
 CLOSURE END
 		 9: 
-		 10: %self->invitations %self[2.0,] 
+		 10: %self->invitations %self[3.1,3.4,3.7,2.0,] 
 		 11: %cl_1_9->destroy_all %cl_1_9[3.10,] 
 		 12: 
-		 13: %self[2.0,] 
+		 13: ATTRASSIGN %self->session_token %self[3.1,3.4,3.7,3.10,2.0,] 
 		 14: 
-		 15: %self->check_session_token %self[3.13,] 
+		 15: %self->check_session_token %self[3.1,3.4,3.7,3.10,3.13,] 
 		 16: 
 		 17: (Time) 
 		 18: %cl_1_12->now %cl_1_12[3.17,] 
-		 19: %self[3.13,] %cl_1_13[3.18,] 
+		 19: ATTRASSIGN %self->deleted_at %self[3.1,3.4,3.7,3.10,3.13,3.15,] %cl_1_13[3.18,] 
 		 20: 
-		 21: %self->save! %self[3.13,3.19,] 
+		 21: %self->save! %self[3.1,3.4,3.7,3.10,3.13,3.15,3.19,] 
 		 22: RETURN %cl_1_14[3.21,] 
 BB 4
 	outgoing: 6 
@@ -844,13 +844,13 @@ BB 2
 		 10: 
 		 11: (Utils) 
 		 12: %v_7[2.11,] 
-		 13: %v_5[2.9,] %v_8[2.12,] %v_6[2.10,] 
-		 14: %self[2.0,] %v_9[2.13,] 
+		 13: %v_5[2.9,] %v_6[2.10,] %v_8[2.12,] 
+		 14: ATTRASSIGN %self->password_reset_token %self[2.0,] %v_9[2.13,] 
 		 15: 
 		 16: %self->save! %self[2.0,2.14,] 
 		 17: 
 		 18: (PasswordReset) 
-		 19: %v_11->password_reset_link %self[2.0,2.14,] ip[2.5,] %v_11[2.18,] 
+		 19: %v_11->password_reset_link %v_11[2.18,] %self[2.0,2.14,2.16,] ip[2.5,] 
 		 20: %v_12->deliver %v_12[2.19,] 
 		 21: RETURN %v_13[2.20,] 
 BB 3
@@ -877,13 +877,13 @@ BB 2
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: %self->is_banned? %self[2.0,] 
 		 1: %v_4[3.0,] 
 BB 4
 	outgoing: 5 
-	datadep: 3 2 
+	datadep: 
 	instructions:
 		 0: %v_3->! %v_3[3.1,2.6,] 
 		 1: RETURN %v_5[4.0,] 
@@ -935,7 +935,7 @@ BB 2
 		 9: %v_4[2.7,] %v_5[2.8,] 
 		 10: (NEW_USER_DAYS) 
 		 11: %v_7->days %v_7[2.10,] 
-		 12: %v_8[2.11,] %v_6[2.9,] 
+		 12: %v_6[2.9,] %v_8[2.11,] 
 		 13: RETURN %v_9[2.12,] 
 BB 3
 	outgoing: 
@@ -960,7 +960,7 @@ BB 2
 		 6: (Markdowner) 
 		 7: %self->about %self[2.0,] 
 		 8: 
-		 9: %v_3->to_html %v_4[2.7,] %v_5[2.8,] %v_3[2.6,] 
+		 9: %v_3->to_html %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: RETURN %v_6[2.9,] 
 BB 3
 	outgoing: 
@@ -1023,7 +1023,7 @@ BB 2
 		 9: BRANCH %v_4[2.8,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
 		 1: (Pushover) 
@@ -1060,7 +1060,7 @@ BB 2
 		 8: %v_3->group %v_3[2.7,] 
 		 9: 
 		 10: %v_4->order %v_4[2.8,] %v_5[2.9,] 
-		 11: %v_6->limit amount[2.5,] %v_6[2.10,] 
+		 11: %v_6->limit %v_6[2.10,] amount[2.5,] 
 		 12: %v_7->pluck %v_7[2.11,] 
 		 13: RETURN %v_8[2.12,] 
 BB 3
@@ -1134,11 +1134,11 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: %self[2.0,] 
+		 7: ATTRASSIGN %self->banned_at %self[2.0,] 
 		 8: 
-		 9: %self[2.0,2.7,] 
+		 9: ATTRASSIGN %self->banned_by_user_id %self[2.0,2.7,] 
 		 10: 
-		 11: %self[2.0,2.7,2.9,] 
+		 11: ATTRASSIGN %self->banned_reason %self[2.0,2.7,2.9,] 
 		 12: 
 		 13: %self->save! %self[2.0,2.7,2.9,2.11,] 
 		 14: 
@@ -1147,13 +1147,13 @@ BB 2
 		 17: %v_5[2.16,] 
 		 18: 
 		 19: unbanner->id unbanner[2.5,] 
-		 20: m[2.17,] %v_6[2.19,] 
+		 20: ATTRASSIGN m->moderator_user_id m[2.17,] %v_6[2.19,] 
 		 21: 
-		 22: %self->id %self[2.0,2.7,2.9,2.11,] 
-		 23: m[2.17,2.20,] %v_7[2.22,] 
+		 22: %self->id %self[2.0,2.7,2.9,2.11,2.13,] 
+		 23: ATTRASSIGN m->user_id m[2.17,2.20,] %v_7[2.22,] 
 		 24: 
 		 25: 
-		 26: m[2.17,2.20,2.23,] %v_8[2.25,] 
+		 26: ATTRASSIGN m->action m[2.17,2.20,2.23,] %v_8[2.25,] 
 		 27: 
 		 28: m->save! m[2.17,2.20,2.23,2.26,] 
 		 29: 
@@ -1180,7 +1180,7 @@ BB 2
 		 5: 
 		 6: %self->received_messages %self[2.0,] 
 		 7: 
-		 8: %v_3->where %v_4[2.7,] %v_3[2.6,] 
+		 8: %v_3->where %v_3[2.6,] %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] 
 BB 3
 	outgoing: 
@@ -1204,7 +1204,7 @@ BB 2
 		 5: 
 		 6: %self->sent_messages %self[2.0,] 
 		 7: 
-		 8: %v_3->where %v_4[2.7,] %v_3[2.6,] 
+		 8: %v_3->where %v_3[2.6,] %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] 
 BB 3
 	outgoing: 
@@ -1259,7 +1259,7 @@ BB 2
 		 8: %self->id %self[2.0,] 
 		 9: 
 		 10: %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
-		 11: %self->received_messages %self[2.0,] 
+		 11: %self->received_messages %self[2.0,2.8,] 
 		 12: %v_8->unread %v_8[2.11,] 
 		 13: %v_9->count %v_9[2.12,] 
 		 14: %v_3->put %v_3[2.6,] %v_7[2.10,] %v_10[2.13,] 
