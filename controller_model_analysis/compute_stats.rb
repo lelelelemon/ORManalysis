@@ -22,7 +22,8 @@ def traceback_data_dep(cur_node, wihtin_bb=true)
 					return e.getFromNode	
 				else
 					#test is both nodes are in the same basic block, prevent from tracing too far
-					if e.getFromNode.getInstr.getBB == node.getInstr.getBB
+					#if e.getFromNode.getInstr.getBB == node.getInstr.getBB
+					if @node_list.include?(e.getFromNode) == false
 						@node_list.push(e.getFromNode)
 					end
 				end
@@ -121,12 +122,19 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 		if $root == nil
 			random_trace(start_class, start_function)
 		end
-		puts "Finish random trace: root = #{$root.getIndex}, list_length = #{$node_list.length}"
 	end
 	
 	$node_list.each do |n|
 		n.setLabel
-		#puts "#{n.getIndex}: #{n.getInstr.toString}"
+		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		n.getBackwardEdges.each do |e|
+			if e.getFromNode != nil
+				puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+			else
+				puts "\t\t <- params"
+			end
+		end
+		puts "#{n.getIndex}: #{n.getInstr.toString}"
 	end
 
 	graph_fname = "#{output_dir}/backward_forward.log"
@@ -198,6 +206,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	
 		elsif n.isField?
 			graph_write($graph_file, "+FIELD+ #{n.getInstr.getCallHandler.caller.getName}.#{n.getInstr.getCallHandler.getField.field_name} (#{n.getInstr.getCallHandler.getField.type})\n")
+			#test call handler same CFG: n.getInstr.getMethodDefCFG
+			puts "Field: #{n.getInstr.getCallHandler.getObjName} . #{n.getInstr.getCallHandler.getFuncName}"
+		elsif n.isBranch?
+		 	q = traceback_data_dep(n)
+			if q != nil
+				puts "Branch depend on query:  #{q.getInstr.getCallHandler.getObjName} . #{q.getInstr.getCallHandler.getFuncName}"
+			end
 		end
 	end
 	graph_write($graph_file, "\n")

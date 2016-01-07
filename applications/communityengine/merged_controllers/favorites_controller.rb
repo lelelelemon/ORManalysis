@@ -36,17 +36,33 @@ class FavoritesController < BaseController
 
  case favorite.favoritable.class.to_s.tableize 
  when 'clippings' 
- render :partial => "clippings/clipping", :locals => {:clipping => favorite.favoritable} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
  when 'posts' 
- render :partial => "posts/favorited_post", :locals => {:post => favorite.favoritable}     
- end 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ link_to post.title, user_post_path(post.user, post) 
+ link_to :by.l(:login => post.user.login), user_path(post.user) 
+ link_to image_tag(post.image_for_excerpt), user_post_path(post.user, post) 
+ truncate_words(post.post, 7, '...' ) 
+ link_to :more.l, user_post_path(post.user, post)) 
+
+
+end
+
+     
  end 
 
 
 end
 
  
-# end 
+ end 
  paginate @favorites, :theme => 'bootstrap'      
 
   end

@@ -95,7 +95,7 @@ end
 def handle_single_file(item)
 	file = File.open(item, "r")
 	contents = file.read
-	puts "HANDLE file: #{item}"
+	#puts "HANDLE file: #{item}"
 	ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 	class_list = Array.new
 	module_node = get_module_node(ast)

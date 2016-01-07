@@ -59,6 +59,7 @@ def find_method(class_name, method_name)
 	return $class_map[class_name].getMethod(method_name)
 end
 
+
 def handle_single_dataflow_file(item, class_name)
 		file = File.open(item, "r")
 		file.each_line do |line|
@@ -157,7 +158,11 @@ def handle_single_dataflow_file(item, class_name)
 										fc_array = single_attr.split("->")
 										#fc_array[0]: caller
 										#fc_array[1]: function_name
-										cur_instr = Call_instr.new(fc_array[0], fc_array[1])
+										if cur_instr.instance_of?AttrAssign_instr
+											cur_instr = AttrAssign_instr.new(fc_array[0], fc_array[1])
+										else
+											cur_instr = Call_instr.new(fc_array[0], fc_array[1])
+										end
 										if cur_instr.getCaller == "%self" and cur_instr.getFuncname == "params"
 												cur_instr.setFromUserInput
 										end
@@ -206,6 +211,13 @@ def handle_single_dataflow_file(item, class_name)
 									
 									elsif single_attr == "BRANCH"
 										cur_instr = Branch_instr.new
+
+									elsif single_attr == "RECEIVEARG"
+										cur_instr = ReceiveArg_instr.new
+										cur_instr.var_name = attrs[index+1]
+	
+									elsif single_attr == "ATTRASSIGN"
+										cur_instr = AttrAssign_instr.new("", "")
 
 									elsif single_attr.include?('(') and single_attr.include?(')')
 										bracket_begin = single_attr.index('(')

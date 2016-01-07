@@ -39,6 +39,14 @@ class Method_class
 	end
 end
 
+class Assoc_attrib
+	def initialize(_name)
+		@name = _name
+		@attribs = Hash.new
+	end
+	attr_accessor :name, :attribs
+end
+
 class Class_class
 	def initialize(name)
 		@methods = Hash.new
@@ -53,6 +61,7 @@ class Class_class
 		@create_actions = Array.new
 		@scope_list = Array.new
 		@fields = Array.new
+		@assocs = Hash.new
 		
 		filter_meth = Method_class.new("before_filter")
 		@methods[filter_meth.getName] = filter_meth
@@ -68,6 +77,18 @@ class Class_class
 		#Remove from original list and insert into according list
 		#@after_create = Array.new
 		#@after_destroy = Array.new
+	end
+	def getAssocs
+		@assocs
+	end
+	def getAssoc(_name)
+		@assocs[_name]
+	end
+	def addAssoc(_name, assoc)
+		if @assocs[_name] == nil
+			@assocs[_name] = Array.new
+		end
+		@assocs[_name].push(assoc)
 	end
 	def getFields
 		@fields

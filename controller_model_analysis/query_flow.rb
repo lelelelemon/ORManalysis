@@ -1,6 +1,7 @@
 #load 'read_dataflow.rb'
 $in_view = false
 $in_loop = Array.new
+$funccall_stack = Array.new
 
 class INode
 	def initialize(instr)
@@ -61,6 +62,12 @@ class INode
 	def isField?
 		if @instr != nil and @instr.instance_of?Call_instr
 			return @instr.isField
+		end
+		return false
+	end
+	def isBranch?
+		if @instr != nil and @instr.instance_of?Branch_instr
+			return true
 		end
 		return false
 	end
@@ -203,7 +210,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 			if caller_class == nil
 				caller_class = call.getTableName
 			end
-			
+		
 			if trigger_save?(call) or trigger_create?(call)
 				temp_actions = Array.new
 				if caller_class != nil and trigger_save?(call)
@@ -282,8 +289,22 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 			if instr.getResolvedCaller.include?("self")
 				instr.setResolvedCaller(start_class)
 			end
-
+			$funccall_stack.push($cur_node)
 			handle_single_call_node2(start_class, start_function, class_handler, call, level)
+			$funccall_stack.pop
+		end
+	end
+
+	if instr.instance_of?ReceiveArg_instr
+		if $funccall_stack.length > 0
+			dep = $funccall_stack[-1]
+			edge_name = "#{dep.getIndex}*#{node.getIndex}"
+			edge = Edge.new(dep, node, instr.var_name)
+			dep.addDataflowEdge(edge)
+			if $dataflow_edges[edge_name] == nil
+				$dataflow_edges[edge_name] = Array.new
+			end
+			$dataflow_edges[edge_name].push(edge)
 		end
 	end
 

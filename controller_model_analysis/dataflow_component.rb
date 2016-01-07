@@ -61,6 +61,9 @@ class Instruction
 	def getINode
 		@inode
 	end
+	def getMethodDefCFG
+		return @bb.getMethodDefCFG
+	end
 	def setBB(_bb)
 		@bb = _bb
 	end
@@ -75,6 +78,7 @@ class Instruction
 	end
 	def addClosure(cl)
 		@closure = cl
+		cl.parent_instr = self
 		@has_closure = true
 	end
 	def hasClosure?
@@ -186,7 +190,11 @@ class Call_instr < Instruction
 	def toString
 #		s = "#{@caller}->#{@funcname} "
 		s = super
-		s = s + " #{@resolved_caller} -> #{@funcname}"
+		if @call_handler != nil
+			s = s + " #{@call_handler.toString}"
+		else
+			s = s + " #{@resolved_caller} -> #{@funcname}"
+		end
 		return s
 	end
 end
@@ -231,6 +239,30 @@ class Branch_instr < Instruction
 	end
 end
 
+class ReceiveArg_instr < Instruction
+	def initialize
+		super
+	end
+	attr_accessor :var_name
+	def toString
+		s = "RECEIVEARG "
+		s = s + super
+		return s
+	end
+end
+
+class AttrAssign_instr < Call_instr
+	def initialize(_caller, _func_name)
+		super(_caller, _func_name)
+	end
+	def toString
+		s = "ATTRASSIGN "
+		s = s + super
+		return s
+	end
+end
+		
+
 class Basic_block
 	def initialize(index)
 		@outgoings = Array.new
@@ -263,6 +295,9 @@ class Basic_block
 		end
 		return false
 	end	
+	def getMethodDefCFG
+		return @cfg.getMethodDefCFG
+	end
 	def addCFG(cfg)
 		@cfg = cfg
 	end
@@ -323,7 +358,7 @@ class Basic_block
 	end
 	def findCalls
 		@instructions.each do |instr|
-			if instr.instance_of?Call_instr
+			if instr.instance_of?Call_instr or instr.instance_of?AttrAssign_instr
 				#caller = self
 				if instr.getCaller=="%self"
 					instr.setResolvedCaller("self")
@@ -331,10 +366,10 @@ class Basic_block
 				else
 					caller_v = instr.getCaller
 					dep_instr = searchDepLocally(instr, caller_v)
-					if dep_instr != nil and dep_instr.isResolved?
-						instr.setResolvedCaller(dep_instr.getResolvedString)
-					elsif instr.getCaller.include?('%')==false
+					if instr.getCaller.include?('%')==false
 						instr.setResolvedCaller(instr.getCaller)
+					elsif dep_instr != nil and dep_instr.isResolved?
+						instr.setResolvedCaller(dep_instr.getResolvedString)
 					else
 						instr.getDeps.each do |d|
 							if d.getVname.include?('%') == false
@@ -389,6 +424,9 @@ class CFG
 		end
 		return cnt
 	end
+	def getMethodDefCFG
+		return self
+	end
 	def setMHandler(m)
 		@m_handler = m
 	end
@@ -436,10 +474,15 @@ class Closure < CFG
 		@view_code = false
 		@view_closure = false
 		@var_def_table = Array.new 
+		@parent_instr = nil
 		super
 	end
+	attr_accessor :parent_instr
 	def setViewClosure
 	  @view_closure = true
+	end
+	def getMethodDefCFG
+		return @parent_instr.getMethodDefCFG	
 	end
 	def getViewClosure
 	   @view_closure

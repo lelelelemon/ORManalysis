@@ -97,8 +97,38 @@ def parse_keyword(astnode, meth)
 	end
 end
 
+def parse_association(astnode, op)
+	if astnode.children[1].type.to_s == "list"
+		_name = nil
+		attri = Hash.new
+		astnode.children[1].children.each do |child|
+			if child.type.to_s == "symbol_literal"
+				_name = get_left_most_leaf(child).source
+				#puts "parse assoc: #{op} :#{_name}"
+			elsif child.type.to_s == "list"
+				child.children.each do |grand_child|
+					if grand_child.type.to_s == "assoc"
+						attri[get_left_most_leaf(grand_child.children[0]).source] = get_left_most_leaf(grand_child.children[1]).source
+					else
+						puts "#{_name} attr not handled: #{grand_child.type.to_s}"
+					end
+				end
+			end
+		end
+		if _name != nil
+			assoc = Assoc_attrib.new(_name)
+			attri.each do |k, v|
+				assoc.attribs[k] = v
+			end
+			$cur_class.addAssoc(op, assoc)
+		end
+	end
+end
+
 def parse_attrib(astnode)
 	case astnode.children[0].source.to_s
+		when "has_many","belongs_to","has_one"
+			parse_association(astnode, astnode.children[0].source.to_s)
 		#when "has_many"
 		#	if astnode.children[1].type.to_s == "list"
 		#		astnode.children[1].children.each do |child|

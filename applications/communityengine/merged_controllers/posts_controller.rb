@@ -92,7 +92,31 @@ class PostsController < BaseController
       }
     end
  @page_title = :users_blog.l(:user => @user.login) 
- render :partial => 'author_profile', :locals => {:user => @user} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :author.l 
+ link_to tag(:img, :src => user.avatar_photo_url(:medium), "alt"=>"#{user.login}", :class => "img-responsive"), user_path(user), :title => "#{user.login}'s"+ :profile.l 
+ link_to user.login, user_path(user), :class => 'url' 
+ if user.featured_writer?       
+ :featured_writer.l 
+ end 
+ if user.description 
+ truncate_words( user.description, 12, '...') 
+ end 
+ :member_since.l+" #{I18n.l(user.created_at, :format => :short_published_date)}" 
+ if user.posts.count == 1 
+ link_to :singular_posts.l(:count => user.posts.count), user_posts_path(user) 
+ else 
+ link_to :plural_posts.l(:count => user.posts.count), user_posts_path(user) 
+ end 
+ link_to fa_icon('rss', :text => :rss_feed.l), user_posts_path(user, :format => :rss) 
+ end 
+
+
+end
+
+ 
  unless @popular_posts.empty? 
  widget :id => "posts" do 
  :popular_posts.l 
@@ -103,7 +127,13 @@ class PostsController < BaseController
  end 
  @category ? "&raquo; #{link_to(@category.name.upcase, users_posts_in_category_path(@user, @category.name))}".html_safe : '' 
  link_to( :new_post.l, new_user_post_path(@user), {:class => "right"})  if @is_current_user 
- render :partial => 'post', :collection => @posts 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
  paginate @posts, :theme => 'bootstrap' 
 
   end
@@ -130,7 +160,31 @@ class PostsController < BaseController
     @most_commented = Post.find_most_commented
  @section = (@post.category && @post.category.name) 
  @meta = { :title => "#{@post.title}", :description => "#{truncate_words(@post.post, 75, '...' )}", :keywords => "#{@post.tags.join(", ") unless @post.tags.nil?}", :robots => configatron.robots_meta_show_content } 
- render :partial => 'author_profile', :locals => {:user => @user} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :author.l 
+ link_to tag(:img, :src => user.avatar_photo_url(:medium), "alt"=>"#{user.login}", :class => "img-responsive"), user_path(user), :title => "#{user.login}'s"+ :profile.l 
+ link_to user.login, user_path(user), :class => 'url' 
+ if user.featured_writer?       
+ :featured_writer.l 
+ end 
+ if user.description 
+ truncate_words( user.description, 12, '...') 
+ end 
+ :member_since.l+" #{I18n.l(user.created_at, :format => :short_published_date)}" 
+ if user.posts.count == 1 
+ link_to :singular_posts.l(:count => user.posts.count), user_posts_path(user) 
+ else 
+ link_to :plural_posts.l(:count => user.posts.count), user_posts_path(user) 
+ end 
+ link_to fa_icon('rss', :text => :rss_feed.l), user_posts_path(user, :format => :rss) 
+ end 
+
+
+end
+
+ 
  unless @related.empty? 
  widget do 
  :related_posts.l 
@@ -180,8 +234,82 @@ class PostsController < BaseController
  end 
  :post_comments.l 
  :add_your_comment.l 
- render :partial => 'comments/comment_form', :locals => {:commentable => @post} 
- render :partial => 'comments/comment', :collection => @comments 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if logged_in? || configatron.allow_anonymous_commenting 
+ bootstrap_form_for(:comment, :url => commentable_comments_path(commentable.class.to_s.tableize, commentable), :remote => true, :layout => :horizontal, :html => {:id => 'comment'}) do |f| 
+ f.text_area :comment, :rows => 5, :style => 'width: 99%', :class => "rich_text_editor", :help => :comment_character_limit.l 
+ if !logged_in? && configatron.recaptcha_pub_key && configatron.recaptcha_priv_key 
+ f.text_field :author_name 
+ f.text_field :author_email, :required => true 
+ f.form_group do 
+ f.check_box :notify_by_email, :label => :notify_me_of_follow_ups_via_email.l 
+ if commentable.respond_to?(:send_comment_notifications?) && !commentable.send_comment_notifications? 
+ :comment_notifications_off.l 
+ end 
+ end 
+ f.text_field :author_url, :label => :comment_web_site_label.l 
+ f.form_group do 
+ recaptcha_tags :ajax => true 
+ end 
+ end 
+ f.form_group :submit_group do 
+ f.primary :add_comment.l, data: { disable_with: "Please wait..." } 
+ end 
+ end 
+ else 
+ link_to :log_in_to_leave_a_comment.l, new_commentable_comment_path(commentable.class, commentable.id), :class => 'btn btn-primary' 
+ link_to :create_an_account.l, signup_path, :class => 'btn btn-primary' 
+ end 
+
+
+end
+
+ 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ comment.id 
+ if comment.pending? 
+ end 
+ if comment.user 
+ link_to image_tag(comment.user.avatar_photo_url(:medium), :alt => comment.user.login, :class => "img-responsive"), user_path(comment.user), :rel => 'bookmark', :title => :users_profile.l(:user => comment.user.login), :class => 'list-group-item' 
+ user_path(comment.user) 
+ fa_icon "hand-o-right fw", :text => comment.user.login 
+ commentable_url(comment) 
+ fa_icon "calendar" 
+ comment.created_at 
+ I18n.l(comment.created_at, :format => :short_literal_date) 
+ if logged_in? && (current_user.admin? || current_user.moderator?) 
+ link_to fa_icon("pencil-square-o fw", :text => :edit.l), edit_commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :class => 'edit-via-ajax list-group-item' 
+ end 
+ if ( comment.can_be_deleted_by(current_user) ) 
+ link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item" 
+ end 
+ comment.comment.html_safe 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '50', :width => '50', :class => "img-responsive") 
+ if comment.author_url.blank? 
+ h comment.username 
+ else 
+ link_to fa_icon('hand-o-right', :text => h(comment.username)), h(comment.author_url) 
+ end 
+ commentable_url(comment) 
+ fa_icon "calendar fw" 
+ comment.created_at 
+ I18n.l(comment.created_at, :format => :short_literal_date) 
+ if logged_in? && (current_user.admin? || current_user.moderator?) 
+ link_to fa_icon("pencil-square-o fw", :text => :edit.l), edit_commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :class => 'edit-via-ajax list-group-item' 
+ end 
+ if ( comment.can_be_deleted_by(current_user) ) 
+ link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item" 
+ end 
+ comment.comment.html_safe 
+ end 
+
+
+end
+
+ 
  more_comments_links(@post) 
  content_for :end_javascript do 
  end 
@@ -198,7 +326,31 @@ class PostsController < BaseController
     @post = Post.unscoped.find(params[:id])
     redirect_to(:controller => 'sessions', :action => 'new') and return false unless @post.user.eql?(current_user) || admin? || moderator?
  @page_title = @post.title 
- render :partial => 'author_profile', :locals => {:user => @user} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ widget do 
+ :author.l 
+ link_to tag(:img, :src => user.avatar_photo_url(:medium), "alt"=>"#{user.login}", :class => "img-responsive"), user_path(user), :title => "#{user.login}'s"+ :profile.l 
+ link_to user.login, user_path(user), :class => 'url' 
+ if user.featured_writer?       
+ :featured_writer.l 
+ end 
+ if user.description 
+ truncate_words( user.description, 12, '...') 
+ end 
+ :member_since.l+" #{I18n.l(user.created_at, :format => :short_published_date)}" 
+ if user.posts.count == 1 
+ link_to :singular_posts.l(:count => user.posts.count), user_posts_path(user) 
+ else 
+ link_to :plural_posts.l(:count => user.posts.count), user_posts_path(user) 
+ end 
+ link_to fa_icon('rss', :text => :rss_feed.l), user_posts_path(user, :format => :rss) 
+ end 
+
+
+end
+
+ 
  :users_blog.l :user=>  @user.login 
  user_post_path(@user, @post) 
  fa_icon "calendar fw" 
@@ -230,7 +382,20 @@ class PostsController < BaseController
  @page_title = @post.category ? (:new_post_for_category.l :category => @post.category.name) : :new_post.l 
  widget :id => 'category_tips' do 
  if @post.category 
- render :partial => "categories/tips", :locals => {:category => @post.category} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if !category.nil? && !category.tips.blank? 
+ category.name 
+ category.tips 
+ else  
+ :we_need_you.l 
+ :every_person_has_something_to_say.l 
+ end 
+
+
+end
+
+ 
  else  
  ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
 
@@ -249,7 +414,40 @@ end
  end 
  end 
  link_to :back.l, manage_user_posts_path(@user), :class => 'btn btn-default' 
- render 'form' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @post.new_record? 
+ object = @post 
+ url = user_posts_path(@user) 
+ content_for :end_javascript do 
+ end 
+ else 
+ object = [@user, @post] 
+ url = user_post_path(@user, @post) 
+ content_for :end_javascript do 
+ end 
+ end 
+ bootstrap_form_for(object, :url => url, :layout => :horizontal) do |f| 
+ f.text_field :title, :class => 'col-sm-6' 
+ f.collection_select(:category_id, Category.all, :id, :name, {}, {}) 
+ f.text_area :raw_post, :rows => 15, :class => "rich_text_editor", :required => false 
+ f.text_field :tag_list, :autocomplete => "off", :label => :tags.l, :help => :optional_keywords_describing_this_post_separated_by_commas.l 
+ content_for :end_javascript do 
+ tag_auto_complete_field 'post_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
+ end 
+ f.select :published_as, [[:published.l, 'live'], [:draft.l, 'draft']], :label => :save_post_as.l 
+ f.form_group :comments_group do 
+ f.check_box :send_comment_notifications 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
 
   end
 
@@ -259,7 +457,20 @@ end
  @page_title = :editing_post.l 
  widget :id => 'category_tips' do 
  if @post.category 
- render :partial => "categories/tips", :locals => {:category => @post.category} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if !category.nil? && !category.tips.blank? 
+ category.name 
+ category.tips 
+ else  
+ :we_need_you.l 
+ :every_person_has_something_to_say.l 
+ end 
+
+
+end
+
+ 
  else 
  ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
 
@@ -280,7 +491,40 @@ end
  link_to :back.l, manage_user_posts_path(@post.user), :class => 'btn btn-default' 
  link_to :show.l, user_post_path(@post.user, @post), :class => 'btn btn-primary' 
  link_to :delete.l, user_post_path(@post.user, @post), :method => 'delete', data: { confirm: :are_you_sure.l }, :class => 'btn btn-danger' 
- render 'form' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @post.new_record? 
+ object = @post 
+ url = user_posts_path(@user) 
+ content_for :end_javascript do 
+ end 
+ else 
+ object = [@user, @post] 
+ url = user_post_path(@user, @post) 
+ content_for :end_javascript do 
+ end 
+ end 
+ bootstrap_form_for(object, :url => url, :layout => :horizontal) do |f| 
+ f.text_field :title, :class => 'col-sm-6' 
+ f.collection_select(:category_id, Category.all, :id, :name, {}, {}) 
+ f.text_area :raw_post, :rows => 15, :class => "rich_text_editor", :required => false 
+ f.text_field :tag_list, :autocomplete => "off", :label => :tags.l, :help => :optional_keywords_describing_this_post_separated_by_commas.l 
+ content_for :end_javascript do 
+ tag_auto_complete_field 'post_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
+ end 
+ f.select :published_as, [[:published.l, 'live'], [:draft.l, 'draft']], :label => :save_post_as.l 
+ f.form_group :comments_group do 
+ f.check_box :send_comment_notifications 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
 
   end
 
@@ -310,7 +554,20 @@ end
  @page_title = @post.category ? (:new_post_for_category.l :category => @post.category.name) : :new_post.l 
  widget :id => 'category_tips' do 
  if @post.category 
- render :partial => "categories/tips", :locals => {:category => @post.category} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if !category.nil? && !category.tips.blank? 
+ category.name 
+ category.tips 
+ else  
+ :we_need_you.l 
+ :every_person_has_something_to_say.l 
+ end 
+
+
+end
+
+ 
  else  
  ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
 
@@ -329,7 +586,40 @@ end
  end 
  end 
  link_to :back.l, manage_user_posts_path(@user), :class => 'btn btn-default' 
- render 'form' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @post.new_record? 
+ object = @post 
+ url = user_posts_path(@user) 
+ content_for :end_javascript do 
+ end 
+ else 
+ object = [@user, @post] 
+ url = user_post_path(@user, @post) 
+ content_for :end_javascript do 
+ end 
+ end 
+ bootstrap_form_for(object, :url => url, :layout => :horizontal) do |f| 
+ f.text_field :title, :class => 'col-sm-6' 
+ f.collection_select(:category_id, Category.all, :id, :name, {}, {}) 
+ f.text_area :raw_post, :rows => 15, :class => "rich_text_editor", :required => false 
+ f.text_field :tag_list, :autocomplete => "off", :label => :tags.l, :help => :optional_keywords_describing_this_post_separated_by_commas.l 
+ content_for :end_javascript do 
+ tag_auto_complete_field 'post_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
+ end 
+ f.select :published_as, [[:published.l, 'live'], [:draft.l, 'draft']], :label => :save_post_as.l 
+ f.form_group :comments_group do 
+ f.check_box :send_comment_notifications 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
 
 
 end
@@ -357,7 +647,20 @@ end
  @page_title = :editing_post.l 
  widget :id => 'category_tips' do 
  if @post.category 
- render :partial => "categories/tips", :locals => {:category => @post.category} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if !category.nil? && !category.tips.blank? 
+ category.name 
+ category.tips 
+ else  
+ :we_need_you.l 
+ :every_person_has_something_to_say.l 
+ end 
+
+
+end
+
+ 
  else 
  ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
 
@@ -378,7 +681,40 @@ end
  link_to :back.l, manage_user_posts_path(@post.user), :class => 'btn btn-default' 
  link_to :show.l, user_post_path(@post.user, @post), :class => 'btn btn-primary' 
  link_to :delete.l, user_post_path(@post.user, @post), :method => 'delete', data: { confirm: :are_you_sure.l }, :class => 'btn btn-danger' 
- render 'form' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ if @post.new_record? 
+ object = @post 
+ url = user_posts_path(@user) 
+ content_for :end_javascript do 
+ end 
+ else 
+ object = [@user, @post] 
+ url = user_post_path(@user, @post) 
+ content_for :end_javascript do 
+ end 
+ end 
+ bootstrap_form_for(object, :url => url, :layout => :horizontal) do |f| 
+ f.text_field :title, :class => 'col-sm-6' 
+ f.collection_select(:category_id, Category.all, :id, :name, {}, {}) 
+ f.text_area :raw_post, :rows => 15, :class => "rich_text_editor", :required => false 
+ f.text_field :tag_list, :autocomplete => "off", :label => :tags.l, :help => :optional_keywords_describing_this_post_separated_by_commas.l 
+ content_for :end_javascript do 
+ tag_auto_complete_field 'post_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
+ end 
+ f.select :published_as, [[:published.l, 'live'], [:draft.l, 'draft']], :label => :save_post_as.l 
+ f.form_group :comments_group do 
+ f.check_box :send_comment_notifications 
+ end 
+ f.form_group :submit_group do 
+ f.primary :save.l 
+ end 
+ end 
+
+
+end
+
+ 
 
 
 end
@@ -411,13 +747,21 @@ end
     if @post.send_to(params[:emails], params[:message], (current_user || nil))
       flash[:notice] = "Your message has been sent."
       respond_to do |format|
-
+        format.html {render :partial => 'shared/messages'}
+        format.js
       end
     else
       flash[:error] = "You entered invalid addresses: "+ @post.invalid_emails.join(', ')+". Please correct these and try again."
 
       respond_to do |format|
+        format.html {ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
 
+
+
+end
+
+}
+        format.js
       end
     end
   end
@@ -483,10 +827,27 @@ end
  widget do 
  :featured_writers.l 
  @featured_writers.each do |user| 
- render :partial => "users/sidebar_user", :locals => {:user => user} 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ link_to image_tag(user.avatar_photo_url(:thumb), :alt => "#{user.login}"), user_path(user) 
+ link_to user.login, user_path(user), :class => 'url' 
+ if user.description 
+ truncate_words( user.description, 10, '...') 
+ end 
+
+
+end
+
+ 
  end 
  end 
- render :partial => 'posts/post', :collection => @posts 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+
+
+end
+
+ 
  paginate @posts, :theme => 'bootstrap' 
 
   end

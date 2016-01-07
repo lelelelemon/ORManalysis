@@ -94,6 +94,8 @@ for subdir, folders, files in os.walk(base_path):
 							tbl_fields[table][field] = tbl_fields[table][field] + 1
 				elif len(line) > 0:
 					if "<" in line and ">" in line:
+						if "]" in chs[-1]:
+							print line
 						for c in chs:
 							if "<" in c and ">" in c:
 								info = c.split(",")
