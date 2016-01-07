@@ -424,8 +424,8 @@ if options[:print_all] == true
 		#end
 		#puts ""
 	end
-	_file = File.open("#{$app_dir}/table_name.txt", "w")
-	$table_names.each do |t|
-		_file.write("#{t}\n")
-	end
+	#_file = File.open("#{$app_dir}/table_name.txt", "w")
+	#$table_names.each do |t|
+	#	_file.write("#{t}\n")
+	#end
 end

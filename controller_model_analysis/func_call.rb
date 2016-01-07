@@ -244,6 +244,18 @@ class Function_call
 					@is_field = true
 					@field = f
 				end
+				if @is_field == false
+					# go over associations to see if renamed or not
+					self.caller.getAssocs.each do |k, v|
+						v.each do |f_name|
+							if f_name.name == @func_name
+								#puts "Find call field defined in assoc: #{@obj_name} . #{@func_name} ( #{k} ) "
+								@is_field = true
+								@field = f
+							end
+						end
+					end
+				end
 			end
 		end
 		return caller_class

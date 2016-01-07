@@ -61,6 +61,9 @@ class Instruction
 	def getINode
 		@inode
 	end
+	def getMethodDefCFG
+		return @bb.getMethodDefCFG
+	end
 	def setBB(_bb)
 		@bb = _bb
 	end
@@ -75,6 +78,7 @@ class Instruction
 	end
 	def addClosure(cl)
 		@closure = cl
+		cl.parent_instr = self
 		@has_closure = true
 	end
 	def hasClosure?
@@ -231,6 +235,30 @@ class Branch_instr < Instruction
 	end
 end
 
+class ReceiveArg_instr < Instruction
+	def initialize
+		super
+	end
+	attr_accessor :var_name
+	def toString
+		s = "RECEIVEARG "
+		s = s + super
+		return s
+	end
+end
+
+class AttrAssign_instr < Call_instr
+	def initialize(_caller, _func_name)
+		super(_caller, _func_name)
+	end
+	def toString
+		s = "ATTRASSIGN "
+		s = s + super
+		return s
+	end
+end
+		
+
 class Basic_block
 	def initialize(index)
 		@outgoings = Array.new
@@ -263,6 +291,9 @@ class Basic_block
 		end
 		return false
 	end	
+	def getMethodDefCFG
+		return @cfg.getMethodDefCFG
+	end
 	def addCFG(cfg)
 		@cfg = cfg
 	end
@@ -389,6 +420,9 @@ class CFG
 		end
 		return cnt
 	end
+	def getMethodDefCFG
+		return self
+	end
 	def setMHandler(m)
 		@m_handler = m
 	end
@@ -436,10 +470,15 @@ class Closure < CFG
 		@view_code = false
 		@view_closure = false
 		@var_def_table = Array.new 
+		@parent_instr = nil
 		super
 	end
+	attr_accessor :parent_instr
 	def setViewClosure
 	  @view_closure = true
+	end
+	def getMethodDefCFG
+		return @parent_instr.getMethodDefCFG	
 	end
 	def getViewClosure
 	   @view_closure
