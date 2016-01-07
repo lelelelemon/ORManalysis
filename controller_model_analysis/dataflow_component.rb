@@ -190,7 +190,11 @@ class Call_instr < Instruction
 	def toString
 #		s = "#{@caller}->#{@funcname} "
 		s = super
-		s = s + " #{@resolved_caller} -> #{@funcname}"
+		if @call_handler != nil
+			s = s + " #{@call_handler.toString}"
+		else
+			s = s + " #{@resolved_caller} -> #{@funcname}"
+		end
 		return s
 	end
 end
@@ -354,7 +358,7 @@ class Basic_block
 	end
 	def findCalls
 		@instructions.each do |instr|
-			if instr.instance_of?Call_instr
+			if instr.instance_of?Call_instr or instr.instance_of?AttrAssign_instr
 				#caller = self
 				if instr.getCaller=="%self"
 					instr.setResolvedCaller("self")
@@ -362,10 +366,10 @@ class Basic_block
 				else
 					caller_v = instr.getCaller
 					dep_instr = searchDepLocally(instr, caller_v)
-					if dep_instr != nil and dep_instr.isResolved?
-						instr.setResolvedCaller(dep_instr.getResolvedString)
-					elsif instr.getCaller.include?('%')==false
+					if instr.getCaller.include?('%')==false
 						instr.setResolvedCaller(instr.getCaller)
+					elsif dep_instr != nil and dep_instr.isResolved?
+						instr.setResolvedCaller(dep_instr.getResolvedString)
 					else
 						instr.getDeps.each do |d|
 							if d.getVname.include?('%') == false

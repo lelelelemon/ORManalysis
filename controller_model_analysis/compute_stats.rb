@@ -126,15 +126,15 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	
 	$node_list.each do |n|
 		n.setLabel
-		#puts "#{n.getIndex}:#{n.getInstr.toString}"
-		#n.getBackwardEdges.each do |e|
-		#	if e.getFromNode != nil
-		#		puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
-		#	else
-		#		puts "\t\t <- params"
-		#	end
-		#end
-		#puts "#{n.getIndex}: #{n.getInstr.toString}"
+		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		n.getBackwardEdges.each do |e|
+			if e.getFromNode != nil
+				puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+			else
+				puts "\t\t <- params"
+			end
+		end
+		puts "#{n.getIndex}: #{n.getInstr.toString}"
 	end
 
 	graph_fname = "#{output_dir}/backward_forward.log"

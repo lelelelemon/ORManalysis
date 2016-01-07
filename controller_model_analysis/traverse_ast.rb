@@ -42,7 +42,7 @@ def traverse_ast(astnode, level)
 				traverse_ast(child, level+1)
 			end
 		end
-	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
+	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode" or astnode.type.to_s == "field"
 		temp_funccall = parse_method_call(astnode, $cur_method)
 		if $cur_position == "INCONDITION" and temp_funccall != nil
 			temp_funccall.setReturnValue("true")

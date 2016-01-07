@@ -335,6 +335,15 @@ class Function_call
 			#puts ""
 		end
 	end
+
+	def toString
+		s = ""
+		if @caller != nil
+			s = "#{@obj_name}(#{@caller.getName}) . #{@func_name}"
+		else
+			s = "#{@obj_name} . #{@func_name}"
+		end
+	end
 end
 
 class Method_vars
