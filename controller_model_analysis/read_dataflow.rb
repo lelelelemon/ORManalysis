@@ -163,7 +163,7 @@ def handle_single_dataflow_file(item, class_name)
 										else
 											cur_instr = Call_instr.new(fc_array[0], fc_array[1])
 										end
-										if cur_instr.getCaller == "%self" and cur_instr.getFuncname == "params"
+										if cur_instr.getCaller.include?("self") and cur_instr.getFuncname == "params"
 												cur_instr.setFromUserInput
 										end
 										if cur_instr.getFuncname == "ruby_code_from_view"
