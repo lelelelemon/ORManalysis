@@ -69,16 +69,19 @@ def traverse_routes_mapping(astnode, nested_path, controller_name, default)
 		else
 			cur_astnode = cur_astnode[0][1]
 		end	
-
-		if cur_astnode[0].type == :string_literal
-			add_render_view(astnode, nested_path, controller_name, cur_astnode[0].source)
-		else
-			cur_astnode.children.each do |x|
-				if x[0][0].respond_to?("source") && (x[0][0].source == ":partial" || x[0][0].source == ":action" || x[0][0].source == ":template")
-					view_name = x[0][1].source
-					add_render_view(astnode, nested_path, controller_name, view_name)
+		
+		begin 
+			if cur_astnode[0].type == :string_literal
+				add_render_view(astnode, nested_path, controller_name, cur_astnode[0].source)
+			else
+				cur_astnode.children.each do |x|
+					if x[0][0].respond_to?("source") && (x[0][0].source == ":partial" || x[0][0].source == ":action" || x[0][0].source == ":template")
+						view_name = x[0][1].source
+						add_render_view(astnode, nested_path, controller_name, view_name)
+					end
 				end
 			end
+		rescue
 		end
 	else
 		cur_astnode.children.each {|x| traverse_routes_mapping(x, nested_path, controller_name, default) }
@@ -124,6 +127,8 @@ def add_render_view (astnode, nested_path, controller_name, view_name)
 	
 	if astnode.parent.source.start_with?("return render")
 		$render_view_mapping[astnode.parent.source] = view_contents
+	elsif astnode.source.end_with?("\te") or astnode.source.end_with?("\ne") or astnode.source.end_with?(" e")
+		$render_view_mapping[astnode.source[0..-2]] = view_contents
 	else
 		$render_view_mapping[astnode.source] = view_contents
 	end
@@ -156,6 +161,8 @@ Dir.glob($controller_path + "**/*") do |item|
 
 	#replace all render statement by the view file 
 	$render_view_mapping.each do |key, value|
+	#	puts key
+	#	puts value
 		controller_contents.gsub! key, value
 	end
 
@@ -175,6 +182,8 @@ Dir.glob($controller_path + "**/*") do |item|
 
 	#replace all render statement by the view file 
 	$render_view_mapping.each do |key, value|
+	#	puts key
+	#	puts value
 		controller_contents.gsub! key, value
 	end
 
@@ -194,6 +203,8 @@ Dir.glob($controller_path + "**/*") do |item|
 
 	#replace all render statement by the view file 
 	$render_view_mapping.each do |key, value|
+	#	puts key
+	#	puts value
 		controller_contents.gsub! key, value
 	end
 

@@ -32,7 +32,11 @@ int main(int argc, char** argv){
             	a = fgetc(fin);
             b = fgetc(fin);
             c = fgetc(fin);
-        } else {
+        } else if (c == '#') {
+		b = c;
+		a = b;
+		c = fgetc(fin);
+	} else {
             a = c;
             b = fgetc(fin);
 	    c = fgetc(fin);
