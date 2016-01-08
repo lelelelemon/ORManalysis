@@ -264,7 +264,6 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 				end
 			end
 		end
-
 end
 
 def handle_single_instr2(start_class, start_function, class_handler, function_handler, instr, level, return_list)
@@ -412,7 +411,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 	
 	class_handler = $class_map[start_class]
 	if class_handler != nil
-		function_handler = class_handler.getMethods[start_function]
+		function_handler = class_handler.getMethod(start_function)
 	else
 		function_handler = nil
 	end

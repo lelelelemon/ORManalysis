@@ -51,6 +51,11 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 				puts "=====transaction begin====="
 			end
 
+			$blank = ""
+			for i in (0...level)
+				$blank = $blank + "\t"
+			end
+
 			puts "#{$blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
 			if simplified_caller != nil
 				$label += "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{simplified_caller}.#{call.getFuncName} </td></tr>\n"
@@ -255,7 +260,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 	if class_handler == nil
 		puts "Class handler not found: #{start_class}"
 	end
-	function_handler = class_handler.getMethods[start_function]
+	function_handler = class_handler.getMethod(start_function)
 
 	$blank = ""
 	for i in (0...level)
@@ -269,9 +274,10 @@ def trace_flow(start_class, start_function, params, returnv, level)
 			else
 				puts "#{$blank}======transaction end====="
 			end
+		else
+			#puts "function #{start_class}.#{start_function} cannot be found"
+			return 
 		end
-		#puts "function #{start_class}.#{start_function} cannot be found"
-		return 
 	end	
 
 	#$graph_file.write("subgraph cluster_#{start_class}_#{start_function}")
@@ -310,14 +316,10 @@ def trace_flow(start_class, start_function, params, returnv, level)
 		$l_index = 0
 
 		function_handler.getCalls.each do |call|
-		
 			handle_single_call_node(start_class, start_function, class_handler, call, level, 1)
 
 		end
-	
 		set_node_label(start_class, start_function, nil, label_list)
-		
-		
 	end
 
 	#puts "#{$blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"

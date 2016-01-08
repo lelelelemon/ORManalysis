@@ -80,6 +80,9 @@ def resolve_upper_class
 				valuec.mergeBeforeFilter(parent)
 				valuec.mergeSave(parent)
 				valuec.mergeCreate(parent)
+				if valuec.include_module == nil
+					valuec.include_module = parent.include_module
+				end
 			end
 			
 			#create valid? function

@@ -127,32 +127,10 @@ end
 
 def parse_attrib(astnode)
 	case astnode.children[0].source.to_s
+		when "include"
+			$cur_class.include_module = get_left_most_leaf(astnode.children[1]).source.to_s
 		when "has_many","belongs_to","has_one"
 			parse_association(astnode, astnode.children[0].source.to_s)
-		#when "has_many"
-		#	if astnode.children[1].type.to_s == "list"
-		#		astnode.children[1].children.each do |child|
-		#			if child.type.to_s == "symbol_literal"
-		#				$cur_class.addHasMany(parse_attrib_node(child))
-		#			end
-		#		end
-		#	end
-		#when "belongs_to"
-		#	if astnode.children[1].type.to_s == "list"
-		#		astnode.children[1].children.each do |child|
-		#			if child.type.to_s == "symbol_literal"
-		#				$cur_class.addBelongsTo(parse_attrib_node(child))
-		#			end
-		#		end
-		#	end
-		#when "has_one"
-		#	if astnode.children[1].type.to_s == "list"
-		#		astnode.children[1].children.each do |child|
-		#			if child.type.to_s == "symbol_literal"
-		#				$cur_class.addHasOne(parse_attrib_node(child))
-		#			end
-		#		end
-		#	end
 		when "scope"
 			scope_func_list = Array.new
 			if astnode.children[1].type.to_s == "list"
@@ -163,11 +141,15 @@ def parse_attrib(astnode)
 					elsif child.type.to_s == "lambda" and scope_func_list.length > 0
 						$cur_method = Method_class.new(scope_func_list[-1])
 						$cur_class.addMethod($cur_method)
+						super_call = Function_call.new("self", "super")
+						$cur_method.addCall(super_call)	
 						traverse_ast(child, 3)
 						$cur_method = nil
 					elsif child.type.to_s == "fcall" and scope_func_list.length > 0		
 						$cur_method = Method_class.new(scope_func_list[-1])
 						$cur_class.addMethod($cur_method)
+						super_call = Function_call.new("self", "super")
+						$cur_method.addCall(super_call)	
 						child.children.each do |c1|
 							traverse_ast(c1, 3)
 						end
@@ -189,7 +171,7 @@ def parse_attrib(astnode)
 			parse_keyword(astnode, $cur_class.getMethod("before_validation"))
 		when "after_create","before_create"
 			parse_keyword(astnode, $cur_class.getMethod("before_create"))
-		when "after_save","before_save"
+		when "after_save","before_save","before_update","after_update"
 			parse_keyword(astnode, $cur_class.getMethod("before_save"))
 		when "destroy_all","delete_all"
 			if $cur_method != nil

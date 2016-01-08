@@ -55,6 +55,7 @@ class Class_class
 		@variable = Array.new
 		@upper_class = nil
 		@upper_class_instance = nil
+		@include_module = nil
 		@method_var_map = Hash.new
 		@before_filter = Array.new
 		@save_actions = Array.new
@@ -78,6 +79,7 @@ class Class_class
 		#@after_create = Array.new
 		#@after_destroy = Array.new
 	end
+	attr_accessor :include_module, :filename
 	def getAssocs
 		@assocs
 	end

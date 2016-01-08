@@ -210,6 +210,15 @@ def get_mvc_name2(filename)
 	return n
 end
 
+def dataflow_filename_match(dataflow_file_name)
+	$class_map.each do |k, v|
+		if v.filename.tr('/','').gsub('.rb','') == dataflow_file_name.tr('/','').gsub('dataflow','').gsub('.log','')
+			return k
+		end
+	end
+	return nil
+end
+
 def remove_module_info(name)
 	i = name.rindex(':')
 	n = name[i+1..name.length-1]

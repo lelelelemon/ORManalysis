@@ -138,15 +138,25 @@ class Function_call
 		caller_class = nil
 			if @obj_name == "self"
 				caller_class = calling_func_class
-				while $class_map[caller_class] != nil and $class_map[caller_class].getMethod(@func_name) == nil do
-					caller_class = $class_map[caller_class].getUpperClass
-					#TODO: I hate this, but exception handler should anyway appear somewhere...
-					#if $class_map[caller_class] == nil
-					#	caller_class = nil
-					#end
-				end
-				if $class_map[caller_class] == nil
-					caller_class = calling_func_class
+				if @is_query == false
+					if $class_map[caller_class].getMethod(@func_name) == nil
+						while $class_map[caller_class] != nil and $class_map[caller_class].getMethod(@func_name) == nil do
+							caller_class = $class_map[caller_class].getUpperClass
+							#TODO: I hate this, but exception handler should anyway appear somewhere...
+							#if $class_map[caller_class] == nil
+							#	caller_class = nil
+							#end
+						end
+					end
+					#find upper fails
+					if $class_map[caller_class] == nil or $class_map[caller_class].getMethod(@func_name) == nil
+						include_m = $class_map[$class_map[calling_func_class].include_module]
+						if include_m != nil and include_m.getMethod(@func_name) != nil
+							caller_class = include_m.getName
+						else
+							caller_class = nil
+						end
+					end
 				end
 			end
 			#Luckily, the log records the type of c
@@ -215,6 +225,7 @@ class Function_call
 					caller_class = calling_func_class
 				end
 			end
+
 			#OK, search distinct func name doesn't work. For example, in lobsters: comment.rb EmailReply.reply, CommentsController also defines reply...
 			#if caller_class == nil
 			#	caller_class = search_distinct_func_name(@func_name)

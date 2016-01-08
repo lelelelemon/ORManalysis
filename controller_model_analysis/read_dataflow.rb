@@ -28,31 +28,43 @@ def read_dataflow(application_dir=nil)
 		$app_dir = application_dir
 	end
 
-	$dataflow_files = "#{$app_dir}/dataflow/#{$merged_controllers}/*.log"
+	$dataflow_dir = "#{$app_dir}/dataflow/"
 
-	Dir.glob($dataflow_files) do |item|
-		next if item == '.' or item == '..'
-		class_name = get_mvc_name2(item)
-		handle_single_dataflow_file(item, class_name)
-		$class_map[class_name].getMethods.each do |key, meth|
-			if meth.getCFG != nil
-				meth.getCFG.findCalls
+	root, files, dirs = os_walk($dataflow_dir)
+	for filename in files
+		if filename.to_s.end_with?(".log")
+			class_name = dataflow_filename_match(filename.to_s) 
+			if class_name != nil
+				handle_single_dataflow_file(filename.to_s, class_name)
+			else
+				#puts "Dataflow file #{filename} cannot find a class!"
 			end
 		end
 	end
+	
+	#Dir.glob($dataflow_files) do |item|
+	#	next if item == '.' or item == '..'
+	#	class_name = get_mvc_name2(item)
+	#	handle_single_dataflow_file(item, class_name)
+	#	$class_map[class_name].getMethods.each do |key, meth|
+	#		if meth.getCFG != nil
+	#			meth.getCFG.findCalls
+	#		end
+	#	end
+	#end
 
-	$dataflow_files = "#{$app_dir}/dataflow/models/*.log"
+	#$dataflow_files = "#{$app_dir}/dataflow/models/*.log"
 
-	Dir.glob($dataflow_files) do |item|
-		next if item == '.' or item == '..'
-		class_name = get_mvc_name2(item)
-		handle_single_dataflow_file(item, class_name)
-		$class_map[class_name].getMethods.each do |key, meth|
-			if meth.getCFG != nil
-				meth.getCFG.findCalls
-			end	
-		end
-	end
+	#Dir.glob($dataflow_files) do |item|
+	#	next if item == '.' or item == '..'
+	#	class_name = get_mvc_name2(item)
+	#	handle_single_dataflow_file(item, class_name)
+	#	$class_map[class_name].getMethods.each do |key, meth|
+	#		if meth.getCFG != nil
+	#			meth.getCFG.findCalls
+	#		end	
+	#	end
+	#end
 end
 
 def find_method(class_name, method_name)

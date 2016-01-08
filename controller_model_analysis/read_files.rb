@@ -1,3 +1,16 @@
+require 'pathname'
+def os_walk(dir)
+  root = Pathname(dir)
+  files, dirs = [], []
+  Pathname(root).find do |path|
+    unless path == root
+      dirs << path if path.directory?
+      files << path if path.file?
+    end
+  end
+  [root, files, dirs]
+end
+
 def read_dynamic_typing_info
 	Dir.glob($log_files) do |item|
 		next if item == '.' or item == '..'
@@ -41,7 +54,7 @@ def read_dynamic_typing_info
 	end
 end
 
-def read_each_class(class_list, module_name)
+def read_each_class(class_list, module_name, filename)
 	class_list.each do |class_node|
 		if module_name == "" or class_node.children[0].source.to_s.include?(module_name)
 			class_name = class_node.children[0].source.to_s
@@ -63,6 +76,7 @@ def read_each_class(class_list, module_name)
 		end
 		
 		$class_map[class_name] = $cur_class
+		$cur_class.filename = filename
 		level = 0
 		traverse_ast(class_node, level)
 	end
@@ -109,14 +123,16 @@ def handle_single_file(item)
 			class_list.push(module_node)
 			read_each_class(class_list, "")
 		else
-			abort("Neither class nor module can be found")
+			#If no module nor class can be found, then skip the file
+			#abort("Neither class nor module can be found")
+			return 
 		end
 	else
 		#puts "class_list:"
 		#class_list.each do |c|
 		#	puts "\t--#{c.children[0].source.to_s}"
 		#end
-		read_each_class(class_list, module_name)
+		read_each_class(class_list, module_name, item)
 	end
 end
 
@@ -132,25 +148,32 @@ def read_ruby_files(application_dir=nil)
 	#read_table_names($table_file)
 	read_key_words
 
-	Dir.foreach($app_dir) do |item|
-		next if item == '.' or item == '..'
-		#first level: all folders
-		if item.include?('.') == false
-			dir_name = "#{$app_dir}/#{item}"
-			Dir.foreach(dir_name) do |sub_item|
-				next if sub_item == '.' or sub_item == '..'
-				if sub_item.include?(".rb") == false
-					sub_dir_name = "#{dir_name}/#{sub_item}/*.rb"
-					Dir.glob(sub_dir_name) do |item1|
-						handle_single_file(item1)
-					end
-				else
-					fname = "#{dir_name}/#{sub_item}"
-					handle_single_file(fname)
-				end
-			end
+	root, files, dirs = os_walk($app_dir)
+	for filename in files
+		if filename.to_s.end_with?(".rb") and filename.to_s.end_with?("schema.rb") == false
+			#puts "Filename = #{filename.to_s}"
+			handle_single_file(filename.to_s)
 		end
 	end
+	#Dir.foreach($app_dir) do |item|
+	#	next if item == '.' or item == '..'
+	#	#first level: all folders
+	#	if item.include?('.') == false
+	#		dir_name = "#{$app_dir}/#{item}"
+	#		Dir.foreach(dir_name) do |sub_item|
+	#			next if sub_item == '.' or sub_item == '..'
+	#			if sub_item.include?(".rb") == false
+	#				sub_dir_name = "#{dir_name}/#{sub_item}/*.rb"
+	#				Dir.glob(sub_dir_name) do |item1|
+	#					handle_single_file(item1)
+	#				end
+	#			else
+	#				fname = "#{dir_name}/#{sub_item}"
+	#				handle_single_file(fname)
+	#			end
+	#		end
+	#	end
+	#end
 	
 	if $type_inference == false
 		read_dynamic_typing_info
