@@ -215,9 +215,10 @@ class Function_call
 					caller_class = calling_func_class
 				end
 			end
-			if caller_class == nil
-				caller_class = search_distinct_func_name(@func_name)
-			end
+			#OK, search distinct func name doesn't work. For example, in lobsters: comment.rb EmailReply.reply, CommentsController also defines reply...
+			#if caller_class == nil
+			#	caller_class = search_distinct_func_name(@func_name)
+			#end
 			#puts "#{calling_func_class}.#{calling_func} issues call #{@obj_name} [of class #{caller_class}] . #{@func_name}"
 			#puts ""
 		#if @is_query == false and caller_class != nil
