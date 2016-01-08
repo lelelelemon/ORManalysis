@@ -1,0 +1,883 @@
+SET IRMethod, name = initialize
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def_a_blog RECEIVEARG 
+		 6: 
+		 7: ATTRASSIGN %self->this_blog %self[2.0,] a_blog[2.5,] 
+		 8: RETURN a_blog[2.5,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = is_spam?
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def_string RECEIVEARG 
+		 6: 
+		 7: def_%v_3 %self->this_blog %self[2.0,] 
+		 8: def_%v_4 %v_3->sp_global %v_3[2.7,] 
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: def_%v_5 
+		 1: 
+		 2: def_%v_6 string->blank? string[2.5,] 
+		 3: BRANCH %v_6[3.2,] 
+BB 4
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: def_%v_7 
+		 1: 
+		 2: def_%v_8 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: string[2.5,] %self[2.0,] 
+BB 1
+	outgoing: 16 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+BB 3
+	outgoing: 4 5 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_5 (Format) 
+		 2: def_%cl_1_6 %cl_1_5[3.1,] 
+		 3: %cl_1_6[3.2,] 
+BB 4
+	outgoing: 5 14 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 %cl_1_5[3.1,] 
+BB 5
+	outgoing: 6 10 14 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 %cl_1_6[4.0,3.2,] string[] 
+		 1: BRANCH %cl_1_4[5.0,] 
+BB 6
+	outgoing: 7 8 14 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 (Format) 
+		 1: def_%cl_1_9 %cl_1_8[6.0,] 
+		 2: %cl_1_9[6.1,] 
+BB 7
+	outgoing: 8 14 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_9 %cl_1_8[6.0,] 
+BB 8
+	outgoing: 9 11 14 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 %cl_1_9[7.0,6.1,] string[] 
+		 1: BRANCH %cl_1_7[8.0,] 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 10
+	outgoing: 14 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_10 %self->scan_ip %self[2.0,] string[] 
+		 2: def_%cl_1_3 %cl_1_10[10.1,] 
+		 3: RETURN %cl_1_10[10.1,] 
+BB 11
+	outgoing: 14 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_11 string[] 
+		 2: def_%cl_1_12 %self->scan_uris %self[2.0,] %cl_1_11[11.1,] 
+		 3: def_%cl_1_3 %cl_1_12[11.2,] 
+		 4: RETURN %cl_1_12[11.2,] 
+BB 12
+	outgoing: 14 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_13 %self->scan_text %self[2.0,] string[] 
+		 2: def_%cl_1_3 %cl_1_13[12.1,] 
+		 3: RETURN %cl_1_13[12.1,] 
+BB 14
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_14 
+		 1: def_%cl_1_15 %cl_1_14[14.0,] 
+		 2: RETURN %cl_1_15[14.1,] 
+BB 16
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: def_reason %v_8[7.2,] 
+		 4: 
+		 5: BRANCH %v_8[7.2,] 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_9 %self->logger %self[2.0,] 
+		 2: def_%v_10 
+		 3: def_%v_11 %v_10[9.2,] reason[7.3,] 
+		 4: def_%v_12 %v_9->info %v_9[9.1,] %v_11[9.3,] 
+		 5: 
+		 6: RETURN 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = scan_ip
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def_ip_address RECEIVEARG 
+		 6: 
+		 7: def_%v_3 %self->logger %self[2.0,] 
+		 8: def_%v_4 
+		 9: def_%v_5 %v_4[2.8,] ip_address[2.5,] 
+		 10: def_%v_6 %v_3->info %v_3[2.7,] %v_5[2.9,] 
+		 11: 
+		 12: def_%v_7 (IP_RBLS) 
+		 13: def_%v_8 
+		 14: def_%v_9 ip_address->split ip_address[2.5,] %v_8[2.13,] 
+		 15: def_%v_10 %v_9->reverse %v_9[2.14,] 
+		 16: def_%v_11 
+		 17: def_%v_12 %v_10->join %v_10[2.15,] %v_11[2.16,] 
+		 18: def_%v_13 %self->query_rbls %self[2.0,2.7,] %v_7[2.12,] %v_12[2.17,] 
+		 19: RETURN %v_13[2.18,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = scan_text
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def_string RECEIVEARG 
+		 6: 
+		 7: def_%v_3 
+		 8: def_%v_4 string->scan string[2.5,] 
+		 9: def_%v_5 %v_4->flatten %v_4[2.8,] 
+		 10: def_uri_list %v_5[2.9,] 
+		 11: 
+		 12: def_%v_6 %self->check_uri_count %self[2.0,] %v_5[2.9,] 
+		 13: 
+		 14: def_%v_7 %self->scan_uris %self[2.0,2.12,] uri_list[2.10,] 
+		 15: 
+		 16: RETURN 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = check_uri_count
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def_uris RECEIVEARG 
+		 6: 
+		 7: def_%v_3 %self->this_blog %self[2.0,] 
+		 8: def_%v_4 %v_3->sp_url_limit %v_3[2.7,] 
+		 9: def_limit %v_4[2.8,] 
+		 10: 
+		 11: def_%v_5 %v_4->to_i %v_4[2.8,] 
+		 12: def_%v_6 %v_5->zero? %v_5[2.11,] 
+		 13: BRANCH %v_6[2.12,] 
+BB 3
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: def_%v_7 
+		 1: 
+		 2: def_%v_8 uris->size uris[2.5,] 
+		 3: def_%v_9 %v_8[4.2,] limit[2.9,] 
+		 4: BRANCH %v_9[4.3,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_10 
+		 2: def_%v_11 uris->size uris[2.5,] 
+		 3: def_%v_12 
+		 4: def_%v_13 %v_10[6.1,] %v_11[6.2,] %v_12[6.3,] limit[2.9,] 
+		 5: def_%v_14 %self->throw %self[2.0,] %v_13[6.4,] 
+		 6: RETURN %v_14[6.5,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = scan_uris
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def_uris 
+		 6: uris[2.5,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: def_%v_3 
+		 1: def_uris %v_3[4.0,] 
+BB 5
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_4 uris->each uris[4.1,2.5,] %self[2.0,] 
+CLOSURE BEGIN: uri[] host[] %self[2.0,] domain[] 
+BB 1
+	outgoing: 23 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_uri RECEIVEARG 
+		 3: def_%current_scope 
+		 4: def_%current_module 
+		 5: 
+		 6: def_%cl_1_3 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_6 (URI) 
+		 2: def_%cl_1_7 %cl_1_6->parse %cl_1_6[4.1,] uri[2.2,] 
+		 3: def_%cl_1_8 %cl_1_7->host %cl_1_7[4.2,] 
+		 4: def_%cl_1_5 %cl_1_8[4.3,] 
+		 5: %cl_1_3[2.6,] 
+BB 6
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 9 11 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[7.0,] 
+		 2: BRANCH %cl_1_10[7.1,] 
+BB 8
+	outgoing: 11 23 
+	datadep: 
+	instructions:
+		 0: %cl_1_9[7.0,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: %cl_1_3[2.6,] 
+BB 10
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN 
+BB 11
+	outgoing: 21 23 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_11 
+		 1: def_%cl_1_12 %cl_1_11[11.0,] %cl_1_3[2.6,] 
+		 2: %cl_1_11[11.0,] 
+BB 12
+	outgoing: 13 14 21 
+	datadep: 
+	instructions:
+		 0: def_host %cl_1_5[4.4,] 
+		 1: 
+		 2: def_%cl_1_13 (Format) 
+		 3: def_%cl_1_14 %cl_1_13[12.2,] 
+		 4: %cl_1_14[12.3,] 
+BB 13
+	outgoing: 14 21 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_14 %cl_1_13[12.2,] 
+BB 14
+	outgoing: 15 16 21 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_15 host[12.0,] %cl_1_14[13.0,12.3,] 
+		 1: BRANCH %cl_1_15[14.0,] 
+BB 15
+	outgoing: 21 23 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_16 %self->scan_ip %self[2.0,] host[12.0,] 
+		 1: 
+		 2: %cl_1_16[15.0,] 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_17 
+BB 17
+	outgoing: 18 19 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_18 
+		 2: def_%cl_1_19 host->split host[12.0,] %cl_1_18[17.1,] 
+		 3: def_%cl_1_20 %cl_1_19->reverse %cl_1_19[17.2,] 
+		 4: def_host_parts %cl_1_20[17.3,] 
+		 5: 
+		 6: def_%cl_1_21 
+		 7: def_domain %cl_1_21[17.6,] 
+		 8: 
+		 9: def_%cl_1_22 (SECOND_LEVEL) 
+		 10: def_%cl_1_23 %cl_1_20[17.3,] 
+		 11: def_%cl_1_24 %cl_1_22->include? %cl_1_22[17.9,] %cl_1_23[17.10,] 
+		 12: BRANCH %cl_1_24[17.11,] 
+BB 18
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_25 
+		 1: 
+BB 19
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_25 
+BB 20
+	outgoing: 21 23 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_26 %cl_1_25->times %cl_1_25[19.0,18.0,] %self[2.0,] 
+CLOSURE BEGIN: host_parts[17.4,] domain[17.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_2_3 host_parts->shift host_parts[] 
+		 2: def_%cl_2_4 domain->unshift domain[] %cl_2_3[3.1,] 
+		 3: RETURN %cl_2_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 1: 
+		 2: def_%cl_1_27 %self->logger %self[2.0,] 
+		 3: def_%cl_1_28 
+		 4: def_%cl_1_29 
+		 5: def_%cl_1_30 domain->join domain[17.7,] %cl_1_29[20.4,] 
+		 6: def_%cl_1_31 %cl_1_28[20.3,] %cl_1_30[20.5,] 
+		 7: def_%cl_1_32 %cl_1_27->info %cl_1_27[20.2,] %cl_1_31[20.6,] 
+		 8: 
+		 9: def_%cl_1_33 (HOST_RBLS) 
+		 10: def_%cl_1_34 
+		 11: def_%cl_1_35 domain->join domain[20.5,17.7,] %cl_1_34[20.10,] 
+		 12: def_%cl_1_36 %self->query_rbls %self[20.2,2.0,] %cl_1_33[20.9,] host[12.0,] %cl_1_35[20.11,] 
+		 13: 
+		 14: def_%cl_1_37 %self->logger %self[20.2,20.12,2.0,] 
+		 15: def_%cl_1_38 
+		 16: def_%cl_1_39 
+		 17: def_%cl_1_40 domain->join domain[20.5,20.11,17.7,] %cl_1_39[20.16,] 
+		 18: def_%cl_1_41 %cl_1_38[20.15,] %cl_1_40[20.17,] 
+		 19: def_%cl_1_42 %cl_1_37->info %cl_1_37[20.14,] %cl_1_41[20.18,] 
+		 20: 
+		 21: 
+		 22: 
+BB 21
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_43 
+		 1: def_%cl_1_44 %cl_1_43[21.0,] 
+		 2: RETURN %cl_1_44[21.1,] 
+BB 23
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %v_4[5.1,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: def_%v_5 
+		 1: def_%v_6 %v_5[6.0,] 
+		 2: RETURN %v_6[6.1,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = query_rbls
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def_rbls RECEIVEARG 
+		 6: def_subdomains 
+		 7: 
+		 8: def_%v_3 rbls->each rbls[2.5,] %self[2.0,] 
+CLOSURE BEGIN: subdomains[2.6,] %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_rbl RECEIVEARG 
+		 3: def_%current_scope 
+		 4: def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_3 subdomains->uniq subdomains[] 
+		 2: def_%cl_1_4 %cl_1_3->each %cl_1_3[3.1,] %self[2.0,] 
+CLOSURE BEGIN: d[] rbl[2.2,] response[] %self[2.0,] 
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: def_d RECEIVEARG 
+		 3: def_%current_scope 
+		 4: def_%current_module 
+		 5: 
+		 6: def_%cl_2_3 
+BB 4
+	outgoing: 6 7 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: def_%cl_2_6 (IPSocket) 
+		 3: def_%cl_2_7 d[2.2,] rbl[] 
+		 4: def_%cl_2_8 
+		 5: def_%cl_2_9 %cl_2_7->join %cl_2_7[4.3,] %cl_2_8[4.4,] 
+		 6: def_%cl_2_10 %cl_2_6->getaddress %cl_2_6[4.2,] %cl_2_9[4.5,] 
+		 7: def_response %cl_2_10[4.6,] 
+		 8: 
+		 9: def_%cl_2_11 
+		 10: def_%cl_2_12 %cl_2_10[4.6,] 
+		 11: BRANCH %cl_2_12[4.10,] 
+BB 6
+	outgoing: 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: def_%cl_2_13 
+		 3: def_%cl_2_14 
+		 4: def_%cl_2_15 rbl[] %cl_2_13[6.2,] d[2.2,] %cl_2_14[6.3,] response[4.7,] 
+		 5: def_%cl_2_16 %self->throw %self[2.0,] %cl_2_15[6.4,] 
+		 6: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_16 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 %cl_2_16[7.0,6.5,] 
+		 1: 
+		 2: %cl_2_3[2.6,] 
+BB 9
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+BB 10
+	outgoing: 11 12 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_2_17 
+		 2: def_%cl_2_18 (SocketError) 
+		 3: def_%cl_2_19 %cl_2_18[10.2,] %cl_2_17[10.1,] 
+		 4: BRANCH %cl_2_19[10.3,] 
+BB 11
+	outgoing: 14 18 
+	datadep: 
+	instructions:
+		 0: %cl_2_17[10.1,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 
+		 1: 
+		 2: %cl_2_3[2.6,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+BB 14
+	outgoing: 16 18 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_20 
+		 1: def_%cl_2_21 %cl_2_20[14.0,] %cl_2_3[2.6,] 
+		 2: %cl_2_20[14.0,] 
+BB 15
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_2_5[8.0,12.0,] 
+BB 16
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_22 
+		 1: def_%cl_2_23 %cl_2_22[16.0,] 
+		 2: RETURN %cl_2_23[16.1,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_1_4[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 9: 
+		 10: RETURN 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = logger
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_4 %self[2.0,] 
+		 7: def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: def_%v_5 %self[2.0,] @logger[] 
+		 1: def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 10 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: def_%v_6 
+		 1: %v_6[5.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: def_%v_6 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: def_%v_7 %v_6->logger %v_6[6.0,5.0,] 
+		 1: BRANCH %v_7[7.0,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%v_8 (Logger) 
+		 1: def_%v_9 (STDOUT) 
+		 2: def_%v_10 %v_8->new %v_8[8.0,] %v_9[8.1,] 
+		 3: def_%v_7 %v_10[8.2,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: %self[2.0,] %v_7[8.3,7.0,] @logger[3.0,] 
+		 1: RETURN %v_7[8.3,7.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = validates_against_spamdb
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def_attr_names 
+		 6: 
+		 7: def_%v_3 
+		 8: def_%v_4 %v_3[2.7,] 
+		 9: def_configuration %v_4[2.8,] 
+		 10: 
+		 11: def_%v_5 attr_names->last attr_names[2.5,] 
+		 12: def_%v_6 (Hash) 
+		 13: def_%v_7 %v_5->is_a? %v_5[2.11,] %v_6[2.12,] 
+		 14: BRANCH %v_7[2.13,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: def_%v_8 attr_names->pop attr_names[2.5,] 
+		 1: def_%v_9 configuration->update configuration[2.9,] %v_8[3.0,] 
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: def_%v_9 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_10 %self->validates_each %self[2.0,] attr_names[2.5,] configuration[2.9,] %self[2.0,] 
+CLOSURE BEGIN: record[] value[] configuration[2.9,] attr_name[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_record RECEIVEARG 
+		 3: def_attr_name RECEIVEARG 
+		 4: def_value RECEIVEARG 
+		 5: def_%current_scope 
+		 6: def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_3 (SpamProtection) 
+		 2: def_%cl_1_4 record->blog record[2.2,] 
+		 3: def_%cl_1_5 %cl_1_3->new %cl_1_3[3.1,] %cl_1_4[3.2,] 
+		 4: def_%cl_1_6 %cl_1_5->is_spam? %cl_1_5[3.3,] value[2.4,] 
+		 5: BRANCH %cl_1_6[3.4,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 record->errors record[2.2,] 
+		 1: def_%cl_1_8 configuration[] 
+		 2: def_%cl_1_9 %cl_1_7->add %cl_1_7[4.0,] attr_name[2.3,] %cl_1_8[4.1,] 
+		 3: 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_9[4.2,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[7.0,] 
+		 2: RETURN %cl_1_11[7.1,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: RETURN %v_10[5.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

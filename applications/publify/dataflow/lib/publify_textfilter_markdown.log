@@ -1,0 +1,63 @@
+SET IRMethod, name = help_text
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 
+		 7: RETURN %v_3[2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = filtertext
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: def__blog RECEIVEARG 
+		 6: def__content RECEIVEARG 
+		 7: def_text RECEIVEARG 
+		 8: def__params RECEIVEARG 
+		 9: 
+		 10: def_%v_3 
+		 11: def_%v_4 
+		 12: def_%v_5 text->gsub text[2.7,] %v_4[2.11,] 
+		 13: def_escaped_macros %v_5[2.12,] 
+		 14: 
+		 15: def_%v_6 (BlueCloth) 
+		 16: def_%v_7 %v_6->new %v_6[2.15,] %v_5[2.12,] 
+		 17: def_%v_8 %v_7->to_html %v_7[2.16,] 
+		 18: def_%v_9 
+		 19: def_%v_10 
+		 20: def_%v_11 %v_8->gsub %v_8[2.17,] %v_10[2.19,] 
+		 21: def_html %v_11[2.20,] 
+		 22: 
+		 23: def_%v_12 
+		 24: def_%v_13 
+		 25: def_%v_14 %v_11->gsub %v_11[2.20,] %v_13[2.24,] 
+		 26: RETURN %v_14[2.25,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
