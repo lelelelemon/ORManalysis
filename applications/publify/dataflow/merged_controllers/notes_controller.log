@@ -21,7 +21,7 @@ BB 2
 		 11: def_%v_8 %self->this_blog %self[2.0,2.8,] 
 		 12: def_%v_9 %v_8->limit_article_display %v_8[2.11,] 
 		 13: def_%v_10 %v_7->per %v_7[2.10,] %v_9[2.12,] 
-		 14: %self[2.0,2.8,2.11,] %v_10[2.13,] @notes[] 
+		 14: ATTRASSIGN %self->@notes %self[2.0,2.8,2.11,] %v_10[2.13,] @notes[] 
 		 15: 
 		 16: def_%v_11 %self[2.0,2.8,2.11,] @notes[2.14,] 
 		 17: def_%v_12 %v_11->empty? %v_11[2.16,] 
@@ -34,7 +34,7 @@ BB 3
 		 1: def_%v_13 (I18n) 
 		 2: def_%v_14 
 		 3: def_%v_15 %v_13->t %v_13[3.1,] %v_14[3.2,] 
-		 4: %self[2.0,] %v_15[3.3,] @message[] 
+		 4: ATTRASSIGN %self->@message %self[2.0,] %v_15[3.3,] @message[] 
 		 5: 
 		 6: def_%v_16 %self->ruby_code_from_view %self[2.0,] 
 		 7: def_%v_17 %v_16->ruby_code_from_view %v_16[3.6,] %self[3.6,2.0,] 
@@ -93,7 +93,7 @@ BB 2
 		 10: def_%v_7 %v_6[2.9,] 
 		 11: def_%v_8 %v_5->escape %v_5[2.8,] %v_7[2.10,] 
 		 12: def_%v_9 %v_4->find_by_permalink %v_4[2.7,] %v_8[2.11,] 
-		 13: %self[2.0,2.9,] %v_9[2.12,] @note[] 
+		 13: ATTRASSIGN %self->@note %self[2.0,2.9,] %v_9[2.12,] @note[] 
 		 14: 
 		 15: def_%v_10 %self->ruby_code_from_view %self[2.0,2.9,] 
 		 16: def_%v_11 %v_10->ruby_code_from_view %v_10[2.15,] %self[2.0,2.9,2.15,] 
@@ -139,7 +139,7 @@ CLOSURE END
 		 19: 
 		 20: def_%v_13 %self[2.0,2.9,2.15,] @note[2.13,2.18,] 
 		 21: def_%v_14 %v_13->permalink_url %v_13[2.20,] 
-		 22: %self[2.0,2.9,2.15,] %v_14[2.21,] @canonical_url[] 
+		 22: ATTRASSIGN %self->@canonical_url %self[2.0,2.9,2.15,] %v_14[2.21,] @canonical_url[] 
 		 23: 
 		 24: def_%v_15 %self[2.0,2.9,2.15,] @note[2.13,2.18,2.20,] 
 		 25: def_%v_16 %v_15->in_reply_to_message %v_15[2.24,] 
@@ -154,7 +154,7 @@ BB 3
 		 2: def_%v_19 %self[2.0,] @note[2.13,2.18,2.20,2.24,] 
 		 3: def_%v_20 %v_19->in_reply_to_message %v_19[3.2,] 
 		 4: def_%v_21 %v_18->parse %v_18[3.1,] %v_20[3.3,] 
-		 5: %self[2.0,] %v_21[3.4,] @reply[] 
+		 5: ATTRASSIGN %self->@reply %self[2.0,] %v_21[3.4,] @reply[] 
 		 6: 
 		 7: def_%v_22 %self->render %self[2.0,] 
 		 8: RETURN %v_22[3.7,] 
@@ -185,7 +185,7 @@ BB 2
 		 5: 
 		 6: def_%v_3 %self->this_blog %self[2.0,] 
 		 7: def_%v_4 %v_3->meta_keywords %v_3[2.6,] 
-		 8: %self[2.0,2.6,] %v_4[2.7,] @keywords[] 
+		 8: ATTRASSIGN %self->@keywords %self[2.0,2.6,] %v_4[2.7,] @keywords[] 
 		 9: 
 		 10: def_%v_5 %self->this_blog %self[2.0,2.6,] 
 		 11: def_%v_6 %v_5->statuses_title_template %v_5[2.10,] 
@@ -193,7 +193,7 @@ BB 2
 		 13: def_%v_8 %self->this_blog %self[2.0,2.6,2.10,] 
 		 14: def_%v_9 %self->params %self[2.0,2.6,2.10,2.13,] 
 		 15: def_%v_10 %v_6->to_title %v_6[2.11,] %v_7[2.12,] %v_8[2.13,] %v_9[2.14,] 
-		 16: %self[2.0,2.6,2.10,2.13,2.14,] %v_10[2.15,] @page_title[] 
+		 16: ATTRASSIGN %self->@page_title %self[2.0,2.6,2.10,2.13,2.14,] %v_10[2.15,] @page_title[] 
 		 17: 
 		 18: def_%v_11 %self->this_blog %self[2.0,2.6,2.10,2.13,2.14,] 
 		 19: def_%v_12 %v_11->statuses_desc_template %v_11[2.18,] 
@@ -201,7 +201,7 @@ BB 2
 		 21: def_%v_14 %self->this_blog %self[2.0,2.6,2.10,2.13,2.14,2.18,] 
 		 22: def_%v_15 %self->params %self[2.0,2.6,2.10,2.13,2.14,2.18,2.21,] 
 		 23: def_%v_16 %v_12->to_title %v_12[2.19,] %v_13[2.20,] %v_14[2.21,] %v_15[2.22,] 
-		 24: %self[2.0,2.6,2.10,2.13,2.14,2.18,2.21,2.22,] %v_16[2.23,] @description[] 
+		 24: ATTRASSIGN %self->@description %self[2.0,2.6,2.10,2.13,2.14,2.18,2.21,2.22,] %v_16[2.23,] @description[] 
 		 25: RETURN %v_16[2.23,] 
 BB 3
 	outgoing: 
