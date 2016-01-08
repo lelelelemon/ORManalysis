@@ -327,3 +327,332 @@ BB 3
 	datadep: 
 	instructions:
 
+SET IRMethod, name = index
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 
+		 8: def_%v_5 %v_3->order %v_3[2.6,] %v_4[2.7,] 
+		 9: def_%v_6 %self->params %self[2.0,] 
+		 10: def_%v_7 %v_6[2.9,] 
+		 11: def_%v_8 %v_5->page %v_5[2.8,] %v_7[2.10,] 
+		 12: def_%v_9 %self->this_blog %self[2.0,2.9,] 
+		 13: def_%v_10 %v_9->admin_display_elements %v_9[2.12,] 
+		 14: def_%v_11 %v_8->per %v_8[2.11,] %v_10[2.13,] 
+		 15: %self[2.0,2.9,2.12,] %v_11[2.14,] @users[] 
+		 16: RETURN %v_11[2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 %v_3->new %v_3[2.6,] 
+		 8: %self[2.0,] %v_4[2.7,] @user[] 
+		 9: 
+		 10: def_%v_5 %self[2.0,] @user[2.8,] 
+		 11: def_%v_6 (TextFilter) 
+		 12: def_%v_7 %self->this_blog %self[2.0,] 
+		 13: def_%v_8 %v_7->text_filter %v_7[2.12,] 
+		 14: def_%v_9 %v_6->find_by_name %v_6[2.11,] %v_8[2.13,] 
+		 15: ATTRASSIGN %v_5->text_filter %v_5[2.10,] %v_9[2.14,] 
+		 16: 
+		 17: def_%v_10 %self->setup_profiles %self[2.0,2.12,] 
+		 18: RETURN %v_10[2.17,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = edit
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 %self->params %self[2.0,] 
+		 7: def_%v_4 %v_3[2.6,] 
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: def_%v_5 (User) 
+		 1: def_%v_6 %self->params %self[2.0,] 
+		 2: def_%v_7 %v_6[3.1,] 
+		 3: def_%v_8 %v_5->find_by_id %v_5[3.0,] %v_7[3.2,] 
+		 4: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: def_%v_9 %self->current_user %self[2.0,] 
+		 1: def_%v_8 %v_9[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self[2.0,] %v_8[4.1,3.3,] @user[] 
+		 1: 
+		 2: def_%v_10 %self->setup_profiles %self[2.0,] 
+		 3: RETURN %v_10[5.2,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 %self->user_params %self[2.0,] 
+		 8: def_%v_5 %v_3->new %v_3[2.6,] %v_4[2.7,] 
+		 9: %self[2.0,2.7,] %v_5[2.8,] @user[] 
+		 10: 
+		 11: def_%v_6 %self[2.0,2.7,] @user[2.9,] 
+		 12: def_%v_7 %self[2.0,2.7,] @user[2.9,2.11,] 
+		 13: def_%v_8 %v_7->login %v_7[2.12,] 
+		 14: ATTRASSIGN %v_6->name %v_6[2.11,] %v_8[2.13,] 
+		 15: 
+		 16: def_%v_9 %self[2.0,2.7,] @user[2.9,2.11,2.12,] 
+		 17: def_%v_10 %v_9->save %v_9[2.16,] 
+		 18: BRANCH %v_10[2.17,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_11 %self->admin_users_url %self[2.0,] 
+		 2: def_%v_12 (I18n) 
+		 3: def_%v_13 
+		 4: def_%v_14 %v_12->t %v_12[3.2,] %v_13[3.3,] 
+		 5: def_%v_15 %v_14[3.4,] 
+		 6: def_%v_16 %self->redirect_to %self[3.1,2.0,] %v_11[3.1,] %v_15[3.5,] 
+		 7: RETURN %v_16[3.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_17 %self->render %self[2.0,] 
+		 2: RETURN %v_17[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 %self[2.0,] @user[] 
+		 7: def_%v_4 %self->user_params %self[2.0,] 
+		 8: def_%v_5 %v_3->update %v_3[2.6,] %v_4[2.7,] 
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_6 %self->admin_users_url %self[2.0,] 
+		 2: def_%v_7 
+		 3: def_%v_8 %v_7[3.2,] 
+		 4: def_%v_9 %self->redirect_to %self[3.1,2.0,] %v_6[3.1,] %v_8[3.3,] 
+		 5: RETURN %v_9[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_10 %self->render %self[2.0,] 
+		 2: RETURN %v_10[4.1,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 
+		 8: def_%v_5 (Profile) 
+		 9: def_%v_6 
+		 10: def_%v_7 %v_5->find_by_label %v_5[2.8,] %v_6[2.9,] 
+		 11: def_%v_8 %self[2.0,] @user[] 
+		 12: def_%v_9 %v_8->id %v_8[2.11,] 
+		 13: def_%v_10 %v_3->where %v_3[2.6,] %v_4[2.7,] %v_7[2.10,] %v_9[2.12,] 
+		 14: def_%v_11 %v_10->count %v_10[2.13,] 
+		 15: def_%v_12 %v_11[2.14,] 
+		 16: BRANCH %v_12[2.15,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: def_%v_13 %self[2.0,] @user[2.11,] 
+		 1: def_%v_14 %v_13->destroy %v_13[3.0,] 
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: def_%v_14 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_15 %self->admin_users_url %self[2.0,] 
+		 2: def_%v_16 %self->redirect_to %self[5.1,2.0,] %v_15[5.1,] 
+		 3: RETURN %v_16[5.2,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = setup_profiles
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 (Profile) 
+		 7: def_%v_4 
+		 8: def_%v_5 %v_3->order %v_3[2.6,] %v_4[2.7,] 
+		 9: %self[2.0,] %v_5[2.8,] @profiles[] 
+		 10: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_user
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 %self->params %self[2.0,] 
+		 8: def_%v_5 %v_4[2.7,] 
+		 9: def_%v_6 %v_3->find %v_3[2.6,] %v_5[2.8,] 
+		 10: %self[2.0,2.7,] %v_6[2.9,] @user[] 
+		 11: RETURN %v_6[2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = user_params
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 %self->params %self[2.0,] 
+		 7: def_%v_4 %v_3->require %v_3[2.6,] 
+		 8: def_%v_5 %v_4->permit %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

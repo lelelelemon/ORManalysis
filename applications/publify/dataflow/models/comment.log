@@ -7,21 +7,21 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_user RECEIVEARG 
 		 6: 
-		 7: user->notify_via_email? user[2.5,] 
+		 7: def_%v_3 user->notify_via_email? user[2.5,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
-		 0: (EmailNotify) 
-		 1: %v_4->send_comment %self[2.0,] %v_4[3.0,] user[2.5,] 
+		 0: def_%v_4 (EmailNotify) 
+		 1: def_%v_5 %v_4->send_comment %v_4[3.0,] %self[2.0,] user[2.5,] 
 		 2: RETURN %v_5[3.1,] 
 BB 4
 	outgoing: 6 
@@ -42,15 +42,15 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: (User) 
-		 7: 
-		 8: %v_3->where %v_4[2.7,] %v_3[2.6,] 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 
+		 8: def_%v_5 %v_3->where %v_3[2.6,] %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] 
 BB 3
 	outgoing: 
@@ -66,15 +66,15 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->blog %self[2.0,] 
-		 7: %v_3->comment_text_filter %v_3[2.6,] 
-		 8: %v_4->to_text_filter %v_4[2.7,] 
+		 6: def_%v_3 %self->blog %self[2.0,] 
+		 7: def_%v_4 %v_3->comment_text_filter %v_3[2.6,] 
+		 8: def_%v_5 %v_4->to_text_filter %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] 
 BB 3
 	outgoing: 
@@ -90,18 +90,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: 
-		 7: %self->article %self[2.0,] 
-		 8: %v_4->title %v_4[2.7,] 
-		 9: 
-		 10: %self->author %self[2.0,] 
-		 11: %v_5[2.8,] %v_3[2.6,] %v_6[2.9,] %v_7[2.10,] 
+		 6: def_%v_3 
+		 7: def_%v_4 %self->article %self[2.0,] 
+		 8: def_%v_5 %v_4->title %v_4[2.7,] 
+		 9: def_%v_6 
+		 10: def_%v_7 %self->author %self[2.0,2.7,] 
+		 11: def_%v_8 %v_3[2.6,] %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] 
 		 12: RETURN %v_8[2.11,] 
 BB 3
 	outgoing: 
@@ -117,14 +117,14 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->article %self[2.0,] 
-		 7: %v_3->allow_comments? %v_3[2.6,] 
+		 6: def_%v_3 %self->article %self[2.0,] 
+		 7: def_%v_4 %v_3->allow_comments? %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
@@ -133,13 +133,13 @@ BB 3
 		 0: RETURN 
 BB 4
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_5 
 		 1: 
-		 2: %self->errors %self[2.0,] 
-		 3: 
-		 4: %v_6->add %v_6[4.2,] %v_7[4.3,] 
+		 2: def_%v_6 %self->errors %self[2.0,] 
+		 3: def_%v_7 
+		 4: def_%v_8 %v_6->add %v_6[4.2,] %v_7[4.3,] 
 		 5: 
 		 6: RETURN 
 BB 6
@@ -156,13 +156,13 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->author %self[2.0,] 
+		 6: def_%v_3 %self->author %self[2.0,] 
 		 7: RETURN %v_3[2.6,] 
 BB 3
 	outgoing: 
@@ -178,13 +178,13 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: 
+		 6: def_%v_3 
 		 7: RETURN %v_3[2.6,] 
 BB 3
 	outgoing: 

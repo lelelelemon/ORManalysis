@@ -7,31 +7,31 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: (User) 
-		 7: %v_3->count %v_3[2.6,] 
-		 8: %v_4->zero? %v_4[2.7,] 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 %v_3->count %v_3[2.6,] 
+		 8: def_%v_5 %v_4->zero? %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->signup_accounts_url %self[2.0,] 
-		 2: %self->redirect_to %self[2.0,] %v_6[3.1,] 
+		 1: def_%v_6 %self->signup_accounts_url %self[2.0,] 
+		 2: def_%v_7 %self->redirect_to %self[3.1,2.0,] %v_6[3.1,] 
 		 3: RETURN %v_7[3.2,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->login_accounts_url %self[2.0,] 
-		 2: %self->redirect_to %self[2.0,] %v_8[4.1,] 
+		 1: def_%v_8 %self->login_accounts_url %self[2.0,] 
+		 2: def_%v_9 %self->redirect_to %self[4.1,2.0,] %v_8[4.1,] 
 		 3: RETURN %v_9[4.2,] 
 BB 6
 	outgoing: 
@@ -47,32 +47,32 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->request %self[2.0,] 
-		 7: %v_3->post? %v_3[2.6,] 
+		 6: def_%v_3 %self->request %self[2.0,] 
+		 7: def_%v_4 %v_3->post? %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 7 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_5 
 		 1: 
-		 2: (User) 
-		 3: %self->params %self[2.0,] 
-		 4: %v_7[3.3,] 
-		 5: %v_8[3.4,] 
-		 6: %self->params %self[2.0,] 
-		 7: %v_10[3.6,] 
-		 8: %v_11[3.7,] 
-		 9: %v_6->authenticate %v_9[3.5,] %v_6[3.2,] %v_12[3.8,] 
-		 10: %v_13[3.9,] %self[2.0,] 
+		 2: def_%v_6 (User) 
+		 3: def_%v_7 %self->params %self[2.0,] 
+		 4: def_%v_8 %v_7[3.3,] 
+		 5: def_%v_9 %v_8[3.4,] 
+		 6: def_%v_10 %self->params %self[3.3,2.0,] 
+		 7: def_%v_11 %v_10[3.6,] 
+		 8: def_%v_12 %v_11[3.7,] 
+		 9: def_%v_13 %v_6->authenticate %v_6[3.2,] %v_9[3.5,] %v_12[3.8,] 
+		 10: ATTRASSIGN %self->current_user %self[3.3,3.6,2.0,] %v_13[3.9,] 
 		 11: 
-		 12: %self->logged_in? %self[3.10,] 
+		 12: def_%v_14 %self->logged_in? %self[3.3,3.6,3.10,] 
 		 13: BRANCH %v_14[3.12,] 
 BB 4
 	outgoing: 9 
@@ -81,33 +81,33 @@ BB 4
 		 0: RETURN 
 BB 6
 	outgoing: 8 
-	datadep: 3 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->successful_login %self[3.10,] 
+		 1: def_%v_15 %self->successful_login %self[3.10,] 
 		 2: 
 BB 7
 	outgoing: 8 
-	datadep: 3 3 3 3 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash %self[3.10,] 
-		 2: 
-		 3: %self->t %self[3.10,] %v_17[7.2,] 
+		 1: def_%v_16 %self->flash %self[3.10,] 
+		 2: def_%v_17 
+		 3: def_%v_18 %self->t %self[7.1,3.10,] %v_17[7.2,] 
 		 4: %v_16[7.1,] %v_18[7.3,] 
 		 5: 
-		 6: %self->params %self[3.10,] 
-		 7: %v_19[7.6,] 
-		 8: %v_20[7.7,] 
-		 9: %self[3.10,] %v_21[7.8,] @login[] 
-		 10: %v_21[7.8,] 
+		 6: def_%v_19 %self->params %self[7.1,7.3,3.10,] 
+		 7: def_%v_20 %v_19[7.6,] 
+		 8: def_%v_21 %v_20[7.7,] 
+		 9: %self[7.1,7.3,7.6,3.10,] %v_21[7.8,] @login[] 
+		 10: def_%v_15 %v_21[7.8,] 
 BB 8
 	outgoing: 9 
-	datadep: 3 3 3 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[3.10,] 
-CLOSURE BEGIN: @login[7.9,] 
+		 1: def_%v_22 %self[3.10,] %self[3.10,] 
+CLOSURE BEGIN: %self[3.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -116,28 +116,28 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->this_blog %self[2.0,] 
-		 2: %cl_1_3->blog_name %cl_1_3[3.1,] 
-		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_1_6[3.4,] 
-		 6: %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_7[3.5,] 
+		 1: def_%cl_1_3 %self->this_blog %self[2.0,] 
+		 2: def_%cl_1_4 %cl_1_3->blog_name %cl_1_3[3.1,] 
+		 3: def_%cl_1_5 
+		 4: def_%cl_1_6 
+		 5: def_%cl_1_7 %self->t %self[3.1,2.0,] %cl_1_6[3.4,] 
+		 6: def_%cl_1_8 %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_7[3.5,] 
 		 7: RETURN %cl_1_8[3.6,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_9[4.0,] 
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[4.0,] 
 		 2: RETURN %cl_1_10[4.1,] 
 BB 6
 	outgoing: 
@@ -145,10 +145,10 @@ BB 6
 	instructions:
 CLOSURE END
 		 2: 
-		 3: 
-		 4: %v_23[8.3,] 
-		 5: %v_24[8.4,] %self[3.10,] 
-CLOSURE BEGIN: @login[7.9,] 
+		 3: def_%v_23 
+		 4: def_%v_24 %v_23[8.3,] 
+		 5: def_%v_25 %self[3.10,] %v_24[8.4,] %self[3.10,] 
+CLOSURE BEGIN: %self[3.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -157,46 +157,46 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: 
-		 3: %self->t %self[2.0,] %cl_2_4[3.2,] 
-		 4: 
-		 5: %cl_2_3[3.1,] %cl_2_5[3.3,] %cl_2_6[3.4,] 
-		 6: %self->text_field %self[2.0,] %cl_2_7[3.5,] 
+		 1: def_%cl_2_3 
+		 2: def_%cl_2_4 
+		 3: def_%cl_2_5 %self->t %self[2.0,] %cl_2_4[3.2,] 
+		 4: def_%cl_2_6 
+		 5: def_%cl_2_7 %cl_2_3[3.1,] %cl_2_5[3.3,] %cl_2_6[3.4,] 
+		 6: def_%cl_2_8 %self->text_field %self[3.3,2.0,] %cl_2_7[3.5,] 
 		 7: 
-		 8: 
-		 9: 
-		 10: %self->t %self[2.0,] %cl_2_10[3.9,] 
-		 11: %cl_2_11[3.10,] %cl_2_9[3.8,] 
-		 12: %self->password_field %self[2.0,] %cl_2_12[3.11,] 
+		 8: def_%cl_2_9 
+		 9: def_%cl_2_10 
+		 10: def_%cl_2_11 %self->t %self[3.3,3.6,2.0,] %cl_2_10[3.9,] 
+		 11: def_%cl_2_12 %cl_2_9[3.8,] %cl_2_11[3.10,] 
+		 12: def_%cl_2_13 %self->password_field %self[3.3,3.6,3.10,2.0,] %cl_2_12[3.11,] 
 		 13: 
-		 14: 
-		 15: %self->check_box_tag %self[2.0,] %cl_2_14[3.14,] 
+		 14: def_%cl_2_14 
+		 15: def_%cl_2_15 %self->check_box_tag %self[3.3,3.6,3.10,3.12,2.0,] %cl_2_14[3.14,] 
 		 16: 
-		 17: 
-		 18: %self->t %cl_2_16[3.17,] %self[2.0,] 
+		 17: def_%cl_2_16 
+		 18: def_%cl_2_17 %self->t %self[3.3,3.6,3.10,3.12,3.15,2.0,] %cl_2_16[3.17,] 
 		 19: 
-		 20: 
-		 21: %self->t %self[2.0,] %cl_2_18[3.20,] 
-		 22: 
-		 23: %cl_2_20[3.22,] 
-		 24: %self->submit_tag %self[2.0,] %cl_2_19[3.21,] %cl_2_21[3.23,] 
+		 20: def_%cl_2_18 
+		 21: def_%cl_2_19 %self->t %self[3.3,3.6,3.10,3.12,3.15,3.18,2.0,] %cl_2_18[3.20,] 
+		 22: def_%cl_2_20 
+		 23: def_%cl_2_21 %cl_2_20[3.22,] 
+		 24: def_%cl_2_22 %self->submit_tag %self[3.3,3.6,3.10,3.12,3.15,3.18,3.21,2.0,] %cl_2_19[3.21,] %cl_2_21[3.23,] 
 		 25: RETURN %cl_2_22[3.24,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_23[4.0,] 
+		 0: def_%cl_2_23 
+		 1: def_%cl_2_24 %cl_2_23[4.0,] 
 		 2: RETURN %cl_2_24[4.1,] 
 BB 6
 	outgoing: 
@@ -204,8 +204,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 6: 
-		 7: %self[3.10,] 
-CLOSURE BEGIN: @login[7.9,] 
+		 7: def_%v_26 %self[3.10,] %self[3.10,] 
+CLOSURE BEGIN: %self[3.10,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -214,61 +214,61 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 5 7 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %cl_3_3[3.1,] 
-		 3: 
-		 4: %cl_3_5[3.3,] 
-		 5: %self->link_to %self[2.0,] %cl_3_4[3.2,] %cl_3_6[3.4,] 
+		 1: def_%cl_3_3 
+		 2: def_%cl_3_4 %self->t %self[2.0,] %cl_3_3[3.1,] 
+		 3: def_%cl_3_5 
+		 4: def_%cl_3_6 %cl_3_5[3.3,] 
+		 5: def_%cl_3_7 %self->link_to %self[3.2,2.0,] %cl_3_4[3.2,] %cl_3_6[3.4,] 
 		 6: 
-		 7: %self->this_blog %self[2.0,] 
-		 8: %cl_3_8->allow_signup? %cl_3_8[3.7,] 
+		 7: def_%cl_3_8 %self->this_blog %self[3.2,3.5,2.0,] 
+		 8: def_%cl_3_9 %cl_3_8->allow_signup? %cl_3_8[3.7,] 
 		 9: BRANCH %cl_3_9[3.8,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %cl_3_10[4.1,] 
-		 3: 
-		 4: %cl_3_12[4.3,] 
-		 5: %self->link_to %self[2.0,] %cl_3_13[4.4,] %cl_3_11[4.2,] 
+		 1: def_%cl_3_10 
+		 2: def_%cl_3_11 %self->t %self[2.0,] %cl_3_10[4.1,] 
+		 3: def_%cl_3_12 
+		 4: def_%cl_3_13 %cl_3_12[4.3,] 
+		 5: def_%cl_3_14 %self->link_to %self[4.2,2.0,] %cl_3_11[4.2,] %cl_3_13[4.4,] 
 		 6: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_%cl_3_14 
 BB 6
 	outgoing: 7 9 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->this_blog %self[2.0,] 
-		 3: %cl_3_16->blog_name %cl_3_16[6.2,] 
-		 4: %cl_3_17[6.3,] 
-		 5: %self->t %self[2.0,] %cl_3_15[6.1,] %cl_3_18[6.4,] 
-		 6: %cl_3_19->html_safe %cl_3_19[6.5,] 
-		 7: %self->this_blog %self[2.0,] 
-		 8: %cl_3_21->base_url %cl_3_21[6.7,] 
-		 9: %self->link_to %self[2.0,] %cl_3_20[6.6,] %cl_3_22[6.8,] 
+		 1: def_%cl_3_15 
+		 2: def_%cl_3_16 %self->this_blog %self[2.0,] 
+		 3: def_%cl_3_17 %cl_3_16->blog_name %cl_3_16[6.2,] 
+		 4: def_%cl_3_18 %cl_3_17[6.3,] 
+		 5: def_%cl_3_19 %self->t %self[6.2,2.0,] %cl_3_15[6.1,] %cl_3_18[6.4,] 
+		 6: def_%cl_3_20 %cl_3_19->html_safe %cl_3_19[6.5,] 
+		 7: def_%cl_3_21 %self->this_blog %self[6.2,6.5,2.0,] 
+		 8: def_%cl_3_22 %cl_3_21->base_url %cl_3_21[6.7,] 
+		 9: def_%cl_3_23 %self->link_to %self[6.2,6.5,6.7,2.0,] %cl_3_20[6.6,] %cl_3_22[6.8,] 
 		 10: RETURN %cl_3_23[6.9,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_24[7.0,] 
+		 0: def_%cl_3_24 
+		 1: def_%cl_3_25 %cl_3_24[7.0,] 
 		 2: RETURN %cl_3_25[7.1,] 
 BB 9
 	outgoing: 
@@ -290,92 +290,92 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: (User) 
-		 7: %v_3->count %v_3[2.6,] 
-		 8: %v_4->zero? %v_4[2.7,] 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 %v_3->count %v_3[2.6,] 
+		 8: def_%v_5 %v_4->zero? %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 4 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self->this_blog %self[2.0,] 
-		 1: %v_6->allow_signup %v_6[3.0,] 
-		 2: %v_7[3.1,] 
-		 3: %v_8[3.2,] 
+		 0: def_%v_6 %self->this_blog %self[2.0,] 
+		 1: def_%v_7 %v_6->allow_signup %v_6[3.0,] 
+		 2: def_%v_8 %v_7[3.1,] 
+		 3: def_%v_5 %v_8[3.2,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 3 2 
+	datadep: 
 	instructions:
 		 0: BRANCH %v_5[3.3,2.8,] 
 BB 5
 	outgoing: 8 9 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_9 
 		 1: 
-		 2: (User) 
-		 3: %self->params %self[2.0,] 
-		 4: %v_13[5.3,] 
+		 2: def_%v_12 (User) 
+		 3: def_%v_13 %self->params %self[2.0,] 
+		 4: def_%v_14 %v_13[5.3,] 
 		 5: BRANCH %v_14[5.4,] 
 BB 6
 	outgoing: 17 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->login_accounts_url %self[2.0,] 
-		 2: %self->redirect_to %self[2.0,] %v_10[6.1,] 
+		 1: def_%v_10 %self->login_accounts_url %self[2.0,] 
+		 2: def_%v_11 %self->redirect_to %self[6.1,2.0,] %v_10[6.1,] 
 		 3: 
 		 4: RETURN 
 BB 8
 	outgoing: 10 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self->params %self[2.0,] 
-		 1: %v_15[8.0,] 
-		 2: %v_16->permit! %v_16[8.1,] 
+		 0: def_%v_15 %self->params %self[2.0,] 
+		 1: def_%v_16 %v_15[8.0,] 
+		 2: def_%v_17 %v_16->permit! %v_16[8.1,] 
 		 3: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_17 
 BB 10
 	outgoing: 11 12 
-	datadep: 9 8 5 2 2 
+	datadep: 
 	instructions:
-		 0: %v_12->new %v_17[9.0,8.2,] %v_12[5.2,] 
+		 0: def_%v_18 %v_12->new %v_12[5.2,] %v_17[9.0,8.2,] 
 		 1: %self[2.0,] %v_18[10.0,] @user[] 
 		 2: 
-		 3: %self->request %self[2.0,] 
-		 4: %v_19->post? %v_19[10.3,] 
+		 3: def_%v_19 %self->request %self[2.0,] 
+		 4: def_%v_20 %v_19->post? %v_19[10.3,] 
 		 5: BRANCH %v_20[10.4,] 
 BB 11
 	outgoing: 14 15 
-	datadep: 2 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_21 
 		 1: 
-		 2: %self[2.0,] @user[10.1,] 
-		 3: %v_22->generate_password! %v_22[11.2,] 
+		 2: def_%v_22 %self[2.0,] @user[10.1,] 
+		 3: def_%v_23 %v_22->generate_password! %v_22[11.2,] 
 		 4: 
-		 5: %self->session %self[2.0,] 
-		 6: @user[11.2,] 
-		 7: %v_25->password %v_25[11.6,] 
+		 5: def_%v_24 %self->session %self[2.0,] 
+		 6: def_%v_25 %self[11.5,2.0,] @user[11.2,10.1,] 
+		 7: def_%v_26 %v_25->password %v_25[11.6,] 
 		 8: %v_24[11.5,] %v_26[11.7,] 
 		 9: 
-		 10: @user[11.2,11.6,] 
-		 11: @user[11.2,11.6,11.10,] 
-		 12: %v_28->login %v_28[11.11,] 
-		 13: %v_27[11.10,] %v_29[11.12,] 
+		 10: def_%v_27 %self[11.5,2.0,] @user[11.2,11.6,10.1,] 
+		 11: def_%v_28 %self[11.5,2.0,] @user[11.2,11.6,11.10,10.1,] 
+		 12: def_%v_29 %v_28->login %v_28[11.11,] 
+		 13: ATTRASSIGN %v_27->name %v_27[11.10,] %v_29[11.12,] 
 		 14: 
-		 15: @user[11.2,11.6,11.10,11.11,] 
-		 16: %v_30->save %v_30[11.15,] 
+		 15: def_%v_30 %self[11.5,2.0,] @user[11.2,11.6,11.10,11.11,10.1,] 
+		 16: def_%v_31 %v_30->save %v_30[11.15,] 
 		 17: BRANCH %v_31[11.16,] 
 BB 12
 	outgoing: 17 
@@ -384,29 +384,29 @@ BB 12
 		 0: RETURN 
 BB 14
 	outgoing: 17 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @user[11.2,11.6,11.10,11.11,11.15,] 
-		 2: %self[2.0,] %v_32[14.1,] 
+		 1: def_%v_32 %self[2.0,] @user[11.2,11.6,11.10,11.11,11.15,10.1,] 
+		 2: ATTRASSIGN %self->current_user %self[2.0,] %v_32[14.1,] 
 		 3: 
-		 4: %self->session %self[14.2,] 
-		 5: @user[14.1,] 
-		 6: %v_34->id %v_34[14.5,] 
-		 7: %v_35[14.6,] %v_33[14.4,] 
+		 4: def_%v_33 %self->session %self[14.2,] 
+		 5: def_%v_34 %self[14.2,14.4,] @user[14.1,11.2,11.6,11.10,11.11,11.15,10.1,] 
+		 6: def_%v_35 %v_34->id %v_34[14.5,] 
+		 7: %v_33[14.4,] %v_35[14.6,] 
 		 8: 
-		 9: %self->confirm_accounts_url %self[14.2,] 
-		 10: %self->redirect_to %v_36[14.9,] %self[14.2,] 
+		 9: def_%v_36 %self->confirm_accounts_url %self[14.2,14.4,] 
+		 10: def_%v_37 %self->redirect_to %self[14.2,14.4,14.9,] %v_36[14.9,] 
 		 11: 
 		 12: RETURN 
 BB 15
 	outgoing: 17 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_38 
 		 1: 
-		 2: %self[2.0,] 
-CLOSURE BEGIN: @user[14.1,] 
+		 2: def_%v_39 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -415,28 +415,28 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->this_blog %self[2.0,] 
-		 2: %cl_1_3->blog_name %cl_1_3[3.1,] 
-		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_1_6[3.4,] 
-		 6: %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_7[3.5,] 
+		 1: def_%cl_1_3 %self->this_blog %self[2.0,] 
+		 2: def_%cl_1_4 %cl_1_3->blog_name %cl_1_3[3.1,] 
+		 3: def_%cl_1_5 
+		 4: def_%cl_1_6 
+		 5: def_%cl_1_7 %self->t %self[3.1,2.0,] %cl_1_6[3.4,] 
+		 6: def_%cl_1_8 %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_7[3.5,] 
 		 7: RETURN %cl_1_8[3.6,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_9[4.0,] 
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[4.0,] 
 		 2: RETURN %cl_1_10[4.1,] 
 BB 6
 	outgoing: 
@@ -444,10 +444,10 @@ BB 6
 	instructions:
 CLOSURE END
 		 3: 
-		 4: 
-		 5: %v_40[15.4,] 
-		 6: %self[2.0,] %v_41[15.5,] 
-CLOSURE BEGIN: @user[14.1,] 
+		 4: def_%v_40 
+		 5: def_%v_41 %v_40[15.4,] 
+		 6: def_%v_42 %self[2.0,] %v_41[15.5,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -456,36 +456,36 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: 
-		 3: %self->t %self[2.0,] %cl_2_4[3.2,] 
-		 4: %cl_2_3[3.1,] %cl_2_5[3.3,] 
-		 5: %self->text_field %self[2.0,] %cl_2_6[3.4,] 
+		 1: def_%cl_2_3 
+		 2: def_%cl_2_4 
+		 3: def_%cl_2_5 %self->t %self[2.0,] %cl_2_4[3.2,] 
+		 4: def_%cl_2_6 %cl_2_3[3.1,] %cl_2_5[3.3,] 
+		 5: def_%cl_2_7 %self->text_field %self[3.3,2.0,] %cl_2_6[3.4,] 
 		 6: 
-		 7: 
-		 8: 
-		 9: %self->t %self[2.0,] %cl_2_9[3.8,] 
-		 10: %cl_2_8[3.7,] %cl_2_10[3.9,] 
-		 11: %self->text_field %self[2.0,] %cl_2_11[3.10,] 
+		 7: def_%cl_2_8 
+		 8: def_%cl_2_9 
+		 9: def_%cl_2_10 %self->t %self[3.3,3.5,2.0,] %cl_2_9[3.8,] 
+		 10: def_%cl_2_11 %cl_2_8[3.7,] %cl_2_10[3.9,] 
+		 11: def_%cl_2_12 %self->text_field %self[3.3,3.5,3.9,2.0,] %cl_2_11[3.10,] 
 		 12: 
-		 13: 
-		 14: %self->t %self[2.0,] %cl_2_13[3.13,] 
+		 13: def_%cl_2_13 
+		 14: def_%cl_2_14 %self->t %self[3.3,3.5,3.9,3.11,2.0,] %cl_2_13[3.13,] 
 		 15: RETURN %cl_2_14[3.14,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_15[4.0,] 
+		 0: def_%cl_2_15 
+		 1: def_%cl_2_16 %cl_2_15[4.0,] 
 		 2: RETURN %cl_2_16[4.1,] 
 BB 6
 	outgoing: 
@@ -493,8 +493,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 7: 
-		 8: %self[2.0,] 
-CLOSURE BEGIN: @user[14.1,] 
+		 8: def_%v_43 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -503,43 +503,43 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %cl_3_3[3.1,] 
-		 3: 
-		 4: %cl_3_5[3.3,] 
-		 5: %self->link_to %self[2.0,] %cl_3_4[3.2,] %cl_3_6[3.4,] 
+		 1: def_%cl_3_3 
+		 2: def_%cl_3_4 %self->t %self[2.0,] %cl_3_3[3.1,] 
+		 3: def_%cl_3_5 
+		 4: def_%cl_3_6 %cl_3_5[3.3,] 
+		 5: def_%cl_3_7 %self->link_to %self[3.2,2.0,] %cl_3_4[3.2,] %cl_3_6[3.4,] 
 		 6: 
-		 7: 
-		 8: %self->t %self[2.0,] %cl_3_8[3.7,] 
-		 9: 
-		 10: %cl_3_10[3.9,] 
-		 11: %self->link_to %self[2.0,] %cl_3_9[3.8,] %cl_3_11[3.10,] 
+		 7: def_%cl_3_8 
+		 8: def_%cl_3_9 %self->t %self[3.2,3.5,2.0,] %cl_3_8[3.7,] 
+		 9: def_%cl_3_10 
+		 10: def_%cl_3_11 %cl_3_10[3.9,] 
+		 11: def_%cl_3_12 %self->link_to %self[3.2,3.5,3.8,2.0,] %cl_3_9[3.8,] %cl_3_11[3.10,] 
 		 12: 
-		 13: 
-		 14: %self->this_blog %self[2.0,] 
-		 15: %cl_3_14->blog_name %cl_3_14[3.14,] 
-		 16: %cl_3_15[3.15,] 
-		 17: %self->t %cl_3_16[3.16,] %self[2.0,] %cl_3_13[3.13,] 
-		 18: %cl_3_17->html_safe %cl_3_17[3.17,] 
-		 19: %self->this_blog %self[2.0,] 
-		 20: %cl_3_19->base_url %cl_3_19[3.19,] 
-		 21: %self->link_to %self[2.0,] %cl_3_18[3.18,] %cl_3_20[3.20,] 
+		 13: def_%cl_3_13 
+		 14: def_%cl_3_14 %self->this_blog %self[3.2,3.5,3.8,3.11,2.0,] 
+		 15: def_%cl_3_15 %cl_3_14->blog_name %cl_3_14[3.14,] 
+		 16: def_%cl_3_16 %cl_3_15[3.15,] 
+		 17: def_%cl_3_17 %self->t %self[3.2,3.5,3.8,3.11,3.14,2.0,] %cl_3_13[3.13,] %cl_3_16[3.16,] 
+		 18: def_%cl_3_18 %cl_3_17->html_safe %cl_3_17[3.17,] 
+		 19: def_%cl_3_19 %self->this_blog %self[3.2,3.5,3.8,3.11,3.14,3.17,2.0,] 
+		 20: def_%cl_3_20 %cl_3_19->base_url %cl_3_19[3.19,] 
+		 21: def_%cl_3_21 %self->link_to %self[3.2,3.5,3.8,3.11,3.14,3.17,3.19,2.0,] %cl_3_18[3.18,] %cl_3_20[3.20,] 
 		 22: RETURN %cl_3_21[3.21,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_22[4.0,] 
+		 0: def_%cl_3_22 
+		 1: def_%cl_3_23 %cl_3_22[4.0,] 
 		 2: RETURN %cl_3_23[4.1,] 
 BB 6
 	outgoing: 
@@ -561,35 +561,35 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->request %self[2.0,] 
-		 7: %v_3->post? %v_3[2.6,] 
+		 6: def_%v_3 %self->request %self[2.0,] 
+		 7: def_%v_4 %v_3->post? %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 7 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_5 
 		 1: 
-		 2: (User) 
-		 3: 
-		 4: %self->params %self[2.0,] 
-		 5: %v_8[3.4,] 
-		 6: %v_9[3.5,] 
-		 7: %self->params %self[2.0,] 
-		 8: %v_11[3.7,] 
-		 9: %v_12[3.8,] 
-		 10: %v_6->where %v_13[3.9,] %v_6[3.2,] %v_7[3.3,] %v_10[3.6,] 
-		 11: %v_14->first %v_14[3.10,] 
-		 12: %self[2.0,] %v_15[3.11,] @user[] 
+		 2: def_%v_6 (User) 
+		 3: def_%v_7 
+		 4: def_%v_8 %self->params %self[2.0,] 
+		 5: def_%v_9 %v_8[3.4,] 
+		 6: def_%v_10 %v_9[3.5,] 
+		 7: def_%v_11 %self->params %self[3.4,2.0,] 
+		 8: def_%v_12 %v_11[3.7,] 
+		 9: def_%v_13 %v_12[3.8,] 
+		 10: def_%v_14 %v_6->where %v_6[3.2,] %v_7[3.3,] %v_10[3.6,] %v_13[3.9,] 
+		 11: def_%v_15 %v_14->first %v_14[3.10,] 
+		 12: %self[3.4,3.7,2.0,] %v_15[3.11,] @user[] 
 		 13: 
 		 14: 
-		 15: @user[3.12,] 
+		 15: def_%v_16 %self[3.4,3.7,2.0,] @user[3.12,] 
 		 16: BRANCH %v_16[3.15,] 
 BB 4
 	outgoing: 9 
@@ -598,39 +598,39 @@ BB 4
 		 0: RETURN 
 BB 6
 	outgoing: 8 
-	datadep: 2 2 2 2 2 
+	datadep: 
 	instructions:
-		 0: %self[2.0,] @user[3.12,3.15,] 
-		 1: %v_17->generate_password! %v_17[6.0,] 
+		 0: def_%v_17 %self[2.0,] @user[3.12,3.15,] 
+		 1: def_%v_18 %v_17->generate_password! %v_17[6.0,] 
 		 2: 
-		 3: @user[6.0,] 
-		 4: %v_19->save %v_19[6.3,] 
+		 3: def_%v_19 %self[2.0,] @user[6.0,3.12,3.15,] 
+		 4: def_%v_20 %v_19->save %v_19[6.3,] 
 		 5: 
-		 6: %self->flash %self[2.0,] 
-		 7: 
-		 8: %self->t %self[2.0,] %v_22[6.7,] 
+		 6: def_%v_21 %self->flash %self[2.0,] 
+		 7: def_%v_22 
+		 8: def_%v_23 %self->t %self[6.6,2.0,] %v_22[6.7,] 
 		 9: %v_21[6.6,] %v_23[6.8,] 
 		 10: 
-		 11: %self->login_accounts_url %self[2.0,] 
-		 12: %self->redirect_to %v_24[6.11,] %self[2.0,] 
+		 11: def_%v_24 %self->login_accounts_url %self[6.6,6.8,2.0,] 
+		 12: def_%v_25 %self->redirect_to %self[6.6,6.8,6.11,2.0,] %v_24[6.11,] 
 		 13: 
 BB 7
 	outgoing: 8 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,] 
-		 2: 
-		 3: %self->t %self[2.0,] %v_27[7.2,] 
+		 1: def_%v_26 %self->flash %self[2.0,] 
+		 2: def_%v_27 
+		 3: def_%v_28 %self->t %self[7.1,2.0,] %v_27[7.2,] 
 		 4: %v_26[7.1,] %v_28[7.3,] 
-		 5: %v_28[7.3,] 
+		 5: def_%v_25 %v_28[7.3,] 
 BB 8
 	outgoing: 9 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] 
-CLOSURE BEGIN: @user[6.0,] 
+		 1: def_%v_29 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -639,28 +639,28 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->this_blog %self[2.0,] 
-		 2: %cl_1_3->blog_name %cl_1_3[3.1,] 
-		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_1_6[3.4,] 
-		 6: %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_7[3.5,] 
+		 1: def_%cl_1_3 %self->this_blog %self[2.0,] 
+		 2: def_%cl_1_4 %cl_1_3->blog_name %cl_1_3[3.1,] 
+		 3: def_%cl_1_5 
+		 4: def_%cl_1_6 
+		 5: def_%cl_1_7 %self->t %self[3.1,2.0,] %cl_1_6[3.4,] 
+		 6: def_%cl_1_8 %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_7[3.5,] 
 		 7: RETURN %cl_1_8[3.6,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_9[4.0,] 
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[4.0,] 
 		 2: RETURN %cl_1_10[4.1,] 
 BB 6
 	outgoing: 
@@ -668,10 +668,10 @@ BB 6
 	instructions:
 CLOSURE END
 		 2: 
-		 3: 
-		 4: %v_30[8.3,] 
-		 5: %self[2.0,] %v_31[8.4,] 
-CLOSURE BEGIN: @user[6.0,] 
+		 3: def_%v_30 
+		 4: def_%v_31 %v_30[8.3,] 
+		 5: def_%v_32 %self[2.0,] %v_31[8.4,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -680,33 +680,33 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: 
-		 3: %self->t %self[2.0,] %cl_2_4[3.2,] 
-		 4: %cl_2_3[3.1,] %cl_2_5[3.3,] 
-		 5: %self->text_field %self[2.0,] %cl_2_6[3.4,] 
+		 1: def_%cl_2_3 
+		 2: def_%cl_2_4 
+		 3: def_%cl_2_5 %self->t %self[2.0,] %cl_2_4[3.2,] 
+		 4: def_%cl_2_6 %cl_2_3[3.1,] %cl_2_5[3.3,] 
+		 5: def_%cl_2_7 %self->text_field %self[3.3,2.0,] %cl_2_6[3.4,] 
 		 6: 
-		 7: 
-		 8: %self->t %self[2.0,] %cl_2_8[3.7,] 
-		 9: 
-		 10: %cl_2_10[3.9,] 
-		 11: %self->submit_tag %self[2.0,] %cl_2_11[3.10,] %cl_2_9[3.8,] 
+		 7: def_%cl_2_8 
+		 8: def_%cl_2_9 %self->t %self[3.3,3.5,2.0,] %cl_2_8[3.7,] 
+		 9: def_%cl_2_10 
+		 10: def_%cl_2_11 %cl_2_10[3.9,] 
+		 11: def_%cl_2_12 %self->submit_tag %self[3.3,3.5,3.8,2.0,] %cl_2_9[3.8,] %cl_2_11[3.10,] 
 		 12: RETURN %cl_2_12[3.11,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_13[4.0,] 
+		 0: def_%cl_2_13 
+		 1: def_%cl_2_14 %cl_2_13[4.0,] 
 		 2: RETURN %cl_2_14[4.1,] 
 BB 6
 	outgoing: 
@@ -714,8 +714,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 6: 
-		 7: %self[2.0,] 
-CLOSURE BEGIN: @user[6.0,] 
+		 7: def_%v_33 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -724,61 +724,61 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 BB 3
 	outgoing: 4 5 7 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %cl_3_3[3.1,] 
-		 3: 
-		 4: %cl_3_5[3.3,] 
-		 5: %self->link_to %self[2.0,] %cl_3_4[3.2,] %cl_3_6[3.4,] 
+		 1: def_%cl_3_3 
+		 2: def_%cl_3_4 %self->t %self[2.0,] %cl_3_3[3.1,] 
+		 3: def_%cl_3_5 
+		 4: def_%cl_3_6 %cl_3_5[3.3,] 
+		 5: def_%cl_3_7 %self->link_to %self[3.2,2.0,] %cl_3_4[3.2,] %cl_3_6[3.4,] 
 		 6: 
-		 7: %self->this_blog %self[2.0,] 
-		 8: %cl_3_8->allow_signup? %cl_3_8[3.7,] 
+		 7: def_%cl_3_8 %self->this_blog %self[3.2,3.5,2.0,] 
+		 8: def_%cl_3_9 %cl_3_8->allow_signup? %cl_3_8[3.7,] 
 		 9: BRANCH %cl_3_9[3.8,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %cl_3_10[4.1,] 
-		 3: 
-		 4: %cl_3_12[4.3,] 
-		 5: %self->link_to %self[2.0,] %cl_3_13[4.4,] %cl_3_11[4.2,] 
+		 1: def_%cl_3_10 
+		 2: def_%cl_3_11 %self->t %self[2.0,] %cl_3_10[4.1,] 
+		 3: def_%cl_3_12 
+		 4: def_%cl_3_13 %cl_3_12[4.3,] 
+		 5: def_%cl_3_14 %self->link_to %self[4.2,2.0,] %cl_3_11[4.2,] %cl_3_13[4.4,] 
 		 6: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_%cl_3_14 
 BB 6
 	outgoing: 7 9 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->this_blog %self[2.0,] 
-		 3: %cl_3_16->blog_name %cl_3_16[6.2,] 
-		 4: %cl_3_17[6.3,] 
-		 5: %self->t %self[2.0,] %cl_3_15[6.1,] %cl_3_18[6.4,] 
-		 6: %cl_3_19->html_safe %cl_3_19[6.5,] 
-		 7: %self->this_blog %self[2.0,] 
-		 8: %cl_3_21->base_url %cl_3_21[6.7,] 
-		 9: %self->link_to %self[2.0,] %cl_3_20[6.6,] %cl_3_22[6.8,] 
+		 1: def_%cl_3_15 
+		 2: def_%cl_3_16 %self->this_blog %self[2.0,] 
+		 3: def_%cl_3_17 %cl_3_16->blog_name %cl_3_16[6.2,] 
+		 4: def_%cl_3_18 %cl_3_17[6.3,] 
+		 5: def_%cl_3_19 %self->t %self[6.2,2.0,] %cl_3_15[6.1,] %cl_3_18[6.4,] 
+		 6: def_%cl_3_20 %cl_3_19->html_safe %cl_3_19[6.5,] 
+		 7: def_%cl_3_21 %self->this_blog %self[6.2,6.5,2.0,] 
+		 8: def_%cl_3_22 %cl_3_21->base_url %cl_3_21[6.7,] 
+		 9: def_%cl_3_23 %self->link_to %self[6.2,6.5,6.7,2.0,] %cl_3_20[6.6,] %cl_3_22[6.8,] 
 		 10: RETURN %cl_3_23[6.9,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_24[7.0,] 
+		 0: def_%cl_3_24 
+		 1: def_%cl_3_25 %cl_3_24[7.0,] 
 		 2: RETURN %cl_3_25[7.1,] 
 BB 9
 	outgoing: 
@@ -800,33 +800,33 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->flash %self[2.0,] 
-		 7: 
-		 8: %self->t %self[2.0,] %v_4[2.7,] 
-		 9: %v_5[2.8,] %v_3[2.6,] 
+		 6: def_%v_3 %self->flash %self[2.0,] 
+		 7: def_%v_4 
+		 8: def_%v_5 %self->t %self[2.0,2.6,] %v_4[2.7,] 
+		 9: %v_3[2.6,] %v_5[2.8,] 
 		 10: 
-		 11: %self->current_user %self[2.0,] 
-		 12: %v_6->forget_me %v_6[2.11,] 
+		 11: def_%v_6 %self->current_user %self[2.0,2.6,2.8,] 
+		 12: def_%v_7 %v_6->forget_me %v_6[2.11,] 
 		 13: 
-		 14: %self[2.0,] 
+		 14: ATTRASSIGN %self->current_user %self[2.0,2.6,2.8,2.11,] 
 		 15: 
-		 16: %self->session %self[2.0,2.14,] 
+		 16: def_%v_8 %self->session %self[2.0,2.6,2.8,2.11,2.14,] 
 		 17: %v_8[2.16,] 
 		 18: 
-		 19: %self->cookies %self[2.0,2.14,] 
-		 20: %v_9->delete %v_9[2.19,] 
+		 19: def_%v_9 %self->cookies %self[2.0,2.6,2.8,2.11,2.14,2.16,] 
+		 20: def_%v_10 %v_9->delete %v_9[2.19,] 
 		 21: 
-		 22: %self->cookies %self[2.0,2.14,] 
-		 23: %v_11->delete %v_11[2.22,] 
+		 22: def_%v_11 %self->cookies %self[2.0,2.6,2.8,2.11,2.14,2.16,2.19,] 
+		 23: def_%v_12 %v_11->delete %v_11[2.22,] 
 		 24: 
-		 25: %self->login_accounts_url %self[2.0,2.14,] 
-		 26: %self->redirect_to %v_13[2.25,] %self[2.0,2.14,] 
+		 25: def_%v_13 %self->login_accounts_url %self[2.0,2.6,2.8,2.11,2.14,2.16,2.19,2.22,] 
+		 26: def_%v_14 %self->redirect_to %self[2.0,2.6,2.8,2.11,2.14,2.16,2.19,2.22,2.25,] %v_13[2.25,] 
 		 27: RETURN %v_14[2.26,] 
 BB 3
 	outgoing: 
@@ -842,30 +842,30 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: (User) 
-		 7: %v_3->count %v_3[2.6,] 
-		 8: %v_4[2.7,] 
+		 6: def_%v_3 (User) 
+		 7: def_%v_4 %v_3->count %v_3[2.6,] 
+		 8: def_%v_5 %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 5 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: %v_6[3.0,] %v_7[3.1,] 
-		 3: %self->redirect_to %self[2.0,] %v_8[3.2,] 
+		 0: def_%v_6 
+		 1: def_%v_7 
+		 2: def_%v_8 %v_6[3.0,] %v_7[3.1,] 
+		 3: def_%v_9 %self->redirect_to %self[2.0,] %v_8[3.2,] 
 		 4: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_9 
 BB 5
 	outgoing: 6 
 	datadep: 
@@ -886,29 +886,29 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->this_blog %self[2.0,] 
-		 7: %v_3->configured? %v_3[2.6,] 
+		 6: def_%v_3 %self->this_blog %self[2.0,] 
+		 7: def_%v_4 %v_3->configured? %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_5 
 		 1: RETURN %v_5[3.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: %v_6[4.0,] %v_7[4.1,] 
-		 3: %self->redirect_to %self[2.0,] %v_8[4.2,] 
+		 0: def_%v_6 
+		 1: def_%v_7 
+		 2: def_%v_8 %v_6[4.0,] %v_7[4.1,] 
+		 3: def_%v_9 %self->redirect_to %self[2.0,] %v_8[4.2,] 
 		 4: RETURN %v_9[4.3,] 
 BB 6
 	outgoing: 
@@ -924,36 +924,36 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->session %self[2.0,] 
-		 7: %v_3[2.6,] 
+		 6: def_%v_3 %self->session %self[2.0,] 
+		 7: def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 4 
-	datadep: 2 2 
+	datadep: 
 	instructions:
-		 0: %self->session %self[2.0,] 
-		 1: %v_5[3.0,] 
-		 2: %self->current_user %self[2.0,] 
-		 3: %v_7->id %v_7[3.2,] 
-		 4: %v_8[3.3,] %v_6[3.1,] 
-		 5: %v_9[3.4,] 
+		 0: def_%v_5 %self->session %self[2.0,] 
+		 1: def_%v_6 %v_5[3.0,] 
+		 2: def_%v_7 %self->current_user %self[3.0,2.0,] 
+		 3: def_%v_8 %v_7->id %v_7[3.2,] 
+		 4: def_%v_9 %v_6[3.1,] %v_8[3.3,] 
+		 5: def_%v_4 %v_9[3.4,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 3 2 
+	datadep: 
 	instructions:
 		 0: BRANCH %v_4[3.5,2.7,] 
 BB 5
 	outgoing: 8 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->redirect_back_or_default %self[2.0,] 
+		 1: def_%v_10 %self->redirect_back_or_default %self[2.0,] 
 		 2: RETURN %v_10[5.1,] 
 BB 6
 	outgoing: 8 
@@ -974,80 +974,80 @@ BB 2
 	outgoing: 3 7 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->session %self[2.0,] 
-		 7: %self->current_user %self[2.0,] 
-		 8: %v_4->id %v_4[2.7,] 
-		 9: %v_5[2.8,] %v_3[2.6,] 
+		 6: def_%v_3 %self->session %self[2.0,] 
+		 7: def_%v_4 %self->current_user %self[2.0,2.6,] 
+		 8: def_%v_5 %v_4->id %v_4[2.7,] 
+		 9: %v_3[2.6,] %v_5[2.8,] 
 		 10: 
-		 11: %self->params %self[2.0,] 
-		 12: %v_6[2.11,] 
-		 13: 
-		 14: %v_8[2.13,] %v_7[2.12,] 
+		 11: def_%v_6 %self->params %self[2.0,2.6,2.7,] 
+		 12: def_%v_7 %v_6[2.11,] 
+		 13: def_%v_8 
+		 14: def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
 	outgoing: 4 5 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->current_user %self[2.0,] 
-		 2: %v_10->remember_token? %v_10[3.1,] 
+		 1: def_%v_10 %self->current_user %self[2.0,] 
+		 2: def_%v_11 %v_10->remember_token? %v_10[3.1,] 
 		 3: BRANCH %v_11[3.2,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_12 
 		 1: 
 BB 5
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self->current_user %self[2.0,] 
-		 1: %v_13->remember_me %v_13[5.0,] 
-		 2: %v_14[5.1,] 
+		 0: def_%v_13 %self->current_user %self[2.0,] 
+		 1: def_%v_14 %v_13->remember_me %v_13[5.0,] 
+		 2: def_%v_12 %v_14[5.1,] 
 BB 6
 	outgoing: 8 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->cookies %self[2.0,] 
-		 2: %self->current_user %self[2.0,] 
-		 3: %v_16->remember_token %v_16[6.2,] 
-		 4: %self->current_user %self[2.0,] 
-		 5: %v_18->remember_token_expires_at %v_18[6.4,] 
-		 6: %v_17[6.3,] %v_19[6.5,] 
+		 1: def_%v_15 %self->cookies %self[2.0,] 
+		 2: def_%v_16 %self->current_user %self[6.1,2.0,] 
+		 3: def_%v_17 %v_16->remember_token %v_16[6.2,] 
+		 4: def_%v_18 %self->current_user %self[6.1,6.2,2.0,] 
+		 5: def_%v_19 %v_18->remember_token_expires_at %v_18[6.4,] 
+		 6: def_%v_20 %v_17[6.3,] %v_19[6.5,] 
 		 7: %v_15[6.1,] %v_20[6.6,] 
 		 8: 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_%v_20 
 BB 8
 	outgoing: 9 
-	datadep: 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->current_user %self[2.0,] 
-		 2: %v_21->profile_label %v_21[8.1,] 
-		 3: 
-		 4: %self->add_to_cookies %self[2.0,] %v_22[8.2,] %v_23[8.3,] 
+		 1: def_%v_21 %self->current_user %self[2.0,] 
+		 2: def_%v_22 %v_21->profile_label %v_21[8.1,] 
+		 3: def_%v_23 
+		 4: def_%v_24 %self->add_to_cookies %self[8.1,2.0,] %v_22[8.2,] %v_23[8.3,] 
 		 5: 
-		 6: %self->current_user %self[2.0,] 
-		 7: %v_25->update_connection_time %v_25[8.6,] 
+		 6: def_%v_25 %self->current_user %self[8.1,8.4,2.0,] 
+		 7: def_%v_26 %v_25->update_connection_time %v_25[8.6,] 
 		 8: 
-		 9: %self->flash %self[2.0,] 
-		 10: 
-		 11: %self->t %self[2.0,] %v_28[8.10,] 
+		 9: def_%v_27 %self->flash %self[8.1,8.4,8.6,2.0,] 
+		 10: def_%v_28 
+		 11: def_%v_29 %self->t %self[8.1,8.4,8.6,8.9,2.0,] %v_28[8.10,] 
 		 12: %v_27[8.9,] %v_29[8.11,] 
 		 13: 
-		 14: %self->redirect_back_or_default %self[2.0,] 
+		 14: def_%v_30 %self->redirect_back_or_default %self[8.1,8.4,8.6,8.9,8.11,2.0,] 
 		 15: RETURN %v_30[8.14,] 
 BB 9
 	outgoing: 
@@ -1063,30 +1063,30 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->session %self[2.0,] 
-		 7: %v_3[2.6,] 
+		 6: def_%v_3 %self->session %self[2.0,] 
+		 7: def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: %v_5[3.0,] %v_6[3.1,] 
-		 3: %v_7[3.2,] 
+		 0: def_%v_5 
+		 1: def_%v_6 
+		 2: def_%v_7 %v_5[3.0,] %v_6[3.1,] 
+		 3: def_%v_4 %v_7[3.2,] 
 BB 4
 	outgoing: 5 
-	datadep: 2 3 2 2 
+	datadep: 
 	instructions:
-		 0: %self->redirect_to %self[2.0,] %v_4[3.3,2.7,] 
+		 0: def_%v_8 %self->redirect_to %self[2.0,] %v_4[3.3,2.7,] 
 		 1: 
-		 2: %self->session %self[2.0,] 
+		 2: def_%v_9 %self->session %self[4.0,2.0,] 
 		 3: %v_9[4.2,] 
 		 4: RETURN 
 BB 5
