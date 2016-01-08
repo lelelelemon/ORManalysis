@@ -41,6 +41,13 @@ class Instruction
 		@f_tag = 0
 		@bb = nil
 		@inode = nil
+		@defv = nil
+	end
+	def setDefv(d)
+		@defv = d
+	end
+	def getDefv
+		@defv
 	end
 	def setFromUserInput
 		@from_user_input = true

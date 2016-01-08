@@ -11,7 +11,8 @@ $query_depends_on_cflow = Array.new
 #forward
 $query_determines_cflow = Array.new
 
-def traceback_data_dep(cur_node, wihtin_bb=true)
+def traceback_data_dep(cur_node, stop_at_query=false)
+	@dep_array = Array.new
 	@node_list = Array.new
 	@node_list.push(cur_node)
 	while @node_list.length > 0 do
@@ -19,18 +20,87 @@ def traceback_data_dep(cur_node, wihtin_bb=true)
 		node.getBackwardEdges.each do |e|
 			if e.getFromNode != nil and e.getToNode != nil
 				if e.getFromNode.isQuery?
-					return e.getFromNode	
+					@dep_array.push(e.getFromNode)
+					if stop_at_query
+						return e.getFromNode
+					end	
 				else
 					#test is both nodes are in the same basic block, prevent from tracing too far
 					#if e.getFromNode.getInstr.getBB == node.getInstr.getBB
-					if @node_list.include?(e.getFromNode) == false
+					if @node_list.include?(e.getFromNode) == false and @dep_array.include?(e.getFromNode) == false
+						@dep_array.push(e.getFromNode)
 						@node_list.push(e.getFromNode)
 					end
+				end
+			elsif e.getFromNode == nil and e.getToNode != nil
+				#TODO: this is a bit annoying... if the type in @dep_array is Edge, then it is user input, otherwise other instruction nodes
+				@dep_array.push(e)
+			end
+		end
+	end
+	if stop_at_query
+		return nil
+	else
+		return @dep_array
+	end
+end
+
+#for a query, if it is like the form v = Vote.where(...)
+#Given the query instruction Vote.where
+#return the assign instruction v =
+#so that we can know the result of the query is put into the variable v
+#Or it can be like if Vote.where(...)
+#Stops at a nearest var define or branch instr
+#TODO: any other possiblilities?
+def find_nearest_var(cur_node)
+	@node_list = Array.new
+	@node_list.push(cur_node)
+	@traversed = Array.new
+	while @node_list.length > 0 do
+		node = @node_list.pop
+		@traversed.push(node)
+		node.getDataflowEdges.each do |e|
+			if e.getToNode.getInstr.getDefv != nil
+				return e.getToNode
+			elsif e.getToNode.isBranch?
+				return e.getToNode
+			else
+				if @node_list.include?(e.getToNode) == false and @traversed.include?(e.getToNode) == false
+					@node_list.push(e.getToNode)
 				end
 			end
 		end
 	end
 	return nil
+end
+
+def traceforward_data_dep(cur_node, query_node)
+	@traversed = Array.new
+	@node_list = Array.new
+	@node_list.push(cur_node)
+	while @node_list.length > 0 do
+		node = @node_list.pop
+		@traversed.push(node)
+		node.getDataflowEdges.each do |e|
+			#e.getToNode will never be nil
+			if e.getToNode.isField?
+				#check caller name matches
+				var_name = e.getToNode.getInstr.getCallHandler.getObjName
+				f_name = e.getToNode.getInstr.getCallHandler.getFuncName
+				puts "\t* Field #{var_name} . #{f_name} is being used"
+				#cur_node must define sth
+				#if cur_node.getDefv == var_name
+					#puts "#{var_name} . #{e.getToNode.getInstr.getCallHandler.getFuncName} from [query] #{query_node.getInstr.toString} is used"
+				#end
+			elsif e.getToNode.isQuery?
+			else
+				if @node_list.include?(e.getToNode) == false and @traversed.include?(e.getToNode) == false
+					@node_list.push(e.getToNode)
+				end	
+			end
+		end
+	end
+	return @traversed
 end
 
 def print_dataflow_graph
@@ -134,7 +204,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				puts "\t\t <- params"
 			end
 		end
-		puts "#{n.getIndex}: #{n.getInstr.toString}"
+		#puts "#{n.getIndex}: #{n.getInstr.toString}"
 	end
 
 	graph_fname = "#{output_dir}/backward_forward.log"
@@ -189,29 +259,35 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				if n.getInView and n.getClosureStack.length == 1
 				else #n.getInView == false or n.getClosureStack.length > 1
 					graph_write($graph_file, " (c)")
-					#n.getClosureStack.each do |cl|
-					#	q = traceback_data_dep(cl)
-					#	if q != nil
-					#		graph_write($graph_file, " [#{q.getLabel}]")
-					#	end
-					#end
 				end
 			end
 			if ["SELECT","GROUP","JOIN"].include?n.getInstr.getCallHandler.getQueryType
 				query_read += 1
+				puts "READ query instr #{n.getIndex}:#{n.getInstr.toString} forward flow:"
+				traceforward_data_dep(n,n).each do |n1|
+					puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
+				end	
 			elsif ["DELETE","UPDATE","INSERT"].include?n.getInstr.getCallHandler.getQueryType
 				query_write += 1
+				#puts "DELETE/UPDATE/INSERT instr #{n.getIndex}:#{n.getInstr.toString} backflow:"
+				#traceback_data_dep(n).each do |n1|
+				#	if n1.instance_of?Edge
+				#		puts "\t--\tFrom user input"
+				#	else
+				#		puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
+				#	end
+				#end
 			end
 			graph_write($graph_file, "\n")
 	
 		elsif n.isField?
 			graph_write($graph_file, "+FIELD+ #{n.getInstr.getCallHandler.caller.getName}.#{n.getInstr.getCallHandler.getField.field_name} (#{n.getInstr.getCallHandler.getField.type})\n")
 			#test call handler same CFG: n.getInstr.getMethodDefCFG
-			puts "Field: #{n.getInstr.getCallHandler.getObjName} . #{n.getInstr.getCallHandler.getFuncName}"
+			#puts "Field: #{n.getInstr.getCallHandler.getObjName} . #{n.getInstr.getCallHandler.getFuncName}"
 		elsif n.isBranch?
-		 	q = traceback_data_dep(n)
+		 	q = traceback_data_dep(n, true)
 			if q != nil
-				puts "Branch depend on query:  #{q.getInstr.getCallHandler.getObjName} . #{q.getInstr.getCallHandler.getFuncName}"
+				#puts "Branch depend on query:  #{q.getInstr.getCallHandler.getObjName} . #{q.getInstr.getCallHandler.getFuncName}"
 			end
 		end
 	end

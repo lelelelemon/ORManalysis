@@ -163,7 +163,7 @@ def handle_single_dataflow_file(item, class_name)
 										else
 											cur_instr = Call_instr.new(fc_array[0], fc_array[1])
 										end
-										if cur_instr.getCaller == "%self" and cur_instr.getFuncname == "params"
+										if cur_instr.getCaller.include?("self") and cur_instr.getFuncname == "params"
 												cur_instr.setFromUserInput
 										end
 										if cur_instr.getFuncname == "ruby_code_from_view"
@@ -205,6 +205,10 @@ def handle_single_dataflow_file(item, class_name)
 												end
 											end
 										end
+					
+									elsif single_attr.index("def_") == 0
+										single_attr.gsub('def_', '')
+										cur_instr.setDefv(single_attr.gsub('def_',''))
 
 									elsif single_attr == "RETURN"
 										cur_instr = Return_instr.new
@@ -213,8 +217,9 @@ def handle_single_dataflow_file(item, class_name)
 										cur_instr = Branch_instr.new
 
 									elsif single_attr == "RECEIVEARG"
+										defv = cur_instr.getDefv
 										cur_instr = ReceiveArg_instr.new
-										cur_instr.var_name = attrs[index+1]
+										cur_instr.var_name = defv
 	
 									elsif single_attr == "ATTRASSIGN"
 										cur_instr = AttrAssign_instr.new("", "")
