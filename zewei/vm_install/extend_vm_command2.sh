@@ -56,3 +56,8 @@ make
 
 sudo make install
 
+cd ..
+
+sudo apt-get install git
+
+sudo gem install yard
