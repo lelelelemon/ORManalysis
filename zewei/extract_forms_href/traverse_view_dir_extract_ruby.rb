@@ -1,4 +1,4 @@
-require "FileUtils"
+require "fileutils"
 
 #ruby traverse_view_dir_extract_ruby.rb extract_ruby.exe views
 
