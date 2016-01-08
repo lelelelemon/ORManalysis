@@ -7,42 +7,42 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
-		 6: 
-		 7: 
+		 5: def_email RECEIVEARG 
+		 6: def_user RECEIVEARG 
+		 7: def_message RECEIVEARG 
 		 8: 
-		 9: email[2.5,] 
-		 10: %self[2.0,] %v_3[2.9,] @recipients[] 
+		 9: def_%v_3 email[2.5,] 
+		 10: ATTRASSIGN %self->@recipients %self[2.0,] %v_3[2.9,] @recipients[] 
 		 11: 
-		 12: user->login user[2.6,] 
-		 13: %self->configatron %self[2.0,] 
-		 14: %v_5->community_name %v_5[2.13,] 
-		 15: %v_4[2.12,] %v_6[2.14,] 
-		 16: %v_7->l %v_7[2.15,] 
-		 17: %v_8[2.16,] 
-		 18: %self[2.0,] %v_9[2.17,] @subject[] 
+		 12: def_%v_4 user->login user[2.6,] 
+		 13: def_%v_5 %self->configatron %self[2.0,] 
+		 14: def_%v_6 %v_5->community_name %v_5[2.13,] 
+		 15: def_%v_7 %v_4[2.12,] %v_6[2.14,] 
+		 16: def_%v_8 %v_7->l %v_7[2.15,] 
+		 17: def_%v_9 %v_8[2.16,] 
+		 18: ATTRASSIGN %self->@subject %self[2.0,2.13,] %v_9[2.17,] @subject[] 
 		 19: 
-		 20: (Time) 
-		 21: %v_10->now %v_10[2.20,] 
-		 22: %self[2.0,] %v_11[2.21,] @sent_on[] 
+		 20: def_%v_10 (Time) 
+		 21: def_%v_11 %v_10->now %v_10[2.20,] 
+		 22: ATTRASSIGN %self->@sent_on %self[2.0,2.13,] %v_11[2.21,] @sent_on[] 
 		 23: 
-		 24: %self[2.0,] user[2.6,] @user[] 
+		 24: ATTRASSIGN %self->@user %self[2.0,2.13,] user[2.6,2.12,] @user[] 
 		 25: 
-		 26: user->invite_code user[2.6,] 
-		 27: %self->signup_by_id_url %self[2.0,] user[2.6,] %v_12[2.26,] 
-		 28: %v_13[2.27,] %self[2.0,] @url[] 
+		 26: def_%v_12 user->invite_code user[2.6,2.12,] 
+		 27: def_%v_13 %self->signup_by_id_url %self[2.0,2.13,] user[2.6,2.12,2.26,] %v_12[2.26,] 
+		 28: ATTRASSIGN %self->@url %self[2.0,2.13,2.27,] %v_13[2.27,] @url[] 
 		 29: 
-		 30: %self[2.0,] message[2.7,] @message[] 
+		 30: ATTRASSIGN %self->@message %self[2.0,2.13,2.27,] message[2.7,] @message[] 
 		 31: 
-		 32: @recipients[2.10,] 
-		 33: @subject[2.18,] 
-		 34: %v_14[2.32,] %v_15[2.33,] 
-		 35: %self->mail %self[2.0,] %v_16[2.34,] 
+		 32: def_%v_14 %self[2.0,2.13,2.27,] @recipients[2.10,] 
+		 33: def_%v_15 %self[2.0,2.13,2.27,] @subject[2.18,] 
+		 34: def_%v_16 %v_14[2.32,] %v_15[2.33,] 
+		 35: def_%v_17 %self->mail %self[2.0,2.13,2.27,] %v_16[2.34,] 
 		 36: RETURN %v_17[2.35,] 
 BB 3
 	outgoing: 
@@ -58,38 +58,38 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_friendship RECEIVEARG 
 		 6: 
-		 7: friendship->friend friendship[2.5,] 
-		 8: %self->setup_email %self[2.0,] %v_3[2.7,] 
+		 7: def_%v_3 friendship->friend friendship[2.5,] 
+		 8: def_%v_4 %self->setup_email %self[2.0,] %v_3[2.7,] 
 		 9: 
-		 10: %self[2.0,] @subject[] 
-		 11: friendship->user friendship[2.5,] 
-		 12: %v_6->login %v_6[2.11,] 
-		 13: %self->configatron %self[2.0,] 
-		 14: %v_8->community_name %v_8[2.13,] 
-		 15: %v_9[2.14,] %v_7[2.12,] 
-		 16: %v_10->l %v_10[2.15,] 
-		 17: %v_11[2.16,] 
-		 18: %v_5[2.10,] %v_12[2.17,] 
-		 19: @subject[2.10,] 
+		 10: def_%v_5 %self[2.0,2.8,] @subject[] 
+		 11: def_%v_6 friendship->user friendship[2.5,2.7,] 
+		 12: def_%v_7 %v_6->login %v_6[2.11,] 
+		 13: def_%v_8 %self->configatron %self[2.0,2.8,] 
+		 14: def_%v_9 %v_8->community_name %v_8[2.13,] 
+		 15: def_%v_10 %v_7[2.12,] %v_9[2.14,] 
+		 16: def_%v_11 %v_10->l %v_10[2.15,] 
+		 17: def_%v_12 %v_11[2.16,] 
+		 18: def_%v_13 %v_5[2.10,] %v_12[2.17,] 
+		 19: ATTRASSIGN %self->@subject %self[2.0,2.8,2.13,] %v_13[2.18,] @subject[2.10,] 
 		 20: 
-		 21: friendship->friend friendship[2.5,] 
-		 22: %self->pending_user_friendships_url %v_14[2.21,] %self[2.0,] 
-		 23: %self[2.0,] %v_15[2.22,] @url[] 
+		 21: def_%v_14 friendship->friend friendship[2.5,2.7,2.11,] 
+		 22: def_%v_15 %self->pending_user_friendships_url %self[2.0,2.8,2.13,] %v_14[2.21,] 
+		 23: ATTRASSIGN %self->@url %self[2.0,2.8,2.13,2.22,] %v_15[2.22,] @url[] 
 		 24: 
-		 25: friendship->user friendship[2.5,] 
-		 26: %self[2.0,] %v_16[2.25,] @requester[] 
+		 25: def_%v_16 friendship->user friendship[2.5,2.7,2.11,2.21,] 
+		 26: ATTRASSIGN %self->@requester %self[2.0,2.8,2.13,2.22,] %v_16[2.25,] @requester[] 
 		 27: 
-		 28: %self[2.0,] @recipients[] 
-		 29: @subject[2.10,2.19,] 
-		 30: %v_17[2.28,] %v_18[2.29,] 
-		 31: %self->mail %self[2.0,] %v_19[2.30,] 
+		 28: def_%v_17 %self[2.0,2.8,2.13,2.22,] @recipients[] 
+		 29: def_%v_18 %self[2.0,2.8,2.13,2.22,] @subject[2.10,2.19,] 
+		 30: def_%v_19 %v_17[2.28,] %v_18[2.29,] 
+		 31: def_%v_20 %self->mail %self[2.0,2.8,2.13,2.22,] %v_19[2.30,] 
 		 32: RETURN %v_20[2.31,] 
 BB 3
 	outgoing: 
@@ -105,36 +105,36 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_friendship RECEIVEARG 
 		 6: 
-		 7: friendship->user friendship[2.5,] 
-		 8: %self->setup_email %self[2.0,] %v_3[2.7,] 
+		 7: def_%v_3 friendship->user friendship[2.5,] 
+		 8: def_%v_4 %self->setup_email %self[2.0,] %v_3[2.7,] 
 		 9: 
-		 10: %self[2.0,] @subject[] 
-		 11: 
-		 12: %v_6[2.11,] 
-		 13: %v_5[2.10,] %v_7[2.12,] 
-		 14: @subject[2.10,] 
+		 10: def_%v_5 %self[2.0,2.8,] @subject[] 
+		 11: def_%v_6 
+		 12: def_%v_7 %v_6[2.11,] 
+		 13: def_%v_8 %v_5[2.10,] %v_7[2.12,] 
+		 14: ATTRASSIGN %self->@subject %self[2.0,2.8,] %v_8[2.13,] @subject[2.10,] 
 		 15: 
-		 16: friendship->user friendship[2.5,] 
-		 17: %self[2.0,] %v_9[2.16,] @requester[] 
+		 16: def_%v_9 friendship->user friendship[2.5,2.7,] 
+		 17: ATTRASSIGN %self->@requester %self[2.0,2.8,] %v_9[2.16,] @requester[] 
 		 18: 
-		 19: friendship->friend friendship[2.5,] 
-		 20: %self[2.0,] %v_10[2.19,] @friend[] 
+		 19: def_%v_10 friendship->friend friendship[2.5,2.7,2.16,] 
+		 20: ATTRASSIGN %self->@friend %self[2.0,2.8,] %v_10[2.19,] @friend[] 
 		 21: 
-		 22: friendship->friend friendship[2.5,] 
-		 23: %self->user_url %self[2.0,] %v_11[2.22,] 
-		 24: %self[2.0,] %v_12[2.23,] @url[] 
+		 22: def_%v_11 friendship->friend friendship[2.5,2.7,2.16,2.19,] 
+		 23: def_%v_12 %self->user_url %self[2.0,2.8,] %v_11[2.22,] 
+		 24: ATTRASSIGN %self->@url %self[2.0,2.8,2.23,] %v_12[2.23,] @url[] 
 		 25: 
-		 26: %self[2.0,] @recipients[] 
-		 27: @subject[2.10,2.14,] 
-		 28: %v_13[2.26,] %v_14[2.27,] 
-		 29: %self->mail %self[2.0,] %v_15[2.28,] 
+		 26: def_%v_13 %self[2.0,2.8,2.23,] @recipients[] 
+		 27: def_%v_14 %self[2.0,2.8,2.23,] @subject[2.10,2.14,] 
+		 28: def_%v_15 %v_13[2.26,] %v_14[2.27,] 
+		 29: def_%v_16 %self->mail %self[2.0,2.8,2.23,] %v_15[2.28,] 
 		 30: RETURN %v_16[2.29,] 
 BB 3
 	outgoing: 
@@ -150,38 +150,38 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_comment RECEIVEARG 
 		 6: 
-		 7: comment->recipient comment[2.5,] 
-		 8: %self->setup_email %self[2.0,] %v_3[2.7,] 
+		 7: def_%v_3 comment->recipient comment[2.5,] 
+		 8: def_%v_4 %self->setup_email %self[2.0,] %v_3[2.7,] 
 		 9: 
-		 10: %self[2.0,] @subject[] 
-		 11: comment->username comment[2.5,] 
-		 12: %self->configatron %self[2.0,] 
-		 13: %v_7->community_name %v_7[2.12,] 
-		 14: %v_8[2.13,] %v_6[2.11,] 
-		 15: %v_9->l %v_9[2.14,] 
-		 16: %v_10[2.15,] 
-		 17: %v_5[2.10,] %v_11[2.16,] 
-		 18: @subject[2.10,] 
+		 10: def_%v_5 %self[2.0,2.8,] @subject[] 
+		 11: def_%v_6 comment->username comment[2.5,2.7,] 
+		 12: def_%v_7 %self->configatron %self[2.0,2.8,] 
+		 13: def_%v_8 %v_7->community_name %v_7[2.12,] 
+		 14: def_%v_9 %v_6[2.11,] %v_8[2.13,] 
+		 15: def_%v_10 %v_9->l %v_9[2.14,] 
+		 16: def_%v_11 %v_10[2.15,] 
+		 17: def_%v_12 %v_5[2.10,] %v_11[2.16,] 
+		 18: ATTRASSIGN %self->@subject %self[2.0,2.8,2.12,] %v_12[2.17,] @subject[2.10,] 
 		 19: 
-		 20: %self->commentable_url %self[2.0,] comment[2.5,] 
-		 21: %v_13[2.20,] %self[2.0,] @url[] 
+		 20: def_%v_13 %self->commentable_url %self[2.0,2.8,2.12,] comment[2.5,2.7,2.11,] 
+		 21: ATTRASSIGN %self->@url %self[2.0,2.8,2.12,2.20,] %v_13[2.20,] @url[] 
 		 22: 
-		 23: %self[2.0,] comment[2.5,] @comment[] 
+		 23: ATTRASSIGN %self->@comment %self[2.0,2.8,2.12,2.20,] comment[2.5,2.7,2.11,] @comment[] 
 		 24: 
-		 25: comment->user comment[2.5,] 
-		 26: %v_14[2.25,] %self[2.0,] @commenter[] 
+		 25: def_%v_14 comment->user comment[2.5,2.7,2.11,] 
+		 26: ATTRASSIGN %self->@commenter %self[2.0,2.8,2.12,2.20,] %v_14[2.25,] @commenter[] 
 		 27: 
-		 28: %self[2.0,] @recipients[] 
-		 29: @subject[2.10,2.18,] 
-		 30: %v_15[2.28,] %v_16[2.29,] 
-		 31: %self->mail %self[2.0,] %v_17[2.30,] 
+		 28: def_%v_15 %self[2.0,2.8,2.12,2.20,] @recipients[] 
+		 29: def_%v_16 %self[2.0,2.8,2.12,2.20,] @subject[2.10,2.18,] 
+		 30: def_%v_17 %v_15[2.28,] %v_16[2.29,] 
+		 31: def_%v_18 %self->mail %self[2.0,2.8,2.12,2.20,] %v_17[2.30,] 
 		 32: RETURN %v_18[2.31,] 
 BB 3
 	outgoing: 
@@ -197,37 +197,37 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
-		 6: 
+		 5: def_user RECEIVEARG 
+		 6: def_comment RECEIVEARG 
 		 7: 
-		 8: %self->setup_email %self[2.0,] user[2.5,] 
+		 8: def_%v_3 %self->setup_email %self[2.0,] user[2.5,] 
 		 9: 
-		 10: %self[2.0,] @subject[] 
-		 11: comment->username comment[2.6,] 
-		 12: comment->commentable_type comment[2.6,] 
-		 13: %v_5[2.11,] %v_6[2.12,] 
-		 14: %v_7->l %v_7[2.13,] 
-		 15: %v_8[2.14,] 
-		 16: %v_4[2.10,] %v_9[2.15,] 
-		 17: @subject[2.10,] 
+		 10: def_%v_4 %self[2.0,2.8,] @subject[] 
+		 11: def_%v_5 comment->username comment[2.6,] 
+		 12: def_%v_6 comment->commentable_type comment[2.6,2.11,] 
+		 13: def_%v_7 %v_5[2.11,] %v_6[2.12,] 
+		 14: def_%v_8 %v_7->l %v_7[2.13,] 
+		 15: def_%v_9 %v_8[2.14,] 
+		 16: def_%v_10 %v_4[2.10,] %v_9[2.15,] 
+		 17: ATTRASSIGN %self->@subject %self[2.0,2.8,] %v_10[2.16,] @subject[2.10,] 
 		 18: 
-		 19: %self->commentable_url %self[2.0,] comment[2.6,] 
-		 20: %self[2.0,] %v_11[2.19,] @url[] 
+		 19: def_%v_11 %self->commentable_url %self[2.0,2.8,] comment[2.6,2.11,2.12,] 
+		 20: ATTRASSIGN %self->@url %self[2.0,2.8,2.19,] %v_11[2.19,] @url[] 
 		 21: 
-		 22: %self[2.0,] comment[2.6,] @comment[] 
+		 22: ATTRASSIGN %self->@comment %self[2.0,2.8,2.19,] comment[2.6,2.11,2.12,] @comment[] 
 		 23: 
-		 24: comment->user comment[2.6,] 
-		 25: %self[2.0,] %v_12[2.24,] @commenter[] 
+		 24: def_%v_12 comment->user comment[2.6,2.11,2.12,] 
+		 25: ATTRASSIGN %self->@commenter %self[2.0,2.8,2.19,] %v_12[2.24,] @commenter[] 
 		 26: 
-		 27: %self[2.0,] @recipients[] 
-		 28: @subject[2.10,2.17,] 
-		 29: %v_13[2.27,] %v_14[2.28,] 
-		 30: %self->mail %self[2.0,] %v_15[2.29,] 
+		 27: def_%v_13 %self[2.0,2.8,2.19,] @recipients[] 
+		 28: def_%v_14 %self[2.0,2.8,2.19,] @subject[2.10,2.17,] 
+		 29: def_%v_15 %v_13[2.27,] %v_14[2.28,] 
+		 30: def_%v_16 %self->mail %self[2.0,2.8,2.19,] %v_15[2.29,] 
 		 31: RETURN %v_16[2.30,] 
 BB 3
 	outgoing: 
@@ -243,56 +243,56 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
-		 6: 
+		 5: def_email RECEIVEARG 
+		 6: def_comment RECEIVEARG 
 		 7: 
-		 8: email[2.5,] 
-		 9: %self[2.0,] %v_3[2.8,] @recipients[] 
+		 8: def_%v_3 email[2.5,] 
+		 9: ATTRASSIGN %self->@recipients %self[2.0,] %v_3[2.8,] @recipients[] 
 		 10: 
-		 11: 
-		 12: %self->configatron %self[2.0,] 
-		 13: %v_5->community_name %v_5[2.12,] 
-		 14: 
-		 15: %v_4[2.11,] %v_6[2.13,] %v_7[2.14,] 
-		 16: %self[2.0,] %v_8[2.15,] @subject[] 
+		 11: def_%v_4 
+		 12: def_%v_5 %self->configatron %self[2.0,] 
+		 13: def_%v_6 %v_5->community_name %v_5[2.12,] 
+		 14: def_%v_7 
+		 15: def_%v_8 %v_4[2.11,] %v_6[2.13,] %v_7[2.14,] 
+		 16: ATTRASSIGN %self->@subject %self[2.0,2.12,] %v_8[2.15,] @subject[] 
 		 17: 
-		 18: (Time) 
-		 19: %v_9->now %v_9[2.18,] 
-		 20: %self[2.0,] %v_10[2.19,] @sent_on[] 
+		 18: def_%v_9 (Time) 
+		 19: def_%v_10 %v_9->now %v_9[2.18,] 
+		 20: ATTRASSIGN %self->@sent_on %self[2.0,2.12,] %v_10[2.19,] @sent_on[] 
 		 21: 
-		 22: @subject[2.16,] 
-		 23: comment->username comment[2.6,] 
-		 24: comment->commentable_type comment[2.6,] 
-		 25: %v_13[2.24,] %v_12[2.23,] 
-		 26: %v_14->l %v_14[2.25,] 
-		 27: %v_15[2.26,] 
-		 28: %v_16[2.27,] %v_11[2.22,] 
-		 29: @subject[2.16,2.22,] 
+		 22: def_%v_11 %self[2.0,2.12,] @subject[2.16,] 
+		 23: def_%v_12 comment->username comment[2.6,] 
+		 24: def_%v_13 comment->commentable_type comment[2.6,2.23,] 
+		 25: def_%v_14 %v_12[2.23,] %v_13[2.24,] 
+		 26: def_%v_15 %v_14->l %v_14[2.25,] 
+		 27: def_%v_16 %v_15[2.26,] 
+		 28: def_%v_17 %v_11[2.22,] %v_16[2.27,] 
+		 29: ATTRASSIGN %self->@subject %self[2.0,2.12,] %v_17[2.28,] @subject[2.16,2.22,] 
 		 30: 
-		 31: %self->commentable_url %self[2.0,] comment[2.6,] 
-		 32: %self[2.0,] %v_18[2.31,] @url[] 
+		 31: def_%v_18 %self->commentable_url %self[2.0,2.12,] comment[2.6,2.23,2.24,] 
+		 32: ATTRASSIGN %self->@url %self[2.0,2.12,2.31,] %v_18[2.31,] @url[] 
 		 33: 
-		 34: %self[2.0,] comment[2.6,] @comment[] 
+		 34: ATTRASSIGN %self->@comment %self[2.0,2.12,2.31,] comment[2.6,2.23,2.24,] @comment[] 
 		 35: 
-		 36: 
-		 37: 
-		 38: comment->commentable_type comment[2.6,] 
-		 39: comment->commentable_id comment[2.6,] 
-		 40: comment->id comment[2.6,] 
-		 41: comment->token_for comment[2.6,] email[2.5,] 
-		 42: %v_24[2.41,] %v_19[2.36,] %v_20[2.37,] %v_21[2.38,] %v_22[2.39,] %v_23[2.40,] email[2.5,] 
-		 43: %self->url_for %v_25[2.42,] %self[2.0,] 
-		 44: %self[2.0,] %v_26[2.43,] @unsubscribe_link[] 
+		 36: def_%v_19 
+		 37: def_%v_20 
+		 38: def_%v_21 comment->commentable_type comment[2.6,2.23,2.24,] 
+		 39: def_%v_22 comment->commentable_id comment[2.6,2.23,2.24,2.38,] 
+		 40: def_%v_23 comment->id comment[2.6,2.23,2.24,2.38,2.39,] 
+		 41: def_%v_24 comment->token_for comment[2.6,2.23,2.24,2.38,2.39,2.40,] email[2.5,] 
+		 42: def_%v_25 %v_19[2.36,] %v_20[2.37,] %v_21[2.38,] %v_22[2.39,] %v_23[2.40,] %v_24[2.41,] email[2.5,] 
+		 43: def_%v_26 %self->url_for %self[2.0,2.12,2.31,] %v_25[2.42,] 
+		 44: ATTRASSIGN %self->@unsubscribe_link %self[2.0,2.12,2.31,2.43,] %v_26[2.43,] @unsubscribe_link[] 
 		 45: 
-		 46: @recipients[2.9,] 
-		 47: @subject[2.16,2.22,2.29,] 
-		 48: %v_27[2.46,] %v_28[2.47,] 
-		 49: %self->mail %self[2.0,] %v_29[2.48,] 
+		 46: def_%v_27 %self[2.0,2.12,2.31,2.43,] @recipients[2.9,] 
+		 47: def_%v_28 %self[2.0,2.12,2.31,2.43,] @subject[2.16,2.22,2.29,] 
+		 48: def_%v_29 %v_27[2.46,] %v_28[2.47,] 
+		 49: def_%v_30 %self->mail %self[2.0,2.12,2.31,2.43,] %v_29[2.48,] 
 		 50: RETURN %v_30[2.49,] 
 BB 3
 	outgoing: 
@@ -308,45 +308,45 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
-		 6: 
+		 5: def_user RECEIVEARG 
+		 6: def_post RECEIVEARG 
 		 7: 
-		 8: %self->setup_email %self[2.0,] user[2.5,] 
+		 8: def_%v_3 %self->setup_email %self[2.0,] user[2.5,] 
 		 9: 
-		 10: %self[2.0,] @subject[] 
-		 11: post->username post[2.6,] 
-		 12: %v_5[2.11,] 
-		 13: %v_6->l %v_6[2.12,] 
-		 14: %v_7[2.13,] 
-		 15: %v_4[2.10,] %v_8[2.14,] 
-		 16: @subject[2.10,] 
+		 10: def_%v_4 %self[2.0,2.8,] @subject[] 
+		 11: def_%v_5 post->username post[2.6,] 
+		 12: def_%v_6 %v_5[2.11,] 
+		 13: def_%v_7 %v_6->l %v_6[2.12,] 
+		 14: def_%v_8 %v_7[2.13,] 
+		 15: def_%v_9 %v_4[2.10,] %v_8[2.14,] 
+		 16: ATTRASSIGN %self->@subject %self[2.0,2.8,] %v_9[2.15,] @subject[2.10,] 
 		 17: 
-		 18: post->topic post[2.6,] 
-		 19: %v_10->forum %v_10[2.18,] 
-		 20: post->topic post[2.6,] 
-		 21: post->topic post[2.6,] 
-		 22: %v_13->last_page %v_13[2.21,] 
-		 23: %v_14[2.22,] %v_11[2.19,] %v_12[2.20,] 
-		 24: %self->forum_topic_url %self[2.0,] %v_15[2.23,] 
-		 25: 
-		 26: post->dom_id post[2.6,] 
-		 27: %v_16[2.24,] %v_17[2.25,] %v_18[2.26,] 
-		 28: %self[2.0,] %v_19[2.27,] @url[] 
+		 18: def_%v_10 post->topic post[2.6,2.11,] 
+		 19: def_%v_11 %v_10->forum %v_10[2.18,] 
+		 20: def_%v_12 post->topic post[2.6,2.11,2.18,] 
+		 21: def_%v_13 post->topic post[2.6,2.11,2.18,2.20,] 
+		 22: def_%v_14 %v_13->last_page %v_13[2.21,] 
+		 23: def_%v_15 %v_11[2.19,] %v_12[2.20,] %v_14[2.22,] 
+		 24: def_%v_16 %self->forum_topic_url %self[2.0,2.8,] %v_15[2.23,] 
+		 25: def_%v_17 
+		 26: def_%v_18 post->dom_id post[2.6,2.11,2.18,2.20,2.21,] 
+		 27: def_%v_19 %v_16[2.24,] %v_17[2.25,] %v_18[2.26,] 
+		 28: ATTRASSIGN %self->@url %self[2.0,2.8,2.24,] %v_19[2.27,] @url[] 
 		 29: 
-		 30: %self[2.0,] post[2.6,] @post[] 
+		 30: ATTRASSIGN %self->@post %self[2.0,2.8,2.24,] post[2.6,2.11,2.18,2.20,2.21,2.26,] @post[] 
 		 31: 
-		 32: post->username post[2.6,] 
-		 33: %self[2.0,] %v_20[2.32,] @author[] 
+		 32: def_%v_20 post->username post[2.6,2.11,2.18,2.20,2.21,2.26,] 
+		 33: ATTRASSIGN %self->@author %self[2.0,2.8,2.24,] %v_20[2.32,] @author[] 
 		 34: 
-		 35: %self[2.0,] @recipients[] 
-		 36: @subject[2.10,2.16,] 
-		 37: %v_21[2.35,] %v_22[2.36,] 
-		 38: %self->mail %self[2.0,] %v_23[2.37,] 
+		 35: def_%v_21 %self[2.0,2.8,2.24,] @recipients[] 
+		 36: def_%v_22 %self[2.0,2.8,2.24,] @subject[2.10,2.16,] 
+		 37: def_%v_23 %v_21[2.35,] %v_22[2.36,] 
+		 38: def_%v_24 %self->mail %self[2.0,2.8,2.24,] %v_23[2.37,] 
 		 39: RETURN %v_24[2.38,] 
 BB 3
 	outgoing: 
@@ -362,35 +362,35 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_user RECEIVEARG 
 		 6: 
-		 7: %self->setup_email %self[2.0,] user[2.5,] 
+		 7: def_%v_3 %self->setup_email %self[2.0,] user[2.5,] 
 		 8: 
-		 9: %self[2.0,] @subject[] 
-		 10: %self->configatron %self[2.0,] 
-		 11: %v_5->community_name %v_5[2.10,] 
-		 12: %v_6[2.11,] 
-		 13: %v_7->l %v_7[2.12,] 
-		 14: %v_8[2.13,] 
-		 15: %v_4[2.9,] %v_9[2.14,] 
-		 16: @subject[2.9,] 
+		 9: def_%v_4 %self[2.0,2.7,] @subject[] 
+		 10: def_%v_5 %self->configatron %self[2.0,2.7,] 
+		 11: def_%v_6 %v_5->community_name %v_5[2.10,] 
+		 12: def_%v_7 %v_6[2.11,] 
+		 13: def_%v_8 %v_7->l %v_7[2.12,] 
+		 14: def_%v_9 %v_8[2.13,] 
+		 15: def_%v_10 %v_4[2.9,] %v_9[2.14,] 
+		 16: ATTRASSIGN %self->@subject %self[2.0,2.7,2.10,] %v_10[2.15,] @subject[2.9,] 
 		 17: 
-		 18: %self->home_url %self[2.0,] 
-		 19: 
-		 20: user->activation_code user[2.5,] 
-		 21: 
-		 22: %v_13[2.20,] %v_14[2.21,] %v_11[2.18,] %v_12[2.19,] 
-		 23: %self[2.0,] %v_15[2.22,] @url[] 
+		 18: def_%v_11 %self->home_url %self[2.0,2.7,2.10,] 
+		 19: def_%v_12 
+		 20: def_%v_13 user->activation_code user[2.5,] 
+		 21: def_%v_14 
+		 22: def_%v_15 %v_11[2.18,] %v_12[2.19,] %v_13[2.20,] %v_14[2.21,] 
+		 23: ATTRASSIGN %self->@url %self[2.0,2.7,2.10,2.18,] %v_15[2.22,] @url[] 
 		 24: 
-		 25: %self[2.0,] @recipients[] 
-		 26: @subject[2.9,2.16,] 
-		 27: %v_16[2.25,] %v_17[2.26,] 
-		 28: %self->mail %self[2.0,] %v_18[2.27,] 
+		 25: def_%v_16 %self[2.0,2.7,2.10,2.18,] @recipients[] 
+		 26: def_%v_17 %self[2.0,2.7,2.10,2.18,] @subject[2.9,2.16,] 
+		 27: def_%v_18 %v_16[2.25,] %v_17[2.26,] 
+		 28: def_%v_19 %self->mail %self[2.0,2.7,2.10,2.18,] %v_18[2.27,] 
 		 29: RETURN %v_19[2.28,] 
 BB 3
 	outgoing: 
@@ -406,31 +406,31 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_message RECEIVEARG 
 		 6: 
-		 7: message->recipient message[2.5,] 
-		 8: %self->setup_email %self[2.0,] %v_3[2.7,] 
+		 7: def_%v_3 message->recipient message[2.5,] 
+		 8: def_%v_4 %self->setup_email %self[2.0,] %v_3[2.7,] 
 		 9: 
-		 10: %self[2.0,] @subject[] 
-		 11: message->sender message[2.5,] 
-		 12: %v_6->login %v_6[2.11,] 
-		 13: %v_7[2.12,] 
-		 14: %v_8->l %v_8[2.13,] 
-		 15: %v_9[2.14,] 
-		 16: %v_5[2.10,] %v_10[2.15,] 
-		 17: @subject[2.10,] 
+		 10: def_%v_5 %self[2.0,2.8,] @subject[] 
+		 11: def_%v_6 message->sender message[2.5,2.7,] 
+		 12: def_%v_7 %v_6->login %v_6[2.11,] 
+		 13: def_%v_8 %v_7[2.12,] 
+		 14: def_%v_9 %v_8->l %v_8[2.13,] 
+		 15: def_%v_10 %v_9[2.14,] 
+		 16: def_%v_11 %v_5[2.10,] %v_10[2.15,] 
+		 17: ATTRASSIGN %self->@subject %self[2.0,2.8,] %v_11[2.16,] @subject[2.10,] 
 		 18: 
-		 19: %self[2.0,] message[2.5,] @message[] 
+		 19: ATTRASSIGN %self->@message %self[2.0,2.8,] message[2.5,2.7,2.11,] @message[] 
 		 20: 
-		 21: %self[2.0,] @recipients[] 
-		 22: @subject[2.10,2.17,] 
-		 23: %v_13[2.22,] %v_12[2.21,] 
-		 24: %self->mail %v_14[2.23,] %self[2.0,] 
+		 21: def_%v_12 %self[2.0,2.8,] @recipients[] 
+		 22: def_%v_13 %self[2.0,2.8,] @subject[2.10,2.17,] 
+		 23: def_%v_14 %v_12[2.21,] %v_13[2.22,] 
+		 24: def_%v_15 %self->mail %self[2.0,2.8,] %v_14[2.23,] 
 		 25: RETURN %v_15[2.24,] 
 BB 3
 	outgoing: 
@@ -446,93 +446,93 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
-		 6: 
-		 7: 
-		 8: 
+		 5: def_name RECEIVEARG 
+		 6: def_email RECEIVEARG 
+		 7: def_post RECEIVEARG 
+		 8: def_message 
 		 9: message[2.8,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_message 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_current_user 
 		 1: current_user[4.0,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
+		 0: def_current_user 
 BB 6
 	outgoing: 7 8 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 5 4 
+	datadep: 
 	instructions:
 		 0: 
-		 1: email[2.6,] 
-		 2: %self[2.0,] %v_3[6.1,] @recipients[] 
+		 1: def_%v_3 email[2.6,] 
+		 2: ATTRASSIGN %self->@recipients %self[2.0,] %v_3[6.1,] @recipients[] 
 		 3: 
-		 4: (Time) 
-		 5: %v_4->now %v_4[6.4,] 
-		 6: %self[2.0,] %v_5[6.5,] @sent_on[] 
+		 4: def_%v_4 (Time) 
+		 5: def_%v_5 %v_4->now %v_4[6.4,] 
+		 6: ATTRASSIGN %self->@sent_on %self[2.0,] %v_5[6.5,] @sent_on[] 
 		 7: 
-		 8: %self->configatron %self[2.0,] 
-		 9: %v_6->community_name %v_6[6.8,] 
-		 10: %v_7[6.9,] 
-		 11: %v_8->l %v_8[6.10,] 
-		 12: %v_9[6.11,] 
-		 13: %self[2.0,] %v_10[6.12,] @subject[] 
+		 8: def_%v_6 %self->configatron %self[2.0,] 
+		 9: def_%v_7 %v_6->community_name %v_6[6.8,] 
+		 10: def_%v_8 %v_7[6.9,] 
+		 11: def_%v_9 %v_8->l %v_8[6.10,] 
+		 12: def_%v_10 %v_9[6.11,] 
+		 13: ATTRASSIGN %self->@subject %self[6.8,2.0,] %v_10[6.12,] @subject[] 
 		 14: 
-		 15: %self[2.0,] name[2.5,] @name[] 
+		 15: ATTRASSIGN %self->@name %self[6.8,2.0,] name[2.5,] @name[] 
 		 16: 
-		 17: post->title post[2.7,] 
-		 18: %self[2.0,] %v_11[6.17,] @title[] 
+		 17: def_%v_11 post->title post[2.7,] 
+		 18: ATTRASSIGN %self->@title %self[6.8,2.0,] %v_11[6.17,] @title[] 
 		 19: 
-		 20: %self[2.0,] post[2.7,] @post[] 
+		 20: ATTRASSIGN %self->@post %self[6.8,2.0,] post[6.17,2.7,] @post[] 
 		 21: 
 		 22: BRANCH current_user[5.0,4.0,] 
 BB 7
 	outgoing: 9 
-	datadep: 5 4 2 5 4 
+	datadep: 
 	instructions:
-		 0: current_user->invite_code current_user[5.0,4.0,] 
-		 1: %self->signup_by_id_url %self[2.0,] current_user[5.0,4.0,] %v_12[7.0,] 
+		 0: def_%v_12 current_user->invite_code current_user[5.0,4.0,] 
+		 1: def_%v_13 %self->signup_by_id_url %self[2.0,] current_user[7.0,5.0,4.0,] %v_12[7.0,] 
 		 2: 
 BB 8
 	outgoing: 9 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self->signup_url %self[2.0,] 
-		 1: %v_14[8.0,] 
+		 0: def_%v_14 %self->signup_url %self[2.0,] 
+		 1: def_%v_13 %v_14[8.0,] 
 BB 9
 	outgoing: 10 
-	datadep: 8 7 2 2 3 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
-		 0: %v_13[8.1,7.1,] %self[2.0,] @signup_link[] 
+		 0: ATTRASSIGN %self->@signup_link %self[2.0,] %v_13[8.1,7.1,] @signup_link[] 
 		 1: 
-		 2: %self[2.0,] message[3.0,2.8,] @message[] 
+		 2: ATTRASSIGN %self->@message %self[2.0,] message[3.0,2.8,] @message[] 
 		 3: 
-		 4: post->user post[2.7,] 
-		 5: %self->user_post_url %self[2.0,] %v_15[9.4,] post[2.7,] 
-		 6: %self[2.0,] %v_16[9.5,] @url[] 
+		 4: def_%v_15 post->user post[2.7,] 
+		 5: def_%v_16 %self->user_post_url %self[2.0,] %v_15[9.4,] post[9.4,2.7,] 
+		 6: ATTRASSIGN %self->@url %self[9.5,2.0,] %v_16[9.5,] @url[] 
 		 7: 
-		 8: post->post post[2.7,] 
-		 9: @url[9.6,] 
-		 10: %self->truncate_words %self[2.0,] %v_17[9.8,] %v_18[9.9,] 
-		 11: %self[2.0,] %v_19[9.10,] @description[] 
+		 8: def_%v_17 post->post post[9.4,2.7,] 
+		 9: def_%v_18 %self[9.5,2.0,] @url[9.6,] 
+		 10: def_%v_19 %self->truncate_words %self[9.5,2.0,] %v_17[9.8,] %v_18[9.9,] 
+		 11: ATTRASSIGN %self->@description %self[9.5,9.10,2.0,] %v_19[9.10,] @description[] 
 		 12: 
-		 13: %self[2.0,] @recipients[6.2,6.2,] 
-		 14: %self[2.0,] @subject[6.13,6.13,] 
-		 15: %v_20[9.13,] %v_21[9.14,] 
-		 16: %self->mail %self[2.0,] %v_22[9.15,] 
+		 13: def_%v_20 %self[9.5,9.10,2.0,] @recipients[6.2,] 
+		 14: def_%v_21 %self[9.5,9.10,2.0,] @subject[6.13,] 
+		 15: def_%v_22 %v_20[9.13,] %v_21[9.14,] 
+		 16: def_%v_23 %self->mail %self[9.5,9.10,2.0,] %v_22[9.15,] 
 		 17: RETURN %v_23[9.16,] 
 BB 10
 	outgoing: 
@@ -548,31 +548,31 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_user RECEIVEARG 
 		 6: 
-		 7: %self->setup_email %self[2.0,] user[2.5,] 
+		 7: def_%v_3 %self->setup_email %self[2.0,] user[2.5,] 
 		 8: 
-		 9: %self[2.0,] @subject[] 
-		 10: %self->configatron %self[2.0,] 
-		 11: %v_5->community_name %v_5[2.10,] 
-		 12: %v_6[2.11,] 
-		 13: %v_7->l %v_7[2.12,] 
-		 14: %v_8[2.13,] 
-		 15: %v_4[2.9,] %v_9[2.14,] 
-		 16: @subject[2.9,] 
+		 9: def_%v_4 %self[2.0,2.7,] @subject[] 
+		 10: def_%v_5 %self->configatron %self[2.0,2.7,] 
+		 11: def_%v_6 %v_5->community_name %v_5[2.10,] 
+		 12: def_%v_7 %v_6[2.11,] 
+		 13: def_%v_8 %v_7->l %v_7[2.12,] 
+		 14: def_%v_9 %v_8[2.13,] 
+		 15: def_%v_10 %v_4[2.9,] %v_9[2.14,] 
+		 16: ATTRASSIGN %self->@subject %self[2.0,2.7,2.10,] %v_10[2.15,] @subject[2.9,] 
 		 17: 
-		 18: %self->home_url %self[2.0,] 
-		 19: %self[2.0,] %v_11[2.18,] @url[] 
+		 18: def_%v_11 %self->home_url %self[2.0,2.7,2.10,] 
+		 19: ATTRASSIGN %self->@url %self[2.0,2.7,2.10,2.18,] %v_11[2.18,] @url[] 
 		 20: 
-		 21: %self[2.0,] @recipients[] 
-		 22: @subject[2.9,2.16,] 
-		 23: %v_13[2.22,] %v_12[2.21,] 
-		 24: %self->mail %v_14[2.23,] %self[2.0,] 
+		 21: def_%v_12 %self[2.0,2.7,2.10,2.18,] @recipients[] 
+		 22: def_%v_13 %self[2.0,2.7,2.10,2.18,] @subject[2.9,2.16,] 
+		 23: def_%v_14 %v_12[2.21,] %v_13[2.22,] 
+		 24: def_%v_15 %self->mail %self[2.0,2.7,2.10,2.18,] %v_14[2.23,] 
 		 25: RETURN %v_15[2.24,] 
 BB 3
 	outgoing: 
@@ -588,32 +588,32 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_user RECEIVEARG 
 		 6: 
-		 7: %self->setup_email %self[2.0,] user[2.5,] 
+		 7: def_%v_3 %self->setup_email %self[2.0,] user[2.5,] 
 		 8: 
-		 9: %self[2.0,] @subject[] 
-		 10: %self->configatron %self[2.0,] 
-		 11: %v_5->community_name %v_5[2.10,] 
-		 12: %v_6[2.11,] 
-		 13: %v_7->l %v_7[2.12,] 
-		 14: %v_8[2.13,] 
-		 15: %v_4[2.9,] %v_9[2.14,] 
-		 16: @subject[2.9,] 
+		 9: def_%v_4 %self[2.0,2.7,] @subject[] 
+		 10: def_%v_5 %self->configatron %self[2.0,2.7,] 
+		 11: def_%v_6 %v_5->community_name %v_5[2.10,] 
+		 12: def_%v_7 %v_6[2.11,] 
+		 13: def_%v_8 %v_7->l %v_7[2.12,] 
+		 14: def_%v_9 %v_8[2.13,] 
+		 15: def_%v_10 %v_4[2.9,] %v_9[2.14,] 
+		 16: ATTRASSIGN %self->@subject %self[2.0,2.7,2.10,] %v_10[2.15,] @subject[2.9,] 
 		 17: 
-		 18: user->perishable_token user[2.5,] 
-		 19: %self->edit_password_reset_url %self[2.0,] %v_11[2.18,] 
-		 20: %self[2.0,] %v_12[2.19,] @edit_password_reset_url[] 
+		 18: def_%v_11 user->perishable_token user[2.5,] 
+		 19: def_%v_12 %self->edit_password_reset_url %self[2.0,2.7,2.10,] %v_11[2.18,] 
+		 20: ATTRASSIGN %self->@edit_password_reset_url %self[2.0,2.7,2.10,2.19,] %v_12[2.19,] @edit_password_reset_url[] 
 		 21: 
-		 22: %self[2.0,] @recipients[] 
-		 23: @subject[2.9,2.16,] 
-		 24: %v_13[2.22,] %v_14[2.23,] 
-		 25: %self->mail %self[2.0,] %v_15[2.24,] 
+		 22: def_%v_13 %self[2.0,2.7,2.10,2.19,] @recipients[] 
+		 23: def_%v_14 %self[2.0,2.7,2.10,2.19,] @subject[2.9,2.16,] 
+		 24: def_%v_15 %v_13[2.22,] %v_14[2.23,] 
+		 25: def_%v_16 %self->mail %self[2.0,2.7,2.10,2.19,] %v_15[2.24,] 
 		 26: RETURN %v_16[2.25,] 
 BB 3
 	outgoing: 
@@ -629,28 +629,28 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_user RECEIVEARG 
 		 6: 
-		 7: %self->setup_email %self[2.0,] user[2.5,] 
+		 7: def_%v_3 %self->setup_email %self[2.0,] user[2.5,] 
 		 8: 
-		 9: %self[2.0,] @subject[] 
-		 10: %self->configatron %self[2.0,] 
-		 11: %v_5->community_name %v_5[2.10,] 
-		 12: %v_6[2.11,] 
-		 13: %v_7->l %v_7[2.12,] 
-		 14: %v_8[2.13,] 
-		 15: %v_4[2.9,] %v_9[2.14,] 
-		 16: @subject[2.9,] 
+		 9: def_%v_4 %self[2.0,2.7,] @subject[] 
+		 10: def_%v_5 %self->configatron %self[2.0,2.7,] 
+		 11: def_%v_6 %v_5->community_name %v_5[2.10,] 
+		 12: def_%v_7 %v_6[2.11,] 
+		 13: def_%v_8 %v_7->l %v_7[2.12,] 
+		 14: def_%v_9 %v_8[2.13,] 
+		 15: def_%v_10 %v_4[2.9,] %v_9[2.14,] 
+		 16: ATTRASSIGN %self->@subject %self[2.0,2.7,2.10,] %v_10[2.15,] @subject[2.9,] 
 		 17: 
-		 18: %self[2.0,] @recipients[] 
-		 19: @subject[2.9,2.16,] 
-		 20: %v_11[2.18,] %v_12[2.19,] 
-		 21: %self->mail %v_13[2.20,] %self[2.0,] 
+		 18: def_%v_11 %self[2.0,2.7,2.10,] @recipients[] 
+		 19: def_%v_12 %self[2.0,2.7,2.10,] @subject[2.9,2.16,] 
+		 20: def_%v_13 %v_11[2.18,] %v_12[2.19,] 
+		 21: def_%v_14 %self->mail %self[2.0,2.7,2.10,] %v_13[2.20,] 
 		 22: RETURN %v_14[2.21,] 
 BB 3
 	outgoing: 
@@ -666,30 +666,30 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
-		 5: 
+		 5: def_user RECEIVEARG 
 		 6: 
-		 7: user->email user[2.5,] 
-		 8: %v_3[2.7,] 
-		 9: %self[2.0,] %v_4[2.8,] @recipients[] 
+		 7: def_%v_3 user->email user[2.5,] 
+		 8: def_%v_4 %v_3[2.7,] 
+		 9: ATTRASSIGN %self->@recipients %self[2.0,] %v_4[2.8,] @recipients[] 
 		 10: 
-		 11: 
-		 12: %self->configatron %self[2.0,] 
-		 13: %v_6->community_name %v_6[2.12,] 
-		 14: 
-		 15: %v_5[2.11,] %v_8[2.14,] %v_7[2.13,] 
-		 16: %self[2.0,] %v_9[2.15,] @subject[] 
+		 11: def_%v_5 
+		 12: def_%v_6 %self->configatron %self[2.0,] 
+		 13: def_%v_7 %v_6->community_name %v_6[2.12,] 
+		 14: def_%v_8 
+		 15: def_%v_9 %v_5[2.11,] %v_7[2.13,] %v_8[2.14,] 
+		 16: ATTRASSIGN %self->@subject %self[2.0,2.12,] %v_9[2.15,] @subject[] 
 		 17: 
-		 18: (Time) 
-		 19: %v_10->now %v_10[2.18,] 
-		 20: %self[2.0,] %v_11[2.19,] @sent_on[] 
+		 18: def_%v_10 (Time) 
+		 19: def_%v_11 %v_10->now %v_10[2.18,] 
+		 20: ATTRASSIGN %self->@sent_on %self[2.0,2.12,] %v_11[2.19,] @sent_on[] 
 		 21: 
-		 22: %self[2.0,] user[2.5,] @user[] 
-		 23: RETURN user[2.5,] 
+		 22: ATTRASSIGN %self->@user %self[2.0,2.12,] user[2.5,2.7,] @user[] 
+		 23: RETURN user[2.5,2.7,] 
 BB 3
 	outgoing: 
 	datadep: 

@@ -7,33 +7,33 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: (Forum) 
-		 7: %self->params %self[2.0,] 
-		 8: %v_4[2.7,] 
-		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
-		 10: %self[2.0,] %v_6[2.9,] @forum[] 
+		 6: def_%v_3 (Forum) 
+		 7: def_%v_4 %self->params %self[2.0,] 
+		 8: def_%v_5 %v_4[2.7,] 
+		 9: def_%v_6 %v_3->find %v_3[2.6,] %v_5[2.8,] 
+		 10: ATTRASSIGN %self->@forum %self[2.0,2.7,] %v_6[2.9,] @forum[] 
 		 11: 
-		 12: (User) 
-		 13: %self->params %self[2.0,] 
-		 14: %v_8[2.13,] 
-		 15: %v_7->find %v_9[2.14,] %v_7[2.12,] 
-		 16: %self[2.0,] %v_10[2.15,] @user[] 
+		 12: def_%v_7 (User) 
+		 13: def_%v_8 %self->params %self[2.0,2.7,] 
+		 14: def_%v_9 %v_8[2.13,] 
+		 15: def_%v_10 %v_7->find %v_7[2.12,] %v_9[2.14,] 
+		 16: ATTRASSIGN %self->@user %self[2.0,2.7,2.13,] %v_10[2.15,] @user[] 
 		 17: 
-		 18: (Moderatorship) 
-		 19: @forum[2.10,] 
-		 20: @user[2.16,] 
-		 21: %v_13[2.20,] %v_12[2.19,] 
-		 22: %v_11->create! %v_14[2.21,] %v_11[2.18,] 
-		 23: %self[2.0,] %v_15[2.22,] @moderatorship[] 
+		 18: def_%v_11 (Moderatorship) 
+		 19: def_%v_12 %self[2.0,2.7,2.13,] @forum[2.10,] 
+		 20: def_%v_13 %self[2.0,2.7,2.13,] @user[2.16,] 
+		 21: def_%v_14 %v_12[2.19,] %v_13[2.20,] 
+		 22: def_%v_15 %v_11->create! %v_11[2.18,] %v_14[2.21,] 
+		 23: ATTRASSIGN %self->@moderatorship %self[2.0,2.7,2.13,] %v_15[2.22,] @moderatorship[] 
 		 24: 
-		 25: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @forum[2.10,] @user[2.16,] @moderatorship[2.23,] 
+		 25: def_%v_16 %self->respond_to %self[2.0,2.7,2.13,] %self[2.0,2.7,2.13,] 
+CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -42,24 +42,24 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_format RECEIVEARG 
+		 3: def_%current_scope 
+		 4: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->js format[2.2,] 
+		 1: def_%cl_1_3 format->js format[2.2,] 
 		 2: RETURN %cl_1_3[3.1,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_4[4.0,] 
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
 		 2: RETURN %cl_1_5[4.1,] 
 BB 6
 	outgoing: 
@@ -81,23 +81,23 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: (Moderatorship) 
-		 7: %self->params %self[2.0,] 
-		 8: %v_4[2.7,] 
-		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
-		 10: %self[2.0,] %v_6[2.9,] @moderatorship[] 
+		 6: def_%v_3 (Moderatorship) 
+		 7: def_%v_4 %self->params %self[2.0,] 
+		 8: def_%v_5 %v_4[2.7,] 
+		 9: def_%v_6 %v_3->find %v_3[2.6,] %v_5[2.8,] 
+		 10: ATTRASSIGN %self->@moderatorship %self[2.0,2.7,] %v_6[2.9,] @moderatorship[] 
 		 11: 
-		 12: @moderatorship[2.10,] 
-		 13: %v_7->destroy %v_7[2.12,] 
+		 12: def_%v_7 %self[2.0,2.7,] @moderatorship[2.10,] 
+		 13: def_%v_8 %v_7->destroy %v_7[2.12,] 
 		 14: 
-		 15: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @moderatorship[2.10,] 
+		 15: def_%v_9 %self->respond_to %self[2.0,2.7,] %self[2.0,2.7,] 
+CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -106,24 +106,24 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_format RECEIVEARG 
+		 3: def_%current_scope 
+		 4: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->js format[2.2,] 
+		 1: def_%cl_1_3 format->js format[2.2,] 
 		 2: RETURN %cl_1_3[3.1,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_4[4.0,] 
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
 		 2: RETURN %cl_1_5[4.1,] 
 BB 6
 	outgoing: 
