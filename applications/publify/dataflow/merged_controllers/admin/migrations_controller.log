@@ -15,11 +15,11 @@ BB 2
 		 5: 
 		 6: def_%v_3 %self->migrator %self[2.0,] 
 		 7: def_%v_4 %v_3->current_schema_version %v_3[2.6,] 
-		 8: %self[2.0,2.6,] %v_4[2.7,] @current_version[] 
+		 8: ATTRASSIGN %self->@current_version %self[2.0,2.6,] %v_4[2.7,] @current_version[] 
 		 9: 
 		 10: def_%v_5 %self->migrator %self[2.0,2.6,] 
 		 11: def_%v_6 %v_5->pending_migrations %v_5[2.10,] 
-		 12: %self[2.0,2.6,2.10,] %v_6[2.11,] @needed_migrations[] 
+		 12: ATTRASSIGN %self->@needed_migrations %self[2.0,2.6,2.10,] %v_6[2.11,] @needed_migrations[] 
 		 13: 
 		 14: def_%v_7 %self[2.0,2.6,2.10,] %self[2.0,2.6,2.10,] 
 CLOSURE BEGIN: %self[2.0,2.6,2.10,] 
@@ -248,7 +248,7 @@ BB 5
 	instructions:
 		 0: def_%v_6 (Migrator) 
 		 1: def_%v_7 %v_6->new %v_6[5.0,] 
-		 2: %self[2.0,] %v_7[5.1,] @migrator[3.0,] 
+		 2: ATTRASSIGN %self->@migrator %self[2.0,] %v_7[5.1,] @migrator[3.0,] 
 		 3: RETURN %v_7[5.1,] 
 BB 6
 	outgoing: 7 

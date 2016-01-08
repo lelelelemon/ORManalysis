@@ -36,7 +36,7 @@ BB 6
 		 2: def_%v_10 %v_9->url %v_9[6.1,] 
 		 3: def_%v_11 %v_8->parse %v_8[6.0,] %v_10[6.2,] 
 		 4: def_%v_12 %v_7->get_response %v_7[5.0,4.3,] %v_11[6.3,] 
-		 5: %self[6.1,2.0,] %v_12[6.4,] @response[] 
+		 5: ATTRASSIGN %self->@response %self[6.1,2.0,] %v_12[6.4,] @response[] 
 		 6: 
 		 7: def_%v_13 %self->send_pingback %self[6.1,2.0,] 
 		 8: BRANCH %v_13[6.7,] 
@@ -598,9 +598,9 @@ BB 2
 		 5: def_origin_url RECEIVEARG 
 		 6: def_ping RECEIVEARG 
 		 7: 
-		 8: %self[2.0,] origin_url[2.5,] @origin_url[] 
+		 8: ATTRASSIGN %self->@origin_url %self[2.0,] origin_url[2.5,] @origin_url[] 
 		 9: 
-		 10: %self[2.0,] ping[2.6,] @ping[] 
+		 10: ATTRASSIGN %self->@ping %self[2.0,] ping[2.6,] @ping[] 
 		 11: 
 		 12: def_%v_3 ping->article ping[2.6,] 
 		 13: def_%v_4 %v_3->default_text_filter %v_3[2.12,] 
