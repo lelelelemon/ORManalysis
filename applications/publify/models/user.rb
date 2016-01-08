@@ -71,11 +71,11 @@ class User < ActiveRecord::Base
 
   # These create and unset the fields required for remembering users between browser closes
   def remember_me
-    remember_me_for 2.weeks
+    remember_me_for(2.weeks)
   end
 
   def remember_me_for(time)
-    remember_me_until time.from_now.utc
+    remember_me_until(time.from_now.utc)
   end
 
   def remember_me_until(time)
