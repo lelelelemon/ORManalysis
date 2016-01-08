@@ -15,6 +15,8 @@ class Feedback < ActiveRecord::Base
   before_create :create_guid, :article_allows_this_feedback
   before_save :correct_url, :before_save_handler
   after_save :post_trigger, :report_classification, :invalidates_cache?
+
+
   after_initialize :after_initialize_handler
   after_destroy ->(c) { c.invalidates_cache?(true) }
 

@@ -5,10 +5,7 @@ $last_caller_string = ""
 $QUERY_COLOR = "orange"
 $FLOWEDGE_COLOR = "blue"
 
-$label = ""
 $l_index = 0
-$label_stack = Array.new
-$l_index_stack = Array.new
 $blank = ""
 $in_view = false
 
@@ -57,11 +54,6 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 			end
 
 			puts "#{$blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
-			if simplified_caller != nil
-				$label += "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{simplified_caller}.#{call.getFuncName} </td></tr>\n"
-			else
-				$label += "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\" bgcolor=\"#{$QUERY_COLOR}\"> [QUERY]#{remove_special_chars(call.getObjName)}.#{call.getFuncName} </td></tr>\n"
-			end
 			$l_index += 1
 
 			if trigger_save?(call) or trigger_create?(call)
@@ -71,26 +63,20 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 
-							$last_caller_string = "#{start_class}_before_save_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
-					
-							$label_stack.push($label)
-							$l_index_stack.push($l_index)
+							if $class_map[callerv.getUpperClass] != nil	
+								trace_flow(callerv.getUpperClass, "before_save", "", "", level+2)
+							end
 							trace_flow(callerv.getName, "before_save", "", "", level+2)
-							$label = $label_stack.pop
-							$l_index = $l_index_stack.pop
 						end
 
 						temp_name = "#{callerv.getName}.before_validation"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
 
-							$last_caller_string = "#{start_class}_before_validation_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
-					
-							$label_stack.push($label)
-							$l_index_stack.push($l_index)
+							if $class_map[callerv.getUpperClass] != nil	
+								trace_flow(callerv.getUpperClass, "before_validation", "", "", level+2)
+							end
 							trace_flow(callerv.getName, "before_validation", "", "", level+2)
-							$label = $label_stack.pop
-							$l_index = $l_index_stack.pop
 						end
 
 				end
@@ -99,14 +85,11 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 						temp_name = "#{callerv.getName}.before_create"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
-							
-							$last_caller_string = "#{start_class}_before_create_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
-							
-							$label_stack.push($label)
-							$l_index_stack.push($l_index)
+							if $class_map[callerv.getUpperClass] != nil	
+								trace_flow(callerv.getUpperClass, "before_create", "", "", level+2)
+							end
+
 							trace_flow(callerv.getName, "before_create", "", "", level+2)
-							$label = $label_stack.pop
-							$l_index = $l_index_stack.pop
 						end
 				end
 				puts "=====transaction end====="
@@ -118,7 +101,6 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 		elsif callerv != nil
 			temp_name = "#{callerv.getName}.#{call.getFuncName}"
 
-			$label +=  "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\"> #{temp_name}</td></tr>\n"
 			$l_index += 1
 
 			if $non_repeat_list.include?(temp_name) == false
@@ -126,59 +108,18 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 					$non_repeat_list.push(temp_name)
 				end
 
-				$last_caller_string = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb_index}:f#{$l_index-1}"
-
-				$label_stack.push($label)
-				$l_index_stack.push($l_index)
 				trace_flow(callerv.getName, call.getFuncName, pass_params, pass_returnv, level+1)
-				$label = $label_stack.pop
-				$l_index = $l_index_stack.pop
 			end
 		end
 end
 
-def set_node_label(start_class, start_function, bb, label_list)
-		$label = $label + "\t\t\t<tr><td port=\"f#{$l_index}\" border=\"1\"> (nil) </td></tr>\n"		
-		$label = "\t\tlabel = <<table border=\"2\">\n#{$label}\t\t</table>>\n"
-
-		if bb == nil #No CFG found
-			$label = "\t#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB1 [\n" + $label
-		else
-			$label = "\t#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB#{bb.getIndex} [\n" + $label
-		end
-
-		$label = $label + "\t\tshape = none\n"
-
-		#view output/rendering
-		if bb != nil and bb.getCFG.instance_of?Closure and bb.getCFG.getViewCode
-			$label = $label + "\t\tcolor = pink\n"
-		end
-		#include "param", from user input
-		if bb != nil 
-			include_user_input = false
-			bb.getInstr.each do |ins|
-				if ins.getFromUserInput
-					include_user_input = true
-				end
-			end
-			if include_user_input
-				$label = $label + "\t\tcolor = green\n"
-			end
-		end
-		
-		$label = $label + "\t];\n"
-
-		label_list.push($label)		
-end
 
 def handle_single_bb(start_class, start_function, class_handler, bb, label_list, function_handler, level)
-	$label = ""
 	$l_index = 0
 	bb.getInstr.each do |instr|
 		handle_single_instr(start_class, start_function, class_handler, bb, instr, label_list, function_handler, level)
 	end
 
-	set_node_label(start_class, start_function, bb, label_list)			
 	bb.setLabelN($l_index)			
 end
 
@@ -210,15 +151,11 @@ def handle_single_instr(start_class, start_function, class_handler, bb, instr, l
 		
 	if instr.hasClosure?
 		cl = instr.getClosure
-		$l_index_stack.push($l_index)	
 		$closure_stack.push(cl)
-		$label_stack.push($label)
 		cl.getBB.each do |inner_bb|
 			handle_single_bb(start_class, start_function, class_handler, inner_bb, label_list, function_handler, level)
 		end
 		$closure_stack.pop
-		$l_index = $l_index_stack.pop
-		$label = $label_stack.pop
 	end
 
 end
@@ -319,17 +256,11 @@ def trace_flow(start_class, start_function, params, returnv, level)
 			handle_single_call_node(start_class, start_function, class_handler, call, level, 1)
 
 		end
-		set_node_label(start_class, start_function, nil, label_list)
 	end
 
 	#puts "#{$blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
 	#puts "#{$blank}(write subgraph #{start_class}_#{start_function})"
 
-	$graph_file.write("subgraph cluster_#{start_class}_#{simplify(start_function)} {\n")
-	$graph_file.write("\tcolor=red;\n\tnode [style=filled];\n\tlabel = \"#{start_class}_#{start_function}\"\n")	
-	label_list.each do |label|
-		$graph_file.write("#{label}")
-	end
 
 	if function_handler.getCFG != nil	
 		function_handler.getCFG.getBB.each do |bb|
@@ -337,5 +268,4 @@ def trace_flow(start_class, start_function, params, returnv, level)
 		end
 	end	
 
-	$graph_file.write("}\n")
 end

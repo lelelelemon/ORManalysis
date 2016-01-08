@@ -227,6 +227,10 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 						temp_name = "#{caller_class}.#{action}"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
+							if callerv != nil and $class_map[callerv.getUpperClass] != nil
+								cur_cfg = trace_query_flow(callerv.getUpperClass, action, "", "", level+2)
+								#TODO: add control flow edges...
+							end
 							cur_cfg = trace_query_flow(caller_class, action, "", "", level+2)
 							if cur_cfg != nil
 								if last_cfg == nil

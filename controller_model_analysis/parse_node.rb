@@ -56,6 +56,7 @@ def parse_keyword(astnode, meth)
 		$cur_method = temp_method
 		fcall = Function_call.new("self", temp_method.getName)
 		meth.addCall(fcall)
+		$cur_class.addMethod(temp_method)
 	end
 	on_list = Array.new
 	cond_list = Array.new

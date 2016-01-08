@@ -84,17 +84,17 @@ module Article::States
     end
 
     def send_notifications
-      content.really_send_notifications if just_published?
+      article.really_send_notifications if just_published?
       true
     end
 
     def send_pings
-      content.really_send_pings if just_published?
+      article.really_send_pings if just_published?
       true
     end
 
     def just_published?
-      content.just_changed_published_status?
+      article.just_changed_published_status?
     end
   end
 

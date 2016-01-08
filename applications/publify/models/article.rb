@@ -40,6 +40,17 @@ class Article < Content
   before_save :set_published_at, :set_permalink
   after_save :post_trigger, :keywords_to_tags, :shorten_url
 
+	after_save do
+		Article::Published.withdraw
+    Article::Published.post_trigger
+    Article::Published.send_pings
+		Article::Published.send_notifications
+    Article::Published.published_at=
+		Article::Published.published=
+		Article::Published.just_published
+	end
+
+
   scope :drafts, -> { where(state: 'draft').order('created_at DESC') }
   scope :child_of, ->(article_id) { where(parent_id: article_id) }
   scope :published_at, ->(time_params) { published.where(published_at: PublifyTime.delta(*time_params)).order('published_at DESC') }

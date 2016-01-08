@@ -412,6 +412,10 @@ end
 
 if options[:print_all] == true
 	$class_map.each do |keyc, valuec|
+		puts "class #{keyc}"
+		valuec.getMethod("before_save").getCalls.each do |s|
+			puts "\t#{s.getFuncName}"
+		end
 		#puts "class #{keyc}"
 		#if $table_names.find(keyc) != nil
 		#	valuec.getFields.each do |f|
