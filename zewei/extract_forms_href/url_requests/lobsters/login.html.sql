@@ -1,0 +1,2 @@
+# Logfile created on 2016-01-08 12:47:39 -0600 by logger.rb/47272
+D, [2016-01-08T12:47:39.492027 #2716] DEBUG -- :   [1m[36mUser Load (0.5ms)[0m  [1mSELECT  `users`.* FROM `users`  WHERE `users`.`session_token` = 'yMvDgquEClagp0qkFWmweNDKPFMLfRYlrUmNEDKS9vYY9ks7SltCng7dvAiw'  ORDER BY `users`.`id` ASC LIMIT 1[0m
