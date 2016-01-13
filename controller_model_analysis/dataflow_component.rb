@@ -167,6 +167,17 @@ class Call_instr < Instruction
 			return false
 		end
 	end
+	def isReadQuery
+		if @call_handler != nil
+			if ["SELECT","GROUP","JOIN"].include?@call_handler.getQueryType
+				return true
+			else
+				return false
+			end
+		else
+			return false
+		end
+	end
 	def isField
 		if @call_handler != nil
 			return @call_handler.isField
@@ -200,7 +211,7 @@ class Call_instr < Instruction
 		if @call_handler != nil
 			s = s + " #{@call_handler.toString}"
 		else
-			s = s + " #{@resolved_caller} -> #{@funcname}"
+			s = s + " #{@caller} -> #{@funcname}"
 		end
 		return s
 	end

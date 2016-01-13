@@ -188,8 +188,9 @@ def parse_attrib(astnode)
 	if astnode.children[0].source.to_s.include?"validates"
 		parse_keyword(astnode, $cur_class.getMethod("before_validation"))
 		if ["validates_uniqueness_of", "validates_presence_of"].include?astnode.children[0].source.to_s
-			if $cur_class.getMethod("before_validation").hasCall?("self", "where") == false
-				fcall = Function_call.new("self", "where")
+			field = get_left_most_leaf(astnode.children[1]).source.to_s
+			if $cur_class.getMethod("before_validation").hasCall?(field, "where") == false
+				fcall = Function_call.new(field, "where")
 				fcall.setIsQuery
 				fcall.setTableName($cur_class.getName)
 				fcall.setQueryType("SELECT")

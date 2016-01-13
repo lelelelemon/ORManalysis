@@ -7,7 +7,7 @@ base_path = "../applications/publify/"
 #entryfile_path = "../zewei/extract_forms_href/href_from_views/lobsters/"
 
 routes_path = "%s/routes.rb"%base_path
-output_path = "%s/singlepath_results/"%base_path
+output_path = "%s/results/"%base_path
 
 entries = []
 
@@ -38,8 +38,8 @@ for line in entries:
 	else:
 		os.system("rm %s/*"%folder)
 	print "%s # %s"%(controller_name, chs[1])
-	os.system("ruby parsing.rb -d %s -t %s,%s -r -o %s &> %s/trace.temp"%(base_path, controller_name, chs[1], folder, folder))
-	os.system("ruby parsing.rb -d %s -s %s,%s -r -o %s"%(base_path, controller_name, chs[1], folder))
+	os.system("ruby parsing.rb -d %s -t %s,%s -o %s &> %s/trace.temp"%(base_path, controller_name, chs[1], folder, folder))
+	os.system("ruby parsing.rb -d %s -s %s,%s -o %s"%(base_path, controller_name, chs[1], folder))
 	#for filename in glob.iglob("%s/*.log"%folder):
 	#	graph_fname = filename.replace(".log", ".pdf")
 	#	os.system("dot -Tpdf %s -o %s"%(filename, graph_fname))

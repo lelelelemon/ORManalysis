@@ -16,7 +16,7 @@ PATH_ORDER = [
 
 
 #file = File.open("../applications/boxroom/controllers/files_controller.rb", "r")
-file = File.open("../applications/publify/models/user.rb", "r")
+file = File.open("../applications/lobsters/models/message.rb", "r")
 #file = File.open("../applications/publify/merged_controllers/admin/base_controller.rb", "r")
 contents = file.read
 ast = YARD::Parser::Ruby::RubyParser.parse(contents).root

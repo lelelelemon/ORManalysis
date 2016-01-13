@@ -8,14 +8,20 @@ lcnt = []
 total = []
 total_min = 100
 total_max = 0
-view = []
-reads = []
-writes = []
+stats = {}
+stats_cnt = {}
 tables = {}
 tbl_fields = {}
 table_queries = {}
 #key: tablename.field
 tbl_fields_type = {}
+tbl_var = {}
+
+tbl_read_record = {}
+tbl_read_record_cnt = {}
+tbl_write_record = {}
+tbl_write_record_cnt = {}
+tbl_write_record_fields = {}
 
 tablename_file = "../applications/%s/table_name.txt"%sys.argv[1]
 tablename_fp = open(tablename_file)
@@ -75,23 +81,58 @@ for subdir, folders, files in os.walk(base_path):
 						total_min = t
 					if t > total_max:
 						total_max = t
-				elif "query in view:" in line:
-					view.append(int(chs[-1], 10))
-				elif "read queries:" in line:
-					reads.append(int(chs[-1], 10))
-				elif "write queries:" in line:
-					writes.append(int(chs[-1], 10))
+				elif "STATS" in line:
+					vmap = line.split(": ")
+					if vmap[0] in stats:
+						stats[vmap[0]].append(int(chs[-1], 10))
+					else:
+						stats[vmap[0]] = []
+						stats[vmap[0]].append(int(chs[-1], 10))
 				elif "+FIELD+" in line:
-					info = chs[1].split(".")
+					info = chs[2].split(".")
 					table = info[0]
 					field = info[1]
-					f_type = chs[2].replace(")","").replace("(","")
+					var_name = chs[1]
+					if var_name in tbl_var:
+						tbl_var[var_name] = tbl_var[var_name] + 1
+					else:
+						tbl_var[var_name] = 1
+					f_type = chs[3].replace(")","").replace("(","")
 					if tbl_fields.has_key(table):
 						if tbl_fields[table].has_key(field) == False:
 							tbl_fields[table][field] = 1
 							tbl_fields_type[chs[1]] = f_type
 						else:
 							tbl_fields[table][field] = tbl_fields[table][field] + 1
+				elif "TBLREADRECORD:" in line:
+					table = chs[1]
+					data_list = chs[2].replace("[","").replace("]","").split(",")
+					if table not in tbl_read_record:
+						tbl_read_record[table] = []
+						for i in range(6):
+							tbl_read_record[table].append(0)
+							tbl_read_record_cnt[table] = 0
+					for i in range(6):
+						tbl_read_record[table][i] = int(data_list[i], 10)
+						tbl_read_record_cnt[table] = tbl_read_record_cnt[table] + 1
+				elif "TBLWRITERECORD:" in line:
+					table = chs[1]
+					data_list = chs[2].replace("[","").replace("]","").split(",")
+					if table not in tbl_write_record:
+						tbl_write_record[table] = []
+						tbl_write_record_fields[table] = {}
+						for i in range(3):
+							tbl_write_record[table].append(0)
+							tbl_write_record_cnt[table] = 0
+					for i in range(3):
+						tbl_write_record[table][i] = int(data_list[i], 10)
+						tbl_write_record_cnt[table] = tbl_write_record_cnt[table] + 1
+					fields = chs[-1].replace("[","").replace("]","").split(",")
+					for f in fields:
+						if f in tbl_write_record_fields[table]:
+							tbl_write_record_fields[table][f] += 1
+						else:
+							tbl_write_record_fields[table][f] = 1
 				elif len(line) > 0:
 					if "<" in line and ">" in line:
 						if "]" in chs[-1]:
@@ -113,31 +154,48 @@ for subdir, folders, files in os.walk(base_path):
 						
 
 #print "Average txn length: %f"%(float(sum(lcnt)) / float(len(lcnt)))
+print "Controller functions: %d"%len(total)
 
 print "Average query in total: %f"%(float(sum(total)) / float(len(total)))
 print "\tmin: %d, max: %d"%(total_min, total_max)
 
-print "Average query in view: %f"%(float(sum(view)) / float(len(view)))
-
-print "Average read queries: %f"%(float(sum(reads)) / float(len(view)))
-
-print "Avery write queries: %f"%(float(sum(writes)) / float(len(view)))
-
-print "Controller functions: %d"%len(total)
+for k,v in stats.items():
+	print "Average %s: %d"%(k,float(sum(v))/float(len(v)))
 
 for k,v in tables.items():
-	print "===================="
 	print "Table %s:"%k
-	for k1, v1 in v.items():
-		if v1 > 0:
-			print "\t%s: %d times"%(k1, v1)
-	if tbl_fields.has_key(k):
-		for k1, v1 in tbl_fields[k].items():
-			if v1 > 0:
-				f = "%s.%s"%(k, k1)
-				print "\t\tfield %s\t[type: %s] accessed %d times"%(k1, tbl_fields_type[f], v1)
-	print "Have %d types of queries:"%(len(table_queries[k]))
-	for q in table_queries[k]:
-		print "\t%s"%q
-	print ""
+	if k in tbl_read_record:
+		print "\tread %d times"%tbl_read_record_cnt[k]
+		print "\tstats: ",
+		for s in tbl_read_record[k]:
+			print "%d, "%s,
+		print ""
+	if k in tbl_write_record:
+		print "\twrite %d times"%tbl_write_record_cnt[k]
+		print "\tstats: ",
+		for s in tbl_write_record[k]:
+			print "%d, "%s,
+		print ""
+		print "\tfield set: ",
+		for s,m in tbl_write_record_fields[k].items():
+			if len(s) > 0:
+				print "%s(%d), "%(s, m),
+		print ""
+
+
+#for k,v in tables.items():
+#	print "===================="
+#	print "Table %s:"%k
+#	for k1, v1 in v.items():
+#		if v1 > 0:
+#			print "\t%s: %d times"%(k1, v1)
+#	if tbl_fields.has_key(k):
+#		for k1, v1 in tbl_fields[k].items():
+#			if v1 > 0:
+#				f = "%s.%s"%(k, k1)
+#				print "\t\tfield %s\t[type: %s] accessed %d times"%(k1, tbl_fields_type[f], v1)
+#	print "Have %d types of queries:"%(len(table_queries[k]))
+#	for q in table_queries[k]:
+#		print "\t%s"%q
+#	print ""
 
