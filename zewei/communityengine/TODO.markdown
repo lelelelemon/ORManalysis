@@ -1,3 +1,0 @@
-# TODO
-
-* datepicker for events
