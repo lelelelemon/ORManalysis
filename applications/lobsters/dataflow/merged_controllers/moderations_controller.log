@@ -9,39 +9,39 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: COPY def_%v_3 
 		 7: ATTRASSIGN %self->@title %self[2.0,] %v_3[2.6,] @title[] 
 		 8: 
-		 9: def_%v_4 %self->params %self[2.0,] 
+		 9: %self->params def_%v_4 %self[2.0,] 
 		 10: def_%v_5 %v_4[2.9,] 
 		 11: BRANCH %v_5[2.10,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self->params %self[2.0,] 
+		 0: %self->params def_%v_6 %self[2.0,] 
 		 1: def_%v_7 %v_6[3.0,] 
-		 2: def_%v_8 %v_7->to_i %v_7[3.1,] 
+		 2: %v_7->to_i def_%v_8 %v_7[3.1,] 
 		 3: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_8 
+		 0: COPY def_%v_8 
 BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
 		 0: ATTRASSIGN %self->@page %self[2.0,] %v_8[4.0,3.2,] @page[] 
 		 1: 
-		 2: def_%v_9 (Moderation) 
-		 3: def_%v_10 %v_9->count %v_9[5.2,] 
+		 2: (Moderation) def_%v_9 
+		 3: %v_9->count def_%v_10 %v_9[5.2,] 
 		 4: def_%v_11 %v_10[5.3,] 
-		 5: def_%v_12 %v_11->ceil %v_11[5.4,] 
+		 5: %v_11->ceil def_%v_12 %v_11[5.4,] 
 		 6: ATTRASSIGN %self->@pages %self[2.0,] %v_12[5.5,] @pages[] 
 		 7: 
 		 8: def_%v_13 %self[2.0,] @page[5.0,] 
@@ -53,7 +53,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: ATTRASSIGN %self->@page %self[2.0,] @page[5.0,5.8,] 
-		 2: def_%v_15 
+		 2: COPY def_%v_15 
 		 3: 
 BB 7
 	outgoing: 8 9 
@@ -76,25 +76,25 @@ BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: def_%v_19 
+		 0: COPY def_%v_19 
 BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: def_%v_15 %v_19[9.0,8.1,] 
+		 0: COPY def_%v_15 %v_19[9.0,8.1,] 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_20 (Moderation) 
-		 2: def_%v_21 
-		 3: def_%v_22 %v_20->order %v_20[11.1,] %v_21[11.2,] 
+		 1: (Moderation) def_%v_20 
+		 2: COPY def_%v_21 
+		 3: %v_20->order def_%v_22 %v_20[11.1,] %v_21[11.2,] 
 		 4: def_%v_23 %v_22[11.3,] 
 		 5: def_%v_24 %self[2.0,] @page[6.1,8.2,5.0,5.8,7.1,] 
 		 6: def_%v_25 %v_24[11.5,] 
 		 7: def_%v_26 %v_25[11.6,] 
-		 8: def_%v_27 %v_23->offset %v_23[11.4,] %v_26[11.7,] 
+		 8: %v_23->offset def_%v_27 %v_23[11.4,] %v_26[11.7,] 
 		 9: ATTRASSIGN %self->@moderations %self[2.0,] %v_27[11.8,] @moderations[] 
 		 10: RETURN %v_27[11.8,] 
 BB 12

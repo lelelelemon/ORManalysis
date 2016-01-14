@@ -7,23 +7,23 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: (Post) 
-		 7: %self->params %self[2.0,] 
-		 8: %v_4[2.7,] 
-		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
-		 10: %self[2.0,] %v_6[2.9,] @post[] 
+		 6: def_%v_3 (Post) 
+		 7: def_%v_4 %self->params %self[2.0,] 
+		 8: def_%v_5 %v_4[2.7,] 
+		 9: def_%v_6 %v_3->find %v_3[2.6,] %v_5[2.8,] 
+		 10: ATTRASSIGN %self->@post %self[2.0,2.7,] %v_6[2.9,] @post[] 
 		 11: 
-		 12: @post[2.10,] 
-		 13: %v_7->user %v_7[2.12,] 
-		 14: @post[2.10,2.12,] 
-		 15: %self->user_post_path %self[2.0,] %v_8[2.13,] %v_9[2.14,] 
-		 16: %self->redirect_to %self[2.0,] %v_10[2.15,] 
+		 12: def_%v_7 %self[2.0,2.7,] @post[2.10,] 
+		 13: def_%v_8 %v_7->user %v_7[2.12,] 
+		 14: def_%v_9 %self[2.0,2.7,] @post[2.10,2.12,] 
+		 15: def_%v_10 %self->user_post_path %self[2.0,2.7,] %v_8[2.13,] %v_9[2.14,] 
+		 16: def_%v_11 %self->redirect_to %self[2.0,2.7,2.15,] %v_10[2.15,] 
 		 17: RETURN %v_11[2.16,] 
 BB 3
 	outgoing: 
@@ -39,26 +39,26 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @choice[] 
-		 7: %v_3->votes %v_3[2.6,] 
-		 8: %self->current_user %self[2.0,] 
-		 9: @choice[2.6,] 
-		 10: %v_6->poll %v_6[2.9,] 
-		 11: %v_5[2.8,] %v_7[2.10,] 
-		 12: %v_4->new %v_4[2.7,] %v_8[2.11,] 
-		 13: %self[2.0,] %v_9[2.12,] @vote[] 
+		 6: def_%v_3 %self[2.0,] @choice[] 
+		 7: def_%v_4 %v_3->votes %v_3[2.6,] 
+		 8: def_%v_5 %self->current_user %self[2.0,] 
+		 9: def_%v_6 %self[2.0,2.8,] @choice[2.6,] 
+		 10: def_%v_7 %v_6->poll %v_6[2.9,] 
+		 11: def_%v_8 %v_5[2.8,] %v_7[2.10,] 
+		 12: def_%v_9 %v_4->new %v_4[2.7,] %v_8[2.11,] 
+		 13: ATTRASSIGN %self->@vote %self[2.0,2.8,] %v_9[2.12,] @vote[] 
 		 14: 
-		 15: @vote[2.13,] 
-		 16: %v_10->save %v_10[2.15,] 
+		 15: def_%v_10 %self[2.0,2.8,] @vote[2.13,] 
+		 16: def_%v_11 %v_10->save %v_10[2.15,] 
 		 17: 
-		 18: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @vote[2.13,] @choice[2.6,] 
+		 18: def_%v_12 %self->respond_to %self[2.0,2.8,] %self[2.0,2.8,] 
+CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -67,24 +67,24 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: def_format RECEIVEARG 
+		 3: def_%current_scope 
+		 4: def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->js format[2.2,] 
+		 1: def_%cl_1_3 format->js format[2.2,] 
 		 2: RETURN %cl_1_3[3.1,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_4[4.0,] 
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
 		 2: RETURN %cl_1_5[4.1,] 
 BB 6
 	outgoing: 
@@ -106,17 +106,17 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: def_%current_scope 
+		 3: def_%current_module 
 		 4: 
 		 5: 
-		 6: (Choice) 
-		 7: %self->params %self[2.0,] 
-		 8: %v_4[2.7,] 
-		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
-		 10: %self[2.0,] %v_6[2.9,] @choice[] 
+		 6: def_%v_3 (Choice) 
+		 7: def_%v_4 %self->params %self[2.0,] 
+		 8: def_%v_5 %v_4[2.7,] 
+		 9: def_%v_6 %v_3->find %v_3[2.6,] %v_5[2.8,] 
+		 10: ATTRASSIGN %self->@choice %self[2.0,2.7,] %v_6[2.9,] @choice[] 
 		 11: RETURN %v_6[2.9,] 
 BB 3
 	outgoing: 
