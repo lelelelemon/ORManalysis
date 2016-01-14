@@ -257,6 +257,17 @@ class Branch_instr < Instruction
 	end
 end
 
+class Copy_instr < Instruction
+	def initialize
+		super
+	end
+	def toString
+		s = "COPY "
+		s = s + super
+		return s
+	end
+end
+
 class ReceiveArg_instr < Instruction
 	def initialize
 		super
@@ -266,6 +277,10 @@ class ReceiveArg_instr < Instruction
 		s = "RECEIVEARG "
 		s = s + super
 		return s
+	end
+	def setDefv(d)
+		@defv = d
+		@var_name = d
 	end
 end
 
@@ -376,7 +391,7 @@ class Basic_block
 	end
 	def findCalls
 		@instructions.each do |instr|
-			if instr.instance_of?Call_instr or instr.instance_of?AttrAssign_instr
+			if instr.is_a?Call_instr
 				#caller = self
 				if instr.getCaller=="%self"
 					instr.setResolvedCaller("self")

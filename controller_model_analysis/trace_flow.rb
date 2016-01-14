@@ -126,7 +126,7 @@ end
 def handle_single_instr(start_class, start_function, class_handler, bb, instr, label_list, function_handler, level)
 
 	instr.setFTag($l_index)
-	if instr.instance_of?Call_instr
+	if instr.is_a?Call_instr
 		#match instr's call to funccall in Method_class
 		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
 		#if call == nil

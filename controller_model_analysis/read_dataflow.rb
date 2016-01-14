@@ -229,13 +229,14 @@ def handle_single_dataflow_file(item, class_name)
 										cur_instr = Branch_instr.new
 
 									elsif single_attr == "RECEIVEARG"
-										defv = cur_instr.getDefv
 										cur_instr = ReceiveArg_instr.new
-										cur_instr.var_name = defv
 	
 									elsif single_attr == "ATTRASSIGN"
 										cur_instr = AttrAssign_instr.new("", "")
 
+									elsif single_attr == "COPY"
+										cur_instr = Copy_instr.new	
+	
 									elsif single_attr.include?('(') and single_attr.include?(')')
 										bracket_begin = single_attr.index('(')
 										bracket_end = single_attr.index(')')

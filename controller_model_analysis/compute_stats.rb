@@ -364,18 +364,18 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				assigned_fields = Hash.new
 				traceback_data_dep(n).each do |n1|
 					if n1.instance_of?Edge
-						puts "\t(From user input)"
+						puts " x (From user input)"
 						write_from_user_input += 1
 						write_source_total += 1
 						single_tbl_from_user += 1
 						single_tbl_total += 1
 					else
-						if n1.isQuery?
+						if n1.isQuery? and n1.isReadQuery?
 							write_from_query += 1
 							write_source_total += 1
 							single_tbl_total += 1
 							single_tbl_from_query += 1
-							puts "\t(From query)"
+							puts " x (From query)"
 						elsif n1.getInstr.instance_of?AttrAssign_instr
 							call = n1.getInstr.getCallHandler
 							assigned_fields[n1.getInstr.getFuncname] = true
@@ -384,6 +384,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 							#	graph_write($graph_file, " --assign #{call.getObjName}.#{call.getFuncName} type=#{call.caller.getName}")
 							#end
 						elsif n1.getBackwardEdges.length == 0
+							if n1.getInstr.instance_of?Copy_instr
+								puts " x (From copy const)"
+							else
+								puts " x (Some source)"
+							end
 							write_source_total += 1
 							single_tbl_total += 1
 						end
@@ -477,12 +482,12 @@ def compute_dataflow_forward(output_dir, start_class, start_function, start_node
 		else
 			$cnt_determines += 1
 			graph_write($graph_file, "\tn#{c.getIndex} [");
-			if c.getInstr.instance_of?Call_instr 
+			if c.getInstr.is_a?Call_instr 
 				graph_write($graph_file, "label = <<i>#{c.getLabel}</i>> ")
 			end
 			if c.getInstr.getToUserOutput
 				graph_write($graph_file, "color=#{$USERINOUTCOLOR} ")
-			elsif c.getInstr.instance_of?Call_instr and c.getInstr.isQuery
+			elsif c.getInstr.is_a?Call_instr and c.getInstr.isQuery
 				graph_write($graph_file, "color=#{$QNODECOLOR} ")
 			end
 			graph_write($graph_file, "]\n")
@@ -517,12 +522,12 @@ def compute_dataflow_backward(output_dir, start_class, start_function, start_nod
 		else
 			$cnt_depends_on += 1
 			graph_write($graph_file, "\tn#{c.getIndex} [");
-			if c.getInstr.instance_of?Call_instr 
+			if c.getInstr.is_a?Call_instr 
 				graph_write($graph_file, "label = <<i>#{c.getLabel}</i>> ")
 			end
 			if c.getInstr.getFromUserInput
 				graph_write($graph_file, "color=#{$USERINOUTCOLOR} ")
-			elsif c.getInstr.instance_of?Call_instr and c.getInstr.isQuery
+			elsif c.getInstr.is_a?Call_instr and c.getInstr.isQuery
 				graph_write($graph_file, "color=#{$QNODECOLOR} ")
 			end
 			graph_write($graph_file, "]\n")

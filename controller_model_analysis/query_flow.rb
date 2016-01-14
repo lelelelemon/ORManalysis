@@ -73,7 +73,7 @@ class INode
 		return false
 	end
 	def isField?
-		if @instr != nil and (@instr.instance_of?Call_instr or @instr.instance_of?AttrAssign_instr)
+		if @instr != nil and (@instr.is_a?Call_instr)
 			return @instr.isField
 		end
 		return false
@@ -95,7 +95,7 @@ class INode
 		#	@label = "#{@instr.getCaller}.#{@instr.getFuncname}"
 		#end
 
-		if @instr.instance_of?Call_instr 
+		if @instr.is_a?Call_instr 
 			if@instr.getCallHandler != nil
 				@label = "#{remove_special_chars(@instr.getCallHandler.getObjName)}.#{@instr.getFuncname}"
 			else
@@ -187,10 +187,11 @@ def add_dataflow_edge(node)
 			puts "Handler nil: BB#{dep.getBlock}.#{dep.getInstr}"
 		end
 		#TODO: getINode == nil, if this instr hasn't been handled yet...
-		#XXX: If it is a field instr, then we know it is not a blackbox func call...
-		if (to_ins.instance_of?Call_instr or to_ins.instance_of?AttrAssign_instr) and to_ins.isField and (dep.getVname.include?("%")==false or dep.getVname.include?("self"))
-		else
-			if dep.getInstrHandler.getINode != nil
+		if dep.getInstrHandler.getINode != nil
+			#XXX: If it is a field instr, then we know it is not a blackbox func call, if it is not attrassign, then it is a read only instr
+			from_node = dep.getInstrHandler.getINode
+			if from_node.getInstr.instance_of?Call_instr and from_node.getInstr.isField and dep.getVname == "%self"
+			else
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"
 				edge = Edge.new(dep.getInstrHandler.getINode, node, dep.getVname)
 				dep.getInstrHandler.getINode.addDataflowEdge(edge)
@@ -301,7 +302,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	$node_list.push($cur_node)
 	$ins_cnt += 1
 
-	if instr.instance_of?Call_instr or instr.instance_of?AttrAssign_instr
+	if instr.is_a?Call_instr
 		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
 		if call != nil
 			instr.setCallHandler(call)
