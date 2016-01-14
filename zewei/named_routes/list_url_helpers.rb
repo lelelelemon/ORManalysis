@@ -2,7 +2,7 @@ require "fileutils"
 
 $helper_filename = ARGV[0]
 $view_folder = ARGV[1]
-$named_routes_view_folder = "named_routes_" + $view_folder
+$named_routes_view_folder = ARGV[2]
 
 def get_file_name_from_path(filename)
 	i = filename.rindex('/')
@@ -29,23 +29,24 @@ $helper_action_mapping = Hash.new
 helper_file = File.new $helper_filename, "r"
 while ((line = helper_file.gets) != nil)
 	line.strip!
-	if line.end_with?"_path"
-		helper = line
-		line = helper_file.gets
-
-		line = line[1, line.rindex('}')-1]
-		line.gsub! "\"", ""
-		items = line.split(',')
 	
-		hash = Hash.new
-		items.each do |item|
-			item.strip!
-			a = item.split("=>")
-		
-			hash[a[0]] = a[1]
-		end
-		$helper_action_mapping[helper] = [hash[":controller"], hash[":action"]]
+	helper = line
+	line = helper_file.gets
+
+	line = line[1, line.rindex('}')-1]
+	line.gsub! "\"", ""
+	items = line.split(',')
+
+	hash = Hash.new
+	items.each do |item|
+		item.strip!
+		a = item.split("=>")
+	
+		hash[a[0]] = a[1]
 	end
+	$helper_action_mapping[helper + "_path"] = [hash[":controller"], hash[":action"]]
+	$helper_action_mapping[helper + "_url"] = [hash[":controller"], hash[":action"]]
+
 end
 helper_file.close
 
