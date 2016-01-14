@@ -1,7 +1,7 @@
 require "fileutils"
 
 $href_path = ARGV[0]
-$new_href_path = "new_" + $href_path
+$new_href_path = ARGV[1]
 
 def get_file_name_from_path(filename)
 	i = filename.rindex('/')
