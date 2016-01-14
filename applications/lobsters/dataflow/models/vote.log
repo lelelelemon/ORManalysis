@@ -41,26 +41,26 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: v->story_id def_%cl_1_3 v[2.2,] 
-		 2: v->vote def_%cl_1_4 v[3.1,2.2,] 
-		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.2,] 
+		 1: v->story_id def_%cl_1_3 v[2.2,] v[2.2,] 
+		 2: v->vote def_%cl_1_4 v[3.1,2.2,] v[3.1,2.2,] 
+		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.2,] v[3.1,3.2,2.2,] 
 		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: votes[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
-		 6: RETURN %cl_1_6[3.4,] 
+		 6: RETURN %cl_1_6[3.4,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_7 
 		 1: def_%cl_1_8 %cl_1_7[4.0,] 
-		 2: RETURN %cl_1_8[4.1,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 15: 
-		 16: RETURN votes[2.9,] 
+		 16: RETURN votes[2.9,] %self[2.0,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -111,26 +111,26 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: v->comment_id def_%cl_1_3 v[2.2,] 
-		 2: v->vote def_%cl_1_4 v[3.1,2.2,] 
-		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.2,] 
+		 1: v->comment_id def_%cl_1_3 v[2.2,] v[2.2,] 
+		 2: v->vote def_%cl_1_4 v[3.1,2.2,] v[3.1,2.2,] 
+		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.2,] v[3.1,3.2,2.2,] 
 		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: votes[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
-		 6: RETURN %cl_1_6[3.4,] 
+		 6: RETURN %cl_1_6[3.4,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_7 
 		 1: def_%cl_1_8 %cl_1_7[4.0,] 
-		 2: RETURN %cl_1_8[4.1,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 17: 
-		 18: RETURN votes[2.9,] 
+		 18: RETURN votes[2.9,] %self[2.0,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -161,7 +161,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY def_%v_4 
-		 2: RETURN 
+		 2: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -193,26 +193,26 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: v->story_id def_%cl_1_3 v[2.3,] 
-		 2: v->vote def_%cl_1_4 v[3.1,2.3,] 
-		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.3,] 
+		 1: v->story_id def_%cl_1_3 v[2.3,] v[2.3,] 
+		 2: v->vote def_%cl_1_4 v[3.1,2.3,] v[3.1,2.3,] 
+		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.3,] v[3.1,3.2,2.3,] 
 		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: memo[2.2,] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: 
-		 7: RETURN memo[3.5,] 
+		 7: RETURN memo[3.5,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_7 
 		 1: def_%cl_1_8 %cl_1_7[4.0,] 
-		 2: RETURN %cl_1_8[4.1,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 7: RETURN %v_8[4.6,] 
+		 7: RETURN %v_8[4.6,] %self[4.2,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -243,7 +243,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY def_%v_4 
-		 2: RETURN 
+		 2: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -275,26 +275,26 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: v->comment_id def_%cl_1_3 v[2.3,] 
-		 2: v->vote def_%cl_1_4 v[3.1,2.3,] 
-		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.3,] 
+		 1: v->comment_id def_%cl_1_3 v[2.3,] v[2.3,] 
+		 2: v->vote def_%cl_1_4 v[3.1,2.3,] v[3.1,2.3,] 
+		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.3,] v[3.1,3.2,2.3,] 
 		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: memo[2.2,] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: 
-		 7: RETURN memo[3.5,] 
+		 7: RETURN memo[3.5,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_7 
 		 1: def_%cl_1_8 %cl_1_7[4.0,] 
-		 2: RETURN %cl_1_8[4.1,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 7: RETURN %v_8[4.6,] 
+		 7: RETURN %v_8[4.6,] %self[4.2,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -357,7 +357,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: RETURN 
+		 1: RETURN %self[2.0,] 
 BB 8
 	outgoing: 10 
 	datadep: 
@@ -592,7 +592,7 @@ BB 33
 		 3: %cl_1_30->find def_%cl_1_32 %cl_1_30[33.1,] %cl_1_31[33.2,] 
 		 4: COPY def_c %cl_1_32[33.3,] 
 		 5: 
-		 6: %cl_1_32->user_id def_%cl_1_33 %cl_1_32[33.3,] 
+		 6: %cl_1_32->user_id def_%cl_1_33 %cl_1_32[33.3,] %cl_1_32[33.3,] 
 		 7: def_%cl_1_34 %cl_1_33[33.6,] user_id[] 
 		 8: BRANCH %cl_1_34[33.7,] 
 BB 34
@@ -601,7 +601,7 @@ BB 34
 	instructions:
 		 0: 
 		 1: (User) def_%cl_1_35 
-		 2: c->user_id def_%cl_1_36 c[33.4,] 
+		 2: c->user_id def_%cl_1_36 c[33.4,] c[33.4,] 
 		 3: def_%cl_1_37 upvote[23.1,7.0,] downvote[26.1,10.0,] 
 		 4: COPY def_%cl_1_38 %cl_1_37[34.3,] 
 		 5: %cl_1_35->update_counters def_%cl_1_39 %cl_1_35[34.1,] %cl_1_36[34.2,] %cl_1_38[34.4,] 
@@ -616,7 +616,7 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: c->give_upvote_or_downvote_and_recalculate_confidence! def_%cl_1_40 c[33.4,] upvote[23.1,7.0,] downvote[26.1,10.0,] 
+		 1: c->give_upvote_or_downvote_and_recalculate_confidence! def_%cl_1_40 c[34.2,33.4,] upvote[23.1,7.0,] downvote[26.1,10.0,] 
 		 2: 
 BB 37
 	outgoing: 38 39 44 
@@ -628,7 +628,7 @@ BB 37
 		 3: %cl_1_41->find def_%cl_1_43 %cl_1_41[37.1,] %cl_1_42[37.2,] 
 		 4: COPY def_s %cl_1_43[37.3,] 
 		 5: 
-		 6: %cl_1_43->user_id def_%cl_1_44 %cl_1_43[37.3,] 
+		 6: %cl_1_43->user_id def_%cl_1_44 %cl_1_43[37.3,] %cl_1_43[37.3,] 
 		 7: def_%cl_1_45 %cl_1_44[37.6,] user_id[] 
 		 8: BRANCH %cl_1_45[37.7,] 
 BB 38
@@ -637,7 +637,7 @@ BB 38
 	instructions:
 		 0: 
 		 1: (User) def_%cl_1_46 
-		 2: s->user_id def_%cl_1_47 s[37.4,] 
+		 2: s->user_id def_%cl_1_47 s[37.4,] s[37.4,] 
 		 3: def_%cl_1_48 upvote[23.1,7.0,] downvote[26.1,10.0,] 
 		 4: COPY def_%cl_1_49 %cl_1_48[38.3,] 
 		 5: %cl_1_46->update_counters def_%cl_1_50 %cl_1_46[38.1,] %cl_1_47[38.2,] %cl_1_49[38.4,] 
@@ -652,31 +652,31 @@ BB 40
 	datadep: 
 	instructions:
 		 0: 
-		 1: s->give_upvote_or_downvote_and_recalculate_hotness! def_%cl_1_51 s[37.4,] upvote[23.1,7.0,] downvote[26.1,10.0,] 
+		 1: s->give_upvote_or_downvote_and_recalculate_hotness! def_%cl_1_51 s[38.2,37.4,] upvote[23.1,7.0,] downvote[26.1,10.0,] 
 		 2: COPY def_%cl_1_40 %cl_1_51[40.1,] 
 BB 41
 	outgoing: 46 
 	datadep: 
 	instructions:
-		 0: RETURN %cl_1_40[40.2,36.1,] 
+		 0: RETURN %cl_1_40[40.2,36.1,] %self[2.0,] 
 BB 42
 	outgoing: 46 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 44
 	outgoing: 46 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_52 
 		 1: def_%cl_1_53 %cl_1_52[44.0,] 
-		 2: RETURN %cl_1_53[44.1,] 
+		 2: RETURN %cl_1_53[44.1,] %self[2.0,] 
 BB 46
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: RETURN %v_13[8.7,] 
+		 8: RETURN %v_13[8.7,] %self[2.0,] 
 BB 10
 	outgoing: 
 	datadep: 

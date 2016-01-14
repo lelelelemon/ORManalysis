@@ -18,7 +18,7 @@ BB 2
 		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: %v_5->generate def_%v_6 %v_5[2.8,] 
 		 10: ATTRASSIGN %self->short_id %self[2.0,2.7,] %v_6[2.9,] 
-		 11: RETURN %v_6[2.9,] 
+		 11: RETURN %v_6[2.9,] %self[2.0,2.7,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -58,12 +58,12 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->destroy def_%v_5 %self[2.0,] 
-		 2: RETURN %v_5[5.1,] 
+		 2: RETURN %v_5[5.1,] %self[5.1,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 8
 	outgoing: 
 	datadep: 
@@ -86,7 +86,7 @@ BB 2
 		 5: 
 		 6: %self->recipient def_%v_3 %self[2.0,] 
 		 7: %v_3->update_unread_message_count! def_%v_4 %v_3[2.6,] 
-		 8: RETURN %v_4[2.7,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -115,7 +115,7 @@ BB 3
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 16 
 	datadep: 
@@ -235,12 +235,12 @@ BB 18
 		 21: def_%v_48 %v_45[18.17,] %v_47[18.20,] 
 		 22: COPY def_%v_49 %v_42[18.14,] %v_43[18.15,] %v_44[18.16,] %v_48[18.21,] 
 		 23: %v_31->pushover! def_%v_50 %v_31[18.1,] %v_49[18.22,] 
-		 24: RETURN %v_50[18.23,] 
+		 24: RETURN %v_50[18.23,] %self[18.1,18.9,18.12,18.15,18.16,18.19,2.0,] 
 BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 21
 	outgoing: 
 	datadep: 
@@ -280,7 +280,7 @@ BB 3
 		 3: 
 		 4: ATTRASSIGN %self->@recipient_username %self[3.2,] username[2.5,] @recipient_username[] 
 		 5: COPY def_%v_8 username[2.5,] 
-		 6: RETURN username[2.5,] 
+		 6: RETURN username[2.5,] %self[3.2,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -289,7 +289,7 @@ BB 4
 		 1: %self->errors def_%v_9 %self[2.0,2.7,] 
 		 2: COPY def_%v_10 
 		 3: %v_9->add def_%v_11 %v_9[4.1,] %v_10[4.2,] 
-		 4: RETURN %v_11[4.3,] 
+		 4: RETURN %v_11[4.3,] %self[4.1,2.0,2.7,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -313,7 +313,7 @@ BB 2
 		 6: (Markdowner) def_%v_3 
 		 7: %self->body def_%v_4 %self[2.0,] 
 		 8: %v_3->to_html def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: RETURN %v_5[2.8,] 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -336,7 +336,7 @@ BB 2
 		 5: 
 		 6: %self->body def_%v_3 %self[2.0,] 
 		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 
-		 8: RETURN %v_4[2.7,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -364,7 +364,7 @@ BB 2
 		 10: %self->short_id def_%v_7 %self[2.0,] 
 		 11: def_%v_8 %v_6[2.9,] %v_7[2.10,] 
 		 12: def_%v_9 %v_5[2.8,] %v_8[2.11,] 
-		 13: RETURN %v_9[2.12,] 
+		 13: RETURN %v_9[2.12,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
