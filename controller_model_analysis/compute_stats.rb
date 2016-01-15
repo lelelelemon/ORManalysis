@@ -28,7 +28,8 @@ def traceback_data_dep(cur_node, stop_at_query=false)
 					#If the from node is in cur_node's call stack and the data dependency is a return value, the dependent node can be
 					#instructions far after cur_node
 					if cur_node.getCallStack.include?(e.getToNode) and e.getVname == "returnv"
-					else
+					elsif e.getFromNode.getIndex < cur_node.getIndex
+					#else
 						#test is both nodes are in the same basic block, prevent from tracing too far
 						#if e.getFromNode.getInstr.getBB == node.getInstr.getBB
 						if @node_list.include?(e.getFromNode) == false and @dep_array.include?(e.getFromNode) == false
@@ -85,7 +86,7 @@ def find_nearest_var(cur_node)
 	return nil
 end
 
-def traceforward_data_dep(self_v_name, query_node)
+def traceforward_data_dep(query_node)
 	@traversed = Array.new
 	@node_list = Array.new
 	@node_list.push(query_node)
@@ -94,28 +95,44 @@ def traceforward_data_dep(self_v_name, query_node)
 		@traversed.push(node)
 		node.getDataflowEdges.each do |e|
 			#e.getToNode will never be nil
-			if e.getToNode.isField?
-				#check caller name matches
-				var_name = e.getToNode.getInstr.getCallHandler.getObjName
-				f_name = e.getToNode.getInstr.getCallHandler.getFuncName
-				if (self_v_name == nil or self_v_name != var_name) and e.getToNode.getInstr.instance_of?AttrAssign_instr
-					@traversed.push(e.getToNode)
-				else
-					if @node_list.include?(e.getToNode) == false and @traversed.include?(e.getToNode) == false
-						@node_list.push(e.getToNode)
-					end	
-				end
-				#puts "\t* Field #{var_name} . #{f_name} is being used"
-				#cur_node must define sth
-				#if cur_node.getDefv == var_name
-					#puts "#{var_name} . #{e.getToNode.getInstr.getCallHandler.getFuncName} from [query] #{query_node.getInstr.toString} is used"
-				#end
-			elsif e.getToNode.isQuery?
+			#if e.getToNode.isField?
+			#	#check caller name matches
+			#	var_name = e.getToNode.getInstr.getCallHandler.getObjName
+			#	f_name = e.getToNode.getInstr.getCallHandler.getFuncName
+			#	if (self_v_name == nil or self_v_name != var_name) and e.getToNode.getInstr.instance_of?AttrAssign_instr
+			#		@traversed.push(e.getToNode)
+			#	else
+			#		if @node_list.include?(e.getToNode) == false and @traversed.include?(e.getToNode) == false
+			#			@node_list.push(e.getToNode)
+			#		end	
+			#	end
+			#	#puts "\t* Field #{var_name} . #{f_name} is being used"
+			#	#cur_node must define sth
+			#	#if cur_node.getDefv == var_name
+			#		#puts "#{var_name} . #{e.getToNode.getInstr.getCallHandler.getFuncName} from [query] #{query_node.getInstr.toString} is used"
+			#	#end
+			if e.getToNode.getInView
 				@traversed.push(e.getToNode)
+			elsif e.getToNode.isQuery? and e.getToNode != query_node
+				@traversed.push(e.getToNode)
+				@node_list.push(e.getToNode)
 			else
-				if @node_list.include?(e.getToNode) == false and @traversed.include?(e.getToNode) == false
-					@node_list.push(e.getToNode)
-				end	
+				#If it is a return value dep, the ToNode (funccall node), will not pass any data dep to other node within this func call
+				#if node.getCallStack.include?(e.getToNode) and e.getVname == "returnv"
+				#	@traversed.push(e.getToNode)
+				#	e.getToNode.getDataflowEdges.each do |e1|
+				#		next_node = e1.getToNode
+				#		if e1.getToNode.getIndex > query_node.getIndex and @node_list.include?(e1.getToNode) == false and @traversed.include?(e1.getToNode) == false
+				#			@node_list.push(e1.getToNode)
+				#		end
+				#	end
+				#else
+					if @node_list.include?(e.getToNode) == false and @traversed.include?(e.getToNode) == false
+						if e.getToNode.getIndex > query_node.getIndex or e.getVname == "returnv"
+							@node_list.push(e.getToNode)
+						end
+					end	
+				#end
 			end
 		end
 	end
@@ -217,9 +234,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	$node_list.each do |n|
 		n.setLabel
 		puts "#{n.getIndex}:#{n.getInstr.toString}"
-		n.getBackwardEdges.each do |e|
-			if e.getFromNode != nil
-				puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+		n.getDataflowEdges.each do |e|
+			if e.getToNode != nil
+				puts "\t\t (#{e.getVname})-> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
 			else
 				puts "\t\t <- params"
 			end
@@ -262,15 +279,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	total_branch = 0
 	
 	write_source_total = 0	
+	write_from_const = 0
 	write_from_user_input = 0
 	write_from_query = 0
 	#The whoe query
-	read_to_chained_query = 0
+	read_to_read_query = 0
 	read_to_write_query = 0
 	read_to_view = 0
-	read_assign_to_other = 0
 	read_to_branch = 0
-	read_assign_to_self = 0
 	$node_list.each do |n|
 		if n.isQuery?
 			total_query_num += 1
@@ -296,103 +312,108 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 			end
 			if ["SELECT","GROUP","JOIN"].include?n.getInstr.getCallHandler.getQueryType
 				query_read += 1
-				single_tbl_to_chained_query = 0
+				single_tbl_to_read_query = 0
 				single_tbl_to_write_query = 0
 				single_tbl_to_view = 0
-				single_tbl_assign_to_other = 0
 				single_tbl_to_branch = 0
-				single_tbl_assign_to_self = 0
 
-				#puts "READ query instr #{n.getIndex}:#{n.getInstr.toString} forward flow:"
-				v_node = find_nearest_var(n)
-				self_v_name = nil
-				if v_node != nil
-					if v_node.getInstr.getDefv != nil
-						self_v_name = v_node.getInstr.getDefv
-					else #AttrAssign_instr
-						self_v_name = v_node.getInstr.getFuncname
-					end
-				end
-				if self_v_name != nil
-				#	puts "* result into #{self_v_name}"
-					graph_write($graph_file, " into_#{self_v_name}")
-				end
-				traceforward_data_dep(self_v_name, n).each do |n1|
-					if n1.isField?
-						var_name = n1.getInstr.getCallHandler.getObjName
-						field_name = n1.getInstr.getCallHandler.getFuncName
-						if (self_v_name == nil or self_v_name != var_name) and n1.getInstr.instance_of?AttrAssign_instr
-								read_assign_to_other += 1
-								single_tbl_assign_to_other += 1
-								#puts "\t(read_assign_to_other)"
-						end
-					elsif n1.getInstr.instance_of?AttrAssign_instr and n1.getInstr.getCaller.include?("self")
-						read_assign_to_self += 1
-						single_tbl_assign_to_self += 1
-						#puts "\t(read_assign_to_self)"
+				puts "READ query instr #{n.getIndex}:#{n.getInstr.toString} forward flow:"
+				#v_node = find_nearest_var(n)
+				#self_v_name = nil
+				#if v_node != nil
+				#	if v_node.getInstr.getDefv != nil
+				#		self_v_name = v_node.getInstr.getDefv
+				#	else #AttrAssign_instr
+				#		self_v_name = v_node.getInstr.getFuncname
+				#	end
+				#end
+				#if self_v_name != nil
+				##	puts "* result into #{self_v_name}"
+				#	graph_write($graph_file, " into_#{self_v_name}")
+				#end
+				traceforward_data_dep(n).each do |n1|
+					#if n1.isField?
+					#	var_name = n1.getInstr.getCallHandler.getObjName
+					#	field_name = n1.getInstr.getCallHandler.getFuncName
+					#	if (self_v_name == nil or self_v_name != var_name) and n1.getInstr.instance_of?AttrAssign_instr
+					#			read_assign_to_other += 1
+					#			single_tbl_assign_to_other += 1
+					#			#puts "\t(read_assign_to_other)"
+					#	end
+					#elsif n1.getInstr.instance_of?AttrAssign_instr and n1.getInstr.getCaller.include?("self")
+					#	read_assign_to_self += 1
+					#	single_tbl_assign_to_self += 1
+					#	#puts "\t(read_assign_to_self)"
+					if n1.getInView
+						puts " * (To view)"
+						single_tbl_to_view += 1
+						read_to_view += 1
 					elsif n1.isQuery?
 						if ["DELETE","UPDATE","INSERT"].include?n1.getInstr.getCallHandler.getQueryType
 								read_to_write_query += 1
 								single_tbl_to_write_query += 1
-								#puts "\t(read_to_write_query)"
+								puts " * (To write query)"
 						else
-								read_to_chained_query += 1
-								single_tbl_to_chained_query += 1
-								#puts "\t(read_to_chained_query)"
+								read_to_read_query += 1
+								single_tbl_to_read_query += 1
+								puts " * (To read query)"
 						end
 					elsif n1.isBranch?
 						read_to_branch += 1
 						single_tbl_to_branch += 1
-						#puts "\t(read_to_branch)"
+						puts " * (To branch)"
+					elsif n1.getDataflowEdges.length == 0
+						puts " * (To unknown sink)"
 					end
-					if n1.getInView
-						read_to_view += 1
-						single_tbl_to_view += 1
-						#puts "\t(read_to_view)"
-					end	
-					#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
+					puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 				end
 				if n.getInstr.getCallHandler.caller != nil
-					graph_write($graph_file, "\nTBLREADRECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_to_chained_query},#{single_tbl_to_write_query},#{single_tbl_to_view},#{single_tbl_assign_to_other},#{single_tbl_assign_to_self},#{single_tbl_to_branch}]")
+					graph_write($graph_file, "\nTBLREADRECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_to_read_query},#{single_tbl_to_write_query},#{single_tbl_to_view}]")
 				end
 			elsif ["DELETE","UPDATE","INSERT"].include?n.getInstr.getCallHandler.getQueryType
 				query_write += 1
-				puts "DELETE/UPDATE/INSERT instr #{n.getIndex}:#{n.getInstr.toString} backflow:"
+				#puts "DELETE/UPDATE/INSERT instr #{n.getIndex}:#{n.getInstr.toString} backflow:"
 				single_tbl_from_query = 0
 				single_tbl_from_user = 0
+				single_tbl_from_const = 0
 				single_tbl_total = 0
 				assigned_fields = Hash.new
 				traceback_data_dep(n).each do |n1|
 					if n1.instance_of?Edge
-						puts " x (From user input)"
+						#puts " x (From user input)"
 						write_from_user_input += 1
 						write_source_total += 1
 						single_tbl_from_user += 1
 						single_tbl_total += 1
 					else
-						if n1.isQuery? and n1.isReadQuery?
-							write_from_query += 1
-							write_source_total += 1
-							single_tbl_total += 1
-							single_tbl_from_query += 1
-							puts " x (From query)"
+						if n1.isQuery? 
+							if n1.isReadQuery?
+								write_from_query += 1
+								write_source_total += 1
+								single_tbl_total += 1
+								single_tbl_from_query += 1
+								#puts " x (From query)"
+							else
+								#puts " (#{n.getInstr.toString}) depend on (#{n1.getInstr.toString})"
+							end
 						elsif n1.getInstr.instance_of?AttrAssign_instr
 							call = n1.getInstr.getCallHandler
 							assigned_fields[n1.getInstr.getFuncname] = true
-							puts "\t(Attr_assign)"
+							#puts "\t(Attr_assign)"
 							#if call!=nil
 							#	graph_write($graph_file, " --assign #{call.getObjName}.#{call.getFuncName} type=#{call.caller.getName}")
 							#end
 						elsif n1.getBackwardEdges.length == 0
 							if n1.getInstr.instance_of?Copy_instr
-								puts " x (From copy const)"
+								#puts " x (From copy const)"
+								single_tbl_from_const += 1
 							else
-								puts " x (Some source)"
+								#puts " x (Some source)"
 							end
 							write_source_total += 1
 							single_tbl_total += 1
 						end
-						puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
+						#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 					end
 				end
 				if n.getInstr.getCallHandler.caller != nil
@@ -427,11 +448,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	graph_write($graph_file, "STATS branch total: #{total_branch}\n")
 
 	graph_write($graph_file, "STATS read queries: #{query_read}\n")
-	graph_write($graph_file, "STATS read to chained query: #{read_to_chained_query}\n")
+	graph_write($graph_file, "STATS read to chained query: #{read_to_read_query}\n")
 	graph_write($graph_file, "STATS read to write_query: #{read_to_write_query}\n")
 	graph_write($graph_file, "STATS read to view: #{read_to_view}\n")
-	graph_write($graph_file, "STATS read assign to other: #{read_assign_to_other}\n")
-	graph_write($graph_file, "STATS read assign to self: #{read_assign_to_self}\n")
 	graph_write($graph_file, "STATS read to branch: #{read_to_branch}\n")
 
 	graph_write($graph_file, "STATS write queries: #{query_write}\n")
