@@ -1,6 +1,7 @@
 #load 'read_dataflow.rb'
 $in_view = false
 $in_loop = Array.new
+$general_call_stack = Array.new
 $funccall_stack = Array.new
 
 class INode
@@ -32,6 +33,7 @@ class INode
 			@call_stack.push(f)
 		end
 	end
+	attr_accessor :index	
 	def getClosureStack
 		@closure_stack
 	end
@@ -123,6 +125,7 @@ class INode
 	def getIndex
 		@index
 	end
+						#puts "Add return instr: #{callerv_name}.#{call.getFuncName} #{rt.getIndex} -> #{temp_node.getIndex}"
 	def addChild(c)
 		@children.push(c)
 	end
@@ -191,6 +194,7 @@ def add_dataflow_edge(node)
 			#XXX: If it is a field instr, then we know it is not a blackbox func call, if it is not attrassign, then it is a read only instr
 			from_node = dep.getInstrHandler.getINode
 			if from_node.getInstr.instance_of?Call_instr and from_node.getInstr.isField and dep.getVname == "%self"
+			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
 			else
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"
 				edge = Edge.new(dep.getInstrHandler.getINode, node, dep.getVname)
@@ -230,6 +234,9 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 			end
 		
 			if trigger_save?(call) or trigger_create?(call)
+				$node_list.pop
+				$ins_cnt -= 1
+
 				temp_actions = Array.new
 				if caller_class != nil and trigger_save?(call)
 						temp_actions.push("before_save")
@@ -241,6 +248,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 
 				last_cfg = nil
 				temp_node = $cur_node
+				outnodes = Array.new
 				temp_actions.each do |action|
 						temp_name = "#{caller_class}.#{action}"
 						if $non_repeat_list.include?(temp_name) == false
@@ -251,6 +259,13 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 							end
 							cur_cfg = trace_query_flow(caller_class, action, "", "", level+2)
 							if cur_cfg != nil
+								#XXX: If it is validation function before an insert/update query, then the all the outlet of the validation function goes to that query
+								#validation funcs may update fields in the class, and the insert/update query will have data dependency on those functions
+								#TODO: before_validation can also affect normal functions...
+								cur_cfg.getDefSelf.each do |rt|
+									outnodes.push(rt)
+								end
+
 								if last_cfg == nil
 									temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
 								else
@@ -262,6 +277,15 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 							end
 						end
 				end
+				temp_node.index = $ins_cnt
+				$node_list.push(temp_node)
+				outnodes.each do |rt|
+					dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
+					edge = Edge.new(rt, temp_node, "returnv")
+					rt.getInstr.getINode.addDataflowEdge(edge)
+					$dataflow_edges[dataflow_edge_name] = edge
+				end
+				$ins_cnt += 1
 			end
 				
 		elsif callerv != nil	
@@ -283,6 +307,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 						rt.getInstr.getINode.addDataflowEdge(edge)
 						$dataflow_edges[dataflow_edge_name] = edge
 					end
+					temp_node.getInstr.setCallCFG(cur_cfg)
 				end
 			end
 		end
@@ -310,14 +335,18 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 				instr.setResolvedCaller(start_class)
 			end
 			$funccall_stack.push($cur_node)
+			$general_call_stack.push($cur_node)
 			handle_single_call_node2(start_class, start_function, class_handler, call, level)
 			$funccall_stack.pop
+			$general_call_stack.pop
+		else
+			#puts "CANNOT find caller: #{instr.getResolvedCaller}, #{instr.getFuncname}"
 		end
 	end
 
 	if instr.instance_of?ReceiveArg_instr
-		if $funccall_stack.length > 0
-			dep = $funccall_stack[-1]
+		if $general_call_stack.length > 0
+			dep = $general_call_stack[-1]
 			edge_name = "#{dep.getIndex}*#{node.getIndex}"
 			edge = Edge.new(dep, node, instr.var_name)
 			dep.addDataflowEdge(edge)
@@ -325,6 +354,19 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 				$dataflow_edges[edge_name] = Array.new
 			end
 			$dataflow_edges[edge_name].push(edge)
+		end
+	end
+
+	if instr.instance_of?Return_instr
+		instr.getDeps.each do |dep|
+			if dep.getInstrHandler.getINode != nil
+				from_node = dep.getInstrHandler.getINode
+				if dep.getVname == "%self"
+					if instr.getBB.getCFG.getDefSelf.include?(from_node)==false
+						instr.getBB.getCFG.addDefSelf(from_node)
+					end
+				end
+			end
 		end
 	end
 
@@ -340,8 +382,10 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 			$in_loop.push(true)
 		end
 		$closure_stack.push($cur_node)
+		$general_call_stack.push($cur_node)
 		handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
 		$closure_stack.pop
+		$general_call_stack.pop
 		cl.getReturns.each do |r|
 			new_return_l.push(r)
 		end
@@ -420,6 +464,17 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 
 
 	cfg.getBB.each do |bb|
+		#TODO: THIS IS SO MESSY...
+		if ["before_save"].include?function_handler.getName
+			bb.getInstr.each do |i|
+				if i.instance_of?Call_instr and i.getCallCFG != nil
+					i.getCallCFG.getDefSelf.each do |d|
+						cfg.addDefSelf(d)
+					end
+				end
+			end
+		end
+
 		#puts "BB's return length = #{bb.getReturns.length}"
 		bb.getOutgoings.each do |o|
 			o_bb = cfg.getBBByIndex(o)

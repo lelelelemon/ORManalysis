@@ -149,10 +149,17 @@ class Call_instr < Instruction
 	def initialize(_caller, _funcname)
 		@deps = Array.new	
 		@resolved = false
-		@caller = _caller;
+		@caller = _caller; #string
 		@funcname = _funcname	
 		@resolved_caller = ""
-		@call_handler = nil
+		@call_handler = nil #Function_call
+		@call_cfg = nil #CFG
+	end
+	def setCallCFG(c)
+		@call_cfg = c
+	end
+	def getCallCFG
+		@call_cfg
 	end
 	def setCallHandler(h)
 		@call_handler = h
@@ -449,6 +456,14 @@ class CFG
 		#explicit_return is the return point in data flow, only include "RETURN" instr
 		@explicit_return = Array.new
 		@m_handler = nil
+		#All nodes that last defines "self", used for validation like "before_save"
+		@def_self_nodes = Array.new #INode
+	end
+	def getDefSelf
+		@def_self_nodes
+	end
+	def addDefSelf(s)
+		@def_self_nodes.push(s)
 	end
 	def getInstrNum
 		cnt = 0
