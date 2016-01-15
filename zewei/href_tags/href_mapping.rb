@@ -37,5 +37,5 @@ Dir.glob($href_path + "**/*") do |item|
 	end
 
 
-	system("rails console < " + item + " > " + $new_href_path + nested_path + file_name)
+	system("rails runner " + item + " > " + $new_href_path + nested_path + file_name)
 end
