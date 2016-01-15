@@ -7,15 +7,15 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->people %self[2.0,] 
-		 7: %v_3->first %v_3[2.6,] 
-		 8: RETURN %v_4[2.7,] 
+		 6: %self->people def_%v_3 %self[2.0,] 
+		 7: %v_3->first def_%v_4 %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -30,15 +30,15 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->all %self[2.0,] 
-		 7: %self[2.0,] %v_3[2.6,] 
-CLOSURE BEGIN: 
+		 6: %self->all def_%v_3 %self[2.0,] 
+		 7: def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 
+CLOSURE BEGIN: admin[] sum[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -47,35 +47,35 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_sum 
+		 3: RECEIVEARG def_admin 
+		 4: COPY def_%current_scope 
+		 5: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: admin->people admin[2.3,] 
-		 2: %cl_1_3->count %cl_1_3[3.1,] 
-		 3: %cl_1_4[3.2,] sum[2.2,] 
-		 4: %cl_1_5[3.3,] 
-		 5: RETURN %cl_1_5[3.3,] 
+		 1: admin->people def_%cl_1_3 admin[2.3,] 
+		 2: %cl_1_3->count def_%cl_1_4 %cl_1_3[3.1,] 
+		 3: def_%cl_1_5 sum[2.2,] %cl_1_4[3.2,] 
+		 4: COPY def_sum %cl_1_5[3.3,] 
+		 5: RETURN %cl_1_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_6[4.0,] 
-		 2: RETURN %cl_1_7[4.1,] 
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: RETURN %v_4[2.7,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -90,16 +90,16 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->template_name %self[2.0,] 
-		 7: %v_3->nil? %v_3[2.6,] 
-		 8: %v_4->! %v_4[2.7,] 
-		 9: RETURN %v_5[2.8,] 
+		 6: %self->template_name def_%v_3 %self[2.0,] 
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
+		 8: %v_4->! def_%v_5 %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -114,29 +114,29 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->flags %self[2.0,] 
-		 7: (Hash) 
-		 8: %v_3->is_a? %v_4[2.7,] %v_3[2.6,] 
-		 9: %v_5->! %v_5[2.8,] 
+		 6: %self->flags def_%v_3 %self[2.0,] 
+		 7: (Hash) def_%v_4 
+		 8: %v_3->is_a? def_%v_5 %v_3[2.6,] %v_4[2.7,] 
+		 9: %v_5->! def_%v_6 %v_5[2.8,] 
 		 10: BRANCH %v_6[2.9,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
-		 1: %self[2.0,] %v_7[3.0,] 
-		 2: RETURN %v_7[3.0,] 
+		 0: COPY def_%v_7 
+		 1: ATTRASSIGN %self->flags %self[2.0,] %v_7[3.0,] 
+		 2: RETURN %v_7[3.0,] %self[3.1,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -151,17 +151,17 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: (I18n) 
-		 7: 
-		 8: %v_3->t %v_4[2.7,] %v_3[2.6,] 
-		 9: %v_5->select %self[2.0,] %v_5[2.8,] 
-CLOSURE BEGIN: 
+		 6: (I18n) def_%v_3 
+		 7: COPY def_%v_4 
+		 8: %v_3->t def_%v_5 %v_3[2.6,] %v_4[2.7,] 
+		 9: %v_5->select def_%v_6 %v_5[2.8,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] name[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -170,35 +170,35 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_name 
+		 3: RECEIVEARG def_priv 
+		 4: COPY def_%current_scope 
+		 5: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->privileges %self[2.0,] 
-		 2: name->to_s name[2.2,] 
-		 3: %cl_1_3->include? %cl_1_3[3.1,] %cl_1_4[3.2,] 
-		 4: RETURN %cl_1_5[3.3,] 
+		 1: %self->privileges def_%cl_1_3 %self[2.0,] 
+		 2: name->to_s def_%cl_1_4 name[2.2,] 
+		 3: %cl_1_3->include? def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 
+		 4: RETURN %cl_1_5[3.3,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_6[4.0,] 
-		 2: RETURN %cl_1_7[4.1,] 
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 10: %v_6->sort_by %self[2.0,] %v_6[2.9,] 
-CLOSURE BEGIN: 
+		 10: %v_6->sort_by def_%v_7 %v_6[2.9,] %self[2.0,] 
+CLOSURE BEGIN: priv[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -207,55 +207,55 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_name 
+		 3: RECEIVEARG def_priv 
+		 4: COPY def_%current_scope 
+		 5: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 7 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: priv[2.3,] 
-		 2: (Fixnum) 
-		 3: %cl_2_3->is_a? %cl_2_3[3.1,] %cl_2_4[3.2,] 
+		 1: def_%cl_2_3 priv[2.3,] 
+		 2: (Fixnum) def_%cl_2_4 
+		 3: %cl_2_3->is_a? def_%cl_2_5 %cl_2_3[3.1,] %cl_2_4[3.2,] 
 		 4: BRANCH %cl_2_5[3.3,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
-		 1: priv[2.3,] 
-		 2: %cl_2_6[4.0,] %cl_2_7[4.1,] 
+		 0: COPY def_%cl_2_6 
+		 1: def_%cl_2_7 priv[2.3,] 
+		 2: def_%cl_2_8 %cl_2_6[4.0,] %cl_2_7[4.1,] 
 		 3: 
 BB 5
 	outgoing: 7 9 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: priv[2.3,] 
-		 1: %cl_2_9->to_s %cl_2_9[5.0,] 
-		 2: RETURN %cl_2_10[5.1,] 
+		 0: def_%cl_2_9 priv[2.3,] 
+		 1: %cl_2_9->to_s def_%cl_2_10 %cl_2_9[5.0,] 
+		 2: RETURN %cl_2_10[5.1,] %self[2.0,] 
 BB 6
 	outgoing: 9 
-	datadep: 4 
+	datadep: 
 	instructions:
-		 0: RETURN %cl_2_8[4.2,] 
+		 0: RETURN %cl_2_8[4.2,] %self[2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_11[7.0,] 
-		 2: RETURN %cl_2_12[7.1,] 
+		 0: def_%cl_2_11 
+		 1: def_%cl_2_12 %cl_2_11[7.0,] 
+		 2: RETURN %cl_2_12[7.1,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 11: %v_7->map %self[2.0,] %v_7[2.10,] 
-CLOSURE BEGIN: 
+		 11: %v_7->map def_%v_8 %v_7[2.10,] %self[2.0,] 
+CLOSURE BEGIN: name[] priv[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -264,34 +264,34 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_name 
+		 3: RECEIVEARG def_priv 
+		 4: COPY def_%current_scope 
+		 5: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: name->to_s name[2.2,] 
+		 1: name->to_s def_%cl_3_3 name[2.2,] 
 		 2: priv[2.3,] %cl_3_3[3.1,] 
 		 3: 
-		 4: RETURN priv[3.2,] 
+		 4: RETURN priv[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_4[4.0,] 
-		 2: RETURN %cl_3_5[4.1,] 
+		 0: def_%cl_3_4 
+		 1: def_%cl_3_5 %cl_3_4[4.0,] 
+		 2: RETURN %cl_3_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 12: RETURN %v_8[2.11,] 
+		 12: RETURN %v_8[2.11,] %self[2.0,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -306,29 +306,29 @@ BB 2
 	outgoing: 4 5 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
+		 5: def_privs 
 		 6: 
-		 7: %self->privileges %self[2.0,] 
+		 7: %self->privileges def_%v_3 %self[2.0,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
-		 1: %self[2.0,] %v_5[4.0,] 
-		 2: %v_5[4.0,] 
+		 0: COPY def_%v_5 
+		 1: ATTRASSIGN %self->privileges def_%v_4 %self[2.0,] %v_5[4.0,] 
+		 2: COPY def_%v_3 %v_5[4.0,] 
 BB 5
 	outgoing: 6 8 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: privs->each %self[2.0,] privs[2.5,] 
-CLOSURE BEGIN: 
+		 1: privs->each def_%v_6 privs[2.5,] %self[4.1,2.0,] 
+CLOSURE BEGIN: priv[] %self[4.1,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -337,59 +337,59 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_priv 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: priv->to_s priv[2.2,] 
-		 2: %cl_1_3[3.1,] 
+		 1: priv->to_s def_%cl_1_3 priv[2.2,] 
+		 2: COPY def_priv %cl_1_3[3.1,] 
 		 3: 
-		 4: %self->privileges %self[2.0,] 
-		 5: %cl_1_4[3.4,] priv[3.2,] 
+		 4: %self->privileges def_%cl_1_4 %self[2.0,] 
+		 5: def_%cl_1_5 %cl_1_4[3.4,] priv[3.1,3.2,] 
 		 6: 
-		 7: 
+		 7: COPY def_%cl_1_6 
 		 8: 
-		 9: 
+		 9: COPY def_%cl_1_7 
 		 10: 
-		 11: priv->inspect priv[3.2,] 
-		 12: 
+		 11: priv->inspect def_%cl_1_8 priv[3.1,3.2,] 
+		 12: COPY def_%cl_1_9 
 		 13: 
-		 14: 
+		 14: COPY def_%cl_1_10 
 		 15: 
-		 16: priv->inspect priv[3.2,] 
-		 17: 
+		 16: priv->inspect def_%cl_1_11 priv[3.1,3.2,3.11,] 
+		 17: COPY def_%cl_1_12 
 		 18: 
-		 19: priv->inspect priv[3.2,] 
-		 20: 
-		 21: %cl_1_14[3.20,] %cl_1_12[3.17,] %cl_1_6[3.7,] priv[3.2,] %cl_1_13[3.19,] %cl_1_7[3.9,] %cl_1_10[3.14,] %cl_1_8[3.11,] %cl_1_11[3.16,] %cl_1_9[3.12,] 
-		 22: %self->class_eval %cl_1_15[3.21,] %self[2.0,] 
-		 23: RETURN %cl_1_16[3.22,] 
+		 19: priv->inspect def_%cl_1_13 priv[3.1,3.2,3.11,3.16,] 
+		 20: COPY def_%cl_1_14 
+		 21: def_%cl_1_15 %cl_1_6[3.7,] priv[3.1,3.2,3.11,3.16,3.19,] %cl_1_7[3.9,] %cl_1_8[3.11,] %cl_1_9[3.12,] priv[3.1,3.2,3.11,3.16,3.19,] %cl_1_10[3.14,] %cl_1_11[3.16,] %cl_1_12[3.17,] %cl_1_13[3.19,] %cl_1_14[3.20,] 
+		 22: %self->class_eval def_%cl_1_16 %self[3.4,2.0,] %cl_1_15[3.21,] 
+		 23: RETURN %cl_1_16[3.22,] %self[3.4,3.22,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_17[4.0,] 
-		 2: RETURN %cl_1_18[4.1,] 
+		 0: def_%cl_1_17 
+		 1: def_%cl_1_18 %cl_1_17[4.0,] 
+		 2: RETURN %cl_1_18[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %v_6[5.1,] 
+		 2: RETURN %v_6[5.1,] %self[4.1,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %v_7[6.0,] 
-		 2: RETURN %v_8[6.1,] 
+		 0: def_%v_7 
+		 1: def_%v_8 %v_7[6.0,] 
+		 2: RETURN %v_8[6.1,] %self[4.1,2.0,] 
 BB 8
 	outgoing: 
 	datadep: 

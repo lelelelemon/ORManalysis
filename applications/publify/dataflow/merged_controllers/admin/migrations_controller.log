@@ -9,17 +9,17 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->migrator %self[2.0,] 
-		 7: def_%v_4 %v_3->current_schema_version %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@current_version %self[2.0,2.6,] %v_4[2.7,] @current_version[] 
+		 6: %self->migrator def_%v_3 %self[2.0,] 
+		 7: %v_3->current_schema_version def_%v_4 %v_3[2.6,] 
+		 8: ATTRASSIGN %self->@current_version %self[2.0,2.6,] %v_4[2.7,] 
 		 9: 
-		 10: def_%v_5 %self->migrator %self[2.0,2.6,] 
-		 11: def_%v_6 %v_5->pending_migrations %v_5[2.10,] 
-		 12: ATTRASSIGN %self->@needed_migrations %self[2.0,2.6,2.10,] %v_6[2.11,] @needed_migrations[] 
+		 10: %self->migrator def_%v_5 %self[2.0,2.6,] 
+		 11: %v_5->pending_migrations def_%v_6 %v_5[2.10,] 
+		 12: ATTRASSIGN %self->@needed_migrations %self[2.0,2.6,2.10,] %v_6[2.11,] 
 		 13: 
 		 14: def_%v_7 %self[2.0,2.6,2.10,] %self[2.0,2.6,2.10,] 
 CLOSURE BEGIN: %self[2.0,2.6,2.10,] 
@@ -33,64 +33,64 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 
-		 2: def_%cl_1_4 %self->t %self[2.0,] %cl_1_3[3.1,] 
-		 3: RETURN %cl_1_4[3.2,] 
+		 1: COPY def_%cl_1_3 
+		 2: %self->t def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 
+		 3: RETURN %cl_1_4[3.2,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_5 
 		 1: def_%cl_1_6 %cl_1_5[4.0,] 
-		 2: RETURN %cl_1_6[4.1,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 15: 
-		 16: def_%v_8 
-		 17: def_%v_9 %self->t %self[2.0,2.6,2.10,] %v_8[2.16,] 
+		 16: COPY def_%v_8 
+		 17: %self->t def_%v_9 %self[2.0,2.6,2.10,] %v_8[2.16,] 
 		 18: 
-		 19: def_%v_10 
-		 20: def_%v_11 %self->t %self[2.0,2.6,2.10,2.17,] %v_10[2.19,] 
+		 19: COPY def_%v_10 
+		 20: %self->t def_%v_11 %self[2.0,2.6,2.10,2.17,] %v_10[2.19,] 
 		 21: 
-		 22: def_%v_12 %self[2.0,2.6,2.10,2.17,2.20,] @current_version[2.8,] 
-		 23: def_%v_13 %self[2.0,2.6,2.10,2.17,2.20,] @needed_migrations[2.12,] 
-		 24: def_%v_14 %v_13->blank? %v_13[2.23,] 
+		 22: def_%v_12 %self[2.0,2.6,2.10,2.17,2.20,] 
+		 23: def_%v_13 %self[2.0,2.6,2.10,2.17,2.20,] 
+		 24: %v_13->blank? def_%v_14 %v_13[2.23,] 
 		 25: BRANCH %v_14[2.24,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_15 
+		 0: COPY def_%v_15 
 		 1: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_16 
-		 2: def_%v_17 %self->t %self[2.0,] %v_16[4.1,] 
+		 1: COPY def_%v_16 
+		 2: %self->t def_%v_17 %self[2.0,] %v_16[4.1,] 
 		 3: 
-		 4: def_%v_18 
-		 5: def_%v_19 %self[4.2,2.0,] @needed_migrations[2.12,2.23,] 
-		 6: def_%v_20 %v_19->count %v_19[4.5,] 
-		 7: def_%v_21 %v_20[4.6,] 
-		 8: def_%v_22 %self->t %self[4.2,2.0,] %v_18[4.4,] %v_21[4.7,] 
+		 4: COPY def_%v_18 
+		 5: def_%v_19 %self[4.2,2.0,] 
+		 6: %v_19->count def_%v_20 %v_19[4.5,] 
+		 7: COPY def_%v_21 %v_20[4.6,] 
+		 8: %self->t def_%v_22 %self[4.2,2.0,] %v_18[4.4,] %v_21[4.7,] 
 		 9: 
-		 10: def_%v_23 
-		 11: def_%v_24 %self->t %self[4.2,4.8,2.0,] %v_23[4.10,] 
+		 10: COPY def_%v_23 
+		 11: %self->t def_%v_24 %self[4.2,4.8,2.0,] %v_23[4.10,] 
 		 12: 
-		 13: def_%v_26 %self[4.2,4.8,4.11,2.0,] @needed_migrations[4.5,2.12,2.23,] 
-		 14: def_%v_25 %v_26->each %v_26[4.13,] %self[4.2,4.8,4.11,2.0,] 
+		 13: def_%v_26 %self[4.2,4.8,4.11,2.0,] 
+		 14: %v_26->each def_%v_25 %v_26[4.13,] %self[4.2,4.8,4.11,2.0,] 
 CLOSURE BEGIN: migration[] 
 BB 1
 	outgoing: 4 2 
@@ -102,24 +102,24 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: def_migration RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_migration 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 		 5: 
-		 6: def_%cl_2_3 migration->name migration[2.2,] 
-		 7: RETURN %cl_2_3[2.6,] 
+		 6: migration->name def_%cl_2_3 migration[2.2,] 
+		 7: RETURN %cl_2_3[2.6,] %self[2.0,] 
 BB 4
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 15: def_%v_15 %v_25[4.14,] 
+		 15: COPY def_%v_15 %v_25[4.14,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_27 %self->admin_migrations_path %self[2.0,] 
+		 1: %self->admin_migrations_path def_%v_27 %self[2.0,] 
 		 2: def_%v_28 %self[5.1,2.0,] %v_27[5.1,] %self[5.1,2.0,] 
 CLOSURE BEGIN: %self[5.1,2.0,] 
 BB 1
@@ -132,56 +132,56 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_3_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_3 %self[2.0,] @needed_migrations[] 
-		 2: def_%cl_3_4 %cl_3_3->blank? %cl_3_3[3.1,] 
+		 1: def_%cl_3_3 %self[2.0,] 
+		 2: %cl_3_3->blank? def_%cl_3_4 %cl_3_3[3.1,] 
 		 3: BRANCH %cl_3_4[3.2,] 
 BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_5 
-		 2: def_%cl_3_6 %self->t %self[2.0,] %cl_3_5[4.1,] 
+		 1: COPY def_%cl_3_5 
+		 2: %self->t def_%cl_3_6 %self[2.0,] %cl_3_5[4.1,] 
 		 3: 
 BB 5
 	outgoing: 7 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_7 
-		 2: def_%cl_3_8 %self->t %self[2.0,] %cl_3_7[5.1,] 
-		 3: def_%cl_3_9 
-		 4: def_%cl_3_10 %cl_3_9[5.3,] 
-		 5: def_%cl_3_11 %self->submit_tag %self[5.2,2.0,] %cl_3_8[5.2,] %cl_3_10[5.4,] 
+		 1: COPY def_%cl_3_7 
+		 2: %self->t def_%cl_3_8 %self[2.0,] %cl_3_7[5.1,] 
+		 3: COPY def_%cl_3_9 
+		 4: COPY def_%cl_3_10 %cl_3_9[5.3,] 
+		 5: %self->submit_tag def_%cl_3_11 %self[5.2,2.0,] %cl_3_8[5.2,] %cl_3_10[5.4,] 
 		 6: 
-		 7: def_%cl_3_12 
-		 8: def_%cl_3_13 %self->t %self[5.2,5.5,2.0,] %cl_3_12[5.7,] 
-		 9: RETURN %cl_3_13[5.8,] 
+		 7: COPY def_%cl_3_12 
+		 8: %self->t def_%cl_3_13 %self[5.2,5.5,2.0,] %cl_3_12[5.7,] 
+		 9: RETURN %cl_3_13[5.8,] %self[5.2,5.5,5.8,2.0,] 
 BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN %cl_3_6[4.2,] 
+		 0: RETURN %cl_3_6[4.2,] %self[2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: def_%cl_3_14 
 		 1: def_%cl_3_15 %cl_3_14[7.0,] 
-		 2: RETURN %cl_3_15[7.1,] 
+		 2: RETURN %cl_3_15[7.1,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 3: RETURN %v_28[5.2,] 
+		 3: RETURN %v_28[5.2,] %self[5.1,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -198,16 +198,16 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->migrator %self[2.0,] 
-		 7: def_%v_4 %v_3->migrate %v_3[2.6,] 
+		 6: %self->migrator def_%v_3 %self[2.0,] 
+		 7: %v_3->migrate def_%v_4 %v_3[2.6,] 
 		 8: 
-		 9: def_%v_5 %self->admin_migrations_url %self[2.0,2.6,] 
-		 10: def_%v_6 %self->redirect_to %self[2.0,2.6,2.9,] %v_5[2.9,] 
-		 11: RETURN %v_6[2.10,] 
+		 9: %self->admin_migrations_url def_%v_5 %self[2.0,2.6,] 
+		 10: %self->redirect_to def_%v_6 %self[2.0,2.6,2.9,] %v_5[2.9,] 
+		 11: RETURN %v_6[2.10,] %self[2.0,2.6,2.9,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -224,19 +224,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
 		 6: def_%v_4 %self[2.0,] 
-		 7: def_%v_3 %v_4[2.6,] 
+		 7: COPY def_%v_3 %v_4[2.6,] 
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] @migrator[] 
-		 1: def_%v_3 %v_5[3.0,] 
+		 0: def_%v_5 %self[2.0,] 
+		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -246,15 +246,15 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: def_%v_6 (Migrator) 
-		 1: def_%v_7 %v_6->new %v_6[5.0,] 
-		 2: ATTRASSIGN %self->@migrator %self[2.0,] %v_7[5.1,] @migrator[3.0,] 
-		 3: RETURN %v_7[5.1,] 
+		 0: (Migrator) def_%v_6 
+		 1: %v_6->new def_%v_7 %v_6[5.0,] 
+		 2: ATTRASSIGN %self->@migrator %self[2.0,] %v_7[5.1,] 
+		 3: RETURN %v_7[5.1,] %self[2.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: RETURN %v_5[3.0,] 
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
 BB 7
 	outgoing: 
 	datadep: 

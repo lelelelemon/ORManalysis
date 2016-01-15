@@ -7,37 +7,37 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->stream_item %self[2.0,] 
-		 7: %v_3->nil? %v_3[2.6,] 
+		 6: %self->stream_item def_%v_3 %self[2.0,] 
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 2 2 2 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%v_5 
 		 1: 
-		 2: %self->stream_item %self[2.0,] 
-		 3: %self->name %self[2.0,] 
-		 4: %v_6[4.2,] %v_7[4.3,] 
+		 2: %self->stream_item def_%v_6 %self[2.0,] 
+		 3: %self->name def_%v_7 %self[4.2,2.0,] 
+		 4: ATTRASSIGN %v_6->title %v_6[4.2,] %v_7[4.3,] 
 		 5: 
-		 6: %self->stream_item %self[2.0,] 
-		 7: %self->is_public? %self[2.0,] 
-		 8: %v_8[4.6,] %v_9[4.7,] 
+		 6: %self->stream_item def_%v_8 %self[4.2,4.3,2.0,] 
+		 7: %self->is_public? def_%v_9 %self[4.2,4.3,4.6,2.0,] 
+		 8: ATTRASSIGN %v_8->is_public %v_8[4.6,] %v_9[4.7,] 
 		 9: 
-		 10: %self->stream_item %self[2.0,] 
-		 11: %v_10->save %v_10[4.10,] 
-		 12: RETURN %v_11[4.11,] 
+		 10: %self->stream_item def_%v_10 %self[4.2,4.3,4.6,4.7,2.0,] 
+		 11: %v_10->save def_%v_11 %v_10[4.10,] 
+		 12: RETURN %v_11[4.11,] %self[4.2,4.3,4.6,4.7,4.10,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -52,17 +52,17 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->pictures %self[2.0,] 
-		 7: 
-		 8: %v_3->order %v_4[2.7,] %v_3[2.6,] 
-		 9: %v_5->first %v_5[2.8,] 
-		 10: RETURN %v_6[2.9,] 
+		 6: %self->pictures def_%v_3 %self[2.0,] 
+		 7: COPY def_%v_4 
+		 8: %v_3->order def_%v_5 %v_3[2.6,] %v_4[2.7,] 
+		 9: %v_5->first def_%v_6 %v_5[2.8,] 
+		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -77,23 +77,23 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
+		 5: RECEIVEARG def_picture 
 		 6: 
-		 7: %self->pictures %self[2.0,] 
-		 8: 
-		 9: %v_3->update_all %v_4[2.8,] %v_3[2.7,] 
+		 7: %self->pictures def_%v_3 %self[2.0,] 
+		 8: COPY def_%v_4 
+		 9: %v_3->update_all def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: 
-		 11: %self->pictures %self[2.0,] 
-		 12: picture->id picture[2.5,] 
-		 13: %v_6->find %v_6[2.11,] %v_7[2.12,] 
-		 14: 
-		 15: %v_8->update_attributes! %v_8[2.13,] %v_9[2.14,] 
-		 16: RETURN %v_10[2.15,] 
+		 11: %self->pictures def_%v_6 %self[2.0,2.7,] 
+		 12: picture->id def_%v_7 picture[2.5,] 
+		 13: %v_6->find def_%v_8 %v_6[2.11,] %v_7[2.12,] 
+		 14: COPY def_%v_9 
+		 15: %v_8->update_attributes! def_%v_10 %v_8[2.13,] %v_9[2.14,] 
+		 16: RETURN %v_10[2.15,] %self[2.0,2.7,2.11,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -108,27 +108,27 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->owner %self[2.0,] 
-		 7: (Group) 
-		 8: %v_3->is_a? %v_4[2.7,] %v_3[2.6,] 
+		 6: %self->owner def_%v_3 %self[2.0,] 
+		 7: (Group) def_%v_4 
+		 8: %v_3->is_a? def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self->owner %self[2.0,] 
-		 1: RETURN %v_6[3.0,] 
+		 0: %self->owner def_%v_6 %self[2.0,] 
+		 1: RETURN %v_6[3.0,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -143,27 +143,27 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->owner %self[2.0,] 
-		 7: (Person) 
-		 8: %v_3->is_a? %v_4[2.7,] %v_3[2.6,] 
+		 6: %self->owner def_%v_3 %self[2.0,] 
+		 7: (Person) def_%v_4 
+		 8: %v_3->is_a? def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self->owner %self[2.0,] 
-		 1: RETURN %v_6[3.0,] 
+		 0: %self->owner def_%v_6 %self[2.0,] 
+		 1: RETURN %v_6[3.0,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 

@@ -9,23 +9,23 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 (Choice) 
-		 7: def_%v_4 %self->poll_id %self[2.0,] 
-		 8: def_%v_5 %v_4[2.7,] 
-		 9: def_%v_6 %v_3->where %v_3[2.6,] %v_5[2.8,] 
-		 10: def_%v_7 %v_6->sum %v_6[2.9,] 
-		 11: def_votes_count %v_7[2.10,] 
+		 6: (Choice) def_%v_3 
+		 7: %self->poll_id def_%v_4 %self[2.0,] 
+		 8: COPY def_%v_5 %v_4[2.7,] 
+		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 10: %v_6->sum def_%v_7 %v_6[2.9,] 
+		 11: COPY def_votes_count %v_7[2.10,] 
 		 12: 
-		 13: def_%v_8 %self->poll %self[2.0,2.7,] 
+		 13: %self->poll def_%v_8 %self[2.0,2.7,] 
 		 14: ATTRASSIGN %v_8->votes_count %v_8[2.13,] votes_count[2.11,] 
 		 15: 
-		 16: def_%v_9 %self->poll %self[2.0,2.7,2.13,] 
-		 17: def_%v_10 %v_9->save! %v_9[2.16,] 
-		 18: RETURN %v_10[2.17,] 
+		 16: %self->poll def_%v_9 %self[2.0,2.7,2.13,] 
+		 17: %v_9->save! def_%v_10 %v_9[2.16,] 
+		 18: RETURN %v_10[2.17,] %self[2.0,2.7,2.13,2.16,] 
 BB 3
 	outgoing: 
 	datadep: 

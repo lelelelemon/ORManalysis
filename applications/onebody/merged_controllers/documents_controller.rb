@@ -18,8 +18,7 @@ class DocumentsController < ApplicationController
  @title = @parent_folder.try(:name) || t('.heading') 
  if @parent_folder && @parent_folder.all_groups.any? 
  icon('fa fa-lock') 
- t('documents.restricted_folder.alert_html', | 
- end 
+ t('documents.restricted_folder.alert_html', groups: @parent_folder.all_groups.map { |g| link_to(g.name, g) }.join(', ').html_safe) 
  end 
  if @parent_folder 
  if @parent_folder.hidden? 
@@ -88,8 +87,7 @@ class DocumentsController < ApplicationController
  @title = @document.name 
  if @document.parent_folder_groups.any? 
  icon('fa fa-lock') 
- t('documents.restricted_document.alert_html', | 
- end 
+ t('documents.restricted_document.alert_html', groups: @document.parent_folder_groups.map { |g| link_to(g.name, g) }.join(', ').html_safe) 
  end 
  if @document.hidden? 
  icon('fa fa-eye-slash') 

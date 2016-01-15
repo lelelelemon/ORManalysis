@@ -9,8 +9,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: def_%v_3 
 BB 4
@@ -19,7 +19,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_6 %self->params %self[2.0,] 
+		 2: %self->params def_%v_6 %self[2.0,] 
 		 3: def_%v_7 %v_6[4.2,] 
 		 4: BRANCH %v_7[4.3,] 
 BB 5
@@ -27,29 +27,29 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 (Permission) 
-		 2: def_%v_9 %self->params %self[2.0,] 
+		 1: (Permission) def_%v_8 
+		 2: %self->params def_%v_9 %self[2.0,] 
 		 3: def_%v_10 %v_9[5.2,] 
-		 4: def_%v_11 %v_10->keys %v_10[5.3,] 
-		 5: def_%v_12 %self->params %self[5.2,2.0,] 
+		 4: %v_10->keys def_%v_11 %v_10[5.3,] 
+		 5: %self->params def_%v_12 %self[5.2,2.0,] 
 		 6: def_%v_13 %v_12[5.5,] 
-		 7: def_%v_14 %v_13->values %v_13[5.6,] 
-		 8: def_%v_15 %v_8->update %v_8[5.1,] %v_11[5.4,] %v_14[5.7,] 
-		 9: def_permissions %v_15[5.8,] 
+		 7: %v_13->values def_%v_14 %v_13[5.6,] 
+		 8: %v_8->update def_%v_15 %v_8[5.1,] %v_11[5.4,] %v_14[5.7,] 
+		 9: COPY def_permissions %v_15[5.8,] 
 		 10: 
-		 11: def_%v_16 %v_15->first %v_15[5.8,] 
-		 12: def_%v_17 %v_16->folder %v_16[5.11,] 
-		 13: def_folder %v_17[5.12,] 
+		 11: %v_15->first def_%v_16 %v_15[5.8,] 
+		 12: %v_16->folder def_%v_17 %v_16[5.11,] 
+		 13: COPY def_folder %v_17[5.12,] 
 		 14: 
-		 15: def_%v_18 %self->params %self[5.2,5.5,2.0,] 
+		 15: %self->params def_%v_18 %self[5.2,5.5,2.0,] 
 		 16: def_%v_19 %v_18[5.15,] 
 		 17: BRANCH %v_19[5.16,] 
 BB 6
 	outgoing: 7 14 
 	datadep: 
 	instructions:
-		 0: def_%v_20 folder->has_children? folder[5.13,] 
-		 1: def_%v_19 %v_20[6.0,] 
+		 0: folder->has_children? def_%v_20 folder[5.13,] 
+		 1: COPY def_%v_19 %v_20[6.0,] 
 BB 7
 	outgoing: 8 9 
 	datadep: 
@@ -59,13 +59,13 @@ BB 8
 	outgoing: 10 14 
 	datadep: 
 	instructions:
-		 0: def_%v_21 folder->copy_permissions_to_children folder[5.13,] permissions[5.9,] 
+		 0: folder->copy_permissions_to_children def_%v_21 folder[5.13,] permissions[5.9,] 
 		 1: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: def_%v_21 
+		 0: COPY def_%v_21 
 BB 10
 	outgoing: 12 
 	datadep: 
@@ -75,14 +75,14 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: def_%v_21 
+		 0: COPY def_%v_21 
 BB 12
 	outgoing: 13 14 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_22 %self->redirect_to %self[2.0,] 
-		 2: def_%v_5 %v_22[12.1,] 
+		 1: %self->redirect_to def_%v_22 %self[2.0,] 
+		 2: COPY def_%v_5 %v_22[12.1,] 
 		 3: %v_3[2.5,] 
 BB 13
 	outgoing: 21 
@@ -94,7 +94,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: def_%v_23 
-		 1: def_%v_24 (ActiveRecord) 
+		 1: (ActiveRecord) def_%v_24 
 		 2: def_%v_25 %v_24[14.1,] 
 		 3: %v_25[14.2,] 
 BB 15
@@ -118,14 +118,14 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_27 (Folder) 
-		 2: def_%v_28 %v_27->root %v_27[18.1,] 
-		 3: def_%v_29 %self->t %self[2.0,] 
-		 4: def_%v_30 %v_29[18.3,] 
-		 5: def_%v_31 %self->t %self[18.3,2.0,] %v_30[18.4,] 
-		 6: def_%v_32 %v_31[18.5,] 
-		 7: def_%v_33 %self->redirect_to %self[18.3,18.5,2.0,] %v_28[18.2,] %v_32[18.6,] 
-		 8: def_%v_5 %v_33[18.7,] 
+		 1: (Folder) def_%v_27 
+		 2: %v_27->root def_%v_28 %v_27[18.1,] 
+		 3: %self->t def_%v_29 %self[2.0,] 
+		 4: COPY def_%v_30 %v_29[18.3,] 
+		 5: %self->t def_%v_31 %self[18.3,2.0,] %v_30[18.4,] 
+		 6: COPY def_%v_32 %v_31[18.5,] 
+		 7: %self->redirect_to def_%v_33 %self[18.3,18.5,2.0,] %v_28[18.2,] %v_32[18.6,] 
+		 8: COPY def_%v_5 %v_33[18.7,] 
 		 9: %v_3[2.5,] 
 BB 19
 	outgoing: 21 
@@ -143,7 +143,7 @@ BB 21
 	outgoing: 22 
 	datadep: 
 	instructions:
-		 0: RETURN %v_5[12.2,18.8,] 
+		 0: RETURN %v_5[12.2,18.8,] %self[2.0,] 
 BB 22
 	outgoing: 
 	datadep: 

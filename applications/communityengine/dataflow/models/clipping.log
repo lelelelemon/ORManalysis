@@ -9,38 +9,38 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: def_clipping RECEIVEARG 
+		 5: RECEIVEARG def_clipping 
 		 6: def_options 
 		 7: options[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_3 
-		 1: def_options %v_3[3.0,] 
+		 0: COPY def_%v_3 
+		 1: COPY def_options %v_3[3.0,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_4 
-		 2: def_%v_5 
-		 3: def_%v_6 clipping->id clipping[2.5,] 
-		 4: def_%v_7 %v_5[4.2,] %v_6[4.3,] 
-		 5: def_%v_8 %v_4[4.1,] %v_7[4.4,] 
-		 6: def_%v_9 options->reverse_merge! options[3.1,2.6,] %v_8[4.5,] 
+		 1: COPY def_%v_4 
+		 2: COPY def_%v_5 
+		 3: clipping->id def_%v_6 clipping[2.5,] 
+		 4: COPY def_%v_7 %v_5[4.2,] %v_6[4.3,] 
+		 5: COPY def_%v_8 %v_4[4.1,] %v_7[4.4,] 
+		 6: options->reverse_merge! def_%v_9 options[3.1,2.6,] %v_8[4.5,] 
 		 7: 
 		 8: def_%v_10 options[4.6,3.1,2.6,] 
-		 9: def_%v_11 %self->limit %self[2.0,] %v_10[4.8,] 
+		 9: %self->limit def_%v_11 %self[2.0,] %v_10[4.8,] 
 		 10: def_%v_12 options[4.6,3.1,2.6,] 
-		 11: def_%v_13 %v_11->order %v_11[4.9,] %v_12[4.10,] 
+		 11: %v_11->order def_%v_13 %v_11[4.9,] %v_12[4.10,] 
 		 12: def_%v_14 options[4.6,3.1,2.6,] 
-		 13: def_%v_15 %v_13->where %v_13[4.11,] %v_14[4.12,] 
-		 14: def_%v_16 clipping->tags clipping[4.3,2.5,] 
-		 15: def_%v_17 %v_16->collect %v_16[4.14,] %self[4.9,2.0,] 
+		 13: %v_13->where def_%v_15 %v_13[4.11,] %v_14[4.12,] 
+		 14: clipping->tags def_%v_16 clipping[4.3,2.5,] 
+		 15: %v_16->collect def_%v_17 %v_16[4.14,] %self[4.9,2.0,] 
 CLOSURE BEGIN: t[] 
 BB 1
 	outgoing: 6 2 
@@ -52,31 +52,31 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: def_t RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_t 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 t->name t[2.2,] 
-		 2: RETURN %cl_1_3[3.1,] 
+		 1: t->name def_%cl_1_3 t[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_4 
 		 1: def_%cl_1_5 %cl_1_4[4.0,] 
-		 2: RETURN %cl_1_5[4.1,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 16: def_%v_18 
-		 17: def_%v_19 %v_15->tagged_with %v_15[4.13,] %v_17[4.15,] %v_18[4.16,] 
-		 18: RETURN %v_19[4.17,] 
+		 16: COPY def_%v_18 
+		 17: %v_15->tagged_with def_%v_19 %v_15[4.13,] %v_17[4.15,] %v_18[4.16,] 
+		 18: RETURN %v_19[4.17,] %self[4.9,2.0,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -93,8 +93,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: def_options 
 		 6: options[2.5,] 
@@ -102,25 +102,25 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_3 
-		 1: def_options %v_3[3.0,] 
+		 0: COPY def_%v_3 
+		 1: COPY def_options %v_3[3.0,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_4 
+		 1: COPY def_%v_4 
 		 2: def_%v_5 
-		 3: def_%v_6 %v_5->ago %v_5[4.2,] 
+		 3: %v_5->ago def_%v_6 %v_5[4.2,] 
 		 4: def_%v_7 %v_6[4.3,] 
-		 5: def_%v_8 
+		 5: COPY def_%v_8 
 		 6: def_%v_9 %v_4[4.1,] %v_7[4.4,] %v_8[4.5,] 
-		 7: def_%v_10 %self->where %self[2.0,] %v_9[4.6,] 
-		 8: def_%v_11 
-		 9: def_%v_12 %v_10->order %v_10[4.7,] %v_11[4.8,] 
+		 7: %self->where def_%v_10 %self[2.0,] %v_9[4.6,] 
+		 8: COPY def_%v_11 
+		 9: %v_10->order def_%v_12 %v_10[4.7,] %v_11[4.8,] 
 		 10: def_%v_13 options[3.1,2.5,] 
-		 11: def_%v_14 %v_12->limit %v_12[4.9,] %v_13[4.10,] 
-		 12: RETURN %v_14[4.11,] 
+		 11: %v_12->limit def_%v_14 %v_12[4.9,] %v_13[4.10,] 
+		 12: RETURN %v_14[4.11,] %self[4.7,2.0,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -137,19 +137,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->user %self[2.0,] 
-		 7: def_%v_4 %v_3->clippings %v_3[2.6,] 
-		 8: def_%v_5 
-		 9: def_%v_6 %v_4->order %v_4[2.7,] %v_5[2.8,] 
-		 10: def_%v_7 
-		 11: def_%v_8 %self->created_at %self[2.0,2.6,] 
-		 12: def_%v_9 %v_6->where %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] 
-		 13: def_%v_10 %v_9->first %v_9[2.12,] 
-		 14: RETURN %v_10[2.13,] 
+		 6: %self->user def_%v_3 %self[2.0,] 
+		 7: %v_3->clippings def_%v_4 %v_3[2.6,] 
+		 8: COPY def_%v_5 
+		 9: %v_4->order def_%v_6 %v_4[2.7,] %v_5[2.8,] 
+		 10: COPY def_%v_7 
+		 11: %self->created_at def_%v_8 %self[2.0,2.6,] 
+		 12: %v_6->where def_%v_9 %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] 
+		 13: %v_9->first def_%v_10 %v_9[2.12,] 
+		 14: RETURN %v_10[2.13,] %self[2.0,2.6,2.11,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -166,19 +166,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->user %self[2.0,] 
-		 7: def_%v_4 %v_3->clippings %v_3[2.6,] 
-		 8: def_%v_5 
-		 9: def_%v_6 %self->created_at %self[2.0,2.6,] 
-		 10: def_%v_7 %v_4->where %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
-		 11: def_%v_8 
-		 12: def_%v_9 %v_7->order %v_7[2.10,] %v_8[2.11,] 
-		 13: def_%v_10 %v_9->first %v_9[2.12,] 
-		 14: RETURN %v_10[2.13,] 
+		 6: %self->user def_%v_3 %self[2.0,] 
+		 7: %v_3->clippings def_%v_4 %v_3[2.6,] 
+		 8: COPY def_%v_5 
+		 9: %self->created_at def_%v_6 %self[2.0,2.6,] 
+		 10: %v_4->where def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
+		 11: COPY def_%v_8 
+		 12: %v_7->order def_%v_9 %v_7[2.10,] %v_8[2.11,] 
+		 13: %v_9->first def_%v_10 %v_9[2.12,] 
+		 14: RETURN %v_10[2.13,] %self[2.0,2.6,2.9,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -195,12 +195,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->user %self[2.0,] 
-		 7: RETURN %v_3[2.6,] 
+		 6: %self->user def_%v_3 %self[2.0,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -217,8 +217,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: def_size 
 		 6: size[2.5,] 
@@ -226,23 +226,23 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_3 
-		 1: def_size %v_3[3.0,] 
+		 0: COPY def_%v_3 
+		 1: COPY def_size %v_3[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_4 %self->image %self[2.0,] 
+		 1: %self->image def_%v_4 %self[2.0,] 
 		 2: BRANCH %v_4[4.1,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self->image %self[2.0,] 
-		 1: def_%v_6 %v_5->asset %v_5[5.0,] 
-		 2: def_%v_7 %v_6->url %v_6[5.1,] size[3.1,2.5,] 
-		 3: def_%v_4 %v_7[5.2,] 
+		 0: %self->image def_%v_5 %self[2.0,] 
+		 1: %v_5->asset def_%v_6 %v_5[5.0,] 
+		 2: %v_6->url def_%v_7 %v_6[5.1,] size[3.1,2.5,] 
+		 3: COPY def_%v_4 %v_7[5.2,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
@@ -252,13 +252,13 @@ BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_8 %self->image_url %self[2.0,] 
-		 1: RETURN %v_8[7.0,] 
+		 0: %self->image_url def_%v_8 %self[2.0,] 
+		 1: RETURN %v_8[7.0,] %self[7.0,2.0,] 
 BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN %v_4[5.3,4.1,] 
+		 0: RETURN %v_4[5.3,4.1,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -275,26 +275,26 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->description %self[2.0,] 
-		 7: def_%v_4 %v_3->empty? %v_3[2.6,] 
+		 6: %self->description def_%v_3 %self[2.0,] 
+		 7: %v_3->empty? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self->created_at %self[2.0,] 
-		 1: def_%v_6 %v_5->to_formatted_s %v_5[3.0,] 
-		 2: RETURN %v_6[3.1,] 
+		 0: %self->created_at def_%v_5 %self[2.0,] 
+		 1: %v_5->to_formatted_s def_%v_6 %v_5[3.0,] 
+		 2: RETURN %v_6[3.1,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_7 %self->description %self[2.0,] 
-		 1: RETURN %v_7[4.0,] 
+		 0: %self->description def_%v_7 %self[2.0,] 
+		 1: RETURN %v_7[4.0,] %self[4.0,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -311,8 +311,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: def_user 
 		 6: user[2.5,] 
@@ -320,7 +320,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_user 
+		 0: COPY def_user 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -331,17 +331,17 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_remote_ip 
+		 0: COPY def_remote_ip 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_3 (Favorite) 
-		 2: def_%v_4 %v_3->find_by_user_or_ip_address %v_3[6.1,] %self[2.0,] user[3.0,2.5,] remote_ip[5.0,4.0,] 
-		 3: def_f %v_4[6.2,] 
+		 1: (Favorite) def_%v_3 
+		 2: %v_3->find_by_user_or_ip_address def_%v_4 %v_3[6.1,] %self[2.0,] user[3.0,2.5,] remote_ip[5.0,4.0,] 
+		 3: COPY def_f %v_4[6.2,] 
 		 4: 
-		 5: RETURN %v_4[6.2,] 
+		 5: RETURN %v_4[6.2,] %self[2.0,] 
 BB 8
 	outgoing: 
 	datadep: 
@@ -358,8 +358,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
 		 6: def_%v_3 
@@ -369,18 +369,18 @@ BB 4
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_6 (ClippingImage) 
-		 3: def_%v_7 %v_6->new %v_6[4.2,] 
-		 4: def_clipping_image %v_7[4.3,] 
+		 2: (ClippingImage) def_%v_6 
+		 3: %v_6->new def_%v_7 %v_6[4.2,] 
+		 4: COPY def_clipping_image %v_7[4.3,] 
 		 5: 
-		 6: def_%v_8 %self->image_url %self[2.0,] 
-		 7: def_%v_9 clipping_image->data_from_url clipping_image[4.4,] %v_8[4.6,] 
-		 8: def_uploaded_data %v_9[4.7,] 
+		 6: %self->image_url def_%v_8 %self[2.0,] 
+		 7: clipping_image->data_from_url def_%v_9 clipping_image[4.4,] %v_8[4.6,] 
+		 8: COPY def_uploaded_data %v_9[4.7,] 
 		 9: 
 		 10: ATTRASSIGN clipping_image->asset clipping_image[4.4,4.7,] %v_9[4.7,] 
 		 11: 
 		 12: ATTRASSIGN %self->image %self[4.6,2.0,] clipping_image[4.4,4.7,4.10,] 
-		 13: def_%v_5 clipping_image[4.4,4.7,4.10,] 
+		 13: COPY def_%v_5 clipping_image[4.4,4.7,4.10,] 
 		 14: 
 		 15: %v_3[2.6,] 
 BB 5
@@ -406,7 +406,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_5 
+		 1: COPY def_%v_5 
 		 2: 
 		 3: %v_3[2.6,] 
 BB 9
@@ -425,7 +425,7 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: RETURN %v_5[4.13,8.1,] 
+		 0: RETURN %v_5[4.13,8.1,] %self[4.12,] 
 BB 12
 	outgoing: 
 	datadep: 
@@ -442,18 +442,18 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->valid? %self[2.0,] 
+		 6: %self->valid? def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self->image %self[2.0,] 
-		 1: def_%v_3 %v_4[3.0,] 
+		 0: %self->image def_%v_4 %self[2.0,] 
+		 1: COPY def_%v_3 %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -464,17 +464,17 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_5 %self->image %self[2.0,] 
+		 1: %self->image def_%v_5 %self[2.0,] 
 		 2: ATTRASSIGN %v_5->attachable %v_5[5.1,] %self[5.1,2.0,] 
 		 3: 
-		 4: def_%v_6 %self->image %self[5.1,2.0,] 
-		 5: def_%v_7 %v_6->save %v_6[5.4,] 
-		 6: RETURN %v_7[5.5,] 
+		 4: %self->image def_%v_6 %self[5.1,2.0,] 
+		 5: %v_6->save def_%v_7 %v_6[5.4,] 
+		 6: RETURN %v_7[5.5,] %self[5.1,5.4,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 8
 	outgoing: 
 	datadep: 

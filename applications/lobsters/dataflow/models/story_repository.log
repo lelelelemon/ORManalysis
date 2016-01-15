@@ -26,9 +26,9 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->@user %self[2.0,] user[2.5,] @user[] 
+		 1: ATTRASSIGN %self->@user %self[2.0,] user[2.5,] 
 		 2: 
-		 3: ATTRASSIGN %self->@params %self[2.0,] params[3.1,2.6,] @params[] 
+		 3: ATTRASSIGN %self->@params %self[2.0,] params[3.1,2.6,] 
 		 4: RETURN params[3.1,2.6,] %self[2.0,] 
 BB 5
 	outgoing: 
@@ -84,7 +84,7 @@ BB 2
 		 7: COPY def_hidden %v_3[2.6,] 
 		 8: 
 		 9: 
-		 10: def_%v_4 %self[2.0,2.6,] @user[] 
+		 10: def_%v_4 %self[2.0,2.6,] 
 		 11: BRANCH %v_4[2.10,] 
 BB 3
 	outgoing: 5 
@@ -108,7 +108,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_11 %self[2.0,] @params[] 
+		 1: def_%v_11 %self[2.0,] 
 		 2: def_%v_12 %v_11[5.1,] 
 		 3: %v_12->try def_%v_13 %v_12[5.2,] 
 		 4: BRANCH %v_13[5.3,] 
@@ -117,7 +117,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_14 %self[2.0,] @params[5.1,] 
+		 1: def_%v_14 %self[2.0,] 
 		 2: def_%v_15 %v_14[6.1,] 
 		 3: %self->filter_tags def_%v_16 %self[2.0,] hidden[3.6,2.7,] %v_15[6.2,] 
 		 4: COPY def_hidden %v_16[6.3,] 
@@ -246,7 +246,7 @@ BB 3
 		 4: def_%cl_1_6 %cl_1_5[3.3,] 
 		 5: 
 		 6: (RECENT_DAYS_OLD) def_%cl_1_7 
-		 7: def_%cl_1_8 %cl_1_7[3.6,] x[2.2,] %cl_1_7[3.6,] 
+		 7: def_%cl_1_8 %cl_1_7[3.6,] x[2.2,] 
 		 8: %cl_1_8->days def_%cl_1_9 %cl_1_8[3.7,] 
 		 9: %cl_1_9->ago def_%cl_1_10 %cl_1_9[3.8,] 
 		 10: %cl_1_6->gt def_%cl_1_11 %cl_1_6[3.4,] %cl_1_10[3.9,] 
@@ -273,7 +273,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: s->score def_%cl_2_3 s[2.2,] s[2.2,] 
+		 1: s->score def_%cl_2_3 s[2.2,] 
 		 2: (HOT_STORY_POINTS) def_%cl_2_4 
 		 3: def_%cl_2_5 %cl_2_3[3.1,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] %self[2.0,] 
@@ -330,7 +330,7 @@ BB 8
 		 3: def_%cl_1_26 story_ids[3.15,] %cl_1_21[8.2,] 
 		 4: COPY def_keep_ids %cl_1_26[8.3,] 
 		 5: 
-		 6: %cl_1_26->length def_%cl_1_28 %cl_1_26[8.3,] %cl_1_26[8.3,] 
+		 6: %cl_1_26->length def_%cl_1_28 %cl_1_26[8.3,] 
 		 7: def_%cl_1_29 %cl_1_28[8.6,] 
 		 8: story_ids->length def_%cl_1_30 story_ids[3.15,] 
 		 9: def_%cl_1_27 %cl_1_29[8.7,] %cl_1_30[8.8,] 
@@ -341,7 +341,7 @@ BB 9
 	outgoing: 10 11 18 
 	datadep: 
 	instructions:
-		 0: keep_ids->length def_%cl_1_33 keep_ids[8.4,] keep_ids[8.4,] 
+		 0: keep_ids->length def_%cl_1_33 keep_ids[8.4,] 
 		 1: (StoriesPaginator) def_%cl_1_34 
 		 2: def_%cl_1_35 %cl_1_34[9.1,] 
 		 3: %cl_1_35[9.2,] 
@@ -366,7 +366,7 @@ BB 12
 		 2: story_ids->shuffle! def_%cl_1_38 story_ids[8.11,] 
 		 3: 
 		 4: story_ids->shift def_%cl_1_39 story_ids[12.2,8.11,] 
-		 5: keep_ids->push def_%cl_1_40 keep_ids[9.0,8.4,] %cl_1_39[12.4,] 
+		 5: keep_ids->push def_%cl_1_40 keep_ids[8.4,] %cl_1_39[12.4,] 
 BB 13
 	outgoing: 9 
 	datadep: 
@@ -383,7 +383,7 @@ BB 15
 	instructions:
 		 0: 
 		 1: (Story) def_%cl_1_41 
-		 2: COPY def_%cl_1_42 keep_ids[9.0,8.4,] 
+		 2: COPY def_%cl_1_42 keep_ids[8.4,] 
 		 3: %cl_1_41->where def_%cl_1_43 %cl_1_41[15.1,] %cl_1_42[15.2,] 
 		 4: COPY def_stories %cl_1_43[15.3,] 
 		 5: 
@@ -554,7 +554,7 @@ BB 2
 		 5: RECEIVEARG def_scope 
 		 6: 
 		 7: 
-		 8: def_%v_3 %self[2.0,] @user[] 
+		 8: def_%v_3 %self[2.0,] 
 		 9: BRANCH %v_3[2.8,] 
 BB 3
 	outgoing: 5 
@@ -573,7 +573,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_5 %self[2.0,] @params[] 
+		 1: def_%v_5 %self[2.0,] 
 		 2: def_%v_6 %v_5[5.1,] 
 		 3: %v_6->try def_%v_7 %v_6[5.2,] 
 		 4: BRANCH %v_7[5.3,] 
@@ -582,7 +582,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 %self[2.0,] @params[5.1,] 
+		 1: def_%v_8 %self[2.0,] 
 		 2: def_%v_9 %v_8[6.1,] 
 		 3: %self->filter_tags def_%v_10 %self[2.0,] scope[3.1,2.5,] %v_9[6.2,] 
 		 4: COPY def_scope %v_10[6.3,] 
@@ -647,7 +647,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: def_%v_3 %self[2.0,] @user[] 
+		 7: def_%v_3 %self[2.0,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 6 
@@ -658,7 +658,7 @@ BB 3
 		 2: (HiddenStory) def_%v_6 
 		 3: %v_6->arel_table def_%v_7 %v_6[3.2,] 
 		 4: def_%v_8 %v_7[3.3,] 
-		 5: def_%v_9 %self[2.0,] @user[2.7,] 
+		 5: def_%v_9 %self[2.0,] 
 		 6: %v_9->id def_%v_10 %v_9[3.5,] 
 		 7: %v_8->eq def_%v_11 %v_8[3.4,] %v_10[3.6,] 
 		 8: %v_5->where def_%v_12 %v_5[3.1,] %v_11[3.7,] 

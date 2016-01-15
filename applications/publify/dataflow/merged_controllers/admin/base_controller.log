@@ -9,10 +9,10 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: def_str RECEIVEARG 
+		 5: RECEIVEARG def_str 
 		 6: def_%v_3 
 BB 4
 	outgoing: 5 6 
@@ -25,29 +25,29 @@ BB 5
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_6 
+		 0: COPY def_%v_6 
 		 1: 
 BB 6
 	outgoing: 7 10 
 	datadep: 
 	instructions:
-		 0: def_%v_7 
+		 0: COPY def_%v_7 
 		 1: %v_3[2.6,] 
 BB 7
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: RETURN %v_7[6.0,] 
+		 0: RETURN %v_7[6.0,] %self[2.0,] 
 BB 8
 	outgoing: 9 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 (DateTime) 
-		 2: def_%v_9 
-		 3: def_%v_10 %v_8->strptime %v_8[8.1,] str[2.5,] %v_9[8.2,] 
-		 4: def_%v_11 %v_10->utc %v_10[8.3,] 
-		 5: def_%v_5 %v_11[8.4,] 
+		 1: (DateTime) def_%v_8 
+		 2: COPY def_%v_9 
+		 3: %v_8->strptime def_%v_10 %v_8[8.1,] str[2.5,] %v_9[8.2,] 
+		 4: %v_10->utc def_%v_11 %v_10[8.3,] 
+		 5: COPY def_%v_5 %v_11[8.4,] 
 		 6: %v_3[2.6,] 
 BB 9
 	outgoing: 15 
@@ -59,7 +59,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: def_%v_12 
-		 1: def_%v_13 (ArgumentError) 
+		 1: (ArgumentError) def_%v_13 
 		 2: def_%v_14 %v_13[10.1,] %v_12[10.0,] 
 		 3: BRANCH %v_14[10.2,] 
 BB 11
@@ -72,10 +72,10 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_15 (Time) 
-		 2: def_%v_16 %v_15->parse %v_15[12.1,] str[2.5,] 
-		 3: def_%v_17 %v_16->utc %v_16[12.2,] 
-		 4: def_%v_5 %v_17[12.3,] 
+		 1: (Time) def_%v_15 
+		 2: %v_15->parse def_%v_16 %v_15[12.1,] str[2.5,] 
+		 3: %v_16->utc def_%v_17 %v_16[12.2,] 
+		 4: COPY def_%v_5 %v_17[12.3,] 
 		 5: %v_3[2.6,] 
 BB 13
 	outgoing: 15 
@@ -93,7 +93,7 @@ BB 15
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: RETURN %v_5[8.5,12.4,] 
+		 0: RETURN %v_5[8.5,12.4,] %self[2.0,] 
 BB 16
 	outgoing: 
 	datadep: 
@@ -110,13 +110,13 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: def_settings_param RECEIVEARG 
+		 5: RECEIVEARG def_settings_param 
 		 6: 
-		 7: def_%v_3 (Blog) 
-		 8: def_%v_4 %v_3->transaction %v_3[2.7,] %self[2.0,] 
+		 7: (Blog) def_%v_3 
+		 8: %v_3->transaction def_%v_4 %v_3[2.7,] %self[2.0,] 
 CLOSURE BEGIN: settings_param[2.5,] %self[2.0,] 
 BB 1
 	outgoing: 9 2 
@@ -128,14 +128,14 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 settings_param->each settings_param[] %self[2.0,] 
+		 1: settings_param->each def_%cl_1_3 settings_param[] %self[2.0,] 
 CLOSURE BEGIN: %self[2.0,] k[] v[] 
 BB 1
 	outgoing: 6 2 
@@ -147,45 +147,45 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: def_k RECEIVEARG 
-		 3: def_v RECEIVEARG 
-		 4: def_%current_scope 
-		 5: def_%current_module 
+		 2: RECEIVEARG def_k 
+		 3: RECEIVEARG def_v 
+		 4: COPY def_%current_scope 
+		 5: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self->this_blog %self[2.0,] 
-		 2: def_%cl_2_4 
+		 1: %self->this_blog def_%cl_2_3 %self[2.0,] 
+		 2: COPY def_%cl_2_4 
 		 3: def_%cl_2_5 k[2.2,] %cl_2_4[3.2,] 
-		 4: def_%cl_2_6 %cl_2_3->send %cl_2_3[3.1,] %cl_2_5[3.3,] v[2.3,] 
-		 5: RETURN %cl_2_6[3.4,] 
+		 4: %cl_2_3->send def_%cl_2_6 %cl_2_3[3.1,] %cl_2_5[3.3,] v[2.3,] 
+		 5: RETURN %cl_2_6[3.4,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_2_7 
 		 1: def_%cl_2_8 %cl_2_7[4.0,] 
-		 2: RETURN %cl_2_8[4.1,] 
+		 2: RETURN %cl_2_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 2: 
-		 3: def_%cl_1_4 %self->this_blog %self[2.0,] 
-		 4: def_%cl_1_5 %cl_1_4->save %cl_1_4[3.3,] 
+		 3: %self->this_blog def_%cl_1_4 %self[2.0,] 
+		 4: %cl_1_4->save def_%cl_1_5 %cl_1_4[3.3,] 
 		 5: BRANCH %cl_1_5[3.4,] 
 BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_6 %self->flash %self[2.0,] 
-		 2: def_%cl_1_7 (I18n) 
-		 3: def_%cl_1_8 
-		 4: def_%cl_1_9 %cl_1_7->t %cl_1_7[4.2,] %cl_1_8[4.3,] 
+		 1: %self->flash def_%cl_1_6 %self[2.0,] 
+		 2: (I18n) def_%cl_1_7 
+		 3: COPY def_%cl_1_8 
+		 4: %cl_1_7->t def_%cl_1_9 %cl_1_7[4.2,] %cl_1_8[4.3,] 
 		 5: %cl_1_6[4.1,] %cl_1_9[4.4,] 
 		 6: 
 BB 5
@@ -193,43 +193,43 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_10 %self->flash %self[2.0,] 
-		 2: def_%cl_1_11 (I18n) 
-		 3: def_%cl_1_12 
-		 4: def_%cl_1_13 %self->this_blog %self[5.1,2.0,] 
-		 5: def_%cl_1_14 %cl_1_13->errors %cl_1_13[5.4,] 
-		 6: def_%cl_1_15 %cl_1_14->full_messages %cl_1_14[5.5,] 
-		 7: def_%cl_1_16 
-		 8: def_%cl_1_17 %cl_1_15->join %cl_1_15[5.6,] %cl_1_16[5.7,] 
-		 9: def_%cl_1_18 %cl_1_17[5.8,] 
-		 10: def_%cl_1_19 %cl_1_11->t %cl_1_11[5.2,] %cl_1_12[5.3,] %cl_1_18[5.9,] 
+		 1: %self->flash def_%cl_1_10 %self[2.0,] 
+		 2: (I18n) def_%cl_1_11 
+		 3: COPY def_%cl_1_12 
+		 4: %self->this_blog def_%cl_1_13 %self[5.1,2.0,] 
+		 5: %cl_1_13->errors def_%cl_1_14 %cl_1_13[5.4,] 
+		 6: %cl_1_14->full_messages def_%cl_1_15 %cl_1_14[5.5,] 
+		 7: COPY def_%cl_1_16 
+		 8: %cl_1_15->join def_%cl_1_17 %cl_1_15[5.6,] %cl_1_16[5.7,] 
+		 9: COPY def_%cl_1_18 %cl_1_17[5.8,] 
+		 10: %cl_1_11->t def_%cl_1_19 %cl_1_11[5.2,] %cl_1_12[5.3,] %cl_1_18[5.9,] 
 		 11: %cl_1_10[5.1,] %cl_1_19[5.10,] 
-		 12: RETURN %cl_1_19[5.10,] 
+		 12: RETURN %cl_1_19[5.10,] %self[5.1,5.4,2.0,] 
 BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN %cl_1_9[4.4,] 
+		 0: RETURN %cl_1_9[4.4,] %self[2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_20 
 		 1: def_%cl_1_21 %cl_1_20[7.0,] 
-		 2: RETURN %cl_1_21[7.1,] 
+		 2: RETURN %cl_1_21[7.1,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 9: RETURN %v_4[2.8,] 
+		 9: RETURN %v_4[2.8,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%v_5 
 		 1: def_%v_6 %v_5[4.0,] 
-		 2: RETURN %v_6[4.1,] 
+		 2: RETURN %v_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -246,28 +246,28 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: def_klass_to_destroy RECEIVEARG 
+		 5: RECEIVEARG def_klass_to_destroy 
 		 6: 
-		 7: def_%v_3 %self->params %self[2.0,] 
+		 7: %self->params def_%v_3 %self[2.0,] 
 		 8: def_%v_4 %v_3[2.7,] 
-		 9: def_%v_5 klass_to_destroy->find klass_to_destroy[2.5,] %v_4[2.8,] 
-		 10: ATTRASSIGN %self->@record %self[2.0,2.7,] %v_5[2.9,] @record[] 
+		 9: klass_to_destroy->find def_%v_5 klass_to_destroy[2.5,] %v_4[2.8,] 
+		 10: ATTRASSIGN %self->@record %self[2.0,2.7,] %v_5[2.9,] 
 		 11: 
-		 12: def_%v_6 %self[2.0,2.7,] @record[2.10,] 
-		 13: def_%v_7 %v_6->respond_to? %v_6[2.12,] 
+		 12: def_%v_6 %self[2.0,2.7,] 
+		 13: %v_6->respond_to? def_%v_7 %v_6[2.12,] 
 		 14: BRANCH %v_7[2.13,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_8 %self[2.0,] @record[2.10,2.12,] 
-		 1: def_%v_9 %self->current_user %self[2.0,] 
-		 2: def_%v_10 %v_8->access_by? %v_8[3.0,] %v_9[3.1,] 
-		 3: def_%v_11 %v_10->! %v_10[3.2,] 
-		 4: def_%v_7 %v_11[3.3,] 
+		 0: def_%v_8 %self[2.0,] 
+		 1: %self->current_user def_%v_9 %self[2.0,] 
+		 2: %v_8->access_by? def_%v_10 %v_8[3.0,] %v_9[3.1,] 
+		 3: %v_10->! def_%v_11 %v_10[3.2,] 
+		 4: COPY def_%v_7 %v_11[3.3,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -278,38 +278,38 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_12 %self->flash %self[2.0,] 
-		 2: def_%v_13 (I18n) 
-		 3: def_%v_14 
-		 4: def_%v_15 %v_13->t %v_13[5.2,] %v_14[5.3,] 
+		 1: %self->flash def_%v_12 %self[2.0,] 
+		 2: (I18n) def_%v_13 
+		 3: COPY def_%v_14 
+		 4: %v_13->t def_%v_15 %v_13[5.2,] %v_14[5.3,] 
 		 5: %v_12[5.1,] %v_15[5.4,] 
 		 6: 
-		 7: def_%v_16 
-		 8: def_%v_17 %v_16[5.7,] 
-		 9: def_%v_18 %self->redirect_to %self[5.1,2.0,] %v_17[5.8,] 
-		 10: RETURN %v_18[5.9,] 
+		 7: COPY def_%v_16 
+		 8: COPY def_%v_17 %v_16[5.7,] 
+		 9: %self->redirect_to def_%v_18 %self[5.1,2.0,] %v_17[5.8,] 
+		 10: RETURN %v_18[5.9,] %self[5.1,5.9,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_19 
+		 0: COPY def_%v_19 
 		 1: 
-		 2: def_%v_20 %self[2.0,] @record[3.0,2.10,2.12,] 
-		 3: def_%v_21 %v_20->destroy %v_20[6.2,] 
+		 2: def_%v_20 %self[2.0,] 
+		 3: %v_20->destroy def_%v_21 %v_20[6.2,] 
 		 4: 
-		 5: def_%v_22 %self->flash %self[2.0,] 
-		 6: def_%v_23 (I18n) 
-		 7: def_%v_24 
-		 8: def_%v_25 %self->controller_name %self[6.5,2.0,] 
-		 9: def_%v_26 %v_25->humanize %v_25[6.8,] 
-		 10: def_%v_27 %v_26[6.9,] 
-		 11: def_%v_28 %v_23->t %v_23[6.6,] %v_24[6.7,] %v_27[6.10,] 
+		 5: %self->flash def_%v_22 %self[2.0,] 
+		 6: (I18n) def_%v_23 
+		 7: COPY def_%v_24 
+		 8: %self->controller_name def_%v_25 %self[6.5,2.0,] 
+		 9: %v_25->humanize def_%v_26 %v_25[6.8,] 
+		 10: COPY def_%v_27 %v_26[6.9,] 
+		 11: %v_23->t def_%v_28 %v_23[6.6,] %v_24[6.7,] %v_27[6.10,] 
 		 12: %v_22[6.5,] %v_28[6.11,] 
 		 13: 
-		 14: def_%v_29 
-		 15: def_%v_30 %v_29[6.14,] 
-		 16: def_%v_31 %self->redirect_to %self[6.5,6.8,2.0,] %v_30[6.15,] 
-		 17: RETURN %v_31[6.16,] 
+		 14: COPY def_%v_29 
+		 15: COPY def_%v_30 %v_29[6.14,] 
+		 16: %self->redirect_to def_%v_31 %self[6.5,6.8,2.0,] %v_30[6.15,] 
+		 17: RETURN %v_31[6.16,] %self[6.5,6.8,6.16,2.0,] 
 BB 8
 	outgoing: 
 	datadep: 
@@ -326,28 +326,28 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 (Migrator) 
-		 7: def_%v_4 %v_3->new %v_3[2.6,] 
-		 8: def_migrator %v_4[2.7,] 
+		 6: (Migrator) def_%v_3 
+		 7: %v_3->new def_%v_4 %v_3[2.6,] 
+		 8: COPY def_migrator %v_4[2.7,] 
 		 9: 
-		 10: def_%v_5 %v_4->migrations_pending? %v_4[2.7,] 
+		 10: %v_4->migrations_pending? def_%v_5 %v_4[2.7,] 
 		 11: BRANCH %v_5[2.10,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self->admin_migrations_path %self[2.0,] 
-		 1: def_%v_7 %self->redirect_to %self[3.0,2.0,] %v_6[3.0,] 
-		 2: RETURN %v_7[3.1,] 
+		 0: %self->admin_migrations_path def_%v_6 %self[2.0,] 
+		 1: %self->redirect_to def_%v_7 %self[3.0,2.0,] %v_6[3.0,] 
+		 2: RETURN %v_7[3.1,] %self[3.0,3.1,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -364,8 +364,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
 		 6: def_%v_3 
@@ -374,14 +374,14 @@ BB 3
 	outgoing: 20 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: def_%v_4 
+		 0: COPY def_%v_4 
 		 1: 
-		 2: def_%v_5 (Admin) 
+		 2: (Admin) def_%v_5 
 		 3: def_%v_6 %v_5[4.2,] 
 		 4: %v_6[4.3,] 
 BB 6
@@ -393,21 +393,21 @@ BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: def_%v_7 %v_6->new %v_6[6.0,4.3,] 
-		 1: def_checker %v_7[7.0,] 
+		 0: %v_6->new def_%v_7 %v_6[6.0,4.3,] 
+		 1: COPY def_checker %v_7[7.0,] 
 		 2: 
-		 3: def_%v_8 %v_7->safe_token_in_use? %v_7[7.0,] 
+		 3: %v_7->safe_token_in_use? def_%v_8 %v_7[7.0,] 
 		 4: BRANCH %v_8[7.3,] 
 BB 8
 	outgoing: 20 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: def_%v_9 
+		 0: COPY def_%v_9 
 		 1: 
 		 2: def_%v_10 
 BB 11
@@ -416,14 +416,14 @@ BB 11
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_13 checker->generate_token checker[7.1,] 
+		 2: checker->generate_token def_%v_13 checker[7.1,] 
 		 3: 
-		 4: def_%v_14 %self->flash %self[2.0,] 
-		 5: def_%v_15 (I18n) 
-		 6: def_%v_16 
-		 7: def_%v_17 %v_15->t %v_15[11.5,] %v_16[11.6,] 
+		 4: %self->flash def_%v_14 %self[2.0,] 
+		 5: (I18n) def_%v_15 
+		 6: COPY def_%v_16 
+		 7: %v_15->t def_%v_17 %v_15[11.5,] %v_16[11.6,] 
 		 8: %v_14[11.4,] %v_17[11.7,] 
-		 9: def_%v_12 %v_17[11.7,] 
+		 9: COPY def_%v_12 %v_17[11.7,] 
 		 10: %v_10[9.2,] 
 BB 13
 	outgoing: 19 
@@ -447,14 +447,14 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_20 %self->flash %self[2.0,] 
-		 2: def_%v_21 (I18n) 
-		 3: def_%v_22 
-		 4: def_%v_23 checker->file checker[7.1,] 
-		 5: def_%v_24 %v_23[16.4,] 
-		 6: def_%v_25 %v_21->t %v_21[16.2,] %v_22[16.3,] %v_24[16.5,] 
+		 1: %self->flash def_%v_20 %self[2.0,] 
+		 2: (I18n) def_%v_21 
+		 3: COPY def_%v_22 
+		 4: checker->file def_%v_23 checker[7.1,] 
+		 5: COPY def_%v_24 %v_23[16.4,] 
+		 6: %v_21->t def_%v_25 %v_21[16.2,] %v_22[16.3,] %v_24[16.5,] 
 		 7: %v_20[16.1,] %v_25[16.6,] 
-		 8: def_%v_12 %v_25[16.6,] 
+		 8: COPY def_%v_12 %v_25[16.6,] 
 		 9: %v_10[9.2,] 
 BB 17
 	outgoing: 19 
@@ -472,7 +472,7 @@ BB 19
 	outgoing: 20 
 	datadep: 
 	instructions:
-		 0: RETURN %v_12[11.9,16.8,] 
+		 0: RETURN %v_12[11.9,16.8,] %self[2.0,] 
 BB 20
 	outgoing: 
 	datadep: 

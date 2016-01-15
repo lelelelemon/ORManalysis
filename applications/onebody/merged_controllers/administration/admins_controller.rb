@@ -112,6 +112,8 @@ class Administration::AdminsController < ApplicationController
       flash[:notice] = t('admin.admin_removed')
       redirect_to administration_admins_path
     end
+ @person.id 
+
   end
 
   private

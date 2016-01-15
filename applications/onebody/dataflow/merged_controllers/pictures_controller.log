@@ -7,15 +7,15 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @album[] 
-		 7: %self->redirect_to %self[2.0,] %v_3[2.6,] 
-		 8: RETURN %v_4[2.7,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %self->redirect_to def_%v_4 %self[2.0,] %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -30,18 +30,18 @@ BB 2
 	outgoing: 3 7 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @picture[] 
-		 7: %v_3->photo_file_name %v_3[2.6,] 
-		 8: %self[2.0,] %v_4[2.7,] @title[] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->photo_file_name def_%v_4 %v_3[2.6,] 
+		 8: ATTRASSIGN %self->@title %self[2.0,] %v_4[2.7,] 
 		 9: 
-		 10: %self[2.0,] 
-CLOSURE BEGIN: @album[] @title[2.8,] @logged_in[] @picture[] 
+		 10: def_%v_5 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -50,22 +50,22 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->breadcrumbs %self[2.0,] 
+		 1: %self->breadcrumbs def_%cl_1_3 %self[2.0,] 
 		 2: 
-		 3: %self[2.0,] @album[] 
-		 4: %self[2.0,] @picture[] 
-		 5: %self->prev_album_picture_path %cl_1_4[3.3,] %self[2.0,] %cl_1_5[3.4,] 
-		 6: %self[2.0,] %cl_1_6[3.5,] 
-CLOSURE BEGIN: @album[3.3,] @title[] @picture[3.4,] 
+		 3: def_%cl_1_4 %self[3.1,2.0,] 
+		 4: def_%cl_1_5 %self[3.1,2.0,] 
+		 5: %self->prev_album_picture_path def_%cl_1_6 %self[3.1,2.0,] %cl_1_4[3.3,] %cl_1_5[3.4,] 
+		 6: def_%cl_1_7 %self[3.1,3.5,2.0,] %cl_1_6[3.5,] %self[3.1,3.5,2.0,] 
+CLOSURE BEGIN: %self[3.1,3.5,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -74,37 +74,37 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->icon %cl_2_3[3.1,] %self[2.0,] 
-		 3: RETURN %cl_2_4[3.2,] 
+		 1: COPY def_%cl_2_3 
+		 2: %self->icon def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 
+		 3: RETURN %cl_2_4[3.2,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_5[4.0,] 
-		 2: RETURN %cl_2_6[4.1,] 
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 7: 
-		 8: %self[2.0,] @title[] 
-		 9: @album[3.3,] 
-		 10: @picture[3.4,] 
-		 11: %self->next_album_picture_path %self[2.0,] %cl_1_10[3.10,] %cl_1_9[3.9,] 
-		 12: %self[2.0,] %cl_1_11[3.11,] 
-CLOSURE BEGIN: @album[3.3,] @title[3.8,] @picture[3.4,] 
+		 8: def_%cl_1_8 %self[3.1,3.5,2.0,] 
+		 9: def_%cl_1_9 %self[3.1,3.5,2.0,] 
+		 10: def_%cl_1_10 %self[3.1,3.5,2.0,] 
+		 11: %self->next_album_picture_path def_%cl_1_11 %self[3.1,3.5,2.0,] %cl_1_9[3.9,] %cl_1_10[3.10,] 
+		 12: def_%cl_1_12 %self[3.1,3.5,3.11,2.0,] %cl_1_11[3.11,] %self[3.1,3.5,3.11,2.0,] 
+CLOSURE BEGIN: %self[3.1,3.5,3.11,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -113,65 +113,65 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->icon %self[2.0,] %cl_3_3[3.1,] 
-		 3: RETURN %cl_3_4[3.2,] 
+		 1: COPY def_%cl_3_3 
+		 2: %self->icon def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 
+		 3: RETURN %cl_3_4[3.2,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_5[4.0,] 
-		 2: RETURN %cl_3_6[4.1,] 
+		 0: def_%cl_3_5 
+		 1: def_%cl_3_6 %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 13: RETURN %cl_1_12[3.12,] 
+		 13: RETURN %cl_1_12[3.12,] %self[3.1,3.5,3.11,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_13[4.0,] 
-		 2: RETURN %cl_1_14[4.1,] 
+		 0: def_%cl_1_13 
+		 1: def_%cl_1_14 %cl_1_13[4.0,] 
+		 2: RETURN %cl_1_14[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 11: 
-		 12: @picture[2.6,] 
-		 13: %v_6->photo %v_6[2.12,] 
-		 14: %v_7->url %v_7[2.13,] 
-		 15: %self->image_tag %self[2.0,] %v_8[2.14,] 
+		 12: def_%v_6 %self[2.0,] 
+		 13: %v_6->photo def_%v_7 %v_6[2.12,] 
+		 14: %v_7->url def_%v_8 %v_7[2.13,] 
+		 15: %self->image_tag def_%v_9 %self[2.0,] %v_8[2.14,] 
 		 16: 
-		 17: %self[2.0,] @logged_in[] 
-		 18: @picture[2.6,2.12,] 
-		 19: %v_10->can_update? %v_10[2.17,] %v_11[2.18,] 
+		 17: def_%v_10 %self[2.0,2.15,] 
+		 18: def_%v_11 %self[2.0,2.15,] 
+		 19: %v_10->can_update? def_%v_12 %v_10[2.17,] %v_11[2.18,] 
 		 20: BRANCH %v_12[2.19,] 
 BB 3
 	outgoing: 4 5 
-	datadep: 2 2 2 2 2 2 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @picture[2.6,2.12,2.18,] 
-		 2: %v_13->photo %v_13[3.1,] 
-		 3: %v_14->url %v_14[3.2,] 
-		 4: 
-		 5: %v_16[3.4,] 
-		 6: %self->link_to %self[2.0,] %v_15[3.3,] %v_17[3.5,] 
-CLOSURE BEGIN: @album[] @title[2.8,] @logged_in[] @picture[] 
+		 1: def_%v_13 %self[2.0,] 
+		 2: %v_13->photo def_%v_14 %v_13[3.1,] 
+		 3: %v_14->url def_%v_15 %v_14[3.2,] 
+		 4: COPY def_%v_16 
+		 5: COPY def_%v_17 %v_16[3.4,] 
+		 6: %self->link_to def_%v_18 %self[2.0,] %v_15[3.3,] %v_17[3.5,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -180,46 +180,46 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->icon %self[2.0,] %cl_4_3[3.1,] 
+		 1: COPY def_%cl_4_3 
+		 2: %self->icon def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 
 		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_4_5[3.4,] 
-		 6: RETURN %cl_4_6[3.5,] 
+		 4: COPY def_%cl_4_5 
+		 5: %self->t def_%cl_4_6 %self[3.2,2.0,] %cl_4_5[3.4,] 
+		 6: RETURN %cl_4_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_4_7[4.0,] 
-		 2: RETURN %cl_4_8[4.1,] 
+		 0: def_%cl_4_7 
+		 1: def_%cl_4_8 %cl_4_7[4.0,] 
+		 2: RETURN %cl_4_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 7: 
-		 8: %self[2.0,] @album[] 
-		 9: @picture[3.1,] 
-		 10: 
-		 11: %self->album_picture_path %self[2.0,] %v_19[3.8,] %v_20[3.9,] %v_21[3.10,] 
-		 12: 
-		 13: %self->t %self[2.0,] %v_23[3.12,] 
-		 14: %v_24[3.13,] 
-		 15: 
-		 16: 
-		 17: %v_25[3.14,] %v_26[3.15,] %v_27[3.16,] 
-		 18: %self->link_to %self[2.0,] %v_28[3.17,] %v_22[3.11,] 
-CLOSURE BEGIN: @album[] @title[2.8,] @logged_in[] @picture[] 
+		 8: def_%v_19 %self[3.6,2.0,] 
+		 9: def_%v_20 %self[3.6,2.0,] 
+		 10: COPY def_%v_21 
+		 11: %self->album_picture_path def_%v_22 %self[3.6,2.0,] %v_19[3.8,] %v_20[3.9,] %v_21[3.10,] 
+		 12: COPY def_%v_23 
+		 13: %self->t def_%v_24 %self[3.6,3.11,2.0,] %v_23[3.12,] 
+		 14: COPY def_%v_25 %v_24[3.13,] 
+		 15: COPY def_%v_26 
+		 16: COPY def_%v_27 
+		 17: COPY def_%v_28 %v_25[3.14,] %v_26[3.15,] %v_27[3.16,] 
+		 18: %self->link_to def_%v_29 %self[3.6,3.11,3.13,2.0,] %v_22[3.11,] %v_28[3.17,] %self[3.6,3.11,3.13,2.0,] 
+CLOSURE BEGIN: %self[3.6,3.11,3.13,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -228,46 +228,46 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->icon %self[2.0,] %cl_5_3[3.1,] 
+		 1: COPY def_%cl_5_3 
+		 2: %self->icon def_%cl_5_4 %self[2.0,] %cl_5_3[3.1,] 
 		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_5_5[3.4,] 
-		 6: RETURN %cl_5_6[3.5,] 
+		 4: COPY def_%cl_5_5 
+		 5: %self->t def_%cl_5_6 %self[3.2,2.0,] %cl_5_5[3.4,] 
+		 6: RETURN %cl_5_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_5_7[4.0,] 
-		 2: RETURN %cl_5_8[4.1,] 
+		 0: def_%cl_5_7 
+		 1: def_%cl_5_8 %cl_5_7[4.0,] 
+		 2: RETURN %cl_5_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 19: 
-		 20: @album[3.8,] 
-		 21: @picture[3.1,3.9,] 
-		 22: 
-		 23: %self->album_picture_path %self[2.0,] %v_30[3.20,] %v_31[3.21,] %v_32[3.22,] 
-		 24: 
-		 25: %self->t %self[2.0,] %v_34[3.24,] 
-		 26: %v_35[3.25,] 
-		 27: 
-		 28: 
-		 29: %v_36[3.26,] %v_37[3.27,] %v_38[3.28,] 
-		 30: %self->link_to %self[2.0,] %v_39[3.29,] %v_33[3.23,] 
-CLOSURE BEGIN: @album[] @title[2.8,] @logged_in[] @picture[] 
+		 20: def_%v_30 %self[3.6,3.11,3.13,3.18,2.0,] 
+		 21: def_%v_31 %self[3.6,3.11,3.13,3.18,2.0,] 
+		 22: COPY def_%v_32 
+		 23: %self->album_picture_path def_%v_33 %self[3.6,3.11,3.13,3.18,2.0,] %v_30[3.20,] %v_31[3.21,] %v_32[3.22,] 
+		 24: COPY def_%v_34 
+		 25: %self->t def_%v_35 %self[3.6,3.11,3.13,3.18,3.23,2.0,] %v_34[3.24,] 
+		 26: COPY def_%v_36 %v_35[3.25,] 
+		 27: COPY def_%v_37 
+		 28: COPY def_%v_38 
+		 29: COPY def_%v_39 %v_36[3.26,] %v_37[3.27,] %v_38[3.28,] 
+		 30: %self->link_to def_%v_40 %self[3.6,3.11,3.13,3.18,3.23,3.25,2.0,] %v_33[3.23,] %v_39[3.29,] %self[3.6,3.11,3.13,3.18,3.23,3.25,2.0,] 
+CLOSURE BEGIN: %self[3.6,3.11,3.13,3.18,3.23,3.25,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -276,46 +276,46 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_6_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->icon %self[2.0,] %cl_6_3[3.1,] 
+		 1: COPY def_%cl_6_3 
+		 2: %self->icon def_%cl_6_4 %self[2.0,] %cl_6_3[3.1,] 
 		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_6_5[3.4,] 
-		 6: RETURN %cl_6_6[3.5,] 
+		 4: COPY def_%cl_6_5 
+		 5: %self->t def_%cl_6_6 %self[3.2,2.0,] %cl_6_5[3.4,] 
+		 6: RETURN %cl_6_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_6_7[4.0,] 
-		 2: RETURN %cl_6_8[4.1,] 
+		 0: def_%cl_6_7 
+		 1: def_%cl_6_8 %cl_6_7[4.0,] 
+		 2: RETURN %cl_6_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 31: 
-		 32: @album[3.8,3.20,] 
-		 33: @picture[3.1,3.9,3.21,] 
-		 34: 
-		 35: %self->album_picture_path %self[2.0,] %v_41[3.32,] %v_42[3.33,] %v_43[3.34,] 
-		 36: 
-		 37: %self->t %self[2.0,] %v_45[3.36,] 
-		 38: %v_46[3.37,] 
-		 39: 
-		 40: 
-		 41: %v_47[3.38,] %v_48[3.39,] %v_49[3.40,] 
-		 42: %self->link_to %self[2.0,] %v_50[3.41,] %v_44[3.35,] 
-CLOSURE BEGIN: @album[] @title[2.8,] @logged_in[] @picture[] 
+		 32: def_%v_41 %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,2.0,] 
+		 33: def_%v_42 %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,2.0,] 
+		 34: COPY def_%v_43 
+		 35: %self->album_picture_path def_%v_44 %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,2.0,] %v_41[3.32,] %v_42[3.33,] %v_43[3.34,] 
+		 36: COPY def_%v_45 
+		 37: %self->t def_%v_46 %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,3.35,2.0,] %v_45[3.36,] 
+		 38: COPY def_%v_47 %v_46[3.37,] 
+		 39: COPY def_%v_48 
+		 40: COPY def_%v_49 
+		 41: COPY def_%v_50 %v_47[3.38,] %v_48[3.39,] %v_49[3.40,] 
+		 42: %self->link_to def_%v_51 %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,3.35,3.37,2.0,] %v_44[3.35,] %v_50[3.41,] %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,3.35,3.37,2.0,] 
+CLOSURE BEGIN: %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,3.35,3.37,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -324,54 +324,54 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_7_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->icon %self[2.0,] %cl_7_3[3.1,] 
+		 1: COPY def_%cl_7_3 
+		 2: %self->icon def_%cl_7_4 %self[2.0,] %cl_7_3[3.1,] 
 		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_7_5[3.4,] 
-		 6: RETURN %cl_7_6[3.5,] 
+		 4: COPY def_%cl_7_5 
+		 5: %self->t def_%cl_7_6 %self[3.2,2.0,] %cl_7_5[3.4,] 
+		 6: RETURN %cl_7_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_7_7[4.0,] 
-		 2: RETURN %cl_7_8[4.1,] 
+		 0: def_%cl_7_7 
+		 1: def_%cl_7_8 %cl_7_7[4.0,] 
+		 2: RETURN %cl_7_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 43: 
-		 44: %self[2.0,] @logged_in[2.17,] 
-		 45: @picture[3.1,3.9,3.21,3.33,] 
-		 46: %v_52->can_delete? %v_52[3.44,] %v_53[3.45,] 
+		 44: def_%v_52 %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,3.35,3.37,3.42,2.0,] 
+		 45: def_%v_53 %self[3.6,3.11,3.13,3.18,3.23,3.25,3.30,3.35,3.37,3.42,2.0,] 
+		 46: %v_52->can_delete? def_%v_54 %v_52[3.44,] %v_53[3.45,] 
 		 47: BRANCH %v_54[3.46,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @album[3.8,3.20,3.32,] 
-		 2: %self[2.0,] @picture[3.1,3.9,3.21,3.33,3.45,] 
-		 3: %self->album_picture_path %self[2.0,] %v_55[4.1,] %v_56[4.2,] 
-		 4: 
-		 5: %self->t %v_58[4.4,] %self[2.0,] 
-		 6: %v_59[4.5,] 
-		 7: 
-		 8: 
-		 9: %v_60[4.6,] %v_61[4.7,] %v_62[4.8,] 
-		 10: %self->link_to %v_57[4.3,] %self[2.0,] %v_63[4.9,] 
-CLOSURE BEGIN: @album[4.1,] @title[2.8,] @logged_in[3.44,] @picture[] 
+		 1: def_%v_55 %self[2.0,] 
+		 2: def_%v_56 %self[2.0,] 
+		 3: %self->album_picture_path def_%v_57 %self[2.0,] %v_55[4.1,] %v_56[4.2,] 
+		 4: COPY def_%v_58 
+		 5: %self->t def_%v_59 %self[4.3,2.0,] %v_58[4.4,] 
+		 6: COPY def_%v_60 %v_59[4.5,] 
+		 7: COPY def_%v_61 
+		 8: COPY def_%v_62 
+		 9: COPY def_%v_63 %v_60[4.6,] %v_61[4.7,] %v_62[4.8,] 
+		 10: %self->link_to def_%v_64 %self[4.3,4.5,2.0,] %v_57[4.3,] %v_63[4.9,] %self[4.3,4.5,2.0,] 
+CLOSURE BEGIN: %self[4.3,4.5,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -380,28 +380,28 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_8_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->icon %self[2.0,] %cl_8_3[3.1,] 
+		 1: COPY def_%cl_8_3 
+		 2: %self->icon def_%cl_8_4 %self[2.0,] %cl_8_3[3.1,] 
 		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_8_5[3.4,] 
-		 6: RETURN %cl_8_6[3.5,] 
+		 4: COPY def_%cl_8_5 
+		 5: %self->t def_%cl_8_6 %self[3.2,2.0,] %cl_8_5[3.4,] 
+		 6: RETURN %cl_8_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_8_7[4.0,] 
-		 2: RETURN %cl_8_8[4.1,] 
+		 0: def_%cl_8_7 
+		 1: def_%cl_8_8 %cl_8_7[4.0,] 
+		 2: RETURN %cl_8_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -412,7 +412,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%v_64 
 BB 6
 	outgoing: 8 
 	datadep: 
@@ -422,36 +422,36 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%v_64 
 BB 8
 	outgoing: 9 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: (Setting) 
-		 2: %v_65->get %v_65[8.1,] 
+		 1: (Setting) def_%v_65 
+		 2: %v_65->get def_%v_66 %v_65[8.1,] 
 		 3: BRANCH %v_66[8.2,] 
 BB 9
 	outgoing: 12 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %v_67[9.1,] 
+		 1: COPY def_%v_67 
+		 2: %self->t def_%v_68 %self[2.0,] %v_67[9.1,] 
 		 3: 
-		 4: 
-		 5: %self[2.0,] @picture[2.6,2.12,2.18,4.2,3.1,3.9,3.21,3.33,3.45,] 
-		 6: 
-		 7: %self->t %self[2.0,] %v_71[9.6,] 
-		 8: %v_70[9.5,] %v_72[9.7,] 
-		 9: %v_69[9.4,] %v_73[9.8,] 
-		 10: %self->render %self[2.0,] %v_74[9.9,] 
-		 11: RETURN %v_75[9.10,] 
+		 4: COPY def_%v_69 
+		 5: def_%v_70 %self[9.2,2.0,] 
+		 6: COPY def_%v_71 
+		 7: %self->t def_%v_72 %self[9.2,2.0,] %v_71[9.6,] 
+		 8: COPY def_%v_73 %v_70[9.5,] %v_72[9.7,] 
+		 9: COPY def_%v_74 %v_69[9.4,] %v_73[9.8,] 
+		 10: %self->render def_%v_75 %self[9.2,9.7,2.0,] %v_74[9.9,] 
+		 11: RETURN %v_75[9.10,] %self[9.2,9.7,9.10,2.0,] 
 BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 12
 	outgoing: 
 	datadep: 
@@ -466,53 +466,53 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @logged_in[] 
-		 7: %v_3->albums %v_3[2.6,] 
-		 8: %v_4->order %v_4[2.7,] 
-		 9: %self[2.0,] %v_5[2.8,] @albums[] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->albums def_%v_4 %v_3[2.6,] 
+		 8: %v_4->order def_%v_5 %v_4[2.7,] 
+		 9: ATTRASSIGN %self->@albums %self[2.0,] %v_5[2.8,] 
 		 10: 
-		 11: @albums[2.9,] 
-		 12: %v_6->count %v_6[2.11,] 
-		 13: %v_7[2.12,] 
+		 11: def_%v_6 %self[2.0,] 
+		 12: %v_6->count def_%v_7 %v_6[2.11,] 
+		 13: def_%v_8 %v_7[2.12,] 
 		 14: BRANCH %v_8[2.13,] 
 BB 3
 	outgoing: 5 
-	datadep: 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,] 
-		 2: 
-		 3: %self->t %self[2.0,] %v_10[3.2,] 
+		 1: %self->flash def_%v_9 %self[2.0,] 
+		 2: COPY def_%v_10 
+		 3: %self->t def_%v_11 %self[3.1,2.0,] %v_10[3.2,] 
 		 4: %v_9[3.1,] %v_11[3.3,] 
 		 5: 
-		 6: %self[2.0,] @logged_in[2.6,] 
-		 7: %self->new_person_album_path %self[2.0,] %v_12[3.6,] 
-		 8: %self->redirect_to %v_13[3.7,] %self[2.0,] 
+		 6: def_%v_12 %self[3.1,3.3,2.0,] 
+		 7: %self->new_person_album_path def_%v_13 %self[3.1,3.3,2.0,] %v_12[3.6,] 
+		 8: %self->redirect_to def_%v_14 %self[3.1,3.3,3.7,2.0,] %v_13[3.7,] 
 		 9: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%v_14 
 BB 5
 	outgoing: 6 
-	datadep: 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %v_15[5.1,] 
-		 3: %self[2.0,] %v_16[5.2,] @title[] 
+		 1: COPY def_%v_15 
+		 2: %self->t def_%v_16 %self[2.0,] %v_15[5.1,] 
+		 3: ATTRASSIGN %self->@title %self[5.2,2.0,] %v_16[5.2,] 
 		 4: 
-		 5: (Picture) 
-		 6: %v_17->new %v_17[5.5,] 
-		 7: %self[2.0,] %v_18[5.6,] 
-CLOSURE BEGIN: @albums[2.9,] @logged_in[] @title[5.3,] 
+		 5: (Picture) def_%v_17 
+		 6: %v_17->new def_%v_18 %v_17[5.5,] 
+		 7: def_%v_19 %self[5.2,2.0,] %v_18[5.6,] %self[5.2,2.0,] 
+CLOSURE BEGIN: %self[5.2,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -521,53 +521,53 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_form 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %cl_1_3[3.1,] %self[2.0,] 
+		 1: COPY def_%cl_1_3 
+		 2: %self->t def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 
 		 3: 
-		 4: %self->label_tag %self[2.0,] 
+		 4: %self->label_tag def_%cl_1_5 %self[3.2,2.0,] 
 		 5: 
-		 6: %self[2.0,] @albums[] 
-		 7: %self->params %self[2.0,] 
-		 8: %cl_1_7[3.7,] 
-		 9: %self->options_from_collection_for_select %self[2.0,] %cl_1_6[3.6,] %cl_1_8[3.8,] 
-		 10: 
-		 11: %cl_1_10[3.10,] 
-		 12: %self->select_tag %self[2.0,] %cl_1_11[3.11,] %cl_1_9[3.9,] 
+		 6: def_%cl_1_6 %self[3.2,3.4,2.0,] 
+		 7: %self->params def_%cl_1_7 %self[3.2,3.4,2.0,] 
+		 8: def_%cl_1_8 %cl_1_7[3.7,] 
+		 9: %self->options_from_collection_for_select def_%cl_1_9 %self[3.2,3.4,3.7,2.0,] %cl_1_6[3.6,] %cl_1_8[3.8,] 
+		 10: COPY def_%cl_1_10 
+		 11: COPY def_%cl_1_11 %cl_1_10[3.10,] 
+		 12: %self->select_tag def_%cl_1_12 %self[3.2,3.4,3.7,3.9,2.0,] %cl_1_9[3.9,] %cl_1_11[3.11,] 
 		 13: 
-		 14: %self->picture_upload %self[2.0,] 
-		 15: RETURN %cl_1_13[3.14,] 
+		 14: %self->picture_upload def_%cl_1_13 %self[3.2,3.4,3.7,3.9,3.12,2.0,] 
+		 15: RETURN %cl_1_13[3.14,] %self[3.2,3.4,3.7,3.9,3.12,3.14,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_14[4.0,] 
-		 2: RETURN %cl_1_15[4.1,] 
+		 0: def_%cl_1_14 
+		 1: def_%cl_1_15 %cl_1_14[4.0,] 
+		 2: RETURN %cl_1_15[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 8: 
-		 9: 
-		 10: %self->t %self[2.0,] %v_20[5.9,] 
+		 9: COPY def_%v_20 
+		 10: %self->t def_%v_21 %self[5.2,2.0,] %v_20[5.9,] 
 		 11: 
-		 12: %self[2.0,] @logged_in[3.6,2.6,] 
-		 13: %self->new_person_album_path %self[2.0,] %v_22[5.12,] 
-		 14: 
-		 15: %v_24[5.14,] 
-		 16: %self->link_to %v_25[5.15,] %self[2.0,] %v_23[5.13,] 
-CLOSURE BEGIN: @albums[2.9,] @logged_in[5.12,] @title[5.3,] 
+		 12: def_%v_22 %self[5.2,5.10,2.0,] 
+		 13: %self->new_person_album_path def_%v_23 %self[5.2,5.10,2.0,] %v_22[5.12,] 
+		 14: COPY def_%v_24 
+		 15: COPY def_%v_25 %v_24[5.14,] 
+		 16: %self->link_to def_%v_26 %self[5.2,5.10,5.13,2.0,] %v_23[5.13,] %v_25[5.15,] %self[5.2,5.10,5.13,2.0,] 
+CLOSURE BEGIN: %self[5.2,5.10,5.13,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -576,34 +576,34 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->icon %cl_2_3[3.1,] %self[2.0,] 
+		 1: COPY def_%cl_2_3 
+		 2: %self->icon def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 
 		 3: 
-		 4: 
-		 5: %self->t %self[2.0,] %cl_2_5[3.4,] 
-		 6: RETURN %cl_2_6[3.5,] 
+		 4: COPY def_%cl_2_5 
+		 5: %self->t def_%cl_2_6 %self[3.2,2.0,] %cl_2_5[3.4,] 
+		 6: RETURN %cl_2_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_7[4.0,] 
-		 2: RETURN %cl_2_8[4.1,] 
+		 0: def_%cl_2_7 
+		 1: def_%cl_2_8 %cl_2_7[4.0,] 
+		 2: RETURN %cl_2_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 17: RETURN %v_26[5.16,] 
+		 17: RETURN %v_26[5.16,] %self[5.2,5.10,5.13,5.16,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -618,18 +618,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @album[] 
-		 7: %self[2.0,] @picture[] 
-		 8: %v_4->next %v_4[2.7,] 
-		 9: %v_5[2.8,] %v_3[2.6,] 
-		 10: %self->redirect_to %self[2.0,] %v_6[2.9,] 
-		 11: RETURN %v_7[2.10,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: def_%v_4 %self[2.0,] 
+		 8: %v_4->next def_%v_5 %v_4[2.7,] 
+		 9: COPY def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 10: %self->redirect_to def_%v_7 %self[2.0,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -644,18 +644,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @album[] 
-		 7: %self[2.0,] @picture[] 
-		 8: %v_4->prev %v_4[2.7,] 
-		 9: %v_5[2.8,] %v_3[2.6,] 
-		 10: %self->redirect_to %self[2.0,] %v_6[2.9,] 
-		 11: RETURN %v_7[2.10,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: def_%v_4 %self[2.0,] 
+		 8: %v_4->prev def_%v_5 %v_4[2.7,] 
+		 9: COPY def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 10: %self->redirect_to def_%v_7 %self[2.0,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -670,37 +670,37 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: (PictureUploader) 
-		 7: %self[2.0,] @album[] 
-		 8: %self->params %self[2.0,] 
-		 9: %self->current_user %self[2.0,] 
-		 10: %v_3->new %v_4[2.7,] %v_5[2.8,] %v_3[2.6,] %v_6[2.9,] 
-		 11: %self[2.0,] %v_7[2.10,] @uploader[] 
+		 6: (PictureUploader) def_%v_3 
+		 7: def_%v_4 %self[2.0,] 
+		 8: %self->params def_%v_5 %self[2.0,] 
+		 9: %self->current_user def_%v_6 %self[2.0,2.8,] 
+		 10: %v_3->new def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
+		 11: ATTRASSIGN %self->@uploader %self[2.0,2.8,2.9,] %v_7[2.10,] 
 		 12: 
-		 13: @uploader[2.11,] 
-		 14: %v_8->save %v_8[2.13,] 
+		 13: def_%v_8 %self[2.0,2.8,2.9,] 
+		 14: %v_8->save def_%v_9 %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,] 
-		 2: 
-		 3: %self[2.0,] @uploader[2.11,2.13,] 
-		 4: %v_12->success %v_12[3.3,] 
-		 5: %v_13[3.4,] 
-		 6: %self->t %v_14[3.5,] %self[2.0,] %v_11[3.2,] 
-		 7: %v_15[3.6,] %v_10[3.1,] 
+		 1: %self->flash def_%v_10 %self[2.0,] 
+		 2: COPY def_%v_11 
+		 3: def_%v_12 %self[3.1,2.0,] 
+		 4: %v_12->success def_%v_13 %v_12[3.3,] 
+		 5: COPY def_%v_14 %v_13[3.4,] 
+		 6: %self->t def_%v_15 %self[3.1,2.0,] %v_11[3.2,] %v_14[3.5,] 
+		 7: %v_10[3.1,] %v_15[3.6,] 
 		 8: 
-		 9: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @album[2.7,] @uploader[3.3,] 
+		 9: %self->respond_to def_%v_16 %self[3.1,3.6,2.0,] %self[3.1,3.6,2.0,] 
+CLOSURE BEGIN: format[] %self[3.1,3.6,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -709,18 +709,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -729,33 +729,33 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @album[] 
-		 2: %self->redirect_to %cl_2_3[3.1,] %self[2.0,] 
-		 3: RETURN %cl_2_4[3.2,] 
+		 1: def_%cl_2_3 %self[2.0,] 
+		 2: %self->redirect_to def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 
+		 3: RETURN %cl_2_4[3.2,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_5[4.0,] 
-		 2: RETURN %cl_2_6[4.1,] 
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 2: 
-		 3: format->json %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 3: format->json def_%cl_1_4 format[3.1,2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -764,55 +764,55 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self[2.0,] @album[] 
-		 3: %self->album_path %self[2.0,] %cl_3_4[3.2,] 
-		 4: %cl_3_3[3.1,] %cl_3_5[3.3,] 
-		 5: %cl_3_6[3.4,] 
-		 6: %self->render %self[2.0,] %cl_3_7[3.5,] 
-		 7: RETURN %cl_3_8[3.6,] 
+		 1: COPY def_%cl_3_3 
+		 2: def_%cl_3_4 %self[2.0,] 
+		 3: %self->album_path def_%cl_3_5 %self[2.0,] %cl_3_4[3.2,] 
+		 4: COPY def_%cl_3_6 %cl_3_3[3.1,] %cl_3_5[3.3,] 
+		 5: COPY def_%cl_3_7 %cl_3_6[3.4,] 
+		 6: %self->render def_%cl_3_8 %self[3.3,2.0,] %cl_3_7[3.5,] 
+		 7: RETURN %cl_3_8[3.6,] %self[3.3,3.6,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_9[4.0,] 
-		 2: RETURN %cl_3_10[4.1,] 
+		 0: def_%cl_3_9 
+		 1: def_%cl_3_10 %cl_3_9[4.0,] 
+		 2: RETURN %cl_3_10[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 4: RETURN %cl_1_4[3.3,] 
+		 4: RETURN %cl_1_4[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_5[4.0,] 
-		 2: RETURN %cl_1_6[4.1,] 
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 10: RETURN %v_16[3.9,] 
+		 10: RETURN %v_16[3.9,] %self[3.1,3.6,3.9,2.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @album[2.7,] @uploader[3.3,] 
+		 1: %self->respond_to def_%v_17 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -821,18 +821,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_4_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -841,42 +841,42 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,] 
-		 2: %self[2.0,] @uploader[] 
-		 3: %cl_5_4->errors %cl_5_4[3.2,] 
-		 4: %cl_5_5->values %cl_5_5[3.3,] 
-		 5: 
-		 6: %cl_5_6->join %cl_5_7[3.5,] %cl_5_6[3.4,] 
-		 7: %cl_5_8[3.6,] %cl_5_3[3.1,] 
+		 1: %self->flash def_%cl_5_3 %self[2.0,] 
+		 2: def_%cl_5_4 %self[3.1,2.0,] 
+		 3: %cl_5_4->errors def_%cl_5_5 %cl_5_4[3.2,] 
+		 4: %cl_5_5->values def_%cl_5_6 %cl_5_5[3.3,] 
+		 5: COPY def_%cl_5_7 
+		 6: %cl_5_6->join def_%cl_5_8 %cl_5_6[3.4,] %cl_5_7[3.5,] 
+		 7: %cl_5_3[3.1,] %cl_5_8[3.6,] 
 		 8: 
-		 9: 
-		 10: %cl_5_9[3.9,] 
-		 11: %self->render %self[2.0,] %cl_5_10[3.10,] 
-		 12: RETURN %cl_5_11[3.11,] 
+		 9: COPY def_%cl_5_9 
+		 10: COPY def_%cl_5_10 %cl_5_9[3.9,] 
+		 11: %self->render def_%cl_5_11 %self[3.1,2.0,] %cl_5_10[3.10,] 
+		 12: RETURN %cl_5_11[3.11,] %self[3.1,3.11,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_5_12[4.0,] 
-		 2: RETURN %cl_5_13[4.1,] 
+		 0: def_%cl_5_12 
+		 1: def_%cl_5_13 %cl_5_12[4.0,] 
+		 2: RETURN %cl_5_13[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 2: 
-		 3: format->json %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 3: format->json def_%cl_4_4 format[3.1,2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -885,49 +885,49 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_6_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self[2.0,] @uploader[] 
-		 3: %cl_6_4->errors %cl_6_4[3.2,] 
-		 4: %cl_6_5->values %cl_6_5[3.3,] 
-		 5: %cl_6_6[3.4,] %cl_6_3[3.1,] 
-		 6: %cl_6_7[3.5,] 
-		 7: %self->render %self[2.0,] %cl_6_8[3.6,] 
-		 8: RETURN %cl_6_9[3.7,] 
+		 1: COPY def_%cl_6_3 
+		 2: def_%cl_6_4 %self[2.0,] 
+		 3: %cl_6_4->errors def_%cl_6_5 %cl_6_4[3.2,] 
+		 4: %cl_6_5->values def_%cl_6_6 %cl_6_5[3.3,] 
+		 5: COPY def_%cl_6_7 %cl_6_3[3.1,] %cl_6_6[3.4,] 
+		 6: COPY def_%cl_6_8 %cl_6_7[3.5,] 
+		 7: %self->render def_%cl_6_9 %self[2.0,] %cl_6_8[3.6,] 
+		 8: RETURN %cl_6_9[3.7,] %self[3.7,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_6_10[4.0,] 
-		 2: RETURN %cl_6_11[4.1,] 
+		 0: def_%cl_6_10 
+		 1: def_%cl_6_11 %cl_6_10[4.0,] 
+		 2: RETURN %cl_6_11[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 4: RETURN %cl_4_4[3.3,] 
+		 4: RETURN %cl_4_4[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_4_5[4.0,] 
-		 2: RETURN %cl_4_6[4.1,] 
+		 0: def_%cl_4_5 
+		 1: def_%cl_4_6 %cl_4_5[4.0,] 
+		 2: RETURN %cl_4_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %v_17[4.1,] 
+		 2: RETURN %v_17[4.1,] %self[4.1,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -942,62 +942,62 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->params %self[2.0,] 
-		 7: %v_3[2.6,] 
+		 6: %self->params def_%v_3 %self[2.0,] 
+		 7: def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 9 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @picture[] 
-		 2: %self->params %self[2.0,] 
-		 3: %v_6[3.2,] 
-		 4: %v_7->to_i %v_7[3.3,] 
-		 5: %v_5->rotate %v_5[3.1,] %v_8[3.4,] 
+		 1: def_%v_5 %self[2.0,] 
+		 2: %self->params def_%v_6 %self[2.0,] 
+		 3: def_%v_7 %v_6[3.2,] 
+		 4: %v_7->to_i def_%v_8 %v_7[3.3,] 
+		 5: %v_5->rotate def_%v_9 %v_5[3.1,] %v_8[3.4,] 
 		 6: 
-		 7: %self[2.0,] @album[] 
-		 8: @picture[3.1,] 
-		 9: %v_10[3.7,] %v_11[3.8,] 
-		 10: %self->redirect_to %self[2.0,] %v_12[3.9,] 
-		 11: RETURN %v_13[3.10,] 
+		 7: def_%v_10 %self[3.2,2.0,] 
+		 8: def_%v_11 %self[3.2,2.0,] 
+		 9: COPY def_%v_12 %v_10[3.7,] %v_11[3.8,] 
+		 10: %self->redirect_to def_%v_13 %self[3.2,2.0,] %v_12[3.9,] 
+		 11: RETURN %v_13[3.10,] %self[3.2,3.10,2.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params %self[2.0,] 
-		 2: %v_14[4.1,] 
+		 1: %self->params def_%v_14 %self[2.0,] 
+		 2: def_%v_15 %v_14[4.1,] 
 		 3: BRANCH %v_15[4.2,] 
 BB 5
 	outgoing: 7 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @album[] 
-		 2: %self[2.0,] @picture[] 
-		 3: %v_17[5.2,] 
-		 4: %v_16->update_attributes! %v_16[5.1,] %v_18[5.3,] 
+		 1: def_%v_16 %self[2.0,] 
+		 2: def_%v_17 %self[2.0,] 
+		 3: COPY def_%v_18 %v_17[5.2,] 
+		 4: %v_16->update_attributes! def_%v_19 %v_16[5.1,] %v_18[5.3,] 
 		 5: 
-		 6: @album[5.1,] 
-		 7: %self->redirect_to %self[2.0,] %v_20[5.6,] 
+		 6: def_%v_20 %self[2.0,] 
+		 7: %self->redirect_to def_%v_21 %self[2.0,] %v_20[5.6,] 
 		 8: 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%v_21 
 BB 7
 	outgoing: 9 
-	datadep: 6 5 
+	datadep: 
 	instructions:
-		 0: RETURN %v_21[6.0,5.7,] 
+		 0: RETURN %v_21[6.0,5.7,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -1012,18 +1012,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @picture[] 
-		 7: %v_3->destroy %v_3[2.6,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->destroy def_%v_4 %v_3[2.6,] 
 		 8: 
-		 9: %self[2.0,] @album[] 
-		 10: %self->redirect_to %self[2.0,] %v_5[2.9,] 
-		 11: RETURN %v_6[2.10,] 
+		 9: def_%v_5 %self[2.0,] 
+		 10: %self->redirect_to def_%v_6 %self[2.0,] %v_5[2.9,] 
+		 11: RETURN %v_6[2.10,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -1038,42 +1038,42 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @album[] 
+		 6: def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
-		 1: %self->params %self[2.0,] 
-		 2: %v_5[4.1,] 
-		 3: %v_6->presence %v_6[4.2,] 
+		 0: COPY def_%v_4 
+		 1: %self->params def_%v_5 %self[2.0,] 
+		 2: def_%v_6 %v_5[4.1,] 
+		 3: %v_6->presence def_%v_7 %v_6[4.2,] 
 		 4: BRANCH %v_7[4.3,] 
 BB 6
 	outgoing: 9 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%v_8 
 		 1: 
-		 2: %self->albums %self[2.0,] 
-		 3: %self->params %self[2.0,] 
-		 4: %v_10[6.3,] 
-		 5: %v_11->presence %v_11[6.4,] 
-		 6: %v_12[6.5,] 
-		 7: %v_9->where %v_13[6.6,] %v_9[6.2,] 
-		 8: %v_14->first_or_create! %v_14[6.7,] %self[2.0,] 
-CLOSURE BEGIN: @album[] 
+		 2: %self->albums def_%v_9 %self[2.0,] 
+		 3: %self->params def_%v_10 %self[6.2,2.0,] 
+		 4: def_%v_11 %v_10[6.3,] 
+		 5: %v_11->presence def_%v_12 %v_11[6.4,] 
+		 6: COPY def_%v_13 %v_12[6.5,] 
+		 7: %v_9->where def_%v_14 %v_9[6.2,] %v_13[6.6,] 
+		 8: %v_14->first_or_create! def_%v_15 %v_14[6.7,] %self[6.2,6.3,2.0,] 
+CLOSURE BEGIN: album[] %self[6.2,6.3,2.0,] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -1082,53 +1082,53 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_album 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: album->owner album[2.2,] 
+		 1: album->owner def_%cl_1_3 album[2.2,] 
 		 2: BRANCH %cl_1_3[3.1,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
-		 0: %self->current_user %self[2.0,] 
-		 1: %cl_1_5[4.0,] album[2.2,] 
-		 2: %cl_1_5[4.0,] 
+		 0: %self->current_user def_%cl_1_5 %self[2.0,] 
+		 1: ATTRASSIGN album->owner def_%cl_1_4 album[2.2,] %cl_1_5[4.0,] 
+		 2: COPY def_%cl_1_3 %cl_1_5[4.0,] 
 BB 5
 	outgoing: 6 8 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: (Authority) 
-		 2: %self->current_user %self[2.0,] 
-		 3: %cl_1_6->enforce %cl_1_6[5.1,] album[2.2,] %cl_1_7[5.2,] 
-		 4: RETURN %cl_1_8[5.3,] 
+		 1: (Authority) def_%cl_1_6 
+		 2: %self->current_user def_%cl_1_7 %self[2.0,] 
+		 3: %cl_1_6->enforce def_%cl_1_8 %cl_1_6[5.1,] album[4.1,2.2,] %cl_1_7[5.2,] 
+		 4: RETURN %cl_1_8[5.3,] %self[5.2,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_9[6.0,] 
-		 2: RETURN %cl_1_10[6.1,] 
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[6.0,] 
+		 2: RETURN %cl_1_10[6.1,] %self[2.0,] 
 BB 8
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 9: %self[2.0,] %v_15[6.8,] @album[2.6,] 
-		 10: RETURN %v_15[6.8,] 
+		 9: ATTRASSIGN %self->@album %self[6.2,6.3,2.0,] %v_15[6.8,] 
+		 10: RETURN %v_15[6.8,] %self[6.2,6.3,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 

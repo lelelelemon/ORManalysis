@@ -9,12 +9,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] @article[] 
-		 7: def_%v_4 %self->new_comment_defaults %self[2.0,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %self->new_comment_defaults def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_3[2.6,] %v_4[2.7,] %self[2.0,2.7,] 
 CLOSURE BEGIN: %self[2.0,2.7,] art[] 
 BB 1
@@ -27,44 +27,44 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: def_art RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_art 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self->params %self[2.0,] 
+		 1: %self->params def_%cl_1_3 %self[2.0,] 
 		 2: def_%cl_1_4 %cl_1_3[3.1,] 
-		 3: def_%cl_1_5 %cl_1_4->slice %cl_1_4[3.2,] 
-		 4: def_%cl_1_6 art->add_comment art[2.2,] %cl_1_5[3.3,] 
-		 5: RETURN %cl_1_6[3.4,] 
+		 3: %cl_1_4->slice def_%cl_1_5 %cl_1_4[3.2,] 
+		 4: art->add_comment def_%cl_1_6 art[2.2,] %cl_1_5[3.3,] 
+		 5: RETURN %cl_1_6[3.4,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_7 
 		 1: def_%cl_1_8 %cl_1_7[4.0,] 
-		 2: RETURN %cl_1_8[4.1,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 9: ATTRASSIGN %self->@comment %self[2.0,2.7,] %v_5[2.8,] @comment[] 
+		 9: ATTRASSIGN %self->@comment %self[2.0,2.7,] %v_5[2.8,] 
 		 10: 
-		 11: def_%v_6 %self->current_user %self[2.0,2.7,] 
-		 12: def_%v_7 %v_6->nil? %v_6[2.11,] 
+		 11: %self->current_user def_%v_6 %self[2.0,2.7,] 
+		 12: %v_6->nil? def_%v_7 %v_6[2.11,] 
 		 13: BRANCH %v_7[2.12,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_8 %self->session %self[2.0,] 
+		 0: %self->session def_%v_8 %self[2.0,] 
 		 1: def_%v_9 %v_8[3.0,] 
-		 2: def_%v_10 %v_9->nil? %v_9[3.1,] 
-		 3: def_%v_7 %v_10[3.2,] 
+		 2: %v_9->nil? def_%v_10 %v_9[3.1,] 
+		 3: COPY def_%v_7 %v_10[3.2,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -74,59 +74,59 @@ BB 5
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: def_%v_11 
+		 0: COPY def_%v_11 
 		 1: 
 BB 6
 	outgoing: 7 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_12 %self->current_user %self[2.0,] 
-		 2: def_%v_13 %v_12->id %v_12[6.1,] 
-		 3: def_%v_14 %self->session %self[6.1,2.0,] 
+		 1: %self->current_user def_%v_12 %self[2.0,] 
+		 2: %v_12->id def_%v_13 %v_12[6.1,] 
+		 3: %self->session def_%v_14 %self[6.1,2.0,] 
 		 4: def_%v_15 %v_14[6.3,] 
-		 5: def_%v_16 %v_13[6.2,] %v_15[6.4,] 
+		 5: %v_13->== def_%v_16 %v_13[6.2,] %v_15[6.4,] 
 		 6: BRANCH %v_16[6.5,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_17 %self[2.0,] @comment[2.9,] 
-		 1: def_%v_18 %self->current_user %self[2.0,] 
-		 2: def_%v_19 %v_18->id %v_18[7.1,] 
+		 0: def_%v_17 %self[2.0,] 
+		 1: %self->current_user def_%v_18 %self[2.0,] 
+		 2: %v_18->id def_%v_19 %v_18[7.1,] 
 		 3: ATTRASSIGN %v_17->user_id %v_17[7.0,] %v_19[7.2,] 
 		 4: 
 BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_19 
+		 0: COPY def_%v_19 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: def_%v_11 %v_19[8.0,7.2,] 
+		 0: COPY def_%v_11 %v_19[8.0,7.2,] 
 BB 10
 	outgoing: 11 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_20 %self[2.0,] @comment[7.0,2.9,] 
-		 2: def_%v_21 %self->set_cookies_for %self[2.0,] %v_20[10.1,] 
+		 1: def_%v_20 %self[2.0,] 
+		 2: %self->set_cookies_for def_%v_21 %self[2.0,] %v_20[10.1,] 
 		 3: 
-		 4: def_%v_22 
-		 5: def_partial %v_22[10.4,] 
+		 4: COPY def_%v_22 
+		 5: COPY def_partial %v_22[10.4,] 
 		 6: 
-		 7: def_%v_23 %self[10.2,2.0,] @comment[10.1,7.0,2.9,] 
-		 8: def_%v_24 %self->recaptcha_ok_for? %self[10.2,2.0,] %v_23[10.7,] 
+		 7: def_%v_23 %self[10.2,2.0,] 
+		 8: %self->recaptcha_ok_for? def_%v_24 %self[10.2,2.0,] %v_23[10.7,] 
 		 9: BRANCH %v_24[10.8,] 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: def_%v_25 %self[2.0,] @comment[10.1,10.7,7.0,2.9,] 
-		 1: def_%v_26 %v_25->save %v_25[11.0,] 
-		 2: def_%v_24 %v_26[11.1,] 
+		 0: def_%v_25 %self[2.0,] 
+		 1: %v_25->save def_%v_26 %v_25[11.0,] 
+		 2: COPY def_%v_24 %v_26[11.1,] 
 BB 12
 	outgoing: 13 14 
 	datadep: 
@@ -137,20 +137,20 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_27 
-		 2: def_partial %v_27[13.1,] 
+		 1: COPY def_%v_27 
+		 2: COPY def_partial %v_27[13.1,] 
 		 3: 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: def_%v_27 
+		 0: COPY def_%v_27 
 BB 15
 	outgoing: 16 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_28 %self->respond_to %self[2.0,] %self[2.0,] 
+		 1: %self->respond_to def_%v_28 %self[2.0,] %self[2.0,] 
 CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -162,15 +162,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: def_format RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 format->js format[2.2,] %self[2.0,] 
+		 1: format->js def_%cl_2_3 format[2.2,] %self[2.0,] 
 CLOSURE BEGIN: %self[2.0,] partial[] 
 BB 1
 	outgoing: 6 2 
@@ -182,29 +182,29 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_3_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_3 %self->render %self[2.0,] partial[] 
-		 2: RETURN %cl_3_3[3.1,] 
+		 1: %self->render def_%cl_3_3 %self[2.0,] partial[] 
+		 2: RETURN %cl_3_3[3.1,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_3_4 
 		 1: def_%cl_3_5 %cl_3_4[4.0,] 
-		 2: RETURN %cl_3_5[4.1,] 
+		 2: RETURN %cl_3_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 2: 
-		 3: def_%cl_2_4 format->html format[3.1,2.2,] %self[2.0,] 
+		 3: format->html def_%cl_2_4 format[3.1,2.2,] %self[2.0,] 
 CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -216,46 +216,46 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_4_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_4_3 (URI) 
-		 2: def_%cl_4_4 %self[2.0,] @article[] 
-		 3: def_%cl_4_5 %cl_4_4->permalink_url %cl_4_4[3.2,] 
-		 4: def_%cl_4_6 %cl_4_3->parse %cl_4_3[3.1,] %cl_4_5[3.3,] 
-		 5: def_%cl_4_7 %cl_4_6->path %cl_4_6[3.4,] 
-		 6: def_%cl_4_8 %self->redirect_to %self[2.0,] %cl_4_7[3.5,] 
-		 7: RETURN %cl_4_8[3.6,] 
+		 1: (URI) def_%cl_4_3 
+		 2: def_%cl_4_4 %self[2.0,] 
+		 3: %cl_4_4->permalink_url def_%cl_4_5 %cl_4_4[3.2,] 
+		 4: %cl_4_3->parse def_%cl_4_6 %cl_4_3[3.1,] %cl_4_5[3.3,] 
+		 5: %cl_4_6->path def_%cl_4_7 %cl_4_6[3.4,] 
+		 6: %self->redirect_to def_%cl_4_8 %self[2.0,] %cl_4_7[3.5,] 
+		 7: RETURN %cl_4_8[3.6,] %self[3.6,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_4_9 
 		 1: def_%cl_4_10 %cl_4_9[4.0,] 
-		 2: RETURN %cl_4_10[4.1,] 
+		 2: RETURN %cl_4_10[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 4: RETURN %cl_2_4[3.3,] 
+		 4: RETURN %cl_2_4[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_2_5 
 		 1: def_%cl_2_6 %cl_2_5[4.0,] 
-		 2: RETURN %cl_2_6[4.1,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %v_28[15.1,] 
+		 2: RETURN %v_28[15.1,] %self[15.1,2.0,] 
 BB 16
 	outgoing: 
 	datadep: 
@@ -272,51 +272,51 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] @article[] 
-		 7: def_%v_4 %v_3->comments_closed? %v_3[2.6,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->comments_closed? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_5 
-		 1: def_%v_6 %v_5[3.0,] 
-		 2: def_%v_7 %self->render %self[2.0,] %v_6[3.1,] 
-		 3: RETURN %v_7[3.2,] 
+		 0: COPY def_%v_5 
+		 1: COPY def_%v_6 %v_5[3.0,] 
+		 2: %self->render def_%v_7 %self[2.0,] %v_6[3.1,] 
+		 3: RETURN %v_7[3.2,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: def_%v_8 
+		 0: COPY def_%v_8 
 		 1: 
-		 2: def_%v_9 %self->comment_params %self[2.0,] 
+		 2: %self->comment_params def_%v_9 %self[2.0,] 
 		 3: def_%v_10 %v_9[4.2,] 
-		 4: def_%v_11 %v_10->blank? %v_10[4.3,] 
+		 4: %v_10->blank? def_%v_11 %v_10[4.3,] 
 		 5: BRANCH %v_11[4.4,] 
 BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_12 
-		 2: def_%v_13 %self->render %self[2.0,] %v_12[6.1,] 
+		 1: COPY def_%v_12 
+		 2: %self->render def_%v_13 %self[2.0,] %v_12[6.1,] 
 		 3: 
-		 4: RETURN 
+		 4: RETURN %self[6.2,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_14 
+		 0: COPY def_%v_14 
 		 1: 
-		 2: def_%v_15 (Comment) 
-		 3: def_%v_16 %self->comment_params %self[2.0,] 
-		 4: def_%v_17 %v_15->new %v_15[7.2,] %v_16[7.3,] 
-		 5: ATTRASSIGN %self->@comment %self[7.3,2.0,] %v_17[7.4,] @comment[] 
-		 6: RETURN %v_17[7.4,] 
+		 2: (Comment) def_%v_15 
+		 3: %self->comment_params def_%v_16 %self[2.0,] 
+		 4: %v_15->new def_%v_17 %v_15[7.2,] %v_16[7.3,] 
+		 5: ATTRASSIGN %self->@comment %self[7.3,2.0,] %v_17[7.4,] 
+		 6: RETURN %v_17[7.4,] %self[7.3,2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -333,27 +333,27 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: def_comment RECEIVEARG 
+		 5: RECEIVEARG def_comment 
 		 6: 
-		 7: def_%v_3 (Blog) 
-		 8: def_%v_4 %v_3->default %v_3[2.7,] 
-		 9: def_%v_5 %v_4->settings %v_4[2.8,] 
-		 10: def_%v_6 
+		 7: (Blog) def_%v_3 
+		 8: %v_3->default def_%v_4 %v_3[2.7,] 
+		 9: %v_4->settings def_%v_5 %v_4[2.8,] 
+		 10: COPY def_%v_6 
 		 11: def_%v_7 %v_5[2.9,] %v_6[2.10,] 
-		 12: def_use_recaptcha %v_7[2.11,] 
+		 12: COPY def_use_recaptcha %v_7[2.11,] 
 		 13: 
-		 14: def_%v_8 %v_7[2.11,] 
+		 14: COPY def_%v_8 %v_7[2.11,] 
 		 15: BRANCH %v_7[2.11,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_9 comment[2.5,] 
-		 1: def_%v_10 %self->verify_recaptcha %self[2.0,] %v_9[3.0,] 
-		 2: def_%v_8 %v_10[3.1,] 
+		 0: COPY def_%v_9 comment[2.5,] 
+		 1: %self->verify_recaptcha def_%v_10 %self[2.0,] %v_9[3.0,] 
+		 2: COPY def_%v_8 %v_10[3.1,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -363,13 +363,13 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: def_%v_11 use_recaptcha->! use_recaptcha[2.12,] 
-		 1: RETURN %v_11[5.0,] 
+		 0: use_recaptcha->! def_%v_11 use_recaptcha[2.12,] 
+		 1: RETURN %v_11[5.0,] %self[2.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: RETURN %v_8[3.2,2.14,] 
+		 0: RETURN %v_8[3.2,2.14,] %self[2.0,] 
 BB 7
 	outgoing: 
 	datadep: 
@@ -386,27 +386,27 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->request %self[2.0,] 
-		 7: def_%v_4 %v_3->remote_ip %v_3[2.6,] 
-		 8: def_%v_5 
-		 9: def_%v_6 %self[2.0,2.6,] @current_user[] 
-		 10: def_%v_7 %self->request %self[2.0,2.6,] 
-		 11: def_%v_8 %v_7->env %v_7[2.10,] 
-		 12: def_%v_9 
+		 6: %self->request def_%v_3 %self[2.0,] 
+		 7: %v_3->remote_ip def_%v_4 %v_3[2.6,] 
+		 8: COPY def_%v_5 
+		 9: def_%v_6 %self[2.0,2.6,] 
+		 10: %self->request def_%v_7 %self[2.0,2.6,] 
+		 11: %v_7->env def_%v_8 %v_7[2.10,] 
+		 12: COPY def_%v_9 
 		 13: def_%v_10 %v_8[2.11,] %v_9[2.12,] 
-		 14: def_%v_11 %self->request %self[2.0,2.6,2.10,] 
-		 15: def_%v_12 %v_11->env %v_11[2.14,] 
-		 16: def_%v_13 
+		 14: %self->request def_%v_11 %self[2.0,2.6,2.10,] 
+		 15: %v_11->env def_%v_12 %v_11[2.14,] 
+		 16: COPY def_%v_13 
 		 17: def_%v_14 %v_12[2.15,] %v_13[2.16,] 
-		 18: def_%v_15 %self[2.0,2.6,2.10,2.14,] @article[] 
-		 19: def_%v_16 %v_15->permalink_url %v_15[2.18,] 
-		 20: def_%v_17 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_10[2.13,] %v_14[2.17,] %v_16[2.19,] 
-		 21: def_%v_18 %v_17->stringify_keys %v_17[2.20,] 
-		 22: RETURN %v_18[2.21,] 
+		 18: def_%v_15 %self[2.0,2.6,2.10,2.14,] 
+		 19: %v_15->permalink_url def_%v_16 %v_15[2.18,] 
+		 20: COPY def_%v_17 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_10[2.13,] %v_14[2.17,] %v_16[2.19,] 
+		 21: %v_17->stringify_keys def_%v_18 %v_17[2.20,] 
+		 22: RETURN %v_18[2.21,] %self[2.0,2.6,2.10,2.14,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -423,32 +423,32 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: def_comment RECEIVEARG 
+		 5: RECEIVEARG def_comment 
 		 6: 
-		 7: def_%v_3 comment->author comment[2.5,] 
-		 8: def_%v_4 %self->add_to_cookies %self[2.0,] %v_3[2.7,] 
+		 7: comment->author def_%v_3 comment[2.5,] 
+		 8: %self->add_to_cookies def_%v_4 %self[2.0,] %v_3[2.7,] 
 		 9: 
-		 10: def_%v_5 comment->url comment[2.5,2.7,] 
-		 11: def_%v_6 %self->add_to_cookies %self[2.0,2.8,] %v_5[2.10,] 
+		 10: comment->url def_%v_5 comment[2.5,2.7,] 
+		 11: %self->add_to_cookies def_%v_6 %self[2.0,2.8,] %v_5[2.10,] 
 		 12: 
-		 13: def_%v_7 comment->email comment[2.5,2.7,2.10,] 
-		 14: def_%v_8 %v_7->blank? %v_7[2.13,] 
+		 13: comment->email def_%v_7 comment[2.5,2.7,2.10,] 
+		 14: %v_7->blank? def_%v_8 %v_7[2.13,] 
 		 15: BRANCH %v_8[2.14,] 
 BB 3
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_9 
-		 1: RETURN %v_9[3.0,] 
+		 0: COPY def_%v_9 
+		 1: RETURN %v_9[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_10 (Digest) 
+		 1: (Digest) def_%v_10 
 		 2: def_%v_11 %v_10[4.1,] 
 		 3: %v_11[4.2,] 
 BB 5
@@ -460,11 +460,11 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_12 comment->email comment[2.5,] 
-		 1: def_%v_13 %v_12->strip %v_12[6.0,] 
-		 2: def_%v_14 %v_11->hexdigest %v_11[5.0,4.2,] %v_13[6.1,] 
-		 3: def_%v_15 %self->add_to_cookies %self[2.0,] %v_14[6.2,] 
-		 4: RETURN %v_15[6.3,] 
+		 0: comment->email def_%v_12 comment[2.5,] 
+		 1: %v_12->strip def_%v_13 %v_12[6.0,] 
+		 2: %v_11->hexdigest def_%v_14 %v_11[5.0,4.2,] %v_13[6.1,] 
+		 3: %self->add_to_cookies def_%v_15 %self[2.0,] %v_14[6.2,] 
+		 4: RETURN %v_15[6.3,] %self[6.3,2.0,] 
 BB 8
 	outgoing: 
 	datadep: 
@@ -481,16 +481,16 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 (Article) 
-		 7: def_%v_4 %self->params %self[2.0,] 
+		 6: (Article) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
-		 9: def_%v_6 %v_3->find %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@article %self[2.0,2.7,] %v_6[2.9,] @article[] 
-		 11: RETURN %v_6[2.9,] 
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 10: ATTRASSIGN %self->@article %self[2.0,2.7,] %v_6[2.9,] 
+		 11: RETURN %v_6[2.9,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -507,19 +507,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
 		 6: def_%v_4 %self[2.0,] 
-		 7: def_%v_3 %v_4[2.6,] 
+		 7: COPY def_%v_3 %v_4[2.6,] 
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] @comment_params[] 
-		 1: def_%v_3 %v_5[3.0,] 
+		 0: def_%v_5 %self[2.0,] 
+		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -529,16 +529,16 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self->params %self[2.0,] 
-		 1: def_%v_7 %v_6->require %v_6[5.0,] 
-		 2: def_%v_8 %v_7->permit %v_7[5.1,] 
-		 3: ATTRASSIGN %self->@comment_params %self[5.0,2.0,] %v_8[5.2,] @comment_params[3.0,] 
-		 4: RETURN %v_8[5.2,] 
+		 0: %self->params def_%v_6 %self[2.0,] 
+		 1: %v_6->require def_%v_7 %v_6[5.0,] 
+		 2: %v_7->permit def_%v_8 %v_7[5.1,] 
+		 3: ATTRASSIGN %self->@comment_params %self[5.0,2.0,] %v_8[5.2,] 
+		 4: RETURN %v_8[5.2,] %self[5.0,2.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: RETURN %v_5[3.0,] 
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
 BB 7
 	outgoing: 
 	datadep: 

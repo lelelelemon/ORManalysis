@@ -9,19 +9,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
 		 6: def_%v_4 %self[2.0,] 
-		 7: def_%v_3 %v_4[2.6,] 
+		 7: COPY def_%v_3 %v_4[2.6,] 
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] @date_func[] 
-		 1: def_%v_3 %v_5[3.0,] 
+		 0: def_%v_5 %self[2.0,] 
+		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 22 
 	datadep: 
@@ -38,9 +38,9 @@ BB 7
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_9 (Content) 
-		 3: def_%v_10 %v_9->connection %v_9[7.2,] 
-		 4: def_%v_11 (ActiveRecord) 
+		 2: (Content) def_%v_9 
+		 3: %v_9->connection def_%v_10 %v_9[7.2,] 
+		 4: (ActiveRecord) def_%v_11 
 		 5: def_%v_12 %v_11[7.4,] 
 		 6: %v_12[7.5,] 
 BB 8
@@ -63,27 +63,27 @@ BB 11
 	outgoing: 12 13 16 
 	datadep: 
 	instructions:
-		 0: def_%v_14 %v_10->is_a? %v_10[7.3,] %v_13[10.0,9.0,] 
+		 0: %v_10->is_a? def_%v_14 %v_10[7.3,] %v_13[10.0,9.0,] 
 		 1: BRANCH %v_14[11.0,] 
 BB 12
 	outgoing: 14 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_15 
+		 1: COPY def_%v_15 
 		 2: 
 BB 13
 	outgoing: 14 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_16 
-		 2: def_%v_15 %v_16[13.1,] 
+		 1: COPY def_%v_16 
+		 2: COPY def_%v_15 %v_16[13.1,] 
 BB 14
 	outgoing: 15 16 
 	datadep: 
 	instructions:
-		 0: def_%v_8 %v_15[13.2,12.1,] 
+		 0: COPY def_%v_8 %v_15[13.2,12.1,] 
 		 1: 
 		 2: %v_6[5.0,] 
 BB 15
@@ -97,7 +97,7 @@ BB 16
 	instructions:
 		 0: 
 		 1: def_%v_17 
-		 2: def_%v_18 (NameError) 
+		 2: (NameError) def_%v_18 
 		 3: def_%v_19 %v_18[16.2,] %v_17[16.1,] 
 		 4: BRANCH %v_19[16.3,] 
 BB 17
@@ -110,8 +110,8 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_20 
-		 2: def_%v_8 %v_20[18.1,] 
+		 1: COPY def_%v_20 
+		 2: COPY def_%v_8 %v_20[18.1,] 
 		 3: 
 		 4: %v_6[5.0,] 
 BB 19
@@ -130,13 +130,13 @@ BB 21
 	outgoing: 23 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@date_func %self[2.0,] %v_8[14.0,18.2,] @date_func[3.0,] 
-		 1: RETURN %v_8[14.0,18.2,] 
+		 0: ATTRASSIGN %self->@date_func %self[2.0,] %v_8[14.0,18.2,] 
+		 1: RETURN %v_8[14.0,18.2,] %self[2.0,] 
 BB 22
 	outgoing: 23 
 	datadep: 
 	instructions:
-		 0: RETURN %v_5[3.0,] 
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
 BB 23
 	outgoing: 
 	datadep: 
@@ -153,29 +153,29 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: def__contents RECEIVEARG 
-		 6: def__params RECEIVEARG 
+		 5: RECEIVEARG def__contents 
+		 6: RECEIVEARG def__params 
 		 7: 
-		 8: def_%v_3 %self->class %self[2.0,] 
-		 9: def_%v_4 %v_3->date_func %v_3[2.8,] 
-		 10: def_date_func %v_4[2.9,] 
+		 8: %self->class def_%v_3 %self[2.0,] 
+		 9: %v_3->date_func def_%v_4 %v_3[2.8,] 
+		 10: COPY def_date_func %v_4[2.9,] 
 		 11: 
-		 12: def_%v_5 (Content) 
-		 13: def_%v_6 
-		 14: def_%v_7 
+		 12: (Content) def_%v_5 
+		 13: COPY def_%v_6 
+		 14: COPY def_%v_7 
 		 15: def_%v_8 %v_6[2.13,] %v_4[2.9,] %v_7[2.14,] 
-		 16: def_%v_9 (Time) 
-		 17: def_%v_10 %v_9->now %v_9[2.16,] 
-		 18: def_%v_11 %self->count %self[2.0,2.8,] 
-		 19: def_%v_12 %v_11->to_i %v_11[2.18,] 
-		 20: def_%v_13 %v_8[2.15,] %v_10[2.17,] %v_12[2.19,] 
-		 21: def_%v_14 %v_5->find_by_sql %v_5[2.12,] %v_13[2.20,] 
-		 22: def_article_counts %v_14[2.21,] 
+		 16: (Time) def_%v_9 
+		 17: %v_9->now def_%v_10 %v_9[2.16,] 
+		 18: %self->count def_%v_11 %self[2.0,2.8,] 
+		 19: %v_11->to_i def_%v_12 %v_11[2.18,] 
+		 20: COPY def_%v_13 %v_8[2.15,] %v_10[2.17,] %v_12[2.19,] 
+		 21: %v_5->find_by_sql def_%v_14 %v_5[2.12,] %v_13[2.20,] 
+		 22: COPY def_article_counts %v_14[2.21,] 
 		 23: 
-		 24: def_%v_15 %v_14->map %v_14[2.21,] %self[2.0,2.8,2.18,] 
+		 24: %v_14->map def_%v_15 %v_14[2.21,] %self[2.0,2.8,2.18,] 
 CLOSURE BEGIN: entry[] month[] year[] 
 BB 1
 	outgoing: 6 2 
@@ -187,45 +187,45 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: def_entry RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_entry 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 entry->month entry[2.2,] 
-		 2: def_%cl_1_4 %cl_1_3->to_i %cl_1_3[3.1,] 
-		 3: def_month %cl_1_4[3.2,] 
+		 1: entry->month def_%cl_1_3 entry[2.2,] 
+		 2: %cl_1_3->to_i def_%cl_1_4 %cl_1_3[3.1,] 
+		 3: COPY def_month %cl_1_4[3.2,] 
 		 4: 
-		 5: def_%cl_1_5 entry->year entry[3.1,2.2,] 
-		 6: def_%cl_1_6 %cl_1_5->to_i %cl_1_5[3.5,] 
-		 7: def_year %cl_1_6[3.6,] 
+		 5: entry->year def_%cl_1_5 entry[3.1,2.2,] 
+		 6: %cl_1_5->to_i def_%cl_1_6 %cl_1_5[3.5,] 
+		 7: COPY def_year %cl_1_6[3.6,] 
 		 8: 
-		 9: def_%cl_1_7 (I18n) 
-		 10: def_%cl_1_8 (Date) 
-		 11: def_%cl_1_9 %cl_1_8->new %cl_1_8[3.10,] %cl_1_6[3.6,] month[3.3,] 
-		 12: def_%cl_1_10 
-		 13: def_%cl_1_11 %cl_1_10[3.12,] 
-		 14: def_%cl_1_12 %cl_1_7->l %cl_1_7[3.9,] %cl_1_9[3.11,] %cl_1_11[3.13,] 
-		 15: def_%cl_1_13 entry->count entry[3.1,3.5,2.2,] 
-		 16: def_%cl_1_14 %cl_1_12[3.14,] month[3.3,] year[3.7,] %cl_1_13[3.15,] 
-		 17: RETURN %cl_1_14[3.16,] 
+		 9: (I18n) def_%cl_1_7 
+		 10: (Date) def_%cl_1_8 
+		 11: %cl_1_8->new def_%cl_1_9 %cl_1_8[3.10,] %cl_1_6[3.6,] month[3.3,] 
+		 12: COPY def_%cl_1_10 
+		 13: COPY def_%cl_1_11 %cl_1_10[3.12,] 
+		 14: %cl_1_7->l def_%cl_1_12 %cl_1_7[3.9,] %cl_1_9[3.11,] %cl_1_11[3.13,] 
+		 15: entry->count def_%cl_1_13 entry[3.1,3.5,2.2,] 
+		 16: COPY def_%cl_1_14 %cl_1_12[3.14,] month[3.3,] year[3.7,] %cl_1_13[3.15,] 
+		 17: RETURN %cl_1_14[3.16,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_15 
 		 1: def_%cl_1_16 %cl_1_15[4.0,] 
-		 2: RETURN %cl_1_16[4.1,] 
+		 2: RETURN %cl_1_16[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 25: ATTRASSIGN %self->@archives %self[2.0,2.8,2.18,] %v_15[2.24,] @archives[] 
-		 26: RETURN %v_15[2.24,] 
+		 25: ATTRASSIGN %self->@archives %self[2.0,2.8,2.18,] %v_15[2.24,] 
+		 26: RETURN %v_15[2.24,] %self[2.0,2.8,2.18,] 
 BB 3
 	outgoing: 
 	datadep: 

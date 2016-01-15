@@ -162,6 +162,9 @@ class MembershipsController < ApplicationController
       format.html { redirect_to :back }
       format.js
     end
+ params[:id] 
+ escape_javascript t('people.person', count: @group.people.count) 
+
   end
 
   def batch
@@ -177,6 +180,9 @@ class MembershipsController < ApplicationController
       format.js
       format.html { redirect_to :back }
     end
+ escape_javascript render(partial: 'membership', collection: @added, locals: { hide: true }) 
+ @added.map { |m| '#'+dom_id(m) }.join(',') 
+
   end
 
   private

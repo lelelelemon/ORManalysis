@@ -5,6 +5,9 @@ class Checkin::FamiliesController < ApplicationController
     @family_people = @family.people.undeleted.order(:position)
     @attendance_records = AttendanceRecord.find_for_people_and_date(@family_people.map(&:id), Date.today)
                                           .group_by(&:person_id)
+ escape_javascript render(:partial => 'details') 
+ escape_javascript render(:partial => 'barcode_entry') 
+
   end
 
   def new
@@ -32,6 +35,13 @@ class Checkin::FamiliesController < ApplicationController
     respond_to do |format|
       format.js
     end
+ if @success 
+ t('checkin.family.saved') 
+ else 
+ t('checkin.family.errors') 
+ escape_javascript @family.errors.values.join('; ') 
+ end 
+
   end
 
   private

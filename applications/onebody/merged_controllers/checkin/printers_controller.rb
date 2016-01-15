@@ -16,7 +16,6 @@ class Checkin::PrintersController < ApplicationController
  button_tag 'Save', class: 'btn btn-primary' 
  if @printer[:id] 
  @printer[:id] 
- #= #{request.protocol}#{request.host_with_port}/checkin?printer=#{@printer[:id]} 
  end 
  end 
 

@@ -7,14 +7,14 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: 
+		 6: %self->respond_to def_%v_3 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -23,18 +23,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] the_url[] 
 BB 1
 	outgoing: 12 2 
 	datadep: 
@@ -43,84 +43,84 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: (Setting) 
-		 2: %cl_2_3->get %cl_2_3[3.1,] 
+		 1: (Setting) def_%cl_2_3 
+		 2: %cl_2_3->get def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: BRANCH %cl_2_4[3.2,] 
 BB 4
 	outgoing: 9 10 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: (NewsItem) 
-		 2: %cl_2_5->active %cl_2_5[4.1,] 
-		 3: 
-		 4: %cl_2_6->order %cl_2_6[4.2,] %cl_2_7[4.3,] 
-		 5: %cl_2_8->includes %cl_2_8[4.4,] 
-		 6: %self->params %self[2.0,] 
-		 7: %cl_2_10[4.6,] 
-		 8: %cl_2_9->page %cl_2_11[4.7,] %cl_2_9[4.5,] 
-		 9: %self[2.0,] %cl_2_12[4.8,] @news_items[] 
+		 1: (NewsItem) def_%cl_2_5 
+		 2: %cl_2_5->active def_%cl_2_6 %cl_2_5[4.1,] 
+		 3: COPY def_%cl_2_7 
+		 4: %cl_2_6->order def_%cl_2_8 %cl_2_6[4.2,] %cl_2_7[4.3,] 
+		 5: %cl_2_8->includes def_%cl_2_9 %cl_2_8[4.4,] 
+		 6: %self->params def_%cl_2_10 %self[2.0,] 
+		 7: def_%cl_2_11 %cl_2_10[4.6,] 
+		 8: %cl_2_9->page def_%cl_2_12 %cl_2_9[4.5,] %cl_2_11[4.7,] 
+		 9: ATTRASSIGN %self->@news_items %self[4.6,2.0,] %cl_2_12[4.8,] 
 		 10: 
 BB 5
 	outgoing: 6 7 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: (Setting) 
-		 2: %cl_2_13->get %cl_2_13[5.1,] 
-		 3: %cl_2_14[5.2,] 
+		 1: (Setting) def_%cl_2_13 
+		 2: %cl_2_13->get def_%cl_2_14 %cl_2_13[5.1,] 
+		 3: COPY def_the_url %cl_2_14[5.2,] 
 		 4: BRANCH %cl_2_14[5.2,] 
 BB 6
 	outgoing: 8 10 
-	datadep: 2 5 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->redirect_to %self[2.0,] the_url[5.3,] 
+		 1: %self->redirect_to def_%cl_2_15 %self[2.0,] the_url[5.3,] 
 		 2: 
 BB 7
 	outgoing: 8 10 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %cl_2_16[7.1,] %self[2.0,] 
-		 3: %cl_2_17[7.2,] 
-		 4: %self->render %self[2.0,] %cl_2_18[7.3,] 
-		 5: %cl_2_19[7.4,] 
+		 1: COPY def_%cl_2_16 
+		 2: %self->t def_%cl_2_17 %self[2.0,] %cl_2_16[7.1,] 
+		 3: COPY def_%cl_2_18 %cl_2_17[7.2,] 
+		 4: %self->render def_%cl_2_19 %self[7.2,2.0,] %cl_2_18[7.3,] 
+		 5: COPY def_%cl_2_15 %cl_2_19[7.4,] 
 BB 8
 	outgoing: 12 
-	datadep: 7 6 
+	datadep: 
 	instructions:
-		 0: RETURN %cl_2_15[7.5,6.1,] 
+		 0: RETURN %cl_2_15[7.5,6.1,] %self[2.0,] 
 BB 9
 	outgoing: 12 
-	datadep: 4 
+	datadep: 
 	instructions:
-		 0: RETURN %cl_2_12[4.8,] 
+		 0: RETURN %cl_2_12[4.8,] %self[2.0,] 
 BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_20[10.0,] 
-		 2: RETURN %cl_2_21[10.1,] 
+		 0: def_%cl_2_20 
+		 1: def_%cl_2_21 %cl_2_20[10.0,] 
+		 2: RETURN %cl_2_21[10.1,] %self[2.0,] 
 BB 12
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 2: 
-		 3: format->xml %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 3: format->xml def_%cl_1_4 format[3.1,2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] the_url[] 
 BB 1
 	outgoing: 12 2 
 	datadep: 
@@ -129,97 +129,97 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: (Setting) 
-		 2: %cl_3_3->get %cl_3_3[3.1,] 
+		 1: (Setting) def_%cl_3_3 
+		 2: %cl_3_3->get def_%cl_3_4 %cl_3_3[3.1,] 
 		 3: BRANCH %cl_3_4[3.2,] 
 BB 4
 	outgoing: 9 10 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: (NewsItem) 
-		 2: 
-		 3: %cl_3_5->where %cl_3_5[4.1,] %cl_3_6[4.2,] 
-		 4: %cl_3_7->includes %cl_3_7[4.3,] 
-		 5: %cl_3_8[4.4,] 
-		 6: 
-		 7: %cl_3_9->order %cl_3_9[4.5,] %cl_3_10[4.6,] 
-		 8: %self[2.0,] %cl_3_11[4.7,] @news_items[] 
+		 1: (NewsItem) def_%cl_3_5 
+		 2: COPY def_%cl_3_6 
+		 3: %cl_3_5->where def_%cl_3_7 %cl_3_5[4.1,] %cl_3_6[4.2,] 
+		 4: %cl_3_7->includes def_%cl_3_8 %cl_3_7[4.3,] 
+		 5: def_%cl_3_9 %cl_3_8[4.4,] 
+		 6: COPY def_%cl_3_10 
+		 7: %cl_3_9->order def_%cl_3_11 %cl_3_9[4.5,] %cl_3_10[4.6,] 
+		 8: ATTRASSIGN %self->@news_items %self[2.0,] %cl_3_11[4.7,] 
 		 9: 
-		 10: 
-		 11: %self->render %self[2.0,] %cl_3_12[4.10,] 
+		 10: COPY def_%cl_3_12 
+		 11: %self->render def_%cl_3_13 %self[2.0,] %cl_3_12[4.10,] 
 		 12: 
 BB 5
 	outgoing: 6 7 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: (Setting) 
-		 2: %cl_3_14->get %cl_3_14[5.1,] 
-		 3: %cl_3_15[5.2,] 
+		 1: (Setting) def_%cl_3_14 
+		 2: %cl_3_14->get def_%cl_3_15 %cl_3_14[5.1,] 
+		 3: COPY def_the_url %cl_3_15[5.2,] 
 		 4: BRANCH %cl_3_15[5.2,] 
 BB 6
 	outgoing: 8 10 
-	datadep: 2 5 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->redirect_to %self[2.0,] the_url[5.3,] 
+		 1: %self->redirect_to def_%cl_3_16 %self[2.0,] the_url[5.3,] 
 		 2: 
 BB 7
 	outgoing: 8 10 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %cl_3_17[7.1,] %self[2.0,] 
-		 3: %cl_3_18[7.2,] 
-		 4: %self->render %self[2.0,] %cl_3_19[7.3,] 
-		 5: %cl_3_20[7.4,] 
+		 1: COPY def_%cl_3_17 
+		 2: %self->t def_%cl_3_18 %self[2.0,] %cl_3_17[7.1,] 
+		 3: COPY def_%cl_3_19 %cl_3_18[7.2,] 
+		 4: %self->render def_%cl_3_20 %self[7.2,2.0,] %cl_3_19[7.3,] 
+		 5: COPY def_%cl_3_16 %cl_3_20[7.4,] 
 BB 8
 	outgoing: 12 
-	datadep: 7 6 
+	datadep: 
 	instructions:
-		 0: RETURN %cl_3_16[7.5,6.1,] 
+		 0: RETURN %cl_3_16[7.5,6.1,] %self[2.0,] 
 BB 9
 	outgoing: 12 
-	datadep: 4 
+	datadep: 
 	instructions:
-		 0: RETURN %cl_3_13[4.11,] 
+		 0: RETURN %cl_3_13[4.11,] %self[2.0,] 
 BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_21[10.0,] 
-		 2: RETURN %cl_3_22[10.1,] 
+		 0: def_%cl_3_21 
+		 1: def_%cl_3_22 %cl_3_21[10.0,] 
+		 2: RETURN %cl_3_22[10.1,] %self[2.0,] 
 BB 12
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 4: RETURN %cl_1_4[3.3,] 
+		 4: RETURN %cl_1_4[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_5[4.0,] 
-		 2: RETURN %cl_1_6[4.1,] 
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 7: RETURN %v_3[2.6,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -234,28 +234,28 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: (Setting) 
-		 7: %v_3->get %v_3[2.6,] 
+		 6: (Setting) def_%v_3 
+		 7: %v_3->get def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: (NewsItem) 
-		 2: %self->params %self[2.0,] 
-		 3: %v_6[3.2,] 
-		 4: %v_5->find %v_5[3.1,] %v_7[3.3,] 
-		 5: %self[2.0,] %v_8[3.4,] @news_item[] 
+		 1: (NewsItem) def_%v_5 
+		 2: %self->params def_%v_6 %self[2.0,] 
+		 3: def_%v_7 %v_6[3.2,] 
+		 4: %v_5->find def_%v_8 %v_5[3.1,] %v_7[3.3,] 
+		 5: ATTRASSIGN %self->@news_item %self[3.2,2.0,] %v_8[3.4,] 
 		 6: 
-		 7: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @news_item[3.5,] 
+		 7: %self->respond_to def_%v_9 %self[3.2,2.0,] %self[3.2,2.0,] 
+CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -264,38 +264,38 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html format[2.2,] 
-		 2: RETURN %cl_1_3[3.1,] 
+		 1: format->html def_%cl_1_3 format[2.2,] 
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_4[4.0,] 
-		 2: RETURN %cl_1_5[4.1,] 
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: RETURN %v_9[3.7,] 
+		 8: RETURN %v_9[3.7,] %self[3.2,3.7,2.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @news_item[3.5,] 
+		 1: %self->respond_to def_%v_10 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -304,18 +304,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_2_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] the_url[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -324,67 +324,67 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: (Setting) 
-		 2: %cl_3_3->get %cl_3_3[3.1,] 
-		 3: %cl_3_4[3.2,] 
+		 1: (Setting) def_%cl_3_3 
+		 2: %cl_3_3->get def_%cl_3_4 %cl_3_3[3.1,] 
+		 3: COPY def_the_url %cl_3_4[3.2,] 
 		 4: BRANCH %cl_3_4[3.2,] 
 BB 4
 	outgoing: 6 7 
-	datadep: 2 3 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->redirect_to %self[2.0,] the_url[3.3,] 
+		 1: %self->redirect_to def_%cl_3_5 %self[2.0,] the_url[3.3,] 
 		 2: 
 BB 5
 	outgoing: 7 9 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %cl_3_6[5.1,] 
-		 3: %cl_3_7[5.2,] 
-		 4: %self->render %self[2.0,] %cl_3_8[5.3,] 
-		 5: RETURN %cl_3_9[5.4,] 
+		 1: COPY def_%cl_3_6 
+		 2: %self->t def_%cl_3_7 %self[2.0,] %cl_3_6[5.1,] 
+		 3: COPY def_%cl_3_8 %cl_3_7[5.2,] 
+		 4: %self->render def_%cl_3_9 %self[5.2,2.0,] %cl_3_8[5.3,] 
+		 5: RETURN %cl_3_9[5.4,] %self[5.2,5.4,2.0,] 
 BB 6
 	outgoing: 9 
-	datadep: 4 
+	datadep: 
 	instructions:
-		 0: RETURN %cl_3_5[4.1,] 
+		 0: RETURN %cl_3_5[4.1,] %self[2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_10[7.0,] 
-		 2: RETURN %cl_3_11[7.1,] 
+		 0: def_%cl_3_10 
+		 1: def_%cl_3_11 %cl_3_10[7.0,] 
+		 2: RETURN %cl_3_11[7.1,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %cl_2_3[3.1,] 
+		 2: RETURN %cl_2_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_4[4.0,] 
-		 2: RETURN %cl_2_5[4.1,] 
+		 0: def_%cl_2_4 
+		 1: def_%cl_2_5 %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %v_10[4.1,] 
+		 2: RETURN %v_10[4.1,] %self[4.1,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -399,46 +399,46 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @logged_in[] 
-		 7: %v_3->admin? %v_3[2.6,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: (Setting) 
-		 1: %v_5->get %v_5[3.0,] 
-		 2: %v_6[3.1,] 
+		 0: (Setting) def_%v_5 
+		 1: %v_5->get def_%v_6 %v_5[3.0,] 
+		 2: COPY def_%v_4 %v_6[3.1,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 3 2 
+	datadep: 
 	instructions:
 		 0: BRANCH %v_4[3.2,2.7,] 
 BB 5
 	outgoing: 8 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: (NewsItem) 
-		 2: %v_7->new %v_7[5.1,] 
-		 3: %self[2.0,] %v_8[5.2,] @news_item[] 
-		 4: RETURN %v_8[5.2,] 
+		 1: (NewsItem) def_%v_7 
+		 2: %v_7->new def_%v_8 %v_7[5.1,] 
+		 3: ATTRASSIGN %self->@news_item %self[2.0,] %v_8[5.2,] 
+		 4: RETURN %v_8[5.2,] %self[2.0,] 
 BB 6
 	outgoing: 8 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %v_9[6.1,] 
-		 3: %v_10[6.2,] 
-		 4: %self->render %self[2.0,] %v_11[6.3,] 
-		 5: RETURN %v_12[6.4,] 
+		 1: COPY def_%v_9 
+		 2: %self->t def_%v_10 %self[2.0,] %v_9[6.1,] 
+		 3: COPY def_%v_11 %v_10[6.2,] 
+		 4: %self->render def_%v_12 %self[6.2,2.0,] %v_11[6.3,] 
+		 5: RETURN %v_12[6.4,] %self[6.2,6.4,2.0,] 
 BB 8
 	outgoing: 
 	datadep: 
@@ -453,55 +453,55 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] @logged_in[] 
-		 7: %v_3->admin? %v_3[2.6,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: (Setting) 
-		 1: %v_5->get %v_5[3.0,] 
-		 2: %v_6[3.1,] 
+		 0: (Setting) def_%v_5 
+		 1: %v_5->get def_%v_6 %v_5[3.0,] 
+		 2: COPY def_%v_4 %v_6[3.1,] 
 BB 4
 	outgoing: 5 9 
-	datadep: 3 2 
+	datadep: 
 	instructions:
 		 0: BRANCH %v_4[3.2,2.7,] 
 BB 5
 	outgoing: 6 7 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: (NewsItem) 
-		 2: %self->news_item_params %self[2.0,] 
-		 3: %v_7->new %v_8[5.2,] %v_7[5.1,] 
-		 4: %self[2.0,] %v_9[5.3,] @news_item[] 
+		 1: (NewsItem) def_%v_7 
+		 2: %self->news_item_params def_%v_8 %self[2.0,] 
+		 3: %v_7->new def_%v_9 %v_7[5.1,] %v_8[5.2,] 
+		 4: ATTRASSIGN %self->@news_item %self[5.2,2.0,] %v_9[5.3,] 
 		 5: 
-		 6: @news_item[5.4,] 
-		 7: %self[2.0,] @logged_in[2.6,2.6,] 
-		 8: %v_10[5.6,] %v_11[5.7,] 
+		 6: def_%v_10 %self[5.2,2.0,] 
+		 7: def_%v_11 %self[5.2,2.0,] 
+		 8: ATTRASSIGN %v_10->person %v_10[5.6,] %v_11[5.7,] 
 		 9: 
-		 10: @news_item[5.4,5.6,] 
-		 11: 
-		 12: %v_13[5.11,] %v_12[5.10,] 
+		 10: def_%v_12 %self[5.2,2.0,] 
+		 11: COPY def_%v_13 
+		 12: ATTRASSIGN %v_12->source %v_12[5.10,] %v_13[5.11,] 
 		 13: 
-		 14: @news_item[5.4,5.6,5.10,] 
-		 15: %v_14->save %v_14[5.14,] 
+		 14: def_%v_14 %self[5.2,2.0,] 
+		 15: %v_14->save def_%v_15 %v_14[5.14,] 
 		 16: BRANCH %v_15[5.15,] 
 BB 6
 	outgoing: 8 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @logged_in[5.7,] @news_item[5.4,] 
+		 1: %self->respond_to def_%v_16 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -510,18 +510,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -530,55 +530,55 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 6 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,] 
-		 2: 
-		 3: %self->t %self[2.0,] %cl_2_4[3.2,] 
+		 1: %self->flash def_%cl_2_3 %self[2.0,] 
+		 2: COPY def_%cl_2_4 
+		 3: %self->t def_%cl_2_5 %self[3.1,2.0,] %cl_2_4[3.2,] 
 		 4: %cl_2_3[3.1,] %cl_2_5[3.3,] 
 		 5: 
-		 6: %self->params %self[2.0,] 
-		 7: %cl_2_6[3.6,] 
+		 6: %self->params def_%cl_2_6 %self[3.1,3.3,2.0,] 
+		 7: def_%cl_2_7 %cl_2_6[3.6,] 
 		 8: BRANCH %cl_2_7[3.7,] 
 BB 4
 	outgoing: 5 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self[2.0,] @news_item[] 
-		 1: %cl_2_8[4.0,] 
+		 0: def_%cl_2_8 %self[2.0,] 
+		 1: COPY def_%cl_2_7 %cl_2_8[4.0,] 
 BB 5
 	outgoing: 6 8 
-	datadep: 2 4 3 
+	datadep: 
 	instructions:
-		 0: %self->redirect_to %self[2.0,] %cl_2_7[4.1,3.7,] 
-		 1: RETURN %cl_2_9[5.0,] 
+		 0: %self->redirect_to def_%cl_2_9 %self[2.0,] %cl_2_7[4.1,3.7,] 
+		 1: RETURN %cl_2_9[5.0,] %self[5.0,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_10[6.0,] 
-		 2: RETURN %cl_2_11[6.1,] 
+		 0: def_%cl_2_10 
+		 1: def_%cl_2_11 %cl_2_10[6.0,] 
+		 2: RETURN %cl_2_11[6.1,] %self[2.0,] 
 BB 8
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %cl_1_3[3.1,] 
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_4[4.0,] 
-		 2: RETURN %cl_1_5[4.1,] 
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -587,11 +587,11 @@ CLOSURE END
 		 2: 
 BB 7
 	outgoing: 8 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @logged_in[5.7,] @news_item[5.4,] 
+		 1: %self->respond_to def_%v_17 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -600,18 +600,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_3_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -620,60 +620,60 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %cl_4_3[3.1,] 
-		 3: %self->render %self[2.0,] %cl_4_4[3.2,] 
-		 4: RETURN %cl_4_5[3.3,] 
+		 1: COPY def_%cl_4_3 
+		 2: COPY def_%cl_4_4 %cl_4_3[3.1,] 
+		 3: %self->render def_%cl_4_5 %self[2.0,] %cl_4_4[3.2,] 
+		 4: RETURN %cl_4_5[3.3,] %self[3.3,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_4_6[4.0,] 
-		 2: RETURN %cl_4_7[4.1,] 
+		 0: def_%cl_4_6 
+		 1: def_%cl_4_7 %cl_4_6[4.0,] 
+		 2: RETURN %cl_4_7[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %cl_3_3[3.1,] 
+		 2: RETURN %cl_3_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_4[4.0,] 
-		 2: RETURN %cl_3_5[4.1,] 
+		 0: def_%cl_3_4 
+		 1: def_%cl_3_5 %cl_3_4[4.0,] 
+		 2: RETURN %cl_3_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: %v_17[7.1,] 
+		 2: COPY def_%v_16 %v_17[7.1,] 
 BB 8
 	outgoing: 11 
-	datadep: 7 6 
+	datadep: 
 	instructions:
-		 0: RETURN %v_16[7.2,6.1,] 
+		 0: RETURN %v_16[7.2,6.1,] %self[2.0,] 
 BB 9
 	outgoing: 11 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %v_18[9.1,] 
-		 3: %v_19[9.2,] 
-		 4: %self->render %self[2.0,] %v_20[9.3,] 
-		 5: RETURN %v_21[9.4,] 
+		 1: COPY def_%v_18 
+		 2: %self->t def_%v_19 %self[2.0,] %v_18[9.1,] 
+		 3: COPY def_%v_20 %v_19[9.2,] 
+		 4: %self->render def_%v_21 %self[9.2,2.0,] %v_20[9.3,] 
+		 5: RETURN %v_21[9.4,] %self[9.2,9.4,2.0,] 
 BB 11
 	outgoing: 
 	datadep: 
@@ -688,38 +688,38 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: (NewsItem) 
-		 7: %self->params %self[2.0,] 
-		 8: %v_4[2.7,] 
-		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
-		 10: %self[2.0,] %v_6[2.9,] @news_item[] 
+		 6: (NewsItem) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 
+		 8: def_%v_5 %v_4[2.7,] 
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 10: ATTRASSIGN %self->@news_item %self[2.0,2.7,] %v_6[2.9,] 
 		 11: 
-		 12: %self[2.0,] @logged_in[] 
-		 13: @news_item[2.10,] 
-		 14: %v_7->can_update? %v_8[2.13,] %v_7[2.12,] 
+		 12: def_%v_7 %self[2.0,2.7,] 
+		 13: def_%v_8 %self[2.0,2.7,] 
+		 14: %v_7->can_update? def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: RETURN %v_10[3.0,] 
+		 0: COPY def_%v_10 
+		 1: RETURN %v_10[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %v_11[4.1,] 
-		 3: %v_12[4.2,] 
-		 4: %self->render %v_13[4.3,] %self[2.0,] 
-		 5: RETURN %v_14[4.4,] 
+		 1: COPY def_%v_11 
+		 2: %self->t def_%v_12 %self[2.0,] %v_11[4.1,] 
+		 3: COPY def_%v_13 %v_12[4.2,] 
+		 4: %self->render def_%v_14 %self[4.2,2.0,] %v_13[4.3,] 
+		 5: RETURN %v_14[4.4,] %self[4.2,4.4,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -734,38 +734,38 @@ BB 2
 	outgoing: 3 7 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: (NewsItem) 
-		 7: %self->params %self[2.0,] 
-		 8: %v_4[2.7,] 
-		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
-		 10: %self[2.0,] %v_6[2.9,] @news_item[] 
+		 6: (NewsItem) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 
+		 8: def_%v_5 %v_4[2.7,] 
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 10: ATTRASSIGN %self->@news_item %self[2.0,2.7,] %v_6[2.9,] 
 		 11: 
-		 12: %self[2.0,] @logged_in[] 
-		 13: @news_item[2.10,] 
-		 14: %v_7->can_update? %v_8[2.13,] %v_7[2.12,] 
+		 12: def_%v_7 %self[2.0,2.7,] 
+		 13: def_%v_8 %self[2.0,2.7,] 
+		 14: %v_7->can_update? def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
 	outgoing: 4 5 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @news_item[2.10,2.13,] 
-		 2: %self->news_item_params %self[2.0,] 
-		 3: %v_10->update_attributes %v_10[3.1,] %v_11[3.2,] 
+		 1: def_%v_10 %self[2.0,] 
+		 2: %self->news_item_params def_%v_11 %self[2.0,] 
+		 3: %v_10->update_attributes def_%v_12 %v_10[3.1,] %v_11[3.2,] 
 		 4: BRANCH %v_12[3.3,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @logged_in[2.12,] @news_item[3.1,] 
+		 1: %self->respond_to def_%v_13 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -774,18 +774,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -794,42 +794,42 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,] 
-		 2: 
-		 3: %self->t %self[2.0,] %cl_2_4[3.2,] 
+		 1: %self->flash def_%cl_2_3 %self[2.0,] 
+		 2: COPY def_%cl_2_4 
+		 3: %self->t def_%cl_2_5 %self[3.1,2.0,] %cl_2_4[3.2,] 
 		 4: %cl_2_3[3.1,] %cl_2_5[3.3,] 
-		 5: %self[2.0,] @news_item[] 
-		 6: %self->redirect_to %self[2.0,] %cl_2_6[3.5,] 
-		 7: RETURN %cl_2_7[3.6,] 
+		 5: def_%cl_2_6 %self[3.1,3.3,2.0,] 
+		 6: %self->redirect_to def_%cl_2_7 %self[3.1,3.3,2.0,] %cl_2_6[3.5,] 
+		 7: RETURN %cl_2_7[3.6,] %self[3.1,3.3,3.6,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_8[4.0,] 
-		 2: RETURN %cl_2_9[4.1,] 
+		 0: def_%cl_2_8 
+		 1: def_%cl_2_9 %cl_2_8[4.0,] 
+		 2: RETURN %cl_2_9[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %cl_1_3[3.1,] 
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_4[4.0,] 
-		 2: RETURN %cl_1_5[4.1,] 
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -838,11 +838,11 @@ CLOSURE END
 		 2: 
 BB 5
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @logged_in[2.12,] @news_item[3.1,] 
+		 1: %self->respond_to def_%v_14 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -851,18 +851,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_3_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -871,60 +871,60 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %cl_4_3[3.1,] 
-		 3: %self->render %self[2.0,] %cl_4_4[3.2,] 
-		 4: RETURN %cl_4_5[3.3,] 
+		 1: COPY def_%cl_4_3 
+		 2: COPY def_%cl_4_4 %cl_4_3[3.1,] 
+		 3: %self->render def_%cl_4_5 %self[2.0,] %cl_4_4[3.2,] 
+		 4: RETURN %cl_4_5[3.3,] %self[3.3,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_4_6[4.0,] 
-		 2: RETURN %cl_4_7[4.1,] 
+		 0: def_%cl_4_6 
+		 1: def_%cl_4_7 %cl_4_6[4.0,] 
+		 2: RETURN %cl_4_7[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %cl_3_3[3.1,] 
+		 2: RETURN %cl_3_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_4[4.0,] 
-		 2: RETURN %cl_3_5[4.1,] 
+		 0: def_%cl_3_4 
+		 1: def_%cl_3_5 %cl_3_4[4.0,] 
+		 2: RETURN %cl_3_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: %v_14[5.1,] 
+		 2: COPY def_%v_13 %v_14[5.1,] 
 BB 6
 	outgoing: 9 
-	datadep: 5 4 
+	datadep: 
 	instructions:
-		 0: RETURN %v_13[5.2,4.1,] 
+		 0: RETURN %v_13[5.2,4.1,] %self[2.0,] 
 BB 7
 	outgoing: 9 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %self[2.0,] %v_15[7.1,] 
-		 3: %v_16[7.2,] 
-		 4: %self->render %self[2.0,] %v_17[7.3,] 
-		 5: RETURN %v_18[7.4,] 
+		 1: COPY def_%v_15 
+		 2: %self->t def_%v_16 %self[2.0,] %v_15[7.1,] 
+		 3: COPY def_%v_17 %v_16[7.2,] 
+		 4: %self->render def_%v_18 %self[7.2,2.0,] %v_17[7.3,] 
+		 5: RETURN %v_18[7.4,] %self[7.2,7.4,2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -939,32 +939,32 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: (NewsItem) 
-		 7: %self->params %self[2.0,] 
-		 8: %v_4[2.7,] 
-		 9: %v_3->find %v_5[2.8,] %v_3[2.6,] 
-		 10: %self[2.0,] %v_6[2.9,] @news_item[] 
+		 6: (NewsItem) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 
+		 8: def_%v_5 %v_4[2.7,] 
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 10: ATTRASSIGN %self->@news_item %self[2.0,2.7,] %v_6[2.9,] 
 		 11: 
-		 12: %self[2.0,] @logged_in[] 
-		 13: @news_item[2.10,] 
-		 14: %v_7->can_update? %v_8[2.13,] %v_7[2.12,] 
+		 12: def_%v_7 %self[2.0,2.7,] 
+		 13: def_%v_8 %self[2.0,2.7,] 
+		 14: %v_7->can_update? def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] @news_item[2.10,2.13,] 
-		 2: %v_10->destroy %v_10[3.1,] 
+		 1: def_%v_10 %self[2.0,] 
+		 2: %v_10->destroy def_%v_11 %v_10[3.1,] 
 		 3: 
-		 4: %self->respond_to %self[2.0,] 
-CLOSURE BEGIN: @logged_in[2.12,] @news_item[3.1,] 
+		 4: %self->respond_to def_%v_12 %self[2.0,] %self[2.0,] 
+CLOSURE BEGIN: format[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -973,18 +973,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: format->html %self[2.0,] format[2.2,] 
-CLOSURE BEGIN: 
+		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -993,58 +993,58 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash %self[2.0,] 
-		 2: 
-		 3: %self->t %self[2.0,] %cl_2_4[3.2,] 
+		 1: %self->flash def_%cl_2_3 %self[2.0,] 
+		 2: COPY def_%cl_2_4 
+		 3: %self->t def_%cl_2_5 %self[3.1,2.0,] %cl_2_4[3.2,] 
 		 4: %cl_2_3[3.1,] %cl_2_5[3.3,] 
-		 5: %self->news_path %self[2.0,] 
-		 6: %self->redirect_to %self[2.0,] %cl_2_6[3.5,] 
-		 7: RETURN %cl_2_7[3.6,] 
+		 5: %self->news_path def_%cl_2_6 %self[3.1,3.3,2.0,] 
+		 6: %self->redirect_to def_%cl_2_7 %self[3.1,3.3,3.5,2.0,] %cl_2_6[3.5,] 
+		 7: RETURN %cl_2_7[3.6,] %self[3.1,3.3,3.5,3.6,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_8[4.0,] 
-		 2: RETURN %cl_2_9[4.1,] 
+		 0: def_%cl_2_8 
+		 1: def_%cl_2_9 %cl_2_8[4.0,] 
+		 2: RETURN %cl_2_9[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %cl_1_3[3.1,] 
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_4[4.0,] 
-		 2: RETURN %cl_1_5[4.1,] 
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 5: RETURN %v_12[3.4,] 
+		 5: RETURN %v_12[3.4,] %self[3.4,2.0,] 
 BB 4
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: %self->t %v_13[4.1,] %self[2.0,] 
-		 3: %v_14[4.2,] 
-		 4: %self->render %self[2.0,] %v_15[4.3,] 
-		 5: RETURN %v_16[4.4,] 
+		 1: COPY def_%v_13 
+		 2: %self->t def_%v_14 %self[2.0,] %v_13[4.1,] 
+		 3: COPY def_%v_15 %v_14[4.2,] 
+		 4: %self->render def_%v_16 %self[4.2,2.0,] %v_15[4.3,] 
+		 5: RETURN %v_16[4.4,] %self[4.2,4.4,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -1059,16 +1059,16 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->params %self[2.0,] 
-		 7: %v_3->require %v_3[2.6,] 
-		 8: %v_4->permit %v_4[2.7,] 
-		 9: RETURN %v_5[2.8,] 
+		 6: %self->params def_%v_3 %self[2.0,] 
+		 7: %v_3->require def_%v_4 %v_3[2.6,] 
+		 8: %v_4->permit def_%v_5 %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 

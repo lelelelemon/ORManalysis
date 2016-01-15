@@ -7,28 +7,28 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
-		 6: 
+		 5: RECEIVEARG def_campus 
+		 6: def_family 
 		 7: family[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_family 
 BB 4
 	outgoing: 5 
-	datadep: 2 2 2 3 2 3 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self[2.0,] campus[2.5,] @campus[] 
+		 1: ATTRASSIGN %self->@campus %self[2.0,] campus[2.5,] 
 		 2: 
-		 3: %self[2.0,] family[3.0,2.6,] @family[] 
-		 4: RETURN family[3.0,2.6,] 
+		 3: ATTRASSIGN %self->@family %self[2.0,] family[3.0,2.6,] 
+		 4: RETURN family[3.0,2.6,] %self[2.0,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -43,15 +43,15 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->family %self[2.0,] 
-		 7: %v_3->id %v_3[2.6,] 
-		 8: RETURN %v_4[2.7,] 
+		 6: %self->family def_%v_3 %self[2.0,] 
+		 7: %v_3->id def_%v_4 %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -66,15 +66,15 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->checkin_times %self[2.0,] 
-		 7: %v_3->decorate %v_3[2.6,] 
-		 8: RETURN %v_4[2.7,] 
+		 6: %self->checkin_times def_%v_3 %self[2.0,] 
+		 7: %v_3->decorate def_%v_4 %v_3[2.6,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -89,33 +89,33 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] 
-		 7: %v_4[2.6,] 
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY def_%v_3 %v_4[2.6,] 
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self[2.0,] @group_ids[] 
-		 1: %v_5[3.0,] 
+		 0: def_%v_5 %self[2.0,] 
+		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 3 2 
+	datadep: 
 	instructions:
 		 0: BRANCH %v_3[3.1,2.7,] 
 BB 5
 	outgoing: 7 
-	datadep: 2 2 2 
+	datadep: 
 	instructions:
-		 0: %self->checkin_times %self[2.0,] 
-		 1: %v_6->flat_map %self[2.0,] %v_6[5.0,] 
-CLOSURE BEGIN: @group_ids[] 
+		 0: %self->checkin_times def_%v_6 %self[2.0,] 
+		 1: %v_6->flat_map def_%v_7 %v_6[5.0,] %self[5.0,2.0,] 
+CLOSURE BEGIN: t[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -124,39 +124,39 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_t 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: t->all_group_times t[2.2,] 
-		 2: %cl_1_3->pluck %cl_1_3[3.1,] 
-		 3: RETURN %cl_1_4[3.2,] 
+		 1: t->all_group_times def_%cl_1_3 t[2.2,] 
+		 2: %cl_1_3->pluck def_%cl_1_4 %cl_1_3[3.1,] 
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_5[4.0,] 
-		 2: RETURN %cl_1_6[4.1,] 
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: %v_7->uniq %v_7[5.1,] 
-		 3: %self[2.0,] %v_8[5.2,] @group_ids[3.0,] 
-		 4: RETURN %v_8[5.2,] 
+		 2: %v_7->uniq def_%v_8 %v_7[5.1,] 
+		 3: ATTRASSIGN %self->@group_ids %self[5.0,2.0,] %v_8[5.2,] 
+		 4: RETURN %v_8[5.2,] %self[5.0,2.0,] 
 BB 6
 	outgoing: 7 
-	datadep: 3 
+	datadep: 
 	instructions:
-		 0: RETURN %v_5[3.0,] 
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
 BB 7
 	outgoing: 
 	datadep: 
@@ -171,21 +171,21 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
+		 5: RECEIVEARG def_person 
 		 6: 
-		 7: person->attendance_records person[2.5,] 
-		 8: %v_3->includes %v_3[2.7,] 
-		 9: %self->group_ids %self[2.0,] 
-		 10: %self->checkin_times %self[2.0,] 
-		 11: %v_6->pluck %v_6[2.10,] 
-		 12: %v_5[2.9,] %v_7[2.11,] 
-		 13: %v_4->where %v_4[2.8,] %v_8[2.12,] 
-		 14: RETURN %v_9[2.13,] 
+		 7: person->attendance_records def_%v_3 person[2.5,] 
+		 8: %v_3->includes def_%v_4 %v_3[2.7,] 
+		 9: %self->group_ids def_%v_5 %self[2.0,] 
+		 10: %self->checkin_times def_%v_6 %self[2.0,2.9,] 
+		 11: %v_6->pluck def_%v_7 %v_6[2.10,] 
+		 12: COPY def_%v_8 %v_5[2.9,] %v_7[2.11,] 
+		 13: %v_4->where def_%v_9 %v_4[2.8,] %v_8[2.12,] 
+		 14: RETURN %v_9[2.13,] %self[2.0,2.9,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -200,43 +200,43 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
-		 6: 
+		 5: RECEIVEARG def_person 
+		 6: def_times 
 		 7: times[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_times 
 BB 4
 	outgoing: 5 6 
-	datadep: 3 2 3 2 3 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: times[3.0,2.6,] 
-		 2: times[3.0,2.6,] 
+		 1: COPY def_%v_3 times[3.0,2.6,] 
+		 2: COPY def_%v_4 times[3.0,2.6,] 
 		 3: BRANCH times[3.0,2.6,] 
 BB 5
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self->checkin_times %self[2.0,] 
-		 1: %v_5->map %v_5[5.0,] 
-		 2: %v_6[5.1,] 
-		 3: %v_6[5.1,] 
+		 0: %self->checkin_times def_%v_5 %self[2.0,] 
+		 1: %v_5->map def_%v_6 %v_5[5.0,] 
+		 2: COPY def_times %v_6[5.1,] 
+		 3: COPY def_%v_4 %v_6[5.1,] 
 BB 6
 	outgoing: 7 
-	datadep: 2 2 5 3 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->all_attendance_records person[2.5,] %self[2.0,] 
-		 2: times->map times[5.2,3.0,2.6,] %self[2.0,] 
-CLOSURE BEGIN: 
+		 1: %self->all_attendance_records def_%v_7 %self[2.0,] person[2.5,] 
+		 2: times->map def_%v_8 times[5.2,3.0,2.6,] %self[6.1,2.0,] 
+CLOSURE BEGIN: t[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -245,34 +245,34 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_t 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: 
-		 2: t->strftime %cl_1_3[3.1,] t[2.2,] 
-		 3: RETURN %cl_1_4[3.2,] 
+		 1: COPY def_%cl_1_3 
+		 2: t->strftime def_%cl_1_4 t[2.2,] %cl_1_3[3.1,] 
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_5[4.0,] 
-		 2: RETURN %cl_1_6[4.1,] 
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 3: %v_8[6.2,] 
-		 4: %v_7->where %v_9[6.3,] %v_7[6.1,] 
-		 5: RETURN %v_10[6.4,] 
+		 3: COPY def_%v_9 %v_8[6.2,] 
+		 4: %v_7->where def_%v_10 %v_7[6.1,] %v_9[6.3,] 
+		 5: RETURN %v_10[6.4,] %self[6.1,2.0,] 
 BB 7
 	outgoing: 
 	datadep: 
@@ -287,28 +287,28 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
+		 5: RECEIVEARG def_person 
 		 6: 
-		 7: %self->checkin_times %self[2.0,] 
-		 8: %v_3->all? %v_3[2.7,] 
+		 7: %self->checkin_times def_%v_3 %self[2.0,] 
+		 8: %v_3->all? def_%v_4 %v_3[2.7,] 
 		 9: BRANCH %v_4[2.8,] 
 BB 3
 	outgoing: 5 
-	datadep: 2 2 
+	datadep: 
 	instructions:
-		 0: %self->last_week_records person[2.5,] %self[2.0,] 
-		 1: %v_5->any? %v_5[3.0,] 
-		 2: RETURN %v_6[3.1,] 
+		 0: %self->last_week_records def_%v_5 %self[2.0,] person[2.5,] 
+		 1: %v_5->any? def_%v_6 %v_5[3.0,] 
+		 2: RETURN %v_6[3.1,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 5 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: RETURN %v_4[2.8,] 
+		 0: RETURN %v_4[2.8,] %self[2.0,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -323,18 +323,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
+		 5: RECEIVEARG def_person 
 		 6: 
-		 7: %self->checkin_times %self[2.0,] 
-		 8: 
-		 9: %v_3->where %v_4[2.8,] %v_3[2.7,] 
-		 10: %v_5->map %self[2.0,] %v_5[2.9,] 
-CLOSURE BEGIN: 
+		 7: %self->checkin_times def_%v_3 %self[2.0,] 
+		 8: COPY def_%v_4 
+		 9: %v_3->where def_%v_5 %v_3[2.7,] %v_4[2.8,] 
+		 10: %v_5->map def_%v_6 %v_5[2.9,] %self[2.0,2.7,] 
+CLOSURE BEGIN: ct[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -343,37 +343,37 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_ct 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: ct->to_time ct[2.2,] 
-		 2: 
-		 3: %cl_1_3[3.1,] %cl_1_4[3.2,] 
-		 4: RETURN %cl_1_5[3.3,] 
+		 1: ct->to_time def_%cl_1_3 ct[2.2,] 
+		 2: def_%cl_1_4 
+		 3: def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 
+		 4: RETURN %cl_1_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_6[4.0,] 
-		 2: RETURN %cl_1_7[4.1,] 
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 11: %v_6[2.10,] 
+		 11: COPY def_times %v_6[2.10,] 
 		 12: 
-		 13: %v_6->map %v_6[2.10,] 
-		 14: %self->attendance_records person[2.5,] %self[2.0,] %v_7[2.13,] 
-		 15: RETURN %v_8[2.14,] 
+		 13: %v_6->map def_%v_7 %v_6[2.10,] 
+		 14: %self->attendance_records def_%v_8 %self[2.0,2.7,] person[2.5,] %v_7[2.13,] 
+		 15: RETURN %v_8[2.14,] %self[2.0,2.7,2.14,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -388,22 +388,22 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
+		 5: def_args 
 		 6: 
-		 7: %self->people_as_json %self[2.0,] 
-		 8: %self->checkin_times %self[2.0,] 
-		 9: %v_4->decorate %v_4[2.8,] 
-		 10: %v_5->as_json %v_5[2.9,] 
-		 11: %self->selections %self[2.0,] 
-		 12: %v_7->as_json %v_7[2.11,] 
-		 13: %self->last_week_as_json %self[2.0,] 
-		 14: %v_3[2.7,] %v_8[2.12,] %v_9[2.13,] %v_6[2.10,] 
-		 15: RETURN %v_10[2.14,] 
+		 7: %self->people_as_json def_%v_3 %self[2.0,] 
+		 8: %self->checkin_times def_%v_4 %self[2.0,2.7,] 
+		 9: %v_4->decorate def_%v_5 %v_4[2.8,] 
+		 10: %v_5->as_json def_%v_6 %v_5[2.9,] 
+		 11: %self->selections def_%v_7 %self[2.0,2.7,2.8,] 
+		 12: %v_7->as_json def_%v_8 %v_7[2.11,] 
+		 13: %self->last_week_as_json def_%v_9 %self[2.0,2.7,2.8,2.11,] 
+		 14: COPY def_%v_10 %v_3[2.7,] %v_6[2.10,] %v_8[2.12,] %v_9[2.13,] 
+		 15: RETURN %v_10[2.14,] %self[2.0,2.7,2.8,2.11,2.13,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -418,15 +418,15 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->people %self[2.0,] 
-		 7: %v_3->map %self[2.0,] %v_3[2.6,] 
-CLOSURE BEGIN: 
+		 6: %self->people def_%v_3 %self[2.0,] 
+		 7: %v_3->map def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 
+CLOSURE BEGIN: person[] %self[2.0,2.6,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -435,36 +435,36 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_person 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: person->as_json person[2.2,] 
-		 2: %self->avatar person[2.2,] %self[2.0,] 
-		 3: %self->attendance_records person[2.2,] %self[2.0,] 
-		 4: %self->can_choose_same? person[2.2,] %self[2.0,] 
-		 5: %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_6[3.4,] 
-		 6: %cl_1_3->merge %cl_1_3[3.1,] %cl_1_7[3.5,] 
-		 7: RETURN %cl_1_8[3.6,] 
+		 1: person->as_json def_%cl_1_3 person[2.2,] 
+		 2: %self->avatar def_%cl_1_4 %self[2.0,] person[3.1,2.2,] 
+		 3: %self->attendance_records def_%cl_1_5 %self[3.2,2.0,] person[3.1,2.2,] 
+		 4: %self->can_choose_same? def_%cl_1_6 %self[3.2,3.3,2.0,] person[3.1,2.2,] 
+		 5: COPY def_%cl_1_7 %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_6[3.4,] 
+		 6: %cl_1_3->merge def_%cl_1_8 %cl_1_3[3.1,] %cl_1_7[3.5,] 
+		 7: RETURN %cl_1_8[3.6,] %self[3.2,3.3,3.4,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_9[4.0,] 
-		 2: RETURN %cl_1_10[4.1,] 
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[4.0,] 
+		 2: RETURN %cl_1_10[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: RETURN %v_4[2.7,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -479,16 +479,16 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->people %self[2.0,] 
-		 7: 
-		 8: %self[2.0,] %v_4[2.7,] %v_3[2.6,] 
-CLOSURE BEGIN: 
+		 6: %self->people def_%v_3 %self[2.0,] 
+		 7: COPY def_%v_4 
+		 8: def_%v_5 %v_3[2.6,] %v_4[2.7,] %self[2.0,2.6,] 
+CLOSURE BEGIN: person[] %self[2.0,2.6,] person_hash[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -497,22 +497,22 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_person 
+		 3: RECEIVEARG def_person_hash 
+		 4: COPY def_%current_scope 
+		 5: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: person->id person[2.2,] 
-		 2: %self->last_week_records person[2.2,] %self[2.0,] 
-		 3: 
-		 4: %cl_1_4[3.2,] %cl_1_5[3.3,] %self[2.0,] 
-CLOSURE BEGIN: 
+		 1: person->id def_%cl_1_3 person[2.2,] 
+		 2: %self->last_week_records def_%cl_1_4 %self[2.0,] person[3.1,2.2,] 
+		 3: COPY def_%cl_1_5 
+		 4: def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] %self[3.2,2.0,] 
+CLOSURE BEGIN: record[] %self[3.2,2.0,] time_hash[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -521,48 +521,48 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_record 
+		 3: RECEIVEARG def_time_hash 
+		 4: COPY def_%current_scope 
+		 5: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: record->checkin_time_id record[2.2,] 
-		 2: %self->group_time_for_attendance_record %self[2.0,] record[2.2,] 
-		 3: %cl_2_3[3.1,] %cl_2_4[3.2,] time_hash[2.3,] 
-		 4: RETURN %cl_2_4[3.2,] 
+		 1: record->checkin_time_id def_%cl_2_3 record[2.2,] 
+		 2: %self->group_time_for_attendance_record def_%cl_2_4 %self[2.0,] record[3.1,2.2,] 
+		 3: time_hash[2.3,] %cl_2_3[3.1,] %cl_2_4[3.2,] 
+		 4: RETURN %cl_2_4[3.2,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_5[4.0,] 
-		 2: RETURN %cl_2_6[4.1,] 
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 5: %cl_1_3[3.1,] %cl_1_6[3.4,] person_hash[2.3,] 
-		 6: RETURN %cl_1_6[3.4,] 
+		 5: person_hash[2.3,] %cl_1_3[3.1,] %cl_1_6[3.4,] 
+		 6: RETURN %cl_1_6[3.4,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_7[4.0,] 
-		 2: RETURN %cl_1_8[4.1,] 
+		 0: def_%cl_1_7 
+		 1: def_%cl_1_8 %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 9: RETURN %v_5[2.8,] 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -577,16 +577,16 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->people %self[2.0,] 
-		 7: 
-		 8: %self[2.0,] %v_4[2.7,] %v_3[2.6,] 
-CLOSURE BEGIN: 
+		 6: %self->people def_%v_3 %self[2.0,] 
+		 7: COPY def_%v_4 
+		 8: def_%v_5 %v_3[2.6,] %v_4[2.7,] %self[2.0,2.6,] 
+CLOSURE BEGIN: %self[2.0,2.6,] person[] people_hash[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -595,29 +595,29 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
-		 5: 
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_person 
+		 3: RECEIVEARG def_people_hash 
+		 4: COPY def_%current_scope 
+		 5: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 2 2 2 2 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: %self->attendance_records person[2.2,] %self[2.0,] 
-		 2: %cl_1_3->to_a %cl_1_3[3.1,] 
-		 3: %cl_1_4[3.2,] 
+		 1: %self->attendance_records def_%cl_1_3 %self[2.0,] person[2.2,] 
+		 2: %cl_1_3->to_a def_%cl_1_4 %cl_1_3[3.1,] 
+		 3: COPY def_records %cl_1_4[3.2,] 
 		 4: 
-		 5: person->id person[2.2,] 
-		 6: 
-		 7: %cl_1_5[3.5,] %cl_1_6[3.6,] people_hash[2.3,] 
-		 8: %cl_1_6[3.6,] 
+		 5: person->id def_%cl_1_5 person[2.2,] 
+		 6: COPY def_%cl_1_6 
+		 7: people_hash[2.3,] %cl_1_5[3.5,] %cl_1_6[3.6,] 
+		 8: COPY def_h %cl_1_6[3.6,] 
 		 9: 
-		 10: %self->checkin_times %self[2.0,] 
-		 11: %cl_1_7->each %self[2.0,] %cl_1_7[3.10,] 
-CLOSURE BEGIN: 
+		 10: %self->checkin_times def_%cl_1_7 %self[3.1,2.0,] 
+		 11: %cl_1_7->each def_%cl_1_8 %cl_1_7[3.10,] %self[3.1,3.10,2.0,] 
+CLOSURE BEGIN: records[3.3,] %self[3.1,3.10,2.0,] time[] record[] h[3.8,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -626,18 +626,18 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_time 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 7 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: records->detect %self[2.0,] 
-CLOSURE BEGIN: 
+		 1: records->detect def_%cl_2_3 records[] %self[2.0,] 
+CLOSURE BEGIN: a[] time[2.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -646,82 +646,82 @@ BB 2
 	outgoing: 3 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
-		 4: 
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_a 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
-	datadep: 2 
+	datadep: 
 	instructions:
 		 0: 
-		 1: a->checkin_time_id a[2.2,] 
-		 2: time->id 
-		 3: %cl_3_3[3.1,] %cl_3_4[3.2,] 
-		 4: RETURN %cl_3_5[3.3,] 
+		 1: a->checkin_time_id def_%cl_3_3 a[2.2,] 
+		 2: time->id def_%cl_3_4 time[] 
+		 3: %cl_3_3->== def_%cl_3_5 %cl_3_3[3.1,] %cl_3_4[3.2,] 
+		 4: RETURN %cl_3_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_3_6[4.0,] 
-		 2: RETURN %cl_3_7[4.1,] 
+		 0: def_%cl_3_6 
+		 1: def_%cl_3_7 %cl_3_6[4.0,] 
+		 2: RETURN %cl_3_7[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: %cl_2_3[3.1,] 
+		 2: COPY def_record %cl_2_3[3.1,] 
 		 3: 
 		 4: BRANCH %cl_2_3[3.1,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%cl_2_4 
 		 1: 
 BB 5
 	outgoing: 7 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: RETURN 
+		 1: RETURN %self[2.0,] 
 BB 6
 	outgoing: 7 9 
-	datadep: 2 2 3 
+	datadep: 
 	instructions:
 		 0: 
-		 1: time->id time[2.2,] 
-		 2: %self->group_time_for_attendance_record %self[2.0,] record[3.2,] 
-		 3: %cl_2_5[6.1,] %cl_2_6[6.2,] 
-		 4: RETURN %cl_2_6[6.2,] 
+		 1: time->id def_%cl_2_5 time[2.2,] 
+		 2: %self->group_time_for_attendance_record def_%cl_2_6 %self[2.0,] record[3.2,] 
+		 3: h[] %cl_2_5[6.1,] %cl_2_6[6.2,] 
+		 4: RETURN %cl_2_6[6.2,] %self[6.2,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_2_7[7.0,] 
-		 2: RETURN %cl_2_8[7.1,] 
+		 0: def_%cl_2_7 
+		 1: def_%cl_2_8 %cl_2_7[7.0,] 
+		 2: RETURN %cl_2_8[7.1,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 12: RETURN %cl_1_8[3.11,] 
+		 12: RETURN %cl_1_8[3.11,] %self[3.1,3.10,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %cl_1_9[4.0,] 
-		 2: RETURN %cl_1_10[4.1,] 
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[4.0,] 
+		 2: RETURN %cl_1_10[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 9: RETURN %v_5[2.8,] 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -736,44 +736,44 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
+		 5: RECEIVEARG def_record 
 		 6: 
-		 7: (GroupTime) 
-		 8: 
-		 9: %v_3->joins %v_4[2.8,] %v_3[2.7,] 
-		 10: record->group_id record[2.5,] 
-		 11: %v_6[2.10,] 
-		 12: %v_5->where %v_5[2.9,] %v_7[2.11,] 
-		 13: 
-		 14: record->checkin_time_id record[2.5,] 
-		 15: %v_8->where %v_8[2.12,] %v_9[2.13,] %v_10[2.14,] 
-		 16: %v_11->first %v_11[2.15,] 
-		 17: %v_12[2.16,] 
+		 7: (GroupTime) def_%v_3 
+		 8: COPY def_%v_4 
+		 9: %v_3->joins def_%v_5 %v_3[2.7,] %v_4[2.8,] 
+		 10: record->group_id def_%v_6 record[2.5,] 
+		 11: COPY def_%v_7 %v_6[2.10,] 
+		 12: %v_5->where def_%v_8 %v_5[2.9,] %v_7[2.11,] 
+		 13: COPY def_%v_9 
+		 14: record->checkin_time_id def_%v_10 record[2.5,2.10,] 
+		 15: %v_8->where def_%v_11 %v_8[2.12,] %v_9[2.13,] %v_10[2.14,] 
+		 16: %v_11->first def_%v_12 %v_11[2.15,] 
+		 17: COPY def_group_time %v_12[2.16,] 
 		 18: 
 		 19: BRANCH %v_12[2.16,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%v_13 
 		 1: 
-		 2: group_time->as_json group_time[2.17,] 
-		 3: group_time->group group_time[2.17,] 
-		 4: %v_15->name %v_15[3.3,] 
-		 5: %v_16[3.4,] 
-		 6: %v_17[3.5,] 
-		 7: %v_14->merge %v_14[3.2,] %v_18[3.6,] 
-		 8: RETURN %v_19[3.7,] 
+		 2: group_time->as_json def_%v_14 group_time[2.17,] 
+		 3: group_time->group def_%v_15 group_time[3.2,2.17,] 
+		 4: %v_15->name def_%v_16 %v_15[3.3,] 
+		 5: COPY def_%v_17 %v_16[3.4,] 
+		 6: COPY def_%v_18 %v_17[3.5,] 
+		 7: %v_14->merge def_%v_19 %v_14[3.2,] %v_18[3.6,] 
+		 8: RETURN %v_19[3.7,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -788,31 +788,31 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->family %self[2.0,] 
+		 6: %self->family def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: 
+		 0: COPY def_%v_4 
 		 1: 
-		 2: %self->family %self[2.0,] 
-		 3: %v_6->people %v_6[3.2,] 
-		 4: %v_7->undeleted %v_7[3.3,] 
-		 5: %v_8->minimal %v_8[3.4,] 
-		 6: RETURN %v_9[3.5,] 
+		 2: %self->family def_%v_6 %self[2.0,] 
+		 3: %v_6->people def_%v_7 %v_6[3.2,] 
+		 4: %v_7->undeleted def_%v_8 %v_7[3.3,] 
+		 5: %v_8->minimal def_%v_9 %v_8[3.4,] 
+		 6: RETURN %v_9[3.5,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: 
-		 1: RETURN %v_5[4.0,] 
+		 0: COPY def_%v_5 
+		 1: RETURN %v_5[4.0,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -827,28 +827,28 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
-		 5: 
+		 5: RECEIVEARG def_person 
 		 6: 
-		 7: person->photo person[2.5,] 
-		 8: %v_3->exists? %v_3[2.7,] 
+		 7: person->photo def_%v_3 person[2.5,] 
+		 8: %v_3->exists? def_%v_4 %v_3[2.7,] 
 		 9: BRANCH %v_4[2.8,] 
 BB 3
 	outgoing: 6 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: person->photo person[2.5,] 
-		 1: %v_5->url %v_5[3.0,] 
-		 2: RETURN %v_6[3.1,] 
+		 0: person->photo def_%v_5 person[2.5,] 
+		 1: %v_5->url def_%v_6 %v_5[3.0,] 
+		 2: RETURN %v_6[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: RETURN 
+		 0: RETURN %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -863,55 +863,55 @@ BB 2
 	outgoing: 3 4 
 	datadep: 
 	instructions:
-		 0: 
-		 1: 
-		 2: 
-		 3: 
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self[2.0,] 
-		 7: %v_4[2.6,] 
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY def_%v_3 %v_4[2.6,] 
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
-	datadep: 2 
+	datadep: 
 	instructions:
-		 0: %self[2.0,] @checkin_times[] 
-		 1: %v_5[3.0,] 
+		 0: def_%v_5 %self[2.0,] 
+		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
-	datadep: 3 2 
+	datadep: 
 	instructions:
 		 0: BRANCH %v_3[3.1,2.7,] 
 BB 5
 	outgoing: 7 
-	datadep: 2 2 
+	datadep: 
 	instructions:
-		 0: (CheckinTime) 
-		 1: %self[2.0,] @campus[] 
-		 2: %v_7[5.1,] 
-		 3: %v_6->where %v_8[5.2,] %v_6[5.0,] 
-		 4: 
-		 5: (Time) 
-		 6: %v_11->current %v_11[5.5,] 
-		 7: %v_12->wday %v_12[5.6,] 
-		 8: 
-		 9: %v_14->ago %v_14[5.8,] 
-		 10: 
-		 11: %v_15->strftime %v_15[5.9,] %v_16[5.10,] 
-		 12: 
-		 13: %v_18->from_now %v_18[5.12,] 
-		 14: 
-		 15: %v_19->strftime %v_19[5.13,] %v_20[5.14,] 
-		 16: %v_13[5.7,] %v_17[5.11,] %v_21[5.15,] 
-		 17: %v_9->where %v_9[5.3,] %v_10[5.4,] %v_22[5.16,] 
-		 18: %self[2.0,] %v_23[5.17,] @checkin_times[3.0,] 
-		 19: RETURN %v_23[5.17,] 
+		 0: (CheckinTime) def_%v_6 
+		 1: def_%v_7 %self[2.0,] 
+		 2: COPY def_%v_8 %v_7[5.1,] 
+		 3: %v_6->where def_%v_9 %v_6[5.0,] %v_8[5.2,] 
+		 4: COPY def_%v_10 
+		 5: (Time) def_%v_11 
+		 6: %v_11->current def_%v_12 %v_11[5.5,] 
+		 7: %v_12->wday def_%v_13 %v_12[5.6,] 
+		 8: def_%v_14 
+		 9: %v_14->ago def_%v_15 %v_14[5.8,] 
+		 10: COPY def_%v_16 
+		 11: %v_15->strftime def_%v_17 %v_15[5.9,] %v_16[5.10,] 
+		 12: def_%v_18 
+		 13: %v_18->from_now def_%v_19 %v_18[5.12,] 
+		 14: COPY def_%v_20 
+		 15: %v_19->strftime def_%v_21 %v_19[5.13,] %v_20[5.14,] 
+		 16: COPY def_%v_22 %v_13[5.7,] %v_17[5.11,] %v_21[5.15,] 
+		 17: %v_9->where def_%v_23 %v_9[5.3,] %v_10[5.4,] %v_22[5.16,] 
+		 18: ATTRASSIGN %self->@checkin_times %self[2.0,] %v_23[5.17,] 
+		 19: RETURN %v_23[5.17,] %self[2.0,] 
 BB 6
 	outgoing: 7 
-	datadep: 3 
+	datadep: 
 	instructions:
-		 0: RETURN %v_5[3.0,] 
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
 BB 7
 	outgoing: 
 	datadep: 

@@ -21,6 +21,8 @@ class FriendsController < ApplicationController
       wants.html
       wants.js
     end
+ @message 
+
   end
 
   # id = FriendshipRequest

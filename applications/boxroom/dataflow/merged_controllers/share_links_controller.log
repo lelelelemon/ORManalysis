@@ -9,16 +9,16 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 (ShareLink) 
-		 7: def_%v_4 %v_3->active_share_links %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@share_links %self[2.0,] %v_4[2.7,] @share_links[] 
+		 6: (ShareLink) def_%v_3 
+		 7: %v_3->active_share_links def_%v_4 %v_3[2.6,] 
+		 8: ATTRASSIGN %self->@share_links %self[2.0,] %v_4[2.7,] 
 		 9: 
-		 10: def_%v_5 %self->ruby_code_from_view %self[2.0,] 
-		 11: def_%v_6 %v_5->ruby_code_from_view %v_5[2.10,] %self[2.0,2.10,] 
+		 10: %self->ruby_code_from_view def_%v_5 %self[2.0,] 
+		 11: %v_5->ruby_code_from_view def_%v_6 %v_5[2.10,] %self[2.0,2.10,] 
 CLOSURE BEGIN: %self[2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
@@ -30,32 +30,32 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: def_rb_from_view RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self->t %self[2.0,] 
-		 2: def_%cl_1_4 %self->content_for %self[3.1,2.0,] %cl_1_3[3.1,] 
+		 1: %self->t def_%cl_1_3 %self[2.0,] 
+		 2: %self->content_for def_%cl_1_4 %self[3.1,2.0,] %cl_1_3[3.1,] 
 		 3: 
-		 4: def_%cl_1_5 %self->content_for %self[3.1,3.2,2.0,] 
+		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 
-		 7: def_%cl_1_7 %self->t %self[3.1,3.2,3.4,2.0,] %cl_1_6[3.6,] 
+		 6: COPY def_%cl_1_6 
+		 7: %self->t def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] %cl_1_6[3.6,] 
 		 8: 
-		 9: def_%cl_1_8 %self->t %self[3.1,3.2,3.4,3.7,2.0,] 
+		 9: %self->t def_%cl_1_8 %self[3.1,3.2,3.4,3.7,2.0,] 
 		 10: 
-		 11: def_%cl_1_9 
-		 12: def_%cl_1_10 %self->t %self[3.1,3.2,3.4,3.7,3.9,2.0,] %cl_1_9[3.11,] 
+		 11: COPY def_%cl_1_9 
+		 12: %self->t def_%cl_1_10 %self[3.1,3.2,3.4,3.7,3.9,2.0,] %cl_1_9[3.11,] 
 		 13: 
-		 14: def_%cl_1_11 
-		 15: def_%cl_1_12 %self->t %self[3.1,3.2,3.4,3.7,3.9,3.12,2.0,] %cl_1_11[3.14,] 
+		 14: COPY def_%cl_1_11 
+		 15: %self->t def_%cl_1_12 %self[3.1,3.2,3.4,3.7,3.9,3.12,2.0,] %cl_1_11[3.14,] 
 		 16: 
-		 17: def_%cl_1_13 %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] @share_links[] 
-		 18: def_%cl_1_14 %cl_1_13->each %cl_1_13[3.17,] %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] 
+		 17: def_%cl_1_13 %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] 
+		 18: %cl_1_13->each def_%cl_1_14 %cl_1_13[3.17,] %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] 
 CLOSURE BEGIN: %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] share_link[] 
 BB 1
 	outgoing: 6 2 
@@ -67,90 +67,90 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: def_share_link RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_share_link 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 
-		 2: def_%cl_2_4 
-		 3: def_%cl_2_5 %self->cycle %self[2.0,] %cl_2_3[3.1,] %cl_2_4[3.2,] 
+		 1: COPY def_%cl_2_3 
+		 2: COPY def_%cl_2_4 
+		 3: %self->cycle def_%cl_2_5 %self[2.0,] %cl_2_3[3.1,] %cl_2_4[3.2,] 
 		 4: 
-		 5: def_%cl_2_6 share_link->user_file share_link[2.2,] 
-		 6: def_%cl_2_7 %cl_2_6->extension %cl_2_6[3.5,] 
-		 7: def_%cl_2_8 %self->file_icon %self[3.3,2.0,] %cl_2_7[3.6,] 
-		 8: def_%cl_2_9 %self->image_tag %self[3.3,3.7,2.0,] %cl_2_8[3.7,] 
+		 5: share_link->user_file def_%cl_2_6 share_link[2.2,] 
+		 6: %cl_2_6->extension def_%cl_2_7 %cl_2_6[3.5,] 
+		 7: %self->file_icon def_%cl_2_8 %self[3.3,2.0,] %cl_2_7[3.6,] 
+		 8: %self->image_tag def_%cl_2_9 %self[3.3,3.7,2.0,] %cl_2_8[3.7,] 
 		 9: 
-		 10: def_%cl_2_10 share_link->user_file share_link[3.5,2.2,] 
-		 11: def_%cl_2_11 %cl_2_10->attachment_file_name %cl_2_10[3.10,] 
-		 12: def_%cl_2_12 
-		 13: def_%cl_2_13 %self->truncate %self[3.3,3.7,3.8,2.0,] %cl_2_11[3.11,] %cl_2_12[3.12,] 
-		 14: def_%cl_2_14 share_link->user_file share_link[3.5,3.10,2.2,] 
-		 15: def_%cl_2_15 %cl_2_14->folder %cl_2_14[3.14,] 
-		 16: def_%cl_2_16 share_link->user_file share_link[3.5,3.10,3.14,2.2,] 
-		 17: def_%cl_2_17 %cl_2_16->attachment_file_name %cl_2_16[3.16,] 
-		 18: def_%cl_2_18 
-		 19: def_%cl_2_19 share_link->user_file share_link[3.5,3.10,3.14,3.16,2.2,] 
-		 20: def_%cl_2_20 %cl_2_19->folder %cl_2_19[3.19,] 
-		 21: def_%cl_2_21 %cl_2_20->name %cl_2_20[3.20,] 
-		 22: def_%cl_2_22 
+		 10: share_link->user_file def_%cl_2_10 share_link[3.5,2.2,] 
+		 11: %cl_2_10->attachment_file_name def_%cl_2_11 %cl_2_10[3.10,] 
+		 12: COPY def_%cl_2_12 
+		 13: %self->truncate def_%cl_2_13 %self[3.3,3.7,3.8,2.0,] %cl_2_11[3.11,] %cl_2_12[3.12,] 
+		 14: share_link->user_file def_%cl_2_14 share_link[3.5,3.10,2.2,] 
+		 15: %cl_2_14->folder def_%cl_2_15 %cl_2_14[3.14,] 
+		 16: share_link->user_file def_%cl_2_16 share_link[3.5,3.10,3.14,2.2,] 
+		 17: %cl_2_16->attachment_file_name def_%cl_2_17 %cl_2_16[3.16,] 
+		 18: COPY def_%cl_2_18 
+		 19: share_link->user_file def_%cl_2_19 share_link[3.5,3.10,3.14,3.16,2.2,] 
+		 20: %cl_2_19->folder def_%cl_2_20 %cl_2_19[3.19,] 
+		 21: %cl_2_20->name def_%cl_2_21 %cl_2_20[3.20,] 
+		 22: COPY def_%cl_2_22 
 		 23: def_%cl_2_23 %cl_2_17[3.17,] %cl_2_18[3.18,] %cl_2_21[3.21,] %cl_2_22[3.22,] 
-		 24: def_%cl_2_24 %cl_2_23[3.23,] 
-		 25: def_%cl_2_25 %self->link_to %self[3.3,3.7,3.8,3.13,2.0,] %cl_2_13[3.13,] %cl_2_15[3.15,] %cl_2_24[3.24,] 
+		 24: COPY def_%cl_2_24 %cl_2_23[3.23,] 
+		 25: %self->link_to def_%cl_2_25 %self[3.3,3.7,3.8,3.13,2.0,] %cl_2_13[3.13,] %cl_2_15[3.15,] %cl_2_24[3.24,] 
 		 26: 
-		 27: def_%cl_2_26 share_link->user share_link[3.5,3.10,3.14,3.16,3.19,2.2,] 
-		 28: def_%cl_2_27 %cl_2_26->name %cl_2_26[3.27,] 
+		 27: share_link->user def_%cl_2_26 share_link[3.5,3.10,3.14,3.16,3.19,2.2,] 
+		 28: %cl_2_26->name def_%cl_2_27 %cl_2_26[3.27,] 
 		 29: 
-		 30: def_%cl_2_28 share_link->emails share_link[3.5,3.10,3.14,3.16,3.19,3.27,2.2,] 
+		 30: share_link->emails def_%cl_2_28 share_link[3.5,3.10,3.14,3.16,3.19,3.27,2.2,] 
 		 31: 
-		 32: def_%cl_2_29 share_link->emails share_link[3.5,3.10,3.14,3.16,3.19,3.27,3.30,2.2,] 
-		 33: def_%cl_2_30 
-		 34: def_%cl_2_31 %self->truncate %self[3.3,3.7,3.8,3.13,3.25,2.0,] %cl_2_29[3.32,] %cl_2_30[3.33,] 
+		 32: share_link->emails def_%cl_2_29 share_link[3.5,3.10,3.14,3.16,3.19,3.27,3.30,2.2,] 
+		 33: COPY def_%cl_2_30 
+		 34: %self->truncate def_%cl_2_31 %self[3.3,3.7,3.8,3.13,3.25,2.0,] %cl_2_29[3.32,] %cl_2_30[3.33,] 
 		 35: 
-		 36: def_%cl_2_32 share_link->link_expires_at share_link[3.5,3.10,3.14,3.16,3.19,3.27,3.30,3.32,2.2,] 
-		 37: def_%cl_2_33 
-		 38: def_%cl_2_34 %self->l %self[3.3,3.7,3.8,3.13,3.25,3.34,2.0,] %cl_2_32[3.36,] %cl_2_33[3.37,] 
+		 36: share_link->link_expires_at def_%cl_2_32 share_link[3.5,3.10,3.14,3.16,3.19,3.27,3.30,3.32,2.2,] 
+		 37: COPY def_%cl_2_33 
+		 38: %self->l def_%cl_2_34 %self[3.3,3.7,3.8,3.13,3.25,3.34,2.0,] %cl_2_32[3.36,] %cl_2_33[3.37,] 
 		 39: 
-		 40: def_%cl_2_35 
-		 41: def_%cl_2_36 %self->t %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,2.0,] 
-		 42: def_%cl_2_37 %cl_2_36[3.41,] 
-		 43: def_%cl_2_38 %self->image_tag %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,2.0,] %cl_2_35[3.40,] %cl_2_37[3.42,] 
-		 44: def_%cl_2_39 %self->share_link_path %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,2.0,] share_link[3.5,3.10,3.14,3.16,3.19,3.27,3.30,3.32,3.36,2.2,] 
-		 45: def_%cl_2_40 %self->t %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,3.44,2.0,] 
-		 46: def_%cl_2_41 %cl_2_40[3.45,] 
-		 47: def_%cl_2_42 %self->t %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,3.44,3.45,2.0,] 
-		 48: def_%cl_2_43 %cl_2_41[3.46,] %cl_2_42[3.47,] 
-		 49: def_%cl_2_44 %self->link_to %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,3.44,3.45,3.47,2.0,] %cl_2_38[3.43,] %cl_2_39[3.44,] %cl_2_43[3.48,] 
-		 50: RETURN %cl_2_44[3.49,] 
+		 40: COPY def_%cl_2_35 
+		 41: %self->t def_%cl_2_36 %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,2.0,] 
+		 42: COPY def_%cl_2_37 %cl_2_36[3.41,] 
+		 43: %self->image_tag def_%cl_2_38 %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,2.0,] %cl_2_35[3.40,] %cl_2_37[3.42,] 
+		 44: %self->share_link_path def_%cl_2_39 %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,2.0,] share_link[3.5,3.10,3.14,3.16,3.19,3.27,3.30,3.32,3.36,2.2,] 
+		 45: %self->t def_%cl_2_40 %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,3.44,2.0,] 
+		 46: COPY def_%cl_2_41 %cl_2_40[3.45,] 
+		 47: %self->t def_%cl_2_42 %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,3.44,3.45,2.0,] 
+		 48: COPY def_%cl_2_43 %cl_2_41[3.46,] %cl_2_42[3.47,] 
+		 49: %self->link_to def_%cl_2_44 %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,3.44,3.45,3.47,2.0,] %cl_2_38[3.43,] %cl_2_39[3.44,] %cl_2_43[3.48,] 
+		 50: RETURN %cl_2_44[3.49,] %self[3.3,3.7,3.8,3.13,3.25,3.34,3.38,3.41,3.43,3.44,3.45,3.47,3.49,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_2_45 
 		 1: def_%cl_2_46 %cl_2_45[4.0,] 
-		 2: RETURN %cl_2_46[4.1,] 
+		 2: RETURN %cl_2_46[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 19: RETURN %cl_1_14[3.18,] 
+		 19: RETURN %cl_1_14[3.18,] %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_15 
 		 1: def_%cl_1_16 %cl_1_15[4.0,] 
-		 2: RETURN %cl_1_16[4.1,] 
+		 2: RETURN %cl_1_16[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 12: RETURN %v_6[2.11,] 
+		 12: RETURN %v_6[2.11,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -167,31 +167,31 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] @file[] 
-		 7: def_%v_4 %v_3->nil? %v_3[2.6,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_5 
-		 1: RETURN %v_5[3.0,] 
+		 0: COPY def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self[2.0,] @file[2.6,] 
-		 1: def_%v_7 %v_6->attachment %v_6[4.0,] 
-		 2: def_%v_8 %v_7->path %v_7[4.1,] 
-		 3: def_%v_9 %self[2.0,] @file[4.0,2.6,] 
-		 4: def_%v_10 %v_9->attachment_file_name %v_9[4.3,] 
-		 5: def_%v_11 %v_10[4.4,] 
-		 6: def_%v_12 %self->send_file %self[2.0,] %v_8[4.2,] %v_11[4.5,] 
-		 7: RETURN %v_12[4.6,] 
+		 0: def_%v_6 %self[2.0,] 
+		 1: %v_6->attachment def_%v_7 %v_6[4.0,] 
+		 2: %v_7->path def_%v_8 %v_7[4.1,] 
+		 3: def_%v_9 %self[2.0,] 
+		 4: %v_9->attachment_file_name def_%v_10 %v_9[4.3,] 
+		 5: COPY def_%v_11 %v_10[4.4,] 
+		 6: %self->send_file def_%v_12 %self[2.0,] %v_8[4.2,] %v_11[4.5,] 
+		 7: RETURN %v_12[4.6,] %self[4.6,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -208,17 +208,17 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] @file[] 
-		 7: def_%v_4 %v_3->share_links %v_3[2.6,] 
-		 8: def_%v_5 %v_4->build %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@share_link %self[2.0,] %v_5[2.8,] @share_link[] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->share_links def_%v_4 %v_3[2.6,] 
+		 8: %v_4->build def_%v_5 %v_4[2.7,] 
+		 9: ATTRASSIGN %self->@share_link %self[2.0,] %v_5[2.8,] 
 		 10: 
-		 11: def_%v_6 %self->ruby_code_from_view %self[2.0,] 
-		 12: def_%v_7 %v_6->ruby_code_from_view %v_6[2.11,] %self[2.0,2.11,] 
+		 11: %self->ruby_code_from_view def_%v_6 %self[2.0,] 
+		 12: %v_6->ruby_code_from_view def_%v_7 %v_6[2.11,] %self[2.0,2.11,] 
 CLOSURE BEGIN: %self[2.0,2.11,] 
 BB 1
 	outgoing: 6 2 
@@ -230,26 +230,26 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: def_rb_from_view RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self->t %self[2.0,] 
-		 2: def_%cl_1_4 %self->content_for %self[3.1,2.0,] %cl_1_3[3.1,] 
+		 1: %self->t def_%cl_1_3 %self[2.0,] 
+		 2: %self->content_for def_%cl_1_4 %self[3.1,2.0,] %cl_1_3[3.1,] 
 		 3: 
-		 4: def_%cl_1_5 %self->content_for %self[3.1,3.2,2.0,] 
+		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] @file[] 
-		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] @share_link[] 
-		 8: def_%cl_1_8 %cl_1_6[3.6,] %cl_1_7[3.7,] 
-		 9: def_%cl_1_9 
-		 10: def_%cl_1_10 %cl_1_9[3.9,] 
-		 11: def_%cl_1_11 %cl_1_10[3.10,] 
-		 12: def_%cl_1_12 %self->form_for %self[3.1,3.2,3.4,2.0,] %cl_1_8[3.8,] %cl_1_11[3.11,] %self[3.1,3.2,3.4,2.0,] 
+		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
+		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
+		 8: COPY def_%cl_1_8 %cl_1_6[3.6,] %cl_1_7[3.7,] 
+		 9: COPY def_%cl_1_9 
+		 10: COPY def_%cl_1_10 %cl_1_9[3.9,] 
+		 11: COPY def_%cl_1_11 %cl_1_10[3.10,] 
+		 12: %self->form_for def_%cl_1_12 %self[3.1,3.2,3.4,2.0,] %cl_1_8[3.8,] %cl_1_11[3.11,] %self[3.1,3.2,3.4,2.0,] 
 CLOSURE BEGIN: %self[3.1,3.2,3.4,2.0,] f[] 
 BB 1
 	outgoing: 9 2 
@@ -261,166 +261,166 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: def_f RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_f 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self->t %self[2.0,] 
-		 2: def_%cl_2_4 %cl_2_3[3.1,] 
-		 3: def_%cl_2_5 f->error_messages f[2.2,] %cl_2_4[3.2,] 
+		 1: %self->t def_%cl_2_3 %self[2.0,] 
+		 2: COPY def_%cl_2_4 %cl_2_3[3.1,] 
+		 3: f->error_messages def_%cl_2_5 f[2.2,] %cl_2_4[3.2,] 
 		 4: 
-		 5: def_%cl_2_6 %self->t %self[3.1,2.0,] 
+		 5: %self->t def_%cl_2_6 %self[3.1,2.0,] 
 		 6: 
-		 7: def_%cl_2_7 %self[3.1,3.5,2.0,] @file[] 
-		 8: def_%cl_2_8 %cl_2_7->extension %cl_2_7[3.7,] 
-		 9: def_%cl_2_9 %self->file_icon %self[3.1,3.5,2.0,] %cl_2_8[3.8,] 
-		 10: def_%cl_2_10 %self->image_tag %self[3.1,3.5,3.9,2.0,] %cl_2_9[3.9,] 
+		 7: def_%cl_2_7 %self[3.1,3.5,2.0,] 
+		 8: %cl_2_7->extension def_%cl_2_8 %cl_2_7[3.7,] 
+		 9: %self->file_icon def_%cl_2_9 %self[3.1,3.5,2.0,] %cl_2_8[3.8,] 
+		 10: %self->image_tag def_%cl_2_10 %self[3.1,3.5,3.9,2.0,] %cl_2_9[3.9,] 
 		 11: 
-		 12: def_%cl_2_11 %self[3.1,3.5,3.9,3.10,2.0,] @file[3.7,] 
-		 13: def_%cl_2_12 %cl_2_11->attachment_file_name %cl_2_11[3.12,] 
-		 14: def_%cl_2_13 %self[3.1,3.5,3.9,3.10,2.0,] @folder[] 
-		 15: def_%cl_2_14 %self->link_to %self[3.1,3.5,3.9,3.10,2.0,] %cl_2_12[3.13,] %cl_2_13[3.14,] 
+		 12: def_%cl_2_11 %self[3.1,3.5,3.9,3.10,2.0,] 
+		 13: %cl_2_11->attachment_file_name def_%cl_2_12 %cl_2_11[3.12,] 
+		 14: def_%cl_2_13 %self[3.1,3.5,3.9,3.10,2.0,] 
+		 15: %self->link_to def_%cl_2_14 %self[3.1,3.5,3.9,3.10,2.0,] %cl_2_12[3.13,] %cl_2_13[3.14,] 
 		 16: 
-		 17: def_%cl_2_15 %self->t %self[3.1,3.5,3.9,3.10,3.15,2.0,] 
-		 18: def_%cl_2_16 f->label f[3.3,2.2,] %cl_2_15[3.17,] 
+		 17: %self->t def_%cl_2_15 %self[3.1,3.5,3.9,3.10,3.15,2.0,] 
+		 18: f->label def_%cl_2_16 f[3.3,2.2,] %cl_2_15[3.17,] 
 		 19: 
-		 20: def_%cl_2_17 %self->t %self[3.1,3.5,3.9,3.10,3.15,3.17,2.0,] 
+		 20: %self->t def_%cl_2_17 %self[3.1,3.5,3.9,3.10,3.15,3.17,2.0,] 
 		 21: 
-		 22: def_%cl_2_18 
-		 23: def_%cl_2_19 %cl_2_18[3.22,] 
-		 24: def_%cl_2_20 f->text_area f[3.3,3.18,2.2,] %cl_2_19[3.23,] 
+		 22: COPY def_%cl_2_18 
+		 23: COPY def_%cl_2_19 %cl_2_18[3.22,] 
+		 24: f->text_area def_%cl_2_20 f[3.3,3.18,2.2,] %cl_2_19[3.23,] 
 		 25: 
-		 26: def_%cl_2_21 %self->t %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,2.0,] 
+		 26: %self->t def_%cl_2_21 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,2.0,] 
 		 27: 
-		 28: def_%cl_2_22 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,3.26,2.0,] @share_link[] 
-		 29: def_%cl_2_23 %cl_2_22->emails %cl_2_22[3.28,] 
-		 30: def_%cl_2_24 %cl_2_23->nil? %cl_2_23[3.29,] 
+		 28: def_%cl_2_22 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,3.26,2.0,] 
+		 29: %cl_2_22->emails def_%cl_2_23 %cl_2_22[3.28,] 
+		 30: %cl_2_23->nil? def_%cl_2_24 %cl_2_23[3.29,] 
 		 31: BRANCH %cl_2_24[3.30,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_25 
+		 0: COPY def_%cl_2_25 
 		 1: 
 BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_26 %self[2.0,] @share_link[3.28,] 
-		 1: def_%cl_2_27 %cl_2_26->emails %cl_2_26[5.0,] 
-		 2: def_%cl_2_28 %cl_2_27->length %cl_2_27[5.1,] 
-		 3: def_%cl_2_25 %cl_2_28[5.2,] 
+		 0: def_%cl_2_26 %self[2.0,] 
+		 1: %cl_2_26->emails def_%cl_2_27 %cl_2_26[5.0,] 
+		 2: %cl_2_27->length def_%cl_2_28 %cl_2_27[5.1,] 
+		 3: COPY def_%cl_2_25 %cl_2_28[5.2,] 
 BB 6
 	outgoing: 7 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_29 %self->t %self[2.0,] 
-		 2: def_%cl_2_30 f->label f[2.2,] %cl_2_29[6.1,] 
+		 1: %self->t def_%cl_2_29 %self[2.0,] 
+		 2: f->label def_%cl_2_30 f[2.2,] %cl_2_29[6.1,] 
 		 3: 
-		 4: def_%cl_2_31 %self->t %self[6.1,2.0,] 
+		 4: %self->t def_%cl_2_31 %self[6.1,2.0,] 
 		 5: 
-		 6: def_%cl_2_32 
-		 7: def_%cl_2_33 %cl_2_32[6.6,] 
-		 8: def_%cl_2_34 f->text_area f[6.2,2.2,] %cl_2_33[6.7,] 
+		 6: COPY def_%cl_2_32 
+		 7: COPY def_%cl_2_33 %cl_2_32[6.6,] 
+		 8: f->text_area def_%cl_2_34 f[6.2,2.2,] %cl_2_33[6.7,] 
 		 9: 
-		 10: def_%cl_2_35 %self->t %self[6.1,6.4,2.0,] 
-		 11: def_%cl_2_36 f->label f[6.2,6.8,2.2,] %cl_2_35[6.10,] 
+		 10: %self->t def_%cl_2_35 %self[6.1,6.4,2.0,] 
+		 11: f->label def_%cl_2_36 f[6.2,6.8,2.2,] %cl_2_35[6.10,] 
 		 12: 
-		 13: def_%cl_2_37 %self->t %self[6.1,6.4,6.10,2.0,] 
+		 13: %self->t def_%cl_2_37 %self[6.1,6.4,6.10,2.0,] 
 		 14: def_%cl_2_38 
-		 15: def_%cl_2_39 %cl_2_38->from_now %cl_2_38[6.14,] 
-		 16: def_%cl_2_40 %cl_2_39->end_of_day %cl_2_39[6.15,] 
-		 17: def_%cl_2_41 %cl_2_37[6.13,] %cl_2_40[6.16,] 
-		 18: def_%cl_2_42 %self->t %self[6.1,6.4,6.10,6.13,2.0,] 
+		 15: %cl_2_38->from_now def_%cl_2_39 %cl_2_38[6.14,] 
+		 16: %cl_2_39->end_of_day def_%cl_2_40 %cl_2_39[6.15,] 
+		 17: COPY def_%cl_2_41 %cl_2_37[6.13,] %cl_2_40[6.16,] 
+		 18: %self->t def_%cl_2_42 %self[6.1,6.4,6.10,6.13,2.0,] 
 		 19: def_%cl_2_43 
-		 20: def_%cl_2_44 %cl_2_43->from_now %cl_2_43[6.19,] 
-		 21: def_%cl_2_45 %cl_2_44->end_of_day %cl_2_44[6.20,] 
-		 22: def_%cl_2_46 %cl_2_42[6.18,] %cl_2_45[6.21,] 
-		 23: def_%cl_2_47 %self->t %self[6.1,6.4,6.10,6.13,6.18,2.0,] 
+		 20: %cl_2_43->from_now def_%cl_2_44 %cl_2_43[6.19,] 
+		 21: %cl_2_44->end_of_day def_%cl_2_45 %cl_2_44[6.20,] 
+		 22: COPY def_%cl_2_46 %cl_2_42[6.18,] %cl_2_45[6.21,] 
+		 23: %self->t def_%cl_2_47 %self[6.1,6.4,6.10,6.13,6.18,2.0,] 
 		 24: def_%cl_2_48 
-		 25: def_%cl_2_49 %cl_2_48->from_now %cl_2_48[6.24,] 
-		 26: def_%cl_2_50 %cl_2_49->end_of_day %cl_2_49[6.25,] 
-		 27: def_%cl_2_51 %cl_2_47[6.23,] %cl_2_50[6.26,] 
-		 28: def_%cl_2_52 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,2.0,] 
+		 25: %cl_2_48->from_now def_%cl_2_49 %cl_2_48[6.24,] 
+		 26: %cl_2_49->end_of_day def_%cl_2_50 %cl_2_49[6.25,] 
+		 27: COPY def_%cl_2_51 %cl_2_47[6.23,] %cl_2_50[6.26,] 
+		 28: %self->t def_%cl_2_52 %self[6.1,6.4,6.10,6.13,6.18,6.23,2.0,] 
 		 29: def_%cl_2_53 
-		 30: def_%cl_2_54 %cl_2_53->from_now %cl_2_53[6.29,] 
-		 31: def_%cl_2_55 %cl_2_54->end_of_day %cl_2_54[6.30,] 
-		 32: def_%cl_2_56 %cl_2_52[6.28,] %cl_2_55[6.31,] 
-		 33: def_%cl_2_57 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,2.0,] 
+		 30: %cl_2_53->from_now def_%cl_2_54 %cl_2_53[6.29,] 
+		 31: %cl_2_54->end_of_day def_%cl_2_55 %cl_2_54[6.30,] 
+		 32: COPY def_%cl_2_56 %cl_2_52[6.28,] %cl_2_55[6.31,] 
+		 33: %self->t def_%cl_2_57 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,2.0,] 
 		 34: def_%cl_2_58 
-		 35: def_%cl_2_59 %cl_2_58->from_now %cl_2_58[6.34,] 
-		 36: def_%cl_2_60 %cl_2_59->end_of_day %cl_2_59[6.35,] 
-		 37: def_%cl_2_61 %cl_2_57[6.33,] %cl_2_60[6.36,] 
-		 38: def_%cl_2_62 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,2.0,] 
+		 35: %cl_2_58->from_now def_%cl_2_59 %cl_2_58[6.34,] 
+		 36: %cl_2_59->end_of_day def_%cl_2_60 %cl_2_59[6.35,] 
+		 37: COPY def_%cl_2_61 %cl_2_57[6.33,] %cl_2_60[6.36,] 
+		 38: %self->t def_%cl_2_62 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,2.0,] 
 		 39: def_%cl_2_63 
-		 40: def_%cl_2_64 %cl_2_63->from_now %cl_2_63[6.39,] 
-		 41: def_%cl_2_65 %cl_2_64->end_of_day %cl_2_64[6.40,] 
-		 42: def_%cl_2_66 %cl_2_62[6.38,] %cl_2_65[6.41,] 
-		 43: def_%cl_2_67 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,2.0,] 
+		 40: %cl_2_63->from_now def_%cl_2_64 %cl_2_63[6.39,] 
+		 41: %cl_2_64->end_of_day def_%cl_2_65 %cl_2_64[6.40,] 
+		 42: COPY def_%cl_2_66 %cl_2_62[6.38,] %cl_2_65[6.41,] 
+		 43: %self->t def_%cl_2_67 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,2.0,] 
 		 44: def_%cl_2_68 
-		 45: def_%cl_2_69 %cl_2_68->from_now %cl_2_68[6.44,] 
-		 46: def_%cl_2_70 %cl_2_69->end_of_day %cl_2_69[6.45,] 
-		 47: def_%cl_2_71 %cl_2_67[6.43,] %cl_2_70[6.46,] 
-		 48: def_%cl_2_72 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,2.0,] 
+		 45: %cl_2_68->from_now def_%cl_2_69 %cl_2_68[6.44,] 
+		 46: %cl_2_69->end_of_day def_%cl_2_70 %cl_2_69[6.45,] 
+		 47: COPY def_%cl_2_71 %cl_2_67[6.43,] %cl_2_70[6.46,] 
+		 48: %self->t def_%cl_2_72 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,2.0,] 
 		 49: def_%cl_2_73 
-		 50: def_%cl_2_74 %cl_2_73->from_now %cl_2_73[6.49,] 
-		 51: def_%cl_2_75 %cl_2_74->end_of_day %cl_2_74[6.50,] 
-		 52: def_%cl_2_76 %cl_2_72[6.48,] %cl_2_75[6.51,] 
-		 53: def_%cl_2_77 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,2.0,] 
+		 50: %cl_2_73->from_now def_%cl_2_74 %cl_2_73[6.49,] 
+		 51: %cl_2_74->end_of_day def_%cl_2_75 %cl_2_74[6.50,] 
+		 52: COPY def_%cl_2_76 %cl_2_72[6.48,] %cl_2_75[6.51,] 
+		 53: %self->t def_%cl_2_77 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,2.0,] 
 		 54: def_%cl_2_78 
-		 55: def_%cl_2_79 %cl_2_78->from_now %cl_2_78[6.54,] 
-		 56: def_%cl_2_80 %cl_2_79->end_of_day %cl_2_79[6.55,] 
-		 57: def_%cl_2_81 %cl_2_77[6.53,] %cl_2_80[6.56,] 
-		 58: def_%cl_2_82 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,2.0,] 
+		 55: %cl_2_78->from_now def_%cl_2_79 %cl_2_78[6.54,] 
+		 56: %cl_2_79->end_of_day def_%cl_2_80 %cl_2_79[6.55,] 
+		 57: COPY def_%cl_2_81 %cl_2_77[6.53,] %cl_2_80[6.56,] 
+		 58: %self->t def_%cl_2_82 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,2.0,] 
 		 59: def_%cl_2_83 
-		 60: def_%cl_2_84 %cl_2_83->from_now %cl_2_83[6.59,] 
-		 61: def_%cl_2_85 %cl_2_84->end_of_day %cl_2_84[6.60,] 
-		 62: def_%cl_2_86 %cl_2_82[6.58,] %cl_2_85[6.61,] 
-		 63: def_%cl_2_87 %cl_2_41[6.17,] %cl_2_46[6.22,] %cl_2_51[6.27,] %cl_2_56[6.32,] %cl_2_61[6.37,] %cl_2_66[6.42,] %cl_2_71[6.47,] %cl_2_76[6.52,] %cl_2_81[6.57,] %cl_2_86[6.62,] 
+		 60: %cl_2_83->from_now def_%cl_2_84 %cl_2_83[6.59,] 
+		 61: %cl_2_84->end_of_day def_%cl_2_85 %cl_2_84[6.60,] 
+		 62: COPY def_%cl_2_86 %cl_2_82[6.58,] %cl_2_85[6.61,] 
+		 63: COPY def_%cl_2_87 %cl_2_41[6.17,] %cl_2_46[6.22,] %cl_2_51[6.27,] %cl_2_56[6.32,] %cl_2_61[6.37,] %cl_2_66[6.42,] %cl_2_71[6.47,] %cl_2_76[6.52,] %cl_2_81[6.57,] %cl_2_86[6.62,] 
 		 64: def_%cl_2_88 
-		 65: def_%cl_2_89 %cl_2_88->from_now %cl_2_88[6.64,] 
-		 66: def_%cl_2_90 %cl_2_89->end_of_day %cl_2_89[6.65,] 
-		 67: def_%cl_2_91 %self->options_for_select %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,2.0,] %cl_2_87[6.63,] %cl_2_90[6.66,] 
-		 68: def_%cl_2_92 f->select f[6.2,6.8,6.11,2.2,] %cl_2_91[6.67,] 
+		 65: %cl_2_88->from_now def_%cl_2_89 %cl_2_88[6.64,] 
+		 66: %cl_2_89->end_of_day def_%cl_2_90 %cl_2_89[6.65,] 
+		 67: %self->options_for_select def_%cl_2_91 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,2.0,] %cl_2_87[6.63,] %cl_2_90[6.66,] 
+		 68: f->select def_%cl_2_92 f[6.2,6.8,6.11,2.2,] %cl_2_91[6.67,] 
 		 69: 
-		 70: def_%cl_2_93 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,2.0,] 
-		 71: def_%cl_2_94 f->submit f[6.2,6.8,6.11,6.68,2.2,] %cl_2_93[6.70,] 
+		 70: %self->t def_%cl_2_93 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,2.0,] 
+		 71: f->submit def_%cl_2_94 f[6.2,6.8,6.11,6.68,2.2,] %cl_2_93[6.70,] 
 		 72: 
-		 73: def_%cl_2_95 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,2.0,] 
-		 74: def_%cl_2_96 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] @folder[3.14,] 
-		 75: def_%cl_2_97 %self->link_to %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] %cl_2_95[6.73,] %cl_2_96[6.74,] 
-		 76: RETURN %cl_2_97[6.75,] 
+		 73: %self->t def_%cl_2_95 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,2.0,] 
+		 74: def_%cl_2_96 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] 
+		 75: %self->link_to def_%cl_2_97 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] %cl_2_95[6.73,] %cl_2_96[6.74,] 
+		 76: RETURN %cl_2_97[6.75,] %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,6.75,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: def_%cl_2_98 
 		 1: def_%cl_2_99 %cl_2_98[7.0,] 
-		 2: RETURN %cl_2_99[7.1,] 
+		 2: RETURN %cl_2_99[7.1,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 13: RETURN %cl_1_12[3.12,] 
+		 13: RETURN %cl_1_12[3.12,] %self[3.1,3.2,3.4,3.12,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_13 
 		 1: def_%cl_1_14 %cl_1_13[4.0,] 
-		 2: RETURN %cl_1_14[4.1,] 
+		 2: RETURN %cl_1_14[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 13: RETURN %v_7[2.12,] 
+		 13: RETURN %v_7[2.12,] %self[2.0,2.11,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -437,46 +437,46 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] @file[] 
-		 7: def_%v_4 %v_3->share_links %v_3[2.6,] 
-		 8: def_%v_5 %self->permitted_params %self[2.0,] 
-		 9: def_%v_6 %v_5->share_link %v_5[2.8,] 
-		 10: def_%v_7 %v_4->build %v_4[2.7,] %v_6[2.9,] 
-		 11: ATTRASSIGN %self->@share_link %self[2.0,2.8,] %v_7[2.10,] @share_link[] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->share_links def_%v_4 %v_3[2.6,] 
+		 8: %self->permitted_params def_%v_5 %self[2.0,] 
+		 9: %v_5->share_link def_%v_6 %v_5[2.8,] 
+		 10: %v_4->build def_%v_7 %v_4[2.7,] %v_6[2.9,] 
+		 11: ATTRASSIGN %self->@share_link %self[2.0,2.8,] %v_7[2.10,] 
 		 12: 
-		 13: def_%v_8 %self[2.0,2.8,] @share_link[2.11,] 
-		 14: def_%v_9 %self->current_user %self[2.0,2.8,] 
+		 13: def_%v_8 %self[2.0,2.8,] 
+		 14: %self->current_user def_%v_9 %self[2.0,2.8,] 
 		 15: ATTRASSIGN %v_8->user %v_8[2.13,] %v_9[2.14,] 
 		 16: 
-		 17: def_%v_10 %self[2.0,2.8,2.14,] @share_link[2.11,2.13,] 
-		 18: def_%v_11 %v_10->save %v_10[2.17,] 
+		 17: def_%v_10 %self[2.0,2.8,2.14,] 
+		 18: %v_10->save def_%v_11 %v_10[2.17,] 
 		 19: BRANCH %v_11[2.18,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_12 (UserMailer) 
-		 2: def_%v_13 %self[2.0,] @share_link[2.11,2.13,2.17,] 
-		 3: def_%v_14 %v_12->share_link_email %v_12[3.1,] %v_13[3.2,] 
-		 4: def_%v_15 %v_14->deliver_now %v_14[3.3,] 
+		 1: (UserMailer) def_%v_12 
+		 2: def_%v_13 %self[2.0,] 
+		 3: %v_12->share_link_email def_%v_14 %v_12[3.1,] %v_13[3.2,] 
+		 4: %v_14->deliver_now def_%v_15 %v_14[3.3,] 
 		 5: 
-		 6: def_%v_16 %self[2.0,] @folder[] 
-		 7: def_%v_17 %self->t %self[2.0,] 
-		 8: def_%v_18 %v_17[3.7,] 
-		 9: def_%v_19 %self->redirect_to %self[3.7,2.0,] %v_16[3.6,] %v_18[3.8,] 
-		 10: RETURN %v_19[3.9,] 
+		 6: def_%v_16 %self[2.0,] 
+		 7: %self->t def_%v_17 %self[2.0,] 
+		 8: COPY def_%v_18 %v_17[3.7,] 
+		 9: %self->redirect_to def_%v_19 %self[3.7,2.0,] %v_16[3.6,] %v_18[3.8,] 
+		 10: RETURN %v_19[3.9,] %self[3.7,3.9,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_20 %self->ruby_code_from_view %self[2.0,] 
-		 2: def_%v_21 %v_20->ruby_code_from_view %v_20[4.1,] %self[4.1,2.0,] 
+		 1: %self->ruby_code_from_view def_%v_20 %self[2.0,] 
+		 2: %v_20->ruby_code_from_view def_%v_21 %v_20[4.1,] %self[4.1,2.0,] 
 CLOSURE BEGIN: %self[4.1,2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -488,26 +488,26 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: def_rb_from_view RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self->t %self[2.0,] 
-		 2: def_%cl_1_4 %self->content_for %self[3.1,2.0,] %cl_1_3[3.1,] 
+		 1: %self->t def_%cl_1_3 %self[2.0,] 
+		 2: %self->content_for def_%cl_1_4 %self[3.1,2.0,] %cl_1_3[3.1,] 
 		 3: 
-		 4: def_%cl_1_5 %self->content_for %self[3.1,3.2,2.0,] 
+		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] @file[] 
-		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] @share_link[] 
-		 8: def_%cl_1_8 %cl_1_6[3.6,] %cl_1_7[3.7,] 
-		 9: def_%cl_1_9 
-		 10: def_%cl_1_10 %cl_1_9[3.9,] 
-		 11: def_%cl_1_11 %cl_1_10[3.10,] 
-		 12: def_%cl_1_12 %self->form_for %self[3.1,3.2,3.4,2.0,] %cl_1_8[3.8,] %cl_1_11[3.11,] %self[3.1,3.2,3.4,2.0,] 
+		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
+		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
+		 8: COPY def_%cl_1_8 %cl_1_6[3.6,] %cl_1_7[3.7,] 
+		 9: COPY def_%cl_1_9 
+		 10: COPY def_%cl_1_10 %cl_1_9[3.9,] 
+		 11: COPY def_%cl_1_11 %cl_1_10[3.10,] 
+		 12: %self->form_for def_%cl_1_12 %self[3.1,3.2,3.4,2.0,] %cl_1_8[3.8,] %cl_1_11[3.11,] %self[3.1,3.2,3.4,2.0,] 
 CLOSURE BEGIN: %self[3.1,3.2,3.4,2.0,] f[] 
 BB 1
 	outgoing: 9 2 
@@ -519,166 +519,166 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: def_f RECEIVEARG 
-		 3: def_%current_scope 
-		 4: def_%current_module 
+		 2: RECEIVEARG def_f 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self->t %self[2.0,] 
-		 2: def_%cl_2_4 %cl_2_3[3.1,] 
-		 3: def_%cl_2_5 f->error_messages f[2.2,] %cl_2_4[3.2,] 
+		 1: %self->t def_%cl_2_3 %self[2.0,] 
+		 2: COPY def_%cl_2_4 %cl_2_3[3.1,] 
+		 3: f->error_messages def_%cl_2_5 f[2.2,] %cl_2_4[3.2,] 
 		 4: 
-		 5: def_%cl_2_6 %self->t %self[3.1,2.0,] 
+		 5: %self->t def_%cl_2_6 %self[3.1,2.0,] 
 		 6: 
-		 7: def_%cl_2_7 %self[3.1,3.5,2.0,] @file[] 
-		 8: def_%cl_2_8 %cl_2_7->extension %cl_2_7[3.7,] 
-		 9: def_%cl_2_9 %self->file_icon %self[3.1,3.5,2.0,] %cl_2_8[3.8,] 
-		 10: def_%cl_2_10 %self->image_tag %self[3.1,3.5,3.9,2.0,] %cl_2_9[3.9,] 
+		 7: def_%cl_2_7 %self[3.1,3.5,2.0,] 
+		 8: %cl_2_7->extension def_%cl_2_8 %cl_2_7[3.7,] 
+		 9: %self->file_icon def_%cl_2_9 %self[3.1,3.5,2.0,] %cl_2_8[3.8,] 
+		 10: %self->image_tag def_%cl_2_10 %self[3.1,3.5,3.9,2.0,] %cl_2_9[3.9,] 
 		 11: 
-		 12: def_%cl_2_11 %self[3.1,3.5,3.9,3.10,2.0,] @file[3.7,] 
-		 13: def_%cl_2_12 %cl_2_11->attachment_file_name %cl_2_11[3.12,] 
-		 14: def_%cl_2_13 %self[3.1,3.5,3.9,3.10,2.0,] @folder[] 
-		 15: def_%cl_2_14 %self->link_to %self[3.1,3.5,3.9,3.10,2.0,] %cl_2_12[3.13,] %cl_2_13[3.14,] 
+		 12: def_%cl_2_11 %self[3.1,3.5,3.9,3.10,2.0,] 
+		 13: %cl_2_11->attachment_file_name def_%cl_2_12 %cl_2_11[3.12,] 
+		 14: def_%cl_2_13 %self[3.1,3.5,3.9,3.10,2.0,] 
+		 15: %self->link_to def_%cl_2_14 %self[3.1,3.5,3.9,3.10,2.0,] %cl_2_12[3.13,] %cl_2_13[3.14,] 
 		 16: 
-		 17: def_%cl_2_15 %self->t %self[3.1,3.5,3.9,3.10,3.15,2.0,] 
-		 18: def_%cl_2_16 f->label f[3.3,2.2,] %cl_2_15[3.17,] 
+		 17: %self->t def_%cl_2_15 %self[3.1,3.5,3.9,3.10,3.15,2.0,] 
+		 18: f->label def_%cl_2_16 f[3.3,2.2,] %cl_2_15[3.17,] 
 		 19: 
-		 20: def_%cl_2_17 %self->t %self[3.1,3.5,3.9,3.10,3.15,3.17,2.0,] 
+		 20: %self->t def_%cl_2_17 %self[3.1,3.5,3.9,3.10,3.15,3.17,2.0,] 
 		 21: 
-		 22: def_%cl_2_18 
-		 23: def_%cl_2_19 %cl_2_18[3.22,] 
-		 24: def_%cl_2_20 f->text_area f[3.3,3.18,2.2,] %cl_2_19[3.23,] 
+		 22: COPY def_%cl_2_18 
+		 23: COPY def_%cl_2_19 %cl_2_18[3.22,] 
+		 24: f->text_area def_%cl_2_20 f[3.3,3.18,2.2,] %cl_2_19[3.23,] 
 		 25: 
-		 26: def_%cl_2_21 %self->t %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,2.0,] 
+		 26: %self->t def_%cl_2_21 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,2.0,] 
 		 27: 
-		 28: def_%cl_2_22 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,3.26,2.0,] @share_link[] 
-		 29: def_%cl_2_23 %cl_2_22->emails %cl_2_22[3.28,] 
-		 30: def_%cl_2_24 %cl_2_23->nil? %cl_2_23[3.29,] 
+		 28: def_%cl_2_22 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,3.26,2.0,] 
+		 29: %cl_2_22->emails def_%cl_2_23 %cl_2_22[3.28,] 
+		 30: %cl_2_23->nil? def_%cl_2_24 %cl_2_23[3.29,] 
 		 31: BRANCH %cl_2_24[3.30,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_25 
+		 0: COPY def_%cl_2_25 
 		 1: 
 BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_26 %self[2.0,] @share_link[3.28,] 
-		 1: def_%cl_2_27 %cl_2_26->emails %cl_2_26[5.0,] 
-		 2: def_%cl_2_28 %cl_2_27->length %cl_2_27[5.1,] 
-		 3: def_%cl_2_25 %cl_2_28[5.2,] 
+		 0: def_%cl_2_26 %self[2.0,] 
+		 1: %cl_2_26->emails def_%cl_2_27 %cl_2_26[5.0,] 
+		 2: %cl_2_27->length def_%cl_2_28 %cl_2_27[5.1,] 
+		 3: COPY def_%cl_2_25 %cl_2_28[5.2,] 
 BB 6
 	outgoing: 7 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_29 %self->t %self[2.0,] 
-		 2: def_%cl_2_30 f->label f[2.2,] %cl_2_29[6.1,] 
+		 1: %self->t def_%cl_2_29 %self[2.0,] 
+		 2: f->label def_%cl_2_30 f[2.2,] %cl_2_29[6.1,] 
 		 3: 
-		 4: def_%cl_2_31 %self->t %self[6.1,2.0,] 
+		 4: %self->t def_%cl_2_31 %self[6.1,2.0,] 
 		 5: 
-		 6: def_%cl_2_32 
-		 7: def_%cl_2_33 %cl_2_32[6.6,] 
-		 8: def_%cl_2_34 f->text_area f[6.2,2.2,] %cl_2_33[6.7,] 
+		 6: COPY def_%cl_2_32 
+		 7: COPY def_%cl_2_33 %cl_2_32[6.6,] 
+		 8: f->text_area def_%cl_2_34 f[6.2,2.2,] %cl_2_33[6.7,] 
 		 9: 
-		 10: def_%cl_2_35 %self->t %self[6.1,6.4,2.0,] 
-		 11: def_%cl_2_36 f->label f[6.2,6.8,2.2,] %cl_2_35[6.10,] 
+		 10: %self->t def_%cl_2_35 %self[6.1,6.4,2.0,] 
+		 11: f->label def_%cl_2_36 f[6.2,6.8,2.2,] %cl_2_35[6.10,] 
 		 12: 
-		 13: def_%cl_2_37 %self->t %self[6.1,6.4,6.10,2.0,] 
+		 13: %self->t def_%cl_2_37 %self[6.1,6.4,6.10,2.0,] 
 		 14: def_%cl_2_38 
-		 15: def_%cl_2_39 %cl_2_38->from_now %cl_2_38[6.14,] 
-		 16: def_%cl_2_40 %cl_2_39->end_of_day %cl_2_39[6.15,] 
-		 17: def_%cl_2_41 %cl_2_37[6.13,] %cl_2_40[6.16,] 
-		 18: def_%cl_2_42 %self->t %self[6.1,6.4,6.10,6.13,2.0,] 
+		 15: %cl_2_38->from_now def_%cl_2_39 %cl_2_38[6.14,] 
+		 16: %cl_2_39->end_of_day def_%cl_2_40 %cl_2_39[6.15,] 
+		 17: COPY def_%cl_2_41 %cl_2_37[6.13,] %cl_2_40[6.16,] 
+		 18: %self->t def_%cl_2_42 %self[6.1,6.4,6.10,6.13,2.0,] 
 		 19: def_%cl_2_43 
-		 20: def_%cl_2_44 %cl_2_43->from_now %cl_2_43[6.19,] 
-		 21: def_%cl_2_45 %cl_2_44->end_of_day %cl_2_44[6.20,] 
-		 22: def_%cl_2_46 %cl_2_42[6.18,] %cl_2_45[6.21,] 
-		 23: def_%cl_2_47 %self->t %self[6.1,6.4,6.10,6.13,6.18,2.0,] 
+		 20: %cl_2_43->from_now def_%cl_2_44 %cl_2_43[6.19,] 
+		 21: %cl_2_44->end_of_day def_%cl_2_45 %cl_2_44[6.20,] 
+		 22: COPY def_%cl_2_46 %cl_2_42[6.18,] %cl_2_45[6.21,] 
+		 23: %self->t def_%cl_2_47 %self[6.1,6.4,6.10,6.13,6.18,2.0,] 
 		 24: def_%cl_2_48 
-		 25: def_%cl_2_49 %cl_2_48->from_now %cl_2_48[6.24,] 
-		 26: def_%cl_2_50 %cl_2_49->end_of_day %cl_2_49[6.25,] 
-		 27: def_%cl_2_51 %cl_2_47[6.23,] %cl_2_50[6.26,] 
-		 28: def_%cl_2_52 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,2.0,] 
+		 25: %cl_2_48->from_now def_%cl_2_49 %cl_2_48[6.24,] 
+		 26: %cl_2_49->end_of_day def_%cl_2_50 %cl_2_49[6.25,] 
+		 27: COPY def_%cl_2_51 %cl_2_47[6.23,] %cl_2_50[6.26,] 
+		 28: %self->t def_%cl_2_52 %self[6.1,6.4,6.10,6.13,6.18,6.23,2.0,] 
 		 29: def_%cl_2_53 
-		 30: def_%cl_2_54 %cl_2_53->from_now %cl_2_53[6.29,] 
-		 31: def_%cl_2_55 %cl_2_54->end_of_day %cl_2_54[6.30,] 
-		 32: def_%cl_2_56 %cl_2_52[6.28,] %cl_2_55[6.31,] 
-		 33: def_%cl_2_57 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,2.0,] 
+		 30: %cl_2_53->from_now def_%cl_2_54 %cl_2_53[6.29,] 
+		 31: %cl_2_54->end_of_day def_%cl_2_55 %cl_2_54[6.30,] 
+		 32: COPY def_%cl_2_56 %cl_2_52[6.28,] %cl_2_55[6.31,] 
+		 33: %self->t def_%cl_2_57 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,2.0,] 
 		 34: def_%cl_2_58 
-		 35: def_%cl_2_59 %cl_2_58->from_now %cl_2_58[6.34,] 
-		 36: def_%cl_2_60 %cl_2_59->end_of_day %cl_2_59[6.35,] 
-		 37: def_%cl_2_61 %cl_2_57[6.33,] %cl_2_60[6.36,] 
-		 38: def_%cl_2_62 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,2.0,] 
+		 35: %cl_2_58->from_now def_%cl_2_59 %cl_2_58[6.34,] 
+		 36: %cl_2_59->end_of_day def_%cl_2_60 %cl_2_59[6.35,] 
+		 37: COPY def_%cl_2_61 %cl_2_57[6.33,] %cl_2_60[6.36,] 
+		 38: %self->t def_%cl_2_62 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,2.0,] 
 		 39: def_%cl_2_63 
-		 40: def_%cl_2_64 %cl_2_63->from_now %cl_2_63[6.39,] 
-		 41: def_%cl_2_65 %cl_2_64->end_of_day %cl_2_64[6.40,] 
-		 42: def_%cl_2_66 %cl_2_62[6.38,] %cl_2_65[6.41,] 
-		 43: def_%cl_2_67 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,2.0,] 
+		 40: %cl_2_63->from_now def_%cl_2_64 %cl_2_63[6.39,] 
+		 41: %cl_2_64->end_of_day def_%cl_2_65 %cl_2_64[6.40,] 
+		 42: COPY def_%cl_2_66 %cl_2_62[6.38,] %cl_2_65[6.41,] 
+		 43: %self->t def_%cl_2_67 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,2.0,] 
 		 44: def_%cl_2_68 
-		 45: def_%cl_2_69 %cl_2_68->from_now %cl_2_68[6.44,] 
-		 46: def_%cl_2_70 %cl_2_69->end_of_day %cl_2_69[6.45,] 
-		 47: def_%cl_2_71 %cl_2_67[6.43,] %cl_2_70[6.46,] 
-		 48: def_%cl_2_72 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,2.0,] 
+		 45: %cl_2_68->from_now def_%cl_2_69 %cl_2_68[6.44,] 
+		 46: %cl_2_69->end_of_day def_%cl_2_70 %cl_2_69[6.45,] 
+		 47: COPY def_%cl_2_71 %cl_2_67[6.43,] %cl_2_70[6.46,] 
+		 48: %self->t def_%cl_2_72 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,2.0,] 
 		 49: def_%cl_2_73 
-		 50: def_%cl_2_74 %cl_2_73->from_now %cl_2_73[6.49,] 
-		 51: def_%cl_2_75 %cl_2_74->end_of_day %cl_2_74[6.50,] 
-		 52: def_%cl_2_76 %cl_2_72[6.48,] %cl_2_75[6.51,] 
-		 53: def_%cl_2_77 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,2.0,] 
+		 50: %cl_2_73->from_now def_%cl_2_74 %cl_2_73[6.49,] 
+		 51: %cl_2_74->end_of_day def_%cl_2_75 %cl_2_74[6.50,] 
+		 52: COPY def_%cl_2_76 %cl_2_72[6.48,] %cl_2_75[6.51,] 
+		 53: %self->t def_%cl_2_77 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,2.0,] 
 		 54: def_%cl_2_78 
-		 55: def_%cl_2_79 %cl_2_78->from_now %cl_2_78[6.54,] 
-		 56: def_%cl_2_80 %cl_2_79->end_of_day %cl_2_79[6.55,] 
-		 57: def_%cl_2_81 %cl_2_77[6.53,] %cl_2_80[6.56,] 
-		 58: def_%cl_2_82 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,2.0,] 
+		 55: %cl_2_78->from_now def_%cl_2_79 %cl_2_78[6.54,] 
+		 56: %cl_2_79->end_of_day def_%cl_2_80 %cl_2_79[6.55,] 
+		 57: COPY def_%cl_2_81 %cl_2_77[6.53,] %cl_2_80[6.56,] 
+		 58: %self->t def_%cl_2_82 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,2.0,] 
 		 59: def_%cl_2_83 
-		 60: def_%cl_2_84 %cl_2_83->from_now %cl_2_83[6.59,] 
-		 61: def_%cl_2_85 %cl_2_84->end_of_day %cl_2_84[6.60,] 
-		 62: def_%cl_2_86 %cl_2_82[6.58,] %cl_2_85[6.61,] 
-		 63: def_%cl_2_87 %cl_2_41[6.17,] %cl_2_46[6.22,] %cl_2_51[6.27,] %cl_2_56[6.32,] %cl_2_61[6.37,] %cl_2_66[6.42,] %cl_2_71[6.47,] %cl_2_76[6.52,] %cl_2_81[6.57,] %cl_2_86[6.62,] 
+		 60: %cl_2_83->from_now def_%cl_2_84 %cl_2_83[6.59,] 
+		 61: %cl_2_84->end_of_day def_%cl_2_85 %cl_2_84[6.60,] 
+		 62: COPY def_%cl_2_86 %cl_2_82[6.58,] %cl_2_85[6.61,] 
+		 63: COPY def_%cl_2_87 %cl_2_41[6.17,] %cl_2_46[6.22,] %cl_2_51[6.27,] %cl_2_56[6.32,] %cl_2_61[6.37,] %cl_2_66[6.42,] %cl_2_71[6.47,] %cl_2_76[6.52,] %cl_2_81[6.57,] %cl_2_86[6.62,] 
 		 64: def_%cl_2_88 
-		 65: def_%cl_2_89 %cl_2_88->from_now %cl_2_88[6.64,] 
-		 66: def_%cl_2_90 %cl_2_89->end_of_day %cl_2_89[6.65,] 
-		 67: def_%cl_2_91 %self->options_for_select %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,2.0,] %cl_2_87[6.63,] %cl_2_90[6.66,] 
-		 68: def_%cl_2_92 f->select f[6.2,6.8,6.11,2.2,] %cl_2_91[6.67,] 
+		 65: %cl_2_88->from_now def_%cl_2_89 %cl_2_88[6.64,] 
+		 66: %cl_2_89->end_of_day def_%cl_2_90 %cl_2_89[6.65,] 
+		 67: %self->options_for_select def_%cl_2_91 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,2.0,] %cl_2_87[6.63,] %cl_2_90[6.66,] 
+		 68: f->select def_%cl_2_92 f[6.2,6.8,6.11,2.2,] %cl_2_91[6.67,] 
 		 69: 
-		 70: def_%cl_2_93 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,2.0,] 
-		 71: def_%cl_2_94 f->submit f[6.2,6.8,6.11,6.68,2.2,] %cl_2_93[6.70,] 
+		 70: %self->t def_%cl_2_93 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,2.0,] 
+		 71: f->submit def_%cl_2_94 f[6.2,6.8,6.11,6.68,2.2,] %cl_2_93[6.70,] 
 		 72: 
-		 73: def_%cl_2_95 %self->t %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,2.0,] 
-		 74: def_%cl_2_96 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] @folder[3.14,] 
-		 75: def_%cl_2_97 %self->link_to %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] %cl_2_95[6.73,] %cl_2_96[6.74,] 
-		 76: RETURN %cl_2_97[6.75,] 
+		 73: %self->t def_%cl_2_95 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,2.0,] 
+		 74: def_%cl_2_96 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] 
+		 75: %self->link_to def_%cl_2_97 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] %cl_2_95[6.73,] %cl_2_96[6.74,] 
+		 76: RETURN %cl_2_97[6.75,] %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,6.75,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: def_%cl_2_98 
 		 1: def_%cl_2_99 %cl_2_98[7.0,] 
-		 2: RETURN %cl_2_99[7.1,] 
+		 2: RETURN %cl_2_99[7.1,] %self[2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 13: RETURN %cl_1_12[3.12,] 
+		 13: RETURN %cl_1_12[3.12,] %self[3.1,3.2,3.4,3.12,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_13 
 		 1: def_%cl_1_14 %cl_1_13[4.0,] 
-		 2: RETURN %cl_1_14[4.1,] 
+		 2: RETURN %cl_1_14[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 3: RETURN %v_21[4.2,] 
+		 3: RETURN %v_21[4.2,] %self[4.1,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -695,16 +695,16 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] @share_link[] 
-		 7: def_%v_4 %v_3->destroy %v_3[2.6,] 
+		 6: def_%v_3 %self[2.0,] 
+		 7: %v_3->destroy def_%v_4 %v_3[2.6,] 
 		 8: 
-		 9: def_%v_5 %self->share_links_url %self[2.0,] 
-		 10: def_%v_6 %self->redirect_to %self[2.0,2.9,] %v_5[2.9,] 
-		 11: RETURN %v_6[2.10,] 
+		 9: %self->share_links_url def_%v_5 %self[2.0,] 
+		 10: %self->redirect_to def_%v_6 %self[2.0,2.9,] %v_5[2.9,] 
+		 11: RETURN %v_6[2.10,] %self[2.0,2.9,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -721,42 +721,42 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->params %self[2.0,] 
+		 6: %self->params def_%v_3 %self[2.0,] 
 		 7: def_%v_4 %v_3[2.6,] 
-		 8: def_%v_5 %v_4->blank? %v_4[2.7,] 
+		 8: %v_4->blank? def_%v_5 %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_6 (ShareLink) 
-		 1: def_%v_7 %self->params %self[2.0,] 
+		 0: (ShareLink) def_%v_6 
+		 1: %self->params def_%v_7 %self[2.0,] 
 		 2: def_%v_8 %v_7[3.1,] 
-		 3: def_%v_9 %v_6->file_for_token %v_6[3.0,] %v_8[3.2,] 
+		 3: %v_6->file_for_token def_%v_9 %v_6[3.0,] %v_8[3.2,] 
 		 4: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_10 (UserFile) 
-		 1: def_%v_11 %self->params %self[2.0,] 
+		 0: (UserFile) def_%v_10 
+		 1: %self->params def_%v_11 %self[2.0,] 
 		 2: def_%v_12 %v_11[4.1,] 
-		 3: def_%v_13 %v_10->find %v_10[4.0,] %v_12[4.2,] 
-		 4: def_%v_9 %v_13[4.3,] 
+		 3: %v_10->find def_%v_13 %v_10[4.0,] %v_12[4.2,] 
+		 4: COPY def_%v_9 %v_13[4.3,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@file %self[2.0,] %v_9[4.4,3.3,] @file[] 
+		 0: ATTRASSIGN %self->@file %self[2.0,] %v_9[4.4,3.3,] 
 		 1: 
-		 2: def_%v_14 %self[2.0,] @file[5.0,] 
-		 3: def_%v_15 %v_14->folder %v_14[5.2,] 
-		 4: ATTRASSIGN %self->@folder %self[2.0,] %v_15[5.3,] @folder[] 
-		 5: RETURN %v_15[5.3,] 
+		 2: def_%v_14 %self[2.0,] 
+		 3: %v_14->folder def_%v_15 %v_14[5.2,] 
+		 4: ATTRASSIGN %self->@folder %self[2.0,] %v_15[5.3,] 
+		 5: RETURN %v_15[5.3,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -773,8 +773,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: def_%v_3 
 BB 4
@@ -783,12 +783,12 @@ BB 4
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_6 (ShareLink) 
-		 3: def_%v_7 %self->params %self[2.0,] 
+		 2: (ShareLink) def_%v_6 
+		 3: %self->params def_%v_7 %self[2.0,] 
 		 4: def_%v_8 %v_7[4.3,] 
-		 5: def_%v_9 %v_6->find %v_6[4.2,] %v_8[4.4,] 
-		 6: ATTRASSIGN %self->@share_link %self[4.3,2.0,] %v_9[4.5,] @share_link[] 
-		 7: def_%v_5 %v_9[4.5,] 
+		 5: %v_6->find def_%v_9 %v_6[4.2,] %v_8[4.4,] 
+		 6: ATTRASSIGN %self->@share_link %self[4.3,2.0,] %v_9[4.5,] 
+		 7: COPY def_%v_5 %v_9[4.5,] 
 		 8: %v_3[2.5,] 
 BB 5
 	outgoing: 13 
@@ -800,7 +800,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: def_%v_10 
-		 1: def_%v_11 (ActiveRecord) 
+		 1: (ActiveRecord) def_%v_11 
 		 2: def_%v_12 %v_11[6.1,] 
 		 3: %v_12[6.2,] 
 BB 7
@@ -824,13 +824,13 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_14 %self->share_links_url %self[2.0,] 
-		 2: def_%v_15 %self->t %self[10.1,2.0,] 
-		 3: def_%v_16 %v_15[10.2,] 
-		 4: def_%v_17 %self->t %self[10.1,10.2,2.0,] %v_16[10.3,] 
-		 5: def_%v_18 %v_17[10.4,] 
-		 6: def_%v_19 %self->redirect_to %self[10.1,10.2,10.4,2.0,] %v_14[10.1,] %v_18[10.5,] 
-		 7: def_%v_5 %v_19[10.6,] 
+		 1: %self->share_links_url def_%v_14 %self[2.0,] 
+		 2: %self->t def_%v_15 %self[10.1,2.0,] 
+		 3: COPY def_%v_16 %v_15[10.2,] 
+		 4: %self->t def_%v_17 %self[10.1,10.2,2.0,] %v_16[10.3,] 
+		 5: COPY def_%v_18 %v_17[10.4,] 
+		 6: %self->redirect_to def_%v_19 %self[10.1,10.2,10.4,2.0,] %v_14[10.1,] %v_18[10.5,] 
+		 7: COPY def_%v_5 %v_19[10.6,] 
 		 8: %v_3[2.5,] 
 BB 11
 	outgoing: 13 
@@ -848,7 +848,7 @@ BB 13
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: RETURN %v_5[4.7,10.7,] 
+		 0: RETURN %v_5[4.7,10.7,] %self[2.0,] 
 BB 14
 	outgoing: 
 	datadep: 
@@ -865,37 +865,37 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: def_%current_scope 
-		 3: def_%current_module 
+		 2: COPY def_%current_scope 
+		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self->signed_in? %self[2.0,] 
+		 6: %self->signed_in? def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_4 (Folder) 
-		 2: def_%v_5 %v_4->root %v_4[3.1,] 
-		 3: def_%v_6 %self->t %self[2.0,] 
-		 4: def_%v_7 %v_6[3.3,] 
-		 5: def_%v_8 %self->t %self[3.3,2.0,] %v_7[3.4,] 
-		 6: def_%v_9 %v_8[3.5,] 
-		 7: def_%v_10 %self->redirect_to %self[3.3,3.5,2.0,] %v_5[3.2,] %v_9[3.6,] 
-		 8: RETURN %v_10[3.7,] 
+		 1: (Folder) def_%v_4 
+		 2: %v_4->root def_%v_5 %v_4[3.1,] 
+		 3: %self->t def_%v_6 %self[2.0,] 
+		 4: COPY def_%v_7 %v_6[3.3,] 
+		 5: %self->t def_%v_8 %self[3.3,2.0,] %v_7[3.4,] 
+		 6: COPY def_%v_9 %v_8[3.5,] 
+		 7: %self->redirect_to def_%v_10 %self[3.3,3.5,2.0,] %v_5[3.2,] %v_9[3.6,] 
+		 8: RETURN %v_10[3.7,] %self[3.3,3.5,3.7,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_11 %self->signin_url %self[2.0,] 
-		 2: def_%v_12 %self->t %self[4.1,2.0,] 
-		 3: def_%v_13 %v_12[4.2,] 
-		 4: def_%v_14 %self->t %self[4.1,4.2,2.0,] %v_13[4.3,] 
-		 5: def_%v_15 %v_14[4.4,] 
-		 6: def_%v_16 %self->redirect_to %self[4.1,4.2,4.4,2.0,] %v_11[4.1,] %v_15[4.5,] 
-		 7: RETURN %v_16[4.6,] 
+		 1: %self->signin_url def_%v_11 %self[2.0,] 
+		 2: %self->t def_%v_12 %self[4.1,2.0,] 
+		 3: COPY def_%v_13 %v_12[4.2,] 
+		 4: %self->t def_%v_14 %self[4.1,4.2,2.0,] %v_13[4.3,] 
+		 5: COPY def_%v_15 %v_14[4.4,] 
+		 6: %self->redirect_to def_%v_16 %self[4.1,4.2,4.4,2.0,] %v_11[4.1,] %v_15[4.5,] 
+		 7: RETURN %v_16[4.6,] %self[4.1,4.2,4.4,4.6,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 

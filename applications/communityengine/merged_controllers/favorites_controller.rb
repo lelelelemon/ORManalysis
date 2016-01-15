@@ -44,6 +44,14 @@ end
 
  
  when 'posts' 
+ ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+
+ link_to post.title, user_post_path(post.user, post) 
+ link_to :by.l(:login => post.user.login), user_path(post.user) 
+ link_to image_tag(post.image_for_excerpt), user_post_path(post.user, post) 
+
+
+end
 
      
  end 

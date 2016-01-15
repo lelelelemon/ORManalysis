@@ -95,12 +95,8 @@ class Administration::ImportsController < ApplicationController
  t('.table.column') 
  t('.table.attribute') 
  t('.table.example') 
- #@import.mappings.each do |from, to| 
- #from 
- #select_tag "import[mappings][#{from}]", | 
- #end 
- #@example[from] 
- #end 
+ @example[from] 
+ end 
  button_tag id: 'btn-preview', class: 'btn btn-success' do 
  t('.save.button') 
  icon 'fa fa-arrow-right' 
