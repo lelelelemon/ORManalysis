@@ -233,12 +233,12 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	
 	$node_list.each do |n|
 		n.setLabel
-		puts "#{n.getIndex}:#{n.getInstr.toString}"
-		n.getDataflowEdges.each do |e|
-			if e.getToNode != nil
-				puts "\t\t (#{e.getVname})-> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
+		#puts "#{n.getIndex}:#{n.getInstr.toString}"
+		n.getBackwardEdges.each do |e|
+			if e.getFromNode != nil
+				#puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
 			else
-				puts "\t\t <- params"
+				#puts "\t\t <- params"
 			end
 		end
 		#puts "#{n.getIndex}: #{n.getInstr.toString}"
@@ -317,7 +317,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				single_tbl_to_view = 0
 				single_tbl_to_branch = 0
 
-				puts "READ query instr #{n.getIndex}:#{n.getInstr.toString} forward flow:"
+				#puts "READ query instr #{n.getIndex}:#{n.getInstr.toString} forward flow:"
 				#v_node = find_nearest_var(n)
 				#self_v_name = nil
 				#if v_node != nil
@@ -345,30 +345,30 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 					#	single_tbl_assign_to_self += 1
 					#	#puts "\t(read_assign_to_self)"
 					if n1.getInView
-						puts " * (To view)"
+						#puts " * (To view)"
 						single_tbl_to_view += 1
 						read_to_view += 1
 					elsif n1.isQuery?
 						if ["DELETE","UPDATE","INSERT"].include?n1.getInstr.getCallHandler.getQueryType
 								read_to_write_query += 1
 								single_tbl_to_write_query += 1
-								puts " * (To write query)"
+								#puts " * (To write query)"
 						else
 								read_to_read_query += 1
 								single_tbl_to_read_query += 1
-								puts " * (To read query)"
+								#puts " * (To read query)"
 						end
 					elsif n1.isBranch?
 						read_to_branch += 1
 						single_tbl_to_branch += 1
-						puts " * (To branch)"
+						#puts " * (To branch)"
 					elsif n1.getDataflowEdges.length == 0
-						puts " * (To unknown sink)"
+						#puts " * (To unknown sink)"
 					end
-					puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
+					#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 				end
 				if n.getInstr.getCallHandler.caller != nil
-					graph_write($graph_file, "\nTBLREADRECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_to_read_query},#{single_tbl_to_write_query},#{single_tbl_to_view}]")
+					graph_write($graph_file, "\nTBLREADRECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_to_read_query},#{single_tbl_to_write_query},#{single_tbl_to_view},#{single_tbl_to_branch}]")
 				end
 			elsif ["DELETE","UPDATE","INSERT"].include?n.getInstr.getCallHandler.getQueryType
 				query_write += 1
@@ -407,6 +407,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 							if n1.getInstr.instance_of?Copy_instr
 								#puts " x (From copy const)"
 								single_tbl_from_const += 1
+								write_from_const += 1
 							else
 								#puts " x (Some source)"
 							end
@@ -417,7 +418,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 					end
 				end
 				if n.getInstr.getCallHandler.caller != nil
-					graph_write($graph_file, "\nTBLWRITERECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_total},#{single_tbl_from_query},#{single_tbl_from_user}] Fields: [");
+					graph_write($graph_file, "\nTBLWRITERECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_from_query},#{single_tbl_from_user},#{single_tbl_from_const}] Fields: [");
 					assigned_fields.each do |k,v|
 						graph_write($graph_file, "#{k},")
 					end
@@ -448,15 +449,15 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	graph_write($graph_file, "STATS branch total: #{total_branch}\n")
 
 	graph_write($graph_file, "STATS read queries: #{query_read}\n")
-	graph_write($graph_file, "STATS read to chained query: #{read_to_read_query}\n")
-	graph_write($graph_file, "STATS read to write_query: #{read_to_write_query}\n")
+	graph_write($graph_file, "STATS read to read query: #{read_to_read_query}\n")
+	graph_write($graph_file, "STATS read to write query: #{read_to_write_query}\n")
 	graph_write($graph_file, "STATS read to view: #{read_to_view}\n")
 	graph_write($graph_file, "STATS read to branch: #{read_to_branch}\n")
 
 	graph_write($graph_file, "STATS write queries: #{query_write}\n")
 	graph_write($graph_file, "STATS write from user input: #{write_from_user_input}\n")
 	graph_write($graph_file, "STATS write from other queries: #{write_from_query}\n")
-	graph_write($graph_file, "STATS write source total: #{write_source_total}\n")
+	graph_write($graph_file, "STATS write from const: #{write_from_const}\n")
 	#if $query_depends_on.length > 0	
 	#	graph_write($graph_file, "query backward dependencies: #{($query_depends_on.inject{|sum,x| sum + x })/($query_depends_on.length)}\n")
 	#end

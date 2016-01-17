@@ -3,10 +3,9 @@ import glob
 import os
 import string
 
-base_path = "../applications/publify/"
+base_path = "../applications/communityengine/"
 #entryfile_path = "../zewei/extract_forms_href/href_from_views/lobsters/"
 
-routes_path = "%s/routes.rb"%base_path
 output_path = "%s/results/"%base_path
 
 entries = []

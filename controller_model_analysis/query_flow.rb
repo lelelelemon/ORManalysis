@@ -465,7 +465,7 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 
 	cfg.getBB.each do |bb|
 		#TODO: THIS IS SO MESSY...
-		if ["before_save"].include?function_handler.getName
+		if ["before_save", "before_create"].include?function_handler.getName
 			bb.getInstr.each do |i|
 				if i.instance_of?Call_instr and i.getCallCFG != nil
 					i.getCallCFG.getDefSelf.each do |d|

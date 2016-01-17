@@ -109,12 +109,12 @@ for subdir, folders, files in os.walk(base_path):
 					data_list = chs[2].replace("[","").replace("]","").split(",")
 					if table not in tbl_read_record:
 						tbl_read_record[table] = []
-						for i in range(6):
+						for i in range(4):
 							tbl_read_record[table].append(0)
 							tbl_read_record_cnt[table] = 0
-					for i in range(6):
-						tbl_read_record[table][i] = int(data_list[i], 10)
-						tbl_read_record_cnt[table] = tbl_read_record_cnt[table] + 1
+					tbl_read_record_cnt[table] = tbl_read_record_cnt[table] + 1
+					for i in range(4):
+						tbl_read_record[table][i] += int(data_list[i], 10)
 				elif "TBLWRITERECORD:" in line:
 					table = chs[1]
 					data_list = chs[2].replace("[","").replace("]","").split(",")
@@ -124,9 +124,9 @@ for subdir, folders, files in os.walk(base_path):
 						for i in range(3):
 							tbl_write_record[table].append(0)
 							tbl_write_record_cnt[table] = 0
+					tbl_write_record_cnt[table] = tbl_write_record_cnt[table] + 1
 					for i in range(3):
-						tbl_write_record[table][i] = int(data_list[i], 10)
-						tbl_write_record_cnt[table] = tbl_write_record_cnt[table] + 1
+						tbl_write_record[table][i] += int(data_list[i], 10)
 					fields = chs[-1].replace("[","").replace("]","").split(",")
 					for f in fields:
 						if f in tbl_write_record_fields[table]:
@@ -160,7 +160,23 @@ print "Average query in total: %f"%(float(sum(total)) / float(len(total)))
 print "\tmin: %d, max: %d"%(total_min, total_max)
 
 for k,v in stats.items():
-	print "Average %s: %d"%(k,float(sum(v))/float(len(v)))
+	if "read" not in k and "write" not in k:
+		#print "Average %s: %f"%(k,float(sum(v))/float(len(v)))
+		print "Total %s: %d"%(k, sum(v))
+
+print ""
+for k,v in stats.items():
+	if "read" in k:
+		#print "Average %s: %f"%(k,float(sum(v))/float(len(v)))
+		print "Total %s: %d"%(k, sum(v))
+
+
+print ""
+for k,v in stats.items():
+	if "write" in k and "read" not in k:
+		#print "Average %s: %f"%(k,float(sum(v))/float(len(v)))
+		print "Total %s: %d"%(k, sum(v))
+
 
 for k,v in tables.items():
 	print "Table %s:"%k
