@@ -419,13 +419,13 @@ BB 13
 	instructions:
 		 0: 
 		 1: COPY def_%v_41 
-		 2: ATTRASSIGN %self->results %self[9.2,] %v_41[13.1,] 
+		 2: ATTRASSIGN %self->results %self[9.2,2.0,] %v_41[13.1,] 
 		 3: 
-		 4: ATTRASSIGN %self->total_results %self[13.2,] 
+		 4: ATTRASSIGN %self->total_results %self[13.2,9.2,2.0,] 
 		 5: 
-		 6: ATTRASSIGN %self->page %self[13.2,13.4,] 
+		 6: ATTRASSIGN %self->page %self[13.2,13.4,9.2,2.0,] 
 		 7: 
-		 8: RETURN %self[13.2,13.4,13.6,] 
+		 8: RETURN %self[13.2,13.4,13.6,9.2,2.0,] 
 BB 15
 	outgoing: 16 
 	datadep: 
@@ -504,7 +504,7 @@ BB 24
 		 7: COPY def_%v_61 
 		 8: ATTRASSIGN %self->results %self[9.2,2.0,] %v_61[24.7,] 
 		 9: 
-		 10: ATTRASSIGN %self->total_results %self[24.8,] 
+		 10: ATTRASSIGN %self->total_results %self[24.8,9.2,2.0,] 
 		 11: 
 		 12: def_%v_62 
 BB 26
@@ -514,12 +514,12 @@ BB 26
 		 0: 
 		 1: 
 		 2: (ThinkingSphinx) def_%v_65 
-		 3: %v_65->search def_%v_66 %v_65[26.2,] query[24.5,] opts[24.0,] 
-		 4: ATTRASSIGN %self->results %self[24.8,24.10,] %v_66[26.3,] 
+		 3: %v_65->search def_%v_66 %v_65[26.2,] query[24.5,] opts[24.0,12.2,3.2,5.2,2.14,] 
+		 4: ATTRASSIGN %self->results %self[24.8,24.10,9.2,2.0,] %v_66[26.3,] 
 		 5: 
-		 6: %self->results def_%v_67 %self[26.4,] 
+		 6: %self->results def_%v_67 %self[26.4,24.8,24.10,9.2,2.0,] 
 		 7: %v_67->total_entries def_%v_68 %v_67[26.6,] 
-		 8: ATTRASSIGN %self->total_results %self[26.4,26.6,] %v_68[26.7,] 
+		 8: ATTRASSIGN %self->total_results %self[26.4,26.6,24.8,24.10,9.2,2.0,] %v_68[26.7,] 
 		 9: COPY def_%v_64 %v_68[26.7,] 
 		 10: %v_62[24.12,] 
 BB 27
@@ -571,8 +571,8 @@ BB 33
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->page def_%v_80 %self[26.4,26.8,] 
-		 2: %self->page_count def_%v_81 %self[33.1,26.4,26.8,] 
+		 1: %self->page def_%v_80 %self[26.4,26.8,24.8,24.10,9.2,2.0,] 
+		 2: %self->page_count def_%v_81 %self[33.1,26.4,26.8,24.8,24.10,9.2,2.0,] 
 		 3: def_%v_82 %v_80[33.1,] %v_81[33.2,] 
 		 4: BRANCH %v_82[33.3,] 
 BB 34
@@ -580,8 +580,8 @@ BB 34
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->page_count def_%v_83 %self[26.4,26.8,] 
-		 2: ATTRASSIGN %self->page %self[34.1,26.4,26.8,] %v_83[34.1,] 
+		 1: %self->page_count def_%v_83 %self[26.4,26.8,24.8,24.10,9.2,2.0,] 
+		 2: ATTRASSIGN %self->page %self[34.1,26.4,26.8,24.8,24.10,9.2,2.0,] %v_83[34.1,] 
 		 3: 
 BB 35
 	outgoing: 36 
@@ -593,7 +593,7 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_84 opts[24.0,] 
+		 1: def_%v_84 opts[24.0,12.2,3.2,5.2,2.14,] 
 		 2: (Comment) def_%v_85 
 		 3: %v_84->include? def_%v_86 %v_84[36.1,] %v_85[36.2,] 
 		 4: BRANCH %v_86[36.3,] 
@@ -614,8 +614,8 @@ BB 39
 		 0: 
 		 1: (Vote) def_%v_87 
 		 2: user->id def_%v_88 user[2.5,] 
-		 3: %self->results def_%v_89 %self[34.2,26.4,26.8,] 
-		 4: %v_89->select def_%v_90 %v_89[39.3,] %self[39.3,34.2,26.4,26.8,] 
+		 3: %self->results def_%v_89 %self[34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
+		 4: %v_89->select def_%v_90 %v_89[39.3,] %self[39.3,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
 CLOSURE BEGIN: r[] 
 BB 1
 	outgoing: 6 2 
@@ -651,7 +651,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 5: %v_90->map def_%v_91 %v_90[39.4,] %self[39.3,34.2,26.4,26.8,] 
+		 5: %v_90->map def_%v_91 %v_90[39.4,] %self[39.3,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
 CLOSURE BEGIN: c[] 
 BB 1
 	outgoing: 6 2 
@@ -688,8 +688,8 @@ CLOSURE END
 		 6: %v_87->comment_votes_by_user_for_comment_ids_hash def_%v_92 %v_87[39.1,] %v_88[39.2,] %v_91[39.5,] 
 		 7: COPY def_votes %v_92[39.6,] 
 		 8: 
-		 9: %self->results def_%v_93 %self[39.3,34.2,26.4,26.8,] 
-		 10: %v_93->each def_%v_94 %v_93[39.9,] %self[39.3,39.9,34.2,26.4,26.8,] 
+		 9: %self->results def_%v_93 %self[39.3,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
+		 10: %v_93->each def_%v_94 %v_93[39.9,] %self[39.3,39.9,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
 CLOSURE BEGIN: r[] votes[39.7,] 
 BB 1
 	outgoing: 11 2 
@@ -767,7 +767,7 @@ BB 41
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_95 opts[24.0,] 
+		 1: def_%v_95 opts[24.0,12.2,3.2,5.2,2.14,] 
 		 2: (Story) def_%v_96 
 		 3: %v_95->include? def_%v_97 %v_95[41.1,] %v_96[41.2,] 
 		 4: BRANCH %v_97[41.3,] 
@@ -788,8 +788,8 @@ BB 44
 		 0: 
 		 1: (Vote) def_%v_98 
 		 2: user->id def_%v_99 user[2.5,] 
-		 3: %self->results def_%v_100 %self[34.2,26.4,26.8,] 
-		 4: %v_100->select def_%v_101 %v_100[44.3,] %self[44.3,34.2,26.4,26.8,] 
+		 3: %self->results def_%v_100 %self[34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
+		 4: %v_100->select def_%v_101 %v_100[44.3,] %self[44.3,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
 CLOSURE BEGIN: r[] 
 BB 1
 	outgoing: 6 2 
@@ -825,7 +825,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 5: %v_101->map def_%v_102 %v_101[44.4,] %self[44.3,34.2,26.4,26.8,] 
+		 5: %v_101->map def_%v_102 %v_101[44.4,] %self[44.3,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
 CLOSURE BEGIN: s[] 
 BB 1
 	outgoing: 6 2 
@@ -862,9 +862,9 @@ CLOSURE END
 		 6: %v_98->story_votes_by_user_for_story_ids_hash def_%v_103 %v_98[44.1,] %v_99[44.2,] %v_102[44.5,] 
 		 7: COPY def_votes %v_103[44.6,] 
 		 8: 
-		 9: %self->results def_%v_104 %self[44.3,34.2,26.4,26.8,] 
-		 10: %v_104->each def_%v_105 %v_104[44.9,] %self[44.3,44.9,34.2,26.4,26.8,] 
-CLOSURE BEGIN: r[] votes[44.7,] 
+		 9: %self->results def_%v_104 %self[44.3,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
+		 10: %v_104->each def_%v_105 %v_104[44.9,] %self[44.3,44.9,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
+CLOSURE BEGIN: r[] votes[44.7,39.7,] 
 BB 1
 	outgoing: 11 2 
 	datadep: 
@@ -930,12 +930,12 @@ BB 11
 	datadep: 
 	instructions:
 CLOSURE END
-		 11: RETURN %v_105[44.10,] %self[44.3,44.9,34.2,26.4,26.8,] 
+		 11: RETURN %v_105[44.10,] %self[44.3,44.9,34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
 BB 45
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: RETURN %self[34.2,26.4,26.8,] 
+		 0: RETURN %self[34.2,26.4,26.8,24.8,24.10,9.2,2.0,] 
 BB 47
 	outgoing: 
 	datadep: 

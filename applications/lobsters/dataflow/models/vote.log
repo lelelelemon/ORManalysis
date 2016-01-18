@@ -199,7 +199,7 @@ BB 3
 		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: memo[2.2,] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: 
-		 7: RETURN memo[3.5,] %self[2.0,] 
+		 7: RETURN memo[3.5,2.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -281,7 +281,7 @@ BB 3
 		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: memo[2.2,] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: 
-		 7: RETURN memo[3.5,] %self[2.0,] 
+		 7: RETURN memo[3.5,2.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -557,13 +557,13 @@ BB 28
 	outgoing: 29 30 44 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_27 downvote[26.1,10.0,] 
+		 0: def_%cl_1_27 downvote[26.1,10.0,18.0,] 
 		 1: BRANCH %cl_1_27[28.0,] 
 BB 29
 	outgoing: 30 44 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_28 upvote[23.1,7.0,] 
+		 0: def_%cl_1_28 upvote[23.1,7.0,15.0,] 
 		 1: COPY def_%cl_1_27 %cl_1_28[29.0,] 
 BB 30
 	outgoing: 31 
@@ -602,7 +602,7 @@ BB 34
 		 0: 
 		 1: (User) def_%cl_1_35 
 		 2: c->user_id def_%cl_1_36 c[33.4,] 
-		 3: def_%cl_1_37 upvote[29.0,23.1,7.0,] downvote[28.0,26.1,10.0,] 
+		 3: def_%cl_1_37 upvote[29.0,23.1,7.0,15.0,] downvote[28.0,26.1,10.0,18.0,] 
 		 4: COPY def_%cl_1_38 %cl_1_37[34.3,] 
 		 5: %cl_1_35->update_counters def_%cl_1_39 %cl_1_35[34.1,] %cl_1_36[34.2,] %cl_1_38[34.4,] 
 		 6: 
@@ -616,7 +616,7 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: c->give_upvote_or_downvote_and_recalculate_confidence! def_%cl_1_40 c[33.4,] upvote[29.0,23.1,7.0,] downvote[28.0,26.1,10.0,] 
+		 1: c->give_upvote_or_downvote_and_recalculate_confidence! def_%cl_1_40 c[33.4,] upvote[29.0,23.1,7.0,15.0,] downvote[28.0,26.1,10.0,18.0,] 
 		 2: 
 BB 37
 	outgoing: 38 39 44 
@@ -638,7 +638,7 @@ BB 38
 		 0: 
 		 1: (User) def_%cl_1_46 
 		 2: s->user_id def_%cl_1_47 s[37.4,] 
-		 3: def_%cl_1_48 upvote[29.0,23.1,7.0,] downvote[28.0,26.1,10.0,] 
+		 3: def_%cl_1_48 upvote[29.0,23.1,7.0,15.0,] downvote[28.0,26.1,10.0,18.0,] 
 		 4: COPY def_%cl_1_49 %cl_1_48[38.3,] 
 		 5: %cl_1_46->update_counters def_%cl_1_50 %cl_1_46[38.1,] %cl_1_47[38.2,] %cl_1_49[38.4,] 
 		 6: 
@@ -652,7 +652,7 @@ BB 40
 	datadep: 
 	instructions:
 		 0: 
-		 1: s->give_upvote_or_downvote_and_recalculate_hotness! def_%cl_1_51 s[37.4,] upvote[29.0,23.1,7.0,] downvote[28.0,26.1,10.0,] 
+		 1: s->give_upvote_or_downvote_and_recalculate_hotness! def_%cl_1_51 s[37.4,] upvote[29.0,23.1,7.0,15.0,] downvote[28.0,26.1,10.0,18.0,] 
 		 2: COPY def_%cl_1_40 %cl_1_51[40.1,] 
 BB 41
 	outgoing: 46 

@@ -47,11 +47,11 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: node->id def_%v_11 node[4.3,] 
+		 1: node->id def_%v_11 node[4.3,18.2,] 
 		 2: def_%v_12 parents[2.10,] %v_11[5.1,] 
 		 3: COPY def_children %v_12[5.2,] 
 		 4: 
-		 5: node->is_gone? def_%v_13 node[5.1,4.3,] 
+		 5: node->is_gone? def_%v_13 node[5.1,4.3,18.2,] 
 		 6: %v_13->! def_%v_14 %v_13[5.5,] 
 		 7: BRANCH %v_14[5.6,] 
 BB 6
@@ -89,7 +89,7 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: node->user_id def_%v_19 node[4.3,] 
+		 0: node->user_id def_%v_19 node[4.3,18.2,] 
 		 1: user->id def_%v_20 user[2.5,] 
 		 2: %v_19->== def_%v_21 %v_19[11.0,] %v_20[11.1,] 
 		 3: COPY def_%v_18 %v_21[11.2,] 
@@ -128,7 +128,7 @@ BB 18
 		 1: ancestors->length def_%v_23 ancestors[2.16,] 
 		 2: ATTRASSIGN node->indent_level node[4.3,] %v_23[18.1,] 
 		 3: 
-		 4: def_%v_24 ordered[2.13,] node[18.2,] 
+		 4: def_%v_24 ordered[2.13,] node[18.2,4.3,] 
 		 5: 
 		 6: BRANCH children[5.3,] 
 BB 19
@@ -137,7 +137,7 @@ BB 19
 	instructions:
 		 0: COPY def_%v_25 
 		 1: 
-		 2: node->is_moderated? def_%v_26 node[18.2,] 
+		 2: node->is_moderated? def_%v_26 node[18.2,4.3,] 
 		 3: BRANCH %v_26[19.2,] 
 BB 20
 	outgoing: 27 
@@ -233,7 +233,7 @@ BB 3
 		 2: ATTRASSIGN c->markeddown_comment c[3.1,2.2,] %cl_1_3[3.1,] 
 		 3: 
 		 4: COPY def_%cl_1_4 
-		 5: c->save def_%cl_1_5 c[3.1,3.2,] %cl_1_4[3.4,] 
+		 5: c->save def_%cl_1_5 c[3.1,3.2,2.2,] %cl_1_4[3.4,] 
 		 6: RETURN %cl_1_5[3.5,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -550,7 +550,7 @@ BB 3
 		 1: %self->parent_comment def_%v_5 %self[2.0,] 
 		 2: %v_5->thread_id def_%v_6 %v_5[3.1,] 
 		 3: ATTRASSIGN %self->thread_id %self[3.1,2.0,] %v_6[3.2,] 
-		 4: RETURN %v_6[3.2,] %self[3.1,3.3,] 
+		 4: RETURN %v_6[3.2,] %self[3.1,3.3,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -560,7 +560,7 @@ BB 4
 		 2: COPY def_%v_8 
 		 3: %v_7->incremented_value_for def_%v_9 %v_7[4.1,] %v_8[4.2,] 
 		 4: ATTRASSIGN %self->thread_id %self[2.0,] %v_9[4.3,] 
-		 5: RETURN %v_9[4.3,] %self[4.4,] 
+		 5: RETURN %v_9[4.3,] %self[4.4,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -717,7 +717,7 @@ BB 5
 		 4: %v_8->new def_%v_9 %v_8[5.3,] 
 		 5: COPY def_m %v_9[5.4,] 
 		 6: 
-		 7: %self->id def_%v_10 %self[5.1,] 
+		 7: %self->id def_%v_10 %self[5.1,2.0,2.10,] 
 		 8: ATTRASSIGN m->comment_id m[5.5,] %v_10[5.7,] 
 		 9: 
 		 10: user->id def_%v_11 user[2.5,] 
@@ -2162,7 +2162,7 @@ BB 3
 		 1: ATTRASSIGN %self->is_moderated %self[2.0,2.10,] 
 		 2: 
 		 3: user->id def_%v_5 user[2.5,] 
-		 4: %self->user_id def_%v_6 %self[3.1,] 
+		 4: %self->user_id def_%v_6 %self[3.1,2.0,2.10,] 
 		 5: ATTRASSIGN %v_5->! def_%v_7 %v_5[3.3,] %v_6[3.4,] 
 		 6: BRANCH %v_7[3.5,] 
 BB 4
@@ -2174,7 +2174,7 @@ BB 4
 		 2: %v_8->new def_%v_9 %v_8[4.1,] 
 		 3: COPY def_m %v_9[4.2,] 
 		 4: 
-		 5: %self->id def_%v_10 %self[3.1,] 
+		 5: %self->id def_%v_10 %self[3.1,2.0,2.10,] 
 		 6: ATTRASSIGN m->comment_id m[4.3,] %v_10[4.5,] 
 		 7: 
 		 8: user->id def_%v_11 user[2.5,] 
