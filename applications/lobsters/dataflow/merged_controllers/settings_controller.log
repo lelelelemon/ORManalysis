@@ -16,10 +16,10 @@ BB 2
 		 6: COPY def_%v_3 
 		 7: ATTRASSIGN %self->@title %self[2.0,] %v_3[2.6,] 
 		 8: 
-		 9: def_%v_4 %self[2.0,] 
+		 9: def_%v_4 %self[2.0,2.7,] 
 		 10: %v_4->dup def_%v_5 %v_4[2.9,] 
-		 11: ATTRASSIGN %self->@edit_user %self[2.0,] %v_5[2.10,] 
-		 12: RETURN %v_5[2.10,] %self[2.0,] 
+		 11: ATTRASSIGN %self->@edit_user %self[2.0,2.7,] %v_5[2.10,] 
+		 12: RETURN %v_5[2.10,] %self[2.0,2.7,2.11,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -315,8 +315,8 @@ BB 2
 		 7: %v_3->clone def_%v_4 %v_3[2.6,] 
 		 8: ATTRASSIGN %self->@edit_user %self[2.0,] %v_4[2.7,] 
 		 9: 
-		 10: def_%v_5 %self[2.0,] 
-		 11: %self->user_params def_%v_6 %self[2.0,] 
+		 10: def_%v_5 %self[2.0,2.8,] 
+		 11: %self->user_params def_%v_6 %self[2.0,2.8,] 
 		 12: %v_5->update_attributes def_%v_7 %v_5[2.10,] %v_6[2.11,] 
 		 13: BRANCH %v_7[2.12,] 
 BB 3
@@ -324,13 +324,13 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_8 %self[2.0,] 
+		 1: %self->flash def_%v_8 %self[2.0,2.8,] 
 		 2: %v_8->now def_%v_9 %v_8[3.1,] 
 		 3: COPY def_%v_10 
 		 4: %v_9[3.2,] %v_10[3.3,] 
 		 5: 
-		 6: def_%v_11 %self[3.1,2.0,] 
-		 7: ATTRASSIGN %self->@user %self[3.1,2.0,] %v_11[3.6,] 
+		 6: def_%v_11 %self[3.1,2.0,2.8,] 
+		 7: ATTRASSIGN %self->@user %self[3.1,2.0,2.8,] %v_11[3.6,] 
 		 8: 
 BB 4
 	outgoing: 5 
@@ -342,9 +342,9 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->ruby_code_from_view def_%v_12 %self[2.0,] 
-		 2: %v_12->ruby_code_from_view def_%v_13 %v_12[5.1,] %self[5.1,2.0,] 
-CLOSURE BEGIN: %self[5.1,2.0,] 
+		 1: %self->ruby_code_from_view def_%v_12 %self[3.7,2.0,2.8,] 
+		 2: %v_12->ruby_code_from_view def_%v_13 %v_12[5.1,] %self[5.1,3.7,2.0,2.8,] 
+CLOSURE BEGIN: %self[5.1,3.7,2.0,2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -642,7 +642,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 3: RETURN %v_13[5.2,] %self[5.1,2.0,] 
+		 3: RETURN %v_13[5.2,] %self[5.1,3.7,2.0,2.8,] 
 BB 6
 	outgoing: 
 	datadep: 

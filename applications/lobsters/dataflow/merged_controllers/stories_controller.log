@@ -17,33 +17,33 @@ BB 2
 		 7: ATTRASSIGN %self->@title %self[2.0,] %v_3[2.6,] 
 		 8: 
 		 9: COPY def_%v_4 
-		 10: ATTRASSIGN %self->@cur_url %self[2.0,] %v_4[2.9,] 
+		 10: ATTRASSIGN %self->@cur_url %self[2.0,2.7,] %v_4[2.9,] 
 		 11: 
 		 12: (Story) def_%v_5 
-		 13: %self->story_params def_%v_6 %self[2.0,] 
+		 13: %self->story_params def_%v_6 %self[2.0,2.7,2.10,] 
 		 14: %v_5->new def_%v_7 %v_5[2.12,] %v_6[2.13,] 
-		 15: ATTRASSIGN %self->@story %self[2.0,2.13,] %v_7[2.14,] 
+		 15: ATTRASSIGN %self->@story %self[2.0,2.7,2.10,2.13,] %v_7[2.14,] 
 		 16: 
-		 17: def_%v_8 %self[2.0,2.13,] 
-		 18: def_%v_9 %self[2.0,2.13,] 
+		 17: def_%v_8 %self[2.0,2.7,2.10,2.13,2.15,] 
+		 18: def_%v_9 %self[2.0,2.7,2.10,2.13,2.15,] 
 		 19: %v_9->id def_%v_10 %v_9[2.18,] 
 		 20: ATTRASSIGN %v_8->user_id %v_8[2.17,] %v_10[2.19,] 
 		 21: 
-		 22: def_%v_11 %self[2.0,2.13,] 
+		 22: def_%v_11 %self[2.0,2.7,2.10,2.13,2.15,] 
 		 23: %v_11->valid? def_%v_12 %v_11[2.22,] 
 		 24: BRANCH %v_12[2.23,] 
 BB 3
 	outgoing: 4 5 
 	datadep: 
 	instructions:
-		 0: def_%v_13 %self[2.0,] 
+		 0: def_%v_13 %self[2.0,2.7,2.10,2.15,] 
 		 1: %v_13->already_posted_story def_%v_14 %v_13[3.0,] 
 		 2: BRANCH %v_14[3.1,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_15 %self[2.0,] 
+		 0: def_%v_15 %self[2.0,2.7,2.10,2.15,] 
 		 1: %v_15->seen_previous def_%v_16 %v_15[4.0,] 
 		 2: %v_16->! def_%v_17 %v_16[4.1,] 
 		 3: COPY def_%v_14 %v_17[4.2,] 
@@ -63,7 +63,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_19 %self[2.0,] 
+		 1: def_%v_19 %self[2.0,2.7,2.10,2.15,] 
 		 2: %v_19->save def_%v_20 %v_19[7.1,] 
 		 3: BRANCH %v_20[7.2,] 
 BB 8
@@ -80,10 +80,10 @@ BB 8
 		 7: COPY def_%v_27 
 		 8: %v_21->count! def_%v_28 %v_21[8.1,] %v_26[8.6,] %v_27[8.7,] 
 		 9: 
-		 10: def_%v_29 %self[2.0,] 
+		 10: def_%v_29 %self[2.0,2.7,2.10,2.15,] 
 		 11: %v_29->comments_path def_%v_30 %v_29[8.10,] 
-		 12: %self->redirect_to def_%v_31 %self[2.0,] %v_30[8.11,] 
-		 13: RETURN %v_31[8.12,] %self[8.12,2.0,] 
+		 12: %self->redirect_to def_%v_31 %self[2.0,2.7,2.10,2.15,] %v_30[8.11,] 
+		 13: RETURN %v_31[8.12,] %self[8.12,2.0,2.7,2.10,2.15,] 
 BB 9
 	outgoing: 12 
 	datadep: 
@@ -100,9 +100,9 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->ruby_code_from_view def_%v_33 %self[2.0,] 
-		 2: %v_33->ruby_code_from_view def_%v_34 %v_33[12.1,] %self[12.1,2.0,] 
-CLOSURE BEGIN: %self[12.1,2.0,] 
+		 1: %self->ruby_code_from_view def_%v_33 %self[2.0,2.7,2.10,2.15,] 
+		 2: %v_33->ruby_code_from_view def_%v_34 %v_33[12.1,] %self[12.1,2.0,2.7,2.10,2.15,] 
+CLOSURE BEGIN: %self[12.1,2.0,2.7,2.10,2.15,] 
 BB 1
 	outgoing: 14 2 
 	datadep: 
@@ -234,7 +234,7 @@ BB 14
 	datadep: 
 	instructions:
 CLOSURE END
-		 3: RETURN %v_34[12.2,] %self[12.1,2.0,] 
+		 3: RETURN %v_34[12.2,] %self[12.1,2.0,2.7,2.10,2.15,] 
 BB 13
 	outgoing: 
 	datadep: 
@@ -378,7 +378,7 @@ BB 4
 		 2: COPY def_%v_12 
 		 3: ATTRASSIGN %self->@title %self[2.0,] %v_12[4.2,] 
 		 4: 
-		 5: def_%v_13 %self[2.0,] 
+		 5: def_%v_13 %self[4.3,2.0,] 
 		 6: %v_13->merged_into_story def_%v_14 %v_13[4.5,] 
 		 7: BRANCH %v_14[4.6,] 
 BB 6
@@ -386,17 +386,17 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_15 %self[2.0,] 
-		 2: def_%v_16 %self[2.0,] 
+		 1: def_%v_15 %self[4.3,2.0,] 
+		 2: def_%v_16 %self[4.3,2.0,] 
 		 3: %v_16->merged_into_story def_%v_17 %v_16[6.2,] 
 		 4: %v_17->short_id def_%v_18 %v_17[6.3,] 
 		 5: ATTRASSIGN %v_15->merge_story_short_id %v_15[6.1,] %v_18[6.4,] 
-		 6: RETURN %v_18[6.4,] %self[2.0,] 
+		 6: RETURN %v_18[6.4,] %self[4.3,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[4.3,2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -507,18 +507,18 @@ BB 2
 		 7: ATTRASSIGN %self->@title %self[2.0,] %v_3[2.6,] 
 		 8: 
 		 9: COPY def_%v_4 
-		 10: ATTRASSIGN %self->@cur_url %self[2.0,] %v_4[2.9,] 
+		 10: ATTRASSIGN %self->@cur_url %self[2.0,2.7,] %v_4[2.9,] 
 		 11: 
 		 12: (Story) def_%v_5 
 		 13: %v_5->new def_%v_6 %v_5[2.12,] 
-		 14: ATTRASSIGN %self->@story %self[2.0,] %v_6[2.13,] 
+		 14: ATTRASSIGN %self->@story %self[2.0,2.7,2.10,] %v_6[2.13,] 
 		 15: 
-		 16: def_%v_7 %self[2.0,] 
-		 17: %self->request def_%v_8 %self[2.0,] 
+		 16: def_%v_7 %self[2.0,2.7,2.10,2.14,] 
+		 17: %self->request def_%v_8 %self[2.0,2.7,2.10,2.14,] 
 		 18: %v_8->remote_ip def_%v_9 %v_8[2.17,] 
 		 19: ATTRASSIGN %v_7->fetching_ip %v_7[2.16,] %v_9[2.18,] 
 		 20: 
-		 21: %self->params def_%v_10 %self[2.0,2.17,] 
+		 21: %self->params def_%v_10 %self[2.0,2.7,2.10,2.14,2.17,] 
 		 22: def_%v_11 %v_10[2.21,] 
 		 23: %v_11->present? def_%v_12 %v_11[2.22,] 
 		 24: BRANCH %v_12[2.23,] 
@@ -527,12 +527,12 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_13 %self[2.0,] 
-		 2: %self->params def_%v_14 %self[2.0,] 
+		 1: def_%v_13 %self[2.0,2.7,2.10,2.14,] 
+		 2: %self->params def_%v_14 %self[2.0,2.7,2.10,2.14,] 
 		 3: def_%v_15 %v_14[3.2,] 
 		 4: ATTRASSIGN %v_13->url %v_13[3.1,] %v_15[3.3,] 
 		 5: 
-		 6: def_%v_16 %self[3.2,2.0,] 
+		 6: def_%v_16 %self[3.2,2.0,2.7,2.10,2.14,] 
 		 7: %v_16->fetched_canonical_url def_%v_17 %v_16[3.6,] 
 		 8: COPY def_cu %v_17[3.7,] 
 		 9: COPY def_%v_18 %v_17[3.7,] 
@@ -542,7 +542,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_20 %self[2.0,] 
+		 0: def_%v_20 %self[2.0,2.7,2.10,2.14,] 
 		 1: %v_20->url def_%v_21 %v_20[4.0,] 
 		 2: ATTRASSIGN %v_21->! def_%v_22 %v_21[4.1,] cu[3.8,] 
 		 3: COPY def_%v_19 %v_22[4.2,] 
@@ -556,14 +556,14 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_23 %self[2.0,] 
+		 1: %self->flash def_%v_23 %self[2.0,2.7,2.10,2.14,] 
 		 2: %v_23->now def_%v_24 %v_23[6.1,] 
 		 3: COPY def_%v_25 
 		 4: COPY def_%v_26 
 		 5: def_%v_27 %v_25[6.3,] %v_26[6.4,] 
 		 6: %v_24[6.2,] %v_27[6.5,] 
 		 7: 
-		 8: def_%v_28 %self[6.1,2.0,] 
+		 8: def_%v_28 %self[6.1,2.0,2.7,2.10,2.14,] 
 		 9: ATTRASSIGN %v_28->url %v_28[6.8,] cu[3.8,] 
 		 10: COPY def_%v_29 cu[3.8,] 
 		 11: 
@@ -578,7 +578,7 @@ BB 8
 	instructions:
 		 0: 
 		 1: (Story) def_%v_30 
-		 2: def_%v_31 %self[2.0,] 
+		 2: def_%v_31 %self[2.0,2.7,2.10,2.14,] 
 		 3: %v_31->url def_%v_32 %v_31[8.2,] 
 		 4: %v_30->find_similar_by_url def_%v_33 %v_30[8.1,] %v_32[8.3,] 
 		 5: COPY def_s %v_33[8.4,] 
@@ -595,19 +595,19 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_35 %self[2.0,] 
+		 1: %self->flash def_%v_35 %self[2.0,2.7,2.10,2.14,] 
 		 2: COPY def_%v_36 
 		 3: %v_35[10.1,] %v_36[10.2,] 
 		 4: 
 		 5: s->comments_path def_%v_37 s[8.5,] 
-		 6: %self->redirect_to def_%v_38 %self[10.1,2.0,] %v_37[10.5,] 
-		 7: RETURN %v_38[10.6,] %self[10.1,10.6,2.0,] 
+		 6: %self->redirect_to def_%v_38 %self[10.1,2.0,2.7,2.10,2.14,] %v_37[10.5,] 
+		 7: RETURN %v_38[10.6,] %self[10.1,10.6,2.0,2.7,2.10,2.14,] 
 BB 11
 	outgoing: 14 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_40 %self[2.0,] 
+		 1: def_%v_40 %self[2.0,2.7,2.10,2.14,] 
 		 2: ATTRASSIGN %v_40->already_posted_story %v_40[11.1,] s[8.5,] 
 		 3: COPY def_%v_39 s[8.5,] 
 		 4: 
@@ -621,12 +621,12 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_41 %self[2.0,] 
-		 2: def_%v_42 %self[2.0,] 
+		 1: def_%v_41 %self[2.0,2.7,2.10,2.14,] 
+		 2: def_%v_42 %self[2.0,2.7,2.10,2.14,] 
 		 3: %v_42->fetched_title def_%v_43 %v_42[14.2,] 
 		 4: ATTRASSIGN %v_41->title %v_41[14.1,] %v_43[14.3,] 
 		 5: 
-		 6: def_%v_44 %self[2.0,] 
+		 6: def_%v_44 %self[2.0,2.7,2.10,2.14,] 
 		 7: %v_44->title def_%v_45 %v_44[14.6,] 
 		 8: %v_45->present? def_%v_46 %v_45[14.7,] 
 		 9: %v_46->! def_%v_47 %v_46[14.8,] 
@@ -635,7 +635,7 @@ BB 15
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: %self->params def_%v_48 %self[2.0,] 
+		 0: %self->params def_%v_48 %self[2.0,2.7,2.10,2.14,] 
 		 1: def_%v_49 %v_48[15.0,] 
 		 2: %v_49->present? def_%v_50 %v_49[15.1,] 
 		 3: COPY def_%v_47 %v_50[15.2,] 
@@ -649,8 +649,8 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_51 %self[2.0,] 
-		 2: %self->params def_%v_52 %self[2.0,] 
+		 1: def_%v_51 %self[2.0,2.7,2.10,2.14,] 
+		 2: %self->params def_%v_52 %self[2.0,2.7,2.10,2.14,] 
 		 3: def_%v_53 %v_52[17.2,] 
 		 4: ATTRASSIGN %v_51->title %v_51[17.1,] %v_53[17.3,] 
 		 5: 
@@ -663,12 +663,12 @@ BB 19
 	outgoing: 22 
 	datadep: 
 	instructions:
-		 0: RETURN %v_53[18.0,17.3,] %self[2.0,] 
+		 0: RETURN %v_53[18.0,17.3,] %self[2.0,2.7,2.10,2.14,] 
 BB 20
 	outgoing: 22 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[2.0,2.7,2.10,2.14,] 
 BB 22
 	outgoing: 
 	datadep: 
@@ -694,32 +694,32 @@ BB 2
 		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: ATTRASSIGN %self->@story %self[2.0,2.7,] %v_5[2.8,] 
 		 10: 
-		 11: def_%v_6 %self[2.0,2.7,] 
-		 12: def_%v_7 %self[2.0,2.7,] 
+		 11: def_%v_6 %self[2.0,2.7,2.9,] 
+		 12: def_%v_7 %self[2.0,2.7,2.9,] 
 		 13: %v_7->id def_%v_8 %v_7[2.12,] 
 		 14: ATTRASSIGN %v_6->user_id %v_6[2.11,] %v_8[2.13,] 
 		 15: 
-		 16: def_%v_9 %self[2.0,2.7,] 
+		 16: def_%v_9 %self[2.0,2.7,2.9,] 
 		 17: ATTRASSIGN %v_9->previewing %v_9[2.16,] 
 		 18: 
-		 19: def_%v_10 %self[2.0,2.7,] 
+		 19: def_%v_10 %self[2.0,2.7,2.9,] 
 		 20: (Vote) def_%v_11 
 		 21: COPY def_%v_12 
 		 22: %v_11->new def_%v_13 %v_11[2.20,] %v_12[2.21,] 
 		 23: ATTRASSIGN %v_10->vote %v_10[2.19,] %v_13[2.22,] 
 		 24: 
-		 25: def_%v_14 %self[2.0,2.7,] 
+		 25: def_%v_14 %self[2.0,2.7,2.9,] 
 		 26: ATTRASSIGN %v_14->upvotes %v_14[2.25,] 
 		 27: 
-		 28: def_%v_15 %self[2.0,2.7,] 
+		 28: def_%v_15 %self[2.0,2.7,2.9,] 
 		 29: %v_15->valid? def_%v_16 %v_15[2.28,] 
 		 30: 
-		 31: def_%v_17 %self[2.0,2.7,] 
+		 31: def_%v_17 %self[2.0,2.7,2.9,] 
 		 32: ATTRASSIGN %v_17->seen_previous %v_17[2.31,] 
 		 33: 
-		 34: %self->ruby_code_from_view def_%v_18 %self[2.0,2.7,] 
-		 35: %v_18->ruby_code_from_view def_%v_19 %v_18[2.34,] %self[2.0,2.7,2.34,] 
-CLOSURE BEGIN: %self[2.0,2.7,2.34,] 
+		 34: %self->ruby_code_from_view def_%v_18 %self[2.0,2.7,2.9,] 
+		 35: %v_18->ruby_code_from_view def_%v_19 %v_18[2.34,] %self[2.0,2.7,2.9,2.34,] 
+CLOSURE BEGIN: %self[2.0,2.7,2.9,2.34,] 
 BB 1
 	outgoing: 14 2 
 	datadep: 
@@ -851,7 +851,7 @@ BB 14
 	datadep: 
 	instructions:
 CLOSURE END
-		 36: RETURN %v_19[2.35,] %self[2.0,2.7,2.34,] 
+		 36: RETURN %v_19[2.35,] %self[2.0,2.7,2.9,2.34,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -880,7 +880,7 @@ BB 2
 		 11: %v_7->first! def_%v_8 %v_7[2.10,] 
 		 12: ATTRASSIGN %self->@story %self[2.0,2.7,] %v_8[2.11,] 
 		 13: 
-		 14: def_%v_9 %self[2.0,2.7,] 
+		 14: def_%v_9 %self[2.0,2.7,2.12,] 
 		 15: %v_9->merged_into_story def_%v_10 %v_9[2.14,] 
 		 16: BRANCH %v_10[2.15,] 
 BB 3
@@ -888,27 +888,27 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_11 %self[2.0,] 
+		 1: %self->flash def_%v_11 %self[2.0,2.12,] 
 		 2: COPY def_%v_12 
-		 3: def_%v_13 %self[3.1,2.0,] 
+		 3: def_%v_13 %self[3.1,2.0,2.12,] 
 		 4: %v_13->title def_%v_14 %v_13[3.3,] 
 		 5: COPY def_%v_15 
 		 6: def_%v_16 %v_12[3.2,] %v_14[3.4,] %v_15[3.5,] 
 		 7: %v_11[3.1,] %v_16[3.6,] 
 		 8: 
-		 9: def_%v_17 %self[3.1,2.0,] 
+		 9: def_%v_17 %self[3.1,2.0,2.12,] 
 		 10: %v_17->merged_into_story def_%v_18 %v_17[3.9,] 
 		 11: %v_18->comments_path def_%v_19 %v_18[3.10,] 
-		 12: %self->redirect_to def_%v_20 %self[3.1,2.0,] %v_19[3.11,] 
-		 13: RETURN %v_20[3.12,] %self[3.1,3.12,2.0,] 
+		 12: %self->redirect_to def_%v_20 %self[3.1,2.0,2.12,] %v_19[3.11,] 
+		 13: RETURN %v_20[3.12,] %self[3.1,3.12,2.0,2.12,] 
 BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_21 
 		 1: 
-		 2: def_%v_22 %self[2.0,] 
-		 3: def_%v_23 %self[2.0,] 
+		 2: def_%v_22 %self[2.0,2.12,] 
+		 3: def_%v_23 %self[2.0,2.12,] 
 		 4: %v_22->can_be_seen_by_user? def_%v_24 %v_22[4.2,] %v_23[4.3,] 
 		 5: BRANCH %v_24[4.4,] 
 BB 6
@@ -916,9 +916,9 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_25 %self[2.0,] 
+		 1: def_%v_25 %self[2.0,2.12,] 
 		 2: %v_25->title def_%v_26 %v_25[6.1,] 
-		 3: ATTRASSIGN %self->@title %self[2.0,] %v_26[6.2,] 
+		 3: ATTRASSIGN %self->@title %self[2.0,2.12,] %v_26[6.2,] 
 		 4: 
 BB 7
 	outgoing: 8 
@@ -926,25 +926,25 @@ BB 7
 	instructions:
 		 0: 
 		 1: COPY def_%v_27 
-		 2: ATTRASSIGN %self->@title %self[2.0,] %v_27[7.1,] 
+		 2: ATTRASSIGN %self->@title %self[2.0,2.12,] %v_27[7.1,] 
 		 3: COPY def_%v_26 %v_27[7.1,] 
 BB 8
 	outgoing: 9 13 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_28 %self[2.0,] 
+		 1: def_%v_28 %self[7.2,6.3,2.0,2.12,] 
 		 2: %v_28->short_id_url def_%v_29 %v_28[8.1,] 
-		 3: ATTRASSIGN %self->@short_url %self[2.0,] %v_29[8.2,] 
+		 3: ATTRASSIGN %self->@short_url %self[7.2,6.3,2.0,2.12,] %v_29[8.2,] 
 		 4: 
-		 5: def_%v_30 %self[2.0,] 
+		 5: def_%v_30 %self[8.3,7.2,6.3,2.0,2.12,] 
 		 6: %v_30->merged_comments def_%v_31 %v_30[8.5,] 
 		 7: %v_31->includes def_%v_32 %v_31[8.6,] 
-		 8: def_%v_33 %self[2.0,] 
+		 8: def_%v_33 %self[8.3,7.2,6.3,2.0,2.12,] 
 		 9: %v_32->arrange_for_user def_%v_34 %v_32[8.7,] %v_33[8.8,] 
-		 10: ATTRASSIGN %self->@comments %self[2.0,] %v_34[8.9,] 
+		 10: ATTRASSIGN %self->@comments %self[8.3,7.2,6.3,2.0,2.12,] %v_34[8.9,] 
 		 11: 
-		 12: %self->params def_%v_35 %self[2.0,] 
+		 12: %self->params def_%v_35 %self[8.3,8.10,7.2,6.3,2.0,2.12,] 
 		 13: def_%v_36 %v_35[8.12,] 
 		 14: BRANCH %v_36[8.13,] 
 BB 9
@@ -952,13 +952,13 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_37 %self[2.0,] 
+		 1: def_%v_37 %self[8.3,8.10,7.2,6.3,2.0,2.12,] 
 BB 10
 	outgoing: 12 11 
 	datadep: 
 	instructions:
-		 0: %v_37->each def_%v_38 %v_37[9.1,] %self[2.0,] 
-CLOSURE BEGIN: c[] %self[2.0,] 
+		 0: %v_37->each def_%v_38 %v_37[9.1,] %self[8.3,8.10,7.2,6.3,2.0,2.12,] 
+CLOSURE BEGIN: c[] %self[8.3,8.10,7.2,6.3,2.0,2.12,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -1030,8 +1030,8 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_40 %self[2.0,] %self[2.0,] 
-CLOSURE BEGIN: format[] %self[2.0,] 
+		 1: %self->respond_to def_%v_40 %self[8.3,8.10,7.2,6.3,2.0,2.12,] %self[8.3,8.10,7.2,6.3,2.0,2.12,] 
+CLOSURE BEGIN: format[] %self[8.3,8.10,7.2,6.3,2.0,2.12,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1074,11 +1074,11 @@ BB 3
 		 3: %cl_3_4->build def_%cl_3_5 %cl_3_4[3.2,] 
 		 4: ATTRASSIGN %self->@comment %self[2.0,] %cl_3_5[3.3,] 
 		 5: 
-		 6: %self->load_user_votes def_%cl_3_6 %self[2.0,] 
+		 6: %self->load_user_votes def_%cl_3_6 %self[3.4,2.0,] 
 		 7: 
-		 8: %self->ruby_code_from_view def_%cl_3_7 %self[3.6,2.0,] 
-		 9: %cl_3_7->ruby_code_from_view def_%cl_3_8 %cl_3_7[3.8,] %self[3.6,3.8,2.0,] 
-CLOSURE BEGIN: %self[3.6,3.8,2.0,] subtree[] comment[] comments_by_parent[] ancestors[] children[] 
+		 8: %self->ruby_code_from_view def_%cl_3_7 %self[3.4,3.6,2.0,] 
+		 9: %cl_3_7->ruby_code_from_view def_%cl_3_8 %cl_3_7[3.8,] %self[3.4,3.6,3.8,2.0,] 
+CLOSURE BEGIN: %self[3.4,3.6,3.8,2.0,] subtree[] comment[] comments_by_parent[] ancestors[] children[] 
 BB 1
 	outgoing: 36 2 
 	datadep: 
@@ -1335,14 +1335,14 @@ BB 36
 	datadep: 
 	instructions:
 CLOSURE END
-		 10: RETURN %cl_3_8[3.9,] %self[3.6,3.8,2.0,] 
+		 10: RETURN %cl_3_8[3.9,] %self[3.4,3.6,3.8,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: def_%cl_3_9 
 		 1: def_%cl_3_10 %cl_3_9[4.0,] 
-		 2: RETURN %cl_3_10[4.1,] %self[2.0,] 
+		 2: RETURN %cl_3_10[4.1,] %self[3.4,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -1400,7 +1400,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: RETURN %v_40[14.1,] %self[14.1,2.0,] 
+		 2: RETURN %v_40[14.1,] %self[14.1,8.3,8.10,7.2,6.3,2.0,2.12,] 
 BB 15
 	outgoing: 
 	datadep: 
@@ -2230,28 +2230,28 @@ BB 9
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_23 %self[2.0,] 
+		 2: def_%v_23 %self[8.3,5.3,2.0,] 
 		 3: %v_23->! def_%v_24 %v_23[9.2,] 
 		 4: BRANCH %v_24[9.3,] 
 BB 10
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: %self->flash def_%v_25 %self[2.0,] 
+		 0: %self->flash def_%v_25 %self[8.3,5.3,2.0,] 
 		 1: COPY def_%v_26 
 		 2: COPY def_%v_27 
 		 3: def_%v_28 %v_26[10.1,] %v_27[10.2,] 
 		 4: %v_25[10.0,] %v_28[10.3,] 
 		 5: 
 		 6: COPY def_%v_29 
-		 7: %self->redirect_to def_%v_30 %self[10.0,2.0,] %v_29[10.6,] 
+		 7: %self->redirect_to def_%v_30 %self[10.0,8.3,5.3,2.0,] %v_29[10.6,] 
 		 8: 
-		 9: RETURN %self[10.0,10.7,2.0,] 
+		 9: RETURN %self[10.0,10.7,8.3,5.3,2.0,] 
 BB 11
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[8.3,5.3,2.0,] 
 BB 13
 	outgoing: 
 	datadep: 
@@ -2324,9 +2324,9 @@ BB 6
 		 12: %v_20->comment_votes_by_user_for_story_hash def_%v_25 %v_20[6.7,] %v_22[6.9,] %v_24[6.11,] 
 		 13: ATTRASSIGN %self->@votes %self[2.0,] %v_25[6.12,] 
 		 14: 
-		 15: def_%v_26 %self[2.0,] 
-		 16: %v_26->each def_%v_27 %v_26[6.15,] %self[2.0,] 
-CLOSURE BEGIN: %self[2.0,] c[] 
+		 15: def_%v_26 %self[6.13,2.0,] 
+		 16: %v_26->each def_%v_27 %v_26[6.15,] %self[6.13,2.0,] 
+CLOSURE BEGIN: %self[6.13,2.0,] c[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -2381,7 +2381,7 @@ BB 9
 	datadep: 
 	instructions:
 CLOSURE END
-		 17: RETURN %v_27[6.16,] %self[2.0,] 
+		 17: RETURN %v_27[6.16,] %self[6.13,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
