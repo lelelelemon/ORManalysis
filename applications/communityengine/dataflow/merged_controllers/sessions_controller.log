@@ -71,15 +71,15 @@ BB 8
 		 2: %v_7->new def_%v_8 %v_7[8.1,] 
 		 3: ATTRASSIGN %self->@user_session %self[2.0,] %v_8[8.2,] 
 		 4: 
-		 5: %self->configatron def_%v_9 %self[2.0,] 
+		 5: %self->configatron def_%v_9 %self[8.3,2.0,] 
 		 6: %v_9->community_name def_%v_10 %v_9[8.5,] 
 		 7: COPY def_%v_11 %v_10[8.6,] 
 		 8: %v_11->l def_%v_12 %v_11[8.7,] 
-		 9: ATTRASSIGN %self->@page_title %self[8.5,2.0,] %v_12[8.8,] 
+		 9: ATTRASSIGN %self->@page_title %self[8.3,8.5,2.0,] %v_12[8.8,] 
 		 10: 
-		 11: %self->ruby_code_from_view def_%v_13 %self[8.5,2.0,] 
-		 12: %v_13->ruby_code_from_view def_%v_14 %v_13[8.11,] %self[8.5,8.11,2.0,] 
-CLOSURE BEGIN: %self[8.5,8.11,2.0,] 
+		 11: %self->ruby_code_from_view def_%v_13 %self[8.3,8.5,8.9,2.0,] 
+		 12: %v_13->ruby_code_from_view def_%v_14 %v_13[8.11,] %self[8.3,8.5,8.9,8.11,2.0,] 
+CLOSURE BEGIN: %self[8.3,8.5,8.9,8.11,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -163,7 +163,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 13: 
-		 14: %self->configatron def_%v_15 %self[8.5,8.11,2.0,] 
+		 14: %self->configatron def_%v_15 %self[8.3,8.5,8.9,8.11,2.0,] 
 		 15: %v_15->auth_providers def_%v_16 %v_15[8.14,] 
 		 16: %v_16->to_hash def_%v_17 %v_16[8.15,] 
 		 17: %v_17->keys def_%v_18 %v_17[8.16,] 
@@ -174,8 +174,8 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->widget def_%v_20 %self[2.0,] %self[2.0,] 
-CLOSURE BEGIN: %self[2.0,] 
+		 1: %self->widget def_%v_20 %self[8.3,8.9,2.0,] %self[8.3,8.9,2.0,] 
+CLOSURE BEGIN: %self[8.3,8.9,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -273,10 +273,10 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->sessions_path def_%v_21 %self[2.0,] 
+		 1: %self->sessions_path def_%v_21 %self[8.3,8.9,2.0,] 
 		 2: COPY def_%v_22 %v_21[11.1,] 
-		 3: def_%v_23 %self[11.1,2.0,] %v_22[11.2,] %self[11.1,2.0,] 
-CLOSURE BEGIN: %self[11.1,2.0,] f[] 
+		 3: def_%v_23 %self[11.1,8.3,8.9,2.0,] %v_22[11.2,] %self[11.1,8.3,8.9,2.0,] 
+CLOSURE BEGIN: %self[11.1,8.3,8.9,2.0,] f[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -415,7 +415,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 4: RETURN %v_23[11.3,] %self[11.1,2.0,] 
+		 4: RETURN %v_23[11.3,] %self[11.1,8.3,8.9,2.0,] 
 BB 12
 	outgoing: 
 	datadep: 
@@ -447,7 +447,7 @@ BB 2
 		 14: %v_3->new def_%v_11 %v_3[2.6,] %v_10[2.13,] 
 		 15: ATTRASSIGN %self->@user_session %self[2.0,2.7,2.9,2.11,] %v_11[2.14,] 
 		 16: 
-		 17: def_%v_12 %self[2.0,2.7,2.9,2.11,] 
+		 17: def_%v_12 %self[2.0,2.7,2.9,2.11,2.15,] 
 		 18: %v_12->save def_%v_13 %v_12[2.17,] 
 		 19: BRANCH %v_13[2.18,] 
 BB 3
@@ -455,32 +455,32 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_14 %self[2.0,] 
+		 1: def_%v_14 %self[2.0,2.15,] 
 		 2: %v_14->record def_%v_15 %v_14[3.1,] 
-		 3: ATTRASSIGN %self->current_user %self[2.0,] %v_15[3.2,] 
+		 3: ATTRASSIGN %self->current_user %self[2.0,2.15,] %v_15[3.2,] 
 		 4: 
-		 5: %self->flash def_%v_16 %self[3.3,] 
+		 5: %self->flash def_%v_16 %self[3.3,2.0,2.15,] 
 		 6: def_%v_17 
 		 7: %v_16[3.5,] %v_17[3.6,] 
 		 8: 
-		 9: %self->current_user def_%v_18 %self[3.3,3.5,] 
-		 10: %self->dashboard_user_path def_%v_19 %self[3.3,3.5,3.9,] %v_18[3.9,] 
-		 11: %self->redirect_back_or_default def_%v_20 %self[3.3,3.5,3.9,3.10,] %v_19[3.10,] 
-		 12: RETURN %v_20[3.11,] %self[3.3,3.5,3.9,3.10,3.11,] 
+		 9: %self->current_user def_%v_18 %self[3.3,3.5,2.0,2.15,] 
+		 10: %self->dashboard_user_path def_%v_19 %self[3.3,3.5,3.9,2.0,2.15,] %v_18[3.9,] 
+		 11: %self->redirect_back_or_default def_%v_20 %self[3.3,3.5,3.9,3.10,2.0,2.15,] %v_19[3.10,] 
+		 12: RETURN %v_20[3.11,] %self[3.3,3.5,3.9,3.10,3.11,2.0,2.15,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_21 %self[2.0,] 
+		 1: %self->flash def_%v_21 %self[2.0,2.15,] 
 		 2: def_%v_22 
 		 3: %v_21[4.1,] %v_22[4.2,] 
 		 4: 
-		 5: %self->params def_%v_23 %self[4.1,2.0,] 
+		 5: %self->params def_%v_23 %self[4.1,2.0,2.15,] 
 		 6: def_%v_24 %v_23[4.5,] 
 		 7: COPY def_%v_25 %v_24[4.6,] 
-		 8: %self->render def_%v_26 %self[4.1,4.5,2.0,] %v_25[4.7,] 
-		 9: RETURN %v_26[4.8,] %self[4.1,4.5,4.8,2.0,] 
+		 8: %self->render def_%v_26 %self[4.1,4.5,2.0,2.15,] %v_25[4.7,] 
+		 9: RETURN %v_26[4.8,] %self[4.1,4.5,4.8,2.0,2.15,] 
 BB 6
 	outgoing: 
 	datadep: 

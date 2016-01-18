@@ -23,15 +23,15 @@ BB 2
 		 13: ATTRASSIGN %self->@favoritable %self[2.0,2.6,2.10,] %v_9[2.12,] 
 		 14: 
 		 15: (Favorite) def_%v_10 
-		 16: %self->request def_%v_11 %self[2.0,2.6,2.10,] 
+		 16: %self->request def_%v_11 %self[2.0,2.6,2.10,2.13,] 
 		 17: %v_11->remote_ip def_%v_12 %v_11[2.16,] 
-		 18: def_%v_13 %self[2.0,2.6,2.10,2.16,] 
+		 18: def_%v_13 %self[2.0,2.6,2.10,2.13,2.16,] 
 		 19: COPY def_%v_14 %v_12[2.17,] %v_13[2.18,] 
 		 20: %v_10->new def_%v_15 %v_10[2.15,] %v_14[2.19,] 
-		 21: ATTRASSIGN %self->@favorite %self[2.0,2.6,2.10,2.16,] %v_15[2.20,] 
+		 21: ATTRASSIGN %self->@favorite %self[2.0,2.6,2.10,2.13,2.16,] %v_15[2.20,] 
 		 22: 
-		 23: def_%v_16 %self[2.0,2.6,2.10,2.16,] 
-		 24: %self->current_user def_%v_17 %self[2.0,2.6,2.10,2.16,] 
+		 23: def_%v_16 %self[2.0,2.6,2.10,2.13,2.16,2.21,] 
+		 24: %self->current_user def_%v_17 %self[2.0,2.6,2.10,2.13,2.16,2.21,] 
 		 25: BRANCH %v_17[2.24,] 
 BB 3
 	outgoing: 4 
@@ -44,10 +44,10 @@ BB 4
 	instructions:
 		 0: ATTRASSIGN %v_16->user %v_16[2.23,] %v_17[3.0,2.24,] 
 		 1: 
-		 2: def_%v_18 %self[2.0,] 
+		 2: def_%v_18 %self[2.0,2.13,2.21,] 
 		 3: %v_18->save def_%v_19 %v_18[4.2,] 
 		 4: 
-		 5: %self->respond_to def_%v_20 %self[2.0,] %self[2.0,] 
+		 5: %self->respond_to def_%v_20 %self[2.0,2.13,2.21,] %self[2.0,2.13,2.21,] 
 CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
@@ -81,7 +81,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 6: RETURN %v_20[4.5,] %self[4.5,2.0,] 
+		 6: RETURN %v_20[4.5,] %self[4.5,2.0,2.13,2.21,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -109,10 +109,10 @@ BB 2
 		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 
 		 11: ATTRASSIGN %self->@favorite %self[2.0,2.6,2.8,] %v_7[2.10,] 
 		 12: 
-		 13: def_%v_8 %self[2.0,2.6,2.8,] 
+		 13: def_%v_8 %self[2.0,2.6,2.8,2.11,] 
 		 14: %v_8->destroy def_%v_9 %v_8[2.13,] 
 		 15: 
-		 16: %self->respond_to def_%v_10 %self[2.0,2.6,2.8,] %self[2.0,2.6,2.8,] 
+		 16: %self->respond_to def_%v_10 %self[2.0,2.6,2.8,2.11,] %self[2.0,2.6,2.8,2.11,] 
 CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
@@ -146,7 +146,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 17: RETURN %v_10[2.16,] %self[2.0,2.6,2.8,2.16,] 
+		 17: RETURN %v_10[2.16,] %self[2.0,2.6,2.8,2.11,2.16,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -173,7 +173,7 @@ BB 2
 		 9: def_%v_6 %v_5[2.8,] 
 		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 
 		 11: ATTRASSIGN %self->@favorite %self[2.0,2.8,] %v_7[2.10,] 
-		 12: RETURN %v_7[2.10,] %self[2.0,2.8,] 
+		 12: RETURN %v_7[2.10,] %self[2.0,2.8,2.11,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -203,17 +203,17 @@ BB 2
 		 12: %v_6->page def_%v_9 %v_6[2.9,] %v_8[2.11,] 
 		 13: ATTRASSIGN %self->@favorites %self[2.0,2.10,] %v_9[2.12,] 
 		 14: 
-		 15: def_%v_10 %self[2.0,2.10,] 
+		 15: def_%v_10 %self[2.0,2.10,2.13,] 
 		 16: %v_10->login def_%v_11 %v_10[2.15,] 
 		 17: COPY def_%v_12 
 		 18: def_%v_13 %v_11[2.16,] %v_12[2.17,] 
 		 19: def_%v_14 
 		 20: def_%v_15 %v_13[2.18,] %v_14[2.19,] 
-		 21: ATTRASSIGN %self->@page_title %self[2.0,2.10,] %v_15[2.20,] 
+		 21: ATTRASSIGN %self->@page_title %self[2.0,2.10,2.13,] %v_15[2.20,] 
 		 22: 
-		 23: def_%v_16 %self[2.0,2.10,] 
-		 24: %v_16->each def_%v_17 %v_16[2.23,] %self[2.0,2.10,] 
-CLOSURE BEGIN: %self[2.0,2.10,] 
+		 23: def_%v_16 %self[2.0,2.10,2.13,2.21,] 
+		 24: %v_16->each def_%v_17 %v_16[2.23,] %self[2.0,2.10,2.13,2.21,] 
+CLOSURE BEGIN: %self[2.0,2.10,2.13,2.21,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -401,11 +401,11 @@ BB 6
 	instructions:
 CLOSURE END
 		 25: 
-		 26: def_%v_18 %self[2.0,2.10,] 
+		 26: def_%v_18 %self[2.0,2.10,2.13,2.21,] 
 		 27: COPY def_%v_19 
 		 28: COPY def_%v_20 %v_19[2.27,] 
-		 29: %self->paginate def_%v_21 %self[2.0,2.10,] %v_18[2.26,] %v_20[2.28,] 
-		 30: RETURN %v_21[2.29,] %self[2.0,2.10,2.29,] 
+		 29: %self->paginate def_%v_21 %self[2.0,2.10,2.13,2.21,] %v_18[2.26,] %v_20[2.28,] 
+		 30: RETURN %v_21[2.29,] %self[2.0,2.10,2.13,2.21,2.29,] 
 BB 3
 	outgoing: 
 	datadep: 

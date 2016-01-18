@@ -43,7 +43,7 @@ BB 5
 		 2: %v_9->now def_%v_10 %v_9[5.1,] 
 		 3: ATTRASSIGN message->read_at message[2.10,] %v_10[5.2,] 
 		 4: 
-		 5: message->save! def_%v_11 message[5.3,] 
+		 5: message->save! def_%v_11 message[5.3,2.10,] 
 		 6: 
 BB 6
 	outgoing: 7 
@@ -307,7 +307,7 @@ BB 6
 	instructions:
 		 0: ATTRASSIGN recipients_thread->parent_message recipients_thread[4.2,4.5,4.8,4.10,] %v_11[5.0,4.12,] 
 		 1: 
-		 2: recipients_thread->save def_%v_12 recipients_thread[6.0,] 
+		 2: recipients_thread->save def_%v_12 recipients_thread[6.0,4.2,4.5,4.8,4.10,] 
 		 3: 
 		 4: %self->parent def_%v_13 %self[2.0,] 
 		 5: BRANCH %v_13[6.4,] 
@@ -420,17 +420,17 @@ BB 12
 		 2: ATTRASSIGN message->parent message[6.3,8.1,] %v_10[12.1,] 
 		 3: 
 		 4: message_thread->message def_%v_11 message_thread[12.1,3.0,2.6,] 
-		 5: ATTRASSIGN message->reply_to message[12.2,] %v_11[12.4,] 
+		 5: ATTRASSIGN message->reply_to message[12.2,6.3,8.1,] %v_11[12.4,] 
 		 6: 
 		 7: message_thread->sender def_%v_12 message_thread[12.1,12.4,3.0,2.6,] 
 		 8: %v_12->login def_%v_13 %v_12[12.7,] 
-		 9: ATTRASSIGN message->to message[12.2,12.5,] %v_13[12.8,] 
+		 9: ATTRASSIGN message->to message[12.2,12.5,6.3,8.1,] %v_13[12.8,] 
 		 10: 
 		 11: message_thread->parent_message def_%v_14 message_thread[12.1,12.4,12.7,3.0,2.6,] 
 		 12: %v_14->subject def_%v_15 %v_14[12.11,] 
-		 13: ATTRASSIGN message->subject message[12.2,12.5,12.9,] %v_15[12.12,] 
+		 13: ATTRASSIGN message->subject message[12.2,12.5,12.9,6.3,8.1,] %v_15[12.12,] 
 		 14: 
-		 15: ATTRASSIGN message->sender message[12.2,12.5,12.9,12.13,] sender[2.5,] 
+		 15: ATTRASSIGN message->sender message[12.2,12.5,12.9,12.13,6.3,8.1,] sender[2.5,] 
 		 16: COPY def_%v_16 sender[2.5,] 
 		 17: 
 BB 13
