@@ -21,14 +21,14 @@ BB 2
 		 11: ATTRASSIGN %self->@page_title %self[2.0,2.10,] %v_7[2.10,] 
 		 12: 
 		 13: COPY def_%v_8 
-		 14: %self->t def_%v_9 %self[2.0,2.10,] %v_8[2.13,] 
+		 14: %self->t def_%v_9 %self[2.0,2.10,2.11,] %v_8[2.13,] 
 		 15: 
-		 16: def_%v_10 %self[2.0,2.10,2.14,] 
+		 16: def_%v_10 %self[2.0,2.10,2.11,2.14,] 
 		 17: COPY def_%v_11 
 		 18: COPY def_%v_12 %v_11[2.17,] 
 		 19: COPY def_%v_13 %v_12[2.18,] 
-		 20: %self->form_for def_%v_14 %self[2.0,2.10,2.14,] %v_10[2.16,] %v_13[2.19,] %self[2.0,2.10,2.14,] 
-CLOSURE BEGIN: %self[2.0,2.10,2.14,] 
+		 20: %self->form_for def_%v_14 %self[2.0,2.10,2.11,2.14,] %v_10[2.16,] %v_13[2.19,] %self[2.0,2.10,2.11,2.14,] 
+CLOSURE BEGIN: %self[2.0,2.10,2.11,2.14,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -76,7 +76,7 @@ BB 3
 		 6: %self->current_user def_%cl_2_7 %self[3.4,2.0,] 
 		 7: %cl_2_7->option_tracktime def_%cl_2_8 %cl_2_7[3.6,] 
 		 8: %cl_2_8->to_i def_%cl_2_9 %cl_2_8[3.7,] 
-		 9: def_%cl_2_10 %cl_2_9[3.8,] 
+		 9: %cl_2_9->== def_%cl_2_10 %cl_2_9[3.8,] 
 		 10: BRANCH %cl_2_10[3.9,] 
 BB 4
 	outgoing: 5 6 13 
@@ -220,7 +220,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 21: RETURN %v_14[2.20,] %self[2.0,2.10,2.14,2.20,] 
+		 21: RETURN %v_14[2.20,] %self[2.0,2.10,2.11,2.14,2.20,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -327,17 +327,17 @@ BB 2
 		 11: ATTRASSIGN %self->@page_title %self[2.0,2.10,] %v_7[2.10,] 
 		 12: 
 		 13: COPY def_%v_8 
-		 14: %self->t def_%v_9 %self[2.0,2.10,] %v_8[2.13,] 
+		 14: %self->t def_%v_9 %self[2.0,2.10,2.11,] %v_8[2.13,] 
 		 15: 
-		 16: def_%v_10 %self[2.0,2.10,2.14,] 
+		 16: def_%v_10 %self[2.0,2.10,2.11,2.14,] 
 		 17: %v_10->task def_%v_11 %v_10[2.16,] 
 		 18: 
-		 19: def_%v_12 %self[2.0,2.10,2.14,] 
+		 19: def_%v_12 %self[2.0,2.10,2.11,2.14,] 
 		 20: COPY def_%v_13 
 		 21: COPY def_%v_14 %v_13[2.20,] 
 		 22: COPY def_%v_15 %v_14[2.21,] 
-		 23: %self->form_for def_%v_16 %self[2.0,2.10,2.14,] %v_12[2.19,] %v_15[2.22,] %self[2.0,2.10,2.14,] 
-CLOSURE BEGIN: %self[2.0,2.10,2.14,] 
+		 23: %self->form_for def_%v_16 %self[2.0,2.10,2.11,2.14,] %v_12[2.19,] %v_15[2.22,] %self[2.0,2.10,2.11,2.14,] 
+CLOSURE BEGIN: %self[2.0,2.10,2.11,2.14,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -385,7 +385,7 @@ BB 3
 		 6: %self->current_user def_%cl_2_7 %self[3.4,2.0,] 
 		 7: %cl_2_7->option_tracktime def_%cl_2_8 %cl_2_7[3.6,] 
 		 8: %cl_2_8->to_i def_%cl_2_9 %cl_2_8[3.7,] 
-		 9: def_%cl_2_10 %cl_2_9[3.8,] 
+		 9: %cl_2_9->== def_%cl_2_10 %cl_2_9[3.8,] 
 		 10: BRANCH %cl_2_10[3.9,] 
 BB 4
 	outgoing: 5 6 13 
@@ -559,7 +559,7 @@ BB 9
 	datadep: 
 	instructions:
 CLOSURE END
-		 24: RETURN %v_16[2.23,] %self[2.0,2.10,2.14,2.23,] 
+		 24: RETURN %v_16[2.23,] %self[2.0,2.10,2.11,2.14,2.23,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -780,10 +780,10 @@ BB 2
 		 11: %v_5->find def_%v_8 %v_5[2.8,] %v_7[2.10,] 
 		 12: ATTRASSIGN %self->@log %self[2.0,2.7,2.9,] %v_8[2.11,] 
 		 13: 
-		 14: def_%v_9 %self[2.0,2.7,2.9,] 
+		 14: def_%v_9 %self[2.0,2.7,2.9,2.12,] 
 		 15: %v_9->task def_%v_10 %v_9[2.14,] 
-		 16: ATTRASSIGN %self->@task %self[2.0,2.7,2.9,] %v_10[2.15,] 
-		 17: RETURN %v_10[2.15,] %self[2.0,2.7,2.9,] 
+		 16: ATTRASSIGN %self->@task %self[2.0,2.7,2.9,2.12,] %v_10[2.15,] 
+		 17: RETURN %v_10[2.15,] %self[2.0,2.7,2.9,2.12,2.16,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -812,27 +812,27 @@ BB 2
 		 11: %v_5->find_by_task_num def_%v_8 %v_5[2.8,] %v_7[2.10,] 
 		 12: ATTRASSIGN %self->@task %self[2.0,2.6,2.9,] %v_8[2.11,] 
 		 13: 
-		 14: %self->current_user def_%v_9 %self[2.0,2.6,2.9,] 
+		 14: %self->current_user def_%v_9 %self[2.0,2.6,2.9,2.12,] 
 		 15: %v_9->company def_%v_10 %v_9[2.14,] 
 		 16: %v_10->work_logs def_%v_11 %v_10[2.15,] 
-		 17: %self->params def_%v_12 %self[2.0,2.6,2.9,2.14,] 
+		 17: %self->params def_%v_12 %self[2.0,2.6,2.9,2.12,2.14,] 
 		 18: def_%v_13 %v_12[2.17,] 
 		 19: %v_11->build def_%v_14 %v_11[2.16,] %v_13[2.18,] 
-		 20: ATTRASSIGN %self->@log %self[2.0,2.6,2.9,2.14,2.17,] %v_14[2.19,] 
+		 20: ATTRASSIGN %self->@log %self[2.0,2.6,2.9,2.12,2.14,2.17,] %v_14[2.19,] 
 		 21: 
-		 22: def_%v_15 %self[2.0,2.6,2.9,2.14,2.17,] 
-		 23: def_%v_16 %self[2.0,2.6,2.9,2.14,2.17,] 
+		 22: def_%v_15 %self[2.0,2.6,2.9,2.12,2.14,2.17,2.20,] 
+		 23: def_%v_16 %self[2.0,2.6,2.9,2.12,2.14,2.17,2.20,] 
 		 24: ATTRASSIGN %v_15->task %v_15[2.22,] %v_16[2.23,] 
 		 25: 
-		 26: def_%v_17 %self[2.0,2.6,2.9,2.14,2.17,] 
+		 26: def_%v_17 %self[2.0,2.6,2.9,2.12,2.14,2.17,2.20,] 
 		 27: (Time) def_%v_18 
 		 28: %v_18->now def_%v_19 %v_18[2.27,] 
 		 29: %v_19->utc def_%v_20 %v_19[2.28,] 
-		 30: def_%v_21 %self[2.0,2.6,2.9,2.14,2.17,] 
+		 30: def_%v_21 %self[2.0,2.6,2.9,2.12,2.14,2.17,2.20,] 
 		 31: %v_21->duration def_%v_22 %v_21[2.30,] 
 		 32: def_%v_23 %v_20[2.29,] %v_22[2.31,] 
 		 33: ATTRASSIGN %v_17->started_at %v_17[2.26,] %v_23[2.32,] 
-		 34: RETURN %v_23[2.32,] %self[2.0,2.6,2.9,2.14,2.17,] 
+		 34: RETURN %v_23[2.32,] %self[2.0,2.6,2.9,2.12,2.14,2.17,2.20,] 
 BB 3
 	outgoing: 
 	datadep: 

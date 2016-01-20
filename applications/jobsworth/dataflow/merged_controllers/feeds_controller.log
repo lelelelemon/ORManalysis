@@ -618,7 +618,7 @@ CLOSURE END
 		 5: %v_28->accessed_by def_%v_29 %v_28[13.4,] user[4.13,] 
 		 6: COPY def_%v_30 
 		 7: %v_29->order def_%v_31 %v_29[13.5,] %v_30[13.6,] 
-		 8: def_%v_32 %v_31[13.7,] 
+		 8: %v_31->limit def_%v_32 %v_31[13.7,] 
 		 9: %v_32->includes def_%v_33 %v_32[13.8,] 
 		 10: ATTRASSIGN %self->@activities %self[2.0,] %v_33[13.9,] 
 		 11: COPY def_%v_26 %v_33[13.9,] 
@@ -640,8 +640,8 @@ BB 16
 	datadep: 
 	instructions:
 		 0: COPY def_%v_36 
-		 1: def_%v_37 %v_35[15.0,14.2,] %v_36[16.0,] %self[2.0,] 
-CLOSURE BEGIN: m[] user[4.13,] %self[2.0,] 
+		 1: def_%v_37 %v_35[15.0,14.2,] %v_36[16.0,] %self[13.10,12.2,2.0,] 
+CLOSURE BEGIN: m[] user[4.13,] %self[13.10,12.2,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -820,7 +820,7 @@ BB 16
 	instructions:
 		 0: log->user def_%cl_3_35 log[2.2,] 
 		 1: %cl_3_35->name def_%cl_3_36 %cl_3_35[16.0,] 
-		 2: ATTRASSIGN i->author i[14.3,] %cl_3_36[16.1,] 
+		 2: ATTRASSIGN i->author i[14.3,13.1,10.6,7.1,5.5,3.6,] %cl_3_36[16.1,] 
 		 3: COPY def_%cl_3_34 %cl_3_36[16.1,] 
 BB 17
 	outgoing: 20 
@@ -856,7 +856,7 @@ BB 6
 CLOSURE END
 		 2: COPY def_content %v_37[16.1,] 
 		 3: 
-		 4: ATTRASSIGN %self->@activities %self[2.0,] 
+		 4: ATTRASSIGN %self->@activities %self[13.10,12.2,2.0,] 
 		 5: COPY def_%v_38 
 		 6: 
 BB 17
@@ -1118,7 +1118,7 @@ BB 41
 	instructions:
 		 0: COPY def_%v_90 
 		 1: def_%v_91 %v_89[40.0,39.3,] %v_90[41.0,] %self[2.0,] 
-CLOSURE BEGIN: m[] widget[26.0,] user[4.13,] tasks[39.0,] %self[2.0,] 
+CLOSURE BEGIN: m[] widget[26.0,] user[4.13,] tasks[39.0,32.11,31.10,] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1230,7 +1230,7 @@ BB 8
 	instructions:
 		 0: task->creator def_%cl_7_21 task[2.2,] 
 		 1: %cl_7_21->name def_%cl_7_22 %cl_7_21[8.0,] 
-		 2: ATTRASSIGN i->author i[6.3,] %cl_7_22[8.1,] 
+		 2: ATTRASSIGN i->author i[6.3,5.1,3.3,3.7,3.14,] %cl_7_22[8.1,] 
 		 3: RETURN %cl_7_22[8.1,] %self[2.0,] 
 BB 10
 	outgoing: 12 
@@ -1277,14 +1277,14 @@ BB 44
 	datadep: 
 	instructions:
 		 0: 
-		 1: content->to_s def_%v_93 content[16.2,42.2,41.2,] 
+		 1: content->to_s def_%v_93 content[16.2,42.2,41.2,7.2,] 
 		 2: COPY def_%v_94 %v_93[44.1,] 
-		 3: %self->render def_%v_95 %self[2.0,] %v_94[44.2,] 
+		 3: %self->render def_%v_95 %self[16.4,13.10,12.2,2.0,] %v_94[44.2,] 
 		 4: 
 		 5: COPY def_content 
 		 6: 
 		 7: COPY def_user 
-		 8: RETURN %self[44.3,2.0,] 
+		 8: RETURN %self[44.3,16.4,13.10,12.2,2.0,] 
 BB 45
 	outgoing: 
 	datadep: 
@@ -1591,7 +1591,7 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_55 %self[2.0,] 
+		 1: %self->params def_%v_55 %self[22.11,2.0,] 
 		 2: COPY def_%v_56 
 		 3: def_%v_57 %v_55[24.1,] %v_56[24.2,] 
 		 4: %v_57->nil? def_%v_58 %v_57[24.3,] 
@@ -1600,7 +1600,7 @@ BB 25
 	outgoing: 26 
 	datadep: 
 	instructions:
-		 0: %self->params def_%v_59 %self[2.0,] 
+		 0: %self->params def_%v_59 %self[22.11,2.0,] 
 		 1: COPY def_%v_60 
 		 2: def_%v_61 %v_59[25.0,] %v_60[25.1,] 
 		 3: COPY def_%v_62 
@@ -1616,14 +1616,14 @@ BB 27
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->logger def_%v_64 %self[2.0,] 
+		 1: %self->logger def_%v_64 %self[22.11,2.0,] 
 		 2: COPY def_%v_65 
 		 3: %v_64->info def_%v_66 %v_64[27.1,] %v_65[27.2,] 
 		 4: 
 		 5: (TaskRecord) def_%v_67 
 		 6: %v_67->accessed_by def_%v_68 %v_67[27.5,] user[8.16,] 
 		 7: %v_68->includes def_%v_69 %v_68[27.6,] 
-		 8: ATTRASSIGN %self->@tasks %self[27.1,2.0,] %v_69[27.7,] 
+		 8: ATTRASSIGN %self->@tasks %self[27.1,22.11,2.0,] %v_69[27.7,] 
 		 9: 
 BB 28
 	outgoing: 29 
@@ -1688,7 +1688,7 @@ BB 35
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_89 %self[2.0,] 
+		 1: %self->params def_%v_89 %self[33.12,2.0,] 
 		 2: COPY def_%v_90 
 		 3: def_%v_91 %v_89[35.1,] %v_90[35.2,] 
 		 4: %v_91->nil? def_%v_92 %v_91[35.3,] 
@@ -1697,7 +1697,7 @@ BB 36
 	outgoing: 37 
 	datadep: 
 	instructions:
-		 0: %self->params def_%v_93 %self[2.0,] 
+		 0: %self->params def_%v_93 %self[33.12,2.0,] 
 		 1: COPY def_%v_94 
 		 2: def_%v_95 %v_93[36.0,] %v_94[36.1,] 
 		 3: COPY def_%v_96 
@@ -1713,15 +1713,15 @@ BB 38
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->logger def_%v_98 %self[2.0,] 
+		 1: %self->logger def_%v_98 %self[33.12,2.0,] 
 		 2: COPY def_%v_99 
 		 3: %v_98->info def_%v_100 %v_98[38.1,] %v_99[38.2,] 
 		 4: 
 		 5: user->tasks def_%v_101 user[8.16,] 
 		 6: COPY def_%v_102 
-		 7: %v_101->where def_%v_103 %v_101[38.5,] %v_102[38.6,] pids[18.2,] 
+		 7: %v_101->where def_%v_103 %v_101[38.5,] %v_102[38.6,] pids[18.2,14.8,] 
 		 8: %v_103->includes def_%v_104 %v_103[38.7,] 
-		 9: ATTRASSIGN %self->@tasks %self[38.1,2.0,] %v_104[38.8,] 
+		 9: ATTRASSIGN %self->@tasks %self[38.1,33.12,2.0,] %v_104[38.8,] 
 		 10: 
 BB 39
 	outgoing: 40 
@@ -1738,7 +1738,7 @@ BB 41
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_105 %self[2.0,] 
+		 1: %self->params def_%v_105 %self[38.9,27.8,33.12,22.11,2.0,] 
 		 2: COPY def_%v_106 
 		 3: def_%v_107 %v_105[41.1,] %v_106[41.2,] 
 		 4: %v_107->nil? def_%v_108 %v_107[41.3,] 
@@ -1747,7 +1747,7 @@ BB 42
 	outgoing: 43 
 	datadep: 
 	instructions:
-		 0: %self->params def_%v_109 %self[2.0,] 
+		 0: %self->params def_%v_109 %self[38.9,27.8,33.12,22.11,2.0,] 
 		 1: COPY def_%v_110 
 		 2: def_%v_111 %v_109[42.0,] %v_110[42.1,] 
 		 3: COPY def_%v_112 
@@ -1763,15 +1763,15 @@ BB 44
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->logger def_%v_114 %self[2.0,] 
+		 1: %self->logger def_%v_114 %self[38.9,27.8,33.12,22.11,2.0,] 
 		 2: COPY def_%v_115 
 		 3: %v_114->info def_%v_116 %v_114[44.1,] %v_115[44.2,] 
 		 4: 
 		 5: (Milestone) def_%v_117 
 		 6: COPY def_%v_118 
 		 7: user->company_id def_%v_119 user[8.16,] 
-		 8: %v_117->where def_%v_120 %v_117[44.5,] %v_118[44.6,] %v_119[44.7,] pids[18.2,] 
-		 9: ATTRASSIGN %self->@milestones %self[44.1,2.0,] %v_120[44.8,] 
+		 8: %v_117->where def_%v_120 %v_117[44.5,] %v_118[44.6,] %v_119[44.7,] pids[18.2,14.8,] 
+		 9: ATTRASSIGN %self->@milestones %self[44.1,38.9,27.8,33.12,22.11,2.0,] %v_120[44.8,] 
 		 10: 
 BB 45
 	outgoing: 46 
@@ -1788,14 +1788,14 @@ BB 47
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_122 %self[2.0,] 
+		 1: def_%v_122 %self[44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 2: COPY def_%v_121 %v_122[47.1,] 
 		 3: %v_122[47.1,] 
 BB 48
 	outgoing: 49 
 	datadep: 
 	instructions:
-		 0: def_%v_123 %self[2.0,] 
+		 0: def_%v_123 %self[44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 1: COPY def_%v_121 %v_123[48.0,] 
 BB 49
 	outgoing: 50 51 
@@ -1807,21 +1807,21 @@ BB 50
 	datadep: 
 	instructions:
 		 0: COPY def_%v_124 
-		 1: ATTRASSIGN %self->@activities %self[2.0,] %v_124[50.0,] 
+		 1: ATTRASSIGN %self->@activities %self[44.9,38.9,27.8,2.0,33.12,22.11,] %v_124[50.0,] 
 		 2: COPY def_%v_123 %v_124[50.0,] 
 BB 51
 	outgoing: 52 53 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_126 %self[2.0,] 
+		 1: def_%v_126 %self[50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 2: COPY def_%v_125 %v_126[51.1,] 
 		 3: %v_126[51.1,] 
 BB 52
 	outgoing: 53 
 	datadep: 
 	instructions:
-		 0: def_%v_127 %self[2.0,] 
+		 0: def_%v_127 %self[50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 1: COPY def_%v_125 %v_127[52.0,] 
 BB 53
 	outgoing: 54 55 
@@ -1833,21 +1833,21 @@ BB 54
 	datadep: 
 	instructions:
 		 0: COPY def_%v_128 
-		 1: ATTRASSIGN %self->@tasks %self[2.0,] %v_128[54.0,] 
+		 1: ATTRASSIGN %self->@tasks %self[50.1,44.9,38.9,27.8,2.0,33.12,22.11,] %v_128[54.0,] 
 		 2: COPY def_%v_127 %v_128[54.0,] 
 BB 55
 	outgoing: 56 57 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_130 %self[2.0,] 
+		 1: def_%v_130 %self[54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 2: COPY def_%v_129 %v_130[55.1,] 
 		 3: %v_130[55.1,] 
 BB 56
 	outgoing: 57 
 	datadep: 
 	instructions:
-		 0: def_%v_131 %self[2.0,] 
+		 0: def_%v_131 %self[54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 1: COPY def_%v_129 %v_131[56.0,] 
 BB 57
 	outgoing: 58 59 
@@ -1859,7 +1859,7 @@ BB 58
 	datadep: 
 	instructions:
 		 0: COPY def_%v_132 
-		 1: ATTRASSIGN %self->@milestones %self[2.0,] %v_132[58.0,] 
+		 1: ATTRASSIGN %self->@milestones %self[54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] %v_132[58.0,] 
 		 2: COPY def_%v_131 %v_132[58.0,] 
 BB 59
 	outgoing: 60 
@@ -1870,9 +1870,9 @@ BB 59
 		 2: %v_133->new def_%v_134 %v_133[59.1,] 
 		 3: COPY def_cal %v_134[59.2,] 
 		 4: 
-		 5: def_%v_135 %self[2.0,] 
-		 6: %v_135->each def_%v_136 %v_135[59.5,] %self[2.0,] 
-CLOSURE BEGIN: cal[59.3,] m[] %self[2.0,] tz[14.2,] event[] user[8.16,] description[] 
+		 5: def_%v_135 %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
+		 6: %v_135->each def_%v_136 %v_135[59.5,] %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
+CLOSURE BEGIN: cal[59.3,] m[] %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] tz[14.2,] event[] user[8.16,] description[] 
 BB 1
 	outgoing: 23 2 
 	datadep: 
@@ -1928,12 +1928,12 @@ BB 6
 		 1: COPY def_%cl_2_15 
 		 2: COPY def_%cl_2_16 
 		 3: def_%cl_2_17 %cl_2_15[6.1,] %cl_2_16[6.2,] 
-		 4: ATTRASSIGN event->duration event[5.6,4.6,] %cl_2_17[6.3,] 
+		 4: ATTRASSIGN event->duration event[5.6,4.6,3.2,] %cl_2_17[6.3,] 
 		 5: 
 		 6: COPY def_%cl_2_18 
 		 7: m->id def_%cl_2_19 m[2.2,] 
 		 8: COPY def_%cl_2_20 
-		 9: event->created def_%cl_2_21 event[6.4,] 
+		 9: event->created def_%cl_2_21 event[6.4,5.6,4.6,3.2,] 
 		 10: COPY def_%cl_2_22 
 		 11: user->company def_%cl_2_23 user[] 
 		 12: %cl_2_23->subdomain def_%cl_2_24 %cl_2_23[6.11,] 
@@ -1941,7 +1941,7 @@ BB 6
 		 14: (Setting) def_%cl_2_26 
 		 15: %cl_2_26->domain def_%cl_2_27 %cl_2_26[6.14,] 
 		 16: def_%cl_2_28 %cl_2_18[6.6,] %cl_2_19[6.7,] %cl_2_20[6.8,] %cl_2_21[6.9,] %cl_2_22[6.10,] %cl_2_24[6.12,] %cl_2_25[6.13,] %cl_2_27[6.15,] 
-		 17: ATTRASSIGN event->uid event[6.4,6.9,] %cl_2_28[6.16,] 
+		 17: ATTRASSIGN event->uid event[6.4,6.9,5.6,4.6,3.2,] %cl_2_28[6.16,] 
 		 18: 
 		 19: COPY def_%cl_2_29 
 		 20: m->user def_%cl_2_30 m[6.7,2.2,] 
@@ -1965,18 +1965,18 @@ BB 9
 	datadep: 
 	instructions:
 		 0: def_%cl_2_35 %cl_2_29[6.19,] %cl_2_32[8.2,7.0,] 
-		 1: ATTRASSIGN event->organizer event[6.4,6.17,] %cl_2_35[9.0,] 
+		 1: ATTRASSIGN event->organizer event[6.4,6.17,5.6,4.6,3.2,] %cl_2_35[9.0,] 
 		 2: 
 		 3: user->company def_%cl_2_36 user[] 
 		 4: %cl_2_36->site_URL def_%cl_2_37 %cl_2_36[9.3,] 
 		 5: %self->path_to_tasks_filtered_by def_%cl_2_38 %self[2.0,] m[2.2,] 
 		 6: def_%cl_2_39 %cl_2_37[9.4,] %cl_2_38[9.5,] 
-		 7: ATTRASSIGN event->url event[9.1,] %cl_2_39[9.6,] 
+		 7: ATTRASSIGN event->url event[9.1,6.4,6.17,5.6,4.6,3.2,] %cl_2_39[9.6,] 
 		 8: 
 		 9: COPY def_%cl_2_40 
 		 10: m->name def_%cl_2_41 m[2.2,] 
 		 11: def_%cl_2_42 %cl_2_40[9.9,] %cl_2_41[9.10,] 
-		 12: ATTRASSIGN event->summary event[9.1,9.7,] %cl_2_42[9.11,] 
+		 12: ATTRASSIGN event->summary event[9.1,9.7,6.4,6.17,5.6,4.6,3.2,] %cl_2_42[9.11,] 
 		 13: 
 		 14: m->description def_%cl_2_43 m[9.10,2.2,] 
 		 15: BRANCH %cl_2_43[9.14,] 
@@ -2028,7 +2028,7 @@ BB 16
 	outgoing: 18 21 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN event->description event[9.1,9.7,9.12,] description[10.5,] 
+		 0: ATTRASSIGN event->description event[9.1,9.7,9.12,6.4,6.17,5.6,4.6,3.2,] description[10.5,] 
 		 1: COPY def_%cl_2_54 description[10.5,] 
 		 2: 
 BB 17
@@ -2059,9 +2059,9 @@ BB 23
 	instructions:
 CLOSURE END
 		 7: 
-		 8: def_%v_137 %self[2.0,] 
-		 9: %v_137->each def_%v_138 %v_137[59.8,] %self[2.0,] 
-CLOSURE BEGIN: t[] cached[14.5,] cal[59.3,] %self[2.0,] tz[14.2,] todo[] user[8.16,] description[] event[] 
+		 8: def_%v_137 %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
+		 9: %v_137->each def_%v_138 %v_137[59.8,] %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
+CLOSURE BEGIN: t[] cached[14.5,] cal[59.3,] %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] tz[14.2,] todo[] user[8.16,] description[] event[] 
 BB 1
 	outgoing: 49 2 
 	datadep: 
@@ -2193,12 +2193,12 @@ BB 17
 		 0: 
 		 1: t->created_at def_%cl_3_28 t[2.2,] 
 		 2: %self->to_localtime def_%cl_3_29 %self[2.0,] tz[] %cl_3_28[17.1,] 
-		 3: ATTRASSIGN todo->created todo[7.3,9.5,14.3,13.6,] %cl_3_29[17.2,] 
+		 3: ATTRASSIGN todo->created todo[7.3,9.5,6.2,14.3,13.6,] %cl_3_29[17.2,] 
 		 4: 
 		 5: COPY def_%cl_3_30 
 		 6: t->id def_%cl_3_31 t[17.1,2.2,] 
 		 7: COPY def_%cl_3_32 
-		 8: todo->created def_%cl_3_33 todo[17.3,] 
+		 8: todo->created def_%cl_3_33 todo[17.3,7.3,9.5,6.2,14.3,13.6,] 
 		 9: COPY def_%cl_3_34 
 		 10: user->company def_%cl_3_35 user[] 
 		 11: %cl_3_35->subdomain def_%cl_3_36 %cl_3_35[17.10,] 
@@ -2206,7 +2206,7 @@ BB 17
 		 13: (Setting) def_%cl_3_38 
 		 14: %cl_3_38->domain def_%cl_3_39 %cl_3_38[17.13,] 
 		 15: def_%cl_3_40 %cl_3_30[17.5,] %cl_3_31[17.6,] %cl_3_32[17.7,] %cl_3_33[17.8,] %cl_3_34[17.9,] %cl_3_36[17.11,] %cl_3_37[17.12,] %cl_3_39[17.14,] 
-		 16: ATTRASSIGN todo->uid todo[17.3,17.8,] %cl_3_40[17.15,] 
+		 16: ATTRASSIGN todo->uid todo[17.3,17.8,7.3,9.5,6.2,14.3,13.6,] %cl_3_40[17.15,] 
 		 17: 
 		 18: t->users def_%cl_3_41 t[17.1,17.6,2.2,] 
 		 19: %cl_3_41->size def_%cl_3_42 %cl_3_41[17.18,] 
@@ -2221,7 +2221,7 @@ BB 18
 		 2: %cl_3_45->first def_%cl_3_46 %cl_3_45[18.1,] 
 		 3: %cl_3_46->email def_%cl_3_47 %cl_3_46[18.2,] 
 		 4: def_%cl_3_48 %cl_3_44[18.0,] %cl_3_47[18.3,] 
-		 5: ATTRASSIGN todo->organizer todo[17.3,17.16,] %cl_3_48[18.4,] 
+		 5: ATTRASSIGN todo->organizer todo[17.3,17.16,7.3,9.5,6.2,14.3,13.6,] %cl_3_48[18.4,] 
 		 6: 
 BB 19
 	outgoing: 20 
@@ -2238,11 +2238,11 @@ BB 20
 		 3: COPY def_%cl_3_51 
 		 4: t->task_num def_%cl_3_52 t[2.2,] 
 		 5: def_%cl_3_53 %cl_3_50[20.2,] %cl_3_51[20.3,] %cl_3_52[20.4,] 
-		 6: ATTRASSIGN todo->url todo[18.5,17.3,17.16,] %cl_3_53[20.5,] 
+		 6: ATTRASSIGN todo->url todo[18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] %cl_3_53[20.5,] 
 		 7: 
 		 8: t->issue_name def_%cl_3_54 t[20.4,2.2,] 
 		 9: def_%cl_3_55 %cl_3_54[20.8,] 
-		 10: ATTRASSIGN todo->summary todo[20.6,] %cl_3_55[20.9,] 
+		 10: ATTRASSIGN todo->summary todo[20.6,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] %cl_3_55[20.9,] 
 		 11: 
 		 12: t->description def_%cl_3_56 t[20.4,20.8,2.2,] 
 		 13: BRANCH %cl_3_56[20.12,] 
@@ -2287,7 +2287,7 @@ BB 26
 	outgoing: 28 47 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN todo->description todo[20.6,20.10,] description[21.7,] 
+		 0: ATTRASSIGN todo->description todo[20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] description[21.7,] 
 		 1: COPY def_%cl_3_67 description[21.7,] 
 		 2: 
 BB 27
@@ -2344,7 +2344,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: ATTRASSIGN todo->categories todo[26.0,20.6,20.10,] %cl_3_72[29.1,] 
+		 2: ATTRASSIGN todo->categories todo[26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] %cl_3_72[29.1,] 
 		 3: 
 BB 30
 	outgoing: 31 
@@ -2362,7 +2362,7 @@ BB 32
 	outgoing: 34 47 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN todo->percent todo[29.2,26.0,20.6,20.10,] 
+		 0: ATTRASSIGN todo->percent todo[29.2,26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] 
 		 1: COPY def_%cl_3_74 
 		 2: 
 BB 33
@@ -2378,19 +2378,19 @@ BB 34
 		 1: cal->event def_%cl_3_75 cal[] 
 		 2: COPY def_event %cl_3_75[34.1,] 
 		 3: 
-		 4: todo->start def_%cl_3_76 todo[32.0,29.2,26.0,20.6,20.10,] 
+		 4: todo->start def_%cl_3_76 todo[32.0,29.2,26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] 
 		 5: ATTRASSIGN event->start event[34.2,] %cl_3_76[34.4,] 
 		 6: 
 		 7: COPY def_%cl_3_77 
 		 8: ATTRASSIGN event->duration event[34.2,34.5,] %cl_3_77[34.7,] 
 		 9: 
-		 10: todo->created def_%cl_3_78 todo[34.4,32.0,29.2,26.0,20.6,20.10,] 
+		 10: todo->created def_%cl_3_78 todo[34.4,32.0,29.2,26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] 
 		 11: ATTRASSIGN event->created event[34.2,34.5,34.8,] %cl_3_78[34.10,] 
 		 12: 
 		 13: COPY def_%cl_3_79 
 		 14: t->id def_%cl_3_80 t[2.2,] 
 		 15: COPY def_%cl_3_81 
-		 16: todo->created def_%cl_3_82 todo[34.4,34.10,32.0,29.2,26.0,20.6,20.10,] 
+		 16: todo->created def_%cl_3_82 todo[34.4,34.10,32.0,29.2,26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] 
 		 17: COPY def_%cl_3_83 
 		 18: user->company def_%cl_3_84 user[] 
 		 19: %cl_3_84->subdomain def_%cl_3_85 %cl_3_84[34.18,] 
@@ -2400,10 +2400,10 @@ BB 34
 		 23: def_%cl_3_89 %cl_3_79[34.13,] %cl_3_80[34.14,] %cl_3_81[34.15,] %cl_3_82[34.16,] %cl_3_83[34.17,] %cl_3_85[34.19,] %cl_3_86[34.20,] %cl_3_88[34.22,] 
 		 24: ATTRASSIGN event->uid event[34.2,34.5,34.8,34.11,] %cl_3_89[34.23,] 
 		 25: 
-		 26: todo->organizer def_%cl_3_90 todo[34.4,34.10,34.16,32.0,29.2,26.0,20.6,20.10,] 
+		 26: todo->organizer def_%cl_3_90 todo[34.4,34.10,34.16,32.0,29.2,26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] 
 		 27: ATTRASSIGN event->organizer event[34.2,34.5,34.8,34.11,34.24,] %cl_3_90[34.26,] 
 		 28: 
-		 29: todo->url def_%cl_3_91 todo[34.4,34.10,34.16,34.26,32.0,29.2,26.0,20.6,20.10,] 
+		 29: todo->url def_%cl_3_91 todo[34.4,34.10,34.16,34.26,32.0,29.2,26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] 
 		 30: ATTRASSIGN event->url event[34.2,34.5,34.8,34.11,34.24,34.27,] %cl_3_91[34.29,] 
 		 31: 
 		 32: t->done? def_%cl_3_92 t[34.14,2.2,] 
@@ -2454,7 +2454,7 @@ BB 40
 	datadep: 
 	instructions:
 		 0: 
-		 1: todo->description def_%cl_3_106 todo[32.0,29.2,26.0,20.6,20.10,] 
+		 1: todo->description def_%cl_3_106 todo[32.0,29.2,26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] 
 		 2: ATTRASSIGN event->description event[38.7,36.4,34.2,34.5,34.8,34.11,34.24,34.27,34.30,] %cl_3_106[40.1,] 
 		 3: 
 		 4: t->tags def_%cl_3_107 t[2.2,] 
@@ -2501,7 +2501,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: ATTRASSIGN event->categories event[40.2,] %cl_3_111[41.1,] 
+		 2: ATTRASSIGN event->categories event[40.2,38.7,36.4,34.2,34.5,34.8,34.11,34.24,34.27,34.30,] %cl_3_111[41.1,] 
 		 3: 
 BB 42
 	outgoing: 43 
@@ -2527,8 +2527,8 @@ BB 45
 	instructions:
 		 0: 
 		 1: (IcalEntry) def_%cl_3_114 
-		 2: event->to_ical def_%cl_3_115 event[41.2,40.2,] 
-		 3: todo->to_ical def_%cl_3_116 todo[32.0,29.2,26.0,20.6,20.10,] 
+		 2: event->to_ical def_%cl_3_115 event[41.2,40.2,38.7,36.4,34.2,34.5,34.8,34.11,34.24,34.27,34.30,] 
+		 3: todo->to_ical def_%cl_3_116 todo[32.0,29.2,26.0,20.6,20.10,18.5,17.3,17.16,7.3,9.5,6.2,14.3,13.6,] 
 		 4: def_%cl_3_117 %cl_3_115[45.2,] %cl_3_116[45.3,] 
 		 5: t->id def_%cl_3_118 t[2.2,] 
 		 6: COPY def_%cl_3_119 %cl_3_117[45.4,] %cl_3_118[45.5,] 
@@ -2550,9 +2550,9 @@ BB 49
 	instructions:
 CLOSURE END
 		 10: 
-		 11: def_%v_139 %self[2.0,] 
-		 12: %v_139->each def_%v_140 %v_139[59.11,] %self[2.0,] 
-CLOSURE BEGIN: log[] cached[14.5,] cal[59.3,] %self[2.0,] tz[14.2,] event[] user[8.16,] action[] description[] 
+		 11: def_%v_139 %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
+		 12: %v_139->each def_%v_140 %v_139[59.11,] %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
+CLOSURE BEGIN: log[] cached[14.5,] cal[59.3,] %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] tz[14.2,] event[] user[8.16,] action[] description[] 
 BB 1
 	outgoing: 35 2 
 	datadep: 
@@ -2642,7 +2642,7 @@ BB 11
 		 0: log->task def_%cl_6_22 log[2.2,] 
 		 1: %cl_6_22->created_at def_%cl_6_23 %cl_6_22[11.0,] 
 		 2: %self->to_localtime def_%cl_6_24 %self[2.0,] tz[] %cl_6_23[11.1,] 
-		 3: ATTRASSIGN event->created event[9.1,] %cl_6_24[11.2,] 
+		 3: ATTRASSIGN event->created event[9.1,6.2,6.6,] %cl_6_24[11.2,] 
 		 4: COPY def_%cl_6_21 %cl_6_24[11.2,] 
 BB 12
 	outgoing: 13 14 33 
@@ -2652,7 +2652,7 @@ BB 12
 		 1: COPY def_%cl_6_25 
 		 2: log->id def_%cl_6_26 log[2.2,] 
 		 3: COPY def_%cl_6_27 
-		 4: event->created def_%cl_6_28 event[11.3,9.1,] 
+		 4: event->created def_%cl_6_28 event[11.3,9.1,6.2,6.6,] 
 		 5: COPY def_%cl_6_29 
 		 6: user->company def_%cl_6_30 user[] 
 		 7: %cl_6_30->subdomain def_%cl_6_31 %cl_6_30[12.6,] 
@@ -2660,13 +2660,13 @@ BB 12
 		 9: (Setting) def_%cl_6_33 
 		 10: %cl_6_33->domain def_%cl_6_34 %cl_6_33[12.9,] 
 		 11: def_%cl_6_35 %cl_6_25[12.1,] %cl_6_26[12.2,] %cl_6_27[12.3,] %cl_6_28[12.4,] %cl_6_29[12.5,] %cl_6_31[12.7,] %cl_6_32[12.8,] %cl_6_34[12.10,] 
-		 12: ATTRASSIGN event->uid event[12.4,11.3,9.1,] %cl_6_35[12.11,] 
+		 12: ATTRASSIGN event->uid event[12.4,11.3,9.1,6.2,6.6,] %cl_6_35[12.11,] 
 		 13: 
 		 14: COPY def_%cl_6_36 
 		 15: log->user def_%cl_6_37 log[12.2,2.2,] 
 		 16: %cl_6_37->email def_%cl_6_38 %cl_6_37[12.15,] 
 		 17: def_%cl_6_39 %cl_6_36[12.14,] %cl_6_38[12.16,] 
-		 18: ATTRASSIGN event->organizer event[12.4,12.12,] %cl_6_39[12.17,] 
+		 18: ATTRASSIGN event->organizer event[12.4,12.12,11.3,9.1,6.2,6.6,] %cl_6_39[12.17,] 
 		 19: 
 		 20: user->company def_%cl_6_40 user[12.6,] 
 		 21: %cl_6_40->site_URL def_%cl_6_41 %cl_6_40[12.20,] 
@@ -2674,7 +2674,7 @@ BB 12
 		 23: log->task def_%cl_6_43 log[12.2,12.15,2.2,] 
 		 24: %cl_6_43->task_num def_%cl_6_44 %cl_6_43[12.23,] 
 		 25: def_%cl_6_45 %cl_6_41[12.21,] %cl_6_42[12.22,] %cl_6_44[12.24,] 
-		 26: ATTRASSIGN event->url event[12.4,12.12,12.18,] %cl_6_45[12.25,] 
+		 26: ATTRASSIGN event->url event[12.4,12.12,12.18,11.3,9.1,6.2,6.6,] %cl_6_45[12.25,] 
 		 27: 
 		 28: %self->get_action def_%cl_6_46 %self[2.0,] log[12.2,12.15,12.23,2.2,] 
 		 29: COPY def_action %cl_6_46[12.28,] 
@@ -2699,7 +2699,7 @@ BB 14
 		 4: log->user def_%cl_6_54 log[14.1,2.2,] 
 		 5: %cl_6_54->name def_%cl_6_55 %cl_6_54[14.4,] 
 		 6: def_%cl_6_56 action[12.29,] %cl_6_50[14.0,] %cl_6_52[14.2,] %cl_6_53[14.3,] %cl_6_55[14.5,] 
-		 7: ATTRASSIGN event->summary event[12.12,12.18,12.26,] %cl_6_56[14.6,] 
+		 7: ATTRASSIGN event->summary event[12.12,12.18,12.26,11.3,9.1,6.2,6.6,] %cl_6_56[14.6,] 
 		 8: COPY def_%cl_6_49 %cl_6_56[14.6,] 
 BB 15
 	outgoing: 16 17 33 
@@ -2724,7 +2724,7 @@ BB 16
 		 8: log->user def_%cl_6_67 log[16.1,16.5,2.2,] 
 		 9: %cl_6_67->name def_%cl_6_68 %cl_6_67[16.8,] 
 		 10: def_%cl_6_69 action[12.29,] %cl_6_59[16.0,] %cl_6_62[16.3,] %cl_6_63[16.4,] %cl_6_65[16.6,] %cl_6_66[16.7,] %cl_6_68[16.9,] 
-		 11: ATTRASSIGN event->summary event[14.7,12.12,12.18,12.26,] %cl_6_69[16.10,] 
+		 11: ATTRASSIGN event->summary event[14.7,12.12,12.18,12.26,11.3,9.1,6.2,6.6,] %cl_6_69[16.10,] 
 		 12: 
 BB 17
 	outgoing: 18 
@@ -2736,7 +2736,7 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: event->summary def_%cl_6_70 event[16.11,14.7,12.12,12.18,12.26,] 
+		 1: event->summary def_%cl_6_70 event[16.11,14.7,12.12,12.18,12.26,11.3,9.1,6.2,6.6,] 
 		 2: BRANCH %cl_6_70[18.1,] 
 BB 19
 	outgoing: 20 33 
@@ -2746,7 +2746,7 @@ BB 19
 		 1: log->user def_%cl_6_73 log[2.2,] 
 		 2: %cl_6_73->name def_%cl_6_74 %cl_6_73[19.1,] 
 		 3: def_%cl_6_75 action[12.29,] %cl_6_72[19.0,] %cl_6_74[19.2,] 
-		 4: ATTRASSIGN event->summary def_%cl_6_71 event[16.11,14.7,12.12,12.18,12.26,] %cl_6_75[19.3,] 
+		 4: ATTRASSIGN event->summary def_%cl_6_71 event[16.11,14.7,12.12,12.18,12.26,11.3,9.1,6.2,6.6,] %cl_6_75[19.3,] 
 		 5: COPY def_%cl_6_70 %cl_6_75[19.3,] 
 BB 20
 	outgoing: 21 22 33 
@@ -2790,7 +2790,7 @@ BB 25
 	outgoing: 26 33 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN event->description event[19.4,16.11,14.7,12.12,12.18,12.26,] description[21.7,] 
+		 0: ATTRASSIGN event->description event[19.4,16.11,14.7,12.12,12.18,12.26,11.3,9.1,6.2,6.6,] description[21.7,] 
 		 1: COPY def_%cl_6_85 description[21.7,] 
 BB 26
 	outgoing: 27 28 33 
@@ -2843,7 +2843,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 3: ATTRASSIGN event->categories event[25.0,19.4,16.11,14.7,12.12,12.18,12.26,] %cl_6_92[27.2,] 
+		 3: ATTRASSIGN event->categories event[25.0,19.4,16.11,14.7,12.12,12.18,12.26,11.3,9.1,6.2,6.6,] %cl_6_92[27.2,] 
 		 4: 
 BB 28
 	outgoing: 29 
@@ -2869,7 +2869,7 @@ BB 31
 	instructions:
 		 0: 
 		 1: (IcalEntry) def_%cl_6_95 
-		 2: event->to_ical def_%cl_6_96 event[27.3,25.0,19.4,16.11,14.7,12.12,12.18,12.26,] 
+		 2: event->to_ical def_%cl_6_96 event[27.3,25.0,19.4,16.11,14.7,12.12,12.18,12.26,11.3,9.1,6.2,6.6,] 
 		 3: def_%cl_6_97 %cl_6_96[31.2,] 
 		 4: log->id def_%cl_6_98 log[2.2,] 
 		 5: COPY def_%cl_6_99 %cl_6_97[31.3,] %cl_6_98[31.4,] 
@@ -2903,15 +2903,15 @@ CLOSURE END
 		 23: COPY def_ical_feed %v_149[59.22,] 
 		 24: 
 		 25: COPY def_%v_150 %v_149[59.22,] 
-		 26: %self->render def_%v_151 %self[2.0,] %v_150[59.25,] 
+		 26: %self->render def_%v_151 %self[58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] %v_150[59.25,] 
 		 27: 
 		 28: COPY def_ical_feed 
 		 29: 
-		 30: ATTRASSIGN %self->@activities %self[59.26,2.0,] 
+		 30: ATTRASSIGN %self->@activities %self[59.26,58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 31: 
-		 32: ATTRASSIGN %self->@tasks %self[59.26,2.0,] 
+		 32: ATTRASSIGN %self->@tasks %self[59.26,59.30,58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 33: 
-		 34: ATTRASSIGN %self->@milestones %self[59.26,2.0,] 
+		 34: ATTRASSIGN %self->@milestones %self[59.26,59.30,59.32,58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
 		 35: 
 		 36: COPY def_tz 
 		 37: 
@@ -2922,7 +2922,7 @@ CLOSURE END
 		 42: 
 		 43: (GC) def_%v_153 
 		 44: %v_153->start def_%v_154 %v_153[59.43,] 
-		 45: RETURN %v_154[59.44,] %self[59.26,2.0,] 
+		 45: RETURN %v_154[59.44,] %self[59.26,59.30,59.32,59.34,58.1,54.1,50.1,44.9,38.9,27.8,2.0,33.12,22.11,] 
 BB 60
 	outgoing: 
 	datadep: 
