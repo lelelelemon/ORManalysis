@@ -46,9 +46,9 @@ BB 2
 		 8: %v_4->build def_%v_5 %v_4[2.7,] 
 		 9: ATTRASSIGN %self->@file %self[2.0,] %v_5[2.8,] 
 		 10: 
-		 11: %self->ruby_code_from_view def_%v_6 %self[2.0,] 
-		 12: %v_6->ruby_code_from_view def_%v_7 %v_6[2.11,] %self[2.0,2.11,] 
-CLOSURE BEGIN: %self[2.0,2.11,] 
+		 11: %self->ruby_code_from_view def_%v_6 %self[2.0,2.9,] 
+		 12: %v_6->ruby_code_from_view def_%v_7 %v_6[2.11,] %self[2.0,2.9,2.11,] 
+CLOSURE BEGIN: %self[2.0,2.9,2.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -154,7 +154,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 13: RETURN %v_7[2.12,] %self[2.0,2.11,] 
+		 13: RETURN %v_7[2.12,] %self[2.0,2.9,2.11,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -183,8 +183,8 @@ BB 2
 		 11: ATTRASSIGN %self->@file %self[2.0,2.8,] %v_7[2.10,] 
 		 12: 
 		 13: COPY def_%v_8 
-		 14: %self->render def_%v_9 %self[2.0,2.8,] %v_8[2.13,] 
-		 15: RETURN %v_9[2.14,] %self[2.0,2.8,2.14,] 
+		 14: %self->render def_%v_9 %self[2.0,2.8,2.11,] %v_8[2.13,] 
+		 15: RETURN %v_9[2.14,] %self[2.0,2.8,2.11,2.14,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -480,17 +480,17 @@ BB 2
 		 13: %v_3->new def_%v_10 %v_3[2.6,] %v_9[2.12,] 
 		 14: ATTRASSIGN %self->@file %self[2.0,2.7,] %v_10[2.13,] 
 		 15: 
-		 16: def_%v_11 %self[2.0,2.7,] 
-		 17: %self->params def_%v_12 %self[2.0,2.7,] 
+		 16: def_%v_11 %self[2.0,2.7,2.14,] 
+		 17: %self->params def_%v_12 %self[2.0,2.7,2.14,] 
 		 18: def_%v_13 %v_12[2.17,] 
 		 19: ATTRASSIGN %v_11->folder_id %v_11[2.16,] %v_13[2.18,] 
 		 20: 
-		 21: def_%v_14 %self[2.0,2.7,2.17,] 
+		 21: def_%v_14 %self[2.0,2.7,2.14,2.17,] 
 		 22: %v_14->valid? def_%v_15 %v_14[2.21,] 
 		 23: %v_15->! def_%v_16 %v_15[2.22,] 
 		 24: COPY def_%v_17 %v_16[2.23,] 
-		 25: %self->render def_%v_18 %self[2.0,2.7,2.17,] %v_17[2.24,] 
-		 26: RETURN %v_18[2.25,] %self[2.0,2.7,2.17,2.25,] 
+		 25: %self->render def_%v_18 %self[2.0,2.7,2.14,2.17,] %v_17[2.24,] 
+		 26: RETURN %v_18[2.25,] %self[2.0,2.7,2.14,2.17,2.25,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -523,9 +523,9 @@ BB 4
 		 5: %v_6->find def_%v_9 %v_6[4.2,] %v_8[4.4,] 
 		 6: ATTRASSIGN %self->@file %self[4.3,2.0,] %v_9[4.5,] 
 		 7: 
-		 8: def_%v_10 %self[4.3,2.0,] 
+		 8: def_%v_10 %self[4.3,4.6,2.0,] 
 		 9: %v_10->folder def_%v_11 %v_10[4.8,] 
-		 10: ATTRASSIGN %self->@folder %self[4.3,2.0,] %v_11[4.9,] 
+		 10: ATTRASSIGN %self->@folder %self[4.3,4.6,2.0,] %v_11[4.9,] 
 		 11: COPY def_%v_5 %v_11[4.9,] 
 		 12: %v_3[2.5,] 
 BB 5
@@ -564,11 +564,11 @@ BB 10
 		 0: 
 		 1: (Folder) def_%v_16 
 		 2: %v_16->root def_%v_17 %v_16[10.1,] 
-		 3: %self->t def_%v_18 %self[2.0,] 
+		 3: %self->t def_%v_18 %self[4.6,4.10,2.0,] 
 		 4: COPY def_%v_19 %v_18[10.3,] 
-		 5: %self->t def_%v_20 %self[10.3,2.0,] %v_19[10.4,] 
+		 5: %self->t def_%v_20 %self[10.3,4.6,4.10,2.0,] %v_19[10.4,] 
 		 6: COPY def_%v_21 %v_20[10.5,] 
-		 7: %self->redirect_to def_%v_22 %self[10.3,10.5,2.0,] %v_17[10.2,] %v_21[10.6,] 
+		 7: %self->redirect_to def_%v_22 %self[10.3,10.5,4.6,4.10,2.0,] %v_17[10.2,] %v_21[10.6,] 
 		 8: COPY def_%v_5 %v_22[10.7,] 
 		 9: %v_3[2.5,] 
 BB 11
@@ -587,7 +587,7 @@ BB 13
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: RETURN %v_5[4.11,10.8,] %self[2.0,] 
+		 0: RETURN %v_5[4.11,10.8,] %self[4.6,4.10,2.0,] 
 BB 14
 	outgoing: 
 	datadep: 

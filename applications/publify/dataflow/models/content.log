@@ -24,9 +24,9 @@ BB 3
 		 1: user->login def_%v_4 user[2.5,] 
 		 2: %self[2.0,] %v_4[3.1,] 
 		 3: 
-		 4: ATTRASSIGN %self->user %self[3.2,] user[3.1,2.5,] 
+		 4: ATTRASSIGN %self->user %self[3.2,2.0,] user[3.1,2.5,] 
 		 5: COPY def_%v_5 user[3.1,2.5,] 
-		 6: RETURN user[3.1,2.5,] %self[3.2,3.4,] 
+		 6: RETURN user[3.1,2.5,] %self[3.2,3.4,2.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -85,7 +85,7 @@ BB 3
 		 0: 
 		 1: filter_object->id def_%v_4 filter_object[2.8,] 
 		 2: ATTRASSIGN %self->text_filter_id %self[2.0,] %v_4[3.1,] 
-		 3: RETURN %v_4[3.1,] %self[3.2,] 
+		 3: RETURN %v_4[3.1,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -93,7 +93,7 @@ BB 4
 		 0: 
 		 1: filter->to_i def_%v_5 filter[2.5,] 
 		 2: ATTRASSIGN %self->text_filter_id %self[2.0,] %v_5[4.1,] 
-		 3: RETURN %v_5[4.1,] %self[4.2,] 
+		 3: RETURN %v_5[4.1,] %self[4.2,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -174,7 +174,7 @@ BB 10
 		 9: ATTRASSIGN r->to_path r[10.3,10.6,] %v_19[10.8,] 
 		 10: 
 		 11: ATTRASSIGN %self->redirect %self[10.8,2.0,] r[10.3,10.6,10.9,] 
-		 12: RETURN r[10.3,10.6,10.9,] %self[10.8,10.11,] 
+		 12: RETURN r[10.3,10.6,10.9,] %self[10.8,10.11,2.0,] 
 BB 11
 	outgoing: 12 
 	datadep: 
@@ -205,7 +205,7 @@ BB 2
 		 8: (Time) def_%v_4 
 		 9: %v_4->now def_%v_5 %v_4[2.8,] 
 		 10: %self->where def_%v_6 %self[2.0,] %v_3[2.7,] %v_5[2.9,] 
-		 11: def_%v_7 %v_6[2.10,] 
+		 11: %v_6->limit def_%v_7 %v_6[2.10,] 
 		 12: COPY def_%v_8 
 		 13: %v_7->order def_%v_9 %v_7[2.11,] %v_8[2.12,] 
 		 14: RETURN %v_9[2.13,] %self[2.0,2.10,] 
@@ -681,7 +681,7 @@ BB 7
 		 1: %v_7->parse def_%v_9 %v_7[6.0,5.1,] %v_8[7.0,] 
 		 2: %v_9->normalize def_%v_10 %v_9[7.1,] 
 		 3: ATTRASSIGN %self->@normalized_permalink_url %self[7.0,2.0,] %v_10[7.2,] 
-		 4: RETURN %v_10[7.2,] %self[7.0,2.0,] 
+		 4: RETURN %v_10[7.2,] %self[7.0,7.3,2.0,] 
 BB 8
 	outgoing: 9 
 	datadep: 

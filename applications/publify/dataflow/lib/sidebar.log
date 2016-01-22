@@ -30,10 +30,10 @@ BB 4
 		 1: key->to_s def_%v_4 key[2.5,] 
 		 2: ATTRASSIGN %self->@key %self[2.0,] %v_4[4.1,] 
 		 3: 
-		 4: ATTRASSIGN %self->@default %self[2.0,] default[2.6,] 
+		 4: ATTRASSIGN %self->@default %self[4.2,2.0,] default[2.6,] 
 		 5: 
-		 6: ATTRASSIGN %self->@options %self[2.0,] options[3.1,2.7,] 
-		 7: RETURN options[3.1,2.7,] %self[2.0,] 
+		 6: ATTRASSIGN %self->@options %self[4.2,4.4,2.0,] options[3.1,2.7,] 
+		 7: RETURN options[3.1,2.7,] %self[4.2,4.4,4.6,2.0,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -869,7 +869,7 @@ BB 6
 		 2: COPY def_key %v_4[6.1,] 
 		 3: 
 		 4: %self->instance_methods def_%v_5 %self[2.0,] 
-		 5: %v_5->include? def_%v_6 %v_5[6.4,] key[6.1,6.2,] 
+		 5: %v_5->include? def_%v_6 %v_5[6.4,] key[6.1,6.2,2.5,] 
 		 6: BRANCH %v_6[6.5,] 
 BB 7
 	outgoing: 10 
@@ -884,17 +884,17 @@ BB 8
 		 1: 
 		 2: %self->fields def_%v_8 %self[2.0,] 
 		 3: (Field) def_%v_9 
-		 4: %v_9->build def_%v_10 %v_9[8.3,] key[6.2,] default[3.0,2.6,] options[5.1,4.0,] 
+		 4: %v_9->build def_%v_10 %v_9[8.3,] key[6.2,2.5,] default[3.0,2.6,] options[5.1,4.0,] 
 		 5: def_%v_11 %v_8[8.2,] %v_10[8.4,] 
 		 6: 
 		 7: %self->fieldmap def_%v_12 %self[8.2,2.0,] 
 		 8: %self->fields def_%v_13 %self[8.2,8.7,2.0,] 
 		 9: %v_13->last def_%v_14 %v_13[8.8,] 
-		 10: COPY def_%v_15 key[6.2,] %v_14[8.9,] 
+		 10: COPY def_%v_15 key[6.2,2.5,] %v_14[8.9,] 
 		 11: %v_12->update def_%v_16 %v_12[8.7,] %v_15[8.10,] 
 		 12: 
-		 13: %self->send def_%v_17 %self[8.2,8.7,8.8,2.0,] key[6.2,] %self[8.2,8.7,8.8,2.0,] 
-CLOSURE BEGIN: %self[8.2,8.7,8.8,2.0,] key[6.2,] default[3.0,2.6,] 
+		 13: %self->send def_%v_17 %self[8.2,8.7,8.8,2.0,] key[6.2,2.5,] %self[8.2,8.7,8.8,2.0,] 
+CLOSURE BEGIN: %self[8.2,8.7,8.8,2.0,] key[6.2,2.5,] default[3.0,2.6,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -948,9 +948,9 @@ BB 9
 CLOSURE END
 		 14: 
 		 15: COPY def_%v_18 
-		 16: def_%v_19 key[6.2,] %v_18[8.15,] 
+		 16: def_%v_19 key[6.2,2.5,] %v_18[8.15,] 
 		 17: %self->send def_%v_20 %self[8.2,8.7,8.8,8.13,2.0,] %v_19[8.16,] %self[8.2,8.7,8.8,8.13,2.0,] 
-CLOSURE BEGIN: %self[8.2,8.7,8.8,8.13,2.0,] key[6.2,] newval[] 
+CLOSURE BEGIN: %self[8.2,8.7,8.8,8.13,2.0,] key[6.2,2.5,] newval[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1025,7 +1025,7 @@ BB 5
 	instructions:
 		 0: COPY def_%v_6 
 		 1: ATTRASSIGN %self->@fieldmap %self[2.0,] %v_6[5.0,] 
-		 2: RETURN %v_6[5.0,] %self[2.0,] 
+		 2: RETURN %v_6[5.0,] %self[5.1,2.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
@@ -1071,7 +1071,7 @@ BB 5
 	instructions:
 		 0: COPY def_%v_6 
 		 1: ATTRASSIGN %self->@fields %self[2.0,] %v_6[5.0,] 
-		 2: RETURN %v_6[5.0,] %self[2.0,] 
+		 2: RETURN %v_6[5.0,] %self[5.1,2.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
@@ -1116,7 +1116,7 @@ BB 5
 		 0: 
 		 1: ATTRASSIGN %self->@description %self[2.0,] desc[3.0,2.5,] 
 		 2: COPY def_%v_3 desc[3.0,2.5,] 
-		 3: RETURN desc[3.0,2.5,] %self[2.0,] 
+		 3: RETURN desc[3.0,2.5,] %self[5.1,2.0,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
@@ -1233,20 +1233,20 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_4 %self[2.0,] 
+		 1: def_%v_4 %self[5.0,2.0,] 
 		 2: BRANCH %v_4[7.1,] 
 BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: %self->short_name def_%v_5 %self[2.0,] 
+		 0: %self->short_name def_%v_5 %self[5.0,2.0,] 
 		 1: %v_5->humanize def_%v_6 %v_5[8.0,] 
-		 2: RETURN %v_6[8.1,] %self[8.0,2.0,] 
+		 2: RETURN %v_6[8.1,] %self[8.0,5.0,2.0,] 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: RETURN %v_4[7.1,] %self[2.0,] 
+		 0: RETURN %v_4[7.1,] %self[5.0,2.0,] 
 BB 10
 	outgoing: 
 	datadep: 
@@ -1272,7 +1272,7 @@ BB 2
 		 8: def_%v_4 %v_3[2.7,] klass[2.5,] 
 		 9: 
 		 10: ATTRASSIGN %self->@available_sidebar_types %self[2.0,2.7,] 
-		 11: RETURN %self[2.0,2.7,] 
+		 11: RETURN %self[2.0,2.7,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -1360,7 +1360,7 @@ BB 5
 	instructions:
 		 0: COPY def_%v_6 
 		 1: ATTRASSIGN %self->@registered_sidebars %self[2.0,] %v_6[5.0,] 
-		 2: RETURN %v_6[5.0,] %self[2.0,] 
+		 2: RETURN %v_6[5.0,] %self[5.1,2.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
@@ -1431,7 +1431,7 @@ BB 3
 		 1: s->staged_position def_%cl_2_3 s[2.2,] 
 		 2: ATTRASSIGN s->active_position s[3.1,2.2,] %cl_2_3[3.1,] 
 		 3: 
-		 4: s->save! def_%cl_2_4 s[3.1,3.2,] 
+		 4: s->save! def_%cl_2_4 s[3.1,3.2,2.2,] 
 		 5: RETURN %cl_2_4[3.4,] %self[2.0,] 
 BB 4
 	outgoing: 6 

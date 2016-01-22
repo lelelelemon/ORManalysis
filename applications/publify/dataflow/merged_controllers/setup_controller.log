@@ -42,15 +42,15 @@ BB 3
 		 19: %v_12->new def_%v_19 %v_12[3.12,] %v_18[3.18,] 
 		 20: ATTRASSIGN %self->@user %self[3.2,3.3,3.8,3.9,3.14,2.0,] %v_19[3.19,] 
 		 21: 
-		 22: def_%v_20 %self[3.2,3.3,3.8,3.9,3.14,2.0,] 
+		 22: def_%v_20 %self[3.2,3.3,3.8,3.9,3.14,3.20,2.0,] 
 		 23: %v_20->generate_password! def_%v_21 %v_20[3.22,] 
 		 24: 
-		 25: def_%v_22 %self[3.2,3.3,3.8,3.9,3.14,2.0,] 
-		 26: def_%v_23 %self[3.2,3.3,3.8,3.9,3.14,2.0,] 
+		 25: def_%v_22 %self[3.2,3.3,3.8,3.9,3.14,3.20,2.0,] 
+		 26: def_%v_23 %self[3.2,3.3,3.8,3.9,3.14,3.20,2.0,] 
 		 27: %v_23->login def_%v_24 %v_23[3.26,] 
 		 28: ATTRASSIGN %v_22->name %v_22[3.25,] %v_24[3.27,] 
 		 29: 
-		 30: %self->this_blog def_%v_25 %self[3.2,3.3,3.8,3.9,3.14,2.0,] 
+		 30: %self->this_blog def_%v_25 %self[3.2,3.3,3.8,3.9,3.14,3.20,2.0,] 
 		 31: %v_25->valid? def_%v_26 %v_25[3.30,] 
 		 32: BRANCH %v_26[3.31,] 
 BB 4
@@ -62,7 +62,7 @@ BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: def_%v_27 %self[2.0,] 
+		 0: def_%v_27 %self[3.20,2.0,] 
 		 1: %v_27->valid? def_%v_28 %v_27[6.0,] 
 		 2: COPY def_%v_26 %v_28[6.1,] 
 BB 7
@@ -76,7 +76,7 @@ BB 8
 	instructions:
 		 0: COPY def_%v_29 
 		 1: 
-		 2: %self->this_blog def_%v_32 %self[2.0,] 
+		 2: %self->this_blog def_%v_32 %self[3.20,2.0,] 
 		 3: %v_32->save def_%v_33 %v_32[8.2,] 
 		 4: BRANCH %v_33[8.3,] 
 BB 9
@@ -84,62 +84,62 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->setup_url def_%v_30 %self[2.0,] 
-		 2: %self->redirect_to def_%v_31 %self[9.1,2.0,] %v_30[9.1,] 
+		 1: %self->setup_url def_%v_30 %self[3.20,2.0,] 
+		 2: %self->redirect_to def_%v_31 %self[9.1,3.20,2.0,] %v_30[9.1,] 
 		 3: 
-		 4: RETURN %self[9.1,9.2,2.0,] 
+		 4: RETURN %self[9.1,9.2,3.20,2.0,] 
 BB 11
 	outgoing: 14 15 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_34 
 		 1: 
-		 2: %self->session def_%v_35 %self[2.0,] 
-		 3: def_%v_36 %self[11.2,2.0,] 
+		 2: %self->session def_%v_35 %self[3.20,2.0,] 
+		 3: def_%v_36 %self[11.2,3.20,2.0,] 
 		 4: %v_36->password def_%v_37 %v_36[11.3,] 
 		 5: %v_35[11.2,] %v_37[11.4,] 
 		 6: 
-		 7: def_%v_38 %self[11.2,2.0,] 
+		 7: def_%v_38 %self[11.2,3.20,2.0,] 
 		 8: %v_38->save def_%v_39 %v_38[11.7,] 
 		 9: BRANCH %v_39[11.8,] 
 BB 12
 	outgoing: 20 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[3.20,2.0,] 
 BB 14
 	outgoing: 17 18 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_40 
 		 1: 
-		 2: def_%v_41 %self[2.0,] 
-		 3: ATTRASSIGN %self->current_user %self[2.0,] %v_41[14.2,] 
+		 2: def_%v_41 %self[3.20,2.0,] 
+		 3: ATTRASSIGN %self->current_user %self[3.20,2.0,] %v_41[14.2,] 
 		 4: 
-		 5: %self->session def_%v_42 %self[14.3,] 
-		 6: def_%v_43 %self[14.3,14.5,] 
+		 5: %self->session def_%v_42 %self[14.3,3.20,2.0,] 
+		 6: def_%v_43 %self[14.3,14.5,3.20,2.0,] 
 		 7: %v_43->id def_%v_44 %v_43[14.6,] 
 		 8: %v_42[14.5,] %v_44[14.7,] 
 		 9: 
 		 10: (User) def_%v_45 
 		 11: %v_45->count def_%v_46 %v_45[14.10,] 
-		 12: def_%v_47 %v_46[14.11,] 
+		 12: %v_46->== def_%v_47 %v_46[14.11,] 
 		 13: BRANCH %v_47[14.12,] 
 BB 15
 	outgoing: 20 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[3.20,2.0,] 
 BB 17
 	outgoing: 19 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_48 %self[14.3,] 
-		 2: %self->update_or_create_first_post_with_user def_%v_49 %self[14.3,] %v_48[17.1,] 
+		 1: def_%v_48 %self[14.3,3.20,2.0,] 
+		 2: %self->update_or_create_first_post_with_user def_%v_49 %self[14.3,3.20,2.0,] %v_48[17.1,] 
 		 3: 
-		 4: def_%v_50 %self[17.2,14.3,] 
-		 5: %self->create_first_page def_%v_51 %self[17.2,14.3,] %v_50[17.4,] 
+		 4: def_%v_50 %self[17.2,14.3,3.20,2.0,] 
+		 5: %self->create_first_page def_%v_51 %self[17.2,14.3,3.20,2.0,] %v_50[17.4,] 
 		 6: 
 BB 18
 	outgoing: 19 
@@ -151,13 +151,13 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->confirm_accounts_url def_%v_52 %self[14.3,] 
-		 2: %self->redirect_to def_%v_53 %self[19.1,14.3,] %v_52[19.1,] 
+		 1: %self->confirm_accounts_url def_%v_52 %self[14.3,3.20,2.0,] 
+		 2: %self->redirect_to def_%v_53 %self[19.1,14.3,3.20,2.0,] %v_52[19.1,] 
 		 3: 
 		 4: COPY def_%v_54 
 		 5: COPY def_%v_55 %v_54[19.4,] 
-		 6: def_%v_56 %self[19.1,19.2,14.3,] %v_55[19.5,] %self[19.1,19.2,14.3,] 
-CLOSURE BEGIN: %self[19.1,19.2,14.3,] 
+		 6: def_%v_56 %self[19.1,19.2,14.3,3.20,2.0,] %v_55[19.5,] %self[19.1,19.2,14.3,3.20,2.0,] 
+CLOSURE BEGIN: %self[19.1,19.2,14.3,3.20,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -209,7 +209,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 7: RETURN %v_56[19.6,] %self[19.1,19.2,14.3,] 
+		 7: RETURN %v_56[19.6,] %self[19.1,19.2,14.3,3.20,2.0,] 
 BB 20
 	outgoing: 
 	datadep: 
@@ -243,7 +243,7 @@ BB 3
 		 0: 
 		 1: ATTRASSIGN art->user art[2.9,] user[2.5,] 
 		 2: 
-		 3: art->save def_%v_5 art[3.1,] 
+		 3: art->save def_%v_5 art[3.1,2.9,] 
 		 4: RETURN %v_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 

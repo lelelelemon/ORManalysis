@@ -95,7 +95,7 @@ BB 6
 		 2: %self->title def_%v_9 %self[2.0,] 
 		 3: %v_9->to_permalink def_%v_10 %v_9[6.2,] 
 		 4: ATTRASSIGN %self->permalink %self[6.2,2.0,] %v_10[6.3,] 
-		 5: RETURN %v_10[6.3,] %self[6.2,6.4,] 
+		 5: RETURN %v_10[6.3,] %self[6.2,6.4,2.0,] 
 BB 8
 	outgoing: 
 	datadep: 
@@ -351,7 +351,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_7 %self[2.0,] 
+		 1: def_%v_7 %self[9.1,2.0,] 
 		 2: def_%v_9 anchor[3.0,2.5,] only_path[5.0,4.0,] 
 		 3: def_%v_8 %v_7[10.1,] %v_9[10.2,] 
 		 4: BRANCH %v_8[10.3,] 
@@ -359,17 +359,17 @@ BB 11
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: %self->blog def_%v_10 %self[2.0,] 
-		 1: %self->permalink_url_options def_%v_11 %self[11.0,2.0,] 
+		 0: %self->blog def_%v_10 %self[9.1,2.0,] 
+		 1: %self->permalink_url_options def_%v_11 %self[11.0,9.1,2.0,] 
 		 2: COPY def_%v_12 anchor[3.0,2.5,] only_path[5.0,4.0,] 
 		 3: %v_10->url_for def_%v_13 %v_10[11.0,] %v_11[11.1,] %v_12[11.2,] 
 		 4: def_%v_8 %v_7[10.1,] %v_9[10.2,] %v_13[11.3,] 
-		 5: RETURN %v_13[11.3,] %self[11.0,11.1,2.0,] 
+		 5: RETURN %v_13[11.3,] %self[11.0,11.1,9.1,2.0,] 
 BB 12
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: RETURN %v_8[10.3,] %self[2.0,] 
+		 0: RETURN %v_8[10.3,] %self[9.1,2.0,] 
 BB 13
 	outgoing: 
 	datadep: 
@@ -865,7 +865,7 @@ BB 2
 		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: COPY def_%v_7 
 		 11: %v_6->order def_%v_8 %v_6[2.9,] %v_7[2.10,] 
-		 12: def_%v_9 %v_8[2.11,] 
+		 12: %v_8->limit def_%v_9 %v_8[2.11,] 
 		 13: %v_9->first def_%v_10 %v_9[2.12,] 
 		 14: RETURN %v_10[2.13,] %self[2.0,2.8,] 
 BB 3
@@ -894,7 +894,7 @@ BB 2
 		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: COPY def_%v_7 
 		 11: %v_6->order def_%v_8 %v_6[2.9,] %v_7[2.10,] 
-		 12: def_%v_9 %v_8[2.11,] 
+		 12: %v_8->limit def_%v_9 %v_8[2.11,] 
 		 13: %v_9->first def_%v_10 %v_9[2.12,] 
 		 14: RETURN %v_10[2.13,] %self[2.0,2.8,] 
 BB 3
@@ -1075,7 +1075,7 @@ BB 15
 		 4: req_params[6.0,3.1,2.15,] %v_20[15.3,] 
 		 5: 
 		 6: %self->published def_%v_21 %self[2.0,] 
-		 7: %v_21->find_by def_%v_22 %v_21[15.6,] req_params[15.4,] 
+		 7: %v_21->find_by def_%v_22 %v_21[15.6,] req_params[15.4,6.0,3.1,2.15,] 
 		 8: COPY def_article %v_22[15.7,] 
 		 9: 
 		 10: BRANCH %v_22[15.7,] 
@@ -1083,7 +1083,7 @@ BB 16
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: RETURN article[15.8,] %self[2.0,] 
+		 0: RETURN article[15.8,10.4,] %self[2.0,] 
 BB 17
 	outgoing: 20 
 	datadep: 
@@ -1583,7 +1583,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: ATTRASSIGN %self->extended %self[2.0,2.12,] %v_6[3.1,2.14,] 
-		 1: RETURN %v_6[3.1,2.14,] %self[4.0,] 
+		 1: RETURN %v_6[3.1,2.14,] %self[4.0,2.0,2.12,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -1822,7 +1822,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: %self[2.0,] %v_6[6.2,5.1,] 
-		 1: RETURN %v_6[6.2,5.1,] %self[7.0,] 
+		 1: RETURN %v_6[6.2,5.1,] %self[7.0,2.0,] 
 BB 8
 	outgoing: 10 
 	datadep: 
