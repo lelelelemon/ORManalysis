@@ -1,102 +1,34 @@
 require "yard"
 require "fileutils"
 
+load "helper.rb"
+
 $view_path = ARGV[0]
 $new_view_path = ARGV[1]
 
-def get_filename_from_path(filename)
-	i = filename.rindex('/')
-	if i == nil
-		return nil
-	end
-	n = filename[i+1..-1]
-	return n
-end
-
-def get_nested_path(filepath, basepath)
-	i = filepath.rindex(basepath)
-	j = filepath.rindex('/')
-	if i == nil or j == nil
-		return nil
-	end
-	n = filepath[i+basepath.length..j]
-	return n
-end
-
-def parse_render_params(line)
-	line = line.to_s	
-	line = line.split("\n")[0]
-	line.gsub! "render", ""
-	line.gsub! "\"", ""
-	line.gsub! "'", ""
-	line.gsub! " ", ""
-	line.gsub! "\t", ""
-	if line.start_with?'{' or line.start_with?"("
-		line = line[1..-1]
-	end
-	if line.end_with?')' or line.end_with? == '}'
-		line = line[0..-2]
-	end
-	items = line.split(',')
-
-	
-	if not (items[0].include?":action" or items[0].include?":template" or items[0].include?":partial")
-		return items[0]
-	end
-
-	items.each do |item|
-		item.strip!
-		#puts item 
-		a = item.split("=>")
-		#puts a
-		if a[0] == ':action' or a[0] == ':template' or a[0] == ':partial'
-		#	puts a[1]
-			return a[1]
-		end
-	end
-
-end
-
-def traverse_routes_mapping2(astnode, nested_path, render_view_mapping, dep)
+def traverse_routes_mapping(astnode, nested_path, render_view_mapping, dep)
 	cur_astnode = astnode
 	if cur_astnode == nil 
 		return
 	elsif (cur_astnode.source.start_with?("render ") or cur_astnode.source.start_with?("render(")) and (cur_astnode.type.to_s == "fcall" or cur_astnode.type.to_s == "command" or cur_astnode.type.to_s == "list")
 		astnode = cur_astnode
-
-		puts cur_astnode.source	
 		template = parse_render_params(cur_astnode.source)
 		add_render_view(astnode, nested_path, template, render_view_mapping, dep)
 	elsif cur_astnode.source.start_with?"render"
-		#puts cur_astnode.source
-		#puts cur_astnode.type.to_s
+		puts cur_astnode.source
+		puts cur_astnode.type.to_s
 	else
-		cur_astnode.children.each {|x| traverse_routes_mapping2(x, nested_path, render_view_mapping, dep) }
+		cur_astnode.children.each {|x| traverse_routes_mapping(x, nested_path, render_view_mapping, dep) }
 	end
 
 end
 
-def add_render_view (astnode, nested_path, view_name, render_view_mapping, dep)
-	view_name = view_name.to_s
-	if view_name.start_with?"/"
-		view_name = view_name[1..-1]
-	end
-	view_name.gsub! "\"", ""
-	view_name.gsub! "'", ""
-	view_name.gsub! " ", ""
-	view_name.gsub! ".html.erb", ""
-	controller_name = nested_path[0..-2]
-	if view_name.include? '/'
-		
-		view_name = view_name.split('/')
-		controller_name = view_name[0]
-		view_name = view_name[1]
-	end
-	
-	puts "controller_name: " + controller_name
-	puts "view name: " + view_name
+def split_controller_view(controller_view)
+	temp = controller_view.split "/"
+	return temp[0], temp[1]
+end
 
-	# determine the view file location and name
+def pick_right_view_path(controller_name, view_name)
 	if controller_name != ""
 		path = $view_path + controller_name + "/_" + view_name + ".html.erb.rb"
 	else	
@@ -124,37 +56,43 @@ def add_render_view (astnode, nested_path, view_name, render_view_mapping, dep)
 		end
 	end
 	if !File.exist?(path)
-		puts path, "NOT EXISTS!"
+		path = nil
 		#puts $view_path
-		return
 	end
+	return path
+end
 
-
+def add_render_view (astnode, nested_path, view_name, render_view_mapping, dep)
+	view_name = view_name.to_s
+	if view_name.start_with?"/"
+		view_name = view_name[1..-1]
+	end
+	view_name.gsub! /"' \t\n/, ""
+	view_name.gsub! ".html.erb", ""
+	controller_name = nested_path[0..-2]
+	if view_name.include? '/'
+		controller_name, view_name = split_controller_view(view_name)
+	end
+	
+	# determine the view file location and name
 
 	#view_file = File.open(path)
-	view_contents = handle_single_file(path, dep+1)
 
+	path = pick_right_view_path(controller_name, view_name)
+	return if path == nil
+	view_contents = handle_single_file(path, dep+1)
 
 	view_contents = "ruby_code_from_view.ruby_code_from_view do |rb_from_view| \n#{view_contents}\nend\n"
 	
 	#puts astnode.source
 
-	key = ""
 	if astnode.parent.source.start_with?("return render")
 		render_view_mapping[astnode.parent.source] = view_contents
-		key = astnode.parent.source
 	elsif astnode.source.end_with?("\te") or astnode.source.end_with?("\ne") or astnode.source.end_with?(" e")
 		render_view_mapping[astnode.source[0..-3]] = view_contents
-		key = astnode.source[0..-3]
 	else
 		render_view_mapping[astnode.source] = view_contents
-		key = astnode.source
 	end
-	puts key
-	puts view_contents
-
-
-
 end
 
 def handle_single_file(item, dep)
@@ -174,7 +112,7 @@ def handle_single_file(item, dep)
 		#the render statement and the render view is a hash mapping
 		render_view_mapping = Hash.new
 	
-		traverse_routes_mapping2(view_ast, nested_path, render_view_mapping, dep)
+		traverse_routes_mapping(view_ast, nested_path, render_view_mapping, dep)
 
 		#replace all render statement by the view file 
 		render_view_mapping.each do |key, value|
