@@ -24,8 +24,8 @@ def get_nested_path(filepath, basepath)
 end
 
 def parse_render_params(line)
-
 	line = line.to_s	
+	line = line.split("\n")[0]
 	line.gsub! "render", ""
 	line.gsub! "\"", ""
 	line.gsub! "'", ""
@@ -46,11 +46,11 @@ def parse_render_params(line)
 
 	items.each do |item|
 		item.strip!
-		puts item 
+		#puts item 
 		a = item.split("=>")
-		puts a
+		#puts a
 		if a[0] == ':action' or a[0] == ':template' or a[0] == ':partial'
-			puts a[1]
+		#	puts a[1]
 			return a[1]
 		end
 	end
@@ -93,15 +93,15 @@ def add_render_view (astnode, nested_path, view_name, render_view_mapping, dep)
 		view_name = view_name[1]
 	end
 	
-	puts controller_name
-	puts view_name
+	puts "controller_name: " + controller_name
+	puts "view name: " + view_name
 
 	# determine the view file location and name
 	if controller_name != ""
 		path = $view_path + controller_name + "/_" + view_name + ".html.erb.rb"
 	else	
 		path = $view_path + "_" + view_name + ".html.erb.rb"
-	end 
+	end
 	if !File.exist?(path)
 		if controller_name != ""
 			path = $view_path + controller_name + "/" + view_name + ".html.erb.rb"
@@ -124,7 +124,7 @@ def add_render_view (astnode, nested_path, view_name, render_view_mapping, dep)
 		end
 	end
 	if !File.exist?(path)
-		#puts path
+		puts path, "NOT EXISTS!"
 		#puts $view_path
 		return
 	end
@@ -139,13 +139,19 @@ def add_render_view (astnode, nested_path, view_name, render_view_mapping, dep)
 	
 	#puts astnode.source
 
+	key = ""
 	if astnode.parent.source.start_with?("return render")
 		render_view_mapping[astnode.parent.source] = view_contents
+		key = astnode.parent.source
 	elsif astnode.source.end_with?("\te") or astnode.source.end_with?("\ne") or astnode.source.end_with?(" e")
-		render_view_mapping[astnode.source[0..-2]] = view_contents
+		render_view_mapping[astnode.source[0..-3]] = view_contents
+		key = astnode.source[0..-3]
 	else
 		render_view_mapping[astnode.source] = view_contents
+		key = astnode.source
 	end
+	puts key
+	puts view_contents
 
 
 
@@ -172,13 +178,17 @@ def handle_single_file(item, dep)
 
 		#replace all render statement by the view file 
 		render_view_mapping.each do |key, value|
+			puts view_contents
+			puts key
+			puts view_contents.include?key
 	#		puts key, value
 			view_contents.gsub! key, value
 		end
+		puts view_contents
 	#end
 	end
 	
-
+	puts view_contents
 	return view_contents
 
 end
@@ -202,4 +212,4 @@ def replace_render_stmt
 end
 
 replace_render_stmt
-#handle_single_file("views/customers/edit.html.erb.rb")
+#handle_single_file("views/news_items/edit.html.erb.rb", 0)
