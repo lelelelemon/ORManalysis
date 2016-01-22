@@ -57,7 +57,7 @@ def parse_render_params(line)
 
 end
 
-def traverse_routes_mapping2(astnode, nested_path)
+def traverse_routes_mapping2(astnode, nested_path, render_view_mapping, dep)
 	cur_astnode = astnode
 	if cur_astnode == nil 
 		return
@@ -66,16 +66,17 @@ def traverse_routes_mapping2(astnode, nested_path)
 
 		puts cur_astnode.source	
 		template = parse_render_params(cur_astnode.source)
-		add_render_view(astnode, nested_path, template)
+		add_render_view(astnode, nested_path, template, render_view_mapping, dep)
 	elsif cur_astnode.source.start_with?"render"
 		#puts cur_astnode.source
 		#puts cur_astnode.type.to_s
 	else
-		cur_astnode.children.each {|x| traverse_routes_mapping2(x, nested_path) }
+		cur_astnode.children.each {|x| traverse_routes_mapping2(x, nested_path, render_view_mapping, dep) }
 	end
+
 end
 
-def add_render_view (astnode, nested_path, view_name)
+def add_render_view (astnode, nested_path, view_name, render_view_mapping, dep)
 	view_name = view_name.to_s
 	if view_name.start_with?"/"
 		view_name = view_name[1..-1]
@@ -130,55 +131,55 @@ def add_render_view (astnode, nested_path, view_name)
 
 
 
-	view_file = File.open(path)
-	view_contents = view_file.read
+	#view_file = File.open(path)
+	view_contents = handle_single_file(path, dep+1)
+
 
 	view_contents = "ruby_code_from_view.ruby_code_from_view do |rb_from_view| \n#{view_contents}\nend\n"
 	
 	#puts astnode.source
 
 	if astnode.parent.source.start_with?("return render")
-		$render_view_mapping[astnode.parent.source] = view_contents
+		render_view_mapping[astnode.parent.source] = view_contents
 	elsif astnode.source.end_with?("\te") or astnode.source.end_with?("\ne") or astnode.source.end_with?(" e")
-		$render_view_mapping[astnode.source[0..-2]] = view_contents
+		render_view_mapping[astnode.source[0..-2]] = view_contents
 	else
-		$render_view_mapping[astnode.source] = view_contents
+		render_view_mapping[astnode.source] = view_contents
 	end
 
-	view_file.close
+
+
 end
 
-def handle_single_file(item)
+def handle_single_file(item, dep)
 
 	view_file = File.open(item, "r")
 	view_contents = view_file.read
 	nested_path = get_nested_path(item, $view_path)
 	filename = get_filename_from_path(item)
 	view_file.close
-	i = 0
-	while view_contents.include?"render" and i < 10
+	#while view_contents.include?"render" and i < 10
 		
-		File.write("log2.txt", view_contents + "\n" + item)
+	File.write("log2.txt", view_contents + "\n" + item)
+	if dep < 10
 		view_ast = YARD::Parser::Ruby::RubyParser.parse(view_contents).root
 
 		
 		#the render statement and the render view is a hash mapping
-		$render_view_mapping = Hash.new
-		traverse_routes_mapping2(view_ast, nested_path)
+		render_view_mapping = Hash.new
+	
+		traverse_routes_mapping2(view_ast, nested_path, render_view_mapping, dep)
 
 		#replace all render statement by the view file 
-		$render_view_mapping.each do |key, value|
+		render_view_mapping.each do |key, value|
 	#		puts key, value
 			view_contents.gsub! key, value
 		end
-		i += 1
+	#end
 	end
 	
-	if not File.directory?($new_view_path + nested_path)
-		FileUtils.mkdir_p $new_view_path + nested_path
-	end
 
-	File.write($new_view_path + nested_path + filename, view_contents)
+	return view_contents
 
 end
 
@@ -187,7 +188,15 @@ def replace_render_stmt
 		if not item.end_with?(".erb.rb")
 			next
 		end
-		handle_single_file(item)
+		view_contents = handle_single_file(item, 0)
+
+		nested_path = get_nested_path(item, $view_path)
+		filename = get_filename_from_path(item)
+		if not File.directory?($new_view_path + nested_path)
+			FileUtils.mkdir_p $new_view_path + nested_path
+		end
+
+		File.write($new_view_path + nested_path + filename, view_contents)
 
 	end
 end
