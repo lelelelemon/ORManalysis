@@ -16,7 +16,7 @@ BB 2
 		 6: (Rails) def_%v_3 
 		 7: %v_3->application def_%v_4 %v_3[2.6,] 
 		 8: %v_4->allow_invitation_requests? def_%v_5 %v_4[2.7,] 
-		 9: BRANCH 
+		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 6 
 	datadep: 
@@ -25,7 +25,7 @@ BB 3
 		 1: (InvitationRequest) def_%v_6 
 		 2: %v_6->new def_%v_7 %v_6[3.1,] 
 		 3: ATTRASSIGN %self->@invitation_request %v_7[3.2,] 
-		 4: RETURN %self[3.3,2.0,] 
+		 4: RETURN %v_7[3.2,] %self[3.3,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -33,11 +33,11 @@ BB 4
 		 0: 
 		 1: %self->flash def_%v_8 %self[2.0,] 
 		 2: COPY def_%v_9 
-		 3: %v_9[4.2,] 
+		 3: %v_8[4.1,] %v_9[4.2,] 
 		 4: 
 		 5: COPY def_%v_10 
 		 6: %self->redirect_to def_%v_11 %self[4.1,2.0,] %v_10[4.5,] 
-		 7: RETURN %self[4.1,4.6,2.0,] 
+		 7: RETURN %v_11[4.6,] %self[4.1,4.6,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -62,7 +62,7 @@ BB 2
 		 7: COPY def_%v_4 
 		 8: %v_3->where def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: ATTRASSIGN %self->@invitation_requests %v_5[2.8,] 
-		 10: RETURN %self[2.0,2.9,] 
+		 10: RETURN %v_5[2.8,] %self[2.0,2.9,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -87,13 +87,13 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_5->to_s def_%v_6 %v_5[2.8,] 
-		 10: COPY def_%v_7 
+		 10: COPY def_%v_7 %v_6[2.9,] 
 		 11: %v_3->where def_%v_8 %v_3[2.6,] %v_7[2.10,] 
 		 12: %v_8->first def_%v_9 %v_8[2.11,] 
-		 13: COPY def_ir 
-		 14: COPY def_%v_10 
+		 13: COPY def_ir %v_9[2.12,] 
+		 14: COPY def_%v_10 %v_9[2.12,] 
 		 15: %v_9->! def_%v_11 %v_9[2.12,] 
-		 16: BRANCH 
+		 16: BRANCH %v_11[2.15,] 
 BB 3
 	outgoing: 7 
 	datadep: 
@@ -101,11 +101,11 @@ BB 3
 		 0: 
 		 1: %self->flash def_%v_12 %self[2.0,] 
 		 2: COPY def_%v_13 
-		 3: %v_13[3.2,] 
+		 3: %v_12[3.1,] %v_13[3.2,] 
 		 4: 
 		 5: COPY def_%v_14 
 		 6: %self->redirect_to def_%v_15 %self[3.1,2.0,] %v_14[3.5,] 
-		 7: RETURN %self[3.1,3.6,2.0,] 
+		 7: RETURN %v_15[3.6,] %self[3.1,3.6,2.0,] 
 BB 4
 	outgoing: 7 
 	datadep: 
@@ -120,11 +120,11 @@ BB 4
 		 7: COPY def_%v_19 
 		 8: COPY def_%v_20 
 		 9: def_%v_21 %v_19[4.7,] %v_20[4.8,] 
-		 10: %v_21[4.9,] 
+		 10: %v_18[4.6,] %v_21[4.9,] 
 		 11: 
 		 12: COPY def_%v_22 
 		 13: %self->redirect_to def_%v_23 %self[4.6,2.0,] %v_22[4.12,] 
-		 14: RETURN %self[4.6,4.13,2.0,] 
+		 14: RETURN %v_23[4.13,] %self[4.6,4.13,2.0,] 
 BB 7
 	outgoing: 
 	datadep: 
@@ -147,9 +147,9 @@ BB 2
 		 5: 
 		 6: (Invitation) def_%v_3 
 		 7: %v_3->new def_%v_4 %v_3[2.6,] 
-		 8: COPY def_i 
+		 8: COPY def_i %v_4[2.7,] 
 		 9: 
-		 10: def_%v_5 
+		 10: def_%v_5 %self[2.0,] 
 		 11: %v_5->id def_%v_6 %v_5[2.10,] 
 		 12: ATTRASSIGN i->user_id %v_6[2.11,] 
 		 13: 
@@ -180,9 +180,9 @@ BB 4
 		 11: def_%v_21 %v_17[4.7,] %v_20[4.10,] 
 		 12: COPY def_%v_22 
 		 13: def_%v_23 %v_21[4.11,] %v_22[4.12,] 
-		 14: %v_23[4.13,] 
-		 15: COPY def_%v_13 
-		 16: 
+		 14: %v_16[4.6,] %v_23[4.13,] 
+		 15: COPY def_%v_13 %v_23[4.13,] 
+		 16: %v_11[2.22,] 
 BB 5
 	outgoing: 11 
 	datadep: 
@@ -193,13 +193,13 @@ BB 6
 	datadep: 
 	instructions:
 		 0: def_%v_24 
-		 1: def_%v_25 
-		 2: BRANCH 
+		 1: def_%v_25 %v_24[6.0,] 
+		 2: BRANCH %v_25[6.1,] 
 BB 7
 	outgoing: 10 15 
 	datadep: 
 	instructions:
-		 0: 
+		 0: %v_24[6.0,] 
 BB 8
 	outgoing: 9 10 
 	datadep: 
@@ -209,9 +209,9 @@ BB 8
 		 2: COPY def_%v_27 
 		 3: COPY def_%v_28 
 		 4: def_%v_29 %v_27[8.2,] %v_28[8.3,] 
-		 5: %v_29[8.4,] 
-		 6: COPY def_%v_13 
-		 7: 
+		 5: %v_26[8.1,] %v_29[8.4,] 
+		 6: COPY def_%v_13 %v_29[8.4,] 
+		 7: %v_11[2.22,] 
 BB 9
 	outgoing: 11 
 	datadep: 
@@ -222,8 +222,8 @@ BB 10
 	datadep: 
 	instructions:
 		 0: def_%v_30 
-		 1: def_%v_31 %v_11[2.22,] 
-		 2: 
+		 1: def_%v_31 %v_30[10.0,] %v_11[2.22,] 
+		 2: %v_30[10.0,] 
 BB 11
 	outgoing: 12 13 
 	datadep: 
@@ -231,7 +231,7 @@ BB 11
 		 0: 
 		 1: %self->params def_%v_32 %self[2.0,] 
 		 2: def_%v_33 %v_32[11.1,] 
-		 3: BRANCH 
+		 3: BRANCH %v_33[11.2,] 
 BB 12
 	outgoing: 15 
 	datadep: 
@@ -239,7 +239,7 @@ BB 12
 		 0: 
 		 1: COPY def_%v_34 
 		 2: %self->redirect_to def_%v_35 %self[2.0,] %v_34[12.1,] 
-		 3: RETURN %self[12.2,2.0,] 
+		 3: RETURN %v_35[12.2,] %self[12.2,2.0,] 
 BB 13
 	outgoing: 15 
 	datadep: 
@@ -247,7 +247,7 @@ BB 13
 		 0: 
 		 1: COPY def_%v_37 
 		 2: %self->redirect_to def_%v_38 %self[2.0,] %v_37[13.1,] 
-		 3: RETURN %self[13.2,2.0,] 
+		 3: RETURN %v_38[13.2,] %self[13.2,2.0,] 
 BB 15
 	outgoing: 
 	datadep: 
@@ -271,7 +271,7 @@ BB 2
 		 6: (Rails) def_%v_3 
 		 7: %v_3->application def_%v_4 %v_3[2.6,] 
 		 8: %v_4->allow_invitation_requests? def_%v_5 %v_4[2.7,] 
-		 9: BRANCH 
+		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 4 5 
 	datadep: 
@@ -284,14 +284,14 @@ BB 3
 		 5: %v_6->new def_%v_10 %v_6[3.1,] %v_9[3.4,] 
 		 6: ATTRASSIGN %self->@invitation_request %v_10[3.5,] 
 		 7: 
-		 8: def_%v_11 
+		 8: def_%v_11 %self[3.2,3.6,2.0,] 
 		 9: %self->request def_%v_12 %self[3.2,3.6,2.0,] 
 		 10: %v_12->remote_ip def_%v_13 %v_12[3.9,] 
 		 11: ATTRASSIGN %v_11->ip_address %v_13[3.10,] 
 		 12: 
-		 13: def_%v_14 
+		 13: def_%v_14 %self[3.2,3.6,3.9,2.0,] 
 		 14: %v_14->save def_%v_15 %v_14[3.13,] 
-		 15: BRANCH 
+		 15: BRANCH %v_15[3.14,] 
 BB 4
 	outgoing: 9 
 	datadep: 
@@ -306,11 +306,11 @@ BB 4
 		 7: def_%v_22 %v_17[4.2,] %v_21[4.6,] 
 		 8: COPY def_%v_23 
 		 9: def_%v_24 %v_22[4.7,] %v_23[4.8,] 
-		 10: %v_24[4.9,] 
+		 10: %v_16[4.1,] %v_24[4.9,] 
 		 11: 
 		 12: COPY def_%v_25 
 		 13: %self->redirect_to def_%v_26 %self[4.1,4.3,3.6,2.0,] %v_25[4.12,] 
-		 14: RETURN %self[4.1,4.3,4.13,3.6,2.0,] 
+		 14: RETURN %v_26[4.13,] %self[4.1,4.3,4.13,3.6,2.0,] 
 BB 5
 	outgoing: 8 
 	datadep: 
@@ -318,7 +318,7 @@ BB 5
 		 0: 
 		 1: COPY def_%v_28 
 		 2: %self->render def_%v_29 %self[3.6,2.0,] %v_28[5.1,] 
-		 3: COPY def_%v_27 
+		 3: COPY def_%v_27 %v_29[5.2,] 
 		 4: 
 BB 7
 	outgoing: 9 
@@ -327,12 +327,12 @@ BB 7
 		 0: 
 		 1: COPY def_%v_30 
 		 2: %self->redirect_to def_%v_31 %self[2.0,] %v_30[7.1,] 
-		 3: RETURN %self[7.2,2.0,] 
+		 3: RETURN %v_31[7.2,] %self[7.2,2.0,] 
 BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN %self[3.6,2.0,] 
+		 0: RETURN %v_27[5.3,] %self[3.6,2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -357,13 +357,13 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_5->to_s def_%v_6 %v_5[2.8,] 
-		 10: COPY def_%v_7 
+		 10: COPY def_%v_7 %v_6[2.9,] 
 		 11: %v_3->where def_%v_8 %v_3[2.6,] %v_7[2.10,] 
 		 12: %v_8->first def_%v_9 %v_8[2.11,] 
-		 13: COPY def_ir 
-		 14: COPY def_%v_10 
+		 13: COPY def_ir %v_9[2.12,] 
+		 14: COPY def_%v_10 %v_9[2.12,] 
 		 15: %v_9->! def_%v_11 %v_9[2.12,] 
-		 16: BRANCH 
+		 16: BRANCH %v_11[2.15,] 
 BB 3
 	outgoing: 7 
 	datadep: 
@@ -371,11 +371,11 @@ BB 3
 		 0: 
 		 1: %self->flash def_%v_12 %self[2.0,] 
 		 2: COPY def_%v_13 
-		 3: %v_13[3.2,] 
+		 3: %v_12[3.1,] %v_13[3.2,] 
 		 4: 
 		 5: COPY def_%v_14 
 		 6: %self->redirect_to def_%v_15 %self[3.1,2.0,] %v_14[3.5,] 
-		 7: RETURN %self[3.1,3.6,2.0,] 
+		 7: RETURN %v_15[3.6,] %self[3.1,3.6,2.0,] 
 BB 4
 	outgoing: 7 
 	datadep: 
@@ -384,9 +384,9 @@ BB 4
 		 1: 
 		 2: (Invitation) def_%v_17 
 		 3: %v_17->new def_%v_18 %v_17[4.2,] 
-		 4: COPY def_i 
+		 4: COPY def_i %v_18[4.3,] 
 		 5: 
-		 6: def_%v_19 
+		 6: def_%v_19 %self[2.0,] 
 		 7: %v_19->id def_%v_20 %v_19[4.6,] 
 		 8: ATTRASSIGN i->user_id %v_20[4.7,] 
 		 9: 
@@ -406,11 +406,11 @@ BB 4
 		 23: def_%v_29 %v_26[4.20,] %v_28[4.22,] 
 		 24: COPY def_%v_30 
 		 25: def_%v_31 %v_29[4.23,] %v_30[4.24,] 
-		 26: %v_31[4.25,] 
+		 26: %v_25[4.19,] %v_31[4.25,] 
 		 27: 
 		 28: COPY def_%v_32 
 		 29: %self->redirect_to def_%v_33 %self[4.19,2.0,] %v_32[4.28,] 
-		 30: RETURN %self[4.19,4.29,2.0,] 
+		 30: RETURN %v_33[4.29,] %self[4.19,4.29,2.0,] 
 BB 7
 	outgoing: 
 	datadep: 
@@ -431,10 +431,10 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: def_%v_3 %self[2.0,] 
 		 7: %v_3->is_moderator? def_%v_4 %v_3[2.6,] 
 		 8: %v_4->! def_%v_5 %v_4[2.7,] 
-		 9: BRANCH 
+		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 10 
 	datadep: 
@@ -442,7 +442,7 @@ BB 3
 		 0: 
 		 1: COPY def_%v_6 
 		 2: %self->redirect_to def_%v_7 %self[2.0,] %v_6[3.1,] 
-		 3: RETURN %self[3.2,2.0,] 
+		 3: RETURN %v_7[3.2,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 7 
 	datadep: 
@@ -453,13 +453,13 @@ BB 4
 		 3: %self->params def_%v_10 %self[2.0,] 
 		 4: def_%v_11 %v_10[4.3,] 
 		 5: %v_11->to_s def_%v_12 %v_11[4.4,] 
-		 6: COPY def_%v_13 
+		 6: COPY def_%v_13 %v_12[4.5,] 
 		 7: %v_9->where def_%v_14 %v_9[4.2,] %v_13[4.6,] 
 		 8: %v_14->first def_%v_15 %v_14[4.7,] 
-		 9: COPY def_ir 
-		 10: COPY def_%v_16 
+		 9: COPY def_ir %v_15[4.8,] 
+		 10: COPY def_%v_16 %v_15[4.8,] 
 		 11: %v_15->! def_%v_17 %v_15[4.8,] 
-		 12: BRANCH 
+		 12: BRANCH %v_17[4.11,] 
 BB 6
 	outgoing: 10 
 	datadep: 
@@ -467,11 +467,11 @@ BB 6
 		 0: 
 		 1: %self->flash def_%v_18 %self[2.0,] 
 		 2: COPY def_%v_19 
-		 3: %v_19[6.2,] 
+		 3: %v_18[6.1,] %v_19[6.2,] 
 		 4: 
 		 5: COPY def_%v_20 
 		 6: %self->redirect_to def_%v_21 %self[6.1,2.0,] %v_20[6.5,] 
-		 7: RETURN %self[6.1,6.6,2.0,] 
+		 7: RETURN %v_21[6.6,] %self[6.1,6.6,2.0,] 
 BB 7
 	outgoing: 10 
 	datadep: 
@@ -487,11 +487,11 @@ BB 7
 		 8: def_%v_28 %v_25[7.5,] %v_27[7.7,] 
 		 9: COPY def_%v_29 
 		 10: def_%v_30 %v_28[7.8,] %v_29[7.9,] 
-		 11: %v_30[7.10,] 
+		 11: %v_24[7.4,] %v_30[7.10,] 
 		 12: 
 		 13: COPY def_%v_31 
 		 14: %self->redirect_to def_%v_32 %self[7.4,2.0,] %v_31[7.13,] 
-		 15: RETURN %self[7.4,7.14,2.0,] 
+		 15: RETURN %v_32[7.14,] %self[7.4,7.14,2.0,] 
 BB 10
 	outgoing: 
 	datadep: 

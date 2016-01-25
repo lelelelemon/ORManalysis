@@ -15,7 +15,7 @@ BB 2
 		 5: 
 		 6: (Message) def_%v_3 
 		 7: %v_3->new def_%v_4 %v_3[2.6,] 
-		 8: COPY def_m 
+		 8: COPY def_m %v_4[2.7,] 
 		 9: 
 		 10: %self->moderator_user_id def_%v_5 %self[2.0,] 
 		 11: ATTRASSIGN m->author_user_id %v_5[2.10,] 
@@ -23,7 +23,7 @@ BB 2
 		 13: ATTRASSIGN m->deleted_by_author 
 		 14: 
 		 15: %self->story def_%v_6 %self[2.0,2.10,] 
-		 16: BRANCH 
+		 16: BRANCH %v_6[2.15,] 
 BB 3
 	outgoing: 4 5 
 	datadep: 
@@ -40,12 +40,12 @@ BB 3
 		 9: %self->story def_%v_11 %self[3.1,2.0,] 
 		 10: %v_11->title def_%v_12 %v_11[3.9,] 
 		 11: COPY def_%v_13 
-		 12: def_%v_14 %v_12[3.10,] %v_13[3.11,] 
+		 12: def_%v_14 %v_10[3.8,] %v_12[3.10,] %v_13[3.11,] 
 		 13: 
 		 14: %self->story def_%v_15 %self[3.1,3.9,2.0,] 
 		 15: %v_15->comments_url def_%v_16 %v_15[3.14,] 
 		 16: COPY def_%v_17 
-		 17: def_%v_18 %v_17[3.16,] 
+		 17: def_%v_18 %v_16[3.15,] %v_17[3.16,] 
 		 18: def_%v_19 %v_14[3.12,] %v_18[3.17,] 
 		 19: COPY def_%v_20 
 		 20: def_%v_21 %v_19[3.18,] %v_20[3.19,] 
@@ -55,13 +55,13 @@ BB 3
 		 24: 
 		 25: %self->action def_%v_25 %self[3.1,3.9,3.14,2.0,] 
 		 26: COPY def_%v_26 
-		 27: def_%v_27 %v_25[3.25,] %v_26[3.26,] 
+		 27: def_%v_27 %v_24[3.23,] %v_25[3.25,] %v_26[3.26,] 
 		 28: def_%v_28 %v_23[3.22,] %v_27[3.27,] 
 		 29: ATTRASSIGN m->body %v_28[3.28,] 
 		 30: 
 		 31: %self->reason def_%v_29 %self[3.1,3.9,3.14,3.25,2.0,] 
 		 32: %v_29->present? def_%v_30 %v_29[3.31,] 
-		 33: BRANCH 
+		 33: BRANCH %v_30[3.32,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -78,7 +78,7 @@ BB 4
 		 9: 
 		 10: %self->reason def_%v_39 %self[2.0,] 
 		 11: COPY def_%v_40 
-		 12: def_%v_41 %v_39[4.10,] %v_40[4.11,] 
+		 12: def_%v_41 %v_38[4.8,] %v_39[4.10,] %v_40[4.11,] 
 		 13: def_%v_42 %v_37[4.7,] %v_41[4.12,] 
 		 14: 
 BB 5
@@ -97,7 +97,7 @@ BB 7
 	instructions:
 		 0: 
 		 1: %self->comment def_%v_43 %self[2.0,] 
-		 2: BRANCH 
+		 2: BRANCH %v_43[7.1,] 
 BB 8
 	outgoing: 9 10 
 	datadep: 
@@ -115,13 +115,13 @@ BB 8
 		 10: %v_48->story def_%v_49 %v_48[8.9,] 
 		 11: %v_49->title def_%v_50 %v_49[8.10,] 
 		 12: COPY def_%v_51 
-		 13: def_%v_52 %v_50[8.11,] %v_51[8.12,] 
+		 13: def_%v_52 %v_47[8.8,] %v_50[8.11,] %v_51[8.12,] 
 		 14: 
 		 15: %self->comment def_%v_53 %self[8.1,8.9,2.0,] 
 		 16: %v_53->story def_%v_54 %v_53[8.15,] 
 		 17: %v_54->comments_url def_%v_55 %v_54[8.16,] 
 		 18: COPY def_%v_56 
-		 19: def_%v_57 %v_56[8.18,] 
+		 19: def_%v_57 %v_55[8.17,] %v_56[8.18,] 
 		 20: def_%v_58 %v_52[8.13,] %v_57[8.19,] 
 		 21: COPY def_%v_59 
 		 22: def_%v_60 %v_58[8.20,] %v_59[8.21,] 
@@ -130,13 +130,13 @@ BB 8
 		 25: %self->comment def_%v_62 %self[8.1,8.9,8.15,2.0,] 
 		 26: %v_62->comment def_%v_63 %v_62[8.25,] 
 		 27: COPY def_%v_64 
-		 28: def_%v_65 %v_63[8.26,] %v_64[8.27,] 
+		 28: def_%v_65 %v_61[8.23,] %v_63[8.26,] %v_64[8.27,] 
 		 29: def_%v_66 %v_60[8.22,] %v_65[8.28,] 
 		 30: ATTRASSIGN m->body %v_66[8.29,] 
 		 31: 
 		 32: %self->reason def_%v_67 %self[8.1,8.9,8.15,8.25,2.0,] 
 		 33: %v_67->present? def_%v_68 %v_67[8.32,] 
-		 34: BRANCH 
+		 34: BRANCH %v_68[8.33,] 
 BB 9
 	outgoing: 11 
 	datadep: 
@@ -153,7 +153,7 @@ BB 9
 		 9: 
 		 10: %self->reason def_%v_77 %self[2.0,] 
 		 11: COPY def_%v_78 
-		 12: def_%v_79 %v_77[9.10,] %v_78[9.11,] 
+		 12: def_%v_79 %v_76[9.8,] %v_77[9.10,] %v_78[9.11,] 
 		 13: def_%v_80 %v_75[9.7,] %v_79[9.12,] 
 		 14: 
 BB 10
@@ -165,7 +165,7 @@ BB 11
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_42 
+		 0: COPY def_%v_42 %v_80[10.0,9.13,] 
 BB 12
 	outgoing: 15 
 	datadep: 
@@ -184,7 +184,7 @@ BB 14
 		 5: def_%v_85 %v_83[14.3,] %v_84[14.4,] 
 		 6: 
 		 7: m->save def_%v_86 m[14.1,3.3,3.6,3.29,8.3,8.6,8.30,2.8,2.11,2.13,] 
-		 8: RETURN %self[2.0,] 
+		 8: RETURN %v_86[14.7,] %self[2.0,] 
 BB 15
 	outgoing: 
 	datadep: 
