@@ -24,6 +24,10 @@ def load_all_controllers(controller_path)
 end
 
 def load_all_views(view_path)
+	named_routes_path = "named_routes.txt"
+	named_routes_class = Named_Routes_Class.new(named_routes_path)
+	#puts named_routes_class.get_named_routes
+	
 	view_hash = Hash.new
 	Dir.glob(view_path + "**/*") do |item|
 		next if not item.end_with?".erb"
@@ -40,7 +44,17 @@ def load_all_views(view_path)
 		puts "forms: " + view_class.get_form_tags
 		puts "form_for: "
 		view_class.get_form_for_array.each do |form_for_tag|
-			puts form_for_tag.source
+			#puts form_for_tag.source
+			url_inside = false
+			named_routes_class.get_named_routes.each do |k, v|
+				if form_for_tag.source.include? k
+					puts "controller: " + v[0] + " action: " + v[1]
+					url_inside = true
+				end
+			end
+			if not url_inside
+				puts form_for_tag.source
+			end
 		end
 
 		puts "-------------------------"
@@ -48,8 +62,16 @@ def load_all_views(view_path)
 	end	
 end
 
+def load_named_routes(named_routes_path)
+	named_routes_class = Named_Routes_Class.new(named_routes_path)
+	puts named_routes_class.get_named_routes
+end
+
+#load_named_routes "named_routes.txt"
+
 #load_all_controllers("../app/controllers")
 load_all_views "../app/views/"
+
 
 #path = "../app/controllers/users_controller.rb"
 #

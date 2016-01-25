@@ -191,5 +191,33 @@ class Named_Routes_Class
 		@content
 	end
 
-	
+	def get_named_routes
+		@named_routes
+	end
+
+	def parse_content(content)
+		res = Hash.new
+
+		lines = content.split "\n"
+		num_of_lines = lines.length
+		i = 0
+		while i < num_of_lines
+			lines[i].strip
+			helper = lines[i]
+
+			lines[i+1] = lines[i+1][1..lines[i+1].rindex('}')-1]
+			lines[i+1].gsub! "\"", ""
+			items = lines[i+1].split ","
+			hash = Hash.new
+			items.each do |item|
+				item.strip!
+				a = item.split "=>"
+				hash[a[0]] = a[1]
+			end
+			
+			res[helper] = [hash[":controller"], hash[":action"]]			
+			i += 2
+		end
+		res
+	end	
 end
