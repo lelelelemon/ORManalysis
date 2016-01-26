@@ -1,0 +1,531 @@
+view_path: tags/index.html.erb
+controller: tags
+view: index
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+controller: home, action: tagged
+-------------------------
+view_path: stories/suggest.html.erb
+controller: stories
+view: suggest
+hrefs: 
+controller: stories, action: show
+forms: 
+form_for: 
+controller: stories, action: suggest
+controller: stories, action: show
+link_to: 
+-------------------------
+view_path: stories/show.html.erb
+controller: stories
+view: show
+hrefs: 
+
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: stories/_listdetail.html.erb
+controller: stories
+view: _listdetail
+hrefs: 
+
+controller: comments, action: index
+controller: comments, action: index
+controller: home, action: tagged
+controller: search, action: index
+controller: comments, action: index
+controller: home, action: tagged
+controller: search, action: index
+/u/<%= ms.user.username %>
+/u/<%= ms.user.username %>
+/u/<%= story.user.username %>
+
+/u/<%= story.user.username %>
+controller: stories, action: edit
+controller: stories, action: show
+
+
+controller: comments, action: index
+controller: comments, action: index
+forms: 
+form_for: 
+link_to: 
+controller: stories, action: hide
+controller: stories, action: unhide
+controller: stories, action: suggest
+controller: stories, action: show
+controller: stories, action: show
+controller: stories, action: undelete
+controller: login, action: index
+-------------------------
+view_path: stories/new.html.erb
+controller: stories
+view: new
+hrefs: 
+forms: 
+form_for: 
+form_for @story do |f| 
+ render :partial => "stories/form", :locals => { :story => @story,
+        :f => f } 
+ submit_tag "Submit" 
+ render :partial => "global/markdownhelp",
+            :locals => { :allow_images => true } 
+ end
+link_to: 
+-------------------------
+view_path: stories/edit.html.erb
+controller: stories
+view: edit
+hrefs: 
+controller: stories, action: show
+forms: 
+form_for: 
+controller: stories, action: show
+link_to: 
+-------------------------
+view_path: stories/_form.html.erb
+controller: stories
+view: _form
+hrefs: 
+controller: comments, action: index
+controller: comments, action: index
+<%= f.object.url %>
+#
+controller: home, action: index
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: email_reply/mention.text.erb
+controller: email_reply
+view: mention
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: email_reply/reply.text.erb
+controller: email_reply
+view: reply
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: invitation_request_mailer/invitation_request.text.erb
+controller: invitation_request_mailer
+view: invitation_request
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: settings/index.html.erb
+controller: settings
+view: index
+hrefs: 
+/u/<%= @user.username %>
+http://www.gravatar.com/
+/filters
+
+forms: 
+form_for: 
+controller: settings, action: delete_account
+controller: settings, action: index
+link_to: 
+link_to((f.object.pushover_user_key.present??
+        "Manage Pushover Subscription" : "Subscribe With Pushover"),
+        "/settings/pushover", :class => "pushover_button", :method => :post)
+-------------------------
+view_path: login/set_new_password.html.erb
+controller: login
+view: set_new_password
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: login/index.html.erb
+controller: login
+view: index
+hrefs: 
+/u/
+/invitations/request
+/chat
+forms: 
+form_for: 
+link_to: 
+controller: login, action: forgot_password
+-------------------------
+view_path: login/forgot_password.html.erb
+controller: login
+view: forgot_password
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: messages/show.html.erb
+controller: messages
+view: show
+hrefs: 
+/messages/sent
+/messages
+/u/<%= @message.author.username %>
+/u/<%= @message.recipient.username %>
+forms: 
+form_for: 
+form_for @new_message, :method => :post do |f| 
+ f.hidden_field :recipient_username 
+ error_messages_for @new_message 
+ f.text_field :subject, :style => "width: 500px;",
+          :autocomplete => "off" 
+ f.text_area :body, :style => "width: 500px;", :rows => 5,
+          :autocomplete => "off" 
+ submit_tag "Send Message" 
+ end
+link_to: 
+-------------------------
+view_path: messages/index.html.erb
+controller: messages
+view: index
+hrefs: 
+/messages
+/messages/sent
+/u/<%= message.author.username %>
+/u/<%= message.recipient.username %>
+/messages/<%= message.short_id %>
+forms: 
+form_for: 
+form_for @new_message, :method => :post do |f| 
+ error_messages_for @new_message 
+ f.label :recipient_username, "To:", :class => "required" 
+ f.text_field :recipient_username, :size => 20,
+        :autocomplete => "off" 
+ f.label :subject, "Subject:", :class => "required" 
+ f.text_field :subject, :style => "width: 500px;",
+        :autocomplete => "off" 
+ f.label :body, "Message:", :class => "required" 
+ f.text_area :body, :style => "width: 500px;", :rows => 5,
+        :autocomplete => "off" 
+ submit_tag "Send Message" 
+ end
+link_to: 
+-------------------------
+view_path: users/_invitationform.html.erb
+controller: users
+view: _invitationform
+hrefs: 
+/u
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: users/show.html.erb
+controller: users
+view: show
+hrefs: 
+/messages?to=<%= @showing_user.username %>
+/newest/<%= @showing_user.username %>
+controller: home, action: tagged
+/threads/<%= @showing_user.username %>
+<%= v.comment.short_id_url %>
+/u/<%= v.comment.user.try(:username) %>
+<%= v.story.short_id_url %>
+<%= v.story.short_id_url %>
+/u/<%= v.story.user.try(:username) %>
+forms: 
+form_for: 
+link_to: 
+link_to @showing_user.banned_by_user.try(:username),
+          @showing_user.banned_by_user 
+ @showing_user.banned_reason
+link_to @showing_user.invited_by_user.try(:username),
+        @showing_user.invited_by_user
+-------------------------
+view_path: users/tree.html.erb
+controller: users
+view: tree
+hrefs: 
+/u/<%= user.username %>
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: users/list.html.erb
+controller: users
+view: list
+hrefs: 
+/u/<%= user.username %>
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: comments/_comment.html.erb
+controller: comments
+view: _comment
+hrefs: 
+
+
+
+/u/<%= comment.user.username %>
+/u/<%= comment.user.username %>
+<%= comment.url %>
+
+
+
+
+controller: comments, action: index
+forms: 
+form_for: 
+link_to: 
+controller: login, action: index
+-------------------------
+view_path: comments/_commentbox.html.erb
+controller: comments
+view: _commentbox
+hrefs: 
+forms: 
+form_for: 
+form_for comment,
+:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
+ if comment.errors.any? 
+ errors_for comment 
+ end 
+ hidden_field_tag "story_id", comment.story.short_id 
+ if comment.parent_comment 
+ hidden_field_tag "parent_comment_short_id",
+      comment.parent_comment.short_id 
+ end 
+ text_area_tag "comment", comment.comment, :rows => 5,
+      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
+      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
+      
+ if @user 
+ end 
+ button_tag "#{comment.new_record?? "Post" : "Update"}",
+        :class => "comment-post", :type => "button",
+        :disabled => !@user 
+ button_tag "Preview", :class => "comment-preview",
+        :type => "button", :disabled => !@user 
+ if comment.persisted? || comment.parent_comment_id 
+ button_tag "Cancel", :class => "comment-cancel",
+          :type => "button" 
+ end 
+ if @user && @user.hats.any? 
+ select_tag "hat_id",
+          options_from_collection_for_select(@user.hats, "id", "hat",
+          comment.hat_id), :include_blank => true 
+ end 
+ if @user 
+ render :partial => "global/markdownhelp" 
+ end 
+ end
+link_to: 
+-------------------------
+view_path: comments/threads.html.erb
+controller: comments
+view: threads
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: comments/index.html.erb
+controller: comments
+view: index
+hrefs: 
+/comments<%= @page == 2 ? 
+/comments/page/<%= @page + 1 %>
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: comments/_postedreply.html.erb
+controller: comments
+view: _postedreply
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: comments/index.rss.erb
+controller: comments
+view: index
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: moderations/index.html.erb
+controller: moderations
+view: index
+hrefs: 
+/messages?to=<%= mod.moderator.try(:username) %>
+controller: comments, action: index
+<%= mod.comment.url %>
+/u/<%= mod.user.username %>
+/moderations/page/<%= @page - 1 %>
+/moderations/page/<%= @page + 1 %>
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: home/index.html.erb
+controller: home
+view: index
+hrefs: 
+/newest
+<%= @cur_url %><%= @cur_url == 
+<%= @cur_url %><%= @cur_url == 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: home/rss.erb
+controller: home
+view: rss
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+controller: comments, action: index
+-------------------------
+view_path: search/index.html.erb
+controller: search
+view: index
+hrefs: 
+/search?<%= raw(@search.to_url_params) %>&page=<%= p
+            %>
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: email_message/notify.text.erb
+controller: email_message
+view: notify
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: password_reset/password_reset_link.text.erb
+controller: password_reset
+view: password_reset_link
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: invitations/build.html.erb
+controller: invitations
+view: build
+hrefs: 
+/u/
+forms: 
+form_for: 
+controller: invitations, action: create_by_request
+link_to: 
+-------------------------
+view_path: invitations/index.html.erb
+controller: invitations
+view: index
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: filters/index.html.erb
+controller: filters
+view: index
+hrefs: 
+/tags
+/login
+forms: 
+form_for: 
+link_to: 
+controller: home, action: tagged
+-------------------------
+view_path: layouts/application.html.erb
+controller: layouts
+view: application
+hrefs: 
+
+<%= @cur_url %>
+<%= u %>
+/filters
+/messages
+/messages
+/settings
+/login
+/moderations
+/invitations
+/chat
+/bbs
+/privacy
+/about
+forms: 
+form_for: 
+link_to: 
+link_to "Logout", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Are you sure you want to logout?" },
+            :method => "post"
+-------------------------
+view_path: global/_markdownhelp.html.erb
+controller: global
+view: _markdownhelp
+hrefs: 
+http://example.com/
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: ban_notification/notify.text.erb
+controller: ban_notification
+view: notify
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: signup/index.html.erb
+controller: signup
+view: index
+hrefs: 
+/u/
+/invitations/request
+/chat
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: signup/invite.html.erb
+controller: signup
+view: invite
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
+view_path: signup/invited.html.erb
+controller: signup
+view: invited
+hrefs: 
+/u/<%= @invitation.user.username %>
+http://www.gravatar.com/
+forms: 
+form_for: 
+controller: signup, action: index
+link_to: 
+-------------------------
+view_path: invitation_mailer/invitation.text.erb
+controller: invitation_mailer
+view: invitation
+hrefs: 
+forms: 
+form_for: 
+link_to: 
+-------------------------
