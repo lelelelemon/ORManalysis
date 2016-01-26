@@ -78,7 +78,7 @@ def get_array_with_keyword(ast, keyword)
 	while ast_arr.length > 0
 		cur_ast = ast_arr.pop
 		if cur_ast.source.start_with? keyword 
-			res_arr.push cur_ast
+			res_arr.push cur_ast.source
 		else
 			cur_ast.children.each do |child|
 				ast_arr.push child
@@ -86,4 +86,21 @@ def get_array_with_keyword(ast, keyword)
 		end
 	end
 	return res_arr
+end
+
+def print_rails_tag(tag_arr, named_routes_class)
+	tag_arr.each do |tag|
+			#puts form_for_tag.source
+		url_inside = false
+		named_routes_class.get_named_routes.each do |k, v|
+			if tag.include? k
+				puts "controller: " + v[0] + ", action: " + v[1]
+				url_inside = true
+			end
+		end
+		if not url_inside
+			puts tag
+		end
+	end
+
 end

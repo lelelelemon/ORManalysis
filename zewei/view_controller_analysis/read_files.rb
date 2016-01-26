@@ -23,6 +23,37 @@ def load_all_controllers(controller_path)
 	end
 end
 
+def print_href_tags(tag_arr, named_routes_class)
+	res = "route = Rails.application.routes\n"
+	tag_arr.each do |tag|
+			#puts form_for_tag.source
+		url_inside = false
+		named_routes_class.get_named_routes.each do |k, v|
+			if tag.include? k
+				puts "controller: " + v[0] + ", action: " + v[1]
+				url_inside = true
+			end
+		end
+		if not url_inside
+			tag2 = tag + ""
+			tag.gsub! /<%.*%>/, "2"
+			res += ("route.recognize_path '" + tag + "' #" + tag2 + "\n")
+		end
+	end
+
+	File.write("temp.rb", res)
+
+	system("rails console < temp.rb > temp2.txt")
+	res = ""
+	File.readlines("temp2.txt").each do |line|
+		if line.start_with?"{" or line.start_with?"route.recognize"
+			res += line
+		end
+	end
+	puts res
+end
+
+
 def load_all_views(view_path)
 	named_routes_path = "named_routes.txt"
 	named_routes_class = Named_Routes_Class.new(named_routes_path)
@@ -35,27 +66,29 @@ def load_all_views(view_path)
 		view_hash[item] = View_Class.new(item, view_path)
 	end
 
-	view_hash.each do |item_path, view_class|
-		puts "view_path: " + item_path
-		puts "controller: " + view_class.get_controller_name
-		puts "view: " + view_class.get_view_name
-		puts "hrefs: " + view_class.get_href_tags
+#	view_hash["/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb"] = View_Class.new("/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb", view_path)
 
-		puts "forms: " + view_class.get_form_tags
-		puts "form_for: "
-		view_class.get_form_for_array.each do |form_for_tag|
-			#puts form_for_tag.source
-			url_inside = false
-			named_routes_class.get_named_routes.each do |k, v|
-				if form_for_tag.source.include? k
-					puts "controller: " + v[0] + " action: " + v[1]
-					url_inside = true
-				end
-			end
-			if not url_inside
-				puts form_for_tag.source
-			end
-		end
+	indent = "---"
+
+	view_hash.each do |item_path, view_class|
+		puts indent + "view_path: " + item_path
+		puts indent + "controller: " + view_class.get_controller_name
+		puts indent + "view: " + view_class.get_view_name
+
+		# get html tags
+		puts indent + "hrefs: "# + view_class.get_href_tags
+		print_href_tags(view_class.get_href_tag_array_from_html, named_routes_class)
+#		print_rails_tag(view_class.get_href_tag_array_from_html, named_routes_class)
+		puts indent + "forms: "
+		print_rails_tag(view_class.get_form_tag_array_from_html, named_routes_class)
+		
+
+		# get "ruby helper tags"
+		puts indent + "form_for: "
+		print_rails_tag(view_class.get_form_for_array, named_routes_class)
+
+		puts indent + "link_to: "
+		print_rails_tag(view_class.get_link_to_array, named_routes_class)
 
 		puts "-------------------------"
 
@@ -70,7 +103,7 @@ end
 #load_named_routes "named_routes.txt"
 
 #load_all_controllers("../app/controllers")
-load_all_views "../app/views/"
+load_all_views "./app/views/"
 
 
 #path = "../app/controllers/users_controller.rb"

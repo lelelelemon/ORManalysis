@@ -146,32 +146,38 @@ class View_Class
 		return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
 
-	def get_href_tags
+	def get_href_tag_array_from_html
 
 		page = Nokogiri::HTML(get_content)
-		res = ""
+		res = Array.new
 		page.css("a").each do |a|
 
 			href = a["href"]
 			href = "" if href == nil
-			res += href
-			res += "\n"
+			res.push(href)
 		end
 		return res
 	end
 
-	def get_form_tags
+	def get_form_tag_array_from_html
 		page = Nokogiri::HTML(get_content)
-		res = ""
+		res = Array.new
 		page.css("form").each do |form|
-			res += form
-			res += "\n"
+			res.push(form)
 		end
 		return res
 	end
 	
 	def get_form_for_array 
 		get_array_with_keyword @ast, "form_for"
+	end
+	
+	def get_link_to_array 
+		get_array_with_keyword @ast, "link_to"
+	end
+	
+	def get_button_to_array 
+		get_array_with_keyword @ast, "button_to"
 	end
 end 
 
@@ -215,7 +221,8 @@ class Named_Routes_Class
 				hash[a[0]] = a[1]
 			end
 			
-			res[helper] = [hash[":controller"], hash[":action"]]			
+			res[helper + "_path"] = [hash[":controller"], hash[":action"]]			
+			res[helper + "_url"] = [hash[":controller"], hash[":action"]]			
 			i += 2
 		end
 		res
