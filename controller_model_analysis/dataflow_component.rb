@@ -143,6 +143,10 @@ class Instruction
 		end
 		return s
 	end
+	def toString2
+		s = ""
+		return s
+	end 
 end
 
 class Call_instr < Instruction
@@ -221,6 +225,15 @@ class Call_instr < Instruction
 			s = s + " #{@caller} -> #{@funcname}"
 		end
 		return s
+	end
+	def toString2
+		s = super
+		if @call_handler != nil
+			s = s + " #{@call_handler.toString}"
+		else
+			s = s + " #{@caller} -> #{@funcname}"
+		end
+		return s.tr(']', ')').tr('[', '(').tr('<', '(').tr('>', ')')
 	end
 end
 

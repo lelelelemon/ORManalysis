@@ -36,6 +36,11 @@ def read_dataflow(application_dir=nil)
 			class_name = dataflow_filename_match(filename.to_s) 
 			if class_name != nil
 				handle_single_dataflow_file(filename.to_s, class_name)
+				$class_map[class_name].getMethods.each do |key, meth|
+					if meth.getCFG != nil
+						meth.getCFG.findCalls
+					end
+				end
 			else
 				#puts "Dataflow file #{filename} cannot find a class!"
 			end
@@ -210,7 +215,14 @@ def handle_single_dataflow_file(item, class_name)
 													#	puts "block #{dep_str[0].to_i}  doesn't exist"
 													#end
 													#if dep_instr != nil
-													cur_instr.addDatadep(dep, v_name)
+													#XXX:Here is some non-beautiful trick, attrassign don't use the class instance, it only assigns. So avoid defining the use of class instance
+													if cur_instr.instance_of?AttrAssign_instr
+														if v_name.include?('%')==true
+															cur_instr.addDatadep(dep, v_name)
+														end
+													else
+														cur_instr.addDatadep(dep, v_name)
+													end
 													#else
 													#	puts "DEP instructions cannot be found: #{dep_str[0].to_i}.#{dep_str[1].to_i}"
 													#end

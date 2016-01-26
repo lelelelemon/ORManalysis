@@ -19,9 +19,6 @@ class Administration::ImportsController < ApplicationController
  t(import.status, scope: 'administration.imports.status') # notest 
  import.rows.count 
  import.rows.errored.count 
- link_to import, class: 'btn btn-info btn-xs' do 
- icon 'fa fa-eye' 
- end 
  end 
  pagination @imports 
  else 
@@ -49,14 +46,6 @@ class Administration::ImportsController < ApplicationController
 
   def new
  @title = t('.heading') 
- t('.people.heading') 
- form_tag administration_imports_path, multipart: true, id: 'import-form' do 
- hidden_field_tag :importable_type, 'Person' 
- file_field_tag :file, accept: 'text/csv,text/comma-separated-values' 
- icon 'fa fa-folder-open-o' 
- t('.browse.button') 
- button_tag t('.form.submit'), class: 'btn btn-success' 
- end 
 
   end
 
@@ -84,19 +73,6 @@ class Administration::ImportsController < ApplicationController
     @import.update_attributes(status: 'parsed')
     @example = build_example
  render 'heading' 
- form_for @import do |form| 
- hidden_field_tag :status, 'matched' 
- form.label :match_strategy, t('.form.match_strategy') 
- form.select :match_strategy, import_match_strategies, {}, class: 'form-control' 
- form.check_box :create_as_active 
- form.label :create_as_active, t('.form.create_as_active') 
- form.check_box :overwrite_changed_emails 
- form.label :overwrite_changed_emails, t('.form.overwrite_changed_emails_html', url: administration_emails_path) 
- t('.table.column') 
- t('.table.attribute') 
- t('.table.example') 
- @example[from] 
- end 
  button_tag id: 'btn-preview', class: 'btn btn-success' do 
  t('.save.button') 
  icon 'fa fa-arrow-right' 
@@ -110,7 +86,6 @@ class Administration::ImportsController < ApplicationController
  link_to @import, data: { method: :delete, confirm: t('are_you_sure') }, class: 'btn btn-delete pull-right' do 
  icon 'fa fa-trash-o' 
  t('.delete.button') 
- end 
  end 
 
   end

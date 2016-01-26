@@ -5,7 +5,7 @@ class ImportParser
     'csv' => Strategies::CSV
   }
 
-  def initialize(import:, data:, strategy_name:)
+  def initialize(import, data, strategy_name)
     @import = import
     @data = data
     lookup_strategy(strategy_name)

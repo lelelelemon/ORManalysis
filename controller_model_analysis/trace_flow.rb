@@ -31,8 +31,8 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 		#callerv = $class_map[callerv_name]
 		#pre-computed after reading all files, in #read_file.rb
 		callerv = call.caller
-		pass_params = ""
-		pass_returnv = ""
+		pass_params = ""     
+		pass_returnv = ""    
 		call.getParams.each do |param|
 			if param.getVar.length > 0
 					pass_params += "#{param.getVar}, "
@@ -45,7 +45,7 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 				caller_class = callerv.getName
 			end
 			if trigger_save?(call) or trigger_create?(call)
-				puts "=====transaction begin====="
+				OUTPUT_Direct "=====transaction begin====="
 			end
 
 			$blank = ""
@@ -53,7 +53,7 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 				$blank = $blank + "\t"
 			end
 
-			puts "#{$blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
+			OUTPUT_Direct "#{$blank}\tlevel #{(level+1)}:  [QUERY] #{call.getObjName} . #{call.getFuncName}	{params: #{pass_params}} # {returnv: #{pass_returnv}} # {op: #{caller_class}.#{call.getQueryType}}"
 			$l_index += 1
 
 			if trigger_save?(call) or trigger_create?(call)
@@ -92,11 +92,11 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 							trace_flow(callerv.getName, "before_create", "", "", level+2)
 						end
 				end
-				puts "=====transaction end====="
+				OUTPUT_Direct "=====transaction end====="
 			end
 
 		#elsif call.isField
-		#	puts "#{$blank}\tlevel #{(level+1)}:  +FIELD+ #{callerv.getName} . #{call.getFuncName}	(type: #{call.getField.type}) "
+		#	OUTPUT_Direct "#{$blank}\tlevel #{(level+1)}:  +FIELD+ #{callerv.getName} . #{call.getFuncName}	(type: #{call.getField.type}) "
 
 		elsif callerv != nil
 			temp_name = "#{callerv.getName}.#{call.getFuncName}"
@@ -109,7 +109,11 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 				end
 
 				trace_flow(callerv.getName, call.getFuncName, pass_params, pass_returnv, level+1)
+			else
+				#OUTPUT_Direct "HAS been executed: #{temp_name} (#{call.getObjName}, #{call.getFuncName})"
 			end
+		else
+			#OUTPUT_Direct "CANNOT find caller #{call.getObjName}.#{call.getFuncName} --"
 		end
 end
 
@@ -130,13 +134,13 @@ def handle_single_instr(start_class, start_function, class_handler, bb, instr, l
 		#match instr's call to funccall in Method_class
 		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
 		#if call == nil
-		#	puts "Name doesn't match: #{instr.toString}" 
+		#	OUTPUT_Direct "Name doesn't match: #{instr.toString} [#{instr.getResolvedCaller}]" 
 		#else
-		#	puts "match call: #{instr.toString}"
+		#	OUTPUT_Direct "match call: #{instr.toString} [#{instr.getResolvedCaller}]-> #{call.getObjName}.#{call.getFuncName}"
 		#end
 		if call != nil
 
-			#puts "Map to #{call.getObjName}.#{call.getFuncName}"
+			#OUTPUT_Direct "Map to #{call.getObjName}.#{call.getFuncName}"
 			#print "\t -- "
 			#call.print
 		
@@ -195,7 +199,7 @@ end
 def trace_flow(start_class, start_function, params, returnv, level)
 	class_handler = $class_map[start_class]
 	if class_handler == nil
-		puts "Class handler not found: #{start_class}"
+		OUTPUT_Direct "Class handler not found: #{start_class}"
 	end
 	function_handler = class_handler.getMethod(start_function)
 
@@ -207,12 +211,12 @@ def trace_flow(start_class, start_function, params, returnv, level)
 	if function_handler == nil
 		if is_transaction_function(start_function)
 			if start_function.include?("begin")
-				puts "#{$blank}======transaction begin====="
+				OUTPUT_Direct "#{$blank}======transaction begin====="
 			else
-				puts "#{$blank}======transaction end====="
+				OUTPUT_Direct "#{$blank}======transaction end====="
 			end
 		else
-			#puts "function #{start_class}.#{start_function} cannot be found"
+			#OUTPUT_Direct "function #{start_class}.#{start_function} cannot be found"
 			return 
 		end
 	end	
@@ -227,7 +231,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 		trace_flow(start_class, "before_filter", "", "", level)
 	end
 
-	puts "#{$blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
+	OUTPUT_Direct "#{$blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
 
 	if $last_caller_string.length > 0	
 		_to_name = "#{start_class}_#{simplify(start_function)}_#{get_closure_tag}BB1" 
@@ -248,7 +252,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 	#Function is not specifically defined, like .new .valid?, etc
 	else
 
-		#puts "#{start_class}.#{start_function} is not matched"
+		#OUTPUT_Direct "#{start_class}.#{start_function} is not matched"
 		$label = ""
 		$l_index = 0
 
@@ -258,8 +262,8 @@ def trace_flow(start_class, start_function, params, returnv, level)
 		end
 	end
 
-	#puts "#{$blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
-	#puts "#{$blank}(write subgraph #{start_class}_#{start_function})"
+	#OUTPUT_Direct "#{$blank}level #{level}: #{start_class} . #{start_function} (params: #{params}) # (returnv: #{returnv})"
+	#OUTPUT_Direct "#{$blank}(write subgraph #{start_class}_#{start_function})"
 
 
 	if function_handler.getCFG != nil	

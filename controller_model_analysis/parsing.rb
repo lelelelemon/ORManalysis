@@ -15,9 +15,11 @@ load 'trace_flow.rb'
 load 'query_flow.rb'
 load 'dataflow_component.rb'
 load 'compute_stats.rb'
-load 'random_path.rb'
+load 'graph_component.rb'
+#load 'random_path.rb'
 load 'util.rb'
 load 'read_schema.rb'
+load 'dataflow_chain.rb'
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',
@@ -261,8 +263,8 @@ opt_parser = OptionParser.new do |opt|
    	options[:dir] = dir
   end
 
-	opt.on("-a","--template NAME",String,"the application uses a template, for example Shoppe, so the template and app have separate controllers/models","the argument specifies the name of template","example: --template shoppe") do |tplt|
-		options[:template] = tplt
+	opt.on("-a","--run-all","Run all entrance") do |run_all|
+		options[:run_all] = true
 	end
 
 	opt.on("-i", "--only-type-inference","Only do type inference, and search method by name upon function call.","Using this option the script may not be able to resolve every function call, but no need for dynamic type logs.") do |inference|
@@ -281,9 +283,9 @@ opt_parser = OptionParser.new do |opt|
 		end
 	end
 
-	opt.on("-r", "--random-path","instead of calculate the complete control flow graph, select random path at each branch") do |random_path|
-		options[:random_path] = true
-	end
+	#opt.on("-r", "--random-path","instead of calculate the complete control flow graph, select random path at each branch") do |random_path|
+	#	options[:random_path] = true
+	#end
 
 	opt.on("-g", "--query-graph CLASS_NAME,FUNCTION_NAME",Array,"print out flow graph only containing queries") do |q_input|
 		options[:query_graph] = true
@@ -369,6 +371,7 @@ end
 
 
 $output_dir = "."
+$trace_output_file = ""
 if options[:output] != nil
 	$output_dir = options[:output]
 end
@@ -405,6 +408,80 @@ if options[:trace_flow] or options[:random_path] or options[:stats] or options[:
 	end
 end
 
+if options[:run_all]
+	call_file = "#{$app_dir}/calls.txt"
+	File.open(call_file, "r").each do |line|
+		line = line.gsub("\n","")
+		chs = line.split(',')
+		start_function = chs[1]
+		chs[0] = chs[0].capitalize
+		start_class = "#{chs[0]}Controller"
+		puts "HANDLING: #{start_class} . #{start_function}"
+		$node_list = Array.new
+		$root = nil
+		$view_ruby_code = false
+		$view_closure = false
+
+		$cur_bb_stack = Array.new
+		$cur_cfg_stack = Array.new
+
+		$non_repeat_list = Array.new
+		$cur_cfg = nil
+		$cfg_map = Hash.new
+		$cur_bb = nil
+		$l_index = 0
+		$blank = ""
+		$in_view = false
+		
+		$closure_stack = Array.new
+		$in_loop = Array.new
+		$general_call_stack = Array.new
+		$funccall_stack = Array.new
+		$root = nil
+		$cfg = nil
+		$ins_cnt = 0
+		#store all instruction node
+		$node_list = Array.new
+		$sketch_node_list = Array.new
+		#the very source of dataflow, all nodes using user input connect to this node
+		$dataflow_source = INode.new(nil)
+		
+		#format: from_inode_index*to_inode_index
+		$dataflow_edges = Hash.new
+		$cur_funccall = nil
+		$cur_position = ""
+		$path_tracker = Array.new
+		$processed_node_stack = Array.new
+		$computed_node = nil
+		
+		level = 0
+
+		$output_dir = "#{$app_dir}/temp_results/#{start_class}_#{start_function}"
+		system("mkdir #{$output_dir}")
+		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
+		puts "Graph_name = #{graph_fname}"
+		$graph_file = File.open(graph_fname, "w");
+
+		$graph_file.write("digraph #{remove_special_chars(start_class)}_#{start_function} {\n")
+		$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
+		trace_flow(start_class, start_function, "", "", level)
+		$graph_file.write("}")
+
+		$cur_node = nil
+		$root = nil
+		$non_repeat_list = Array.new
+		$global_check = Hash.new
+		$node_list = Array.new
+		$cur_query_stack = Array.new
+		$query_edges = Array.new
+
+		compute_dataflow_stat($output_dir, start_class, start_function)
+
+
+	end
+	
+end
+
 
 if options[:xml] == true
 	generate_xml_files
@@ -412,10 +489,10 @@ end
 
 if options[:print_all] == true
 	$class_map.each do |keyc, valuec|
-		puts "class #{keyc}"
-		valuec.getMethod("before_save").getCalls.each do |s|
-			puts "\t#{s.getFuncName}"
-		end
+		puts "class #{keyc} < #{valuec.getUpperClass} #{isActiveRecord(keyc)}"
+		#valuec.getMethod("before_save").getCalls.each do |s|
+		#	puts "\t#{s.getFuncName}"
+		#end
 		#puts "class #{keyc}"
 		#if $table_names.find(keyc) != nil
 		#	valuec.getFields.each do |f|

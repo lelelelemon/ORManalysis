@@ -74,7 +74,7 @@ class Import < ActiveRecord::Base
     execute_async if active?
   end
 
-  def parse_async(file:, strategy_name:)
+  def parse_async(file, strategy_name)
     return if new_record?
     data = file.read
     update_attribute(:row_count, data.count("\n")) # a rough count -- will be improved once parsing is complete

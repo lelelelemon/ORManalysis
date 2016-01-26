@@ -278,6 +278,8 @@ def search_distinct_func_name(func_name)
 end
 
 def call_match_name(caller_name, funcname, f_handler)
+  name_cnt = 0
+	only_call = nil
 	f_handler.getCalls.each do |call|
 		if (call.getObjName.include?(caller_name) or caller_name.include?(call.getObjName)) and funcname == call.getFuncName
 				return call 
@@ -285,8 +287,19 @@ def call_match_name(caller_name, funcname, f_handler)
 		if funcname == "super" and call.isSuperFunc
 				return call
 		end
+		if call.getFuncName == funcname
+			name_cnt += 1
+			only_call = call
+		end
+	end
+	if name_cnt == 1
+		return only_call
 	end
 	return nil
+end
+
+def isValidationFunc(name)
+	return ["before_filter","before_save","before_create","before_action"].include?name
 end
 
 #Graphviz doesn't recognize special characters
@@ -304,5 +317,10 @@ def remove_special_chars(n)
 end
 
 def graph_write(file, word)
-	file.write(word.gsub("::",""))
+	file.write(word.gsub("::","").tr(':',' ').tr('.',' ').tr('%','_'))
+end
+
+def OUTPUT_Direct(w)
+	puts w
+	#$trace_output_file.write("#{w}\n")
 end

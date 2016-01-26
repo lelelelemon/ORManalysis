@@ -1,6 +1,7 @@
 import sys
 import glob
 import os
+import matplotlib.pyplot as plt
 
 base_path = "../applications/%s/results/"%sys.argv[1]
 txn = []
@@ -50,6 +51,15 @@ tables["UNKNOWN"]["JOIN"] = 0
 tables["UNKNOWN"]["GROUP"] = 0
 table_queries["UNKNOWN"] = []
 
+chain_data = []
+for i in range(5):
+	chain_data.append([])
+Input = []
+nonfield = []
+nonfield.append([])
+nonfield.append([])
+nf = {}
+
 for subdir, folders, files in os.walk(base_path):
 	for fn in files:
 		if fn.endswith("trace.temp"):
@@ -66,13 +76,28 @@ for subdir, folders, files in os.walk(base_path):
 					lcnt.append(line_cnt-temp_l)
 				if "QUERY" in line:
 					line_cnt = line_cnt + 1
-		if fn.endswith(".txt"):
+		if fn.endswith("sketch_stats.txt"):
+			fp = open(os.path.join(subdir, fn), "r")
+			for line in fp:
+				line = line.replace("\n","")
+				chs = line.split(" ")
+				if chs[0] == "chain:":
+					for i in range(5):
+						chain_data[i].append(int(chs[i+1], 10))
+				elif chs[0] == "Input:":
+					Input.append(int(chs[1], 10))
+				elif chs[0] == "Nonfield:":
+					print line
+					nonfield[0].append(int(chs[2], 10))
+					nonfield[1].append(int(chs[3], 10))
+					
+		elif fn.endswith(".txt"):
 			fp = open(os.path.join(subdir, fn), "r")
 			#print "filename: %s"%(os.path.join(subdir, fn))
 			for line in fp:
 				line = line.replace("\n","")
 				chs = line.split(" ")
-				if "query in total:" in line:
+				if "query in total" in line:
 					t = int(chs[-1], 10)
 					if t == 0:
 						print "ZERO: %s"%subdir
@@ -82,28 +107,28 @@ for subdir, folders, files in os.walk(base_path):
 					if t > total_max:
 						total_max = t
 				elif "STATS" in line:
-					vmap = line.split(": ")
+					vmap = line.split("  ")
 					if vmap[0] in stats:
 						stats[vmap[0]].append(int(chs[-1], 10))
 					else:
 						stats[vmap[0]] = []
 						stats[vmap[0]].append(int(chs[-1], 10))
-				elif "+FIELD+" in line:
-					info = chs[2].split(".")
-					table = info[0]
-					field = info[1]
-					var_name = chs[1]
-					if var_name in tbl_var:
-						tbl_var[var_name] = tbl_var[var_name] + 1
-					else:
-						tbl_var[var_name] = 1
-					f_type = chs[3].replace(")","").replace("(","")
-					if tbl_fields.has_key(table):
-						if tbl_fields[table].has_key(field) == False:
-							tbl_fields[table][field] = 1
-							tbl_fields_type[chs[1]] = f_type
-						else:
-							tbl_fields[table][field] = tbl_fields[table][field] + 1
+				#elif "+FIELD+" in line:
+					#info = chs[2].split(".")
+					#table = info[0]
+					#field = info[1]
+					#var_name = chs[1]
+					#if var_name in tbl_var:
+					#	tbl_var[var_name] = tbl_var[var_name] + 1
+					#else:
+					#	tbl_var[var_name] = 1
+					#f_type = chs[3].replace(")","").replace("(","")
+					#if tbl_fields.has_key(table):
+					#	if tbl_fields[table].has_key(field) == False:
+					#		tbl_fields[table][field] = 1
+					#		tbl_fields_type[chs[1]] = f_type
+					#	else:
+					#		tbl_fields[table][field] = tbl_fields[table][field] + 1
 				elif "TBLREADRECORD:" in line:
 					table = chs[1]
 					data_list = chs[2].replace("[","").replace("]","").split(",")
@@ -151,7 +176,26 @@ for subdir, folders, files in os.walk(base_path):
 										if query not in table_queries[table]:
 											table_queries[table].append(query)
 						
-						
+
+plt.figure(1)  
+plt.subplot(321)
+plt.plot(chain_data[1], chain_data[2], 'ro')
+plt.xlabel("# of out nodes")
+plt.ylabel("# of in nodes")
+plt.subplot(322)
+plt.plot(chain_data[2], chain_data[3], 'ro')
+plt.xlabel("# of out sink nodes")
+plt.ylabel("# of in source nodes")
+plt.subplot(323)
+plt.hist(chain_data[0], 10)
+plt.xlabel("Histogram of def-use chain length (only queries)")
+plt.subplot(324)
+plt.hist(Input, 20, color='green')
+plt.xlabel("Importance of input: #of queries each input affected")
+plt.subplot(325)
+plt.plot(nonfield[1], nonfield[0], 'b*')
+plt.xlabel("#of instructions (distance) from source")
+plt.show()
 
 #print "Average txn length: %f"%(float(sum(lcnt)) / float(len(lcnt)))
 print "Controller functions: %d"%len(total)
@@ -177,26 +221,25 @@ for k,v in stats.items():
 		#print "Average %s: %f"%(k,float(sum(v))/float(len(v)))
 		print "Total %s: %d"%(k, sum(v))
 
-
-for k,v in tables.items():
-	print "Table %s:"%k
-	if k in tbl_read_record:
-		print "\tread %d times"%tbl_read_record_cnt[k]
-		print "\tstats: ",
-		for s in tbl_read_record[k]:
-			print "%d, "%s,
-		print ""
-	if k in tbl_write_record:
-		print "\twrite %d times"%tbl_write_record_cnt[k]
-		print "\tstats: ",
-		for s in tbl_write_record[k]:
-			print "%d, "%s,
-		print ""
-		print "\tfield set: ",
-		for s,m in tbl_write_record_fields[k].items():
-			if len(s) > 0:
-				print "%s(%d), "%(s, m),
-		print ""
+#for k,v in tables.items():
+#	print "Table %s:"%k
+#	if k in tbl_read_record:
+#		print "\tread %d times"%tbl_read_record_cnt[k]
+#		print "\tstats: ",
+#		for s in tbl_read_record[k]:
+#			print "%d, "%s,
+#		print ""
+#	if k in tbl_write_record:
+#		print "\twrite %d times"%tbl_write_record_cnt[k]
+#		print "\tstats: ",
+#		for s in tbl_write_record[k]:
+#			print "%d, "%s,
+#		print ""
+		#print "\tfield set: ",
+		#for s,m in tbl_write_record_fields[k].items():
+		#	if len(s) > 0:
+		#		print "%s(%d), "%(s, m),
+		#print ""
 
 
 #for k,v in tables.items():

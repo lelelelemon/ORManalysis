@@ -221,6 +221,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 
 	if $root == nil and random == false
 		$cfg = trace_query_flow(start_class, start_function, "", "", 0)
+		addAllControlEdges
 		if $cfg == nil
 			return
 		end
@@ -233,7 +234,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	
 	$node_list.each do |n|
 		n.setLabel
-		#puts "#{n.getIndex}:#{n.getInstr.toString}"
+		puts "#{n.getIndex}:#{n.getInstr.toString}"
 		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
 				#puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
@@ -241,30 +242,46 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				#puts "\t\t <- params"
 			end
 		end
+		n.getControlflowEdges.each do |e|
+			puts "\t\t -> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
+		end
 		#puts "#{n.getIndex}: #{n.getInstr.toString}"
 	end
 
-	graph_fname = "#{output_dir}/backward_forward.log"
+	graph_fname = "#{output_dir}/sketch_graph.log"
 	$graph_file = File.open(graph_fname, "w")
 
+	build_sketch_graph
+
+	$graph_file.close
+
+	#graph_fname = "#{output_dir}/sketch_stats.txt"
+	#$graph_file = File.open(graph_fname, "w")
+
+	#compute_source_sink_for_all_nodes
+	#compute_chain_stats
+
+#	graph_fname = "#{output_dir}/backward_forward.log"
+#	$graph_file = File.open(graph_fname, "w")
+
 	
-	$node_list.each do |n|
-		if n.isQuery?
-			$cnt_depends_on = 0
-			$cnt_determines = 0
-			$cnt_depends_on_cflow = 0
-			$cnt_determines_cflow = 0
-			compute_dataflow_forward(output_dir, start_class, start_function, n)
-			compute_dataflow_backward(output_dir, start_class, start_function, n)
-			$query_depends_on.push($cnt_depends_on)
-			$query_determines.push($cnt_determines)
-			$query_depends_on_cflow.push($cnt_depends_on_cflow)
-			$query_determines_cflow.push($cnt_determines_cflow)
-			#puts "#{n.getInstr.toString}"
-			#puts "cnt_depends_on = #{$cnt_depends_on}"
-			#puts "cnt_determins = #{$cnt_determines}"
-		end
-	end
+#	$node_list.each do |n|
+#		if n.isQuery?
+#			$cnt_depends_on = 0
+#			$cnt_determines = 0
+#			$cnt_depends_on_cflow = 0
+#			$cnt_determines_cflow = 0
+#			compute_dataflow_forward(output_dir, start_class, start_function, n)
+#			compute_dataflow_backward(output_dir, start_class, start_function, n)
+#			$query_depends_on.push($cnt_depends_on)
+#			$query_determines.push($cnt_determines)
+#			$query_depends_on_cflow.push($cnt_depends_on_cflow)
+#			$query_determines_cflow.push($cnt_determines_cflow)
+#			#puts "#{n.getInstr.toString}"
+#			#puts "cnt_depends_on = #{$cnt_depends_on}"
+#			#puts "cnt_determins = #{$cnt_determines}"
+#		end
+#	end
 
 
 	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_stats.txt"
@@ -277,7 +294,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	query_write = 0
 	branch_dependon_query = 0
 	total_branch = 0
-	
+
+	cnt_materialized_query = 0	
+
 	write_source_total = 0	
 	write_from_const = 0
 	write_from_user_input = 0
@@ -318,19 +337,20 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				single_tbl_to_branch = 0
 
 				#puts "READ query instr #{n.getIndex}:#{n.getInstr.toString} forward flow:"
-				#v_node = find_nearest_var(n)
-				#self_v_name = nil
-				#if v_node != nil
-				#	if v_node.getInstr.getDefv != nil
-				#		self_v_name = v_node.getInstr.getDefv
-				#	else #AttrAssign_instr
-				#		self_v_name = v_node.getInstr.getFuncname
-				#	end
-				#end
-				#if self_v_name != nil
-				##	puts "* result into #{self_v_name}"
-				#	graph_write($graph_file, " into_#{self_v_name}")
-				#end
+				v_node = find_nearest_var(n)
+				self_v_name = nil
+				if v_node != nil
+					if v_node.getInstr.getDefv != nil
+						self_v_name = v_node.getInstr.getDefv
+					else #AttrAssign_instr
+						self_v_name = v_node.getInstr.getFuncname
+					end
+				end
+				if self_v_name != nil
+					puts "* #{n.getIndex}:#{n.getInstr.toString} result into #{self_v_name}"
+					cnt_materialized_query += 1
+					#graph_write($graph_file, " into_#{self_v_name}")
+				end
 				traceforward_data_dep(n).each do |n1|
 					#if n1.isField?
 					#	var_name = n1.getInstr.getCallHandler.getObjName
@@ -370,16 +390,18 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				if n.getInstr.getCallHandler.caller != nil
 					graph_write($graph_file, "\nTBLREADRECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_to_read_query},#{single_tbl_to_write_query},#{single_tbl_to_view},#{single_tbl_to_branch}]")
 				end
-			elsif ["DELETE","UPDATE","INSERT"].include?n.getInstr.getCallHandler.getQueryType
+			#elsif ["DELETE","UPDATE","INSERT"].include?n.getInstr.getCallHandler.getQueryType
+			end
+			if n.isQuery?
 				query_write += 1
-				#puts "DELETE/UPDATE/INSERT instr #{n.getIndex}:#{n.getInstr.toString} backflow:"
+				#puts "READ / DELETE/UPDATE/INSERT instr #{n.getIndex}:#{n.getInstr.toString} backflow:"
 				single_tbl_from_query = 0
 				single_tbl_from_user = 0
 				single_tbl_from_const = 0
 				single_tbl_total = 0
 				assigned_fields = Hash.new
 				traceback_data_dep(n).each do |n1|
-					if n1.instance_of?Edge
+					if n1.instance_of?Dataflow_edge
 						#puts " x (From user input)"
 						write_from_user_input += 1
 						write_source_total += 1
@@ -453,6 +475,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	graph_write($graph_file, "STATS read to write query: #{read_to_write_query}\n")
 	graph_write($graph_file, "STATS read to view: #{read_to_view}\n")
 	graph_write($graph_file, "STATS read to branch: #{read_to_branch}\n")
+
+	graph_write($graph_file, "STATS materialized query: #{cnt_materialized_query}\n")
 
 	graph_write($graph_file, "STATS write queries: #{query_write}\n")
 	graph_write($graph_file, "STATS write from user input: #{write_from_user_input}\n")

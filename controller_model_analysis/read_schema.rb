@@ -37,6 +37,43 @@ class Table_field
 	attr_accessor :type, :field_name, :attrs
 end
 
+class Class_field < Table_field
+end
+
+def isActiveRecord(caller_name)
+	if $class_map[caller_name] != nil
+		_caller = $class_map[caller_name]
+		if _caller.getUpperClass == "ActiveRecord::Base"
+			return true
+		else
+			while _caller != nil 
+				if _caller.getUpperClass == "ActiveRecord::Base"
+					return true
+				else
+					_caller = $class_map[_caller.getUpperClass]
+				end
+			end
+		end
+	end
+	return false
+end
+
+def isTableField(caller_name, f_name)
+	if $class_map[caller_name] != nil
+		#puts "### #{caller_name} fields length = #{$class_map[caller_name].getFields.length}, f_name = #{f_name}"
+		$class_map[caller_name].getFields.each do |f|
+			#puts "\t #{f.field_name}"
+			if f.field_name == f_name.delete('?')
+				return true
+			end
+			if f.field_name.include?("_id") and f.field_name[0...-3] == f_name.delete('?')
+				return true
+			end
+		end
+	end
+	return false
+end
+
 def read_schema(app_dir)
 	$schema_file = "#{app_dir}/schema.rb"
 	file = File.open($schema_file, "r")

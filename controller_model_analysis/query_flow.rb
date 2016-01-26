@@ -4,210 +4,6 @@ $in_loop = Array.new
 $general_call_stack = Array.new
 $funccall_stack = Array.new
 
-class INode
-	def initialize(instr)
-		if instr != nil
-			instr.setINode(self)
-		end
- 		@instr = instr
-		@isQuery = false
-		@children = Array.new
-		@index = $ins_cnt
-		@label = ""
-		@in_closure = false
-		@in_view = $in_view	
-		@in_loop = ($in_loop.length > 0)	
-		@closure_stack = Array.new
-		@call_stack = Array.new
-		@dataflow_edges = Array.new
-		@backward_dataflow_edges = Array.new
-		r = Random.new
-		@rnd = r.rand(1...1024)
-		if $closure_stack.length > 0
-			@in_closure = true
-			$closure_stack.each do |cl|
-				@closure_stack.push(cl)
-			end
-		end
-		$funccall_stack.each do |f|
-			@call_stack.push(f)
-		end
-	end
-	attr_accessor :index	
-	def getClosureStack
-		@closure_stack
-	end
-	def getCallStack
-		@call_stack
-	end
-	def getInView
-		@in_view
-	end
-	def getInLoop
-		@in_loop
-	end
-	def addDataflowEdge(edge)
-		@dataflow_edges.push(edge)
-		edge.getToNode.addBackwardEdge(edge)
-	end
-	def addBackwardEdge(edge)
-		@backward_dataflow_edges.push(edge)
-	end
-	def getBackwardEdges
-		@backward_dataflow_edges
-	end
-	def getDataflowEdges
-		@dataflow_edges
-	end
-	def getInClosure
-		@in_closure
-	end
-	def isQuery?
-		if @instr != nil and @instr.instance_of?Call_instr
-			return @instr.isQuery
-		end
-		return false
-	end
-	def isReadQuery?
-		if @instr != nil and @instr.instance_of?Call_instr
-			return @instr.isReadQuery
-		end
-		return false
-	end
-	def isField?
-		if @instr != nil and (@instr.is_a?Call_instr)
-			return @instr.isField
-		end
-		return false
-	end
-	def isBranch?
-		if @instr != nil and @instr.instance_of?Branch_instr
-			return true
-		end
-		return false
-	end
-	def setLabel
-		#if isQuery?
-			#if @instr.getResolvedCaller.length > 0
-			#	@label = "#{@instr.getResolvedCaller}.#{@instr.getFuncname}"
-			#else
-			#	@label = "#{@instr.getCaller}.#{@instr.getFuncname}"
-			#end
-		#elsif @instr.instance_of?Call_instr
-		#	@label = "#{@instr.getCaller}.#{@instr.getFuncname}"
-		#end
-
-		if @instr.is_a?Call_instr 
-			if@instr.getCallHandler != nil
-				@label = "#{remove_special_chars(@instr.getCallHandler.getObjName)}.#{@instr.getFuncname}"
-			else
-				@label = "#{remove_special_chars(@instr.getCaller)}.#{@instr.getFuncname}"
-			end
-		end
-	end
-	def getLabel
-		@label
-	end
-	def getSimplifiedLabel
-		if isQuery?
-			if @instr.getResolvedCaller.length > 0
-				return "#{@instr.getResolvedCaller}.#{@instr.getFuncname.delete('!').delete('?')}"
-			else
-				return "#{@rnd}.#{@instr.getFuncname.delete('!').delete('?')}"
-			end
-		else
-			return ""
-		end
-	end
-	def getInstr
-		@instr
-	end
-	def getIndex
-		@index
-	end
-						#puts "Add return instr: #{callerv_name}.#{call.getFuncName} #{rt.getIndex} -> #{temp_node.getIndex}"
-	def addChild(c)
-		@children.push(c)
-	end
-	def getChildren
-		@children
-	end
-	def setIsQuery
-		@isQuery = true
-	end
-	def isQuery?
-		@isQuery
-	end	
-end
-
-
-$root = nil
-$cfg
-$ins_cnt = 0
-#store all instruction node
-$node_list = Array.new
-#the very source of dataflow, all nodes using user input connect to this node
-$dataflow_source = INode.new(nil)
-
-#format: from_inode_index*to_inode_index
-$dataflow_edges = Hash.new
-class Edge
-	def initialize(fromn, ton, vname, isBranching=false)
-		@from_node = fromn
-		@to_node = ton
-		@vname = vname
-		@is_branching = isBranching
-	end
-	def getIsBranching
-		@is_branching
-	end
-	def getFromNode
-		@from_node
-	end
-	def getToNode
-		@to_node
-	end
-	def getVname
-		@vname
-	end
-end
-
-def add_dataflow_edge(node)
-	to_ins = node.getInstr
-	if to_ins.getFromUserInput
-		edge_name = "user_input*#{node.getIndex}"
-		edge = Edge.new(nil, node, "param")
-		$dataflow_source.addDataflowEdge(edge)	
-		if $dataflow_edges[edge_name] == nil
-			$dataflow_edges[edge_name] = Array.new
-		end
-		$dataflow_edges[edge_name].push(edge)
-		return
-	end
-
-	to_ins.getDeps.each do |dep|
-		if dep.getInstrHandler == nil
-			puts "Handler nil: BB#{dep.getBlock}.#{dep.getInstr}"
-		end
-		#TODO: getINode == nil, if this instr hasn't been handled yet...
-		if dep.getInstrHandler.getINode != nil
-			#XXX: If it is a field instr, then we know it is not a blackbox func call, if it is not attrassign, then it is a read only instr
-			from_node = dep.getInstrHandler.getINode
-			if from_node.getInstr.instance_of?Call_instr and from_node.getInstr.isField and dep.getVname == "%self"
-			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
-			else
-				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"
-				edge = Edge.new(dep.getInstrHandler.getINode, node, dep.getVname)
-				dep.getInstrHandler.getINode.addDataflowEdge(edge)
-				if $dataflow_edges[edge_name] == nil
-					$dataflow_edges[edge_name] = Array.new
-				end
-				$dataflow_edges[edge_name].push(edge)
-			end
-		end
-	end
-end
-
 def handle_single_call_node2(start_class, start_function, class_handler, call, level)
 	
 		#callerv_name = call.findCaller(start_class, start_function)
@@ -249,6 +45,14 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 				last_cfg = nil
 				temp_node = $cur_node
 				outnodes = Array.new
+				prev_defself = Array.new
+				temp_node.getInstr.getDeps.each do |dep|
+					if dep.getInstrHandler.getINode != nil
+						#puts "SAVE: : #{temp_node.getInstr.toString} add predef #{dep.getInstrHandler.getINode.getIndex}"
+						prev_defself.push(dep.getInstrHandler.getINode)
+					end
+				end
+
 				temp_actions.each do |action|
 						temp_name = "#{caller_class}.#{action}"
 						if $non_repeat_list.include?(temp_name) == false
@@ -264,6 +68,16 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 								#TODO: before_validation can also affect normal functions...
 								cur_cfg.getDefSelf.each do |rt|
 									outnodes.push(rt)
+								end
+								prev_defself.each do |p|
+									receive_node = cur_cfg.getBB[0].getInstr[0].getINode
+									edge_name = "#{p.getIndex}*#{receive_node.getIndex}"
+									edge = Dataflow_edge.new(p, receive_node, "%self")
+									p.addDataflowEdge(edge)
+									if $dataflow_edges[edge_name] == nil
+										$dataflow_edges[edge_name] = Array.new
+									end
+									$dataflow_edges[edge_name].push(edge)
 								end
 
 								if last_cfg == nil
@@ -281,7 +95,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 				$node_list.push(temp_node)
 				outnodes.each do |rt|
 					dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
-					edge = Edge.new(rt, temp_node, "returnv")
+					edge = Dataflow_edge.new(rt, temp_node, "returnv")
 					rt.getInstr.getINode.addDataflowEdge(edge)
 					$dataflow_edges[dataflow_edge_name] = edge
 				end
@@ -301,7 +115,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 					temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
 					cur_cfg.getExplicitReturn.each do |rt|
 						dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
-						edge = Edge.new(rt, temp_node, "returnv")
+						edge = Dataflow_edge.new(rt, temp_node, "returnv")
 						#puts "Add return instr: #{callerv_name}.#{call.getFuncName} #{rt.getIndex} -> #{temp_node.getIndex}"
 						
 						rt.getInstr.getINode.addDataflowEdge(edge)
@@ -348,7 +162,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		if $general_call_stack.length > 0
 			dep = $general_call_stack[-1]
 			edge_name = "#{dep.getIndex}*#{node.getIndex}"
-			edge = Edge.new(dep, node, instr.var_name)
+			edge = Dataflow_edge.new(dep, node, instr.var_name)
 			dep.addDataflowEdge(edge)
 			if $dataflow_edges[edge_name] == nil
 				$dataflow_edges[edge_name] = Array.new
@@ -451,15 +265,18 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 		fromIns = nil
 	end
 
-	if $funccall_stack.length > 0 and fromIns != nil 
-		dep = $funccall_stack[-1]
-		edge_name = "#{dep.getIndex}*#{fromIns.getINode.getIndex}"
-		edge = Edge.new(dep, fromIns.getINode, "%self")
-		dep.addDataflowEdge(edge)
-		if $dataflow_edges[edge_name] == nil
-			$dataflow_edges[edge_name] = Array.new
+	if $funccall_stack.length > 0 and fromIns != nil
+		if isValidationFunc(function_handler.getName)
+		else 
+			dep = $funccall_stack[-1]
+			edge_name = "#{dep.getIndex}*#{fromIns.getINode.getIndex}"
+			edge = Dataflow_edge.new(dep, fromIns.getINode, "%self")
+			dep.addDataflowEdge(edge)
+			if $dataflow_edges[edge_name] == nil
+				$dataflow_edges[edge_name] = Array.new
+			end
+			$dataflow_edges[edge_name].push(edge)
 		end
-		$dataflow_edges[edge_name].push(edge)
 	end
 
 
@@ -478,18 +295,6 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 		#puts "BB's return length = #{bb.getReturns.length}"
 		bb.getOutgoings.each do |o|
 			o_bb = cfg.getBBByIndex(o)
-			
-			#Add data flow for branching instr
-			if bb.getInstr[-1].instance_of?Branch_instr
-				o_bb.getInstr.each do |ins|
-					edge_name = "#{bb.getInstr[-1].getINode.getIndex}*#{ins.getINode.getIndex}"
-					edge = Edge.new(bb.getInstr[-1].getINode, ins.getINode, "_branch_", true)	
-					if $dataflow_edges[edge_name] == nil
-						$dataflow_edges[edge_name] = Array.new
-					end
-					$dataflow_edges[edge_name].push(edge)
-				end
-			end		
 	
 			#Add edge to instruction node
 			bb.getReturns.each do |r|
@@ -535,20 +340,23 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 	
 	#TODO: Before filter is not handled here, since most of them just do validation and are not involved in dataflow	
 	before_filter_name = "#{start_class}.before_filter"
+	filter_handler = $class_map[start_class].getMethods["before_filter"]
+
 	if $non_repeat_list.include?(before_filter_name) == false
 		$non_repeat_list.push(before_filter_name)
-
+		
 		cfg = CFG.new
 		bb = Basic_block.new(1)
 		def_self = Instruction.new
 		def_self.setDefv("%self")
 		bb.addInstr(def_self)
-		filter_handler = $class_map[start_class].getMethods["before_filter"]
 		if filter_handler != nil	
 			filter_handler.getCalls.each do |c|
-				call_instr = Call_instr.new(c.getObjName, c.getFuncName)
-				call_instr.addDatadep("1.0", "%self", def_self)
-				bb.addInstr(call_instr)
+				if c.getOn.length == 0 or c.getOn.include?(start_function)
+					call_instr = Call_instr.new(c.getObjName, c.getFuncName)
+					call_instr.addDatadep("1.0", "%self", def_self)
+					bb.addInstr(call_instr)
+				end
 			end
 			cfg.addBB(bb)
 			handle_single_cfg2(start_class, "before_filter", class_handler, filter_handler, cfg, level)

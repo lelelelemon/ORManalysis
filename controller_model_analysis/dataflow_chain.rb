@@ -60,7 +60,7 @@ def build_sketch_graph
 	@processed_list = Hash.new
 	$node_list.each do |n|
 		#Nodes in sketched graph: queries, user_inputs
-		if n.getInstr.getFromUserInput or (n.isQuery? and n.isWriteQuery?) or n.getInstr.instance_of?AttrAssign_instr
+		if n.getInstr.getFromUserInput or (n.isQuery? and n.isWriteQuery?) or (n.getInstr.instance_of?AttrAssign_instr and n.getInstr.getFuncname.index('!') == nil)
 			#puts "Node #{n.getIndex}:#{n.getInstr.toString}"
 			n.Tnode = TreeNode.new(n)
 			$sketch_node_list.push(n.Tnode)	

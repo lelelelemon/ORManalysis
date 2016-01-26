@@ -121,6 +121,9 @@ def parse_association(astnode, op)
 			attri.each do |k, v|
 				assoc.attribs[k] = v
 			end
+			if assoc.attribs.has_key?("foreign_key")
+				assoc.name = assoc.attribs["foreign_key"]
+			end
 			$cur_class.addAssoc(op, assoc)
 		end
 	end
@@ -130,7 +133,7 @@ def parse_attrib(astnode)
 	case astnode.children[0].source.to_s
 		when "include"
 			$cur_class.include_module = get_left_most_leaf(astnode.children[1]).source.to_s
-		when "has_many","belongs_to","has_one"
+		when "has_many","belongs_to","has_one","attr_accessor"
 			parse_association(astnode, astnode.children[0].source.to_s)
 		when "scope"
 			scope_func_list = Array.new
