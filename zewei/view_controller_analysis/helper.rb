@@ -94,6 +94,7 @@ def print_rails_tag(tag_arr, named_routes_class)
 		url_inside = false
 		named_routes_class.get_named_routes.each do |k, v|
 			if tag.include? k
+				puts "#" + tag if $log
 				puts "controller: " + v[0] + ", action: " + v[1]
 				url_inside = true
 			end

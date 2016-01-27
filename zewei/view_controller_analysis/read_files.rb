@@ -1,3 +1,5 @@
+require "optparse"
+
 load "data_structure.rb"
 
 def load_all_controllers_from_path(controller_path)
@@ -37,6 +39,7 @@ def print_href_tags(tag_arr, named_routes_class)
 		url_inside = false
 		named_routes_class.get_named_routes.each do |k, v|
 			if tag.include? k
+				puts "#" + tag if $log
 				puts "controller: " + v[0] + ", action: " + v[1]
 				url_inside = true
 			end
@@ -62,10 +65,6 @@ end
 
 
 def load_all_views_from_path(view_path)
-	named_routes_path = "named_routes.txt"
-	named_routes_class = Named_Routes_Class.new(named_routes_path)
-	#puts named_routes_class.get_named_routes
-	
 	view_hash = Hash.new
 	Dir.glob(view_path + "**/*") do |item|
 		next if not item.end_with?".erb"
@@ -98,18 +97,16 @@ def print_all_controllers_render_replaced(controller_path, view_path)
 	end
 end
 
-def load_all_views(view_path)
-	named_routes_path = "named_routes.txt"
+def load_named_routes_from_path(named_routes_path)
 	named_routes_class = Named_Routes_Class.new(named_routes_path)
-	#puts named_routes_class.get_named_routes
-	
-	view_hash = Hash.new
-	Dir.glob(view_path + "**/*") do |item|
-		next if not item.end_with?".erb"
+	return named_routes_class
+#	puts named_routes_class.get_named_routes
+end
 
-		view_class = View_Class.new(item, view_path)
-		view_hash[view_class.get_controller_name + "_"  + view_class.get_view_name] = view_class
-	end
+def print_links_in_all_views(view_path)
+	named_routes_class = load_named_routes_from_path("named_routes.txt")
+	#puts named_routes_class.get_named_routes
+	view_hash = load_all_views_from_path(view_path)
 
 #	view_hash["/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb"] = View_Class.new("/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb", view_path)
 
@@ -135,18 +132,14 @@ def load_all_views(view_path)
 		puts indent + "link_to: "
 		print_rails_tag(view_class.get_link_to_array, named_routes_class)
 
-		puts indent + "replace render statements: "
-		puts view_class.replace_render_statements(view_hash)
+	#	puts indent + "replace render statements: "
+	#	puts view_class.replace_render_statements(view_hash)
 
-		puts "-------------------------"
+		puts "-------------------------------------------"
 
 	end	
 end
 
-def load_named_routes(named_routes_path)
-	named_routes_class = Named_Routes_Class.new(named_routes_path)
-	puts named_routes_class.get_named_routes
-end
 
 def load_all_views_render_statement(view_path)
 	view_hash = load_all_views_from_path(view_path)
@@ -166,7 +159,36 @@ def load_all_views_render_statement(view_path)
 end
 #load_all_controllers("../app/controllers")
 #load_all_views "./app/views/"
-load_all_views_render_statement "./app/views/"
+
+$controller_path = "./app/controllers/"
+$view_path = "./app/views/"
+
+options = {}
+
+opt_parser = OptionParser.new do |opt|
+	opt.banner = "Usage: ruby read_files.rb [OPTIONS]"
+	opt.on("-v", "--view", "load all views and print links in views", "example: --view") do
+		options[:view] = true
+	end
+	opt.on("-r", "--render", "replace render statements", "example: --render") do 
+		options[:render] = true
+	end
+	opt.on("-l", "--log", "log the information of original lines of code", "example: --log") do
+		options[:log] = true
+	end
+end
+
+opt_parser.parse!
+
+if options[:log]
+	$log = true
+end
+
+if options[:view]
+	print_links_in_all_views($view_path)	
+end
+
+#load_all_views_render_statement "./app/views/"
 
 #print_all_controllers_render_replaced("./app/controllers/", "./app/views/")
 
