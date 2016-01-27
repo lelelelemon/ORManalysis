@@ -104,3 +104,21 @@ def print_rails_tag(tag_arr, named_routes_class)
 	end
 
 end
+
+def get_render_array(ast)
+	res_arr = Array.new
+	ast_arr = Array.new
+	ast_arr.push @ast
+	while ast_arr.length > 0
+		cur_ast = ast_arr.pop
+		if cur_ast.source.start_with?"render" and (cur_ast.type.to_s == "fcall" or cur_ast.type.to_s == "command" or cur_ast.type.to_s == "list")
+			res_arr.push cur_ast.source
+		else
+			cur_ast.children.each do |child|
+				ast_arr.push child
+			end
+		end
+	end
+	return res_arr
+end
+

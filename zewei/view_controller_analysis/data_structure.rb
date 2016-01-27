@@ -11,12 +11,12 @@ class Controller_Class
 	def initialize(path)
 		@path = path
 		@content = read_content(@path)
+		i = path.rindex("/")
+		j = path.index("_controller.rb")
+		@controller = path[i+1, j-18]
 		@ast = parse_content(@content)
 		@functions = parse_functions(@ast)
 		
-		i = path.rindex("/")
-		j = path.index("_controller.rb")
-		@controller = path[i+1, j-1]
 	end
 
 	def get_controller_name
@@ -66,6 +66,8 @@ class Controller_Class
 	def parse_content(content)
 		return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
+
+	
 end
 
 class Function_Class
@@ -73,6 +75,13 @@ class Function_Class
 		@class = controller_class
 		@content = content
 		@ast = parse_content(@content)
+		@function_name = content.split("\n")[0]
+		@function_name.strip!
+		@function_name = @function_name.split(" ")[1]
+		i = @function_name.rindex("(")
+		if i != nil
+			@function_name = @function_name[0..i-1]
+		end
 	end
 
 	def parse_content(content)
@@ -87,8 +96,12 @@ class Function_Class
 		@class
 	end
 
-	def get_redirect_to_array
+	def get_controller_name
+		return @class.get_controller_name
+	end
 
+	def get_function_name
+		@function_name
 	end
 
 	def get_render_array
@@ -98,7 +111,75 @@ class Function_Class
 	def get_redirect_to_array 
 		get_array_with_keyword @ast, "redirect_to"
 	end
-end
+	
+	def get_render_statement_array
+		get_array_with_keyword @ast, "render"
+	end
+	
+	def get_render_view_mapping(view_class_hash)
+		render_view_mapping = Hash.new
+
+		self.get_render_statement_array.each do |r|
+			view_name = get_view_name_from_render_statement(r)
+			view_class = view_class_hash[view_name]
+					
+	
+			if view_class != nil
+				value = view_class.replace_render_statements(view_class_hash)
+				render_view_mapping[r] = value
+			end
+		end
+	
+		return render_view_mapping	
+	end
+
+	def get_view_name_from_render_statement(r)
+		r = r.split("\n")[0]
+		r = r[6..-1] if r.start_with?"render"
+		while r[0] == '(' 
+			r = r[1..-1]
+		end
+
+		arr = r.split(",")
+		view = self.get_controller_name + "_" + self.get_function_name
+
+		arr[0].strip!
+		if arr[0].start_with?"\"" or arr[0].start_with?"'"
+			view = arr[0]
+		else 
+			arr.each do |a|
+				a.gsub! " ", ""
+				a.gsub! "\"", ""
+				a.gsub! "'", ""
+				a.gsub! "\t", ""
+				a = a.split("=>")
+				if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
+					view = a[1]
+				end
+			end
+		end
+
+		k = view.rindex("/")
+		if k == nil
+			view = self.get_controller_name + "_" + view
+		else
+			view = view[0..k-1] + "_" + view[k+1..-1]
+		end
+		#puts "view: " + view
+		return view
+	end
+
+	def replace_render_statements(view_class_hash)
+		render_view_mapping = self.get_render_view_mapping(view_class_hash)
+		content = self.get_content
+		render_view_mapping.each do |k, v|
+			content.gsub! k, v
+		end
+		return content
+	end
+end 
+
+
 
 
 class View_Class
@@ -117,6 +198,9 @@ class View_Class
 		@view_name = path[i+1..-1]
 		j = @view_name.index(".")
 		@view_name = @view_name[0..j-1]
+		while @view_name[0] == '_'
+			@view_name = @view_name[1..-1]
+		end
 
 		@controller_name = path[0..i-1]
 	end
@@ -178,6 +262,76 @@ class View_Class
 	
 	def get_button_to_array 
 		get_array_with_keyword @ast, "button_to"
+	end
+
+	def get_render_statement_array
+		get_render_array @ast
+	end
+
+#	get a hash of hash[render_statement] = view_file_content
+#	the render statements inside view_file_content will be replaces recursively before it is assigned to the hash
+	def get_render_view_mapping(view_class_hash)
+		render_view_mapping = Hash.new
+
+		self.get_render_statement_array.each do |r|
+			view_name = get_view_name_from_render_statement(r)
+			view_class = view_class_hash[view_name]
+		
+			#puts "render: " + r
+			#puts "view_name: " + view_name
+	
+			if view_class != nil
+				#puts "view_file: " + view_class.get_controller_name + ", " + view_class.get_view_name
+				value = view_class.replace_render_statements(view_class_hash)
+				render_view_mapping[r] = view_class.replace_render_statements(view_class_hash)
+			end
+		end
+	
+		return render_view_mapping	
+	end
+
+	def get_view_name_from_render_statement(r)
+		r = r.split("\n")[0]
+		r = r[6..-1] if r.start_with?"render"
+		while r[0] == '(' 
+			r = r[1..-1]
+		end
+
+		arr = r.split(",")
+		view = self.get_controller_name + "_" + self.get_view_name
+		arr[0].strip!
+		if arr[0].start_with?"\"" or arr[0].start_with?"'"
+			view = arr[0]
+		else 
+			arr.each do |a|
+				a.gsub! " ", ""
+				a.gsub! "\"", ""
+				a.gsub! "'", ""
+				a.gsub! "\t", ""
+				a = a.split("=>")
+				if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
+					view = a[1]
+				end
+			end
+		end
+
+		k = view.rindex("/")
+		if k == nil
+			view = self.get_controller_name + "_" + view
+		else
+			view = view[0..k-1] + "_" + view[k+1..-1]
+		end
+		return view
+	end
+
+	def replace_render_statements(view_class_hash)
+		render_view_mapping = self.get_render_view_mapping(view_class_hash)
+		rb_content = self.get_rb_content
+		render_view_mapping.each do |k, v|
+			#puts "key: " + k
+			rb_content.gsub! k, v
+		end
+		return rb_content
 	end
 end 
 

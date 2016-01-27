@@ -1,15 +1,21 @@
 load "data_structure.rb"
 
-def load_all_controllers(controller_path)
-	controller_arr = Hash.new
+def load_all_controllers_from_path(controller_path)
+	controller_hash = Hash.new
 	Dir.glob(controller_path + "**/*") do |item|
 		next if not item.end_with?"_controller.rb"
 
-		controller_arr[item] = Controller_Class.new(item)
+		controller_hash[item] = Controller_Class.new(item)
 
 	end
 
-	controller_arr.each do |item_path, controller_class|
+	return controller_hash
+end
+
+def print_redirect_to_of_all_controllers(controller_path)
+	controller_hash = load_all_controllers_from_path(controller_path)
+
+	controller_hash.each do |item_path, controller_class|
 		controller_class.getFunctions.each do |k, v|
 			puts "controller: " + controller_class.get_controller_name
 			puts "action: " + k
@@ -22,6 +28,7 @@ def load_all_controllers(controller_path)
 		end
 	end
 end
+
 
 def print_href_tags(tag_arr, named_routes_class)
 	res = "route = Rails.application.routes\n"
@@ -54,6 +61,43 @@ def print_href_tags(tag_arr, named_routes_class)
 end
 
 
+def load_all_views_from_path(view_path)
+	named_routes_path = "named_routes.txt"
+	named_routes_class = Named_Routes_Class.new(named_routes_path)
+	#puts named_routes_class.get_named_routes
+	
+	view_hash = Hash.new
+	Dir.glob(view_path + "**/*") do |item|
+		next if not item.end_with?".erb"
+
+		view_class = View_Class.new(item, view_path)
+		view_hash[view_class.get_controller_name + "_"  + view_class.get_view_name] = view_class
+	end
+	return view_hash
+end
+
+def print_all_controllers_render_replaced(controller_path, view_path)
+	controller_hash = load_all_controllers_from_path(controller_path)
+	view_hash = load_all_views_from_path(view_path)
+
+	view_hash.each do |k, v|
+		puts k
+		puts v.get_rb_content
+	end
+
+	controller_hash.each do |item_path, controller_class|
+		controller_class.get_functions.each do |k, v|
+
+			puts "controller: " + controller_class.get_controller_name
+			puts "action: " + k
+
+			puts v.replace_render_statements(view_hash)
+
+			puts "----------------------"
+		end
+	end
+end
+
 def load_all_views(view_path)
 	named_routes_path = "named_routes.txt"
 	named_routes_class = Named_Routes_Class.new(named_routes_path)
@@ -63,7 +107,8 @@ def load_all_views(view_path)
 	Dir.glob(view_path + "**/*") do |item|
 		next if not item.end_with?".erb"
 
-		view_hash[item] = View_Class.new(item, view_path)
+		view_class = View_Class.new(item, view_path)
+		view_hash[view_class.get_controller_name + "_"  + view_class.get_view_name] = view_class
 	end
 
 #	view_hash["/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb"] = View_Class.new("/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb", view_path)
@@ -90,6 +135,9 @@ def load_all_views(view_path)
 		puts indent + "link_to: "
 		print_rails_tag(view_class.get_link_to_array, named_routes_class)
 
+		puts indent + "replace render statements: "
+		puts view_class.replace_render_statements(view_hash)
+
 		puts "-------------------------"
 
 	end	
@@ -100,11 +148,27 @@ def load_named_routes(named_routes_path)
 	puts named_routes_class.get_named_routes
 end
 
+def load_all_views_render_statement(view_path)
+	view_hash = load_all_views_from_path(view_path)
+
+#	view_hash["/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb"] = View_Class.new("/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb", view_path)
+
+	indent = "---"
+
+	view_hash.each do |item_path, view_class|
+		puts indent + "view_path: " + item_path
 #load_named_routes "named_routes.txt"
 
-#load_all_controllers("../app/controllers")
-load_all_views "./app/views/"
+		puts view_class.replace_render_statements(view_hash)
 
+		puts "-------------------------------------------"
+	end
+end
+#load_all_controllers("../app/controllers")
+#load_all_views "./app/views/"
+load_all_views_render_statement "./app/views/"
+
+#print_all_controllers_render_replaced("./app/controllers/", "./app/views/")
 
 #path = "../app/controllers/users_controller.rb"
 #
