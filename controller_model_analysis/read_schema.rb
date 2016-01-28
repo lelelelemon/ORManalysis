@@ -62,16 +62,16 @@ def isTableField(caller_name, f_name)
 	if $class_map[caller_name] != nil
 		#puts "### #{caller_name} fields length = #{$class_map[caller_name].getFields.length}, f_name = #{f_name}"
 		$class_map[caller_name].getFields.each do |f|
-			#puts "\t #{f.field_name}"
+			#puts "\t #{f.field_name} #{f.type}"
 			if f.field_name == f_name.delete('?')
-				return true
+				return f
 			end
 			if f.field_name.include?("_id") and f.field_name[0...-3] == f_name.delete('?')
-				return true
+				return f
 			end
 		end
 	end
-	return false
+	return nil
 end
 
 def read_schema(app_dir)

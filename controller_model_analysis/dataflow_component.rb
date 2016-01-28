@@ -346,6 +346,7 @@ class Basic_block
 		@return_list = Array.new
 		@explicit_return = Array.new
 	end
+	attr_accessor :explicit_return, :return_list
 	def addExplicitReturn(r)
 		@explicit_return.push(r)
 	end
@@ -490,6 +491,7 @@ class CFG
 		#All nodes that last defines "self", used for validation like "before_save"
 		@def_self_nodes = Array.new #INode
 	end
+	attr_accessor :explicit_return, :return_list
 	def getDefSelf
 		@def_self_nodes
 	end

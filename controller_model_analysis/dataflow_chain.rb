@@ -316,6 +316,8 @@ def find_path_between_two_nodes(start_node, end_node)
 		if temp_node == end_node
 			reach_end = true
 			break
+		elsif temp_node == nil
+			break
 		else
 			temp_node.getDataflowEdges.each do |e|
 				if @processed_list.include?(e.getToNode)
@@ -478,22 +480,26 @@ def compute_chain_stats
 	@notstored_f_source = Hash.new
 	@stored_fields = Hash.new
 	@stored_f_source = Hash.new
+	@stored_f_type = Hash.new
 	$node_list.each do |n|
-		if n.isField? or n.getInstr.instance_of?AttrAssign_instr
+		if n.isField? or n.getInstr.instance_of?AttrAssign_instr and n.getInstr.getCallHandler != nil and n.getInstr.getCallHandler.caller != nil
 			var_name = n.getInstr.getCallHandler.getObjName
 			field_name = n.getInstr.getCallHandler.getFuncName
 			#field_instance = n.getInstr.getCallHandler.getField
 			tbl_name = n.getInstr.getCallHandler.caller.getName
 			p_s = "#{var_name} (#{tbl_name}) . #{field_name}"
 			s = "#{tbl_name}.#{field_name}"
-			if isTableField(tbl_name, field_name)
+			f = isTableField(tbl_name, field_name)
+			if f != nil
 				p_s = p_s + " -> field"
 				if n.getInstr.instance_of?AttrAssign_instr
 					if @stored_fields.has_key?(s)
 						@stored_fields[s] += 1
+						@stored_f_type[s] = f.type
 					else
 						@stored_fields[s] = 1
 						@stored_f_source[s] = 0
+						@stored_f_type[s] = f.type
 						n.source_list.each do |sn|
 							r_lst = find_path_between_two_nodes(sn, n)
 							@stored_f_source[s] += r_lst.length
@@ -520,7 +526,7 @@ def compute_chain_stats
 		$graph_file.write("Nonfield: #{f} #{v} #{@notstored_f_source[f]}\n")
 	end
 	@stored_fields.each do |f,v|
-		$graph_file.write("FieldAssign: #{f} #{v} #{@stored_f_source[f]}\n")
+		$graph_file.write("FieldAssign: #{f} #{v} #{@stored_f_type[f]} #{@stored_f_source[f]}\n")
 	end
 end
 #pattern 1: root1 is on the path of root2, which means node in root1 defines sth that node in root2 uses

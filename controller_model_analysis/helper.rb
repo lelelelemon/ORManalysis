@@ -284,6 +284,9 @@ def call_match_name(caller_name, funcname, f_handler)
 		if (call.getObjName.include?(caller_name) or caller_name.include?(call.getObjName)) and funcname == call.getFuncName
 				return call 
 		end
+		if funcname == call.getFuncName and (call.caller != nil and call.caller.getName == caller_name)
+			return call
+		end
 		if funcname == "super" and call.isSuperFunc
 				return call
 		end
@@ -295,6 +298,9 @@ def call_match_name(caller_name, funcname, f_handler)
 	if name_cnt == 1
 		return only_call
 	end
+	#f_handler.getCalls.each do |call|
+	#	puts "\t - #{call.getObjName} . #{call.getFuncName} . #{call.caller == nil}"
+	#end
 	return nil
 end
 
@@ -323,4 +329,15 @@ end
 def OUTPUT_Direct(w)
 	#puts w
 	$trace_output_file.write("#{w}\n")
+end
+
+def clear_data_structure
+	$node_list.each do |n|
+		if n.getInstr!= nil and n.getInstr.getBB.getExplicitReturn.length > 0
+			n.getInstr.getBB.explicit_return = Array.new
+			n.getInstr.getBB.return_list = Array.new
+			n.getInstr.getBB.getCFG.explicit_return = Array.new
+			n.getInstr.getBB.getCFG.return_list = Array.new
+		end
+	end
 end

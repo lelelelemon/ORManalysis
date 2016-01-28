@@ -119,8 +119,9 @@ def test_functional_dependency(nodex, nodey)
 	return @nearest_common_ancestor
 end
 
-def compute_functional_dependency
+def compute_functional_dependency(file_to_write)
 	for i in 0...$node_list.length-1
+		n = $node_list[i]
 		if isTableAttrAssign($node_list[i])
 			for j in i+1...$node_list.length-1
 				if isTableAttrAssign($node_list[j])
@@ -128,22 +129,32 @@ def compute_functional_dependency
 					ancestor = test_functional_dependency($node_list[i], $node_list[j])
 					if ancestor != nil
 						#HAVE functional dependency!
-						puts "!!! FIND a functional dependency! #{i} -> #{j}"	
+						#puts "!!! FIND a functional dependency! #{i} -> #{j}"
+						callera = $node_list[i].getInstr.getCallHandler
+						callerb = $node_list[j].getInstr.getCallHandler
+						file_to_write.write("FUNCDEP: W #{callera.caller.getName}.#{callera.getFuncName} -> #{callerb.caller.getName}.#{callerb.getFuncName}\n")	
 					end
 				end
 			end
-		elsif n.isField?
+		elsif $node_list[i].isField? and n.getInstr.getCallHandler != nil and n.getInstr.getCallHandler.caller != nil
 			var_name = n.getInstr.getCallHandler.getObjName
 			field_name = n.getInstr.getCallHandler.getFuncName
 			tbl_name = n.getInstr.getCallHandler.caller.getName
 			if isTableField(tbl_name, field_name)
 				for j in i+1...$node_list.length-1
-					ancestor = test_functional_dependency($node_list[i], $node_list[j])
-					if ancestor == $node_list[i]
-						#HAVE functional dependency!
-						puts "!!! FIND a functional dependency! #{i} -> #{j}"	
+					if isTableAttrAssign($node_list[j])
+						ancestor = test_functional_dependency($node_list[i], $node_list[j])
+						if ancestor == $node_list[i]
+							#HAVE functional dependency!
+							#puts "!!! FIND a functional dependency! #{i} -> #{j}"
+							callera = $node_list[i].getInstr.getCallHandler
+							callerb = $node_list[j].getInstr.getCallHandler
+							if callera != nil
+								file_to_write.write("FUNCDEP: R #{callera.caller.getName}.#{callera.getFuncName} -> #{callerb.caller.getName}.#{callerb.getFuncName}\n")	
+							end
+						end
 					end
-
+				end
 			end
 		end
 	end

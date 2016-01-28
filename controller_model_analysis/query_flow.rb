@@ -44,7 +44,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 
 				last_cfg = nil
 				temp_node = $cur_node
-				outnodes = Array.new
+				@outnodes = Array.new
 				prev_defself = Array.new
 				temp_node.getInstr.getDeps.each do |dep|
 					if dep.getInstrHandler.getINode != nil
@@ -67,7 +67,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 								#validation funcs may update fields in the class, and the insert/update query will have data dependency on those functions
 								#TODO: before_validation can also affect normal functions...
 								cur_cfg.getDefSelf.each do |rt|
-									outnodes.push(rt)
+									@outnodes.push(rt)
 								end
 								prev_defself.each do |p|
 									receive_node = cur_cfg.getBB[0].getInstr[0].getINode
@@ -93,7 +93,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 				end
 				temp_node.index = $ins_cnt
 				$node_list.push(temp_node)
-				outnodes.each do |rt|
+				@outnodes.each do |rt|
 					dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
 					edge = Dataflow_edge.new(rt, temp_node, "returnv")
 					rt.getInstr.getINode.addDataflowEdge(edge)
@@ -123,7 +123,11 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 					end
 					temp_node.getInstr.setCallCFG(cur_cfg)
 				end
+			else
+				#puts "executed before: #{call.getObjName}, #{call.getFuncName}"
 			end
+		else
+			#puts "Callerv = nil: #{call.getObjName} . #{call.getFuncName}"
 		end
 end
 
@@ -145,7 +149,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
 		if call != nil
 			instr.setCallHandler(call)
-			if instr.getResolvedCaller.include?("self")
+			if instr.getResolvedCaller == ("self")
 				instr.setResolvedCaller(start_class)
 			end
 			$funccall_stack.push($cur_node)
@@ -159,7 +163,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 			call.setField
 			instr.setCallHandler(call)
 		else
-			#puts "CANNOT find caller: #{instr.toString}"
+			#puts "CANNOT find caller: #{instr.toString} #{instr.getResolvedCaller} [#{instr.getCaller}] #{instr.getFuncname} #{call==nil} #{function_handler.getName}"
 		end
 	end
 

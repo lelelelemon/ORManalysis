@@ -201,7 +201,11 @@ def trace_flow(start_class, start_function, params, returnv, level)
 	if class_handler == nil
 		OUTPUT_Direct "Class handler not found: #{start_class}"
 	end
-	function_handler = class_handler.getMethod(start_function)
+	if class_handler != nil
+		function_handler = class_handler.getMethod(start_function)
+	else
+		function_handler = nil
+	end
 
 	$blank = ""
 	for i in (0...level)
@@ -215,6 +219,7 @@ def trace_flow(start_class, start_function, params, returnv, level)
 			else
 				OUTPUT_Direct "#{$blank}======transaction end====="
 			end
+			return 
 		else
 			#OUTPUT_Direct "function #{start_class}.#{start_function} cannot be found"
 			return 

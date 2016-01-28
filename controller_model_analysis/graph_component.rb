@@ -300,13 +300,20 @@ def compute_longest_single_path(file_to_write)
 	temp_node = $node_list[0]
 	p_length = 0
 	query_num = 0
+	read_query = 0
 	while temp_node.getControlflowEdges.length > 0
 		p_length += 1
 		if temp_node.isQuery?
 			query_num += 1
+			if temp_node.isReadQuery?
+				read_query += 1
+			end
 		end
 		#puts "Longest path #{p_length}: #{temp_node.getIndex}: #{temp_node.getInstr.toString}"
 		temp_node = temp_node.longest_control_path_nextnode
 	end
+	file_to_write.write("STATS query total on single path: #{query_num}\n")
+	file_to_write.write("STATS read query on single path: #{read_query}\n")
+	file_to_write.write("STATS write query on single path: #{query_num-read_query}\n")
 	#puts "PATH length: ##{p_length} (qnum: #{query_num}) Vs #{$node_list.length}"
 end

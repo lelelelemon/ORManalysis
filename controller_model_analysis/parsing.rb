@@ -417,7 +417,7 @@ if options[:run_all]
 		start_function = chs[1]
 		chs[0] = chs[0].capitalize
 		start_class = "#{chs[0]}Controller"
-		puts "HANDLING: #{start_class} . #{start_function}"
+		puts "Handling #{start_class}, #{start_function}"
 		$node_list = Array.new
 		$root = nil
 		$view_ruby_code = false
@@ -457,7 +457,7 @@ if options[:run_all]
 		
 		level = 0
 
-		$output_dir = "#{$app_dir}/temp_results/#{start_class}_#{start_function}"
+		$output_dir = "#{$app_dir}/results/#{start_class}_#{start_function}"
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		puts "Graph_name = #{graph_fname}"
@@ -478,7 +478,7 @@ if options[:run_all]
 
 		compute_dataflow_stat($output_dir, start_class, start_function)
 
-
+		clear_data_structure
 	end
 	
 end
@@ -509,8 +509,8 @@ if options[:print_all] == true
 		#end
 		#puts ""
 	end
-	#_file = File.open("#{$app_dir}/table_name.txt", "w")
-	#$table_names.each do |t|
-	#	_file.write("#{t}\n")
-	#end
+	_file = File.open("#{$app_dir}/table_name.txt", "w")
+	$table_names.each do |t|
+		_file.write("#{t}\n")
+	end
 end

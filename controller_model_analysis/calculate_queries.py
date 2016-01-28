@@ -2,6 +2,30 @@ import sys
 import glob
 import os
 import matplotlib.pyplot as plt
+tableau_colors = (
+    (114/255., 158/255., 206/255.),
+    (255/255., 158/255.,  74/255.),
+    (103/255., 191/255.,  92/255.),
+    (237/255., 102/255.,  93/255.),
+    (173/255., 139/255., 201/255.),
+    (168/255., 120/255., 110/255.),
+    (237/255., 151/255., 202/255.),
+    (162/255., 162/255., 162/255.),
+    (205/255., 204/255.,  93/255.),
+    (109/255., 204/255., 218/255.),
+    (144/255., 169/255., 202/255.),
+    (225/255., 157/255.,  90/255.),
+    (122/255., 193/255., 108/255.),
+    (225/255., 122/255., 120/255.),
+    (197/255., 176/255., 213/255.),
+    (196/255., 156/255., 148/255.),
+    (247/255., 182/255., 210/255.),
+    (199/255., 199/255., 199/255.),
+    (219/255., 219/255., 141/255.),
+    (158/255., 218/255., 229/255.),
+    (198/255., 118/255., 255/255.), #dsm added, not Tableau
+    (58/255., 208/255., 129/255.),
+)
 
 base_path = "../applications/%s/results/"%sys.argv[1]
 txn = []
@@ -56,6 +80,7 @@ for i in range(5):
 	chain_data.append([])
 Input = []
 nonfield = {}
+assignfield = {}
 nf = {}
 
 for subdir, folders, files in os.walk(base_path):
@@ -92,6 +117,15 @@ for subdir, folders, files in os.walk(base_path):
 						nonfield[chs[1]].append([])
 					nonfield[chs[1]][0].append(int(chs[2], 10))
 					nonfield[chs[1]][1].append(int(chs[3], 10))
+				elif chs[0] == "FieldAssign:":
+					print line
+					if chs[3] not in assignfield:
+						assignfield[chs[1]] = []
+						assignfield[chs[1]].append([])
+						assignfield[chs[1]].append([])
+					assignfield[chs[1]][0].append(int(chs[2], 10))
+					assignfield[chs[1]][1].append(int(chs[4], 10))
+
 					
 		elif fn.endswith(".txt"):
 			fp = open(os.path.join(subdir, fn), "r")
@@ -110,6 +144,8 @@ for subdir, folders, files in os.walk(base_path):
 						total_max = t
 				elif "STATS" in line:
 					vmap = line.split("  ")
+					if ": " in line:
+						vmap = line.split(": ")
 					if vmap[0] in stats:
 						stats[vmap[0]].append(int(chs[-1], 10))
 					else:
@@ -172,11 +208,11 @@ for subdir, folders, files in os.walk(base_path):
 									op = info[1].replace(">","")
 									if len(table) == 0:
 										table = "UNKNOWN"
-									if tables.has_key(table):
-										tables[table][op] = tables[table][op] + 1
-										query = line[0:line.index("<")-1]
-										if query not in table_queries[table]:
-											table_queries[table].append(query)
+									#if tables.has_key(table):
+									#	tables[table][op] = tables[table][op] + 1
+									#	query = line[0:line.index("<")-1]
+									#	if query not in table_queries[table]:
+									#		table_queries[table].append(query)
 						
 
 plt.figure(1)  
@@ -195,6 +231,7 @@ plt.subplot(324)
 plt.hist(Input, 20, color='green')
 plt.xlabel("Importance of input: #of queries each input affected")
 plt.subplot(325)
+
 data_nonfield = []
 data_nonfield.append([])
 data_nonfield.append([])
@@ -204,6 +241,20 @@ for k,v in nonfield.items():
 plt.plot(data_nonfield[1], data_nonfield[0], 'b*')
 plt.xlabel("Average #of instructions (distance) from source")
 plt.ylabel("#of appearance")
+
+plt.subplot(326)
+data_assignfield = []
+data_assignfield.append([])
+data_assignfield.append([])
+for k,v in assignfield.items():
+	data_assignfield[0].append(sum(v[0]))
+	data_assignfield[1].append(sum(v[1]) / float(len(v[1])))
+#plt.plot(data_assignfield[1], data_assignfield[0], 'b*')
+plt.scatter(data_assignfield[1], data_assignfield[0], color=tableau_colors)
+plt.xlabel("Average #of instructions (distance) from source")
+plt.ylabel("#of appearance")
+
+plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 plt.show()
 
 #print "Average txn length: %f"%(float(sum(lcnt)) / float(len(lcnt)))
@@ -212,23 +263,33 @@ print "Controller functions: %d"%len(total)
 print "Average query in total: %f"%(float(sum(total)) / float(len(total)))
 print "\tmin: %d, max: %d"%(total_min, total_max)
 
+total_queries = 0
 for k,v in stats.items():
 	if "read" not in k and "write" not in k:
 		#print "Average %s: %f"%(k,float(sum(v))/float(len(v)))
-		print "Total %s: %d"%(k, sum(v))
+		if "query total on single path" in k:
+			print "Total %s: %d"%(k, float(sum(v))/float(len(v)))
+		elif "query in total" in k:
+			print "Total %s: %d"%(k, sum(v))
 
 print ""
+read_total = 0
 for k,v in stats.items():
 	if "read" in k:
 		#print "Average %s: %f"%(k,float(sum(v))/float(len(v)))
 		print "Total %s: %d"%(k, sum(v))
+	if "read queries" in k:
+		read_total = sum(v)
 
 
 print ""
 for k,v in stats.items():
 	if "write" in k and "read" not in k:
+		if "write queries" in k:
+			print "Total %s: %d"%(k, sum(total)-read_total)
+		else:
 		#print "Average %s: %f"%(k,float(sum(v))/float(len(v)))
-		print "Total %s: %d"%(k, sum(v))
+			print "Total %s: %d"%(k, sum(v))
 
 #for k,v in tables.items():
 #	print "Table %s:"%k

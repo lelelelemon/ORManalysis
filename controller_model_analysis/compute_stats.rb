@@ -235,10 +235,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	
 	$node_list.each do |n|
 		n.setLabel
-		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		#puts "#{n.getIndex}:#{n.getInstr.toString}"
 		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
-				puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+				#puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
 			else
 				#puts "\t\t <- params"
 			end
@@ -249,7 +249,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	end
 
 
-	puts "Finish string printing"
 	graph_fname = "#{output_dir}/sketch_graph.log"
 	$graph_file = File.open(graph_fname, "w")
 
@@ -257,11 +256,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 
 	$graph_file.close
 
-	compute_functional_dependency
-	#graph_fname = "#{output_dir}/sketch_stats.txt"
-	#$graph_file = File.open(graph_fname, "w")
+	graph_fname = "#{output_dir}/sketch_stats.txt"
+	$graph_file = File.open(graph_fname, "w")
 
-	#compute_chain_stats
+	#compute_functional_dependency($graph_file)
+	compute_chain_stats
 
 #	graph_fname = "#{output_dir}/backward_forward.log"
 #	$graph_file = File.open(graph_fname, "w")
@@ -289,7 +288,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_stats.txt"
 	$graph_file = File.open(graph_fname, "w");
 
-	compute_longest_single_path($graph_file)	
 
 	total_query_num = 0
 	query_in_closure = 0
@@ -454,7 +452,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 			graph_write($graph_file, "\n")
 	
 		elsif n.isField?
-			graph_write($graph_file, "+FIELD+ #{n.getInstr.getCallHandler.getObjName} #{n.getInstr.getCallHandler.caller.getName}.#{n.getInstr.getCallHandler.getField.field_name} (#{n.getInstr.getCallHandler.getField.type})\n")
+			#graph_write($graph_file, "+FIELD+ #{n.getInstr.getCallHandler.getObjName} #{n.getInstr.getCallHandler.caller.getName}.#{n.getInstr.getCallHandler.getField.field_name} (#{n.getInstr.getCallHandler.getField.type})\n")
 			#test call handler same CFG: n.getInstr.getMethodDefCFG
 			#puts "Field: #{n.getInstr.getCallHandler.getObjName} . #{n.getInstr.getCallHandler.getFuncName}"
 		elsif n.isBranch?
@@ -468,6 +466,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	end
 	graph_write($graph_file, "\n")
 	graph_write($graph_file, "STATS query in total: #{total_query_num}\n")
+
+	compute_longest_single_path($graph_file)	
+
 	graph_write($graph_file, "STATS query in view: #{query_in_view}\n")
 	graph_write($graph_file, "STATS query in closure: #{query_in_closure}\n")
 
