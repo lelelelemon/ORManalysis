@@ -503,7 +503,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->send def_%cl_2_5 %self[2.0,] k[2.2,] 
-		 2: js[] k[2.2,] %cl_2_5[4.1,] 
+		 2: k[2.2,] %cl_2_5[4.1,] 
 		 3: 
 BB 5
 	outgoing: 6 10 13 
@@ -533,7 +533,7 @@ BB 7
 		 3: k->values def_%cl_2_14 k[7.1,2.2,] 
 		 4: %cl_2_14->first def_%cl_2_15 %cl_2_14[7.3,] 
 		 5: %self->send def_%cl_2_16 %self[2.0,] %cl_2_15[7.4,] 
-		 6: js[] %cl_2_13[7.2,] %cl_2_16[7.5,] 
+		 6: %cl_2_13[7.2,] %cl_2_16[7.5,] 
 		 7: 
 BB 8
 	outgoing: 9 13 
@@ -544,7 +544,7 @@ BB 8
 		 2: %cl_2_17->first def_%cl_2_18 %cl_2_17[8.1,] 
 		 3: k->values def_%cl_2_19 k[8.1,2.2,] 
 		 4: %cl_2_19->first def_%cl_2_20 %cl_2_19[8.3,] 
-		 5: js[] %cl_2_18[8.2,] %cl_2_20[8.4,] 
+		 5: %cl_2_18[8.2,] %cl_2_20[8.4,] 
 		 6: COPY def_%cl_2_16 %cl_2_20[8.4,] 
 BB 9
 	outgoing: 11 
@@ -682,7 +682,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: t->hotness_mod def_%cl_1_3 t[2.2,] 
-		 2: ATTRASSIGN %cl_1_3->! def_%cl_1_4 
+		 2: %cl_1_3->!= def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -1220,11 +1220,11 @@ BB 2
 		 6: 
 		 7: desc->to_s def_%v_3 desc[2.5,] 
 		 8: %v_3->rstrip def_%v_4 %v_3[2.7,] 
-		 9: %self[2.0,] %v_4[2.8,] 
+		 9: %v_4[2.8,] 
 		 10: 
-		 11: %self->generated_markeddown_description def_%v_5 %self[2.0,] 
+		 11: %self->generated_markeddown_description def_%v_5 %self[2.0,2.9,] 
 		 12: ATTRASSIGN %self->markeddown_description %v_5[2.11,] 
-		 13: RETURN %v_5[2.11,] %self[2.0,2.11,2.12,] 
+		 13: RETURN %v_5[2.11,] %self[2.0,2.9,2.11,2.12,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -1536,7 +1536,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -1873,7 +1873,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->unavailable_at def_%v_3 %self[2.0,] 
-		 7: ATTRASSIGN %v_3->! def_%v_4 
+		 7: %v_3->!= def_%v_4 %v_3[2.6,] 
 		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -2953,7 +2953,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -3106,7 +3106,7 @@ BB 3
 		 0: 
 		 1: tag_name->to_s def_%cl_2_3 tag_name[2.2,] 
 		 2: COPY def_%cl_2_4 
-		 3: ATTRASSIGN %cl_2_3->! def_%cl_2_5 %cl_2_4[3.2,] 
+		 3: %cl_2_3->!= def_%cl_2_5 %cl_2_3[3.1,] %cl_2_4[3.2,] 
 		 4: BRANCH %cl_2_5[3.3,] 
 BB 4
 	outgoing: 5 12 
@@ -3196,8 +3196,8 @@ BB 2
 		 5: RECEIVEARG def_t 
 		 6: 
 		 7: t->strip def_%v_3 t[2.5,] 
-		 8: %self[2.0,] %v_3[2.7,] 
-		 9: RETURN %v_3[2.7,] %self[2.0,] 
+		 8: %v_3[2.7,] 
+		 9: RETURN %v_3[2.7,] %self[2.0,2.8,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -3576,8 +3576,8 @@ BB 10
 		 0: 
 		 1: u->to_s def_%v_18 u[8.1,2.5,] 
 		 2: %v_18->strip def_%v_19 %v_18[10.1,] 
-		 3: %self[2.0,] %v_19[10.2,] 
-		 4: RETURN %v_19[10.2,] %self[2.0,] 
+		 3: %v_19[10.2,] 
+		 4: RETURN %v_19[10.2,] %self[10.3,2.0,] 
 BB 11
 	outgoing: 
 	datadep: 
@@ -4031,13 +4031,13 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD def_%v_4 %self[2.0,] 
 		 1: RETURN %v_4[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -4115,7 +4115,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_25 %self[6.19,2.0,] 
+		 1: GETFIELD def_%v_25 %self[6.19,2.0,] 
 		 2: RETURN %v_25[14.1,] %self[6.19,2.0,] 
 BB 15
 	outgoing: 
@@ -4137,13 +4137,13 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD def_%v_4 %self[2.0,] 
 		 1: RETURN %v_4[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -4380,13 +4380,13 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 29 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD def_%v_4 %self[2.0,] 
 		 1: RETURN %v_4[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 26 
