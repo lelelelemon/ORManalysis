@@ -581,8 +581,8 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: GETFIELD def_%v_3 %self[2.0,] 
-		 7: GETFIELD def_%v_4 %self[2.0,] 
+		 6: GETFIELD %self->upvotes def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->downvotes def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: %v_5->to_f def_%v_6 %v_5[2.8,] 
 		 10: COPY def_n %v_6[2.9,] 
@@ -603,7 +603,7 @@ BB 4
 		 1: 
 		 2: COPY def_z 
 		 3: 
-		 4: GETFIELD def_%v_9 %self[2.0,] 
+		 4: GETFIELD %self->upvotes def_%v_9 %self[2.0,] 
 		 5: %v_9->to_f def_%v_10 %v_9[4.4,] 
 		 6: def_%v_11 %v_10[4.5,] n[2.10,] 
 		 7: COPY def_p %v_11[4.6,] 
@@ -1188,12 +1188,12 @@ BB 2
 		 5: RECEIVEARG def_upvote 
 		 6: RECEIVEARG def_downvote 
 		 7: 
-		 8: GETFIELD def_%v_3 %self[2.0,] 
+		 8: GETFIELD %self->upvotes def_%v_3 %self[2.0,] 
 		 9: upvote->to_i def_%v_4 upvote[2.5,] 
 		 10: def_%v_5 %v_3[2.8,] %v_4[2.9,] 
 		 11: ATTRASSIGN %self->@upvotes %v_5[2.10,] 
 		 12: 
-		 13: GETFIELD def_%v_6 %self[2.0,] 
+		 13: GETFIELD %self->downvotes def_%v_6 %self[2.0,] 
 		 14: downvote->to_i def_%v_7 downvote[2.6,] 
 		 15: def_%v_8 %v_6[2.13,] %v_7[2.14,] 
 		 16: ATTRASSIGN %self->@downvotes %v_8[2.15,] 
@@ -1834,8 +1834,8 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: GETFIELD def_%v_3 %self[2.0,] 
-		 7: GETFIELD def_%v_4 %self[2.0,] 
+		 6: GETFIELD %self->upvotes def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->downvotes def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
 BB 3
