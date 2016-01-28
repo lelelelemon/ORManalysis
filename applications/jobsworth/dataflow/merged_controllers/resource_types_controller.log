@@ -16,7 +16,7 @@ BB 2
 		 6: %self->current_user def_%v_3 %self[2.0,] 
 		 7: %v_3->company def_%v_4 %v_3[2.6,] 
 		 8: %v_4->resource_types def_%v_5 %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@resource_types %self[2.0,2.6,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->resource_types %v_5[2.8,] 
 		 10: 
 		 11: %self->respond_to def_%v_6 %self[2.0,2.6,2.9,] %self[2.0,2.6,2.9,] 
 CLOSURE BEGIN: format[] %self[2.0,2.6,2.9,] 
@@ -59,7 +59,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_types def_%cl_2_3 %self[2.0,] 
 		 2: COPY def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: %self->render def_%cl_2_5 %self[2.0,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] %self[3.3,2.0,] 
@@ -111,7 +111,7 @@ BB 2
 		 5: 
 		 6: (ResourceType) def_%v_3 
 		 7: %v_3->new def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@resource_type %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->resource_type %v_4[2.7,] 
 		 9: 
 		 10: %self->respond_to def_%v_5 %self[2.0,2.8,] %self[2.0,2.8,] 
 CLOSURE BEGIN: format[] %self[2.0,2.8,] 
@@ -154,7 +154,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_2_3 %self[2.0,] 
 		 2: COPY def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: %self->render def_%cl_2_5 %self[2.0,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] %self[3.3,2.0,] 
@@ -210,7 +210,7 @@ BB 2
 		 9: %self->params def_%v_6 %self[2.0,2.6,] 
 		 10: def_%v_7 %v_6[2.9,] 
 		 11: %v_5->find def_%v_8 %v_5[2.8,] %v_7[2.10,] 
-		 12: ATTRASSIGN %self->@resource_type %self[2.0,2.6,2.9,] %v_8[2.11,] 
+		 12: ATTRASSIGN %self->resource_type %v_8[2.11,] 
 		 13: 
 		 14: %self->ruby_code_from_view def_%v_9 %self[2.0,2.6,2.9,2.12,] 
 		 15: %v_9->ruby_code_from_view def_%v_10 %v_9[2.14,] %self[2.0,2.6,2.9,2.12,2.14,] 
@@ -853,7 +853,7 @@ BB 3
 		 15: 
 		 16: %self->csrf_meta_tag def_%cl_11_14 %self[3.2,3.7,3.11,3.14,2.0,] 
 		 17: 
-		 18: def_%cl_11_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
+		 18: GETFIELD %self->page_title def_%cl_11_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
 		 19: BRANCH %cl_11_15[3.18,] 
 BB 4
 	outgoing: 5 12 
@@ -1007,13 +1007,13 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_13_26 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_13_26 %self[2.0,] 
 		 2: BRANCH %cl_13_26[9.1,] 
 BB 10
 	outgoing: 11 15 
 	datadep: 
 	instructions:
-		 0: def_%cl_13_27 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_13_27 %self[2.0,] 
 		 1: %cl_13_27->task def_%cl_13_28 %cl_13_27[10.0,] 
 		 2: COPY def_%cl_13_26 %cl_13_28[10.1,] 
 BB 11
@@ -1047,35 +1047,35 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_14_3 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_14_3 %self[2.0,] 
 		 2: %cl_14_3->task def_%cl_14_4 %cl_14_3[3.1,] 
 		 3: %self->start_stop_work_link def_%cl_14_5 %self[2.0,] %cl_14_4[3.2,] 
 		 4: 
-		 5: def_%cl_14_6 %self[3.3,2.0,] 
+		 5: GETFIELD %self->current_sheet def_%cl_14_6 %self[3.3,2.0,] 
 		 6: %cl_14_6->task def_%cl_14_7 %cl_14_6[3.5,] 
 		 7: %self->cancel_work_link def_%cl_14_8 %self[3.3,2.0,] %cl_14_7[3.6,] 
 		 8: 
-		 9: def_%cl_14_9 %self[3.3,3.7,2.0,] 
+		 9: GETFIELD %self->current_sheet def_%cl_14_9 %self[3.3,3.7,2.0,] 
 		 10: %cl_14_9->task def_%cl_14_10 %cl_14_9[3.9,] 
 		 11: %self->pause_task_link def_%cl_14_11 %self[3.3,3.7,2.0,] %cl_14_10[3.10,] 
 		 12: 
-		 13: def_%cl_14_12 %self[3.3,3.7,3.11,2.0,] 
+		 13: GETFIELD %self->current_sheet def_%cl_14_12 %self[3.3,3.7,3.11,2.0,] 
 		 14: %cl_14_12->task def_%cl_14_13 %cl_14_12[3.13,] 
 		 15: %cl_14_13->issue_name def_%cl_14_14 %cl_14_13[3.14,] 
 		 16: COPY def_%cl_14_15 
 		 17: def_%cl_14_16 %cl_14_14[3.15,] %cl_14_15[3.16,] 
-		 18: def_%cl_14_17 %self[3.3,3.7,3.11,2.0,] 
+		 18: GETFIELD %self->current_sheet def_%cl_14_17 %self[3.3,3.7,3.11,2.0,] 
 		 19: %cl_14_17->task def_%cl_14_18 %cl_14_17[3.18,] 
 		 20: %cl_14_18->project def_%cl_14_19 %cl_14_18[3.19,] 
 		 21: %cl_14_19->name def_%cl_14_20 %cl_14_19[3.20,] 
 		 22: def_%cl_14_21 %cl_14_16[3.17,] %cl_14_20[3.21,] 
-		 23: def_%cl_14_22 %self[3.3,3.7,3.11,2.0,] 
+		 23: GETFIELD %self->current_sheet def_%cl_14_22 %self[3.3,3.7,3.11,2.0,] 
 		 24: %cl_14_22->task def_%cl_14_23 %cl_14_22[3.23,] 
 		 25: %cl_14_23->task_num def_%cl_14_24 %cl_14_23[3.24,] 
 		 26: %self->edit_task_path def_%cl_14_25 %self[3.3,3.7,3.11,2.0,] %cl_14_24[3.25,] 
 		 27: %self->link_to def_%cl_14_26 %self[3.3,3.7,3.11,3.26,2.0,] %cl_14_21[3.22,] %cl_14_25[3.26,] 
 		 28: 
-		 29: def_%cl_14_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
+		 29: GETFIELD %self->current_sheet def_%cl_14_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
 		 30: %cl_14_27->task def_%cl_14_28 %cl_14_27[3.29,] 
 		 31: %cl_14_28->duration def_%cl_14_29 %cl_14_28[3.30,] 
 		 32: %cl_14_29->nil? def_%cl_14_30 %cl_14_29[3.31,] 
@@ -1084,7 +1084,7 @@ BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_14_31 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_14_31 %self[2.0,] 
 		 1: %cl_14_31->task def_%cl_14_32 %cl_14_31[4.0,] 
 		 2: %cl_14_32->duration def_%cl_14_33 %cl_14_32[4.1,] 
 		 3: %cl_14_33->== def_%cl_14_34 %cl_14_33[4.2,] 
@@ -1104,14 +1104,14 @@ BB 7
 	outgoing: 8 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_14_36 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_14_36 %self[2.0,] 
 		 1: %cl_14_36->task def_%cl_14_37 %cl_14_36[7.0,] 
 		 2: %cl_14_37->worked_minutes def_%cl_14_38 %cl_14_37[7.1,] 
-		 3: def_%cl_14_39 %self[2.0,] 
+		 3: GETFIELD %self->current_sheet def_%cl_14_39 %self[2.0,] 
 		 4: %cl_14_39->duration def_%cl_14_40 %cl_14_39[7.3,] 
 		 5: def_%cl_14_41 %cl_14_40[7.4,] 
 		 6: def_%cl_14_42 %cl_14_38[7.2,] %cl_14_41[7.5,] 
-		 7: def_%cl_14_43 %self[2.0,] 
+		 7: GETFIELD %self->current_sheet def_%cl_14_43 %self[2.0,] 
 		 8: %cl_14_43->task def_%cl_14_44 %cl_14_43[7.7,] 
 		 9: %cl_14_44->duration def_%cl_14_45 %cl_14_44[7.8,] 
 		 10: %cl_14_45->to_f def_%cl_14_46 %cl_14_45[7.9,] 
@@ -1126,16 +1126,16 @@ BB 8
 	instructions:
 		 0: 
 		 1: (TimeParser) def_%cl_14_50 
-		 2: def_%cl_14_51 %self[2.0,] 
+		 2: GETFIELD %self->current_sheet def_%cl_14_51 %self[2.0,] 
 		 3: %cl_14_51->duration def_%cl_14_52 %cl_14_51[8.2,] 
 		 4: def_%cl_14_53 %cl_14_52[8.3,] 
 		 5: %cl_14_50->format_duration def_%cl_14_54 %cl_14_50[8.1,] %cl_14_53[8.4,] 
 		 6: 
 		 7: (TimeParser) def_%cl_14_55 
-		 8: def_%cl_14_56 %self[2.0,] 
+		 8: GETFIELD %self->current_sheet def_%cl_14_56 %self[2.0,] 
 		 9: %cl_14_56->task def_%cl_14_57 %cl_14_56[8.8,] 
 		 10: %cl_14_57->worked_minutes def_%cl_14_58 %cl_14_57[8.9,] 
-		 11: def_%cl_14_59 %self[2.0,] 
+		 11: GETFIELD %self->current_sheet def_%cl_14_59 %self[2.0,] 
 		 12: %cl_14_59->duration def_%cl_14_60 %cl_14_59[8.11,] 
 		 13: def_%cl_14_61 %cl_14_60[8.12,] 
 		 14: def_%cl_14_62 %cl_14_58[8.10,] %cl_14_61[8.13,] 
@@ -2188,7 +2188,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_23_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_23_3 %self[2.0,] 
 		 2: COPY def_%cl_23_4 
 		 3: COPY def_%cl_23_5 %cl_23_4[3.2,] 
 		 4: COPY def_%cl_23_6 %cl_23_5[3.3,] 
@@ -2220,7 +2220,7 @@ BB 3
 		 6: COPY def_%cl_24_6 
 		 7: %self->t def_%cl_24_7 %self[3.2,2.0,] %cl_24_6[3.6,] 
 		 8: 
-		 9: def_%cl_24_8 %self[3.2,3.7,2.0,] 
+		 9: GETFIELD %self->resource_type def_%cl_24_8 %self[3.2,3.7,2.0,] 
 		 10: %cl_24_8->resource_type_attributes def_%cl_24_9 %cl_24_8[3.9,] 
 		 11: %cl_24_9->each def_%cl_24_10 %cl_24_9[3.10,] %self[3.2,3.7,2.0,] 
 CLOSURE BEGIN: %self[3.2,3.7,2.0,] 
@@ -2311,7 +2311,7 @@ BB 8
 		 0: COPY def_ids %cl_26_14[7.1,6.7,] 
 		 1: 
 		 2: %self->attribute def_%cl_26_16 %self[2.0,] 
-		 3: %self->fields_for def_%cl_26_17 %self[8.2,2.0,] prefix[6.4,4.2,3.5,] %cl_26_16[8.2,] %self[8.2,2.0,] 
+		 3: %self->fields_for def_%cl_26_17 %self[8.2,2.0,] prefix[6.4,] %cl_26_16[8.2,] %self[8.2,2.0,] 
 CLOSURE BEGIN: ids[8.0,] f[] %self[8.2,2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -2421,7 +2421,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 12: 
-		 13: def_%cl_24_11 %self[3.2,3.7,2.0,] 
+		 13: GETFIELD %self->resource_type def_%cl_24_11 %self[3.2,3.7,2.0,] 
 		 14: %self->cit_submit_tag def_%cl_24_12 %self[3.2,3.7,2.0,] %cl_24_11[3.13,] 
 		 15: 
 		 16: %self->add_attribute_link def_%cl_24_13 %self[3.2,3.7,3.14,2.0,] 
@@ -2489,12 +2489,12 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->new def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@resource_type %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->resource_type %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,2.10,] 
+		 12: GETFIELD %self->resource_type def_%v_7 %self[2.0,2.7,2.10,] 
 		 13: %self->current_user def_%v_8 %self[2.0,2.7,2.10,] 
 		 14: %v_8->company def_%v_9 %v_8[2.13,] 
-		 15: ATTRASSIGN %v_7->company %v_7[2.12,] %v_9[2.14,] 
+		 15: ATTRASSIGN %v_7->company %v_9[2.14,] 
 		 16: 
 		 17: %self->respond_to def_%v_10 %self[2.0,2.7,2.10,2.13,] %self[2.0,2.7,2.10,2.13,] 
 CLOSURE BEGIN: %self[2.0,2.7,2.10,2.13,] format[] 
@@ -2516,7 +2516,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->save def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
@@ -2531,7 +2531,7 @@ BB 4
 		 5: %cl_1_8->human def_%cl_1_9 %cl_1_8[4.4,] 
 		 6: COPY def_%cl_1_10 %cl_1_9[4.5,] 
 		 7: %self->t def_%cl_1_11 %self[4.1,2.0,] %cl_1_6[4.2,] %cl_1_10[4.6,] 
-		 8: %cl_1_5[4.1,] %cl_1_11[4.7,] 
+		 8: ATTRASSIGN %cl_1_5->[] %cl_1_11[4.7,] 
 		 9: 
 		 10: format->html def_%cl_1_12 format[2.2,] %self[4.1,4.7,2.0,] 
 CLOSURE BEGIN: %self[4.1,4.7,2.0,] 
@@ -2552,7 +2552,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_2_3 %self[2.0,] 
 		 2: %self->edit_resource_type_path def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 
 		 3: %self->redirect_to def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] %self[3.2,3.3,2.0,] 
@@ -2588,8 +2588,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_3 %self[2.0,] 
-		 2: def_%cl_3_4 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_3_3 %self[2.0,] 
+		 2: GETFIELD %self->resource_type def_%cl_3_4 %self[2.0,] 
 		 3: COPY def_%cl_3_5 %cl_3_3[3.1,] %cl_3_4[3.2,] 
 		 4: %self->render def_%cl_3_6 %self[2.0,] %cl_3_5[3.3,] 
 		 5: RETURN %cl_3_6[3.4,] %self[3.4,2.0,] 
@@ -3271,7 +3271,7 @@ BB 3
 		 15: 
 		 16: %self->csrf_meta_tag def_%cl_15_14 %self[3.2,3.7,3.11,3.14,2.0,] 
 		 17: 
-		 18: def_%cl_15_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
+		 18: GETFIELD %self->page_title def_%cl_15_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
 		 19: BRANCH %cl_15_15[3.18,] 
 BB 4
 	outgoing: 5 12 
@@ -3425,13 +3425,13 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_17_26 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_17_26 %self[2.0,] 
 		 2: BRANCH %cl_17_26[9.1,] 
 BB 10
 	outgoing: 11 15 
 	datadep: 
 	instructions:
-		 0: def_%cl_17_27 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_17_27 %self[2.0,] 
 		 1: %cl_17_27->task def_%cl_17_28 %cl_17_27[10.0,] 
 		 2: COPY def_%cl_17_26 %cl_17_28[10.1,] 
 BB 11
@@ -3465,35 +3465,35 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_18_3 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_18_3 %self[2.0,] 
 		 2: %cl_18_3->task def_%cl_18_4 %cl_18_3[3.1,] 
 		 3: %self->start_stop_work_link def_%cl_18_5 %self[2.0,] %cl_18_4[3.2,] 
 		 4: 
-		 5: def_%cl_18_6 %self[3.3,2.0,] 
+		 5: GETFIELD %self->current_sheet def_%cl_18_6 %self[3.3,2.0,] 
 		 6: %cl_18_6->task def_%cl_18_7 %cl_18_6[3.5,] 
 		 7: %self->cancel_work_link def_%cl_18_8 %self[3.3,2.0,] %cl_18_7[3.6,] 
 		 8: 
-		 9: def_%cl_18_9 %self[3.3,3.7,2.0,] 
+		 9: GETFIELD %self->current_sheet def_%cl_18_9 %self[3.3,3.7,2.0,] 
 		 10: %cl_18_9->task def_%cl_18_10 %cl_18_9[3.9,] 
 		 11: %self->pause_task_link def_%cl_18_11 %self[3.3,3.7,2.0,] %cl_18_10[3.10,] 
 		 12: 
-		 13: def_%cl_18_12 %self[3.3,3.7,3.11,2.0,] 
+		 13: GETFIELD %self->current_sheet def_%cl_18_12 %self[3.3,3.7,3.11,2.0,] 
 		 14: %cl_18_12->task def_%cl_18_13 %cl_18_12[3.13,] 
 		 15: %cl_18_13->issue_name def_%cl_18_14 %cl_18_13[3.14,] 
 		 16: COPY def_%cl_18_15 
 		 17: def_%cl_18_16 %cl_18_14[3.15,] %cl_18_15[3.16,] 
-		 18: def_%cl_18_17 %self[3.3,3.7,3.11,2.0,] 
+		 18: GETFIELD %self->current_sheet def_%cl_18_17 %self[3.3,3.7,3.11,2.0,] 
 		 19: %cl_18_17->task def_%cl_18_18 %cl_18_17[3.18,] 
 		 20: %cl_18_18->project def_%cl_18_19 %cl_18_18[3.19,] 
 		 21: %cl_18_19->name def_%cl_18_20 %cl_18_19[3.20,] 
 		 22: def_%cl_18_21 %cl_18_16[3.17,] %cl_18_20[3.21,] 
-		 23: def_%cl_18_22 %self[3.3,3.7,3.11,2.0,] 
+		 23: GETFIELD %self->current_sheet def_%cl_18_22 %self[3.3,3.7,3.11,2.0,] 
 		 24: %cl_18_22->task def_%cl_18_23 %cl_18_22[3.23,] 
 		 25: %cl_18_23->task_num def_%cl_18_24 %cl_18_23[3.24,] 
 		 26: %self->edit_task_path def_%cl_18_25 %self[3.3,3.7,3.11,2.0,] %cl_18_24[3.25,] 
 		 27: %self->link_to def_%cl_18_26 %self[3.3,3.7,3.11,3.26,2.0,] %cl_18_21[3.22,] %cl_18_25[3.26,] 
 		 28: 
-		 29: def_%cl_18_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
+		 29: GETFIELD %self->current_sheet def_%cl_18_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
 		 30: %cl_18_27->task def_%cl_18_28 %cl_18_27[3.29,] 
 		 31: %cl_18_28->duration def_%cl_18_29 %cl_18_28[3.30,] 
 		 32: %cl_18_29->nil? def_%cl_18_30 %cl_18_29[3.31,] 
@@ -3502,7 +3502,7 @@ BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_18_31 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_18_31 %self[2.0,] 
 		 1: %cl_18_31->task def_%cl_18_32 %cl_18_31[4.0,] 
 		 2: %cl_18_32->duration def_%cl_18_33 %cl_18_32[4.1,] 
 		 3: %cl_18_33->== def_%cl_18_34 %cl_18_33[4.2,] 
@@ -3522,14 +3522,14 @@ BB 7
 	outgoing: 8 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_18_36 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_18_36 %self[2.0,] 
 		 1: %cl_18_36->task def_%cl_18_37 %cl_18_36[7.0,] 
 		 2: %cl_18_37->worked_minutes def_%cl_18_38 %cl_18_37[7.1,] 
-		 3: def_%cl_18_39 %self[2.0,] 
+		 3: GETFIELD %self->current_sheet def_%cl_18_39 %self[2.0,] 
 		 4: %cl_18_39->duration def_%cl_18_40 %cl_18_39[7.3,] 
 		 5: def_%cl_18_41 %cl_18_40[7.4,] 
 		 6: def_%cl_18_42 %cl_18_38[7.2,] %cl_18_41[7.5,] 
-		 7: def_%cl_18_43 %self[2.0,] 
+		 7: GETFIELD %self->current_sheet def_%cl_18_43 %self[2.0,] 
 		 8: %cl_18_43->task def_%cl_18_44 %cl_18_43[7.7,] 
 		 9: %cl_18_44->duration def_%cl_18_45 %cl_18_44[7.8,] 
 		 10: %cl_18_45->to_f def_%cl_18_46 %cl_18_45[7.9,] 
@@ -3544,16 +3544,16 @@ BB 8
 	instructions:
 		 0: 
 		 1: (TimeParser) def_%cl_18_50 
-		 2: def_%cl_18_51 %self[2.0,] 
+		 2: GETFIELD %self->current_sheet def_%cl_18_51 %self[2.0,] 
 		 3: %cl_18_51->duration def_%cl_18_52 %cl_18_51[8.2,] 
 		 4: def_%cl_18_53 %cl_18_52[8.3,] 
 		 5: %cl_18_50->format_duration def_%cl_18_54 %cl_18_50[8.1,] %cl_18_53[8.4,] 
 		 6: 
 		 7: (TimeParser) def_%cl_18_55 
-		 8: def_%cl_18_56 %self[2.0,] 
+		 8: GETFIELD %self->current_sheet def_%cl_18_56 %self[2.0,] 
 		 9: %cl_18_56->task def_%cl_18_57 %cl_18_56[8.8,] 
 		 10: %cl_18_57->worked_minutes def_%cl_18_58 %cl_18_57[8.9,] 
-		 11: def_%cl_18_59 %self[2.0,] 
+		 11: GETFIELD %self->current_sheet def_%cl_18_59 %self[2.0,] 
 		 12: %cl_18_59->duration def_%cl_18_60 %cl_18_59[8.11,] 
 		 13: def_%cl_18_61 %cl_18_60[8.12,] 
 		 14: def_%cl_18_62 %cl_18_58[8.10,] %cl_18_61[8.13,] 
@@ -4606,7 +4606,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_27_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_27_3 %self[2.0,] 
 		 2: COPY def_%cl_27_4 
 		 3: COPY def_%cl_27_5 %cl_27_4[3.2,] 
 		 4: COPY def_%cl_27_6 %cl_27_5[3.3,] 
@@ -4638,7 +4638,7 @@ BB 3
 		 6: COPY def_%cl_28_6 
 		 7: %self->t def_%cl_28_7 %self[3.2,2.0,] %cl_28_6[3.6,] 
 		 8: 
-		 9: def_%cl_28_8 %self[3.2,3.7,2.0,] 
+		 9: GETFIELD %self->resource_type def_%cl_28_8 %self[3.2,3.7,2.0,] 
 		 10: %cl_28_8->resource_type_attributes def_%cl_28_9 %cl_28_8[3.9,] 
 		 11: %cl_28_9->each def_%cl_28_10 %cl_28_9[3.10,] %self[3.2,3.7,2.0,] 
 CLOSURE BEGIN: %self[3.2,3.7,2.0,] 
@@ -4729,7 +4729,7 @@ BB 8
 		 0: COPY def_ids %cl_30_14[7.1,6.7,] 
 		 1: 
 		 2: %self->attribute def_%cl_30_16 %self[2.0,] 
-		 3: %self->fields_for def_%cl_30_17 %self[8.2,2.0,] prefix[6.4,4.2,3.5,] %cl_30_16[8.2,] %self[8.2,2.0,] 
+		 3: %self->fields_for def_%cl_30_17 %self[8.2,2.0,] prefix[6.4,] %cl_30_16[8.2,] %self[8.2,2.0,] 
 CLOSURE BEGIN: ids[8.0,] f[] %self[8.2,2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -4839,7 +4839,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 12: 
-		 13: def_%cl_28_11 %self[3.2,3.7,2.0,] 
+		 13: GETFIELD %self->resource_type def_%cl_28_11 %self[3.2,3.7,2.0,] 
 		 14: %self->cit_submit_tag def_%cl_28_12 %self[3.2,3.7,2.0,] %cl_28_11[3.13,] 
 		 15: 
 		 16: %self->add_attribute_link def_%cl_28_13 %self[3.2,3.7,3.14,2.0,] 
@@ -4915,7 +4915,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_32_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_32_3 %self[2.0,] 
 		 2: %cl_32_3->errors def_%cl_32_4 %cl_32_3[3.1,] 
 		 3: COPY def_%cl_32_5 %cl_32_4[3.2,] 
 		 4: %self->render def_%cl_32_6 %self[2.0,] %cl_32_5[3.3,] 
@@ -4977,7 +4977,7 @@ BB 2
 		 9: %self->params def_%v_6 %self[2.0,2.6,] 
 		 10: def_%v_7 %v_6[2.9,] 
 		 11: %v_5->find def_%v_8 %v_5[2.8,] %v_7[2.10,] 
-		 12: ATTRASSIGN %self->@resource_type %self[2.0,2.6,2.9,] %v_8[2.11,] 
+		 12: ATTRASSIGN %self->resource_type %v_8[2.11,] 
 		 13: 
 		 14: %self->params def_%v_9 %self[2.0,2.6,2.9,2.12,] 
 		 15: def_%v_10 %v_9[2.14,] 
@@ -4995,16 +4995,16 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_13 %self[2.0,2.12,] 
+		 1: GETFIELD %self->resource_type def_%v_13 %self[2.0,2.12,] 
 		 2: %self->params def_%v_14 %self[2.0,2.12,] 
 		 3: def_%v_15 %v_14[4.2,] 
 		 4: %v_13->update_attributes def_%v_16 %v_13[4.1,] %v_15[4.3,] 
 		 5: COPY def_saved %v_16[4.4,] 
 		 6: 
-		 7: def_%v_17 %self[4.2,2.0,2.12,] 
+		 7: GETFIELD %self->resource_type def_%v_17 %self[4.2,2.0,2.12,] 
 		 8: %self->current_user def_%v_18 %self[4.2,2.0,2.12,] 
 		 9: %v_18->company def_%v_19 %v_18[4.8,] 
-		 10: ATTRASSIGN %v_17->company %v_17[4.7,] %v_19[4.9,] 
+		 10: ATTRASSIGN %v_17->company %v_19[4.9,] 
 		 11: 
 		 12: COPY def_%v_20 saved[4.5,] 
 		 13: BRANCH saved[4.5,] 
@@ -5012,7 +5012,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_21 %self[2.0,2.12,] 
+		 0: GETFIELD %self->resource_type def_%v_21 %self[2.0,2.12,] 
 		 1: %v_21->save def_%v_22 %v_21[5.0,] 
 		 2: COPY def_saved %v_22[5.1,] 
 		 3: COPY def_%v_20 %v_22[5.1,] 
@@ -5050,7 +5050,7 @@ BB 4
 		 5: %cl_1_6->human def_%cl_1_7 %cl_1_6[4.4,] 
 		 6: COPY def_%cl_1_8 %cl_1_7[4.5,] 
 		 7: %self->t def_%cl_1_9 %self[4.1,2.0,] %cl_1_4[4.2,] %cl_1_8[4.6,] 
-		 8: %cl_1_3[4.1,] %cl_1_9[4.7,] 
+		 8: ATTRASSIGN %cl_1_3->[] %cl_1_9[4.7,] 
 		 9: 
 		 10: format->html def_%cl_1_10 format[2.2,] %self[4.1,4.7,2.0,] 
 CLOSURE BEGIN: %self[4.1,4.7,2.0,] 
@@ -5071,7 +5071,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_2_3 %self[2.0,] 
 		 2: %self->edit_resource_type_path def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 
 		 3: %self->redirect_to def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] %self[3.2,3.3,2.0,] 
@@ -5787,7 +5787,7 @@ BB 3
 		 15: 
 		 16: %self->csrf_meta_tag def_%cl_15_14 %self[3.2,3.7,3.11,3.14,2.0,] 
 		 17: 
-		 18: def_%cl_15_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
+		 18: GETFIELD %self->page_title def_%cl_15_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
 		 19: BRANCH %cl_15_15[3.18,] 
 BB 4
 	outgoing: 5 12 
@@ -5941,13 +5941,13 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_17_26 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_17_26 %self[2.0,] 
 		 2: BRANCH %cl_17_26[9.1,] 
 BB 10
 	outgoing: 11 15 
 	datadep: 
 	instructions:
-		 0: def_%cl_17_27 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_17_27 %self[2.0,] 
 		 1: %cl_17_27->task def_%cl_17_28 %cl_17_27[10.0,] 
 		 2: COPY def_%cl_17_26 %cl_17_28[10.1,] 
 BB 11
@@ -5981,35 +5981,35 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_18_3 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_18_3 %self[2.0,] 
 		 2: %cl_18_3->task def_%cl_18_4 %cl_18_3[3.1,] 
 		 3: %self->start_stop_work_link def_%cl_18_5 %self[2.0,] %cl_18_4[3.2,] 
 		 4: 
-		 5: def_%cl_18_6 %self[3.3,2.0,] 
+		 5: GETFIELD %self->current_sheet def_%cl_18_6 %self[3.3,2.0,] 
 		 6: %cl_18_6->task def_%cl_18_7 %cl_18_6[3.5,] 
 		 7: %self->cancel_work_link def_%cl_18_8 %self[3.3,2.0,] %cl_18_7[3.6,] 
 		 8: 
-		 9: def_%cl_18_9 %self[3.3,3.7,2.0,] 
+		 9: GETFIELD %self->current_sheet def_%cl_18_9 %self[3.3,3.7,2.0,] 
 		 10: %cl_18_9->task def_%cl_18_10 %cl_18_9[3.9,] 
 		 11: %self->pause_task_link def_%cl_18_11 %self[3.3,3.7,2.0,] %cl_18_10[3.10,] 
 		 12: 
-		 13: def_%cl_18_12 %self[3.3,3.7,3.11,2.0,] 
+		 13: GETFIELD %self->current_sheet def_%cl_18_12 %self[3.3,3.7,3.11,2.0,] 
 		 14: %cl_18_12->task def_%cl_18_13 %cl_18_12[3.13,] 
 		 15: %cl_18_13->issue_name def_%cl_18_14 %cl_18_13[3.14,] 
 		 16: COPY def_%cl_18_15 
 		 17: def_%cl_18_16 %cl_18_14[3.15,] %cl_18_15[3.16,] 
-		 18: def_%cl_18_17 %self[3.3,3.7,3.11,2.0,] 
+		 18: GETFIELD %self->current_sheet def_%cl_18_17 %self[3.3,3.7,3.11,2.0,] 
 		 19: %cl_18_17->task def_%cl_18_18 %cl_18_17[3.18,] 
 		 20: %cl_18_18->project def_%cl_18_19 %cl_18_18[3.19,] 
 		 21: %cl_18_19->name def_%cl_18_20 %cl_18_19[3.20,] 
 		 22: def_%cl_18_21 %cl_18_16[3.17,] %cl_18_20[3.21,] 
-		 23: def_%cl_18_22 %self[3.3,3.7,3.11,2.0,] 
+		 23: GETFIELD %self->current_sheet def_%cl_18_22 %self[3.3,3.7,3.11,2.0,] 
 		 24: %cl_18_22->task def_%cl_18_23 %cl_18_22[3.23,] 
 		 25: %cl_18_23->task_num def_%cl_18_24 %cl_18_23[3.24,] 
 		 26: %self->edit_task_path def_%cl_18_25 %self[3.3,3.7,3.11,2.0,] %cl_18_24[3.25,] 
 		 27: %self->link_to def_%cl_18_26 %self[3.3,3.7,3.11,3.26,2.0,] %cl_18_21[3.22,] %cl_18_25[3.26,] 
 		 28: 
-		 29: def_%cl_18_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
+		 29: GETFIELD %self->current_sheet def_%cl_18_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
 		 30: %cl_18_27->task def_%cl_18_28 %cl_18_27[3.29,] 
 		 31: %cl_18_28->duration def_%cl_18_29 %cl_18_28[3.30,] 
 		 32: %cl_18_29->nil? def_%cl_18_30 %cl_18_29[3.31,] 
@@ -6018,7 +6018,7 @@ BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_18_31 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_18_31 %self[2.0,] 
 		 1: %cl_18_31->task def_%cl_18_32 %cl_18_31[4.0,] 
 		 2: %cl_18_32->duration def_%cl_18_33 %cl_18_32[4.1,] 
 		 3: %cl_18_33->== def_%cl_18_34 %cl_18_33[4.2,] 
@@ -6038,14 +6038,14 @@ BB 7
 	outgoing: 8 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_18_36 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_18_36 %self[2.0,] 
 		 1: %cl_18_36->task def_%cl_18_37 %cl_18_36[7.0,] 
 		 2: %cl_18_37->worked_minutes def_%cl_18_38 %cl_18_37[7.1,] 
-		 3: def_%cl_18_39 %self[2.0,] 
+		 3: GETFIELD %self->current_sheet def_%cl_18_39 %self[2.0,] 
 		 4: %cl_18_39->duration def_%cl_18_40 %cl_18_39[7.3,] 
 		 5: def_%cl_18_41 %cl_18_40[7.4,] 
 		 6: def_%cl_18_42 %cl_18_38[7.2,] %cl_18_41[7.5,] 
-		 7: def_%cl_18_43 %self[2.0,] 
+		 7: GETFIELD %self->current_sheet def_%cl_18_43 %self[2.0,] 
 		 8: %cl_18_43->task def_%cl_18_44 %cl_18_43[7.7,] 
 		 9: %cl_18_44->duration def_%cl_18_45 %cl_18_44[7.8,] 
 		 10: %cl_18_45->to_f def_%cl_18_46 %cl_18_45[7.9,] 
@@ -6060,16 +6060,16 @@ BB 8
 	instructions:
 		 0: 
 		 1: (TimeParser) def_%cl_18_50 
-		 2: def_%cl_18_51 %self[2.0,] 
+		 2: GETFIELD %self->current_sheet def_%cl_18_51 %self[2.0,] 
 		 3: %cl_18_51->duration def_%cl_18_52 %cl_18_51[8.2,] 
 		 4: def_%cl_18_53 %cl_18_52[8.3,] 
 		 5: %cl_18_50->format_duration def_%cl_18_54 %cl_18_50[8.1,] %cl_18_53[8.4,] 
 		 6: 
 		 7: (TimeParser) def_%cl_18_55 
-		 8: def_%cl_18_56 %self[2.0,] 
+		 8: GETFIELD %self->current_sheet def_%cl_18_56 %self[2.0,] 
 		 9: %cl_18_56->task def_%cl_18_57 %cl_18_56[8.8,] 
 		 10: %cl_18_57->worked_minutes def_%cl_18_58 %cl_18_57[8.9,] 
-		 11: def_%cl_18_59 %self[2.0,] 
+		 11: GETFIELD %self->current_sheet def_%cl_18_59 %self[2.0,] 
 		 12: %cl_18_59->duration def_%cl_18_60 %cl_18_59[8.11,] 
 		 13: def_%cl_18_61 %cl_18_60[8.12,] 
 		 14: def_%cl_18_62 %cl_18_58[8.10,] %cl_18_61[8.13,] 
@@ -7122,7 +7122,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_27_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_27_3 %self[2.0,] 
 		 2: COPY def_%cl_27_4 
 		 3: COPY def_%cl_27_5 %cl_27_4[3.2,] 
 		 4: COPY def_%cl_27_6 %cl_27_5[3.3,] 
@@ -7154,7 +7154,7 @@ BB 3
 		 6: COPY def_%cl_28_6 
 		 7: %self->t def_%cl_28_7 %self[3.2,2.0,] %cl_28_6[3.6,] 
 		 8: 
-		 9: def_%cl_28_8 %self[3.2,3.7,2.0,] 
+		 9: GETFIELD %self->resource_type def_%cl_28_8 %self[3.2,3.7,2.0,] 
 		 10: %cl_28_8->resource_type_attributes def_%cl_28_9 %cl_28_8[3.9,] 
 		 11: %cl_28_9->each def_%cl_28_10 %cl_28_9[3.10,] %self[3.2,3.7,2.0,] 
 CLOSURE BEGIN: %self[3.2,3.7,2.0,] 
@@ -7245,7 +7245,7 @@ BB 8
 		 0: COPY def_ids %cl_30_14[7.1,6.7,] 
 		 1: 
 		 2: %self->attribute def_%cl_30_16 %self[2.0,] 
-		 3: %self->fields_for def_%cl_30_17 %self[8.2,2.0,] prefix[6.4,4.2,3.5,] %cl_30_16[8.2,] %self[8.2,2.0,] 
+		 3: %self->fields_for def_%cl_30_17 %self[8.2,2.0,] prefix[6.4,] %cl_30_16[8.2,] %self[8.2,2.0,] 
 CLOSURE BEGIN: ids[8.0,] f[] %self[8.2,2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -7355,7 +7355,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 12: 
-		 13: def_%cl_28_11 %self[3.2,3.7,2.0,] 
+		 13: GETFIELD %self->resource_type def_%cl_28_11 %self[3.2,3.7,2.0,] 
 		 14: %self->cit_submit_tag def_%cl_28_12 %self[3.2,3.7,2.0,] %cl_28_11[3.13,] 
 		 15: 
 		 16: %self->add_attribute_link def_%cl_28_13 %self[3.2,3.7,3.14,2.0,] 
@@ -7431,7 +7431,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_32_3 %self[2.0,] 
+		 1: GETFIELD %self->resource_type def_%cl_32_3 %self[2.0,] 
 		 2: %cl_32_3->errors def_%cl_32_4 %cl_32_3[3.1,] 
 		 3: COPY def_%cl_32_5 %cl_32_4[3.2,] 
 		 4: %self->render def_%cl_32_6 %self[2.0,] %cl_32_5[3.3,] 
@@ -7493,9 +7493,9 @@ BB 2
 		 9: %self->params def_%v_6 %self[2.0,2.6,] 
 		 10: def_%v_7 %v_6[2.9,] 
 		 11: %v_5->find def_%v_8 %v_5[2.8,] %v_7[2.10,] 
-		 12: ATTRASSIGN %self->@resource_type %self[2.0,2.6,2.9,] %v_8[2.11,] 
+		 12: ATTRASSIGN %self->resource_type %v_8[2.11,] 
 		 13: 
-		 14: def_%v_9 %self[2.0,2.6,2.9,2.12,] 
+		 14: GETFIELD %self->resource_type def_%v_9 %self[2.0,2.6,2.9,2.12,] 
 		 15: %v_9->destroy def_%v_10 %v_9[2.14,] 
 		 16: 
 		 17: %self->respond_to def_%v_11 %self[2.0,2.6,2.9,2.12,] %self[2.0,2.6,2.9,2.12,] 
@@ -8268,7 +8268,7 @@ BB 3
 		 15: 
 		 16: %self->csrf_meta_tag def_%cl_11_14 %self[3.2,3.7,3.11,3.14,2.0,] 
 		 17: 
-		 18: def_%cl_11_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
+		 18: GETFIELD %self->page_title def_%cl_11_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
 		 19: BRANCH %cl_11_15[3.18,] 
 BB 4
 	outgoing: 5 12 
@@ -8422,13 +8422,13 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_13_26 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_13_26 %self[2.0,] 
 		 2: BRANCH %cl_13_26[9.1,] 
 BB 10
 	outgoing: 11 15 
 	datadep: 
 	instructions:
-		 0: def_%cl_13_27 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_13_27 %self[2.0,] 
 		 1: %cl_13_27->task def_%cl_13_28 %cl_13_27[10.0,] 
 		 2: COPY def_%cl_13_26 %cl_13_28[10.1,] 
 BB 11
@@ -8462,35 +8462,35 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_14_3 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_14_3 %self[2.0,] 
 		 2: %cl_14_3->task def_%cl_14_4 %cl_14_3[3.1,] 
 		 3: %self->start_stop_work_link def_%cl_14_5 %self[2.0,] %cl_14_4[3.2,] 
 		 4: 
-		 5: def_%cl_14_6 %self[3.3,2.0,] 
+		 5: GETFIELD %self->current_sheet def_%cl_14_6 %self[3.3,2.0,] 
 		 6: %cl_14_6->task def_%cl_14_7 %cl_14_6[3.5,] 
 		 7: %self->cancel_work_link def_%cl_14_8 %self[3.3,2.0,] %cl_14_7[3.6,] 
 		 8: 
-		 9: def_%cl_14_9 %self[3.3,3.7,2.0,] 
+		 9: GETFIELD %self->current_sheet def_%cl_14_9 %self[3.3,3.7,2.0,] 
 		 10: %cl_14_9->task def_%cl_14_10 %cl_14_9[3.9,] 
 		 11: %self->pause_task_link def_%cl_14_11 %self[3.3,3.7,2.0,] %cl_14_10[3.10,] 
 		 12: 
-		 13: def_%cl_14_12 %self[3.3,3.7,3.11,2.0,] 
+		 13: GETFIELD %self->current_sheet def_%cl_14_12 %self[3.3,3.7,3.11,2.0,] 
 		 14: %cl_14_12->task def_%cl_14_13 %cl_14_12[3.13,] 
 		 15: %cl_14_13->issue_name def_%cl_14_14 %cl_14_13[3.14,] 
 		 16: COPY def_%cl_14_15 
 		 17: def_%cl_14_16 %cl_14_14[3.15,] %cl_14_15[3.16,] 
-		 18: def_%cl_14_17 %self[3.3,3.7,3.11,2.0,] 
+		 18: GETFIELD %self->current_sheet def_%cl_14_17 %self[3.3,3.7,3.11,2.0,] 
 		 19: %cl_14_17->task def_%cl_14_18 %cl_14_17[3.18,] 
 		 20: %cl_14_18->project def_%cl_14_19 %cl_14_18[3.19,] 
 		 21: %cl_14_19->name def_%cl_14_20 %cl_14_19[3.20,] 
 		 22: def_%cl_14_21 %cl_14_16[3.17,] %cl_14_20[3.21,] 
-		 23: def_%cl_14_22 %self[3.3,3.7,3.11,2.0,] 
+		 23: GETFIELD %self->current_sheet def_%cl_14_22 %self[3.3,3.7,3.11,2.0,] 
 		 24: %cl_14_22->task def_%cl_14_23 %cl_14_22[3.23,] 
 		 25: %cl_14_23->task_num def_%cl_14_24 %cl_14_23[3.24,] 
 		 26: %self->edit_task_path def_%cl_14_25 %self[3.3,3.7,3.11,2.0,] %cl_14_24[3.25,] 
 		 27: %self->link_to def_%cl_14_26 %self[3.3,3.7,3.11,3.26,2.0,] %cl_14_21[3.22,] %cl_14_25[3.26,] 
 		 28: 
-		 29: def_%cl_14_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
+		 29: GETFIELD %self->current_sheet def_%cl_14_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
 		 30: %cl_14_27->task def_%cl_14_28 %cl_14_27[3.29,] 
 		 31: %cl_14_28->duration def_%cl_14_29 %cl_14_28[3.30,] 
 		 32: %cl_14_29->nil? def_%cl_14_30 %cl_14_29[3.31,] 
@@ -8499,7 +8499,7 @@ BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_14_31 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_14_31 %self[2.0,] 
 		 1: %cl_14_31->task def_%cl_14_32 %cl_14_31[4.0,] 
 		 2: %cl_14_32->duration def_%cl_14_33 %cl_14_32[4.1,] 
 		 3: %cl_14_33->== def_%cl_14_34 %cl_14_33[4.2,] 
@@ -8519,14 +8519,14 @@ BB 7
 	outgoing: 8 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_14_36 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_14_36 %self[2.0,] 
 		 1: %cl_14_36->task def_%cl_14_37 %cl_14_36[7.0,] 
 		 2: %cl_14_37->worked_minutes def_%cl_14_38 %cl_14_37[7.1,] 
-		 3: def_%cl_14_39 %self[2.0,] 
+		 3: GETFIELD %self->current_sheet def_%cl_14_39 %self[2.0,] 
 		 4: %cl_14_39->duration def_%cl_14_40 %cl_14_39[7.3,] 
 		 5: def_%cl_14_41 %cl_14_40[7.4,] 
 		 6: def_%cl_14_42 %cl_14_38[7.2,] %cl_14_41[7.5,] 
-		 7: def_%cl_14_43 %self[2.0,] 
+		 7: GETFIELD %self->current_sheet def_%cl_14_43 %self[2.0,] 
 		 8: %cl_14_43->task def_%cl_14_44 %cl_14_43[7.7,] 
 		 9: %cl_14_44->duration def_%cl_14_45 %cl_14_44[7.8,] 
 		 10: %cl_14_45->to_f def_%cl_14_46 %cl_14_45[7.9,] 
@@ -8541,16 +8541,16 @@ BB 8
 	instructions:
 		 0: 
 		 1: (TimeParser) def_%cl_14_50 
-		 2: def_%cl_14_51 %self[2.0,] 
+		 2: GETFIELD %self->current_sheet def_%cl_14_51 %self[2.0,] 
 		 3: %cl_14_51->duration def_%cl_14_52 %cl_14_51[8.2,] 
 		 4: def_%cl_14_53 %cl_14_52[8.3,] 
 		 5: %cl_14_50->format_duration def_%cl_14_54 %cl_14_50[8.1,] %cl_14_53[8.4,] 
 		 6: 
 		 7: (TimeParser) def_%cl_14_55 
-		 8: def_%cl_14_56 %self[2.0,] 
+		 8: GETFIELD %self->current_sheet def_%cl_14_56 %self[2.0,] 
 		 9: %cl_14_56->task def_%cl_14_57 %cl_14_56[8.8,] 
 		 10: %cl_14_57->worked_minutes def_%cl_14_58 %cl_14_57[8.9,] 
-		 11: def_%cl_14_59 %self[2.0,] 
+		 11: GETFIELD %self->current_sheet def_%cl_14_59 %self[2.0,] 
 		 12: %cl_14_59->duration def_%cl_14_60 %cl_14_59[8.11,] 
 		 13: def_%cl_14_61 %cl_14_60[8.12,] 
 		 14: def_%cl_14_62 %cl_14_58[8.10,] %cl_14_61[8.13,] 
@@ -9312,7 +9312,7 @@ BB 8
 		 0: COPY def_ids %cl_1_17[7.1,6.7,] 
 		 1: 
 		 2: %self->attribute def_%cl_1_19 %self[2.0,] 
-		 3: %self->fields_for def_%cl_1_20 %self[8.2,2.0,] prefix[6.4,4.2,3.10,] %cl_1_19[8.2,] %self[8.2,2.0,] 
+		 3: %self->fields_for def_%cl_1_20 %self[8.2,2.0,] prefix[6.4,] %cl_1_19[8.2,] %self[8.2,2.0,] 
 CLOSURE BEGIN: ids[8.0,] f[] %self[8.2,2.0,] 
 BB 1
 	outgoing: 6 2 

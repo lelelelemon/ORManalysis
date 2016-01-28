@@ -252,7 +252,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: person->family def_%cl_1_6 person[] 
-		 1: reasons[2.2,] %cl_1_6[4.0,] 
+		 1: ATTRASSIGN reasons->[] %cl_1_6[4.0,] 
 		 2: 
 BB 5
 	outgoing: 6 
@@ -272,7 +272,7 @@ BB 7
 	outgoing: 9 13 
 	datadep: 
 	instructions:
-		 0: reasons[4.1,2.2,] 
+		 0: ATTRASSIGN reasons->[] 
 		 1: COPY def_%cl_1_10 
 		 2: 
 BB 8
@@ -325,16 +325,16 @@ BB 6
 CLOSURE END
 		 4: %cl_1_13->map def_%cl_1_14 %cl_1_13[9.3,] 
 		 5: %cl_1_11->find def_%cl_1_15 %cl_1_11[9.1,] %cl_1_14[9.4,] 
-		 6: reasons[7.0,4.1,2.2,] %cl_1_15[9.5,] 
+		 6: ATTRASSIGN reasons->[] %cl_1_15[9.5,] 
 		 7: 
-		 8: def_%cl_1_16 reasons[9.6,] 
+		 8: def_%cl_1_16 reasons[9.6,7.0,4.1,2.2,] 
 		 9: %cl_1_16->empty? def_%cl_1_17 %cl_1_16[9.8,] 
 		 10: BRANCH %cl_1_17[9.9,] 
 BB 10
 	outgoing: 12 13 
 	datadep: 
 	instructions:
-		 0: reasons->delete def_%cl_1_18 reasons[9.6,] 
+		 0: reasons->delete def_%cl_1_18 reasons[9.6,7.0,4.1,2.2,] 
 		 1: 
 BB 11
 	outgoing: 15 

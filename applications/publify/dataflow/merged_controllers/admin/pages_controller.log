@@ -33,10 +33,10 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@search %self[2.0,] %v_6[4.1,3.1,] 
+		 0: ATTRASSIGN %self->search %v_6[4.1,3.1,] 
 		 1: 
 		 2: (Page) def_%v_8 
-		 3: def_%v_9 %self[5.0,2.0,] 
+		 3: GETFIELD %self->search def_%v_9 %self[5.0,2.0,] 
 		 4: %v_8->search_with def_%v_10 %v_8[5.2,] %v_9[5.3,] 
 		 5: %self->params def_%v_11 %self[5.0,2.0,] 
 		 6: def_%v_12 %v_11[5.5,] 
@@ -44,7 +44,7 @@ BB 5
 		 8: %self->this_blog def_%v_14 %self[5.0,5.5,2.0,] 
 		 9: %v_14->admin_display_elements def_%v_15 %v_14[5.8,] 
 		 10: %v_13->per def_%v_16 %v_13[5.7,] %v_15[5.9,] 
-		 11: ATTRASSIGN %self->@pages %self[5.0,5.5,5.8,2.0,] %v_16[5.10,] 
+		 11: ATTRASSIGN %self->pages %v_16[5.10,] 
 		 12: 
 		 13: def_%v_17 %self[5.0,5.5,5.8,5.11,2.0,] %self[5.0,5.5,5.8,5.11,2.0,] 
 CLOSURE BEGIN: %self[5.0,5.5,5.8,5.11,2.0,] 
@@ -118,7 +118,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->pages def_%cl_2_3 %self[2.0,] 
 		 2: %cl_2_3->empty? def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: BRANCH %cl_2_4[3.2,] 
 BB 4
@@ -139,7 +139,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_8 %self[2.0,] 
+		 1: GETFIELD %self->pages def_%cl_2_8 %self[2.0,] 
 		 2: %cl_2_8->each def_%cl_2_7 %cl_2_8[6.1,] %self[2.0,] 
 CLOSURE BEGIN: page[] %self[2.0,] 
 BB 1
@@ -172,7 +172,7 @@ BB 4
 	instructions:
 CLOSURE END
 		 3: 
-		 4: def_%cl_2_9 %self[2.0,] 
+		 4: GETFIELD %self->pages def_%cl_2_9 %self[2.0,] 
 		 5: %self->display_pagination def_%cl_2_10 %self[2.0,] %cl_2_9[6.4,] 
 		 6: RETURN %cl_2_10[6.5,] %self[6.5,2.0,] 
 BB 7
@@ -210,9 +210,9 @@ BB 2
 		 5: 
 		 6: (Page) def_%v_3 
 		 7: %v_3->new def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@page %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->page %v_4[2.7,] 
 		 9: 
-		 10: def_%v_7 %self[2.0,2.8,] 
+		 10: GETFIELD %self->page def_%v_7 %self[2.0,2.8,] 
 		 11: %v_7->text_filter def_%v_5 %v_7[2.10,] 
 		 12: BRANCH %v_5[2.11,] 
 BB 3
@@ -220,20 +220,20 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->default_textfilter def_%v_8 %self[2.0,2.8,] 
-		 1: ATTRASSIGN %v_7->text_filter def_%v_6 %v_7[2.10,] %v_8[3.0,] 
+		 1: %v_7->text_filter= def_%v_6 %v_8[3.0,] 
 		 2: COPY def_%v_5 %v_8[3.0,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_9 %self[2.0,2.8,] 
-		 2: ATTRASSIGN %v_9->published %v_9[4.1,] 
+		 1: GETFIELD %self->page def_%v_9 %self[2.0,2.8,] 
+		 2: ATTRASSIGN %v_9->published 
 		 3: 
-		 4: def_%v_10 %self[2.0,2.8,] 
+		 4: GETFIELD %self->page def_%v_10 %self[2.0,2.8,] 
 		 5: %self->current_user def_%v_11 %self[2.0,2.8,] 
 		 6: %v_11->id def_%v_12 %v_11[4.5,] 
-		 7: ATTRASSIGN %v_10->user_id %v_10[4.4,] %v_12[4.6,] 
+		 7: ATTRASSIGN %v_10->user_id %v_12[4.6,] 
 		 8: 
 		 9: %self->ruby_code_from_view def_%v_13 %self[4.5,2.0,2.8,] 
 		 10: %v_13->ruby_code_from_view def_%v_14 %v_13[4.9,] %self[4.5,4.9,2.0,2.8,] 
@@ -256,7 +256,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->page def_%cl_1_3 %self[2.0,] 
 		 2: COPY def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: def_%cl_1_5 %self[2.0,] %cl_1_4[3.2,] %self[2.0,] 
 CLOSURE BEGIN: %self[2.0,] 
@@ -278,7 +278,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->page def_%cl_2_3 %self[2.0,] 
 		 2: %cl_2_3->errors def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: %cl_2_4->any? def_%cl_2_5 %cl_2_4[3.2,] 
 		 4: BRANCH %cl_2_5[3.3,] 
@@ -287,13 +287,13 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_6 %self[2.0,] 
+		 1: GETFIELD %self->page def_%cl_2_6 %self[2.0,] 
 		 2: %cl_2_6->errors def_%cl_2_7 %cl_2_6[4.1,] 
 		 3: %cl_2_7->count def_%cl_2_8 %cl_2_7[4.2,] 
 		 4: COPY def_%cl_2_9 
 		 5: %self->pluralize def_%cl_2_10 %self[2.0,] %cl_2_8[4.3,] %cl_2_9[4.4,] 
 		 6: 
-		 7: def_%cl_2_11 %self[4.5,2.0,] 
+		 7: GETFIELD %self->page def_%cl_2_11 %self[4.5,2.0,] 
 		 8: %cl_2_11->errors def_%cl_2_12 %cl_2_11[4.7,] 
 		 9: %cl_2_12->full_messages def_%cl_2_13 %cl_2_12[4.8,] 
 		 10: %cl_2_13->each def_%cl_2_14 %cl_2_13[4.9,] %self[4.5,2.0,] 
@@ -367,7 +367,7 @@ BB 9
 		 1: COPY def_%cl_2_32 
 		 2: %self->error_messages_for def_%cl_2_33 %self[2.0,] %cl_2_32[9.1,] 
 		 3: 
-		 4: def_%cl_2_34 %self[9.2,2.0,] 
+		 4: GETFIELD %self->page def_%cl_2_34 %self[9.2,2.0,] 
 		 5: %cl_2_34->text_filter def_%cl_2_35 %cl_2_34[9.4,] 
 		 6: 
 		 7: COPY def_%cl_2_36 
@@ -413,7 +413,7 @@ BB 9
 		 47: COPY def_%cl_2_69 
 		 48: %self->t def_%cl_2_70 %self[9.2,9.11,9.13,9.21,9.24,9.27,9.30,9.33,9.36,9.42,9.45,2.0,] %cl_2_69[9.47,] 
 		 49: 
-		 50: def_%cl_2_71 %self[9.2,9.11,9.13,9.21,9.24,9.27,9.30,9.33,9.36,9.42,9.45,9.48,2.0,] 
+		 50: GETFIELD %self->page def_%cl_2_71 %self[9.2,9.11,9.13,9.21,9.24,9.27,9.30,9.33,9.36,9.42,9.45,9.48,2.0,] 
 		 51: %cl_2_71->published def_%cl_2_72 %cl_2_71[9.50,] 
 		 52: BRANCH %cl_2_72[9.51,] 
 BB 10
@@ -452,7 +452,7 @@ BB 12
 		 15: COPY def_%cl_2_87 
 		 16: %self->t def_%cl_2_88 %self[12.2,12.6,12.9,12.13,2.0,] %cl_2_87[12.15,] 
 		 17: 
-		 18: def_%cl_2_89 %self[12.2,12.6,12.9,12.13,12.16,2.0,] 
+		 18: GETFIELD %self->page def_%cl_2_89 %self[12.2,12.6,12.9,12.13,12.16,2.0,] 
 		 19: %cl_2_89->text_filter def_%cl_2_90 %cl_2_89[12.18,] 
 		 20: %cl_2_90->description def_%cl_2_91 %cl_2_90[12.19,] 
 		 21: 
@@ -460,7 +460,7 @@ BB 12
 		 23: %self->toggle_element def_%cl_2_93 %self[12.2,12.6,12.9,12.13,12.16,2.0,] %cl_2_92[12.22,] 
 		 24: 
 		 25: %self->text_filter_options def_%cl_2_94 %self[12.2,12.6,12.9,12.13,12.16,12.23,2.0,] 
-		 26: def_%cl_2_95 %self[12.2,12.6,12.9,12.13,12.16,12.23,12.25,2.0,] 
+		 26: GETFIELD %self->page def_%cl_2_95 %self[12.2,12.6,12.9,12.13,12.16,12.23,12.25,2.0,] 
 		 27: %cl_2_95->text_filter def_%cl_2_96 %cl_2_95[12.26,] 
 		 28: %self->options_for_select def_%cl_2_97 %self[12.2,12.6,12.9,12.13,12.16,12.23,12.25,2.0,] %cl_2_94[12.25,] %cl_2_96[12.27,] 
 		 29: 
@@ -520,7 +520,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_5 %self[2.0,] 
+		 6: GETFIELD %self->page def_%v_5 %self[2.0,] 
 		 7: %v_5->text_filter def_%v_3 %v_5[2.6,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
@@ -528,7 +528,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->default_textfilter def_%v_6 %self[2.0,] 
-		 1: ATTRASSIGN %v_5->text_filter def_%v_4 %v_5[2.6,] %v_6[3.0,] 
+		 1: %v_5->text_filter= def_%v_4 %v_6[3.0,] 
 		 2: COPY def_%v_3 %v_6[3.0,] 
 BB 4
 	outgoing: 5 
@@ -556,7 +556,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->page def_%cl_1_3 %self[2.0,] 
 		 2: COPY def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: def_%cl_1_5 %self[2.0,] %cl_1_4[3.2,] %self[2.0,] 
 CLOSURE BEGIN: %self[2.0,] 
@@ -578,7 +578,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->page def_%cl_2_3 %self[2.0,] 
 		 2: %cl_2_3->errors def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: %cl_2_4->any? def_%cl_2_5 %cl_2_4[3.2,] 
 		 4: BRANCH %cl_2_5[3.3,] 
@@ -587,13 +587,13 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_6 %self[2.0,] 
+		 1: GETFIELD %self->page def_%cl_2_6 %self[2.0,] 
 		 2: %cl_2_6->errors def_%cl_2_7 %cl_2_6[4.1,] 
 		 3: %cl_2_7->count def_%cl_2_8 %cl_2_7[4.2,] 
 		 4: COPY def_%cl_2_9 
 		 5: %self->pluralize def_%cl_2_10 %self[2.0,] %cl_2_8[4.3,] %cl_2_9[4.4,] 
 		 6: 
-		 7: def_%cl_2_11 %self[4.5,2.0,] 
+		 7: GETFIELD %self->page def_%cl_2_11 %self[4.5,2.0,] 
 		 8: %cl_2_11->errors def_%cl_2_12 %cl_2_11[4.7,] 
 		 9: %cl_2_12->full_messages def_%cl_2_13 %cl_2_12[4.8,] 
 		 10: %cl_2_13->each def_%cl_2_14 %cl_2_13[4.9,] %self[4.5,2.0,] 
@@ -667,7 +667,7 @@ BB 9
 		 1: COPY def_%cl_2_32 
 		 2: %self->error_messages_for def_%cl_2_33 %self[2.0,] %cl_2_32[9.1,] 
 		 3: 
-		 4: def_%cl_2_34 %self[9.2,2.0,] 
+		 4: GETFIELD %self->page def_%cl_2_34 %self[9.2,2.0,] 
 		 5: %cl_2_34->text_filter def_%cl_2_35 %cl_2_34[9.4,] 
 		 6: 
 		 7: COPY def_%cl_2_36 
@@ -713,7 +713,7 @@ BB 9
 		 47: COPY def_%cl_2_69 
 		 48: %self->t def_%cl_2_70 %self[9.2,9.11,9.13,9.21,9.24,9.27,9.30,9.33,9.36,9.42,9.45,2.0,] %cl_2_69[9.47,] 
 		 49: 
-		 50: def_%cl_2_71 %self[9.2,9.11,9.13,9.21,9.24,9.27,9.30,9.33,9.36,9.42,9.45,9.48,2.0,] 
+		 50: GETFIELD %self->page def_%cl_2_71 %self[9.2,9.11,9.13,9.21,9.24,9.27,9.30,9.33,9.36,9.42,9.45,9.48,2.0,] 
 		 51: %cl_2_71->published def_%cl_2_72 %cl_2_71[9.50,] 
 		 52: BRANCH %cl_2_72[9.51,] 
 BB 10
@@ -752,7 +752,7 @@ BB 12
 		 15: COPY def_%cl_2_87 
 		 16: %self->t def_%cl_2_88 %self[12.2,12.6,12.9,12.13,2.0,] %cl_2_87[12.15,] 
 		 17: 
-		 18: def_%cl_2_89 %self[12.2,12.6,12.9,12.13,12.16,2.0,] 
+		 18: GETFIELD %self->page def_%cl_2_89 %self[12.2,12.6,12.9,12.13,12.16,2.0,] 
 		 19: %cl_2_89->text_filter def_%cl_2_90 %cl_2_89[12.18,] 
 		 20: %cl_2_90->description def_%cl_2_91 %cl_2_90[12.19,] 
 		 21: 
@@ -760,7 +760,7 @@ BB 12
 		 23: %self->toggle_element def_%cl_2_93 %self[12.2,12.6,12.9,12.13,12.16,2.0,] %cl_2_92[12.22,] 
 		 24: 
 		 25: %self->text_filter_options def_%cl_2_94 %self[12.2,12.6,12.9,12.13,12.16,12.23,2.0,] 
-		 26: def_%cl_2_95 %self[12.2,12.6,12.9,12.13,12.16,12.23,12.25,2.0,] 
+		 26: GETFIELD %self->page def_%cl_2_95 %self[12.2,12.6,12.9,12.13,12.16,12.23,12.25,2.0,] 
 		 27: %cl_2_95->text_filter def_%cl_2_96 %cl_2_95[12.26,] 
 		 28: %self->options_for_select def_%cl_2_97 %self[12.2,12.6,12.9,12.13,12.16,12.23,12.25,2.0,] %cl_2_94[12.25,] %cl_2_96[12.27,] 
 		 29: 
@@ -823,19 +823,19 @@ BB 2
 		 6: (Page) def_%v_3 
 		 7: %self->page_params def_%v_4 %self[2.0,] 
 		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@page %self[2.0,2.7,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->page %v_5[2.8,] 
 		 10: 
-		 11: def_%v_6 %self[2.0,2.7,2.9,] 
+		 11: GETFIELD %self->page def_%v_6 %self[2.0,2.7,2.9,] 
 		 12: (Time) def_%v_7 
 		 13: %v_7->now def_%v_8 %v_7[2.12,] 
-		 14: ATTRASSIGN %v_6->published_at %v_6[2.11,] %v_8[2.13,] 
+		 14: ATTRASSIGN %v_6->published_at %v_8[2.13,] 
 		 15: 
-		 16: def_%v_9 %self[2.0,2.7,2.9,] 
+		 16: GETFIELD %self->page def_%v_9 %self[2.0,2.7,2.9,] 
 		 17: %self->current_user def_%v_10 %self[2.0,2.7,2.9,] 
 		 18: %v_10->id def_%v_11 %v_10[2.17,] 
-		 19: ATTRASSIGN %v_9->user_id %v_9[2.16,] %v_11[2.18,] 
+		 19: ATTRASSIGN %v_9->user_id %v_11[2.18,] 
 		 20: 
-		 21: def_%v_12 %self[2.0,2.7,2.9,2.17,] 
+		 21: GETFIELD %self->page def_%v_12 %self[2.0,2.7,2.9,2.17,] 
 		 22: %v_12->save def_%v_13 %v_12[2.21,] 
 		 23: BRANCH %v_13[2.22,] 
 BB 3
@@ -877,7 +877,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_5 %self[2.0,] 
+		 6: GETFIELD %self->page def_%v_5 %self[2.0,] 
 		 7: %v_5->text_filter def_%v_3 %v_5[2.6,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
@@ -885,14 +885,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->default_textfilter def_%v_6 %self[2.0,] 
-		 1: ATTRASSIGN %v_5->text_filter def_%v_4 %v_5[2.6,] %v_6[3.0,] 
+		 1: %v_5->text_filter= def_%v_4 %v_6[3.0,] 
 		 2: COPY def_%v_3 %v_6[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_7 %self[2.0,] 
+		 1: GETFIELD %self->page def_%v_7 %self[2.0,] 
 		 2: %self->page_params def_%v_8 %self[2.0,] 
 		 3: %v_7->update def_%v_9 %v_7[4.1,] %v_8[4.2,] 
 		 4: BRANCH %v_9[4.3,] 
@@ -995,7 +995,7 @@ BB 2
 		 5: 
 		 6: (TextFilter) def_%v_3 
 		 7: %v_3->macro_filters def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@macros %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->macros %v_4[2.7,] 
 		 9: RETURN %v_4[2.7,] %self[2.0,2.8,] 
 BB 3
 	outgoing: 
@@ -1022,7 +1022,7 @@ BB 2
 		 8: %v_4->by_created_at def_%v_5 %v_4[2.7,] 
 		 9: %v_5->page def_%v_6 %v_5[2.8,] 
 		 10: %v_6->per def_%v_7 %v_6[2.9,] 
-		 11: ATTRASSIGN %self->@images %self[2.0,] %v_7[2.10,] 
+		 11: ATTRASSIGN %self->images %v_7[2.10,] 
 		 12: RETURN %v_7[2.10,] %self[2.0,2.11,] 
 BB 3
 	outgoing: 
@@ -1130,7 +1130,7 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@page %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->page %v_6[2.9,] 
 		 11: RETURN %v_6[2.9,] %self[2.0,2.7,2.10,] 
 BB 3
 	outgoing: 

@@ -27,7 +27,7 @@ BB 3
 		 4: def_%v_9 
 		 5: def_%v_10 %v_8[3.3,] %v_9[3.4,] 
 		 6: def_%v_11 %v_5[3.0,] %v_6[3.1,] %v_10[3.5,] 
-		 7: ATTRASSIGN %self->permalink %self[3.0,3.2,2.0,] %v_11[3.6,] 
+		 7: ATTRASSIGN %self->permalink %v_11[3.6,] 
 		 8: 
 BB 4
 	outgoing: 5 
@@ -366,20 +366,20 @@ BB 3
 		 1: (Blog) def_%cl_1_3 
 		 2: %cl_1_3->default def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: %cl_1_4->twitter_consumer_key def_%cl_1_5 %cl_1_4[3.2,] 
-		 4: ATTRASSIGN config->consumer_key config[2.2,] %cl_1_5[3.3,] 
+		 4: ATTRASSIGN config->consumer_key %cl_1_5[3.3,] 
 		 5: 
 		 6: (Blog) def_%cl_1_6 
 		 7: %cl_1_6->default def_%cl_1_7 %cl_1_6[3.6,] 
 		 8: %cl_1_7->twitter_consumer_secret def_%cl_1_8 %cl_1_7[3.7,] 
-		 9: ATTRASSIGN config->consumer_secret config[3.4,2.2,] %cl_1_8[3.8,] 
+		 9: ATTRASSIGN config->consumer_secret %cl_1_8[3.8,] 
 		 10: 
 		 11: %self->user def_%cl_1_9 %self[2.0,] 
 		 12: %cl_1_9->twitter_oauth_token def_%cl_1_10 %cl_1_9[3.11,] 
-		 13: ATTRASSIGN config->access_token config[3.4,3.9,2.2,] %cl_1_10[3.12,] 
+		 13: ATTRASSIGN config->access_token %cl_1_10[3.12,] 
 		 14: 
 		 15: %self->user def_%cl_1_11 %self[3.11,2.0,] 
 		 16: %cl_1_11->twitter_oauth_token_secret def_%cl_1_12 %cl_1_11[3.15,] 
-		 17: ATTRASSIGN config->access_token_secret config[3.4,3.9,3.13,2.2,] %cl_1_12[3.16,] 
+		 17: ATTRASSIGN config->access_token_secret %cl_1_12[3.16,] 
 		 18: RETURN %cl_1_12[3.16,] %self[3.11,3.15,2.0,] 
 BB 4
 	outgoing: 6 
@@ -413,7 +413,7 @@ BB 15
 	instructions:
 		 0: %self->in_reply_to_status_id def_%v_19 %self[2.0,] 
 		 1: COPY def_%v_20 
-		 2: ATTRASSIGN %v_19->! def_%v_21 %v_19[15.0,] %v_20[15.1,] 
+		 2: %v_19->!= def_%v_21 %v_19[15.0,] %v_20[15.1,] 
 		 3: COPY def_%v_18 %v_21[15.2,] 
 BB 16
 	outgoing: 17 18 
@@ -432,7 +432,7 @@ BB 17
 		 5: %self->in_reply_to_status_id def_%v_24 %self[17.1,2.0,] 
 		 6: twitter->status def_%v_25 twitter[12.1,] %v_24[17.5,] 
 		 7: %v_25->to_json def_%v_26 %v_25[17.6,] 
-		 8: ATTRASSIGN %self->in_reply_to_message %self[17.1,17.5,2.0,] %v_26[17.7,] 
+		 8: ATTRASSIGN %self->in_reply_to_message %v_26[17.7,] 
 		 9: 
 BB 18
 	outgoing: 19 
@@ -450,7 +450,7 @@ BB 19
 		 4: 
 		 5: %v_28->attrs def_%v_29 %v_28[19.2,] 
 		 6: def_%v_30 %v_29[19.5,] 
-		 7: ATTRASSIGN %self->twitter_id %self[19.1,17.8,2.0,] %v_30[19.6,] 
+		 7: ATTRASSIGN %self->twitter_id %v_30[19.6,] 
 		 8: 
 		 9: %self->save def_%v_31 %self[19.1,19.7,17.8,2.0,] 
 		 10: 

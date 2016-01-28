@@ -13,7 +13,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->current_sheet def_%v_3 %self[2.0,] 
 		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -43,9 +43,9 @@ BB 5
 		 7: %v_12->order def_%v_14 %v_12[5.5,] %v_13[5.6,] 
 		 8: %v_14->includes def_%v_15 %v_14[5.7,] 
 		 9: %v_15->first def_%v_16 %v_15[5.8,] 
-		 10: ATTRASSIGN %self->@current_sheet %self[5.3,2.0,] %v_16[5.9,] 
+		 10: ATTRASSIGN %self->current_sheet %v_16[5.9,] 
 		 11: 
-		 12: def_%v_17 %self[5.3,5.10,2.0,] 
+		 12: GETFIELD %self->current_sheet def_%v_17 %self[5.3,5.10,2.0,] 
 		 13: %v_17->nil? def_%v_18 %v_17[5.12,] 
 		 14: BRANCH %v_18[5.13,] 
 BB 6
@@ -59,7 +59,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_20 %self[5.10,2.0,] 
+		 1: GETFIELD %self->current_sheet def_%v_20 %self[5.10,2.0,] 
 		 2: %v_20->task def_%v_21 %v_20[7.1,] 
 		 3: %v_21->nil? def_%v_22 %v_21[7.2,] 
 		 4: BRANCH %v_22[7.3,] 
@@ -68,10 +68,10 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_23 %self[5.10,2.0,] 
+		 1: GETFIELD %self->current_sheet def_%v_23 %self[5.10,2.0,] 
 		 2: %v_23->destroy def_%v_24 %v_23[8.1,] 
 		 3: 
-		 4: ATTRASSIGN %self->@current_sheet %self[5.10,2.0,] 
+		 4: ATTRASSIGN %self->current_sheet 
 		 5: COPY def_%v_25 
 		 6: 
 BB 9
@@ -99,7 +99,7 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_26 %self[2.0,8.4,5.10,] 
+		 1: GETFIELD %self->current_sheet def_%v_26 %self[2.0,8.4,5.10,] 
 		 2: RETURN %v_26[13.1,] %self[2.0,8.4,5.10,] 
 BB 14
 	outgoing: 
@@ -128,7 +128,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->_current_company def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -141,7 +141,7 @@ BB 5
 	instructions:
 		 0: %self->current_user def_%v_6 %self[2.0,] 
 		 1: %v_6->try def_%v_7 %v_6[5.0,] 
-		 2: ATTRASSIGN %self->@_current_company %self[5.0,2.0,] %v_7[5.1,] 
+		 2: ATTRASSIGN %self->_current_company %v_7[5.1,] 
 		 3: RETURN %v_7[5.1,] %self[5.0,5.2,2.0,] 
 BB 6
 	outgoing: 7 
@@ -169,7 +169,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->milestone_ids def_%v_3 %self[2.0,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 12 
@@ -188,7 +188,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_7 %self[2.0,] 
+		 0: GETFIELD %self->milestone_ids def_%v_7 %self[2.0,] 
 		 1: COPY def_%v_5 %v_7[5.0,] 
 BB 6
 	outgoing: 7 8 
@@ -240,14 +240,14 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: ATTRASSIGN %self->@milestone_ids %self[7.4,2.0,] %v_15[7.7,] 
+		 8: ATTRASSIGN %self->milestone_ids %v_15[7.7,] 
 		 9: COPY def_%v_7 %v_15[7.7,] 
 BB 8
 	outgoing: 9 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_16 %self[7.8,2.0,] 
+		 1: GETFIELD %self->milestone_ids def_%v_16 %self[7.8,2.0,] 
 		 2: %v_16->empty? def_%v_17 %v_16[8.1,] 
 		 3: BRANCH %v_17[8.2,] 
 BB 9
@@ -255,7 +255,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: COPY def_%v_18 
-		 1: ATTRASSIGN %self->@milestone_ids %self[7.8,2.0,] %v_18[9.0,] 
+		 1: ATTRASSIGN %self->milestone_ids %v_18[9.0,] 
 		 2: 
 BB 10
 	outgoing: 11 
@@ -272,7 +272,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_19 %self[9.1,2.0,7.8,] 
+		 1: GETFIELD %self->milestone_ids def_%v_19 %self[9.1,2.0,7.8,] 
 		 2: RETURN %v_19[12.1,] %self[9.1,2.0,7.8,] 
 BB 13
 	outgoing: 
@@ -513,7 +513,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->company def_%v_3 %self[2.0,] 
 		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -547,7 +547,7 @@ BB 6
 		 2: COPY def_%v_11 
 		 3: %v_10->where def_%v_12 %v_10[6.1,] %v_11[6.2,] subdomain[4.3,] 
 		 4: %v_12->first def_%v_13 %v_12[6.3,] 
-		 5: ATTRASSIGN %self->@company %self[2.0,] %v_13[6.4,] 
+		 5: ATTRASSIGN %self->company %v_13[6.4,] 
 		 6: 
 		 7: (Company) def_%v_14 
 		 8: %v_14->count def_%v_15 %v_14[6.7,] 
@@ -565,7 +565,7 @@ BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_19 %self[6.5,2.0,] 
+		 0: GETFIELD %self->company def_%v_19 %self[6.5,2.0,] 
 		 1: COPY def_%v_17 %v_19[8.0,] 
 BB 9
 	outgoing: 10 11 
@@ -580,7 +580,7 @@ BB 10
 		 1: COPY def_%v_21 
 		 2: %v_20->order def_%v_22 %v_20[10.0,] %v_21[10.1,] 
 		 3: %v_22->first def_%v_23 %v_22[10.2,] 
-		 4: ATTRASSIGN %self->@company %self[6.5,2.0,] %v_23[10.3,] 
+		 4: ATTRASSIGN %self->company %v_23[10.3,] 
 		 5: COPY def_%v_19 %v_23[10.3,] 
 BB 11
 	outgoing: 13 
@@ -607,7 +607,7 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_24 %self[2.0,6.5,10.4,] 
+		 1: GETFIELD %self->company def_%v_24 %self[2.0,6.5,10.4,] 
 		 2: RETURN %v_24[15.1,] %self[2.0,6.5,10.4,] 
 BB 17
 	outgoing: 
@@ -834,7 +834,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->current_task_filter def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -848,7 +848,7 @@ BB 5
 		 0: (TaskFilter) def_%v_6 
 		 1: %self->current_user def_%v_7 %self[2.0,] 
 		 2: %v_6->system_filter def_%v_8 %v_6[5.0,] %v_7[5.1,] 
-		 3: ATTRASSIGN %self->@current_task_filter %self[5.1,2.0,] %v_8[5.2,] 
+		 3: ATTRASSIGN %self->current_task_filter %v_8[5.2,] 
 		 4: RETURN %v_8[5.2,] %self[5.1,5.3,2.0,] 
 BB 6
 	outgoing: 7 
@@ -1002,7 +1002,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %v_3->locale %v_3[2.6,] %v_5[3.1,2.8,] 
+		 0: ATTRASSIGN %v_3->locale %v_5[3.1,2.8,] 
 		 1: RETURN %v_5[3.1,2.8,] %self[2.0,] 
 BB 5
 	outgoing: 

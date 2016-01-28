@@ -191,9 +191,9 @@ CLOSURE END
 		 19: %self->params def_%v_12 %self[2.0,2.6,2.16,] 
 		 20: def_%v_13 %v_12[2.19,] container_id_key[2.10,] 
 		 21: container_class->find_by_id def_%v_14 container_class[2.17,] %v_13[2.20,] 
-		 22: ATTRASSIGN %self->@container %self[2.0,2.6,2.16,2.19,] %v_14[2.21,] 
+		 22: ATTRASSIGN %self->container %v_14[2.21,] 
 		 23: 
-		 24: def_%v_15 %self[2.0,2.6,2.16,2.19,2.22,] 
+		 24: GETFIELD %self->container def_%v_15 %self[2.0,2.6,2.16,2.19,2.22,] 
 		 25: BRANCH %v_15[2.24,] 
 BB 3
 	outgoing: 6 
@@ -228,14 +228,14 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->container def_%v_3 %self[2.0,] 
 		 7: %v_3->score_rules def_%v_4 %v_3[2.6,] 
 		 8: %self->params def_%v_5 %self[2.0,] 
 		 9: def_%v_6 %v_5[2.8,] 
 		 10: %v_4->find_by_id def_%v_7 %v_4[2.7,] %v_6[2.9,] 
-		 11: ATTRASSIGN %self->@score_rule %self[2.0,2.8,] %v_7[2.10,] 
+		 11: ATTRASSIGN %self->score_rule %v_7[2.10,] 
 		 12: 
-		 13: def_%v_8 %self[2.0,2.8,2.11,] 
+		 13: GETFIELD %self->score_rule def_%v_8 %self[2.0,2.8,2.11,] 
 		 14: BRANCH %v_8[2.13,] 
 BB 3
 	outgoing: 6 
@@ -275,7 +275,7 @@ BB 2
 		 8: %self->redirect_to def_%v_4 %self[2.0,2.7,] %v_3[2.7,] 
 		 9: 
 		 10: %self->flash def_%v_5 %self[2.0,2.7,2.8,] 
-		 11: %v_5[2.10,] error_msg[2.5,] 
+		 11: ATTRASSIGN %v_5->[] error_msg[2.5,] 
 		 12: RETURN error_msg[2.5,] %self[2.0,2.7,2.8,2.10,] 
 BB 3
 	outgoing: 

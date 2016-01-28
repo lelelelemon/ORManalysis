@@ -28,8 +28,8 @@ BB 3
 		 1: %self->options def_%v_8 %self[2.0,] 
 		 2: def_%v_9 %v_8[3.1,] 
 		 3: %v_7->find def_%v_10 %v_7[3.0,] %v_9[3.2,] 
-		 4: ATTRASSIGN %self->@group %self[3.1,2.0,] %v_10[3.3,] 
-		 5: RETURN %v_10[3.3,] %self[3.1,2.0,] 
+		 4: ATTRASSIGN %self->group %v_10[3.3,] 
+		 5: RETURN %v_10[3.3,] %self[3.1,3.4,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -57,7 +57,7 @@ BB 2
 		 5: 
 		 6: (I18n) def_%v_3 
 		 7: 
-		 8: def_%v_4 %self[2.0,] 
+		 8: GETFIELD %self->group def_%v_4 %self[2.0,] 
 		 9: BRANCH %v_4[2.8,] 
 BB 3
 	outgoing: 5 
@@ -76,7 +76,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: COPY def_%v_7 
-		 1: def_%v_8 %self[2.0,] 
+		 1: GETFIELD %self->group def_%v_8 %self[2.0,] 
 		 2: %v_8->try def_%v_9 %v_8[5.1,] 
 		 3: COPY def_%v_10 %v_7[5.0,] %v_9[5.2,] 
 		 4: %v_3->t def_%v_11 %v_3[2.6,] %v_5[4.1,3.0,] %v_10[5.3,] 
@@ -101,14 +101,14 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->group def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_4 
-		 1: def_%v_6 %self[2.0,] 
+		 1: GETFIELD %self->group def_%v_6 %self[2.0,] 
 		 2: %v_6->attendance_records def_%v_7 %v_6[3.1,] 
 		 3: %v_7->select def_%v_8 %v_7[3.2,] 
 		 4: COPY def_%v_9 
@@ -143,7 +143,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->group def_%v_3 %self[2.0,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 6 
@@ -191,7 +191,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 5: 
-		 6: def_%v_7 %self[3.0,2.0,] 
+		 6: GETFIELD %self->group def_%v_7 %self[3.0,2.0,] 
 		 7: %v_7->people def_%v_8 %v_7[3.6,] 
 		 8: %v_8->each def_%v_9 %v_8[3.7,] %self[3.0,2.0,] 
 CLOSURE BEGIN: %self[3.0,2.0,] person[] rows[3.2,] 

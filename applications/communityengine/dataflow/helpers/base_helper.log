@@ -34,7 +34,7 @@ BB 5
 		 0: 
 		 1: comment->commentable_type def_%v_5 comment[2.5,] 
 		 2: COPY def_%v_6 
-		 3: ATTRASSIGN %v_5->! def_%v_7 %v_5[5.1,] %v_6[5.2,] 
+		 3: %v_5->!= def_%v_7 %v_5[5.1,] %v_6[5.2,] 
 		 4: BRANCH %v_7[5.3,] 
 BB 6
 	outgoing: 11 
@@ -227,16 +227,16 @@ BB 4
 		 7: 
 		 8: def_%v_8 %v_7[4.5,] 
 		 9: COPY def_%v_9 
-		 10: ATTRASSIGN %v_8->! def_%v_10 %v_8[4.8,] %v_9[4.9,] 
+		 10: %v_8->!= def_%v_10 %v_8[4.8,] %v_9[4.9,] 
 		 11: BRANCH %v_10[4.10,] 
 BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_11 
-		 1: def_%v_12 options[4.6,3.1,2.5,] 
+		 1: def_%v_12 options[4.6,] 
 		 2: def_%v_13 %v_11[5.0,] %v_12[5.1,] 
-		 3: options[4.6,3.1,2.5,] %v_13[5.2,] 
+		 3: ATTRASSIGN options->[] %v_13[5.2,] 
 		 4: 
 BB 6
 	outgoing: 7 
@@ -251,7 +251,7 @@ BB 7
 		 1: COPY def_%v_14 
 		 2: COPY def_str %v_14[7.1,] 
 		 3: 
-		 4: options->collect def_%v_15 options[5.3,4.6,3.1,2.5,] %self[2.0,] 
+		 4: options->collect def_%v_15 options[5.3,4.6,] %self[2.0,] 
 CLOSURE BEGIN: key[] val[] str[7.2,] 
 BB 1
 	outgoing: 6 2 
@@ -425,7 +425,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_7 %self[2.0,] 
+		 0: GETFIELD %self->widgets def_%v_7 %self[2.0,] 
 		 1: COPY def_%v_5 %v_7[5.0,] 
 BB 6
 	outgoing: 7 8 
@@ -437,14 +437,14 @@ BB 7
 	datadep: 
 	instructions:
 		 0: COPY def_%v_8 
-		 1: ATTRASSIGN %self->@widgets %self[2.0,] %v_8[7.0,] 
+		 1: ATTRASSIGN %self->widgets %v_8[7.0,] 
 		 2: COPY def_%v_7 %v_8[7.0,] 
 BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_9 %self[7.1,2.0,] 
+		 1: GETFIELD %self->widgets def_%v_9 %self[7.1,2.0,] 
 		 2: COPY def_%v_10 
 		 3: %self->capture def_%v_11 %self[7.1,2.0,] block[4.1,] 
 		 4: COPY def_%v_12 %v_11[8.3,] html_options[3.1,2.5,] 
@@ -475,13 +475,13 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->widgets def_%v_3 %self[2.0,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD %self->widgets def_%v_4 %self[2.0,] 
 		 1: %v_4->html_safe def_%v_5 %v_4[3.0,] 
 		 2: RETURN %v_5[3.1,] %self[2.0,] 
 BB 4
@@ -528,7 +528,7 @@ BB 4
 		 5: COPY def_%v_7 %v_6[4.4,] html_options[3.1,2.5,] 
 		 6: COPY def_%v_8 %v_5[4.3,] %v_7[4.5,] 
 		 7: %self->render def_%v_9 %self[4.4,2.0,] %v_8[4.6,] 
-		 8: ATTRASSIGN %self->@jumbotron %self[4.4,4.7,2.0,] %v_9[4.7,] 
+		 8: ATTRASSIGN %self->jumbotron %v_9[4.7,] 
 		 9: 
 		 10: COPY def_%v_10 
 		 11: RETURN %v_10[4.10,] %self[4.4,4.7,4.8,2.0,] 
@@ -553,13 +553,13 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->jumbotron def_%v_3 %self[2.0,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD %self->jumbotron def_%v_4 %self[2.0,] 
 		 1: %v_4->html_safe def_%v_5 %v_4[3.0,] 
 		 2: RETURN %v_5[3.1,] %self[2.0,] 
 BB 4
@@ -1029,13 +1029,13 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_34 %self[2.0,] 
+		 1: GETFIELD %self->page def_%v_34 %self[2.0,] 
 		 2: BRANCH %v_34[13.1,] 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: def_%v_35 %self[2.0,] 
+		 0: GETFIELD %self->page def_%v_35 %self[2.0,] 
 		 1: %v_35->title def_%v_36 %v_35[14.0,] 
 		 2: COPY def_%v_34 %v_36[14.1,] 
 BB 15
@@ -1048,7 +1048,7 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_37 %self[2.0,] 
+		 1: GETFIELD %self->page def_%v_37 %self[2.0,] 
 		 2: %v_37->title def_%v_38 %v_37[16.1,] 
 		 3: def_%v_39 %v_38[16.2,] divider[2.8,] 
 		 4: def_%v_40 %v_39[16.3,] app_base[2.12,] 
@@ -1071,13 +1071,13 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_42 %self[2.0,] 
+		 1: GETFIELD %self->post def_%v_42 %self[2.0,] 
 		 2: BRANCH %v_42[19.1,] 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: def_%v_43 %self[2.0,] 
+		 0: GETFIELD %self->post def_%v_43 %self[2.0,] 
 		 1: %v_43->title def_%v_44 %v_43[20.0,] 
 		 2: COPY def_%v_42 %v_44[20.1,] 
 BB 21
@@ -1090,14 +1090,14 @@ BB 22
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_45 %self[2.0,] 
+		 1: GETFIELD %self->post def_%v_45 %self[2.0,] 
 		 2: %v_45->title def_%v_46 %v_45[22.1,] 
 		 3: def_%v_47 %v_46[22.2,] divider[2.8,] 
 		 4: def_%v_48 %v_47[22.3,] app_base[2.12,] 
 		 5: def_%v_49 %v_48[22.4,] tagline[2.19,] 
 		 6: COPY def_title %v_49[22.5,] 
 		 7: 
-		 8: def_%v_50 %self[2.0,] 
+		 8: GETFIELD %self->post def_%v_50 %self[2.0,] 
 		 9: %v_50->tags def_%v_51 %v_50[22.8,] 
 		 10: %v_51->empty? def_%v_52 %v_51[22.9,] 
 		 11: BRANCH %v_52[22.10,] 
@@ -1114,7 +1114,7 @@ BB 24
 		 0: def_%v_54 
 		 1: COPY def_%v_55 
 		 2: def_%v_56 divider[2.8,] %v_54[24.0,] %v_55[24.1,] 
-		 3: def_%v_57 %self[2.0,] 
+		 3: GETFIELD %self->post def_%v_57 %self[2.0,] 
 		 4: %v_57->tags def_%v_58 %v_57[24.3,] 
 		 5: def_%v_59 
 		 6: def_%v_60 %v_58[24.4,] %v_59[24.5,] 
@@ -1126,14 +1126,14 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: def_%v_64 title[22.6,2.21,] %v_53[24.10,23.0,] 
+		 0: def_%v_64 title[22.6,] %v_53[24.10,23.0,] 
 		 1: COPY def_title %v_64[25.0,] 
 		 2: 
-		 3: def_%v_65 %self[2.0,] 
+		 3: GETFIELD %self->post def_%v_65 %self[2.0,] 
 		 4: %v_65->user def_%v_66 %v_65[25.3,] 
-		 5: def_%v_67 %self[2.0,] 
+		 5: GETFIELD %self->post def_%v_67 %self[2.0,] 
 		 6: %self->user_post_url def_%v_68 %self[2.0,] %v_66[25.4,] %v_67[25.5,] 
-		 7: ATTRASSIGN %self->@canonical_url %self[25.6,2.0,] %v_68[25.6,] 
+		 7: ATTRASSIGN %self->canonical_url %v_68[25.6,] 
 		 8: 
 BB 26
 	outgoing: 27 
@@ -1151,13 +1151,13 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_69 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_69 %self[2.0,] 
 		 2: BRANCH %v_69[28.1,] 
 BB 29
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: def_%v_70 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_70 %self[2.0,] 
 		 1: %v_70->new_record? def_%v_71 %v_70[29.0,] 
 		 2: %v_71->! def_%v_72 %v_71[29.1,] 
 		 3: COPY def_%v_69 %v_72[29.2,] 
@@ -1170,7 +1170,7 @@ BB 31
 	outgoing: 32 
 	datadep: 
 	instructions:
-		 0: def_%v_73 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_73 %self[2.0,] 
 		 1: %v_73->login def_%v_74 %v_73[31.0,] 
 		 2: COPY def_%v_69 %v_74[31.1,] 
 BB 32
@@ -1183,18 +1183,18 @@ BB 33
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_75 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_75 %self[2.0,] 
 		 2: %v_75->login def_%v_76 %v_75[33.1,] 
 		 3: COPY def_title %v_76[33.2,] 
 		 4: 
 		 5: def_%v_77 divider[2.8,] app_base[2.12,] 
 		 6: def_%v_78 %v_77[33.5,] tagline[2.19,] 
-		 7: def_%v_79 title[33.3,2.21,] %v_78[33.6,] 
+		 7: def_%v_79 title[33.3,] %v_78[33.6,] 
 		 8: COPY def_title %v_79[33.7,] 
 		 9: 
-		 10: def_%v_80 %self[2.0,] 
+		 10: GETFIELD %self->user def_%v_80 %self[2.0,] 
 		 11: %self->user_url def_%v_81 %self[2.0,] %v_80[33.10,] 
-		 12: ATTRASSIGN %self->@canonical_url %self[33.11,2.0,] %v_81[33.11,] 
+		 12: ATTRASSIGN %self->canonical_url %v_81[33.11,] 
 		 13: 
 BB 34
 	outgoing: 35 
@@ -1218,13 +1218,13 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_86 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_86 %self[2.0,] 
 		 2: BRANCH %v_86[36.1,] 
 BB 37
 	outgoing: 38 
 	datadep: 
 	instructions:
-		 0: def_%v_87 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_87 %self[2.0,] 
 		 1: %v_87->login def_%v_88 %v_87[37.0,] 
 		 2: COPY def_%v_86 %v_88[37.1,] 
 BB 38
@@ -1237,7 +1237,7 @@ BB 39
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_89 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_89 %self[2.0,] 
 		 2: %v_89->login def_%v_90 %v_89[39.1,] 
 		 3: COPY def_%v_91 %v_90[39.2,] 
 		 4: %v_91->l def_%v_92 %v_91[39.3,] 
@@ -1262,13 +1262,13 @@ BB 42
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_96 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_96 %self[2.0,] 
 		 2: BRANCH %v_96[42.1,] 
 BB 43
 	outgoing: 44 
 	datadep: 
 	instructions:
-		 0: def_%v_97 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_97 %self[2.0,] 
 		 1: %v_97->login def_%v_98 %v_97[43.0,] 
 		 2: COPY def_%v_96 %v_98[43.1,] 
 BB 44
@@ -1281,7 +1281,7 @@ BB 45
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_99 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_99 %self[2.0,] 
 		 2: %v_99->login def_%v_100 %v_99[45.1,] 
 		 3: COPY def_%v_101 %v_100[45.2,] 
 		 4: %v_101->l def_%v_102 %v_101[45.3,] 
@@ -1345,7 +1345,7 @@ BB 51
 		 7: def_%v_119 %v_114[51.2,] %v_118[51.6,] 
 		 8: COPY def_%v_120 
 		 9: def_%v_121 %v_119[51.7,] %v_120[51.8,] 
-		 10: def_%v_122 %self[51.3,2.0,] 
+		 10: GETFIELD %self->tags def_%v_122 %self[51.3,2.0,] 
 		 11: %v_122->map def_%v_123 %v_122[51.10,] 
 		 12: COPY def_%v_124 
 		 13: %v_123->join def_%v_125 %v_123[51.11,] %v_124[51.12,] 
@@ -1358,7 +1358,7 @@ BB 52
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_128 %self[2.0,] 
+		 1: GETFIELD %self->tags def_%v_128 %self[2.0,] 
 		 2: %v_128->map def_%v_129 %v_128[52.1,] 
 		 3: COPY def_%v_130 
 		 4: %v_129->join def_%v_131 %v_129[52.2,] %v_130[52.3,] 
@@ -1371,7 +1371,7 @@ BB 53
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_134 %self[2.0,] 
+		 1: GETFIELD %self->related_tags def_%v_134 %self[2.0,] 
 		 2: BRANCH %v_134[53.1,] 
 BB 54
 	outgoing: 56 
@@ -1381,12 +1381,12 @@ BB 54
 		 1: 
 		 2: def_%v_136 
 		 3: COPY def_%v_137 
-		 4: def_%v_138 %self[2.0,] 
+		 4: GETFIELD %self->related_tags def_%v_138 %self[2.0,] 
 		 5: COPY def_%v_139 
 		 6: %v_138->join def_%v_140 %v_138[54.4,] %v_139[54.5,] 
 		 7: COPY def_%v_141 
 		 8: def_%v_142 %v_135[54.0,] %v_136[54.2,] %v_137[54.3,] %v_140[54.6,] %v_141[54.7,] 
-		 9: def_%v_143 title[52.7,51.16,2.21,] %v_142[54.8,] 
+		 9: def_%v_143 title[52.7,51.16,] %v_142[54.8,] 
 		 10: COPY def_title %v_143[54.9,] 
 		 11: 
 BB 55
@@ -1400,10 +1400,10 @@ BB 56
 	instructions:
 		 0: 
 		 1: def_%v_144 divider[2.8,] app_base[2.12,] 
-		 2: def_%v_145 title[54.10,52.7,51.16,2.21,] %v_144[56.1,] 
+		 2: def_%v_145 title[54.10,52.7,51.16,] %v_144[56.1,] 
 		 3: COPY def_title %v_145[56.2,] 
 		 4: 
-		 5: def_%v_146 %self[2.0,] 
+		 5: GETFIELD %self->tags_raw def_%v_146 %self[2.0,] 
 		 6: BRANCH %v_146[56.5,] 
 BB 57
 	outgoing: 59 
@@ -1411,12 +1411,12 @@ BB 57
 	instructions:
 		 0: (URI) def_%v_147 
 		 1: (URI) def_%v_148 
-		 2: def_%v_149 %self[2.0,] 
+		 2: GETFIELD %self->tags_raw def_%v_149 %self[2.0,] 
 		 3: %v_148->escape def_%v_150 %v_148[57.1,] %v_149[57.2,] 
 		 4: COPY def_%v_151 
 		 5: %v_147->escape def_%v_152 %v_147[57.0,] %v_150[57.3,] 
 		 6: %self->tag_url def_%v_153 %self[2.0,] %v_152[57.5,] 
-		 7: ATTRASSIGN %self->@canonical_url %self[57.6,2.0,] %v_153[57.6,] 
+		 7: ATTRASSIGN %self->canonical_url %v_153[57.6,] 
 		 8: 
 BB 58
 	outgoing: 59 
@@ -1440,13 +1440,13 @@ BB 62
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_158 %self[2.0,] 
+		 1: GETFIELD %self->category def_%v_158 %self[2.0,] 
 		 2: BRANCH %v_158[62.1,] 
 BB 63
 	outgoing: 64 
 	datadep: 
 	instructions:
-		 0: def_%v_159 %self[2.0,] 
+		 0: GETFIELD %self->category def_%v_159 %self[2.0,] 
 		 1: %v_159->name def_%v_160 %v_159[63.0,] 
 		 2: COPY def_%v_158 %v_160[63.1,] 
 BB 64
@@ -1459,7 +1459,7 @@ BB 65
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_161 %self[2.0,] 
+		 1: GETFIELD %self->category def_%v_161 %self[2.0,] 
 		 2: %v_161->name def_%v_162 %v_161[65.1,] 
 		 3: COPY def_%v_163 %v_162[65.2,] 
 		 4: %v_163->l def_%v_164 %v_163[65.3,] 
@@ -1503,13 +1503,13 @@ BB 70
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_176 %self[2.0,25.7,33.12,57.7,] 
+		 2: GETFIELD %self->page_title def_%v_176 %self[2.0,] 
 		 3: BRANCH %v_176[70.2,] 
 BB 71
 	outgoing: 76 
 	datadep: 
 	instructions:
-		 0: def_%v_177 %self[2.0,25.7,33.12,57.7,] 
+		 0: GETFIELD %self->page_title def_%v_177 %self[2.0,] 
 		 1: def_%v_178 %v_177[71.0,] divider[2.8,] 
 		 2: def_%v_179 %v_178[71.1,] app_base[2.12,] 
 		 3: def_%v_180 %v_179[71.2,] tagline[2.19,] 
@@ -1520,7 +1520,7 @@ BB 72
 	datadep: 
 	instructions:
 		 0: 
-		 1: title->== def_%v_181 title[12.2,68.5,2.21,16.6,25.1,34.5,33.3,33.8,39.8,45.8,49.5,66.5,65.8,22.6,56.3,54.10,52.7,51.16,] app_base[2.12,] 
+		 1: title->== def_%v_181 title[12.2,68.5,16.6,25.1,34.5,33.3,33.8,39.8,45.8,49.5,66.5,65.8,56.3,2.21,] app_base[2.12,] 
 		 2: BRANCH %v_181[72.1,] 
 BB 73
 	outgoing: 75 
@@ -1553,7 +1553,7 @@ BB 76
 	datadep: 
 	instructions:
 		 0: 
-		 1: RETURN title[71.4,73.10,12.2,68.5,2.21,16.6,25.1,34.5,33.3,33.8,39.8,45.8,49.5,66.5,65.8,22.6,56.3,54.10,52.7,51.16,] %self[2.0,25.7,33.12,57.7,] 
+		 1: RETURN title[71.4,73.10,12.2,68.5,16.6,25.1,34.5,33.3,33.8,39.8,45.8,49.5,66.5,65.8,56.3,2.21,] %self[2.0,25.7,33.12,57.7,] 
 BB 77
 	outgoing: 
 	datadep: 
@@ -1645,13 +1645,13 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_24 %self[2.0,] 
+		 1: GETFIELD %self->page def_%v_24 %self[2.0,] 
 		 2: BRANCH %v_24[11.1,] 
 BB 12
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: def_%v_25 %self[2.0,] 
+		 0: GETFIELD %self->page def_%v_25 %self[2.0,] 
 		 1: %v_25->title def_%v_26 %v_25[12.0,] 
 		 2: COPY def_%v_24 %v_26[12.1,] 
 BB 13
@@ -1664,7 +1664,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_27 %self[2.0,] 
+		 1: GETFIELD %self->page def_%v_27 %self[2.0,] 
 		 2: %v_27->title def_%v_28 %v_27[14.1,] 
 		 3: COPY def_title %v_28[14.2,] 
 		 4: 
@@ -1684,13 +1684,13 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_29 %self[2.0,] 
+		 1: GETFIELD %self->post def_%v_29 %self[2.0,] 
 		 2: BRANCH %v_29[17.1,] 
 BB 18
 	outgoing: 19 
 	datadep: 
 	instructions:
-		 0: def_%v_30 %self[2.0,] 
+		 0: GETFIELD %self->post def_%v_30 %self[2.0,] 
 		 1: %v_30->title def_%v_31 %v_30[18.0,] 
 		 2: COPY def_%v_29 %v_31[18.1,] 
 BB 19
@@ -1703,15 +1703,15 @@ BB 20
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_32 %self[2.0,] 
+		 1: GETFIELD %self->post def_%v_32 %self[2.0,] 
 		 2: %v_32->title def_%v_33 %v_32[20.1,] 
 		 3: COPY def_title %v_33[20.2,] 
 		 4: 
-		 5: def_%v_34 %self[2.0,] 
+		 5: GETFIELD %self->post def_%v_34 %self[2.0,] 
 		 6: %v_34->user def_%v_35 %v_34[20.5,] 
-		 7: def_%v_36 %self[2.0,] 
+		 7: GETFIELD %self->post def_%v_36 %self[2.0,] 
 		 8: %self->user_post_url def_%v_37 %self[2.0,] %v_35[20.6,] %v_36[20.7,] 
-		 9: ATTRASSIGN %self->@canonical_url %self[20.8,2.0,] %v_37[20.8,] 
+		 9: ATTRASSIGN %self->canonical_url %v_37[20.8,] 
 		 10: 
 BB 21
 	outgoing: 22 
@@ -1729,13 +1729,13 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_38 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_38 %self[2.0,] 
 		 2: BRANCH %v_38[23.1,] 
 BB 24
 	outgoing: 25 
 	datadep: 
 	instructions:
-		 0: def_%v_39 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_39 %self[2.0,] 
 		 1: %v_39->new_record? def_%v_40 %v_39[24.0,] 
 		 2: %v_40->! def_%v_41 %v_40[24.1,] 
 		 3: COPY def_%v_38 %v_41[24.2,] 
@@ -1748,7 +1748,7 @@ BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: def_%v_42 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_42 %self[2.0,] 
 		 1: %v_42->login def_%v_43 %v_42[26.0,] 
 		 2: COPY def_%v_38 %v_43[26.1,] 
 BB 27
@@ -1761,13 +1761,13 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_44 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_44 %self[2.0,] 
 		 2: %v_44->login def_%v_45 %v_44[28.1,] 
 		 3: COPY def_title %v_45[28.2,] 
 		 4: 
-		 5: def_%v_46 %self[2.0,] 
+		 5: GETFIELD %self->user def_%v_46 %self[2.0,] 
 		 6: %self->user_url def_%v_47 %self[2.0,] %v_46[28.5,] 
-		 7: ATTRASSIGN %self->@canonical_url %self[28.6,2.0,] %v_47[28.6,] 
+		 7: ATTRASSIGN %self->canonical_url %v_47[28.6,] 
 		 8: 
 BB 29
 	outgoing: 30 
@@ -1788,13 +1788,13 @@ BB 31
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_49 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_49 %self[2.0,] 
 		 2: BRANCH %v_49[31.1,] 
 BB 32
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: def_%v_50 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_50 %self[2.0,] 
 		 1: %v_50->login def_%v_51 %v_50[32.0,] 
 		 2: COPY def_%v_49 %v_51[32.1,] 
 BB 33
@@ -1807,7 +1807,7 @@ BB 34
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_52 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_52 %self[2.0,] 
 		 2: %v_52->login def_%v_53 %v_52[34.1,] 
 		 3: COPY def_%v_54 %v_53[34.2,] 
 		 4: %v_54->l def_%v_55 %v_54[34.3,] 
@@ -1829,13 +1829,13 @@ BB 37
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_56 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_56 %self[2.0,] 
 		 2: BRANCH %v_56[37.1,] 
 BB 38
 	outgoing: 39 
 	datadep: 
 	instructions:
-		 0: def_%v_57 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_57 %self[2.0,] 
 		 1: %v_57->login def_%v_58 %v_57[38.0,] 
 		 2: COPY def_%v_56 %v_58[38.1,] 
 BB 39
@@ -1848,7 +1848,7 @@ BB 40
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_59 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_59 %self[2.0,] 
 		 2: %v_59->login def_%v_60 %v_59[40.1,] 
 		 3: COPY def_%v_61 %v_60[40.2,] 
 		 4: %v_61->l def_%v_62 %v_61[40.3,] 
@@ -1906,7 +1906,7 @@ BB 46
 		 7: def_%v_76 %v_71[46.2,] %v_75[46.6,] 
 		 8: COPY def_%v_77 
 		 9: def_%v_78 %v_76[46.7,] %v_77[46.8,] 
-		 10: def_%v_79 %self[46.3,2.0,] 
+		 10: GETFIELD %self->tags def_%v_79 %self[46.3,2.0,] 
 		 11: %v_79->map def_%v_80 %v_79[46.10,] 
 		 12: COPY def_%v_81 
 		 13: %v_80->join def_%v_82 %v_80[46.11,] %v_81[46.12,] 
@@ -1919,7 +1919,7 @@ BB 47
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_85 %self[2.0,] 
+		 1: GETFIELD %self->tags def_%v_85 %self[2.0,] 
 		 2: %v_85->map def_%v_86 %v_85[47.1,] 
 		 3: COPY def_%v_87 
 		 4: %v_86->join def_%v_88 %v_86[47.2,] %v_87[47.3,] 
@@ -1932,7 +1932,7 @@ BB 48
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_91 %self[2.0,] 
+		 1: GETFIELD %self->related_tags def_%v_91 %self[2.0,] 
 		 2: BRANCH %v_91[48.1,] 
 BB 49
 	outgoing: 51 
@@ -1942,12 +1942,12 @@ BB 49
 		 1: 
 		 2: def_%v_93 
 		 3: COPY def_%v_94 
-		 4: def_%v_95 %self[2.0,] 
+		 4: GETFIELD %self->related_tags def_%v_95 %self[2.0,] 
 		 5: COPY def_%v_96 
 		 6: %v_95->join def_%v_97 %v_95[49.4,] %v_96[49.5,] 
 		 7: COPY def_%v_98 
 		 8: def_%v_99 %v_92[49.0,] %v_93[49.2,] %v_94[49.3,] %v_97[49.6,] %v_98[49.7,] 
-		 9: def_%v_100 title[47.7,46.16,2.10,] %v_99[49.8,] 
+		 9: def_%v_100 title[47.7,46.16,] %v_99[49.8,] 
 		 10: COPY def_title %v_100[49.9,] 
 		 11: 
 BB 50
@@ -1960,7 +1960,7 @@ BB 51
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_101 %self[2.0,] 
+		 1: GETFIELD %self->tags_raw def_%v_101 %self[2.0,] 
 		 2: BRANCH %v_101[51.1,] 
 BB 52
 	outgoing: 54 
@@ -1968,12 +1968,12 @@ BB 52
 	instructions:
 		 0: (URI) def_%v_102 
 		 1: (URI) def_%v_103 
-		 2: def_%v_104 %self[2.0,] 
+		 2: GETFIELD %self->tags_raw def_%v_104 %self[2.0,] 
 		 3: %v_103->escape def_%v_105 %v_103[52.1,] %v_104[52.2,] 
 		 4: COPY def_%v_106 
 		 5: %v_102->escape def_%v_107 %v_102[52.0,] %v_105[52.3,] 
 		 6: %self->tag_url def_%v_108 %self[2.0,] %v_107[52.5,] 
-		 7: ATTRASSIGN %self->@canonical_url %self[52.6,2.0,] %v_108[52.6,] 
+		 7: ATTRASSIGN %self->canonical_url %v_108[52.6,] 
 		 8: 
 BB 53
 	outgoing: 54 
@@ -1997,13 +1997,13 @@ BB 57
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_110 %self[2.0,] 
+		 1: GETFIELD %self->category def_%v_110 %self[2.0,] 
 		 2: BRANCH %v_110[57.1,] 
 BB 58
 	outgoing: 59 
 	datadep: 
 	instructions:
-		 0: def_%v_111 %self[2.0,] 
+		 0: GETFIELD %self->category def_%v_111 %self[2.0,] 
 		 1: %v_111->name def_%v_112 %v_111[58.0,] 
 		 2: COPY def_%v_110 %v_112[58.1,] 
 BB 59
@@ -2016,7 +2016,7 @@ BB 60
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_113 %self[2.0,] 
+		 1: GETFIELD %self->category def_%v_113 %self[2.0,] 
 		 2: %v_113->name def_%v_114 %v_113[60.1,] 
 		 3: COPY def_%v_115 %v_114[60.2,] 
 		 4: %v_115->l def_%v_116 %v_115[60.3,] 
@@ -2051,13 +2051,13 @@ BB 65
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_119 %self[20.9,28.7,52.7,2.0,] 
+		 2: GETFIELD %self->page_title def_%v_119 %self[2.0,] 
 		 3: BRANCH %v_119[65.2,] 
 BB 66
 	outgoing: 71 
 	datadep: 
 	instructions:
-		 0: def_%v_120 %self[20.9,28.7,52.7,2.0,] 
+		 0: GETFIELD %self->page_title def_%v_120 %self[2.0,] 
 		 1: COPY def_title %v_120[66.0,] 
 		 2: 
 BB 67
@@ -2172,7 +2172,7 @@ BB 3
 	instructions:
 		 0: options->delete def_%v_6 options[2.6,] 
 		 1: %v_6->to_a def_%v_7 %v_6[3.0,] 
-		 2: def_%v_8 %self[2.0,] 
+		 2: GETFIELD %self->section def_%v_8 %self[2.0,] 
 		 3: %v_7->include? def_%v_9 %v_7[3.1,] %v_8[3.2,] 
 		 4: COPY def_%v_5 %v_9[3.3,] 
 BB 4
@@ -2669,7 +2669,7 @@ BB 9
 	outgoing: 11 15 
 	datadep: 
 	instructions:
-		 0: options[8.0,] 
+		 0: ATTRASSIGN options->[] 
 		 1: COPY def_%v_10 
 		 2: 
 BB 10
@@ -3302,7 +3302,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->uses_tiny_mce def_%v_3 %self[2.0,] 
 		 7: %v_3->blank? def_%v_4 %v_3[2.6,] 
 		 8: %v_4->! def_%v_5 %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
@@ -3339,14 +3339,14 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->tiny_mce_configuration def_%v_3 %self[2.0,] 
 		 7: COPY def_%v_4 
 		 8: def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: COPY def_selector %v_5[2.8,] 
 		 10: 
 		 11: COPY def_%v_6 
 		 12: COPY def_%v_7 
-		 13: def_%v_8 %self[2.0,] 
+		 13: GETFIELD %self->tiny_mce_configuration def_%v_8 %self[2.0,] 
 		 14: %v_8->to_json def_%v_9 %v_8[2.13,] 
 		 15: COPY def_%v_10 
 		 16: def_%v_11 %v_6[2.11,] selector[2.9,] %v_7[2.12,] %v_9[2.14,] %v_10[2.15,] 
@@ -3457,7 +3457,7 @@ BB 4
 		 0: 
 		 1: def_%v_4 options[3.1,2.6,] 
 		 2: COPY def_%v_5 
-		 3: %v_4[4.1,] %v_5[4.2,] 
+		 3: ATTRASSIGN %v_4->[] %v_5[4.2,] 
 		 4: 
 		 5: COPY def_%v_6 
 		 6: COPY def_html %v_6[4.5,] 

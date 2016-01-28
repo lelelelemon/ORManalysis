@@ -16,12 +16,12 @@ BB 2
 		 6: (User) def_%v_3 
 		 7: %v_3->active def_%v_4 %v_3[2.6,] 
 		 8: %v_4->where def_%v_5 %v_4[2.7,] 
-		 9: def_%v_6 %self[2.0,] 
+		 9: GETFIELD %self->user def_%v_6 %self[2.0,] 
 		 10: %v_6->login def_%v_7 %v_6[2.9,] 
 		 11: COPY def_%v_8 %v_7[2.10,] 
 		 12: %v_5->not def_%v_9 %v_5[2.8,] %v_8[2.11,] 
 		 13: %v_9->pluck def_%v_10 %v_9[2.12,] 
-		 14: ATTRASSIGN %self->@usernames %self[2.0,] %v_10[2.13,] 
+		 14: ATTRASSIGN %self->usernames %v_10[2.13,] 
 		 15: 
 		 16: %self->respond_to def_%v_11 %self[2.0,2.14,] %self[2.0,2.14,] 
 CLOSURE BEGIN: format[] %self[2.0,2.14,] 
@@ -62,7 +62,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->usernames def_%cl_2_3 %self[2.0,] 
 		 2: %cl_2_3->to_json def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: COPY def_%cl_2_5 %cl_2_4[3.2,] 
 		 4: %self->render def_%cl_2_6 %self[2.0,] %cl_2_5[3.3,] 
@@ -123,20 +123,20 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_7 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_7 %self[2.0,] 
 		 2: %v_7->sent_messages def_%v_8 %v_7[3.1,] 
 		 3: %self->params def_%v_9 %self[2.0,] 
 		 4: def_%v_10 %v_9[3.3,] 
 		 5: %v_8->page def_%v_11 %v_8[3.2,] %v_10[3.4,] 
 		 6: %v_11->per def_%v_12 %v_11[3.5,] 
-		 7: ATTRASSIGN %self->@messages %self[3.3,2.0,] %v_12[3.6,] 
+		 7: ATTRASSIGN %self->messages %v_12[3.6,] 
 		 8: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_13 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_13 %self[2.0,] 
 		 2: %v_13->message_threads_as_recipient def_%v_14 %v_13[4.1,] 
 		 3: COPY def_%v_15 
 		 4: %v_14->order def_%v_16 %v_14[4.2,] %v_15[4.3,] 
@@ -144,7 +144,7 @@ BB 4
 		 6: def_%v_18 %v_17[4.5,] 
 		 7: %v_16->page def_%v_19 %v_16[4.4,] %v_18[4.6,] 
 		 8: %v_19->per def_%v_20 %v_19[4.7,] 
-		 9: ATTRASSIGN %self->@messages %self[4.5,2.0,] %v_20[4.8,] 
+		 9: ATTRASSIGN %self->messages %v_20[4.8,] 
 		 10: COPY def_%v_12 %v_20[4.8,] 
 BB 5
 	outgoing: 6 7 
@@ -193,12 +193,12 @@ BB 3
 		 0: 
 		 1: def_%cl_2_3 
 		 2: 
-		 3: def_%cl_2_4 %self[2.0,] 
+		 3: GETFIELD %self->user def_%cl_2_4 %self[2.0,] 
 		 4: %self->user_messages_path def_%cl_2_5 %self[2.0,] %cl_2_4[3.3,] 
 		 5: 
 		 6: def_%cl_2_6 
 		 7: 
-		 8: def_%cl_2_7 %self[3.4,2.0,] 
+		 8: GETFIELD %self->user def_%cl_2_7 %self[3.4,2.0,] 
 		 9: %cl_2_7->unread_messages? def_%cl_2_8 %cl_2_7[3.8,] 
 		 10: BRANCH %cl_2_8[3.9,] 
 BB 4
@@ -206,7 +206,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_9 %self[2.0,] 
+		 1: GETFIELD %self->user def_%cl_2_9 %self[2.0,] 
 		 2: %cl_2_9->unread_message_count def_%cl_2_10 %cl_2_9[4.1,] 
 		 3: def_%cl_2_11 %cl_2_10[4.2,] 
 		 4: 
@@ -224,13 +224,13 @@ BB 6
 	instructions:
 		 0: 
 		 1: def_%cl_2_14 
-		 2: def_%cl_2_15 %self[2.0,] 
+		 2: GETFIELD %self->user def_%cl_2_15 %self[2.0,] 
 		 3: COPY def_%cl_2_16 
 		 4: %self->user_messages_path def_%cl_2_17 %self[2.0,] %cl_2_15[6.2,] %cl_2_16[6.3,] 
 		 5: %self->link_to def_%cl_2_18 %self[6.4,2.0,] %cl_2_14[6.1,] %cl_2_17[6.4,] 
 		 6: 
 		 7: def_%cl_2_19 
-		 8: def_%cl_2_20 %self[6.4,6.5,2.0,] 
+		 8: GETFIELD %self->user def_%cl_2_20 %self[6.4,6.5,2.0,] 
 		 9: %self->new_user_message_path def_%cl_2_21 %self[6.4,6.5,2.0,] %cl_2_20[6.8,] 
 		 10: %self->link_to def_%cl_2_22 %self[6.4,6.5,6.9,2.0,] %cl_2_19[6.7,] %cl_2_21[6.9,] 
 		 11: RETURN %cl_2_22[6.10,] %self[6.4,6.5,6.9,6.10,2.0,] 
@@ -270,7 +270,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_27 %self[4.9,3.7,2.0,] 
+		 1: GETFIELD %self->user def_%v_27 %self[2.0,] 
 		 2: %self->delete_selected_user_messages_path def_%v_28 %self[4.9,3.7,2.0,] %v_27[6.1,] 
 		 3: COPY def_%v_29 %v_28[6.2,] 
 		 4: def_%v_30 %self[6.2,4.9,3.7,2.0,] %v_29[6.3,] %self[6.2,4.9,3.7,2.0,] 
@@ -314,9 +314,9 @@ BB 3
 	instructions:
 		 0: 
 		 1: def_%cl_4_3 
-		 2: ATTRASSIGN %self->@page_title %self[2.0,] %cl_4_3[3.1,] 
+		 2: ATTRASSIGN %self->page_title %cl_4_3[3.1,] 
 		 3: 
-		 4: def_%cl_4_4 %self[3.2,2.0,] 
+		 4: GETFIELD %self->messages def_%cl_4_4 %self[2.0,] 
 		 5: %cl_4_4->empty? def_%cl_4_5 %cl_4_4[3.4,] 
 		 6: BRANCH %cl_4_5[3.5,] 
 BB 4
@@ -331,7 +331,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_4_7 %self[3.2,2.0,] 
+		 1: GETFIELD %self->messages def_%cl_4_7 %self[2.0,] 
 		 2: %cl_4_7->each def_%cl_4_8 %cl_4_7[5.1,] %self[3.2,2.0,] 
 CLOSURE BEGIN: message[] %self[3.2,2.0,] 
 BB 1
@@ -408,7 +408,7 @@ CLOSURE END
 		 6: COPY def_%cl_4_11 %cl_4_10[5.5,] 
 		 7: %self->submit_tag def_%cl_4_12 %self[3.2,2.0,] %cl_4_9[5.4,] %cl_4_11[5.6,] 
 		 8: 
-		 9: def_%cl_4_13 %self[5.7,3.2,2.0,] 
+		 9: GETFIELD %self->messages def_%cl_4_13 %self[5.7,2.0,] 
 		 10: COPY def_%cl_4_14 
 		 11: COPY def_%cl_4_15 %cl_4_14[5.10,] 
 		 12: %self->paginate def_%cl_4_16 %self[5.7,3.2,2.0,] %cl_4_13[5.9,] %cl_4_15[5.11,] 
@@ -449,7 +449,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_31 %self[4.9,3.7,2.0,] 
+		 1: GETFIELD %self->user def_%v_31 %self[2.0,] 
 		 2: %self->delete_message_threads_user_messages_path def_%v_32 %self[4.9,3.7,2.0,] %v_31[7.1,] 
 		 3: COPY def_%v_33 %v_32[7.2,] 
 		 4: def_%v_34 %self[7.2,4.9,3.7,2.0,] %v_33[7.3,] %self[7.2,4.9,3.7,2.0,] 
@@ -530,19 +530,19 @@ BB 2
 		 6: (Message) def_%v_3 
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
-		 9: def_%v_6 %self[2.0,2.7,] 
+		 9: GETFIELD %self->user def_%v_6 %self[2.0,2.7,] 
 		 10: %v_3->read def_%v_7 %v_3[2.6,] %v_5[2.8,] %v_6[2.9,] 
-		 11: ATTRASSIGN %self->@message %self[2.0,2.7,] %v_7[2.10,] 
+		 11: ATTRASSIGN %self->message %v_7[2.10,] 
 		 12: 
 		 13: (MessageThread) def_%v_8 
-		 14: def_%v_9 %self[2.0,2.7,2.11,] 
+		 14: GETFIELD %self->message def_%v_9 %self[2.0,2.7,2.11,] 
 		 15: %self->admin? def_%v_10 %self[2.0,2.7,2.11,] 
 		 16: BRANCH %v_10[2.15,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_11 %self[2.0,2.11,] 
+		 0: GETFIELD %self->message def_%v_11 %self[2.0,2.11,] 
 		 1: %v_11->recipient def_%v_12 %v_11[3.0,] 
 		 2: 
 BB 4
@@ -556,42 +556,42 @@ BB 5
 	datadep: 
 	instructions:
 		 0: %v_8->for def_%v_14 %v_8[2.13,] %v_9[2.14,] %v_12[4.1,3.1,] 
-		 1: ATTRASSIGN %self->@message_thread %self[2.0,2.11,] %v_14[5.0,] 
+		 1: ATTRASSIGN %self->message_thread %v_14[5.0,] 
 		 2: 
 		 3: (Message) def_%v_15 
-		 4: def_%v_16 %self[5.1,2.0,2.11,] 
-		 5: def_%v_17 %self[5.1,2.0,2.11,] 
+		 4: GETFIELD %self->user def_%v_16 %self[2.0,] 
+		 5: GETFIELD %self->message_thread def_%v_17 %self[5.1,2.0,] 
 		 6: %self->params def_%v_18 %self[5.1,2.0,2.11,] 
 		 7: %v_15->new_reply def_%v_19 %v_15[5.3,] %v_16[5.4,] %v_17[5.5,] %v_18[5.6,] 
-		 8: ATTRASSIGN %self->@reply %self[5.1,5.6,2.0,2.11,] %v_19[5.7,] 
+		 8: ATTRASSIGN %self->reply %v_19[5.7,] 
 		 9: 
 		 10: 
-		 11: def_%v_20 %self[5.1,5.6,5.8,2.0,2.11,] 
+		 11: GETFIELD %self->message_thread def_%v_20 %self[5.1,5.6,2.0,] 
 		 12: BRANCH %v_20[5.11,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_21 %self[5.1,5.8,2.0,2.11,] 
+		 0: GETFIELD %self->message_thread def_%v_21 %self[5.1,2.0,] 
 		 1: %v_21->parent_message def_%v_22 %v_21[6.0,] 
 		 2: %v_22->sender def_%v_23 %v_22[6.1,] 
 		 3: %v_23->login def_%v_24 %v_23[6.2,] 
 		 4: COPY def_%v_25 
 		 5: def_%v_26 %v_24[6.3,] %v_25[6.4,] 
-		 6: def_%v_27 %self[5.1,5.8,2.0,2.11,] 
+		 6: GETFIELD %self->message_thread def_%v_27 %self[5.1,2.0,] 
 		 7: %v_27->parent_message def_%v_28 %v_27[6.6,] 
 		 8: %v_28->subject def_%v_29 %v_28[6.7,] 
 		 9: def_%v_30 %v_26[6.5,] %v_29[6.8,] 
-		 10: ATTRASSIGN %self->@page_title %self[5.1,5.8,2.0,2.11,] %v_30[6.9,] 
+		 10: ATTRASSIGN %self->page_title %v_30[6.9,] 
 		 11: 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_31 %self[5.1,5.8,2.0,2.11,] 
+		 1: GETFIELD %self->message def_%v_31 %self[2.0,2.11,] 
 		 2: %v_31->subject def_%v_32 %v_31[7.1,] 
-		 3: ATTRASSIGN %self->@page_title %self[5.1,5.8,2.0,2.11,] %v_32[7.2,] 
+		 3: ATTRASSIGN %self->page_title %v_32[7.2,] 
 		 4: COPY def_%v_30 %v_32[7.2,] 
 BB 8
 	outgoing: 9 10 
@@ -640,12 +640,12 @@ BB 3
 		 0: 
 		 1: def_%cl_2_3 
 		 2: 
-		 3: def_%cl_2_4 %self[2.0,] 
+		 3: GETFIELD %self->user def_%cl_2_4 %self[2.0,] 
 		 4: %self->user_messages_path def_%cl_2_5 %self[2.0,] %cl_2_4[3.3,] 
 		 5: 
 		 6: def_%cl_2_6 
 		 7: 
-		 8: def_%cl_2_7 %self[3.4,2.0,] 
+		 8: GETFIELD %self->user def_%cl_2_7 %self[3.4,2.0,] 
 		 9: %cl_2_7->unread_messages? def_%cl_2_8 %cl_2_7[3.8,] 
 		 10: BRANCH %cl_2_8[3.9,] 
 BB 4
@@ -653,7 +653,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_9 %self[2.0,] 
+		 1: GETFIELD %self->user def_%cl_2_9 %self[2.0,] 
 		 2: %cl_2_9->unread_message_count def_%cl_2_10 %cl_2_9[4.1,] 
 		 3: def_%cl_2_11 %cl_2_10[4.2,] 
 		 4: 
@@ -671,13 +671,13 @@ BB 6
 	instructions:
 		 0: 
 		 1: def_%cl_2_14 
-		 2: def_%cl_2_15 %self[2.0,] 
+		 2: GETFIELD %self->user def_%cl_2_15 %self[2.0,] 
 		 3: COPY def_%cl_2_16 
 		 4: %self->user_messages_path def_%cl_2_17 %self[2.0,] %cl_2_15[6.2,] %cl_2_16[6.3,] 
 		 5: %self->link_to def_%cl_2_18 %self[6.4,2.0,] %cl_2_14[6.1,] %cl_2_17[6.4,] 
 		 6: 
 		 7: def_%cl_2_19 
-		 8: def_%cl_2_20 %self[6.4,6.5,2.0,] 
+		 8: GETFIELD %self->user def_%cl_2_20 %self[6.4,6.5,2.0,] 
 		 9: %self->new_user_message_path def_%cl_2_21 %self[6.4,6.5,2.0,] %cl_2_20[6.8,] 
 		 10: %self->link_to def_%cl_2_22 %self[6.4,6.5,6.9,2.0,] %cl_2_19[6.7,] %cl_2_21[6.9,] 
 		 11: RETURN %cl_2_22[6.10,] %self[6.4,6.5,6.9,6.10,2.0,] 
@@ -708,7 +708,7 @@ BB 6
 CLOSURE END
 		 3: 
 		 4: 
-		 5: def_%v_35 %self[8.1,7.3,6.10,5.1,5.8,2.0,2.11,] 
+		 5: GETFIELD %self->message_thread def_%v_35 %self[8.1,5.1,2.0,] 
 		 6: BRANCH %v_35[8.5,] 
 BB 9
 	outgoing: 11 
@@ -716,19 +716,19 @@ BB 9
 	instructions:
 		 0: 
 		 1: (I18n) def_%v_36 
-		 2: def_%v_37 %self[7.3,6.10,5.1,5.8,2.0,2.11,] 
+		 2: GETFIELD %self->message_thread def_%v_37 %self[5.1,2.0,] 
 		 3: %v_37->parent_message def_%v_38 %v_37[9.2,] 
 		 4: %v_38->created_at def_%v_39 %v_38[9.3,] 
 		 5: COPY def_%v_40 
 		 6: %v_36->l def_%v_41 %v_36[9.1,] %v_39[9.4,] %v_40[9.5,] 
 		 7: %self->h def_%v_42 %self[7.3,6.10,5.1,5.8,2.0,2.11,] %v_41[9.6,] 
 		 8: 
-		 9: def_%v_43 %self[9.7,7.3,6.10,5.1,5.8,2.0,2.11,] 
+		 9: GETFIELD %self->message_thread def_%v_43 %self[9.7,5.1,2.0,] 
 		 10: %v_43->parent_message def_%v_44 %v_43[9.9,] 
 		 11: %v_44->body def_%v_45 %v_44[9.10,] 
 		 12: %self->auto_link def_%v_46 %self[9.7,7.3,6.10,5.1,5.8,2.0,2.11,] %v_45[9.11,] 
 		 13: 
-		 14: def_%v_47 %self[9.7,9.12,7.3,6.10,5.1,5.8,2.0,2.11,] 
+		 14: GETFIELD %self->message_thread def_%v_47 %self[9.7,9.12,5.1,2.0,] 
 		 15: %v_47->parent_message def_%v_48 %v_47[9.14,] 
 		 16: %v_48->children def_%v_49 %v_48[9.15,] 
 		 17: COPY def_children %v_49[9.16,] 
@@ -784,13 +784,13 @@ BB 10
 	instructions:
 		 0: 
 		 1: (I18n) def_%v_51 
-		 2: def_%v_52 %self[7.3,6.10,5.1,5.8,2.0,2.11,] 
+		 2: GETFIELD %self->message def_%v_52 %self[2.0,2.11,] 
 		 3: %v_52->created_at def_%v_53 %v_52[10.2,] 
 		 4: COPY def_%v_54 
 		 5: %v_51->l def_%v_55 %v_51[10.1,] %v_53[10.3,] %v_54[10.4,] 
 		 6: %self->h def_%v_56 %self[7.3,6.10,5.1,5.8,2.0,2.11,] %v_55[10.5,] 
 		 7: 
-		 8: def_%v_57 %self[10.6,7.3,6.10,5.1,5.8,2.0,2.11,] 
+		 8: GETFIELD %self->message def_%v_57 %self[10.6,2.0,2.11,] 
 		 9: %v_57->body def_%v_58 %v_57[10.8,] 
 		 10: %self->auto_link def_%v_59 %self[10.6,7.3,6.10,5.1,5.8,2.0,2.11,] %v_58[10.9,] 
 		 11: COPY def_%v_50 %v_59[10.10,] 
@@ -800,15 +800,15 @@ BB 11
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_60 %self[7.3,6.10,5.1,5.8,2.0,2.11,] 
+		 2: GETFIELD %self->reply def_%v_60 %self[5.8,2.0,] 
 		 3: BRANCH %v_60[11.2,] 
 BB 12
 	outgoing: 15 
 	datadep: 
 	instructions:
 		 0: def_%v_61 
-		 1: def_%v_62 %self[7.3,6.10,5.1,5.8,2.0,2.11,] 
-		 2: def_%v_63 %self[7.3,6.10,5.1,5.8,2.0,2.11,] 
+		 1: GETFIELD %self->user def_%v_62 %self[2.0,] 
+		 2: GETFIELD %self->message def_%v_63 %self[2.0,2.11,] 
 		 3: COPY def_%v_64 %v_63[12.2,] 
 		 4: %self->new_user_message_path def_%v_65 %self[7.3,6.10,5.1,5.8,2.0,2.11,] %v_62[12.1,] %v_64[12.3,] 
 		 5: COPY def_%v_66 
@@ -931,7 +931,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%cl_5_14 %self[2.0,] 
+		 2: GETFIELD %self->reply def_%cl_5_14 %self[2.0,] 
 		 3: BRANCH %cl_5_14[6.2,] 
 BB 7
 	outgoing: 9 10 
@@ -1040,13 +1040,13 @@ BB 5
 	instructions:
 		 0: 
 		 1: (Message) def_%v_12 
-		 2: def_%v_13 %self[2.0,] 
+		 2: GETFIELD %self->user def_%v_13 %self[2.0,] 
 		 3: %self->params def_%v_14 %self[2.0,] 
 		 4: %v_12->new_reply def_%v_15 %v_12[5.1,] %v_13[5.2,] message_thread[3.10,] %v_14[5.3,] 
-		 5: ATTRASSIGN %self->@message %self[5.3,2.0,] %v_15[5.4,] 
+		 5: ATTRASSIGN %self->message %v_15[5.4,] 
 		 6: 
 		 7: def_%v_16 
-		 8: ATTRASSIGN %self->@page_title %self[5.3,5.5,2.0,] %v_16[5.7,] 
+		 8: ATTRASSIGN %self->page_title %v_16[5.7,] 
 		 9: 
 		 10: %self->ruby_code_from_view def_%v_17 %self[5.3,5.5,5.8,2.0,] 
 		 11: %v_17->ruby_code_from_view def_%v_18 %v_17[5.10,] %self[5.3,5.5,5.8,5.10,2.0,] 
@@ -1090,12 +1090,12 @@ BB 3
 		 0: 
 		 1: def_%cl_2_3 
 		 2: 
-		 3: def_%cl_2_4 %self[2.0,] 
+		 3: GETFIELD %self->user def_%cl_2_4 %self[2.0,] 
 		 4: %self->user_messages_path def_%cl_2_5 %self[2.0,] %cl_2_4[3.3,] 
 		 5: 
 		 6: def_%cl_2_6 
 		 7: 
-		 8: def_%cl_2_7 %self[3.4,2.0,] 
+		 8: GETFIELD %self->user def_%cl_2_7 %self[3.4,2.0,] 
 		 9: %cl_2_7->unread_messages? def_%cl_2_8 %cl_2_7[3.8,] 
 		 10: BRANCH %cl_2_8[3.9,] 
 BB 4
@@ -1103,7 +1103,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_9 %self[2.0,] 
+		 1: GETFIELD %self->user def_%cl_2_9 %self[2.0,] 
 		 2: %cl_2_9->unread_message_count def_%cl_2_10 %cl_2_9[4.1,] 
 		 3: def_%cl_2_11 %cl_2_10[4.2,] 
 		 4: 
@@ -1121,13 +1121,13 @@ BB 6
 	instructions:
 		 0: 
 		 1: def_%cl_2_14 
-		 2: def_%cl_2_15 %self[2.0,] 
+		 2: GETFIELD %self->user def_%cl_2_15 %self[2.0,] 
 		 3: COPY def_%cl_2_16 
 		 4: %self->user_messages_path def_%cl_2_17 %self[2.0,] %cl_2_15[6.2,] %cl_2_16[6.3,] 
 		 5: %self->link_to def_%cl_2_18 %self[6.4,2.0,] %cl_2_14[6.1,] %cl_2_17[6.4,] 
 		 6: 
 		 7: def_%cl_2_19 
-		 8: def_%cl_2_20 %self[6.4,6.5,2.0,] 
+		 8: GETFIELD %self->user def_%cl_2_20 %self[6.4,6.5,2.0,] 
 		 9: %self->new_user_message_path def_%cl_2_21 %self[6.4,6.5,2.0,] %cl_2_20[6.8,] 
 		 10: %self->link_to def_%cl_2_22 %self[6.4,6.5,6.9,2.0,] %cl_2_19[6.7,] %cl_2_21[6.9,] 
 		 11: RETURN %cl_2_22[6.10,] %self[6.4,6.5,6.9,6.10,2.0,] 
@@ -1273,7 +1273,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%cl_4_14 %self[2.0,] 
+		 2: GETFIELD %self->reply def_%cl_4_14 %self[2.0,] 
 		 3: BRANCH %cl_4_14[6.2,] 
 BB 7
 	outgoing: 9 10 
@@ -1363,9 +1363,9 @@ BB 3
 		 1: (Message) def_%v_8 
 		 2: %self->message_params def_%v_9 %self[2.0,] 
 		 3: %v_8->new def_%v_10 %v_8[3.1,] %v_9[3.2,] 
-		 4: ATTRASSIGN %self->@message %self[3.2,2.0,] %v_10[3.3,] 
+		 4: ATTRASSIGN %self->message %v_10[3.3,] 
 		 5: 
-		 6: def_%v_11 %self[3.2,3.4,2.0,] 
+		 6: GETFIELD %self->message def_%v_11 %self[3.2,3.4,2.0,] 
 		 7: %v_11->valid? def_%v_12 %v_11[3.6,] 
 		 8: 
 		 9: COPY def_%v_13 
@@ -1389,9 +1389,9 @@ BB 7
 		 1: (Message) def_%v_15 
 		 2: %self->message_params def_%v_16 %self[2.0,] 
 		 3: %v_15->new def_%v_17 %v_15[7.1,] %v_16[7.2,] 
-		 4: ATTRASSIGN %self->@message %self[7.2,2.0,] %v_17[7.3,] 
+		 4: ATTRASSIGN %self->message %v_17[7.3,] 
 		 5: 
-		 6: def_%v_18 %self[7.2,7.4,2.0,] 
+		 6: GETFIELD %self->message def_%v_18 %self[7.2,7.4,2.0,] 
 		 7: (User) def_%v_19 
 		 8: COPY def_%v_20 
 		 9: %self->params def_%v_21 %self[7.2,7.4,2.0,] 
@@ -1401,13 +1401,13 @@ BB 7
 		 13: %v_24->downcase def_%v_25 %v_24[7.12,] 
 		 14: %v_19->where def_%v_26 %v_19[7.7,] %v_20[7.8,] %v_25[7.13,] 
 		 15: %v_26->first def_%v_27 %v_26[7.14,] 
-		 16: ATTRASSIGN %v_18->recipient %v_18[7.6,] %v_27[7.15,] 
+		 16: ATTRASSIGN %v_18->recipient %v_27[7.15,] 
 		 17: 
-		 18: def_%v_28 %self[7.2,7.4,7.9,2.0,] 
-		 19: def_%v_29 %self[7.2,7.4,7.9,2.0,] 
-		 20: ATTRASSIGN %v_28->sender %v_28[7.18,] %v_29[7.19,] 
+		 18: GETFIELD %self->message def_%v_28 %self[7.2,7.4,7.9,2.0,] 
+		 19: GETFIELD %self->user def_%v_29 %self[7.2,7.9,2.0,] 
+		 20: ATTRASSIGN %v_28->sender %v_29[7.19,] 
 		 21: 
-		 22: def_%v_30 %self[7.2,7.4,7.9,2.0,] 
+		 22: GETFIELD %self->message def_%v_30 %self[7.2,7.4,7.9,2.0,] 
 		 23: %v_30->valid? def_%v_31 %v_30[7.22,] 
 		 24: BRANCH %v_31[7.23,] 
 BB 8
@@ -1415,7 +1415,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_32 %self[7.4,2.0,] 
+		 1: GETFIELD %self->message def_%v_32 %self[7.4,2.0,] 
 		 2: %v_32->save! def_%v_33 %v_32[8.1,] 
 		 3: 
 BB 9
@@ -1443,9 +1443,9 @@ BB 13
 		 0: 
 		 1: %self->flash def_%v_36 %self[7.4,2.0,] 
 		 2: def_%v_37 
-		 3: %v_36[13.1,] %v_37[13.2,] 
+		 3: ATTRASSIGN %v_36->[] %v_37[13.2,] 
 		 4: 
-		 5: def_%v_38 %self[13.1,7.4,2.0,] 
+		 5: GETFIELD %self->user def_%v_38 %self[13.1,2.0,] 
 		 6: %self->user_messages_path def_%v_39 %self[13.1,7.4,2.0,] %v_38[13.5,] 
 		 7: %self->redirect_to def_%v_40 %self[13.1,13.6,7.4,2.0,] %v_39[13.6,] 
 		 8: BRANCH %v_40[13.7,] 
@@ -1519,13 +1519,13 @@ BB 3
 		 0: 
 		 1: (Message) def_%cl_1_3 
 		 2: COPY def_%cl_1_4 
-		 3: def_%cl_1_5 %self[2.0,] 
-		 4: def_%cl_1_6 %self[2.0,] 
+		 3: GETFIELD %self->user def_%cl_1_5 %self[2.0,] 
+		 4: GETFIELD %self->user def_%cl_1_6 %self[2.0,] 
 		 5: %cl_1_3->where def_%cl_1_7 %cl_1_3[3.1,] %cl_1_4[3.2,] id[2.2,] %cl_1_5[3.3,] %cl_1_6[3.4,] 
 		 6: %cl_1_7->first def_%cl_1_8 %cl_1_7[3.5,] 
-		 7: ATTRASSIGN %self->@message %self[2.0,] %cl_1_8[3.6,] 
+		 7: ATTRASSIGN %self->message %cl_1_8[3.6,] 
 		 8: 
-		 9: def_%cl_1_9 %self[3.7,2.0,] 
+		 9: GETFIELD %self->message def_%cl_1_9 %self[3.7,2.0,] 
 		 10: %cl_1_9->nil? def_%cl_1_10 %cl_1_9[3.9,] 
 		 11: BRANCH %cl_1_10[3.10,] 
 BB 4
@@ -1538,8 +1538,8 @@ BB 5
 	outgoing: 7 9 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_12 %self[3.7,2.0,] 
-		 1: def_%cl_1_13 %self[3.7,2.0,] 
+		 0: GETFIELD %self->message def_%cl_1_12 %self[3.7,2.0,] 
+		 1: GETFIELD %self->user def_%cl_1_13 %self[2.0,] 
 		 2: %cl_1_12->mark_deleted def_%cl_1_14 %cl_1_12[5.0,] %cl_1_13[5.1,] 
 		 3: RETURN %cl_1_14[5.2,] %self[3.7,2.0,] 
 BB 7
@@ -1557,7 +1557,7 @@ CLOSURE END
 		 4: 
 		 5: %self->flash def_%v_10 %self[4.1,2.0,] 
 		 6: def_%v_11 
-		 7: %v_10[4.5,] %v_11[4.6,] 
+		 7: ATTRASSIGN %v_10->[] %v_11[4.6,] 
 		 8: 
 BB 5
 	outgoing: 6 
@@ -1569,7 +1569,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_12 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_12 %self[2.0,] 
 		 2: %self->user_messages_path def_%v_13 %self[2.0,] %v_12[6.1,] 
 		 3: %self->redirect_to def_%v_14 %self[6.2,2.0,] %v_13[6.2,] 
 		 4: RETURN %v_14[6.3,] %self[6.2,6.3,2.0,] 
@@ -1637,7 +1637,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (MessageThread) def_%cl_1_3 
-		 2: def_%cl_1_4 %self[2.0,] 
+		 2: GETFIELD %self->user def_%cl_1_4 %self[2.0,] 
 		 3: %cl_1_4->id def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: %cl_1_3->find_by_id_and_recipient_id def_%cl_1_6 %cl_1_3[3.1,] id[2.2,] %cl_1_5[3.3,] 
 		 5: COPY def_message_thread %cl_1_6[3.4,] 
@@ -1674,7 +1674,7 @@ CLOSURE END
 		 4: 
 		 5: %self->flash def_%v_10 %self[4.1,2.0,] 
 		 6: def_%v_11 
-		 7: %v_10[4.5,] %v_11[4.6,] 
+		 7: ATTRASSIGN %v_10->[] %v_11[4.6,] 
 		 8: 
 BB 5
 	outgoing: 6 
@@ -1686,7 +1686,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_12 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_12 %self[2.0,] 
 		 2: %self->user_messages_path def_%v_13 %self[2.0,] %v_12[6.1,] 
 		 3: %self->redirect_to def_%v_14 %self[6.2,2.0,] %v_13[6.2,] 
 		 4: RETURN %v_14[6.3,] %self[6.2,6.3,2.0,] 
@@ -1719,7 +1719,7 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@user %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->user %v_6[2.9,] 
 		 11: RETURN %v_6[2.9,] %self[2.0,2.7,2.10,] 
 BB 3
 	outgoing: 
@@ -1758,13 +1758,13 @@ BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_5 %self[2.0,] 
 		 1: BRANCH %v_5[5.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_6 %self[2.0,] 
 		 1: %self->current_user def_%v_7 %self[2.0,] 
 		 2: %v_6->eql? def_%v_8 %v_6[6.0,] %v_7[6.1,] 
 		 3: COPY def_%v_5 %v_8[6.2,] 
@@ -1809,7 +1809,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_14 %self[2.0,] 
+		 1: GETFIELD %self->user def_%v_14 %self[2.0,] 
 		 2: RETURN %v_14[14.1,] %self[2.0,] 
 BB 16
 	outgoing: 

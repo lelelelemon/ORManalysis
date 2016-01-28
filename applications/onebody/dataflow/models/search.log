@@ -111,7 +111,7 @@ BB 9
 		 0: 
 		 1: (Person) def_%v_9 
 		 2: %v_9->eager_load def_%v_10 %v_9[9.1,] 
-		 3: ATTRASSIGN %self->@scope %self[2.0,] %v_10[9.2,] 
+		 3: ATTRASSIGN %self->scope %v_10[9.2,] 
 		 4: 
 BB 10
 	outgoing: 11 17 
@@ -120,13 +120,13 @@ BB 10
 		 0: 
 		 1: (Person) def_%v_11 
 		 2: %v_11->joins def_%v_12 %v_11[10.1,] 
-		 3: ATTRASSIGN %self->@scope %self[2.0,] %v_12[10.2,] 
+		 3: ATTRASSIGN %self->scope %v_12[10.2,] 
 		 4: COPY def_%v_10 %v_12[10.2,] 
 BB 11
 	outgoing: 19 
 	datadep: 
 	instructions:
-		 0: RETURN %v_10[10.4,9.2,] %self[2.0,] 
+		 0: RETURN %v_10[10.4,9.2,] %self[10.3,9.3,2.0,] 
 BB 12
 	outgoing: 13 14 17 
 	datadep: 
@@ -141,7 +141,7 @@ BB 13
 		 0: 
 		 1: (Family) def_%v_14 
 		 2: %v_14->includes def_%v_15 %v_14[13.1,] 
-		 3: ATTRASSIGN %self->@scope %self[2.0,] %v_15[13.2,] 
+		 3: ATTRASSIGN %self->scope %v_15[13.2,] 
 		 4: 
 BB 14
 	outgoing: 15 
@@ -152,14 +152,14 @@ BB 15
 	outgoing: 19 
 	datadep: 
 	instructions:
-		 0: RETURN %v_15[14.0,13.2,] %self[2.0,] 
+		 0: RETURN %v_15[14.0,13.2,] %self[13.3,2.0,] 
 BB 17
 	outgoing: 19 
 	datadep: 
 	instructions:
 		 0: def_%v_16 
 		 1: def_%v_17 %v_16[17.0,] 
-		 2: RETURN %v_17[17.1,] %self[2.0,] 
+		 2: RETURN %v_17[17.1,] %self[9.3,10.3,13.3,2.0,] 
 BB 19
 	outgoing: 
 	datadep: 
@@ -182,7 +182,7 @@ BB 2
 		 5: 
 		 6: %self->execute! def_%v_3 %self[2.0,] 
 		 7: 
-		 8: def_%v_4 %self[2.0,2.6,] 
+		 8: GETFIELD %self->scope def_%v_4 %self[2.0,2.6,] 
 		 9: RETURN %v_4[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -206,7 +206,7 @@ BB 2
 		 5: 
 		 6: %self->execute! def_%v_3 %self[2.0,] 
 		 7: 
-		 8: def_%v_4 %self[2.0,2.6,] 
+		 8: GETFIELD %self->scope def_%v_4 %self[2.0,2.6,] 
 		 9: %v_4->count def_%v_5 %v_4[2.8,] 
 		 10: RETURN %v_5[2.9,] %self[2.0,2.6,] 
 BB 3
@@ -230,7 +230,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_name 
 		 6: 
-		 7: ATTRASSIGN %self->name %self[2.0,] name[2.5,] 
+		 7: ATTRASSIGN %self->name name[2.5,] 
 		 8: RETURN name[2.5,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -269,7 +269,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_3 %self[2.0,] 
+		 1: GETFIELD %self->birthday def_%v_3 %self[2.0,] 
 		 2: %v_3->try def_%v_4 %v_3[5.1,] key[3.0,2.5,] 
 		 3: %v_4->to_i def_%v_5 %v_4[5.2,] 
 		 4: RETURN %v_5[5.3,] %self[2.0,] 
@@ -278,7 +278,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_6 %self[2.0,] 
+		 1: GETFIELD %self->birthday def_%v_6 %self[2.0,] 
 		 2: RETURN %v_6[6.1,] %self[2.0,] 
 BB 8
 	outgoing: 
@@ -317,7 +317,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_3 %self[2.0,] 
+		 1: GETFIELD %self->anniversary def_%v_3 %self[2.0,] 
 		 2: %v_3->try def_%v_4 %v_3[5.1,] key[3.0,2.5,] 
 		 3: %v_4->to_i def_%v_5 %v_4[5.2,] 
 		 4: RETURN %v_5[5.3,] %self[2.0,] 
@@ -326,7 +326,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_6 %self[2.0,] 
+		 1: GETFIELD %self->anniversary def_%v_6 %self[2.0,] 
 		 2: RETURN %v_6[6.1,] %self[2.0,] 
 BB 8
 	outgoing: 
@@ -365,7 +365,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_3 %self[2.0,] 
+		 1: GETFIELD %self->address def_%v_3 %self[2.0,] 
 		 2: %v_3->try def_%v_4 %v_3[5.1,] key[3.0,2.5,] 
 		 3: RETURN %v_4[5.2,] %self[2.0,] 
 BB 6
@@ -373,7 +373,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_5 %self[2.0,] 
+		 1: GETFIELD %self->address def_%v_5 %self[2.0,] 
 		 2: RETURN %v_5[6.1,] %self[2.0,] 
 BB 8
 	outgoing: 
@@ -395,7 +395,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->executed def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
@@ -439,8 +439,8 @@ BB 4
 		 30: 
 		 31: %self->family_barcode_id! def_%v_20 %self[4.1,4.3,4.5,4.7,4.9,4.11,4.13,4.15,4.17,4.19,4.21,4.23,4.25,4.27,4.29,2.0,] 
 		 32: 
-		 33: ATTRASSIGN %self->@executed %self[4.1,4.3,4.5,4.7,4.9,4.11,4.13,4.15,4.17,4.19,4.21,4.23,4.25,4.27,4.29,4.31,2.0,] 
-		 34: RETURN %self[4.1,4.3,4.5,4.7,4.9,4.11,4.13,4.15,4.17,4.19,4.21,4.23,4.25,4.27,4.29,4.31,2.0,] 
+		 33: ATTRASSIGN %self->executed 
+		 34: RETURN %self[4.1,4.3,4.5,4.7,4.9,4.11,4.13,4.15,4.17,4.19,4.21,4.23,4.25,4.27,4.29,4.31,4.33,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -462,11 +462,11 @@ BB 2
 		 4: 
 		 5: def_args 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->scope def_%v_3 %self[2.0,] 
 		 8: def_%v_4 args[2.5,] 
 		 9: %v_3->where def_%v_5 %v_3[2.7,] %v_4[2.8,] 
-		 10: ATTRASSIGN %self->@scope %self[2.0,] %v_5[2.9,] 
-		 11: RETURN %v_5[2.9,] %self[2.0,] 
+		 10: ATTRASSIGN %self->scope %v_5[2.9,] 
+		 11: RETURN %v_5[2.9,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -488,11 +488,11 @@ BB 2
 		 4: 
 		 5: def_args 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->scope def_%v_3 %self[2.0,] 
 		 8: def_%v_4 args[2.5,] 
 		 9: %v_3->order def_%v_5 %v_3[2.7,] %v_4[2.8,] 
-		 10: ATTRASSIGN %self->@scope %self[2.0,] %v_5[2.9,] 
-		 11: RETURN %v_5[2.9,] %self[2.0,] 
+		 10: ATTRASSIGN %self->scope %v_5[2.9,] 
+		 11: RETURN %v_5[2.9,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -917,7 +917,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: COPY def_%v_5 
-		 1: ATTRASSIGN %self->birthday def_%v_4 %self[2.0,] %v_5[3.0,] 
+		 1: %self->birthday= def_%v_4 %v_5[3.0,] 
 		 2: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -992,7 +992,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: COPY def_%v_5 
-		 1: ATTRASSIGN %self->anniversary def_%v_4 %self[2.0,] %v_5[3.0,] 
+		 1: %self->anniversary= def_%v_4 %v_5[3.0,] 
 		 2: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -1067,7 +1067,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: COPY def_%v_5 
-		 1: ATTRASSIGN %self->address def_%v_4 %self[2.0,] %v_5[3.0,] 
+		 1: %self->address= def_%v_4 %v_5[3.0,] 
 		 2: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -1434,7 +1434,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->scope def_%v_3 %self[2.0,] 
 		 7: %v_3->connection def_%v_4 %v_3[2.6,] 
 		 8: %v_4->adapter_name def_%v_5 %v_4[2.7,] 
 		 9: COPY def_%v_6 

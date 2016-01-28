@@ -15,7 +15,7 @@ BB 2
 		 5: 
 		 6: (ShareLink) def_%v_3 
 		 7: %v_3->active_share_links def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@share_links %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->share_links %v_4[2.7,] 
 		 9: 
 		 10: %self->ruby_code_from_view def_%v_5 %self[2.0,2.8,] 
 		 11: %v_5->ruby_code_from_view def_%v_6 %v_5[2.10,] %self[2.0,2.8,2.10,] 
@@ -54,7 +54,7 @@ BB 3
 		 14: COPY def_%cl_1_11 
 		 15: %self->t def_%cl_1_12 %self[3.1,3.2,3.4,3.7,3.9,3.12,2.0,] %cl_1_11[3.14,] 
 		 16: 
-		 17: def_%cl_1_13 %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] 
+		 17: GETFIELD %self->share_links def_%cl_1_13 %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] 
 		 18: %cl_1_13->each def_%cl_1_14 %cl_1_13[3.17,] %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] 
 CLOSURE BEGIN: %self[3.1,3.2,3.4,3.7,3.9,3.12,3.15,2.0,] share_link[] 
 BB 1
@@ -171,7 +171,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->file def_%v_3 %self[2.0,] 
 		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -184,10 +184,10 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self[2.0,] 
+		 0: GETFIELD %self->file def_%v_6 %self[2.0,] 
 		 1: %v_6->attachment def_%v_7 %v_6[4.0,] 
 		 2: %v_7->path def_%v_8 %v_7[4.1,] 
-		 3: def_%v_9 %self[2.0,] 
+		 3: GETFIELD %self->file def_%v_9 %self[2.0,] 
 		 4: %v_9->attachment_file_name def_%v_10 %v_9[4.3,] 
 		 5: COPY def_%v_11 %v_10[4.4,] 
 		 6: %self->send_file def_%v_12 %self[2.0,] %v_8[4.2,] %v_11[4.5,] 
@@ -212,10 +212,10 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->file def_%v_3 %self[2.0,] 
 		 7: %v_3->share_links def_%v_4 %v_3[2.6,] 
 		 8: %v_4->build def_%v_5 %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@share_link %self[2.0,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->share_link %v_5[2.8,] 
 		 10: 
 		 11: %self->ruby_code_from_view def_%v_6 %self[2.0,2.9,] 
 		 12: %v_6->ruby_code_from_view def_%v_7 %v_6[2.11,] %self[2.0,2.9,2.11,] 
@@ -243,8 +243,8 @@ BB 3
 		 3: 
 		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
-		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
+		 6: GETFIELD %self->file def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
+		 7: GETFIELD %self->share_link def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
 		 8: COPY def_%cl_1_8 %cl_1_6[3.6,] %cl_1_7[3.7,] 
 		 9: COPY def_%cl_1_9 
 		 10: COPY def_%cl_1_10 %cl_1_9[3.9,] 
@@ -275,14 +275,14 @@ BB 3
 		 4: 
 		 5: %self->t def_%cl_2_6 %self[3.1,2.0,] 
 		 6: 
-		 7: def_%cl_2_7 %self[3.1,3.5,2.0,] 
+		 7: GETFIELD %self->file def_%cl_2_7 %self[3.1,3.5,2.0,] 
 		 8: %cl_2_7->extension def_%cl_2_8 %cl_2_7[3.7,] 
 		 9: %self->file_icon def_%cl_2_9 %self[3.1,3.5,2.0,] %cl_2_8[3.8,] 
 		 10: %self->image_tag def_%cl_2_10 %self[3.1,3.5,3.9,2.0,] %cl_2_9[3.9,] 
 		 11: 
-		 12: def_%cl_2_11 %self[3.1,3.5,3.9,3.10,2.0,] 
+		 12: GETFIELD %self->file def_%cl_2_11 %self[3.1,3.5,3.9,3.10,2.0,] 
 		 13: %cl_2_11->attachment_file_name def_%cl_2_12 %cl_2_11[3.12,] 
-		 14: def_%cl_2_13 %self[3.1,3.5,3.9,3.10,2.0,] 
+		 14: GETFIELD %self->folder def_%cl_2_13 %self[3.1,3.5,3.9,3.10,2.0,] 
 		 15: %self->link_to def_%cl_2_14 %self[3.1,3.5,3.9,3.10,2.0,] %cl_2_12[3.13,] %cl_2_13[3.14,] 
 		 16: 
 		 17: %self->t def_%cl_2_15 %self[3.1,3.5,3.9,3.10,3.15,2.0,] 
@@ -296,7 +296,7 @@ BB 3
 		 25: 
 		 26: %self->t def_%cl_2_21 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,2.0,] 
 		 27: 
-		 28: def_%cl_2_22 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,3.26,2.0,] 
+		 28: GETFIELD %self->share_link def_%cl_2_22 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,3.26,2.0,] 
 		 29: %cl_2_22->emails def_%cl_2_23 %cl_2_22[3.28,] 
 		 30: %cl_2_23->nil? def_%cl_2_24 %cl_2_23[3.29,] 
 		 31: BRANCH %cl_2_24[3.30,] 
@@ -310,7 +310,7 @@ BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_26 %self[2.0,] 
+		 0: GETFIELD %self->share_link def_%cl_2_26 %self[2.0,] 
 		 1: %cl_2_26->emails def_%cl_2_27 %cl_2_26[5.0,] 
 		 2: %cl_2_27->length def_%cl_2_28 %cl_2_27[5.1,] 
 		 3: COPY def_%cl_2_25 %cl_2_28[5.2,] 
@@ -392,7 +392,7 @@ BB 6
 		 71: f->submit def_%cl_2_94 f[6.2,6.8,6.11,6.68,2.2,] %cl_2_93[6.70,] 
 		 72: 
 		 73: %self->t def_%cl_2_95 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,2.0,] 
-		 74: def_%cl_2_96 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] 
+		 74: GETFIELD %self->folder def_%cl_2_96 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] 
 		 75: %self->link_to def_%cl_2_97 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] %cl_2_95[6.73,] %cl_2_96[6.74,] 
 		 76: RETURN %cl_2_97[6.75,] %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,6.75,2.0,] 
 BB 7
@@ -441,18 +441,18 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->file def_%v_3 %self[2.0,] 
 		 7: %v_3->share_links def_%v_4 %v_3[2.6,] 
 		 8: %self->permitted_params def_%v_5 %self[2.0,] 
 		 9: %v_5->share_link def_%v_6 %v_5[2.8,] 
 		 10: %v_4->build def_%v_7 %v_4[2.7,] %v_6[2.9,] 
-		 11: ATTRASSIGN %self->@share_link %self[2.0,2.8,] %v_7[2.10,] 
+		 11: ATTRASSIGN %self->share_link %v_7[2.10,] 
 		 12: 
-		 13: def_%v_8 %self[2.0,2.8,2.11,] 
+		 13: GETFIELD %self->share_link def_%v_8 %self[2.0,2.8,2.11,] 
 		 14: %self->current_user def_%v_9 %self[2.0,2.8,2.11,] 
-		 15: ATTRASSIGN %v_8->user %v_8[2.13,] %v_9[2.14,] 
+		 15: ATTRASSIGN %v_8->user %v_9[2.14,] 
 		 16: 
-		 17: def_%v_10 %self[2.0,2.8,2.11,2.14,] 
+		 17: GETFIELD %self->share_link def_%v_10 %self[2.0,2.8,2.11,2.14,] 
 		 18: %v_10->save def_%v_11 %v_10[2.17,] 
 		 19: BRANCH %v_11[2.18,] 
 BB 3
@@ -461,11 +461,11 @@ BB 3
 	instructions:
 		 0: 
 		 1: (UserMailer) def_%v_12 
-		 2: def_%v_13 %self[2.0,2.11,] 
+		 2: GETFIELD %self->share_link def_%v_13 %self[2.0,2.11,] 
 		 3: %v_12->share_link_email def_%v_14 %v_12[3.1,] %v_13[3.2,] 
 		 4: %v_14->deliver_now def_%v_15 %v_14[3.3,] 
 		 5: 
-		 6: def_%v_16 %self[2.0,2.11,] 
+		 6: GETFIELD %self->folder def_%v_16 %self[2.0,] 
 		 7: %self->t def_%v_17 %self[2.0,2.11,] 
 		 8: COPY def_%v_18 %v_17[3.7,] 
 		 9: %self->redirect_to def_%v_19 %self[3.7,2.0,2.11,] %v_16[3.6,] %v_18[3.8,] 
@@ -501,8 +501,8 @@ BB 3
 		 3: 
 		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
-		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
+		 6: GETFIELD %self->file def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
+		 7: GETFIELD %self->share_link def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
 		 8: COPY def_%cl_1_8 %cl_1_6[3.6,] %cl_1_7[3.7,] 
 		 9: COPY def_%cl_1_9 
 		 10: COPY def_%cl_1_10 %cl_1_9[3.9,] 
@@ -533,14 +533,14 @@ BB 3
 		 4: 
 		 5: %self->t def_%cl_2_6 %self[3.1,2.0,] 
 		 6: 
-		 7: def_%cl_2_7 %self[3.1,3.5,2.0,] 
+		 7: GETFIELD %self->file def_%cl_2_7 %self[3.1,3.5,2.0,] 
 		 8: %cl_2_7->extension def_%cl_2_8 %cl_2_7[3.7,] 
 		 9: %self->file_icon def_%cl_2_9 %self[3.1,3.5,2.0,] %cl_2_8[3.8,] 
 		 10: %self->image_tag def_%cl_2_10 %self[3.1,3.5,3.9,2.0,] %cl_2_9[3.9,] 
 		 11: 
-		 12: def_%cl_2_11 %self[3.1,3.5,3.9,3.10,2.0,] 
+		 12: GETFIELD %self->file def_%cl_2_11 %self[3.1,3.5,3.9,3.10,2.0,] 
 		 13: %cl_2_11->attachment_file_name def_%cl_2_12 %cl_2_11[3.12,] 
-		 14: def_%cl_2_13 %self[3.1,3.5,3.9,3.10,2.0,] 
+		 14: GETFIELD %self->folder def_%cl_2_13 %self[3.1,3.5,3.9,3.10,2.0,] 
 		 15: %self->link_to def_%cl_2_14 %self[3.1,3.5,3.9,3.10,2.0,] %cl_2_12[3.13,] %cl_2_13[3.14,] 
 		 16: 
 		 17: %self->t def_%cl_2_15 %self[3.1,3.5,3.9,3.10,3.15,2.0,] 
@@ -554,7 +554,7 @@ BB 3
 		 25: 
 		 26: %self->t def_%cl_2_21 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,2.0,] 
 		 27: 
-		 28: def_%cl_2_22 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,3.26,2.0,] 
+		 28: GETFIELD %self->share_link def_%cl_2_22 %self[3.1,3.5,3.9,3.10,3.15,3.17,3.20,3.26,2.0,] 
 		 29: %cl_2_22->emails def_%cl_2_23 %cl_2_22[3.28,] 
 		 30: %cl_2_23->nil? def_%cl_2_24 %cl_2_23[3.29,] 
 		 31: BRANCH %cl_2_24[3.30,] 
@@ -568,7 +568,7 @@ BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_26 %self[2.0,] 
+		 0: GETFIELD %self->share_link def_%cl_2_26 %self[2.0,] 
 		 1: %cl_2_26->emails def_%cl_2_27 %cl_2_26[5.0,] 
 		 2: %cl_2_27->length def_%cl_2_28 %cl_2_27[5.1,] 
 		 3: COPY def_%cl_2_25 %cl_2_28[5.2,] 
@@ -650,7 +650,7 @@ BB 6
 		 71: f->submit def_%cl_2_94 f[6.2,6.8,6.11,6.68,2.2,] %cl_2_93[6.70,] 
 		 72: 
 		 73: %self->t def_%cl_2_95 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,2.0,] 
-		 74: def_%cl_2_96 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] 
+		 74: GETFIELD %self->folder def_%cl_2_96 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] 
 		 75: %self->link_to def_%cl_2_97 %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,2.0,] %cl_2_95[6.73,] %cl_2_96[6.74,] 
 		 76: RETURN %cl_2_97[6.75,] %self[6.1,6.4,6.10,6.13,6.18,6.23,6.28,6.33,6.38,6.43,6.48,6.53,6.58,6.67,6.70,6.73,6.75,2.0,] 
 BB 7
@@ -699,7 +699,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->share_link def_%v_3 %self[2.0,] 
 		 7: %v_3->destroy def_%v_4 %v_3[2.6,] 
 		 8: 
 		 9: %self->share_links_url def_%v_5 %self[2.0,] 
@@ -751,11 +751,11 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@file %self[2.0,] %v_9[4.4,3.3,] 
+		 0: ATTRASSIGN %self->file %v_9[4.4,3.3,] 
 		 1: 
-		 2: def_%v_14 %self[5.0,2.0,] 
+		 2: GETFIELD %self->file def_%v_14 %self[5.0,2.0,] 
 		 3: %v_14->folder def_%v_15 %v_14[5.2,] 
-		 4: ATTRASSIGN %self->@folder %self[5.0,2.0,] %v_15[5.3,] 
+		 4: ATTRASSIGN %self->folder %v_15[5.3,] 
 		 5: RETURN %v_15[5.3,] %self[5.0,5.4,2.0,] 
 BB 6
 	outgoing: 
@@ -787,7 +787,7 @@ BB 4
 		 3: %self->params def_%v_7 %self[2.0,] 
 		 4: def_%v_8 %v_7[4.3,] 
 		 5: %v_6->find def_%v_9 %v_6[4.2,] %v_8[4.4,] 
-		 6: ATTRASSIGN %self->@share_link %self[4.3,2.0,] %v_9[4.5,] 
+		 6: ATTRASSIGN %self->share_link %v_9[4.5,] 
 		 7: COPY def_%v_5 %v_9[4.5,] 
 		 8: %v_3[2.5,] 
 BB 5

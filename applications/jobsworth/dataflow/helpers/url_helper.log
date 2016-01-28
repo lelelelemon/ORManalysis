@@ -41,7 +41,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: COPY def_%v_7 
-		 1: def_%v_8 subdomain[4.0,2.5,] %v_7[6.0,] 
+		 1: def_%v_8 subdomain[4.0,] %v_7[6.0,] 
 		 2: COPY def_subdomain %v_8[6.1,] 
 		 3: COPY def_%v_6 %v_8[6.1,] 
 BB 7
@@ -53,7 +53,7 @@ BB 7
 		 2: %v_9->domain def_%v_10 %v_9[7.1,] 
 		 3: %self->request def_%v_11 %self[2.0,] 
 		 4: %v_11->port_string def_%v_12 %v_11[7.3,] 
-		 5: COPY def_%v_13 subdomain[6.2,4.0,2.5,] %v_10[7.2,] %v_12[7.4,] 
+		 5: COPY def_%v_13 subdomain[6.2,4.0,] %v_10[7.2,] %v_12[7.4,] 
 		 6: %v_13->join def_%v_14 %v_13[7.5,] 
 		 7: RETURN %v_14[7.6,] %self[7.3,2.0,] 
 BB 8
@@ -108,7 +108,7 @@ BB 7
 		 0: 
 		 1: options->delete def_%v_6 options[3.0,2.5,] 
 		 2: %self->with_subdomain def_%v_7 %self[2.0,] %v_6[7.1,] 
-		 3: options[7.1,3.0,2.5,] %v_7[7.2,] 
+		 3: ATTRASSIGN options->[] %v_7[7.2,] 
 		 4: 
 BB 8
 	outgoing: 9 
@@ -159,7 +159,7 @@ BB 4
 		 2: %v_6->subdomains def_%v_7 %v_6[4.1,] 
 		 3: def_%v_8 %v_7[4.2,] 
 		 4: %self->with_subdomain def_%v_9 %self[4.1,2.0,] %v_8[4.3,] 
-		 5: %v_5[4.0,] %v_9[4.4,] 
+		 5: ATTRASSIGN %v_5->[] %v_9[4.4,] 
 		 6: RETURN %v_9[4.4,] %self[4.1,4.4,2.0,] 
 BB 5
 	outgoing: 

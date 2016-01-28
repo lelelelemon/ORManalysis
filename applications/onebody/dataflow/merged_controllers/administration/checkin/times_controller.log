@@ -16,27 +16,27 @@ BB 2
 		 6: (CheckinTime) def_%v_3 
 		 7: %v_3->recurring def_%v_4 %v_3[2.6,] 
 		 8: %v_4->order def_%v_5 %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@recurring_times %self[2.0,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->recurring_times %v_5[2.8,] 
 		 10: 
 		 11: (CheckinTime) def_%v_6 
 		 12: %v_6->future_singles def_%v_7 %v_6[2.11,] 
 		 13: %v_7->order def_%v_8 %v_7[2.12,] 
-		 14: ATTRASSIGN %self->@single_times %self[2.0,] %v_8[2.13,] 
+		 14: ATTRASSIGN %self->single_times %v_8[2.13,] 
 		 15: 
 		 16: COPY def_%v_9 
-		 17: %self->t def_%v_10 %self[2.0,] %v_9[2.16,] 
-		 18: ATTRASSIGN %self->@title %self[2.0,2.17,] %v_10[2.17,] 
+		 17: %self->t def_%v_10 %self[2.0,2.9,2.14,] %v_9[2.16,] 
+		 18: ATTRASSIGN %self->title %v_10[2.17,] 
 		 19: 
 		 20: COPY def_%v_11 
-		 21: %self->t def_%v_12 %self[2.0,2.17,] %v_11[2.20,] 
+		 21: %self->t def_%v_12 %self[2.0,2.9,2.14,2.17,2.18,] %v_11[2.20,] 
 		 22: 
 		 23: COPY def_%v_13 
 		 24: COPY def_%v_14 
 		 25: COPY def_%v_15 
 		 26: COPY def_%v_16 %v_15[2.25,] 
 		 27: COPY def_%v_17 %v_14[2.24,] %v_16[2.26,] 
-		 28: %self->link_to def_%v_18 %self[2.0,2.17,2.21,] %v_13[2.23,] %v_17[2.27,] %self[2.0,2.17,2.21,] 
-CLOSURE BEGIN: %self[2.0,2.17,2.21,] 
+		 28: %self->link_to def_%v_18 %self[2.0,2.9,2.14,2.17,2.18,2.21,] %v_13[2.23,] %v_17[2.27,] %self[2.0,2.9,2.14,2.17,2.18,2.21,] 
+CLOSURE BEGIN: %self[2.0,2.9,2.14,2.17,2.18,2.21,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -73,15 +73,15 @@ BB 6
 	instructions:
 CLOSURE END
 		 29: 
-		 30: %self->administration_checkin_times_path def_%v_19 %self[2.0,2.17,2.21,2.28,] 
+		 30: %self->administration_checkin_times_path def_%v_19 %self[2.0,2.9,2.14,2.17,2.18,2.21,2.28,] 
 		 31: COPY def_%v_20 
 		 32: COPY def_%v_21 
 		 33: COPY def_%v_22 
 		 34: COPY def_%v_23 %v_20[2.31,] %v_21[2.32,] %v_22[2.33,] 
 		 35: COPY def_%v_24 
 		 36: COPY def_%v_25 %v_19[2.30,] %v_23[2.34,] %v_24[2.35,] 
-		 37: %self->form_for def_%v_26 %self[2.0,2.17,2.21,2.28,2.30,] %v_25[2.36,] %self[2.0,2.17,2.21,2.28,2.30,] 
-CLOSURE BEGIN: form[] %self[2.0,2.17,2.21,2.28,2.30,] 
+		 37: %self->form_for def_%v_26 %self[2.0,2.9,2.14,2.17,2.18,2.21,2.28,2.30,] %v_25[2.36,] %self[2.0,2.9,2.14,2.17,2.18,2.21,2.28,2.30,] 
+CLOSURE BEGIN: form[] %self[2.0,2.9,2.14,2.17,2.18,2.21,2.28,2.30,] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -158,7 +158,7 @@ BB 8
 	instructions:
 CLOSURE END
 		 38: 
-		 39: def_%v_27 %self[2.0,2.17,2.21,2.28,2.30,2.37,] 
+		 39: GETFIELD %self->recurring_times def_%v_27 %self[2.0,2.9,2.17,2.21,2.28,2.30,2.37,] 
 		 40: %v_27->any? def_%v_28 %v_27[2.39,] 
 		 41: BRANCH %v_28[2.40,] 
 BB 3
@@ -167,9 +167,9 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY def_%v_29 
-		 2: def_%v_30 %self[2.0,] 
+		 2: GETFIELD %self->recurring_times def_%v_30 %self[2.0,2.9,] 
 		 3: COPY def_%v_31 %v_29[3.1,] %v_30[3.2,] 
-		 4: %self->render def_%v_32 %self[2.0,] %v_31[3.3,] 
+		 4: %self->render def_%v_32 %self[2.0,2.9,2.14,2.18,] %v_31[3.3,] 
 		 5: 
 BB 4
 	outgoing: 5 
@@ -177,7 +177,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: COPY def_%v_33 
-		 2: %self->t def_%v_34 %self[2.0,] %v_33[4.1,] 
+		 2: %self->t def_%v_34 %self[2.0,2.9,2.14,2.18,] %v_33[4.1,] 
 		 3: COPY def_%v_32 %v_34[4.2,] 
 BB 5
 	outgoing: 6 7 
@@ -185,15 +185,15 @@ BB 5
 	instructions:
 		 0: 
 		 1: COPY def_%v_35 
-		 2: %self->t def_%v_36 %self[2.0,] %v_35[5.1,] 
+		 2: %self->t def_%v_36 %self[2.0,2.9,2.14,2.18,] %v_35[5.1,] 
 		 3: 
 		 4: COPY def_%v_37 
 		 5: COPY def_%v_38 
 		 6: COPY def_%v_39 
 		 7: COPY def_%v_40 %v_39[5.6,] 
 		 8: COPY def_%v_41 %v_38[5.5,] %v_40[5.7,] 
-		 9: %self->link_to def_%v_42 %self[5.2,2.0,] %v_37[5.4,] %v_41[5.8,] %self[5.2,2.0,] 
-CLOSURE BEGIN: %self[5.2,2.0,] 
+		 9: %self->link_to def_%v_42 %self[5.2,2.0,2.9,2.14,2.18,] %v_37[5.4,] %v_41[5.8,] %self[5.2,2.0,2.9,2.14,2.18,] 
+CLOSURE BEGIN: %self[5.2,2.0,2.9,2.14,2.18,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -230,15 +230,15 @@ BB 6
 	instructions:
 CLOSURE END
 		 10: 
-		 11: %self->administration_checkin_times_path def_%v_43 %self[5.2,5.9,2.0,] 
+		 11: %self->administration_checkin_times_path def_%v_43 %self[5.2,5.9,2.0,2.9,2.14,2.18,] 
 		 12: COPY def_%v_44 
 		 13: COPY def_%v_45 
 		 14: COPY def_%v_46 
 		 15: COPY def_%v_47 %v_44[5.12,] %v_45[5.13,] %v_46[5.14,] 
 		 16: COPY def_%v_48 
 		 17: COPY def_%v_49 %v_43[5.11,] %v_47[5.15,] %v_48[5.16,] 
-		 18: %self->form_for def_%v_50 %self[5.2,5.9,5.11,2.0,] %v_49[5.17,] %self[5.2,5.9,5.11,2.0,] 
-CLOSURE BEGIN: %self[5.2,5.9,5.11,2.0,] form[] 
+		 18: %self->form_for def_%v_50 %self[5.2,5.9,5.11,2.0,2.9,2.14,2.18,] %v_49[5.17,] %self[5.2,5.9,5.11,2.0,2.9,2.14,2.18,] 
+CLOSURE BEGIN: %self[5.2,5.9,5.11,2.0,2.9,2.14,2.18,] form[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -296,7 +296,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 19: 
-		 20: def_%v_51 %self[5.2,5.9,5.11,5.18,2.0,] 
+		 20: GETFIELD %self->single_times def_%v_51 %self[5.2,5.9,5.11,5.18,2.0,2.14,] 
 		 21: %v_51->any? def_%v_52 %v_51[5.20,] 
 		 22: BRANCH %v_52[5.21,] 
 BB 6
@@ -305,18 +305,18 @@ BB 6
 	instructions:
 		 0: 
 		 1: COPY def_%v_53 
-		 2: def_%v_54 %self[2.0,] 
+		 2: GETFIELD %self->single_times def_%v_54 %self[2.0,2.14,] 
 		 3: COPY def_%v_55 %v_53[6.1,] %v_54[6.2,] 
-		 4: %self->render def_%v_56 %self[2.0,] %v_55[6.3,] 
-		 5: RETURN %v_56[6.4,] %self[6.4,2.0,] 
+		 4: %self->render def_%v_56 %self[2.0,2.9,2.14,2.18,] %v_55[6.3,] 
+		 5: RETURN %v_56[6.4,] %self[6.4,2.0,2.9,2.14,2.18,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: 
 		 1: COPY def_%v_57 
-		 2: %self->t def_%v_58 %self[2.0,] %v_57[7.1,] 
-		 3: RETURN %v_58[7.2,] %self[7.2,2.0,] 
+		 2: %self->t def_%v_58 %self[2.0,2.9,2.14,2.18,] %v_57[7.1,] 
+		 3: RETURN %v_58[7.2,] %self[7.2,2.0,2.9,2.14,2.18,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -366,18 +366,18 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@time %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->time %v_6[2.9,] 
 		 11: 
 		 12: COPY def_%v_7 
-		 13: %self->t def_%v_8 %self[2.0,2.7,] %v_7[2.12,] 
-		 14: ATTRASSIGN %self->@title %self[2.0,2.7,2.13,] %v_8[2.13,] 
+		 13: %self->t def_%v_8 %self[2.0,2.7,2.10,] %v_7[2.12,] 
+		 14: ATTRASSIGN %self->title %v_8[2.13,] 
 		 15: 
-		 16: def_%v_9 %self[2.0,2.7,2.13,] 
-		 17: def_%v_10 %self[2.0,2.7,2.13,] 
-		 18: %self->administration_checkin_time_path def_%v_11 %self[2.0,2.7,2.13,] %v_10[2.17,] 
+		 16: GETFIELD %self->time def_%v_9 %self[2.0,2.7,2.10,2.13,] 
+		 17: GETFIELD %self->time def_%v_10 %self[2.0,2.7,2.10,2.13,] 
+		 18: %self->administration_checkin_time_path def_%v_11 %self[2.0,2.7,2.10,2.13,2.14,] %v_10[2.17,] 
 		 19: COPY def_%v_12 %v_11[2.18,] 
-		 20: %self->form_for def_%v_13 %self[2.0,2.7,2.13,2.18,] %v_9[2.16,] %v_12[2.19,] %self[2.0,2.7,2.13,2.18,] 
-CLOSURE BEGIN: %self[2.0,2.7,2.13,2.18,] form[] 
+		 20: %self->form_for def_%v_13 %self[2.0,2.7,2.10,2.13,2.14,2.18,] %v_9[2.16,] %v_12[2.19,] %self[2.0,2.7,2.10,2.13,2.14,2.18,] 
+CLOSURE BEGIN: %self[2.0,2.7,2.10,2.13,2.14,2.18,] form[] 
 BB 1
 	outgoing: 11 2 
 	datadep: 
@@ -396,7 +396,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->time def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->weekday def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
@@ -423,7 +423,7 @@ BB 6
 		 4: COPY def_%cl_1_11 %cl_1_10[6.3,] 
 		 5: form->select def_%cl_1_12 form[2.2,] %cl_1_8[6.1,] %cl_1_9[6.2,] %cl_1_11[6.4,] 
 		 6: 
-		 7: def_%cl_1_13 %self[2.0,] 
+		 7: GETFIELD %self->time def_%cl_1_13 %self[2.0,] 
 		 8: %cl_1_13->time_to_s def_%cl_1_14 %cl_1_13[6.7,] 
 		 9: COPY def_%cl_1_15 
 		 10: COPY def_%cl_1_16 
@@ -436,7 +436,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_20 %self[2.0,] 
+		 1: GETFIELD %self->time def_%cl_1_20 %self[2.0,] 
 		 2: %cl_1_20->to_s def_%cl_1_21 %cl_1_20[7.1,] 
 		 3: COPY def_%cl_1_22 
 		 4: COPY def_%cl_1_23 
@@ -457,7 +457,7 @@ BB 8
 		 6: (CheckinTime) def_%cl_1_32 
 		 7: %cl_1_32->campuses def_%cl_1_33 %cl_1_32[8.6,] 
 		 8: def_%cl_1_34 %cl_1_31[8.5,] %cl_1_33[8.7,] 
-		 9: def_%cl_1_35 %self[8.2,2.0,] 
+		 9: GETFIELD %self->time def_%cl_1_35 %self[8.2,2.0,] 
 		 10: %cl_1_35->campus def_%cl_1_36 %cl_1_35[8.9,] 
 		 11: %self->options_for_select def_%cl_1_37 %self[8.2,2.0,] %cl_1_34[8.8,] %cl_1_36[8.10,] 
 		 12: COPY def_%cl_1_38 
@@ -471,7 +471,7 @@ BB 8
 		 20: COPY def_%cl_1_45 %cl_1_44[8.19,] 
 		 21: form->button def_%cl_1_46 form[8.15,2.2,] %cl_1_43[8.18,] %cl_1_45[8.20,] 
 		 22: 
-		 23: def_%cl_1_47 %self[8.2,8.11,8.18,2.0,] 
+		 23: GETFIELD %self->time def_%cl_1_47 %self[8.2,8.11,8.18,2.0,] 
 		 24: %self->administration_checkin_time_path def_%cl_1_48 %self[8.2,8.11,8.18,2.0,] %cl_1_47[8.23,] 
 		 25: COPY def_%cl_1_49 
 		 26: COPY def_%cl_1_50 
@@ -529,7 +529,7 @@ BB 11
 	datadep: 
 	instructions:
 CLOSURE END
-		 21: RETURN %v_13[2.20,] %self[2.0,2.7,2.13,2.18,2.20,] 
+		 21: RETURN %v_13[2.20,] %self[2.0,2.7,2.10,2.13,2.14,2.18,2.20,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -553,9 +553,9 @@ BB 2
 		 6: (CheckinTime) def_%v_3 
 		 7: %self->time_params def_%v_4 %self[2.0,] 
 		 8: %v_3->create def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@time %self[2.0,2.7,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->time %v_5[2.8,] 
 		 10: 
-		 11: def_%v_6 %self[2.0,2.7,] 
+		 11: GETFIELD %self->time def_%v_6 %self[2.0,2.7,2.9,] 
 		 12: %v_6->valid? def_%v_7 %v_6[2.11,] 
 		 13: BRANCH %v_7[2.12,] 
 BB 3
@@ -568,17 +568,17 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_9 %self[2.0,] 
-		 1: %self->add_errors_to_flash def_%v_10 %self[2.0,] %v_9[4.0,] 
+		 0: GETFIELD %self->time def_%v_9 %self[2.0,2.9,] 
+		 1: %self->add_errors_to_flash def_%v_10 %self[2.0,2.9,] %v_9[4.0,] 
 		 2: COPY def_%v_8 %v_10[4.1,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->administration_checkin_times_path def_%v_11 %self[2.0,] 
-		 2: %self->redirect_to def_%v_12 %self[5.1,2.0,] %v_11[5.1,] 
-		 3: RETURN %v_12[5.2,] %self[5.1,5.2,2.0,] 
+		 1: %self->administration_checkin_times_path def_%v_11 %self[2.0,2.9,] 
+		 2: %self->redirect_to def_%v_12 %self[5.1,2.0,2.9,] %v_11[5.1,] 
+		 3: RETURN %v_12[5.2,] %self[5.1,5.2,2.0,2.9,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -603,10 +603,10 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@time %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->time %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,] 
-		 13: %self->time_params def_%v_8 %self[2.0,2.7,] 
+		 12: GETFIELD %self->time def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: %self->time_params def_%v_8 %self[2.0,2.7,2.10,] 
 		 14: %v_7->update_attributes def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
@@ -614,27 +614,27 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_10 %self[2.0,] 
+		 1: %self->flash def_%v_10 %self[2.0,2.10,] 
 		 2: COPY def_%v_11 
-		 3: %self->t def_%v_12 %self[3.1,2.0,] %v_11[3.2,] 
-		 4: %v_10[3.1,] %v_12[3.3,] 
+		 3: %self->t def_%v_12 %self[3.1,2.0,2.10,] %v_11[3.2,] 
+		 4: ATTRASSIGN %v_10->[] %v_12[3.3,] 
 		 5: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_13 %self[2.0,] 
-		 2: %self->add_errors_to_flash def_%v_14 %self[2.0,] %v_13[4.1,] 
+		 1: GETFIELD %self->time def_%v_13 %self[2.0,2.10,] 
+		 2: %self->add_errors_to_flash def_%v_14 %self[2.0,2.10,] %v_13[4.1,] 
 		 3: COPY def_%v_12 %v_14[4.2,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->administration_checkin_times_path def_%v_15 %self[2.0,] 
-		 2: %self->redirect_to def_%v_16 %self[5.1,2.0,] %v_15[5.1,] 
-		 3: RETURN %v_16[5.2,] %self[5.1,5.2,2.0,] 
+		 1: %self->administration_checkin_times_path def_%v_15 %self[2.0,2.10,] 
+		 2: %self->redirect_to def_%v_16 %self[5.1,2.0,2.10,] %v_15[5.1,] 
+		 3: RETURN %v_16[5.2,] %self[5.1,5.2,2.0,2.10,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -659,14 +659,14 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@time %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->time %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,] 
+		 12: GETFIELD %self->time def_%v_7 %self[2.0,2.7,2.10,] 
 		 13: %v_7->destroy def_%v_8 %v_7[2.12,] 
 		 14: 
-		 15: %self->administration_checkin_times_path def_%v_9 %self[2.0,2.7,] 
-		 16: %self->redirect_to def_%v_10 %self[2.0,2.7,2.15,] %v_9[2.15,] 
-		 17: RETURN %v_10[2.16,] %self[2.0,2.7,2.15,2.16,] 
+		 15: %self->administration_checkin_times_path def_%v_9 %self[2.0,2.7,2.10,] 
+		 16: %self->redirect_to def_%v_10 %self[2.0,2.7,2.10,2.15,] %v_9[2.15,] 
+		 17: RETURN %v_10[2.16,] %self[2.0,2.7,2.10,2.15,2.16,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -711,7 +711,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
 		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3

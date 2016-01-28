@@ -409,7 +409,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->password def_%v_3 %self[2.0,] 
 		 7: RETURN %v_3[2.6,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -432,9 +432,9 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_new_password 
 		 6: 
-		 7: ATTRASSIGN %self->@password %self[2.0,] new_password[2.5,] 
+		 7: ATTRASSIGN %self->password new_password[2.5,] 
 		 8: 
-		 9: def_%v_3 %self[2.0,2.7,] 
+		 9: GETFIELD %self->password def_%v_3 %self[2.0,2.7,] 
 		 10: %v_3->blank? def_%v_4 %v_3[2.9,] 
 		 11: BRANCH %v_4[2.10,] 
 BB 3
@@ -450,7 +450,7 @@ BB 4
 		 0: 
 		 1: (SecureRandom) def_%v_6 
 		 2: def_%v_7 %v_6[4.1,] 
-		 3: ATTRASSIGN %self->password_salt %self[2.0,2.7,] %v_7[4.2,] 
+		 3: ATTRASSIGN %self->password_salt %v_7[4.2,] 
 		 4: 
 		 5: (Digest) def_%v_8 
 		 6: def_%v_9 %v_8[4.5,] 
@@ -468,7 +468,7 @@ BB 6
 		 1: %self->password def_%v_11 %self[6.0,4.3,2.0,2.7,] 
 		 2: def_%v_12 %v_10[6.0,] %v_11[6.1,] 
 		 3: %v_9->hexdigest def_%v_13 %v_9[5.0,4.6,] %v_12[6.2,] 
-		 4: ATTRASSIGN %self->hashed_password %self[6.0,6.1,4.3,2.0,2.7,] %v_13[6.3,] 
+		 4: ATTRASSIGN %self->hashed_password %v_13[6.3,] 
 		 5: RETURN %v_13[6.3,] %self[6.0,6.1,6.4,4.3,2.0,2.7,] 
 BB 8
 	outgoing: 
@@ -516,13 +516,13 @@ BB 2
 		 5: 
 		 6: (SecureRandom) def_%v_3 
 		 7: %v_3->hex def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->reset_password_token %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->reset_password_token %v_4[2.7,] 
 		 9: 
 		 10: def_%v_5 
 		 11: %v_5->from_now def_%v_6 %v_5[2.10,] 
-		 12: ATTRASSIGN %self->reset_password_token_expires_at %self[2.0,2.8,] %v_6[2.11,] 
+		 12: ATTRASSIGN %self->reset_password_token_expires_at %v_6[2.11,] 
 		 13: 
-		 14: ATTRASSIGN %self->dont_clear_reset_password_token %self[2.0,2.8,2.12,] 
+		 14: ATTRASSIGN %self->dont_clear_reset_password_token 
 		 15: 
 		 16: COPY def_%v_7 
 		 17: %self->save def_%v_8 %self[2.0,2.8,2.12,2.14,] %v_7[2.16,] 
@@ -549,7 +549,7 @@ BB 2
 		 5: 
 		 6: (SecureRandom) def_%v_3 
 		 7: def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->remember_token %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->remember_token %v_4[2.7,] 
 		 9: 
 		 10: COPY def_%v_5 
 		 11: %self->save def_%v_6 %self[2.0,2.8,] %v_5[2.10,] 
@@ -574,7 +574,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: ATTRASSIGN %self->remember_token %self[2.0,] 
+		 6: ATTRASSIGN %self->remember_token 
 		 7: 
 		 8: COPY def_%v_3 
 		 9: %self->save def_%v_4 %self[2.0,2.6,] %v_3[2.8,] 
@@ -737,11 +737,11 @@ BB 2
 		 5: 
 		 6: (SecureRandom) def_%v_3 
 		 7: %v_3->hex def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->signup_token %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->signup_token %v_4[2.7,] 
 		 9: 
 		 10: def_%v_5 
 		 11: %v_5->from_now def_%v_6 %v_5[2.10,] 
-		 12: ATTRASSIGN %self->signup_token_expires_at %self[2.0,2.8,] %v_6[2.11,] 
+		 12: ATTRASSIGN %self->signup_token_expires_at %v_6[2.11,] 
 		 13: RETURN %v_6[2.11,] %self[2.0,2.8,2.12,] 
 BB 3
 	outgoing: 
@@ -777,9 +777,9 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->signup_token %self[2.0,] 
+		 1: ATTRASSIGN %self->signup_token 
 		 2: 
-		 3: ATTRASSIGN %self->signup_token_expires_at %self[4.1,2.0,] 
+		 3: ATTRASSIGN %self->signup_token_expires_at 
 		 4: RETURN %self[4.1,4.3,2.0,] 
 BB 6
 	outgoing: 
@@ -801,9 +801,9 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: ATTRASSIGN %self->reset_password_token %self[2.0,] 
+		 6: ATTRASSIGN %self->reset_password_token 
 		 7: 
-		 8: ATTRASSIGN %self->reset_password_token_expires_at %self[2.0,2.6,] 
+		 8: ATTRASSIGN %self->reset_password_token_expires_at 
 		 9: RETURN %self[2.0,2.6,2.8,] 
 BB 3
 	outgoing: 

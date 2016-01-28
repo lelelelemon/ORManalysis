@@ -94,7 +94,7 @@ BB 6
 		 1: 
 		 2: %self->title def_%v_9 %self[2.0,] 
 		 3: %v_9->to_permalink def_%v_10 %v_9[6.2,] 
-		 4: ATTRASSIGN %self->permalink %self[6.2,2.0,] %v_10[6.3,] 
+		 4: ATTRASSIGN %self->permalink %v_10[6.3,] 
 		 5: RETURN %v_10[6.3,] %self[6.2,6.4,2.0,] 
 BB 8
 	outgoing: 
@@ -332,7 +332,7 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->cached_permalink_url def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[7.0,] 
 BB 8
 	outgoing: 9 10 
@@ -344,14 +344,14 @@ BB 9
 	datadep: 
 	instructions:
 		 0: COPY def_%v_6 
-		 1: ATTRASSIGN %self->@cached_permalink_url %self[2.0,] %v_6[9.0,] 
+		 1: ATTRASSIGN %self->cached_permalink_url %v_6[9.0,] 
 		 2: COPY def_%v_5 %v_6[9.0,] 
 BB 10
 	outgoing: 11 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_7 %self[9.1,2.0,] 
+		 1: GETFIELD %self->cached_permalink_url def_%v_7 %self[9.1,2.0,] 
 		 2: def_%v_9 anchor[3.0,2.5,] only_path[5.0,4.0,] 
 		 3: def_%v_8 %v_7[10.1,] %v_9[10.2,] 
 		 4: BRANCH %v_8[10.3,] 
@@ -1003,7 +1003,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: def_%v_10 params[2.5,] 
-		 1: req_params[2.15,] %v_10[3.0,] 
+		 1: ATTRASSIGN req_params->[] %v_10[3.0,] 
 		 2: 
 BB 4
 	outgoing: 5 
@@ -1020,7 +1020,7 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: req_params[3.1,2.15,] date_range[2.12,] 
+		 0: ATTRASSIGN req_params->[] date_range[2.12,] 
 		 1: COPY def_%v_11 date_range[2.12,] 
 		 2: 
 BB 7
@@ -1072,7 +1072,7 @@ BB 15
 		 1: (CGI) def_%v_18 
 		 2: def_%v_19 params[2.5,] 
 		 3: %v_18->escape def_%v_20 %v_18[15.1,] %v_19[15.2,] 
-		 4: req_params[6.0,3.1,2.15,] %v_20[15.3,] 
+		 4: ATTRASSIGN req_params->[] %v_20[15.3,] 
 		 5: 
 		 6: %self->published def_%v_21 %self[2.0,] 
 		 7: %v_21->find_by def_%v_22 %v_21[15.6,] req_params[15.4,6.0,3.1,2.15,] 
@@ -1083,7 +1083,7 @@ BB 16
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: RETURN article[15.8,10.4,] %self[2.0,] 
+		 0: RETURN article[15.8,] %self[2.0,] 
 BB 17
 	outgoing: 20 
 	datadep: 
@@ -1568,7 +1568,7 @@ BB 2
 		 9: COPY def_parts %v_4[2.8,] 
 		 10: 
 		 11: def_%v_5 %v_4[2.8,] 
-		 12: ATTRASSIGN %self->body %self[2.0,] %v_5[2.11,] 
+		 12: ATTRASSIGN %self->body %v_5[2.11,] 
 		 13: 
 		 14: def_%v_6 parts[2.9,] 
 		 15: BRANCH %v_6[2.14,] 
@@ -1582,7 +1582,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->extended %self[2.0,2.12,] %v_6[3.1,2.14,] 
+		 0: ATTRASSIGN %self->extended %v_6[3.1,2.14,] 
 		 1: RETURN %v_6[3.1,2.14,] %self[4.0,2.0,2.12,] 
 BB 5
 	outgoing: 
@@ -1821,7 +1821,7 @@ BB 7
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: %self[2.0,] %v_6[6.2,5.1,] 
+		 0: ATTRASSIGN %self->[] %v_6[6.2,5.1,] 
 		 1: RETURN %v_6[6.2,5.1,] %self[7.0,2.0,] 
 BB 8
 	outgoing: 10 

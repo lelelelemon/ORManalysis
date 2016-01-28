@@ -179,11 +179,11 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->last_connection def_%v_3 %self[2.0,] 
-		 7: ATTRASSIGN %self->last_venue %self[2.0,2.6,] %v_3[2.6,] 
+		 7: ATTRASSIGN %self->last_venue %v_3[2.6,] 
 		 8: 
 		 9: (Time) def_%v_4 
 		 10: %v_4->now def_%v_5 %v_4[2.9,] 
-		 11: ATTRASSIGN %self->last_connection %self[2.0,2.6,2.7,] %v_5[2.10,] 
+		 11: ATTRASSIGN %self->last_connection %v_5[2.10,] 
 		 12: 
 		 13: %self->save def_%v_6 %self[2.0,2.6,2.7,2.11,] 
 		 14: RETURN %v_6[2.13,] %self[2.0,2.6,2.7,2.11,2.13,] 
@@ -256,7 +256,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_time 
 		 6: 
-		 7: ATTRASSIGN %self->remember_token_expires_at %self[2.0,] time[2.5,] 
+		 7: ATTRASSIGN %self->remember_token_expires_at time[2.5,] 
 		 8: 
 		 9: (Digest) def_%v_3 
 		 10: def_%v_4 %v_3[2.9,] 
@@ -275,7 +275,7 @@ BB 4
 		 2: %self->remember_token_expires_at def_%v_7 %self[4.0,2.0,2.7,] 
 		 3: def_%v_8 %v_5[4.0,] %v_6[4.1,] %v_7[4.2,] 
 		 4: %v_4->hexdigest def_%v_9 %v_4[3.0,2.10,] %v_8[4.3,] 
-		 5: ATTRASSIGN %self->remember_token %self[4.0,4.2,2.0,2.7,] %v_9[4.4,] 
+		 5: ATTRASSIGN %self->remember_token %v_9[4.4,] 
 		 6: 
 		 7: COPY def_%v_10 
 		 8: %self->save def_%v_11 %self[4.0,4.2,4.5,2.0,2.7,] %v_10[4.7,] 
@@ -300,9 +300,9 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: ATTRASSIGN %self->remember_token_expires_at %self[2.0,] 
+		 6: ATTRASSIGN %self->remember_token_expires_at 
 		 7: 
-		 8: ATTRASSIGN %self->remember_token %self[2.0,2.6,] 
+		 8: ATTRASSIGN %self->remember_token 
 		 9: 
 		 10: COPY def_%v_3 
 		 11: %self->save def_%v_4 %self[2.0,2.6,2.8,] %v_3[2.10,] 
@@ -542,7 +542,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_3 %self[2.0,] 
+		 1: GETFIELD %self->password def_%v_3 %self[2.0,] 
 		 2: %v_3->to_s def_%v_4 %v_3[5.1,] 
 		 3: RETURN %v_4[5.2,] %self[2.0,] 
 BB 6
@@ -550,7 +550,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_5 %self[2.0,] 
+		 1: GETFIELD %self->password def_%v_5 %self[2.0,] 
 		 2: BRANCH %v_5[6.1,] 
 BB 7
 	outgoing: 8 
@@ -738,7 +738,7 @@ BB 4
 	instructions:
 		 0: COPY def_%v_5 
 		 1: 
-		 2: ATTRASSIGN %self->twitter_profile_image %self[2.0,] img[2.5,] 
+		 2: ATTRASSIGN %self->twitter_profile_image img[2.5,] 
 		 3: 
 		 4: %self->save def_%v_6 %self[4.2,2.0,] 
 		 5: RETURN %v_6[4.4,] %self[4.2,4.4,2.0,] 
@@ -820,7 +820,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 26: 
-		 27: ATTRASSIGN %self->password %self[2.0,] newpass[2.23,] 
+		 27: ATTRASSIGN %self->password newpass[2.23,] 
 		 28: RETURN newpass[2.23,] %self[2.0,2.27,] 
 BB 3
 	outgoing: 
@@ -945,9 +945,9 @@ BB 2
 		 8: 
 		 9: %self->password def_%v_5 %self[2.0,] 
 		 10: %self->password_hash def_%v_6 %self[2.0,2.9,] %v_5[2.9,] 
-		 11: %self[2.0,2.9,2.10,] %v_6[2.10,] 
+		 11: ATTRASSIGN %self->[] %v_6[2.10,] 
 		 12: 
-		 13: ATTRASSIGN %self->@password %self[2.0,2.9,2.10,2.11,] 
+		 13: ATTRASSIGN %self->password 
 		 14: RETURN %self[2.0,2.9,2.10,2.11,2.13,] 
 BB 3
 	outgoing: 
@@ -983,7 +983,7 @@ BB 3
 		 4: COPY def_user %v_7[3.3,] 
 		 5: 
 		 6: %v_7->password def_%v_8 %v_7[3.3,] 
-		 7: %self[3.1,3.2,2.0,] %v_8[3.6,] 
+		 7: ATTRASSIGN %self->[] %v_8[3.6,] 
 		 8: RETURN %v_8[3.6,] %self[3.1,3.2,3.7,2.0,] 
 BB 4
 	outgoing: 6 
@@ -1040,7 +1040,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: %v_5->find_by_label def_%v_11 %v_5[3.0,] %v_9[5.1,4.0,] 
-		 1: ATTRASSIGN %self->profile def_%v_4 %self[2.0,] %v_11[6.0,] 
+		 1: %self->profile= def_%v_4 %v_11[6.0,] 
 		 2: RETURN %v_11[6.0,] %self[6.1,2.0,] 
 BB 7
 	outgoing: 8 

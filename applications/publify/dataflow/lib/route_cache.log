@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@cache %self[2.0,] %v_3[2.6,] 
+		 7: ATTRASSIGN %self->cache %v_3[2.6,] 
 		 8: RETURN %v_3[2.6,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -37,7 +37,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_key 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->cache def_%v_3 %self[2.0,] 
 		 8: key->inspect def_%v_4 key[2.5,] 
 		 9: def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: RETURN %v_5[2.9,] %self[2.0,] 
@@ -63,9 +63,9 @@ BB 2
 		 5: RECEIVEARG def_key 
 		 6: RECEIVEARG def_value 
 		 7: 
-		 8: def_%v_3 %self[2.0,] 
+		 8: GETFIELD %self->cache def_%v_3 %self[2.0,] 
 		 9: key->inspect def_%v_4 key[2.5,] 
-		 10: %v_3[2.8,] %v_4[2.9,] value[2.6,] 
+		 10: ATTRASSIGN %v_3->[] %v_4[2.9,] value[2.6,] 
 		 11: RETURN value[2.6,] %self[2.0,] 
 BB 3
 	outgoing: 

@@ -35,7 +35,7 @@ BB 4
 		 1: %self->flash def_%v_10 %self[2.0,] 
 		 2: COPY def_%v_11 
 		 3: %self->t def_%v_12 %self[4.1,2.0,] %v_11[4.2,] 
-		 4: %v_10[4.1,] %v_12[4.3,] 
+		 4: ATTRASSIGN %v_10->[] %v_12[4.3,] 
 		 5: 
 BB 5
 	outgoing: 6 
@@ -54,14 +54,14 @@ BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@attended_at %self[2.0,] %v_6[6.3,2.9,] 
+		 0: ATTRASSIGN %self->attended_at %v_6[6.3,2.9,] 
 		 1: 
-		 2: def_%v_15 %self[2.0,] 
-		 3: def_%v_16 %self[2.0,] 
+		 2: GETFIELD %self->group def_%v_15 %self[2.0,] 
+		 3: GETFIELD %self->attended_at def_%v_16 %self[7.0,2.0,] 
 		 4: %v_15->get_people_attendance_records_for_date def_%v_17 %v_15[7.2,] %v_16[7.3,] 
-		 5: ATTRASSIGN %self->@records %self[2.0,] %v_17[7.4,] 
+		 5: ATTRASSIGN %self->records %v_17[7.4,] 
 		 6: 
-		 7: %self->params def_%v_18 %self[2.0,] 
+		 7: %self->params def_%v_18 %self[7.0,7.5,2.0,] 
 		 8: def_%v_19 %v_18[7.7,] 
 		 9: BRANCH %v_19[7.8,] 
 BB 8
@@ -72,13 +72,13 @@ BB 8
 		 1: COPY def_%v_20 
 		 2: COPY def_%v_21 
 		 3: COPY def_%v_22 %v_20[8.1,] %v_21[8.2,] 
-		 4: %self->render def_%v_23 %self[2.0,] %v_22[8.3,] 
-		 5: RETURN %v_23[8.4,] %self[8.4,2.0,] 
+		 4: %self->render def_%v_23 %self[7.0,7.5,2.0,] %v_22[8.3,] 
+		 5: RETURN %v_23[8.4,] %self[8.4,7.0,7.5,2.0,] 
 BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[7.0,7.5,2.0,] 
 BB 11
 	outgoing: 
 	datadep: 
@@ -100,7 +100,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (AttendanceBatch) def_%v_3 
-		 7: def_%v_4 %self[2.0,] 
+		 7: GETFIELD %self->group def_%v_4 %self[2.0,] 
 		 8: %self->params def_%v_5 %self[2.0,] 
 		 9: def_%v_6 %v_5[2.8,] 
 		 10: %v_3->new def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_6[2.9,] 
@@ -170,7 +170,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->group def_%cl_2_3 %self[2.0,] 
 		 2: batch->attended_at def_%cl_2_4 batch[] 
 		 3: COPY def_%cl_2_5 %cl_2_4[3.2,] 
 		 4: %self->group_attendance_index_path def_%cl_2_6 %self[2.0,] %cl_2_3[3.1,] %cl_2_5[3.3,] 
@@ -260,7 +260,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (AttendanceBatch) def_%v_3 
-		 7: def_%v_4 %self[2.0,] 
+		 7: GETFIELD %self->group def_%v_4 %self[2.0,] 
 		 8: %self->params def_%v_5 %self[2.0,] 
 		 9: def_%v_6 %v_5[2.8,] 
 		 10: %v_3->new def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_6[2.9,] 
@@ -309,8 +309,8 @@ BB 7
 	instructions:
 		 0: 
 		 1: (Notifier) def_%v_22 
-		 2: def_%v_23 %self[2.0,] 
-		 3: def_%v_24 %self[2.0,] 
+		 2: GETFIELD %self->group def_%v_23 %self[2.0,] 
+		 3: GETFIELD %self->logged_in def_%v_24 %self[2.0,] 
 		 4: %self->params def_%v_25 %self[2.0,] 
 		 5: def_%v_26 %v_25[7.4,] 
 		 6: %v_22->attendance_submission def_%v_27 %v_22[7.1,] %v_23[7.2,] attendance_records[3.7,] %v_24[7.3,] %v_26[7.5,] 
@@ -336,8 +336,8 @@ BB 10
 	instructions:
 		 0: 
 		 1: (Notifier) def_%v_32 
-		 2: def_%v_33 %self[2.0,] 
-		 3: def_%v_34 %self[2.0,] 
+		 2: GETFIELD %self->group def_%v_33 %self[2.0,] 
+		 3: GETFIELD %self->logged_in def_%v_34 %self[2.0,] 
 		 4: %self->params def_%v_35 %self[2.0,] 
 		 5: def_%v_36 %v_35[10.4,] 
 		 6: %v_32->attendance_submission def_%v_37 %v_32[10.1,] %v_33[10.2,] attendance_records[3.7,] %v_34[10.3,] %v_36[10.5,] 
@@ -346,9 +346,9 @@ BB 10
 		 9: %self->flash def_%v_39 %self[10.4,2.0,] 
 		 10: COPY def_%v_40 
 		 11: %self->t def_%v_41 %self[10.4,10.9,2.0,] %v_40[10.10,] 
-		 12: %v_39[10.9,] %v_41[10.11,] 
+		 12: ATTRASSIGN %v_39->[] %v_41[10.11,] 
 		 13: 
-		 14: def_%v_42 %self[10.4,10.9,10.11,2.0,] 
+		 14: GETFIELD %self->group def_%v_42 %self[10.4,10.9,10.11,2.0,] 
 		 15: batch->attended_at def_%v_43 batch[2.11,] 
 		 16: %v_43->to_s def_%v_44 %v_43[10.15,] 
 		 17: COPY def_%v_45 %v_44[10.16,] 
@@ -512,8 +512,8 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
-		 7: def_%v_4 %self[2.0,] 
+		 6: GETFIELD %self->group def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->logged_in def_%v_4 %self[2.0,] 
 		 8: %v_3->admin? def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
@@ -571,7 +571,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self[2.0,] 
+		 0: GETFIELD %self->group def_%v_6 %self[2.0,] 
 		 1: COPY def_%v_5 %v_6[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -582,7 +582,7 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: def_%v_7 %self[2.0,] 
+		 0: GETFIELD %self->group def_%v_7 %self[2.0,] 
 		 1: %v_7->share_token def_%v_8 %v_7[5.0,] 
 		 2: %self->params def_%v_9 %self[2.0,] 
 		 3: def_%v_10 %v_9[5.2,] 
@@ -613,13 +613,13 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->group def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD %self->group def_%v_4 %self[2.0,] 
 		 1: %v_4->attendance? def_%v_5 %v_4[3.0,] 
 		 2: COPY def_%v_3 %v_5[3.1,] 
 BB 4

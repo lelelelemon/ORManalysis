@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_a_blog 
 		 6: 
-		 7: ATTRASSIGN %self->this_blog %self[2.0,] a_blog[2.5,] 
+		 7: ATTRASSIGN %self->this_blog a_blog[2.5,] 
 		 8: RETURN a_blog[2.5,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -729,7 +729,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->logger def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 10 
@@ -765,7 +765,7 @@ BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@logger %self[2.0,] %v_7[8.3,7.0,] 
+		 0: ATTRASSIGN %self->logger %v_7[8.3,7.0,] 
 		 1: RETURN %v_7[8.3,7.0,] %self[9.0,2.0,] 
 BB 10
 	outgoing: 11 

@@ -16,11 +16,11 @@ BB 2
 		 6: RECEIVEARG def_user 
 		 7: RECEIVEARG def_agreement 
 		 8: 
-		 9: ATTRASSIGN %self->@child %self[2.0,] child[2.5,] 
+		 9: ATTRASSIGN %self->child child[2.5,] 
 		 10: 
-		 11: ATTRASSIGN %self->@user %self[2.0,] user[2.6,] 
+		 11: ATTRASSIGN %self->user user[2.6,] 
 		 12: 
-		 13: ATTRASSIGN %self->@agreement %self[2.0,] agreement[2.7,] 
+		 13: ATTRASSIGN %self->agreement agreement[2.7,] 
 		 14: 
 		 15: (ActiveModel) def_%v_3 
 		 16: def_%v_4 %v_3[2.15,] 
@@ -34,9 +34,9 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %v_4->new def_%v_5 %v_4[3.0,2.16,] %self[2.0,] 
-		 1: ATTRASSIGN %self->@errors %self[2.0,] %v_5[4.0,] 
-		 2: RETURN %v_5[4.0,] %self[2.0,] 
+		 0: %v_4->new def_%v_5 %v_4[3.0,2.16,] %self[2.0,2.9,2.11,2.13,] 
+		 1: ATTRASSIGN %self->errors %v_5[4.0,] 
+		 2: RETURN %v_5[4.0,] %self[4.1,2.0,2.9,2.11,2.13,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -65,20 +65,20 @@ BB 3
 	instructions:
 		 0: COPY def_%v_4 
 		 1: 
-		 2: def_%v_5 %self[2.0,] 
-		 3: def_%v_6 %self[2.0,] 
+		 2: GETFIELD %self->child def_%v_5 %self[2.0,] 
+		 3: GETFIELD %self->user def_%v_6 %self[2.0,] 
 		 4: %v_6->name def_%v_7 %v_6[3.3,] 
 		 5: COPY def_%v_8 
-		 6: def_%v_9 %self[2.0,] 
+		 6: GETFIELD %self->user def_%v_9 %self[2.0,] 
 		 7: %v_9->id def_%v_10 %v_9[3.6,] 
 		 8: COPY def_%v_11 
 		 9: (Time) def_%v_12 
 		 10: %v_12->current def_%v_13 %v_12[3.9,] 
 		 11: %v_13->to_s def_%v_14 %v_13[3.10,] 
 		 12: def_%v_15 %v_7[3.4,] %v_8[3.5,] %v_10[3.7,] %v_11[3.8,] %v_14[3.11,] 
-		 13: ATTRASSIGN %v_5->parental_consent %v_5[3.2,] %v_15[3.12,] 
+		 13: ATTRASSIGN %v_5->parental_consent %v_15[3.12,] 
 		 14: 
-		 15: def_%v_16 %self[2.0,] 
+		 15: GETFIELD %self->child def_%v_16 %self[2.0,] 
 		 16: COPY def_%v_17 
 		 17: %v_16->save def_%v_18 %v_16[3.15,] %v_17[3.16,] 
 		 18: RETURN %v_18[3.17,] %self[2.0,] 
@@ -109,7 +109,7 @@ BB 2
 		 5: 
 		 6: %self->validate def_%v_3 %self[2.0,] 
 		 7: 
-		 8: def_%v_4 %self[2.0,2.6,] 
+		 8: GETFIELD %self->errors def_%v_4 %self[2.0,2.6,] 
 		 9: %v_4->empty? def_%v_5 %v_4[2.8,] 
 		 10: RETURN %v_5[2.9,] %self[2.0,2.6,] 
 BB 3
@@ -132,9 +132,9 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->user def_%v_3 %self[2.0,] 
 		 7: %v_3->family def_%v_4 %v_3[2.6,] 
-		 8: def_%v_5 %self[2.0,] 
+		 8: GETFIELD %self->child def_%v_5 %self[2.0,] 
 		 9: %v_5->family def_%v_6 %v_5[2.8,] 
 		 10: %v_4->== def_%v_7 %v_4[2.7,] %v_6[2.9,] 
 		 11: BRANCH %v_7[2.10,] 
@@ -142,7 +142,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_8 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_8 %self[2.0,] 
 		 1: %v_8->family def_%v_9 %v_8[3.0,] 
 		 2: COPY def_%v_7 %v_9[3.1,] 
 BB 4
@@ -154,7 +154,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_10 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_10 %self[2.0,] 
 		 1: %v_10->adult? def_%v_11 %v_10[5.0,] 
 		 2: COPY def_%v_7 %v_11[5.1,] 
 BB 6
@@ -166,8 +166,8 @@ BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_12 %self[2.0,] 
-		 1: def_%v_13 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_12 %self[2.0,] 
+		 1: GETFIELD %self->child def_%v_13 %self[2.0,] 
 		 2: %v_13->family def_%v_14 %v_13[7.1,] 
 		 3: %v_12->can_update? def_%v_15 %v_12[7.0,] %v_14[7.2,] 
 		 4: RETURN %v_15[7.3,] %self[2.0,] 
@@ -196,7 +196,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->agreement def_%v_3 %self[2.0,] 
 		 7: (I18n) def_%v_4 
 		 8: COPY def_%v_5 
 		 9: %v_4->t def_%v_6 %v_4[2.7,] %v_5[2.8,] 
@@ -224,7 +224,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->errors def_%v_3 %self[2.0,] 
 		 7: %v_3->clear def_%v_4 %v_3[2.6,] 
 		 8: 
 		 9: %self->authorized? def_%v_5 %self[2.0,] 
@@ -239,7 +239,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_7 %self[2.0,] 
+		 0: GETFIELD %self->errors def_%v_7 %self[2.0,] 
 		 1: (I18n) def_%v_8 
 		 2: COPY def_%v_9 
 		 3: %v_8->t def_%v_10 %v_8[4.1,] %v_9[4.2,] 
@@ -262,7 +262,7 @@ BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_14 %self[2.0,] 
+		 0: GETFIELD %self->errors def_%v_14 %self[2.0,] 
 		 1: (I18n) def_%v_15 
 		 2: COPY def_%v_16 
 		 3: %v_15->t def_%v_17 %v_15[7.1,] %v_16[7.2,] 

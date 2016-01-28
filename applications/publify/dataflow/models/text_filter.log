@@ -142,7 +142,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self[2.0,] 
+		 0: GETFIELD %self->cached_filter_types def_%v_6 %self[2.0,] 
 		 1: COPY def_%v_4 %v_6[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -154,14 +154,14 @@ BB 5
 	datadep: 
 	instructions:
 		 0: COPY def_%v_7 
-		 1: ATTRASSIGN %self->@cached_filter_types %self[2.0,] %v_7[5.0,] 
+		 1: ATTRASSIGN %self->cached_filter_types %v_7[5.0,] 
 		 2: COPY def_%v_6 %v_7[5.0,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 %self[5.1,2.0,] 
+		 1: GETFIELD %self->cached_filter_types def_%v_8 %self[5.1,2.0,] 
 		 2: def_%v_9 %v_8[6.1,] filters[2.7,] 
 		 3: BRANCH %v_9[6.2,] 
 BB 7
@@ -227,15 +227,15 @@ BB 6
 	instructions:
 CLOSURE END
 		 15: 
-		 16: def_%v_23 %self[5.1,2.0,] 
-		 17: %v_23[8.16,] filters[8.14,2.7,] types[8.12,] 
+		 16: GETFIELD %self->cached_filter_types def_%v_23 %self[5.1,2.0,] 
+		 17: ATTRASSIGN %v_23->[] filters[8.14,2.7,] types[8.12,] 
 		 18: COPY def_%v_10 types[8.12,] 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_24 %self[5.1,2.0,] 
+		 1: GETFIELD %self->cached_filter_types def_%v_24 %self[5.1,2.0,] 
 		 2: def_%v_25 %v_24[9.1,] filters[2.7,] 
 		 3: RETURN %v_25[9.2,] %self[5.1,2.0,] 
 BB 10

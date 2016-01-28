@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_params 
 		 6: 
-		 7: ATTRASSIGN %self->params %self[2.0,] params[2.5,] 
+		 7: ATTRASSIGN %self->params params[2.5,] 
 		 8: RETURN params[2.5,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -82,10 +82,10 @@ BB 2
 		 5: RECEIVEARG def_p 
 		 6: 
 		 7: p->delete def_%v_3 p[2.5,] 
-		 8: ATTRASSIGN %self->@id %self[2.0,] %v_3[2.7,] 
+		 8: ATTRASSIGN %self->id %v_3[2.7,] 
 		 9: 
-		 10: ATTRASSIGN %self->@changes %self[2.0,] 
-		 11: ATTRASSIGN %self->@person %self[2.0,] 
+		 10: ATTRASSIGN %self->changes 
+		 11: ATTRASSIGN %self->person 
 		 12: 
 		 13: (ActionController) def_%v_4 
 		 14: def_%v_5 %v_4[2.13,] 
@@ -100,8 +100,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: %v_5->new def_%v_6 %v_5[3.0,2.14,] p[2.5,] 
-		 1: ATTRASSIGN %self->@params %self[2.0,] %v_6[4.0,] 
-		 2: RETURN %v_6[4.0,] %self[2.0,] 
+		 1: ATTRASSIGN %self->params %v_6[4.0,] 
+		 2: RETURN %v_6[4.0,] %self[4.1,2.0,2.8,2.10,2.11,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -129,7 +129,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->changes def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 12 
@@ -157,7 +157,7 @@ BB 6
 		 3: def_%v_12 %v_11[6.2,] 
 		 4: %v_9->new def_%v_13 %v_9[6.0,] %v_10[6.1,] %v_12[6.3,] 
 		 5: %v_13->changes def_%v_14 %v_13[6.4,] 
-		 6: h[5.3,] %v_14[6.5,] 
+		 6: ATTRASSIGN h->[] %v_14[6.5,] 
 		 7: 
 BB 7
 	outgoing: 8 
@@ -181,7 +181,7 @@ BB 9
 		 3: def_%v_19 %v_18[9.2,] 
 		 4: %v_16->new def_%v_20 %v_16[9.0,] %v_17[9.1,] %v_19[9.3,] 
 		 5: %v_20->changes def_%v_21 %v_20[9.4,] 
-		 6: h[6.6,5.3,] %v_21[9.5,] 
+		 6: ATTRASSIGN h->[] %v_21[9.5,] 
 		 7: 
 BB 10
 	outgoing: 11 
@@ -228,8 +228,8 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: ATTRASSIGN %self->@changes %self[2.0,] %v_22[11.1,] 
-		 3: RETURN %v_22[11.1,] %self[2.0,] 
+		 2: ATTRASSIGN %self->changes %v_22[11.1,] 
+		 3: RETURN %v_22[11.1,] %self[11.2,2.0,] 
 BB 12
 	outgoing: 13 
 	datadep: 
@@ -385,7 +385,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->person def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -397,10 +397,10 @@ BB 5
 	datadep: 
 	instructions:
 		 0: (Person) def_%v_6 
-		 1: def_%v_7 %self[2.0,] 
+		 1: GETFIELD %self->id def_%v_7 %self[2.0,] 
 		 2: %v_6->find def_%v_8 %v_6[5.0,] %v_7[5.1,] 
-		 3: ATTRASSIGN %self->@person %self[2.0,] %v_8[5.2,] 
-		 4: RETURN %v_8[5.2,] %self[2.0,] 
+		 3: ATTRASSIGN %self->person %v_8[5.2,] 
+		 4: RETURN %v_8[5.2,] %self[5.3,2.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
@@ -433,7 +433,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->family def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -446,8 +446,8 @@ BB 5
 	instructions:
 		 0: %self->person def_%v_6 %self[2.0,] 
 		 1: %v_6->family def_%v_7 %v_6[5.0,] 
-		 2: ATTRASSIGN %self->@family %self[5.0,2.0,] %v_7[5.1,] 
-		 3: RETURN %v_7[5.1,] %self[5.0,2.0,] 
+		 2: ATTRASSIGN %self->family %v_7[5.1,] 
+		 3: RETURN %v_7[5.1,] %self[5.0,5.2,2.0,] 
 BB 6
 	outgoing: 7 
 	datadep: 
@@ -701,7 +701,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_3 %self[2.0,] 
+		 0: GETFIELD %self->params def_%v_3 %self[2.0,] 
 		 1: COPY def_unfiltered %v_3[5.0,] 
 BB 6
 	outgoing: 7 8 
@@ -793,7 +793,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->filter_params def_%cl_2_6 %self[2.0,] key[2.2,] val[2.3,] access[3.2,] block[] 
-		 2: permitted[] key[2.2,] %cl_2_6[5.1,] 
+		 2: ATTRASSIGN permitted->[] key[2.2,] %cl_2_6[5.1,] 
 		 3: 
 		 4: def_%cl_2_7 permitted[5.2,] key[2.2,] 
 		 5: %cl_2_7->permit! def_%cl_2_8 %cl_2_7[5.4,] 
@@ -815,7 +815,7 @@ BB 7
 		 1: %self->cleanse_value def_%cl_2_11 %self[2.0,] val[6.3,] 
 		 2: COPY def_val %cl_2_11[7.1,] 
 		 3: 
-		 4: permitted[] key[2.2,] %cl_2_11[7.1,] 
+		 4: ATTRASSIGN permitted->[] key[2.2,] %cl_2_11[7.1,] 
 		 5: COPY def_%cl_2_12 val[7.2,] 
 		 6: 
 BB 8

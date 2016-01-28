@@ -14,11 +14,11 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->current_user def_%v_3 %self[2.0,] 
-		 7: ATTRASSIGN %self->@user %self[2.0,2.6,] %v_3[2.6,] 
+		 7: ATTRASSIGN %self->user %v_3[2.6,] 
 		 8: 
-		 9: def_%v_4 %self[2.0,2.6,2.7,] 
+		 9: GETFIELD %self->user def_%v_4 %self[2.0,2.6,2.7,] 
 		 10: %v_4->invitations def_%v_5 %v_4[2.9,] 
-		 11: ATTRASSIGN %self->@invitations %self[2.0,2.6,2.7,] %v_5[2.10,] 
+		 11: ATTRASSIGN %self->invitations %v_5[2.10,] 
 		 12: 
 		 13: %self->respond_to def_%v_6 %self[2.0,2.6,2.7,2.11,] %self[2.0,2.6,2.7,2.11,] 
 CLOSURE BEGIN: format[] 
@@ -56,9 +56,9 @@ BB 6
 CLOSURE END
 		 14: 
 		 15: def_%v_7 
-		 16: ATTRASSIGN %self->@page_title %self[2.0,2.6,2.7,2.11,2.13,] %v_7[2.15,] 
+		 16: ATTRASSIGN %self->page_title %v_7[2.15,] 
 		 17: 
-		 18: def_%v_9 %self[2.0,2.6,2.7,2.11,2.13,2.16,] 
+		 18: GETFIELD %self->invitations def_%v_9 %self[2.0,2.6,2.11,2.13,] 
 		 19: %v_9->each def_%v_8 %v_9[2.18,] %self[2.0,2.6,2.7,2.11,2.13,2.16,] 
 CLOSURE BEGIN: invitation[] 
 BB 1
@@ -111,14 +111,14 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->current_user def_%v_3 %self[2.0,] 
-		 7: ATTRASSIGN %self->@user %self[2.0,2.6,] %v_3[2.6,] 
+		 7: ATTRASSIGN %self->user %v_3[2.6,] 
 		 8: 
 		 9: (Invitation) def_%v_4 
 		 10: %v_4->new def_%v_5 %v_4[2.9,] 
-		 11: ATTRASSIGN %self->@invitation %self[2.0,2.6,2.7,] %v_5[2.10,] 
+		 11: ATTRASSIGN %self->invitation %v_5[2.10,] 
 		 12: 
 		 13: def_%v_6 
-		 14: ATTRASSIGN %self->@page_title %self[2.0,2.6,2.7,2.11,] %v_6[2.13,] 
+		 14: ATTRASSIGN %self->page_title %v_6[2.13,] 
 		 15: 
 		 16: %self->widget def_%v_7 %self[2.0,2.6,2.7,2.11,2.14,] %self[2.0,2.6,2.7,2.11,2.14,] 
 CLOSURE BEGIN: %self[2.0,2.6,2.7,2.11,2.14,] 
@@ -164,8 +164,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 17: 
-		 18: def_%v_8 %self[2.0,2.6,2.7,2.11,2.14,2.16,] 
-		 19: def_%v_9 %self[2.0,2.6,2.7,2.11,2.14,2.16,] 
+		 18: GETFIELD %self->user def_%v_8 %self[2.0,2.6,2.7,2.16,] 
+		 19: GETFIELD %self->invitation def_%v_9 %self[2.0,2.6,2.11,2.16,] 
 		 20: COPY def_%v_10 %v_8[2.18,] %v_9[2.19,] 
 		 21: COPY def_%v_11 
 		 22: %self->bootstrap_form_for def_%v_12 %self[2.0,2.6,2.7,2.11,2.14,2.16,] %v_10[2.20,] %v_11[2.21,] %self[2.0,2.6,2.7,2.11,2.14,2.16,] 
@@ -273,7 +273,7 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@invitation %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->invitation %v_6[2.9,] 
 		 11: RETURN %v_6[2.9,] %self[2.0,2.7,2.10,] 
 BB 3
 	outgoing: 
@@ -296,16 +296,16 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->current_user def_%v_3 %self[2.0,] 
-		 7: ATTRASSIGN %self->@user %self[2.0,2.6,] %v_3[2.6,] 
+		 7: ATTRASSIGN %self->user %v_3[2.6,] 
 		 8: 
 		 9: (Invitation) def_%v_4 
 		 10: %self->invitation_params def_%v_5 %self[2.0,2.6,2.7,] 
 		 11: %v_4->new def_%v_6 %v_4[2.9,] %v_5[2.10,] 
-		 12: ATTRASSIGN %self->@invitation %self[2.0,2.6,2.7,2.10,] %v_6[2.11,] 
+		 12: ATTRASSIGN %self->invitation %v_6[2.11,] 
 		 13: 
-		 14: def_%v_7 %self[2.0,2.6,2.7,2.10,2.12,] 
-		 15: def_%v_8 %self[2.0,2.6,2.7,2.10,2.12,] 
-		 16: ATTRASSIGN %v_7->user %v_7[2.14,] %v_8[2.15,] 
+		 14: GETFIELD %self->invitation def_%v_7 %self[2.0,2.6,2.10,2.12,] 
+		 15: GETFIELD %self->user def_%v_8 %self[2.0,2.6,2.7,2.10,] 
+		 16: ATTRASSIGN %v_7->user %v_8[2.15,] 
 		 17: 
 		 18: %self->respond_to def_%v_9 %self[2.0,2.6,2.7,2.10,2.12,] %self[2.0,2.6,2.7,2.10,2.12,] 
 CLOSURE BEGIN: %self[2.0,2.6,2.7,2.10,2.12,] format[] 
@@ -327,7 +327,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->invitation def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->save def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
@@ -337,7 +337,7 @@ BB 4
 		 0: 
 		 1: %self->flash def_%cl_1_5 %self[2.0,] 
 		 2: def_%cl_1_6 
-		 3: %cl_1_5[4.1,] %cl_1_6[4.2,] 
+		 3: ATTRASSIGN %cl_1_5->[] %cl_1_6[4.2,] 
 		 4: 
 		 5: format->html def_%cl_1_7 format[2.2,] %self[4.1,2.0,] 
 CLOSURE BEGIN: %self[4.1,2.0,] 
@@ -366,7 +366,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_5 %self[2.0,] 
+		 1: GETFIELD %self->invitation def_%cl_2_5 %self[2.0,] 
 		 2: %cl_2_5->user def_%cl_2_6 %cl_2_5[4.1,] 
 		 3: %self->welcome_complete_user_path def_%cl_2_7 %self[2.0,] %cl_2_6[4.2,] 
 		 4: %self->redirect_to def_%cl_2_8 %self[4.3,2.0,] %cl_2_7[4.3,] 
@@ -376,7 +376,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_9 %self[2.0,] 
+		 1: GETFIELD %self->invitation def_%cl_2_9 %self[2.0,] 
 		 2: %cl_2_9->user def_%cl_2_10 %cl_2_9[5.1,] 
 		 3: %self->user_path def_%cl_2_11 %self[2.0,] %cl_2_10[5.2,] 
 		 4: %self->redirect_to def_%cl_2_12 %self[5.3,2.0,] %cl_2_11[5.3,] 
@@ -445,7 +445,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: def_%cl_4_3 
-		 2: ATTRASSIGN %self->@page_title %self[2.0,] %cl_4_3[3.1,] 
+		 2: ATTRASSIGN %self->page_title %cl_4_3[3.1,] 
 		 3: 
 		 4: %self->widget def_%cl_4_4 %self[3.2,2.0,] %self[3.2,2.0,] 
 CLOSURE BEGIN: %self[3.2,2.0,] 
@@ -491,8 +491,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 5: 
-		 6: def_%cl_4_5 %self[3.2,3.4,2.0,] 
-		 7: def_%cl_4_6 %self[3.2,3.4,2.0,] 
+		 6: GETFIELD %self->user def_%cl_4_5 %self[3.4,2.0,] 
+		 7: GETFIELD %self->invitation def_%cl_4_6 %self[3.4,2.0,] 
 		 8: COPY def_%cl_4_7 %cl_4_5[3.6,] %cl_4_6[3.7,] 
 		 9: COPY def_%cl_4_8 
 		 10: %self->bootstrap_form_for def_%cl_4_9 %self[3.2,3.4,2.0,] %cl_4_7[3.8,] %cl_4_8[3.9,] %self[3.2,3.4,2.0,] 

@@ -87,19 +87,19 @@ BB 5
 	instructions:
 		 0: 
 		 1: controller->tz def_%v_17 controller[2.5,] 
-		 2: ATTRASSIGN %self->@tz %self[2.0,] %v_17[5.1,] 
+		 2: ATTRASSIGN %self->tz %v_17[5.1,] 
 		 3: 
 		 4: def_%v_18 params[2.6,] 
 		 5: %v_18->to_i def_%v_19 %v_18[5.4,] 
-		 6: ATTRASSIGN %self->@type %self[5.2,2.0,] %v_19[5.5,] 
+		 6: ATTRASSIGN %self->type %v_19[5.5,] 
 		 7: 
 		 8: controller->current_user def_%v_20 controller[5.1,2.5,] 
-		 9: ATTRASSIGN %self->@current_user %self[5.2,5.6,2.0,] %v_20[5.8,] 
+		 9: ATTRASSIGN %self->current_user %v_20[5.8,] 
 		 10: 
 		 11: def_%v_21 params[2.6,] 
-		 12: ATTRASSIGN %self->@row_value %self[5.2,5.6,5.9,2.0,] %v_21[5.11,] 
+		 12: ATTRASSIGN %self->row_value %v_21[5.11,] 
 		 13: 
-		 14: def_%v_22 %self[5.2,5.6,5.9,5.12,2.0,] 
+		 14: GETFIELD %self->row_value def_%v_22 %self[5.12,2.0,] 
 		 15: %v_22->to_i def_%v_23 %v_22[5.14,] 
 		 16: %v_23->== def_%v_24 %v_23[5.15,] 
 		 17: BRANCH %v_24[5.16,] 
@@ -107,25 +107,25 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_25 %self[5.2,5.6,5.9,5.12,2.0,] 
+		 0: GETFIELD %self->row_value def_%v_25 %self[5.12,2.0,] 
 		 1: 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_26 %self[5.2,5.6,5.9,5.12,2.0,] 
+		 0: GETFIELD %self->row_value def_%v_26 %self[5.12,2.0,] 
 		 1: %v_26->to_i def_%v_27 %v_26[7.0,] 
 		 2: COPY def_%v_25 %v_27[7.1,] 
 BB 8
 	outgoing: 9 10 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@row_value %self[5.2,5.6,5.9,5.12,2.0,] %v_25[7.2,6.0,] 
+		 0: ATTRASSIGN %self->row_value %v_25[7.2,6.0,] 
 		 1: 
 		 2: def_%v_28 params[2.6,] 
-		 3: ATTRASSIGN %self->@column_value %self[8.0,5.2,5.6,5.9,5.12,2.0,] %v_28[8.2,] 
+		 3: ATTRASSIGN %self->column_value %v_28[8.2,] 
 		 4: 
-		 5: def_%v_29 %self[8.0,8.3,5.2,5.6,5.9,5.12,2.0,] 
+		 5: GETFIELD %self->column_value def_%v_29 %self[8.3,2.0,] 
 		 6: %v_29->to_i def_%v_30 %v_29[8.5,] 
 		 7: %v_30->== def_%v_31 %v_30[8.6,] 
 		 8: BRANCH %v_31[8.7,] 
@@ -133,24 +133,24 @@ BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: def_%v_32 %self[8.0,8.3,5.2,5.6,5.9,5.12,2.0,] 
+		 0: GETFIELD %self->column_value def_%v_32 %self[8.3,2.0,] 
 		 1: 
 BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: def_%v_33 %self[8.0,8.3,5.2,5.6,5.9,5.12,2.0,] 
+		 0: GETFIELD %self->column_value def_%v_33 %self[8.3,2.0,] 
 		 1: %v_33->to_i def_%v_34 %v_33[10.0,] 
 		 2: COPY def_%v_32 %v_34[10.1,] 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@column_value %self[8.0,8.3,5.2,5.6,5.9,5.12,2.0,] %v_32[10.2,9.0,] 
+		 0: ATTRASSIGN %self->column_value %v_32[10.2,9.0,] 
 		 1: 
 		 2: %self->init_start_and_end_dates def_%v_35 %self[11.0,8.0,8.3,5.2,5.6,5.9,5.12,2.0,] params[2.6,] 
 		 3: 
-		 4: %self->init_work_logs def_%v_36 %self[11.0,11.2,8.0,8.3,5.2,5.6,5.9,5.12,2.0,] tasks[4.9,3.5,2.9,] params[2.6,] 
+		 4: %self->init_work_logs def_%v_36 %self[11.0,11.2,8.0,8.3,5.2,5.6,5.9,5.12,2.0,] tasks[4.9,3.5,] params[2.6,] 
 		 5: 
 		 6: %self->init_rows_and_columns def_%v_37 %self[11.0,11.2,11.4,8.0,8.3,5.2,5.6,5.9,5.12,2.0,] 
 		 7: 
@@ -176,13 +176,13 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->range def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD %self->range def_%v_4 %self[2.0,] 
 		 1: RETURN %v_4[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 7 
@@ -284,7 +284,7 @@ BB 14
 	instructions:
 CLOSURE END
 		 10: 
-		 11: ATTRASSIGN %self->@range %self[4.2,4.5,4.8,2.0,] 
+		 11: ATTRASSIGN %self->range 
 		 12: 
 		 13: COPY def_%v_10 start_date[4.3,] 
 		 14: BRANCH start_date[4.3,] 
@@ -314,7 +314,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->@range %self[4.11,2.0,] 
+		 1: ATTRASSIGN %self->range 
 		 2: COPY def_%v_14 
 		 3: 
 BB 10
@@ -330,7 +330,7 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->@range %self[4.11,2.0,] 
+		 1: ATTRASSIGN %self->range 
 		 2: COPY def_%v_17 
 		 3: 
 BB 12
@@ -346,7 +346,7 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->@range %self[4.11,2.0,] 
+		 1: ATTRASSIGN %self->range 
 		 2: COPY def_%v_20 
 		 3: 
 BB 14
@@ -354,7 +354,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->@range %self[4.11,2.0,] 
+		 1: ATTRASSIGN %self->range 
 		 2: COPY def_%v_20 
 BB 15
 	outgoing: 16 
@@ -381,7 +381,7 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_21 %self[9.1,4.11,11.1,2.0,14.1,13.1,] 
+		 1: GETFIELD %self->range def_%v_21 %self[9.1,4.11,11.1,2.0,14.1,13.1,] 
 		 2: RETURN %v_21[19.1,] %self[9.1,4.11,11.1,2.0,14.1,13.1,] 
 BB 21
 	outgoing: 
@@ -606,7 +606,7 @@ BB 12
 		 3: %v_16->now def_%v_17 %v_16[12.2,] 
 		 4: %v_17->at_midnight def_%v_18 %v_17[12.3,] 
 		 5: %v_15->local_to_utc def_%v_19 %v_15[12.1,] %v_18[12.4,] 
-		 6: ATTRASSIGN %self->@start_date %self[12.1,12.2,2.0,] %v_19[12.5,] 
+		 6: ATTRASSIGN %self->start_date %v_19[12.5,] 
 		 7: COPY def_%v_5 %v_19[12.5,] 
 		 8: RETURN %v_19[12.5,] %self[12.1,12.2,12.6,2.0,] 
 BB 13
@@ -621,14 +621,14 @@ BB 13
 		 5: def_%v_24 %v_22[13.3,] %v_23[13.4,] 
 		 6: %v_24->at_midnight def_%v_25 %v_24[13.5,] 
 		 7: %v_20->local_to_utc def_%v_26 %v_20[13.1,] %v_25[13.6,] 
-		 8: ATTRASSIGN %self->@start_date %self[13.1,13.2,2.0,] %v_26[13.7,] 
+		 8: ATTRASSIGN %self->start_date %v_26[13.7,] 
 		 9: 
 		 10: %self->tz def_%v_27 %self[13.1,13.2,13.8,2.0,] 
 		 11: %self->tz def_%v_28 %self[13.1,13.2,13.8,13.10,2.0,] 
 		 12: %v_28->now def_%v_29 %v_28[13.11,] 
 		 13: %v_29->at_midnight def_%v_30 %v_29[13.12,] 
 		 14: %v_27->local_to_utc def_%v_31 %v_27[13.10,] %v_30[13.13,] 
-		 15: ATTRASSIGN %self->@end_date %self[13.1,13.2,13.8,13.10,13.11,2.0,] %v_31[13.14,] 
+		 15: ATTRASSIGN %self->end_date %v_31[13.14,] 
 		 16: COPY def_%v_5 %v_31[13.14,] 
 		 17: RETURN %v_31[13.14,] %self[13.1,13.2,13.8,13.10,13.11,13.15,2.0,] 
 BB 14
@@ -641,7 +641,7 @@ BB 14
 		 3: %v_33->now def_%v_34 %v_33[14.2,] 
 		 4: %v_34->beginning_of_week def_%v_35 %v_34[14.3,] 
 		 5: %v_32->local_to_utc def_%v_36 %v_32[14.1,] %v_35[14.4,] 
-		 6: ATTRASSIGN %self->@start_date %self[14.1,14.2,2.0,] %v_36[14.5,] 
+		 6: ATTRASSIGN %self->start_date %v_36[14.5,] 
 		 7: COPY def_%v_5 %v_36[14.5,] 
 		 8: RETURN %v_36[14.5,] %self[14.1,14.2,14.6,2.0,] 
 BB 15
@@ -656,14 +656,14 @@ BB 15
 		 5: def_%v_41 %v_39[15.3,] %v_40[15.4,] 
 		 6: %v_41->beginning_of_week def_%v_42 %v_41[15.5,] 
 		 7: %v_37->local_to_utc def_%v_43 %v_37[15.1,] %v_42[15.6,] 
-		 8: ATTRASSIGN %self->@start_date %self[15.1,15.2,2.0,] %v_43[15.7,] 
+		 8: ATTRASSIGN %self->start_date %v_43[15.7,] 
 		 9: 
 		 10: %self->tz def_%v_44 %self[15.1,15.2,15.8,2.0,] 
 		 11: %self->tz def_%v_45 %self[15.1,15.2,15.8,15.10,2.0,] 
 		 12: %v_45->now def_%v_46 %v_45[15.11,] 
 		 13: %v_46->beginning_of_week def_%v_47 %v_46[15.12,] 
 		 14: %v_44->local_to_utc def_%v_48 %v_44[15.10,] %v_47[15.13,] 
-		 15: ATTRASSIGN %self->@end_date %self[15.1,15.2,15.8,15.10,15.11,2.0,] %v_48[15.14,] 
+		 15: ATTRASSIGN %self->end_date %v_48[15.14,] 
 		 16: COPY def_%v_5 %v_48[15.14,] 
 		 17: RETURN %v_48[15.14,] %self[15.1,15.2,15.8,15.10,15.11,15.15,2.0,] 
 BB 16
@@ -676,7 +676,7 @@ BB 16
 		 3: %v_50->now def_%v_51 %v_50[16.2,] 
 		 4: %v_51->beginning_of_month def_%v_52 %v_51[16.3,] 
 		 5: %v_49->local_to_utc def_%v_53 %v_49[16.1,] %v_52[16.4,] 
-		 6: ATTRASSIGN %self->@start_date %self[16.1,16.2,2.0,] %v_53[16.5,] 
+		 6: ATTRASSIGN %self->start_date %v_53[16.5,] 
 		 7: COPY def_%v_5 %v_53[16.5,] 
 		 8: RETURN %v_53[16.5,] %self[16.1,16.2,16.6,2.0,] 
 BB 17
@@ -691,14 +691,14 @@ BB 17
 		 5: def_%v_58 %v_56[17.3,] %v_57[17.4,] 
 		 6: %v_58->beginning_of_month def_%v_59 %v_58[17.5,] 
 		 7: %v_54->local_to_utc def_%v_60 %v_54[17.1,] %v_59[17.6,] 
-		 8: ATTRASSIGN %self->@start_date %self[17.1,17.2,2.0,] %v_60[17.7,] 
+		 8: ATTRASSIGN %self->start_date %v_60[17.7,] 
 		 9: 
 		 10: %self->tz def_%v_61 %self[17.1,17.2,17.8,2.0,] 
 		 11: %self->tz def_%v_62 %self[17.1,17.2,17.8,17.10,2.0,] 
 		 12: %v_62->now def_%v_63 %v_62[17.11,] 
 		 13: %v_63->beginning_of_month def_%v_64 %v_63[17.12,] 
 		 14: %v_61->local_to_utc def_%v_65 %v_61[17.10,] %v_64[17.13,] 
-		 15: ATTRASSIGN %self->@end_date %self[17.1,17.2,17.8,17.10,17.11,2.0,] %v_65[17.14,] 
+		 15: ATTRASSIGN %self->end_date %v_65[17.14,] 
 		 16: COPY def_%v_5 %v_65[17.14,] 
 		 17: RETURN %v_65[17.14,] %self[17.1,17.2,17.8,17.10,17.11,17.15,2.0,] 
 BB 18
@@ -711,7 +711,7 @@ BB 18
 		 3: %v_67->now def_%v_68 %v_67[18.2,] 
 		 4: %v_68->beginning_of_year def_%v_69 %v_68[18.3,] 
 		 5: %v_66->local_to_utc def_%v_70 %v_66[18.1,] %v_69[18.4,] 
-		 6: ATTRASSIGN %self->@start_date %self[18.1,18.2,2.0,] %v_70[18.5,] 
+		 6: ATTRASSIGN %self->start_date %v_70[18.5,] 
 		 7: COPY def_%v_5 %v_70[18.5,] 
 		 8: RETURN %v_70[18.5,] %self[18.1,18.2,18.6,2.0,] 
 BB 19
@@ -726,14 +726,14 @@ BB 19
 		 5: def_%v_75 %v_73[19.3,] %v_74[19.4,] 
 		 6: %v_75->beginning_of_year def_%v_76 %v_75[19.5,] 
 		 7: %v_71->local_to_utc def_%v_77 %v_71[19.1,] %v_76[19.6,] 
-		 8: ATTRASSIGN %self->@start_date %self[19.1,19.2,2.0,] %v_77[19.7,] 
+		 8: ATTRASSIGN %self->start_date %v_77[19.7,] 
 		 9: 
 		 10: %self->tz def_%v_78 %self[19.1,19.2,19.8,2.0,] 
 		 11: %self->tz def_%v_79 %self[19.1,19.2,19.8,19.10,2.0,] 
 		 12: %v_79->now def_%v_80 %v_79[19.11,] 
 		 13: %v_80->beginning_of_year def_%v_81 %v_80[19.12,] 
 		 14: %v_78->local_to_utc def_%v_82 %v_78[19.10,] %v_81[19.13,] 
-		 15: ATTRASSIGN %self->@end_date %self[19.1,19.2,19.8,19.10,19.11,2.0,] %v_82[19.14,] 
+		 15: ATTRASSIGN %self->end_date %v_82[19.14,] 
 		 16: COPY def_%v_5 %v_82[19.14,] 
 		 17: RETURN %v_82[19.14,] %self[19.1,19.2,19.8,19.10,19.11,19.15,2.0,] 
 BB 20
@@ -842,7 +842,7 @@ BB 34
 		 1: %self->tz def_%v_108 %self[2.0,] 
 		 2: start_date->midnight def_%v_109 start_date[25.8,31.3,] 
 		 3: %v_108->local_to_utc def_%v_110 %v_108[34.1,] %v_109[34.2,] 
-		 4: ATTRASSIGN %self->@start_date %self[34.1,2.0,] %v_110[34.3,] 
+		 4: ATTRASSIGN %self->start_date %v_110[34.3,] 
 		 5: 
 BB 35
 	outgoing: 36 
@@ -957,7 +957,7 @@ BB 50
 		 3: def_%v_138 end_date[41.8,47.3,] %v_137[50.2,] 
 		 4: %v_138->midnight def_%v_139 %v_138[50.3,] 
 		 5: %v_136->local_to_utc def_%v_140 %v_136[50.1,] %v_139[50.4,] 
-		 6: ATTRASSIGN %self->@end_date %self[50.1,34.4,2.0,] %v_140[50.5,] 
+		 6: ATTRASSIGN %self->end_date %v_140[50.5,] 
 		 7: 
 BB 51
 	outgoing: 52 
@@ -1047,14 +1047,14 @@ CLOSURE END
 		 22: %v_9->includes def_%v_13 %v_9[2.18,] %v_12[2.21,] 
 		 23: COPY def_logs %v_13[2.22,] 
 		 24: 
-		 25: def_%v_14 %self[2.0,2.15,] 
+		 25: GETFIELD %self->start_date def_%v_14 %self[2.0,2.15,] 
 		 26: BRANCH %v_14[2.25,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_15 
-		 1: def_%v_16 %self[2.0,] 
+		 1: GETFIELD %self->start_date def_%v_16 %self[2.0,] 
 		 2: logs->where def_%v_17 logs[2.9,2.23,] %v_15[3.0,] %v_16[3.1,] 
 		 3: COPY def_logs %v_17[3.2,] 
 		 4: 
@@ -1068,14 +1068,14 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_18 %self[2.0,] 
+		 1: GETFIELD %self->end_date def_%v_18 %self[2.0,] 
 		 2: BRANCH %v_18[5.1,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_19 
-		 1: def_%v_20 %self[2.0,] 
+		 1: GETFIELD %self->end_date def_%v_20 %self[2.0,] 
 		 2: logs->where def_%v_21 logs[3.3,2.9,2.23,] %v_19[6.0,] %v_20[6.1,] 
 		 3: COPY def_logs %v_21[6.2,] 
 		 4: 
@@ -1246,7 +1246,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: ATTRASSIGN %self->@work_logs %self[2.0,] %v_49[25.1,] 
+		 2: ATTRASSIGN %self->work_logs %v_49[25.1,] 
 		 3: RETURN %v_49[25.1,] %self[25.2,2.0,] 
 BB 26
 	outgoing: 
@@ -1268,19 +1268,19 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: ATTRASSIGN %self->@total %self[2.0,] 
+		 6: ATTRASSIGN %self->total 
 		 7: 
 		 8: COPY def_%v_3 
-		 9: ATTRASSIGN %self->@row_totals %self[2.0,2.6,] %v_3[2.8,] 
+		 9: ATTRASSIGN %self->row_totals %v_3[2.8,] 
 		 10: 
 		 11: COPY def_%v_4 
-		 12: ATTRASSIGN %self->@column_totals %self[2.0,2.6,2.9,] %v_4[2.11,] 
+		 12: ATTRASSIGN %self->column_totals %v_4[2.11,] 
 		 13: 
 		 14: COPY def_%v_5 
-		 15: ATTRASSIGN %self->@column_headers %self[2.0,2.6,2.9,2.12,] %v_5[2.14,] 
+		 15: ATTRASSIGN %self->column_headers %v_5[2.14,] 
 		 16: 
 		 17: COPY def_%v_6 
-		 18: ATTRASSIGN %self->@rows %self[2.0,2.6,2.9,2.12,2.15,] %v_6[2.17,] 
+		 18: ATTRASSIGN %self->rows %v_6[2.17,] 
 		 19: 
 		 20: %self->start_date def_%v_7 %self[2.0,2.6,2.9,2.12,2.15,2.18,] 
 		 21: BRANCH %v_7[2.20,] 
@@ -1289,7 +1289,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 %self[2.0,2.6,2.9,2.12,2.15,2.18,] 
+		 1: GETFIELD %self->column_headers def_%v_8 %self[2.0,2.15,] 
 		 2: COPY def_%v_9 
 		 3: (I18n) def_%v_10 
 		 4: %self->start_date def_%v_11 %self[2.0,2.6,2.9,2.12,2.15,2.18,] 
@@ -1298,7 +1298,7 @@ BB 3
 		 7: COPY def_%v_14 %v_13[3.6,] 
 		 8: %v_10->l def_%v_15 %v_10[3.3,] %v_11[3.4,] %v_14[3.7,] 
 		 9: def_%v_16 %v_15[3.8,] 
-		 10: %v_8[3.1,] %v_9[3.2,] %v_16[3.9,] 
+		 10: ATTRASSIGN %v_8->[] %v_9[3.2,] %v_16[3.9,] 
 		 11: 
 		 12: %self->end_date def_%v_17 %self[3.4,3.5,2.0,2.6,2.9,2.12,2.15,2.18,] 
 		 13: BRANCH %v_17[3.12,] 
@@ -1310,7 +1310,7 @@ BB 4
 		 1: %v_18->yday def_%v_19 %v_18[4.0,] 
 		 2: %self->start_date def_%v_20 %self[4.0,2.0,2.6,2.9,2.12,2.15,2.18,] 
 		 3: %v_20->yday def_%v_21 %v_20[4.2,] 
-		 4: ATTRASSIGN %v_19->! def_%v_22 %v_19[4.1,] %v_21[4.3,] 
+		 4: %v_19->!= def_%v_22 %v_19[4.1,] %v_21[4.3,] 
 		 5: COPY def_%v_17 %v_22[4.4,] 
 BB 5
 	outgoing: 6 7 
@@ -1321,7 +1321,7 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_23 %self[2.0,2.6,2.9,2.12,2.15,2.18,] 
+		 0: GETFIELD %self->column_headers def_%v_23 %self[2.0,2.15,] 
 		 1: COPY def_%v_24 
 		 2: def_%v_25 %v_23[6.0,] %v_24[6.1,] 
 		 3: COPY def_%v_26 
@@ -1349,11 +1349,11 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_35 %self[2.0,2.6,2.9,2.12,2.15,2.18,] 
+		 1: GETFIELD %self->column_headers def_%v_35 %self[2.0,2.15,] 
 		 2: COPY def_%v_36 
 		 3: COPY def_%v_37 
 		 4: %v_37->html_safe def_%v_38 %v_37[9.3,] 
-		 5: %v_35[9.1,] %v_36[9.2,] %v_38[9.4,] 
+		 5: ATTRASSIGN %v_35->[] %v_36[9.2,] %v_38[9.4,] 
 		 6: COPY def_%v_34 %v_38[9.4,] 
 BB 10
 	outgoing: 11 
@@ -1406,12 +1406,12 @@ BB 7
 	instructions:
 		 0: COPY def_%cl_1_9 
 		 1: 
-		 2: def_%cl_1_10 %self[2.0,] 
+		 2: GETFIELD %self->total def_%cl_1_10 %self[2.0,] 
 		 3: w->duration def_%cl_1_11 w[2.2,] 
 		 4: def_%cl_1_12 %cl_1_10[7.2,] %cl_1_11[7.3,] 
-		 5: ATTRASSIGN %self->@total %self[2.0,] %cl_1_12[7.4,] 
+		 5: ATTRASSIGN %self->total %cl_1_12[7.4,] 
 		 6: 
-		 7: def_%cl_1_13 %self[7.5,2.0,] 
+		 7: GETFIELD %self->type def_%cl_1_13 %self[2.0,] 
 		 8: def_%cl_1_15 %cl_1_13[7.7,] 
 		 9: BRANCH %cl_1_15[7.8,] 
 BB 9
@@ -1443,7 +1443,7 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_19 %self[7.5,2.0,] 
+		 1: GETFIELD %self->column_value def_%cl_1_19 %self[2.0,] 
 		 2: %cl_1_19->== def_%cl_1_20 %cl_1_19[13.1,] 
 		 3: BRANCH %cl_1_20[13.2,] 
 BB 14
@@ -1473,12 +1473,12 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->column_value def_%cl_2_3 %self[2.0,] 
 		 2: %self->key_from_worklog def_%cl_2_4 %self[2.0,] tag[2.2,] %cl_2_3[3.1,] 
 		 3: %cl_2_4->to_s def_%cl_2_5 %cl_2_4[3.2,] 
 		 4: COPY def_key %cl_2_5[3.3,] 
 		 5: 
-		 6: def_%cl_2_6 %self[3.2,2.0,] 
+		 6: GETFIELD %self->column_headers def_%cl_2_6 %self[3.2,2.0,] 
 		 7: def_%cl_2_7 %cl_2_6[3.6,] %cl_2_5[3.3,] 
 		 8: BRANCH %cl_2_7[3.7,] 
 BB 4
@@ -1492,12 +1492,12 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_9 %self[2.0,] 
-		 2: def_%cl_2_10 %self[2.0,] 
+		 1: GETFIELD %self->column_headers def_%cl_2_9 %self[2.0,] 
+		 2: GETFIELD %self->column_value def_%cl_2_10 %self[2.0,] 
 		 3: %self->name_from_worklog def_%cl_2_11 %self[2.0,] tag[2.2,] %cl_2_10[5.2,] 
-		 4: %cl_2_9[5.1,] key[3.4,] %cl_2_11[5.3,] 
+		 4: ATTRASSIGN %cl_2_9->[] key[3.4,] %cl_2_11[5.3,] 
 		 5: 
-		 6: def_%cl_2_12 %self[5.3,2.0,] 
+		 6: GETFIELD %self->column_totals def_%cl_2_12 %self[5.3,2.0,] 
 		 7: def_%cl_2_13 %cl_2_12[5.6,] key[3.4,] 
 		 8: BRANCH %cl_2_13[5.7,] 
 BB 6
@@ -1536,12 +1536,12 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_24 %self[7.5,2.0,] 
+		 1: GETFIELD %self->column_value def_%cl_1_24 %self[2.0,] 
 		 2: %self->key_from_worklog def_%cl_1_25 %self[7.5,2.0,] w[2.2,] %cl_1_24[15.1,] 
 		 3: %cl_1_25->to_s def_%cl_1_26 %cl_1_25[15.2,] 
 		 4: COPY def_key %cl_1_26[15.3,] 
 		 5: 
-		 6: def_%cl_1_27 %self[15.2,7.5,2.0,] 
+		 6: GETFIELD %self->column_headers def_%cl_1_27 %self[15.2,2.0,] 
 		 7: def_%cl_1_28 %cl_1_27[15.6,] %cl_1_26[15.3,] 
 		 8: BRANCH %cl_1_28[15.7,] 
 BB 16
@@ -1555,12 +1555,12 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_30 %self[7.5,2.0,] 
-		 2: def_%cl_1_31 %self[7.5,2.0,] 
+		 1: GETFIELD %self->column_headers def_%cl_1_30 %self[2.0,] 
+		 2: GETFIELD %self->column_value def_%cl_1_31 %self[2.0,] 
 		 3: %self->name_from_worklog def_%cl_1_32 %self[7.5,2.0,] w[2.2,] %cl_1_31[17.2,] 
-		 4: %cl_1_30[17.1,] key[15.4,] %cl_1_32[17.3,] 
+		 4: ATTRASSIGN %cl_1_30->[] key[15.4,] %cl_1_32[17.3,] 
 		 5: 
-		 6: def_%cl_1_33 %self[17.3,7.5,2.0,] 
+		 6: GETFIELD %self->column_value def_%cl_1_33 %self[17.3,2.0,] 
 		 7: %cl_1_33->== def_%cl_1_34 %cl_1_33[17.6,] 
 		 8: BRANCH %cl_1_34[17.7,] 
 BB 18
@@ -1568,10 +1568,10 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_35 %self[7.5,2.0,] 
+		 1: GETFIELD %self->column_headers def_%cl_1_35 %self[2.0,] 
 		 2: w->task def_%cl_1_36 w[2.2,] 
 		 3: %cl_1_36->name def_%cl_1_37 %cl_1_36[18.2,] 
-		 4: %cl_1_35[18.1,] key[15.4,] %cl_1_37[18.3,] 
+		 4: ATTRASSIGN %cl_1_35->[] key[15.4,] %cl_1_37[18.3,] 
 		 5: 
 BB 19
 	outgoing: 20 
@@ -1583,7 +1583,7 @@ BB 20
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_38 %self[7.5,2.0,] 
+		 1: GETFIELD %self->column_totals def_%cl_1_38 %self[2.0,] 
 		 2: def_%cl_1_39 %cl_1_38[20.1,] key[15.4,] 
 		 3: BRANCH %cl_1_39[20.2,] 
 BB 21
@@ -1682,7 +1682,7 @@ BB 3
 		 1: %self->key_from_worklog def_%cl_4_3 %self[2.0,] w[] k[2.2,] 
 		 2: COPY def_key %cl_4_3[3.1,] 
 		 3: 
-		 4: def_%cl_4_4 %self[3.1,2.0,] 
+		 4: GETFIELD %self->column_headers def_%cl_4_4 %self[3.1,2.0,] 
 		 5: def_%cl_4_5 %cl_4_4[3.4,] %cl_4_3[3.1,] 
 		 6: BRANCH %cl_4_5[3.5,] 
 BB 4
@@ -1696,11 +1696,11 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_4_7 %self[2.0,] 
+		 1: GETFIELD %self->column_headers def_%cl_4_7 %self[2.0,] 
 		 2: %self->name_from_worklog def_%cl_4_8 %self[2.0,] w[] k[2.2,] 
-		 3: %cl_4_7[5.1,] key[3.2,] %cl_4_8[5.2,] 
+		 3: ATTRASSIGN %cl_4_7->[] key[3.2,] %cl_4_8[5.2,] 
 		 4: 
-		 5: def_%cl_4_9 %self[5.2,2.0,] 
+		 5: GETFIELD %self->column_totals def_%cl_4_9 %self[5.2,2.0,] 
 		 6: def_%cl_4_10 %cl_4_9[5.5,] key[3.2,] 
 		 7: BRANCH %cl_4_10[5.6,] 
 BB 6
@@ -2890,7 +2890,7 @@ BB 2
 		 7: RECEIVEARG def_vkey 
 		 8: RECEIVEARG def_duration 
 		 9: 
-		 10: def_%v_3 %self[2.0,] 
+		 10: GETFIELD %self->rows def_%v_3 %self[2.0,] 
 		 11: def_%v_4 %v_3[2.10,] rkey[2.5,] 
 		 12: BRANCH %v_4[2.11,] 
 BB 3
@@ -2904,7 +2904,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_6 %self[2.0,] 
+		 1: GETFIELD %self->rows def_%v_6 %self[2.0,] 
 		 2: def_%v_7 %v_6[4.1,] rkey[2.5,] 
 		 3: BRANCH %v_7[4.2,] 
 BB 5
@@ -2919,7 +2919,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_9 %self[2.0,] 
+		 1: GETFIELD %self->row_totals def_%v_9 %self[2.0,] 
 		 2: def_%v_10 %v_9[6.1,] rkey[2.5,] 
 		 3: BRANCH %v_10[6.2,] 
 BB 7
@@ -2933,10 +2933,10 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_11 %self[2.0,] 
+		 1: GETFIELD %self->rows def_%v_11 %self[2.0,] 
 		 2: def_%v_12 %v_11[8.1,] rkey[2.5,] 
 		 3: COPY def_%v_13 
-		 4: %v_12[8.2,] %v_13[8.3,] rname[2.6,] 
+		 4: ATTRASSIGN %v_12->[] %v_13[8.3,] rname[2.6,] 
 		 5: COPY def_%v_5 rname[2.6,] 
 BB 9
 	outgoing: 10 16 
@@ -2951,7 +2951,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_16 %self[2.0,] 
+		 1: GETFIELD %self->rows def_%v_16 %self[2.0,] 
 		 2: def_%v_17 %v_16[10.1,] rkey[2.5,] 
 		 3: def_%v_18 %v_17[10.2,] vkey[2.7,] 
 		 4: BRANCH %v_18[10.3,] 
@@ -2971,7 +2971,7 @@ BB 13
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: def_%v_19 %self[2.0,] 
+		 0: GETFIELD %self->rows def_%v_19 %self[2.0,] 
 		 1: def_%v_20 %v_19[13.0,] rkey[2.5,] 
 		 2: def_%v_21 %v_20[13.1,] vkey[2.7,] 
 		 3: def_%v_21 %v_21[13.2,] duration[2.8,] 
@@ -2992,7 +2992,7 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_23 %self[2.0,] 
+		 1: GETFIELD %self->rows def_%v_23 %self[2.0,] 
 		 2: def_%v_24 %v_23[16.1,] rkey[2.5,] 
 		 3: def_%v_25 %v_24[16.2,] vkey[2.7,] 
 		 4: BRANCH %v_25[16.3,] 
@@ -3008,7 +3008,7 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_27 %self[2.0,] 
+		 1: GETFIELD %self->rows def_%v_27 %self[2.0,] 
 		 2: def_%v_28 %v_27[18.1,] rkey[2.5,] 
 		 3: def_%v_29 %v_28[18.2,] vkey[2.7,] 
 		 4: %v_29->length def_%v_30 %v_29[18.3,] 
@@ -3028,7 +3028,7 @@ BB 21
 	outgoing: 23 
 	datadep: 
 	instructions:
-		 0: def_%v_32 %self[2.0,] 
+		 0: GETFIELD %self->rows def_%v_32 %self[2.0,] 
 		 1: def_%v_33 %v_32[21.0,] rkey[2.5,] 
 		 2: def_%v_34 %v_33[21.1,] vkey[2.7,] 
 		 3: COPY def_%v_35 
@@ -3046,7 +3046,7 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_38 %self[2.0,] 
+		 1: GETFIELD %self->rows def_%v_38 %self[2.0,] 
 		 2: def_%v_39 %v_38[23.1,] rkey[2.5,] 
 		 3: def_%v_40 %v_39[23.2,] vkey[2.7,] 
 		 4: %v_40->length def_%v_41 %v_40[23.3,] 
@@ -3091,7 +3091,7 @@ BB 30
 	outgoing: 32 
 	datadep: 
 	instructions:
-		 0: def_%v_48 %self[2.0,] 
+		 0: GETFIELD %self->rows def_%v_48 %self[2.0,] 
 		 1: def_%v_49 %v_48[30.0,] rkey[2.5,] 
 		 2: def_%v_50 %v_49[30.1,] vkey[2.7,] 
 		 3: COPY def_%v_51 
@@ -3114,7 +3114,7 @@ BB 33
 	outgoing: 35 
 	datadep: 
 	instructions:
-		 0: def_%v_54 %self[2.0,] 
+		 0: GETFIELD %self->rows def_%v_54 %self[2.0,] 
 		 1: def_%v_55 %v_54[33.0,] rkey[2.5,] 
 		 2: def_%v_56 %v_55[33.1,] vkey[2.7,] 
 		 3: def_%v_56 %v_56[33.2,] duration[2.8,] 
@@ -3170,7 +3170,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_11 %self[2.0,] 
+		 0: GETFIELD %self->column_totals def_%v_11 %self[2.0,] 
 		 1: def_%v_12 %v_11[4.0,] key[2.6,] 
 		 2: w->duration def_%v_13 w[2.5,] 
 		 3: def_%v_12 %v_12[4.1,] %v_13[4.2,] 
@@ -3188,7 +3188,7 @@ BB 5
 		 5: %self->name_from_worklog def_%v_17 %self[5.1,2.0,] w[2.5,] 
 		 6: COPY def_row_name %v_17[5.5,] 
 		 7: 
-		 8: def_%v_18 %self[5.1,5.5,2.0,] 
+		 8: GETFIELD %self->row_value def_%v_18 %self[5.1,5.5,2.0,] 
 		 9: %v_18->== def_%v_19 %v_18[5.8,] 
 		 10: BRANCH %v_19[5.9,] 
 BB 6
@@ -3209,7 +3209,7 @@ BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_24 %self[2.0,] 
+		 0: GETFIELD %self->type def_%v_24 %self[2.0,] 
 		 1: %v_24->== def_%v_25 %v_24[8.0,] 
 		 2: COPY def_%v_19 %v_25[8.1,] 
 BB 9
@@ -3244,19 +3244,19 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->row_value def_%cl_1_3 %self[2.0,] 
 		 2: %self->key_from_worklog def_%cl_1_4 %self[2.0,] tag[2.2,] %cl_1_3[3.1,] 
 		 3: %cl_1_4->to_s def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: COPY def_rkey %cl_1_5[3.3,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.2,2.0,] 
+		 6: GETFIELD %self->row_value def_%cl_1_6 %self[3.2,2.0,] 
 		 7: %self->name_from_worklog def_%cl_1_7 %self[3.2,2.0,] tag[2.2,] %cl_1_6[3.6,] 
 		 8: COPY def_row_name %cl_1_7[3.7,] 
 		 9: 
 		 10: w->duration def_%cl_1_8 w[] 
 		 11: %self->do_row def_%cl_1_9 %self[3.2,3.7,2.0,] rkey[3.4,] row_name[3.8,] key[] %cl_1_8[3.10,] 
 		 12: 
-		 13: def_%cl_1_10 %self[3.2,3.7,3.11,2.0,] 
+		 13: GETFIELD %self->row_totals def_%cl_1_10 %self[3.2,3.7,3.11,2.0,] 
 		 14: def_%cl_1_11 %cl_1_10[3.13,] rkey[3.4,] 
 		 15: w->duration def_%cl_1_12 w[3.10,] 
 		 16: def_%cl_1_11 %cl_1_11[3.14,] %cl_1_12[3.15,] 
@@ -3314,7 +3314,7 @@ BB 15
 		 0: 
 		 1: %self->do_row def_%v_37 %self[2.0,] rkey[5.3,] row_name[5.6,] key[2.6,] body[12.3,] 
 		 2: 
-		 3: def_%v_38 %self[15.1,2.0,] 
+		 3: GETFIELD %self->row_totals def_%v_38 %self[15.1,2.0,] 
 		 4: def_%v_39 %v_38[15.3,] rkey[5.3,] 
 		 5: w->duration def_%v_40 w[2.5,] 
 		 6: def_%v_39 %v_39[15.4,] %v_40[15.5,] 
@@ -3354,7 +3354,7 @@ BB 17
 		 19: %v_61->html_safe def_%v_62 %v_61[17.18,] 
 		 20: %self->do_row def_%v_63 %self[17.5,17.8,17.12,2.0,] rkey[5.3,] row_name[5.6,] key[2.6,] %v_62[17.19,] 
 		 21: 
-		 22: def_%v_64 %self[17.5,17.8,17.12,17.20,2.0,] 
+		 22: GETFIELD %self->row_totals def_%v_64 %self[17.5,17.8,17.12,17.20,2.0,] 
 		 23: def_%v_65 %v_64[17.22,] rkey[5.3,] 
 		 24: w->duration def_%v_66 w[17.2,17.6,2.5,] 
 		 25: def_%v_65 %v_65[17.23,] %v_66[17.24,] 
@@ -3652,7 +3652,7 @@ BB 49
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->do_row def_%v_170 %self[2.0,] rkey[5.3,] row_name[5.6,] key[2.6,] body[47.8,47.12,47.15,37.0,44.8,41.4,38.5,] 
+		 1: %self->do_row def_%v_170 %self[2.0,] rkey[5.3,] row_name[5.6,] key[2.6,] body[47.8,47.12,47.15,37.0,] 
 		 2: 
 BB 50
 	outgoing: 51 52 
@@ -3679,23 +3679,23 @@ BB 52
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_176 %self[2.0,] 
+		 1: GETFIELD %self->row_value def_%v_176 %self[2.0,] 
 		 2: %self->key_from_worklog def_%v_177 %self[2.0,] w[2.5,] %v_176[52.1,] 
 		 3: %v_177->to_s def_%v_178 %v_177[52.2,] 
 		 4: COPY def_rkey %v_178[52.3,] 
 		 5: 
-		 6: def_%v_179 %self[52.2,2.0,] 
+		 6: GETFIELD %self->row_value def_%v_179 %self[52.2,2.0,] 
 		 7: %self->name_from_worklog def_%v_180 %self[52.2,2.0,] w[2.5,] %v_179[52.6,] 
 		 8: COPY def_row_name %v_180[52.7,] 
 		 9: 
 		 10: w->duration def_%v_181 w[2.5,] 
-		 11: %self->do_row def_%v_182 %self[52.2,52.7,2.0,] rkey[52.4,5.3,] row_name[52.8,5.6,] key[2.6,] %v_181[52.10,] 
+		 11: %self->do_row def_%v_182 %self[52.2,52.7,2.0,] rkey[52.4,] row_name[52.8,] key[2.6,] %v_181[52.10,] 
 		 12: 
-		 13: def_%v_183 %self[52.2,52.7,52.11,2.0,] 
-		 14: def_%v_184 %v_183[52.13,] rkey[52.4,5.3,] 
+		 13: GETFIELD %self->row_totals def_%v_183 %self[52.2,52.7,52.11,2.0,] 
+		 14: def_%v_184 %v_183[52.13,] rkey[52.4,] 
 		 15: w->duration def_%v_185 w[52.10,2.5,] 
 		 16: def_%v_184 %v_184[52.14,] %v_185[52.15,] 
-		 17: def_%v_186 %v_183[52.13,] rkey[52.4,5.3,] %v_184[52.14,52.16,] 
+		 17: def_%v_186 %v_183[52.13,] rkey[52.4,] %v_184[52.14,52.16,] 
 		 18: COPY def_%v_175 %v_184[52.14,52.16,] 
 BB 53
 	outgoing: 54 
@@ -3836,7 +3836,7 @@ BB 2
 		 5: RECEIVEARG def_w 
 		 6: 
 		 7: COPY def_%v_3 
-		 8: def_%v_4 %self[2.0,] 
+		 8: GETFIELD %self->range def_%v_4 %self[2.0,] 
 		 9: %v_4->to_i def_%v_5 %v_4[2.8,] 
 		 10: %v_3->include? def_%v_6 %v_3[2.7,] %v_5[2.9,] 
 		 11: BRANCH %v_6[2.10,] 
@@ -3860,7 +3860,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: COPY def_%v_15 
-		 2: def_%v_16 %self[2.0,] 
+		 2: GETFIELD %self->range def_%v_16 %self[2.0,] 
 		 3: %v_16->to_i def_%v_17 %v_16[4.2,] 
 		 4: %v_15->include? def_%v_18 %v_15[4.1,] %v_17[4.3,] 
 		 5: BRANCH %v_18[4.4,] 
@@ -3881,7 +3881,7 @@ BB 5
 		 10: def_%v_28 
 		 11: %v_27->since def_%v_29 %v_27[5.9,] %v_28[5.10,] 
 		 12: %v_29->month def_%v_30 %v_29[5.11,] 
-		 13: ATTRASSIGN %v_23->! def_%v_31 %v_23[5.5,] %v_30[5.12,] 
+		 13: %v_23->!= def_%v_31 %v_23[5.5,] %v_30[5.12,] 
 		 14: BRANCH %v_31[5.13,] 
 BB 6
 	outgoing: 7 8 
@@ -4038,7 +4038,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_148 %self[2.0,] 
+		 1: GETFIELD %self->range def_%v_148 %self[2.0,] 
 		 2: %v_148->to_i def_%v_149 %v_148[12.1,] 
 		 3: %v_149->== def_%v_150 %v_149[12.2,] 
 		 4: BRANCH %v_150[12.3,] 
@@ -4046,7 +4046,7 @@ BB 13
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: def_%v_151 %self[2.0,] 
+		 0: GETFIELD %self->range def_%v_151 %self[2.0,] 
 		 1: %v_151->to_i def_%v_152 %v_151[13.0,] 
 		 2: %v_152->== def_%v_153 %v_152[13.1,] 
 		 3: COPY def_%v_150 %v_153[13.2,] 
@@ -4198,13 +4198,13 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->column_headers def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD %self->column_headers def_%v_4 %self[2.0,] 
 		 1: %v_4->size def_%v_5 %v_4[3.0,] 
 		 2: def_%v_6 %v_5[3.1,] 
 		 3: COPY def_%v_3 %v_6[3.2,] 
@@ -4231,25 +4231,25 @@ BB 6
 		 0: 
 		 1: (GeneratedReport) def_%v_10 
 		 2: %v_10->new def_%v_11 %v_10[6.1,] 
-		 3: ATTRASSIGN %self->@generated_report %self[2.0,] %v_11[6.2,] 
+		 3: ATTRASSIGN %self->generated_report %v_11[6.2,] 
 		 4: 
-		 5: def_%v_12 %self[6.3,2.0,] 
+		 5: GETFIELD %self->generated_report def_%v_12 %self[6.3,2.0,] 
 		 6: %self->current_user def_%v_13 %self[6.3,2.0,] 
 		 7: %v_13->company def_%v_14 %v_13[6.6,] 
-		 8: ATTRASSIGN %v_12->company %v_12[6.5,] %v_14[6.7,] 
+		 8: ATTRASSIGN %v_12->company %v_14[6.7,] 
 		 9: 
-		 10: def_%v_15 %self[6.3,6.6,2.0,] 
+		 10: GETFIELD %self->generated_report def_%v_15 %self[6.3,6.6,2.0,] 
 		 11: %self->current_user def_%v_16 %self[6.3,6.6,2.0,] 
-		 12: ATTRASSIGN %v_15->user %v_15[6.10,] %v_16[6.11,] 
+		 12: ATTRASSIGN %v_15->user %v_16[6.11,] 
 		 13: 
-		 14: def_%v_17 %self[6.3,6.6,6.11,2.0,] 
+		 14: GETFIELD %self->generated_report def_%v_17 %self[6.3,6.6,6.11,2.0,] 
 		 15: COPY def_%v_18 
-		 16: ATTRASSIGN %v_17->filename %v_17[6.14,] %v_18[6.15,] 
+		 16: ATTRASSIGN %v_17->filename %v_18[6.15,] 
 		 17: 
-		 18: def_%v_19 %self[6.3,6.6,6.11,2.0,] 
-		 19: ATTRASSIGN %v_19->report %v_19[6.18,] csv[5.2,] 
+		 18: GETFIELD %self->generated_report def_%v_19 %self[6.3,6.6,6.11,2.0,] 
+		 19: ATTRASSIGN %v_19->report csv[5.2,] 
 		 20: 
-		 21: def_%v_20 %self[6.3,6.6,6.11,2.0,] 
+		 21: GETFIELD %self->generated_report def_%v_20 %self[6.3,6.6,6.11,2.0,] 
 		 22: %v_20->save def_%v_21 %v_20[6.21,] 
 		 23: 
 BB 7
@@ -4291,7 +4291,7 @@ BB 2
 		 7: COPY def_csv_string %v_3[2.6,] 
 		 8: 
 		 9: 
-		 10: def_%v_4 %self[2.0,] 
+		 10: GETFIELD %self->column_headers def_%v_4 %self[2.0,] 
 		 11: BRANCH %v_4[2.10,] 
 BB 3
 	outgoing: 5 
@@ -4324,7 +4324,7 @@ BB 3
 		 2: COPY def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: COPY def_header %cl_1_4[3.2,] 
 		 4: 
-		 5: def_%cl_1_5 %self[2.0,] 
+		 5: GETFIELD %self->column_headers def_%cl_1_5 %self[2.0,] 
 		 6: %cl_1_5->sort def_%cl_1_6 %cl_1_5[3.5,] 
 		 7: %cl_1_6->each def_%cl_1_7 %cl_1_6[3.6,] %self[2.0,] 
 CLOSURE BEGIN: key[] %self[2.0,] value[] header[3.3,] 
@@ -4387,7 +4387,7 @@ CLOSURE END
 		 11: 
 		 12: def_%cl_1_10 csv[2.2,] header[3.3,] 
 		 13: 
-		 14: def_%cl_1_11 %self[2.0,] 
+		 14: GETFIELD %self->rows def_%cl_1_11 %self[2.0,] 
 		 15: %cl_1_11->sort def_%cl_1_12 %cl_1_11[3.14,] 
 		 16: %cl_1_12->each def_%cl_1_13 %cl_1_12[3.15,] %self[2.0,] 
 CLOSURE BEGIN: value[] %self[2.0,] row[] key[] csv[2.2,] 
@@ -4418,7 +4418,7 @@ BB 3
 		 6: %self->clean_value def_%cl_3_6 %self[2.0,] %cl_3_5[3.5,] 
 		 7: def_%cl_3_7 row[3.2,] %cl_3_6[3.6,] 
 		 8: 
-		 9: def_%cl_3_8 %self[3.6,2.0,] 
+		 9: GETFIELD %self->column_headers def_%cl_3_8 %self[3.6,2.0,] 
 		 10: %cl_3_8->sort def_%cl_3_9 %cl_3_8[3.9,] 
 		 11: %cl_3_9->each def_%cl_3_10 %cl_3_9[3.10,] %self[3.6,2.0,] 
 CLOSURE BEGIN: k[] value[2.3,] v[] val[] %self[3.6,2.0,] row[3.2,] 
@@ -4592,7 +4592,7 @@ BB 27
 	instructions:
 CLOSURE END
 		 12: 
-		 13: def_%cl_3_11 %self[3.6,2.0,] 
+		 13: GETFIELD %self->row_totals def_%cl_3_11 %self[3.6,2.0,] 
 		 14: def_%cl_3_12 %cl_3_11[3.13,] key[2.2,] 
 		 15: def_%cl_3_13 row[3.2,] %cl_3_12[3.14,] 
 		 16: 
@@ -4617,7 +4617,7 @@ CLOSURE END
 		 21: COPY def_%cl_1_15 
 		 22: def_%cl_1_16 %cl_1_14[3.18,] %cl_1_15[3.21,] 
 		 23: 
-		 24: def_%cl_1_17 %self[2.0,] 
+		 24: GETFIELD %self->column_headers def_%cl_1_17 %self[2.0,] 
 		 25: %cl_1_17->sort def_%cl_1_18 %cl_1_17[3.24,] 
 		 26: %cl_1_18->each def_%cl_1_19 %cl_1_18[3.25,] %self[2.0,] 
 CLOSURE BEGIN: key[] %self[2.0,] row[3.19,] val[] 
@@ -4661,7 +4661,7 @@ BB 6
 		 0: 
 		 1: COPY def_val 
 		 2: 
-		 3: def_%cl_5_6 %self[2.0,] 
+		 3: GETFIELD %self->column_totals def_%cl_5_6 %self[2.0,] 
 		 4: def_%cl_5_7 %cl_5_6[6.3,] key[2.2,] 
 		 5: def_%cl_5_8 %cl_5_7[6.4,] 
 		 6: BRANCH %cl_5_8[6.5,] 
@@ -4669,7 +4669,7 @@ BB 7
 	outgoing: 9 10 
 	datadep: 
 	instructions:
-		 0: def_%cl_5_9 %self[2.0,] 
+		 0: GETFIELD %self->column_totals def_%cl_5_9 %self[2.0,] 
 		 1: def_%cl_5_10 %cl_5_9[7.0,] key[2.2,] 
 		 2: COPY def_val %cl_5_10[7.1,] 
 		 3: 
@@ -4698,7 +4698,7 @@ BB 12
 	instructions:
 CLOSURE END
 		 27: 
-		 28: def_%cl_1_20 %self[2.0,] 
+		 28: GETFIELD %self->total def_%cl_1_20 %self[2.0,] 
 		 29: def_%cl_1_21 row[3.19,] %cl_1_20[3.28,] 
 		 30: 
 		 31: def_%cl_1_22 csv[2.2,] row[3.19,] 
@@ -4806,7 +4806,7 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: RETURN res[4.5,2.7,] %self[2.0,] 
+		 1: RETURN res[4.5,] %self[2.0,] 
 BB 13
 	outgoing: 
 	datadep: 
@@ -4827,7 +4827,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->controller def_%v_3 %self[2.0,] 
 		 7: %v_3->send def_%v_4 %v_3[2.6,] 
 		 8: RETURN %v_4[2.7,] %self[2.0,] 
 BB 3

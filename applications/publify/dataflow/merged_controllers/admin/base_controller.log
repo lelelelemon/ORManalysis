@@ -186,7 +186,7 @@ BB 4
 		 2: (I18n) def_%cl_1_7 
 		 3: COPY def_%cl_1_8 
 		 4: %cl_1_7->t def_%cl_1_9 %cl_1_7[4.2,] %cl_1_8[4.3,] 
-		 5: %cl_1_6[4.1,] %cl_1_9[4.4,] 
+		 5: ATTRASSIGN %cl_1_6->[] %cl_1_9[4.4,] 
 		 6: 
 BB 5
 	outgoing: 7 9 
@@ -203,7 +203,7 @@ BB 5
 		 8: %cl_1_15->join def_%cl_1_17 %cl_1_15[5.6,] %cl_1_16[5.7,] 
 		 9: COPY def_%cl_1_18 %cl_1_17[5.8,] 
 		 10: %cl_1_11->t def_%cl_1_19 %cl_1_11[5.2,] %cl_1_12[5.3,] %cl_1_18[5.9,] 
-		 11: %cl_1_10[5.1,] %cl_1_19[5.10,] 
+		 11: ATTRASSIGN %cl_1_10->[] %cl_1_19[5.10,] 
 		 12: RETURN %cl_1_19[5.10,] %self[5.1,5.4,2.0,] 
 BB 6
 	outgoing: 9 
@@ -254,16 +254,16 @@ BB 2
 		 7: %self->params def_%v_3 %self[2.0,] 
 		 8: def_%v_4 %v_3[2.7,] 
 		 9: klass_to_destroy->find def_%v_5 klass_to_destroy[2.5,] %v_4[2.8,] 
-		 10: ATTRASSIGN %self->@record %self[2.0,2.7,] %v_5[2.9,] 
+		 10: ATTRASSIGN %self->record %v_5[2.9,] 
 		 11: 
-		 12: def_%v_6 %self[2.0,2.7,2.10,] 
+		 12: GETFIELD %self->record def_%v_6 %self[2.0,2.7,2.10,] 
 		 13: %v_6->respond_to? def_%v_7 %v_6[2.12,] 
 		 14: BRANCH %v_7[2.13,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_8 %self[2.0,2.10,] 
+		 0: GETFIELD %self->record def_%v_8 %self[2.0,2.10,] 
 		 1: %self->current_user def_%v_9 %self[2.0,2.10,] 
 		 2: %v_8->access_by? def_%v_10 %v_8[3.0,] %v_9[3.1,] 
 		 3: %v_10->! def_%v_11 %v_10[3.2,] 
@@ -282,7 +282,7 @@ BB 5
 		 2: (I18n) def_%v_13 
 		 3: COPY def_%v_14 
 		 4: %v_13->t def_%v_15 %v_13[5.2,] %v_14[5.3,] 
-		 5: %v_12[5.1,] %v_15[5.4,] 
+		 5: ATTRASSIGN %v_12->[] %v_15[5.4,] 
 		 6: 
 		 7: COPY def_%v_16 
 		 8: COPY def_%v_17 %v_16[5.7,] 
@@ -294,7 +294,7 @@ BB 6
 	instructions:
 		 0: COPY def_%v_19 
 		 1: 
-		 2: def_%v_20 %self[2.0,2.10,] 
+		 2: GETFIELD %self->record def_%v_20 %self[2.0,2.10,] 
 		 3: %v_20->destroy def_%v_21 %v_20[6.2,] 
 		 4: 
 		 5: %self->flash def_%v_22 %self[2.0,2.10,] 
@@ -304,7 +304,7 @@ BB 6
 		 9: %v_25->humanize def_%v_26 %v_25[6.8,] 
 		 10: COPY def_%v_27 %v_26[6.9,] 
 		 11: %v_23->t def_%v_28 %v_23[6.6,] %v_24[6.7,] %v_27[6.10,] 
-		 12: %v_22[6.5,] %v_28[6.11,] 
+		 12: ATTRASSIGN %v_22->[] %v_28[6.11,] 
 		 13: 
 		 14: COPY def_%v_29 
 		 15: COPY def_%v_30 %v_29[6.14,] 
@@ -422,7 +422,7 @@ BB 11
 		 5: (I18n) def_%v_15 
 		 6: COPY def_%v_16 
 		 7: %v_15->t def_%v_17 %v_15[11.5,] %v_16[11.6,] 
-		 8: %v_14[11.4,] %v_17[11.7,] 
+		 8: ATTRASSIGN %v_14->[] %v_17[11.7,] 
 		 9: COPY def_%v_12 %v_17[11.7,] 
 		 10: %v_10[9.2,] 
 BB 13
@@ -453,7 +453,7 @@ BB 16
 		 4: checker->file def_%v_23 checker[7.1,] 
 		 5: COPY def_%v_24 %v_23[16.4,] 
 		 6: %v_21->t def_%v_25 %v_21[16.2,] %v_22[16.3,] %v_24[16.5,] 
-		 7: %v_20[16.1,] %v_25[16.6,] 
+		 7: ATTRASSIGN %v_20->[] %v_25[16.6,] 
 		 8: COPY def_%v_12 %v_25[16.6,] 
 		 9: %v_10[9.2,] 
 BB 17

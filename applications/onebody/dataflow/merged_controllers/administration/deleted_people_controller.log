@@ -67,7 +67,7 @@ BB 4
 		 0: 
 		 1: %self->params def_%v_10 %self[2.0,] 
 		 2: COPY def_%v_11 
-		 3: %v_10[4.1,] %v_11[4.2,] 
+		 3: ATTRASSIGN %v_10->[] %v_11[4.2,] 
 		 4: COPY def_%v_9 %v_11[4.2,] 
 BB 5
 	outgoing: 6 7 
@@ -156,7 +156,7 @@ BB 8
 		 9: def_%v_31 %v_30[8.8,] 
 		 10: COPY def_%v_32 %v_31[8.9,] 
 		 11: %v_29->paginate def_%v_33 %v_29[8.7,] %v_32[8.10,] 
-		 12: ATTRASSIGN %self->@people %self[8.5,8.8,2.0,] %v_33[8.11,] 
+		 12: ATTRASSIGN %self->people %v_33[8.11,] 
 		 13: 
 		 14: (Family) def_%v_34 
 		 15: %v_34->undeleted def_%v_35 %v_34[8.14,] 
@@ -165,8 +165,8 @@ BB 8
 		 18: %v_35->where def_%v_38 %v_35[8.15,] %v_37[8.17,] 
 		 19: COPY def_%v_39 
 		 20: %v_38->order def_%v_40 %v_38[8.18,] %v_39[8.19,] 
-		 21: ATTRASSIGN %self->@families %self[8.5,8.8,2.0,] %v_40[8.20,] 
-		 22: RETURN %v_40[8.20,] %self[8.5,8.8,2.0,] 
+		 21: ATTRASSIGN %self->families %v_40[8.20,] 
+		 22: RETURN %v_40[8.20,] %self[8.5,8.8,8.12,8.21,2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -398,7 +398,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
 		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3

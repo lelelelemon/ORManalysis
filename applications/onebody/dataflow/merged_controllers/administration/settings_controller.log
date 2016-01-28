@@ -14,11 +14,11 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@settings %self[2.0,] %v_3[2.6,] 
+		 7: ATTRASSIGN %self->settings %v_3[2.6,] 
 		 8: 
-		 9: %self->our_settings def_%v_4 %self[2.0,] 
-		 10: %v_4->each def_%v_5 %v_4[2.9,] %self[2.0,2.9,] 
-CLOSURE BEGIN: %self[2.0,2.9,] setting[] 
+		 9: %self->our_settings def_%v_4 %self[2.0,2.7,] 
+		 10: %v_4->each def_%v_5 %v_4[2.9,] %self[2.0,2.7,2.9,] 
+CLOSURE BEGIN: %self[2.0,2.7,2.9,] setting[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -37,7 +37,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->settings def_%cl_1_3 %self[2.0,] 
 		 2: setting->section def_%cl_1_5 setting[2.2,] 
 		 3: def_%cl_1_4 %cl_1_3[3.1,] %cl_1_5[3.2,] 
 		 4: BRANCH %cl_1_4[3.3,] 
@@ -53,12 +53,12 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_7 %self[2.0,] 
+		 1: GETFIELD %self->settings def_%cl_1_7 %self[2.0,] 
 		 2: setting->section def_%cl_1_8 setting[2.2,] 
 		 3: def_%cl_1_9 %cl_1_7[5.1,] %cl_1_8[5.2,] 
 		 4: COPY def_%cl_1_10 
 		 5: def_%cl_1_11 setting[5.2,2.2,] %cl_1_10[5.4,] 
-		 6: %cl_1_9[5.3,] %cl_1_11[5.5,] setting[5.2,2.2,] 
+		 6: ATTRASSIGN %cl_1_9->[] %cl_1_11[5.5,] setting[5.2,2.2,] 
 		 7: RETURN setting[5.2,2.2,] %self[2.0,] 
 BB 6
 	outgoing: 8 
@@ -86,7 +86,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: %v_7->all def_%v_8 %v_7[3.0,2.13,] 
-		 1: %v_8->map def_%v_9 %v_8[4.0,] %self[2.0,] 
+		 1: %v_8->map def_%v_9 %v_8[4.0,] %self[2.0,2.7,] 
 CLOSURE BEGIN: z[] 
 BB 1
 	outgoing: 6 2 
@@ -122,18 +122,18 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: ATTRASSIGN %self->@timezones %self[2.0,] %v_9[4.1,] 
+		 2: ATTRASSIGN %self->timezones %v_9[4.1,] 
 		 3: 
 		 4: COPY def_%v_10 
-		 5: %self->t def_%v_11 %self[2.0,] %v_10[4.4,] 
-		 6: ATTRASSIGN %self->@title %self[4.5,2.0,] %v_11[4.5,] 
+		 5: %self->t def_%v_11 %self[4.2,2.0,2.7,] %v_10[4.4,] 
+		 6: ATTRASSIGN %self->title %v_11[4.5,] 
 		 7: 
-		 8: %self->batch_administration_settings_path def_%v_12 %self[4.5,2.0,] 
+		 8: %self->batch_administration_settings_path def_%v_12 %self[4.2,4.5,4.6,2.0,2.7,] 
 		 9: COPY def_%v_13 
 		 10: COPY def_%v_14 
 		 11: COPY def_%v_15 %v_13[4.9,] %v_14[4.10,] 
-		 12: %self->form_tag def_%v_16 %self[4.5,4.8,2.0,] %v_12[4.8,] %v_15[4.11,] %self[4.5,4.8,2.0,] 
-CLOSURE BEGIN: %self[4.5,4.8,2.0,] 
+		 12: %self->form_tag def_%v_16 %self[4.2,4.5,4.6,4.8,2.0,2.7,] %v_12[4.8,] %v_15[4.11,] %self[4.2,4.5,4.6,4.8,2.0,2.7,] 
+CLOSURE BEGIN: %self[4.2,4.5,4.6,4.8,2.0,2.7,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -385,7 +385,7 @@ BB 3
 		 232: 
 		 233: COPY def_%cl_3_183 
 		 234: COPY def_%cl_3_184 
-		 235: def_%cl_3_185 %self[3.2,3.3,3.6,3.7,3.10,3.11,3.14,3.15,3.18,3.19,3.22,3.23,3.26,3.27,3.30,3.31,3.34,3.35,3.38,3.39,3.43,3.46,3.54,3.57,3.61,3.65,3.68,3.71,3.74,3.78,3.82,3.86,3.90,3.93,3.97,3.101,3.105,3.109,3.112,3.115,3.119,3.123,3.127,3.131,3.135,3.139,3.142,3.145,3.148,3.152,3.155,3.159,3.163,3.167,3.171,3.173,3.176,3.179,3.183,3.187,3.191,3.195,3.199,3.203,3.209,3.213,3.216,3.219,3.228,3.231,2.0,] 
+		 235: GETFIELD %self->timezones def_%cl_3_185 %self[3.2,3.3,3.6,3.7,3.10,3.11,3.14,3.15,3.18,3.19,3.22,3.23,3.26,3.27,3.30,3.31,3.34,3.35,3.38,3.39,3.43,3.46,3.54,3.57,3.61,3.65,3.68,3.71,3.74,3.78,3.82,3.86,3.90,3.93,3.97,3.101,3.105,3.109,3.112,3.115,3.119,3.123,3.127,3.131,3.135,3.139,3.142,3.145,3.148,3.152,3.155,3.159,3.163,3.167,3.171,3.173,3.176,3.179,3.183,3.187,3.191,3.195,3.199,3.203,3.209,3.213,3.216,3.219,3.228,3.231,2.0,] 
 		 236: COPY def_%cl_3_186 %cl_3_185[3.235,] 
 		 237: %self->setting_row def_%cl_3_187 %self[3.2,3.3,3.6,3.7,3.10,3.11,3.14,3.15,3.18,3.19,3.22,3.23,3.26,3.27,3.30,3.31,3.34,3.35,3.38,3.39,3.43,3.46,3.54,3.57,3.61,3.65,3.68,3.71,3.74,3.78,3.82,3.86,3.90,3.93,3.97,3.101,3.105,3.109,3.112,3.115,3.119,3.123,3.127,3.131,3.135,3.139,3.142,3.145,3.148,3.152,3.155,3.159,3.163,3.167,3.171,3.173,3.176,3.179,3.183,3.187,3.191,3.195,3.199,3.203,3.209,3.213,3.216,3.219,3.228,3.231,2.0,] %cl_3_183[3.233,] %cl_3_184[3.234,] %cl_3_186[3.236,] 
 		 238: 
@@ -621,7 +621,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 13: RETURN %v_16[4.12,] %self[4.5,4.8,4.12,2.0,] 
+		 13: RETURN %v_16[4.12,] %self[4.2,4.5,4.6,4.8,4.12,2.0,2.7,] 
 BB 5
 	outgoing: 
 	datadep: 
@@ -654,7 +654,7 @@ BB 3
 		 3: %self->flash def_%v_5 %self[3.1,2.0,] 
 		 4: COPY def_%v_6 
 		 5: %self->t def_%v_7 %self[3.1,3.3,2.0,] %v_6[3.4,] 
-		 6: %v_5[3.3,] %v_7[3.5,] 
+		 6: ATTRASSIGN %v_5->[] %v_7[3.5,] 
 		 7: 
 BB 4
 	outgoing: 5 
@@ -698,7 +698,7 @@ BB 2
 		 8: %self->flash def_%v_4 %self[2.0,2.6,] 
 		 9: COPY def_%v_5 
 		 10: %self->t def_%v_6 %self[2.0,2.6,2.8,] %v_5[2.9,] 
-		 11: %v_4[2.8,] %v_6[2.10,] 
+		 11: ATTRASSIGN %v_4->[] %v_6[2.10,] 
 		 12: 
 		 13: %self->admin_path def_%v_7 %self[2.0,2.6,2.8,2.10,] 
 		 14: %self->redirect_to def_%v_8 %self[2.0,2.6,2.8,2.10,2.13,] %v_7[2.13,] 
@@ -734,7 +734,7 @@ BB 3
 		 1: %v_5->current def_%v_6 %v_5[3.0,] 
 		 2: %self->params def_%v_7 %self[2.0,] 
 		 3: def_%v_8 %v_7[3.2,] 
-		 4: ATTRASSIGN %v_6->host %v_6[3.1,] %v_8[3.3,] 
+		 4: ATTRASSIGN %v_6->host %v_8[3.3,] 
 		 5: 
 BB 4
 	outgoing: 5 
@@ -757,7 +757,7 @@ BB 6
 		 1: %v_11->current def_%v_12 %v_11[6.0,] 
 		 2: %self->params def_%v_13 %self[2.0,] 
 		 3: def_%v_14 %v_13[6.2,] 
-		 4: ATTRASSIGN %v_12->email_host %v_12[6.1,] %v_14[6.3,] 
+		 4: ATTRASSIGN %v_12->email_host %v_14[6.3,] 
 		 5: 
 BB 7
 	outgoing: 8 
@@ -931,7 +931,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
 		 7: %v_3->super_admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3

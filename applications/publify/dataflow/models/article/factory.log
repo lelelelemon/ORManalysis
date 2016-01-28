@@ -15,9 +15,9 @@ BB 2
 		 5: RECEIVEARG def_blog 
 		 6: RECEIVEARG def_user 
 		 7: 
-		 8: ATTRASSIGN %self->@blog %self[2.0,] blog[2.5,] 
+		 8: ATTRASSIGN %self->blog blog[2.5,] 
 		 9: 
-		 10: ATTRASSIGN %self->@user %self[2.0,2.8,] user[2.6,] 
+		 10: ATTRASSIGN %self->user user[2.6,] 
 		 11: RETURN user[2.6,] %self[2.0,2.8,2.10,] 
 BB 3
 	outgoing: 
@@ -63,17 +63,17 @@ BB 3
 		 0: 
 		 1: %self->blog def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->default_allow_comments def_%cl_1_4 %cl_1_3[3.1,] 
-		 3: ATTRASSIGN art->allow_comments art[2.2,] %cl_1_4[3.2,] 
+		 3: ATTRASSIGN art->allow_comments %cl_1_4[3.2,] 
 		 4: 
 		 5: %self->blog def_%cl_1_5 %self[3.1,2.0,] 
 		 6: %cl_1_5->default_allow_pings def_%cl_1_6 %cl_1_5[3.5,] 
-		 7: ATTRASSIGN art->allow_pings art[3.3,2.2,] %cl_1_6[3.6,] 
+		 7: ATTRASSIGN art->allow_pings %cl_1_6[3.6,] 
 		 8: 
 		 9: %self->user def_%cl_1_7 %self[3.1,3.5,2.0,] 
 		 10: %cl_1_7->default_text_filter def_%cl_1_8 %cl_1_7[3.9,] 
-		 11: ATTRASSIGN art->text_filter art[3.3,3.7,2.2,] %cl_1_8[3.10,] 
+		 11: ATTRASSIGN art->text_filter %cl_1_8[3.10,] 
 		 12: 
-		 13: ATTRASSIGN art->published art[3.3,3.7,3.11,2.2,] 
+		 13: ATTRASSIGN art->published 
 		 14: RETURN %self[3.1,3.5,3.9,2.0,] 
 BB 4
 	outgoing: 6 
@@ -164,7 +164,7 @@ BB 2
 		 21: 
 		 22: parts->length def_%v_11 parts[2.5,2.16,2.17,] 
 		 23: specs->length def_%v_12 specs[2.10,] 
-		 24: ATTRASSIGN %v_11->! def_%v_13 %v_11[2.22,] %v_12[2.23,] 
+		 24: %v_11->!= def_%v_13 %v_11[2.22,] %v_12[2.23,] 
 		 25: BRANCH %v_13[2.24,] 
 BB 4
 	outgoing: 9 
@@ -239,7 +239,7 @@ BB 4
 		 23: COPY def_result %cl_1_20[4.22,] 
 		 24: 
 		 25: format_string->to_sym def_%cl_1_21 format_string[4.9,] 
-		 26: article_params[] %cl_1_21[4.25,] result[4.23,] 
+		 26: ATTRASSIGN article_params->[] %cl_1_21[4.25,] result[4.23,] 
 		 27: COPY def_%cl_1_22 result[4.23,] 
 		 28: RETURN result[4.23,] %self[2.0,] 
 BB 5
@@ -247,7 +247,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN spec->! def_%cl_1_23 spec[2.2,] item[2.3,] 
+		 1: spec->!= def_%cl_1_23 spec[2.2,] item[2.3,] 
 		 2: BRANCH %cl_1_23[5.1,] 
 BB 6
 	outgoing: 10 12 

@@ -61,7 +61,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->verification def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -74,14 +74,14 @@ BB 5
 	instructions:
 		 0: (Verification) def_%v_6 
 		 1: %v_6->new def_%v_7 %v_6[5.0,] 
-		 2: ATTRASSIGN %self->@verification %self[2.0,] %v_7[5.1,] 
+		 2: ATTRASSIGN %self->verification %v_7[5.1,] 
 		 3: COPY def_%v_5 %v_7[5.1,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_8 %self[2.0,] 
+		 1: %self->params def_%v_8 %self[5.2,2.0,] 
 		 2: def_%v_9 %v_8[6.1,] 
 		 3: BRANCH %v_9[6.2,] 
 BB 7
@@ -91,14 +91,14 @@ BB 7
 		 0: 
 		 1: COPY def_%v_10 
 		 2: COPY def_%v_11 %v_10[7.1,] 
-		 3: %self->render def_%v_12 %self[2.0,] %v_11[7.2,] 
-		 4: RETURN %v_12[7.3,] %self[7.3,2.0,] 
+		 3: %self->render def_%v_12 %self[5.2,2.0,] %v_11[7.2,] 
+		 4: RETURN %v_12[7.3,] %self[7.3,5.2,2.0,] 
 BB 8
 	outgoing: 9 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_13 %self[2.0,] 
+		 1: %self->params def_%v_13 %self[5.2,2.0,] 
 		 2: def_%v_14 %v_13[8.1,] 
 		 3: BRANCH %v_14[8.2,] 
 BB 9
@@ -108,14 +108,14 @@ BB 9
 		 0: 
 		 1: COPY def_%v_15 
 		 2: COPY def_%v_16 %v_15[9.1,] 
-		 3: %self->render def_%v_17 %self[2.0,] %v_16[9.2,] 
+		 3: %self->render def_%v_17 %self[5.2,2.0,] %v_16[9.2,] 
 		 4: 
 BB 10
 	outgoing: 11 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_18 %self[2.0,] 
+		 1: %self->params def_%v_18 %self[5.2,2.0,] 
 		 2: def_%v_19 %v_18[10.1,] 
 		 3: BRANCH %v_19[10.2,] 
 BB 11
@@ -125,7 +125,7 @@ BB 11
 		 0: 
 		 1: COPY def_%v_20 
 		 2: COPY def_%v_21 %v_20[11.1,] 
-		 3: %self->render def_%v_22 %self[2.0,] %v_21[11.2,] 
+		 3: %self->render def_%v_22 %self[5.2,2.0,] %v_21[11.2,] 
 		 4: 
 BB 12
 	outgoing: 13 14 
@@ -142,11 +142,11 @@ BB 13
 		 0: 
 		 1: (Signup) def_%v_25 
 		 2: %v_25->new def_%v_26 %v_25[13.1,] 
-		 3: ATTRASSIGN %self->@signup %self[2.0,] %v_26[13.2,] 
+		 3: ATTRASSIGN %self->signup %v_26[13.2,] 
 		 4: 
 		 5: COPY def_%v_27 
 		 6: COPY def_%v_28 %v_27[13.5,] 
-		 7: %self->render def_%v_29 %self[2.0,] %v_28[13.6,] 
+		 7: %self->render def_%v_29 %self[13.3,5.2,2.0,] %v_28[13.6,] 
 		 8: 
 BB 14
 	outgoing: 15 
@@ -155,7 +155,7 @@ BB 14
 		 0: 
 		 1: COPY def_%v_30 
 		 2: COPY def_%v_31 %v_30[14.1,] 
-		 3: %self->render def_%v_32 %self[2.0,] %v_31[14.2,] 
+		 3: %self->render def_%v_32 %self[5.2,2.0,] %v_31[14.2,] 
 		 4: COPY def_%v_29 %v_32[14.3,] 
 BB 15
 	outgoing: 16 
@@ -171,7 +171,7 @@ BB 17
 	outgoing: 19 
 	datadep: 
 	instructions:
-		 0: RETURN %v_17[16.0,9.3,] %self[2.0,] 
+		 0: RETURN %v_17[16.0,9.3,] %self[13.3,5.2,2.0,] 
 BB 19
 	outgoing: 
 	datadep: 
@@ -204,9 +204,9 @@ BB 3
 		 2: %self->params def_%v_6 %self[2.0,] 
 		 3: def_%v_7 %v_6[3.2,] 
 		 4: %v_5->new def_%v_8 %v_5[3.1,] %v_7[3.3,] 
-		 5: ATTRASSIGN %self->@signup %self[3.2,2.0,] %v_8[3.4,] 
+		 5: ATTRASSIGN %self->signup %v_8[3.4,] 
 		 6: 
-		 7: def_%v_9 %self[3.2,2.0,] 
+		 7: GETFIELD %self->signup def_%v_9 %self[3.2,3.5,2.0,] 
 		 8: %v_9->save def_%v_10 %v_9[3.7,] 
 		 9: BRANCH %v_10[3.8,] 
 BB 4
@@ -214,7 +214,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_11 %self[2.0,] 
+		 1: GETFIELD %self->signup def_%v_11 %self[3.5,2.0,] 
 		 2: %v_11->approval_sent? def_%v_12 %v_11[4.1,] 
 		 3: BRANCH %v_12[4.2,] 
 BB 5
@@ -223,16 +223,16 @@ BB 5
 	instructions:
 		 0: 
 		 1: COPY def_%v_13 
-		 2: %self->t def_%v_14 %self[2.0,] %v_13[5.1,] 
+		 2: %self->t def_%v_14 %self[3.5,2.0,] %v_13[5.1,] 
 		 3: COPY def_%v_15 %v_14[5.2,] 
-		 4: %self->render def_%v_16 %self[5.2,2.0,] %v_15[5.3,] 
+		 4: %self->render def_%v_16 %self[5.2,3.5,2.0,] %v_15[5.3,] 
 		 5: 
 BB 6
 	outgoing: 7 11 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_17 %self[2.0,] 
+		 1: GETFIELD %self->signup def_%v_17 %self[3.5,2.0,] 
 		 2: %v_17->verification_sent? def_%v_18 %v_17[6.1,] 
 		 3: BRANCH %v_18[6.2,] 
 BB 7
@@ -240,7 +240,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_19 %self[2.0,] 
+		 1: GETFIELD %self->signup def_%v_19 %self[3.5,2.0,] 
 		 2: %v_19->found_existing? def_%v_20 %v_19[7.1,] 
 		 3: BRANCH %v_20[7.2,] 
 BB 8
@@ -248,11 +248,11 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_21 %self[2.0,] 
+		 1: %self->flash def_%v_21 %self[3.5,2.0,] 
 		 2: %v_21->now def_%v_22 %v_21[8.1,] 
 		 3: COPY def_%v_23 
-		 4: %self->t def_%v_24 %self[8.1,2.0,] %v_23[8.3,] 
-		 5: %v_22[8.2,] %v_24[8.4,] 
+		 4: %self->t def_%v_24 %self[8.1,3.5,2.0,] %v_23[8.3,] 
+		 5: ATTRASSIGN %v_22->[] %v_24[8.4,] 
 		 6: 
 BB 9
 	outgoing: 10 
@@ -265,16 +265,16 @@ BB 10
 	instructions:
 		 0: 
 		 1: COPY def_%v_25 
-		 2: %self->t def_%v_26 %self[2.0,] %v_25[10.1,] 
+		 2: %self->t def_%v_26 %self[3.5,2.0,] %v_25[10.1,] 
 		 3: COPY def_%v_27 %v_26[10.2,] 
-		 4: %self->render def_%v_28 %self[10.2,2.0,] %v_27[10.3,] 
+		 4: %self->render def_%v_28 %self[10.2,3.5,2.0,] %v_27[10.3,] 
 		 5: 
 BB 11
 	outgoing: 12 13 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_29 %self[2.0,] 
+		 1: GETFIELD %self->signup def_%v_29 %self[3.5,2.0,] 
 		 2: %v_29->can_verify_mobile? def_%v_30 %v_29[11.1,] 
 		 3: BRANCH %v_30[11.2,] 
 BB 12
@@ -282,16 +282,16 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_31 %self[2.0,] 
+		 1: %self->flash def_%v_31 %self[3.5,2.0,] 
 		 2: COPY def_%v_32 
-		 3: %self->t def_%v_33 %self[12.1,2.0,] %v_32[12.2,] 
-		 4: %v_31[12.1,] %v_33[12.3,] 
+		 3: %self->t def_%v_33 %self[12.1,3.5,2.0,] %v_32[12.2,] 
+		 4: ATTRASSIGN %v_31->[] %v_33[12.3,] 
 		 5: 
-		 6: def_%v_34 %self[12.1,12.3,2.0,] 
+		 6: GETFIELD %self->signup def_%v_34 %self[12.1,12.3,3.5,2.0,] 
 		 7: %v_34->mobile_phone def_%v_35 %v_34[12.6,] 
 		 8: COPY def_%v_36 %v_35[12.7,] 
-		 9: %self->new_account_path def_%v_37 %self[12.1,12.3,2.0,] %v_36[12.8,] 
-		 10: %self->redirect_to def_%v_38 %self[12.1,12.3,12.9,2.0,] %v_37[12.9,] 
+		 9: %self->new_account_path def_%v_37 %self[12.1,12.3,3.5,2.0,] %v_36[12.8,] 
+		 10: %self->redirect_to def_%v_38 %self[12.1,12.3,12.9,3.5,2.0,] %v_37[12.9,] 
 		 11: 
 BB 13
 	outgoing: 14 
@@ -320,13 +320,13 @@ BB 17
 		 0: 
 		 1: COPY def_%v_39 
 		 2: COPY def_%v_40 %v_39[17.1,] 
-		 3: %self->render def_%v_41 %self[2.0,] %v_40[17.2,] 
+		 3: %self->render def_%v_41 %self[3.5,2.0,] %v_40[17.2,] 
 		 4: COPY def_%v_16 %v_41[17.3,] 
 BB 18
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: RETURN %v_16[17.4,15.0,5.4,] %self[2.0,] 
+		 0: RETURN %v_16[17.4,15.0,5.4,] %self[3.5,2.0,] 
 BB 19
 	outgoing: 20 30 
 	datadep: 
@@ -343,9 +343,9 @@ BB 20
 		 1: (Verification) def_%v_44 
 		 2: %self->verification_params def_%v_45 %self[2.0,] 
 		 3: %v_44->new def_%v_46 %v_44[20.1,] %v_45[20.2,] 
-		 4: ATTRASSIGN %self->@verification %self[20.2,2.0,] %v_46[20.3,] 
+		 4: ATTRASSIGN %self->verification %v_46[20.3,] 
 		 5: 
-		 6: def_%v_47 %self[20.2,2.0,] 
+		 6: GETFIELD %self->verification def_%v_47 %self[20.2,20.4,2.0,] 
 		 7: %v_47->save def_%v_48 %v_47[20.6,] 
 		 8: BRANCH %v_48[20.7,] 
 BB 21
@@ -353,7 +353,7 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_49 %self[2.0,] 
+		 1: %self->params def_%v_49 %self[20.4,2.0,] 
 		 2: def_%v_50 %v_49[21.1,] 
 		 3: BRANCH %v_50[21.2,] 
 BB 22
@@ -361,21 +361,21 @@ BB 22
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_51 %self[2.0,] 
+		 1: %self->flash def_%v_51 %self[20.4,2.0,] 
 		 2: COPY def_%v_52 
-		 3: %self->t def_%v_53 %self[22.1,2.0,] %v_52[22.2,] 
-		 4: %v_51[22.1,] %v_53[22.3,] 
+		 3: %self->t def_%v_53 %self[22.1,20.4,2.0,] %v_52[22.2,] 
+		 4: ATTRASSIGN %v_51->[] %v_53[22.3,] 
 		 5: 
 		 6: COPY def_%v_54 
 		 7: COPY def_%v_55 %v_54[22.6,] 
-		 8: %self->render def_%v_56 %self[22.1,22.3,2.0,] %v_55[22.7,] 
+		 8: %self->render def_%v_56 %self[22.1,22.3,20.4,2.0,] %v_55[22.7,] 
 		 9: 
 BB 23
 	outgoing: 24 25 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_57 %self[2.0,] 
+		 1: %self->params def_%v_57 %self[20.4,2.0,] 
 		 2: def_%v_58 %v_57[23.1,] 
 		 3: BRANCH %v_58[23.2,] 
 BB 24
@@ -383,15 +383,15 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_59 %self[2.0,] 
+		 1: %self->flash def_%v_59 %self[20.4,2.0,] 
 		 2: COPY def_%v_60 
-		 3: %self->t def_%v_61 %self[24.1,2.0,] %v_60[24.2,] 
-		 4: %v_59[24.1,] %v_61[24.3,] 
+		 3: %self->t def_%v_61 %self[24.1,20.4,2.0,] %v_60[24.2,] 
+		 4: ATTRASSIGN %v_59->[] %v_61[24.3,] 
 		 5: 
-		 6: def_%v_62 %self[24.1,24.3,2.0,] 
+		 6: GETFIELD %self->verification def_%v_62 %self[24.1,24.3,20.4,2.0,] 
 		 7: %v_62->people def_%v_63 %v_62[24.6,] 
 		 8: %v_63->first def_%v_64 %v_63[24.7,] 
-		 9: %self->redirect_to def_%v_65 %self[24.1,24.3,2.0,] %v_64[24.8,] 
+		 9: %self->redirect_to def_%v_65 %self[24.1,24.3,20.4,2.0,] %v_64[24.8,] 
 		 10: 
 BB 25
 	outgoing: 26 
@@ -399,9 +399,9 @@ BB 25
 	instructions:
 		 0: 
 		 1: COPY def_%v_66 
-		 2: %self->t def_%v_67 %self[2.0,] %v_66[25.1,] 
+		 2: %self->t def_%v_67 %self[20.4,2.0,] %v_66[25.1,] 
 		 3: COPY def_%v_68 %v_67[25.2,] 
-		 4: %self->render def_%v_69 %self[25.2,2.0,] %v_68[25.3,] 
+		 4: %self->render def_%v_69 %self[25.2,20.4,2.0,] %v_68[25.3,] 
 		 5: COPY def_%v_65 %v_69[25.4,] 
 BB 26
 	outgoing: 27 
@@ -418,7 +418,7 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->new def_%v_70 %self[2.0,] 
+		 1: %self->new def_%v_70 %self[20.4,2.0,] 
 		 2: COPY def_%v_56 %v_70[28.1,] 
 BB 29
 	outgoing: 31 
@@ -432,22 +432,22 @@ BB 30
 		 0: 
 		 1: (Signup) def_%v_71 
 		 2: %v_71->new def_%v_72 %v_71[30.1,] 
-		 3: ATTRASSIGN %self->@signup %self[2.0,] %v_72[30.2,] 
+		 3: ATTRASSIGN %self->signup %v_72[30.2,] 
 		 4: 
-		 5: %self->flash def_%v_73 %self[2.0,] 
+		 5: %self->flash def_%v_73 %self[30.3,2.0,] 
 		 6: COPY def_%v_74 
-		 7: %self->t def_%v_75 %self[30.5,2.0,] %v_74[30.6,] 
-		 8: %v_73[30.5,] %v_75[30.7,] 
+		 7: %self->t def_%v_75 %self[30.3,30.5,2.0,] %v_74[30.6,] 
+		 8: ATTRASSIGN %v_73->[] %v_75[30.7,] 
 		 9: 
 		 10: COPY def_%v_76 
 		 11: COPY def_%v_77 %v_76[30.10,] 
-		 12: %self->render def_%v_78 %self[30.5,30.7,2.0,] %v_77[30.11,] 
+		 12: %self->render def_%v_78 %self[30.3,30.5,30.7,2.0,] %v_77[30.11,] 
 		 13: COPY def_%v_56 %v_78[30.12,] 
 BB 31
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: RETURN %v_56[30.13,28.2,26.0,22.8,] %self[2.0,] 
+		 0: RETURN %v_56[30.13,28.2,26.0,22.8,] %self[30.3,2.0,20.4,] 
 BB 33
 	outgoing: 
 	datadep: 
@@ -472,9 +472,9 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@verification %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->verification %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,] 
+		 12: GETFIELD %self->verification def_%v_7 %self[2.0,2.7,2.10,] 
 		 13: %v_7->pending? def_%v_8 %v_7[2.12,] 
 		 14: %v_8->! def_%v_9 %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
@@ -485,18 +485,18 @@ BB 3
 		 0: 
 		 1: COPY def_%v_10 
 		 2: COPY def_%v_11 
-		 3: %self->new_account_path def_%v_12 %self[2.0,] %v_11[3.2,] 
+		 3: %self->new_account_path def_%v_12 %self[2.0,2.10,] %v_11[3.2,] 
 		 4: COPY def_%v_13 %v_12[3.3,] 
-		 5: %self->t def_%v_14 %self[3.3,2.0,] %v_10[3.1,] %v_13[3.4,] 
+		 5: %self->t def_%v_14 %self[3.3,2.0,2.10,] %v_10[3.1,] %v_13[3.4,] 
 		 6: COPY def_%v_15 %v_14[3.5,] 
-		 7: %self->render def_%v_16 %self[3.3,3.5,2.0,] %v_15[3.6,] 
-		 8: RETURN %v_16[3.7,] %self[3.3,3.5,3.7,2.0,] 
+		 7: %self->render def_%v_16 %self[3.3,3.5,2.0,2.10,] %v_15[3.6,] 
+		 8: RETURN %v_16[3.7,] %self[3.3,3.5,3.7,2.0,2.10,] 
 BB 4
 	outgoing: 5 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->request def_%v_17 %self[2.0,] 
+		 1: %self->request def_%v_17 %self[2.0,2.10,] 
 		 2: %v_17->post? def_%v_18 %v_17[4.1,] 
 		 3: BRANCH %v_18[4.2,] 
 BB 5
@@ -504,8 +504,8 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_19 %self[2.0,] 
-		 2: %self->params def_%v_20 %self[2.0,] 
+		 1: GETFIELD %self->verification def_%v_19 %self[2.0,2.10,] 
+		 2: %self->params def_%v_20 %self[2.0,2.10,] 
 		 3: def_%v_21 %v_20[5.2,] 
 		 4: %v_19->check! def_%v_22 %v_19[5.1,] %v_21[5.3,] 
 		 5: BRANCH %v_22[5.4,] 
@@ -514,7 +514,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->redirect_for_verification def_%v_23 %self[2.0,] 
+		 1: %self->redirect_for_verification def_%v_23 %self[2.0,2.10,] 
 		 2: 
 BB 7
 	outgoing: 8 
@@ -522,9 +522,9 @@ BB 7
 	instructions:
 		 0: 
 		 1: COPY def_%v_24 
-		 2: %self->t def_%v_25 %self[2.0,] %v_24[7.1,] 
+		 2: %self->t def_%v_25 %self[2.0,2.10,] %v_24[7.1,] 
 		 3: COPY def_%v_26 %v_25[7.2,] 
-		 4: %self->render def_%v_27 %self[7.2,2.0,] %v_26[7.3,] 
+		 4: %self->render def_%v_27 %self[7.2,2.0,2.10,] %v_26[7.3,] 
 		 5: COPY def_%v_23 %v_27[7.4,] 
 BB 8
 	outgoing: 10 
@@ -540,7 +540,7 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: RETURN %v_23[9.0,7.5,6.1,] %self[2.0,] 
+		 0: RETURN %v_23[9.0,7.5,6.1,] %self[2.0,2.10,] 
 BB 12
 	outgoing: 
 	datadep: 
@@ -561,16 +561,16 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->person def_%v_3 %self[2.0,] 
 		 7: %v_3->name def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@title %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->title %v_4[2.7,] 
 		 9: 
-		 10: def_%v_5 %self[2.0,] 
-		 11: def_%v_6 %self[2.0,] 
-		 12: %self->person_account_path def_%v_7 %self[2.0,] %v_6[2.11,] 
+		 10: GETFIELD %self->person def_%v_5 %self[2.0,] 
+		 11: GETFIELD %self->person def_%v_6 %self[2.0,] 
+		 12: %self->person_account_path def_%v_7 %self[2.0,2.8,] %v_6[2.11,] 
 		 13: COPY def_%v_8 %v_7[2.12,] 
-		 14: %self->form_for def_%v_9 %self[2.0,2.12,] %v_5[2.10,] %v_8[2.13,] %self[2.0,2.12,] 
-CLOSURE BEGIN: %self[2.0,2.12,] form[] 
+		 14: %self->form_for def_%v_9 %self[2.0,2.8,2.12,] %v_5[2.10,] %v_8[2.13,] %self[2.0,2.8,2.12,] 
+CLOSURE BEGIN: %self[2.0,2.8,2.12,] form[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -607,7 +607,7 @@ BB 3
 		 16: COPY def_%cl_1_14 %cl_1_13[3.15,] 
 		 17: form->password_field def_%cl_1_15 form[3.5,3.9,3.13,2.2,] %cl_1_14[3.16,] 
 		 18: 
-		 19: def_%cl_1_16 %self[3.1,3.4,3.12,2.0,] 
+		 19: GETFIELD %self->person def_%cl_1_16 %self[3.1,3.4,3.12,2.0,] 
 		 20: %cl_1_16->encrypted_password def_%cl_1_17 %cl_1_16[3.19,] 
 		 21: BRANCH %cl_1_17[3.20,] 
 BB 4
@@ -654,7 +654,7 @@ BB 9
 	datadep: 
 	instructions:
 CLOSURE END
-		 15: RETURN %v_9[2.14,] %self[2.0,2.12,2.14,] 
+		 15: RETURN %v_9[2.14,] %self[2.0,2.8,2.12,2.14,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -675,7 +675,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->person def_%v_3 %self[2.0,] 
 		 7: %self->person_params def_%v_4 %self[2.0,] 
 		 8: %v_3->update_attributes def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
@@ -687,9 +687,9 @@ BB 3
 		 1: %self->flash def_%v_6 %self[2.0,] 
 		 2: COPY def_%v_7 
 		 3: %self->t def_%v_8 %self[3.1,2.0,] %v_7[3.2,] 
-		 4: %v_6[3.1,] %v_8[3.3,] 
+		 4: ATTRASSIGN %v_6->[] %v_8[3.3,] 
 		 5: 
-		 6: def_%v_9 %self[3.1,3.3,2.0,] 
+		 6: GETFIELD %self->person def_%v_9 %self[3.1,3.3,2.0,] 
 		 7: %self->redirect_to def_%v_10 %self[3.1,3.3,2.0,] %v_9[3.6,] 
 		 8: RETURN %v_10[3.7,] %self[3.1,3.3,3.7,2.0,] 
 BB 4
@@ -731,18 +731,18 @@ BB 3
 		 0: 
 		 1: %self->session def_%v_5 %self[2.0,] 
 		 2: def_%v_6 %v_5[3.1,] 
-		 3: ATTRASSIGN %self->@people %self[3.1,2.0,] %v_6[3.2,] 
+		 3: ATTRASSIGN %self->people %v_6[3.2,] 
 		 4: 
-		 5: %self->request def_%v_7 %self[3.1,2.0,] 
+		 5: %self->request def_%v_7 %self[3.1,3.3,2.0,] 
 		 6: %v_7->post? def_%v_8 %v_7[3.5,] 
 		 7: BRANCH %v_8[3.6,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_9 %self[2.0,] 
-		 1: %v_9->detect def_%v_10 %v_9[4.0,] %self[2.0,] 
-CLOSURE BEGIN: p[] %self[2.0,] 
+		 0: GETFIELD %self->people def_%v_9 %self[3.3,2.0,] 
+		 1: %v_9->detect def_%v_10 %v_9[4.0,] %self[3.3,2.0,] 
+CLOSURE BEGIN: p[] %self[3.3,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -779,7 +779,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 2: ATTRASSIGN %self->@person %self[2.0,] %v_10[4.1,] 
+		 2: ATTRASSIGN %self->person %v_10[4.1,] 
 		 3: COPY def_%v_8 %v_10[4.1,] 
 BB 5
 	outgoing: 6 7 
@@ -791,22 +791,22 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->session def_%v_11 %self[2.0,] 
-		 2: def_%v_12 %self[6.1,2.0,] 
+		 1: %self->session def_%v_11 %self[4.2,3.3,2.0,] 
+		 2: GETFIELD %self->person def_%v_12 %self[6.1,4.2,2.0,] 
 		 3: %v_12->id def_%v_13 %v_12[6.2,] 
-		 4: %v_11[6.1,] %v_13[6.3,] 
+		 4: ATTRASSIGN %v_11->[] %v_13[6.3,] 
 		 5: 
-		 6: %self->session def_%v_14 %self[6.1,2.0,] 
-		 7: %v_14[6.6,] 
+		 6: %self->session def_%v_14 %self[6.1,4.2,3.3,2.0,] 
+		 7: ATTRASSIGN %v_14->[] 
 		 8: 
-		 9: %self->flash def_%v_15 %self[6.1,6.6,2.0,] 
+		 9: %self->flash def_%v_15 %self[6.1,6.6,4.2,3.3,2.0,] 
 		 10: COPY def_%v_16 
-		 11: %self->t def_%v_17 %self[6.1,6.6,6.9,2.0,] %v_16[6.10,] 
-		 12: %v_15[6.9,] %v_17[6.11,] 
+		 11: %self->t def_%v_17 %self[6.1,6.6,6.9,4.2,3.3,2.0,] %v_16[6.10,] 
+		 12: ATTRASSIGN %v_15->[] %v_17[6.11,] 
 		 13: 
-		 14: def_%v_18 %self[6.1,6.6,6.9,6.11,2.0,] 
-		 15: %self->edit_person_account_path def_%v_19 %self[6.1,6.6,6.9,6.11,2.0,] %v_18[6.14,] 
-		 16: %self->redirect_to def_%v_20 %self[6.1,6.6,6.9,6.11,6.15,2.0,] %v_19[6.15,] 
+		 14: GETFIELD %self->person def_%v_18 %self[6.1,6.6,6.9,6.11,4.2,2.0,] 
+		 15: %self->edit_person_account_path def_%v_19 %self[6.1,6.6,6.9,6.11,4.2,3.3,2.0,] %v_18[6.14,] 
+		 16: %self->redirect_to def_%v_20 %self[6.1,6.6,6.9,6.11,6.15,4.2,3.3,2.0,] %v_19[6.15,] 
 		 17: 
 BB 7
 	outgoing: 8 
@@ -817,7 +817,7 @@ BB 8
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: RETURN %v_20[7.0,6.16,] %self[2.0,] 
+		 0: RETURN %v_20[7.0,6.16,] %self[4.2,3.3,2.0,] 
 BB 9
 	outgoing: 11 
 	datadep: 
@@ -848,7 +848,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->verification def_%v_3 %self[2.0,] 
 		 7: %v_3->people def_%v_4 %v_3[2.6,] 
 		 8: %v_4->count def_%v_5 %v_4[2.7,] 
 		 9: def_%v_6 %v_5[2.8,] 
@@ -859,10 +859,10 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->session def_%v_7 %self[2.0,] 
-		 2: def_%v_8 %self[3.1,2.0,] 
+		 2: GETFIELD %self->verification def_%v_8 %self[3.1,2.0,] 
 		 3: %v_8->people def_%v_9 %v_8[3.2,] 
 		 4: %v_9->to_a def_%v_10 %v_9[3.3,] 
-		 5: %v_7[3.1,] %v_10[3.4,] 
+		 5: ATTRASSIGN %v_7->[] %v_10[3.4,] 
 		 6: 
 		 7: %self->select_account_path def_%v_11 %self[3.1,2.0,] 
 		 8: %self->redirect_to def_%v_12 %self[3.1,3.7,2.0,] %v_11[3.7,] 
@@ -872,17 +872,17 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_13 %self[2.0,] 
+		 1: GETFIELD %self->verification def_%v_13 %self[2.0,] 
 		 2: %v_13->people def_%v_14 %v_13[4.1,] 
 		 3: %v_14->first def_%v_15 %v_14[4.2,] 
 		 4: COPY def_person %v_15[4.3,] 
 		 5: 
 		 6: %self->session def_%v_16 %self[2.0,] 
 		 7: person->id def_%v_17 person[4.4,] 
-		 8: %v_16[4.6,] %v_17[4.7,] 
+		 8: ATTRASSIGN %v_16->[] %v_17[4.7,] 
 		 9: 
 		 10: %self->flash def_%v_18 %self[4.6,2.0,] 
-		 11: def_%v_19 %self[4.6,4.10,2.0,] 
+		 11: GETFIELD %self->verification def_%v_19 %self[4.6,4.10,2.0,] 
 		 12: %v_19->mobile_phone? def_%v_20 %v_19[4.11,] 
 		 13: BRANCH %v_20[4.12,] 
 BB 5
@@ -905,7 +905,7 @@ BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: %v_18[4.10,] %v_22[6.3,5.2,] 
+		 0: ATTRASSIGN %v_18->[] %v_22[6.3,5.2,] 
 		 1: 
 		 2: %self->edit_person_account_path def_%v_25 %self[2.0,] person[4.4,] 
 		 3: %self->redirect_to def_%v_26 %self[7.2,2.0,] %v_25[7.2,] 

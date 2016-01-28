@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@format %self[2.0,] %v_3[2.6,] 
+		 7: ATTRASSIGN %self->format %v_3[2.6,] 
 		 8: 
 		 9: %self->params def_%v_4 %self[2.0,2.7,] 
 		 10: def_%v_5 %v_4[2.9,] 
@@ -28,9 +28,9 @@ BB 3
 		 2: %self->params def_%v_7 %self[2.0,2.7,] 
 		 3: def_%v_8 %v_7[3.2,] 
 		 4: def_%v_9 %v_6[3.1,] %v_8[3.3,] 
-		 5: ATTRASSIGN %self->@format %self[3.2,2.0,2.7,] %v_9[3.4,] 
+		 5: ATTRASSIGN %self->format %v_9[3.4,] 
 		 6: 
-		 7: def_%v_10 %self[3.2,3.5,2.0,2.7,] 
+		 7: GETFIELD %self->format def_%v_10 %self[3.2,3.5,2.0,2.7,] 
 		 8: BRANCH %v_10[3.7,] 
 BB 4
 	outgoing: 8 
@@ -128,7 +128,7 @@ BB 16
 		 0: 
 		 1: COPY def_%v_37 
 		 2: COPY def_%v_38 
-		 3: def_%v_39 %self[2.0,2.7,3.5,] 
+		 3: GETFIELD %self->format def_%v_39 %self[2.0,2.7,3.5,] 
 		 4: COPY def_%v_40 %v_37[16.1,] %v_38[16.2,] %v_39[16.3,] 
 		 5: %self->redirect_to def_%v_41 %self[2.0,2.7,3.5,] %v_40[16.4,] 
 		 6: COPY def_%v_22 %v_41[16.5,] 
@@ -138,7 +138,7 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_42 %self[2.0,2.7,3.5,] 
+		 1: GETFIELD %self->format def_%v_42 %self[2.0,2.7,3.5,] 
 		 2: COPY def_%v_43 %v_42[17.1,] 
 		 3: %self->admin_comments_url def_%v_44 %self[2.0,2.7,3.5,] %v_43[17.2,] 
 		 4: COPY def_%v_45 
@@ -152,7 +152,7 @@ BB 18
 		 0: 
 		 1: (Article) def_%v_47 
 		 2: %v_47->find def_%v_48 %v_47[18.1,] param_id[8.10,] 
-		 3: def_%v_49 %self[2.0,2.7,3.5,] 
+		 3: GETFIELD %self->format def_%v_49 %self[2.0,2.7,3.5,] 
 		 4: %v_48->feed_url def_%v_50 %v_48[18.2,] %v_49[18.3,] 
 		 5: COPY def_%v_51 
 		 6: %self->redirect_to def_%v_52 %self[2.0,2.7,3.5,] %v_50[18.4,] %v_51[18.5,] 
@@ -165,7 +165,7 @@ BB 19
 		 0: 
 		 1: COPY def_%v_53 
 		 2: def_%v_54 param_type[8.6,] %v_53[19.1,] 
-		 3: def_%v_55 %self[2.0,2.7,3.5,] 
+		 3: GETFIELD %self->format def_%v_55 %self[2.0,2.7,3.5,] 
 		 4: COPY def_%v_56 %v_55[19.3,] 
 		 5: %self->send def_%v_57 %self[2.0,2.7,3.5,] %v_54[19.2,] param_id[8.10,] %v_56[19.4,] 
 		 6: COPY def_%v_58 
@@ -178,7 +178,7 @@ BB 20
 	instructions:
 		 0: COPY def_%v_60 
 		 1: def_%v_61 param_type[8.6,] %v_60[20.0,] 
-		 2: def_%v_62 %self[2.0,2.7,3.5,] 
+		 2: GETFIELD %self->format def_%v_62 %self[2.0,2.7,3.5,] 
 		 3: COPY def_%v_63 %v_62[20.2,] 
 		 4: %self->send def_%v_64 %self[2.0,2.7,3.5,] %v_61[20.1,] param_id[8.10,] %v_63[20.3,] 
 		 5: COPY def_%v_65 
@@ -190,7 +190,7 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_67 %self[2.0,2.7,3.5,] 
+		 1: GETFIELD %self->format def_%v_67 %self[2.0,2.7,3.5,] 
 		 2: COPY def_%v_68 %v_67[21.1,] 
 		 3: %self->trackbacks_url def_%v_69 %self[2.0,2.7,3.5,] %v_68[21.2,] 
 		 4: COPY def_%v_70 
@@ -203,34 +203,34 @@ BB 22
 	instructions:
 		 0: 
 		 1: COPY def_%v_72 
-		 2: ATTRASSIGN %self->@items %self[2.0,2.7,3.5,] %v_72[22.1,] 
+		 2: ATTRASSIGN %self->items %v_72[22.1,] 
 		 3: 
 		 4: %self->this_blog def_%v_73 %self[22.2,2.0,2.7,3.5,] 
-		 5: ATTRASSIGN %self->@blog %self[22.2,22.4,2.0,2.7,3.5,] %v_73[22.4,] 
+		 5: ATTRASSIGN %self->blog %v_73[22.4,] 
 		 6: 
 		 7: %self->this_blog def_%v_74 %self[22.2,22.4,22.5,2.0,2.7,3.5,] 
 		 8: %v_74->blog_name def_%v_75 %v_74[22.7,] 
-		 9: ATTRASSIGN %self->@feed_title %self[22.2,22.4,22.5,22.7,2.0,2.7,3.5,] %v_75[22.8,] 
+		 9: ATTRASSIGN %self->feed_title %v_75[22.8,] 
 		 10: 
 		 11: %self->this_blog def_%v_76 %self[22.2,22.4,22.5,22.7,22.9,2.0,2.7,3.5,] 
 		 12: %v_76->base_url def_%v_77 %v_76[22.11,] 
-		 13: ATTRASSIGN %self->@link %self[22.2,22.4,22.5,22.7,22.9,22.11,2.0,2.7,3.5,] %v_77[22.12,] 
+		 13: ATTRASSIGN %self->link %v_77[22.12,] 
 		 14: 
 		 15: %self->params def_%v_78 %self[22.2,22.4,22.5,22.7,22.9,22.11,22.13,2.0,2.7,3.5,] 
 		 16: %self->url_for def_%v_79 %self[22.2,22.4,22.5,22.7,22.9,22.11,22.13,22.15,2.0,2.7,3.5,] %v_78[22.15,] 
-		 17: ATTRASSIGN %self->@self_url %self[22.2,22.4,22.5,22.7,22.9,22.11,22.13,22.15,22.16,2.0,2.7,3.5,] %v_79[22.16,] 
+		 17: ATTRASSIGN %self->self_url %v_79[22.16,] 
 		 18: 
-		 19: def_%v_80 %self[22.2,22.4,22.5,22.7,22.9,22.11,22.13,22.15,22.16,22.17,2.0,2.7,3.5,] 
+		 19: GETFIELD %self->items def_%v_80 %self[22.2,22.4,22.7,22.11,22.15,22.16,2.0,] 
 		 20: (Article) def_%v_81 
 		 21: %v_81->find_already_published def_%v_82 %v_81[22.20,] 
 		 22: def_%v_83 %v_80[22.19,] %v_82[22.21,] 
-		 23: ATTRASSIGN %self->@items %self[22.2,22.4,22.5,22.7,22.9,22.11,22.13,22.15,22.16,22.17,2.0,2.7,3.5,] %v_83[22.22,] 
+		 23: ATTRASSIGN %self->items %v_83[22.22,] 
 		 24: 
-		 25: def_%v_84 %self[22.2,22.4,22.5,22.7,22.9,22.11,22.13,22.15,22.16,22.17,22.23,2.0,2.7,3.5,] 
+		 25: GETFIELD %self->items def_%v_84 %self[22.2,22.4,22.7,22.11,22.15,22.16,22.23,2.0,] 
 		 26: (Page) def_%v_85 
 		 27: %v_85->find_already_published def_%v_86 %v_85[22.26,] 
 		 28: def_%v_87 %v_84[22.25,] %v_86[22.27,] 
-		 29: ATTRASSIGN %self->@items %self[22.2,22.4,22.5,22.7,22.9,22.11,22.13,22.15,22.16,22.17,22.23,2.0,2.7,3.5,] %v_87[22.28,] 
+		 29: ATTRASSIGN %self->items %v_87[22.28,] 
 		 30: 
 		 31: %self->this_blog def_%v_88 %self[22.2,22.4,22.5,22.7,22.9,22.11,22.13,22.15,22.16,22.17,22.23,22.29,2.0,2.7,3.5,] 
 		 32: %v_88->unindex_tags def_%v_89 %v_88[22.31,] 
@@ -245,11 +245,11 @@ BB 24
 	outgoing: 25 
 	datadep: 
 	instructions:
-		 0: def_%v_91 %self[22.2,22.5,22.9,22.13,22.17,22.23,22.29,2.0,2.7,3.5,] 
+		 0: GETFIELD %self->items def_%v_91 %self[22.2,22.23,22.29,2.0,] 
 		 1: (Tag) def_%v_92 
 		 2: %v_92->find_all_with_article_counters def_%v_93 %v_92[24.1,] 
 		 3: def_%v_94 %v_91[24.0,] %v_93[24.2,] 
-		 4: ATTRASSIGN %self->@items %self[22.2,22.5,22.9,22.13,22.17,22.23,22.29,2.0,2.7,3.5,] %v_94[24.3,] 
+		 4: ATTRASSIGN %self->items %v_94[24.3,] 
 		 5: COPY def_%v_90 %v_94[24.3,] 
 BB 25
 	outgoing: 29 

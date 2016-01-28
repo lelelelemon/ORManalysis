@@ -15,12 +15,12 @@ BB 2
 		 5: RECEIVEARG def_group 
 		 6: RECEIVEARG def_attended_at 
 		 7: 
-		 8: ATTRASSIGN %self->@group %self[2.0,] group[2.5,] 
+		 8: ATTRASSIGN %self->group group[2.5,] 
 		 9: 
-		 10: %self->parse def_%v_3 %self[2.0,] attended_at[2.6,] 
-		 11: %self->time_without_zone def_%v_4 %self[2.0,2.10,] %v_3[2.10,] 
-		 12: ATTRASSIGN %self->@attended_at %self[2.0,2.10,2.11,] %v_4[2.11,] 
-		 13: RETURN %v_4[2.11,] %self[2.0,2.10,2.11,] 
+		 10: %self->parse def_%v_3 %self[2.0,2.8,] attended_at[2.6,] 
+		 11: %self->time_without_zone def_%v_4 %self[2.0,2.8,2.10,] %v_3[2.10,] 
+		 12: ATTRASSIGN %self->attended_at %v_4[2.11,] 
+		 13: RETURN %v_4[2.11,] %self[2.0,2.8,2.10,2.11,2.12,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -268,8 +268,8 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
-		 7: def_%v_4 %self[2.0,] 
+		 6: GETFIELD %self->group def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->attended_at def_%v_4 %self[2.0,] 
 		 8: %v_3->attendance_records_for_date def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: %v_5->delete_all def_%v_6 %v_5[2.8,] 
 		 10: RETURN %v_6[2.9,] %self[2.0,] 
@@ -296,7 +296,7 @@ BB 2
 		 6: 
 		 7: (AttendanceRecord) def_%v_3 
 		 8: person->id def_%v_4 person[2.5,] 
-		 9: def_%v_5 %self[2.0,] 
+		 9: GETFIELD %self->attended_at def_%v_5 %self[2.0,] 
 		 10: COPY def_%v_6 %v_4[2.8,] %v_5[2.9,] 
 		 11: %v_3->where def_%v_7 %v_3[2.7,] %v_6[2.10,] 
 		 12: %v_7->delete_all def_%v_8 %v_7[2.11,] 
@@ -322,10 +322,10 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_person 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->group def_%v_3 %self[2.0,] 
 		 8: %v_3->attendance_records def_%v_4 %v_3[2.7,] 
 		 9: person->id def_%v_5 person[2.5,] 
-		 10: def_%v_6 %self[2.0,] 
+		 10: GETFIELD %self->attended_at def_%v_6 %self[2.0,] 
 		 11: person->first_name def_%v_7 person[2.5,2.9,] 
 		 12: person->last_name def_%v_8 person[2.5,2.9,2.11,] 
 		 13: person->family def_%v_9 person[2.5,2.9,2.11,2.12,] 
@@ -358,9 +358,9 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_person 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->group def_%v_3 %self[2.0,] 
 		 8: %v_3->attendance_records def_%v_4 %v_3[2.7,] 
-		 9: def_%v_5 %self[2.0,] 
+		 9: GETFIELD %self->attended_at def_%v_5 %self[2.0,] 
 		 10: COPY def_%v_6 
 		 11: def_%v_7 person[2.5,] %v_6[2.10,] 
 		 12: COPY def_%v_8 
