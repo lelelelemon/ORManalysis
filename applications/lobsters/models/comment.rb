@@ -151,7 +151,7 @@ class Comment < ActiveRecord::Base
 
   def assign_short_id_and_upvote
     self.short_id = ShortId.new(self.class).generate
-    self.upvotes = 1
+    @upvotes = 1
   end
 
   def assign_thread_id
@@ -165,13 +165,13 @@ class Comment < ActiveRecord::Base
   # http://evanmiller.org/how-not-to-sort-by-average-rating.html
   # https://github.com/reddit/reddit/blob/master/r2/r2/lib/db/_sorts.pyx
   def calculated_confidence
-    n = (upvotes + downvotes).to_f
+    n = (@upvotes + @downvotes).to_f
     if n == 0.0
       return 0
     end
 
     z = 1.281551565545 # 80% confidence
-    p = upvotes.to_f / n
+    p = @upvotes.to_f / n
 
     left = p + (1 / ((2.0 * n) * z * z))
     right = z * Math.sqrt((p * ((1.0 - p) / n)) + (z * (z / (4.0 * n * n))))
@@ -262,8 +262,8 @@ class Comment < ActiveRecord::Base
   end
 
   def give_upvote_or_downvote_and_recalculate_confidence!(upvote, downvote)
-    self.upvotes += upvote.to_i
-    self.downvotes += downvote.to_i
+    @upvotes += upvote.to_i
+    @downvotes += downvote.to_i
 
     Comment.connection.execute("UPDATE #{Comment.table_name} SET " <<
       "upvotes = COALESCE(upvotes, 0) + #{upvote.to_i}, " <<
@@ -362,7 +362,7 @@ class Comment < ActiveRecord::Base
   end
 
   def score
-    self.upvotes - self.downvotes
+    @upvotes - @downvotes
   end
 
   def short_id_path

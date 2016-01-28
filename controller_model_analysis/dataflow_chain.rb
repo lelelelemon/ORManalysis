@@ -60,8 +60,8 @@ def build_sketch_graph
 	@processed_list = Hash.new
 	$node_list.each do |n|
 		#Nodes in sketched graph: queries, user_inputs
-		if n.getInstr.getFromUserInput or (n.isQuery? and n.isWriteQuery?) or (n.getInstr.instance_of?AttrAssign_instr and n.getInstr.getFuncname.index('!') == nil)
-			#puts "Node #{n.getIndex}:#{n.getInstr.toString}"
+		#if n.getInstr.getFromUserInput or (n.isQuery? and n.isWriteQuery?) or (n.getInstr.instance_of?AttrAssign_instr and n.getInstr.getFuncname.index('!') == nil)
+		if n.getInstr.getFromUserInput or n.isQuery? or isTableAttrAssign(n) 
 			n.Tnode = TreeNode.new(n)
 			$sketch_node_list.push(n.Tnode)	
 			@temp_hop_record[n] = Array.new
@@ -251,6 +251,48 @@ def compute_source_sink_for_all_nodes
 		end
 	end
 
+	#$node_list.each do |n|
+	#	puts "#{n.getIndex}:#{n.getInstr.toString}"
+	#	n.source_list.each do |s|
+	#		puts "\t source: #{s.getIndex}:#{s.getInstr.toString}"
+	#	end
+	#end
+end
+
+#helper func
+def controller_path_reachable(start_node, end_node)
+	#standard breadth first search
+	#@pre_node = Hash.new
+	@processed_list = Array.new
+	@processed_list.push(start_node)
+	@temp_node_list = Array.new
+	@temp_node_list.push(start_node)
+	reach_end = false
+	temp_node = start_node
+	while (!reach_end and temp_node.getIndex > end_node.getIndex)
+		temp_node = @temp_node_list.shift
+		if temp_node == end_node
+			reach_end = true
+			break
+		else
+			temp_node.getControlflowEdges.each do |e|
+				if @processed_list.include?(e.getToNode)
+				else
+					@processed_list.push(e.getToNode)
+					#@pre_node[e.getToNode] = temp_node
+					@temp_node_list.push(e.getToNode)
+				end
+			end
+		end
+	end
+	return reach_end
+#	@return_list = Array.new
+#	temp_node = end_node
+#	while temp_node != nil and temp_node != start_node
+#		@return_list.insert(0, temp_node)
+#		temp_node = @pre_node[temp_node]
+#	end
+#	return @return_list
 end
 
 #helper func
@@ -286,6 +328,7 @@ def find_path_between_two_nodes(start_node, end_node)
 	end
 	return @return_list
 end
+
 #Find all the def-use chains of sketch nodes, and compute if combining them, the "overhead"
 $processed_node_stack = Array.new
 def compute_single_chain_node(cur_node)

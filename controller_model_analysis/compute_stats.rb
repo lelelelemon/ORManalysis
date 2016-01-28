@@ -222,6 +222,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	if $root == nil and random == false
 		$cfg = trace_query_flow(start_class, start_function, "", "", 0)
 		addAllControlEdges
+		compute_source_sink_for_all_nodes
 		if $cfg == nil
 			return
 		end
@@ -237,17 +238,19 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 		puts "#{n.getIndex}:#{n.getInstr.toString}"
 		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
-				#puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+				puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
 			else
 				#puts "\t\t <- params"
 			end
 		end
-		n.getControlflowEdges.each do |e|
-			puts "\t\t -> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
-		end
+		#n.getControlflowEdges.each do |e|
+		#	puts "\t\t -> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
+		#end
 		#puts "#{n.getIndex}: #{n.getInstr.toString}"
 	end
 
+
+	puts "Finish string printing"
 	graph_fname = "#{output_dir}/sketch_graph.log"
 	$graph_file = File.open(graph_fname, "w")
 
@@ -255,10 +258,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 
 	$graph_file.close
 
+	compute_functional_dependency
 	#graph_fname = "#{output_dir}/sketch_stats.txt"
 	#$graph_file = File.open(graph_fname, "w")
 
-	#compute_source_sink_for_all_nodes
 	#compute_chain_stats
 
 #	graph_fname = "#{output_dir}/backward_forward.log"
@@ -347,7 +350,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 					end
 				end
 				if self_v_name != nil
-					puts "* #{n.getIndex}:#{n.getInstr.toString} result into #{self_v_name}"
+					#puts "* #{n.getIndex}:#{n.getInstr.toString} result into #{self_v_name}"
 					cnt_materialized_query += 1
 					#graph_write($graph_file, " into_#{self_v_name}")
 				end

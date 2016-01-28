@@ -221,7 +221,7 @@ def add_dataflow_edge(node)
 		if dep.getInstrHandler.getINode != nil
 			#XXX: If it is a field instr, then we know it is not a blackbox func call, if it is not attrassign, then it is a read only instr
 			from_node = dep.getInstrHandler.getINode
-			if from_node.getInstr.instance_of?Call_instr and from_node.getInstr.isField and dep.getVname == "%self"
+			if from_node.getInstr.instance_of?Call_instr and from_node.getInstr.isField and (dep.getVname == "%self" or dep.getVname.index('%') == nil)
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
 			else
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"

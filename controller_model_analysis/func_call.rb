@@ -154,7 +154,8 @@ class Function_call
 						if include_m != nil and include_m.getMethod(@func_name) != nil
 							caller_class = include_m.getName
 						else
-							caller_class = nil
+							#caller_class = nil
+							caller_class = calling_func_class
 						end
 					end
 				end
