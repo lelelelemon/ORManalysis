@@ -1,4 +1,7 @@
 require "yard"
+require 'active_support'
+require 'active_support/inflector'
+require 'active_support/core_ext/string'
 
 def get_filename_from_path(filename)
 	i = filename.rindex('/')
@@ -94,6 +97,7 @@ def print_rails_tag(tag_arr, named_routes_class)
 		url_inside = false
 		named_routes_class.get_named_routes.each do |k, v|
 			if tag.include? k
+				puts "#" + tag if $log
 				puts "controller: " + v[0] + ", action: " + v[1]
 				url_inside = true
 			end
@@ -104,3 +108,49 @@ def print_rails_tag(tag_arr, named_routes_class)
 	end
 
 end
+
+def print_form_for_tag(tag_arr, named_routes_class, controller_hash)
+	tag_arr.each do |tag|
+			#puts form_for_tag.source
+		url_inside = false
+		named_routes_class.get_named_routes.each do |k, v|
+			if tag.include? k
+				puts "#" + tag if $log
+				puts "controller: " + v[0] + ", action: " + v[1]
+				url_inside = true
+			end
+		end
+		if not url_inside
+			tag.strip!
+			controller = tag.split(" ")[1]
+			controller.strip!
+			controller = controller[1..-1] if controller[0] == "@"
+			controller = controller[0..-2] if controller.end_with?","
+
+			controller_hash.each do |k, v|
+				if controller.downcase == k.downcase.singularize
+					puts "controller: " + k + ", view: new/create"
+				end
+			end
+			puts tag
+		end
+	end
+end
+
+def get_render_array(ast)
+	res_arr = Array.new
+	ast_arr = Array.new
+	ast_arr.push @ast
+	while ast_arr.length > 0
+		cur_ast = ast_arr.pop
+		if cur_ast.source.start_with?"render" and (cur_ast.type.to_s == "fcall" or cur_ast.type.to_s == "command" or cur_ast.type.to_s == "list")
+			res_arr.push cur_ast.source
+		else
+			cur_ast.children.each do |child|
+				ast_arr.push child
+			end
+		end
+	end
+	return res_arr
+end
+
