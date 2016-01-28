@@ -20,7 +20,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->tags def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -37,7 +37,7 @@ BB 5
 		 3: %v_8->to_i def_%v_9 %v_8[5.2,] 
 		 4: %v_7->take def_%v_10 %v_7[5.1,] %v_9[5.3,] 
 		 5: %v_10->sort_by def_%v_11 %v_10[5.4,] 
-		 6: ATTRASSIGN %self->@tags %self[5.2,2.0,] %v_11[5.5,] 
+		 6: ATTRASSIGN %self->tags %v_11[5.5,] 
 		 7: RETURN %v_11[5.5,] %self[5.2,5.6,2.0,] 
 BB 6
 	outgoing: 7 
@@ -64,20 +64,20 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->sizes def_%v_3 %self[2.0,] 
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %self[2.0,] 
+		 0: GETFIELD %self->sizes def_%v_4 %self[2.0,] 
 		 1: RETURN %v_4[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_5 
-		 1: def_%v_6 %self[2.0,] 
+		 1: GETFIELD %self->tags def_%v_6 %self[2.0,] 
 		 2: def_%v_7 %v_6[4.1,] %self[2.0,] 
 CLOSURE BEGIN: tag[] sum[] 
 BB 1
@@ -117,13 +117,13 @@ CLOSURE END
 		 3: COPY def_total %v_7[4.2,] 
 		 4: 
 		 5: %v_7->to_f def_%v_8 %v_7[4.2,] 
-		 6: def_%v_9 %self[2.0,] 
+		 6: GETFIELD %self->tags def_%v_9 %self[2.0,] 
 		 7: %v_9->size def_%v_10 %v_9[4.6,] 
 		 8: %v_10->to_f def_%v_11 %v_10[4.7,] 
 		 9: def_%v_12 %v_8[4.5,] %v_11[4.8,] 
 		 10: COPY def_average %v_12[4.9,] 
 		 11: 
-		 12: def_%v_13 %self[2.0,] 
+		 12: GETFIELD %self->tags def_%v_13 %self[2.0,] 
 		 13: COPY def_%v_14 
 		 14: def_%v_15 %v_13[4.12,] %v_14[4.13,] %self[2.0,] 
 CLOSURE BEGIN: tag[] average[4.10,] size[] h[] 
@@ -172,7 +172,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 15: ATTRASSIGN %self->@sizes %self[2.0,] %v_15[4.14,] 
+		 15: ATTRASSIGN %self->sizes %v_15[4.14,] 
 		 16: RETURN %v_15[4.14,] %self[4.15,2.0,] 
 BB 6
 	outgoing: 

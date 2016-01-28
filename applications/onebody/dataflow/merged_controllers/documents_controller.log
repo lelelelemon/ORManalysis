@@ -13,7 +13,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->parent_folder def_%v_3 %self[2.0,] 
 		 7: %v_3->try def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -29,15 +29,15 @@ BB 4
 	instructions:
 		 0: %v_4->order def_%v_7 %v_4[3.2,2.7,] 
 		 1: %v_7->includes def_%v_8 %v_7[4.0,] 
-		 2: ATTRASSIGN %self->@folders %self[2.0,] %v_8[4.1,] 
+		 2: ATTRASSIGN %self->folders %v_8[4.1,] 
 		 3: 
 		 4: (DocumentFolderAuthorizer) def_%v_9 
-		 5: def_%v_10 %self[2.0,] 
-		 6: def_%v_11 %self[2.0,] 
+		 5: GETFIELD %self->logged_in def_%v_10 %self[2.0,] 
+		 6: GETFIELD %self->folders def_%v_11 %self[4.2,2.0,] 
 		 7: %v_9->readable_by def_%v_12 %v_9[4.4,] %v_10[4.5,] %v_11[4.6,] 
-		 8: ATTRASSIGN %self->@folders %self[2.0,] %v_12[4.7,] 
+		 8: ATTRASSIGN %self->folders %v_12[4.7,] 
 		 9: 
-		 10: def_%v_13 %self[2.0,] 
+		 10: GETFIELD %self->logged_in def_%v_13 %self[2.0,] 
 		 11: %v_13->admin? def_%v_14 %v_13[4.10,] 
 		 12: BRANCH %v_14[4.11,] 
 BB 5
@@ -45,16 +45,16 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_15 %self[2.0,] 
+		 1: GETFIELD %self->folders def_%v_15 %self[4.2,4.8,2.0,] 
 		 2: %v_15->hidden def_%v_16 %v_15[5.1,] 
 		 3: %v_16->count def_%v_17 %v_16[5.2,] 
-		 4: ATTRASSIGN %self->@hidden_folder_count %self[2.0,] %v_17[5.3,] 
+		 4: ATTRASSIGN %self->hidden_folder_count %v_17[5.3,] 
 		 5: 
-		 6: def_%v_18 %self[2.0,] 
+		 6: GETFIELD %self->folders def_%v_18 %self[4.2,4.8,2.0,] 
 		 7: %v_18->restricted def_%v_19 %v_18[5.6,] 
 		 8: COPY def_%v_20 
 		 9: %v_19->count def_%v_21 %v_19[5.7,] %v_20[5.8,] 
-		 10: ATTRASSIGN %self->@restricted_folder_count %self[2.0,] %v_21[5.9,] 
+		 10: ATTRASSIGN %self->restricted_folder_count %v_21[5.9,] 
 		 11: 
 BB 6
 	outgoing: 7 
@@ -66,7 +66,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_22 %self[2.0,] 
+		 1: GETFIELD %self->show_restricted_folders def_%v_22 %self[2.0,] 
 		 2: BRANCH %v_22[7.1,] 
 BB 8
 	outgoing: 10 
@@ -78,16 +78,16 @@ BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: def_%v_24 %self[2.0,] 
+		 0: GETFIELD %self->folders def_%v_24 %self[4.2,4.8,2.0,] 
 		 1: %v_24->open def_%v_25 %v_24[9.0,] 
-		 2: ATTRASSIGN %self->@folders %self[2.0,] %v_25[9.1,] 
+		 2: ATTRASSIGN %self->folders %v_25[9.1,] 
 		 3: COPY def_%v_23 %v_25[9.1,] 
 BB 10
 	outgoing: 11 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_26 %self[2.0,] 
+		 1: GETFIELD %self->show_hidden_folders def_%v_26 %self[2.0,] 
 		 2: BRANCH %v_26[10.1,] 
 BB 11
 	outgoing: 13 
@@ -99,15 +99,15 @@ BB 12
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: def_%v_28 %self[2.0,] 
+		 0: GETFIELD %self->folders def_%v_28 %self[9.2,4.2,4.8,2.0,] 
 		 1: %v_28->active def_%v_29 %v_28[12.0,] 
-		 2: ATTRASSIGN %self->@folders %self[2.0,] %v_29[12.1,] 
+		 2: ATTRASSIGN %self->folders %v_29[12.1,] 
 		 3: COPY def_%v_27 %v_29[12.1,] 
 BB 13
 	outgoing: 14 15 
 	datadep: 
 	instructions:
-		 0: def_%v_30 %self[2.0,] 
+		 0: GETFIELD %self->parent_folder def_%v_30 %self[2.0,] 
 		 1: %v_30->try def_%v_31 %v_30[13.0,] 
 		 2: BRANCH %v_31[13.1,] 
 BB 14
@@ -122,9 +122,9 @@ BB 15
 	datadep: 
 	instructions:
 		 0: %v_31->order def_%v_34 %v_31[14.2,13.1,] 
-		 1: ATTRASSIGN %self->@documents %self[2.0,] %v_34[15.0,] 
+		 1: ATTRASSIGN %self->documents %v_34[15.0,] 
 		 2: 
-		 3: %self->params def_%v_35 %self[2.0,] 
+		 3: %self->params def_%v_35 %self[15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 		 4: def_%v_36 %v_35[15.3,] 
 		 5: %v_36->present? def_%v_37 %v_36[15.4,] 
 		 6: BRANCH %v_37[15.5,] 
@@ -132,10 +132,10 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: %self->cookies def_%v_38 %self[2.0,] 
-		 1: %self->params def_%v_39 %self[16.0,2.0,] 
+		 0: %self->cookies def_%v_38 %self[15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+		 1: %self->params def_%v_39 %self[16.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 		 2: def_%v_40 %v_39[16.1,] 
-		 3: %v_38[16.0,] %v_40[16.2,] 
+		 3: ATTRASSIGN %v_38->[] %v_40[16.2,] 
 		 4: 
 BB 17
 	outgoing: 18 
@@ -147,7 +147,7 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->cookies def_%v_41 %self[2.0,] 
+		 1: %self->cookies def_%v_41 %self[15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 		 2: def_%v_42 %v_41[18.1,] 
 		 3: BRANCH %v_42[18.2,] 
 BB 19
@@ -160,9 +160,9 @@ BB 20
 	outgoing: 21 22 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@view %self[2.0,] %v_42[19.1,18.2,] 
+		 0: ATTRASSIGN %self->view %v_42[19.1,18.2,] 
 		 1: 
-		 2: def_%v_44 %self[2.0,] 
+		 2: GETFIELD %self->parent_folder def_%v_44 %self[2.0,] 
 		 3: %v_44->try def_%v_45 %v_44[20.2,] 
 		 4: BRANCH %v_45[20.3,] 
 BB 21
@@ -170,21 +170,21 @@ BB 21
 	datadep: 
 	instructions:
 		 0: COPY def_%v_46 
-		 1: %self->t def_%v_47 %self[2.0,] %v_46[21.0,] 
+		 1: %self->t def_%v_47 %self[20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_46[21.0,] 
 		 2: COPY def_%v_45 %v_47[21.1,] 
 BB 22
 	outgoing: 23 24 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@title %self[2.0,] %v_45[21.2,20.3,] 
+		 0: ATTRASSIGN %self->title %v_45[21.2,20.3,] 
 		 1: 
-		 2: def_%v_48 %self[2.0,] 
+		 2: GETFIELD %self->parent_folder def_%v_48 %self[2.0,] 
 		 3: BRANCH %v_48[22.2,] 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: def_%v_49 %self[2.0,] 
+		 0: GETFIELD %self->parent_folder def_%v_49 %self[2.0,] 
 		 1: %v_49->all_groups def_%v_50 %v_49[23.0,] 
 		 2: %v_50->any? def_%v_51 %v_50[23.1,] 
 		 3: COPY def_%v_48 %v_51[23.2,] 
@@ -199,13 +199,13 @@ BB 25
 	instructions:
 		 0: 
 		 1: COPY def_%v_52 
-		 2: %self->icon def_%v_53 %self[2.0,] %v_52[25.1,] 
+		 2: %self->icon def_%v_53 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_52[25.1,] 
 		 3: 
 		 4: COPY def_%v_54 
-		 5: def_%v_55 %self[25.2,2.0,] 
+		 5: GETFIELD %self->parent_folder def_%v_55 %self[25.2,2.0,] 
 		 6: %v_55->all_groups def_%v_56 %v_55[25.5,] 
-		 7: %v_56->map def_%v_57 %v_56[25.6,] %self[25.2,2.0,] 
-CLOSURE BEGIN: g[] %self[25.2,2.0,] 
+		 7: %v_56->map def_%v_57 %v_56[25.6,] %self[25.2,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+CLOSURE BEGIN: g[] %self[25.2,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -243,7 +243,7 @@ CLOSURE END
 		 9: %v_57->join def_%v_59 %v_57[25.7,] %v_58[25.8,] 
 		 10: %v_59->html_safe def_%v_60 %v_59[25.9,] 
 		 11: COPY def_%v_61 %v_60[25.10,] 
-		 12: %self->t def_%v_62 %self[25.2,2.0,] %v_54[25.4,] %v_61[25.11,] 
+		 12: %self->t def_%v_62 %self[25.2,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_54[25.4,] %v_61[25.11,] 
 		 13: 
 BB 26
 	outgoing: 27 
@@ -256,13 +256,13 @@ BB 27
 	instructions:
 		 0: 
 		 1: 
-		 2: def_%v_63 %self[2.0,] 
+		 2: GETFIELD %self->parent_folder def_%v_63 %self[2.0,] 
 		 3: BRANCH %v_63[27.2,] 
 BB 28
 	outgoing: 29 30 
 	datadep: 
 	instructions:
-		 0: def_%v_64 %self[2.0,] 
+		 0: GETFIELD %self->parent_folder def_%v_64 %self[2.0,] 
 		 1: %v_64->hidden? def_%v_65 %v_64[28.0,] 
 		 2: BRANCH %v_65[28.1,] 
 BB 29
@@ -271,17 +271,17 @@ BB 29
 	instructions:
 		 0: 
 		 1: COPY def_%v_66 
-		 2: %self->icon def_%v_67 %self[2.0,] %v_66[29.1,] 
+		 2: %self->icon def_%v_67 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_66[29.1,] 
 		 3: 
 		 4: COPY def_%v_68 
-		 5: %self->t def_%v_69 %self[29.2,2.0,] %v_68[29.4,] 
+		 5: %self->t def_%v_69 %self[29.2,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_68[29.4,] 
 		 6: 
 BB 30
 	outgoing: 31 32 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_70 %self[2.0,] 
+		 1: GETFIELD %self->parent_folder def_%v_70 %self[2.0,] 
 		 2: %v_70->hidden_at_all? def_%v_71 %v_70[30.1,] 
 		 3: BRANCH %v_71[30.2,] 
 BB 31
@@ -290,10 +290,10 @@ BB 31
 	instructions:
 		 0: 
 		 1: COPY def_%v_72 
-		 2: %self->icon def_%v_73 %self[2.0,] %v_72[31.1,] 
+		 2: %self->icon def_%v_73 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_72[31.1,] 
 		 3: 
 		 4: COPY def_%v_74 
-		 5: %self->t def_%v_75 %self[31.2,2.0,] %v_74[31.4,] 
+		 5: %self->t def_%v_75 %self[31.2,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_74[31.4,] 
 		 6: 
 BB 32
 	outgoing: 33 
@@ -320,7 +320,7 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_76 %self[2.0,] 
+		 1: GETFIELD %self->parent_folder def_%v_76 %self[2.0,] 
 		 2: %v_76->try def_%v_77 %v_76[36.1,] 
 		 3: BRANCH %v_77[36.2,] 
 BB 37
@@ -328,18 +328,18 @@ BB 37
 	datadep: 
 	instructions:
 		 0: COPY def_%v_78 
-		 1: %self->t def_%v_79 %self[2.0,] %v_78[37.0,] 
+		 1: %self->t def_%v_79 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_78[37.0,] 
 		 2: COPY def_%v_77 %v_79[37.1,] 
 BB 38
 	outgoing: 39 40 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_80 %self[2.0,] 
+		 1: %self->params def_%v_80 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 		 2: COPY def_%v_81 
 		 3: COPY def_%v_82 %v_81[38.2,] 
 		 4: %v_80->merge def_%v_83 %v_80[38.1,] %v_82[38.3,] 
-		 5: def_%v_84 %self[38.1,2.0,] 
+		 5: GETFIELD %self->view def_%v_84 %self[38.1,20.0,2.0,] 
 		 6: COPY def_%v_85 
 		 7: %v_84->== def_%v_86 %v_84[38.5,] %v_85[38.6,] 
 		 8: BRANCH %v_86[38.7,] 
@@ -360,8 +360,8 @@ BB 41
 	datadep: 
 	instructions:
 		 0: COPY def_%v_89 %v_87[40.1,39.0,] 
-		 1: %self->link_to def_%v_90 %self[2.0,] %v_83[38.4,] %v_89[41.0,] %self[2.0,] 
-CLOSURE BEGIN: %self[2.0,] 
+		 1: %self->link_to def_%v_90 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_83[38.4,] %v_89[41.0,] %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+CLOSURE BEGIN: %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -395,11 +395,11 @@ BB 6
 	instructions:
 CLOSURE END
 		 2: 
-		 3: %self->params def_%v_91 %self[41.1,2.0,] 
+		 3: %self->params def_%v_91 %self[41.1,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 		 4: COPY def_%v_92 
 		 5: COPY def_%v_93 %v_92[41.4,] 
 		 6: %v_91->merge def_%v_94 %v_91[41.3,] %v_93[41.5,] 
-		 7: def_%v_95 %self[41.1,41.3,2.0,] 
+		 7: GETFIELD %self->view def_%v_95 %self[41.1,41.3,20.0,2.0,] 
 		 8: COPY def_%v_96 
 		 9: %v_95->== def_%v_97 %v_95[41.7,] %v_96[41.8,] 
 		 10: BRANCH %v_97[41.9,] 
@@ -420,8 +420,8 @@ BB 44
 	datadep: 
 	instructions:
 		 0: COPY def_%v_100 %v_98[43.1,42.0,] 
-		 1: %self->link_to def_%v_101 %self[2.0,] %v_94[41.6,] %v_100[44.0,] %self[2.0,] 
-CLOSURE BEGIN: %self[2.0,] 
+		 1: %self->link_to def_%v_101 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_94[41.6,] %v_100[44.0,] %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+CLOSURE BEGIN: %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -455,7 +455,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 2: 
-		 3: def_%v_102 %self[44.1,2.0,] 
+		 3: GETFIELD %self->logged_in def_%v_102 %self[44.1,2.0,] 
 		 4: %v_102->admin? def_%v_103 %v_102[44.3,] 
 		 5: BRANCH %v_103[44.4,] 
 BB 45
@@ -466,8 +466,8 @@ BB 45
 		 1: COPY def_%v_104 
 		 2: COPY def_%v_105 
 		 3: COPY def_%v_106 %v_104[45.1,] %v_105[45.2,] 
-		 4: %self->form_tag def_%v_107 %self[2.0,] %v_106[45.3,] %self[2.0,] 
-CLOSURE BEGIN: %self[2.0,] 
+		 4: %self->form_tag def_%v_107 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_106[45.3,] %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+CLOSURE BEGIN: %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 1
 	outgoing: 12 2 
 	datadep: 
@@ -490,7 +490,7 @@ BB 3
 		 3: def_%cl_4_5 %cl_4_4[3.2,] 
 		 4: %self->hidden_field_tag def_%cl_4_6 %self[3.2,2.0,] %cl_4_3[3.1,] %cl_4_5[3.3,] 
 		 5: 
-		 6: def_%cl_4_7 %self[3.2,3.4,2.0,] 
+		 6: GETFIELD %self->hidden_folder_count def_%cl_4_7 %self[3.2,3.4,2.0,] 
 		 7: def_%cl_4_8 %cl_4_7[3.6,] 
 		 8: BRANCH %cl_4_8[3.7,] 
 BB 4
@@ -498,13 +498,13 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_4_9 %self[2.0,] 
+		 1: GETFIELD %self->show_hidden_folders def_%cl_4_9 %self[2.0,] 
 		 2: COPY def_%cl_4_10 
 		 3: COPY def_%cl_4_11 %cl_4_10[4.2,] 
 		 4: %self->check_box_tag def_%cl_4_12 %self[2.0,] %cl_4_9[4.1,] %cl_4_11[4.3,] 
 		 5: 
 		 6: COPY def_%cl_4_13 
-		 7: def_%cl_4_14 %self[4.4,2.0,] 
+		 7: GETFIELD %self->hidden_folder_count def_%cl_4_14 %self[4.4,2.0,] 
 		 8: COPY def_%cl_4_15 %cl_4_14[4.7,] 
 		 9: %self->t def_%cl_4_16 %self[4.4,2.0,] %cl_4_13[4.6,] %cl_4_15[4.8,] 
 		 10: %self->label_tag def_%cl_4_17 %self[4.4,4.9,2.0,] %cl_4_16[4.9,] 
@@ -519,7 +519,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_4_18 %self[2.0,] 
+		 1: GETFIELD %self->restricted_folder_count def_%cl_4_18 %self[2.0,] 
 		 2: def_%cl_4_19 %cl_4_18[6.1,] 
 		 3: BRANCH %cl_4_19[6.2,] 
 BB 7
@@ -527,13 +527,13 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_4_20 %self[2.0,] 
+		 1: GETFIELD %self->show_restricted_folders def_%cl_4_20 %self[2.0,] 
 		 2: COPY def_%cl_4_21 
 		 3: COPY def_%cl_4_22 %cl_4_21[7.2,] 
 		 4: %self->check_box_tag def_%cl_4_23 %self[2.0,] %cl_4_20[7.1,] %cl_4_22[7.3,] 
 		 5: 
 		 6: COPY def_%cl_4_24 
-		 7: def_%cl_4_25 %self[7.4,2.0,] 
+		 7: GETFIELD %self->restricted_folder_count def_%cl_4_25 %self[7.4,2.0,] 
 		 8: COPY def_%cl_4_26 %cl_4_25[7.7,] 
 		 9: %self->t def_%cl_4_27 %self[7.4,2.0,] %cl_4_24[7.6,] %cl_4_26[7.8,] 
 		 10: %self->label_tag def_%cl_4_28 %self[7.4,7.9,2.0,] %cl_4_27[7.9,] 
@@ -571,14 +571,14 @@ BB 47
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_108 %self[2.0,] 
+		 1: GETFIELD %self->folders def_%v_108 %self[12.2,9.2,4.2,4.8,2.0,] 
 		 2: %v_108->any? def_%v_109 %v_108[47.1,] 
 		 3: BRANCH %v_109[47.2,] 
 BB 48
 	outgoing: 49 
 	datadep: 
 	instructions:
-		 0: def_%v_110 %self[2.0,] 
+		 0: GETFIELD %self->documents def_%v_110 %self[15.1,2.0,] 
 		 1: %v_110->any? def_%v_111 %v_110[48.0,] 
 		 2: COPY def_%v_109 %v_111[48.1,] 
 BB 49
@@ -591,7 +591,7 @@ BB 50
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_112 %self[2.0,] 
+		 1: GETFIELD %self->view def_%v_112 %self[20.0,2.0,] 
 		 2: COPY def_%v_113 
 		 3: %v_112->== def_%v_114 %v_112[50.1,] %v_113[50.2,] 
 		 4: BRANCH %v_114[50.3,] 
@@ -601,7 +601,7 @@ BB 51
 	instructions:
 		 0: 
 		 1: COPY def_%v_115 
-		 2: %self->render def_%v_116 %self[2.0,] %v_115[51.1,] 
+		 2: %self->render def_%v_116 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_115[51.1,] 
 		 3: 
 BB 52
 	outgoing: 53 
@@ -609,7 +609,7 @@ BB 52
 	instructions:
 		 0: 
 		 1: COPY def_%v_117 
-		 2: %self->render def_%v_118 %self[2.0,] %v_117[52.1,] 
+		 2: %self->render def_%v_118 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_117[52.1,] 
 		 3: COPY def_%v_116 %v_118[52.2,] 
 BB 53
 	outgoing: 55 
@@ -622,14 +622,14 @@ BB 54
 	instructions:
 		 0: 
 		 1: COPY def_%v_119 
-		 2: %self->t def_%v_120 %self[2.0,] %v_119[54.1,] 
+		 2: %self->t def_%v_120 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_119[54.1,] 
 		 3: COPY def_%v_116 %v_120[54.2,] 
 BB 55
 	outgoing: 56 62 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_121 %self[2.0,] 
+		 1: GETFIELD %self->logged_in def_%v_121 %self[2.0,] 
 		 2: %v_121->admin? def_%v_122 %v_121[55.1,] 
 		 3: BRANCH %v_122[55.2,] 
 BB 56
@@ -637,14 +637,14 @@ BB 56
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_123 %self[2.0,] 
+		 1: GETFIELD %self->logged_in def_%v_123 %self[2.0,] 
 		 2: %v_123->admin? def_%v_124 %v_123[56.1,] 
 		 3: BRANCH %v_124[56.2,] 
 BB 57
 	outgoing: 58 
 	datadep: 
 	instructions:
-		 0: def_%v_125 %self[2.0,] 
+		 0: GETFIELD %self->parent_folder def_%v_125 %self[2.0,] 
 		 1: COPY def_%v_124 %v_125[57.0,] 
 BB 58
 	outgoing: 59 60 
@@ -656,13 +656,13 @@ BB 59
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_126 %self[2.0,] 
+		 1: GETFIELD %self->parent_folder def_%v_126 %self[2.0,] 
 		 2: COPY def_%v_127 
-		 3: %self->edit_document_path def_%v_128 %self[2.0,] %v_126[59.1,] %v_127[59.2,] 
+		 3: %self->edit_document_path def_%v_128 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_126[59.1,] %v_127[59.2,] 
 		 4: COPY def_%v_129 
 		 5: COPY def_%v_130 %v_129[59.4,] 
-		 6: %self->link_to def_%v_131 %self[59.3,2.0,] %v_128[59.3,] %v_130[59.5,] %self[59.3,2.0,] 
-CLOSURE BEGIN: %self[59.3,2.0,] 
+		 6: %self->link_to def_%v_131 %self[59.3,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_128[59.3,] %v_130[59.5,] %self[59.3,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+CLOSURE BEGIN: %self[59.3,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -699,17 +699,17 @@ BB 6
 	instructions:
 CLOSURE END
 		 7: 
-		 8: def_%v_132 %self[59.3,59.6,2.0,] 
+		 8: GETFIELD %self->parent_folder def_%v_132 %self[59.3,59.6,2.0,] 
 		 9: COPY def_%v_133 
-		 10: %self->document_path def_%v_134 %self[59.3,59.6,2.0,] %v_132[59.8,] %v_133[59.9,] 
+		 10: %self->document_path def_%v_134 %self[59.3,59.6,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_132[59.8,] %v_133[59.9,] 
 		 11: COPY def_%v_135 
 		 12: COPY def_%v_136 
-		 13: %self->t def_%v_137 %self[59.3,59.6,59.10,2.0,] %v_136[59.12,] 
+		 13: %self->t def_%v_137 %self[59.3,59.6,59.10,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_136[59.12,] 
 		 14: COPY def_%v_138 %v_135[59.11,] %v_137[59.13,] 
 		 15: COPY def_%v_139 
 		 16: COPY def_%v_140 %v_138[59.14,] %v_139[59.15,] 
-		 17: %self->link_to def_%v_141 %self[59.3,59.6,59.10,59.13,2.0,] %v_134[59.10,] %v_140[59.16,] %self[59.3,59.6,59.10,59.13,2.0,] 
-CLOSURE BEGIN: %self[59.3,59.6,59.10,59.13,2.0,] 
+		 17: %self->link_to def_%v_141 %self[59.3,59.6,59.10,59.13,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_134[59.10,] %v_140[59.16,] %self[59.3,59.6,59.10,59.13,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+CLOSURE BEGIN: %self[59.3,59.6,59.10,59.13,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -756,13 +756,13 @@ BB 61
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_142 %self[2.0,] 
+		 1: GETFIELD %self->parent_folder def_%v_142 %self[2.0,] 
 		 2: COPY def_%v_143 %v_142[61.1,] 
-		 3: %self->new_document_path def_%v_144 %self[2.0,] %v_143[61.2,] 
+		 3: %self->new_document_path def_%v_144 %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_143[61.2,] 
 		 4: COPY def_%v_145 
 		 5: COPY def_%v_146 %v_145[61.4,] 
-		 6: %self->link_to def_%v_147 %self[61.3,2.0,] %v_144[61.3,] %v_146[61.5,] %self[61.3,2.0,] 
-CLOSURE BEGIN: %self[61.3,2.0,] 
+		 6: %self->link_to def_%v_147 %self[61.3,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_144[61.3,] %v_146[61.5,] %self[61.3,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+CLOSURE BEGIN: %self[61.3,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -799,13 +799,13 @@ BB 6
 	instructions:
 CLOSURE END
 		 7: 
-		 8: def_%v_148 %self[61.3,61.6,2.0,] 
+		 8: GETFIELD %self->parent_folder def_%v_148 %self[61.3,61.6,2.0,] 
 		 9: COPY def_%v_149 %v_148[61.8,] 
-		 10: %self->new_document_path def_%v_150 %self[61.3,61.6,2.0,] %v_149[61.9,] 
+		 10: %self->new_document_path def_%v_150 %self[61.3,61.6,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_149[61.9,] 
 		 11: COPY def_%v_151 
 		 12: COPY def_%v_152 %v_151[61.11,] 
-		 13: %self->link_to def_%v_153 %self[61.3,61.6,61.10,2.0,] %v_150[61.10,] %v_152[61.12,] %self[61.3,61.6,61.10,2.0,] 
-CLOSURE BEGIN: %self[61.3,61.6,61.10,2.0,] 
+		 13: %self->link_to def_%v_153 %self[61.3,61.6,61.10,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] %v_150[61.10,] %v_152[61.12,] %self[61.3,61.6,61.10,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
+CLOSURE BEGIN: %self[61.3,61.6,61.10,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -841,12 +841,12 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 14: RETURN %v_153[61.13,] %self[61.3,61.6,61.10,61.13,2.0,] 
+		 14: RETURN %v_153[61.13,] %self[61.3,61.6,61.10,61.13,22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 62
 	outgoing: 64 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[22.0,20.0,15.1,12.2,9.2,5.4,5.10,4.2,4.8,2.0,] 
 BB 64
 	outgoing: 
 	datadep: 
@@ -871,10 +871,10 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@document %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->document %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,] 
-		 13: def_%v_8 %self[2.0,2.7,] 
+		 12: GETFIELD %self->logged_in def_%v_7 %self[2.0,2.7,] 
+		 13: GETFIELD %self->document def_%v_8 %self[2.0,2.7,2.10,] 
 		 14: %v_7->can_read? def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
@@ -899,18 +899,18 @@ BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: %self->fail def_%v_13 %self[2.0,] %v_12[5.0,4.1,] 
+		 0: %self->fail def_%v_13 %self[2.0,2.10,] %v_12[5.0,4.1,] 
 		 1: COPY def_%v_10 %v_13[6.0,] 
 BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_14 %self[2.0,] 
+		 1: GETFIELD %self->document def_%v_14 %self[2.0,2.10,] 
 		 2: %v_14->name def_%v_15 %v_14[7.1,] 
-		 3: ATTRASSIGN %self->@title %self[2.0,] %v_15[7.2,] 
+		 3: ATTRASSIGN %self->title %v_15[7.2,] 
 		 4: 
-		 5: def_%v_16 %self[2.0,] 
+		 5: GETFIELD %self->document def_%v_16 %self[2.0,2.10,] 
 		 6: %v_16->parent_folder_groups def_%v_17 %v_16[7.5,] 
 		 7: %v_17->any? def_%v_18 %v_17[7.6,] 
 		 8: BRANCH %v_18[7.7,] 
@@ -920,13 +920,13 @@ BB 8
 	instructions:
 		 0: 
 		 1: COPY def_%v_19 
-		 2: %self->icon def_%v_20 %self[2.0,] %v_19[8.1,] 
+		 2: %self->icon def_%v_20 %self[7.3,2.0,2.10,] %v_19[8.1,] 
 		 3: 
 		 4: COPY def_%v_21 
-		 5: def_%v_22 %self[8.2,2.0,] 
+		 5: GETFIELD %self->document def_%v_22 %self[8.2,2.0,2.10,] 
 		 6: %v_22->parent_folder_groups def_%v_23 %v_22[8.5,] 
-		 7: %v_23->map def_%v_24 %v_23[8.6,] %self[8.2,2.0,] 
-CLOSURE BEGIN: g[] %self[8.2,2.0,] 
+		 7: %v_23->map def_%v_24 %v_23[8.6,] %self[8.2,7.3,2.0,2.10,] 
+CLOSURE BEGIN: g[] %self[8.2,7.3,2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -964,7 +964,7 @@ CLOSURE END
 		 9: %v_24->join def_%v_26 %v_24[8.7,] %v_25[8.8,] 
 		 10: %v_26->html_safe def_%v_27 %v_26[8.9,] 
 		 11: COPY def_%v_28 %v_27[8.10,] 
-		 12: %self->t def_%v_29 %self[8.2,2.0,] %v_21[8.4,] %v_28[8.11,] 
+		 12: %self->t def_%v_29 %self[8.2,7.3,2.0,2.10,] %v_21[8.4,] %v_28[8.11,] 
 		 13: 
 BB 9
 	outgoing: 10 
@@ -976,7 +976,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_30 %self[2.0,] 
+		 1: GETFIELD %self->document def_%v_30 %self[2.0,2.10,] 
 		 2: %v_30->hidden? def_%v_31 %v_30[10.1,] 
 		 3: BRANCH %v_31[10.2,] 
 BB 11
@@ -985,10 +985,10 @@ BB 11
 	instructions:
 		 0: 
 		 1: COPY def_%v_32 
-		 2: %self->icon def_%v_33 %self[2.0,] %v_32[11.1,] 
+		 2: %self->icon def_%v_33 %self[7.3,2.0,2.10,] %v_32[11.1,] 
 		 3: 
 		 4: COPY def_%v_34 
-		 5: %self->t def_%v_35 %self[11.2,2.0,] %v_34[11.4,] 
+		 5: %self->t def_%v_35 %self[11.2,7.3,2.0,2.10,] %v_34[11.4,] 
 		 6: 
 BB 12
 	outgoing: 13 
@@ -1000,14 +1000,14 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_36 %self[2.0,] 
+		 1: GETFIELD %self->document def_%v_36 %self[2.0,2.10,] 
 		 2: %v_36->description def_%v_37 %v_36[13.1,] 
 		 3: 
-		 4: def_%v_38 %self[2.0,] 
+		 4: GETFIELD %self->document def_%v_38 %self[2.0,2.10,] 
 		 5: COPY def_%v_39 
-		 6: %self->download_document_path def_%v_40 %self[2.0,] %v_38[13.4,] %v_39[13.5,] 
-		 7: def_%v_41 %self[13.6,2.0,] %v_40[13.6,] %self[13.6,2.0,] 
-CLOSURE BEGIN: %self[13.6,2.0,] 
+		 6: %self->download_document_path def_%v_40 %self[7.3,2.0,2.10,] %v_38[13.4,] %v_39[13.5,] 
+		 7: def_%v_41 %self[13.6,7.3,2.0,2.10,] %v_40[13.6,] %self[13.6,7.3,2.0,2.10,] 
+CLOSURE BEGIN: %self[13.6,7.3,2.0,2.10,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -1025,7 +1025,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->document def_%cl_2_3 %self[2.0,] 
 		 2: %cl_2_3->preview def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: %cl_2_4->present? def_%cl_2_5 %cl_2_4[3.2,] 
 		 4: BRANCH %cl_2_5[3.3,] 
@@ -1034,7 +1034,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_6 %self[2.0,] 
+		 1: GETFIELD %self->document def_%cl_2_6 %self[2.0,] 
 		 2: %cl_2_6->preview def_%cl_2_7 %cl_2_6[4.1,] 
 		 3: %cl_2_7->url def_%cl_2_8 %cl_2_7[4.2,] 
 		 4: COPY def_%cl_2_9 
@@ -1046,7 +1046,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_12 %self[2.0,] 
+		 1: GETFIELD %self->document def_%cl_2_12 %self[2.0,] 
 		 2: %self->document_icon_class def_%cl_2_13 %self[2.0,] %cl_2_12[5.1,] 
 		 3: COPY def_%cl_2_14 
 		 4: def_%cl_2_15 %cl_2_13[5.2,] %cl_2_14[5.3,] 
@@ -1071,34 +1071,34 @@ BB 9
 CLOSURE END
 		 8: 
 		 9: COPY def_%v_42 
-		 10: %self->t def_%v_43 %self[13.6,2.0,] %v_42[13.9,] 
+		 10: %self->t def_%v_43 %self[13.6,7.3,2.0,2.10,] %v_42[13.9,] 
 		 11: 
-		 12: def_%v_44 %self[13.6,13.10,2.0,] 
+		 12: GETFIELD %self->document def_%v_44 %self[13.6,13.10,2.0,2.10,] 
 		 13: %v_44->file_file_name def_%v_45 %v_44[13.12,] 
 		 14: 
 		 15: COPY def_%v_46 
-		 16: %self->t def_%v_47 %self[13.6,13.10,2.0,] %v_46[13.15,] 
+		 16: %self->t def_%v_47 %self[13.6,13.10,7.3,2.0,2.10,] %v_46[13.15,] 
 		 17: 
-		 18: def_%v_48 %self[13.6,13.10,13.16,2.0,] 
+		 18: GETFIELD %self->document def_%v_48 %self[13.6,13.10,13.16,2.0,2.10,] 
 		 19: %v_48->file def_%v_49 %v_48[13.18,] 
 		 20: %v_49->content_type def_%v_50 %v_49[13.19,] 
 		 21: 
 		 22: COPY def_%v_51 
-		 23: %self->t def_%v_52 %self[13.6,13.10,13.16,2.0,] %v_51[13.22,] 
+		 23: %self->t def_%v_52 %self[13.6,13.10,13.16,7.3,2.0,2.10,] %v_51[13.22,] 
 		 24: 
-		 25: def_%v_53 %self[13.6,13.10,13.16,13.23,2.0,] 
+		 25: GETFIELD %self->document def_%v_53 %self[13.6,13.10,13.16,13.23,2.0,2.10,] 
 		 26: %v_53->file def_%v_54 %v_53[13.25,] 
 		 27: %v_54->size def_%v_55 %v_54[13.26,] 
-		 28: %self->number_to_human_size def_%v_56 %self[13.6,13.10,13.16,13.23,2.0,] %v_55[13.27,] 
+		 28: %self->number_to_human_size def_%v_56 %self[13.6,13.10,13.16,13.23,7.3,2.0,2.10,] %v_55[13.27,] 
 		 29: 
 		 30: COPY def_%v_57 
-		 31: %self->t def_%v_58 %self[13.6,13.10,13.16,13.23,13.28,2.0,] %v_57[13.30,] 
+		 31: %self->t def_%v_58 %self[13.6,13.10,13.16,13.23,13.28,7.3,2.0,2.10,] %v_57[13.30,] 
 		 32: 
-		 33: def_%v_59 %self[13.6,13.10,13.16,13.23,13.28,13.31,2.0,] 
+		 33: GETFIELD %self->document def_%v_59 %self[13.6,13.10,13.16,13.23,13.28,13.31,2.0,2.10,] 
 		 34: %v_59->updated_at def_%v_60 %v_59[13.33,] 
 		 35: %v_60->to_s def_%v_61 %v_60[13.34,] 
 		 36: 
-		 37: def_%v_62 %self[13.6,13.10,13.16,13.23,13.28,13.31,2.0,] 
+		 37: GETFIELD %self->logged_in def_%v_62 %self[13.6,13.10,13.16,13.23,13.28,13.31,2.0,] 
 		 38: %v_62->admin? def_%v_63 %v_62[13.37,] 
 		 39: BRANCH %v_63[13.38,] 
 BB 14
@@ -1106,12 +1106,12 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_64 %self[2.0,] 
-		 2: %self->edit_document_path def_%v_65 %self[2.0,] %v_64[14.1,] 
+		 1: GETFIELD %self->document def_%v_64 %self[2.0,2.10,] 
+		 2: %self->edit_document_path def_%v_65 %self[7.3,2.0,2.10,] %v_64[14.1,] 
 		 3: COPY def_%v_66 
 		 4: COPY def_%v_67 %v_66[14.3,] 
-		 5: %self->link_to def_%v_68 %self[14.2,2.0,] %v_65[14.2,] %v_67[14.4,] %self[14.2,2.0,] 
-CLOSURE BEGIN: %self[14.2,2.0,] 
+		 5: %self->link_to def_%v_68 %self[14.2,7.3,2.0,2.10,] %v_65[14.2,] %v_67[14.4,] %self[14.2,7.3,2.0,2.10,] 
+CLOSURE BEGIN: %self[14.2,7.3,2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1148,14 +1148,14 @@ BB 6
 	instructions:
 CLOSURE END
 		 6: 
-		 7: def_%v_69 %self[14.2,14.5,2.0,] 
+		 7: GETFIELD %self->document def_%v_69 %self[14.2,14.5,2.0,2.10,] 
 		 8: COPY def_%v_70 
-		 9: %self->t def_%v_71 %self[14.2,14.5,2.0,] %v_70[14.8,] 
+		 9: %self->t def_%v_71 %self[14.2,14.5,7.3,2.0,2.10,] %v_70[14.8,] 
 		 10: COPY def_%v_72 %v_71[14.9,] 
 		 11: COPY def_%v_73 
 		 12: COPY def_%v_74 %v_72[14.10,] %v_73[14.11,] 
-		 13: %self->link_to def_%v_75 %self[14.2,14.5,14.9,2.0,] %v_69[14.7,] %v_74[14.12,] %self[14.2,14.5,14.9,2.0,] 
-CLOSURE BEGIN: %self[14.2,14.5,14.9,2.0,] 
+		 13: %self->link_to def_%v_75 %self[14.2,14.5,14.9,7.3,2.0,2.10,] %v_69[14.7,] %v_74[14.12,] %self[14.2,14.5,14.9,7.3,2.0,2.10,] 
+CLOSURE BEGIN: %self[14.2,14.5,14.9,7.3,2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1202,12 +1202,12 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_76 %self[2.0,] 
-		 2: %self->download_document_path def_%v_77 %self[2.0,] %v_76[16.1,] 
+		 1: GETFIELD %self->document def_%v_76 %self[2.0,2.10,] 
+		 2: %self->download_document_path def_%v_77 %self[7.3,2.0,2.10,] %v_76[16.1,] 
 		 3: COPY def_%v_78 
 		 4: COPY def_%v_79 %v_78[16.3,] 
-		 5: %self->link_to def_%v_80 %self[16.2,2.0,] %v_77[16.2,] %v_79[16.4,] %self[16.2,2.0,] 
-CLOSURE BEGIN: %self[16.2,2.0,] 
+		 5: %self->link_to def_%v_80 %self[16.2,7.3,2.0,2.10,] %v_77[16.2,] %v_79[16.4,] %self[16.2,7.3,2.0,2.10,] 
+CLOSURE BEGIN: %self[16.2,7.3,2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1243,7 +1243,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 6: RETURN %v_80[16.5,] %self[16.2,16.5,2.0,] 
+		 6: RETURN %v_80[16.5,] %self[16.2,16.5,7.3,2.0,2.10,] 
 BB 17
 	outgoing: 
 	datadep: 
@@ -1272,7 +1272,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_5 %self[2.0,] 
+		 1: GETFIELD %self->parent_folder def_%v_5 %self[2.0,] 
 		 2: %v_5->try def_%v_6 %v_5[3.1,] 
 		 3: BRANCH %v_6[3.2,] 
 BB 4
@@ -1286,18 +1286,18 @@ BB 5
 	datadep: 
 	instructions:
 		 0: %v_6->new def_%v_8 %v_6[4.1,3.2,] 
-		 1: ATTRASSIGN %self->@folder %self[2.0,] %v_8[5.0,] 
+		 1: ATTRASSIGN %self->folder %v_8[5.0,] 
 		 2: 
 		 3: COPY def_%v_9 
 		 4: COPY def_%v_10 %v_9[5.3,] 
-		 5: %self->render def_%v_11 %self[2.0,] %v_10[5.4,] 
-		 6: RETURN %v_11[5.5,] %self[5.5,2.0,] 
+		 5: %self->render def_%v_11 %self[5.1,2.0,] %v_10[5.4,] 
+		 6: RETURN %v_11[5.5,] %self[5.1,5.5,2.0,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_12 %self[2.0,] 
+		 1: GETFIELD %self->parent_folder def_%v_12 %self[2.0,] 
 		 2: %v_12->try def_%v_13 %v_12[6.1,] 
 		 3: BRANCH %v_13[6.2,] 
 BB 7
@@ -1311,8 +1311,8 @@ BB 8
 	datadep: 
 	instructions:
 		 0: %v_13->new def_%v_15 %v_13[7.1,6.2,] 
-		 1: ATTRASSIGN %self->@document %self[2.0,] %v_15[8.0,] 
-		 2: RETURN %v_15[8.0,] %self[2.0,] 
+		 1: ATTRASSIGN %self->document %v_15[8.0,] 
+		 2: RETURN %v_15[8.0,] %self[8.1,2.0,] 
 BB 10
 	outgoing: 
 	datadep: 
@@ -1382,12 +1382,12 @@ BB 3
 		 2: %self->params def_%v_6 %self[2.0,] 
 		 3: def_%v_7 %v_6[3.2,] 
 		 4: %v_5->find def_%v_8 %v_5[3.1,] %v_7[3.3,] 
-		 5: ATTRASSIGN %self->@folder %self[3.2,2.0,] %v_8[3.4,] 
+		 5: ATTRASSIGN %self->folder %v_8[3.4,] 
 		 6: 
 		 7: COPY def_%v_9 
 		 8: COPY def_%v_10 %v_9[3.7,] 
-		 9: %self->render def_%v_11 %self[3.2,2.0,] %v_10[3.8,] 
-		 10: RETURN %v_11[3.9,] %self[3.2,3.9,2.0,] 
+		 9: %self->render def_%v_11 %self[3.2,3.5,2.0,] %v_10[3.8,] 
+		 10: RETURN %v_11[3.9,] %self[3.2,3.5,3.9,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -1397,8 +1397,8 @@ BB 4
 		 2: %self->params def_%v_13 %self[2.0,] 
 		 3: def_%v_14 %v_13[4.2,] 
 		 4: %v_12->find def_%v_15 %v_12[4.1,] %v_14[4.3,] 
-		 5: ATTRASSIGN %self->@document %self[4.2,2.0,] %v_15[4.4,] 
-		 6: RETURN %v_15[4.4,] %self[4.2,2.0,] 
+		 5: ATTRASSIGN %self->document %v_15[4.4,] 
+		 6: RETURN %v_15[4.4,] %self[4.2,4.5,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -1431,10 +1431,10 @@ BB 3
 		 2: %self->params def_%v_6 %self[2.0,] 
 		 3: def_%v_7 %v_6[3.2,] 
 		 4: %v_5->find def_%v_8 %v_5[3.1,] %v_7[3.3,] 
-		 5: ATTRASSIGN %self->@folder %self[3.2,2.0,] %v_8[3.4,] 
+		 5: ATTRASSIGN %self->folder %v_8[3.4,] 
 		 6: 
-		 7: def_%v_9 %self[3.2,2.0,] 
-		 8: %self->folder_params def_%v_10 %self[3.2,2.0,] 
+		 7: GETFIELD %self->folder def_%v_9 %self[3.2,3.5,2.0,] 
+		 8: %self->folder_params def_%v_10 %self[3.2,3.5,2.0,] 
 		 9: %v_9->update_attributes def_%v_11 %v_9[3.7,] %v_10[3.8,] 
 		 10: BRANCH %v_11[3.9,] 
 BB 4
@@ -1442,14 +1442,14 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_12 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%v_12 %self[3.5,2.0,] 
 		 2: %v_12->folder_id def_%v_13 %v_12[4.1,] 
 		 3: COPY def_%v_14 %v_13[4.2,] 
-		 4: %self->documents_path def_%v_15 %self[2.0,] %v_14[4.3,] 
+		 4: %self->documents_path def_%v_15 %self[3.5,2.0,] %v_14[4.3,] 
 		 5: COPY def_%v_16 
-		 6: %self->t def_%v_17 %self[4.4,2.0,] %v_16[4.5,] 
+		 6: %self->t def_%v_17 %self[4.4,3.5,2.0,] %v_16[4.5,] 
 		 7: COPY def_%v_18 %v_17[4.6,] 
-		 8: %self->redirect_to def_%v_19 %self[4.4,4.6,2.0,] %v_15[4.4,] %v_18[4.7,] 
+		 8: %self->redirect_to def_%v_19 %self[4.4,4.6,3.5,2.0,] %v_15[4.4,] %v_18[4.7,] 
 		 9: 
 BB 5
 	outgoing: 6 
@@ -1458,13 +1458,13 @@ BB 5
 		 0: 
 		 1: COPY def_%v_20 
 		 2: COPY def_%v_21 %v_20[5.1,] 
-		 3: %self->render def_%v_22 %self[2.0,] %v_21[5.2,] 
+		 3: %self->render def_%v_22 %self[3.5,2.0,] %v_21[5.2,] 
 		 4: COPY def_%v_19 %v_22[5.3,] 
 BB 6
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: RETURN %v_19[5.4,4.8,] %self[2.0,] 
+		 0: RETURN %v_19[5.4,4.8,] %self[3.5,2.0,] 
 BB 7
 	outgoing: 8 9 
 	datadep: 
@@ -1474,10 +1474,10 @@ BB 7
 		 2: %self->params def_%v_24 %self[2.0,] 
 		 3: def_%v_25 %v_24[7.2,] 
 		 4: %v_23->find def_%v_26 %v_23[7.1,] %v_25[7.3,] 
-		 5: ATTRASSIGN %self->@document %self[7.2,2.0,] %v_26[7.4,] 
+		 5: ATTRASSIGN %self->document %v_26[7.4,] 
 		 6: 
-		 7: def_%v_27 %self[7.2,2.0,] 
-		 8: %self->document_params def_%v_28 %self[7.2,2.0,] 
+		 7: GETFIELD %self->document def_%v_27 %self[7.2,7.5,2.0,] 
+		 8: %self->document_params def_%v_28 %self[7.2,7.5,2.0,] 
 		 9: %v_27->update_attributes def_%v_29 %v_27[7.7,] %v_28[7.8,] 
 		 10: BRANCH %v_29[7.9,] 
 BB 8
@@ -1485,14 +1485,14 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_30 %self[2.0,] 
+		 1: GETFIELD %self->document def_%v_30 %self[7.5,2.0,] 
 		 2: %v_30->folder_id def_%v_31 %v_30[8.1,] 
 		 3: COPY def_%v_32 %v_31[8.2,] 
-		 4: %self->documents_path def_%v_33 %self[2.0,] %v_32[8.3,] 
+		 4: %self->documents_path def_%v_33 %self[7.5,2.0,] %v_32[8.3,] 
 		 5: COPY def_%v_34 
-		 6: %self->t def_%v_35 %self[8.4,2.0,] %v_34[8.5,] 
+		 6: %self->t def_%v_35 %self[8.4,7.5,2.0,] %v_34[8.5,] 
 		 7: COPY def_%v_36 %v_35[8.6,] 
-		 8: %self->redirect_to def_%v_37 %self[8.4,8.6,2.0,] %v_33[8.4,] %v_36[8.7,] 
+		 8: %self->redirect_to def_%v_37 %self[8.4,8.6,7.5,2.0,] %v_33[8.4,] %v_36[8.7,] 
 		 9: 
 BB 9
 	outgoing: 10 
@@ -1501,13 +1501,13 @@ BB 9
 		 0: 
 		 1: COPY def_%v_38 
 		 2: COPY def_%v_39 %v_38[9.1,] 
-		 3: %self->render def_%v_40 %self[2.0,] %v_39[9.2,] 
+		 3: %self->render def_%v_40 %self[7.5,2.0,] %v_39[9.2,] 
 		 4: COPY def_%v_37 %v_40[9.3,] 
 BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: RETURN %v_37[9.4,8.8,] %self[2.0,] 
+		 0: RETURN %v_37[9.4,8.8,] %self[7.5,2.0,] 
 BB 12
 	outgoing: 
 	datadep: 
@@ -1540,20 +1540,20 @@ BB 3
 		 2: %self->params def_%v_6 %self[2.0,] 
 		 3: def_%v_7 %v_6[3.2,] 
 		 4: %v_5->find def_%v_8 %v_5[3.1,] %v_7[3.3,] 
-		 5: ATTRASSIGN %self->@folder %self[3.2,2.0,] %v_8[3.4,] 
+		 5: ATTRASSIGN %self->folder %v_8[3.4,] 
 		 6: 
-		 7: def_%v_9 %self[3.2,2.0,] 
+		 7: GETFIELD %self->folder def_%v_9 %self[3.2,3.5,2.0,] 
 		 8: %v_9->destroy def_%v_10 %v_9[3.7,] 
 		 9: 
-		 10: def_%v_11 %self[3.2,2.0,] 
+		 10: GETFIELD %self->folder def_%v_11 %self[3.2,3.5,2.0,] 
 		 11: %v_11->folder_id def_%v_12 %v_11[3.10,] 
 		 12: COPY def_%v_13 %v_12[3.11,] 
-		 13: %self->documents_path def_%v_14 %self[3.2,2.0,] %v_13[3.12,] 
+		 13: %self->documents_path def_%v_14 %self[3.2,3.5,2.0,] %v_13[3.12,] 
 		 14: COPY def_%v_15 
-		 15: %self->t def_%v_16 %self[3.2,3.13,2.0,] %v_15[3.14,] 
+		 15: %self->t def_%v_16 %self[3.2,3.5,3.13,2.0,] %v_15[3.14,] 
 		 16: COPY def_%v_17 %v_16[3.15,] 
-		 17: %self->redirect_to def_%v_18 %self[3.2,3.13,3.15,2.0,] %v_14[3.13,] %v_17[3.16,] 
-		 18: RETURN %v_18[3.17,] %self[3.2,3.13,3.15,3.17,2.0,] 
+		 17: %self->redirect_to def_%v_18 %self[3.2,3.5,3.13,3.15,2.0,] %v_14[3.13,] %v_17[3.16,] 
+		 18: RETURN %v_18[3.17,] %self[3.2,3.5,3.13,3.15,3.17,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -1563,20 +1563,20 @@ BB 4
 		 2: %self->params def_%v_20 %self[2.0,] 
 		 3: def_%v_21 %v_20[4.2,] 
 		 4: %v_19->find def_%v_22 %v_19[4.1,] %v_21[4.3,] 
-		 5: ATTRASSIGN %self->@document %self[4.2,2.0,] %v_22[4.4,] 
+		 5: ATTRASSIGN %self->document %v_22[4.4,] 
 		 6: 
-		 7: def_%v_23 %self[4.2,2.0,] 
+		 7: GETFIELD %self->document def_%v_23 %self[4.2,4.5,2.0,] 
 		 8: %v_23->destroy def_%v_24 %v_23[4.7,] 
 		 9: 
-		 10: def_%v_25 %self[4.2,2.0,] 
+		 10: GETFIELD %self->document def_%v_25 %self[4.2,4.5,2.0,] 
 		 11: %v_25->folder_id def_%v_26 %v_25[4.10,] 
 		 12: COPY def_%v_27 %v_26[4.11,] 
-		 13: %self->documents_path def_%v_28 %self[4.2,2.0,] %v_27[4.12,] 
+		 13: %self->documents_path def_%v_28 %self[4.2,4.5,2.0,] %v_27[4.12,] 
 		 14: COPY def_%v_29 
-		 15: %self->t def_%v_30 %self[4.2,4.13,2.0,] %v_29[4.14,] 
+		 15: %self->t def_%v_30 %self[4.2,4.5,4.13,2.0,] %v_29[4.14,] 
 		 16: COPY def_%v_31 %v_30[4.15,] 
-		 17: %self->redirect_to def_%v_32 %self[4.2,4.13,4.15,2.0,] %v_28[4.13,] %v_31[4.16,] 
-		 18: RETURN %v_32[4.17,] %self[4.2,4.13,4.15,4.17,2.0,] 
+		 17: %self->redirect_to def_%v_32 %self[4.2,4.5,4.13,4.15,2.0,] %v_28[4.13,] %v_31[4.16,] 
+		 18: RETURN %v_32[4.17,] %self[4.2,4.5,4.13,4.15,4.17,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -1601,10 +1601,10 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@document %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->document %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,] 
-		 13: def_%v_8 %self[2.0,2.7,] 
+		 12: GETFIELD %self->logged_in def_%v_7 %self[2.0,2.7,] 
+		 13: GETFIELD %self->document def_%v_8 %self[2.0,2.7,2.10,] 
 		 14: %v_7->can_read? def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
@@ -1629,18 +1629,18 @@ BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: %self->fail def_%v_13 %self[2.0,] %v_12[5.0,4.1,] 
+		 0: %self->fail def_%v_13 %self[2.0,2.10,] %v_12[5.0,4.1,] 
 		 1: COPY def_%v_10 %v_13[6.0,] 
 BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_14 %self[2.0,] 
+		 1: GETFIELD %self->document def_%v_14 %self[2.0,2.10,] 
 		 2: %v_14->file def_%v_15 %v_14[7.1,] 
 		 3: %v_15->path def_%v_16 %v_15[7.2,] 
 		 4: 
-		 5: %self->params def_%v_17 %self[2.0,] 
+		 5: %self->params def_%v_17 %self[2.0,2.10,] 
 		 6: def_%v_18 %v_17[7.5,] 
 		 7: BRANCH %v_18[7.6,] 
 BB 8
@@ -1659,14 +1659,14 @@ BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: def_%v_21 %self[2.0,] 
+		 0: GETFIELD %self->document def_%v_21 %self[2.0,2.10,] 
 		 1: %v_21->file_file_name def_%v_22 %v_21[10.0,] 
-		 2: def_%v_23 %self[2.0,] 
+		 2: GETFIELD %self->document def_%v_23 %self[2.0,2.10,] 
 		 3: %v_23->file def_%v_24 %v_23[10.2,] 
 		 4: %v_24->content_type def_%v_25 %v_24[10.3,] 
 		 5: COPY def_%v_26 %v_19[9.1,8.0,] %v_22[10.1,] %v_25[10.4,] 
-		 6: %self->send_file def_%v_27 %self[2.0,] %v_16[7.3,] %v_26[10.5,] 
-		 7: RETURN %v_27[10.6,] %self[10.6,2.0,] 
+		 6: %self->send_file def_%v_27 %self[2.0,2.10,] %v_16[7.3,] %v_26[10.5,] 
+		 7: RETURN %v_27[10.6,] %self[10.6,2.0,2.10,] 
 BB 11
 	outgoing: 
 	datadep: 
@@ -1690,9 +1690,9 @@ BB 2
 		 6: (DocumentFolder) def_%v_3 
 		 7: %self->folder_params def_%v_4 %self[2.0,] 
 		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@folder %self[2.0,2.7,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->folder %v_5[2.8,] 
 		 10: 
-		 11: def_%v_6 %self[2.0,2.7,] 
+		 11: GETFIELD %self->folder def_%v_6 %self[2.0,2.7,2.9,] 
 		 12: %v_6->save def_%v_7 %v_6[2.11,] 
 		 13: BRANCH %v_7[2.12,] 
 BB 3
@@ -1700,14 +1700,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%v_8 %self[2.0,2.9,] 
 		 2: COPY def_%v_9 %v_8[3.1,] 
-		 3: %self->documents_path def_%v_10 %self[2.0,] %v_9[3.2,] 
+		 3: %self->documents_path def_%v_10 %self[2.0,2.9,] %v_9[3.2,] 
 		 4: COPY def_%v_11 
-		 5: %self->t def_%v_12 %self[3.3,2.0,] %v_11[3.4,] 
+		 5: %self->t def_%v_12 %self[3.3,2.0,2.9,] %v_11[3.4,] 
 		 6: COPY def_%v_13 %v_12[3.5,] 
-		 7: %self->redirect_to def_%v_14 %self[3.3,3.5,2.0,] %v_10[3.3,] %v_13[3.6,] 
-		 8: RETURN %v_14[3.7,] %self[3.3,3.5,3.7,2.0,] 
+		 7: %self->redirect_to def_%v_14 %self[3.3,3.5,2.0,2.9,] %v_10[3.3,] %v_13[3.6,] 
+		 8: RETURN %v_14[3.7,] %self[3.3,3.5,3.7,2.0,2.9,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -1715,8 +1715,8 @@ BB 4
 		 0: 
 		 1: COPY def_%v_15 
 		 2: COPY def_%v_16 %v_15[4.1,] 
-		 3: %self->render def_%v_17 %self[2.0,] %v_16[4.2,] 
-		 4: RETURN %v_17[4.3,] %self[4.3,2.0,] 
+		 3: %self->render def_%v_17 %self[2.0,2.9,] %v_16[4.2,] 
+		 4: RETURN %v_17[4.3,] %self[4.3,2.0,2.9,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -1738,16 +1738,16 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@successes %self[2.0,] %v_3[2.6,] 
+		 7: ATTRASSIGN %self->successes %v_3[2.6,] 
 		 8: 
 		 9: COPY def_%v_4 
-		 10: ATTRASSIGN %self->@errors %self[2.0,] %v_4[2.9,] 
+		 10: ATTRASSIGN %self->errors %v_4[2.9,] 
 		 11: 
-		 12: %self->params def_%v_5 %self[2.0,] 
+		 12: %self->params def_%v_5 %self[2.0,2.7,2.10,] 
 		 13: def_%v_6 %v_5[2.12,] 
 		 14: def_%v_7 %v_6[2.13,] 
-		 15: %v_7->each_with_index def_%v_8 %v_7[2.14,] %self[2.0,2.12,] 
-CLOSURE BEGIN: %self[2.0,2.12,] index[] file[] 
+		 15: %v_7->each_with_index def_%v_8 %v_7[2.14,] %self[2.0,2.7,2.10,2.12,] 
+CLOSURE BEGIN: %self[2.0,2.7,2.10,2.12,] index[] file[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -1781,9 +1781,9 @@ BB 3
 		 12: def_%cl_1_14 %cl_1_13[3.11,] 
 		 13: COPY def_%cl_1_15 %cl_1_7[3.5,] %cl_1_11[3.9,] %cl_1_14[3.12,] file[2.2,] 
 		 14: %cl_1_3->new def_%cl_1_16 %cl_1_3[3.1,] %cl_1_15[3.13,] 
-		 15: ATTRASSIGN %self->@document %self[3.2,3.6,3.10,2.0,] %cl_1_16[3.14,] 
+		 15: ATTRASSIGN %self->document %cl_1_16[3.14,] 
 		 16: 
-		 17: def_%cl_1_17 %self[3.2,3.6,3.10,2.0,] 
+		 17: GETFIELD %self->document def_%cl_1_17 %self[3.2,3.6,3.10,3.15,2.0,] 
 		 18: %cl_1_17->save def_%cl_1_18 %cl_1_17[3.17,] 
 		 19: BRANCH %cl_1_18[3.18,] 
 BB 4
@@ -1791,8 +1791,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_19 %self[2.0,] 
-		 2: def_%cl_1_20 %self[2.0,] 
+		 1: GETFIELD %self->successes def_%cl_1_19 %self[2.0,] 
+		 2: GETFIELD %self->document def_%cl_1_20 %self[3.15,2.0,] 
 		 3: %cl_1_20->name def_%cl_1_21 %cl_1_20[4.2,] 
 		 4: def_%cl_1_22 %cl_1_19[4.1,] %cl_1_21[4.3,] 
 		 5: 
@@ -1801,30 +1801,30 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_23 %self[2.0,] 
-		 2: def_%cl_1_24 %self[2.0,] 
+		 1: GETFIELD %self->errors def_%cl_1_23 %self[2.0,] 
+		 2: GETFIELD %self->document def_%cl_1_24 %self[3.15,2.0,] 
 		 3: %cl_1_24->name def_%cl_1_25 %cl_1_24[5.2,] 
 		 4: def_%cl_1_26 %cl_1_23[5.1,] %cl_1_25[5.3,] 
-		 5: RETURN %cl_1_26[5.4,] %self[2.0,] 
+		 5: RETURN %cl_1_26[5.4,] %self[3.15,2.0,] 
 BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN %cl_1_22[4.4,] %self[2.0,] 
+		 0: RETURN %cl_1_22[4.4,] %self[3.15,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: def_%cl_1_27 
 		 1: def_%cl_1_28 %cl_1_27[7.0,] 
-		 2: RETURN %cl_1_28[7.1,] %self[2.0,] 
+		 2: RETURN %cl_1_28[7.1,] %self[3.15,2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
 		 16: 
-		 17: def_%v_9 %self[2.0,2.12,] 
+		 17: GETFIELD %self->errors def_%v_9 %self[2.0,2.10,2.12,] 
 		 18: %v_9->any? def_%v_10 %v_9[2.17,] 
 		 19: BRANCH %v_10[2.18,] 
 BB 3
@@ -1832,42 +1832,42 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_11 %self[2.0,] 
+		 1: %self->flash def_%v_11 %self[2.0,2.7,2.10,] 
 		 2: COPY def_%v_12 
-		 3: def_%v_13 %self[3.1,2.0,] 
+		 3: GETFIELD %self->errors def_%v_13 %self[3.1,2.0,2.10,] 
 		 4: %v_13->size def_%v_14 %v_13[3.3,] 
-		 5: def_%v_15 %self[3.1,2.0,] 
+		 5: GETFIELD %self->errors def_%v_15 %self[3.1,2.0,2.10,] 
 		 6: COPY def_%v_16 
 		 7: %v_15->join def_%v_17 %v_15[3.5,] %v_16[3.6,] 
 		 8: COPY def_%v_18 %v_14[3.4,] %v_17[3.7,] 
-		 9: %self->t def_%v_19 %self[3.1,2.0,] %v_12[3.2,] %v_18[3.8,] 
-		 10: %v_11[3.1,] %v_19[3.9,] 
+		 9: %self->t def_%v_19 %self[3.1,2.0,2.7,2.10,] %v_12[3.2,] %v_18[3.8,] 
+		 10: ATTRASSIGN %v_11->[] %v_19[3.9,] 
 		 11: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_20 %self[2.0,] 
+		 1: %self->flash def_%v_20 %self[2.0,2.7,2.10,] 
 		 2: COPY def_%v_21 
-		 3: def_%v_22 %self[4.1,2.0,] 
+		 3: GETFIELD %self->successes def_%v_22 %self[4.1,2.0,2.7,] 
 		 4: %v_22->size def_%v_23 %v_22[4.3,] 
 		 5: COPY def_%v_24 %v_23[4.4,] 
-		 6: %self->t def_%v_25 %self[4.1,2.0,] %v_21[4.2,] %v_24[4.5,] 
-		 7: %v_20[4.1,] %v_25[4.6,] 
+		 6: %self->t def_%v_25 %self[4.1,2.0,2.7,2.10,] %v_21[4.2,] %v_24[4.5,] 
+		 7: ATTRASSIGN %v_20->[] %v_25[4.6,] 
 		 8: COPY def_%v_19 %v_25[4.6,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_26 %self[2.0,] 
+		 1: %self->params def_%v_26 %self[2.0,2.7,2.10,] 
 		 2: def_%v_27 %v_26[5.1,] 
 		 3: def_%v_28 %v_27[5.2,] 
 		 4: COPY def_%v_29 %v_28[5.3,] 
-		 5: %self->documents_path def_%v_30 %self[5.1,2.0,] %v_29[5.4,] 
-		 6: %self->redirect_to def_%v_31 %self[5.1,5.5,2.0,] %v_30[5.5,] 
-		 7: RETURN %v_31[5.6,] %self[5.1,5.5,5.6,2.0,] 
+		 5: %self->documents_path def_%v_30 %self[5.1,2.0,2.7,2.10,] %v_29[5.4,] 
+		 6: %self->redirect_to def_%v_31 %self[5.1,5.5,2.0,2.7,2.10,] %v_30[5.5,] 
+		 7: RETURN %v_31[5.6,] %self[5.1,5.5,5.6,2.0,2.7,2.10,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -1907,30 +1907,30 @@ BB 4
 		 3: %self->params def_%v_8 %self[2.0,] 
 		 4: def_%v_9 %v_8[4.3,] 
 		 5: %v_7->find def_%v_10 %v_7[4.2,] %v_9[4.4,] 
-		 6: ATTRASSIGN %self->@parent_folder %self[4.3,2.0,] %v_10[4.5,] 
+		 6: ATTRASSIGN %self->parent_folder %v_10[4.5,] 
 		 7: 
-		 8: def_%v_11 %self[4.3,2.0,] 
+		 8: GETFIELD %self->logged_in def_%v_11 %self[4.3,2.0,] 
 		 9: %v_11->admin? def_%v_12 %v_11[4.8,] 
 		 10: BRANCH %v_12[4.9,] 
 BB 6
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[4.6,2.0,] 
 BB 7
 	outgoing: 9 10 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_13 
 		 1: 
-		 2: def_%v_14 %self[2.0,] 
+		 2: GETFIELD %self->parent_folder def_%v_14 %self[4.6,2.0,] 
 		 3: BRANCH %v_14[7.2,] 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: def_%v_15 %self[2.0,] 
-		 1: def_%v_16 %self[2.0,] 
+		 0: GETFIELD %self->logged_in def_%v_15 %self[2.0,] 
+		 1: GETFIELD %self->parent_folder def_%v_16 %self[4.6,2.0,] 
 		 2: %v_15->can_read? def_%v_17 %v_15[9.0,] %v_16[9.1,] 
 		 3: %v_17->! def_%v_18 %v_17[9.2,] 
 		 4: COPY def_%v_14 %v_18[9.3,] 
@@ -1955,13 +1955,13 @@ BB 13
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: %self->fail def_%v_21 %self[2.0,] %v_20[12.0,11.1,] 
-		 1: RETURN %v_21[13.0,] %self[13.0,2.0,] 
+		 0: %self->fail def_%v_21 %self[4.6,2.0,] %v_20[12.0,11.1,] 
+		 1: RETURN %v_21[13.0,] %self[13.0,4.6,2.0,] 
 BB 14
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[4.6,2.0,] 
 BB 16
 	outgoing: 
 	datadep: 
@@ -2070,7 +2070,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
 		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -2121,7 +2121,7 @@ BB 3
 		 0: %self->cookies def_%v_6 %self[2.0,] 
 		 1: %self->params def_%v_7 %self[3.0,2.0,] 
 		 2: def_%v_8 %v_7[3.1,] 
-		 3: %v_6[3.0,] %v_8[3.2,] 
+		 3: ATTRASSIGN %v_6->[] %v_8[3.2,] 
 		 4: 
 BB 4
 	outgoing: 5 
@@ -2133,7 +2133,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_9 %self[2.0,] 
+		 1: GETFIELD %self->logged_in def_%v_9 %self[2.0,] 
 		 2: %v_9->admin? def_%v_10 %v_9[5.1,] 
 		 3: %v_10->! def_%v_11 %v_10[5.2,] 
 		 4: BRANCH %v_11[5.3,] 
@@ -2150,9 +2150,9 @@ BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@show_restricted_folders %self[2.0,] %v_11[6.4,5.3,] 
+		 0: ATTRASSIGN %self->show_restricted_folders %v_11[6.4,5.3,] 
 		 1: 
-		 2: %self->params def_%v_16 %self[2.0,] 
+		 2: %self->params def_%v_16 %self[7.0,2.0,] 
 		 3: def_%v_17 %v_16[7.2,] 
 		 4: %v_17->present? def_%v_18 %v_17[7.3,] 
 		 5: BRANCH %v_18[7.4,] 
@@ -2160,10 +2160,10 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: %self->cookies def_%v_19 %self[2.0,] 
-		 1: %self->params def_%v_20 %self[8.0,2.0,] 
+		 0: %self->cookies def_%v_19 %self[7.0,2.0,] 
+		 1: %self->params def_%v_20 %self[8.0,7.0,2.0,] 
 		 2: def_%v_21 %v_20[8.1,] 
-		 3: %v_19[8.0,] %v_21[8.2,] 
+		 3: ATTRASSIGN %v_19->[] %v_21[8.2,] 
 		 4: 
 BB 9
 	outgoing: 10 
@@ -2175,12 +2175,12 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->cookies def_%v_22 %self[2.0,] 
+		 1: %self->cookies def_%v_22 %self[7.0,2.0,] 
 		 2: def_%v_23 %v_22[10.1,] 
 		 3: COPY def_%v_24 
 		 4: %v_23->== def_%v_25 %v_23[10.2,] %v_24[10.3,] 
-		 5: ATTRASSIGN %self->@show_hidden_folders %self[10.1,2.0,] %v_25[10.4,] 
-		 6: RETURN %v_25[10.4,] %self[10.1,2.0,] 
+		 5: ATTRASSIGN %self->show_hidden_folders %v_25[10.4,] 
+		 6: RETURN %v_25[10.4,] %self[10.1,10.5,7.0,2.0,] 
 BB 11
 	outgoing: 
 	datadep: 

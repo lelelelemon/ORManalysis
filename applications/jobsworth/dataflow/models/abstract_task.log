@@ -123,14 +123,14 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->milestone_id def_%v_3 %self[2.0,] 
-		 7: ATTRASSIGN %v_3->! def_%v_4 %v_3[2.6,] 
+		 7: %v_3->!= def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: %self->milestone_id def_%v_5 %self[2.0,] 
-		 1: ATTRASSIGN %v_5->! def_%v_6 %v_5[3.0,] 
+		 1: %v_5->!= def_%v_6 %v_5[3.0,] 
 		 2: RETURN %v_6[3.1,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 5 
@@ -252,7 +252,7 @@ BB 4
 		 5: COPY def_utz %v_5[4.4,] 
 		 6: 
 		 7: 
-		 8: def_%v_6 %self[2.0,] 
+		 8: GETFIELD %self->tip def_%v_6 %self[2.0,] 
 		 9: BRANCH %v_6[4.8,] 
 BB 5
 	outgoing: 31 
@@ -657,14 +657,14 @@ BB 30
 		 4: COPY def_%v_156 
 		 5: COPY def_%v_157 
 		 6: res->gsub def_%v_158 res[9.2,] %v_157[30.5,] 
-		 7: ATTRASSIGN %self->@tip %self[2.0,] %v_158[30.6,] 
+		 7: ATTRASSIGN %self->tip %v_158[30.6,] 
 		 8: COPY def_%v_7 %v_158[30.6,] 
 BB 31
 	outgoing: 32 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_159 %self[30.7,2.0,] 
+		 1: GETFIELD %self->tip def_%v_159 %self[30.7,2.0,] 
 		 2: RETURN %v_159[31.1,] %self[30.7,2.0,] 
 BB 32
 	outgoing: 
@@ -687,7 +687,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->status def_%v_3 %self[2.0,] 
-		 7: ATTRASSIGN %v_3->! def_%v_4 %v_3[2.6,] 
+		 7: %v_3->!= def_%v_4 %v_3[2.6,] 
 		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -750,7 +750,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->completed_at def_%v_4 %self[2.0,] 
-		 1: ATTRASSIGN %v_4->! def_%v_5 %v_4[3.0,] 
+		 1: %v_4->!= def_%v_5 %v_4[3.0,] 
 		 2: RETURN %v_5[3.1,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 5 
@@ -1638,7 +1638,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->css def_%v_3 %self[2.0,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 11 
@@ -1689,14 +1689,14 @@ BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@css %self[2.0,] %v_6[9.0,5.1,] 
+		 0: ATTRASSIGN %self->css %v_6[9.0,5.1,] 
 		 1: COPY def_%v_4 %v_6[9.0,5.1,] 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_10 %self[10.0,2.0,] 
+		 1: GETFIELD %self->css def_%v_10 %self[10.0,2.0,] 
 		 2: RETURN %v_10[11.1,] %self[10.0,2.0,] 
 BB 12
 	outgoing: 
@@ -1860,7 +1860,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: hash[5.6,] 
+		 1: ATTRASSIGN hash->[] 
 		 2: COPY def_%cl_1_12 
 		 3: 
 BB 7
@@ -1868,9 +1868,9 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: hash[5.6,] prop_id[2.2,] 
+		 1: ATTRASSIGN hash->[] prop_id[2.2,] 
 		 2: 
-		 3: hash[7.1,5.6,] val_id[2.3,] 
+		 3: ATTRASSIGN hash->[] val_id[2.3,] 
 		 4: COPY def_%cl_1_12 val_id[2.3,] 
 BB 8
 	outgoing: 9 
@@ -1926,7 +1926,7 @@ CLOSURE END
 		 17: def_%v_9 attributes[2.11,] %v_8[2.16,] 
 		 18: COPY def_attributes %v_9[2.17,] 
 		 19: 
-		 20: ATTRASSIGN %self->task_property_values_attributes %self[2.0,2.13,] %v_9[2.17,] 
+		 20: ATTRASSIGN %self->task_property_values_attributes %v_9[2.17,] 
 		 21: RETURN attributes[2.11,2.18,] %self[2.0,2.13,2.20,] 
 BB 3
 	outgoing: 
@@ -2073,7 +2073,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: existing->property_value def_%v_6 existing[2.10,] 
-		 1: ATTRASSIGN %v_6->! def_%v_7 %v_6[3.0,] property_value[2.6,] 
+		 1: %v_6->!= def_%v_7 %v_6[3.0,] property_value[2.6,] 
 		 2: COPY def_%v_5 %v_7[3.1,] 
 BB 4
 	outgoing: 5 6 
@@ -2321,7 +2321,7 @@ BB 11
 		 1: current_user->email_addresses def_%v_19 current_user[2.6,] 
 		 2: %v_19->first def_%v_20 %v_19[11.1,] 
 		 3: %v_20->id def_%v_21 %v_20[11.2,] 
-		 4: ATTRASSIGN %self->updated_by_id %self[2.0,] %v_21[11.3,] 
+		 4: ATTRASSIGN %self->updated_by_id %v_21[11.3,] 
 		 5: 
 		 6: %self->creator_id def_%v_22 %self[11.4,2.0,] 
 		 7: %v_22->nil? def_%v_23 %v_22[11.6,] 
@@ -2331,7 +2331,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: current_user->id def_%v_24 current_user[2.6,] 
-		 1: ATTRASSIGN %self->creator_id %self[11.4,2.0,] %v_24[12.0,] 
+		 1: ATTRASSIGN %self->creator_id %v_24[12.0,] 
 		 2: RETURN %v_24[12.0,] %self[12.1,11.4,2.0,] 
 BB 13
 	outgoing: 15 
@@ -2966,7 +2966,7 @@ BB 13
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->due_at %self[2.0,] due_date[4.10,] 
+		 0: ATTRASSIGN %self->due_at due_date[4.10,] 
 		 1: RETURN due_date[4.10,] %self[13.0,2.0,] 
 BB 15
 	outgoing: 
@@ -3170,7 +3170,7 @@ BB 6
 		 8: 
 		 9: def_%v_36 old_task[4.9,] 
 		 10: def_%v_37 task[6.1,2.5,] 
-		 11: ATTRASSIGN %v_36->! def_%v_38 %v_36[6.9,] %v_37[6.10,] 
+		 11: %v_36->!= def_%v_38 %v_36[6.9,] %v_37[6.10,] 
 		 12: BRANCH %v_38[6.11,] 
 BB 7
 	outgoing: 9 
@@ -3205,7 +3205,7 @@ BB 9
 		 1: 
 		 2: old_task->description def_%v_55 old_task[4.9,] 
 		 3: task->description def_%v_56 task[2.5,] 
-		 4: ATTRASSIGN %v_55->! def_%v_57 %v_55[9.2,] %v_56[9.3,] 
+		 4: %v_55->!= def_%v_57 %v_55[9.2,] %v_56[9.3,] 
 		 5: BRANCH %v_57[9.4,] 
 BB 10
 	outgoing: 12 
@@ -3280,7 +3280,7 @@ CLOSURE END
 		 6: %v_66->join def_%v_68 %v_66[14.4,] %v_67[14.5,] 
 		 7: COPY def_assigned_ids %v_68[14.6,] 
 		 8: 
-		 9: ATTRASSIGN old_users->! def_%v_69 old_users[3.1,2.32,] %v_68[14.6,] 
+		 9: old_users->!= def_%v_69 old_users[3.1,2.32,] %v_68[14.6,] 
 		 10: BRANCH %v_69[14.9,] 
 BB 15
 	outgoing: 16 17 
@@ -3364,7 +3364,7 @@ BB 20
 	outgoing: 21 22 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN event_log->event_type event_log[6.4,] %v_84[19.0,18.8,] 
+		 0: ATTRASSIGN event_log->event_type %v_84[19.0,18.8,] 
 		 1: 
 		 2: task->mark_as_unread def_%v_85 task[2.5,] user[2.7,] 
 		 3: 
@@ -3419,7 +3419,7 @@ BB 28
 	instructions:
 		 0: 
 		 1: task->project_id def_%v_94 task[2.5,] 
-		 2: ATTRASSIGN old_project_id->! def_%v_95 old_project_id[4.2,] %v_94[28.1,] 
+		 2: old_project_id->!= def_%v_95 old_project_id[4.2,] %v_94[28.1,] 
 		 3: BRANCH %v_95[28.2,] 
 BB 29
 	outgoing: 31 
@@ -3480,7 +3480,7 @@ BB 31
 		 10: 
 		 11: old_task->duration def_%v_131 old_task[31.2,4.9,] 
 		 12: task->duration def_%v_132 task[31.7,2.5,] 
-		 13: ATTRASSIGN %v_131->! def_%v_133 %v_131[31.11,] %v_132[31.12,] 
+		 13: %v_131->!= def_%v_133 %v_131[31.11,] %v_132[31.12,] 
 		 14: BRANCH %v_133[31.13,] 
 BB 32
 	outgoing: 34 
@@ -3506,7 +3506,7 @@ BB 34
 		 1: 
 		 2: old_task->milestone def_%v_141 old_task[4.9,] 
 		 3: task->milestone def_%v_142 task[2.5,] 
-		 4: ATTRASSIGN %v_141->! def_%v_143 %v_141[34.2,] %v_142[34.3,] 
+		 4: %v_141->!= def_%v_143 %v_141[34.2,] %v_142[34.3,] 
 		 5: BRANCH %v_143[34.4,] 
 BB 35
 	outgoing: 36 37 
@@ -3573,7 +3573,7 @@ BB 41
 		 1: COPY def_%v_160 
 		 2: COPY def_%v_161 
 		 3: COPY def_%v_162 
-		 4: def_%v_163 %v_160[41.1,] old_name[37.3,35.2,] %v_161[41.2,] new_name[40.2,38.2,18.0,] %v_162[41.3,] 
+		 4: def_%v_163 %v_160[41.1,] old_name[37.3,35.2,] %v_161[41.2,] new_name[40.2,38.2,] %v_162[41.3,] 
 		 5: def_%v_164 body[6.7,] %v_163[41.4,] 
 		 6: 
 BB 42
@@ -3588,7 +3588,7 @@ BB 43
 		 0: 
 		 1: old_task->due_at def_%v_165 old_task[4.9,] 
 		 2: task->due_at def_%v_166 task[2.5,] 
-		 3: ATTRASSIGN %v_165->! def_%v_167 %v_165[43.1,] %v_166[43.2,] 
+		 3: %v_165->!= def_%v_167 %v_165[43.1,] %v_166[43.2,] 
 		 4: BRANCH %v_167[43.3,] 
 BB 44
 	outgoing: 45 46 
@@ -3656,7 +3656,7 @@ BB 50
 		 1: COPY def_%v_189 
 		 2: COPY def_%v_190 
 		 3: COPY def_%v_191 
-		 4: def_%v_192 %v_189[50.1,] old_name[46.7,44.3,37.3,35.2,] %v_190[50.2,] new_name[49.7,44.2,40.2,38.2,18.0,] %v_191[50.3,] 
+		 4: def_%v_192 %v_189[50.1,] old_name[46.7,44.3,] %v_190[50.2,] new_name[49.7,44.2,] %v_191[50.3,] 
 		 5: %v_192->html_safe def_%v_193 %v_192[50.4,] 
 		 6: def_%v_194 body[6.7,] %v_193[50.5,] 
 		 7: 
@@ -3710,7 +3710,7 @@ CLOSURE END
 		 5: %v_197->join def_%v_199 %v_197[52.3,] %v_198[52.4,] 
 		 6: COPY def_new_tags %v_199[52.5,] 
 		 7: 
-		 8: ATTRASSIGN old_tags->! def_%v_200 old_tags[2.14,] %v_199[52.5,] 
+		 8: old_tags->!= def_%v_200 old_tags[2.14,] %v_199[52.5,] 
 		 9: BRANCH %v_200[52.8,] 
 BB 53
 	outgoing: 55 
@@ -3776,7 +3776,7 @@ CLOSURE END
 		 5: %v_207->join def_%v_209 %v_207[55.3,] %v_208[55.4,] 
 		 6: COPY def_new_deps %v_209[55.5,] 
 		 7: 
-		 8: ATTRASSIGN old_deps->! def_%v_210 old_deps[2.21,] %v_209[55.5,] 
+		 8: old_deps->!= def_%v_210 old_deps[2.21,] %v_209[55.5,] 
 		 9: BRANCH %v_210[55.8,] 
 BB 56
 	outgoing: 57 58 
@@ -3819,7 +3819,7 @@ BB 61
 		 0: 
 		 1: old_task->status def_%v_219 old_task[4.9,] 
 		 2: task->status def_%v_220 task[2.5,] 
-		 3: ATTRASSIGN %v_219->! def_%v_221 %v_219[61.1,] %v_220[61.2,] 
+		 3: %v_219->!= def_%v_221 %v_219[61.1,] %v_220[61.2,] 
 		 4: BRANCH %v_221[61.3,] 
 BB 62
 	outgoing: 63 64 
@@ -3842,7 +3842,7 @@ BB 63
 	instructions:
 		 0: old_task->status def_%v_230 old_task[4.9,] 
 		 1: task->status def_%v_231 task[2.5,] 
-		 2: ATTRASSIGN %v_230->! def_%v_232 %v_230[63.0,] %v_231[63.1,] 
+		 2: %v_230->!= def_%v_232 %v_230[63.0,] %v_231[63.1,] 
 		 3: COPY def_%v_229 %v_232[63.2,] 
 BB 64
 	outgoing: 65 68 
@@ -3866,7 +3866,7 @@ BB 67
 	outgoing: 69 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN event_log->event_type event_log[20.0,6.4,] %v_234[66.0,65.2,] 
+		 0: ATTRASSIGN event_log->event_type %v_234[66.0,65.2,] 
 		 1: 
 BB 68
 	outgoing: 69 
@@ -3909,7 +3909,7 @@ BB 74
 	outgoing: 76 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN event_log->event_type event_log[67.0,20.0,6.4,] %v_239[73.0,72.2,] 
+		 0: ATTRASSIGN event_log->event_type %v_239[73.0,72.2,] 
 		 1: 
 BB 75
 	outgoing: 76 
@@ -3952,7 +3952,7 @@ BB 81
 	outgoing: 83 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN event_log->event_type event_log[74.0,67.0,20.0,6.4,] %v_244[80.0,79.2,] 
+		 0: ATTRASSIGN event_log->event_type %v_244[80.0,79.2,] 
 		 1: 
 BB 82
 	outgoing: 83 
@@ -4040,9 +4040,9 @@ BB 6
 	instructions:
 CLOSURE END
 		 7: 
-		 8: ATTRASSIGN event_log->body event_log[81.0,74.0,67.0,20.0,6.4,] body[6.7,] 
+		 8: ATTRASSIGN event_log->body body[6.7,] 
 		 9: 
-		 10: ATTRASSIGN event_log->target event_log[88.8,81.0,74.0,67.0,20.0,6.4,] task[88.3,2.5,] 
+		 10: ATTRASSIGN event_log->target task[88.3,2.5,] 
 		 11: 
 		 12: event_log->body def_%v_255 event_log[88.8,88.10,81.0,74.0,67.0,20.0,6.4,] 
 		 13: %v_255->blank? def_%v_256 %v_255[88.12,] 
@@ -4089,7 +4089,7 @@ BB 94
 	instructions:
 		 0: work_log->event_log def_%v_264 work_log[91.3,] 
 		 1: event_log->event_type def_%v_265 event_log[88.8,88.10,81.0,74.0,67.0,20.0,6.4,] 
-		 2: ATTRASSIGN %v_264->event_type %v_264[94.0,] %v_265[94.1,] 
+		 2: ATTRASSIGN %v_264->event_type %v_265[94.1,] 
 		 3: COPY def_%v_263 %v_265[94.1,] 
 BB 95
 	outgoing: 96 97 
@@ -4456,7 +4456,7 @@ BB 8
 		 10: 
 		 11: COPY def_%v_14 
 		 12: emails->join def_%v_15 emails[8.0,] %v_14[8.11,] 
-		 13: ATTRASSIGN %self->unknown_emails %self[8.5,8.6,8.8,8.9,2.0,] %v_15[8.12,] 
+		 13: ATTRASSIGN %self->unknown_emails %v_15[8.12,] 
 		 14: RETURN %v_15[8.12,] %self[8.5,8.6,8.8,8.9,8.13,2.0,] 
 BB 9
 	outgoing: 
@@ -4894,7 +4894,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->wait_for_customer %self[2.0,] 
+		 1: ATTRASSIGN %self->wait_for_customer 
 		 2: 
 		 3: def_%v_7 params[2.5,] 
 		 4: %v_7->delete def_%v_8 %v_7[5.3,] 
@@ -4910,7 +4910,7 @@ BB 7
 	instructions:
 		 0: 
 		 1: def_%v_9 params[2.5,] 
-		 2: ATTRASSIGN %self->attributes %self[5.1,2.0,] %v_9[7.1,] 
+		 2: ATTRASSIGN %self->attributes %v_9[7.1,] 
 		 3: 
 		 4: %self->service_id def_%v_10 %self[7.2,5.1,2.0,] 
 		 5: %v_10->== def_%v_11 %v_10[7.4,] 
@@ -4920,9 +4920,9 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->isQuoted %self[7.2,5.1,2.0,] 
+		 1: ATTRASSIGN %self->isQuoted 
 		 2: 
-		 3: ATTRASSIGN %self->service_id %self[8.1,7.2,5.1,2.0,] 
+		 3: ATTRASSIGN %self->service_id 
 		 4: COPY def_%v_12 
 		 5: 
 BB 9
@@ -4930,7 +4930,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->isQuoted %self[7.2,5.1,2.0,] 
+		 1: ATTRASSIGN %self->isQuoted 
 		 2: COPY def_%v_12 
 BB 10
 	outgoing: 11 12 
@@ -4961,7 +4961,7 @@ BB 13
 		 1: def_%v_18 params[2.5,] 
 		 2: def_%v_19 %v_18[13.1,] 
 		 3: %v_17->parse_time def_%v_20 %v_17[13.0,] %v_19[13.2,] 
-		 4: ATTRASSIGN %self->duration %self[9.1,8.1,8.3,7.2,5.1,2.0,] %v_20[13.3,] 
+		 4: ATTRASSIGN %self->duration %v_20[13.3,] 
 		 5: 
 BB 14
 	outgoing: 15 
@@ -4995,7 +4995,7 @@ BB 18
 		 1: (Time) def_%v_24 
 		 2: %v_24->now def_%v_25 %v_24[18.1,] 
 		 3: %v_25->utc def_%v_26 %v_25[18.2,] 
-		 4: ATTRASSIGN %self->completed_at %self[13.4,9.1,8.1,8.3,7.2,5.1,2.0,] %v_26[18.3,] 
+		 4: ATTRASSIGN %self->completed_at %v_26[18.3,] 
 		 5: 
 BB 19
 	outgoing: 20 
@@ -5028,7 +5028,7 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->completed_at %self[18.4,13.4,9.1,8.1,8.3,7.2,5.1,2.0,] 
+		 1: ATTRASSIGN %self->completed_at 
 		 2: COPY def_%v_32 
 		 3: 
 BB 24
@@ -5097,7 +5097,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->estimate_date %self[2.0,] 
+		 1: ATTRASSIGN %self->estimate_date 
 		 2: 
 		 3: RETURN %self[6.1,2.0,] 
 BB 8

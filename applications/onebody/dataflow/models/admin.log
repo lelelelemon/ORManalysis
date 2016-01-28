@@ -130,8 +130,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: COPY def_%v_7 
-		 1: ATTRASSIGN %self->flags %self[2.0,] %v_7[3.0,] 
-		 2: RETURN %v_7[3.0,] %self[3.1,] 
+		 1: ATTRASSIGN %self->flags %v_7[3.0,] 
+		 2: RETURN %v_7[3.0,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -276,9 +276,9 @@ BB 3
 	instructions:
 		 0: 
 		 1: name->to_s def_%cl_3_3 name[2.2,] 
-		 2: priv[2.3,] %cl_3_3[3.1,] 
+		 2: ATTRASSIGN priv->[] %cl_3_3[3.1,] 
 		 3: 
-		 4: RETURN priv[3.2,] %self[2.0,] 
+		 4: RETURN priv[3.2,2.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -320,7 +320,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: COPY def_%v_5 
-		 1: ATTRASSIGN %self->privileges def_%v_4 %self[2.0,] %v_5[4.0,] 
+		 1: %self->privileges= def_%v_4 %v_5[4.0,] 
 		 2: COPY def_%v_3 %v_5[4.0,] 
 BB 5
 	outgoing: 6 8 

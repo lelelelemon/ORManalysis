@@ -18,16 +18,16 @@ BB 2
 		 8: %v_3->where def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: COPY def_%v_6 
 		 10: %v_5->order def_%v_7 %v_5[2.8,] %v_6[2.9,] 
-		 11: ATTRASSIGN %self->@people %self[2.0,] %v_7[2.10,] 
+		 11: ATTRASSIGN %self->people %v_7[2.10,] 
 		 12: 
 		 13: COPY def_%v_8 
-		 14: %self->t def_%v_9 %self[2.0,] %v_8[2.13,] 
-		 15: ATTRASSIGN %self->@title %self[2.0,2.14,] %v_9[2.14,] 
+		 14: %self->t def_%v_9 %self[2.0,2.11,] %v_8[2.13,] 
+		 15: ATTRASSIGN %self->title %v_9[2.14,] 
 		 16: 
 		 17: COPY def_%v_10 
-		 18: %self->t def_%v_11 %self[2.0,2.14,] %v_10[2.17,] 
+		 18: %self->t def_%v_11 %self[2.0,2.11,2.14,2.15,] %v_10[2.17,] 
 		 19: 
-		 20: def_%v_12 %self[2.0,2.14,2.18,] 
+		 20: GETFIELD %self->people def_%v_12 %self[2.0,2.11,2.14,2.18,] 
 		 21: %v_12->any? def_%v_13 %v_12[2.20,] 
 		 22: BRANCH %v_13[2.21,] 
 BB 3
@@ -35,10 +35,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->batch_administration_emails_path def_%v_14 %self[2.0,] 
+		 1: %self->batch_administration_emails_path def_%v_14 %self[2.0,2.11,2.15,] 
 		 2: COPY def_%v_15 
-		 3: %self->form_tag def_%v_16 %self[3.1,2.0,] %v_14[3.1,] %v_15[3.2,] %self[3.1,2.0,] 
-CLOSURE BEGIN: %self[3.1,2.0,] 
+		 3: %self->form_tag def_%v_16 %self[3.1,2.0,2.11,2.15,] %v_14[3.1,] %v_15[3.2,] %self[3.1,2.0,2.11,2.15,] 
+CLOSURE BEGIN: %self[3.1,2.0,2.11,2.15,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -71,7 +71,7 @@ BB 3
 		 13: COPY def_%cl_1_11 
 		 14: %self->t def_%cl_1_12 %self[3.2,3.5,3.8,3.11,2.0,] %cl_1_11[3.13,] 
 		 15: 
-		 16: def_%cl_1_13 %self[3.2,3.5,3.8,3.11,3.14,2.0,] 
+		 16: GETFIELD %self->people def_%cl_1_13 %self[3.2,3.5,3.8,3.11,3.14,2.0,] 
 		 17: %cl_1_13->each def_%cl_1_14 %cl_1_13[3.16,] %self[3.2,3.5,3.8,3.11,3.14,2.0,] 
 CLOSURE BEGIN: person[] %self[3.2,3.5,3.8,3.11,3.14,2.0,] 
 BB 1
@@ -140,15 +140,15 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 4: RETURN %v_16[3.3,] %self[3.1,3.3,2.0,] 
+		 4: RETURN %v_16[3.3,] %self[3.1,3.3,2.0,2.11,2.15,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: COPY def_%v_17 
-		 2: %self->t def_%v_18 %self[2.0,] %v_17[4.1,] 
-		 3: RETURN %v_18[4.2,] %self[4.2,2.0,] 
+		 2: %self->t def_%v_18 %self[2.0,2.11,2.15,] %v_17[4.1,] 
+		 3: RETURN %v_18[4.2,] %self[4.2,2.0,2.11,2.15,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -212,7 +212,7 @@ CLOSURE END
 		 11: %self->flash def_%v_7 %self[2.0,2.6,] 
 		 12: COPY def_%v_8 
 		 13: %self->t def_%v_9 %self[2.0,2.6,2.11,] %v_8[2.12,] 
-		 14: %v_7[2.11,] %v_9[2.13,] 
+		 14: ATTRASSIGN %v_7->[] %v_9[2.13,] 
 		 15: 
 		 16: %self->administration_emails_path def_%v_10 %self[2.0,2.6,2.11,2.13,] 
 		 17: %self->redirect_to def_%v_11 %self[2.0,2.6,2.11,2.13,2.16,] %v_10[2.16,] 
@@ -237,7 +237,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
 		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3

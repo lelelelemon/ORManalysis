@@ -13,9 +13,9 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: ATTRASSIGN %self->@cache_size %self[2.0,] 
+		 6: ATTRASSIGN %self->cache_size 
 		 7: 
-		 8: ATTRASSIGN %self->@cache_number %self[2.0,2.6,] 
+		 8: ATTRASSIGN %self->cache_number 
 		 9: 
 		 10: (File) def_%v_3 
 		 11: (Publify) def_%v_4 
@@ -143,15 +143,15 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_12 %self[2.0,] 
+		 1: GETFIELD %self->cache_size def_%cl_1_12 %self[2.0,] 
 		 2: (FileTest) def_%cl_1_13 
 		 3: %cl_1_13->size def_%cl_1_14 %cl_1_13[8.2,] path[2.2,] 
 		 4: def_%cl_1_15 %cl_1_12[8.1,] %cl_1_14[8.3,] 
-		 5: ATTRASSIGN %self->@cache_size %self[2.0,] %cl_1_15[8.4,] 
+		 5: ATTRASSIGN %self->cache_size %cl_1_15[8.4,] 
 		 6: 
-		 7: def_%cl_1_16 %self[8.5,2.0,] 
+		 7: GETFIELD %self->cache_number def_%cl_1_16 %self[2.0,] 
 		 8: def_%cl_1_17 %cl_1_16[8.7,] 
-		 9: ATTRASSIGN %self->@cache_number %self[8.5,2.0,] %cl_1_17[8.8,] 
+		 9: ATTRASSIGN %self->cache_number %cl_1_17[8.8,] 
 		 10: RETURN %cl_1_17[8.8,] %self[8.5,8.9,2.0,] 
 BB 10
 	outgoing: 12 
@@ -199,7 +199,7 @@ BB 4
 		 5: %self->flash def_%v_8 %self[2.0,] 
 		 6: COPY def_%v_9 
 		 7: %self->t def_%v_10 %self[4.5,2.0,] %v_9[4.6,] 
-		 8: %v_8[4.5,] %v_10[4.7,] 
+		 8: ATTRASSIGN %v_8->[] %v_10[4.7,] 
 		 9: COPY def_%v_5 %v_10[4.7,] 
 		 10: %v_3[2.6,] 
 BB 5
@@ -227,7 +227,7 @@ BB 8
 		 1: %self->flash def_%v_13 %self[2.0,] 
 		 2: COPY def_%v_14 
 		 3: %self->t def_%v_15 %self[8.1,2.0,] %v_14[8.2,] 
-		 4: %v_13[8.1,] %v_15[8.3,] 
+		 4: ATTRASSIGN %v_13->[] %v_15[8.3,] 
 		 5: COPY def_%v_5 %v_15[8.3,] 
 		 6: %v_3[2.6,] 
 BB 9

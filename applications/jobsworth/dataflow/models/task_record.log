@@ -248,7 +248,7 @@ BB 2
 		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: %v_6->sum def_%v_7 %v_6[2.9,] 
 		 11: %v_7->to_i def_%v_8 %v_7[2.10,] 
-		 12: ATTRASSIGN %self->worked_minutes %self[2.0,2.8,] %v_8[2.11,] 
+		 12: ATTRASSIGN %self->worked_minutes %v_8[2.11,] 
 		 13: RETURN %v_8[2.11,] %self[2.0,2.8,2.12,] 
 BB 3
 	outgoing: 
@@ -802,7 +802,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->sort_rank def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -815,7 +815,7 @@ BB 5
 	instructions:
 		 0: %self->company def_%v_6 %self[2.0,] 
 		 1: %v_6->rank_by_properties def_%v_7 %v_6[5.0,] %self[5.0,2.0,] 
-		 2: ATTRASSIGN %self->@sort_rank %self[5.0,2.0,] %v_7[5.1,] 
+		 2: ATTRASSIGN %self->sort_rank %v_7[5.1,] 
 		 3: RETURN %v_7[5.1,] %self[5.0,5.2,2.0,] 
 BB 6
 	outgoing: 7 
@@ -1368,7 +1368,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->user_work def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -1424,7 +1424,7 @@ BB 6
 	instructions:
 		 0: l->_user_ def_%cl_1_7 l[2.3,] 
 		 1: l->duration def_%cl_1_8 l[6.0,2.3,] 
-		 2: memo[2.2,] %cl_1_7[6.0,] %cl_1_8[6.1,] 
+		 2: ATTRASSIGN memo->[] %cl_1_7[6.0,] %cl_1_8[6.1,] 
 		 3: 
 BB 7
 	outgoing: 8 
@@ -1449,7 +1449,7 @@ BB 11
 	datadep: 
 	instructions:
 CLOSURE END
-		 4: ATTRASSIGN %self->@user_work %self[5.0,2.0,] %v_9[5.3,] 
+		 4: ATTRASSIGN %self->user_work %v_9[5.3,] 
 		 5: RETURN %v_9[5.3,] %self[5.0,5.4,2.0,] 
 BB 6
 	outgoing: 7 
@@ -1526,7 +1526,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->milestone_id %self[2.0,] 
+		 1: ATTRASSIGN %self->milestone_id 
 		 2: COPY def_%v_15 
 		 3: 
 BB 8
@@ -1547,14 +1547,14 @@ BB 8
 		 11: %v_25->id def_%v_26 %v_25[8.10,] 
 		 12: COPY def_mid %v_26[8.11,] 
 		 13: 
-		 14: ATTRASSIGN %self->milestone_id %self[2.0,] %v_26[8.11,] 
+		 14: ATTRASSIGN %self->milestone_id %v_26[8.11,] 
 		 15: COPY def_%v_15 mid[8.12,] 
 BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->project_id %self[8.14,7.1,2.0,] pid[6.2,] 
+		 1: ATTRASSIGN %self->project_id pid[6.2,] 
 		 2: 
 		 3: %self->save def_%v_27 %self[9.1,8.14,7.1,2.0,] 
 		 4: 
@@ -1662,7 +1662,7 @@ BB 9
 	instructions:
 CLOSURE END
 		 4: 
-		 5: ATTRASSIGN %self->status %self[17.2,2.0,] status[17.0,] 
+		 5: ATTRASSIGN %self->status status[17.0,] 
 		 6: 
 		 7: %self->save def_%v_37 %self[17.2,17.5,2.0,] 
 		 8: 
@@ -1715,7 +1715,7 @@ BB 22
 		 5: 
 		 6: (PropertyValue) def_%v_52 
 		 7: prop->id def_%v_53 prop[18.5,] 
-		 8: %v_52->find_by_icon_url_and_property_id def_%v_54 %v_52[22.6,] icon[22.2,22.4,3.0,2.8,] %v_53[22.7,] 
+		 8: %v_52->find_by_icon_url_and_property_id def_%v_54 %v_52[22.6,] icon[22.2,22.4,] %v_53[22.7,] 
 		 9: COPY def_pv %v_54[22.8,] 
 		 10: 
 BB 23
@@ -1739,7 +1739,7 @@ BB 25
 		 4: %v_55->find_by_task_id_and_property_id def_%v_58 %v_55[25.1,] %v_56[25.2,] %v_57[25.3,] 
 		 5: %v_58->try def_%v_59 %v_58[25.4,] 
 		 6: pv->id def_%v_60 pv[20.4,22.9,] 
-		 7: ATTRASSIGN %v_59->! def_%v_61 %v_59[25.5,] %v_60[25.6,] 
+		 7: %v_59->!= def_%v_61 %v_59[25.5,] %v_60[25.6,] 
 		 8: BRANCH %v_61[25.7,] 
 BB 26
 	outgoing: 28 
@@ -1976,7 +1976,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->weight %self[2.0,] 
+		 1: ATTRASSIGN %self->weight 
 		 2: 
 		 3: RETURN %self[3.1,2.0,] 
 BB 4
@@ -1992,7 +1992,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->weight %self[2.0,] 
+		 1: ATTRASSIGN %self->weight 
 		 2: 
 		 3: RETURN %self[6.1,2.0,] 
 BB 7
@@ -2012,7 +2012,7 @@ BB 9
 	instructions:
 		 0: 
 		 1: %self->weight_adjustment def_%v_9 %self[2.0,] 
-		 2: ATTRASSIGN %self->weight %self[9.1,2.0,] %v_9[9.1,] 
+		 2: ATTRASSIGN %self->weight %v_9[9.1,] 
 		 3: RETURN %v_9[9.1,] %self[9.1,9.2,2.0,] 
 BB 10
 	outgoing: 12 
@@ -2056,7 +2056,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 3: ATTRASSIGN %self->weight %self[10.1,2.0,] %v_11[10.2,] 
+		 3: ATTRASSIGN %self->weight %v_11[10.2,] 
 		 4: RETURN %v_11[10.2,] %self[10.1,10.3,2.0,] 
 BB 12
 	outgoing: 

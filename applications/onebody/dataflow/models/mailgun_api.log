@@ -14,9 +14,9 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_key 
 		 6: 
-		 7: ATTRASSIGN %self->@key %self[2.0,] key[2.5,] 
+		 7: ATTRASSIGN %self->key key[2.5,] 
 		 8: 
-		 9: def_%v_3 %self[2.0,] 
+		 9: GETFIELD %self->key def_%v_3 %self[2.0,2.7,] 
 		 10: %v_3->blank? def_%v_4 %v_3[2.9,] 
 		 11: BRANCH %v_4[2.10,] 
 BB 3
@@ -24,13 +24,13 @@ BB 3
 	datadep: 
 	instructions:
 		 0: (KeyMissing) def_%v_5 
-		 1: %self->fail def_%v_6 %self[2.0,] %v_5[3.0,] 
-		 2: RETURN %v_6[3.1,] %self[3.1,2.0,] 
+		 1: %self->fail def_%v_6 %self[2.0,2.7,] %v_5[3.0,] 
+		 2: RETURN %v_6[3.1,] %self[3.1,2.0,2.7,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: RETURN %self[2.0,] 
+		 0: RETURN %self[2.0,2.7,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -75,7 +75,7 @@ BB 6
 		 0: 
 		 1: COPY def_%v_3 
 		 2: COPY def_%v_4 
-		 3: def_%v_5 %self[2.0,] 
+		 3: GETFIELD %self->key def_%v_5 %self[2.0,] 
 		 4: COPY def_%v_6 %v_4[6.2,] %v_5[6.3,] 
 		 5: COPY def_%v_7 skip[3.0,2.5,] limit[5.0,4.0,] 
 		 6: COPY def_%v_8 %v_6[6.4,] %v_7[6.5,] 
@@ -141,7 +141,7 @@ BB 6
 		 0: 
 		 1: COPY def_%v_15 
 		 2: COPY def_%v_16 
-		 3: def_%v_17 %self[2.0,] 
+		 3: GETFIELD %self->key def_%v_17 %self[2.0,] 
 		 4: COPY def_%v_18 %v_16[6.2,] %v_17[6.3,] 
 		 5: %self->build_data def_%v_19 %self[2.0,] 
 		 6: COPY def_%v_20 %v_18[6.4,] %v_19[6.5,] 
@@ -180,7 +180,7 @@ BB 2
 		 10: COPY def_response %v_5[2.9,] 
 		 11: 
 		 12: %v_5->code def_%v_6 %v_5[2.9,] 
-		 13: def_%v_7 %v_6[2.12,] 
+		 13: %v_6->== def_%v_7 %v_6[2.12,] 
 		 14: BRANCH %v_7[2.13,] 
 BB 3
 	outgoing: 5 
@@ -227,7 +227,7 @@ BB 2
 		 10: COPY def_response %v_5[2.9,] 
 		 11: 
 		 12: %v_5->code def_%v_6 %v_5[2.9,] 
-		 13: def_%v_7 %v_6[2.12,] 
+		 13: %v_6->== def_%v_7 %v_6[2.12,] 
 		 14: BRANCH %v_7[2.13,] 
 BB 3
 	outgoing: 5 
@@ -296,7 +296,7 @@ BB 3
 		 1: COPY def_%cl_1_3 
 		 2: def_%cl_1_4 item[2.2,] %cl_1_3[3.1,] 
 		 3: COPY def_%cl_1_5 
-		 4: ATTRASSIGN %cl_1_4->! def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 4: %cl_1_4->!= def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: BRANCH %cl_1_6[3.4,] 
 BB 4
 	outgoing: 10 12 
@@ -322,7 +322,7 @@ BB 6
 		 6: %cl_1_12->email_host def_%cl_1_13 %cl_1_12[6.5,] 
 		 7: COPY def_%cl_1_14 
 		 8: def_%cl_1_15 %cl_1_10[6.3,] %cl_1_13[6.6,] %cl_1_14[6.7,] 
-		 9: ATTRASSIGN %cl_1_9->! def_%cl_1_16 %cl_1_9[6.2,] %cl_1_15[6.8,] 
+		 9: %cl_1_9->!= def_%cl_1_16 %cl_1_9[6.2,] %cl_1_15[6.8,] 
 		 10: BRANCH %cl_1_16[6.9,] 
 BB 7
 	outgoing: 10 12 

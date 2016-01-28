@@ -17,24 +17,24 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->search def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@search %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->search %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,2.10,] 
+		 12: GETFIELD %self->search def_%v_7 %self[2.0,2.7,2.10,] 
 		 13: %v_7->result def_%v_8 %v_7[2.12,] 
-		 14: ATTRASSIGN %self->@result %self[2.0,2.7,2.10,] %v_8[2.13,] 
+		 14: ATTRASSIGN %self->result %v_8[2.13,] 
 		 15: 
-		 16: def_%v_9 %self[2.0,2.7,2.10,2.14,] 
+		 16: GETFIELD %self->result def_%v_9 %self[2.0,2.7,2.14,] 
 		 17: COPY def_%v_10 
 		 18: %v_9->order def_%v_11 %v_9[2.16,] %v_10[2.17,] 
 		 19: %v_11->distinct def_%v_12 %v_11[2.18,] 
-		 20: ATTRASSIGN %self->@ads %self[2.0,2.7,2.10,2.14,] %v_12[2.19,] 
+		 20: ATTRASSIGN %self->ads %v_12[2.19,] 
 		 21: 
-		 22: def_%v_13 %self[2.0,2.7,2.10,2.14,2.20,] 
+		 22: GETFIELD %self->result def_%v_13 %self[2.0,2.7,2.14,] 
 		 23: %self->params def_%v_14 %self[2.0,2.7,2.10,2.14,2.20,] 
 		 24: def_%v_15 %v_14[2.23,] 
 		 25: %v_13->page def_%v_16 %v_13[2.22,] %v_15[2.24,] 
 		 26: %v_16->per def_%v_17 %v_16[2.25,] 
-		 27: ATTRASSIGN %self->@ads %self[2.0,2.7,2.10,2.14,2.20,2.23,] %v_17[2.26,] 
+		 27: ATTRASSIGN %self->ads %v_17[2.26,] 
 		 28: 
 		 29: %self->respond_to def_%v_18 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,] %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,] 
 CLOSURE BEGIN: format[] 
@@ -72,7 +72,7 @@ BB 6
 CLOSURE END
 		 30: 
 		 31: def_%v_19 
-		 32: ATTRASSIGN %self->@page_title %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,] %v_19[2.31,] 
+		 32: ATTRASSIGN %self->page_title %v_19[2.31,] 
 		 33: 
 		 34: %self->ruby_code_from_view def_%v_20 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,] 
 		 35: %v_20->ruby_code_from_view def_%v_21 %v_20[2.34,] %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,] 
@@ -156,7 +156,7 @@ BB 3
 		 40: %self->admin_users_path def_%cl_3_32 %self[3.4,3.5,3.8,3.9,3.12,3.13,3.16,3.17,3.20,3.21,3.24,3.25,3.28,3.29,3.32,3.33,3.36,3.37,2.0,] 
 		 41: %self->link_to_unless_current def_%cl_3_33 %self[3.4,3.5,3.8,3.9,3.12,3.13,3.16,3.17,3.20,3.21,3.24,3.25,3.28,3.29,3.32,3.33,3.36,3.37,3.40,2.0,] %cl_3_31[3.39,] %cl_3_32[3.40,] 
 		 42: 
-		 43: def_%cl_3_34 %self[3.4,3.5,3.8,3.9,3.12,3.13,3.16,3.17,3.20,3.21,3.24,3.25,3.28,3.29,3.32,3.33,3.36,3.37,3.40,3.41,2.0,] 
+		 43: GETFIELD %self->admin_nav_links def_%cl_3_34 %self[3.4,3.5,3.8,3.9,3.12,3.13,3.16,3.17,3.20,3.21,3.24,3.25,3.28,3.29,3.32,3.33,3.36,3.37,3.40,3.41,2.0,] 
 		 44: %cl_3_34->any? def_%cl_3_35 %cl_3_34[3.43,] 
 		 45: BRANCH %cl_3_35[3.44,] 
 BB 4
@@ -164,7 +164,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_36 %self[2.0,] 
+		 1: GETFIELD %self->admin_nav_links def_%cl_3_36 %self[2.0,] 
 		 2: %cl_3_36->each def_%cl_3_37 %cl_3_36[4.1,] %self[2.0,] 
 CLOSURE BEGIN: link[] %self[2.0,] 
 BB 1
@@ -247,7 +247,7 @@ CLOSURE END
 		 36: 
 		 37: def_%v_22 
 		 38: 
-		 39: def_%v_23 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,] 
+		 39: GETFIELD %self->search def_%v_23 %self[2.0,2.7,2.10,2.23,2.29,2.34,] 
 		 40: %self->ads_path def_%v_24 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,] 
 		 41: COPY def_%v_25 %v_24[2.40,] 
 		 42: %self->bootstrap_form_for def_%v_26 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,] %v_23[2.39,] %v_25[2.41,] %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,] 
@@ -326,21 +326,21 @@ BB 6
 	instructions:
 CLOSURE END
 		 43: 
-		 44: def_%v_27 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,] 
+		 44: GETFIELD %self->search def_%v_27 %self[2.0,2.7,2.10,2.23,2.29,2.34,2.40,2.42,] 
 		 45: def_%v_28 
 		 46: %self->sort_link def_%v_29 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,] %v_27[2.44,] %v_28[2.45,] 
 		 47: 
-		 48: def_%v_30 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,] 
+		 48: GETFIELD %self->search def_%v_30 %self[2.0,2.7,2.10,2.23,2.29,2.34,2.40,2.42,2.46,] 
 		 49: def_%v_31 
 		 50: %self->sort_link def_%v_32 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,] %v_30[2.48,] %v_31[2.49,] 
 		 51: 
-		 52: def_%v_33 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,2.50,] 
+		 52: GETFIELD %self->search def_%v_33 %self[2.0,2.7,2.10,2.23,2.29,2.34,2.40,2.42,2.46,2.50,] 
 		 53: def_%v_34 
 		 54: %self->sort_link def_%v_35 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,2.50,] %v_33[2.52,] %v_34[2.53,] 
 		 55: 
 		 56: def_%v_36 
 		 57: 
-		 58: def_%v_38 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,2.50,2.54,] 
+		 58: GETFIELD %self->ads def_%v_38 %self[2.0,2.7,2.20,2.23,2.27,2.29,2.34,2.40,2.42,2.46,2.50,2.54,] 
 		 59: %v_38->each def_%v_37 %v_38[2.58,] %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,2.50,2.54,] 
 CLOSURE BEGIN: ad[] %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,2.50,2.54,] 
 BB 1
@@ -394,7 +394,7 @@ BB 4
 	instructions:
 CLOSURE END
 		 60: 
-		 61: def_%v_39 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,2.50,2.54,] 
+		 61: GETFIELD %self->ads def_%v_39 %self[2.0,2.7,2.20,2.23,2.27,2.29,2.34,2.40,2.42,2.46,2.50,2.54,] 
 		 62: COPY def_%v_40 
 		 63: COPY def_%v_41 %v_40[2.62,] 
 		 64: %self->paginate def_%v_42 %self[2.0,2.7,2.10,2.14,2.20,2.23,2.27,2.29,2.32,2.34,2.40,2.42,2.46,2.50,2.54,] %v_39[2.61,] %v_41[2.63,] 
@@ -429,7 +429,7 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@ad %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->ad %v_6[2.9,] 
 		 11: 
 		 12: %self->respond_to def_%v_7 %self[2.0,2.7,2.10,] %self[2.0,2.7,2.10,] 
 CLOSURE BEGIN: format[] 
@@ -466,9 +466,9 @@ BB 6
 	instructions:
 CLOSURE END
 		 13: 
-		 14: def_%v_8 %self[2.0,2.7,2.10,2.12,] 
+		 14: GETFIELD %self->ad def_%v_8 %self[2.0,2.7,2.10,2.12,] 
 		 15: %v_8->name def_%v_9 %v_8[2.14,] 
-		 16: ATTRASSIGN %self->@page_title %self[2.0,2.7,2.10,2.12,] %v_9[2.15,] 
+		 16: ATTRASSIGN %self->page_title %v_9[2.15,] 
 		 17: 
 		 18: def_%v_10 
 		 19: %self->ads_path def_%v_11 %self[2.0,2.7,2.10,2.12,2.16,] 
@@ -477,14 +477,14 @@ CLOSURE END
 		 22: %self->link_to def_%v_14 %self[2.0,2.7,2.10,2.12,2.16,2.19,] %v_10[2.18,] %v_11[2.19,] %v_13[2.21,] 
 		 23: 
 		 24: def_%v_15 
-		 25: def_%v_16 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,] 
+		 25: GETFIELD %self->ad def_%v_16 %self[2.0,2.7,2.10,2.12,2.19,2.22,] 
 		 26: %self->edit_ad_path def_%v_17 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,] %v_16[2.25,] 
 		 27: COPY def_%v_18 
 		 28: COPY def_%v_19 %v_18[2.27,] 
 		 29: %self->link_to def_%v_20 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,] %v_15[2.24,] %v_17[2.26,] %v_19[2.28,] 
 		 30: 
 		 31: def_%v_21 
-		 32: def_%v_22 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,] 
+		 32: GETFIELD %self->ad def_%v_22 %self[2.0,2.7,2.10,2.12,2.19,2.22,2.26,2.29,] 
 		 33: %self->ad_path def_%v_23 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,] %v_22[2.32,] 
 		 34: def_%v_24 
 		 35: COPY def_%v_25 %v_24[2.34,] 
@@ -494,41 +494,41 @@ CLOSURE END
 		 39: 
 		 40: def_%v_29 
 		 41: 
-		 42: def_%v_30 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,2.33,2.38,] 
+		 42: GETFIELD %self->ad def_%v_30 %self[2.0,2.7,2.10,2.12,2.19,2.22,2.26,2.29,2.33,2.38,] 
 		 43: %v_30->name def_%v_31 %v_30[2.42,] 
 		 44: %self->h def_%v_32 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,2.33,2.38,] %v_31[2.43,] 
 		 45: 
 		 46: def_%v_33 
 		 47: 
-		 48: def_%v_34 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,2.33,2.38,2.44,] 
+		 48: GETFIELD %self->ad def_%v_34 %self[2.0,2.7,2.10,2.12,2.19,2.22,2.26,2.29,2.33,2.38,2.44,] 
 		 49: %v_34->html def_%v_35 %v_34[2.48,] 
 		 50: %self->raw def_%v_36 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,2.33,2.38,2.44,] %v_35[2.49,] 
 		 51: 
 		 52: def_%v_37 
 		 53: 
-		 54: def_%v_38 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,2.33,2.38,2.44,2.50,] 
+		 54: GETFIELD %self->ad def_%v_38 %self[2.0,2.7,2.10,2.12,2.19,2.22,2.26,2.29,2.33,2.38,2.44,2.50,] 
 		 55: %v_38->frequency def_%v_39 %v_38[2.54,] 
 		 56: %self->h def_%v_40 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,2.33,2.38,2.44,2.50,] %v_39[2.55,] 
 		 57: 
 		 58: def_%v_41 
 		 59: 
-		 60: def_%v_42 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,2.33,2.38,2.44,2.50,2.56,] 
+		 60: GETFIELD %self->ad def_%v_42 %self[2.0,2.7,2.10,2.12,2.19,2.22,2.26,2.29,2.33,2.38,2.44,2.50,2.56,] 
 		 61: %v_42->published? def_%v_43 %v_42[2.60,] 
 		 62: 
 		 63: def_%v_44 
 		 64: 
-		 65: def_%v_45 %self[2.0,2.7,2.10,2.12,2.16,2.19,2.22,2.26,2.29,2.33,2.38,2.44,2.50,2.56,] 
+		 65: GETFIELD %self->ad def_%v_45 %self[2.0,2.7,2.10,2.12,2.19,2.22,2.26,2.29,2.33,2.38,2.44,2.50,2.56,] 
 		 66: %v_45->time_constrained? def_%v_46 %v_45[2.65,] 
 		 67: BRANCH %v_46[2.66,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_47 %self[2.0,2.10,2.16,] 
+		 0: GETFIELD %self->ad def_%v_47 %self[2.0,2.10,] 
 		 1: %v_47->start_date def_%v_48 %v_47[3.0,] 
 		 2: %v_48->to_formatted_s def_%v_49 %v_48[3.1,] 
 		 3: COPY def_%v_50 
-		 4: def_%v_51 %self[2.0,2.10,2.16,] 
+		 4: GETFIELD %self->ad def_%v_51 %self[2.0,2.10,] 
 		 5: %v_51->end_date def_%v_52 %v_51[3.4,] 
 		 6: %v_52->to_formatted_s def_%v_53 %v_52[3.5,] 
 		 7: def_%v_54 %v_49[3.2,] %v_50[3.3,] %v_53[3.6,] 
@@ -547,7 +547,7 @@ BB 5
 		 1: 
 		 2: def_%v_57 
 		 3: 
-		 4: def_%v_58 %self[5.0,2.0,2.10,2.16,] 
+		 4: GETFIELD %self->ad def_%v_58 %self[5.0,2.0,2.10,] 
 		 5: %v_58->location def_%v_59 %v_58[5.4,] 
 		 6: %self->h def_%v_60 %self[5.0,2.0,2.10,2.16,] %v_59[5.5,] 
 		 7: RETURN %v_60[5.6,] %self[5.0,5.6,2.0,2.10,2.16,] 
@@ -573,10 +573,10 @@ BB 2
 		 5: 
 		 6: (Ad) def_%v_3 
 		 7: %v_3->new def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@ad %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->ad %v_4[2.7,] 
 		 9: 
 		 10: def_%v_5 
-		 11: ATTRASSIGN %self->@page_title %self[2.0,2.8,] %v_5[2.10,] 
+		 11: ATTRASSIGN %self->page_title %v_5[2.10,] 
 		 12: 
 		 13: def_%v_6 
 		 14: %self->ads_path def_%v_7 %self[2.0,2.8,2.11,] 
@@ -605,7 +605,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->ad def_%cl_1_3 %self[2.0,] 
 		 2: COPY def_%cl_1_4 
 		 3: %self->bootstrap_form_for def_%cl_1_5 %self[2.0,] %cl_1_3[3.1,] %cl_1_4[3.2,] %self[2.0,] 
 CLOSURE BEGIN: f[] %self[2.0,] 
@@ -685,7 +685,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 16: 
-		 17: def_%cl_2_14 %self[2.0,] 
+		 17: GETFIELD %self->ad def_%cl_2_14 %self[2.0,] 
 		 18: %cl_2_14->time_constrained? def_%cl_2_15 %cl_2_14[3.17,] 
 		 19: BRANCH %cl_2_15[3.18,] 
 BB 4
@@ -785,10 +785,10 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@ad %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->ad %v_6[2.9,] 
 		 11: 
 		 12: def_%v_7 
-		 13: ATTRASSIGN %self->@page_title %self[2.0,2.7,2.10,] %v_7[2.12,] 
+		 13: ATTRASSIGN %self->page_title %v_7[2.12,] 
 		 14: 
 		 15: def_%v_8 
 		 16: %self->ads_path def_%v_9 %self[2.0,2.7,2.10,2.13,] 
@@ -797,14 +797,14 @@ BB 2
 		 19: %self->link_to def_%v_12 %self[2.0,2.7,2.10,2.13,2.16,] %v_8[2.15,] %v_9[2.16,] %v_11[2.18,] 
 		 20: 
 		 21: def_%v_13 
-		 22: def_%v_14 %self[2.0,2.7,2.10,2.13,2.16,2.19,] 
+		 22: GETFIELD %self->ad def_%v_14 %self[2.0,2.7,2.10,2.16,2.19,] 
 		 23: %self->ad_path def_%v_15 %self[2.0,2.7,2.10,2.13,2.16,2.19,] %v_14[2.22,] 
 		 24: COPY def_%v_16 
 		 25: COPY def_%v_17 %v_16[2.24,] 
 		 26: %self->link_to def_%v_18 %self[2.0,2.7,2.10,2.13,2.16,2.19,2.23,] %v_13[2.21,] %v_15[2.23,] %v_17[2.25,] 
 		 27: 
 		 28: def_%v_19 
-		 29: def_%v_20 %self[2.0,2.7,2.10,2.13,2.16,2.19,2.23,2.26,] 
+		 29: GETFIELD %self->ad def_%v_20 %self[2.0,2.7,2.10,2.16,2.19,2.23,2.26,] 
 		 30: %self->ad_path def_%v_21 %self[2.0,2.7,2.10,2.13,2.16,2.19,2.23,2.26,] %v_20[2.29,] 
 		 31: def_%v_22 
 		 32: COPY def_%v_23 %v_22[2.31,] 
@@ -833,7 +833,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->ad def_%cl_1_3 %self[2.0,] 
 		 2: COPY def_%cl_1_4 
 		 3: %self->bootstrap_form_for def_%cl_1_5 %self[2.0,] %cl_1_3[3.1,] %cl_1_4[3.2,] %self[2.0,] 
 CLOSURE BEGIN: f[] %self[2.0,] 
@@ -913,7 +913,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 16: 
-		 17: def_%cl_2_14 %self[2.0,] 
+		 17: GETFIELD %self->ad def_%cl_2_14 %self[2.0,] 
 		 18: %cl_2_14->time_constrained? def_%cl_2_15 %cl_2_14[3.17,] 
 		 19: BRANCH %cl_2_15[3.18,] 
 BB 4
@@ -1012,7 +1012,7 @@ BB 2
 		 6: (Ad) def_%v_3 
 		 7: %self->ad_params def_%v_4 %self[2.0,] 
 		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@ad %self[2.0,2.7,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->ad %v_5[2.8,] 
 		 10: 
 		 11: %self->respond_to def_%v_6 %self[2.0,2.7,2.9,] %self[2.0,2.7,2.9,] 
 CLOSURE BEGIN: %self[2.0,2.7,2.9,] format[] 
@@ -1034,7 +1034,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->ad def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->save def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
@@ -1044,7 +1044,7 @@ BB 4
 		 0: 
 		 1: %self->flash def_%cl_1_5 %self[2.0,] 
 		 2: def_%cl_1_6 
-		 3: %cl_1_5[4.1,] %cl_1_6[4.2,] 
+		 3: ATTRASSIGN %cl_1_5->[] %cl_1_6[4.2,] 
 		 4: 
 		 5: format->html def_%cl_1_7 format[2.2,] %self[4.1,2.0,] 
 CLOSURE BEGIN: %self[4.1,2.0,] 
@@ -1065,7 +1065,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->ad def_%cl_2_3 %self[2.0,] 
 		 2: %self->ad_url def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 
 		 3: %self->redirect_to def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] %self[3.2,3.3,2.0,] 
@@ -1128,7 +1128,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: def_%cl_4_3 
-		 2: ATTRASSIGN %self->@page_title %self[2.0,] %cl_4_3[3.1,] 
+		 2: ATTRASSIGN %self->page_title %cl_4_3[3.1,] 
 		 3: 
 		 4: def_%cl_4_4 
 		 5: %self->ads_path def_%cl_4_5 %self[3.2,2.0,] 
@@ -1157,7 +1157,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_5_3 %self[2.0,] 
+		 1: GETFIELD %self->ad def_%cl_5_3 %self[2.0,] 
 		 2: COPY def_%cl_5_4 
 		 3: %self->bootstrap_form_for def_%cl_5_5 %self[2.0,] %cl_5_3[3.1,] %cl_5_4[3.2,] %self[2.0,] 
 CLOSURE BEGIN: f[] %self[2.0,] 
@@ -1237,7 +1237,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 16: 
-		 17: def_%cl_6_14 %self[2.0,] 
+		 17: GETFIELD %self->ad def_%cl_6_14 %self[2.0,] 
 		 18: %cl_6_14->time_constrained? def_%cl_6_15 %cl_6_14[3.17,] 
 		 19: BRANCH %cl_6_15[3.18,] 
 BB 4
@@ -1381,7 +1381,7 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@ad %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->ad %v_6[2.9,] 
 		 11: 
 		 12: %self->respond_to def_%v_7 %self[2.0,2.7,2.10,] %self[2.0,2.7,2.10,] 
 CLOSURE BEGIN: %self[2.0,2.7,2.10,] format[] 
@@ -1403,7 +1403,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->ad def_%cl_1_3 %self[2.0,] 
 		 2: %self->ad_params def_%cl_1_4 %self[2.0,] 
 		 3: %cl_1_3->update_attributes def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 
 		 4: BRANCH %cl_1_5[3.3,] 
@@ -1414,7 +1414,7 @@ BB 4
 		 0: 
 		 1: %self->flash def_%cl_1_6 %self[2.0,] 
 		 2: def_%cl_1_7 
-		 3: %cl_1_6[4.1,] %cl_1_7[4.2,] 
+		 3: ATTRASSIGN %cl_1_6->[] %cl_1_7[4.2,] 
 		 4: 
 		 5: format->html def_%cl_1_8 format[2.2,] %self[4.1,2.0,] 
 CLOSURE BEGIN: %self[4.1,2.0,] 
@@ -1435,7 +1435,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->ad def_%cl_2_3 %self[2.0,] 
 		 2: %self->ad_url def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 
 		 3: %self->redirect_to def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] %self[3.2,3.3,2.0,] 
@@ -1498,7 +1498,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: def_%cl_4_3 
-		 2: ATTRASSIGN %self->@page_title %self[2.0,] %cl_4_3[3.1,] 
+		 2: ATTRASSIGN %self->page_title %cl_4_3[3.1,] 
 		 3: 
 		 4: def_%cl_4_4 
 		 5: %self->ads_path def_%cl_4_5 %self[3.2,2.0,] 
@@ -1507,14 +1507,14 @@ BB 3
 		 8: %self->link_to def_%cl_4_8 %self[3.2,3.5,2.0,] %cl_4_4[3.4,] %cl_4_5[3.5,] %cl_4_7[3.7,] 
 		 9: 
 		 10: def_%cl_4_9 
-		 11: def_%cl_4_10 %self[3.2,3.5,3.8,2.0,] 
+		 11: GETFIELD %self->ad def_%cl_4_10 %self[3.5,3.8,2.0,] 
 		 12: %self->ad_path def_%cl_4_11 %self[3.2,3.5,3.8,2.0,] %cl_4_10[3.11,] 
 		 13: COPY def_%cl_4_12 
 		 14: COPY def_%cl_4_13 %cl_4_12[3.13,] 
 		 15: %self->link_to def_%cl_4_14 %self[3.2,3.5,3.8,3.12,2.0,] %cl_4_9[3.10,] %cl_4_11[3.12,] %cl_4_13[3.14,] 
 		 16: 
 		 17: def_%cl_4_15 
-		 18: def_%cl_4_16 %self[3.2,3.5,3.8,3.12,3.15,2.0,] 
+		 18: GETFIELD %self->ad def_%cl_4_16 %self[3.5,3.8,3.12,3.15,2.0,] 
 		 19: %self->ad_path def_%cl_4_17 %self[3.2,3.5,3.8,3.12,3.15,2.0,] %cl_4_16[3.18,] 
 		 20: def_%cl_4_18 
 		 21: COPY def_%cl_4_19 %cl_4_18[3.20,] 
@@ -1543,7 +1543,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_5_3 %self[2.0,] 
+		 1: GETFIELD %self->ad def_%cl_5_3 %self[2.0,] 
 		 2: COPY def_%cl_5_4 
 		 3: %self->bootstrap_form_for def_%cl_5_5 %self[2.0,] %cl_5_3[3.1,] %cl_5_4[3.2,] %self[2.0,] 
 CLOSURE BEGIN: f[] %self[2.0,] 
@@ -1623,7 +1623,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 16: 
-		 17: def_%cl_6_14 %self[2.0,] 
+		 17: GETFIELD %self->ad def_%cl_6_14 %self[2.0,] 
 		 18: %cl_6_14->time_constrained? def_%cl_6_15 %cl_6_14[3.17,] 
 		 19: BRANCH %cl_6_15[3.18,] 
 BB 4
@@ -1767,9 +1767,9 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@ad %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->ad %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,2.10,] 
+		 12: GETFIELD %self->ad def_%v_7 %self[2.0,2.7,2.10,] 
 		 13: %v_7->destroy def_%v_8 %v_7[2.12,] 
 		 14: 
 		 15: %self->respond_to def_%v_9 %self[2.0,2.7,2.10,] %self[2.0,2.7,2.10,] 

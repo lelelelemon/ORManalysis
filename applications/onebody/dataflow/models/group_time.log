@@ -96,7 +96,7 @@ BB 4
 		 3: 
 		 4: %self->checkin_folder def_%v_4 %self[4.1,2.0,] 
 		 5: %v_4->checkin_time def_%v_5 %v_4[4.4,] 
-		 6: ATTRASSIGN %self->checkin_time %self[4.1,4.4,2.0,] %v_5[4.5,] 
+		 6: ATTRASSIGN %self->checkin_time %v_5[4.5,] 
 		 7: 
 		 8: cf->sequence def_%v_6 cf[4.2,] 
 		 9: placement->== def_%v_7 placement[3.0,2.5,] 
@@ -117,14 +117,14 @@ BB 7
 	datadep: 
 	instructions:
 		 0: def_%v_9 %v_6[4.8,] %v_8[6.0,5.0,] 
-		 1: ATTRASSIGN %self->sequence %self[4.6,] %v_9[7.0,] 
+		 1: ATTRASSIGN %self->sequence %v_9[7.0,] 
 		 2: 
-		 3: ATTRASSIGN %self->checkin_folder %self[7.1,] 
+		 3: ATTRASSIGN %self->checkin_folder 
 		 4: 
-		 5: %self->checkin_time def_%v_10 %self[7.1,7.3,] 
+		 5: %self->checkin_time def_%v_10 %self[7.1,7.3,4.6,2.0,] 
 		 6: %v_10->entries def_%v_11 %v_10[7.5,] 
-		 7: %v_11->select def_%v_12 %v_11[7.6,] %self[7.1,7.3,7.5,] 
-CLOSURE BEGIN: e[] %self[7.1,7.3,7.5,] 
+		 7: %v_11->select def_%v_12 %v_11[7.6,] %self[7.1,7.3,7.5,4.6,2.0,] 
+CLOSURE BEGIN: e[] %self[7.1,7.3,7.5,4.6,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -159,8 +159,8 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: %v_12->each_with_index def_%v_13 %v_12[7.7,] %self[7.1,7.3,7.5,] 
-CLOSURE BEGIN: %self[7.1,7.3,7.5,] index[] gt[] 
+		 8: %v_12->each_with_index def_%v_13 %v_12[7.7,] %self[7.1,7.3,7.5,4.6,2.0,] 
+CLOSURE BEGIN: %self[7.1,7.3,7.5,4.6,2.0,] index[] gt[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -198,13 +198,13 @@ BB 6
 	instructions:
 CLOSURE END
 		 9: 
-		 10: %self->save def_%v_14 %self[7.1,7.3,7.5,] 
+		 10: %self->save def_%v_14 %self[7.1,7.3,7.5,4.6,2.0,] 
 		 11: 
-		 12: %self->checkin_time def_%v_15 %self[7.1,7.3,7.5,7.10,] 
+		 12: %self->checkin_time def_%v_15 %self[7.1,7.3,7.5,7.10,4.6,2.0,] 
 		 13: %v_15->reload def_%v_16 %v_15[7.12,] 
 		 14: 
 		 15: cf->resequence def_%v_17 cf[4.2,] 
-		 16: RETURN %v_17[7.15,] %self[7.1,7.3,7.5,7.10,7.12,] 
+		 16: RETURN %v_17[7.15,] %self[7.1,7.3,7.5,7.10,7.12,4.6,2.0,] 
 BB 8
 	outgoing: 
 	datadep: 

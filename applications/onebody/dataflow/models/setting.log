@@ -463,7 +463,7 @@ BB 2
 		 5: def_args 
 		 6: 
 		 7: args->length def_%v_3 args[2.5,] 
-		 8: def_%v_4 %v_3[2.7,] 
+		 8: %v_3->== def_%v_4 %v_3[2.7,] 
 		 9: BRANCH %v_4[2.8,] 
 BB 3
 	outgoing: 6 
@@ -861,7 +861,7 @@ BB 10
 		 1: (SETTINGS) def_%cl_1_23 
 		 2: def_%cl_1_24 %cl_1_23[10.1,] site_id[6.0,] 
 		 3: def_%cl_1_25 %cl_1_24[10.2,] section[6.7,] 
-		 4: %cl_1_25[10.3,] name[6.14,] setting[2.2,] 
+		 4: ATTRASSIGN %cl_1_25->[] name[6.14,] setting[2.2,] 
 		 5: RETURN setting[2.2,] %self[2.0,] 
 BB 11
 	outgoing: 13 
@@ -898,7 +898,7 @@ BB 14
 		 1: COPY def_%v_16 
 		 2: (Time) def_%v_17 
 		 3: %v_17->now def_%v_18 %v_17[14.2,] 
-		 4: %v_15[14.0,] %v_16[14.1,] %v_18[14.3,] 
+		 4: ATTRASSIGN %v_15->[] %v_16[14.1,] %v_18[14.3,] 
 		 5: COPY def_%v_14 %v_18[14.3,] 
 BB 15
 	outgoing: 16 
@@ -1389,11 +1389,11 @@ BB 5
 		 0: 
 		 1: COPY def_%cl_1_5 
 		 2: site->id def_%cl_1_6 site[] 
-		 3: setting[2.4,] %cl_1_5[5.1,] %cl_1_6[5.2,] 
+		 3: ATTRASSIGN setting->[] %cl_1_5[5.1,] %cl_1_6[5.2,] 
 		 4: 
 		 5: (Setting) def_%cl_1_7 
 		 6: COPY def_%cl_1_8 section_name[2.2,] setting_name[2.3,] 
-		 7: setting->merge def_%cl_1_9 setting[5.3,] %cl_1_8[5.6,] 
+		 7: setting->merge def_%cl_1_9 setting[5.3,2.4,] %cl_1_8[5.6,] 
 		 8: %cl_1_7->create! def_%cl_1_10 %cl_1_7[5.5,] %cl_1_9[5.7,] 
 		 9: def_%cl_1_11 settings_in_db[] %cl_1_10[5.8,] 
 		 10: RETURN %cl_1_11[5.9,] %self[2.0,] 

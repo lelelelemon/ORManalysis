@@ -68,7 +68,7 @@ BB 4
 		 6: %self->params def_%cl_2_10 %self[2.0,] 
 		 7: def_%cl_2_11 %cl_2_10[4.6,] 
 		 8: %cl_2_9->page def_%cl_2_12 %cl_2_9[4.5,] %cl_2_11[4.7,] 
-		 9: ATTRASSIGN %self->@news_items %self[4.6,2.0,] %cl_2_12[4.8,] 
+		 9: ATTRASSIGN %self->news_items %cl_2_12[4.8,] 
 		 10: 
 BB 5
 	outgoing: 6 7 10 
@@ -105,14 +105,14 @@ BB 9
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: RETURN %cl_2_12[4.8,] %self[2.0,] 
+		 0: RETURN %cl_2_12[4.8,] %self[4.9,2.0,] 
 BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
 		 0: def_%cl_2_20 
 		 1: def_%cl_2_21 %cl_2_20[10.0,] 
-		 2: RETURN %cl_2_21[10.1,] %self[2.0,] 
+		 2: RETURN %cl_2_21[10.1,] %self[4.9,2.0,] 
 BB 12
 	outgoing: 
 	datadep: 
@@ -150,13 +150,13 @@ BB 4
 		 2: COPY def_%cl_3_6 
 		 3: %cl_3_5->where def_%cl_3_7 %cl_3_5[4.1,] %cl_3_6[4.2,] 
 		 4: %cl_3_7->includes def_%cl_3_8 %cl_3_7[4.3,] 
-		 5: def_%cl_3_9 %cl_3_8[4.4,] 
+		 5: %cl_3_8->limit def_%cl_3_9 %cl_3_8[4.4,] 
 		 6: COPY def_%cl_3_10 
 		 7: %cl_3_9->order def_%cl_3_11 %cl_3_9[4.5,] %cl_3_10[4.6,] 
-		 8: ATTRASSIGN %self->@news_items %self[2.0,] %cl_3_11[4.7,] 
+		 8: ATTRASSIGN %self->news_items %cl_3_11[4.7,] 
 		 9: 
 		 10: COPY def_%cl_3_12 
-		 11: %self->render def_%cl_3_13 %self[2.0,] %cl_3_12[4.10,] 
+		 11: %self->render def_%cl_3_13 %self[4.8,2.0,] %cl_3_12[4.10,] 
 		 12: 
 BB 5
 	outgoing: 6 7 10 
@@ -193,14 +193,14 @@ BB 9
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: RETURN %cl_3_13[4.11,] %self[2.0,] 
+		 0: RETURN %cl_3_13[4.11,] %self[4.8,2.0,] 
 BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
 		 0: def_%cl_3_21 
 		 1: def_%cl_3_22 %cl_3_21[10.0,] 
-		 2: RETURN %cl_3_22[10.1,] %self[2.0,] 
+		 2: RETURN %cl_3_22[10.1,] %self[4.8,2.0,] 
 BB 12
 	outgoing: 
 	datadep: 
@@ -252,9 +252,9 @@ BB 3
 		 2: %self->params def_%v_6 %self[2.0,] 
 		 3: def_%v_7 %v_6[3.2,] 
 		 4: %v_5->find def_%v_8 %v_5[3.1,] %v_7[3.3,] 
-		 5: ATTRASSIGN %self->@news_item %self[3.2,2.0,] %v_8[3.4,] 
+		 5: ATTRASSIGN %self->news_item %v_8[3.4,] 
 		 6: 
-		 7: %self->respond_to def_%v_9 %self[3.2,2.0,] %self[3.2,2.0,] 
+		 7: %self->respond_to def_%v_9 %self[3.2,3.5,2.0,] %self[3.2,3.5,2.0,] 
 CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
@@ -288,7 +288,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: RETURN %v_9[3.7,] %self[3.2,3.7,2.0,] 
+		 8: RETURN %v_9[3.7,] %self[3.2,3.5,3.7,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -405,7 +405,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
 		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -427,8 +427,8 @@ BB 5
 		 0: 
 		 1: (NewsItem) def_%v_7 
 		 2: %v_7->new def_%v_8 %v_7[5.1,] 
-		 3: ATTRASSIGN %self->@news_item %self[2.0,] %v_8[5.2,] 
-		 4: RETURN %v_8[5.2,] %self[2.0,] 
+		 3: ATTRASSIGN %self->news_item %v_8[5.2,] 
+		 4: RETURN %v_8[5.2,] %self[5.3,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
@@ -459,7 +459,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
 		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -482,17 +482,17 @@ BB 5
 		 1: (NewsItem) def_%v_7 
 		 2: %self->news_item_params def_%v_8 %self[2.0,] 
 		 3: %v_7->new def_%v_9 %v_7[5.1,] %v_8[5.2,] 
-		 4: ATTRASSIGN %self->@news_item %self[5.2,2.0,] %v_9[5.3,] 
+		 4: ATTRASSIGN %self->news_item %v_9[5.3,] 
 		 5: 
-		 6: def_%v_10 %self[5.2,2.0,] 
-		 7: def_%v_11 %self[5.2,2.0,] 
-		 8: ATTRASSIGN %v_10->person %v_10[5.6,] %v_11[5.7,] 
+		 6: GETFIELD %self->news_item def_%v_10 %self[5.2,5.4,2.0,] 
+		 7: GETFIELD %self->logged_in def_%v_11 %self[5.2,2.0,] 
+		 8: ATTRASSIGN %v_10->person %v_11[5.7,] 
 		 9: 
-		 10: def_%v_12 %self[5.2,2.0,] 
+		 10: GETFIELD %self->news_item def_%v_12 %self[5.2,5.4,2.0,] 
 		 11: COPY def_%v_13 
-		 12: ATTRASSIGN %v_12->source %v_12[5.10,] %v_13[5.11,] 
+		 12: ATTRASSIGN %v_12->source %v_13[5.11,] 
 		 13: 
-		 14: def_%v_14 %self[5.2,2.0,] 
+		 14: GETFIELD %self->news_item def_%v_14 %self[5.2,5.4,2.0,] 
 		 15: %v_14->save def_%v_15 %v_14[5.14,] 
 		 16: BRANCH %v_15[5.15,] 
 BB 6
@@ -500,8 +500,8 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_16 %self[2.0,] %self[2.0,] 
-CLOSURE BEGIN: format[] %self[2.0,] 
+		 1: %self->respond_to def_%v_16 %self[5.4,2.0,] %self[5.4,2.0,] 
+CLOSURE BEGIN: format[] %self[5.4,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -542,7 +542,7 @@ BB 3
 		 1: %self->flash def_%cl_2_3 %self[2.0,] 
 		 2: COPY def_%cl_2_4 
 		 3: %self->t def_%cl_2_5 %self[3.1,2.0,] %cl_2_4[3.2,] 
-		 4: %cl_2_3[3.1,] %cl_2_5[3.3,] 
+		 4: ATTRASSIGN %cl_2_3->[] %cl_2_5[3.3,] 
 		 5: 
 		 6: %self->params def_%cl_2_6 %self[3.1,3.3,2.0,] 
 		 7: def_%cl_2_7 %cl_2_6[3.6,] 
@@ -551,7 +551,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_8 %self[2.0,] 
+		 0: GETFIELD %self->news_item def_%cl_2_8 %self[2.0,] 
 		 1: COPY def_%cl_2_7 %cl_2_8[4.0,] 
 BB 5
 	outgoing: 6 8 
@@ -590,8 +590,8 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_17 %self[2.0,] %self[2.0,] 
-CLOSURE BEGIN: format[] %self[2.0,] 
+		 1: %self->respond_to def_%v_17 %self[5.4,2.0,] %self[5.4,2.0,] 
+CLOSURE BEGIN: format[] %self[5.4,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -663,7 +663,7 @@ BB 8
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: RETURN %v_16[7.2,6.1,] %self[2.0,] 
+		 0: RETURN %v_16[7.2,6.1,] %self[5.4,2.0,] 
 BB 9
 	outgoing: 11 
 	datadep: 
@@ -698,10 +698,10 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@news_item %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->news_item %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,] 
-		 13: def_%v_8 %self[2.0,2.7,] 
+		 12: GETFIELD %self->logged_in def_%v_7 %self[2.0,2.7,] 
+		 13: GETFIELD %self->news_item def_%v_8 %self[2.0,2.7,2.10,] 
 		 14: %v_7->can_update? def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
@@ -709,17 +709,17 @@ BB 3
 	datadep: 
 	instructions:
 		 0: COPY def_%v_10 
-		 1: RETURN %v_10[3.0,] %self[2.0,] 
+		 1: RETURN %v_10[3.0,] %self[2.0,2.10,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: COPY def_%v_11 
-		 2: %self->t def_%v_12 %self[2.0,] %v_11[4.1,] 
+		 2: %self->t def_%v_12 %self[2.0,2.10,] %v_11[4.1,] 
 		 3: COPY def_%v_13 %v_12[4.2,] 
-		 4: %self->render def_%v_14 %self[4.2,2.0,] %v_13[4.3,] 
-		 5: RETURN %v_14[4.4,] %self[4.2,4.4,2.0,] 
+		 4: %self->render def_%v_14 %self[4.2,2.0,2.10,] %v_13[4.3,] 
+		 5: RETURN %v_14[4.4,] %self[4.2,4.4,2.0,2.10,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -744,10 +744,10 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@news_item %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->news_item %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,] 
-		 13: def_%v_8 %self[2.0,2.7,] 
+		 12: GETFIELD %self->logged_in def_%v_7 %self[2.0,2.7,] 
+		 13: GETFIELD %self->news_item def_%v_8 %self[2.0,2.7,2.10,] 
 		 14: %v_7->can_update? def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
@@ -755,8 +755,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_10 %self[2.0,] 
-		 2: %self->news_item_params def_%v_11 %self[2.0,] 
+		 1: GETFIELD %self->news_item def_%v_10 %self[2.0,2.10,] 
+		 2: %self->news_item_params def_%v_11 %self[2.0,2.10,] 
 		 3: %v_10->update_attributes def_%v_12 %v_10[3.1,] %v_11[3.2,] 
 		 4: BRANCH %v_12[3.3,] 
 BB 4
@@ -764,8 +764,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_13 %self[2.0,] %self[2.0,] 
-CLOSURE BEGIN: format[] %self[2.0,] 
+		 1: %self->respond_to def_%v_13 %self[2.0,2.10,] %self[2.0,2.10,] 
+CLOSURE BEGIN: format[] %self[2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -806,8 +806,8 @@ BB 3
 		 1: %self->flash def_%cl_2_3 %self[2.0,] 
 		 2: COPY def_%cl_2_4 
 		 3: %self->t def_%cl_2_5 %self[3.1,2.0,] %cl_2_4[3.2,] 
-		 4: %cl_2_3[3.1,] %cl_2_5[3.3,] 
-		 5: def_%cl_2_6 %self[3.1,3.3,2.0,] 
+		 4: ATTRASSIGN %cl_2_3->[] %cl_2_5[3.3,] 
+		 5: GETFIELD %self->news_item def_%cl_2_6 %self[3.1,3.3,2.0,] 
 		 6: %self->redirect_to def_%cl_2_7 %self[3.1,3.3,2.0,] %cl_2_6[3.5,] 
 		 7: RETURN %cl_2_7[3.6,] %self[3.1,3.3,3.6,2.0,] 
 BB 4
@@ -841,8 +841,8 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_14 %self[2.0,] %self[2.0,] 
-CLOSURE BEGIN: format[] %self[2.0,] 
+		 1: %self->respond_to def_%v_14 %self[2.0,2.10,] %self[2.0,2.10,] 
+CLOSURE BEGIN: format[] %self[2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -914,17 +914,17 @@ BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: RETURN %v_13[5.2,4.1,] %self[2.0,] 
+		 0: RETURN %v_13[5.2,4.1,] %self[2.0,2.10,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: 
 		 1: COPY def_%v_15 
-		 2: %self->t def_%v_16 %self[2.0,] %v_15[7.1,] 
+		 2: %self->t def_%v_16 %self[2.0,2.10,] %v_15[7.1,] 
 		 3: COPY def_%v_17 %v_16[7.2,] 
-		 4: %self->render def_%v_18 %self[7.2,2.0,] %v_17[7.3,] 
-		 5: RETURN %v_18[7.4,] %self[7.2,7.4,2.0,] 
+		 4: %self->render def_%v_18 %self[7.2,2.0,2.10,] %v_17[7.3,] 
+		 5: RETURN %v_18[7.4,] %self[7.2,7.4,2.0,2.10,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -949,10 +949,10 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@news_item %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->news_item %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,] 
-		 13: def_%v_8 %self[2.0,2.7,] 
+		 12: GETFIELD %self->logged_in def_%v_7 %self[2.0,2.7,] 
+		 13: GETFIELD %self->news_item def_%v_8 %self[2.0,2.7,2.10,] 
 		 14: %v_7->can_update? def_%v_9 %v_7[2.12,] %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
@@ -960,11 +960,11 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_10 %self[2.0,] 
+		 1: GETFIELD %self->news_item def_%v_10 %self[2.0,2.10,] 
 		 2: %v_10->destroy def_%v_11 %v_10[3.1,] 
 		 3: 
-		 4: %self->respond_to def_%v_12 %self[2.0,] %self[2.0,] 
-CLOSURE BEGIN: format[] %self[2.0,] 
+		 4: %self->respond_to def_%v_12 %self[2.0,2.10,] %self[2.0,2.10,] 
+CLOSURE BEGIN: format[] %self[2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1005,7 +1005,7 @@ BB 3
 		 1: %self->flash def_%cl_2_3 %self[2.0,] 
 		 2: COPY def_%cl_2_4 
 		 3: %self->t def_%cl_2_5 %self[3.1,2.0,] %cl_2_4[3.2,] 
-		 4: %cl_2_3[3.1,] %cl_2_5[3.3,] 
+		 4: ATTRASSIGN %cl_2_3->[] %cl_2_5[3.3,] 
 		 5: %self->news_path def_%cl_2_6 %self[3.1,3.3,2.0,] 
 		 6: %self->redirect_to def_%cl_2_7 %self[3.1,3.3,3.5,2.0,] %cl_2_6[3.5,] 
 		 7: RETURN %cl_2_7[3.6,] %self[3.1,3.3,3.5,3.6,2.0,] 
@@ -1034,17 +1034,17 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 5: RETURN %v_12[3.4,] %self[3.4,2.0,] 
+		 5: RETURN %v_12[3.4,] %self[3.4,2.0,2.10,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: COPY def_%v_13 
-		 2: %self->t def_%v_14 %self[2.0,] %v_13[4.1,] 
+		 2: %self->t def_%v_14 %self[2.0,2.10,] %v_13[4.1,] 
 		 3: COPY def_%v_15 %v_14[4.2,] 
-		 4: %self->render def_%v_16 %self[4.2,2.0,] %v_15[4.3,] 
-		 5: RETURN %v_16[4.4,] %self[4.2,4.4,2.0,] 
+		 4: %self->render def_%v_16 %self[4.2,2.0,2.10,] %v_15[4.3,] 
+		 5: RETURN %v_16[4.4,] %self[4.2,4.4,2.0,2.10,] 
 BB 6
 	outgoing: 
 	datadep: 

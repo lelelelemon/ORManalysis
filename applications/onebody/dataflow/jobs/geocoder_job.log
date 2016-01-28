@@ -16,9 +16,9 @@ BB 2
 		 6: RECEIVEARG def_model_type 
 		 7: RECEIVEARG def_model_id 
 		 8: 
-		 9: ATTRASSIGN %self->@delay %self[2.0,] 
+		 9: ATTRASSIGN %self->delay 
 		 10: 
-		 11: ATTRASSIGN %self->@error_count %self[2.0,] 
+		 11: ATTRASSIGN %self->error_count 
 		 12: 
 		 13: (ActiveRecord) def_%v_3 
 		 14: def_%v_4 %v_3[2.13,] 
@@ -33,8 +33,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: %v_4->connection_pool def_%v_5 %v_4[3.0,2.14,] 
-		 1: %v_5->with_connection def_%v_6 %v_5[4.0,] %self[2.0,] 
-CLOSURE BEGIN: site[2.5,] %self[2.0,] 
+		 1: %v_5->with_connection def_%v_6 %v_5[4.0,] %self[2.0,2.9,2.11,] 
+CLOSURE BEGIN: site[2.5,] %self[2.0,2.9,2.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -148,14 +148,14 @@ BB 5
 	datadep: 
 	instructions:
 		 0: COPY def_%v_10 
-		 1: RETURN %v_10[5.0,] %self[2.0,] 
+		 1: RETURN %v_10[5.0,] %self[2.0,2.9,2.11,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_11 %self[2.0,] 
-		 1: %self->sleep def_%v_12 %self[2.0,] %v_11[6.0,] 
-		 2: RETURN %v_12[6.1,] %self[6.1,2.0,] 
+		 0: GETFIELD %self->delay def_%v_11 %self[2.0,2.9,] 
+		 1: %self->sleep def_%v_12 %self[2.0,2.9,2.11,] %v_11[6.0,] 
+		 2: RETURN %v_12[6.1,] %self[6.1,2.0,2.9,2.11,] 
 BB 8
 	outgoing: 
 	datadep: 
@@ -189,10 +189,10 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN model->dont_geocode model[2.5,] 
+		 1: ATTRASSIGN model->dont_geocode 
 		 2: 
 		 3: COPY def_%v_7 
-		 4: model->save def_%v_8 model[5.1,] %v_7[5.3,] 
+		 4: model->save def_%v_8 model[5.1,2.5,] %v_7[5.3,] 
 		 5: COPY def_%v_5 %v_8[5.4,] 
 		 6: %v_3[2.6,] 
 BB 6
@@ -305,12 +305,12 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_model 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->delay def_%v_3 %self[2.0,] 
 		 8: (SLEEP_MULTIPLIER) def_%v_4 
 		 9: def_%v_5 %v_3[2.7,] %v_4[2.8,] 
-		 10: ATTRASSIGN %self->@delay %self[2.0,] %v_5[2.9,] 
+		 10: ATTRASSIGN %self->delay %v_5[2.9,] 
 		 11: 
-		 12: def_%v_6 %self[2.0,] 
+		 12: GETFIELD %self->delay def_%v_6 %self[2.0,2.10,] 
 		 13: (MAX_SLEEP_TIME) def_%v_7 
 		 14: def_%v_8 %v_6[2.12,] %v_7[2.13,] 
 		 15: BRANCH %v_8[2.14,] 
@@ -321,8 +321,8 @@ BB 3
 		 0: 
 		 1: (GeocodingError) def_%v_9 
 		 2: COPY def_%v_10 
-		 3: %self->fail def_%v_11 %self[2.0,] %v_9[3.1,] %v_10[3.2,] 
-		 4: RETURN %v_11[3.3,] %self[3.3,2.0,] 
+		 3: %self->fail def_%v_11 %self[2.0,2.10,] %v_9[3.1,] %v_10[3.2,] 
+		 4: RETURN %v_11[3.3,] %self[3.3,2.0,2.10,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -339,15 +339,15 @@ BB 4
 		 9: COPY def_%v_19 
 		 10: COPY def_%v_20 
 		 11: 
-		 12: def_%v_21 %self[2.0,] 
+		 12: GETFIELD %self->delay def_%v_21 %self[2.0,2.10,] 
 		 13: COPY def_%v_22 
 		 14: def_%v_23 %v_20[4.10,] %v_21[4.12,] %v_22[4.13,] 
 		 15: def_%v_24 %v_14[4.3,] %v_16[4.6,] %v_17[4.7,] %v_18[4.8,] %v_19[4.9,] %v_23[4.14,] 
 		 16: %v_13->warn def_%v_25 %v_13[4.2,] %v_24[4.15,] 
 		 17: 
-		 18: def_%v_26 %self[2.0,] 
-		 19: %self->sleep def_%v_27 %self[2.0,] %v_26[4.18,] 
-		 20: RETURN %v_27[4.19,] %self[4.19,2.0,] 
+		 18: GETFIELD %self->delay def_%v_26 %self[2.0,2.10,] 
+		 19: %self->sleep def_%v_27 %self[2.0,2.10,] %v_26[4.18,] 
+		 20: RETURN %v_27[4.19,] %self[4.19,2.0,2.10,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -370,11 +370,11 @@ BB 2
 		 5: RECEIVEARG def_model 
 		 6: RECEIVEARG def_message 
 		 7: 
-		 8: def_%v_3 %self[2.0,] 
+		 8: GETFIELD %self->error_count def_%v_3 %self[2.0,] 
 		 9: def_%v_4 %v_3[2.8,] 
-		 10: ATTRASSIGN %self->@error_count %self[2.0,] %v_4[2.9,] 
+		 10: ATTRASSIGN %self->error_count %v_4[2.9,] 
 		 11: 
-		 12: def_%v_5 %self[2.0,] 
+		 12: GETFIELD %self->error_count def_%v_5 %self[2.0,2.10,] 
 		 13: (MAX_FAILURE_COUNT) def_%v_6 
 		 14: def_%v_7 %v_5[2.12,] %v_6[2.13,] 
 		 15: BRANCH %v_7[2.14,] 
@@ -394,12 +394,12 @@ BB 3
 		 9: COPY def_%v_15 
 		 10: COPY def_%v_16 
 		 11: 
-		 12: def_%v_17 %self[2.0,] 
+		 12: GETFIELD %self->error_count def_%v_17 %self[2.0,2.10,] 
 		 13: COPY def_%v_18 
 		 14: def_%v_19 %v_16[3.10,] %v_17[3.12,] %v_18[3.13,] 
 		 15: def_%v_20 %v_9[3.2,] %v_11[3.5,] %v_12[3.6,] %v_13[3.7,] %v_14[3.8,] message[2.6,] %v_15[3.9,] %v_19[3.14,] 
-		 16: %self->fail def_%v_21 %self[2.0,] %v_8[3.1,] %v_20[3.15,] 
-		 17: RETURN %v_21[3.16,] %self[3.16,2.0,] 
+		 16: %self->fail def_%v_21 %self[2.0,2.10,] %v_8[3.1,] %v_20[3.15,] 
+		 17: RETURN %v_21[3.16,] %self[3.16,2.0,2.10,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -417,14 +417,14 @@ BB 4
 		 10: COPY def_%v_30 
 		 11: COPY def_%v_31 
 		 12: 
-		 13: def_%v_32 %self[2.0,] 
+		 13: GETFIELD %self->error_count def_%v_32 %self[2.0,2.10,] 
 		 14: COPY def_%v_33 
 		 15: def_%v_34 %v_31[4.11,] %v_32[4.13,] %v_33[4.14,] 
 		 16: def_%v_35 %v_24[4.3,] %v_26[4.6,] %v_27[4.7,] %v_28[4.8,] %v_29[4.9,] message[2.6,] %v_30[4.10,] %v_34[4.15,] 
 		 17: %v_23->warn def_%v_36 %v_23[4.2,] %v_35[4.16,] 
 		 18: 
-		 19: def_%v_37 %self[2.0,] 
-		 20: RETURN %v_37[4.19,] %self[2.0,] 
+		 19: %self->sleep def_%v_37 %self[2.0,2.10,] 
+		 20: RETURN %v_37[4.19,] %self[4.19,2.0,2.10,] 
 BB 6
 	outgoing: 
 	datadep: 

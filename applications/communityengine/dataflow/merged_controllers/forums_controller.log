@@ -16,7 +16,7 @@ BB 2
 		 6: (Forum) def_%v_3 
 		 7: COPY def_%v_4 
 		 8: %v_3->order def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@forums %self[2.0,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->forums %v_5[2.8,] 
 		 10: 
 		 11: %self->respond_to def_%v_6 %self[2.0,2.9,] %self[2.0,2.9,] 
 CLOSURE BEGIN: format[] %self[2.0,2.9,] 
@@ -59,7 +59,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->forums def_%cl_2_3 %self[2.0,] 
 		 2: COPY def_%cl_2_4 %cl_2_3[3.1,] 
 		 3: %self->render def_%cl_2_5 %self[2.0,] %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_5[3.3,] %self[3.3,2.0,] 
@@ -113,7 +113,7 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@forum %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->forum %v_6[2.9,] 
 		 11: 
 		 12: %self->respond_to def_%v_7 %self[2.0,2.7,2.10,] %self[2.0,2.7,2.10,] 
 CLOSURE BEGIN: format[] %self[2.0,2.7,2.10,] 
@@ -174,12 +174,12 @@ BB 6
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_7 %self[2.0,] 
+		 0: GETFIELD %self->forum def_%cl_2_7 %self[2.0,] 
 		 1: %cl_2_7->id def_%cl_2_8 %cl_2_7[6.0,] 
 		 2: (Time) def_%cl_2_9 
 		 3: %cl_2_9->now def_%cl_2_10 %cl_2_9[6.2,] 
 		 4: %cl_2_10->utc def_%cl_2_11 %cl_2_10[6.3,] 
-		 5: %cl_2_5[5.1,5.2,4.1,] %cl_2_8[6.1,] %cl_2_11[6.4,] 
+		 5: ATTRASSIGN %cl_2_5->[] %cl_2_8[6.1,] %cl_2_11[6.4,] 
 		 6: 
 BB 7
 	outgoing: 8 
@@ -191,7 +191,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_12 %self[2.0,] 
+		 1: GETFIELD %self->forum def_%cl_2_12 %self[2.0,] 
 		 2: %cl_2_12->topics def_%cl_2_13 %cl_2_12[8.1,] 
 		 3: %cl_2_13->includes def_%cl_2_14 %cl_2_13[8.2,] 
 		 4: COPY def_%cl_2_15 
@@ -200,7 +200,7 @@ BB 8
 		 7: def_%cl_2_18 %cl_2_17[8.6,] 
 		 8: %cl_2_16->page def_%cl_2_19 %cl_2_16[8.5,] %cl_2_18[8.7,] 
 		 9: %cl_2_19->per def_%cl_2_20 %cl_2_19[8.8,] 
-		 10: ATTRASSIGN %self->@topics %self[8.6,2.0,] %cl_2_20[8.9,] 
+		 10: ATTRASSIGN %self->topics %cl_2_20[8.9,] 
 		 11: RETURN %cl_2_20[8.9,] %self[8.6,8.10,2.0,] 
 BB 9
 	outgoing: 11 
@@ -234,7 +234,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_3 %self[2.0,] 
+		 1: GETFIELD %self->forum def_%cl_3_3 %self[2.0,] 
 		 2: COPY def_%cl_3_4 %cl_3_3[3.1,] 
 		 3: %self->render def_%cl_3_5 %self[2.0,] %cl_3_4[3.2,] 
 		 4: RETURN %cl_3_5[3.3,] %self[3.3,2.0,] 
@@ -286,10 +286,10 @@ BB 2
 		 5: 
 		 6: (Forum) def_%v_3 
 		 7: %v_3->new def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@forum %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->forum %v_4[2.7,] 
 		 9: 
 		 10: def_%v_5 
-		 11: ATTRASSIGN %self->@page_title %self[2.0,2.8,] %v_5[2.10,] 
+		 11: ATTRASSIGN %self->page_title %v_5[2.10,] 
 		 12: 
 		 13: def_%v_6 
 		 14: %self->forums_path def_%v_7 %self[2.0,2.8,2.11,] 
@@ -318,7 +318,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->forum def_%cl_1_3 %self[2.0,] 
 		 2: COPY def_%cl_1_4 
 		 3: %self->bootstrap_form_for def_%cl_1_5 %self[2.0,] %cl_1_3[3.1,] %cl_1_4[3.2,] %self[2.0,] 
 CLOSURE BEGIN: f[] %self[2.0,] 
@@ -478,9 +478,9 @@ BB 2
 		 6: (Forum) def_%v_3 
 		 7: %self->forum_params def_%v_4 %self[2.0,] 
 		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@forum %self[2.0,2.7,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->forum %v_5[2.8,] 
 		 10: 
-		 11: def_%v_6 %self[2.0,2.7,2.9,] 
+		 11: GETFIELD %self->forum def_%v_6 %self[2.0,2.7,2.9,] 
 		 12: %self->params def_%v_7 %self[2.0,2.7,2.9,] 
 		 13: def_%v_8 %v_7[2.12,] 
 		 14: BRANCH %v_8[2.13,] 
@@ -494,9 +494,9 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %v_6->tag_list %v_6[2.11,] %v_8[3.1,2.13,] 
+		 0: ATTRASSIGN %v_6->tag_list %v_8[3.1,2.13,] 
 		 1: 
-		 2: def_%v_10 %self[2.0,2.9,] 
+		 2: GETFIELD %self->forum def_%v_10 %self[2.0,2.9,] 
 		 3: %v_10->save! def_%v_11 %v_10[4.2,] 
 		 4: 
 		 5: %self->respond_to def_%v_12 %self[2.0,2.9,] %self[2.0,2.9,] 
@@ -573,7 +573,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_3 %self[2.0,] 
+		 1: GETFIELD %self->forum def_%cl_3_3 %self[2.0,] 
 		 2: COPY def_%cl_3_4 %cl_3_3[3.1,] 
 		 3: %self->forum_url def_%cl_3_5 %self[2.0,] %cl_3_4[3.2,] 
 		 4: COPY def_%cl_3_6 %cl_3_5[3.3,] 
@@ -629,10 +629,10 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@forum %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->forum %v_6[2.9,] 
 		 11: 
 		 12: def_%v_7 
-		 13: ATTRASSIGN %self->@page_title %self[2.0,2.7,2.10,] %v_7[2.12,] 
+		 13: ATTRASSIGN %self->page_title %v_7[2.12,] 
 		 14: 
 		 15: def_%v_8 
 		 16: %self->forums_path def_%v_9 %self[2.0,2.7,2.10,2.13,] 
@@ -641,14 +641,14 @@ BB 2
 		 19: %self->link_to def_%v_12 %self[2.0,2.7,2.10,2.13,2.16,] %v_8[2.15,] %v_9[2.16,] %v_11[2.18,] 
 		 20: 
 		 21: def_%v_13 
-		 22: def_%v_14 %self[2.0,2.7,2.10,2.13,2.16,2.19,] 
+		 22: GETFIELD %self->forum def_%v_14 %self[2.0,2.7,2.10,2.16,2.19,] 
 		 23: %self->forum_path def_%v_15 %self[2.0,2.7,2.10,2.13,2.16,2.19,] %v_14[2.22,] 
 		 24: COPY def_%v_16 
 		 25: COPY def_%v_17 %v_16[2.24,] 
 		 26: %self->link_to def_%v_18 %self[2.0,2.7,2.10,2.13,2.16,2.19,2.23,] %v_13[2.21,] %v_15[2.23,] %v_17[2.25,] 
 		 27: 
 		 28: def_%v_19 
-		 29: def_%v_20 %self[2.0,2.7,2.10,2.13,2.16,2.19,2.23,2.26,] 
+		 29: GETFIELD %self->forum def_%v_20 %self[2.0,2.7,2.10,2.16,2.19,2.23,2.26,] 
 		 30: %self->forum_path def_%v_21 %self[2.0,2.7,2.10,2.13,2.16,2.19,2.23,2.26,] %v_20[2.29,] 
 		 31: COPY def_%v_22 
 		 32: def_%v_23 
@@ -678,7 +678,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->forum def_%cl_1_3 %self[2.0,] 
 		 2: COPY def_%cl_1_4 
 		 3: %self->bootstrap_form_for def_%cl_1_5 %self[2.0,] %cl_1_3[3.1,] %cl_1_4[3.2,] %self[2.0,] 
 CLOSURE BEGIN: f[] %self[2.0,] 
@@ -839,9 +839,9 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@forum %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->forum %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,2.10,] 
+		 12: GETFIELD %self->forum def_%v_7 %self[2.0,2.7,2.10,] 
 		 13: %self->params def_%v_8 %self[2.0,2.7,2.10,] 
 		 14: def_%v_9 %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
@@ -855,9 +855,9 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %v_7->tag_list %v_7[2.12,] %v_9[3.1,2.14,] 
+		 0: ATTRASSIGN %v_7->tag_list %v_9[3.1,2.14,] 
 		 1: 
-		 2: def_%v_11 %self[2.0,2.10,] 
+		 2: GETFIELD %self->forum def_%v_11 %self[2.0,2.10,] 
 		 3: %self->forum_params def_%v_12 %self[2.0,2.10,] 
 		 4: %v_11->update_attributes! def_%v_13 %v_11[4.2,] %v_12[4.3,] 
 		 5: 
@@ -987,9 +987,9 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@forum %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->forum %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,2.10,] 
+		 12: GETFIELD %self->forum def_%v_7 %self[2.0,2.7,2.10,] 
 		 13: %v_7->destroy def_%v_8 %v_7[2.12,] 
 		 14: 
 		 15: %self->respond_to def_%v_9 %self[2.0,2.7,2.10,] %self[2.0,2.7,2.10,] 

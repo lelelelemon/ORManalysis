@@ -30,7 +30,7 @@ BB 4
 		 9: %self->params def_%v_13 %self[4.4,4.6,2.0,] 
 		 10: def_%v_14 %v_13[4.9,] 
 		 11: %v_12->find def_%v_15 %v_12[4.8,] %v_14[4.10,] 
-		 12: ATTRASSIGN %self->@widget %self[4.4,4.6,4.9,2.0,] %v_15[4.11,] 
+		 12: ATTRASSIGN %self->widget %v_15[4.11,] 
 		 13: COPY def_%v_5 %v_15[4.11,] 
 		 14: %v_3[2.6,] 
 BB 5
@@ -38,7 +38,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_23 %self[4.12,2.0,] 
+		 1: GETFIELD %self->widget def_%v_23 %self[4.12,2.0,] 
 		 2: %v_23->configured? def_%v_24 %v_23[5.1,] 
 		 3: BRANCH %v_24[5.2,] 
 BB 6
@@ -81,7 +81,7 @@ BB 12
 	instructions:
 		 0: COPY def_%v_25 
 		 1: 
-		 2: def_%v_33 %self[4.12,2.0,] 
+		 2: GETFIELD %self->widget def_%v_33 %self[4.12,2.0,] 
 		 3: %v_33->widget_type def_%v_34 %v_33[12.2,] 
 		 4: def_%v_36 %v_34[12.3,] 
 		 5: BRANCH %v_36[12.4,] 
@@ -91,7 +91,7 @@ BB 13
 	instructions:
 		 0: 
 		 1: COPY def_%v_26 
-		 2: def_%v_27 %self[4.12,2.0,] 
+		 2: GETFIELD %self->widget def_%v_27 %self[4.12,2.0,] 
 		 3: %v_27->widget_type def_%v_28 %v_27[13.2,] 
 		 4: COPY def_%v_29 
 		 5: def_%v_30 %v_26[13.1,] %v_28[13.3,] %v_29[13.4,] 
@@ -240,7 +240,7 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_54 %self[4.12,2.0,] 
+		 1: GETFIELD %self->widget def_%v_54 %self[4.12,2.0,] 
 		 2: %v_54->widget_type def_%v_55 %v_54[36.1,] 
 		 3: def_%v_57 %v_55[36.2,] 
 		 4: BRANCH %v_57[36.3,] 
@@ -915,7 +915,7 @@ BB 3
 		 15: 
 		 16: %self->csrf_meta_tag def_%cl_11_14 %self[3.2,3.7,3.11,3.14,2.0,] 
 		 17: 
-		 18: def_%cl_11_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
+		 18: GETFIELD %self->page_title def_%cl_11_15 %self[3.2,3.7,3.11,3.14,3.16,2.0,] 
 		 19: BRANCH %cl_11_15[3.18,] 
 BB 4
 	outgoing: 5 12 
@@ -1069,13 +1069,13 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_13_26 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_13_26 %self[2.0,] 
 		 2: BRANCH %cl_13_26[9.1,] 
 BB 10
 	outgoing: 11 15 
 	datadep: 
 	instructions:
-		 0: def_%cl_13_27 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_13_27 %self[2.0,] 
 		 1: %cl_13_27->task def_%cl_13_28 %cl_13_27[10.0,] 
 		 2: COPY def_%cl_13_26 %cl_13_28[10.1,] 
 BB 11
@@ -1109,35 +1109,35 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_14_3 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_14_3 %self[2.0,] 
 		 2: %cl_14_3->task def_%cl_14_4 %cl_14_3[3.1,] 
 		 3: %self->start_stop_work_link def_%cl_14_5 %self[2.0,] %cl_14_4[3.2,] 
 		 4: 
-		 5: def_%cl_14_6 %self[3.3,2.0,] 
+		 5: GETFIELD %self->current_sheet def_%cl_14_6 %self[3.3,2.0,] 
 		 6: %cl_14_6->task def_%cl_14_7 %cl_14_6[3.5,] 
 		 7: %self->cancel_work_link def_%cl_14_8 %self[3.3,2.0,] %cl_14_7[3.6,] 
 		 8: 
-		 9: def_%cl_14_9 %self[3.3,3.7,2.0,] 
+		 9: GETFIELD %self->current_sheet def_%cl_14_9 %self[3.3,3.7,2.0,] 
 		 10: %cl_14_9->task def_%cl_14_10 %cl_14_9[3.9,] 
 		 11: %self->pause_task_link def_%cl_14_11 %self[3.3,3.7,2.0,] %cl_14_10[3.10,] 
 		 12: 
-		 13: def_%cl_14_12 %self[3.3,3.7,3.11,2.0,] 
+		 13: GETFIELD %self->current_sheet def_%cl_14_12 %self[3.3,3.7,3.11,2.0,] 
 		 14: %cl_14_12->task def_%cl_14_13 %cl_14_12[3.13,] 
 		 15: %cl_14_13->issue_name def_%cl_14_14 %cl_14_13[3.14,] 
 		 16: COPY def_%cl_14_15 
 		 17: def_%cl_14_16 %cl_14_14[3.15,] %cl_14_15[3.16,] 
-		 18: def_%cl_14_17 %self[3.3,3.7,3.11,2.0,] 
+		 18: GETFIELD %self->current_sheet def_%cl_14_17 %self[3.3,3.7,3.11,2.0,] 
 		 19: %cl_14_17->task def_%cl_14_18 %cl_14_17[3.18,] 
 		 20: %cl_14_18->project def_%cl_14_19 %cl_14_18[3.19,] 
 		 21: %cl_14_19->name def_%cl_14_20 %cl_14_19[3.20,] 
 		 22: def_%cl_14_21 %cl_14_16[3.17,] %cl_14_20[3.21,] 
-		 23: def_%cl_14_22 %self[3.3,3.7,3.11,2.0,] 
+		 23: GETFIELD %self->current_sheet def_%cl_14_22 %self[3.3,3.7,3.11,2.0,] 
 		 24: %cl_14_22->task def_%cl_14_23 %cl_14_22[3.23,] 
 		 25: %cl_14_23->task_num def_%cl_14_24 %cl_14_23[3.24,] 
 		 26: %self->edit_task_path def_%cl_14_25 %self[3.3,3.7,3.11,2.0,] %cl_14_24[3.25,] 
 		 27: %self->link_to def_%cl_14_26 %self[3.3,3.7,3.11,3.26,2.0,] %cl_14_21[3.22,] %cl_14_25[3.26,] 
 		 28: 
-		 29: def_%cl_14_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
+		 29: GETFIELD %self->current_sheet def_%cl_14_27 %self[3.3,3.7,3.11,3.26,3.27,2.0,] 
 		 30: %cl_14_27->task def_%cl_14_28 %cl_14_27[3.29,] 
 		 31: %cl_14_28->duration def_%cl_14_29 %cl_14_28[3.30,] 
 		 32: %cl_14_29->nil? def_%cl_14_30 %cl_14_29[3.31,] 
@@ -1146,7 +1146,7 @@ BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_14_31 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_14_31 %self[2.0,] 
 		 1: %cl_14_31->task def_%cl_14_32 %cl_14_31[4.0,] 
 		 2: %cl_14_32->duration def_%cl_14_33 %cl_14_32[4.1,] 
 		 3: %cl_14_33->== def_%cl_14_34 %cl_14_33[4.2,] 
@@ -1166,14 +1166,14 @@ BB 7
 	outgoing: 8 12 
 	datadep: 
 	instructions:
-		 0: def_%cl_14_36 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_14_36 %self[2.0,] 
 		 1: %cl_14_36->task def_%cl_14_37 %cl_14_36[7.0,] 
 		 2: %cl_14_37->worked_minutes def_%cl_14_38 %cl_14_37[7.1,] 
-		 3: def_%cl_14_39 %self[2.0,] 
+		 3: GETFIELD %self->current_sheet def_%cl_14_39 %self[2.0,] 
 		 4: %cl_14_39->duration def_%cl_14_40 %cl_14_39[7.3,] 
 		 5: def_%cl_14_41 %cl_14_40[7.4,] 
 		 6: def_%cl_14_42 %cl_14_38[7.2,] %cl_14_41[7.5,] 
-		 7: def_%cl_14_43 %self[2.0,] 
+		 7: GETFIELD %self->current_sheet def_%cl_14_43 %self[2.0,] 
 		 8: %cl_14_43->task def_%cl_14_44 %cl_14_43[7.7,] 
 		 9: %cl_14_44->duration def_%cl_14_45 %cl_14_44[7.8,] 
 		 10: %cl_14_45->to_f def_%cl_14_46 %cl_14_45[7.9,] 
@@ -1188,16 +1188,16 @@ BB 8
 	instructions:
 		 0: 
 		 1: (TimeParser) def_%cl_14_50 
-		 2: def_%cl_14_51 %self[2.0,] 
+		 2: GETFIELD %self->current_sheet def_%cl_14_51 %self[2.0,] 
 		 3: %cl_14_51->duration def_%cl_14_52 %cl_14_51[8.2,] 
 		 4: def_%cl_14_53 %cl_14_52[8.3,] 
 		 5: %cl_14_50->format_duration def_%cl_14_54 %cl_14_50[8.1,] %cl_14_53[8.4,] 
 		 6: 
 		 7: (TimeParser) def_%cl_14_55 
-		 8: def_%cl_14_56 %self[2.0,] 
+		 8: GETFIELD %self->current_sheet def_%cl_14_56 %self[2.0,] 
 		 9: %cl_14_56->task def_%cl_14_57 %cl_14_56[8.8,] 
 		 10: %cl_14_57->worked_minutes def_%cl_14_58 %cl_14_57[8.9,] 
-		 11: def_%cl_14_59 %self[2.0,] 
+		 11: GETFIELD %self->current_sheet def_%cl_14_59 %self[2.0,] 
 		 12: %cl_14_59->duration def_%cl_14_60 %cl_14_59[8.11,] 
 		 13: def_%cl_14_61 %cl_14_60[8.12,] 
 		 14: def_%cl_14_62 %cl_14_58[8.10,] %cl_14_61[8.13,] 
@@ -2161,13 +2161,13 @@ BB 32
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_22_50 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_22_50 %self[2.0,] 
 		 2: BRANCH %cl_22_50[32.1,] 
 BB 33
 	outgoing: 34 111 
 	datadep: 
 	instructions:
-		 0: def_%cl_22_51 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_22_51 %self[2.0,] 
 		 1: %cl_22_51->task_id def_%cl_22_52 %cl_22_51[33.0,] 
 		 2: task->id def_%cl_22_53 task[] 
 		 3: %cl_22_52->== def_%cl_22_54 %cl_22_52[33.1,] %cl_22_53[33.2,] 
@@ -2213,13 +2213,13 @@ BB 40
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_22_60 %self[2.0,] 
+		 1: GETFIELD %self->current_sheet def_%cl_22_60 %self[2.0,] 
 		 2: BRANCH %cl_22_60[40.1,] 
 BB 41
 	outgoing: 42 111 
 	datadep: 
 	instructions:
-		 0: def_%cl_22_61 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_22_61 %self[2.0,] 
 		 1: %cl_22_61->task_id def_%cl_22_62 %cl_22_61[41.0,] 
 		 2: task->id def_%cl_22_63 task[] 
 		 3: %cl_22_62->== def_%cl_22_64 %cl_22_62[41.1,] %cl_22_63[41.2,] 
@@ -2233,7 +2233,7 @@ BB 43
 	outgoing: 44 111 
 	datadep: 
 	instructions:
-		 0: def_%cl_22_65 %self[2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_22_65 %self[2.0,] 
 		 1: %cl_22_65->paused? def_%cl_22_66 %cl_22_65[43.0,] 
 		 2: COPY def_%cl_22_60 %cl_22_66[43.1,] 
 BB 44
@@ -2307,19 +2307,19 @@ BB 53
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->@task %self[2.0,] task[] 
+		 1: ATTRASSIGN %self->task task[] 
 		 2: 
 		 3: task->dom_id def_%cl_22_82 task[] 
 		 4: 
 		 5: %self->task_icon def_%cl_22_83 %self[53.1,2.0,] task[53.3,] 
 		 6: 
-		 7: def_%cl_22_84 %self[53.1,53.5,2.0,] 
+		 7: GETFIELD %self->current_sheet def_%cl_22_84 %self[53.5,2.0,] 
 		 8: BRANCH %cl_22_84[53.7,] 
 BB 54
 	outgoing: 55 111 
 	datadep: 
 	instructions:
-		 0: def_%cl_22_85 %self[53.1,2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_22_85 %self[2.0,] 
 		 1: %cl_22_85->task_id def_%cl_22_86 %cl_22_85[54.0,] 
 		 2: task->id def_%cl_22_87 task[] 
 		 3: %cl_22_86->== def_%cl_22_88 %cl_22_86[54.1,] %cl_22_87[54.2,] 
@@ -2347,13 +2347,13 @@ BB 58
 		 0: 
 		 1: task->id def_%cl_22_90 task[] 
 		 2: 
-		 3: def_%cl_22_91 %self[53.1,2.0,] 
+		 3: GETFIELD %self->current_sheet def_%cl_22_91 %self[2.0,] 
 		 4: BRANCH %cl_22_91[58.3,] 
 BB 59
 	outgoing: 60 111 
 	datadep: 
 	instructions:
-		 0: def_%cl_22_92 %self[53.1,2.0,] 
+		 0: GETFIELD %self->current_sheet def_%cl_22_92 %self[2.0,] 
 		 1: %cl_22_92->task_id def_%cl_22_93 %cl_22_92[59.0,] 
 		 2: task->id def_%cl_22_94 task[] 
 		 3: %cl_22_93->== def_%cl_22_95 %cl_22_93[59.1,] %cl_22_94[59.2,] 
@@ -2495,7 +2495,7 @@ BB 74
 		 1: %self->controller def_%cl_22_145 %self[53.1,2.0,] 
 		 2: %cl_22_145->controller_name def_%cl_22_146 %cl_22_145[74.1,] 
 		 3: COPY def_%cl_22_147 
-		 4: ATTRASSIGN %cl_22_146->! def_%cl_22_148 %cl_22_146[74.2,] %cl_22_147[74.3,] 
+		 4: %cl_22_146->!= def_%cl_22_148 %cl_22_146[74.2,] %cl_22_147[74.3,] 
 		 5: BRANCH %cl_22_148[74.4,] 
 BB 75
 	outgoing: 77 111 
@@ -2509,7 +2509,7 @@ BB 76
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_22_150 %self[53.1,2.0,] 
+		 1: GETFIELD %self->keys def_%cl_22_150 %self[2.0,] 
 		 2: %self->link_to_task def_%cl_22_151 %self[53.1,2.0,] task[] %cl_22_150[76.1,] 
 		 3: COPY def_%cl_22_149 %cl_22_151[76.2,] 
 BB 77
@@ -2693,7 +2693,7 @@ BB 94
 		 1: %self->controller def_%cl_22_196 %self[53.1,2.0,] 
 		 2: %cl_22_196->controller_name def_%cl_22_197 %cl_22_196[94.1,] 
 		 3: COPY def_%cl_22_198 
-		 4: ATTRASSIGN %cl_22_197->! def_%cl_22_199 %cl_22_197[94.2,] %cl_22_198[94.3,] 
+		 4: %cl_22_197->!= def_%cl_22_199 %cl_22_197[94.2,] %cl_22_198[94.3,] 
 		 5: BRANCH %cl_22_199[94.4,] 
 BB 95
 	outgoing: 96 97 111 
@@ -2769,7 +2769,7 @@ BB 99
 	instructions:
 		 0: 
 		 1: task->full_name_without_links def_%cl_22_205 task[] 
-		 2: def_%cl_22_206 %self[53.1,2.0,] 
+		 2: GETFIELD %self->keys def_%cl_22_206 %self[2.0,] 
 		 3: %self->highlight_all def_%cl_22_207 %self[53.1,2.0,] %cl_22_205[99.1,] %cl_22_206[99.2,] 
 		 4: COPY def_%cl_22_204 %cl_22_207[99.3,] 
 BB 100
@@ -2886,7 +2886,7 @@ BB 44
 	instructions:
 		 0: 
 		 1: COPY def_%v_64 
-		 2: def_%v_65 %self[4.12,2.0,] 
+		 2: GETFIELD %self->widget def_%v_65 %self[4.12,2.0,] 
 		 3: %v_65->widget_type def_%v_66 %v_65[44.2,] 
 		 4: def_%v_67 %v_64[44.1,] %v_66[44.3,] 
 		 5: COPY def_%v_68 %v_67[44.4,] 
@@ -2959,7 +2959,7 @@ BB 4
 		 9: %self->params def_%v_13 %self[4.4,4.6,2.0,] 
 		 10: def_%v_14 %v_13[4.9,] 
 		 11: %v_12->find def_%v_15 %v_12[4.8,] %v_14[4.10,] 
-		 12: ATTRASSIGN %self->@widget %self[4.4,4.6,4.9,2.0,] %v_15[4.11,] 
+		 12: ATTRASSIGN %self->widget %v_15[4.11,] 
 		 13: COPY def_%v_5 %v_15[4.11,] 
 		 14: %v_3[2.6,] 
 BB 5
@@ -2967,7 +2967,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_24 %self[4.12,2.0,] 
+		 1: GETFIELD %self->widget def_%v_24 %self[4.12,2.0,] 
 		 2: %v_24->destroy def_%v_25 %v_24[5.1,] 
 		 3: 
 		 4: COPY def_%v_26 
@@ -3032,30 +3032,30 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 
 		 8: def_%v_5 %v_4[2.7,] 
 		 9: %v_3->new def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: ATTRASSIGN %self->@widget %self[2.0,2.7,] %v_6[2.9,] 
+		 10: ATTRASSIGN %self->widget %v_6[2.9,] 
 		 11: 
-		 12: def_%v_7 %self[2.0,2.7,2.10,] 
+		 12: GETFIELD %self->widget def_%v_7 %self[2.0,2.7,2.10,] 
 		 13: %self->current_user def_%v_8 %self[2.0,2.7,2.10,] 
-		 14: ATTRASSIGN %v_7->user %v_7[2.12,] %v_8[2.13,] 
+		 14: ATTRASSIGN %v_7->user %v_8[2.13,] 
 		 15: 
-		 16: def_%v_9 %self[2.0,2.7,2.10,2.13,] 
+		 16: GETFIELD %self->widget def_%v_9 %self[2.0,2.7,2.10,2.13,] 
 		 17: %self->current_user def_%v_10 %self[2.0,2.7,2.10,2.13,] 
 		 18: %v_10->company def_%v_11 %v_10[2.17,] 
-		 19: ATTRASSIGN %v_9->company %v_9[2.16,] %v_11[2.18,] 
+		 19: ATTRASSIGN %v_9->company %v_11[2.18,] 
 		 20: 
-		 21: def_%v_12 %self[2.0,2.7,2.10,2.13,2.17,] 
-		 22: ATTRASSIGN %v_12->configured %v_12[2.21,] 
+		 21: GETFIELD %self->widget def_%v_12 %self[2.0,2.7,2.10,2.13,2.17,] 
+		 22: ATTRASSIGN %v_12->configured 
 		 23: 
-		 24: def_%v_13 %self[2.0,2.7,2.10,2.13,2.17,] 
-		 25: ATTRASSIGN %v_13->column %v_13[2.24,] 
+		 24: GETFIELD %self->widget def_%v_13 %self[2.0,2.7,2.10,2.13,2.17,] 
+		 25: ATTRASSIGN %v_13->column 
 		 26: 
-		 27: def_%v_14 %self[2.0,2.7,2.10,2.13,2.17,] 
-		 28: ATTRASSIGN %v_14->position %v_14[2.27,] 
+		 27: GETFIELD %self->widget def_%v_14 %self[2.0,2.7,2.10,2.13,2.17,] 
+		 28: ATTRASSIGN %v_14->position 
 		 29: 
-		 30: def_%v_15 %self[2.0,2.7,2.10,2.13,2.17,] 
-		 31: ATTRASSIGN %v_15->collapsed %v_15[2.30,] 
+		 30: GETFIELD %self->widget def_%v_15 %self[2.0,2.7,2.10,2.13,2.17,] 
+		 31: ATTRASSIGN %v_15->collapsed 
 		 32: 
-		 33: def_%v_16 %self[2.0,2.7,2.10,2.13,2.17,] 
+		 33: GETFIELD %self->widget def_%v_16 %self[2.0,2.7,2.10,2.13,2.17,] 
 		 34: %v_16->save def_%v_17 %v_16[2.33,] 
 		 35: BRANCH %v_17[2.34,] 
 BB 3
@@ -3070,7 +3070,7 @@ BB 3
 		 5: COPY def_html %v_24[3.4,] 
 		 6: 
 		 7: COPY def_%v_25 %v_24[3.4,] 
-		 8: def_%v_26 %self[3.4,2.0,2.10,] 
+		 8: GETFIELD %self->widget def_%v_26 %self[3.4,2.0,2.10,] 
 		 9: %v_26->as_json def_%v_27 %v_26[3.8,] 
 		 10: %v_25->merge def_%v_28 %v_25[3.7,] %v_27[3.9,] 
 		 11: COPY def_%v_29 %v_28[3.10,] 
@@ -3122,7 +3122,7 @@ BB 4
 		 9: %self->params def_%v_13 %self[4.4,4.6,2.0,] 
 		 10: def_%v_14 %v_13[4.9,] 
 		 11: %v_12->find def_%v_15 %v_12[4.8,] %v_14[4.10,] 
-		 12: ATTRASSIGN %self->@widget %self[4.4,4.6,4.9,2.0,] %v_15[4.11,] 
+		 12: ATTRASSIGN %self->widget %v_15[4.11,] 
 		 13: COPY def_%v_5 %v_15[4.11,] 
 		 14: %v_3[2.6,] 
 BB 5
@@ -3131,7 +3131,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: COPY def_%v_23 
-		 2: def_%v_24 %self[4.12,2.0,] 
+		 2: GETFIELD %self->widget def_%v_24 %self[4.12,2.0,] 
 		 3: %v_24->widget_type def_%v_25 %v_24[5.2,] 
 		 4: COPY def_%v_26 
 		 5: def_%v_27 %v_23[5.1,] %v_25[5.3,] %v_26[5.4,] 
@@ -3209,7 +3209,7 @@ BB 4
 		 9: %self->params def_%v_13 %self[4.4,4.6,2.0,] 
 		 10: def_%v_14 %v_13[4.9,] 
 		 11: %v_12->find def_%v_15 %v_12[4.8,] %v_14[4.10,] 
-		 12: ATTRASSIGN %self->@widget %self[4.4,4.6,4.9,2.0,] %v_15[4.11,] 
+		 12: ATTRASSIGN %self->widget %v_15[4.11,] 
 		 13: COPY def_%v_5 %v_15[4.11,] 
 		 14: %v_3[2.6,] 
 BB 5
@@ -3217,10 +3217,10 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_23 %self[4.12,2.0,] 
-		 2: ATTRASSIGN %v_23->configured %v_23[5.1,] 
+		 1: GETFIELD %self->widget def_%v_23 %self[4.12,2.0,] 
+		 2: ATTRASSIGN %v_23->configured 
 		 3: 
-		 4: def_%v_24 %self[4.12,2.0,] 
+		 4: GETFIELD %self->widget def_%v_24 %self[4.12,2.0,] 
 		 5: %self->params def_%v_25 %self[4.12,2.0,] 
 		 6: def_%v_26 %v_25[5.5,] 
 		 7: %v_24->update_attributes def_%v_27 %v_24[5.4,] %v_26[5.6,] 
@@ -3265,13 +3265,13 @@ BB 12
 	instructions:
 		 0: COPY def_%v_28 
 		 1: 
-		 2: def_%v_31 %self[4.12,2.0,] 
+		 2: GETFIELD %self->widget def_%v_31 %self[4.12,2.0,] 
 		 3: %v_31->name def_%v_32 %v_31[12.2,] 
-		 4: def_%v_33 %self[4.12,2.0,] 
+		 4: GETFIELD %self->widget def_%v_33 %self[4.12,2.0,] 
 		 5: %v_33->widget_type def_%v_34 %v_33[12.4,] 
-		 6: def_%v_35 %self[4.12,2.0,] 
+		 6: GETFIELD %self->widget def_%v_35 %self[4.12,2.0,] 
 		 7: %v_35->gadget_url def_%v_36 %v_35[12.6,] 
-		 8: def_%v_37 %self[4.12,2.0,] 
+		 8: GETFIELD %self->widget def_%v_37 %self[4.12,2.0,] 
 		 9: %v_37->configured def_%v_38 %v_37[12.8,] 
 		 10: COPY def_%v_39 
 		 11: COPY def_%v_40 %v_32[12.3,] %v_34[12.5,] %v_36[12.7,] %v_38[12.9,] %v_39[12.10,] 
@@ -3404,9 +3404,9 @@ BB 12
 	instructions:
 		 0: COPY def_w %cl_2_6[4.4,] 
 		 1: 
-		 2: ATTRASSIGN %cl_2_6->column %cl_2_6[4.4,] column[] 
+		 2: ATTRASSIGN %cl_2_6->column column[] 
 		 3: 
-		 4: ATTRASSIGN w->position w[12.0,] position[2.2,] 
+		 4: ATTRASSIGN w->position position[2.2,] 
 		 5: 
 		 6: w->save def_%cl_2_14 w[12.0,12.4,] 
 		 7: RETURN %cl_2_14[12.6,] %self[2.0,] 
@@ -3471,7 +3471,7 @@ BB 4
 		 4: %self->params def_%v_8 %self[4.2,2.0,] 
 		 5: def_%v_9 %v_8[4.4,] 
 		 6: %v_7->find def_%v_10 %v_7[4.3,] %v_9[4.5,] 
-		 7: ATTRASSIGN %self->@widget %self[4.2,4.4,2.0,] %v_10[4.6,] 
+		 7: ATTRASSIGN %self->widget %v_10[4.6,] 
 		 8: COPY def_%v_5 %v_10[4.6,] 
 		 9: %v_3[2.6,] 
 BB 5
@@ -3479,18 +3479,18 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_18 %self[4.7,2.0,] 
-		 2: def_%v_19 %self[4.7,2.0,] 
+		 1: GETFIELD %self->widget def_%v_18 %self[4.7,2.0,] 
+		 2: GETFIELD %self->widget def_%v_19 %self[4.7,2.0,] 
 		 3: %v_19->collapsed? def_%v_20 %v_19[5.2,] 
 		 4: %v_20->! def_%v_21 %v_20[5.3,] 
-		 5: ATTRASSIGN %v_18->collapsed %v_18[5.1,] %v_21[5.4,] 
+		 5: ATTRASSIGN %v_18->collapsed %v_21[5.4,] 
 		 6: 
-		 7: def_%v_22 %self[4.7,2.0,] 
+		 7: GETFIELD %self->widget def_%v_22 %self[4.7,2.0,] 
 		 8: %v_22->save def_%v_23 %v_22[5.7,] 
 		 9: 
-		 10: def_%v_24 %self[4.7,2.0,] 
+		 10: GETFIELD %self->widget def_%v_24 %self[4.7,2.0,] 
 		 11: %v_24->collapsed? def_%v_25 %v_24[5.10,] 
-		 12: def_%v_26 %self[4.7,2.0,] 
+		 12: GETFIELD %self->widget def_%v_26 %self[4.7,2.0,] 
 		 13: %v_26->dom_id def_%v_27 %v_26[5.12,] 
 		 14: COPY def_%v_28 %v_25[5.11,] %v_27[5.13,] 
 		 15: COPY def_%v_29 %v_28[5.14,] 
@@ -3550,7 +3550,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->widget def_%v_3 %self[2.0,] 
 		 7: %v_3->filter_from_filter_by def_%v_4 %v_3[2.6,] 
 		 8: RETURN %v_4[2.7,] %self[2.0,] 
 BB 3
@@ -3576,7 +3576,7 @@ BB 2
 		 6: %self->filter_from_filter_by def_%v_3 %self[2.0,] 
 		 7: COPY def_filter %v_3[2.6,] 
 		 8: 
-		 9: def_%v_4 %self[2.0,2.6,] 
+		 9: GETFIELD %self->widget def_%v_4 %self[2.0,2.6,] 
 		 10: %v_4->mine? def_%v_5 %v_4[2.9,] 
 		 11: BRANCH %v_5[2.10,] 
 BB 3
@@ -3598,7 +3598,7 @@ BB 3
 		 12: %v_7->where def_%v_17 %v_7[3.2,] %v_10[3.5,] %v_11[3.6,] %v_15[3.10,] %v_16[3.11,] 
 		 13: COPY def_%v_18 
 		 14: %v_17->includes def_%v_19 %v_17[3.12,] %v_18[3.13,] 
-		 15: ATTRASSIGN %self->@items %self[3.1,3.6,3.7,3.11,2.0,] %v_19[3.14,] 
+		 15: ATTRASSIGN %self->items %v_19[3.14,] 
 		 16: 
 BB 4
 	outgoing: 5 
@@ -3618,14 +3618,14 @@ BB 4
 		 11: %self->completed_milestone_ids def_%v_30 %self[4.2,4.7,2.0,] 
 		 12: %v_22->where def_%v_31 %v_22[4.3,] %v_25[4.6,] %v_29[4.10,] %v_30[4.11,] 
 		 13: %v_31->includes def_%v_32 %v_31[4.12,] 
-		 14: ATTRASSIGN %self->@items %self[4.2,4.7,4.11,2.0,] %v_32[4.13,] 
+		 14: ATTRASSIGN %self->items %v_32[4.13,] 
 		 15: COPY def_%v_19 %v_32[4.13,] 
 BB 5
 	outgoing: 6 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_33 %self[4.14,3.15,2.0,] 
+		 1: GETFIELD %self->widget def_%v_33 %self[2.0,] 
 		 2: %v_33->order_by def_%v_34 %v_33[5.1,] 
 		 3: COPY def_%v_37 
 		 4: def_%v_36 %v_37[5.3,] %v_34[5.2,] 
@@ -3650,9 +3650,9 @@ BB 8
 		 0: 
 		 1: %self->current_user def_%v_40 %self[4.14,3.15,2.0,] 
 		 2: %v_40->company def_%v_41 %v_40[8.1,] 
-		 3: def_%v_42 %self[8.1,4.14,3.15,2.0,] 
+		 3: GETFIELD %self->items def_%v_42 %self[8.1,4.14,3.15,2.0,] 
 		 4: %v_41->sort def_%v_43 %v_41[8.2,] %v_42[8.3,] 
-		 5: def_%v_44 %self[8.1,4.14,3.15,2.0,] 
+		 5: GETFIELD %self->widget def_%v_44 %self[8.1,2.0,] 
 		 6: %v_44->number def_%v_45 %v_44[8.5,] 
 		 7: def_%v_46 %v_43[8.4,] %v_45[8.6,] 
 		 8: COPY def_%v_35 %v_46[8.7,] 
@@ -3662,7 +3662,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_47 %self[4.14,3.15,2.0,] 
+		 1: GETFIELD %self->items def_%v_47 %self[4.14,3.15,2.0,] 
 		 2: %v_47->sort_by def_%v_48 %v_47[9.1,] %self[4.14,3.15,2.0,] 
 CLOSURE BEGIN: t[] 
 BB 1
@@ -3698,7 +3698,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 3: def_%v_49 %self[4.14,3.15,2.0,] 
+		 3: GETFIELD %self->widget def_%v_49 %self[2.0,] 
 		 4: %v_49->number def_%v_50 %v_49[9.3,] 
 		 5: %v_48->last def_%v_51 %v_48[9.2,] %v_50[9.4,] 
 		 6: COPY def_%v_35 %v_51[9.5,] 
@@ -3707,7 +3707,7 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@items %self[4.14,3.15,2.0,] %v_35[8.8,9.6,7.0,] 
+		 0: ATTRASSIGN %self->items %v_35[8.8,9.6,7.0,] 
 		 1: RETURN %v_35[8.8,9.6,7.0,] %self[11.0,4.14,3.15,2.0,] 
 BB 12
 	outgoing: 
@@ -3729,7 +3729,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->widget def_%v_3 %self[2.0,] 
 		 7: %self->tz def_%v_4 %self[2.0,] 
 		 8: %v_3->calculate_start_step_interval_range_tick def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: def_%v_6 %v_5[2.8,] 
@@ -3748,13 +3748,13 @@ BB 2
 		 22: COPY def_filter %v_12[2.21,] 
 		 23: 
 		 24: COPY def_%v_13 
-		 25: ATTRASSIGN %self->@items %self[2.0,2.7,2.21,] %v_13[2.24,] 
+		 25: ATTRASSIGN %self->items %v_13[2.24,] 
 		 26: 
 		 27: COPY def_%v_14 
-		 28: ATTRASSIGN %self->@dates %self[2.0,2.7,2.21,2.25,] %v_14[2.27,] 
+		 28: ATTRASSIGN %self->dates %v_14[2.27,] 
 		 29: 
 		 30: COPY def_%v_15 
-		 31: ATTRASSIGN %self->@range %self[2.0,2.7,2.21,2.25,2.28,] %v_15[2.30,] 
+		 31: ATTRASSIGN %self->range %v_15[2.30,] 
 		 32: 
 		 33: def_%v_16 range[2.18,] step[2.16,] 
 		 34: def_%v_17 %v_16[2.33,] %self[2.0,2.7,2.21,2.25,2.28,2.31,] 
@@ -3777,7 +3777,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->widget def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->mine? def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
@@ -3785,7 +3785,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_5 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_5 %self[2.0,] 
 		 2: %self->current_user def_%cl_1_6 %self[2.0,] 
 		 3: %cl_1_6->tasks def_%cl_1_7 %cl_1_6[4.2,] 
 		 4: COPY def_%cl_1_8 
@@ -3797,14 +3797,14 @@ BB 4
 		 10: def_%cl_1_14 start[] %cl_1_13[4.9,] 
 		 11: %cl_1_7->where def_%cl_1_15 %cl_1_7[4.3,] %cl_1_9[4.5,] %cl_1_10[4.6,] %cl_1_12[4.8,] %cl_1_14[4.10,] 
 		 12: %cl_1_15->count def_%cl_1_16 %cl_1_15[4.11,] 
-		 13: %cl_1_5[4.1,] d[2.2,] %cl_1_16[4.12,] 
+		 13: ATTRASSIGN %cl_1_5->[] d[2.2,] %cl_1_16[4.12,] 
 		 14: 
 BB 5
 	outgoing: 6 20 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_17 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_17 %self[2.0,] 
 		 2: (TaskRecord) def_%cl_1_18 
 		 3: %self->current_user def_%cl_1_19 %self[2.0,] 
 		 4: %cl_1_18->accessed_by def_%cl_1_20 %cl_1_18[5.2,] %cl_1_19[5.3,] 
@@ -3816,7 +3816,7 @@ BB 5
 		 10: def_%cl_1_26 start[] %cl_1_25[5.9,] 
 		 11: %cl_1_20->where def_%cl_1_27 %cl_1_20[5.4,] %cl_1_22[5.6,] %cl_1_24[5.8,] %cl_1_26[5.10,] 
 		 12: %cl_1_27->count def_%cl_1_28 %cl_1_27[5.11,] 
-		 13: %cl_1_17[5.1,] d[2.2,] %cl_1_28[5.12,] 
+		 13: ATTRASSIGN %cl_1_17->[] d[2.2,] %cl_1_28[5.12,] 
 		 14: COPY def_%cl_1_16 %cl_1_28[5.12,] 
 BB 6
 	outgoing: 7 8 20 
@@ -3830,7 +3830,7 @@ BB 7
 	outgoing: 9 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_31 %self[2.0,] 
+		 0: GETFIELD %self->dates def_%cl_1_31 %self[2.0,] 
 		 1: %self->tz def_%cl_1_32 %self[2.0,] 
 		 2: def_%cl_1_33 d[2.2,] interval[] 
 		 3: def_%cl_1_34 start[] %cl_1_33[7.2,] 
@@ -3838,7 +3838,7 @@ BB 7
 		 5: def_%cl_1_36 %cl_1_34[7.3,] %cl_1_35[7.4,] 
 		 6: %cl_1_32->utc_to_local def_%cl_1_37 %cl_1_32[7.1,] %cl_1_36[7.5,] 
 		 7: %cl_1_37->strftime def_%cl_1_38 %cl_1_37[7.6,] tick[] 
-		 8: %cl_1_31[7.0,] d[2.2,] %cl_1_38[7.7,] 
+		 8: ATTRASSIGN %cl_1_31->[] d[2.2,] %cl_1_38[7.7,] 
 		 9: 
 BB 8
 	outgoing: 9 
@@ -3850,14 +3850,14 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_39 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_39 %self[2.0,] 
 		 2: def_%cl_1_40 %cl_1_39[9.1,] 
 		 3: BRANCH %cl_1_40[9.2,] 
 BB 10
 	outgoing: 11 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_41 %self[2.0,] 
+		 0: GETFIELD %self->items def_%cl_1_41 %self[2.0,] 
 		 1: def_%cl_1_42 %cl_1_41[10.0,] d[2.2,] 
 		 2: def_%cl_1_40 %cl_1_39[9.1,] %cl_1_42[10.1,] 
 		 3: COPY def_%cl_1_40 %cl_1_42[10.1,] 
@@ -3866,14 +3866,14 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_43 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_43 %self[2.0,] 
 		 2: def_%cl_1_44 %cl_1_43[11.1,] 
 		 3: BRANCH %cl_1_44[11.2,] 
 BB 12
 	outgoing: 13 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_45 %self[2.0,] 
+		 0: GETFIELD %self->items def_%cl_1_45 %self[2.0,] 
 		 1: def_%cl_1_46 %cl_1_45[12.0,] d[2.2,] 
 		 2: def_%cl_1_44 %cl_1_43[11.1,] %cl_1_46[12.1,] 
 		 3: COPY def_%cl_1_44 %cl_1_46[12.1,] 
@@ -3882,9 +3882,9 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_47 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_47 %self[2.0,] 
 		 2: def_%cl_1_48 %cl_1_47[13.1,] 
-		 3: def_%cl_1_49 %self[2.0,] 
+		 3: GETFIELD %self->items def_%cl_1_49 %self[2.0,] 
 		 4: def_%cl_1_50 %cl_1_49[13.3,] d[2.2,] 
 		 5: def_%cl_1_51 %cl_1_48[13.2,] %cl_1_50[13.4,] 
 		 6: BRANCH %cl_1_51[13.5,] 
@@ -3892,10 +3892,10 @@ BB 14
 	outgoing: 16 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_52 %self[2.0,] 
-		 1: def_%cl_1_53 %self[2.0,] 
+		 0: GETFIELD %self->range def_%cl_1_52 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_53 %self[2.0,] 
 		 2: def_%cl_1_54 %cl_1_53[14.1,] d[2.2,] 
-		 3: %cl_1_52[14.0,] %cl_1_54[14.2,] 
+		 3: ATTRASSIGN %cl_1_52->[] %cl_1_54[14.2,] 
 		 4: 
 BB 15
 	outgoing: 16 
@@ -3907,9 +3907,9 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_55 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_55 %self[2.0,] 
 		 2: def_%cl_1_56 %cl_1_55[16.1,] 
-		 3: def_%cl_1_57 %self[2.0,] 
+		 3: GETFIELD %self->items def_%cl_1_57 %self[2.0,] 
 		 4: def_%cl_1_58 %cl_1_57[16.3,] d[2.2,] 
 		 5: def_%cl_1_59 %cl_1_56[16.2,] %cl_1_58[16.4,] 
 		 6: BRANCH %cl_1_59[16.5,] 
@@ -3917,10 +3917,10 @@ BB 17
 	outgoing: 19 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_60 %self[2.0,] 
-		 1: def_%cl_1_61 %self[2.0,] 
+		 0: GETFIELD %self->range def_%cl_1_60 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_61 %self[2.0,] 
 		 2: def_%cl_1_62 %cl_1_61[17.1,] d[2.2,] 
-		 3: %cl_1_60[17.0,] %cl_1_62[17.2,] 
+		 3: ATTRASSIGN %cl_1_60->[] %cl_1_62[17.2,] 
 		 4: 
 BB 18
 	outgoing: 22 
@@ -3965,7 +3965,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->widget def_%v_3 %self[2.0,] 
 		 7: %self->tz def_%v_4 %self[2.0,] 
 		 8: %v_3->calculate_start_step_interval_range_tick def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: def_%v_6 %v_5[2.8,] 
@@ -3984,13 +3984,13 @@ BB 2
 		 22: COPY def_filter %v_12[2.21,] 
 		 23: 
 		 24: COPY def_%v_13 
-		 25: ATTRASSIGN %self->@items %self[2.0,2.7,2.21,] %v_13[2.24,] 
+		 25: ATTRASSIGN %self->items %v_13[2.24,] 
 		 26: 
 		 27: COPY def_%v_14 
-		 28: ATTRASSIGN %self->@dates %self[2.0,2.7,2.21,2.25,] %v_14[2.27,] 
+		 28: ATTRASSIGN %self->dates %v_14[2.27,] 
 		 29: 
 		 30: COPY def_%v_15 
-		 31: ATTRASSIGN %self->@range %self[2.0,2.7,2.21,2.25,2.28,] %v_15[2.30,] 
+		 31: ATTRASSIGN %self->range %v_15[2.30,] 
 		 32: 
 		 33: COPY def_velocity 
 		 34: 
@@ -4015,7 +4015,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->widget def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->mine? def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
@@ -4023,7 +4023,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_5 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_5 %self[2.0,] 
 		 2: %self->current_user def_%cl_1_6 %self[2.0,] 
 		 3: %cl_1_6->tasks def_%cl_1_7 %cl_1_6[4.2,] 
 		 4: COPY def_%cl_1_8 
@@ -4038,7 +4038,7 @@ BB 4
 		 13: %cl_1_15->sum def_%cl_1_17 %cl_1_15[4.11,] %cl_1_16[4.12,] 
 		 14: %cl_1_17->to_f def_%cl_1_18 %cl_1_17[4.13,] 
 		 15: def_%cl_1_19 %cl_1_18[4.14,] 
-		 16: %cl_1_5[4.1,] d[2.2,] %cl_1_19[4.15,] 
+		 16: ATTRASSIGN %cl_1_5->[] d[2.2,] %cl_1_19[4.15,] 
 		 17: 
 		 18: %self->current_user def_%cl_1_20 %self[4.2,4.6,2.0,] 
 		 19: %cl_1_20->tasks def_%cl_1_21 %cl_1_20[4.18,] 
@@ -4060,8 +4060,8 @@ BB 4
 		 35: def_%cl_1_37 %cl_1_36[4.34,] 
 		 36: COPY def_worked %cl_1_37[4.35,] 
 		 37: 
-		 38: def_%cl_1_38 %self[4.2,4.6,4.18,4.23,2.0,] 
-		 39: def_%cl_1_39 %self[4.2,4.6,4.18,4.23,2.0,] 
+		 38: GETFIELD %self->items def_%cl_1_38 %self[4.2,4.6,4.18,4.23,2.0,] 
+		 39: GETFIELD %self->items def_%cl_1_39 %self[4.2,4.6,4.18,4.23,2.0,] 
 		 40: def_%cl_1_40 %cl_1_39[4.39,] d[2.2,] 
 		 41: def_%cl_1_41 %cl_1_40[4.40,] worked[4.36,] 
 		 42: def_%cl_1_42 %cl_1_41[4.41,] 
@@ -4070,7 +4070,7 @@ BB 5
 	outgoing: 7 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_43 %self[2.0,] 
+		 0: GETFIELD %self->items def_%cl_1_43 %self[2.0,] 
 		 1: def_%cl_1_44 %cl_1_43[5.0,] d[2.2,] 
 		 2: def_%cl_1_45 %cl_1_44[5.1,] worked[4.36,] 
 		 3: 
@@ -4083,14 +4083,14 @@ BB 7
 	outgoing: 12 26 
 	datadep: 
 	instructions:
-		 0: %cl_1_38[4.38,] d[2.2,] %cl_1_45[6.0,5.2,] 
+		 0: ATTRASSIGN %cl_1_38->[] d[2.2,] %cl_1_45[6.0,5.2,] 
 		 1: 
 BB 8
 	outgoing: 9 10 26 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_46 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_46 %self[2.0,] 
 		 2: (TaskRecord) def_%cl_1_47 
 		 3: %self->current_user def_%cl_1_48 %self[2.0,] 
 		 4: %cl_1_47->accessed_by def_%cl_1_49 %cl_1_47[8.2,] %cl_1_48[8.3,] 
@@ -4105,7 +4105,7 @@ BB 8
 		 13: %cl_1_56->sum def_%cl_1_58 %cl_1_56[8.11,] %cl_1_57[8.12,] 
 		 14: %cl_1_58->to_f def_%cl_1_59 %cl_1_58[8.13,] 
 		 15: def_%cl_1_60 %cl_1_59[8.14,] 
-		 16: %cl_1_46[8.1,] d[2.2,] %cl_1_60[8.15,] 
+		 16: ATTRASSIGN %cl_1_46->[] d[2.2,] %cl_1_60[8.15,] 
 		 17: 
 		 18: (TaskRecord) def_%cl_1_61 
 		 19: %self->current_user def_%cl_1_62 %self[8.3,2.0,] 
@@ -4128,8 +4128,8 @@ BB 8
 		 36: def_%cl_1_79 %cl_1_78[8.35,] 
 		 37: COPY def_worked %cl_1_79[8.36,] 
 		 38: 
-		 39: def_%cl_1_80 %self[8.3,8.19,8.24,2.0,] 
-		 40: def_%cl_1_81 %self[8.3,8.19,8.24,2.0,] 
+		 39: GETFIELD %self->items def_%cl_1_80 %self[8.3,8.19,8.24,2.0,] 
+		 40: GETFIELD %self->items def_%cl_1_81 %self[8.3,8.19,8.24,2.0,] 
 		 41: def_%cl_1_82 %cl_1_81[8.40,] d[2.2,] 
 		 42: def_%cl_1_83 %cl_1_82[8.41,] worked[8.37,] 
 		 43: def_%cl_1_84 %cl_1_83[8.42,] 
@@ -4138,7 +4138,7 @@ BB 9
 	outgoing: 11 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_85 %self[2.0,] 
+		 0: GETFIELD %self->items def_%cl_1_85 %self[2.0,] 
 		 1: def_%cl_1_86 %cl_1_85[9.0,] d[2.2,] 
 		 2: def_%cl_1_87 %cl_1_86[9.1,] worked[8.37,] 
 		 3: 
@@ -4151,7 +4151,7 @@ BB 11
 	outgoing: 12 26 
 	datadep: 
 	instructions:
-		 0: %cl_1_80[8.39,] d[2.2,] %cl_1_87[10.0,9.2,] 
+		 0: ATTRASSIGN %cl_1_80->[] d[2.2,] %cl_1_87[10.0,9.2,] 
 		 1: COPY def_%cl_1_45 %cl_1_87[10.0,9.2,] 
 BB 12
 	outgoing: 13 14 26 
@@ -4165,7 +4165,7 @@ BB 13
 	outgoing: 15 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_90 %self[2.0,] 
+		 0: GETFIELD %self->dates def_%cl_1_90 %self[2.0,] 
 		 1: %self->tz def_%cl_1_91 %self[2.0,] 
 		 2: def_%cl_1_92 d[2.2,] interval[] 
 		 3: def_%cl_1_93 start[] %cl_1_92[13.2,] 
@@ -4173,7 +4173,7 @@ BB 13
 		 5: def_%cl_1_95 %cl_1_93[13.3,] %cl_1_94[13.4,] 
 		 6: %cl_1_91->utc_to_local def_%cl_1_96 %cl_1_91[13.1,] %cl_1_95[13.5,] 
 		 7: %cl_1_96->strftime def_%cl_1_97 %cl_1_96[13.6,] tick[] 
-		 8: %cl_1_90[13.0,] d[2.2,] %cl_1_97[13.7,] 
+		 8: ATTRASSIGN %cl_1_90->[] d[2.2,] %cl_1_97[13.7,] 
 		 9: 
 BB 14
 	outgoing: 15 
@@ -4185,14 +4185,14 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_98 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_98 %self[2.0,] 
 		 2: def_%cl_1_99 %cl_1_98[15.1,] 
 		 3: BRANCH %cl_1_99[15.2,] 
 BB 16
 	outgoing: 17 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_100 %self[2.0,] 
+		 0: GETFIELD %self->items def_%cl_1_100 %self[2.0,] 
 		 1: def_%cl_1_101 %cl_1_100[16.0,] d[2.2,] 
 		 2: def_%cl_1_99 %cl_1_98[15.1,] %cl_1_101[16.1,] 
 		 3: COPY def_%cl_1_99 %cl_1_101[16.1,] 
@@ -4201,14 +4201,14 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_102 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_102 %self[2.0,] 
 		 2: def_%cl_1_103 %cl_1_102[17.1,] 
 		 3: BRANCH %cl_1_103[17.2,] 
 BB 18
 	outgoing: 19 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_104 %self[2.0,] 
+		 0: GETFIELD %self->items def_%cl_1_104 %self[2.0,] 
 		 1: def_%cl_1_105 %cl_1_104[18.0,] d[2.2,] 
 		 2: def_%cl_1_103 %cl_1_102[17.1,] %cl_1_105[18.1,] 
 		 3: COPY def_%cl_1_103 %cl_1_105[18.1,] 
@@ -4217,9 +4217,9 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_106 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_106 %self[2.0,] 
 		 2: def_%cl_1_107 %cl_1_106[19.1,] 
-		 3: def_%cl_1_108 %self[2.0,] 
+		 3: GETFIELD %self->items def_%cl_1_108 %self[2.0,] 
 		 4: def_%cl_1_109 %cl_1_108[19.3,] d[2.2,] 
 		 5: def_%cl_1_110 %cl_1_107[19.2,] %cl_1_109[19.4,] 
 		 6: BRANCH %cl_1_110[19.5,] 
@@ -4227,10 +4227,10 @@ BB 20
 	outgoing: 22 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_111 %self[2.0,] 
-		 1: def_%cl_1_112 %self[2.0,] 
+		 0: GETFIELD %self->range def_%cl_1_111 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_112 %self[2.0,] 
 		 2: def_%cl_1_113 %cl_1_112[20.1,] d[2.2,] 
-		 3: %cl_1_111[20.0,] %cl_1_113[20.2,] 
+		 3: ATTRASSIGN %cl_1_111->[] %cl_1_113[20.2,] 
 		 4: 
 BB 21
 	outgoing: 22 
@@ -4242,9 +4242,9 @@ BB 22
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_114 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_114 %self[2.0,] 
 		 2: def_%cl_1_115 %cl_1_114[22.1,] 
-		 3: def_%cl_1_116 %self[2.0,] 
+		 3: GETFIELD %self->items def_%cl_1_116 %self[2.0,] 
 		 4: def_%cl_1_117 %cl_1_116[22.3,] d[2.2,] 
 		 5: def_%cl_1_118 %cl_1_115[22.2,] %cl_1_117[22.4,] 
 		 6: BRANCH %cl_1_118[22.5,] 
@@ -4252,10 +4252,10 @@ BB 23
 	outgoing: 25 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_119 %self[2.0,] 
-		 1: def_%cl_1_120 %self[2.0,] 
+		 0: GETFIELD %self->range def_%cl_1_119 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_120 %self[2.0,] 
 		 2: def_%cl_1_121 %cl_1_120[23.1,] d[2.2,] 
-		 3: %cl_1_119[23.0,] %cl_1_121[23.2,] 
+		 3: ATTRASSIGN %cl_1_119->[] %cl_1_121[23.2,] 
 		 4: 
 BB 24
 	outgoing: 28 
@@ -4280,9 +4280,9 @@ BB 28
 	instructions:
 CLOSURE END
 		 37: 
-		 38: def_%v_18 %self[2.0,2.7,2.21,2.25,2.28,2.31,] 
+		 38: GETFIELD %self->items def_%v_18 %self[2.0,2.7,2.21,2.25,] 
 		 39: def_%v_19 %v_18[2.38,] 
-		 40: def_%v_20 %self[2.0,2.7,2.21,2.25,2.28,2.31,] 
+		 40: GETFIELD %self->items def_%v_20 %self[2.0,2.7,2.21,2.25,] 
 		 41: def_%v_21 %v_20[2.40,] 
 		 42: def_%v_22 %v_19[2.39,] %v_21[2.41,] 
 		 43: def_%v_23 interval[2.17,] range[2.18,] 
@@ -4302,7 +4302,7 @@ CLOSURE END
 		 57: def_%v_33 %v_32[2.56,] velocity[2.33,2.48,2.53,] 
 		 58: %v_31->info def_%v_34 %v_31[2.55,] %v_33[2.57,] 
 		 59: 
-		 60: ATTRASSIGN %self->@end_date %self[2.0,2.7,2.21,2.25,2.28,2.31,2.55,] 
+		 60: ATTRASSIGN %self->end_date 
 		 61: 
 		 62: def_%v_35 velocity[2.33,2.48,2.53,] 
 		 63: BRANCH %v_35[2.62,] 
@@ -4311,7 +4311,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_36 %self[2.0,2.25,2.28,2.31,2.60,] 
+		 1: GETFIELD %self->items def_%v_36 %self[2.0,2.25,] 
 		 2: def_%v_37 %v_36[3.1,] 
 		 3: def_%v_38 %v_37[3.2,] velocity[2.33,2.48,2.53,] 
 		 4: COPY def_days_left %v_38[3.3,] 
@@ -4320,11 +4320,11 @@ BB 3
 		 7: %v_39->now def_%v_40 %v_39[3.6,] 
 		 8: days_left->days def_%v_41 days_left[3.4,] 
 		 9: def_%v_42 %v_40[3.7,] %v_41[3.8,] 
-		 10: ATTRASSIGN %self->@end_date %self[2.0,2.25,2.28,2.31,2.60,] %v_42[3.9,] 
+		 10: ATTRASSIGN %self->end_date %v_42[3.9,] 
 		 11: 
 		 12: %self->logger def_%v_43 %self[3.10,2.0,2.25,2.28,2.31,2.60,] 
 		 13: COPY def_%v_44 
-		 14: def_%v_45 %self[3.10,3.12,2.0,2.25,2.28,2.31,2.60,] 
+		 14: GETFIELD %self->items def_%v_45 %self[3.12,2.0,2.25,] 
 		 15: def_%v_46 %v_45[3.14,] 
 		 16: def_%v_47 %v_44[3.13,] %v_46[3.15,] 
 		 17: %v_43->info def_%v_48 %v_43[3.12,] %v_47[3.16,] 
@@ -4336,7 +4336,7 @@ BB 3
 		 23: 
 		 24: %self->logger def_%v_53 %self[3.10,3.12,3.19,2.0,2.25,2.28,2.31,2.60,] 
 		 25: COPY def_%v_54 
-		 26: def_%v_55 %self[3.10,3.12,3.19,3.24,2.0,2.25,2.28,2.31,2.60,] 
+		 26: GETFIELD %self->end_date def_%v_55 %self[3.10,3.12,3.19,3.24,2.0,2.60,] 
 		 27: def_%v_56 %v_54[3.25,] %v_55[3.26,] 
 		 28: %v_53->info def_%v_57 %v_53[3.24,] %v_56[3.27,] 
 		 29: 
@@ -4350,16 +4350,16 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_58 %self[3.10,2.0,2.25,2.28,2.31,2.60,] 
+		 1: GETFIELD %self->items def_%v_58 %self[2.0,2.25,] 
 		 2: def_%v_59 %v_58[5.1,] 
 		 3: COPY def_start %v_59[5.2,] 
 		 4: 
 		 5: COPY def_%v_60 
-		 6: ATTRASSIGN %self->@velocity %self[3.10,2.0,2.25,2.28,2.31,2.60,] %v_60[5.5,] 
+		 6: ATTRASSIGN %self->velocity %v_60[5.5,] 
 		 7: 
 		 8: def_%v_61 range[2.18,] step[2.16,] 
 		 9: def_%v_62 %v_61[5.8,] %self[5.6,3.10,2.0,2.25,2.28,2.31,2.60,] 
-CLOSURE BEGIN: %self[5.6,3.10,2.0,2.25,2.28,2.31,2.60,] velocity[2.33,2.48,2.53,] d[] start[5.3,2.15,] 
+CLOSURE BEGIN: %self[5.6,3.10,2.0,2.25,2.28,2.31,2.60,] velocity[2.33,2.48,2.53,] d[] start[5.3,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -4378,10 +4378,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->velocity def_%cl_2_3 %self[2.0,] 
 		 2: def_%cl_2_4 velocity[] d[2.2,] 
 		 3: def_%cl_2_5 start[] %cl_2_4[3.2,] 
-		 4: %cl_2_3[3.1,] d[2.2,] %cl_2_5[3.3,] 
+		 4: ATTRASSIGN %cl_2_3->[] d[2.2,] %cl_2_5[3.3,] 
 		 5: RETURN %cl_2_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -4416,7 +4416,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->widget def_%v_3 %self[2.0,] 
 		 7: %self->tz def_%v_4 %self[2.0,] 
 		 8: %v_3->calculate_start_step_interval_range_tick def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: def_%v_6 %v_5[2.8,] 
@@ -4435,16 +4435,16 @@ BB 2
 		 22: COPY def_filter %v_12[2.21,] 
 		 23: 
 		 24: COPY def_%v_13 
-		 25: ATTRASSIGN %self->@items %self[2.0,2.7,2.21,] %v_13[2.24,] 
+		 25: ATTRASSIGN %self->items %v_13[2.24,] 
 		 26: 
 		 27: COPY def_%v_14 
-		 28: ATTRASSIGN %self->@totals %self[2.0,2.7,2.21,2.25,] %v_14[2.27,] 
+		 28: ATTRASSIGN %self->totals %v_14[2.27,] 
 		 29: 
 		 30: COPY def_%v_15 
-		 31: ATTRASSIGN %self->@dates %self[2.0,2.7,2.21,2.25,2.28,] %v_15[2.30,] 
+		 31: ATTRASSIGN %self->dates %v_15[2.30,] 
 		 32: 
 		 33: COPY def_%v_16 
-		 34: ATTRASSIGN %self->@range %self[2.0,2.7,2.21,2.25,2.28,2.31,] %v_16[2.33,] 
+		 34: ATTRASSIGN %self->range %v_16[2.33,] 
 		 35: 
 		 36: COPY def_velocity 
 		 37: 
@@ -4469,7 +4469,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->widget def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->mine? def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
@@ -4477,7 +4477,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_5 %self[2.0,] 
+		 1: GETFIELD %self->totals def_%cl_1_5 %self[2.0,] 
 		 2: %self->current_user def_%cl_1_6 %self[2.0,] 
 		 3: %cl_1_6->tasks def_%cl_1_7 %cl_1_6[4.2,] 
 		 4: COPY def_%cl_1_8 
@@ -4491,9 +4491,9 @@ BB 4
 		 12: %cl_1_14->sum def_%cl_1_16 %cl_1_14[4.10,] %cl_1_15[4.11,] 
 		 13: %cl_1_16->to_f def_%cl_1_17 %cl_1_16[4.12,] 
 		 14: def_%cl_1_18 %cl_1_17[4.13,] 
-		 15: %cl_1_5[4.1,] d[2.2,] %cl_1_18[4.14,] 
+		 15: ATTRASSIGN %cl_1_5->[] d[2.2,] %cl_1_18[4.14,] 
 		 16: 
-		 17: def_%cl_1_19 %self[4.2,4.7,2.0,] 
+		 17: GETFIELD %self->totals def_%cl_1_19 %self[4.2,4.7,2.0,] 
 		 18: def_%cl_1_20 %cl_1_19[4.17,] d[2.2,] 
 		 19: %self->current_user def_%cl_1_21 %self[4.2,4.7,2.0,] 
 		 20: %cl_1_21->tasks def_%cl_1_22 %cl_1_21[4.19,] 
@@ -4514,7 +4514,7 @@ BB 4
 		 35: def_%cl_1_20 %cl_1_20[4.18,] %cl_1_36[4.34,] 
 		 36: def_%cl_1_37 %cl_1_19[4.17,] d[2.2,] %cl_1_20[4.18,4.35,] 
 		 37: 
-		 38: def_%cl_1_38 %self[4.2,4.7,4.19,4.24,2.0,] 
+		 38: GETFIELD %self->items def_%cl_1_38 %self[4.2,4.7,4.19,4.24,2.0,] 
 		 39: %self->current_user def_%cl_1_39 %self[4.2,4.7,4.19,4.24,2.0,] 
 		 40: %cl_1_39->tasks def_%cl_1_40 %cl_1_39[4.39,] 
 		 41: COPY def_%cl_1_41 
@@ -4530,9 +4530,9 @@ BB 4
 		 51: %cl_1_49->sum def_%cl_1_51 %cl_1_49[4.49,] %cl_1_50[4.50,] 
 		 52: %cl_1_51->to_f def_%cl_1_52 %cl_1_51[4.51,] 
 		 53: def_%cl_1_53 %cl_1_52[4.52,] 
-		 54: %cl_1_38[4.38,] d[2.2,] %cl_1_53[4.53,] 
+		 54: ATTRASSIGN %cl_1_38->[] d[2.2,] %cl_1_53[4.53,] 
 		 55: 
-		 56: def_%cl_1_54 %self[4.2,4.7,4.19,4.24,4.39,4.44,2.0,] 
+		 56: GETFIELD %self->items def_%cl_1_54 %self[4.2,4.7,4.19,4.24,4.39,4.44,2.0,] 
 		 57: def_%cl_1_55 %cl_1_54[4.56,] d[2.2,] 
 		 58: %self->current_user def_%cl_1_56 %self[4.2,4.7,4.19,4.24,4.39,4.44,2.0,] 
 		 59: %cl_1_56->tasks def_%cl_1_57 %cl_1_56[4.58,] 
@@ -4560,7 +4560,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_75 %self[2.0,] 
+		 1: GETFIELD %self->totals def_%cl_1_75 %self[2.0,] 
 		 2: (TaskRecord) def_%cl_1_76 
 		 3: %self->current_user def_%cl_1_77 %self[2.0,] 
 		 4: %cl_1_76->accessed_by def_%cl_1_78 %cl_1_76[5.2,] %cl_1_77[5.3,] 
@@ -4573,9 +4573,9 @@ BB 5
 		 11: %cl_1_83->sum def_%cl_1_85 %cl_1_83[5.9,] %cl_1_84[5.10,] 
 		 12: %cl_1_85->to_f def_%cl_1_86 %cl_1_85[5.11,] 
 		 13: def_%cl_1_87 %cl_1_86[5.12,] 
-		 14: %cl_1_75[5.1,] d[2.2,] %cl_1_87[5.13,] 
+		 14: ATTRASSIGN %cl_1_75->[] d[2.2,] %cl_1_87[5.13,] 
 		 15: 
-		 16: def_%cl_1_88 %self[5.3,2.0,] 
+		 16: GETFIELD %self->totals def_%cl_1_88 %self[5.3,2.0,] 
 		 17: def_%cl_1_89 %cl_1_88[5.16,] d[2.2,] 
 		 18: (TaskRecord) def_%cl_1_90 
 		 19: %self->current_user def_%cl_1_91 %self[5.3,2.0,] 
@@ -4595,7 +4595,7 @@ BB 5
 		 33: def_%cl_1_89 %cl_1_89[5.17,] %cl_1_104[5.32,] 
 		 34: def_%cl_1_105 %cl_1_88[5.16,] d[2.2,] %cl_1_89[5.17,5.33,] 
 		 35: 
-		 36: def_%cl_1_106 %self[5.3,5.19,2.0,] 
+		 36: GETFIELD %self->items def_%cl_1_106 %self[5.3,5.19,2.0,] 
 		 37: (TaskRecord) def_%cl_1_107 
 		 38: %self->current_user def_%cl_1_108 %self[5.3,5.19,2.0,] 
 		 39: %cl_1_107->accessed_by def_%cl_1_109 %cl_1_107[5.37,] %cl_1_108[5.38,] 
@@ -4611,9 +4611,9 @@ BB 5
 		 49: %cl_1_117->sum def_%cl_1_119 %cl_1_117[5.47,] %cl_1_118[5.48,] 
 		 50: %cl_1_119->to_f def_%cl_1_120 %cl_1_119[5.49,] 
 		 51: def_%cl_1_121 %cl_1_120[5.50,] 
-		 52: %cl_1_106[5.36,] d[2.2,] %cl_1_121[5.51,] 
+		 52: ATTRASSIGN %cl_1_106->[] d[2.2,] %cl_1_121[5.51,] 
 		 53: 
-		 54: def_%cl_1_122 %self[5.3,5.19,5.38,2.0,] 
+		 54: GETFIELD %self->items def_%cl_1_122 %self[5.3,5.19,5.38,2.0,] 
 		 55: def_%cl_1_123 %cl_1_122[5.54,] d[2.2,] 
 		 56: (TaskRecord) def_%cl_1_124 
 		 57: %self->current_user def_%cl_1_125 %self[5.3,5.19,5.38,2.0,] 
@@ -4648,7 +4648,7 @@ BB 7
 	outgoing: 9 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_145 %self[2.0,] 
+		 0: GETFIELD %self->dates def_%cl_1_145 %self[2.0,] 
 		 1: %self->tz def_%cl_1_146 %self[2.0,] 
 		 2: def_%cl_1_147 d[2.2,] interval[] 
 		 3: def_%cl_1_148 start[] %cl_1_147[7.2,] 
@@ -4656,7 +4656,7 @@ BB 7
 		 5: def_%cl_1_150 %cl_1_148[7.3,] %cl_1_149[7.4,] 
 		 6: %cl_1_146->utc_to_local def_%cl_1_151 %cl_1_146[7.1,] %cl_1_150[7.5,] 
 		 7: %cl_1_151->strftime def_%cl_1_152 %cl_1_151[7.6,] tick[] 
-		 8: %cl_1_145[7.0,] d[2.2,] %cl_1_152[7.7,] 
+		 8: ATTRASSIGN %cl_1_145->[] d[2.2,] %cl_1_152[7.7,] 
 		 9: 
 BB 8
 	outgoing: 9 
@@ -4668,14 +4668,14 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_153 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_153 %self[2.0,] 
 		 2: def_%cl_1_154 %cl_1_153[9.1,] 
 		 3: BRANCH %cl_1_154[9.2,] 
 BB 10
 	outgoing: 11 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_155 %self[2.0,] 
+		 0: GETFIELD %self->items def_%cl_1_155 %self[2.0,] 
 		 1: def_%cl_1_156 %cl_1_155[10.0,] d[2.2,] 
 		 2: def_%cl_1_154 %cl_1_153[9.1,] %cl_1_156[10.1,] 
 		 3: COPY def_%cl_1_154 %cl_1_156[10.1,] 
@@ -4684,14 +4684,14 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_157 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_157 %self[2.0,] 
 		 2: def_%cl_1_158 %cl_1_157[11.1,] 
 		 3: BRANCH %cl_1_158[11.2,] 
 BB 12
 	outgoing: 13 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_159 %self[2.0,] 
+		 0: GETFIELD %self->items def_%cl_1_159 %self[2.0,] 
 		 1: def_%cl_1_160 %cl_1_159[12.0,] d[2.2,] 
 		 2: def_%cl_1_158 %cl_1_157[11.1,] %cl_1_160[12.1,] 
 		 3: COPY def_%cl_1_158 %cl_1_160[12.1,] 
@@ -4700,9 +4700,9 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_161 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_161 %self[2.0,] 
 		 2: def_%cl_1_162 %cl_1_161[13.1,] 
-		 3: def_%cl_1_163 %self[2.0,] 
+		 3: GETFIELD %self->items def_%cl_1_163 %self[2.0,] 
 		 4: def_%cl_1_164 %cl_1_163[13.3,] d[2.2,] 
 		 5: def_%cl_1_165 %cl_1_162[13.2,] %cl_1_164[13.4,] 
 		 6: BRANCH %cl_1_165[13.5,] 
@@ -4710,10 +4710,10 @@ BB 14
 	outgoing: 16 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_166 %self[2.0,] 
-		 1: def_%cl_1_167 %self[2.0,] 
+		 0: GETFIELD %self->range def_%cl_1_166 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_167 %self[2.0,] 
 		 2: def_%cl_1_168 %cl_1_167[14.1,] d[2.2,] 
-		 3: %cl_1_166[14.0,] %cl_1_168[14.2,] 
+		 3: ATTRASSIGN %cl_1_166->[] %cl_1_168[14.2,] 
 		 4: 
 BB 15
 	outgoing: 16 
@@ -4725,9 +4725,9 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_169 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_169 %self[2.0,] 
 		 2: def_%cl_1_170 %cl_1_169[16.1,] 
-		 3: def_%cl_1_171 %self[2.0,] 
+		 3: GETFIELD %self->items def_%cl_1_171 %self[2.0,] 
 		 4: def_%cl_1_172 %cl_1_171[16.3,] d[2.2,] 
 		 5: def_%cl_1_173 %cl_1_170[16.2,] %cl_1_172[16.4,] 
 		 6: BRANCH %cl_1_173[16.5,] 
@@ -4735,10 +4735,10 @@ BB 17
 	outgoing: 19 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_174 %self[2.0,] 
-		 1: def_%cl_1_175 %self[2.0,] 
+		 0: GETFIELD %self->range def_%cl_1_174 %self[2.0,] 
+		 1: GETFIELD %self->items def_%cl_1_175 %self[2.0,] 
 		 2: def_%cl_1_176 %cl_1_175[17.1,] d[2.2,] 
-		 3: %cl_1_174[17.0,] %cl_1_176[17.2,] 
+		 3: ATTRASSIGN %cl_1_174->[] %cl_1_176[17.2,] 
 		 4: 
 BB 18
 	outgoing: 19 
@@ -4750,9 +4750,9 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_177 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_177 %self[2.0,] 
 		 2: def_%cl_1_178 %cl_1_177[19.1,] 
-		 3: def_%cl_1_179 %self[2.0,] 
+		 3: GETFIELD %self->totals def_%cl_1_179 %self[2.0,] 
 		 4: def_%cl_1_180 %cl_1_179[19.3,] d[2.2,] 
 		 5: def_%cl_1_181 %cl_1_178[19.2,] %cl_1_180[19.4,] 
 		 6: BRANCH %cl_1_181[19.5,] 
@@ -4760,10 +4760,10 @@ BB 20
 	outgoing: 22 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_182 %self[2.0,] 
-		 1: def_%cl_1_183 %self[2.0,] 
+		 0: GETFIELD %self->range def_%cl_1_182 %self[2.0,] 
+		 1: GETFIELD %self->totals def_%cl_1_183 %self[2.0,] 
 		 2: def_%cl_1_184 %cl_1_183[20.1,] d[2.2,] 
-		 3: %cl_1_182[20.0,] %cl_1_184[20.2,] 
+		 3: ATTRASSIGN %cl_1_182->[] %cl_1_184[20.2,] 
 		 4: 
 BB 21
 	outgoing: 22 
@@ -4775,9 +4775,9 @@ BB 22
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_185 %self[2.0,] 
+		 1: GETFIELD %self->range def_%cl_1_185 %self[2.0,] 
 		 2: def_%cl_1_186 %cl_1_185[22.1,] 
-		 3: def_%cl_1_187 %self[2.0,] 
+		 3: GETFIELD %self->totals def_%cl_1_187 %self[2.0,] 
 		 4: def_%cl_1_188 %cl_1_187[22.3,] d[2.2,] 
 		 5: def_%cl_1_189 %cl_1_186[22.2,] %cl_1_188[22.4,] 
 		 6: BRANCH %cl_1_189[22.5,] 
@@ -4785,10 +4785,10 @@ BB 23
 	outgoing: 25 26 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_190 %self[2.0,] 
-		 1: def_%cl_1_191 %self[2.0,] 
+		 0: GETFIELD %self->range def_%cl_1_190 %self[2.0,] 
+		 1: GETFIELD %self->totals def_%cl_1_191 %self[2.0,] 
 		 2: def_%cl_1_192 %cl_1_191[23.1,] d[2.2,] 
-		 3: %cl_1_190[23.0,] %cl_1_192[23.2,] 
+		 3: ATTRASSIGN %cl_1_190->[] %cl_1_192[23.2,] 
 		 4: 
 BB 24
 	outgoing: 28 
@@ -4813,9 +4813,9 @@ BB 28
 	instructions:
 CLOSURE END
 		 40: 
-		 41: def_%v_19 %self[2.0,2.7,2.21,2.25,2.28,2.31,2.34,] 
+		 41: GETFIELD %self->items def_%v_19 %self[2.0,2.7,2.21,2.25,] 
 		 42: def_%v_20 %v_19[2.41,] 
-		 43: def_%v_21 %self[2.0,2.7,2.21,2.25,2.28,2.31,2.34,] 
+		 43: GETFIELD %self->items def_%v_21 %self[2.0,2.7,2.21,2.25,] 
 		 44: def_%v_22 %v_21[2.43,] 
 		 45: def_%v_23 %v_20[2.42,] %v_22[2.44,] 
 		 46: def_%v_24 interval[2.17,] range[2.18,] 
@@ -4835,7 +4835,7 @@ CLOSURE END
 		 60: def_%v_34 %v_33[2.59,] velocity[2.36,2.51,2.56,] 
 		 61: %v_32->info def_%v_35 %v_32[2.58,] %v_34[2.60,] 
 		 62: 
-		 63: ATTRASSIGN %self->@end_date %self[2.0,2.7,2.21,2.25,2.28,2.31,2.34,2.58,] 
+		 63: ATTRASSIGN %self->end_date 
 		 64: 
 		 65: def_%v_36 velocity[2.36,2.51,2.56,] 
 		 66: BRANCH %v_36[2.65,] 
@@ -4844,9 +4844,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_37 %self[2.0,2.25,2.28,2.31,2.34,2.63,] 
+		 1: GETFIELD %self->totals def_%v_37 %self[2.0,2.28,] 
 		 2: def_%v_38 %v_37[3.1,] 
-		 3: def_%v_39 %self[2.0,2.25,2.28,2.31,2.34,2.63,] 
+		 3: GETFIELD %self->items def_%v_39 %self[2.0,2.25,] 
 		 4: def_%v_40 %v_39[3.3,] 
 		 5: def_%v_41 %v_38[3.2,] %v_40[3.4,] 
 		 6: def_%v_42 velocity[2.36,2.51,2.56,] 
@@ -4857,13 +4857,13 @@ BB 3
 		 11: %v_44->now def_%v_45 %v_44[3.10,] 
 		 12: days_left->days def_%v_46 days_left[3.8,] 
 		 13: def_%v_47 %v_45[3.11,] %v_46[3.12,] 
-		 14: ATTRASSIGN %self->@end_date %self[2.0,2.25,2.28,2.31,2.34,2.63,] %v_47[3.13,] 
+		 14: ATTRASSIGN %self->end_date %v_47[3.13,] 
 		 15: 
 		 16: %self->logger def_%v_48 %self[3.14,2.0,2.25,2.28,2.31,2.34,2.63,] 
 		 17: COPY def_%v_49 
-		 18: def_%v_50 %self[3.14,3.16,2.0,2.25,2.28,2.31,2.34,2.63,] 
+		 18: GETFIELD %self->totals def_%v_50 %self[3.16,2.0,2.28,] 
 		 19: def_%v_51 %v_50[3.18,] 
-		 20: def_%v_52 %self[3.14,3.16,2.0,2.25,2.28,2.31,2.34,2.63,] 
+		 20: GETFIELD %self->items def_%v_52 %self[3.16,2.0,2.25,] 
 		 21: def_%v_53 %v_52[3.20,] 
 		 22: def_%v_54 %v_51[3.19,] %v_53[3.21,] 
 		 23: def_%v_55 %v_49[3.17,] %v_54[3.22,] 
@@ -4876,7 +4876,7 @@ BB 3
 		 30: 
 		 31: %self->logger def_%v_61 %self[3.14,3.16,3.26,2.0,2.25,2.28,2.31,2.34,2.63,] 
 		 32: COPY def_%v_62 
-		 33: def_%v_63 %self[3.14,3.16,3.26,3.31,2.0,2.25,2.28,2.31,2.34,2.63,] 
+		 33: GETFIELD %self->end_date def_%v_63 %self[3.14,3.16,3.26,3.31,2.0,2.63,] 
 		 34: def_%v_64 %v_62[3.32,] %v_63[3.33,] 
 		 35: %v_61->info def_%v_65 %v_61[3.31,] %v_64[3.34,] 
 		 36: 
@@ -4890,16 +4890,16 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_66 %self[3.14,2.0,2.25,2.28,2.31,2.34,2.63,] 
+		 1: GETFIELD %self->items def_%v_66 %self[2.0,2.25,] 
 		 2: def_%v_67 %v_66[5.1,] 
 		 3: COPY def_start %v_67[5.2,] 
 		 4: 
 		 5: COPY def_%v_68 
-		 6: ATTRASSIGN %self->@velocity %self[3.14,2.0,2.25,2.28,2.31,2.34,2.63,] %v_68[5.5,] 
+		 6: ATTRASSIGN %self->velocity %v_68[5.5,] 
 		 7: 
 		 8: def_%v_69 range[2.18,] step[2.16,] 
 		 9: def_%v_70 %v_69[5.8,] %self[5.6,3.14,2.0,2.25,2.28,2.31,2.34,2.63,] 
-CLOSURE BEGIN: %self[5.6,3.14,2.0,2.25,2.28,2.31,2.34,2.63,] velocity[2.36,2.51,2.56,] d[] start[5.3,2.15,] 
+CLOSURE BEGIN: %self[5.6,3.14,2.0,2.25,2.28,2.31,2.34,2.63,] velocity[2.36,2.51,2.56,] d[] start[5.3,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -4918,10 +4918,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 %self[2.0,] 
+		 1: GETFIELD %self->velocity def_%cl_2_3 %self[2.0,] 
 		 2: def_%cl_2_4 velocity[] d[2.2,] 
 		 3: def_%cl_2_5 start[] %cl_2_4[3.2,] 
-		 4: %cl_2_3[3.1,] d[2.2,] %cl_2_5[3.3,] 
+		 4: ATTRASSIGN %cl_2_3->[] d[2.2,] %cl_2_5[3.3,] 
 		 5: RETURN %cl_2_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -4956,7 +4956,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->widget def_%v_3 %self[2.0,] 
 		 7: %v_3->mine? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -4972,10 +4972,10 @@ BB 3
 		 6: %v_8->accessed_by def_%v_10 %v_8[3.4,] %v_9[3.5,] 
 		 7: COPY def_%v_11 
 		 8: %v_10->order def_%v_12 %v_10[3.6,] %v_11[3.7,] 
-		 9: def_%v_13 %self[3.3,3.5,2.0,] 
+		 9: GETFIELD %self->widget def_%v_13 %self[3.3,3.5,2.0,] 
 		 10: %v_13->number def_%v_14 %v_13[3.9,] 
 		 11: %v_12->limit def_%v_15 %v_12[3.8,] %v_14[3.10,] 
-		 12: ATTRASSIGN %self->@items %self[3.3,3.5,2.0,] %v_15[3.11,] 
+		 12: ATTRASSIGN %self->items %v_15[3.11,] 
 		 13: RETURN %v_15[3.11,] %self[3.3,3.5,3.12,2.0,] 
 BB 4
 	outgoing: 6 
@@ -4988,10 +4988,10 @@ BB 4
 		 4: %v_17->accessed_by def_%v_19 %v_17[4.2,] %v_18[4.3,] 
 		 5: COPY def_%v_20 
 		 6: %v_19->order def_%v_21 %v_19[4.4,] %v_20[4.5,] 
-		 7: def_%v_22 %self[4.3,2.0,] 
+		 7: GETFIELD %self->widget def_%v_22 %self[4.3,2.0,] 
 		 8: %v_22->number def_%v_23 %v_22[4.7,] 
 		 9: %v_21->limit def_%v_24 %v_21[4.6,] %v_23[4.8,] 
-		 10: ATTRASSIGN %self->@items %self[4.3,2.0,] %v_24[4.9,] 
+		 10: ATTRASSIGN %self->items %v_24[4.9,] 
 		 11: RETURN %v_24[4.9,] %self[4.3,4.10,2.0,] 
 BB 6
 	outgoing: 
@@ -5016,7 +5016,7 @@ BB 2
 		 6: %self->filter_from_filter_by def_%v_3 %self[2.0,] 
 		 7: COPY def_filter %v_3[2.6,] 
 		 8: 
-		 9: def_%v_4 %self[2.0,2.6,] 
+		 9: GETFIELD %self->widget def_%v_4 %self[2.0,2.6,] 
 		 10: %v_4->mine? def_%v_5 %v_4[2.9,] 
 		 11: BRANCH %v_5[2.10,] 
 BB 3
@@ -5092,7 +5092,7 @@ CLOSURE END
 		 2: COPY def_tasks %v_22[5.1,] 
 		 3: 
 		 4: COPY def_%v_23 
-		 5: ATTRASSIGN %self->@tasks %self[2.0,] %v_23[5.4,] 
+		 5: ATTRASSIGN %self->tasks %v_23[5.4,] 
 		 6: 
 		 7: %v_22->each def_%v_24 %v_22[5.1,] %self[5.5,2.0,] 
 CLOSURE BEGIN: t[] %self[5.5,2.0,] 
@@ -5140,7 +5140,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_7 %self[2.0,] 
+		 1: GETFIELD %self->tasks def_%cl_2_7 %self[2.0,] 
 		 2: (OVERDUE) def_%cl_2_9 
 		 3: def_%cl_2_8 %cl_2_7[7.1,] %cl_2_9[7.2,] 
 		 4: BRANCH %cl_2_8[7.3,] 
@@ -5177,7 +5177,7 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_21 %self[2.0,] 
+		 1: GETFIELD %self->tasks def_%cl_2_21 %self[2.0,] 
 		 2: (TODAY) def_%cl_2_23 
 		 3: def_%cl_2_22 %cl_2_21[11.1,] %cl_2_23[11.2,] 
 		 4: BRANCH %cl_2_22[11.3,] 
@@ -5215,7 +5215,7 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_36 %self[2.0,] 
+		 1: GETFIELD %self->tasks def_%cl_2_36 %self[2.0,] 
 		 2: (TOMORROW) def_%cl_2_38 
 		 3: def_%cl_2_37 %cl_2_36[15.1,] %cl_2_38[15.2,] 
 		 4: BRANCH %cl_2_37[15.3,] 
@@ -5252,7 +5252,7 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_50 %self[2.0,] 
+		 1: GETFIELD %self->tasks def_%cl_2_50 %self[2.0,] 
 		 2: (THIS_WEEK) def_%cl_2_52 
 		 3: def_%cl_2_51 %cl_2_50[19.1,] %cl_2_52[19.2,] 
 		 4: BRANCH %cl_2_51[19.3,] 
@@ -5290,7 +5290,7 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_65 %self[2.0,] 
+		 1: GETFIELD %self->tasks def_%cl_2_65 %self[2.0,] 
 		 2: (NEXT_WEEK) def_%cl_2_67 
 		 3: def_%cl_2_66 %cl_2_65[23.1,] %cl_2_67[23.2,] 
 		 4: BRANCH %cl_2_66[23.3,] 
@@ -5370,13 +5370,13 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->widget def_%v_3 %self[2.0,] 
 		 7: %v_3->last_completed def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@last_completed %self[2.0,] %v_4[2.7,] 
+		 8: ATTRASSIGN %self->last_completed %v_4[2.7,] 
 		 9: 
-		 10: def_%v_5 %self[2.0,2.8,] 
+		 10: GETFIELD %self->widget def_%v_5 %self[2.0,] 
 		 11: %v_5->counts def_%v_6 %v_5[2.10,] 
-		 12: ATTRASSIGN %self->@counts %self[2.0,2.8,] %v_6[2.11,] 
+		 12: ATTRASSIGN %self->counts %v_6[2.11,] 
 		 13: RETURN %v_6[2.11,] %self[2.0,2.8,2.12,] 
 BB 3
 	outgoing: 
@@ -5409,7 +5409,7 @@ BB 2
 		 14: def_%v_9 %v_8[2.13,] filter[2.7,] 
 		 15: %self->current_project_ids def_%v_10 %self[2.0,2.6,] 
 		 16: %v_7->where def_%v_11 %v_7[2.12,] %v_9[2.14,] %v_10[2.15,] 
-		 17: ATTRASSIGN %self->@sheets %self[2.0,2.6,2.15,] %v_11[2.16,] 
+		 17: ATTRASSIGN %self->sheets %v_11[2.16,] 
 		 18: RETURN %v_11[2.16,] %self[2.0,2.6,2.15,2.17,] 
 BB 3
 	outgoing: 

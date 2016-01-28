@@ -58,13 +58,13 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->name def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: %self->content_for def_%cl_1_5 %self[2.0,] %cl_1_4[3.2,] 
 		 4: 
 		 5: %self->content_for def_%cl_1_6 %self[3.3,2.0,] 
 		 6: 
-		 7: def_%cl_1_7 %self[3.3,3.5,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_1_7 %self[3.3,3.5,2.0,] 
 		 8: %cl_1_7->is_root? def_%cl_1_8 %cl_1_7[3.7,] 
 		 9: BRANCH %cl_1_8[3.8,] 
 BB 4
@@ -78,10 +78,10 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_10 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%cl_1_10 %self[2.0,] 
 		 2: %self->breadcrumbs def_%cl_1_11 %self[2.0,] %cl_1_10[5.1,] 
 		 3: 
-		 4: def_%cl_1_12 %self[5.2,2.0,] 
+		 4: GETFIELD %self->folder def_%cl_1_12 %self[5.2,2.0,] 
 		 5: %cl_1_12->name def_%cl_1_13 %cl_1_12[5.4,] 
 		 6: COPY def_%cl_1_9 %cl_1_13[5.5,] 
 BB 6
@@ -90,7 +90,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: %self->current_user def_%cl_1_14 %self[2.0,] 
-		 2: def_%cl_1_15 %self[6.1,2.0,] 
+		 2: GETFIELD %self->folder def_%cl_1_15 %self[6.1,2.0,] 
 		 3: %cl_1_14->can_create def_%cl_1_16 %cl_1_14[6.1,] %cl_1_15[6.2,] 
 		 4: BRANCH %cl_1_16[6.3,] 
 BB 7
@@ -104,7 +104,7 @@ BB 7
 		 4: %self->image_tag def_%cl_1_20 %self[7.2,2.0,] %cl_1_17[7.1,] %cl_1_19[7.3,] 
 		 5: 
 		 6: %self->t def_%cl_1_21 %self[7.2,7.4,2.0,] 
-		 7: def_%cl_1_22 %self[7.2,7.4,7.6,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_1_22 %self[7.2,7.4,7.6,2.0,] 
 		 8: %self->new_folder_folder_path def_%cl_1_23 %self[7.2,7.4,7.6,2.0,] %cl_1_22[7.7,] 
 		 9: %self->link_to def_%cl_1_24 %self[7.2,7.4,7.6,7.8,2.0,] %cl_1_21[7.6,] %cl_1_23[7.8,] 
 		 10: 
@@ -114,7 +114,7 @@ BB 7
 		 14: %self->image_tag def_%cl_1_28 %self[7.2,7.4,7.6,7.8,7.9,7.12,2.0,] %cl_1_25[7.11,] %cl_1_27[7.13,] 
 		 15: 
 		 16: %self->t def_%cl_1_29 %self[7.2,7.4,7.6,7.8,7.9,7.12,7.14,2.0,] 
-		 17: def_%cl_1_30 %self[7.2,7.4,7.6,7.8,7.9,7.12,7.14,7.16,2.0,] 
+		 17: GETFIELD %self->folder def_%cl_1_30 %self[7.2,7.4,7.6,7.8,7.9,7.12,7.14,7.16,2.0,] 
 		 18: %self->new_folder_file_path def_%cl_1_31 %self[7.2,7.4,7.6,7.8,7.9,7.12,7.14,7.16,2.0,] %cl_1_30[7.17,] 
 		 19: %self->link_to def_%cl_1_32 %self[7.2,7.4,7.6,7.8,7.9,7.12,7.14,7.16,7.18,2.0,] %cl_1_29[7.16,] %cl_1_31[7.18,] 
 		 20: 
@@ -174,7 +174,7 @@ BB 12
 		 15: 
 		 16: %self->t def_%cl_1_55 %self[12.2,12.4,12.6,12.10,12.12,12.14,2.0,] 
 		 17: 
-		 18: def_%cl_1_56 %self[12.2,12.4,12.6,12.10,12.12,12.14,12.16,2.0,] 
+		 18: GETFIELD %self->folder def_%cl_1_56 %self[12.2,12.4,12.6,12.10,12.12,12.14,12.16,2.0,] 
 		 19: %cl_1_56->is_root? def_%cl_1_57 %cl_1_56[12.18,] 
 		 20: BRANCH %cl_1_57[12.19,] 
 BB 13
@@ -196,9 +196,9 @@ BB 14
 		 6: %self->image_tag def_%cl_1_63 %self[14.3,2.0,] %cl_1_62[14.5,] 
 		 7: 
 		 8: %self->t def_%cl_1_64 %self[14.3,14.6,2.0,] 
-		 9: def_%cl_1_65 %self[14.3,14.6,14.8,2.0,] 
+		 9: GETFIELD %self->folder def_%cl_1_65 %self[14.3,14.6,14.8,2.0,] 
 		 10: %cl_1_65->parent def_%cl_1_66 %cl_1_65[14.9,] 
-		 11: def_%cl_1_67 %self[14.3,14.6,14.8,2.0,] 
+		 11: GETFIELD %self->folder def_%cl_1_67 %self[14.3,14.6,14.8,2.0,] 
 		 12: %cl_1_67->parent def_%cl_1_68 %cl_1_67[14.11,] 
 		 13: %cl_1_68->name def_%cl_1_69 %cl_1_68[14.12,] 
 		 14: COPY def_%cl_1_70 %cl_1_69[14.13,] 
@@ -209,7 +209,7 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_72 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%cl_1_72 %self[2.0,] 
 		 2: %cl_1_72->children def_%cl_1_73 %cl_1_72[15.1,] 
 		 3: %cl_1_73->each def_%cl_1_74 %cl_1_73[15.2,] %self[2.0,] 
 CLOSURE BEGIN: %self[2.0,] folder[] 
@@ -314,7 +314,7 @@ BB 10
 		 4: %self->image_tag def_%cl_2_39 %self[10.2,2.0,] %cl_2_36[10.1,] %cl_2_38[10.3,] 
 		 5: folder->id def_%cl_2_40 folder[2.2,] 
 		 6: COPY def_%cl_2_41 
-		 7: def_%cl_2_42 %self[10.2,10.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_2_42 %self[10.2,10.4,2.0,] 
 		 8: %self->form_authenticity_token def_%cl_2_43 %self[10.2,10.4,2.0,] 
 		 9: COPY def_%cl_2_44 %cl_2_40[10.5,] %cl_2_41[10.6,] %cl_2_42[10.7,] %cl_2_43[10.8,] 
 		 10: %self->t def_%cl_2_45 %self[10.2,10.4,10.8,2.0,] 
@@ -344,7 +344,7 @@ BB 15
 	instructions:
 CLOSURE END
 		 4: 
-		 5: def_%cl_1_75 %self[2.0,] 
+		 5: GETFIELD %self->folder def_%cl_1_75 %self[2.0,] 
 		 6: %cl_1_75->user_files def_%cl_1_76 %cl_1_75[15.5,] 
 		 7: %cl_1_76->each def_%cl_1_77 %cl_1_76[15.6,] %self[2.0,] 
 CLOSURE BEGIN: %self[2.0,] file[] 
@@ -367,7 +367,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->current_user def_%cl_3_3 %self[2.0,] 
-		 2: def_%cl_3_4 %self[3.1,2.0,] 
+		 2: GETFIELD %self->folder def_%cl_3_4 %self[3.1,2.0,] 
 		 3: %cl_3_3->can_read def_%cl_3_5 %cl_3_3[3.1,] %cl_3_4[3.2,] 
 		 4: BRANCH %cl_3_5[3.3,] 
 BB 4
@@ -466,7 +466,7 @@ BB 10
 		 4: %self->image_tag def_%cl_3_55 %self[10.2,2.0,] %cl_3_52[10.1,] %cl_3_54[10.3,] 
 		 5: file->id def_%cl_3_56 file[2.2,] 
 		 6: COPY def_%cl_3_57 
-		 7: def_%cl_3_58 %self[10.2,10.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_3_58 %self[10.2,10.4,2.0,] 
 		 8: %self->form_authenticity_token def_%cl_3_59 %self[10.2,10.4,2.0,] 
 		 9: COPY def_%cl_3_60 %cl_3_56[10.5,] %cl_3_57[10.6,] %cl_3_58[10.7,] %cl_3_59[10.8,] 
 		 10: %self->t def_%cl_3_61 %self[10.2,10.4,10.8,2.0,] 
@@ -547,7 +547,7 @@ BB 3
 		 12: 
 		 13: %self->reset_cycle def_%cl_4_10 %self[3.3,3.5,3.7,3.9,3.11,2.0,] 
 		 14: 
-		 15: def_%cl_4_11 %self[3.3,3.5,3.7,3.9,3.11,3.13,2.0,] 
+		 15: GETFIELD %self->folder def_%cl_4_11 %self[3.3,3.5,3.7,3.9,3.11,3.13,2.0,] 
 		 16: %cl_4_11->permissions def_%cl_4_12 %cl_4_11[3.15,] 
 		 17: %cl_4_12->each def_%cl_4_13 %cl_4_12[3.16,] %self[3.3,3.5,3.7,3.9,3.11,3.13,2.0,] 
 CLOSURE BEGIN: %self[3.3,3.5,3.7,3.9,3.11,3.13,2.0,] permission[] 
@@ -752,7 +752,7 @@ BB 3
 		 8: item->name def_%cl_7_8 item[2.2,] 
 		 9: 
 		 10: %self->current_user def_%cl_7_9 %self[3.3,3.6,2.0,] 
-		 11: def_%cl_7_10 %self[3.3,3.6,3.10,2.0,] 
+		 11: GETFIELD %self->folder def_%cl_7_10 %self[3.3,3.6,3.10,2.0,] 
 		 12: %cl_7_9->can_create def_%cl_7_11 %cl_7_9[3.10,] %cl_7_10[3.11,] 
 		 13: BRANCH %cl_7_11[3.12,] 
 BB 4
@@ -766,7 +766,7 @@ BB 4
 		 4: %self->image_tag def_%cl_7_15 %self[4.2,2.0,] %cl_7_12[4.1,] %cl_7_14[4.3,] 
 		 5: item->id def_%cl_7_16 item[2.2,] 
 		 6: COPY def_%cl_7_17 
-		 7: def_%cl_7_18 %self[4.2,4.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_7_18 %self[4.2,4.4,2.0,] 
 		 8: %self->form_authenticity_token def_%cl_7_19 %self[4.2,4.4,2.0,] 
 		 9: COPY def_%cl_7_20 %cl_7_16[4.5,] %cl_7_17[4.6,] %cl_7_18[4.7,] %cl_7_19[4.8,] 
 		 10: %self->t def_%cl_7_21 %self[4.2,4.4,4.8,2.0,] 
@@ -784,7 +784,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: %self->current_user def_%cl_7_24 %self[2.0,] 
-		 2: def_%cl_7_25 %self[6.1,2.0,] 
+		 2: GETFIELD %self->folder def_%cl_7_25 %self[6.1,2.0,] 
 		 3: %cl_7_24->can_create def_%cl_7_26 %cl_7_24[6.1,] %cl_7_25[6.2,] 
 		 4: BRANCH %cl_7_26[6.3,] 
 BB 7
@@ -810,7 +810,7 @@ BB 9
 		 4: %self->image_tag def_%cl_7_32 %self[9.2,2.0,] %cl_7_29[9.1,] %cl_7_31[9.3,] 
 		 5: item->id def_%cl_7_33 item[2.2,] 
 		 6: COPY def_%cl_7_34 
-		 7: def_%cl_7_35 %self[9.2,9.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_7_35 %self[9.2,9.4,2.0,] 
 		 8: %self->form_authenticity_token def_%cl_7_36 %self[9.2,9.4,2.0,] 
 		 9: COPY def_%cl_7_37 %cl_7_33[9.5,] %cl_7_34[9.6,] %cl_7_35[9.7,] %cl_7_36[9.8,] 
 		 10: %self->t def_%cl_7_38 %self[9.2,9.4,9.8,2.0,] 
@@ -835,7 +835,7 @@ BB 11
 		 4: %self->image_tag def_%cl_7_46 %self[11.2,2.0,] %cl_7_43[11.1,] %cl_7_45[11.3,] 
 		 5: item->id def_%cl_7_47 item[2.2,] 
 		 6: COPY def_%cl_7_48 
-		 7: def_%cl_7_49 %self[11.2,11.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_7_49 %self[11.2,11.4,2.0,] 
 		 8: %self->form_authenticity_token def_%cl_7_50 %self[11.2,11.4,2.0,] 
 		 9: COPY def_%cl_7_51 %cl_7_47[11.5,] %cl_7_48[11.6,] %cl_7_49[11.7,] %cl_7_50[11.8,] 
 		 10: %self->t def_%cl_7_52 %self[11.2,11.4,11.8,2.0,] 
@@ -888,7 +888,7 @@ BB 3
 		 9: item->attachment_file_name def_%cl_8_9 item[3.5,2.2,] 
 		 10: 
 		 11: %self->current_user def_%cl_8_10 %self[3.3,3.6,3.7,2.0,] 
-		 12: def_%cl_8_11 %self[3.3,3.6,3.7,3.11,2.0,] 
+		 12: GETFIELD %self->folder def_%cl_8_11 %self[3.3,3.6,3.7,3.11,2.0,] 
 		 13: %cl_8_10->can_create def_%cl_8_12 %cl_8_10[3.11,] %cl_8_11[3.12,] 
 		 14: BRANCH %cl_8_12[3.13,] 
 BB 4
@@ -902,7 +902,7 @@ BB 4
 		 4: %self->image_tag def_%cl_8_16 %self[4.2,2.0,] %cl_8_13[4.1,] %cl_8_15[4.3,] 
 		 5: item->id def_%cl_8_17 item[2.2,] 
 		 6: COPY def_%cl_8_18 
-		 7: def_%cl_8_19 %self[4.2,4.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_8_19 %self[4.2,4.4,2.0,] 
 		 8: %self->form_authenticity_token def_%cl_8_20 %self[4.2,4.4,2.0,] 
 		 9: COPY def_%cl_8_21 %cl_8_17[4.5,] %cl_8_18[4.6,] %cl_8_19[4.7,] %cl_8_20[4.8,] 
 		 10: %self->t def_%cl_8_22 %self[4.2,4.4,4.8,2.0,] 
@@ -920,7 +920,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: %self->current_user def_%cl_8_25 %self[2.0,] 
-		 2: def_%cl_8_26 %self[6.1,2.0,] 
+		 2: GETFIELD %self->folder def_%cl_8_26 %self[6.1,2.0,] 
 		 3: %cl_8_25->can_create def_%cl_8_27 %cl_8_25[6.1,] %cl_8_26[6.2,] 
 		 4: BRANCH %cl_8_27[6.3,] 
 BB 7
@@ -947,7 +947,7 @@ BB 9
 		 4: %self->image_tag def_%cl_8_34 %self[9.2,2.0,] %cl_8_31[9.1,] %cl_8_33[9.3,] 
 		 5: item->id def_%cl_8_35 item[2.2,] 
 		 6: COPY def_%cl_8_36 
-		 7: def_%cl_8_37 %self[9.2,9.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_8_37 %self[9.2,9.4,2.0,] 
 		 8: %self->form_authenticity_token def_%cl_8_38 %self[9.2,9.4,2.0,] 
 		 9: COPY def_%cl_8_39 %cl_8_35[9.5,] %cl_8_36[9.6,] %cl_8_37[9.7,] %cl_8_38[9.8,] 
 		 10: %self->t def_%cl_8_40 %self[9.2,9.4,9.8,2.0,] 
@@ -972,7 +972,7 @@ BB 11
 		 4: %self->image_tag def_%cl_8_48 %self[11.2,2.0,] %cl_8_45[11.1,] %cl_8_47[11.3,] 
 		 5: item->id def_%cl_8_49 item[2.2,] 
 		 6: COPY def_%cl_8_50 
-		 7: def_%cl_8_51 %self[11.2,11.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_8_51 %self[11.2,11.4,2.0,] 
 		 8: %self->form_authenticity_token def_%cl_8_52 %self[11.2,11.4,2.0,] 
 		 9: COPY def_%cl_8_53 %cl_8_49[11.5,] %cl_8_50[11.6,] %cl_8_51[11.7,] %cl_8_52[11.8,] 
 		 10: %self->t def_%cl_8_54 %self[11.2,11.4,11.8,2.0,] 
@@ -993,7 +993,7 @@ BB 14
 CLOSURE END
 		 12: 
 		 13: %self->t def_%cl_1_99 %self[20.1,20.3,20.5,20.9,2.0,] 
-		 14: def_%cl_1_100 %self[20.1,20.3,20.5,20.9,20.13,2.0,] 
+		 14: GETFIELD %self->folder def_%cl_1_100 %self[20.1,20.3,20.5,20.9,20.13,2.0,] 
 		 15: %self->form_authenticity_token def_%cl_1_101 %self[20.1,20.3,20.5,20.9,20.13,2.0,] 
 		 16: COPY def_%cl_1_102 %cl_1_100[20.14,] %cl_1_101[20.15,] 
 		 17: COPY def_%cl_1_103 
@@ -1043,10 +1043,10 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->target_folder def_%v_3 %self[2.0,] 
 		 7: %v_3->children def_%v_4 %v_3[2.6,] 
 		 8: %v_4->build def_%v_5 %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@folder %self[2.0,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->folder %v_5[2.8,] 
 		 10: 
 		 11: %self->ruby_code_from_view def_%v_6 %self[2.0,2.9,] 
 		 12: %v_6->ruby_code_from_view def_%v_7 %v_6[2.11,] %self[2.0,2.9,2.11,] 
@@ -1074,8 +1074,8 @@ BB 3
 		 3: 
 		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
-		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
+		 6: GETFIELD %self->target_folder def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
 		 8: COPY def_%cl_1_8 %cl_1_6[3.6,] %cl_1_7[3.7,] 
 		 9: def_%cl_1_9 %self[3.1,3.2,3.4,2.0,] %cl_1_8[3.8,] %self[3.1,3.2,3.4,2.0,] 
 CLOSURE BEGIN: f[] %self[3.1,3.2,3.4,2.0,] 
@@ -1109,7 +1109,7 @@ BB 3
 		 10: f->submit def_%cl_2_9 f[3.1,3.3,3.7,2.2,] %cl_2_8[3.9,] 
 		 11: 
 		 12: %self->t def_%cl_2_10 %self[3.9,2.0,] 
-		 13: def_%cl_2_11 %self[3.9,3.12,2.0,] 
+		 13: GETFIELD %self->folder def_%cl_2_11 %self[3.9,3.12,2.0,] 
 		 14: %cl_2_11->parent def_%cl_2_12 %cl_2_11[3.13,] 
 		 15: %self->link_to def_%cl_2_13 %self[3.9,3.12,2.0,] %cl_2_10[3.12,] %cl_2_12[3.14,] 
 		 16: RETURN %cl_2_13[3.15,] %self[3.9,3.12,3.15,2.0,] 
@@ -1159,14 +1159,14 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->target_folder def_%v_3 %self[2.0,] 
 		 7: %v_3->children def_%v_4 %v_3[2.6,] 
 		 8: %self->permitted_params def_%v_5 %self[2.0,] 
 		 9: %v_5->folder def_%v_6 %v_5[2.8,] 
 		 10: %v_4->build def_%v_7 %v_4[2.7,] %v_6[2.9,] 
-		 11: ATTRASSIGN %self->@folder %self[2.0,2.8,] %v_7[2.10,] 
+		 11: ATTRASSIGN %self->folder %v_7[2.10,] 
 		 12: 
-		 13: def_%v_8 %self[2.0,2.8,2.11,] 
+		 13: GETFIELD %self->folder def_%v_8 %self[2.0,2.8,2.11,] 
 		 14: %v_8->save def_%v_9 %v_8[2.13,] 
 		 15: BRANCH %v_9[2.14,] 
 BB 3
@@ -1174,7 +1174,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_10 %self[2.0,2.11,] 
+		 1: GETFIELD %self->target_folder def_%v_10 %self[2.0,] 
 		 2: %self->redirect_to def_%v_11 %self[2.0,2.11,] %v_10[3.1,] 
 		 3: RETURN %v_11[3.2,] %self[3.2,2.0,2.11,] 
 BB 4
@@ -1208,8 +1208,8 @@ BB 3
 		 3: 
 		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
-		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
+		 6: GETFIELD %self->target_folder def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
+		 7: GETFIELD %self->folder def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] 
 		 8: COPY def_%cl_1_8 %cl_1_6[3.6,] %cl_1_7[3.7,] 
 		 9: def_%cl_1_9 %self[3.1,3.2,3.4,2.0,] %cl_1_8[3.8,] %self[3.1,3.2,3.4,2.0,] 
 CLOSURE BEGIN: f[] %self[3.1,3.2,3.4,2.0,] 
@@ -1243,7 +1243,7 @@ BB 3
 		 10: f->submit def_%cl_2_9 f[3.1,3.3,3.7,2.2,] %cl_2_8[3.9,] 
 		 11: 
 		 12: %self->t def_%cl_2_10 %self[3.9,2.0,] 
-		 13: def_%cl_2_11 %self[3.9,3.12,2.0,] 
+		 13: GETFIELD %self->folder def_%cl_2_11 %self[3.9,3.12,2.0,] 
 		 14: %cl_2_11->parent def_%cl_2_12 %cl_2_11[3.13,] 
 		 15: %self->link_to def_%cl_2_13 %self[3.9,3.12,2.0,] %cl_2_10[3.12,] %cl_2_12[3.14,] 
 		 16: RETURN %cl_2_13[3.15,] %self[3.9,3.12,3.15,2.0,] 
@@ -1319,7 +1319,7 @@ BB 3
 		 3: 
 		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
+		 6: GETFIELD %self->folder def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
 		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] %cl_1_6[3.6,] %self[3.1,3.2,3.4,2.0,] 
 CLOSURE BEGIN: f[] %self[3.1,3.2,3.4,2.0,] 
 BB 1
@@ -1352,7 +1352,7 @@ BB 3
 		 10: f->submit def_%cl_2_9 f[3.1,3.3,3.7,2.2,] %cl_2_8[3.9,] 
 		 11: 
 		 12: %self->t def_%cl_2_10 %self[3.9,2.0,] 
-		 13: def_%cl_2_11 %self[3.9,3.12,2.0,] 
+		 13: GETFIELD %self->folder def_%cl_2_11 %self[3.9,3.12,2.0,] 
 		 14: %cl_2_11->parent def_%cl_2_12 %cl_2_11[3.13,] 
 		 15: %self->link_to def_%cl_2_13 %self[3.9,3.12,2.0,] %cl_2_10[3.12,] %cl_2_12[3.14,] 
 		 16: RETURN %cl_2_13[3.15,] %self[3.9,3.12,3.15,2.0,] 
@@ -1402,7 +1402,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->folder def_%v_3 %self[2.0,] 
 		 7: %self->permitted_params def_%v_4 %self[2.0,] 
 		 8: %v_4->folder def_%v_5 %v_4[2.7,] 
 		 9: %v_3->update_attributes def_%v_6 %v_3[2.6,] %v_5[2.8,] 
@@ -1412,7 +1412,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_7 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%v_7 %self[2.0,] 
 		 2: %self->edit_folder_url def_%v_8 %self[2.0,] %v_7[3.1,] 
 		 3: %self->t def_%v_9 %self[3.2,2.0,] 
 		 4: COPY def_%v_10 %v_9[3.3,] 
@@ -1449,7 +1449,7 @@ BB 3
 		 3: 
 		 4: %self->content_for def_%cl_1_5 %self[3.1,3.2,2.0,] 
 		 5: 
-		 6: def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
+		 6: GETFIELD %self->folder def_%cl_1_6 %self[3.1,3.2,3.4,2.0,] 
 		 7: def_%cl_1_7 %self[3.1,3.2,3.4,2.0,] %cl_1_6[3.6,] %self[3.1,3.2,3.4,2.0,] 
 CLOSURE BEGIN: f[] %self[3.1,3.2,3.4,2.0,] 
 BB 1
@@ -1482,7 +1482,7 @@ BB 3
 		 10: f->submit def_%cl_2_9 f[3.1,3.3,3.7,2.2,] %cl_2_8[3.9,] 
 		 11: 
 		 12: %self->t def_%cl_2_10 %self[3.9,2.0,] 
-		 13: def_%cl_2_11 %self[3.9,3.12,2.0,] 
+		 13: GETFIELD %self->folder def_%cl_2_11 %self[3.9,3.12,2.0,] 
 		 14: %cl_2_11->parent def_%cl_2_12 %cl_2_11[3.13,] 
 		 15: %self->link_to def_%cl_2_13 %self[3.9,3.12,2.0,] %cl_2_10[3.12,] %cl_2_12[3.14,] 
 		 16: RETURN %cl_2_13[3.15,] %self[3.9,3.12,3.15,2.0,] 
@@ -1532,11 +1532,11 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->folder def_%v_3 %self[2.0,] 
 		 7: %v_3->parent def_%v_4 %v_3[2.6,] 
 		 8: COPY def_target_folder %v_4[2.7,] 
 		 9: 
-		 10: def_%v_5 %self[2.0,] 
+		 10: GETFIELD %self->folder def_%v_5 %self[2.0,] 
 		 11: %v_5->destroy def_%v_6 %v_5[2.10,] 
 		 12: 
 		 13: %self->redirect_to def_%v_7 %self[2.0,] target_folder[2.8,] 
@@ -1564,7 +1564,7 @@ BB 2
 		 6: %self->params def_%v_3 %self[2.0,] 
 		 7: def_%v_4 %v_3[2.6,] 
 		 8: %self->get_folder_or_redirect def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@folder %self[2.0,2.6,2.8,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->folder %v_5[2.8,] 
 		 10: RETURN %v_5[2.8,] %self[2.0,2.6,2.8,2.9,] 
 BB 3
 	outgoing: 
@@ -1586,7 +1586,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->folder def_%v_3 %self[2.0,] 
 		 7: %v_3->is_root? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -1625,7 +1625,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->folder def_%v_3 %self[2.0,] 
 		 7: %v_3->is_root? def_%v_4 %v_3[2.6,] 
 		 8: BRANCH %v_4[2.7,] 
 BB 3
@@ -1633,7 +1633,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->current_user def_%v_5 %self[2.0,] 
-		 1: def_%v_6 %self[3.0,2.0,] 
+		 1: GETFIELD %self->folder def_%v_6 %self[3.0,2.0,] 
 		 2: %v_5->can_delete def_%v_7 %v_5[3.0,] %v_6[3.1,] 
 		 3: COPY def_%v_4 %v_7[3.2,] 
 BB 4
@@ -1646,7 +1646,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%v_8 %self[2.0,] 
 		 2: %v_8->children def_%v_9 %v_8[5.1,] 
 		 3: %self->require_delete_permissions_for def_%v_10 %self[2.0,] %v_9[5.2,] 
 		 4: RETURN %v_10[5.3,] %self[5.3,2.0,] 
@@ -1655,7 +1655,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_11 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%v_11 %self[2.0,] 
 		 2: %v_11->parent def_%v_12 %v_11[6.1,] 
 		 3: %self->t def_%v_13 %self[2.0,] 
 		 4: %self->t def_%v_14 %self[6.3,2.0,] 
@@ -1721,7 +1721,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_7 %self[2.0,] 
+		 1: GETFIELD %self->folder def_%cl_1_7 %self[2.0,] 
 		 2: %cl_1_7->parent def_%cl_1_8 %cl_1_7[5.1,] 
 		 3: %self->t def_%cl_1_9 %self[2.0,] 
 		 4: COPY def_%cl_1_10 %cl_1_9[5.3,] 

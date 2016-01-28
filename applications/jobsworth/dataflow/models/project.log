@@ -40,7 +40,7 @@ BB 3
 		 2: COPY def_new_permission %cl_1_3[3.1,] 
 		 3: 
 		 4: %self->id def_%cl_1_4 %self[2.0,] 
-		 5: ATTRASSIGN new_permission->project_id new_permission[3.2,] %cl_1_4[3.4,] 
+		 5: ATTRASSIGN new_permission->project_id %cl_1_4[3.4,] 
 		 6: 
 		 7: new_permission->user_id def_%cl_1_5 new_permission[3.2,3.5,] 
 		 8: user->id def_%cl_1_6 user[] 
@@ -52,7 +52,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: user->company_id def_%cl_1_8 user[] 
-		 2: ATTRASSIGN new_permission->company_id new_permission[3.2,3.5,] %cl_1_8[4.1,] 
+		 2: ATTRASSIGN new_permission->company_id %cl_1_8[4.1,] 
 		 3: 
 		 4: COPY def_%cl_1_9 
 		 5: new_permission->set def_%cl_1_10 new_permission[4.2,3.2,3.5,] %cl_1_9[4.4,] 
@@ -108,13 +108,13 @@ BB 2
 		 9: COPY def_project_permission %v_4[2.8,] 
 		 10: 
 		 11: user->id def_%v_5 user[2.5,] 
-		 12: ATTRASSIGN project_permission->user_id project_permission[2.9,] %v_5[2.11,] 
+		 12: ATTRASSIGN project_permission->user_id %v_5[2.11,] 
 		 13: 
 		 14: %self->id def_%v_6 %self[2.0,] 
-		 15: ATTRASSIGN project_permission->project_id project_permission[2.9,2.12,] %v_6[2.14,] 
+		 15: ATTRASSIGN project_permission->project_id %v_6[2.14,] 
 		 16: 
 		 17: user->company_id def_%v_7 user[2.5,2.11,] 
-		 18: ATTRASSIGN project_permission->company_id project_permission[2.9,2.12,2.15,] %v_7[2.17,] 
+		 18: ATTRASSIGN project_permission->company_id %v_7[2.17,] 
 		 19: 
 		 20: COPY def_%v_8 
 		 21: project_permission->set def_%v_9 project_permission[2.9,2.12,2.15,2.18,] %v_8[2.20,] 
@@ -335,7 +335,7 @@ BB 3
 		 0: 
 		 1: %self->tasks def_%v_5 %self[2.0,] 
 		 2: %v_5->count def_%v_6 %v_5[3.1,] 
-		 3: ATTRASSIGN %self->total_tasks %self[3.1,2.0,] %v_6[3.2,] 
+		 3: ATTRASSIGN %self->total_tasks %v_6[3.2,] 
 		 4: 
 		 5: %self->save def_%v_7 %self[3.1,3.3,2.0,] 
 		 6: 
@@ -383,7 +383,7 @@ BB 3
 		 2: COPY def_%v_6 
 		 3: %v_5->where def_%v_7 %v_5[3.1,] %v_6[3.2,] 
 		 4: %v_7->count def_%v_8 %v_7[3.3,] 
-		 5: ATTRASSIGN %self->open_tasks %self[3.1,2.0,] %v_8[3.4,] 
+		 5: ATTRASSIGN %self->open_tasks %v_8[3.4,] 
 		 6: 
 		 7: %self->save def_%v_9 %self[3.1,3.5,2.0,] 
 		 8: 
@@ -429,7 +429,7 @@ BB 3
 		 0: 
 		 1: %self->milestones def_%v_5 %self[2.0,] 
 		 2: %v_5->count def_%v_6 %v_5[3.1,] 
-		 3: ATTRASSIGN %self->total_milestones %self[3.1,2.0,] %v_6[3.2,] 
+		 3: ATTRASSIGN %self->total_milestones %v_6[3.2,] 
 		 4: 
 		 5: %self->save def_%v_7 %self[3.1,3.3,2.0,] 
 		 6: 
@@ -477,7 +477,7 @@ BB 3
 		 2: COPY def_%v_6 
 		 3: %v_5->where def_%v_7 %v_5[3.1,] %v_6[3.2,] 
 		 4: %v_7->count def_%v_8 %v_7[3.3,] 
-		 5: ATTRASSIGN %self->open_milestones %self[3.1,2.0,] %v_8[3.4,] 
+		 5: ATTRASSIGN %self->open_milestones %v_8[3.4,] 
 		 6: 
 		 7: %self->save def_%v_9 %self[3.1,3.5,2.0,] 
 		 8: 
@@ -621,7 +621,7 @@ BB 2
 		 11: %v_3->where def_%v_8 %v_3[2.6,] %v_7[2.10,] 
 		 12: %v_8->includes def_%v_9 %v_8[2.11,] 
 		 13: %v_9->count def_%v_10 %v_9[2.12,] 
-		 14: ATTRASSIGN %self->critical_count %self[2.0,2.6,2.8,] %v_10[2.13,] 
+		 14: ATTRASSIGN %self->critical_count %v_10[2.13,] 
 		 15: 
 		 16: %self->tasks def_%v_11 %self[2.0,2.6,2.8,2.14,] 
 		 17: COPY def_%v_12 
@@ -631,7 +631,7 @@ BB 2
 		 21: %v_11->where def_%v_16 %v_11[2.16,] %v_15[2.20,] 
 		 22: %v_16->includes def_%v_17 %v_16[2.21,] 
 		 23: %v_17->count def_%v_18 %v_17[2.22,] 
-		 24: ATTRASSIGN %self->normal_count %self[2.0,2.6,2.8,2.14,2.16,2.18,] %v_18[2.23,] 
+		 24: ATTRASSIGN %self->normal_count %v_18[2.23,] 
 		 25: 
 		 26: %self->tasks def_%v_19 %self[2.0,2.6,2.8,2.14,2.16,2.18,2.24,] 
 		 27: COPY def_%v_20 
@@ -641,11 +641,11 @@ BB 2
 		 31: %v_19->where def_%v_24 %v_19[2.26,] %v_23[2.30,] 
 		 32: %v_24->includes def_%v_25 %v_24[2.31,] 
 		 33: %v_25->count def_%v_26 %v_25[2.32,] 
-		 34: ATTRASSIGN %self->low_count %self[2.0,2.6,2.8,2.14,2.16,2.18,2.24,2.26,2.28,] %v_26[2.33,] 
+		 34: ATTRASSIGN %self->low_count %v_26[2.33,] 
 		 35: 
-		 36: ATTRASSIGN %self->open_tasks %self[2.0,2.6,2.8,2.14,2.16,2.18,2.24,2.26,2.28,2.34,] 
+		 36: ATTRASSIGN %self->open_tasks 
 		 37: 
-		 38: ATTRASSIGN %self->total_tasks %self[2.0,2.6,2.8,2.14,2.16,2.18,2.24,2.26,2.28,2.34,2.36,] 
+		 38: ATTRASSIGN %self->total_tasks 
 		 39: RETURN %self[2.0,2.6,2.8,2.14,2.16,2.18,2.24,2.26,2.28,2.34,2.36,2.38,] 
 BB 3
 	outgoing: 
@@ -792,7 +792,7 @@ BB 2
 		 5: 
 		 6: %self->customer_id def_%v_3 %self[2.0,] 
 		 7: %self->customer_id_was def_%v_4 %self[2.0,2.6,] 
-		 8: ATTRASSIGN %v_3->! def_%v_5 %v_3[2.6,] %v_4[2.7,] 
+		 8: %v_3->!= def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 6 

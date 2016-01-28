@@ -21,7 +21,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->mappers def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -33,7 +33,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: COPY def_%v_6 
-		 1: ATTRASSIGN %self->@mappers %self[2.0,] %v_6[5.0,] 
+		 1: ATTRASSIGN %self->mappers %v_6[5.0,] 
 		 2: COPY def_%v_5 %v_6[5.0,] 
 BB 6
 	outgoing: 7 8 
@@ -47,7 +47,7 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_9 %self[5.1,2.0,] 
+		 0: GETFIELD %self->roles def_%v_9 %self[2.0,] 
 		 1: COPY def_%v_7 %v_9[7.0,] 
 BB 8
 	outgoing: 9 10 
@@ -59,7 +59,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: COPY def_%v_10 
-		 1: ATTRASSIGN %self->@roles %self[5.1,2.0,] %v_10[9.0,] 
+		 1: ATTRASSIGN %self->roles %v_10[9.0,] 
 		 2: COPY def_%v_9 %v_10[9.0,] 
 BB 10
 	outgoing: 11 
@@ -72,10 +72,10 @@ BB 10
 		 4: 
 		 5: def_%v_13 %v_0[2.1,] %v_12[10.2,] 
 		 6: 
-		 7: def_%v_14 %self[9.1,5.1,2.0,] 
+		 7: GETFIELD %self->mappers def_%v_14 %self[5.1,2.0,] 
 		 8: def_%v_15 %v_14[10.7,] %v_12[10.2,] 
 		 9: 
-		 10: def_%v_16 %self[9.1,5.1,2.0,] 
+		 10: GETFIELD %self->roles def_%v_16 %self[9.1,2.0,] 
 		 11: mapper->roles def_%v_17 mapper[10.3,] 
 		 12: %v_16->concat def_%v_18 %v_16[10.10,] %v_17[10.11,] 
 		 13: RETURN %v_18[10.12,] %self[9.1,5.1,2.0,] 
@@ -222,7 +222,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->roles def_%v_3 %self[2.0,] 
 		 7: %v_3->uniq def_%v_4 %v_3[2.6,] 
 		 8: %v_4->compact def_%v_5 %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
@@ -697,7 +697,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_role 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->mappers def_%v_3 %self[2.0,] 
 		 8: %v_3->select def_%v_4 %v_3[2.7,] %self[2.0,] 
 CLOSURE BEGIN: m[] role[2.5,] 
 BB 1
@@ -885,13 +885,13 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@roles %self[2.0,] %v_7[4.5,3.1,] 
+		 0: ATTRASSIGN %self->roles %v_7[4.5,3.1,] 
 		 1: 
 		 2: COPY def_%v_13 
-		 3: ATTRASSIGN %self->@project_modules %self[5.0,2.0,] %v_13[5.2,] 
+		 3: ATTRASSIGN %self->project_modules %v_13[5.2,] 
 		 4: 
 		 5: COPY def_%v_14 
-		 6: ATTRASSIGN %self->@controllers %self[5.0,5.3,2.0,] %v_14[5.5,] 
+		 6: ATTRASSIGN %self->controllers %v_14[5.5,] 
 		 7: RETURN %v_14[5.5,] %self[5.0,5.3,5.6,2.0,] 
 BB 6
 	outgoing: 
@@ -931,7 +931,7 @@ BB 4
 		 4: 
 		 5: def_%v_5 %v_0[2.1,] %v_4[4.2,] 
 		 6: 
-		 7: def_%v_6 %self[2.0,] 
+		 7: GETFIELD %self->project_modules def_%v_6 %self[2.0,] 
 		 8: def_%v_7 %v_6[4.7,] %v_4[4.2,] 
 		 9: RETURN %v_7[4.8,] %self[2.0,] 
 BB 5
@@ -955,7 +955,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_controller 
 		 6: 
-		 7: def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->controllers def_%v_3 %self[2.0,] 
 		 8: def_%v_4 %v_3[2.7,] controller[2.5,] 
 		 9: RETURN %v_4[2.8,] %self[2.0,] 
 BB 3
@@ -978,7 +978,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->controllers def_%v_3 %self[2.0,] 
 		 7: %v_3->uniq def_%v_4 %v_3[2.6,] 
 		 8: %v_4->compact def_%v_5 %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
@@ -1014,18 +1014,18 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->@name %self[2.0,] name[2.5,] 
+		 1: ATTRASSIGN %self->name name[2.5,] 
 		 2: 
 		 3: COPY def_%v_3 
-		 4: ATTRASSIGN %self->@controllers %self[4.1,2.0,] %v_3[4.3,] 
+		 4: ATTRASSIGN %self->controllers %v_3[4.3,] 
 		 5: 
 		 6: COPY def_%v_4 
-		 7: ATTRASSIGN %self->@menus %self[4.1,4.4,2.0,] %v_4[4.6,] 
+		 7: ATTRASSIGN %self->menus %v_4[4.6,] 
 		 8: 
 		 9: COPY def_%v_5 
-		 10: ATTRASSIGN %self->@submenus %self[4.1,4.4,4.7,2.0,] %v_5[4.9,] 
+		 10: ATTRASSIGN %self->submenus %v_5[4.9,] 
 		 11: 
-		 12: def_%v_6 %self[4.1,4.4,4.7,4.10,2.0,] 
+		 12: GETFIELD %self->controllers def_%v_6 %self[4.4,2.0,] 
 		 13: def_%v_7 %v_6[4.12,] controller[3.0,2.6,] 
 		 14: RETURN %v_7[4.13,] %self[4.1,4.4,4.7,4.10,2.0,] 
 BB 5
@@ -1113,7 +1113,7 @@ BB 4
 		 1: %self->set_controller_from_url def_%v_4 %self[2.0,] url[2.6,] 
 		 2: COPY def_url %v_4[4.1,] 
 		 3: 
-		 4: def_%v_5 %self[4.1,2.0,] 
+		 4: GETFIELD %self->menus def_%v_5 %self[4.1,2.0,] 
 		 5: (Menu) def_%v_6 
 		 6: %v_6->new def_%v_7 %v_6[4.5,] name[2.5,] %v_4[4.1,] options[3.1,2.7,] 
 		 7: def_%v_8 %v_5[4.4,] %v_7[4.6,] 
@@ -1155,7 +1155,7 @@ BB 4
 		 1: %self->set_controller_from_url def_%v_4 %self[2.0,] url[2.6,] 
 		 2: COPY def_url %v_4[4.1,] 
 		 3: 
-		 4: def_%v_5 %self[4.1,2.0,] 
+		 4: GETFIELD %self->submenus def_%v_5 %self[4.1,2.0,] 
 		 5: (Menu) def_%v_6 
 		 6: %v_6->new def_%v_7 %v_6[4.5,] name[2.5,] %v_4[4.1,] options[3.1,2.7,] 
 		 7: def_%v_8 %v_5[4.4,] %v_7[4.6,] 
@@ -1180,7 +1180,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->name def_%v_3 %self[2.0,] 
 		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 
 		 8: %v_4->humanize def_%v_5 %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
@@ -1204,7 +1204,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->name def_%v_3 %self[2.0,] 
 		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 
 		 8: %v_4->downcase def_%v_5 %v_4[2.7,] 
 		 9: COPY def_%v_6 
@@ -1259,15 +1259,15 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_8 %self[2.0,] 
+		 0: GETFIELD %self->controllers def_%v_8 %self[2.0,] 
 		 1: %v_8->first def_%v_9 %v_8[6.0,] 
-		 2: url[2.5,] %v_9[6.1,] 
+		 2: ATTRASSIGN url->[] %v_9[6.1,] 
 		 3: 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_10 %self[2.0,] 
+		 0: GETFIELD %self->controllers def_%v_10 %self[2.0,] 
 		 1: def_%v_11 url[2.5,] 
 		 2: def_%v_12 %v_10[7.0,] %v_11[7.1,] 
 		 3: COPY def_%v_9 %v_12[7.2,] 
@@ -1300,11 +1300,11 @@ BB 2
 		 6: RECEIVEARG def_url 
 		 7: RECEIVEARG def_options 
 		 8: 
-		 9: ATTRASSIGN %self->@name %self[2.0,] name[2.5,] 
+		 9: ATTRASSIGN %self->name name[2.5,] 
 		 10: 
-		 11: ATTRASSIGN %self->@options %self[2.0,2.9,] options[2.7,] 
+		 11: ATTRASSIGN %self->options options[2.7,] 
 		 12: 
-		 13: ATTRASSIGN %self->@url %self[2.0,2.9,2.11,] url[2.6,] 
+		 13: ATTRASSIGN %self->url url[2.6,] 
 		 14: RETURN url[2.6,] %self[2.0,2.9,2.11,2.13,] 
 BB 3
 	outgoing: 
@@ -1326,7 +1326,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->name def_%v_3 %self[2.0,] 
 		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 
 		 8: %v_4->humanize def_%v_5 %v_4[2.7,] 
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
@@ -1350,7 +1350,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
+		 6: GETFIELD %self->name def_%v_3 %self[2.0,] 
 		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 
 		 8: %v_4->downcase def_%v_5 %v_4[2.7,] 
 		 9: COPY def_%v_6 

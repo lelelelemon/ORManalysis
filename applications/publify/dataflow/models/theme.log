@@ -15,9 +15,9 @@ BB 2
 		 5: RECEIVEARG def_name 
 		 6: RECEIVEARG def_path 
 		 7: 
-		 8: ATTRASSIGN %self->@name %self[2.0,] name[2.5,] 
+		 8: ATTRASSIGN %self->name name[2.5,] 
 		 9: 
-		 10: ATTRASSIGN %self->@path %self[2.0,2.8,] path[2.6,] 
+		 10: ATTRASSIGN %self->path path[2.6,] 
 		 11: RETURN path[2.6,] %self[2.0,2.8,2.10,] 
 BB 3
 	outgoing: 
@@ -382,7 +382,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_6 %self[2.0,] 
+		 0: GETFIELD %self->theme_cache def_%v_6 %self[2.0,] 
 		 1: COPY def_%v_4 %v_6[4.0,] 
 BB 5
 	outgoing: 6 7 
@@ -394,7 +394,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: %self->search_theme_directory def_%v_7 %self[2.0,] 
-		 1: ATTRASSIGN %self->@theme_cache %self[6.0,2.0,] %v_7[6.0,] 
+		 1: ATTRASSIGN %self->theme_cache %v_7[6.0,] 
 		 2: COPY def_%v_6 %v_7[6.0,] 
 BB 7
 	outgoing: 10 

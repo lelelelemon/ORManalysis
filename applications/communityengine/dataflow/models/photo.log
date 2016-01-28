@@ -461,7 +461,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->geometry def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[5.0,] 
 BB 6
 	outgoing: 7 8 
@@ -473,14 +473,14 @@ BB 7
 	datadep: 
 	instructions:
 		 0: COPY def_%v_6 
-		 1: ATTRASSIGN %self->@geometry %self[2.0,] %v_6[7.0,] 
+		 1: ATTRASSIGN %self->geometry %v_6[7.0,] 
 		 2: COPY def_%v_5 %v_6[7.0,] 
 BB 8
 	outgoing: 9 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_7 %self[7.1,2.0,] 
+		 1: GETFIELD %self->geometry def_%v_7 %self[7.1,2.0,] 
 		 2: def_%v_8 %v_7[8.1,] style[3.0,2.5,] 
 		 3: BRANCH %v_8[8.2,] 
 BB 9
@@ -533,7 +533,7 @@ BB 2
 		 7: %self->data_from_url def_%v_3 %self[2.0,] url_value[2.5,] 
 		 8: COPY def_data %v_3[2.7,] 
 		 9: 
-		 10: ATTRASSIGN %self->photo %self[2.0,2.7,] %v_3[2.7,] 
+		 10: ATTRASSIGN %self->photo %v_3[2.7,] 
 		 11: RETURN data[2.8,] %self[2.0,2.7,2.10,] 
 BB 3
 	outgoing: 

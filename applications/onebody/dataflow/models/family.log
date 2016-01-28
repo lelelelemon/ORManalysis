@@ -31,8 +31,8 @@ BB 4
 	instructions:
 		 0: (Setting) def_%v_7 
 		 1: %v_7->get def_%v_8 %v_7[4.0,] 
-		 2: ATTRASSIGN %self->country %self[2.0,] %v_8[4.1,] 
-		 3: RETURN %v_8[4.1,] %self[4.2,] 
+		 2: ATTRASSIGN %self->country %v_8[4.1,] 
+		 3: RETURN %v_8[4.1,] %self[4.2,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -65,8 +65,8 @@ BB 3
 	instructions:
 		 0: (Time) def_%v_6 
 		 1: %v_6->now def_%v_7 %v_6[3.0,] 
-		 2: ATTRASSIGN %self->barcode_assigned_at %self[2.0,] %v_7[3.1,] 
-		 3: RETURN %v_7[3.1,] %self[3.2,] 
+		 2: ATTRASSIGN %self->barcode_assigned_at %v_7[3.1,] 
+		 3: RETURN %v_7[3.1,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -104,8 +104,8 @@ BB 3
 	instructions:
 		 0: (Time) def_%v_6 
 		 1: %v_6->now def_%v_7 %v_6[3.0,] 
-		 2: ATTRASSIGN %self->barcode_assigned_at %self[2.0,] %v_7[3.1,] 
-		 3: RETURN %v_7[3.1,] %self[3.2,] 
+		 2: ATTRASSIGN %self->barcode_assigned_at %v_7[3.1,] 
+		 3: RETURN %v_7[3.1,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
@@ -945,7 +945,7 @@ BB 2
 		 7: %self->people def_%v_3 %self[2.0,] 
 		 8: %v_3->undeleted def_%v_4 %v_3[2.7,] 
 		 9: %v_4->adults def_%v_5 %v_4[2.8,] 
-		 10: def_%v_6 %v_5[2.9,] 
+		 10: %v_5->limit def_%v_6 %v_5[2.9,] 
 		 11: %v_6->map def_%v_7 %v_6[2.10,] %self[2.0,2.7,] 
 CLOSURE BEGIN: person[] who[2.5,] 
 BB 1
@@ -1072,7 +1072,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->adults def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 9 
@@ -1106,8 +1106,8 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@adults %self[2.0,] %v_8[7.4,6.2,] 
-		 1: RETURN %v_8[7.4,6.2,] %self[2.0,] 
+		 0: ATTRASSIGN %self->adults %v_8[7.4,6.2,] 
+		 1: RETURN %v_8[7.4,6.2,] %self[8.0,2.0,] 
 BB 9
 	outgoing: 10 
 	datadep: 
@@ -1135,7 +1135,7 @@ BB 2
 		 5: 
 		 6: %self->adults def_%v_3 %self[2.0,] 
 		 7: %v_3->count def_%v_4 %v_3[2.6,] 
-		 8: def_%v_5 %v_4[2.7,] 
+		 8: %v_4->== def_%v_5 %v_4[2.7,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 12 
@@ -1161,7 +1161,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->adults def_%v_12 %self[2.0,] 
-		 2: def_%v_13 %v_12[5.1,] 
+		 2: %v_12->take def_%v_13 %v_12[5.1,] 
 		 3: def_%v_14 %v_13[5.2,] 
 		 4: def_%v_15 %v_14[5.3,] 
 		 5: def_%v_16 %v_14[5.3,] 

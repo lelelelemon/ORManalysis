@@ -33,7 +33,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->argument %self[2.0,] %v_5[4.1,3.0,] 
+		 0: ATTRASSIGN %self->argument %v_5[4.1,3.0,] 
 		 1: RETURN %v_5[4.1,3.0,] %self[5.0,2.0,] 
 BB 6
 	outgoing: 
@@ -62,7 +62,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: GETFIELD %self->user def_%v_5 %self[2.0,] 
 		 1: COPY def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -76,7 +76,7 @@ BB 5
 		 0: (User) def_%v_6 
 		 1: %self->argument def_%v_7 %self[2.0,] 
 		 2: %v_6->find def_%v_8 %v_6[5.0,] %v_7[5.1,] 
-		 3: ATTRASSIGN %self->@user %self[5.1,2.0,] %v_8[5.2,] 
+		 3: ATTRASSIGN %self->user %v_8[5.2,] 
 		 4: RETURN %v_8[5.2,] %self[5.1,5.3,2.0,] 
 BB 6
 	outgoing: 7 
@@ -126,7 +126,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_id 
 		 6: 
-		 7: ATTRASSIGN %self->argument %self[2.0,] id[2.5,] 
+		 7: ATTRASSIGN %self->argument id[2.5,] 
 		 8: RETURN id[2.5,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -156,7 +156,7 @@ BB 2
 		 11: 
 		 12: %self->user def_%v_6 %self[2.0,] 
 		 13: COPY def_%v_7 %v_6[2.12,] 
-		 14: ATTRASSIGN task->owners task[2.5,2.7,2.8,] %v_7[2.13,] 
+		 14: ATTRASSIGN task->owners %v_7[2.13,] 
 		 15: 
 		 16: task->watchers def_%v_8 task[2.5,2.7,2.8,2.14,] 
 		 17: def_%v_9 %v_8[2.16,] owners[2.10,] 

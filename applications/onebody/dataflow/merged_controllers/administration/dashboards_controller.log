@@ -16,29 +16,29 @@ BB 2
 		 6: (Person) def_%v_3 
 		 7: %v_3->administrators def_%v_4 %v_3[2.6,] 
 		 8: %v_4->count def_%v_5 %v_4[2.7,] 
-		 9: ATTRASSIGN %self->@admin_count %self[2.0,] %v_5[2.8,] 
+		 9: ATTRASSIGN %self->admin_count %v_5[2.8,] 
 		 10: 
 		 11: (Update) def_%v_6 
 		 12: %v_6->pending def_%v_7 %v_6[2.11,] 
 		 13: %v_7->count def_%v_8 %v_7[2.12,] 
-		 14: ATTRASSIGN %self->@update_count %self[2.0,] %v_8[2.13,] 
+		 14: ATTRASSIGN %self->update_count %v_8[2.13,] 
 		 15: 
 		 16: (Person) def_%v_9 
 		 17: %v_9->email_changed def_%v_10 %v_9[2.16,] 
 		 18: %v_10->count def_%v_11 %v_10[2.17,] 
-		 19: ATTRASSIGN %self->@email_changed_count %self[2.0,] %v_11[2.18,] 
+		 19: ATTRASSIGN %self->email_changed_count %v_11[2.18,] 
 		 20: 
 		 21: (Import) def_%v_12 
 		 22: %v_12->last def_%v_13 %v_12[2.21,] 
-		 23: ATTRASSIGN %self->@last_import %self[2.0,] %v_13[2.22,] 
+		 23: ATTRASSIGN %self->last_import %v_13[2.22,] 
 		 24: 
-		 25: def_%v_14 %self[2.0,] 
+		 25: GETFIELD %self->last_import def_%v_14 %self[2.0,2.23,] 
 		 26: BRANCH %v_14[2.25,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: def_%v_15 %self[2.0,] 
+		 0: GETFIELD %self->last_import def_%v_15 %self[2.0,2.23,] 
 		 1: %v_15->rows def_%v_16 %v_15[3.0,] 
 		 2: %v_16->errored def_%v_17 %v_16[3.1,] 
 		 3: %v_17->count def_%v_18 %v_17[3.2,] 
@@ -52,20 +52,20 @@ BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: ATTRASSIGN %self->@import_errors_count %self[2.0,] %v_18[4.0,3.3,] 
+		 0: ATTRASSIGN %self->import_errors_count %v_18[4.0,3.3,] 
 		 1: 
 		 2: (Group) def_%v_19 
 		 3: %v_19->unapproved def_%v_20 %v_19[5.2,] 
 		 4: %v_20->count def_%v_21 %v_20[5.3,] 
-		 5: ATTRASSIGN %self->@groups_pending_approval_count %self[2.0,] %v_21[5.4,] 
+		 5: ATTRASSIGN %self->groups_pending_approval_count %v_21[5.4,] 
 		 6: 
 		 7: (MembershipRequest) def_%v_22 
 		 8: %v_22->count def_%v_23 %v_22[5.7,] 
-		 9: ATTRASSIGN %self->@membership_request_count %self[2.0,] %v_23[5.8,] 
+		 9: ATTRASSIGN %self->membership_request_count %v_23[5.8,] 
 		 10: 
 		 11: (AttendanceRecord) def_%v_24 
 		 12: %v_24->maximum def_%v_25 %v_24[5.11,] 
-		 13: ATTRASSIGN %self->@attendance_last_date %self[2.0,] %v_25[5.12,] 
+		 13: ATTRASSIGN %self->attendance_last_date %v_25[5.12,] 
 		 14: BRANCH %v_25[5.12,] 
 BB 6
 	outgoing: 8 
@@ -73,10 +73,10 @@ BB 6
 	instructions:
 		 0: 
 		 1: (AttendanceRecord) def_%v_26 
-		 2: def_%v_27 %self[2.0,] 
+		 2: GETFIELD %self->attendance_last_date def_%v_27 %self[5.13,2.0,] 
 		 3: %v_26->on_date def_%v_28 %v_26[6.1,] %v_27[6.2,] 
 		 4: %v_28->count def_%v_29 %v_28[6.3,] 
-		 5: ATTRASSIGN %self->@attendance_records_count %self[2.0,] %v_29[6.4,] 
+		 5: ATTRASSIGN %self->attendance_records_count %v_29[6.4,] 
 		 6: 
 BB 7
 	outgoing: 8 
@@ -91,25 +91,25 @@ BB 8
 		 1: (Person) def_%v_30 
 		 2: %v_30->undeleted def_%v_31 %v_30[8.1,] 
 		 3: %v_31->count def_%v_32 %v_31[8.2,] 
-		 4: ATTRASSIGN %self->@person_count %self[2.0,] %v_32[8.3,] 
+		 4: ATTRASSIGN %self->person_count %v_32[8.3,] 
 		 5: 
 		 6: (Family) def_%v_33 
 		 7: %v_33->undeleted def_%v_34 %v_33[8.6,] 
 		 8: %v_34->count def_%v_35 %v_34[8.7,] 
-		 9: ATTRASSIGN %self->@family_count %self[2.0,] %v_35[8.8,] 
+		 9: ATTRASSIGN %self->family_count %v_35[8.8,] 
 		 10: 
 		 11: (Group) def_%v_36 
 		 12: %v_36->count def_%v_37 %v_36[8.11,] 
-		 13: ATTRASSIGN %self->@group_count %self[2.0,] %v_37[8.12,] 
+		 13: ATTRASSIGN %self->group_count %v_37[8.12,] 
 		 14: 
 		 15: (Person) def_%v_38 
 		 16: %v_38->deleted def_%v_39 %v_38[8.15,] 
 		 17: %v_39->count def_%v_40 %v_39[8.16,] 
-		 18: ATTRASSIGN %self->@deleted_people_count %self[2.0,] %v_40[8.17,] 
+		 18: ATTRASSIGN %self->deleted_people_count %v_40[8.17,] 
 		 19: 
 		 20: COPY def_%v_41 
-		 21: ATTRASSIGN %self->@alerts %self[2.0,] %v_41[8.20,] 
-		 22: RETURN %v_41[8.20,] %self[2.0,] 
+		 21: ATTRASSIGN %self->alerts %v_41[8.20,] 
+		 22: RETURN %v_41[8.20,] %self[8.4,8.9,8.13,8.18,8.21,6.5,5.0,5.5,5.9,5.13,2.0,2.9,2.14,2.19,2.23,] 
 BB 9
 	outgoing: 
 	datadep: 

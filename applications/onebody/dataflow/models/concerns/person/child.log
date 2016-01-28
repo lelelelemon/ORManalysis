@@ -25,15 +25,15 @@ BB 3
 		 3: %v_5->undeleted def_%v_6 %v_5[3.2,] 
 		 4: %v_6->count def_%v_7 %v_6[3.3,] 
 		 5: def_%v_8 %v_7[3.4,] 
-		 6: ATTRASSIGN %self->child %self[3.1,2.0,] %v_8[3.5,] 
-		 7: RETURN %v_8[3.5,] %self[3.1,3.6,] 
+		 6: ATTRASSIGN %self->child %v_8[3.5,] 
+		 7: RETURN %v_8[3.5,] %self[3.1,3.6,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: ATTRASSIGN %self->child %self[2.0,] 
-		 2: RETURN %self[4.1,] 
+		 1: ATTRASSIGN %self->child 
+		 2: RETURN %self[4.1,2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -62,7 +62,7 @@ BB 3
 	instructions:
 		 0: %self->birthday def_%v_4 %self[2.0,] 
 		 1: %v_4->year def_%v_5 %v_4[3.0,] 
-		 2: def_%v_6 %v_5[3.1,] 
+		 2: %v_5->!= def_%v_6 %v_5[3.1,] 
 		 3: COPY def_%v_3 %v_6[3.2,] 
 BB 4
 	outgoing: 5 6 
@@ -80,9 +80,9 @@ BB 5
 		 4: %v_9->to_i def_%v_10 %v_9[5.3,] 
 		 5: %self->at_least? def_%v_11 %self[2.0,] %v_10[5.4,] 
 		 6: %v_11->! def_%v_12 %v_11[5.5,] 
-		 7: ATTRASSIGN %self->child %self[5.5,2.0,] %v_12[5.6,] 
+		 7: ATTRASSIGN %self->child %v_12[5.6,] 
 		 8: 
-		 9: RETURN %self[5.5,5.7,] 
+		 9: RETURN %self[5.5,5.7,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
@@ -168,7 +168,7 @@ BB 5
 		 1: 
 		 2: %self->birthday def_%v_7 %self[2.0,] 
 		 3: %v_7->year def_%v_8 %v_7[5.2,] 
-		 4: def_%v_9 %v_8[5.3,] 
+		 4: %v_8->== def_%v_9 %v_8[5.3,] 
 		 5: BRANCH %v_9[5.4,] 
 BB 6
 	outgoing: 19 
