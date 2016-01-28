@@ -121,6 +121,7 @@ class Function_Class
 
 		self.get_render_statement_array.each do |r|
 			view_name = get_view_name_from_render_statement(r)
+
 			view_class = view_class_hash[view_name]
 					
 	
@@ -146,6 +147,8 @@ class Function_Class
 		arr[0].strip!
 		if arr[0].start_with?"\"" or arr[0].start_with?"'"
 			view = arr[0]
+			view.gsub! "\"", ""
+			view.gsub! "'", ""
 		else 
 			arr.each do |a|
 				a.gsub! " ", ""
@@ -165,7 +168,6 @@ class Function_Class
 		else
 			view = view[0..k-1] + "_" + view[k+1..-1]
 		end
-		#puts "view: " + view
 		return view
 	end
 
@@ -190,12 +192,28 @@ class View_Class
 		@rb_content = read_content(@rb_path)
 		@ast = parse_content(@rb_content)
 
+		if path.include?".html."
+			@file_type = "html"
+		elsif path.include?".rss."
+			@file_type = "rss"
+		elsif path.include?".js."
+			@file_type = "js"
+		elsif path.include?".text."
+			@file_type = "text"
+		else
+			@file_type = "unrecognized_file_type"
+			puts "WARNING: unrecognized file type " + @file_type + ", path: " + @path
+		end
+
 		path.gsub! base_path, ""
 		while path[0] == '/'
 			path = path[1..-1]
 		end
 		i = path.rindex("/")
 		@view_name = path[i+1..-1]
+		while @view_name[0] == "_"
+			@view_name = @view_name[1..-1]
+		end
 		j = @view_name.index(".")
 		@view_name = @view_name[0..j-1]
 		while @view_name[0] == '_'
@@ -211,6 +229,10 @@ class View_Class
 
 	def get_view_name
 		@view_name
+	end
+
+	def get_file_type
+		@file_type
 	end
 
 	def get_content
@@ -276,12 +298,9 @@ class View_Class
 		self.get_render_statement_array.each do |r|
 			view_name = get_view_name_from_render_statement(r)
 			view_class = view_class_hash[view_name]
-		
-			#puts "render: " + r
-			#puts "view_name: " + view_name
-	
+			view_class.get_controller_name		
+
 			if view_class != nil
-				#puts "view_file: " + view_class.get_controller_name + ", " + view_class.get_view_name
 				value = view_class.replace_render_statements(view_class_hash)
 				render_view_mapping[r] = view_class.replace_render_statements(view_class_hash)
 			end
@@ -302,6 +321,8 @@ class View_Class
 		arr[0].strip!
 		if arr[0].start_with?"\"" or arr[0].start_with?"'"
 			view = arr[0]
+			view.gsub! "\"", ""
+			view.gsub! "'", ""
 		else 
 			arr.each do |a|
 				a.gsub! " ", ""
@@ -328,9 +349,9 @@ class View_Class
 		render_view_mapping = self.get_render_view_mapping(view_class_hash)
 		rb_content = self.get_rb_content
 		render_view_mapping.each do |k, v|
-			#puts "key: " + k
 			rb_content.gsub! k, v
 		end
+
 		return rb_content
 	end
 end 
