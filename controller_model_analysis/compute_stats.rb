@@ -243,10 +243,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 				#puts "\t\t <- params"
 			end
 		end
-		#n.getControlflowEdges.each do |e|
-		#	puts "\t\t -> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
-		#end
-		#puts "#{n.getIndex}: #{n.getInstr.toString}"
+		n.getControlflowEdges.each do |e|
+			#puts "\t\t -> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString} (#{e.getToNode.path_length})"
+		end
 	end
 
 
@@ -289,6 +288,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 
 	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_stats.txt"
 	$graph_file = File.open(graph_fname, "w");
+
+	compute_longest_single_path($graph_file)	
 
 	total_query_num = 0
 	query_in_closure = 0

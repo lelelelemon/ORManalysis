@@ -321,6 +321,6 @@ def graph_write(file, word)
 end
 
 def OUTPUT_Direct(w)
-	puts w
-	#$trace_output_file.write("#{w}\n")
+	#puts w
+	$trace_output_file.write("#{w}\n")
 end

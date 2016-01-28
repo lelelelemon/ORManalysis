@@ -158,7 +158,9 @@ class Call_instr < Instruction
 		@resolved_caller = ""
 		@call_handler = nil #Function_call
 		@call_cfg = nil #CFG
+		@field = nil
 	end
+	attr_accessor :field
 	def setCallCFG(c)
 		@call_cfg = c
 	end
@@ -190,10 +192,14 @@ class Call_instr < Instruction
 		end
 	end
 	def isField
-		if @call_handler != nil
-			return @call_handler.isField
-		else
+		if self.instance_of?AttrAssign_instr 
 			return false
+		end
+		if @call_handler != nil and @call_handler.isField
+			@field = @call_handler.getField.field_name
+			return true
+		else
+			return self.instance_of?GetField_instr
 		end
 	end
 	def getCaller
@@ -307,6 +313,7 @@ end
 class AttrAssign_instr < Call_instr
 	def initialize(_caller, _func_name)
 		super(_caller, _func_name)
+		@field = _func_name
 	end
 	def toString
 		s = "ATTRASSIGN "
@@ -314,7 +321,18 @@ class AttrAssign_instr < Call_instr
 		return s
 	end
 end
-		
+
+class GetField_instr < Call_instr
+	def initialize(_caller, _func_name)
+		super(_caller, _func_name)
+		@field = _func_name
+	end
+	def toString
+		s = "GETFIELD "
+		s = s + super
+		return s
+	end
+end		
 
 class Basic_block
 	def initialize(index)

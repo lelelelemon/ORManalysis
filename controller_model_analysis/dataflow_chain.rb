@@ -88,6 +88,13 @@ def build_sketch_graph
 						else
 							if e.getToNode != n 
 								if @processed_list[n].include?e
+								elsif e.getToNode.getIndex < e.getFromNode.getIndex #returnv
+									e.getToNode.getDataflowEdges.each do |e1|
+										if e1.getToNode.getIndex > temp_node.getIndex
+											@temp_hop_record[n].push(e1.getToNode)
+											@processed_list[n].push(e1)
+										end 
+									end
 								else
 									@temp_hop_record[n].push(e.getToNode)
 									@processed_list[n].push(e)
@@ -469,8 +476,10 @@ def compute_chain_stats
 	#should be in compute_stats.rb...
 	@notstored_fields = Hash.new
 	@notstored_f_source = Hash.new
+	@stored_fields = Hash.new
+	@stored_f_source = Hash.new
 	$node_list.each do |n|
-		if n.isField?
+		if n.isField? or n.getInstr.instance_of?AttrAssign_instr
 			var_name = n.getInstr.getCallHandler.getObjName
 			field_name = n.getInstr.getCallHandler.getFuncName
 			#field_instance = n.getInstr.getCallHandler.getField
@@ -479,7 +488,19 @@ def compute_chain_stats
 			s = "#{tbl_name}.#{field_name}"
 			if isTableField(tbl_name, field_name)
 				p_s = p_s + " -> field"
-			else
+				if n.getInstr.instance_of?AttrAssign_instr
+					if @stored_fields.has_key?(s)
+						@stored_fields[s] += 1
+					else
+						@stored_fields[s] = 1
+						@stored_f_source[s] = 0
+						n.source_list.each do |sn|
+							r_lst = find_path_between_two_nodes(sn, n)
+							@stored_f_source[s] += r_lst.length
+						end
+					end
+				end
+			elsif isActiveRecord(tbl_name)
 				p_s = p_s + " -> non field"
 				if @notstored_fields.has_key?(s)
 					@notstored_fields[s] += 1
@@ -491,12 +512,15 @@ def compute_chain_stats
 						@notstored_f_source[s] += r_lst.length
 					end
 				end
-				puts "#{p_s}"	
+				#puts "#{p_s}"	
 			end
 		end
 	end	
 	@notstored_fields.each do |f,v|
 		$graph_file.write("Nonfield: #{f} #{v} #{@notstored_f_source[f]}\n")
+	end
+	@stored_fields.each do |f,v|
+		$graph_file.write("FieldAssign: #{f} #{v} #{@stored_f_source[f]}\n")
 	end
 end
 #pattern 1: root1 is on the path of root2, which means node in root1 defines sth that node in root2 uses

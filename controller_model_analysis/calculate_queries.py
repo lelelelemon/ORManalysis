@@ -55,9 +55,7 @@ chain_data = []
 for i in range(5):
 	chain_data.append([])
 Input = []
-nonfield = []
-nonfield.append([])
-nonfield.append([])
+nonfield = {}
 nf = {}
 
 for subdir, folders, files in os.walk(base_path):
@@ -88,8 +86,12 @@ for subdir, folders, files in os.walk(base_path):
 					Input.append(int(chs[1], 10))
 				elif chs[0] == "Nonfield:":
 					print line
-					nonfield[0].append(int(chs[2], 10))
-					nonfield[1].append(int(chs[3], 10))
+					if chs[1] not in nonfield:
+						nonfield[chs[1]] = []
+						nonfield[chs[1]].append([])
+						nonfield[chs[1]].append([])
+					nonfield[chs[1]][0].append(int(chs[2], 10))
+					nonfield[chs[1]][1].append(int(chs[3], 10))
 					
 		elif fn.endswith(".txt"):
 			fp = open(os.path.join(subdir, fn), "r")
@@ -193,8 +195,15 @@ plt.subplot(324)
 plt.hist(Input, 20, color='green')
 plt.xlabel("Importance of input: #of queries each input affected")
 plt.subplot(325)
-plt.plot(nonfield[1], nonfield[0], 'b*')
-plt.xlabel("#of instructions (distance) from source")
+data_nonfield = []
+data_nonfield.append([])
+data_nonfield.append([])
+for k,v in nonfield.items():
+	data_nonfield[0].append(sum(v[0]))
+	data_nonfield[1].append(sum(v[1]) / float(len(v[1])))
+plt.plot(data_nonfield[1], data_nonfield[0], 'b*')
+plt.xlabel("Average #of instructions (distance) from source")
+plt.ylabel("#of appearance")
 plt.show()
 
 #print "Average txn length: %f"%(float(sum(lcnt)) / float(len(lcnt)))

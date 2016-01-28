@@ -177,6 +177,8 @@ def handle_single_dataflow_file(item, class_name)
 										#fc_array[1]: function_name
 										if cur_instr.instance_of?AttrAssign_instr
 											cur_instr = AttrAssign_instr.new(fc_array[0], fc_array[1])
+										elsif cur_instr.instance_of?GetField_instr
+											cur_instr = GetField_instr.new(fc_array[0], fc_array[1])
 										else
 											cur_instr = Call_instr.new(fc_array[0], fc_array[1])
 										end
@@ -192,7 +194,6 @@ def handle_single_dataflow_file(item, class_name)
 										bracket_begin = single_attr.index('[')
 										bracket_end = single_attr.index(']')
 										#no explicit define is found, for named vairables like @message
-										if bracket_begin == bracket_end - 1 
 											if $cur_cfg.instance_of?Closure
 												v_name = single_attr[0...bracket_begin]
 												#puts "Find use without def: #{v_name} (#{$cur_bb.getIndex}.#{$cur_bb.getInstr.length})"
@@ -201,6 +202,8 @@ def handle_single_dataflow_file(item, class_name)
 													#puts "\t\thandler: #{v.getInstrHandler.toString}"
 												end
 											end
+										
+										if bracket_begin == bracket_end - 1 
 										else
 											dep_string = single_attr[bracket_begin+1...bracket_end-1]
 											deps = dep_string.split(',')
@@ -246,6 +249,9 @@ def handle_single_dataflow_file(item, class_name)
 									elsif single_attr == "ATTRASSIGN"
 										cur_instr = AttrAssign_instr.new("", "")
 
+									elsif single_attr == "GETFIELD"
+										cur_instr = GetField_instr.new("", "")								
+	
 									elsif single_attr == "COPY"
 										cur_instr = Copy_instr.new	
 	

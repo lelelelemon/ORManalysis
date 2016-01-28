@@ -153,8 +153,13 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 			handle_single_call_node2(start_class, start_function, class_handler, call, level)
 			$funccall_stack.pop
 			$general_call_stack.pop
+		elsif (instr.instance_of?AttrAssign_instr or instr.instance_of?GetField_instr) and instr.getCaller == "%self"
+			call = Function_call.new(instr.getCaller, instr.getFuncname)
+			call.caller = $class_map[start_class]
+			call.setField
+			instr.setCallHandler(call)
 		else
-			#puts "CANNOT find caller: #{instr.getResolvedCaller}, #{instr.getFuncname}"
+			#puts "CANNOT find caller: #{instr.toString}"
 		end
 	end
 

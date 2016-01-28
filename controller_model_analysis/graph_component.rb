@@ -17,6 +17,8 @@ class INode
 		@controlflow_edges = Array.new
 		@backward_dataflow_edges = Array.new
 		@backward_controlflow_edges = Array.new
+		@longest_control_path_nextnode = nil
+		@path_length = -1
 		@Tnode = nil
 		@source_list = Array.new
 		@sink_list = Array.new
@@ -33,6 +35,7 @@ class INode
 		end
 	end
 	attr_accessor :index, :Tnode, :source_list, :sink_list
+	attr_accessor :longest_control_path_nextnode, :path_length
 	def getClosureStack
 		@closure_stack
 	end
@@ -221,7 +224,8 @@ def add_dataflow_edge(node)
 		if dep.getInstrHandler.getINode != nil
 			#XXX: If it is a field instr, then we know it is not a blackbox func call, if it is not attrassign, then it is a read only instr
 			from_node = dep.getInstrHandler.getINode
-			if from_node.getInstr.instance_of?Call_instr and from_node.getInstr.isField and (dep.getVname == "%self" or dep.getVname.index('%') == nil)
+			if (from_node.isField?) and (dep.getVname == "%self" or dep.getVname.index('%') == nil)
+			#elsif from_node.isField? and to_ins.instance_of?AttrAssign_instr and to_ins.field == from_node.getInstr.field 
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
 			else
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"
@@ -241,10 +245,7 @@ def addAllControlEdges
 		pren = $node_list[i-1]
 		curn = $node_list[i]
 		if pren.getInstr and curn.getInstr
-			if pren.getInstr.instance_of?Call_instr
-				edge = Controlflow_edge.new(pren, curn)
-				pren.addControlflowEdge(edge)
-			elsif pren.getInstr.getBB == curn.getInstr.getBB
+			if pren.getInstr.getBB == curn.getInstr.getBB
 				edge = Controlflow_edge.new(pren, curn)
 				pren.addControlflowEdge(edge)
 			elsif pren.getInstr != nil and pren.getInstr == pren.getInstr.getBB.getInstr[-1]
@@ -263,9 +264,49 @@ def addAllControlEdges
 					end
 					tmp_cnt += 1
 				end
+				if pren.getControlflowEdges.length == 0
+					edge = Controlflow_edge.new(pren, curn)
+					pren.addControlflowEdge(edge)
+				end
+			#elsif pren.getInstr.instance_of?Call_instr
+			else
+				edge = Controlflow_edge.new(pren, curn)
+				pren.addControlflowEdge(edge)
+			end
+		end
+	end
+
+	$node_list.reverse.each do |n|
+		if n.getControlflowEdges.length == 0
+			n.path_length = 0	
+		else
+			shortest_length = -1
+			n_node = nil
+			n.getControlflowEdges.each do |e|
+				if shortest_length < e.getToNode.path_length
+					shortest_length = e.getToNode.path_length
+					n_node = e.getToNode
+				end
+			end
+			if shortest_length > -1
+				n.longest_control_path_nextnode = n_node
+				n.path_length = shortest_length + 1
 			end
 		end
 	end
 end
 
-
+def compute_longest_single_path(file_to_write)
+	temp_node = $node_list[0]
+	p_length = 0
+	query_num = 0
+	while temp_node.getControlflowEdges.length > 0
+		p_length += 1
+		if temp_node.isQuery?
+			query_num += 1
+		end
+		#puts "Longest path #{p_length}: #{temp_node.getIndex}: #{temp_node.getInstr.toString}"
+		temp_node = temp_node.longest_control_path_nextnode
+	end
+	#puts "PATH length: ##{p_length} (qnum: #{query_num}) Vs #{$node_list.length}"
+end

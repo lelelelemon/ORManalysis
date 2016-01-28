@@ -84,6 +84,10 @@ class Function_call
 	def getField
 		@field
 	end
+	def setField
+		@field = Class_field.new("unknown", @func_name)
+		@is_field = true
+	end
 	def isQuery
 		@is_query
 	end
