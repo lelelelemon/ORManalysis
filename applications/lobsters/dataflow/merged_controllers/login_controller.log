@@ -56,7 +56,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@title %v_3[2.6,] 
+		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: 
 		 9: def_%v_5 %self[2.0,2.7,] 
 		 10: COPY def_%v_4 %v_5[2.9,] 
@@ -78,7 +78,7 @@ BB 5
 	instructions:
 		 0: %self->request def_%v_7 %self[2.0,2.7,] 
 		 1: %v_7->referer def_%v_8 %v_7[5.0,] 
-		 2: ATTRASSIGN %self->@referer %v_8[5.1,] 
+		 2: ATTRASSIGN %self->referer %v_8[5.1,] 
 		 3: COPY def_%v_6 %v_8[5.1,] 
 BB 6
 	outgoing: 7 
@@ -306,7 +306,7 @@ BB 10
 		 0: 
 		 1: %self->session def_%v_26 %self[2.0,] 
 		 2: user->session_token def_%v_27 user[4.7,3.7,] 
-		 3: %v_27[10.2,] 
+		 3: ATTRASSIGN %v_26->[] %v_27[10.2,] 
 		 4: 
 		 5: %self->session def_%v_28 %self[10.1,2.0,] 
 		 6: def_%v_29 %v_28[10.5,] 
@@ -453,11 +453,11 @@ BB 30
 		 2: %self->flash def_%v_68 %self[2.0,] 
 		 3: %v_68->now def_%v_69 %v_68[30.2,] 
 		 4: COPY def_%v_70 
-		 5: %v_70[30.4,] 
+		 5: ATTRASSIGN %v_69->[] %v_70[30.4,] 
 		 6: 
 		 7: %self->params def_%v_71 %self[30.2,2.0,] 
 		 8: def_%v_72 %v_71[30.7,] 
-		 9: ATTRASSIGN %self->@referer %v_72[30.8,] 
+		 9: ATTRASSIGN %self->referer %v_72[30.8,] 
 		 10: 
 		 11: %self->index def_%v_73 %self[30.2,30.7,30.9,2.0,] 
 		 12: RETURN %v_73[30.11,] %self[30.2,30.7,30.9,30.11,2.0,] 
@@ -482,7 +482,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@title %v_3[2.6,] 
+		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: 
 		 9: %self->ruby_code_from_view def_%v_4 %self[2.0,2.7,] 
 		 10: %v_4->ruby_code_from_view def_%v_5 %v_4[2.9,] %self[2.0,2.7,2.9,] 
@@ -591,7 +591,7 @@ BB 2
 		 13: %v_9->to_s def_%v_10 %v_9[2.12,] 
 		 14: %v_3->where def_%v_11 %v_3[2.6,] %v_4[2.7,] %v_7[2.10,] %v_10[2.13,] 
 		 15: %v_11->first def_%v_12 %v_11[2.14,] 
-		 16: ATTRASSIGN %self->@found_user %v_12[2.15,] 
+		 16: ATTRASSIGN %self->found_user %v_12[2.15,] 
 		 17: 
 		 18: 
 		 19: GETFIELD %self->found_user def_%v_13 %self[2.0,2.8,2.11,2.16,] 
@@ -604,7 +604,7 @@ BB 3
 		 0: %self->flash def_%v_15 %self[2.0,2.16,] 
 		 1: %v_15->now def_%v_16 %v_15[3.0,] 
 		 2: COPY def_%v_17 
-		 3: %v_17[3.2,] 
+		 3: ATTRASSIGN %v_16->[] %v_17[3.2,] 
 		 4: 
 		 5: %self->forgot_password def_%v_18 %self[3.0,2.0,2.16,] 
 		 6: RETURN %v_18[3.5,] %self[3.0,3.5,2.0,2.16,] 
@@ -624,7 +624,7 @@ BB 4
 		 9: COPY def_%v_26 
 		 10: COPY def_%v_27 
 		 11: def_%v_28 %v_26[4.9,] %v_27[4.10,] 
-		 12: %v_28[4.11,] 
+		 12: ATTRASSIGN %v_25->[] %v_28[4.11,] 
 		 13: 
 		 14: %self->index def_%v_29 %self[4.3,4.7,2.0,2.16,] 
 		 15: RETURN %v_29[4.14,] %self[4.3,4.7,4.14,2.0,2.16,] 
@@ -649,7 +649,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@title %v_3[2.6,] 
+		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: 
 		 9: %self->params def_%v_4 %self[2.0,2.7,] 
 		 10: def_%v_5 %v_4[2.9,] 
@@ -690,7 +690,7 @@ BB 5
 		 5: COPY def_%v_22 %v_21[5.4,] 
 		 6: %v_18->where def_%v_23 %v_18[5.1,] %v_22[5.5,] 
 		 7: %v_23->first def_%v_24 %v_23[5.6,] 
-		 8: ATTRASSIGN %self->@reset_user %v_24[5.7,] 
+		 8: ATTRASSIGN %self->reset_user %v_24[5.7,] 
 		 9: 
 BB 6
 	outgoing: 7 
@@ -806,7 +806,7 @@ BB 19
 		 1: %self->session def_%v_52 %self[5.8,2.0,2.7,] 
 		 2: GETFIELD %self->reset_user def_%v_53 %self[19.1,5.8,2.0,] 
 		 3: %v_53->session_token def_%v_54 %v_53[19.2,] 
-		 4: %v_54[19.3,] 
+		 4: ATTRASSIGN %v_52->[] %v_54[19.3,] 
 		 5: 
 		 6: COPY def_%v_55 
 		 7: %self->redirect_to def_%v_56 %self[19.1,5.8,2.0,2.7,] %v_55[19.6,] 
@@ -818,7 +818,7 @@ BB 20
 		 0: 
 		 1: %self->flash def_%v_58 %self[5.8,2.0,2.7,] 
 		 2: COPY def_%v_59 
-		 3: %v_59[20.2,] 
+		 3: ATTRASSIGN %v_58->[] %v_59[20.2,] 
 		 4: COPY def_%v_57 %v_59[20.2,] 
 		 5: 
 BB 22
@@ -840,7 +840,7 @@ BB 24
 		 2: COPY def_%v_61 
 		 3: COPY def_%v_62 
 		 4: def_%v_63 %v_61[24.2,] %v_62[24.3,] 
-		 5: %v_63[24.4,] 
+		 5: ATTRASSIGN %v_60->[] %v_63[24.4,] 
 		 6: 
 		 7: %self->forgot_password_path def_%v_64 %self[24.1,5.8,2.0,2.7,] 
 		 8: %self->redirect_to def_%v_65 %self[24.1,24.7,5.8,2.0,2.7,] %v_64[24.7,] 

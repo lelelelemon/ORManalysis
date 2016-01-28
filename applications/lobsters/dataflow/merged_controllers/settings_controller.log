@@ -14,11 +14,11 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@title %v_3[2.6,] 
+		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: 
 		 9: GETFIELD %self->user def_%v_4 %self[2.0,] 
 		 10: %v_4->dup def_%v_5 %v_4[2.9,] 
-		 11: ATTRASSIGN %self->@edit_user %v_5[2.10,] 
+		 11: ATTRASSIGN %self->edit_user %v_5[2.10,] 
 		 12: RETURN %v_5[2.10,] %self[2.0,2.7,2.11,] 
 BB 3
 	outgoing: 
@@ -59,7 +59,7 @@ BB 3
 		 5: 
 		 6: %self->flash def_%v_12 %self[3.4,2.0,] 
 		 7: COPY def_%v_13 
-		 8: %v_13[3.7,] 
+		 8: ATTRASSIGN %v_12->[] %v_13[3.7,] 
 		 9: 
 		 10: COPY def_%v_14 
 		 11: %self->redirect_to def_%v_15 %self[3.4,3.6,2.0,] %v_14[3.10,] 
@@ -72,7 +72,7 @@ BB 4
 		 1: 
 		 2: %self->flash def_%v_17 %self[2.0,] 
 		 3: COPY def_%v_18 
-		 4: %v_18[4.3,] 
+		 4: ATTRASSIGN %v_17->[] %v_18[4.3,] 
 		 5: 
 		 6: %self->settings_path def_%v_19 %self[4.2,2.0,] 
 		 7: %self->redirect_to def_%v_20 %self[4.2,4.6,2.0,] %v_19[4.6,] 
@@ -108,7 +108,7 @@ BB 3
 		 0: 
 		 1: %self->flash def_%v_6 %self[2.0,] 
 		 2: COPY def_%v_7 
-		 3: %v_7[3.2,] 
+		 3: ATTRASSIGN %v_6->[] %v_7[3.2,] 
 		 4: 
 		 5: COPY def_%v_8 
 		 6: %self->redirect_to def_%v_9 %self[3.1,2.0,] %v_8[3.5,] 
@@ -122,7 +122,7 @@ BB 4
 		 2: %self->session def_%v_11 %self[2.0,] 
 		 3: (SecureRandom) def_%v_12 
 		 4: %v_12->hex def_%v_13 %v_12[4.3,] 
-		 5: %v_13[4.4,] 
+		 5: ATTRASSIGN %v_11->[] %v_13[4.4,] 
 		 6: 
 		 7: (Pushover) def_%v_14 
 		 8: 
@@ -180,7 +180,7 @@ BB 3
 		 0: 
 		 1: %self->flash def_%v_8 %self[2.0,] 
 		 2: COPY def_%v_9 
-		 3: %v_9[3.2,] 
+		 3: ATTRASSIGN %v_8->[] %v_9[3.2,] 
 		 4: 
 		 5: COPY def_%v_10 
 		 6: %self->redirect_to def_%v_11 %self[3.1,2.0,] %v_10[3.5,] 
@@ -204,7 +204,7 @@ BB 6
 		 0: 
 		 1: %self->flash def_%v_18 %self[2.0,] 
 		 2: COPY def_%v_19 
-		 3: %v_19[6.2,] 
+		 3: ATTRASSIGN %v_18->[] %v_19[6.2,] 
 		 4: 
 		 5: COPY def_%v_20 
 		 6: %self->redirect_to def_%v_21 %self[6.1,2.0,] %v_20[6.5,] 
@@ -270,7 +270,7 @@ BB 12
 		 0: 
 		 1: %self->flash def_%v_50 %self[2.0,] 
 		 2: COPY def_%v_51 
-		 3: %v_51[12.2,] 
+		 3: ATTRASSIGN %v_50->[] %v_51[12.2,] 
 		 4: 
 BB 13
 	outgoing: 14 
@@ -281,7 +281,7 @@ BB 13
 		 2: COPY def_%v_53 
 		 3: COPY def_%v_54 
 		 4: def_%v_55 %v_53[13.2,] %v_54[13.3,] 
-		 5: %v_55[13.4,] 
+		 5: ATTRASSIGN %v_52->[] %v_55[13.4,] 
 		 6: COPY def_%v_51 %v_55[13.4,] 
 BB 14
 	outgoing: 16 
@@ -313,7 +313,7 @@ BB 2
 		 5: 
 		 6: GETFIELD %self->user def_%v_3 %self[2.0,] 
 		 7: %v_3->clone def_%v_4 %v_3[2.6,] 
-		 8: ATTRASSIGN %self->@edit_user %v_4[2.7,] 
+		 8: ATTRASSIGN %self->edit_user %v_4[2.7,] 
 		 9: 
 		 10: GETFIELD %self->edit_user def_%v_5 %self[2.0,2.8,] 
 		 11: %self->user_params def_%v_6 %self[2.0,2.8,] 
@@ -327,10 +327,10 @@ BB 3
 		 1: %self->flash def_%v_8 %self[2.0,2.8,] 
 		 2: %v_8->now def_%v_9 %v_8[3.1,] 
 		 3: COPY def_%v_10 
-		 4: %v_10[3.3,] 
+		 4: ATTRASSIGN %v_9->[] %v_10[3.3,] 
 		 5: 
 		 6: GETFIELD %self->edit_user def_%v_11 %self[3.1,2.0,2.8,] 
-		 7: ATTRASSIGN %self->@user %v_11[3.6,] 
+		 7: ATTRASSIGN %self->user %v_11[3.6,] 
 		 8: 
 BB 4
 	outgoing: 5 

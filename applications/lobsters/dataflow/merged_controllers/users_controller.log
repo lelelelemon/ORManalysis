@@ -19,13 +19,13 @@ BB 2
 		 9: COPY def_%v_6 %v_5[2.8,] 
 		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_6[2.9,] 
 		 11: %v_7->first! def_%v_8 %v_7[2.10,] 
-		 12: ATTRASSIGN %self->@showing_user %v_8[2.11,] 
+		 12: ATTRASSIGN %self->showing_user %v_8[2.11,] 
 		 13: 
 		 14: COPY def_%v_9 
 		 15: GETFIELD %self->showing_user def_%v_10 %self[2.0,2.7,2.12,] 
 		 16: %v_10->username def_%v_11 %v_10[2.15,] 
 		 17: def_%v_12 %v_9[2.14,] %v_11[2.16,] 
-		 18: ATTRASSIGN %self->@title %v_12[2.17,] 
+		 18: ATTRASSIGN %self->title %v_12[2.17,] 
 		 19: 
 		 20: %self->respond_to def_%v_13 %self[2.0,2.7,2.12,2.18,] %self[2.0,2.7,2.12,2.18,] 
 CLOSURE BEGIN: format[] %self[2.0,2.7,2.12,2.18,] 
@@ -983,7 +983,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@title %v_3[2.6,] 
+		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: 
 		 9: %self->params def_%v_4 %self[2.0,2.7,] 
 		 10: def_%v_5 %v_4[2.9,] 
@@ -1000,11 +1000,11 @@ BB 3
 		 2: COPY def_%v_10 
 		 3: %v_9->order def_%v_11 %v_9[3.1,] %v_10[3.2,] 
 		 4: %v_11->to_a def_%v_12 %v_11[3.3,] 
-		 5: ATTRASSIGN %self->@users %v_12[3.4,] 
+		 5: ATTRASSIGN %self->users %v_12[3.4,] 
 		 6: 
 		 7: GETFIELD %self->users def_%v_13 %self[3.5,2.0,] 
 		 8: %v_13->length def_%v_14 %v_13[3.7,] 
-		 9: ATTRASSIGN %self->@user_count %v_14[3.8,] 
+		 9: ATTRASSIGN %self->user_count %v_14[3.8,] 
 		 10: 
 		 11: GETFIELD %self->title def_%v_15 %self[2.0,2.7,] 
 		 12: COPY def_%v_16 
@@ -1174,14 +1174,14 @@ BB 5
 		 4: COPY def_%v_25 
 		 5: %v_24->order def_%v_26 %v_24[5.3,] %v_25[5.4,] 
 		 6: %v_26->to_a def_%v_27 %v_26[5.5,] 
-		 7: ATTRASSIGN %self->@users %v_27[5.6,] 
+		 7: ATTRASSIGN %self->users %v_27[5.6,] 
 		 8: 
 		 9: GETFIELD %self->users def_%v_28 %self[5.7,2.0,] 
 		 10: %v_28->length def_%v_29 %v_28[5.9,] 
-		 11: ATTRASSIGN %self->@user_count %v_29[5.10,] 
+		 11: ATTRASSIGN %self->user_count %v_29[5.10,] 
 		 12: 
 		 13: COPY def_%v_30 
-		 14: ATTRASSIGN %self->@title %v_30[5.13,] 
+		 14: ATTRASSIGN %self->title %v_30[5.13,] 
 		 15: 
 		 16: %self->ruby_code_from_view def_%v_31 %self[5.7,5.11,5.14,2.0,2.7,] 
 		 17: %v_31->ruby_code_from_view def_%v_32 %v_31[5.16,] %self[5.7,5.11,5.14,5.16,2.0,2.7,] 
@@ -1340,16 +1340,16 @@ BB 6
 		 5: COPY def_users %v_36[6.4,] 
 		 6: 
 		 7: %v_36->length def_%v_37 %v_36[6.4,] 
-		 8: ATTRASSIGN %self->@user_count %v_37[6.7,] 
+		 8: ATTRASSIGN %self->user_count %v_37[6.7,] 
 		 9: 
 		 10: users->group_by def_%v_38 users[6.5,] 
-		 11: ATTRASSIGN %self->@users_by_parent %v_38[6.10,] 
+		 11: ATTRASSIGN %self->users_by_parent %v_38[6.10,] 
 		 12: 
 		 13: (User) def_%v_39 
 		 14: COPY def_%v_40 
 		 15: %v_39->order def_%v_41 %v_39[6.13,] %v_40[6.14,] 
 		 16: %v_41->limit def_%v_42 %v_41[6.15,] 
-		 17: ATTRASSIGN %self->@newest %v_42[6.16,] 
+		 17: ATTRASSIGN %self->newest %v_42[6.16,] 
 		 18: COPY def_%v_32 %v_42[6.16,] 
 BB 7
 	outgoing: 9 
@@ -1377,7 +1377,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: COPY def_%v_3 
-		 7: ATTRASSIGN %self->@title %v_3[2.6,] 
+		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: RETURN %v_3[2.6,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -1416,7 +1416,7 @@ BB 3
 		 0: 
 		 1: %self->flash def_%v_10 %self[2.0,] 
 		 2: COPY def_%v_11 
-		 3: %v_11[3.2,] 
+		 3: ATTRASSIGN %v_10->[] %v_11[3.2,] 
 		 4: 
 		 5: COPY def_%v_12 
 		 6: %self->redirect_to def_%v_13 %self[3.1,2.0,] %v_12[3.5,] 
@@ -1439,7 +1439,7 @@ BB 6
 		 0: 
 		 1: %self->flash def_%v_19 %self[2.0,] 
 		 2: COPY def_%v_20 
-		 3: %v_20[6.2,] 
+		 3: ATTRASSIGN %v_19->[] %v_20[6.2,] 
 		 4: 
 		 5: buser->username def_%v_21 buser[2.12,] 
 		 6: COPY def_%v_22 %v_21[6.5,] 
@@ -1459,7 +1459,7 @@ BB 7
 		 6: 
 		 7: %self->flash def_%v_30 %self[7.3,2.0,] 
 		 8: COPY def_%v_31 
-		 9: %v_31[7.8,] 
+		 9: ATTRASSIGN %v_30->[] %v_31[7.8,] 
 		 10: 
 		 11: buser->username def_%v_32 buser[7.5,2.12,] 
 		 12: COPY def_%v_33 %v_32[7.11,] 
@@ -1503,7 +1503,7 @@ BB 3
 		 0: 
 		 1: %self->flash def_%v_10 %self[2.0,] 
 		 2: COPY def_%v_11 
-		 3: %v_11[3.2,] 
+		 3: ATTRASSIGN %v_10->[] %v_11[3.2,] 
 		 4: 
 		 5: COPY def_%v_12 
 		 6: %self->redirect_to def_%v_13 %self[3.1,2.0,] %v_12[3.5,] 
@@ -1519,7 +1519,7 @@ BB 4
 		 4: 
 		 5: %self->flash def_%v_17 %self[2.0,] 
 		 6: COPY def_%v_18 
-		 7: %v_18[4.6,] 
+		 7: ATTRASSIGN %v_17->[] %v_18[4.6,] 
 		 8: 
 		 9: buser->username def_%v_19 buser[4.3,2.12,] 
 		 10: COPY def_%v_20 %v_19[4.9,] 
