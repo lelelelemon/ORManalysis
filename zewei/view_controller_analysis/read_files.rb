@@ -7,7 +7,10 @@ def load_all_controllers_from_path(controller_path)
 	Dir.glob(controller_path + "**/*") do |item|
 		next if not item.end_with?"_controller.rb"
 
-		controller_hash[item] = Controller_Class.new(item)
+		
+
+		controller = Controller_Class.new(item)
+		controller_hash[controller.get_controller_name] = controller
 
 	end
 
@@ -103,10 +106,11 @@ def load_named_routes_from_path(named_routes_path)
 #	puts named_routes_class.get_named_routes
 end
 
-def print_links_in_all_views(view_path)
+def print_links_in_all_views(view_path, controller_path)
 	named_routes_class = load_named_routes_from_path("named_routes.txt")
 	#puts named_routes_class.get_named_routes
 	view_hash = load_all_views_from_path(view_path)
+	controller_hash = load_all_controllers_from_path(controller_path)
 
 #	view_hash["/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb"] = View_Class.new("/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb", view_path)
 
@@ -127,7 +131,7 @@ def print_links_in_all_views(view_path)
 
 		# get "ruby helper tags"
 		puts indent + "form_for: "
-		print_rails_tag(view_class.get_form_for_array, named_routes_class)
+		print_form_for_tag(view_class.get_form_for_array, named_routes_class, controller_hash)
 
 		puts indent + "link_to: "
 		print_rails_tag(view_class.get_link_to_array, named_routes_class)
@@ -185,7 +189,7 @@ if options[:log]
 end
 
 if options[:view]
-	print_links_in_all_views($view_path)	
+	print_links_in_all_views($view_path, $controller_path)	
 end
 
 #load_all_views_render_statement "./app/views/"
