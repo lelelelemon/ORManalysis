@@ -52,6 +52,22 @@ def parse_render_params(line)
 
 end
 
+def parse_rails_console_get_controller_action(line)
+	line.strip!
+	line = line[1..-1] if line.start_with?"{"
+	line = line[0..-2] if line.end_with?"}"
+	line = line.split ","
+	hash = {}
+	line.each do |item|
+		item = item.split("=>")
+		item[0].strip!
+		item[1].strip!
+		item[1].gsub! /['"]/, ""
+		hash[item[0]] = item[1]
+	end
+	return hash 
+end
+
 # view: string, content of the view file
 #layout: stirng, content of the kayout file
 def embed_view_into_layout(view, layout)
@@ -109,6 +125,55 @@ def print_rails_tag(tag_arr, named_routes_class)
 
 end
 
+def get_rails_tag(tag_arr, named_routes_class)
+	res = ""
+	tag_arr.each do |tag|
+			#puts form_for_tag.source
+		url_inside = false
+		named_routes_class.get_named_routes.each do |k, v|
+			if tag.include? k
+				res += ("#" + tag + "\n") if $log
+				res += ("controller: " + v[0] + ", action: " + v[1] + "\n")
+				url_inside = true
+			end
+		end
+		if not url_inside
+			res += (tag + "\n")
+		end
+	end
+	return res
+end
+
+def get_form_for_tag(tag_arr, named_routes_class, controller_hash)
+	res = ""
+	tag_arr.each do |tag|
+			#puts form_for_tag.source
+		url_inside = false
+		named_routes_class.get_named_routes.each do |k, v|
+			if tag.include? k
+				res += ("#" + tag + "\n") if $log
+				res += ("controller: " + v[0] + ", action: " + v[1] + "\n")
+				url_inside = true
+			end
+		end
+		if not url_inside
+			res += (tag + "\n") if $log
+			tag.strip!
+			controller = tag.split(" ")[1]
+			controller.strip!
+			controller = controller[1..-1] if controller[0] == "@"
+			controller = controller[0..-2] if controller.end_with?","
+
+			controller_hash.each do |k, v|
+				if controller.downcase == k.downcase.singularize
+					res += ("controller: " + k + ", view: new/create")
+				end
+			end
+		end
+	end
+	return res
+end
+
 def print_form_for_tag(tag_arr, named_routes_class, controller_hash)
 	tag_arr.each do |tag|
 			#puts form_for_tag.source
@@ -135,6 +200,41 @@ def print_form_for_tag(tag_arr, named_routes_class, controller_hash)
 			puts tag
 		end
 	end
+end
+
+def get_href_tags(tag_arr, named_routes_class)
+	res = ""
+	rb_console_code = "route = Rails.application.routes\n"
+	tag_arr.each do |tag|
+			#puts form_for_tag.source
+		url_inside = false
+		named_routes_class.get_named_routes.each do |k, v|
+			if tag.include? k
+				res += ("#" + tag + "\n") if $log
+				res += ("controller: " + v[0] + ", action: " + v[1] + "\n")
+				url_inside = true
+			end
+		end
+		if not url_inside
+			tag2 = tag + ""
+			tag.gsub! /<%.*%>/, "2"
+			rb_console_code += ("route.recognize_path '" + tag + "' #" + tag2 + "\n")
+		end
+	end
+
+	File.write("temp.rb", rb_console_code)
+
+	system("rails console < temp.rb > temp2.txt")
+	File.readlines("temp2.txt").each do |line|
+		if $log and line.start_with?"route.recognize"
+				res += line
+		end
+		if line.start_with?"{"
+			hash = parse_rails_console_get_controller_action(line)
+			res += ("controller: " + hash[":controller"] + ", action: " + hash[":action"] + "\n")
+		end
+	end
+	return res
 end
 
 def get_render_array(ast)

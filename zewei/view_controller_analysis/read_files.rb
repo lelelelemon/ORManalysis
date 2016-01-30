@@ -35,36 +35,6 @@ def print_redirect_to_of_all_controllers(controller_path)
 end
 
 
-def print_href_tags(tag_arr, named_routes_class)
-	res = "route = Rails.application.routes\n"
-	tag_arr.each do |tag|
-			#puts form_for_tag.source
-		url_inside = false
-		named_routes_class.get_named_routes.each do |k, v|
-			if tag.include? k
-				puts "#" + tag if $log
-				puts "controller: " + v[0] + ", action: " + v[1]
-				url_inside = true
-			end
-		end
-		if not url_inside
-			tag2 = tag + ""
-			tag.gsub! /<%.*%>/, "2"
-			res += ("route.recognize_path '" + tag + "' #" + tag2 + "\n")
-		end
-	end
-
-	File.write("temp.rb", res)
-
-	system("rails console < temp.rb > temp2.txt")
-	res = ""
-	File.readlines("temp2.txt").each do |line|
-		if line.start_with?"{" or line.start_with?"route.recognize"
-			res += line
-		end
-	end
-	puts res
-end
 
 
 def load_all_views_from_path(view_path)
@@ -158,36 +128,41 @@ def print_links_in_all_views(view_path, controller_path)
 	view_hash = load_all_views_from_path(view_path)
 	controller_hash = load_all_controllers_from_path(controller_path)
 
+	view_hash.each do |item_path, view_class|
+		puts view_class.get_all_links_controller_view(named_routes_class, controller_hash)
+		puts "-------------------------------------"
+	end
+
 #	view_hash["/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb"] = View_Class.new("/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb", view_path)
 
-	indent = "---"
+#	indent = "---"
 
-	view_hash.each do |item_path, view_class|
-		puts indent + "view_path: " + item_path
-		puts indent + "controller: " + view_class.get_controller_name
-		puts indent + "view: " + view_class.get_view_name
-
-		# get html tags
-		puts indent + "hrefs: "# + view_class.get_href_tags
-		print_href_tags(view_class.get_href_tag_array_from_html, named_routes_class)
-#		print_rails_tag(view_class.get_href_tag_array_from_html, named_routes_class)
-		puts indent + "forms: "
-		print_rails_tag(view_class.get_form_tag_array_from_html, named_routes_class)
-		
-
-		# get "ruby helper tags"
-		puts indent + "form_for: "
-		print_form_for_tag(view_class.get_form_for_array, named_routes_class, controller_hash)
-
-		puts indent + "link_to: "
-		print_rails_tag(view_class.get_link_to_array, named_routes_class)
-
-	#	puts indent + "replace render statements: "
-	#	puts view_class.replace_render_statements(view_hash)
-
-		puts "-------------------------------------------"
-
-	end	
+#	view_hash.each do |item_path, view_class|
+#		puts indent + "view_path: " + item_path
+#		puts indent + "controller: " + view_class.get_controller_name
+#		puts indent + "view: " + view_class.get_view_name
+#
+#		# get html tags
+#		puts indent + "hrefs: "# + view_class.get_href_tags
+#		print_href_tags(view_class.get_href_tag_array_from_html, named_routes_class)
+##		print_rails_tag(view_class.get_href_tag_array_from_html, named_routes_class)
+#		puts indent + "forms: "
+#		print_rails_tag(view_class.get_form_tag_array_from_html, named_routes_class)
+#		
+#
+#		# get "ruby helper tags"
+#		puts indent + "form_for: "
+#		print_form_for_tag(view_class.get_form_for_array, named_routes_class, controller_hash)
+#
+#		puts indent + "link_to: "
+#		print_rails_tag(view_class.get_link_to_array, named_routes_class)
+#
+#	#	puts indent + "replace render statements: "
+#	#	puts view_class.replace_render_statements(view_hash)
+#
+#		puts "-------------------------------------------"
+#
+#	end	
 end
 
 
@@ -240,6 +215,35 @@ def controller_replace_render_statements(controller_path, view_path, controller=
 
 end
 
+def controller_get_render_views_recursively(controller_path, view_path, controller=nil, action=nil)
+	controller_hash = load_all_controllers_from_path(controller_path)
+	view_hash = load_all_views_from_path(view_path)
+
+	indent = "---"
+
+	if controller != nil
+		controller_class = controller_hash[controller]
+		
+		if action != nil
+			puts indent + "action: " + action
+			action_class = controller_class.get_functions[action]
+			render_stmts = action_class.get_render_views_recursively(view_hash)
+			puts render_stmts.length
+			render_stmts.each do |stmt|
+				puts stmt
+			end
+		else
+			controller_class.get_functions.each do |action_name, action_class|
+				puts indent + "action: " + action_name
+				action_class.get_render_views_recursively(view_hash).each do |stmt|
+					puts stmt
+				end
+				puts "------------------------------------------"
+			end
+		end
+	end
+end
+
 #load_all_controllers("../app/controllers")
 #load_all_views "./app/views/"
 
@@ -264,6 +268,9 @@ opt_parser = OptionParser.new do |opt|
 	opt.on("-l", "--log", "log the information of original lines of code", "example: --log") do
 		options[:log] = true
 	end
+	opt.on("-s", "--statements", "get render statements only") do 
+		options[:statements] = true
+	end
 end
 
 opt_parser.parse!
@@ -272,7 +279,20 @@ if options[:log]
 	$log = true
 end
 
-if options[:controller] and options[:render]
+if options[:controller] and options[:render] and options[:statements]
+	controller = options[:target][0]
+	if options[:target].length > 1
+		view = options[:target][1]
+	else
+		view = nil
+	end
+	
+	puts "controller: " + controller
+	puts "-----------------------------------------------------------"
+
+	controller_get_render_views_recursively($controller_path, $view_path, controller, view)
+
+elsif options[:controller] and options[:render]
 	controller = options[:target][0]
 	if options[:target].length > 1
 		view = options[:target][1]

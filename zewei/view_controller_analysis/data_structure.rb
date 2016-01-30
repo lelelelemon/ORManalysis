@@ -112,7 +112,10 @@ class Function_Class
 		get_array_with_keyword @ast, "redirect_to"
 	end
 	
-	def get_render_statement_array
+	def get_render_statement_array(ast=nil)
+		if ast == nil
+			ast = @ast
+		end
 		get_array_with_keyword @ast, "render"
 	end
 	
@@ -178,6 +181,16 @@ class Function_Class
 			content.gsub! k, v
 		end
 		return content
+	end
+
+	def get_render_views_ast(view_class_hash)
+		content = self.replace_render_statements(view_class_hash)
+		return YARD::Parser::Ruby::RubyParser.parse(content).root
+	end
+
+	def get_render_views_recursively(view_class_hash)
+		ast = self.get_render_views_ast(view_class_hash)
+		return self.get_render_statement_array(ast)
 	end
 end 
 
@@ -353,6 +366,22 @@ class View_Class
 		end
 
 		return rb_content
+	end
+
+	def get_all_links_controller_view(named_routes, controller_hash)
+		indent = "---"
+		res = ""
+		res += (indent + "controller: " + self.get_controller_name + "\n")
+		res += (indent + "view: " + self.get_view_name + "\n")
+		res += (indent + "hrefs: \n")
+		res += (get_href_tags(self.get_href_tag_array_from_html, named_routes) + "\n")
+		res += (indent + "forms: \n")
+		res += (get_rails_tag(self.get_form_tag_array_from_html, named_routes) + "\n")
+		res += (indent + "form_for: \n")
+		res += (get_form_for_tag(self.get_form_for_array, named_routes, controller_hash))
+		res += (indent + "link_to: \n")
+
+		res += (get_rails_tag(self.get_link_to_array, named_routes) + "\n")  
 	end
 end 
 
