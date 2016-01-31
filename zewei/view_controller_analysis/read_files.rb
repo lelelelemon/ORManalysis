@@ -191,6 +191,37 @@ def view_replace_render_statements(view_path, controller, view)
 	puts view_class.replace_render_statements(view_hash)
 end
 
+def view_print_render_statements_recursively(view_path, controller, view)
+	view_hash = load_all_views_from_path(view_path)
+	indent = "---"
+	view_class = view_hash[controller + "_" + view]
+	puts view_class.get_render_statements_recursively(view_hash)
+end
+
+def view_print_links_controller_view_recursively(view_path, controller_path, controller, view)
+	view_hash = load_all_views_from_path(view_path)
+	controller_hash = load_all_controllers_from_path(controller_path)
+	named_routes_class = load_named_routes_from_path("named_routes.txt")
+	
+	indent = "---"
+	view_class = view_hash[controller + "_" + view]
+	puts view_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash)
+end
+
+def controller_action_print_links_controller_view_recursively(view_path, controller_path, controller, action)
+	view_hash = load_all_views_from_path(view_path)
+	controller_hash = load_all_controllers_from_path(controller_path)
+	named_routes_class = load_named_routes_from_path("named_routes.txt")
+	
+	indent = "---"
+	controller_class = controller_hash[controller]
+	function_class = controller_class.get_functions[action]
+	puts "controller: " + function_class.get_controller_name
+	puts "action: " + function_class.get_function_name 
+	puts function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash)
+end
+
+
 def controller_replace_render_statements(controller_path, view_path, controller=nil, action=nil)
 	controller_hash = load_all_controllers_from_path(controller_path)
 	view_hash = load_all_views_from_path(view_path)
@@ -279,7 +310,20 @@ if options[:log]
 	$log = true
 end
 
-if options[:controller] and options[:render] and options[:statements]
+if options[:view] and options[:render] and options[:statements]
+	controller = options[:target][0]
+	if options[:target].length > 1
+		view = options[:target][1]
+	else
+		view = nil
+	end
+	
+	puts "view: " + controller+ "_" + view
+	puts "-----------------------------------------------------------"
+
+	view_print_render_statements_recursively($view_path, controller, view)
+	view_print_links_controller_view_recursively($view_path, $controller_path, controller, view)
+elsif options[:controller] and options[:render] and options[:statements]
 	controller = options[:target][0]
 	if options[:target].length > 1
 		view = options[:target][1]
@@ -290,7 +334,9 @@ if options[:controller] and options[:render] and options[:statements]
 	puts "controller: " + controller
 	puts "-----------------------------------------------------------"
 
-	controller_get_render_views_recursively($controller_path, $view_path, controller, view)
+	controller_action_print_links_controller_view_recursively($view_path, $controller_path, controller, view)
+#	view_print_render_statments_recursively($controller_path, $view_path, controller, view)
+	#controller_get_render_views_recursively($controller_path, $view_path, controller, view)
 
 elsif options[:controller] and options[:render]
 	controller = options[:target][0]
@@ -310,9 +356,7 @@ elsif options[:render]
 	view = options[:target][1]
 	#puts "controller: " + controller + ", view: " + view
 	view_replace_render_statements($view_path, controller, view)
-end
-
-if options[:view]
+elsif options[:view]
 	print_links_in_all_views($view_path, $controller_path)	
 end
 

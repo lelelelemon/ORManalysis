@@ -118,6 +118,21 @@ class Function_Class
 		end
 		get_array_with_keyword @ast, "render"
 	end
+
+	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
+		res = ""
+		render_stmt_arr = get_render_statement_array
+		render_stmt_arr.each do |stmt|
+			view_name = get_view_name_from_render_statement(stmt)
+			puts "view_name: " + view_name
+			if view_name != "not_valid"
+				view_class = view_class_hash[view_name]
+				res += view_class.get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
+				res += "\n"
+			end
+		end
+		return res
+	end
 	
 	def get_render_view_mapping(view_class_hash)
 		render_view_mapping = Hash.new
@@ -144,14 +159,18 @@ class Function_Class
 			r = r[1..-1]
 		end
 
+
 		arr = r.split(",")
-		view = self.get_controller_name + "_" + self.get_function_name
+		view = ""
+
+		view_exists = false
 
 		arr[0].strip!
 		if arr[0].start_with?"\"" or arr[0].start_with?"'"
 			view = arr[0]
 			view.gsub! "\"", ""
 			view.gsub! "'", ""
+			view_exists = true
 		else 
 			arr.each do |a|
 				a.gsub! " ", ""
@@ -159,8 +178,11 @@ class Function_Class
 				a.gsub! "'", ""
 				a.gsub! "\t", ""
 				a = a.split("=>")
+				a[0].strip!
+				a[1].strip!
 				if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
 					view = a[1]
+					view_exists = true
 				end
 			end
 		end
@@ -171,7 +193,11 @@ class Function_Class
 		else
 			view = view[0..k-1] + "_" + view[k+1..-1]
 		end
-		return view
+		if view_exists
+			return view
+		else
+			return "not_valid"
+		end
 	end
 
 	def replace_render_statements(view_class_hash)
@@ -303,6 +329,35 @@ class View_Class
 		get_render_array @ast
 	end
 
+	def get_render_statements_recursively(view_class_hash)
+		render_arr = []
+		render_stmt_arr = []
+		get_render_statement_array.each do |stmt|
+			render_stmt_arr.push stmt
+			render_arr.push get_view_name_from_render_statement(stmt)
+		end
+		render_stmt_arr.each do |stmt|
+			view_name = get_view_name_from_render_statement(stmt)
+			view_class = view_class_hash[view_name]
+			_render_arr = view_class.get_render_statements_recursively(view_class_hash)
+			_render_arr.each do |_stmt|
+				render_arr.push _stmt
+			end
+		end
+		return render_arr
+	end
+
+	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
+		view_arr = get_render_statements_recursively(view_class_hash)
+		res = ""
+		view_arr.each do |view_name|
+			view_class = view_class_hash[view_name]
+			res += view_class.get_all_links_controller_view(named_routes, controller_hash)
+			res += "\n"
+		end
+		return res
+	end
+
 #	get a hash of hash[render_statement] = view_file_content
 #	the render statements inside view_file_content will be replaces recursively before it is assigned to the hash
 	def get_render_view_mapping(view_class_hash)
@@ -324,23 +379,22 @@ class View_Class
 
 	def get_view_name_from_render_statement(r)
 		r = r.split("\n")[0]
+		r.strip!
 		r = r[6..-1] if r.start_with?"render"
 		while r[0] == '(' 
 			r = r[1..-1]
 		end
 
 		arr = r.split(",")
-		view = self.get_controller_name + "_" + self.get_view_name
+		view = ""
 		arr[0].strip!
 		if arr[0].start_with?"\"" or arr[0].start_with?"'"
 			view = arr[0]
-			view.gsub! "\"", ""
-			view.gsub! "'", ""
+			view.gsub! /["']/, ""
 		else 
 			arr.each do |a|
 				a.gsub! " ", ""
-				a.gsub! "\"", ""
-				a.gsub! "'", ""
+				a.gsub! /["']/, ""
 				a.gsub! "\t", ""
 				a = a.split("=>")
 				if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
@@ -348,6 +402,8 @@ class View_Class
 				end
 			end
 		end
+
+		view.strip!
 
 		k = view.rindex("/")
 		if k == nil
@@ -369,19 +425,23 @@ class View_Class
 	end
 
 	def get_all_links_controller_view(named_routes, controller_hash)
-		indent = "---"
-		res = ""
-		res += (indent + "controller: " + self.get_controller_name + "\n")
-		res += (indent + "view: " + self.get_view_name + "\n")
-		res += (indent + "hrefs: \n")
-		res += (get_href_tags(self.get_href_tag_array_from_html, named_routes) + "\n")
-		res += (indent + "forms: \n")
-		res += (get_rails_tag(self.get_form_tag_array_from_html, named_routes) + "\n")
-		res += (indent + "form_for: \n")
-		res += (get_form_for_tag(self.get_form_for_array, named_routes, controller_hash))
-		res += (indent + "link_to: \n")
+		if @links_controller_view == nil 
+			indent = "---"
+			res = ""
+			res += (indent + "controller: " + self.get_controller_name + "\n")
+			res += (indent + "view: " + self.get_view_name + "\n")
+			res += (indent + "hrefs: \n")
+			res += (get_href_tags(self.get_href_tag_array_from_html, named_routes) + "\n")
+			res += (indent + "forms: \n")
+			res += (get_rails_tag(self.get_form_tag_array_from_html, named_routes) + "\n")
+			res += (indent + "form_for: \n")
+			res += (get_form_for_tag(self.get_form_for_array, named_routes, controller_hash))
+			res += (indent + "link_to: \n")
 
-		res += (get_rails_tag(self.get_link_to_array, named_routes) + "\n")  
+			res += (get_rails_tag(self.get_link_to_array, named_routes) + "\n")  
+			@links_controller_view = res
+		end
+		@links_controller_view 
 	end
 end 
 

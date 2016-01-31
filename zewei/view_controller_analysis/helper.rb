@@ -90,6 +90,7 @@ def traverse_ast(ast)
 	end
 end
 
+#given an ast, search for all statements starting with the specified keywords, returning an array of string
 def get_array_with_keyword(ast, keyword)
 	res_arr = Array.new
 	ast_arr = Array.new
