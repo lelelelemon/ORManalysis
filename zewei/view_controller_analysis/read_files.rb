@@ -45,7 +45,7 @@ def load_all_views_from_path(view_path)
 		view_class = View_Class.new(item, view_path)
 		
 		key = view_class.get_controller_name + "_" + view_class.get_view_name
-		key = view_class.get_file_type + "_" + key if view_class.get_file_type != "html"
+#		key = view_class.get_file_type + "_" + key if view_class.get_file_type != "html"
 
 		view_hash[key] = view_class
 	end
@@ -221,6 +221,23 @@ def controller_action_print_links_controller_view_recursively(view_path, control
 	puts function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash)
 end
 
+def controller_print_links_controller_view_recursively(view_path, controller_path)
+	view_hash = load_all_views_from_path(view_path)
+	controller_hash = load_all_controllers_from_path(controller_path)
+	named_routes_class = load_named_routes_from_path("named_routes.txt")
+	
+	indent = "---"
+	controller_hash.each do |controller_name, controller_class|
+		puts "Controller Class: " + controller_name
+		controller_class.get_functions.each do |function_name, function_class|
+			puts "Action Function: " + function_name 
+			puts function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash)
+			puts "-------------------End of Action Function: " + function_name
+		end
+		puts "-------------------End of Controller Class: " + controller_name + "-------------------"
+	end
+	
+end
 
 def controller_replace_render_statements(controller_path, view_path, controller=nil, action=nil)
 	controller_hash = load_all_controllers_from_path(controller_path)
@@ -358,6 +375,8 @@ elsif options[:render]
 	view_replace_render_statements($view_path, controller, view)
 elsif options[:view]
 	print_links_in_all_views($view_path, $controller_path)	
+elsif options[:controller]
+	controller_print_links_controller_view_recursively($view_path, $controller_path)
 end
 
 #load_all_views_render_statement "./app/views/"

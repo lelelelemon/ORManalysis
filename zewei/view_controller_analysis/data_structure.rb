@@ -255,8 +255,8 @@ class View_Class
 		end
 		j = @view_name.index(".")
 		@view_name = @view_name[0..j-1]
-		while @view_name[0] == '_'
-			@view_name = @view_name[1..-1]
+		if @file_type == "rss" or @file_type == "js"
+			@view_name += ("." + @file_type)
 		end
 
 		@controller_name = path[0..i-1]
