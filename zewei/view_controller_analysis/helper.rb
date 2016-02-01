@@ -290,6 +290,46 @@ def get_href_tags(tag_arr, named_routes_class)
 	return res
 end
 
+def get_redirect_to_tags(tag_arr, named_routes_class)
+	res = ""
+	rb_console_code = "route = Rails.application.routes\n"
+	tag_arr.each do |tag|
+		
+		tag = tag[11..-1] if tag.start_with? "redirect_to" 
+		tag.strip!
+		tag.gsub! /["']/, ""		
+
+		#puts form_for_tag.source
+		url_inside = false
+		named_routes_class.get_named_routes.each do |k, v|
+			if tag.include? k
+				res += ("#" + tag + "\n") if $log
+				res += ("controller: " + v[0] + ", action: " + v[1] + "\n")
+				url_inside = true
+			end
+		end
+		if not url_inside
+			tag2 = tag + ""
+			tag.gsub! /<%.*%>/, "2"
+			rb_console_code += ("route.recognize_path '" + tag + "' #" + tag2 + "\n")
+		end
+	end
+
+	File.write("temp.rb", rb_console_code)
+
+	system("rails console < temp.rb > temp2.txt")
+	File.readlines("temp2.txt").each do |line|
+		if $log and line.start_with?"route.recognize"
+				res += line
+		end
+		if line.start_with?"{"
+			hash = parse_rails_console_get_controller_action(line)
+			res += ("controller: " + hash[":controller"] + ", action: " + hash[":action"] + "\n")
+		end
+	end
+	return res
+end
+
 def get_render_array(ast)
 	res_arr = Array.new
 	ast_arr = Array.new

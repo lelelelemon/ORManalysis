@@ -141,6 +141,10 @@ class Function_Class
 				end
 			end
 		end
+		
+		res += ("\n---redirect_to tags in " + self.get_controller_name + "_" + self.get_function_name + ": \n")
+		redirect_to_arr = self.get_redirect_to_array 
+		res += get_redirect_to_tags(redirect_to_arr, named_routes)
 
 		return res
 	end

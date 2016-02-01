@@ -228,9 +228,9 @@ def controller_print_links_controller_view_recursively(view_path, controller_pat
 	
 	indent = "---"
 	controller_hash.each do |controller_name, controller_class|
-		puts "Controller Class: " + controller_name
+		puts "-------------------Start of Controller Class: " + controller_name + "-------------------"
 		controller_class.get_functions.each do |function_name, function_class|
-			puts "Action Function: " + function_name 
+			puts "-------------------Start of Action Function: " + function_name
 			puts function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash)
 			puts "-------------------End of Action Function: " + function_name
 		end
