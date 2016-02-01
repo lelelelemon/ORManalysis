@@ -3,54 +3,6 @@ require "nokogiri"
 
 load "helper.rb"
 	
-def get_view_name_from_render_statement(r)
-	r = r.split("\n")[0]
-	r = r[6..-1] if r.start_with?"render"
-	while r[0] == '(' 
-		r = r[1..-1]
-	end
-
-
-	arr = r.split(",")
-	view = ""
-
-	view_exists = false
-
-	arr[0].strip!
-	if arr[0].start_with?"\"" or arr[0].start_with?"'"
-		view = arr[0]
-		view.gsub! "\"", ""
-		view.gsub! "'", ""
-		view_exists = true
-	else 
-		arr.each do |a|
-			a.gsub! " ", ""
-			a.gsub! "\"", ""
-			a.gsub! "'", ""
-			a.gsub! "\t", ""
-			a = a.split("=>")
-			a[0].strip!
-			a[1].strip!
-			if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
-				view = a[1]
-				view_exists = true
-			end
-		end
-	end
-
-	k = view.rindex("/")
-	if k == nil
-		view = self.get_controller_name + "_" + view
-	else
-		view = view[0..k-1] + "_" + view[k+1..-1]
-	end
-	if view_exists
-		return view
-	else
-		return "not_valid"
-	end
-end
-
 class Controller_Class
 	def initialize(path)
 		@path = path
@@ -135,6 +87,7 @@ class Function_Class
 		@content
 	end
 
+	# get the class where the action function is defined
 	def get_class 
 		@class
 	end
@@ -191,19 +144,20 @@ class Function_Class
 
 		return res
 	end
-	
+
+	# get the mapping of render statemnets to view file content	
 	def get_render_view_mapping(view_class_hash)
 		render_view_mapping = Hash.new
 
 		self.get_render_statement_array.each do |r|
 			view_name = get_view_name_from_render_statement(r)
-
 			view_class = view_class_hash[view_name]
-					
 	
 			if view_class != nil
 				value = view_class.replace_render_statements(view_class_hash)
 				render_view_mapping[r] = value
+			else
+				#do something the view file does not exist! It could mean we parse the file wrong. 
 			end
 		end
 	
@@ -339,6 +293,7 @@ class View_Class
 		get_render_array @ast
 	end
 
+	# This function is used to get all render statements recursively, so we can know what view files will be rendered by this controller action, further, we can get the information about what links exist in the corresponding view files
 	def get_render_statements_recursively(view_class_hash)
 		render_arr = []
 		render_stmt_arr = []
@@ -381,6 +336,8 @@ class View_Class
 			if view_class != nil
 				value = view_class.replace_render_statements(view_class_hash)
 				render_view_mapping[r] = view_class.replace_render_statements(view_class_hash)
+			else
+				#do something if the view file does not exisst
 			end
 		end
 	

@@ -7,6 +7,54 @@ def read_content(path)
 	return File.open(path, "r").read
 end
 
+def get_view_name_from_render_statement(r)
+	r = r.split("\n")[0]
+	r = r[6..-1] if r.start_with?"render"
+	while r[0] == '(' 
+		r = r[1..-1]
+	end
+
+
+	arr = r.split(",")
+	view = ""
+
+	view_exists = false
+
+	arr[0].strip!
+	if arr[0].start_with?"\"" or arr[0].start_with?"'"
+		view = arr[0]
+		view.gsub! "\"", ""
+		view.gsub! "'", ""
+		view_exists = true
+	else 
+		arr.each do |a|
+			a.gsub! " ", ""
+			a.gsub! "\"", ""
+			a.gsub! "'", ""
+			a.gsub! "\t", ""
+			a = a.split("=>")
+			a[0].strip!
+			a[1].strip!
+			if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
+				view = a[1]
+				view_exists = true
+			end
+		end
+	end
+
+	k = view.rindex("/")
+	if k == nil
+		view = self.get_controller_name + "_" + view
+	else
+		view = view[0..k-1] + "_" + view[k+1..-1]
+	end
+	if view_exists
+		return view
+	else
+		return "not_valid"
+	end
+end
+
 def get_filename_from_path(filename)
 	i = filename.rindex('/')
 	if i == nil

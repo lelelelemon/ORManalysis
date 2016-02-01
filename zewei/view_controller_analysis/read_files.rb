@@ -53,14 +53,14 @@ def load_all_views_from_path(view_path)
 	return view_hash
 end
 
-def print_all_controllers_render_replaced(controller_path, view_path)
+def controller_print_all_controllers_render_replaced(controller_path, view_path)
 	controller_hash = load_all_controllers_from_path(controller_path)
 	view_hash = load_all_views_from_path(view_path)
 
-	view_hash.each do |k, v|
-		puts k
-		puts v.get_rb_content
-	end
+#	view_hash.each do |k, v|
+#		puts k
+#		puts v.get_rb_content
+#	end
 
 	controller_hash.each do |item_path, controller_class|
 		controller_class.get_functions.each do |k, v|
@@ -319,6 +319,9 @@ opt_parser = OptionParser.new do |opt|
 	opt.on("-s", "--statements", "get render statements only") do 
 		options[:statements] = true
 	end
+	opt.on("-a", "--all", "apply the current operation on all controller actions or view files") do 
+		options[:all] = true
+	end
 end
 
 opt_parser.parse!
@@ -375,13 +378,14 @@ elsif options[:render]
 	view_replace_render_statements($view_path, controller, view)
 elsif options[:view]
 	print_links_in_all_views($view_path, $controller_path)	
+elsif options[:controller] and options[:all]
+	controller_print_all_controllers_render_replaced($controller_path, $view_path)
 elsif options[:controller]
 	controller_print_links_controller_view_recursively($view_path, $controller_path)
 end
 
 #load_all_views_render_statement "./app/views/"
 
-#print_all_controllers_render_replaced("./app/controllers/", "./app/views/")
 
 #path = "../app/controllers/users_controller.rb"
 #
