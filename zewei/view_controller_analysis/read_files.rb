@@ -53,25 +53,28 @@ def load_all_views_from_path(view_path)
 	return view_hash
 end
 
-def controller_print_all_controllers_render_replaced(controller_path, view_path)
+def controller_print_all_controllers_render_replaced(controller_path, view_path, new_controller_path)
 	controller_hash = load_all_controllers_from_path(controller_path)
 	view_hash = load_all_views_from_path(view_path)
-
-#	view_hash.each do |k, v|
-#		puts k
-#		puts v.get_rb_content
-#	end
-
 	controller_hash.each do |item_path, controller_class|
+		nested_path = get_nested_path(item_path, controller_path)
+		if not File.directory?(new_controller_path + nested_path)
+			FileUtils.mkdir_p new_controller_path + nested_path
+		end
+		controller_file_path = new_controller_path + nested_path + controller_class.get_controller_name + "_controller.rb"
+		res = controller_class.get_content
 		controller_class.get_functions.each do |k, v|
 
-			puts "controller: " + controller_class.get_controller_name
-			puts "action: " + k
+#			puts "controller: " + controller_class.get_controller_name
+#			puts "action: " + k
 
-			puts v.replace_render_statements(view_hash)
+			res.gsub! v.get_content, v.replace_render_statements(view_hash) + "\n"
+#			res += (v.replace_render_statements(view_hash) + "\n\n")
 
-			puts "----------------------"
+#			puts "----------------------"
 		end
+
+		File.write(controller_file_path, res)
 	end
 end
 
@@ -296,6 +299,7 @@ end
 #load_all_views "./app/views/"
 
 $controller_path = "./app/controllers/"
+$new_controller_path = "./app/new_controllers/"
 $view_path = "./app/views/"
 $output_path = "./output/"
 
@@ -379,7 +383,7 @@ elsif options[:render]
 elsif options[:view]
 	print_links_in_all_views($view_path, $controller_path)	
 elsif options[:controller] and options[:all]
-	controller_print_all_controllers_render_replaced($controller_path, $view_path)
+	controller_print_all_controllers_render_replaced($controller_path, $view_path, $new_controller_path)
 elsif options[:controller]
 	controller_print_links_controller_view_recursively($view_path, $controller_path)
 end

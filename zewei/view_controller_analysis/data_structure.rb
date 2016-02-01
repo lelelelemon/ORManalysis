@@ -174,6 +174,23 @@ class Function_Class
 		render_view_mapping.each do |k, v|
 			content.gsub! k, v
 		end
+
+		#we need to append the default view at the end of the function, this may be inaccuate because some views may already been rendered, we need to figure out a way to avoid duplicated rendering
+		
+		
+		view_name = self.get_controller_name + "_" + self.get_function_name
+		view_class = view_class_hash[view_name]
+		if view_class != nil
+			value = view_class.replace_render_statements(view_class_hash)
+			content = content.split "\n"
+			len = content.length
+			content[len] = content[len-1]
+			content[len-1] = value
+			content = content.join("\n")
+		else
+			#do something the view file does not exist! It could mean we parse the file wrong. 
+		end
+
 		return content
 	end
 

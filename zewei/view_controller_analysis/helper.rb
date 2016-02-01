@@ -68,7 +68,7 @@ def get_nested_path(filepath, basepath)
 	i = filepath.rindex(basepath)
 	j = filepath.rindex('/')
 	if i == nil or j == nil
-		return nil
+		return ""
 	end
 	n = filepath[i+basepath.length..j]
 	return n
