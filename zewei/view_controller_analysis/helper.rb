@@ -3,6 +3,10 @@ require 'active_support'
 require 'active_support/inflector'
 require 'active_support/core_ext/string'
 
+def read_content(path)
+	return File.open(path, "r").read
+end
+
 def get_filename_from_path(filename)
 	i = filename.rindex('/')
 	if i == nil

@@ -2,9 +2,53 @@ require "yard"
 require "nokogiri"
 
 load "helper.rb"
+	
+def get_view_name_from_render_statement(r)
+	r = r.split("\n")[0]
+	r = r[6..-1] if r.start_with?"render"
+	while r[0] == '(' 
+		r = r[1..-1]
+	end
 
-def read_content(path)
-	return File.open(path, "r").read
+
+	arr = r.split(",")
+	view = ""
+
+	view_exists = false
+
+	arr[0].strip!
+	if arr[0].start_with?"\"" or arr[0].start_with?"'"
+		view = arr[0]
+		view.gsub! "\"", ""
+		view.gsub! "'", ""
+		view_exists = true
+	else 
+		arr.each do |a|
+			a.gsub! " ", ""
+			a.gsub! "\"", ""
+			a.gsub! "'", ""
+			a.gsub! "\t", ""
+			a = a.split("=>")
+			a[0].strip!
+			a[1].strip!
+			if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
+				view = a[1]
+				view_exists = true
+			end
+		end
+	end
+
+	k = view.rindex("/")
+	if k == nil
+		view = self.get_controller_name + "_" + view
+	else
+		view = view[0..k-1] + "_" + view[k+1..-1]
+	end
+	if view_exists
+		return view
+	else
+		return "not_valid"
+	end
 end
 
 class Controller_Class
@@ -44,7 +88,8 @@ class Controller_Class
 		func_name.strip!
 		return func_name
 	end
-
+	
+	#traverse the ast of the controller class and get all action functions stored in its function hash
 	def parse_functions(ast)
 		functions = Hash.new
 		ast_arr = Array.new
@@ -66,8 +111,6 @@ class Controller_Class
 	def parse_content(content)
 		return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
-
-	
 end
 
 class Function_Class
@@ -122,15 +165,30 @@ class Function_Class
 	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
 		res = ""
 		render_stmt_arr = get_render_statement_array
+		
+		#view_name_arr contains the names of view files that will be rendered in the current controller action
+		view_name_arr = []		
+
 		render_stmt_arr.each do |stmt|
 			view_name = get_view_name_from_render_statement(stmt)
-			puts "view_name: " + view_name
+			view_name_arr.push view_name
+		end
+		
+		#the view file with the same name of the current controller action may also be rendered by default
+
+		view_name_arr.push self.get_controller_name + "_" + self.get_function_name unless view_name_arr.include?(self.get_controller_name + "_" + self.get_function_name)
+		
+		view_name_arr.each do |view_name|
 			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
-				res += view_class.get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
-				res += "\n"
+				if view_class == nil
+					res += ("view file " + view_name + " not exists!")
+				else
+					res += (view_class.get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash) + "\n")
+				end
 			end
 		end
+
 		return res
 	end
 	
@@ -150,54 +208,6 @@ class Function_Class
 		end
 	
 		return render_view_mapping	
-	end
-
-	def get_view_name_from_render_statement(r)
-		r = r.split("\n")[0]
-		r = r[6..-1] if r.start_with?"render"
-		while r[0] == '(' 
-			r = r[1..-1]
-		end
-
-
-		arr = r.split(",")
-		view = ""
-
-		view_exists = false
-
-		arr[0].strip!
-		if arr[0].start_with?"\"" or arr[0].start_with?"'"
-			view = arr[0]
-			view.gsub! "\"", ""
-			view.gsub! "'", ""
-			view_exists = true
-		else 
-			arr.each do |a|
-				a.gsub! " ", ""
-				a.gsub! "\"", ""
-				a.gsub! "'", ""
-				a.gsub! "\t", ""
-				a = a.split("=>")
-				a[0].strip!
-				a[1].strip!
-				if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
-					view = a[1]
-					view_exists = true
-				end
-			end
-		end
-
-		k = view.rindex("/")
-		if k == nil
-			view = self.get_controller_name + "_" + view
-		else
-			view = view[0..k-1] + "_" + view[k+1..-1]
-		end
-		if view_exists
-			return view
-		else
-			return "not_valid"
-		end
 	end
 
 	def replace_render_statements(view_class_hash)
@@ -375,43 +385,6 @@ class View_Class
 		end
 	
 		return render_view_mapping	
-	end
-
-	def get_view_name_from_render_statement(r)
-		r = r.split("\n")[0]
-		r.strip!
-		r = r[6..-1] if r.start_with?"render"
-		while r[0] == '(' 
-			r = r[1..-1]
-		end
-
-		arr = r.split(",")
-		view = ""
-		arr[0].strip!
-		if arr[0].start_with?"\"" or arr[0].start_with?"'"
-			view = arr[0]
-			view.gsub! /["']/, ""
-		else 
-			arr.each do |a|
-				a.gsub! " ", ""
-				a.gsub! /["']/, ""
-				a.gsub! "\t", ""
-				a = a.split("=>")
-				if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
-					view = a[1]
-				end
-			end
-		end
-
-		view.strip!
-
-		k = view.rindex("/")
-		if k == nil
-			view = self.get_controller_name + "_" + view
-		else
-			view = view[0..k-1] + "_" + view[k+1..-1]
-		end
-		return view
 	end
 
 	def replace_render_statements(view_class_hash)
