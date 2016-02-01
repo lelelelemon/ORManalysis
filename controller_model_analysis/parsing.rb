@@ -17,6 +17,7 @@ load 'dataflow_component.rb'
 load 'compute_stats.rb'
 load 'graph_component.rb'
 load 'compute_functional_dependency.rb'
+load 'compare_consequent_actions.rb'
 #load 'random_path.rb'
 load 'util.rb'
 load 'read_schema.rb'
@@ -252,8 +253,12 @@ opt_parser = OptionParser.new do |opt|
 		options[:class_name] = class_name
   end
 
-	opt.on("-c","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified","example: --trace CommentsController,create") do |trace_input|
+	opt.on("-r","--trace CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name function_name; will print out call graph of the function specified","example: --trace CommentsController,create") do |trace_input|
 		options[:trace_input] = trace_input
+  end
+
+	opt.on("-c","--consequent CLASS_NAME,FUNCTION_NAME",Array,"calculate the overlap between two controller functions","example: --consequent CommentsController,create") do |cons_input|
+		options[:consequent] = cons_input
   end
 
   opt.on("-x","--xml","generate xml file, make sure directory xmls/ exists") do
@@ -418,43 +423,6 @@ if options[:run_all]
 		chs[0] = chs[0].capitalize
 		start_class = "#{chs[0]}Controller"
 		puts "Handling #{start_class}, #{start_function}"
-		$node_list = Array.new
-		$root = nil
-		$view_ruby_code = false
-		$view_closure = false
-
-		$cur_bb_stack = Array.new
-		$cur_cfg_stack = Array.new
-
-		$non_repeat_list = Array.new
-		$cur_cfg = nil
-		$cfg_map = Hash.new
-		$cur_bb = nil
-		$l_index = 0
-		$blank = ""
-		$in_view = false
-		
-		$closure_stack = Array.new
-		$in_loop = Array.new
-		$general_call_stack = Array.new
-		$funccall_stack = Array.new
-		$root = nil
-		$cfg = nil
-		$ins_cnt = 0
-		#store all instruction node
-		$node_list = Array.new
-		$sketch_node_list = Array.new
-		#the very source of dataflow, all nodes using user input connect to this node
-		$dataflow_source = INode.new(nil)
-		
-		#format: from_inode_index*to_inode_index
-		$dataflow_edges = Hash.new
-		$cur_funccall = nil
-		$cur_position = ""
-		$path_tracker = Array.new
-		$processed_node_stack = Array.new
-		$computed_node = nil
-		
 		level = 0
 
 		$output_dir = "#{$app_dir}/results/#{start_class}_#{start_function}"
@@ -463,10 +431,8 @@ if options[:run_all]
 		puts "Graph_name = #{graph_fname}"
 		$graph_file = File.open(graph_fname, "w");
 
-		$graph_file.write("digraph #{remove_special_chars(start_class)}_#{start_function} {\n")
 		$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
 		trace_flow(start_class, start_function, "", "", level)
-		$graph_file.write("}")
 
 		$cur_node = nil
 		$root = nil
@@ -480,9 +446,37 @@ if options[:run_all]
 
 		clear_data_structure
 	end
-	
 end
 
+if options[:consequent] != nil
+	start_class = options[:consequent][0]
+	start_function = options[:consequent][1]
+	
+	level = 0
+	$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
+	compute_dataflow_stat($output_dir, start_class, start_function, true)
+
+
+	@prev_list = Array.new 
+	$node_list.each do |n|
+		@prev_list.push(n)
+	end
+
+	next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
+	File.open(next_file, "r").each do |line|
+		clear_data_structure
+
+		line = line.gsub("\n","")
+		chs = line.split(',')
+		next_function = chs[1]
+		chs[0] = chs[0].capitalize
+		next_class = "#{chs[0]}Controller"
+		compute_dataflow_stat($output_dir, next_class, next_function, true)
+	
+		puts "Compare with: #{next_class}.#{next_function}"
+		compare_consequent_actions(@prev_list, $node_list)
+	end
+end
 
 if options[:xml] == true
 	generate_xml_files

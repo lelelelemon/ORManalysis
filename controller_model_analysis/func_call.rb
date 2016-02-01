@@ -46,8 +46,9 @@ class Function_call
 		#TODO: this is bad, super should be a derived class of Function_call
 		@super_fname = ""
 		self.caller = nil
+		@complete_string = nil
 	end
-	attr_accessor :caller
+	attr_accessor :caller, :complete_string
 	def addOn(on_meth)
 		@on.push(on_meth)
 	end

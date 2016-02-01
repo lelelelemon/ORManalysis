@@ -181,6 +181,7 @@ def parse_attrib(astnode)
 			if $cur_method != nil
 				fcall = Function_call.new("self", "destroy_all")
 				fcall.setIsQuery
+				fcall.complete_string = "destroy_all: #{astnode.source.gsub('\n',' ')}"
 				fcall.setTableName($cur_class.getName)
 				fcall.setQueryType("DELETE")
 				$cur_method.addCall(fcall)
@@ -195,6 +196,7 @@ def parse_attrib(astnode)
 			if $cur_class.getMethod("before_validation").hasCall?(field, "where") == false
 				fcall = Function_call.new(field, "where")
 				fcall.setIsQuery
+				fcall.complete_string = "before_validation: #{astnode.source.gsub('\n',' ')}"
 				fcall.setTableName($cur_class.getName)
 				fcall.setQueryType("SELECT")
 				$cur_class.getMethod("before_validation").addCall(fcall)
@@ -243,6 +245,7 @@ def parse_method_call(astnode, method)
 			fcall.setTableName(searchSelf(fcall.getObjName, $cur_class.getName))
 			fcall.setIsQuery
 			fcall.setQueryType(check_method_keyword(fcall.getObjName, node2.source))
+			fcall.complete_string = astnode.source.gsub('\n',' ')
 
 			if node2.source == "execute" and astnode.children[2] != nil
 				query = astnode.children[2].source

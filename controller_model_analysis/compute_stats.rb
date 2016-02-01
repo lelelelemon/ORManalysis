@@ -217,9 +217,9 @@ $cnt_determines = 0
 $cnt_depends_on_cflow = 0
 $cnt_determines_cflow = 0
 
-def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
+def compute_dataflow_stat(output_dir, start_class, start_function, build_node_list_only=false)
 
-	if $root == nil and random == false
+	if $root == nil
 		$cfg = trace_query_flow(start_class, start_function, "", "", 0)
 		addAllControlEdges
 		compute_source_sink_for_all_nodes
@@ -227,10 +227,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 			return
 		end
 		$root = $cfg.getBB[0].getInstr[0].getINode	
-	elsif random == true
-		if $root == nil
-			random_trace(start_class, start_function)
-		end
 	end
 	
 	$node_list.each do |n|
@@ -248,6 +244,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 		end
 	end
 
+	if build_node_list_only
+		return
+	end
 
 	graph_fname = "#{output_dir}/sketch_graph.log"
 	$graph_file = File.open(graph_fname, "w")
@@ -259,7 +258,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, random=false)
 	graph_fname = "#{output_dir}/sketch_stats.txt"
 	$graph_file = File.open(graph_fname, "w")
 
-	#compute_functional_dependency($graph_file)
+	compute_functional_dependency($graph_file)
 	compute_chain_stats
 
 #	graph_fname = "#{output_dir}/backward_forward.log"

@@ -1,3 +1,22 @@
+#Dataflow trace rules: (starting_node)
+#temp_node.getBackwardEdges.each do |e|
+#		if e.getFromNode != nil and @proessed.include?(e.getFromNode) == false and e.getFromNode.getIndex < starting_node.getIndex
+#			@temp_node_list.push(e.getFromNode)
+
+#temp_node.getDataflowEdges.each do |e|
+#		if @processed.include?(e.getToNode) == false
+#			if e.getToNode.getInstr.instance_of?Return_instr
+#				e.getToNode.getDataflowEdges.each do |e1|
+#					if @processed.include?e1.getToNode == false and e.getToNode.getIndex > starting_node.getIndex
+#						@temp_node_list.push(e.getToNode)
+#					end
+#				end
+#			elsif e.getToNode.getIndex > starting_node.getIndex
+#				@temp_node_list.push(e.getToNode)
+#			end
+#		end
+
+
 def isAttrAssign(node)
 	if node.getInstr.instance_of?AttrAssign_instr
 		if node.getInstr.getFuncname.index('!') == nil
@@ -36,7 +55,7 @@ def find_all_ancestors(nodex)
 		if temp_node.isReadQuery?
 		else
 			temp_node.getBackwardEdges.each do |e|
-				if e.getFromNode != nil and @ancestors.include?(e.getFromNode) == false
+				if e.getFromNode != nil and @ancestors.include?(e.getFromNode) == false and e.getFromNode.getIndex < nodex.getIndex
 					@temp_node_list.push(e.getFromNode)
 				end
 			end
@@ -45,7 +64,80 @@ def find_all_ancestors(nodex)
 	return @ancestors
 end
 
+class Func_dep_expression
+	def initialize
+		#(a^b^c) V (d^e....^h) V (...^...)
+		@clauses = Array.new
+		@cur_clause = nil
+	end
+	attr_accessor :clauses
+	def create_new_clause	
+		if @cur_clause == nil
+			@cur_clause = Array.new
+		else
+			@clauses.push(@cur_clause)
+			@cur_clause = Array.new
+		end
+	end
+	def addLiteral(node)
+		if @cur_clause.include?(node)
+		else
+			@cur_clause.push(node)
+		end
+	end
+end
+
+def compute_functional_dependency(file_to_write)
+	@func_dep_map = Hash.new
+	for i in 0...$node_list.length-1
+		n = $node_list[i]
+		if isTableAttrAssign(n)
+			if @func_dep_map[n] == nil
+				@func_dep_map[n] = Func_dep_expression.new
+				@func_dep_map[n].create_new_clause
+			else
+				@func_dep_map[n].create_new_clause
+			end
+			@ancestors = find_all_ancestors(n)
+			include_user_input = false
+			@ancestors.each do |a|
+				if a.getInstr.getFromUserInput
+					include_user_input = true
+				end
+				if (isTableAttrAssign(a) or a.isField?) and a.getInstr.getCallHandler != nil and a.getInstr.getCallHandler.caller != nil and a != n
+					field_name = a.getInstr.getCallHandler.getFuncName
+					tbl_name = a.getInstr.getCallHandler.caller.getName
+					if isTableField(tbl_name, field_name)
+						@func_dep_map[n].addLiteral(a)
+					end
+				end
+			end
+			if include_user_input
+				@func_dep_map[n] = nil
+			end
+		end
+	end
+
+	@func_dep_map.each do |k, v|
+		v.create_new_clause
+		v.clauses.each do |ary|
+			if ary.length > 0
+				callera = k.getInstr.getCallHandler
+				file_to_write.write("FUNCDEP: #{callera.caller.getName}.#{callera.getFuncName} -> ")
+				puts "#{k.getIndex}: #{callera.caller.getName}.#{callera.getFuncName} < #{k.getInstr.toString} >"
+				ary.each do |n1|
+					callerb	= n1.getInstr.getCallHandler
+					file_to_write.write("#{callerb.caller.getName}.#{callerb.getFuncName} ")
+					puts "\t#{n1.getIndex}: 	#{callerb.caller.getName}.#{callerb.getFuncName} < #{n1.getInstr.toString} >"
+				end
+				file_to_write.write("\n")
+			end
+		end
+	end
+end
+
 #nodex is before nodey
+=begin
 def test_functional_dependency(nodex, nodey)
 	#TODO: First should check nodex and nodey appeared more than twice
 	#TODO: Check if nodex and nodey belong to the same table, whether they belong to the same class instance
@@ -159,3 +251,4 @@ def compute_functional_dependency(file_to_write)
 		end
 	end
 end
+=end

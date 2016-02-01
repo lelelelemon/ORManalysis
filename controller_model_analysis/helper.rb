@@ -340,4 +340,49 @@ def clear_data_structure
 			n.getInstr.getBB.getCFG.return_list = Array.new
 		end
 	end
+	$node_list = Array.new
+	$root = nil
+	$view_ruby_code = false
+	$view_closure = false
+
+	$cur_bb_stack = Array.new
+	$cur_cfg_stack = Array.new
+
+	$non_repeat_list = Array.new
+	$cur_cfg = nil
+	$cfg_map = Hash.new
+	$cur_bb = nil
+	$l_index = 0
+	$blank = ""
+	$in_view = false
+	
+	$closure_stack = Array.new
+	$in_loop = Array.new
+	$general_call_stack = Array.new
+	$funccall_stack = Array.new
+	$root = nil
+	$cfg = nil
+	$ins_cnt = 0
+	#store all instruction node
+	$node_list = Array.new
+	$sketch_node_list = Array.new
+	#the very source of dataflow, all nodes using user input connect to this node
+	$dataflow_source = INode.new(nil)
+	
+	#format: from_inode_index*to_inode_index
+	$dataflow_edges = Hash.new
+	$cur_funccall = nil
+	$cur_position = ""
+	$path_tracker = Array.new
+	$processed_node_stack = Array.new
+	$computed_node = nil
+
+	$cur_node = nil
+	$root = nil
+	$non_repeat_list = Array.new
+	$global_check = Hash.new
+	$node_list = Array.new
+	$cur_query_stack = Array.new
+	$query_edges = Array.new
+
 end

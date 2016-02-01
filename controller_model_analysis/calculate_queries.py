@@ -82,11 +82,16 @@ Input = []
 nonfield = {}
 assignfield = {}
 nf = {}
+w_reject_list = []
+w_accept_list = {}
+w_accept_count = {}
+r_reject_list = []
+r_accept_list = {}
+r_accept_count = {}
 
 for subdir, folders, files in os.walk(base_path):
 	for fn in files:
 		if fn.endswith("trace.temp"):
-			
 			fp = open(os.path.join(subdir, fn), "r")
 			#print "filename: %s"%(os.path.join(subdir, fn))
 			line_cnt = 0
@@ -100,6 +105,8 @@ for subdir, folders, files in os.walk(base_path):
 				if "QUERY" in line:
 					line_cnt = line_cnt + 1
 		if fn.endswith("sketch_stats.txt"):
+			temp_w_func_list = {}
+			temp_r_func_list = {}
 			fp = open(os.path.join(subdir, fn), "r")
 			for line in fp:
 				line = line.replace("\n","")
@@ -110,7 +117,6 @@ for subdir, folders, files in os.walk(base_path):
 				elif chs[0] == "Input:":
 					Input.append(int(chs[1], 10))
 				elif chs[0] == "Nonfield:":
-					print line
 					if chs[1] not in nonfield:
 						nonfield[chs[1]] = []
 						nonfield[chs[1]].append([])
@@ -118,13 +124,59 @@ for subdir, folders, files in os.walk(base_path):
 					nonfield[chs[1]][0].append(int(chs[2], 10))
 					nonfield[chs[1]][1].append(int(chs[3], 10))
 				elif chs[0] == "FieldAssign:":
-					print line
 					if chs[3] not in assignfield:
 						assignfield[chs[1]] = []
 						assignfield[chs[1]].append([])
 						assignfield[chs[1]].append([])
 					assignfield[chs[1]][0].append(int(chs[2], 10))
 					assignfield[chs[1]][1].append(int(chs[4], 10))
+				elif chs[0] == "FUNCDEP:":
+					if chs[1] == "W":
+						if chs[-1] not in w_reject_list:
+							if chs[-1] not in temp_w_func_list:
+								temp_w_func_list[chs[-1]] = []
+							temp_w_func_list[chs[-1]].append(chs[2])	
+					elif chs[1] == "R":
+						if chs[-1] not in r_reject_list:
+							if chs[-1] not in temp_r_func_list:
+								temp_r_func_list[chs[-1]] = []
+							temp_r_func_list[chs[-1]].append(chs[2])		
+
+			for k,v in temp_w_func_list.items():
+				if k in w_accept_list and k not in w_reject_list:
+					match = True
+					if len(v) == len(w_accept_list[k]):
+						for t in v:
+							if t not in w_accept_list[k]:
+								match = False	
+					else:
+						match = False
+						print "Reject %s"%k
+					if match == False:
+						w_reject_list.append(k)
+					else:
+						w_accept_count[k] += 1
+				else:
+					w_accept_list[k] = v
+					w_accept_count[k] = 1
+			for k,v in temp_r_func_list.items():
+				if k in r_accept_list and k not in r_reject_list:
+					match = True
+					if len(v) == len(r_accept_list[k]):
+						for t in v:
+							if t not in r_accept_list[k]:
+								match = False	
+					else:
+						match = False
+						print "Reject %s"%k
+					if match == False:
+						r_reject_list.append(k)
+					else:
+						r_accept_count[k] += 1
+				else:
+					r_accept_list[k] = v
+					r_accept_count[k] = 1
+
 
 					
 		elif fn.endswith(".txt"):
@@ -135,8 +187,8 @@ for subdir, folders, files in os.walk(base_path):
 				chs = line.split(" ")
 				if "query in total" in line:
 					t = int(chs[-1], 10)
-					if t == 0:
-						print "ZERO: %s"%subdir
+					#if t == 0:
+						#print "ZERO: %s"%subdir
 					total.append(int(chs[-1], 10))
 					if t < total_min:
 						total_min = t
@@ -256,6 +308,27 @@ plt.ylabel("#of appearance")
 
 plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 plt.show()
+
+print ""
+print "=====WRITE======"
+for k,v in w_accept_list.items():
+	print "%s: -> "%k,
+	for t in v:
+		print "%s, "%t,
+	print " (count = %d)"%w_accept_count[k]
+print "==========="
+print ""
+
+print ""
+print "=====READ======"
+for k,v in r_accept_list.items():
+	print "%s: -> "%k,
+	for t in v:
+		print "%s, "%t,
+	print " (count = %d)"%r_accept_count[k]
+print "==========="
+print ""
+
 
 #print "Average txn length: %f"%(float(sum(lcnt)) / float(len(lcnt)))
 print "Controller functions: %d"%len(total)

@@ -492,18 +492,18 @@ def compute_chain_stats
 			f = isTableField(tbl_name, field_name)
 			if f != nil
 				p_s = p_s + " -> field"
+				if @stored_fields.has_key?(s)
+					@stored_fields[s] += 1
+					@stored_f_type[s] = f.type
+				else
+					@stored_fields[s] = 1
+					@stored_f_source[s] = 0
+					@stored_f_type[s] = f.type
+				end
 				if n.getInstr.instance_of?AttrAssign_instr
-					if @stored_fields.has_key?(s)
-						@stored_fields[s] += 1
-						@stored_f_type[s] = f.type
-					else
-						@stored_fields[s] = 1
-						@stored_f_source[s] = 0
-						@stored_f_type[s] = f.type
-						n.source_list.each do |sn|
-							r_lst = find_path_between_two_nodes(sn, n)
-							@stored_f_source[s] += r_lst.length
-						end
+					n.source_list.each do |sn|
+						r_lst = find_path_between_two_nodes(sn, n)
+						@stored_f_source[s] += r_lst.length
 					end
 				end
 			elsif isActiveRecord(tbl_name)
