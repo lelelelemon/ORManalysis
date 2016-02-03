@@ -50,7 +50,9 @@ class Controller_Class
 			cur_ast = ast_arr.pop
 			if cur_ast.type.to_s == "def" 
 				func_name = get_func_name(cur_ast.source.split("\n")[0])
-				functions[func_name] = Function_Class.new(self, cur_ast.source)
+				source = cur_ast.source
+				source.strip!
+				functions[func_name] = Function_Class.new(self, source)
 			else
 				cur_ast.children.each do |child|
 					ast_arr.push child
@@ -79,12 +81,16 @@ class Function_Class
 		end
 	end
 
+	def to_str
+		return self.get_controller_name + "_" + self.get_function_name
+	end
+
 	def parse_content(content)
 		return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
 
 	def get_content
-		@content
+		return @content
 	end
 
 	# get the class where the action function is defined
@@ -156,7 +162,7 @@ class Function_Class
 		self.get_render_statement_array.each do |r|
 			view_name = get_view_name_from_render_statement(r)
 			view_class = view_class_hash[view_name]
-	
+		
 			if view_class != nil
 				value = view_class.replace_render_statements(view_class_hash)
 				render_view_mapping[r] = value
@@ -170,26 +176,37 @@ class Function_Class
 
 	def replace_render_statements(view_class_hash)
 		render_view_mapping = self.get_render_view_mapping(view_class_hash)
-		content = self.get_content
+		content = self.get_content.dup
+		
+		need_default_render = true
+		temp = content.split("\n")
+		#if the second last line contains "render" or "redirect_to" we assume that we don't need to do default rendering
+		need_default_render = false if temp[temp.length-2].include?"render" or temp[temp.length-2].include?"redirect_to"
+		
 		render_view_mapping.each do |k, v|
 			content.gsub! k, v
 		end
 
 		#we need to append the default view at the end of the function, this may be inaccuate because some views may already been rendered, we need to figure out a way to avoid duplicated rendering
-		
-		
-		view_name = self.get_controller_name + "_" + self.get_function_name
-		view_class = view_class_hash[view_name]
-		if view_class != nil
-			value = view_class.replace_render_statements(view_class_hash)
-			content = content.split "\n"
-			len = content.length
-			content[len] = content[len-1]
-			content[len-1] = value
-			content = content.join("\n")
-		else
-			#do something the view file does not exist! It could mean we parse the file wrong. 
+		if need_default_render
+			view_name = self.get_controller_name + "_" + self.get_function_name
+			view_class = view_class_hash[view_name]
+			if view_class != nil
+				value = view_class.replace_render_statements(view_class_hash)
+				content = content.split "\n"
+				len = content.length
+				content[len] = content[len-1]
+				content[len-1] = value
+				content = content.join("\n")
+			else
+				#do something the view file does not exist! It could mean we parse the file wrong. 
+			end
 		end
+
+		#testing
+#		render_view_mapping.each do |k, v|
+#			content += (k + "\n" + v + "\n")
+#		end
 
 		return content
 	end
@@ -393,6 +410,10 @@ class View_Class
 			@links_controller_view = res
 		end
 		@links_controller_view 
+	end
+
+	def to_str
+		@controller_name + "_" + @view_name
 	end
 end 
 

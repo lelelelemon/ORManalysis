@@ -6,14 +6,10 @@ def load_all_controllers_from_path(controller_path)
 	controller_hash = Hash.new
 	Dir.glob(controller_path + "**/*") do |item|
 		next if not item.end_with?"_controller.rb"
-
-		
-
 		controller = Controller_Class.new(item)
 		controller_hash[controller.get_controller_name] = controller
 
 	end
-
 	return controller_hash
 end
 
@@ -34,28 +30,24 @@ def print_redirect_to_of_all_controllers(controller_path)
 	end
 end
 
-
-
-
 def load_all_views_from_path(view_path)
 	view_hash = Hash.new
 	Dir.glob(view_path + "**/*") do |item|
 		next if not item.end_with?".erb"
-
 		view_class = View_Class.new(item, view_path)
-		
 		key = view_class.get_controller_name + "_" + view_class.get_view_name
 #		key = view_class.get_file_type + "_" + key if view_class.get_file_type != "html"
-
 		view_hash[key] = view_class
 	end
 
 	return view_hash
 end
 
+#print all controller classes with render statements replaced by the correponding view files, all render statements replaced recursively 
 def controller_print_all_controllers_render_replaced(controller_path, view_path, new_controller_path)
 	controller_hash = load_all_controllers_from_path(controller_path)
 	view_hash = load_all_views_from_path(view_path)
+	
 	controller_hash.each do |item_path, controller_class|
 		nested_path = get_nested_path(item_path, controller_path)
 		if not File.directory?(new_controller_path + nested_path)
@@ -64,14 +56,16 @@ def controller_print_all_controllers_render_replaced(controller_path, view_path,
 		controller_file_path = new_controller_path + nested_path + controller_class.get_controller_name + "_controller.rb"
 		res = controller_class.get_content
 		controller_class.get_functions.each do |k, v|
+			
+			#replace all controller_functions by functions with render statemenrs replaced
+			#old = v.get_content
+			#new = v.replace_render_statements(view_hash)
+			#puts res.include?v.get_content
+#			puts "def #{v.get_function_name}[.*]end" 
 
-#			puts "controller: " + controller_class.get_controller_name
-#			puts "action: " + k
-
-			res.gsub! v.get_content, v.replace_render_statements(view_hash) + "\n"
-#			res += (v.replace_render_statements(view_hash) + "\n\n")
-
-#			puts "----------------------"
+			res = res.gsub(v.get_content, v.replace_render_statements(view_hash))
+			#break
+			
 		end
 
 		File.write(controller_file_path, res)
