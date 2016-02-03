@@ -8,10 +8,28 @@ class SignupController < ApplicationController
     end
 
     @title = "Signup"
+ if Rails.application.allow_invitation_requests? 
+ else 
+ end 
+
   end
 
   def invite
     @title = "Pass Along an Invitation"
+ @user.invited_by_user.try(:username) 
+  form_tag "/invitations", :method => :post do |f| 
+ if defined?(return_home) && return_home 
+ hidden_field_tag :return_home, 1 
+ end 
+ label_tag :email, "E-mail Address:", :class => "required" 
+ text_field_tag :email, "", :size => 30, :autocomplete => "off" 
+ label_tag :memo, "Memo to User:", :class => "required" 
+ text_field_tag :memo, "", :size => 60 
+ submit_tag "Send Invitation" 
+ end 
+ 
+ button_to "Skip", "/", :method => :get 
+
   end
 
   def invited
@@ -30,8 +48,7 @@ class SignupController < ApplicationController
     @new_user = User.new
     @new_user.email = @invitation.email
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for @new_user, { :url => signup_path,
+     form_for @new_user, { :url => signup_path,
   :autocomplete => "off" } do |f| 
  hidden_field_tag "invitation_code", @invitation.code 
  error_messages_for(@new_user) 
@@ -52,11 +69,12 @@ class SignupController < ApplicationController
       :autocomplete => "off" 
  f.label :about, "About:", :class => "required" 
  f.text_area :about, :size => "100x5", :style => "width: 600px;" 
- render :partial => "global/markdownhelp" 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
  submit_tag "Signup" 
  end 
 
-end
   end
 
   def signup
@@ -80,8 +98,7 @@ end
 
       return redirect_to "/signup/invite"
     else
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for @new_user, { :url => signup_path,
+       form_for @new_user, { :url => signup_path,
   :autocomplete => "off" } do |f| 
  hidden_field_tag "invitation_code", @invitation.code 
  error_messages_for(@new_user) 
@@ -102,11 +119,12 @@ end
       :autocomplete => "off" 
  f.label :about, "About:", :class => "required" 
  f.text_area :about, :size => "100x5", :style => "width: 600px;" 
- render :partial => "global/markdownhelp" 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
  submit_tag "Signup" 
  end 
 
-end
     end
   end
 

@@ -14,6 +14,10 @@ class HomeController < ApplicationController
     end
   end
 
+  def chat
+    render :action => "chat"
+  end
+
   def privacy
     begin
       render :action => "privacy"
@@ -32,12 +36,163 @@ class HomeController < ApplicationController
     @heading = @title = "Hidden Stories"
     @cur_url = "/hidden"
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
+     if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @page && @page > 1 
  @cur_url 
  @cur_url == "/" ? "" : "/" 
@@ -55,7 +210,6 @@ class HomeController < ApplicationController
  @page + 1 
  end 
 
-end
   end
 
   def index
@@ -72,12 +226,368 @@ end
     @cur_url = "/"
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+      format.html {  if @cur_url == "/recent" 
+ end 
+ @cur_url == "/hidden" ? "show_hidden" : "" 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
+ if @page && @page > 1 
+ @cur_url 
+ @cur_url == "/" ? "" : "/" 
+
+      @page == 2 ? "" : "page/#{@page - 1}" 
+ @page - 1 
+ end 
+ if @show_more 
+ if @page && @page > 1 
+ end 
+ @cur_url 
+ @cur_url == "/" ? "" : "/" 
+
+      @page + 1 
+ @page + 1 
+ end 
+ }
+      format.rss {
+        if @user && params[:token].present?
+          @title = "Private feed for #{@user.username}"
+        end
+
+         coder = HTMLEntities.new 
+ Rails.application.name 
+ @title.present? ?
+      ": " + h(@title) : "" 
+ @title 
+ Rails.application.root_url + (@newest ? "newest" : "") 
+ @stories.each do |story| 
+ raw coder.encode(story.title, :decimal) 
+ story.url_or_comments_url 
+ story.short_id_url 
+ story.user.username 
+ story.created_at.rfc2822 
+ story.comments_url 
+ raw coder.encode(story.markeddown_description, :decimal) 
+ if story.url.present? 
+ raw coder.encode("<p>" +
+              link_to("Comments", story.comments_url) + "</p>", :decimal) 
+ end 
+ story.taggings.each do |tagging| 
+ tagging.tag.tag 
+ end 
+ end 
+
+      }
+      format.json { render :json => @stories }
+    end
  if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @page && @page > 1 
  @cur_url 
  @cur_url == "/" ? "" : "/" 
@@ -95,16 +605,6 @@ end
  @page + 1 
  end 
 
-end }
-      format.rss {
-        if @user && params[:token].present?
-          @title = "Private feed for #{@user.username}"
-        end
-
-        render :action => "rss", :layout => false
-      }
-      format.json { render :json => @stories }
-    end
   end
 
   def newest
@@ -119,12 +619,163 @@ end }
       :href => "/newest.rss#{@user ? "?token=#{@user.rss_token}" : ""}" }
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
+      format.html {  if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @page && @page > 1 
  @cur_url 
  @cur_url == "/" ? "" : "/" 
@@ -141,14 +792,35 @@ end }
       @page + 1 
  @page + 1 
  end 
-
-end }
+ }
       format.rss {
         if @user && params[:token].present?
           @title += " - Private feed for #{@user.username}"
         end
 
-        render :action => "rss", :layout => false
+         coder = HTMLEntities.new 
+ Rails.application.name 
+ @title.present? ?
+      ": " + h(@title) : "" 
+ @title 
+ Rails.application.root_url + (@newest ? "newest" : "") 
+ @stories.each do |story| 
+ raw coder.encode(story.title, :decimal) 
+ story.url_or_comments_url 
+ story.short_id_url 
+ story.user.username 
+ story.created_at.rfc2822 
+ story.comments_url 
+ raw coder.encode(story.markeddown_description, :decimal) 
+ if story.url.present? 
+ raw coder.encode("<p>" +
+              link_to("Comments", story.comments_url) + "</p>", :decimal) 
+ end 
+ story.taggings.each do |tagging| 
+ tagging.tag.tag 
+ end 
+ end 
+
       }
       format.json { render :json => @stories }
     end
@@ -167,12 +839,163 @@ end }
     @newest = true
     @for_user = by_user.username
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
+     if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @page && @page > 1 
  @cur_url 
  @cur_url == "/" ? "" : "/" 
@@ -190,7 +1013,6 @@ end }
  @page + 1 
  end 
 
-end
   end
 
   def recent
@@ -210,12 +1032,163 @@ end
     @rss_link = { :title => "RSS 2.0 - Newest Items",
       :href => "/newest.rss#{@user ? "?token=#{@user.rss_token}" : ""}" }
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
+     if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @page && @page > 1 
  @cur_url 
  @cur_url == "/" ? "" : "/" 
@@ -233,7 +1206,6 @@ end
  @page + 1 
  end 
 
-end
   end
 
   def tagged
@@ -250,12 +1222,163 @@ end
       :href => "/t/#{@tag.tag}.rss" }
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
+      format.html {  if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @page && @page > 1 
  @cur_url 
  @cur_url == "/" ? "" : "/" 
@@ -272,9 +1395,30 @@ end
       @page + 1 
  @page + 1 
  end 
-
-end }
-      format.rss { render :action => "rss", :layout => false }
+ }
+      format.rss {  coder = HTMLEntities.new 
+ Rails.application.name 
+ @title.present? ?
+      ": " + h(@title) : "" 
+ @title 
+ Rails.application.root_url + (@newest ? "newest" : "") 
+ @stories.each do |story| 
+ raw coder.encode(story.title, :decimal) 
+ story.url_or_comments_url 
+ story.short_id_url 
+ story.user.username 
+ story.created_at.rfc2822 
+ story.comments_url 
+ raw coder.encode(story.markeddown_description, :decimal) 
+ if story.url.present? 
+ raw coder.encode("<p>" +
+              link_to("Comments", story.comments_url) + "</p>", :decimal) 
+ end 
+ story.taggings.each do |tagging| 
+ tagging.tag.tag 
+ end 
+ end 
+ }
       format.json { render :json => @stories }
     end
   end
@@ -302,12 +1446,163 @@ end }
       @heading = @title = "Top Stories of the Past " << length[:intv]
     end
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
+     if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @page && @page > 1 
  @cur_url 
  @cur_url == "/" ? "" : "/" 
@@ -325,7 +1620,6 @@ end }
  @page + 1 
  end 
 
-end
   end
 
   def upvoted
@@ -340,12 +1634,163 @@ end
       :href => "/upvoted.rss#{(@user ? "?token=#{@user.rss_token}" : "")}" }
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
+      format.html {  if @cur_url == "/recent" 
  end 
  @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @page && @page > 1 
  @cur_url 
  @cur_url == "/" ? "" : "/" 
@@ -362,14 +1807,35 @@ end
       @page + 1 
  @page + 1 
  end 
-
-end }
+ }
       format.rss {
         if @user && params[:token].present?
           @title += " - Private feed for #{@user.username}"
         end
 
-        render :action => "rss", :layout => false
+         coder = HTMLEntities.new 
+ Rails.application.name 
+ @title.present? ?
+      ": " + h(@title) : "" 
+ @title 
+ Rails.application.root_url + (@newest ? "newest" : "") 
+ @stories.each do |story| 
+ raw coder.encode(story.title, :decimal) 
+ story.url_or_comments_url 
+ story.short_id_url 
+ story.user.username 
+ story.created_at.rfc2822 
+ story.comments_url 
+ raw coder.encode(story.markeddown_description, :decimal) 
+ if story.url.present? 
+ raw coder.encode("<p>" +
+              link_to("Comments", story.comments_url) + "</p>", :decimal) 
+ end 
+ story.taggings.each do |tagging| 
+ tagging.tag.tag 
+ end 
+ end 
+
       }
       format.json { render :json => @stories }
     end

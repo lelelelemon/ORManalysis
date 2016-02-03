@@ -3,7 +3,7 @@ class FiltersController < ApplicationController
 
   def index
     @cur_url = "/filters"
-    @title = "Filtered Tags"
+    @title = "Tag Filters"
 
     @tags = Tag.active.all_with_story_counts_for(@user)
 
@@ -12,6 +12,25 @@ class FiltersController < ApplicationController
     else
       @filtered_tags = tags_filtered_by_cookie.to_a
     end
+ if !@user 
+ end 
+ form_tag "/filters", :method => :post do 
+ @tags.each do |tag| 
+ check_box_tag "tags[]", tag.tag,
+          @filtered_tags.include?(tag) 
+ link_to tag.tag, tag_path(tag), :class => tag.css_class 
+ tag.description 
+ if tag.hotness_mod != 0 
+ tag.hotness_mod > 0 ? "+" : ""
+
+              tag.hotness_mod 
+ end 
+
+          tag.stories_count 
+ end 
+ submit_tag "Save Filters" 
+ end 
+
   end
 
   def update

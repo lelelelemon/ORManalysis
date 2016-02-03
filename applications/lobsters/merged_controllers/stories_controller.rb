@@ -1,12 +1,11 @@
 class StoriesController < ApplicationController
   before_filter :require_logged_in_user_or_400,
     :only => [ :upvote, :downvote, :unvote, :hide, :unhide, :preview ]
-
   before_filter :require_logged_in_user, :only => [ :destroy, :create, :edit,
-    :fetch_url_title, :new ]
-
+    :fetch_url_attributes, :new, :suggest ]
   before_filter :find_user_story, :only => [ :destroy, :edit, :undelete,
     :update ]
+  before_filter :find_story!, :only => [ :suggest, :submit_suggestions ]
 
   def create
     @title = "Submit Story"
@@ -24,22 +23,464 @@ class StoriesController < ApplicationController
       end
     end
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for @story do |f| 
- render :partial => "stories/form", :locals => { :story => @story,
-        :f => f } 
- submit_tag "Submit" 
- render :partial => "global/markdownhelp",
-            :locals => { :allow_images => true } 
+    return  form_for @story do |f| 
+  if f.object.errors.count == 1 && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ elsif f.object.errors.any? 
+ error_messages_for f.object 
+ elsif !f.object.errors.any? && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ f.hidden_field :seen_previous 
+ end 
+ unless defined?(suggesting) 
+ if f.object.url_is_editable_by_user?(@user) 
+ f.label :url, "URL:", :class => "required" 
+ f.text_field :url, :autocomplete => "off" 
+ button_tag "Fetch Title", :id => "story_fetch_title",
+        :type => "button" 
+ elsif !f.object.new_record? && !f.object.url.blank? 
+ f.label :url, "URL:", :class => "required" 
+ f.object.url 
+ f.object.url 
+ end 
+ end 
+ f.label :title, "Title:", :class => "required" 
+ f.text_field :title, :maxlength => 100, :autocomplete => "off"  
+ if f.object.id && !defined?(suggesting) 
+ title_votes = {} 
+ f.object.suggested_titles.each do |st| 
+ title_votes[st.title] ||= 0 
+ title_votes[st.title] += 1 
+ end 
+ title_votes.delete(f.object.title) 
+ if title_votes.any? 
+ title_votes.each do |ti,c| 
+ h(ti) 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ f.label :tags_a, "Tags:", :class => "required",
+    :style => "line-height: 2.3em;" 
+ f.select "tags_a", options_for_select(
+    Tag.all_with_filtered_counts_for(@user).map{|t|
+      html = "<strong>#{h(t.tag)}</strong> - #{h(t.description.to_s)}"
+
+      if t.hotness_mod != 0
+        html << " (hotness mod #{t.hotness_mod > 0 ? "+" : ""}#{t.hotness_mod})"
+      end
+      if t.filtered_count > 0
+        html << " <em>#{t.filtered_count} user" <<
+          (t.filtered_count == 1 ? "" : "s") << " filtering</em>"
+      end
+
+      [ "#{t.tag} - #{t.description}", t.tag, { "data-html" => raw(html) } ]},
+    f.object.tags_a), {}, { :multiple => true } 
+ if f.object.id && !defined?(suggesting) 
+ tag_votes = {} 
+ f.object.suggested_taggings.group_by(&:user_id).each do |u,stg| 
+ tl = stg.map{|st| st.tag.tag }.sort.join(", ") 
+ tag_votes[tl] ||= 0 
+ tag_votes[tl] += 1 
+ end 
+ tag_votes.delete(f.object.tags_a.sort.join(", ")) 
+ if tag_votes.any? 
+ tag_votes.each do |ts,c| 
+ ts 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ unless defined?(suggesting) 
+ f.label :description, "Text:", :class => "required" 
+ f.text_area :description, :rows => 15,
+        :placeholder => "Optional when submitting a URL; please see guidelines",
+        :autocomplete => "off" 
+ show_guidelines?? "" :
+      "display: none;" 
+ Rails.application.root_url
+        
+
+        
+ Rails.application.name 
+ Rails.application.name 
+ end 
+ unless defined?(suggesting) 
+ f.label :user_is_author, "Author:", :class => "required" 
+ f.check_box :user_is_author 
+ f.label :user_is_author,
+        (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
+        " the author of the story at this URL (or this text)",
+        :class => "normal" 
+ end 
+ 
  end 
  if @story.previewing && @story.valid? 
- render :template => "stories/show" 
+   story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
  end 
- if @story.previewing 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
  else 
  end 
+ ms.user.username 
 
-end
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
+ if @story.markeddown_description.present? 
+ raw @story.markeddown_description 
+ end 
+ if @story.is_unavailable && @story.story_cache.present? 
+
+    time_ago_in_words_label(@story.unavailable_at) 
+ simple_format(@story.story_cache) 
+ end 
+ if !@story.previewing 
+ if !@story.is_gone? && !@story.previewing 
+  comment.short_id if comment.persisted? 
+ form_for comment,
+:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
+ if comment.errors.any? 
+ errors_for comment 
+ end 
+ hidden_field_tag "story_id", comment.story.short_id 
+ if comment.parent_comment 
+ hidden_field_tag "parent_comment_short_id",
+      comment.parent_comment.short_id 
+ end 
+ text_area_tag "comment", comment.comment, :rows => 5,
+      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
+      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
+      
+ if @user 
+ end 
+ button_tag "#{comment.new_record?? "Post" : "Update"}",
+        :class => "comment-post", :type => "button",
+        :disabled => !@user 
+ button_tag "Preview", :class => "comment-preview",
+        :type => "button", :disabled => !@user 
+ if comment.persisted? || comment.parent_comment_id 
+ button_tag "Cancel", :class => "comment-cancel",
+          :type => "button" 
+ end 
+ if @user && @user.hats.any? 
+ select_tag "hat_id",
+          options_from_collection_for_select(@user.hats, "id", "hat",
+          comment.hat_id), :include_blank => true 
+ end 
+ if @user 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
+ end 
+ end 
+ if defined?(show_comment) && show_comment.valid? 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ end 
+ 
+ end 
+ comments_by_parent = @comments.group_by(&:parent_comment_id) 
+ subtree = comments_by_parent[nil] 
+ ancestors = [] 
+ while subtree 
+ if (comment = subtree.shift) 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ elsif (subtree = ancestors.pop) 
+ end 
+ end 
+ end 
+ 
+ end 
+ if !@story.previewing 
+ end 
+
   end
 
   def destroy
@@ -71,6 +512,104 @@ end
     if @story.merged_into_story
       @story.merge_story_short_id = @story.merged_into_story.short_id
     end
+ form_for @story, :url => story_path(@story.short_id),
+  :method => :put, :html => { :id => "edit_story" } do |f| 
+  if f.object.errors.count == 1 && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ elsif f.object.errors.any? 
+ error_messages_for f.object 
+ elsif !f.object.errors.any? && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ f.hidden_field :seen_previous 
+ end 
+ unless defined?(suggesting) 
+ if f.object.url_is_editable_by_user?(@user) 
+ f.label :url, "URL:", :class => "required" 
+ f.text_field :url, :autocomplete => "off" 
+ button_tag "Fetch Title", :id => "story_fetch_title",
+        :type => "button" 
+ elsif !f.object.new_record? && !f.object.url.blank? 
+ f.label :url, "URL:", :class => "required" 
+ f.object.url 
+ f.object.url 
+ end 
+ end 
+ f.label :title, "Title:", :class => "required" 
+ f.text_field :title, :maxlength => 100, :autocomplete => "off"  
+ if f.object.id && !defined?(suggesting) 
+ title_votes = {} 
+ f.object.suggested_titles.each do |st| 
+ title_votes[st.title] ||= 0 
+ title_votes[st.title] += 1 
+ end 
+ title_votes.delete(f.object.title) 
+ if title_votes.any? 
+ title_votes.each do |ti,c| 
+ h(ti) 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ f.label :tags_a, "Tags:", :class => "required",
+    :style => "line-height: 2.3em;" 
+ f.select "tags_a", options_for_select(
+    Tag.all_with_filtered_counts_for(@user).map{|t|
+      html = "<strong>#{h(t.tag)}</strong> - #{h(t.description.to_s)}"
+
+      if t.hotness_mod != 0
+        html << " (hotness mod #{t.hotness_mod > 0 ? "+" : ""}#{t.hotness_mod})"
+      end
+      if t.filtered_count > 0
+        html << " <em>#{t.filtered_count} user" <<
+          (t.filtered_count == 1 ? "" : "s") << " filtering</em>"
+      end
+
+      [ "#{t.tag} - #{t.description}", t.tag, { "data-html" => raw(html) } ]},
+    f.object.tags_a), {}, { :multiple => true } 
+ if f.object.id && !defined?(suggesting) 
+ tag_votes = {} 
+ f.object.suggested_taggings.group_by(&:user_id).each do |u,stg| 
+ tl = stg.map{|st| st.tag.tag }.sort.join(", ") 
+ tag_votes[tl] ||= 0 
+ tag_votes[tl] += 1 
+ end 
+ tag_votes.delete(f.object.tags_a.sort.join(", ")) 
+ if tag_votes.any? 
+ tag_votes.each do |ts,c| 
+ ts 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ unless defined?(suggesting) 
+ f.label :description, "Text:", :class => "required" 
+ f.text_area :description, :rows => 15,
+        :placeholder => "Optional when submitting a URL; please see guidelines",
+        :autocomplete => "off" 
+ show_guidelines?? "" :
+      "display: none;" 
+ Rails.application.root_url
+        
+
+        
+ Rails.application.name 
+ Rails.application.name 
+ end 
+ unless defined?(suggesting) 
+ f.label :user_is_author, "Author:", :class => "required" 
+ f.check_box :user_is_author 
+ f.label :user_is_author,
+        (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
+        " the author of the story at this URL (or this text)",
+        :class => "normal" 
+ end 
+ 
+ end 
+
   end
 
   def fetch_url_attributes
@@ -78,17 +617,7 @@ end
     s.fetching_ip = request.remote_ip
     s.url = params[:fetch_url]
 
-    oattrs = { :url => params[:fetch_url], :title => nil }
-
-    if (title = s.fetched_title).present?
-      oattrs[:title] = title
-    end
-
-    if (cu = s.fetched_canonical_url).present?
-      oattrs[:url] = cu
-    end
-
-    return render :json => oattrs
+    return render :json => s.fetched_attributes
   end
 
   def new
@@ -101,10 +630,12 @@ end
     if params[:url].present?
       @story.url = params[:url]
 
-      if (cu = @story.fetched_canonical_url).present? && @story.url != cu
+      sattrs = @story.fetched_attributes
+
+      if sattrs[:url].present? && @story.url != sattrs[:url]
         flash.now[:notice] = "Note: URL has been changed to fetched " <<
           "canonicalized version"
-        @story.url = cu
+        @story.url = sattrs[:url]
       end
 
       if s = Story.find_similar_by_url(@story.url)
@@ -120,11 +651,469 @@ end
       end
 
       # ignore what the user brought unless we need it as a fallback
-      @story.title = @story.fetched_title
+      @story.title = sattrs[:title]
       if !@story.title.present? && params[:title].present?
         @story.title = params[:title]
       end
     end
+ form_for @story do |f| 
+  if f.object.errors.count == 1 && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ elsif f.object.errors.any? 
+ error_messages_for f.object 
+ elsif !f.object.errors.any? && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ f.hidden_field :seen_previous 
+ end 
+ unless defined?(suggesting) 
+ if f.object.url_is_editable_by_user?(@user) 
+ f.label :url, "URL:", :class => "required" 
+ f.text_field :url, :autocomplete => "off" 
+ button_tag "Fetch Title", :id => "story_fetch_title",
+        :type => "button" 
+ elsif !f.object.new_record? && !f.object.url.blank? 
+ f.label :url, "URL:", :class => "required" 
+ f.object.url 
+ f.object.url 
+ end 
+ end 
+ f.label :title, "Title:", :class => "required" 
+ f.text_field :title, :maxlength => 100, :autocomplete => "off"  
+ if f.object.id && !defined?(suggesting) 
+ title_votes = {} 
+ f.object.suggested_titles.each do |st| 
+ title_votes[st.title] ||= 0 
+ title_votes[st.title] += 1 
+ end 
+ title_votes.delete(f.object.title) 
+ if title_votes.any? 
+ title_votes.each do |ti,c| 
+ h(ti) 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ f.label :tags_a, "Tags:", :class => "required",
+    :style => "line-height: 2.3em;" 
+ f.select "tags_a", options_for_select(
+    Tag.all_with_filtered_counts_for(@user).map{|t|
+      html = "<strong>#{h(t.tag)}</strong> - #{h(t.description.to_s)}"
+
+      if t.hotness_mod != 0
+        html << " (hotness mod #{t.hotness_mod > 0 ? "+" : ""}#{t.hotness_mod})"
+      end
+      if t.filtered_count > 0
+        html << " <em>#{t.filtered_count} user" <<
+          (t.filtered_count == 1 ? "" : "s") << " filtering</em>"
+      end
+
+      [ "#{t.tag} - #{t.description}", t.tag, { "data-html" => raw(html) } ]},
+    f.object.tags_a), {}, { :multiple => true } 
+ if f.object.id && !defined?(suggesting) 
+ tag_votes = {} 
+ f.object.suggested_taggings.group_by(&:user_id).each do |u,stg| 
+ tl = stg.map{|st| st.tag.tag }.sort.join(", ") 
+ tag_votes[tl] ||= 0 
+ tag_votes[tl] += 1 
+ end 
+ tag_votes.delete(f.object.tags_a.sort.join(", ")) 
+ if tag_votes.any? 
+ tag_votes.each do |ts,c| 
+ ts 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ unless defined?(suggesting) 
+ f.label :description, "Text:", :class => "required" 
+ f.text_area :description, :rows => 15,
+        :placeholder => "Optional when submitting a URL; please see guidelines",
+        :autocomplete => "off" 
+ show_guidelines?? "" :
+      "display: none;" 
+ Rails.application.root_url
+        
+
+        
+ Rails.application.name 
+ Rails.application.name 
+ end 
+ unless defined?(suggesting) 
+ f.label :user_is_author, "Author:", :class => "required" 
+ f.check_box :user_is_author 
+ f.label :user_is_author,
+        (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
+        " the author of the story at this URL (or this text)",
+        :class => "normal" 
+ end 
+ 
+ end 
+ if @story.previewing && @story.valid? 
+   story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
+ if @story.markeddown_description.present? 
+ raw @story.markeddown_description 
+ end 
+ if @story.is_unavailable && @story.story_cache.present? 
+
+    time_ago_in_words_label(@story.unavailable_at) 
+ simple_format(@story.story_cache) 
+ end 
+ if !@story.previewing 
+ if !@story.is_gone? && !@story.previewing 
+  comment.short_id if comment.persisted? 
+ form_for comment,
+:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
+ if comment.errors.any? 
+ errors_for comment 
+ end 
+ hidden_field_tag "story_id", comment.story.short_id 
+ if comment.parent_comment 
+ hidden_field_tag "parent_comment_short_id",
+      comment.parent_comment.short_id 
+ end 
+ text_area_tag "comment", comment.comment, :rows => 5,
+      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
+      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
+      
+ if @user 
+ end 
+ button_tag "#{comment.new_record?? "Post" : "Update"}",
+        :class => "comment-post", :type => "button",
+        :disabled => !@user 
+ button_tag "Preview", :class => "comment-preview",
+        :type => "button", :disabled => !@user 
+ if comment.persisted? || comment.parent_comment_id 
+ button_tag "Cancel", :class => "comment-cancel",
+          :type => "button" 
+ end 
+ if @user && @user.hats.any? 
+ select_tag "hat_id",
+          options_from_collection_for_select(@user.hats, "id", "hat",
+          comment.hat_id), :include_blank => true 
+ end 
+ if @user 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
+ end 
+ end 
+ if defined?(show_comment) && show_comment.valid? 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ end 
+ 
+ end 
+ comments_by_parent = @comments.group_by(&:parent_comment_id) 
+ subtree = comments_by_parent[nil] 
+ ancestors = [] 
+ while subtree 
+ if (comment = subtree.shift) 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ elsif (subtree = ancestors.pop) 
+ end 
+ end 
+ end 
+ 
+ end 
+ if !@story.previewing 
+ end 
+
   end
 
   def preview
@@ -139,22 +1128,464 @@ end
 
     @story.seen_previous = true
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for @story do |f| 
- render :partial => "stories/form", :locals => { :story => @story,
-        :f => f } 
- submit_tag "Submit" 
- render :partial => "global/markdownhelp",
-            :locals => { :allow_images => true } 
+    return  form_for @story do |f| 
+  if f.object.errors.count == 1 && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ elsif f.object.errors.any? 
+ error_messages_for f.object 
+ elsif !f.object.errors.any? && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ f.hidden_field :seen_previous 
+ end 
+ unless defined?(suggesting) 
+ if f.object.url_is_editable_by_user?(@user) 
+ f.label :url, "URL:", :class => "required" 
+ f.text_field :url, :autocomplete => "off" 
+ button_tag "Fetch Title", :id => "story_fetch_title",
+        :type => "button" 
+ elsif !f.object.new_record? && !f.object.url.blank? 
+ f.label :url, "URL:", :class => "required" 
+ f.object.url 
+ f.object.url 
+ end 
+ end 
+ f.label :title, "Title:", :class => "required" 
+ f.text_field :title, :maxlength => 100, :autocomplete => "off"  
+ if f.object.id && !defined?(suggesting) 
+ title_votes = {} 
+ f.object.suggested_titles.each do |st| 
+ title_votes[st.title] ||= 0 
+ title_votes[st.title] += 1 
+ end 
+ title_votes.delete(f.object.title) 
+ if title_votes.any? 
+ title_votes.each do |ti,c| 
+ h(ti) 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ f.label :tags_a, "Tags:", :class => "required",
+    :style => "line-height: 2.3em;" 
+ f.select "tags_a", options_for_select(
+    Tag.all_with_filtered_counts_for(@user).map{|t|
+      html = "<strong>#{h(t.tag)}</strong> - #{h(t.description.to_s)}"
+
+      if t.hotness_mod != 0
+        html << " (hotness mod #{t.hotness_mod > 0 ? "+" : ""}#{t.hotness_mod})"
+      end
+      if t.filtered_count > 0
+        html << " <em>#{t.filtered_count} user" <<
+          (t.filtered_count == 1 ? "" : "s") << " filtering</em>"
+      end
+
+      [ "#{t.tag} - #{t.description}", t.tag, { "data-html" => raw(html) } ]},
+    f.object.tags_a), {}, { :multiple => true } 
+ if f.object.id && !defined?(suggesting) 
+ tag_votes = {} 
+ f.object.suggested_taggings.group_by(&:user_id).each do |u,stg| 
+ tl = stg.map{|st| st.tag.tag }.sort.join(", ") 
+ tag_votes[tl] ||= 0 
+ tag_votes[tl] += 1 
+ end 
+ tag_votes.delete(f.object.tags_a.sort.join(", ")) 
+ if tag_votes.any? 
+ tag_votes.each do |ts,c| 
+ ts 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ unless defined?(suggesting) 
+ f.label :description, "Text:", :class => "required" 
+ f.text_area :description, :rows => 15,
+        :placeholder => "Optional when submitting a URL; please see guidelines",
+        :autocomplete => "off" 
+ show_guidelines?? "" :
+      "display: none;" 
+ Rails.application.root_url
+        
+
+        
+ Rails.application.name 
+ Rails.application.name 
+ end 
+ unless defined?(suggesting) 
+ f.label :user_is_author, "Author:", :class => "required" 
+ f.check_box :user_is_author 
+ f.label :user_is_author,
+        (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
+        " the author of the story at this URL (or this text)",
+        :class => "normal" 
+ end 
+ 
  end 
  if @story.previewing && @story.valid? 
- render :template => "stories/show" 
+   story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
  end 
- if @story.previewing 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
  else 
  end 
+ ms.user.username 
 
-end
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
+ if @story.markeddown_description.present? 
+ raw @story.markeddown_description 
+ end 
+ if @story.is_unavailable && @story.story_cache.present? 
+
+    time_ago_in_words_label(@story.unavailable_at) 
+ simple_format(@story.story_cache) 
+ end 
+ if !@story.previewing 
+ if !@story.is_gone? && !@story.previewing 
+  comment.short_id if comment.persisted? 
+ form_for comment,
+:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
+ if comment.errors.any? 
+ errors_for comment 
+ end 
+ hidden_field_tag "story_id", comment.story.short_id 
+ if comment.parent_comment 
+ hidden_field_tag "parent_comment_short_id",
+      comment.parent_comment.short_id 
+ end 
+ text_area_tag "comment", comment.comment, :rows => 5,
+      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
+      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
+      
+ if @user 
+ end 
+ button_tag "#{comment.new_record?? "Post" : "Update"}",
+        :class => "comment-post", :type => "button",
+        :disabled => !@user 
+ button_tag "Preview", :class => "comment-preview",
+        :type => "button", :disabled => !@user 
+ if comment.persisted? || comment.parent_comment_id 
+ button_tag "Cancel", :class => "comment-cancel",
+          :type => "button" 
+ end 
+ if @user && @user.hats.any? 
+ select_tag "hat_id",
+          options_from_collection_for_select(@user.hats, "id", "hat",
+          comment.hat_id), :include_blank => true 
+ end 
+ if @user 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
+ end 
+ end 
+ if defined?(show_comment) && show_comment.valid? 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ end 
+ 
+ end 
+ comments_by_parent = @comments.group_by(&:parent_comment_id) 
+ subtree = comments_by_parent[nil] 
+ ancestors = [] 
+ while subtree 
+ if (comment = subtree.shift) 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ elsif (subtree = ancestors.pop) 
+ end 
+ end 
+ end 
+ 
+ end 
+ if !@story.previewing 
+ end 
+
   end
 
   def show
@@ -189,11 +1620,170 @@ end
       format.html {
         @comment = @story.comments.build
 
+        @meta_tags = {
+          "twitter:card" => "summary",
+          "twitter:site" => "@lobsters",
+          "twitter:title" => @story.title,
+          "twitter:description" => "#{@story.comments_count} comment" <<
+            "#{@story.comments_count == 1 ? "" : "s"}",
+        }
+
         load_user_votes
 
-        ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- render :partial => "stories/listdetail",
-    :locals => { :story => @story, :single_story => true } 
+          story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
  if @story.markeddown_description.present? 
  raw @story.markeddown_description 
  end 
@@ -204,31 +1794,791 @@ end
  end 
  if !@story.previewing 
  if !@story.is_gone? && !@story.previewing 
- render "comments/commentbox", :comment => @comment 
+  comment.short_id if comment.persisted? 
+ form_for comment,
+:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
+ if comment.errors.any? 
+ errors_for comment 
+ end 
+ hidden_field_tag "story_id", comment.story.short_id 
+ if comment.parent_comment 
+ hidden_field_tag "parent_comment_short_id",
+      comment.parent_comment.short_id 
+ end 
+ text_area_tag "comment", comment.comment, :rows => 5,
+      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
+      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
+      
+ if @user 
+ end 
+ button_tag "#{comment.new_record?? "Post" : "Update"}",
+        :class => "comment-post", :type => "button",
+        :disabled => !@user 
+ button_tag "Preview", :class => "comment-preview",
+        :type => "button", :disabled => !@user 
+ if comment.persisted? || comment.parent_comment_id 
+ button_tag "Cancel", :class => "comment-cancel",
+          :type => "button" 
+ end 
+ if @user && @user.hats.any? 
+ select_tag "hat_id",
+          options_from_collection_for_select(@user.hats, "id", "hat",
+          comment.hat_id), :include_blank => true 
+ end 
+ if @user 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
+ end 
+ end 
+ if defined?(show_comment) && show_comment.valid? 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ end 
+ 
  end 
  comments_by_parent = @comments.group_by(&:parent_comment_id) 
  subtree = comments_by_parent[nil] 
  ancestors = [] 
  while subtree 
  if (comment = subtree.shift) 
- render "comments/comment", :comment => comment,
-          :show_story => (comment.story_id != @story.id),
-          :was_merged => (comment.story_id != @story.id) 
- if (children = comments_by_parent[comment.id]) 
- ancestors << subtree 
- subtree = children 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
  else 
  end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
  elsif (subtree = ancestors.pop) 
  end 
  end 
  end 
 
-end
       }
       format.json {
         render :json => @story.as_json(:with_comments => @comments)
       }
+    end
+  story.short_id 
+ story.short_id 
+ story.vote && story.vote[:vote] == 1 ? "upvoted" : "" 
+ story.vote && story.vote[:vote] == -1 ? "downvoted" : "" 
+ story.score <= -1 ? "negative_1" : "" 
+ story.score <= -3 ? "negative_3" : "" 
+ story.score <= -5 ? "negative_5" : "" 
+ story.is_hidden_by_cur_user ? "hidden" : "" 
+ story.is_expired? ? "expired" : "" 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ story.score 
+ if story.can_be_seen_by_user?(@user) 
+ story.url_or_comments_path 
+
+          break_long_words(story.title) 
+ end 
+ if story.is_gone? 
+ story.is_moderated? ? "moderator" :
+          "original submitter" 
+ end 
+ if story.markeddown_description.present? 
+ story.comments_path 
+ end 
+ if story.can_be_seen_by_user?(@user) 
+ story.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if story.domain.present? 
+ story.domain_search_url 
+
+          break_long_words(story.domain) 
+ end 
+ if defined?(single_story) && single_story 
+ story.merged_stories.each do |ms| 
+ ms.url_or_comments_path 
+
+              break_long_words(ms.title) 
+ ms.sorted_taggings.each do |tagging| 
+ tag_path(tagging.tag.tag) 
+ tagging.tag.css_class 
+ tagging.tag.description 
+ tagging.tag.tag 
+ end 
+ if ms.domain.present? 
+ ms.domain_search_url 
+
+              break_long_words(ms.domain) 
+ end 
+ if @user && @user.show_avatars? 
+ ms.user.username 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(16) 
+ ms.user.avatar_url(32) 
+ end 
+ if story.user_is_author? 
+ else 
+ end 
+ ms.user.username 
+
+              ms.html_class_for_user 
+ ms.user.username 
+ time_ago_in_words_label(ms.created_at, :strip_about => true) 
+ end 
+ end 
+ end 
+ if !(defined?(single_story) && single_story) && @user &&
+    @user.show_story_previews? 
+ if (sc = story.description_or_story_cache(500)).present? 
+ break_long_words(sc) 
+ end 
+ end 
+ if @user && @user.show_avatars? 
+ story.user.username 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(16) 
+ story.user.avatar_url(32) 
+ end 
+ if story.previewing 
+ if story.user_is_author? 
+ else 
+ end 
+ story.html_class_for_user 
+
+          story.user.username 
+ else 
+ if story.user_is_author? 
+ else 
+ end 
+ story.user.username 
+
+          story.html_class_for_user 
+ story.user.username 
+ time_ago_in_words_label(story.created_at, :strip_about => true) 
+ if story.is_editable_by_user?(@user) 
+ edit_story_path(story.short_id) 
+ if story.is_gone? && story.is_undeletable_by_user?(@user) 
+ link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" } 
+ elsif !story.is_gone? 
+ if story.user_id != @user.try(:id) &&
+            @user.try(:is_moderator?) 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link" 
+ else 
+ link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" } 
+ end 
+ end 
+ end 
+ if story.can_have_suggestions_from_user?(@user) 
+ link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester" 
+ end 
+ if !story.is_gone? && @user 
+ if @user && story.vote && story.vote[:vote] == -1 
+
+              Vote::STORY_REASONS[story.vote[:reason]].to_s.downcase 
+ elsif @user && @user.can_downvote?(story) 
+ end 
+ if story.is_hidden_by_cur_user 
+ link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider" 
+ else 
+ link_to "hide", story_hide_path(story.short_id),
+              :class => "hider" 
+ end 
+ if defined?(single_story) && single_story && story.hider_count > 0 
+ pluralize(story.hider_count, "user") 
+ end 
+ end 
+ if !story.is_gone? && (@user || story.comments_count > 0) 
+ story.comments_path 
+ story.comments_count == 0 ?
+              "discuss" : "#{story.comments_count} comment" <<
+              (story.comments_count == 1 ? "" : "s") 
+ end 
+ if defined?(single_story) && single_story &&
+        ((story.downvotes > 0 && @user && @user.is_moderator?) ||
+        (story.downvotes >= 3 || story.score <= 0)) 
+ story.vote_summary_for(@user).downcase 
+ end 
+ end 
+ story.comments_count == 0 ? "zero" : "" 
+ story.comments_path 
+ story.comments_count 
+ 
+ if @story.markeddown_description.present? 
+ raw @story.markeddown_description 
+ end 
+ if @story.is_unavailable && @story.story_cache.present? 
+
+    time_ago_in_words_label(@story.unavailable_at) 
+ simple_format(@story.story_cache) 
+ end 
+ if !@story.previewing 
+ if !@story.is_gone? && !@story.previewing 
+  comment.short_id if comment.persisted? 
+ form_for comment,
+:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
+ if comment.errors.any? 
+ errors_for comment 
+ end 
+ hidden_field_tag "story_id", comment.story.short_id 
+ if comment.parent_comment 
+ hidden_field_tag "parent_comment_short_id",
+      comment.parent_comment.short_id 
+ end 
+ text_area_tag "comment", comment.comment, :rows => 5,
+      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
+      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
+      
+ if @user 
+ end 
+ button_tag "#{comment.new_record?? "Post" : "Update"}",
+        :class => "comment-post", :type => "button",
+        :disabled => !@user 
+ button_tag "Preview", :class => "comment-preview",
+        :type => "button", :disabled => !@user 
+ if comment.persisted? || comment.parent_comment_id 
+ button_tag "Cancel", :class => "comment-cancel",
+          :type => "button" 
+ end 
+ if @user && @user.hats.any? 
+ select_tag "hat_id",
+          options_from_collection_for_select(@user.hats, "id", "hat",
+          comment.hat_id), :include_blank => true 
+ end 
+ if @user 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
+ end 
+ end 
+ if defined?(show_comment) && show_comment.valid? 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ end 
+ 
+ end 
+ comments_by_parent = @comments.group_by(&:parent_comment_id) 
+ subtree = comments_by_parent[nil] 
+ ancestors = [] 
+ while subtree 
+ if (comment = subtree.shift) 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ elsif (subtree = ancestors.pop) 
+ end 
+ end 
+ end 
+
+  end
+
+  def suggest
+    if (st = @story.suggested_taggings.where(:user_id => @user.id)).any?
+      @story.tags_a = st.map{|st| st.tag.tag }
+    end
+    if tt = @story.suggested_titles.where(:user_id => @user.id).first
+      @story.title = tt.title
+    end
+ form_for @story, :url => story_suggest_path(@story.short_id),
+  :method => :post, :html => { :id => "edit_story" } do |f| 
+  if f.object.errors.count == 1 && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ elsif f.object.errors.any? 
+ error_messages_for f.object 
+ elsif !f.object.errors.any? && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ f.hidden_field :seen_previous 
+ end 
+ unless defined?(suggesting) 
+ if f.object.url_is_editable_by_user?(@user) 
+ f.label :url, "URL:", :class => "required" 
+ f.text_field :url, :autocomplete => "off" 
+ button_tag "Fetch Title", :id => "story_fetch_title",
+        :type => "button" 
+ elsif !f.object.new_record? && !f.object.url.blank? 
+ f.label :url, "URL:", :class => "required" 
+ f.object.url 
+ f.object.url 
+ end 
+ end 
+ f.label :title, "Title:", :class => "required" 
+ f.text_field :title, :maxlength => 100, :autocomplete => "off"  
+ if f.object.id && !defined?(suggesting) 
+ title_votes = {} 
+ f.object.suggested_titles.each do |st| 
+ title_votes[st.title] ||= 0 
+ title_votes[st.title] += 1 
+ end 
+ title_votes.delete(f.object.title) 
+ if title_votes.any? 
+ title_votes.each do |ti,c| 
+ h(ti) 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ f.label :tags_a, "Tags:", :class => "required",
+    :style => "line-height: 2.3em;" 
+ f.select "tags_a", options_for_select(
+    Tag.all_with_filtered_counts_for(@user).map{|t|
+      html = "<strong>#{h(t.tag)}</strong> - #{h(t.description.to_s)}"
+
+      if t.hotness_mod != 0
+        html << " (hotness mod #{t.hotness_mod > 0 ? "+" : ""}#{t.hotness_mod})"
+      end
+      if t.filtered_count > 0
+        html << " <em>#{t.filtered_count} user" <<
+          (t.filtered_count == 1 ? "" : "s") << " filtering</em>"
+      end
+
+      [ "#{t.tag} - #{t.description}", t.tag, { "data-html" => raw(html) } ]},
+    f.object.tags_a), {}, { :multiple => true } 
+ if f.object.id && !defined?(suggesting) 
+ tag_votes = {} 
+ f.object.suggested_taggings.group_by(&:user_id).each do |u,stg| 
+ tl = stg.map{|st| st.tag.tag }.sort.join(", ") 
+ tag_votes[tl] ||= 0 
+ tag_votes[tl] += 1 
+ end 
+ tag_votes.delete(f.object.tags_a.sort.join(", ")) 
+ if tag_votes.any? 
+ tag_votes.each do |ts,c| 
+ ts 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ unless defined?(suggesting) 
+ f.label :description, "Text:", :class => "required" 
+ f.text_area :description, :rows => 15,
+        :placeholder => "Optional when submitting a URL; please see guidelines",
+        :autocomplete => "off" 
+ show_guidelines?? "" :
+      "display: none;" 
+ Rails.application.root_url
+        
+
+        
+ Rails.application.name 
+ Rails.application.name 
+ end 
+ unless defined?(suggesting) 
+ f.label :user_is_author, "Author:", :class => "required" 
+ f.check_box :user_is_author 
+ f.label :user_is_author,
+        (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
+        " the author of the story at this URL (or this text)",
+        :class => "normal" 
+ end 
+ 
+ end 
+
+  end
+
+  def submit_suggestions
+    ostory = @story.dup
+
+    @story.title = params[:story][:title]
+    if @story.valid?
+      dsug = false
+      if @story.title != ostory.title
+        @story.save_suggested_title_for_user!(@story.title, @user)
+        dsug = true
+      end
+
+      sugtags = params[:story][:tags_a].reject{|t| t.to_s.strip == "" }.sort
+      if @story.tags_a.sort != sugtags
+        @story.save_suggested_tags_a_for_user!(sugtags, @user)
+        dsug = true
+      end
+
+      if dsug
+        ostory = @story.reload
+        flash[:success] = "Your suggested changes have been noted."
+      end
+      redirect_to ostory.comments_path
+    else
+       form_for @story, :url => story_suggest_path(@story.short_id),
+  :method => :post, :html => { :id => "edit_story" } do |f| 
+  if f.object.errors.count == 1 && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ elsif f.object.errors.any? 
+ error_messages_for f.object 
+ elsif !f.object.errors.any? && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ f.hidden_field :seen_previous 
+ end 
+ unless defined?(suggesting) 
+ if f.object.url_is_editable_by_user?(@user) 
+ f.label :url, "URL:", :class => "required" 
+ f.text_field :url, :autocomplete => "off" 
+ button_tag "Fetch Title", :id => "story_fetch_title",
+        :type => "button" 
+ elsif !f.object.new_record? && !f.object.url.blank? 
+ f.label :url, "URL:", :class => "required" 
+ f.object.url 
+ f.object.url 
+ end 
+ end 
+ f.label :title, "Title:", :class => "required" 
+ f.text_field :title, :maxlength => 100, :autocomplete => "off"  
+ if f.object.id && !defined?(suggesting) 
+ title_votes = {} 
+ f.object.suggested_titles.each do |st| 
+ title_votes[st.title] ||= 0 
+ title_votes[st.title] += 1 
+ end 
+ title_votes.delete(f.object.title) 
+ if title_votes.any? 
+ title_votes.each do |ti,c| 
+ h(ti) 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ f.label :tags_a, "Tags:", :class => "required",
+    :style => "line-height: 2.3em;" 
+ f.select "tags_a", options_for_select(
+    Tag.all_with_filtered_counts_for(@user).map{|t|
+      html = "<strong>#{h(t.tag)}</strong> - #{h(t.description.to_s)}"
+
+      if t.hotness_mod != 0
+        html << " (hotness mod #{t.hotness_mod > 0 ? "+" : ""}#{t.hotness_mod})"
+      end
+      if t.filtered_count > 0
+        html << " <em>#{t.filtered_count} user" <<
+          (t.filtered_count == 1 ? "" : "s") << " filtering</em>"
+      end
+
+      [ "#{t.tag} - #{t.description}", t.tag, { "data-html" => raw(html) } ]},
+    f.object.tags_a), {}, { :multiple => true } 
+ if f.object.id && !defined?(suggesting) 
+ tag_votes = {} 
+ f.object.suggested_taggings.group_by(&:user_id).each do |u,stg| 
+ tl = stg.map{|st| st.tag.tag }.sort.join(", ") 
+ tag_votes[tl] ||= 0 
+ tag_votes[tl] += 1 
+ end 
+ tag_votes.delete(f.object.tags_a.sort.join(", ")) 
+ if tag_votes.any? 
+ tag_votes.each do |ts,c| 
+ ts 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ unless defined?(suggesting) 
+ f.label :description, "Text:", :class => "required" 
+ f.text_area :description, :rows => 15,
+        :placeholder => "Optional when submitting a URL; please see guidelines",
+        :autocomplete => "off" 
+ show_guidelines?? "" :
+      "display: none;" 
+ Rails.application.root_url
+        
+
+        
+ Rails.application.name 
+ Rails.application.name 
+ end 
+ unless defined?(suggesting) 
+ f.label :user_is_author, "Author:", :class => "required" 
+ f.check_box :user_is_author 
+ f.label :user_is_author,
+        (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
+        " the author of the story at this URL (or this text)",
+        :class => "normal" 
+ end 
+ 
+ end 
+
     end
   end
 
@@ -264,35 +2614,104 @@ end
     if @story.save
       return redirect_to @story.comments_path
     else
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for @story, :url => story_path(@story.short_id),
+      return  form_for @story, :url => story_path(@story.short_id),
   :method => :put, :html => { :id => "edit_story" } do |f| 
- render :partial => "stories/form", :locals => { :story => @story,
-      :f => f } 
- if @user.is_moderator? 
- f.label :merge_story_short_id, "Merge Into:",
-            :class => "required" 
- f.text_field :merge_story_short_id, :autocomplete => "off",
-            :placeholder => "Short id of story into which this story " <<
-            "be merged" 
- f.label :unavailable_at, "Unavailable:",
-            :class => "required" 
- f.check_box :is_unavailable 
- f.label :unavailable_at, "Source URL is unavailable, " <<
-            "enable display of cached text", :class => "normal" 
- if @story.user_id != @user.id 
- f.label :moderation_reason, "Mod Reason:",
-              :class => "required" 
- f.text_field :moderation_reason, :autocomplete => "off" 
+  if f.object.errors.count == 1 && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ elsif f.object.errors.any? 
+ error_messages_for f.object 
+ elsif !f.object.errors.any? && f.object.already_posted_story 
+
+    time_ago_in_words_label(f.object.already_posted_story.created_at) 
+ f.object.already_posted_story.comments_path 
+ f.hidden_field :seen_previous 
+ end 
+ unless defined?(suggesting) 
+ if f.object.url_is_editable_by_user?(@user) 
+ f.label :url, "URL:", :class => "required" 
+ f.text_field :url, :autocomplete => "off" 
+ button_tag "Fetch Title", :id => "story_fetch_title",
+        :type => "button" 
+ elsif !f.object.new_record? && !f.object.url.blank? 
+ f.label :url, "URL:", :class => "required" 
+ f.object.url 
+ f.object.url 
  end 
  end 
- submit_tag "Save" 
- story_path(@story.short_id) 
- render :partial => "global/markdownhelp",
-          :locals => { :allow_images => true } 
+ f.label :title, "Title:", :class => "required" 
+ f.text_field :title, :maxlength => 100, :autocomplete => "off"  
+ if f.object.id && !defined?(suggesting) 
+ title_votes = {} 
+ f.object.suggested_titles.each do |st| 
+ title_votes[st.title] ||= 0 
+ title_votes[st.title] += 1 
+ end 
+ title_votes.delete(f.object.title) 
+ if title_votes.any? 
+ title_votes.each do |ti,c| 
+ h(ti) 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ f.label :tags_a, "Tags:", :class => "required",
+    :style => "line-height: 2.3em;" 
+ f.select "tags_a", options_for_select(
+    Tag.all_with_filtered_counts_for(@user).map{|t|
+      html = "<strong>#{h(t.tag)}</strong> - #{h(t.description.to_s)}"
+
+      if t.hotness_mod != 0
+        html << " (hotness mod #{t.hotness_mod > 0 ? "+" : ""}#{t.hotness_mod})"
+      end
+      if t.filtered_count > 0
+        html << " <em>#{t.filtered_count} user" <<
+          (t.filtered_count == 1 ? "" : "s") << " filtering</em>"
+      end
+
+      [ "#{t.tag} - #{t.description}", t.tag, { "data-html" => raw(html) } ]},
+    f.object.tags_a), {}, { :multiple => true } 
+ if f.object.id && !defined?(suggesting) 
+ tag_votes = {} 
+ f.object.suggested_taggings.group_by(&:user_id).each do |u,stg| 
+ tl = stg.map{|st| st.tag.tag }.sort.join(", ") 
+ tag_votes[tl] ||= 0 
+ tag_votes[tl] += 1 
+ end 
+ tag_votes.delete(f.object.tags_a.sort.join(", ")) 
+ if tag_votes.any? 
+ tag_votes.each do |ts,c| 
+ ts 
+ c == 1 ? "" : " (#{c} votes)" 
+ end 
+ end 
+ end 
+ unless defined?(suggesting) 
+ f.label :description, "Text:", :class => "required" 
+ f.text_area :description, :rows => 15,
+        :placeholder => "Optional when submitting a URL; please see guidelines",
+        :autocomplete => "off" 
+ show_guidelines?? "" :
+      "display: none;" 
+ Rails.application.root_url
+        
+
+        
+ Rails.application.name 
+ Rails.application.name 
+ end 
+ unless defined?(suggesting) 
+ f.label :user_is_author, "Author:", :class => "required" 
+ f.check_box :user_is_author 
+ f.label :user_is_author,
+        (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
+        " the author of the story at this URL (or this text)",
+        :class => "normal" 
+ end 
+ 
  end 
 
-end
     end
   end
 
@@ -380,6 +2799,13 @@ private
     end
 
     story
+  end
+
+  def find_story!
+    @story = find_story
+    if !@story
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   def find_user_story

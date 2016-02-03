@@ -14,18 +14,6 @@ class MessagesController < ApplicationController
     if params[:to]
       @new_message.recipient_username = params[:to]
     end
-  end
-
-  def sent
-    @cur_url = "/messages"
-    @title = "Messages Sent"
-
-    @direction = :out
-    @messages = @user.undeleted_sent_messages
-
-    @new_message = Message.new
-
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
  if @direction == :out 
  else 
  end 
@@ -41,9 +29,13 @@ class MessagesController < ApplicationController
  message.has_been_read? ? "" : "bold" 
  check_box_tag "delete_#{message.short_id}" 
  if @direction == :in 
+ if message.author 
  message.author.username 
 
-                message.author.username 
+                  message.author.username 
+ else 
+ message.author_username 
+ end 
  else 
  message.recipient.username 
 
@@ -73,7 +65,68 @@ class MessagesController < ApplicationController
  submit_tag "Send Message" 
  end 
 
-end
+  end
+
+  def sent
+    @cur_url = "/messages"
+    @title = "Messages Sent"
+
+    @direction = :out
+    @messages = @user.undeleted_sent_messages
+
+    @new_message = Message.new
+
+     if @direction == :out 
+ else 
+ end 
+ if @direction == :out 
+ end 
+ if @messages.any? 
+ form_tag batch_delete_messages_path do 
+ check_box_tag "delete_all",
+          :id => "delete_all" 
+ @direction == :in ? "From" : "To" 
+ @direction == :in ? "Received" : "Sent" 
+ @messages.includes(:author, :recipient).each do |message| 
+ message.has_been_read? ? "" : "bold" 
+ check_box_tag "delete_#{message.short_id}" 
+ if @direction == :in 
+ if message.author 
+ message.author.username 
+
+                  message.author.username 
+ else 
+ message.author_username 
+ end 
+ else 
+ message.recipient.username 
+
+                message.recipient.username 
+ end 
+ time_ago_in_words_label(message.created_at) 
+ message.short_id 
+ message.subject
+            
+ end 
+ submit_tag "Delete Selected" 
+ end 
+ else 
+ @direction == :in ? "" : "sent" 
+ end 
+ form_for @new_message, :method => :post do |f| 
+ error_messages_for @new_message 
+ f.label :recipient_username, "To:", :class => "required" 
+ f.text_field :recipient_username, :size => 20,
+        :autocomplete => "off" 
+ f.label :subject, "Subject:", :class => "required" 
+ f.text_field :subject, :style => "width: 500px;",
+        :autocomplete => "off" 
+ f.label :body, "Message:", :class => "required" 
+ f.text_area :body, :style => "width: 500px;", :rows => 5,
+        :autocomplete => "off" 
+ submit_tag "Send Message" 
+ end 
+
   end
 
   def create
@@ -91,8 +144,7 @@ end
         @new_message.recipient.username.to_s << "."
       return redirect_to "/messages"
     else
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @direction == :out 
+       if @direction == :out 
  else 
  end 
  if @direction == :out 
@@ -107,9 +159,13 @@ end
  message.has_been_read? ? "" : "bold" 
  check_box_tag "delete_#{message.short_id}" 
  if @direction == :in 
+ if message.author 
  message.author.username 
 
-                message.author.username 
+                  message.author.username 
+ else 
+ message.author_username 
+ end 
  else 
  message.recipient.username 
 
@@ -139,7 +195,6 @@ end
  submit_tag "Send Message" 
  end 
 
-end
     end
   end
 
@@ -147,20 +202,64 @@ end
     @cur_url = "/messages"
     @title = @message.subject
 
-    @new_message = Message.new
-    @new_message.recipient_username = (@message.author_user_id == @user.id ?
-      @message.recipient.username : @message.author.username)
+    if @message.author
+      @new_message = Message.new
+      @new_message.recipient_username = (@message.author_user_id == @user.id ?
+        @message.recipient.username : @message.author.username)
+
+      if @message.subject.match(/^re:/i)
+        @new_message.subject = @message.subject
+      else
+        @new_message.subject = "Re: #{@message.subject}"
+      end
+    end
 
     if @message.recipient_user_id == @user.id
       @message.has_been_read = true
       @message.save
     end
+ if @message.author_user_id == @user.id 
+ else 
+ end 
+ @message.subject 
+ if @message.author 
+ @message.author.username 
 
-    if @message.subject.match(/^re:/i)
-      @new_message.subject = @message.subject
-    else
-      @new_message.subject = "Re: #{@message.subject}"
-    end
+          @message.author.username 
+ if @message.author.is_admin? 
+ elsif @message.author.is_moderator? 
+ end 
+ else 
+ @message.author_username 
+ end 
+ @message.recipient.username 
+
+        @message.recipient.username 
+ time_ago_in_words_label(@message.created_at) 
+ raw @message.linkified_body 
+ form_tag message_path(@message.short_id), :method => :delete do 
+ submit_tag "Delete Message" 
+ end 
+ form_tag message_path(@message.short_id) + "/keep_as_new",
+      :method => :post do 
+ submit_tag "Keep As New" 
+ end 
+ if @new_message 
+ @new_message.recipient_username 
+ end 
+ if @new_message 
+ form_for @new_message, :method => :post do |f| 
+ f.hidden_field :recipient_username 
+ error_messages_for @new_message 
+ f.text_field :subject, :style => "width: 500px;",
+          :autocomplete => "off" 
+ f.text_area :body, :style => "width: 500px;", :rows => 5,
+          :autocomplete => "off" 
+ submit_tag "Send Message" 
+ end 
+ else 
+ end 
+
   end
 
   def destroy

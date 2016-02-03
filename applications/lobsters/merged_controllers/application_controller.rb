@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
 
   TAG_FILTER_COOKIE = :tag_filters
 
-
   def authenticate_user
     if session[:u] &&
     (user = User.where(:session_token => session[:u].to_s).first) &&
@@ -25,8 +24,6 @@ class ApplicationController < ActionController::Base
     if user_is_spider? || [ "json", "rss" ].include?(params[:format])
       return true
     end
-
-		Rails.logger.info	"### app controller ######"
 
     Keystore.transaction do
       now_i = Time.now.to_i
