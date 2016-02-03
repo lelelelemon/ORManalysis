@@ -186,7 +186,7 @@ def get_rails_tag(tag_arr, named_routes_class)
 		named_routes_class.get_named_routes.each do |k, v|
 			if tag.include? k
 				res += ("#" + tag + "\n") if $log
-				res += ("controller: " + v[0] + ", action: " + v[1] + "\n")
+				res += (v[0] + "," + v[1] + "\n")
 				url_inside = true
 			end
 		end
@@ -205,7 +205,7 @@ def get_form_for_tag(tag_arr, named_routes_class, controller_hash)
 		named_routes_class.get_named_routes.each do |k, v|
 			if tag.include? k
 				res += ("#" + tag + "\n") if $log
-				res += ("controller: " + v[0] + ", action: " + v[1] + "\n")
+				res += (v[0] + "," + v[1] + "\n")
 				url_inside = true
 			end
 		end
@@ -219,7 +219,7 @@ def get_form_for_tag(tag_arr, named_routes_class, controller_hash)
 
 			controller_hash.each do |k, v|
 				if controller.downcase == k.downcase.singularize
-					res += ("controller: " + k + ", view: new/create")
+					res += (k + ",new/create")
 				end
 			end
 		end
@@ -234,7 +234,7 @@ def print_form_for_tag(tag_arr, named_routes_class, controller_hash)
 		named_routes_class.get_named_routes.each do |k, v|
 			if tag.include? k
 				puts "#" + tag if $log
-				puts "controller: " + v[0] + ", action: " + v[1]
+				puts "" + v[0] + "," + v[1]
 				url_inside = true
 			end
 		end
@@ -247,7 +247,7 @@ def print_form_for_tag(tag_arr, named_routes_class, controller_hash)
 
 			controller_hash.each do |k, v|
 				if controller.downcase == k.downcase.singularize
-					puts "controller: " + k + ", view: new/create"
+					puts "" + k + ",new/create"
 				end
 			end
 			puts tag
@@ -264,7 +264,7 @@ def get_href_tags(tag_arr, named_routes_class)
 		named_routes_class.get_named_routes.each do |k, v|
 			if tag.include? k
 				res += ("#" + tag + "\n") if $log
-				res += ("controller: " + v[0] + ", action: " + v[1] + "\n")
+				res += ("" + v[0] + "," + v[1] + "\n")
 				url_inside = true
 			end
 		end
@@ -284,7 +284,7 @@ def get_href_tags(tag_arr, named_routes_class)
 		end
 		if line.start_with?"{"
 			hash = parse_rails_console_get_controller_action(line)
-			res += ("controller: " + hash[":controller"] + ", action: " + hash[":action"] + "\n")
+			res += (hash[":controller"] + "," + hash[":action"] + "\n")
 		end
 	end
 	return res
@@ -304,7 +304,7 @@ def get_redirect_to_tags(tag_arr, named_routes_class)
 		named_routes_class.get_named_routes.each do |k, v|
 			if tag.include? k
 				res += ("#" + tag + "\n") if $log
-				res += ("controller: " + v[0] + ", action: " + v[1] + "\n")
+				res += (v[0] + "," + v[1] + "\n")
 				url_inside = true
 			end
 		end
@@ -324,7 +324,7 @@ def get_redirect_to_tags(tag_arr, named_routes_class)
 		end
 		if line.start_with?"{"
 			hash = parse_rails_console_get_controller_action(line)
-			res += ("controller: " + hash[":controller"] + ", action: " + hash[":action"] + "\n")
+			res += (hash[":controller"] + "," + hash[":action"] + "\n")
 		end
 	end
 	return res

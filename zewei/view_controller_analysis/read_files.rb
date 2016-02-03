@@ -218,17 +218,24 @@ def controller_action_print_links_controller_view_recursively(view_path, control
 	puts function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash)
 end
 
-def controller_print_links_controller_view_recursively(view_path, controller_path)
+def controller_print_links_controller_view_recursively(view_path, controller_path, new_view_path)
 	view_hash = load_all_views_from_path(view_path)
 	controller_hash = load_all_controllers_from_path(controller_path)
 	named_routes_class = load_named_routes_from_path("named_routes.txt")
 	
 	indent = "---"
 	controller_hash.each do |controller_name, controller_class|
+		nested_path = get_nested_path(controller_name, controller_path)
+		if not File.directory?(new_view_path + nested_path)
+			FileUtils.mkdir_p new_view_path + nested_path
+		end
 		puts "-------------------Start of Controller Class: " + controller_name + "-------------------"
 		controller_class.get_functions.each do |function_name, function_class|
+			filename = new_view_path + nested_path + controller_name + "_" + function_name + ".txt"
+			
+			
 			puts "-------------------Start of Action Function: " + function_name
-			puts function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash)
+			File.write(filename, function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash))
 			puts "-------------------End of Action Function: " + function_name
 		end
 		puts "-------------------End of Controller Class: " + controller_name + "-------------------"
@@ -295,6 +302,7 @@ end
 $controller_path = "./app/controllers/"
 $new_controller_path = "./app/new_controllers/"
 $view_path = "./app/views/"
+$new_view_path = "./app/new_views/"
 $output_path = "./output/"
 
 options = {}
@@ -379,7 +387,7 @@ elsif options[:view]
 elsif options[:controller] and options[:all]
 	controller_print_all_controllers_render_replaced($controller_path, $view_path, $new_controller_path)
 elsif options[:controller]
-	controller_print_links_controller_view_recursively($view_path, $controller_path)
+	controller_print_links_controller_view_recursively($view_path, $controller_path, $new_view_path)
 end
 
 #load_all_views_render_statement "./app/views/"

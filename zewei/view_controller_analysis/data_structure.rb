@@ -141,14 +141,14 @@ class Function_Class
 			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
 				if view_class == nil
-					res += ("view file " + view_name + " not exists!")
+					res += ("view file " + view_name + " not exists!") if $log
 				else
 					res += (view_class.get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash) + "\n")
 				end
 			end
 		end
-		
-		res += ("\n---redirect_to tags in " + self.get_controller_name + "_" + self.get_function_name + ": \n")
+			
+		res += ("\n---redirect_to tags in " + self.get_controller_name + "_" + self.get_function_name + ": \n") if $log
 		redirect_to_arr = self.get_redirect_to_array 
 		res += get_redirect_to_tags(redirect_to_arr, named_routes)
 
@@ -396,15 +396,17 @@ class View_Class
 		if @links_controller_view == nil 
 			indent = "---"
 			res = ""
-			res += (indent + "controller: " + self.get_controller_name + "\n")
-			res += (indent + "view: " + self.get_view_name + "\n")
-			res += (indent + "hrefs: \n")
+			if $log
+				res += (indent + "controller: " + self.get_controller_name + "\n")
+				res += (indent + "view: " + self.get_view_name + "\n")
+				res += (indent + "hrefs: \n")
+			end
 			res += (get_href_tags(self.get_href_tag_array_from_html, named_routes) + "\n")
-			res += (indent + "forms: \n")
+			res += (indent + "forms: \n") if $log
 			res += (get_rails_tag(self.get_form_tag_array_from_html, named_routes) + "\n")
-			res += (indent + "form_for: \n")
+			res += (indent + "form_for: \n") if $log
 			res += (get_form_for_tag(self.get_form_for_array, named_routes, controller_hash))
-			res += (indent + "link_to: \n")
+			res += (indent + "link_to: \n") if $log
 
 			res += (get_rails_tag(self.get_link_to_array, named_routes) + "\n")  
 			@links_controller_view = res
