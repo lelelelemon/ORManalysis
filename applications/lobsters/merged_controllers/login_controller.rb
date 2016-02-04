@@ -9,26 +9,11 @@ class LoginController < ApplicationController
     redirect_to "/"
   end
 
+
   def index
     @title = "Login"
     @referer ||= request.referer
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_tag login_path do 
- label_tag :email, "E-mail or Username:" 
- text_field_tag :email, "", :size => 30, :autofocus => "autofocus" 
- label_tag :password, "Password:" 
- password_field_tag :password, "", :size => 30 
- submit_tag "Login" 
- link_to "Reset your password", forgot_password_path 
- if Rails.application.allow_invitation_requests? 
- else 
- end 
- if @referer.present? 
- hidden_field_tag :referer, @referer 
- end 
- end 
-
-end
+    render :action => "index"
   end
 
   def login
@@ -38,9 +23,31 @@ end
       user = User.where(:username => params[:email]).first
     end
 
-    if user && user.is_active? &&
-    user.try(:authenticate, params[:password].to_s)
+    begin
+      if !user
+        raise "no user"
+      end
+
+      if !user.try(:authenticate, params[:password].to_s)
+        raise "authentication failed"
+      end
+
+      if user.is_banned?
+        raise "user is banned"
+      end
+
+      if !user.is_active?
+        user.undelete!
+        flash[:success] = "Your account has been reactivated and your " <<
+          "unmoderated comments have been undeleted."
+      end
+
       session[:u] = user.session_token
+
+      if !user.password_digest.to_s.match(/^\$2a\$#{BCrypt::Engine::DEFAULT_COST}\$/)
+        user.password = user.password_confirmation = params[:password].to_s
+        user.save!
+      end
 
       if (rd = session[:redirect_to]).present?
         session.delete(:redirect_to)
@@ -57,6 +64,7 @@ end
       end
 
       return redirect_to "/"
+    rescue
     end
 
     flash.now[:error] = "Invalid e-mail address and/or password."
@@ -64,16 +72,10 @@ end
     index
   end
 
+
   def forgot_password
     @title = "Reset Password"
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_tag reset_password_path do 
- label_tag :email, "E-mail or Username:" 
- text_field_tag :email, "", :size => 30 
- submit_tag "Reset Password" 
- end 
-
-end
+    render :action => "forgot_password"
   end
 
   def reset_password
@@ -91,6 +93,7 @@ end
       "to you."
     return index
   end
+
 
   def set_new_password
     @title = "Reset Password"
@@ -125,5 +128,18 @@ end
         "used or you may have copied it incorrectly."
       return redirect_to forgot_password_path
     end
+ form_tag set_new_password_path, { :autocomplete => "off" } do 
+ error_messages_for(@reset_user) 
+ hidden_field_tag "token", params[:token] 
+ label_tag :username, "Username:" 
+ @reset_user.username 
+ label_tag :password, "New Password:" 
+ password_field_tag :password, "", :size => 30 
+ label_tag :password_confirmation, "(Again):" 
+ password_field_tag :password_confirmation, "", :size => 30 
+ submit_tag "Set New Password" 
+ end 
+
   end
+
 end

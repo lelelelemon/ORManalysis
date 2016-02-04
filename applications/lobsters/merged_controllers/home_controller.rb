@@ -14,6 +14,12 @@ class HomeController < ApplicationController
     end
   end
 
+
+  def chat
+    render :action => "chat"
+  end
+
+
   def privacy
     begin
       render :action => "privacy"
@@ -24,6 +30,7 @@ class HomeController < ApplicationController
     end
   end
 
+
   def hidden
     @stories, @show_more = get_from_cache(hidden: true) {
       paginate stories.hidden
@@ -32,30 +39,7 @@ class HomeController < ApplicationController
     @heading = @title = "Hidden Stories"
     @cur_url = "/hidden"
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
- end 
- @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
- if @page && @page > 1 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page == 2 ? "" : "page/#{@page - 1}" 
- @page - 1 
- end 
- if @show_more 
- if @page && @page > 1 
- end 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page + 1 
- @page + 1 
- end 
-
-end
+    render :action => "index"
   end
 
   def index
@@ -72,30 +56,7 @@ end
     @cur_url = "/"
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
- end 
- @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
- if @page && @page > 1 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page == 2 ? "" : "page/#{@page - 1}" 
- @page - 1 
- end 
- if @show_more 
- if @page && @page > 1 
- end 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page + 1 
- @page + 1 
- end 
-
-end }
+      format.html { render :action => "index" }
       format.rss {
         if @user && params[:token].present?
           @title = "Private feed for #{@user.username}"
@@ -119,30 +80,7 @@ end }
       :href => "/newest.rss#{@user ? "?token=#{@user.rss_token}" : ""}" }
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
- end 
- @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
- if @page && @page > 1 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page == 2 ? "" : "page/#{@page - 1}" 
- @page - 1 
- end 
- if @show_more 
- if @page && @page > 1 
- end 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page + 1 
- @page + 1 
- end 
-
-end }
+      format.html { render :action => "index" }
       format.rss {
         if @user && params[:token].present?
           @title += " - Private feed for #{@user.username}"
@@ -167,30 +105,7 @@ end }
     @newest = true
     @for_user = by_user.username
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
- end 
- @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
- if @page && @page > 1 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page == 2 ? "" : "page/#{@page - 1}" 
- @page - 1 
- end 
- if @show_more 
- if @page && @page > 1 
- end 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page + 1 
- @page + 1 
- end 
-
-end
+    render :action => "index"
   end
 
   def recent
@@ -210,30 +125,7 @@ end
     @rss_link = { :title => "RSS 2.0 - Newest Items",
       :href => "/newest.rss#{@user ? "?token=#{@user.rss_token}" : ""}" }
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
- end 
- @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
- if @page && @page > 1 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page == 2 ? "" : "page/#{@page - 1}" 
- @page - 1 
- end 
- if @show_more 
- if @page && @page > 1 
- end 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page + 1 
- @page + 1 
- end 
-
-end
+    render :action => "index"
   end
 
   def tagged
@@ -250,30 +142,7 @@ end
       :href => "/t/#{@tag.tag}.rss" }
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
- end 
- @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
- if @page && @page > 1 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page == 2 ? "" : "page/#{@page - 1}" 
- @page - 1 
- end 
- if @show_more 
- if @page && @page > 1 
- end 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page + 1 
- @page + 1 
- end 
-
-end }
+      format.html { render :action => "index" }
       format.rss { render :action => "rss", :layout => false }
       format.json { render :json => @stories }
     end
@@ -302,30 +171,7 @@ end }
       @heading = @title = "Top Stories of the Past " << length[:intv]
     end
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
- end 
- @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
- if @page && @page > 1 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page == 2 ? "" : "page/#{@page - 1}" 
- @page - 1 
- end 
- if @show_more 
- if @page && @page > 1 
- end 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page + 1 
- @page + 1 
- end 
-
-end
+    render :action => "index"
   end
 
   def upvoted
@@ -340,30 +186,7 @@ end
       :href => "/upvoted.rss#{(@user ? "?token=#{@user.rss_token}" : "")}" }
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @cur_url == "/recent" 
- end 
- @cur_url == "/hidden" ? "show_hidden" : "" 
- render :partial => "stories/listdetail", :collection => @stories,
-    :as => :story 
- if @page && @page > 1 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page == 2 ? "" : "page/#{@page - 1}" 
- @page - 1 
- end 
- if @show_more 
- if @page && @page > 1 
- end 
- @cur_url 
- @cur_url == "/" ? "" : "/" 
-
-      @page + 1 
- @page + 1 
- end 
-
-end }
+      format.html { render :action => "index" }
       format.rss {
         if @user && params[:token].present?
           @title += " - Private feed for #{@user.username}"
@@ -384,17 +207,21 @@ private
     end
   end
 
+
   def stories
     StoryRepository.new(@user, exclude_tags: filtered_tag_ids)
   end
+
 
   def page
     params[:page].to_i > 0 ? params[:page].to_i : 1
   end
 
+
   def paginate(scope)
     StoriesPaginator.new(scope, page, @user).get
   end
+
 
   def get_from_cache(opts={}, &block)
     if Rails.env.development? || @user || tags_filtered_by_cookie.any?
@@ -405,4 +232,5 @@ private
       Rails.cache.fetch("stories #{key}", :expires_in => 45, &block)
     end
   end
+
 end

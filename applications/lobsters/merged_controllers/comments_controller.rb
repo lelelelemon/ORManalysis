@@ -41,57 +41,16 @@ class CommentsController < ApplicationController
         comment.errors.add(:comment, "^You have already posted a comment " <<
           "here recently.")
 
-        ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- comment.short_id if comment.persisted? 
- form_for comment,
-:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
- if comment.errors.any? 
- errors_for comment 
- end 
- hidden_field_tag "story_id", comment.story.short_id 
- if comment.parent_comment 
- hidden_field_tag "parent_comment_short_id",
-      comment.parent_comment.short_id 
- end 
- text_area_tag "comment", comment.comment, :rows => 5,
-      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
-      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
-      
- if @user 
- end 
- button_tag "#{comment.new_record?? "Post" : "Update"}",
-        :class => "comment-post", :type => "button",
-        :disabled => !@user 
- button_tag "Preview", :class => "comment-preview",
-        :type => "button", :disabled => !@user 
- if comment.persisted? || comment.parent_comment_id 
- button_tag "Cancel", :class => "comment-cancel",
-          :type => "button" 
- end 
- if @user && @user.hats.any? 
- select_tag "hat_id",
-          options_from_collection_for_select(@user.hats, "id", "hat",
-          comment.hat_id), :include_blank => true 
- end 
- if @user 
- render :partial => "global/markdownhelp" 
- end 
- end 
- if defined?(show_comment) && show_comment.valid? 
- render "comments/comment", :comment => show_comment 
- end 
-
-end
+        return render :partial => "commentbox", :layout => false,
+          :content_type => "text/html", :locals => { :comment => comment }
       end
     end
 
     if comment.valid? && params[:preview].blank? && comment.save
       comment.current_vote = { :vote => 1 }
 
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- render "comments/comment", :comment => comment 
-
-end
+      render :partial => "comments/postedreply", :layout => false,
+        :content_type => "text/html", :locals => { :comment => comment }
     else
       comment.upvotes = 1
       comment.current_vote = { :vote => 1 }
@@ -105,80 +64,8 @@ end
       return render :text => "can't find comment", :status => 400
     end
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- comment.short_id 
- comment.short_id if comment.persisted? 
- comment.current_vote ? (comment.current_vote[:vote] == 1 ?
-"upvoted" : "downvoted") : "" 
- comment.highlighted ? "highlighted" : "" 
- comment.score <= 0 ? "negative" : "" 
- comment.score <= -1 ? "negative_1" : "" 
- comment.score <= -3 ? "negative_3" : "" 
- comment.score <= -5 ? "negative_5" : "" 
- if !comment.is_gone? 
- if @user 
- else 
- link_to "", login_path, :class => "upvoter" 
- end 
- comment.score 
- if @user && @user.can_downvote?(comment) 
- else 
- end 
- end 
- comment.short_id 
- if @user 
- end 
- if @user && @user.show_avatars? 
- comment.user.username 
- comment.user.avatar_url(16) 
- end 
- if defined?(was_merged) && was_merged 
- end 
- comment.user.username 
- if !comment.user.is_active? 
- elsif comment.user.is_new? 
- end 
- comment.user.username 
- if comment.hat 
- comment.hat.to_html_label 
- end 
- if comment.previewing 
- else 
- if comment.has_been_edited? 
- elsif comment.is_from_email? 
- end 
- time_ago_in_words_label((comment.has_been_edited? ?
-          comment.updated_at : comment.created_at), :strip_about => true) 
- end 
- if !comment.previewing 
- comment.url 
- if comment.is_editable_by_user?(@user) 
- end 
- if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
- elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
- end 
- if @user && !comment.story.is_gone? && !comment.is_gone? 
- end 
- if comment.downvotes > 0 &&
-          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
-          @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
- elsif comment.current_vote && comment.current_vote[:vote] == -1 
- Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
- end 
- end 
- if defined?(show_story) && show_story 
- comment.story.comments_path 
- comment.story.title
-          
- end 
- if comment.is_gone? 
- comment.gone_text 
- else 
- raw comment.markeddown_comment 
- end 
-
-end
+    render :partial => "comment", :layout => false,
+      :content_type => "text/html", :locals => { :comment => comment }
   end
 
   def show_short_id
@@ -189,6 +76,7 @@ end
     render :json => comment.as_json
   end
 
+
   def redirect_from_short_id
     if comment = find_comment
       return redirect_to comment.url
@@ -197,52 +85,14 @@ end
     end
   end
 
+
   def edit
     if !((comment = find_comment) && comment.is_editable_by_user?(@user))
       return render :text => "can't find comment", :status => 400
     end
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- comment.short_id if comment.persisted? 
- form_for comment,
-:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
- if comment.errors.any? 
- errors_for comment 
- end 
- hidden_field_tag "story_id", comment.story.short_id 
- if comment.parent_comment 
- hidden_field_tag "parent_comment_short_id",
-      comment.parent_comment.short_id 
- end 
- text_area_tag "comment", comment.comment, :rows => 5,
-      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
-      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
-      
- if @user 
- end 
- button_tag "#{comment.new_record?? "Post" : "Update"}",
-        :class => "comment-post", :type => "button",
-        :disabled => !@user 
- button_tag "Preview", :class => "comment-preview",
-        :type => "button", :disabled => !@user 
- if comment.persisted? || comment.parent_comment_id 
- button_tag "Cancel", :class => "comment-cancel",
-          :type => "button" 
- end 
- if @user && @user.hats.any? 
- select_tag "hat_id",
-          options_from_collection_for_select(@user.hats, "id", "hat",
-          comment.hat_id), :include_blank => true 
- end 
- if @user 
- render :partial => "global/markdownhelp" 
- end 
- end 
- if defined?(show_comment) && show_comment.valid? 
- render "comments/comment", :comment => show_comment 
- end 
-
-end
+    render :partial => "commentbox", :layout => false,
+      :content_type => "text/html", :locals => { :comment => comment }
   end
 
   def reply
@@ -254,47 +104,8 @@ end
     comment.story = parent_comment.story
     comment.parent_comment = parent_comment
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- comment.short_id if comment.persisted? 
- form_for comment,
-:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
- if comment.errors.any? 
- errors_for comment 
- end 
- hidden_field_tag "story_id", comment.story.short_id 
- if comment.parent_comment 
- hidden_field_tag "parent_comment_short_id",
-      comment.parent_comment.short_id 
- end 
- text_area_tag "comment", comment.comment, :rows => 5,
-      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
-      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
-      
- if @user 
- end 
- button_tag "#{comment.new_record?? "Post" : "Update"}",
-        :class => "comment-post", :type => "button",
-        :disabled => !@user 
- button_tag "Preview", :class => "comment-preview",
-        :type => "button", :disabled => !@user 
- if comment.persisted? || comment.parent_comment_id 
- button_tag "Cancel", :class => "comment-cancel",
-          :type => "button" 
- end 
- if @user && @user.hats.any? 
- select_tag "hat_id",
-          options_from_collection_for_select(@user.hats, "id", "hat",
-          comment.hat_id), :include_blank => true 
- end 
- if @user 
- render :partial => "global/markdownhelp" 
- end 
- end 
- if defined?(show_comment) && show_comment.valid? 
- render "comments/comment", :comment => show_comment 
- end 
-
-end
+    render :partial => "commentbox", :layout => false,
+      :content_type => "text/html", :locals => { :comment => comment }
   end
 
   def delete
@@ -304,80 +115,8 @@ end
 
     comment.delete_for_user(@user)
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- comment.short_id 
- comment.short_id if comment.persisted? 
- comment.current_vote ? (comment.current_vote[:vote] == 1 ?
-"upvoted" : "downvoted") : "" 
- comment.highlighted ? "highlighted" : "" 
- comment.score <= 0 ? "negative" : "" 
- comment.score <= -1 ? "negative_1" : "" 
- comment.score <= -3 ? "negative_3" : "" 
- comment.score <= -5 ? "negative_5" : "" 
- if !comment.is_gone? 
- if @user 
- else 
- link_to "", login_path, :class => "upvoter" 
- end 
- comment.score 
- if @user && @user.can_downvote?(comment) 
- else 
- end 
- end 
- comment.short_id 
- if @user 
- end 
- if @user && @user.show_avatars? 
- comment.user.username 
- comment.user.avatar_url(16) 
- end 
- if defined?(was_merged) && was_merged 
- end 
- comment.user.username 
- if !comment.user.is_active? 
- elsif comment.user.is_new? 
- end 
- comment.user.username 
- if comment.hat 
- comment.hat.to_html_label 
- end 
- if comment.previewing 
- else 
- if comment.has_been_edited? 
- elsif comment.is_from_email? 
- end 
- time_ago_in_words_label((comment.has_been_edited? ?
-          comment.updated_at : comment.created_at), :strip_about => true) 
- end 
- if !comment.previewing 
- comment.url 
- if comment.is_editable_by_user?(@user) 
- end 
- if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
- elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
- end 
- if @user && !comment.story.is_gone? && !comment.is_gone? 
- end 
- if comment.downvotes > 0 &&
-          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
-          @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
- elsif comment.current_vote && comment.current_vote[:vote] == -1 
- Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
- end 
- end 
- if defined?(show_story) && show_story 
- comment.story.comments_path 
- comment.story.title
-          
- end 
- if comment.is_gone? 
- comment.gone_text 
- else 
- raw comment.markeddown_comment 
- end 
-
-end
+    render :partial => "comment", :layout => false,
+      :content_type => "text/html", :locals => { :comment => comment }
   end
 
   def undelete
@@ -387,80 +126,8 @@ end
 
     comment.undelete_for_user(@user)
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- comment.short_id 
- comment.short_id if comment.persisted? 
- comment.current_vote ? (comment.current_vote[:vote] == 1 ?
-"upvoted" : "downvoted") : "" 
- comment.highlighted ? "highlighted" : "" 
- comment.score <= 0 ? "negative" : "" 
- comment.score <= -1 ? "negative_1" : "" 
- comment.score <= -3 ? "negative_3" : "" 
- comment.score <= -5 ? "negative_5" : "" 
- if !comment.is_gone? 
- if @user 
- else 
- link_to "", login_path, :class => "upvoter" 
- end 
- comment.score 
- if @user && @user.can_downvote?(comment) 
- else 
- end 
- end 
- comment.short_id 
- if @user 
- end 
- if @user && @user.show_avatars? 
- comment.user.username 
- comment.user.avatar_url(16) 
- end 
- if defined?(was_merged) && was_merged 
- end 
- comment.user.username 
- if !comment.user.is_active? 
- elsif comment.user.is_new? 
- end 
- comment.user.username 
- if comment.hat 
- comment.hat.to_html_label 
- end 
- if comment.previewing 
- else 
- if comment.has_been_edited? 
- elsif comment.is_from_email? 
- end 
- time_ago_in_words_label((comment.has_been_edited? ?
-          comment.updated_at : comment.created_at), :strip_about => true) 
- end 
- if !comment.previewing 
- comment.url 
- if comment.is_editable_by_user?(@user) 
- end 
- if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
- elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
- end 
- if @user && !comment.story.is_gone? && !comment.is_gone? 
- end 
- if comment.downvotes > 0 &&
-          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
-          @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
- elsif comment.current_vote && comment.current_vote[:vote] == -1 
- Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
- end 
- end 
- if defined?(show_story) && show_story 
- comment.story.comments_path 
- comment.story.title
-          
- end 
- if comment.is_gone? 
- comment.gone_text 
- else 
- raw comment.markeddown_comment 
- end 
-
-end
+    render :partial => "comment", :layout => false,
+      :content_type => "text/html", :locals => { :comment => comment }
   end
 
   def update
@@ -479,80 +146,8 @@ end
         [comment.id])
       comment.current_vote = votes[comment.id]
 
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- comment.short_id 
- comment.short_id if comment.persisted? 
- comment.current_vote ? (comment.current_vote[:vote] == 1 ?
-"upvoted" : "downvoted") : "" 
- comment.highlighted ? "highlighted" : "" 
- comment.score <= 0 ? "negative" : "" 
- comment.score <= -1 ? "negative_1" : "" 
- comment.score <= -3 ? "negative_3" : "" 
- comment.score <= -5 ? "negative_5" : "" 
- if !comment.is_gone? 
- if @user 
- else 
- link_to "", login_path, :class => "upvoter" 
- end 
- comment.score 
- if @user && @user.can_downvote?(comment) 
- else 
- end 
- end 
- comment.short_id 
- if @user 
- end 
- if @user && @user.show_avatars? 
- comment.user.username 
- comment.user.avatar_url(16) 
- end 
- if defined?(was_merged) && was_merged 
- end 
- comment.user.username 
- if !comment.user.is_active? 
- elsif comment.user.is_new? 
- end 
- comment.user.username 
- if comment.hat 
- comment.hat.to_html_label 
- end 
- if comment.previewing 
- else 
- if comment.has_been_edited? 
- elsif comment.is_from_email? 
- end 
- time_ago_in_words_label((comment.has_been_edited? ?
-          comment.updated_at : comment.created_at), :strip_about => true) 
- end 
- if !comment.previewing 
- comment.url 
- if comment.is_editable_by_user?(@user) 
- end 
- if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
- elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
- end 
- if @user && !comment.story.is_gone? && !comment.is_gone? 
- end 
- if comment.downvotes > 0 &&
-          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
-          @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
- elsif comment.current_vote && comment.current_vote[:vote] == -1 
- Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
- end 
- end 
- if defined?(show_story) && show_story 
- comment.story.comments_path 
- comment.story.title
-          
- end 
- if comment.is_gone? 
- comment.gone_text 
- else 
- raw comment.markeddown_comment 
- end 
-
-end
+      render :partial => "comments/comment", :layout => false,
+        :content_type => "text/html", :locals => { :comment => comment }
     else
       comment.current_vote = { :vote => 1 }
 
@@ -571,6 +166,7 @@ end
     render :text => "ok"
   end
 
+
   def upvote
     if !(comment = find_comment)
       return render :text => "can't find comment", :status => 400
@@ -581,6 +177,7 @@ end
 
     render :text => "ok"
   end
+
 
   def downvote
     if !(comment = find_comment)
@@ -600,6 +197,7 @@ end
 
     render :text => "ok"
   end
+
 
   def index
     @rss_link ||= { :title => "RSS 2.0 - Newest Comments",
@@ -640,23 +238,7 @@ end
     end
 
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- @comments.each do |comment| 
- render "comments/comment", :comment => comment,
-      :show_story => true 
- end 
- if @page && @page > 1 
- @page == 2 ? "" : "/page/#{@page - 1}" 
- @page - 1 
- end 
- if @comments.any? 
- if @page && @page > 1 
- end 
- @page + 1 
- @page + 1 
- end 
-
-end }
+      format.html { render :action => "index" }
       format.rss {
         if @user && params[:token].present?
           @title = "Private comments feed for #{@user.username}"
@@ -681,7 +263,8 @@ end }
       @cur_url = "/threads"
     end
 
-    thread_ids = @showing_user.recent_threads(20)
+    thread_ids = @showing_user.recent_threads(20,
+      include_submitted_stories = !!(@user && @user.id == @showing_user.id))
 
     comments = Comment.where(
       :thread_id => thread_ids
@@ -716,7 +299,90 @@ end }
     #    end
     #  end
     #end
+ @threads.each do |thread| 
+ comments_by_parent = thread.group_by(&:parent_comment_id) 
+ subtree = comments_by_parent[nil] 
+ ancestors = [] 
+ while subtree 
+ if (comment = subtree.shift) 
+  comment.short_id 
+ comment.short_id 
+ comment.short_id if comment.persisted? 
+ comment.current_vote ? (comment.current_vote[:vote] == 1 ?
+"upvoted" : "downvoted") : "" 
+ comment.highlighted ? "highlighted" : "" 
+ comment.score <= 0 ? "negative" : "" 
+ comment.score <= -1 ? "negative_1" : "" 
+ comment.score <= -3 ? "negative_3" : "" 
+ comment.score <= -5 ? "negative_5" : "" 
+ if !comment.is_gone? 
+ if @user 
+ else 
+ link_to "", login_path, :class => "upvoter" 
+ end 
+ comment.score 
+ if @user && @user.can_downvote?(comment) 
+ else 
+ end 
+ end 
+ comment.short_id 
+ comment.short_id 
+ if defined?(was_merged) && was_merged 
+ end 
+ if @user && @user.show_avatars? 
+ comment.user.username 
+ comment.user.avatar_url(16) 
+ end 
+ comment.user.username 
+ comment.html_class_for_user 
+
+        comment.user.username 
+ if comment.hat 
+ comment.hat.to_html_label 
+ end 
+ if comment.previewing 
+ else 
+ if comment.has_been_edited? 
+ elsif comment.is_from_email? 
+ end 
+ time_ago_in_words_label((comment.has_been_edited? ?
+          comment.updated_at : comment.created_at), :strip_about => true) 
+ end 
+ if !comment.previewing 
+ comment.url 
+ if comment.is_editable_by_user?(@user) 
+ end 
+ if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
+ elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ end 
+ if @user && !comment.story.is_gone? && !comment.is_gone? 
+ end 
+ if comment.downvotes > 0 &&
+          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
+          @user.try("is_moderator?")) 
+ comment.vote_summary.downcase 
+ elsif comment.current_vote && comment.current_vote[:vote] == -1 
+ Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
+ end 
+ end 
+ if defined?(show_story) && show_story 
+ comment.story.comments_path 
+ comment.story.title
+          
+ end 
+ if comment.is_gone? 
+ comment.gone_text 
+ else 
+ raw comment.markeddown_comment 
+ end 
+ 
+ elsif (subtree = ancestors.pop) 
+ end 
+ end 
+ end 
+
   end
+
 
 private
 
@@ -724,47 +390,9 @@ private
     comment.previewing = true
     comment.is_deleted = false # show normal preview for deleted comments
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- comment.short_id if comment.persisted? 
- form_for comment,
-:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
- if comment.errors.any? 
- errors_for comment 
- end 
- hidden_field_tag "story_id", comment.story.short_id 
- if comment.parent_comment 
- hidden_field_tag "parent_comment_short_id",
-      comment.parent_comment.short_id 
- end 
- text_area_tag "comment", comment.comment, :rows => 5,
-      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
-      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
-      
- if @user 
- end 
- button_tag "#{comment.new_record?? "Post" : "Update"}",
-        :class => "comment-post", :type => "button",
-        :disabled => !@user 
- button_tag "Preview", :class => "comment-preview",
-        :type => "button", :disabled => !@user 
- if comment.persisted? || comment.parent_comment_id 
- button_tag "Cancel", :class => "comment-cancel",
-          :type => "button" 
- end 
- if @user && @user.hats.any? 
- select_tag "hat_id",
-          options_from_collection_for_select(@user.hats, "id", "hat",
-          comment.hat_id), :include_blank => true 
- end 
- if @user 
- render :partial => "global/markdownhelp" 
- end 
- end 
- if defined?(show_comment) && show_comment.valid? 
- render "comments/comment", :comment => show_comment 
- end 
-
-end
+    render :partial => "comments/commentbox", :layout => false,
+      :content_type => "text/html", :locals => {
+      :comment => comment, :show_comment => comment }
   end
 
   def find_comment
@@ -776,4 +404,5 @@ end
 
     comment
   end
+
 end

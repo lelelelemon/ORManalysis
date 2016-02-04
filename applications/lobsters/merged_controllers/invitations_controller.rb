@@ -9,11 +9,53 @@ class InvitationsController < ApplicationController
       flash[:error] = "Public invitation requests are not allowed."
       return redirect_to "/login"
     end
+ form_for @invitation_request,
+  :url => create_invitation_by_request_path do |f| 
+ f.label :name, "Name:" 
+ f.text_field :name, :size => 30 
+ f.label :email, "E-mail Address:" 
+ f.text_field :email, :size => 30 
+ f.label :memo, "URL:" 
+ f.text_field :memo, :size => 30 
+ submit_tag "Request Invitation" 
+ end 
+
   end
+
 
   def index
     @invitation_requests = InvitationRequest.where(:is_verified => true)
+ if @user.is_moderator? 
+ end 
+ bit = 0 
+ @invitation_requests.each do |ir| 
+ bit 
+ ir.created_at.strftime("%Y-%m-%d %H:%M:%S") 
+ ir.name 
+ if @user.is_moderator? 
+ ir.email 
+ end 
+ raw ir.markeddown_memo 
+ form_tag send_invitation_for_request_path do 
+ hidden_field_tag "code", ir.code 
+ submit_tag "Send Invitation", :data => { :confirm => "Are " <<
+        "you sure you want to invite this person and remove this request?" } 
+ end 
+ if @user.is_moderator? 
+ form_tag delete_invitation_request_path do 
+ hidden_field_tag "code", ir.code 
+ submit_tag "Delete", :data => { :confirm => "Are you sure " <<
+            "you want to delete this request?" } 
+ end 
+ end 
+ bit = (bit == 1 ? 0 : 1) 
+ end 
+ if @invitation_requests.count == 0 
+ @user.is_moderator?? 5 : 4 
+ end 
+
   end
+
 
   def confirm_email
     if !(ir = InvitationRequest.where(:code => params[:code].to_s).first)
@@ -28,6 +70,7 @@ class InvitationsController < ApplicationController
       "will now be shown to other logged-in users."
     return redirect_to "/invitations/request"
   end
+
 
   def create
     i = Invitation.new
@@ -52,6 +95,7 @@ class InvitationsController < ApplicationController
     end
   end
 
+
   def create_by_request
     if Rails.application.allow_invitation_requests?
       @invitation_request = InvitationRequest.new(
@@ -70,6 +114,7 @@ class InvitationsController < ApplicationController
       return redirect_to "/login"
     end
   end
+
 
   def send_for_request
     if !(ir = InvitationRequest.where(:code => params[:code].to_s).first)
@@ -90,6 +135,7 @@ class InvitationsController < ApplicationController
     return redirect_to "/invitations"
   end
 
+
   def delete_request
     if !@user.is_moderator?
       return redirect_to "/invitations"
@@ -106,4 +152,5 @@ class InvitationsController < ApplicationController
 
     return redirect_to "/invitations"
   end
+
 end
