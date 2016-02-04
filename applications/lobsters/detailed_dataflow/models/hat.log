@@ -1,0 +1,272 @@
+SET IRMethod, name = destroy_by_user_with_reason
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 2, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		user = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		reason = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		line_num(;n: 11)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = search_const(scope<1> ;name: Moderation, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_4 = call_0o(%v_3 ;n:new, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_3[2.8 ] ) 
+		m = copy(%v_4)		--org.jruby.ir.instructions.CopyInstr(	%v_4[2.9 ] ) 
+		line_num(;n: 12)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_5 = call_0o(%self ;n:user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		attr_assign(m, %v_5 ;n:user_id=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	m[2.10 ] %v_5[2.12 ] ) #<m>#	-- [PUT:m].user_id 
+		line_num(;n: 13)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_6 = call_0o(user ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	user[2.5 ] ) 
+		attr_assign(m, %v_6 ;n:moderator_user_id=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	m[2.10 2.13 ] %v_6[2.15 ] ) #<m>#	-- [PUT:m].moderator_user_id 
+		line_num(;n: 14)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_7 = copy("Revoked hat "")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_8 = call_0o(%self ;n:hat, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.12 ] ) 
+		%v_9 = copy("": ")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_10 = build_compound_string(%v_7, #{%v_8}, %v_9, #{reason})		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_7[2.18 ] %v_8[2.19 ] %v_9[2.20 ] reason[2.6 ] ) 
+		attr_assign(m, %v_10 ;n:action=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	m[2.10 2.13 2.16 ] %v_10[2.21 ] ) #<m>#	-- [PUT:m].action 
+		line_num(;n: 15)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_11 = call_0o(m ;n:save!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	m[2.10 2.13 2.16 2.22 ] ) 
+		line_num(;n: 17)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_12 = call_0o(%self ;n:destroy, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.12 2.19 ] ) 
+		return(%v_12)		--org.jruby.ir.instructions.ReturnInstr(	%v_12[2.26 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = to_html_label
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:16, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 5		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 21)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = call_0o(%self ;n:link, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_4 = call_0o(%v_3 ;n:present?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_3[2.6 ] ) 
+		b_false(LBL_0:14, %v_4)		--org.jruby.ir.instructions.BFalseInstr(	%v_4[2.7 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0 5		
+	Vars Live on Exit:  0		
+	outgoing edges:4, 
+	Instructions:
+		%v_5 = call_0o(%self ;n:link, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_6 = copy(RE:|^https?:\/\/|RegexpOptions(kcode: NONE, kcodeDefault))		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_7 = call_1o(%v_5, RE:|^https?:\/\/|RegexpOptions(kcode: NONE, kcodeDefault) ;n:match, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_5[3.0 ] ) 
+		%v_4 = copy(%v_7)		--org.jruby.ir.instructions.CopyInstr(	%v_7[3.2 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0 9 21 22		
+	Vars Live on Exit:  0 5		
+	outgoing edges:5, 6, 
+	Instructions:
+		hl = copy(%v_4)		--org.jruby.ir.instructions.CopyInstr(	%v_4[3.3 2.7 ] ) 
+		line_num(;n: 23)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_8 = copy("<span class="hat" title="Granted by ")		--org.jruby.ir.instructions.CopyInstr(	) 
+		line_num(;n: 24)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_9 = call_0o(%self ;n:granted_by_user, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_10 = call_0o(%v_9 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_9[4.4 ] ) 
+		%v_11 = copy(" on ")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_12 = build_compound_string(#{%v_10}, %v_11)		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_10[4.5 ] %v_11[4.6 ] ) 
+		%v_13 = call_1o(%v_8, %v_12 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_8[4.2 ] %v_12[4.7 ] ) 
+		line_num(;n: 25)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_14 = call_0o(%self ;n:created_at, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[4.4 2.0 ] ) 
+		%v_15 = copy("%Y-%m-%d")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_16 = call_1o(%v_14, %v_15 ;n:strftime, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_14[4.10 ] %v_15[4.11 ] ) 
+		%v_17 = build_compound_string(#{%v_16})		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_16[4.12 ] ) 
+		%v_18 = call_1o(%v_13, %v_17 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_13[4.8 ] %v_17[4.13 ] ) 
+		h = copy(%v_18)		--org.jruby.ir.instructions.CopyInstr(	%v_18[4.14 ] ) 
+		line_num(;n: 27)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_19 = call_0o(hl ;n:!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	hl[4.0 ] ) 
+		b_false(LBL_3:37, %v_19)		--org.jruby.ir.instructions.BFalseInstr(	%v_19[4.17 ] ) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0 9 21 22		
+	Vars Live on Exit:  0 9 21		
+	outgoing edges:6, 
+	Instructions:
+		%v_20 = call_0o(%self ;n:link, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_21 = call_0o(%v_20 ;n:present?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_20[5.0 ] ) 
+		%v_19 = copy(%v_21)		--org.jruby.ir.instructions.CopyInstr(	%v_21[5.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0 9 21		
+	Vars Live on Exit:  0 9 21 22		
+	outgoing edges:7, 8, 
+	Instructions:
+		b_false(LBL_1:45, %v_19)		--org.jruby.ir.instructions.BFalseInstr(	%v_19[5.2 4.17 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0 9 21		
+	Vars Live on Exit:  0 9 21		
+	outgoing edges:9, 
+	Instructions:
+		line_num(;n: 28)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_22 = copy(" - ")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_23 = call_0o(%self ;n:link, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_24 = build_compound_string(%v_22, #{%v_23})		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_22[7.1 ] %v_23[7.2 ] ) 
+		%v_25 = call_1o(h, %v_24 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	h[4.15 ] %v_24[7.3 ] ) 
+		jump(LBL_2:47)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 8:
+	Vars Live on Entry:  0 9 21		
+	Vars Live on Exit:  0 9 21		
+	outgoing edges:9, 
+	Instructions:
+		%v_25 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 9:
+	Vars Live on Entry:  0 9 21		
+	Vars Live on Exit:  0 9 21		
+	outgoing edges:10, 11, 
+	Instructions:
+		line_num(;n: 31)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_26 = copy("">")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_27 = call_1o(h, %v_26 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	h[4.15 ] %v_26[9.1 ] ) 
+		%v_28 = copy("<span class="crown">")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_29 = call_1o(%v_27, %v_28 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_27[9.2 ] %v_28[9.3 ] ) 
+		line_num(;n: 34)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		b_false(LBL_4:62, hl)		--org.jruby.ir.instructions.BFalseInstr(	hl[4.0 ] ) 
+PRINT info for BB 10:
+	Vars Live on Entry:  0 9 21		
+	Vars Live on Exit:  0 9 21		
+	outgoing edges:12, 
+	Instructions:
+		line_num(;n: 35)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_30 = copy("<a href="")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_31 = call_0o(%self ;n:link, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_32 = copy("" target="_blank">")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_33 = build_compound_string(%v_30, #{%v_31}, %v_32)		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_30[10.1 ] %v_31[10.2 ] %v_32[10.3 ] ) 
+		%v_34 = call_1o(h, %v_33 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	h[4.15 ] %v_33[10.4 ] ) 
+		jump(LBL_5:64)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 11:
+	Vars Live on Entry:  0 9 21		
+	Vars Live on Exit:  0 9 21		
+	outgoing edges:12, 
+	Instructions:
+		%v_34 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 12:
+	Vars Live on Entry:  21		
+	Vars Live on Exit:  0 9 21		
+	outgoing edges:13, 14, 
+	Instructions:
+		line_num(;n: 38)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_35 = call_0o(%self ;n:hat, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_36 = call_1o(h, %v_35 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	h[4.15 ] %v_35[12.1 ] ) 
+		line_num(;n: 40)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		b_false(LBL_6:74, hl)		--org.jruby.ir.instructions.BFalseInstr(	hl[4.0 ] ) 
+PRINT info for BB 13:
+	Vars Live on Entry:  21		
+	Vars Live on Exit:  21		
+	outgoing edges:15, 
+	Instructions:
+		line_num(;n: 41)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_37 = copy("</a>")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_38 = call_1o(h, %v_37 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	h[4.15 ] %v_37[13.1 ] ) 
+		jump(LBL_7:76)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 14:
+	Vars Live on Entry:  21		
+	Vars Live on Exit:  21		
+	outgoing edges:15, 
+	Instructions:
+		%v_38 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 15:
+	Vars Live on Entry: 
+	Vars Live on Exit:  21		
+	outgoing edges:16, 
+	Instructions:
+		line_num(;n: 44)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_39 = copy("</span></span>")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_40 = call_1o(h, %v_39 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	h[4.15 ] %v_39[15.1 ] ) 
+		line_num(;n: 46)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_41 = call_0o(h ;n:html_safe, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	h[4.15 ] ) 
+		return(%v_41)		--org.jruby.ir.instructions.ReturnInstr(	%v_41[15.4 ] ) 
+PRINT info for BB 16:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = log_moderation
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 6 13		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 50)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = search_const(scope<1> ;name: Moderation, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_4 = call_0o(%v_3 ;n:new, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_3[2.6 ] ) 
+		m = copy(%v_4)		--org.jruby.ir.instructions.CopyInstr(	%v_4[2.7 ] ) 
+		line_num(;n: 51)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_5 = call_0o(%self ;n:created_at, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		attr_assign(m, %v_5 ;n:created_at=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	m[2.8 ] %v_5[2.10 ] ) #<m>#	-- [PUT:m].created_at 
+		line_num(;n: 52)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_6 = call_0o(%self ;n:user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.10 ] ) 
+		attr_assign(m, %v_6 ;n:user_id=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	m[2.8 2.11 ] %v_6[2.13 ] ) #<m>#	-- [PUT:m].user_id 
+		line_num(;n: 53)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_7 = call_0o(%self ;n:granted_by_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.10 2.13 ] ) 
+		attr_assign(m, %v_7 ;n:moderator_user_id=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	m[2.8 2.11 2.14 ] %v_7[2.16 ] ) #<m>#	-- [PUT:m].moderator_user_id 
+		line_num(;n: 54)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_8 = copy("Granted hat "")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_9 = call_0o(%self ;n:hat, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.10 2.13 2.16 ] ) 
+		%v_10 = copy(""")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_11 = build_compound_string(%v_8, #{%v_9}, %v_10)		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_8[2.19 ] %v_9[2.20 ] %v_10[2.21 ] ) 
+		%v_12 = call_0o(%self ;n:link, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.10 2.13 2.16 2.20 ] ) 
+		%v_13 = call_0o(%v_12 ;n:present?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_12[2.23 ] ) 
+		b_false(LBL_0:33, %v_13)		--org.jruby.ir.instructions.BFalseInstr(	%v_13[2.24 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  6 13 19		
+	Vars Live on Exit:  0 6 13		
+	outgoing edges:5, 
+	Instructions:
+		%v_14 = copy(" (")		--org.jruby.ir.instructions.CopyInstr(	) 
+		line_num(;n: 55)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_15 = call_0o(%self ;n:link, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_16 = copy(")")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_17 = build_compound_string(%v_14, #{%v_15}, %v_16)		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_14[3.0 ] %v_15[3.2 ] %v_16[3.3 ] ) 
+		jump(LBL_1:36)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 4:
+	Vars Live on Entry:  6 13 19		
+	Vars Live on Exit:  6 13		
+	outgoing edges:5, 
+	Instructions:
+		%v_18 = copy("")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_17 = copy(%v_18)		--org.jruby.ir.instructions.CopyInstr(	%v_18[4.0 ] ) 
+PRINT info for BB 5:
+	Vars Live on Entry: 
+	Vars Live on Exit:  6 13 19		
+	outgoing edges:6, 
+	Instructions:
+		%v_19 = call_1o(%v_11, %v_17 ;n:+, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_11[2.22 ] %v_17[4.1 3.4 ] ) 
+		attr_assign(m, %v_19 ;n:action=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	m[2.8 2.11 2.14 2.17 ] %v_19[5.0 ] ) #<m>#	-- [PUT:m].action 
+		line_num(;n: 56)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_20 = call_0o(m ;n:save, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	m[5.1 2.8 2.11 2.14 2.17 ] ) 
+		return(%v_20)		--org.jruby.ir.instructions.ReturnInstr(	%v_20[5.3 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+

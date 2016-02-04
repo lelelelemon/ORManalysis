@@ -1,0 +1,37 @@
+User.where <User,SELECT>
+User.where(:session_token => session[:u].to_s).first <,SELECT>
++FIELD+ User.deleted_at (datetime)
++FIELD+ User.banned_at (datetime)
++FIELD+ User.id (integer)
++FIELD+ User.username (string)
+Keystore.transaction <Keystore,TXN>
+self.lock <Keystore,TRANSACTION> (c)
+self.lock(true).where <Keystore,SELECT> (c)
+kv.save! <Keystore,INSERT> (c)
++FIELD+ Keystore.key (string)
+self.where <Keystore,SELECT> (c)
++FIELD+ Keystore.value (integer)
+traffic_kv.save! <Keystore,INSERT> (c)
+date_kv.save! <Keystore,INSERT> (c)
++FIELD+ User.is_moderator (boolean)
+Story.where <Story,SELECT>
+Story.where(:short_id => params[:story_id] || params[:id]).first <,SELECT>
++FIELD+ User.id (integer)
+Story.where <Story,SELECT>
+Story.where(:short_id => params[:story_id] || params[:id]).first <,SELECT>
+Story.where <Story,SELECT>
+Story.where(:short_id => params[:story_id]).first <,SELECT>
++FIELD+ User.id (integer)
++FIELD+ Story.id (integer)
+Vote.where <Vote,SELECT>
+Vote.where(:user_id => @user.id,        :story_id => story.id, :comment_id => nil).first <,SELECT>
++FIELD+ Story.id (integer)
++FIELD+ Story.id (integer)
+HiddenStory.where <HiddenStory,SELECT>
+HiddenStory.where(:user_id => user_id, :story_id =>      story_id).first_or_initialize <,SELECT>
+
+query in total: 19
+query in view: 0
+query in closure: 6
+read queries: 14
+write queries: 3

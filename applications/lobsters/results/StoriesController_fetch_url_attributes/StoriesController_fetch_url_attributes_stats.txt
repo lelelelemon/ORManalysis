@@ -1,0 +1,35 @@
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,3]
+TBLWRITERECORD  User [0,0,0] Fields  []
+User where( session_token => session[ u] to_s) first <,SELECT>
+self lock(true) where( key => key) first <Keystore,SELECT> (c)
+self lock(true) where <Keystore,SELECT> (c)
+self lock <Keystore,TRANSACTION> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+key where <Keystore,SELECT> (c)
+kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+traffic_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+date_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+doc at_css("title") try <,SELECT>
+
+STATS query in total  10
+STATS query total on single path: 10
+STATS read query on single path: 6
+STATS write query on single path: 4
+STATS query in view  0
+STATS query in closure  7
+STATS branch depend on query result  4
+STATS branch total  24
+STATS read queries  6
+STATS read to read query  2
+STATS read to write query  0
+STATS read to view  0
+STATS read to branch  7
+STATS materialized query  1
+STATS write queries  10
+STATS write from user input  1
+STATS write from other queries  1
+STATS write from const  10

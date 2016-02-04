@@ -1,6 +1,6 @@
 SET IRMethod, name = index
 BB 1
-	outgoing: 6 2 
+	outgoing: 9 2 
 	datadep: 
 	instructions:
 BB 2
@@ -17,7 +17,7 @@ BB 2
 		 7: GETFIELD %self->user def_%v_3 %self[2.0,] 
 		 8: BRANCH %v_3[2.7,] 
 BB 3
-	outgoing: 6 
+	outgoing: 9 
 	datadep: 
 	instructions:
 		 0: %self->flash def_%v_4 %self[2.0,] 
@@ -28,15 +28,35 @@ BB 3
 		 5: %self->redirect_to def_%v_7 %self[3.0,2.0,] %v_6[3.4,] 
 		 6: RETURN %v_7[3.5,] %self[3.0,3.5,2.0,] 
 BB 4
-	outgoing: 6 
+	outgoing: 6 7 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_8 
 		 1: 
 		 2: COPY def_%v_9 
 		 3: ATTRASSIGN %self->title %v_9[4.2,] 
-		 4: RETURN %v_9[4.2,] %self[4.3,2.0,] 
+		 4: 
+		 5: (Rails) def_%v_10 
+		 6: %v_10->application def_%v_11 %v_10[4.5,] 
+		 7: %v_11->allow_invitation_requests? def_%v_12 %v_11[4.6,] 
+		 8: BRANCH %v_12[4.7,] 
 BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY def_%v_13 
+		 1: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY def_%v_13 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[4.3,2.0,] 
+BB 9
 	outgoing: 
 	datadep: 
 	instructions:
@@ -58,7 +78,103 @@ BB 2
 		 5: 
 		 6: COPY def_%v_3 
 		 7: ATTRASSIGN %self->title %v_3[2.6,] 
-		 8: RETURN %v_3[2.6,] %self[2.0,2.7,] 
+		 8: 
+		 9: GETFIELD %self->user def_%v_4 %self[2.0,] 
+		 10: %v_4->invited_by_user def_%v_5 %v_4[2.9,] 
+		 11: %v_5->try def_%v_6 %v_5[2.10,] 
+		 12: 
+		 13: COPY def_%v_7 
+		 14: COPY def_%v_8 
+		 15: %self->form_tag def_%v_9 %self[2.0,2.7,] %v_7[2.13,] %v_8[2.14,] %self[2.0,2.7,] 
+CLOSURE BEGIN: %self[2.0,2.7,] 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_f 
+		 3: COPY def_%current_scope 
+		 4: COPY def_%current_module 
+BB 3
+	outgoing: 4 5 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_3 %self[2.0,] 
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 5 9 
+	datadep: 
+	instructions:
+		 0: %self->return_home def_%cl_1_4 %self[2.0,] 
+		 1: COPY def_%cl_1_3 %cl_1_4[4.0,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %cl_1_3[4.1,3.1,] 
+BB 6
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->hidden_field_tag def_%cl_1_5 %self[2.0,] 
+		 2: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY def_%cl_1_5 
+BB 8
+	outgoing: 9 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY def_%cl_1_6 
+		 2: COPY def_%cl_1_7 
+		 3: COPY def_%cl_1_8 %cl_1_7[8.2,] 
+		 4: %self->label_tag def_%cl_1_9 %self[2.0,] %cl_1_6[8.1,] %cl_1_8[8.3,] 
+		 5: 
+		 6: COPY def_%cl_1_10 
+		 7: COPY def_%cl_1_11 
+		 8: COPY def_%cl_1_12 %cl_1_11[8.7,] 
+		 9: %self->text_field_tag def_%cl_1_13 %self[8.4,2.0,] %cl_1_10[8.6,] %cl_1_12[8.8,] 
+		 10: 
+		 11: COPY def_%cl_1_14 
+		 12: COPY def_%cl_1_15 
+		 13: COPY def_%cl_1_16 %cl_1_15[8.12,] 
+		 14: %self->label_tag def_%cl_1_17 %self[8.4,8.9,2.0,] %cl_1_14[8.11,] %cl_1_16[8.13,] 
+		 15: 
+		 16: COPY def_%cl_1_18 
+		 17: COPY def_%cl_1_19 
+		 18: %self->text_field_tag def_%cl_1_20 %self[8.4,8.9,8.14,2.0,] %cl_1_18[8.16,] %cl_1_19[8.17,] 
+		 19: 
+		 20: COPY def_%cl_1_21 
+		 21: %self->submit_tag def_%cl_1_22 %self[8.4,8.9,8.14,8.18,2.0,] %cl_1_21[8.20,] 
+		 22: RETURN %cl_1_22[8.21,] %self[8.4,8.9,8.14,8.18,8.21,2.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_23 
+		 1: def_%cl_1_24 %cl_1_23[9.0,] 
+		 2: RETURN %cl_1_24[9.1,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 16: 
+		 17: COPY def_%v_10 
+		 18: COPY def_%v_11 
+		 19: COPY def_%v_12 
+		 20: %self->button_to def_%v_13 %self[2.0,2.7,2.15,] %v_10[2.17,] %v_11[2.18,] %v_12[2.19,] 
+		 21: RETURN %v_13[2.20,] %self[2.0,2.7,2.15,2.20,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -139,152 +255,10 @@ BB 7
 		 11: %v_26->email def_%v_27 %v_26[7.10,] 
 		 12: ATTRASSIGN %v_25->email %v_27[7.11,] 
 		 13: 
-		 14: %self->ruby_code_from_view def_%v_28 %self[7.3,7.7,4.9,2.0,] 
-		 15: %v_28->ruby_code_from_view def_%v_29 %v_28[7.14,] %self[7.3,7.7,7.14,4.9,2.0,] 
-CLOSURE BEGIN: %self[7.3,7.7,7.14,4.9,2.0,] 
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: def_%self 
-		 1: def_%cl_1_0 
-		 2: RECEIVEARG def_rb_from_view 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
-BB 3
-	outgoing: 4 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: GETFIELD %self->new_user def_%cl_1_3 %self[2.0,] 
-		 2: %self->signup_path def_%cl_1_4 %self[2.0,] 
-		 3: COPY def_%cl_1_5 
-		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
-		 5: %self->form_for def_%cl_1_7 %self[3.2,2.0,] %cl_1_3[3.1,] %cl_1_6[3.4,] %self[3.2,2.0,] 
-CLOSURE BEGIN: %self[3.2,2.0,] f[] 
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: def_%self 
-		 1: def_%cl_2_0 
-		 2: RECEIVEARG def_f 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
-BB 3
-	outgoing: 4 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: COPY def_%cl_2_3 
-		 2: GETFIELD %self->invitation def_%cl_2_4 %self[2.0,] 
-		 3: %cl_2_4->code def_%cl_2_5 %cl_2_4[3.2,] 
-		 4: %self->hidden_field_tag def_%cl_2_6 %self[2.0,] %cl_2_3[3.1,] %cl_2_5[3.3,] 
-		 5: 
-		 6: GETFIELD %self->new_user def_%cl_2_7 %self[3.4,2.0,] 
-		 7: %self->error_messages_for def_%cl_2_8 %self[3.4,2.0,] %cl_2_7[3.6,] 
-		 8: 
-		 9: COPY def_%cl_2_9 
-		 10: COPY def_%cl_2_10 
-		 11: COPY def_%cl_2_11 %cl_2_10[3.10,] 
-		 12: f->label def_%cl_2_12 f[2.2,] %cl_2_9[3.9,] %cl_2_11[3.11,] 
-		 13: 
-		 14: GETFIELD %self->invitation def_%cl_2_13 %self[3.4,3.7,2.0,] 
-		 15: %cl_2_13->user def_%cl_2_14 %cl_2_13[3.14,] 
-		 16: %cl_2_14->username def_%cl_2_15 %cl_2_14[3.15,] 
-		 17: 
-		 18: GETFIELD %self->invitation def_%cl_2_16 %self[3.4,3.7,2.0,] 
-		 19: %cl_2_16->user def_%cl_2_17 %cl_2_16[3.18,] 
-		 20: %cl_2_17->username def_%cl_2_18 %cl_2_17[3.19,] 
-		 21: 
-		 22: COPY def_%cl_2_19 
-		 23: COPY def_%cl_2_20 
-		 24: COPY def_%cl_2_21 %cl_2_20[3.23,] 
-		 25: f->label def_%cl_2_22 f[3.12,2.2,] %cl_2_19[3.22,] %cl_2_21[3.24,] 
-		 26: 
-		 27: COPY def_%cl_2_23 
-		 28: f->text_field def_%cl_2_24 f[3.12,3.25,2.2,] %cl_2_23[3.27,] 
-		 29: 
-		 30: (User) def_%cl_2_25 
-		 31: %cl_2_25->username_regex def_%cl_2_26 %cl_2_25[3.30,] 
-		 32: 
-		 33: COPY def_%cl_2_27 
-		 34: COPY def_%cl_2_28 
-		 35: COPY def_%cl_2_29 %cl_2_28[3.34,] 
-		 36: f->label def_%cl_2_30 f[3.12,3.25,3.28,2.2,] %cl_2_27[3.33,] %cl_2_29[3.35,] 
-		 37: 
-		 38: COPY def_%cl_2_31 
-		 39: f->email_field def_%cl_2_32 f[3.12,3.25,3.28,3.36,2.2,] %cl_2_31[3.38,] 
-		 40: 
-		 41: COPY def_%cl_2_33 
-		 42: COPY def_%cl_2_34 
-		 43: COPY def_%cl_2_35 %cl_2_34[3.42,] 
-		 44: f->label def_%cl_2_36 f[3.12,3.25,3.28,3.36,3.39,2.2,] %cl_2_33[3.41,] %cl_2_35[3.43,] 
-		 45: 
-		 46: COPY def_%cl_2_37 
-		 47: COPY def_%cl_2_38 %cl_2_37[3.46,] 
-		 48: f->password_field def_%cl_2_39 f[3.12,3.25,3.28,3.36,3.39,3.44,2.2,] %cl_2_38[3.47,] 
-		 49: 
-		 50: COPY def_%cl_2_40 
-		 51: COPY def_%cl_2_41 
-		 52: COPY def_%cl_2_42 %cl_2_41[3.51,] 
-		 53: f->label def_%cl_2_43 f[3.12,3.25,3.28,3.36,3.39,3.44,3.48,2.2,] %cl_2_40[3.50,] %cl_2_42[3.52,] 
-		 54: 
-		 55: COPY def_%cl_2_44 
-		 56: COPY def_%cl_2_45 %cl_2_44[3.55,] 
-		 57: f->password_field def_%cl_2_46 f[3.12,3.25,3.28,3.36,3.39,3.44,3.48,3.53,2.2,] %cl_2_45[3.56,] 
-		 58: 
-		 59: COPY def_%cl_2_47 
-		 60: COPY def_%cl_2_48 
-		 61: COPY def_%cl_2_49 %cl_2_48[3.60,] 
-		 62: f->label def_%cl_2_50 f[3.12,3.25,3.28,3.36,3.39,3.44,3.48,3.53,3.57,2.2,] %cl_2_47[3.59,] %cl_2_49[3.61,] 
-		 63: 
-		 64: COPY def_%cl_2_51 
-		 65: COPY def_%cl_2_52 
-		 66: COPY def_%cl_2_53 %cl_2_51[3.64,] %cl_2_52[3.65,] 
-		 67: f->text_area def_%cl_2_54 f[3.12,3.25,3.28,3.36,3.39,3.44,3.48,3.53,3.57,3.62,2.2,] %cl_2_53[3.66,] 
-		 68: 
-		 69: COPY def_%cl_2_55 
-		 70: COPY def_%cl_2_56 %cl_2_55[3.69,] 
-		 71: %self->render def_%cl_2_57 %self[3.4,3.7,2.0,] %cl_2_56[3.70,] 
-		 72: 
-		 73: COPY def_%cl_2_58 
-		 74: %self->submit_tag def_%cl_2_59 %self[3.4,3.7,3.71,2.0,] %cl_2_58[3.73,] 
-		 75: RETURN %cl_2_59[3.74,] %self[3.4,3.7,3.71,3.74,2.0,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: def_%cl_2_60 
-		 1: def_%cl_2_61 %cl_2_60[4.0,] 
-		 2: RETURN %cl_2_61[4.1,] %self[2.0,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 6: RETURN %cl_1_7[3.5,] %self[3.2,3.5,2.0,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: def_%cl_1_8 
-		 1: def_%cl_1_9 %cl_1_8[4.0,] 
-		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 16: RETURN %v_29[7.15,] %self[7.3,7.7,7.14,4.9,2.0,] 
+		 14: COPY def_%v_28 
+		 15: COPY def_%v_29 %v_28[7.14,] 
+		 16: %self->render def_%v_30 %self[7.3,7.7,4.9,2.0,] %v_29[7.15,] 
+		 17: RETURN %v_30[7.16,] %self[7.3,7.7,7.16,4.9,2.0,] 
 BB 9
 	outgoing: 
 	datadep: 
@@ -394,152 +368,10 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->ruby_code_from_view def_%v_53 %self[4.3,4.8,2.0,2.13,] 
-		 2: %v_53->ruby_code_from_view def_%v_54 %v_53[7.1,] %self[7.1,4.3,4.8,2.0,2.13,] 
-CLOSURE BEGIN: %self[7.1,4.3,4.8,2.0,2.13,] 
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: def_%self 
-		 1: def_%cl_1_0 
-		 2: RECEIVEARG def_rb_from_view 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
-BB 3
-	outgoing: 4 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: GETFIELD %self->new_user def_%cl_1_3 %self[2.0,] 
-		 2: %self->signup_path def_%cl_1_4 %self[2.0,] 
-		 3: COPY def_%cl_1_5 
-		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
-		 5: %self->form_for def_%cl_1_7 %self[3.2,2.0,] %cl_1_3[3.1,] %cl_1_6[3.4,] %self[3.2,2.0,] 
-CLOSURE BEGIN: %self[3.2,2.0,] f[] 
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: def_%self 
-		 1: def_%cl_2_0 
-		 2: RECEIVEARG def_f 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
-BB 3
-	outgoing: 4 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: COPY def_%cl_2_3 
-		 2: GETFIELD %self->invitation def_%cl_2_4 %self[2.0,] 
-		 3: %cl_2_4->code def_%cl_2_5 %cl_2_4[3.2,] 
-		 4: %self->hidden_field_tag def_%cl_2_6 %self[2.0,] %cl_2_3[3.1,] %cl_2_5[3.3,] 
-		 5: 
-		 6: GETFIELD %self->new_user def_%cl_2_7 %self[3.4,2.0,] 
-		 7: %self->error_messages_for def_%cl_2_8 %self[3.4,2.0,] %cl_2_7[3.6,] 
-		 8: 
-		 9: COPY def_%cl_2_9 
-		 10: COPY def_%cl_2_10 
-		 11: COPY def_%cl_2_11 %cl_2_10[3.10,] 
-		 12: f->label def_%cl_2_12 f[2.2,] %cl_2_9[3.9,] %cl_2_11[3.11,] 
-		 13: 
-		 14: GETFIELD %self->invitation def_%cl_2_13 %self[3.4,3.7,2.0,] 
-		 15: %cl_2_13->user def_%cl_2_14 %cl_2_13[3.14,] 
-		 16: %cl_2_14->username def_%cl_2_15 %cl_2_14[3.15,] 
-		 17: 
-		 18: GETFIELD %self->invitation def_%cl_2_16 %self[3.4,3.7,2.0,] 
-		 19: %cl_2_16->user def_%cl_2_17 %cl_2_16[3.18,] 
-		 20: %cl_2_17->username def_%cl_2_18 %cl_2_17[3.19,] 
-		 21: 
-		 22: COPY def_%cl_2_19 
-		 23: COPY def_%cl_2_20 
-		 24: COPY def_%cl_2_21 %cl_2_20[3.23,] 
-		 25: f->label def_%cl_2_22 f[3.12,2.2,] %cl_2_19[3.22,] %cl_2_21[3.24,] 
-		 26: 
-		 27: COPY def_%cl_2_23 
-		 28: f->text_field def_%cl_2_24 f[3.12,3.25,2.2,] %cl_2_23[3.27,] 
-		 29: 
-		 30: (User) def_%cl_2_25 
-		 31: %cl_2_25->username_regex def_%cl_2_26 %cl_2_25[3.30,] 
-		 32: 
-		 33: COPY def_%cl_2_27 
-		 34: COPY def_%cl_2_28 
-		 35: COPY def_%cl_2_29 %cl_2_28[3.34,] 
-		 36: f->label def_%cl_2_30 f[3.12,3.25,3.28,2.2,] %cl_2_27[3.33,] %cl_2_29[3.35,] 
-		 37: 
-		 38: COPY def_%cl_2_31 
-		 39: f->email_field def_%cl_2_32 f[3.12,3.25,3.28,3.36,2.2,] %cl_2_31[3.38,] 
-		 40: 
-		 41: COPY def_%cl_2_33 
-		 42: COPY def_%cl_2_34 
-		 43: COPY def_%cl_2_35 %cl_2_34[3.42,] 
-		 44: f->label def_%cl_2_36 f[3.12,3.25,3.28,3.36,3.39,2.2,] %cl_2_33[3.41,] %cl_2_35[3.43,] 
-		 45: 
-		 46: COPY def_%cl_2_37 
-		 47: COPY def_%cl_2_38 %cl_2_37[3.46,] 
-		 48: f->password_field def_%cl_2_39 f[3.12,3.25,3.28,3.36,3.39,3.44,2.2,] %cl_2_38[3.47,] 
-		 49: 
-		 50: COPY def_%cl_2_40 
-		 51: COPY def_%cl_2_41 
-		 52: COPY def_%cl_2_42 %cl_2_41[3.51,] 
-		 53: f->label def_%cl_2_43 f[3.12,3.25,3.28,3.36,3.39,3.44,3.48,2.2,] %cl_2_40[3.50,] %cl_2_42[3.52,] 
-		 54: 
-		 55: COPY def_%cl_2_44 
-		 56: COPY def_%cl_2_45 %cl_2_44[3.55,] 
-		 57: f->password_field def_%cl_2_46 f[3.12,3.25,3.28,3.36,3.39,3.44,3.48,3.53,2.2,] %cl_2_45[3.56,] 
-		 58: 
-		 59: COPY def_%cl_2_47 
-		 60: COPY def_%cl_2_48 
-		 61: COPY def_%cl_2_49 %cl_2_48[3.60,] 
-		 62: f->label def_%cl_2_50 f[3.12,3.25,3.28,3.36,3.39,3.44,3.48,3.53,3.57,2.2,] %cl_2_47[3.59,] %cl_2_49[3.61,] 
-		 63: 
-		 64: COPY def_%cl_2_51 
-		 65: COPY def_%cl_2_52 
-		 66: COPY def_%cl_2_53 %cl_2_51[3.64,] %cl_2_52[3.65,] 
-		 67: f->text_area def_%cl_2_54 f[3.12,3.25,3.28,3.36,3.39,3.44,3.48,3.53,3.57,3.62,2.2,] %cl_2_53[3.66,] 
-		 68: 
-		 69: COPY def_%cl_2_55 
-		 70: COPY def_%cl_2_56 %cl_2_55[3.69,] 
-		 71: %self->render def_%cl_2_57 %self[3.4,3.7,2.0,] %cl_2_56[3.70,] 
-		 72: 
-		 73: COPY def_%cl_2_58 
-		 74: %self->submit_tag def_%cl_2_59 %self[3.4,3.7,3.71,2.0,] %cl_2_58[3.73,] 
-		 75: RETURN %cl_2_59[3.74,] %self[3.4,3.7,3.71,3.74,2.0,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: def_%cl_2_60 
-		 1: def_%cl_2_61 %cl_2_60[4.0,] 
-		 2: RETURN %cl_2_61[4.1,] %self[2.0,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 6: RETURN %cl_1_7[3.5,] %self[3.2,3.5,2.0,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: def_%cl_1_8 
-		 1: def_%cl_1_9 %cl_1_8[4.0,] 
-		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 3: RETURN %v_54[7.2,] %self[7.1,4.3,4.8,2.0,2.13,] 
+		 1: COPY def_%v_53 
+		 2: COPY def_%v_54 %v_53[7.1,] 
+		 3: %self->render def_%v_55 %self[4.3,4.8,2.0,2.13,] %v_54[7.2,] 
+		 4: RETURN %v_55[7.3,] %self[7.3,4.3,4.8,2.0,2.13,] 
 BB 9
 	outgoing: 
 	datadep: 

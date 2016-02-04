@@ -1,0 +1,83 @@
+level 0: CommentsController . before_filter (params: ) # (returnv: )
+	level 1: ApplicationController . before_filter (params: ) # (returnv: )
+		level 2: ApplicationController . authenticate_user (params: ) # (returnv: )
+			level 3:  [QUERY] User . where	{params: session[:u], } # {returnv: true} # {op: User.SELECT}
+			level 3:  [QUERY] User.where(:session_token => session[:u].to_s) . first	{params: } # {returnv: user} # {op: .SELECT}
+			level 3: User . before_filter (params: ) # (returnv: )
+			level 3: User . is_active? (params: ) # (returnv: true)
+				level 4: User . is_banned? (params: ) # (returnv: )
+			level 1: ApplicationController . increase_traffic_counter (params: ) # (returnv: )
+		level 2: ApplicationController . user_is_spider? (params: ) # (returnv: true)
+		level 2: Keystore . before_filter (params: ) # (returnv: )
+		level 2: Keystore . find_or_create_key_for_update (params: now_i, ) # (returnv: date_kv)
+			level 3:  [QUERY] self.lock(true).where(:key => key) . first	{params: } # {returnv: kv} # {op: .SELECT}
+			level 3:  [QUERY] self.lock(true) . where	{params: key, } # {returnv: } # {op: .SELECT}
+			level 3:  [QUERY] self . lock	{params: true, } # {returnv: } # {op: Keystore.TRANSACTION}
+=====transaction begin=====
+			level 3:  [QUERY] kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+				level 4: Keystore . before_save (params: ) # (returnv: )
+				level 4: Keystore . before_validation (params: ) # (returnv: )
+					level 5:  [QUERY] key . where	{params: } # {returnv: } # {op: .SELECT}
+				level 4: Keystore . before_create (params: ) # (returnv: )
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] traffic_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] date_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+	level 1: ApplicationController . find_user_from_rss_token (params: ) # (returnv: )
+		level 2:  [QUERY] User . where	{params: params[:token], } # {returnv: } # {op: User.SELECT}
+		level 2:  [QUERY] User.where(:rss_token => params[:token].to_s) . first	{params: } # {returnv: @user} # {op: .SELECT}
+	level 1: ApplicationController . require_logged_in_user_or_400 (params: ) # (returnv: )
+	level 0: CommentsController . upvote (params: ) # (returnv: )
+	level 1: CommentsController . find_comment (params: ) # (returnv: comment)
+		level 2:  [QUERY] Comment . where	{params: params[:id], } # {returnv: } # {op: Comment.SELECT}
+		level 2:  [QUERY] Comment.where(:short_id => params[:id]) . first	{params: } # {returnv: comment} # {op: .SELECT}
+		level 2:  [QUERY] Vote . where	{params: @user, comment, comment, } # {returnv: } # {op: Vote.SELECT}
+		level 2:  [QUERY] Vote.where(:user_id => @user.id,        :story_id => comment.story_id, :comment_id => comment.id) . first	{params: } # {returnv: comment.current_vote} # {op: .SELECT}
+	level 1: Vote . before_filter (params: ) # (returnv: )
+	level 1: Vote . vote_thusly_on_story_or_comment_for_user_because (params: comment, comment, @user, params[:reason], ) # (returnv: )
+		level 2:  [QUERY] Vote . where	{params: user_id, story_id, comment_id, } # {returnv: } # {op: Vote.SELECT}
+		level 2:  [QUERY] Vote.where(:user_id => user_id, :story_id => story_id,      :comment_id => comment_id) . first_or_initialize	{params: } # {returnv: v} # {op: .SELECT}
+		level 2:  [QUERY] v . destroy!	{params: } # {returnv: } # {op: Vote.DELETE}
+=====transaction begin=====
+		level 2:  [QUERY] v . new_record?	{params: } # {returnv: true} # {op: Vote.INSERT}
+			level 3: Vote . before_save (params: ) # (returnv: )
+			level 3: Vote . before_validation (params: ) # (returnv: )
+			level 3: Vote . before_create (params: ) # (returnv: )
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] v . save!	{params: } # {returnv: } # {op: Vote.INSERT}
+=====transaction end=====
+		level 2:  [QUERY] Comment . find	{params: v, } # {returnv: c} # {op: Comment.SELECT}
+=====transaction begin=====
+		level 2:  [QUERY] User . update_counters	{params: } # {returnv: } # {op: User.UPDATE}
+			level 3: User . before_save (params: ) # (returnv: )
+				level 4: User . check_session_token (params: ) # (returnv: )
+			level 3: User . before_validation (params: ) # (returnv: )
+				level 4: User . before_validation_do_block (params: ) # (returnv: )
+					level 5: User . create_rss_token (params: ) # (returnv: )
+					level 5: User . create_mailing_list_token (params: ) # (returnv: )
+=====transaction end=====
+		level 2: Comment . before_filter (params: ) # (returnv: )
+		level 2: Comment . give_upvote_or_downvote_and_recalculate_confidence! (params: upvote, downvote, ) # (returnv: )
+			level 3: Comment . calculated_confidence (params: ) # (returnv: )
+=====transaction begin=====
+			level 3:  [QUERY] Comment.connection . execute	{params: Comment, } # {returnv: } # {op: .UPDATE}
+=====transaction end=====
+			level 3: Story . before_filter (params: ) # (returnv: )
+			level 3: Story . recalculate_hotness! (params: ) # (returnv: )
+				level 4: Story . calculated_hotness (params: ) # (returnv: )
+					level 5:  [QUERY] self.tags . select	{params: } # {returnv: } # {op: Tag.SELECT}
+					level 5:  [QUERY] self.comments . where	{params: self, } # {returnv: } # {op: Comment.SELECT}
+					level 5:  [QUERY] self.comments.where("user_id <> ?", self.user_id) . select	{params: } # {returnv: } # {op: .SELECT}
+					level 5: Story . score (params: ) # (returnv: )
+		level 2:  [QUERY] Story . find	{params: v, } # {returnv: s} # {op: Story.SELECT}
+=====transaction begin=====
+		level 2:  [QUERY] User . update_counters	{params: } # {returnv: } # {op: User.UPDATE}
+=====transaction end=====
+		level 2: Story . give_upvote_or_downvote_and_recalculate_hotness! (params: upvote, downvote, ) # (returnv: )
+=====transaction begin=====
+			level 3:  [QUERY] Story.connection . execute	{params: Story, } # {returnv: } # {op: .UPDATE}
+=====transaction end=====

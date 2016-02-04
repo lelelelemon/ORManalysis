@@ -1,0 +1,39 @@
+level 0: HomeController . before_filter (params: ) # (returnv: )
+	level 1: ApplicationController . before_filter (params: ) # (returnv: )
+		level 2: ApplicationController . authenticate_user (params: ) # (returnv: )
+			level 3:  [QUERY] User . where	{params: session[:u], } # {returnv: true} # {op: User.SELECT}
+			level 3:  [QUERY] User.where(:session_token => session[:u].to_s) . first	{params: } # {returnv: user} # {op: .SELECT}
+			level 3: User . before_filter (params: ) # (returnv: )
+			level 3: User . is_active? (params: ) # (returnv: true)
+				level 4: User . is_banned? (params: ) # (returnv: )
+			level 1: ApplicationController . increase_traffic_counter (params: ) # (returnv: )
+		level 2: ApplicationController . user_is_spider? (params: ) # (returnv: true)
+		level 2: Keystore . before_filter (params: ) # (returnv: )
+		level 2: Keystore . find_or_create_key_for_update (params: now_i, ) # (returnv: date_kv)
+			level 3:  [QUERY] self.lock(true).where(:key => key) . first	{params: } # {returnv: kv} # {op: .SELECT}
+			level 3:  [QUERY] self.lock(true) . where	{params: key, } # {returnv: } # {op: .SELECT}
+			level 3:  [QUERY] self . lock	{params: true, } # {returnv: } # {op: Keystore.TRANSACTION}
+=====transaction begin=====
+			level 3:  [QUERY] kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+				level 4: Keystore . before_save (params: ) # (returnv: )
+				level 4: Keystore . before_validation (params: ) # (returnv: )
+					level 5:  [QUERY] key . where	{params: } # {returnv: } # {op: .SELECT}
+				level 4: Keystore . before_create (params: ) # (returnv: )
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] traffic_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] date_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+	level 1: ApplicationController . find_user_from_rss_token (params: ) # (returnv: )
+		level 2:  [QUERY] User . where	{params: params[:token], } # {returnv: } # {op: User.SELECT}
+		level 2:  [QUERY] User.where(:rss_token => params[:token].to_s) . first	{params: } # {returnv: @user} # {op: .SELECT}
+	level 1: ApplicationController . require_logged_in_user (params: ) # (returnv: )
+	level 0: HomeController . tagged (params: ) # (returnv: )
+	level 1:  [QUERY] Tag . where	{params: params[:tag], } # {returnv: } # {op: Tag.SELECT}
+	level 1:  [QUERY] Tag.where(:tag => params[:tag]) . first!	{params: } # {returnv: @tag} # {op: .SELECT}
+	level 1: HomeController . stories (params: ) # (returnv: )
+		level 2: HomeController . filtered_tag_ids (params: ) # (returnv: )
+			level 3: ApplicationController . tags_filtered_by_cookie (params: ) # (returnv: )
+				level 4:  [QUERY] Tag . where	{params: cookies[TAG_FILTER_COOKIE], } # {returnv: @_tags_filtered} # {op: Tag.SELECT}

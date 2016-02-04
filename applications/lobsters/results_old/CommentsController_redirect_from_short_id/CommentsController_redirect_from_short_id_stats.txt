@@ -1,0 +1,35 @@
+User.where <User,SELECT>
+User.where(:session_token => session[:u].to_s).first <,SELECT>
++FIELD+ User.deleted_at (datetime)
++FIELD+ User.banned_at (datetime)
++FIELD+ User.id (integer)
++FIELD+ User.username (string)
+Keystore.transaction <Keystore,TXN>
+self.lock <Keystore,TRANSACTION> (c)
+self.lock(true).where <Keystore,SELECT> (c)
+kv.save! <Keystore,INSERT> (c)
++FIELD+ Keystore.key (string)
+self.where <Keystore,SELECT> (c)
++FIELD+ Keystore.value (integer)
+traffic_kv.save! <Keystore,INSERT> (c)
+date_kv.save! <Keystore,INSERT> (c)
+User.where <User,SELECT>
+User.where(:rss_token => params[:token].to_s).first <,SELECT>
+Comment.where <Comment,SELECT>
+Comment.where(:short_id => params[:id]).first <,SELECT>
++FIELD+ User.id (integer)
++FIELD+ Comment.story_id (integer)
++FIELD+ Comment.id (integer)
+Vote.where <Vote,SELECT>
+Vote.where(:user_id => @user.id,        :story_id => comment.story_id, :comment_id => comment.id).first <,SELECT>
++FIELD+ Comment.story_id (integer)
++FIELD+ Story.short_id (string)
++FIELD+ Story.title (string)
++FIELD+ Comment.short_id (string)
++FIELD+ Comment.short_id (string)
+
+query in total: 15
+query in view: 0
+query in closure: 6
+read queries: 10
+write queries: 3

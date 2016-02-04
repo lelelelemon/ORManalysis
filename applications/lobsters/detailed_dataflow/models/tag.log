@@ -1,0 +1,404 @@
+SET IRMethod, name = to_param
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 11)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = call_0o(%self ;n:tag, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		return(%v_3)		--org.jruby.ir.instructions.ReturnInstr(	%v_3[2.6 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = all_with_filtered_counts_for
+PRINT info for BB 1:
+	Vars Live on Entry:  4 8		
+	Vars Live on Exit:  4 8		
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  4 8		
+	Vars Live on Exit:  4 8		
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 1, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		user = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		line_num(;n: 15)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = search_const(scope<1> ;name: TagFilter, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_4 = call_1o(%v_3, :'tag_id' ;n:group, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_3[2.7 ] ) 
+		%v_5 = call_0o(%v_4 ;n:count, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_4[2.8 ] ) 
+		counts = copy(%v_5)		--org.jruby.ir.instructions.CopyInstr(	%v_5[2.9 ] ) 
+		line_num(;n: 17)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_6 = search_const(scope<1> ;name: Tag, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_7 = call_0o(%v_6 ;n:active, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_6[2.12 ] ) 
+		%v_8 = call_1o(%v_7, :'tag' ;n:order, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_7[2.13 ] ) 
+		%v_9 = call(%v_8, %self:CLOSURE all_with_filtered_counts_for_CLOSURE_1[./lobsters/models/tag.rb:17] ;n:select, t:NO, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%v_8[2.14 ] %self[2.0 ] ) 
+CLOSURE BEGIN: t[] user[2.5,] 
+PRINT info for BB 1:
+	Vars Live on Entry:  6		
+	Vars Live on Exit:  6		
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  2 6		
+	Vars Live on Exit:  6		
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_1_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		t = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  2 6		
+	outgoing edges:4, 6, 
+	Instructions:
+		line_num(;n: 17)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_3 = call_1o(t, user ;n:valid_for?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	t[2.2 ] user[] ) 
+		return(%cl_1_3)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_3[3.1 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		%cl_1_4 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_1_5 = runtime_helper(%cl_1_4 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_1_4[4.0 ] ) 
+		return(%cl_1_5)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_5[4.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		%v_10 = call(%v_9, %self:CLOSURE all_with_filtered_counts_for_CLOSURE_2[./lobsters/models/tag.rb:17] ;n:map, t:NO, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%v_9[2.15 ] %self[2.0 ] ) 
+CLOSURE BEGIN: t[] counts[2.10,] 
+PRINT info for BB 1:
+	Vars Live on Entry:  7		
+	Vars Live on Exit:  7		
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  2 7		
+	Vars Live on Exit:  7		
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_2_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		t = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  2 7		
+	outgoing edges:4, 6, 
+	Instructions:
+		line_num(;n: 18)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_3 = call_0o(t ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	t[2.2 ] ) 
+		%cl_2_4 = call_1o(counts, %cl_2_3 ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	counts[] %cl_2_3[3.1 ] ) 
+		%cl_2_5 = call_0o(%cl_2_4 ;n:to_i, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_2_4[3.2 ] ) 
+		attr_assign(t, %cl_2_5 ;n:filtered_count=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	t[3.1 2.2 ] %cl_2_5[3.3 ] ) #<t>#	-- [PUT:t].filtered_count 
+		line_num(;n: 19)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		return(t)		--org.jruby.ir.instructions.ReturnInstr(	t[3.1 3.4 2.2 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		%cl_2_6 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_2_7 = runtime_helper(%cl_2_6 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_2_6[4.0 ] ) 
+		return(%cl_2_7)		--org.jruby.ir.instructions.ReturnInstr(	%cl_2_7[4.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		return(%v_10)		--org.jruby.ir.instructions.ReturnInstr(	%v_10[2.16 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  4 8		
+	Vars Live on Exit:  4 8		
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = all_with_story_counts_for
+PRINT info for BB 1:
+	Vars Live on Entry:  4 8		
+	Vars Live on Exit:  4 8		
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  4 8		
+	Vars Live on Exit:  4 8		
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 1, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		user = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		line_num(;n: 24)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = search_const(scope<1> ;name: Tagging, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_4 = call_1o(%v_3, :'tag_id' ;n:group, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_3[2.7 ] ) 
+		%v_5 = call_0o(%v_4 ;n:count, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_4[2.8 ] ) 
+		counts = copy(%v_5)		--org.jruby.ir.instructions.CopyInstr(	%v_5[2.9 ] ) 
+		line_num(;n: 26)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_6 = search_const(scope<1> ;name: Tag, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_7 = call_0o(%v_6 ;n:active, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_6[2.12 ] ) 
+		%v_8 = call_1o(%v_7, :'tag' ;n:order, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_7[2.13 ] ) 
+		%v_9 = call(%v_8, %self:CLOSURE all_with_story_counts_for_CLOSURE_1[./lobsters/models/tag.rb:26] ;n:select, t:NO, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%v_8[2.14 ] %self[2.0 ] ) 
+CLOSURE BEGIN: t[] user[2.5,] 
+PRINT info for BB 1:
+	Vars Live on Entry:  6		
+	Vars Live on Exit:  6		
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  2 6		
+	Vars Live on Exit:  6		
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_1_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		t = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  2 6		
+	outgoing edges:4, 6, 
+	Instructions:
+		line_num(;n: 26)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_3 = call_1o(t, user ;n:valid_for?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	t[2.2 ] user[] ) 
+		return(%cl_1_3)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_3[3.1 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		%cl_1_4 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_1_5 = runtime_helper(%cl_1_4 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_1_4[4.0 ] ) 
+		return(%cl_1_5)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_5[4.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		%v_10 = call(%v_9, %self:CLOSURE all_with_story_counts_for_CLOSURE_2[./lobsters/models/tag.rb:26] ;n:map, t:NO, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%v_9[2.15 ] %self[2.0 ] ) 
+CLOSURE BEGIN: t[] counts[2.10,] 
+PRINT info for BB 1:
+	Vars Live on Entry:  7		
+	Vars Live on Exit:  7		
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  2 7		
+	Vars Live on Exit:  7		
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_2_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		t = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  2 7		
+	outgoing edges:4, 6, 
+	Instructions:
+		line_num(;n: 27)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_3 = call_0o(t ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	t[2.2 ] ) 
+		%cl_2_4 = call_1o(counts, %cl_2_3 ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	counts[] %cl_2_3[3.1 ] ) 
+		%cl_2_5 = call_0o(%cl_2_4 ;n:to_i, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_2_4[3.2 ] ) 
+		attr_assign(t, %cl_2_5 ;n:stories_count=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	t[3.1 2.2 ] %cl_2_5[3.3 ] ) #<t>#	-- [PUT:t].stories_count 
+		line_num(;n: 28)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		return(t)		--org.jruby.ir.instructions.ReturnInstr(	t[3.1 3.4 2.2 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		%cl_2_6 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_2_7 = runtime_helper(%cl_2_6 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_2_6[4.0 ] ) 
+		return(%cl_2_7)		--org.jruby.ir.instructions.ReturnInstr(	%cl_2_7[4.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		return(%v_10)		--org.jruby.ir.instructions.ReturnInstr(	%v_10[2.16 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  4 8		
+	Vars Live on Exit:  4 8		
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = css_class
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  6		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 33)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = copy("tag tag_")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_4 = call_0o(%self ;n:tag, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_5 = build_compound_string(%v_3, #{%v_4})		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_3[2.6 ] %v_4[2.7 ] ) 
+		%v_6 = call_0o(%self ;n:is_media?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 ] ) 
+		b_false(LBL_0:14, %v_6)		--org.jruby.ir.instructions.BFalseInstr(	%v_6[2.9 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  6 8		
+	Vars Live on Exit:  6		
+	outgoing edges:5, 
+	Instructions:
+		%v_7 = copy(" tag_is_media")		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_1:17)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 4:
+	Vars Live on Entry:  6 8		
+	Vars Live on Exit:  6		
+	outgoing edges:5, 
+	Instructions:
+		%v_8 = copy("")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_7 = copy(%v_8)		--org.jruby.ir.instructions.CopyInstr(	%v_8[4.0 ] ) 
+PRINT info for BB 5:
+	Vars Live on Entry: 
+	Vars Live on Exit:  6 8		
+	outgoing edges:6, 
+	Instructions:
+		%v_9 = call_1o(%v_5, %v_7 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_5[2.8 ] %v_7[4.1 3.0 ] ) 
+		return(%v_9)		--org.jruby.ir.instructions.ReturnInstr(	%v_9[5.0 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = valid_for?
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  4		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 1, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		user = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		line_num(;n: 37)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = call_0o(%self ;n:privileged?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		b_false(LBL_0:15, %v_3)		--org.jruby.ir.instructions.BFalseInstr(	%v_3[2.7 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  4		
+	outgoing edges:6, 
+	Instructions:
+		line_num(;n: 38)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = call_1o(user, :'is_moderator?' ;n:try, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	user[2.5 ] ) 
+		%v_5 = call_0o(%v_4 ;n:!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_4[3.1 ] ) 
+		%v_6 = call_0o(%v_5 ;n:!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_5[3.2 ] ) 
+		return(%v_6)		--org.jruby.ir.instructions.ReturnInstr(	%v_6[3.3 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		line_num(;n: 41)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		return(true)		--org.jruby.ir.instructions.ReturnInstr(	) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = filtered_count
+PRINT info for BB 1:
+	Vars Live on Entry:  6		
+	Vars Live on Exit:  6		
+	outgoing edges:7, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 5 6		
+	Vars Live on Exit:  6		
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 45)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = runtime_helper(%self, "@filtered_count" ;method: IS_DEFINED_INSTANCE_VAR)		--org.jruby.ir.instructions.RuntimeHelperCall(	%self[2.0 ] ) 
+		%v_3 = copy(%v_4)		--org.jruby.ir.instructions.CopyInstr(	%v_4[2.6 ] ) 
+		b_nil(LBL_1:12, %v_4)		--org.jruby.ir.instructions.BNilInstr(	%v_4[2.6 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0 5 6		
+	Vars Live on Exit:  0		
+	outgoing edges:4, 
+	Instructions:
+		%v_5 = get_field(%self ;name: @filtered_count)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].filtered_count 
+		%v_3 = copy(%v_5)		--org.jruby.ir.instructions.CopyInstr(	%v_5[3.0 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0 6		
+	Vars Live on Exit:  0 5 6		
+	outgoing edges:5, 6, 
+	Instructions:
+		b_true(LBL_0:21, %v_3)		--org.jruby.ir.instructions.BTrueInstr(	%v_3[3.1 2.7 ] ) 
+PRINT info for BB 5:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:7, 
+	Instructions:
+		%v_6 = search_const(scope<1> ;name: TagFilter, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_7 = call_0o(%self ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_8 = copy({:'tag_id'=>%v_7})		--org.jruby.ir.instructions.CopyInstr(	%v_7[5.1 ] ) 
+		%v_9 = call_1o(%v_6, %v_8 ;n:where, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_6[5.0 ] %v_8[5.2 ] ) 
+		%v_10 = call_0o(%v_9 ;n:count, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_9[5.3 ] ) 
+		put_field(%self, %v_10 ;name: @filtered_count)		--org.jruby.ir.instructions.PutFieldInstr(	%self[5.1 2.0 ] %v_10[5.4 ] ) #<%self>#	-- [PUT:%self].filtered_count 
+		return(%v_10)		--org.jruby.ir.instructions.ReturnInstr(	%v_10[5.4 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit:  6		
+	outgoing edges:7, 
+	Instructions:
+		return(%v_5)		--org.jruby.ir.instructions.ReturnInstr(	%v_5[3.0 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+

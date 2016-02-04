@@ -1,0 +1,101 @@
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,3]
+TBLWRITERECORD  User [0,0,0] Fields  []
+User where( session_token => session[ u] to_s) first <,SELECT>
+self lock(true) where( key => key) first <Keystore,SELECT> (c)
+self lock(true) where <Keystore,SELECT> (c)
+self lock <Keystore,TRANSACTION> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+key where <Keystore,SELECT> (c)
+kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+traffic_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+date_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+Comment where <Comment,SELECT>
+TBLREADRECORD  Comment [6,0,4,2]
+TBLWRITERECORD  Comment [0,1,0] Fields  []
+Comment where( short_id => params[ id]) first <,SELECT>
+Vote where <Vote,SELECT>
+TBLREADRECORD  Vote [2,0,4,1]
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+Vote where( user_id => @user id,         story_id => comment story_id,  comment_id => comment id) first <,SELECT>
+Keystore connection execute <,INSERT> (v) (c)
+Keystore connection execute <,INSERT> (v) (c)
+Keystore connection execute <,INSERT> (v) (c)
+kv save! <,INSERT> (v) (c)
+self where( key => key) first try <Keystore,SELECT> (v) (c)
+self where( key => key) first <Keystore,SELECT> (v) (c)
+self where <Keystore,SELECT> (v) (c)
+TBLREADRECORD  Keystore [0,0,0,0]
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+Vote where <Vote,SELECT> (v) (c)
+TBLREADRECORD  Vote [0,0,1,0]
+TBLWRITERECORD  Vote [2,0,0] Fields  [story,parent_comment,current_vote,]
+Vote where( user_id => user_id,  story_id => story_id,       comment_id => comment_id) first_or_initialize <,SELECT> (v) (c)
+v destroy! <Vote,DELETE> (v) (c)
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+v new_record? <Vote,INSERT> (v) (c)
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+v save! <Vote,INSERT> (v) (c)
+TBLWRITERECORD  Vote [3,0,0] Fields  [vote,reason,story,parent_comment,current_vote,]
+Comment find <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,2,0]
+TBLWRITERECORD  Comment [3,0,0] Fields  [vote,reason,story,parent_comment,current_vote,]
+User update_counters <User,UPDATE> (v) (c)
+TBLWRITERECORD  User [1,0,14] Fields  []
+Comment connection execute <,UPDATE> (v) (c)
+self tags select <Tag,SELECT> (v) (c)
+TBLREADRECORD  Tag [0,0,2,0]
+TBLWRITERECORD  Tag [1,0,14] Fields  [upvotes,downvotes,]
+self comments where <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,1,0]
+TBLWRITERECORD  Comment [1,0,15] Fields  [upvotes,downvotes,]
+self comments where("user_id <> ?", self user_id) select <Story,SELECT> (v) (c)
+Story find <Story,SELECT> (v) (c)
+TBLREADRECORD  Story [0,0,2,0]
+TBLWRITERECORD  Story [3,0,0] Fields  [vote,reason,story,parent_comment,current_vote,]
+User update_counters <User,UPDATE> (v) (c)
+TBLWRITERECORD  User [1,0,14] Fields  []
+Story connection execute <,UPDATE> (v) (c)
+Story select <Story,SELECT> (v) (c)
+TBLREADRECORD  Story [0,0,1,0]
+TBLWRITERECORD  Story [0,0,0] Fields  []
+Story select( id) where <,SELECT> (v) (c)
+Comment where <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,1,0]
+TBLWRITERECORD  Comment [3,0,0] Fields  [story,parent_comment,current_vote,]
+self order <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,1,0]
+TBLWRITERECORD  Comment [3,0,1] Fields  [story,parent_comment,current_vote,]
+comments count <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,3,0]
+TBLWRITERECORD  Comment [3,0,1] Fields  [story,parent_comment,current_vote,]
+self parent_comment try <Comment,SELECT> (v) (c)
+self plaintext_comment scan(/\B\@([\w\-]+)/) flatten uniq <Comment,SELECT> (v) (c)
+User where <User,SELECT> (v) (c)
+TBLREADRECORD  User [0,0,1,0]
+TBLWRITERECORD  User [3,0,0] Fields  [story,parent_comment,current_vote,]
+User where( username => mention) first <,SELECT> (v) (c)
+comment new_record? <Comment,INSERT> (v) (c)
+TBLWRITERECORD  Comment [17,2,31] Fields  [story,parent_comment,current_vote,hat_id,comment,user,is_moderated,is_deleted,comments_count,]
+
+STATS query in total  44
+STATS query total on single path: 40
+STATS read query on single path: 27
+STATS write query on single path: 13
+STATS query in view  31
+STATS query in closure  38
+STATS branch depend on query result  51
+STATS branch total  70
+STATS read queries  28
+STATS read to read query  14
+STATS read to write query  0
+STATS read to view  40
+STATS read to branch  12
+STATS materialized query  9
+STATS write queries  44
+STATS write from user input  3
+STATS write from other queries  62
+STATS write from const  148

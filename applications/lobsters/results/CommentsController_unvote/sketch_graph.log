@@ -1,0 +1,79 @@
+digraph sketch {
+	n20 [label=<<i>20__ User(User)   where</i>> color=blue]; 
+	n20 -> n21 [label="0"]
+	n21 [label=<<i>21__ User where( session_token =) session( u) to_s)   first</i>> color=blue]; 
+	n109 [label=<<i>109__ self(ApplicationController)   params</i>> color=crimson]; 
+	n142 [label=<<i>142__ self lock(true) where( key =) key)   first</i>> color=blue]; 
+	n143 [label=<<i>143__ self lock(true)   where</i>> color=blue]; 
+	n144 [label=<<i>144__ self(Keystore)   lock</i>> color=blue]; 
+	n151 [label=<<i>151__ key   where</i>> color=blue]; 
+	n153 [label=<<i>153__ kv(Keystore)   save!</i>> color=blue]; 
+	n184 [label=<<i>184__ traffic_kv(Keystore)   value</i>> color=darkorange]; 
+	n184 -> n186 [label="0"]
+	n186 [label=<<i>186__ traffic_kv(Keystore)   save!</i>> color=blue]; 
+	n188 [label=<<i>188__ date_kv(Keystore)   value</i>> color=darkorange]; 
+	n188 -> n190 [label="0"]
+	n190 [label=<<i>190__ date_kv(Keystore)   save!</i>> color=blue]; 
+	n246 [label=<<i>246__ self(CommentsController)   params</i>> color=crimson]; 
+	n246 -> n249 [label="2"]
+	n249 [label=<<i>249__ Comment(Comment)   where</i>> color=blue]; 
+	n249 -> n250 [label="0"]
+	n250 [label=<<i>250__ Comment where( short_id =) params( id))   first</i>> color=blue]; 
+	n250 -> n264 [label="3"]
+	n250 -> n397 [label="6"]
+	n250 -> n399 [label="6"]
+	n250 -> n307 [label="7"]
+	n264 [label=<<i>264__ Vote(Vote)   where</i>> color=blue]; 
+	n264 -> n265 [label="0"]
+	n265 [label=<<i>265__ Vote where( user_id =) @user id,         story_id =) comment story_id,  comment_id =) comment id)   first</i>> color=blue]; 
+	n265 -> n266 [label="0"]
+	n266 [label=<<i>266__ comment(Comment)   current_vote</i>> color=darkorange]; 
+	n266 -> n397 [label="5"]
+	n266 -> n399 [label="5"]
+	n266 -> n307 [label="6"]
+	n307 [label=<<i>307__ Vote(Vote)   where</i>> color=blue]; 
+	n307 -> n308 [label="0"]
+	n308 [label=<<i>308__ Vote where( user_id =) user_id,  story_id =) story_id,       comment_id =) comment_id)   first_or_initialize</i>> color=blue]; 
+	n308 -> n353 [label="1"]
+	n308 -> n359 [label="1"]
+	n308 -> n401 [label="1"]
+	n308 -> n418 [label="2"]
+	n308 -> n692 [label="2"]
+	n353 [label=<<i>353__ v(Vote)   destroy!</i>> color=blue]; 
+	n359 [label=<<i>359__ v(Vote)   new_record?</i>> color=blue]; 
+	n397 [label=<<i>397__ v(Vote)   vote</i>> color=darkorange]; 
+	n397 -> n401 [label="0"]
+	n397 -> n418 [label="1"]
+	n397 -> n692 [label="1"]
+	n399 [label=<<i>399__ v(Vote)   reason</i>> color=darkorange]; 
+	n399 -> n401 [label="0"]
+	n399 -> n418 [label="1"]
+	n399 -> n692 [label="1"]
+	n401 [label=<<i>401__ v(Vote)   save!</i>> color=blue]; 
+	n418 [label=<<i>418__ Comment(Comment)   find</i>> color=blue]; 
+	n418 -> n429 [label="2"]
+	n418 -> n447 [label="5"]
+	n418 -> n452 [label="5"]
+	n418 -> n540 [label="7"]
+	n418 -> n563 [label="8"]
+	n418 -> n598 [label="9"]
+	n429 [label=<<i>429__ User(User)   update_counters</i>> color=blue]; 
+	n447 [label=<<i>447__ _self(Comment)   upvotes</i>> color=darkorange]; 
+	n447 -> n540 [label="4"]
+	n447 -> n563 [label="5"]
+	n447 -> n598 [label="6"]
+	n452 [label=<<i>452__ _self(Comment)   downvotes</i>> color=darkorange]; 
+	n452 -> n540 [label="4"]
+	n452 -> n563 [label="5"]
+	n452 -> n598 [label="6"]
+	n540 [label=<<i>540__ Comment connection   execute</i>> color=blue]; 
+	n563 [label=<<i>563__ self tags(Tag)   select</i>> color=blue]; 
+	n598 [label=<<i>598__ self comments(Comment)   where</i>> color=blue]; 
+	n598 -> n599 [label="0"]
+	n599 [label=<<i>599__ self comments where("user_id () ?", self user_id)   select</i>> color=blue]; 
+	n692 [label=<<i>692__ Story(Story)   find</i>> color=blue]; 
+	n692 -> n703 [label="2"]
+	n692 -> n754 [label="6"]
+	n703 [label=<<i>703__ User(User)   update_counters</i>> color=blue]; 
+	n754 [label=<<i>754__ Story connection   execute</i>> color=blue]; 
+}

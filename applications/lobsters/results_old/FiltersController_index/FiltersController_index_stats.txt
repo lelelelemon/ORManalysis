@@ -1,0 +1,29 @@
+User.where <User,SELECT>
+User.where(:session_token => session[:u].to_s).first <,SELECT>
++FIELD+ User.deleted_at (datetime)
++FIELD+ User.banned_at (datetime)
++FIELD+ User.id (integer)
++FIELD+ User.username (string)
+Keystore.transaction <Keystore,TXN>
+self.lock <Keystore,TRANSACTION> (c)
+self.lock(true).where <Keystore,SELECT> (c)
+kv.save! <Keystore,INSERT> (c)
++FIELD+ Keystore.key (string)
+self.where <Keystore,SELECT> (c)
++FIELD+ Keystore.value (integer)
+traffic_kv.save! <Keystore,INSERT> (c)
+date_kv.save! <Keystore,INSERT> (c)
+self.where <Tag,SELECT>
+Tagging.group <Tagging,GROUP>
+Tagging.group(:tag_id).count <,SELECT>
+Tag.active.order <,SELECT>
+Tag.active.order(:tag).select <,SELECT>
++FIELD+ Tag.privileged (boolean)
+user.try <User,SELECT> (c) [Tag_active.order]
+Tag.where <Tag,SELECT>
+
+query in total: 16
+query in view: 0
+query in closure: 7
+read queries: 11
+write queries: 3

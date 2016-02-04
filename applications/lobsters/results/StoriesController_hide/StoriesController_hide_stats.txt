@@ -1,0 +1,48 @@
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,3]
+TBLWRITERECORD  User [0,0,0] Fields  []
+User where( session_token => session[ u] to_s) first <,SELECT>
+self lock(true) where( key => key) first <Keystore,SELECT> (c)
+self lock(true) where <Keystore,SELECT> (c)
+self lock <Keystore,TRANSACTION> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+key where <Keystore,SELECT> (c)
+kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+traffic_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+date_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+Story where <Story,SELECT>
+TBLREADRECORD  Story [12,2,0,2]
+TBLWRITERECORD  Story [0,1,0] Fields  []
+Story where( short_id => params[ story_id]) first <,SELECT>
+Vote where <Vote,SELECT>
+TBLREADRECORD  Vote [8,2,0,1]
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+Vote where( user_id => @user id,         story_id => story id,  comment_id => nil) first <,SELECT>
+Vote where( user_id => @user id,         story_id => story id,  comment_id => nil) first try <,SELECT>
+HiddenStory where( user_id => user_id,  story_id =>      story_id) first_or_initialize save! <,INSERT>
+HiddenStory where( user_id => user_id,  story_id =>      story_id) first_or_initialize <,SELECT>
+HiddenStory where <HiddenStory,SELECT>
+TBLREADRECORD  HiddenStory [0,0,0,0]
+TBLWRITERECORD  HiddenStory [2,0,0] Fields  [vote,]
+
+STATS query in total  17
+STATS query total on single path: 17
+STATS read query on single path: 12
+STATS write query on single path: 5
+STATS query in view  0
+STATS query in closure  7
+STATS branch depend on query result  5
+STATS branch total  11
+STATS read queries  12
+STATS read to read query  42
+STATS read to write query  10
+STATS read to view  0
+STATS read to branch  13
+STATS materialized query  2
+STATS write queries  17
+STATS write from user input  1
+STATS write from other queries  11
+STATS write from const  7

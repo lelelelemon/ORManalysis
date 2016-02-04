@@ -1,0 +1,107 @@
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,3]
+TBLWRITERECORD  User [0,0,0] Fields  []
+User where( session_token => session[ u] to_s) first <,SELECT>
+self lock(true) where( key => key) first <Keystore,SELECT> (c)
+self lock(true) where <Keystore,SELECT> (c)
+self lock <Keystore,TRANSACTION> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+key where <Keystore,SELECT> (c)
+kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+traffic_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+date_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+Story where <Story,SELECT>
+TBLREADRECORD  Story [10,2,9,8]
+TBLWRITERECORD  Story [0,1,0] Fields  []
+Story where( short_id => params[ story_id]) first <,SELECT>
+Comment where <Comment,SELECT>
+TBLREADRECORD  Comment [2,0,0,2]
+TBLWRITERECORD  Comment [1,1,0] Fields  []
+Comment where( story_id => story id,  short_id =>      params[ parent_comment_short_id]) first <,SELECT>
+Comment where <Comment,SELECT>
+TBLREADRECORD  Comment [2,0,0,2]
+TBLWRITERECORD  Comment [1,2,0] Fields  [parent_comment,hat_id,comment,user,]
+Comment where( story_id => story id,  short_id =>      params[ parent_comment_short_id]) first <,SELECT>
+Keystore connection execute <,INSERT> (v) (c)
+Keystore connection execute <,INSERT> (v) (c)
+Keystore connection execute <,INSERT> (v) (c)
+kv save! <,INSERT> (v) (c)
+self where( key => key) first try <Keystore,SELECT> (v) (c)
+self where( key => key) first <Keystore,SELECT> (v) (c)
+self where <Keystore,SELECT> (v) (c)
+TBLREADRECORD  Keystore [0,0,0,0]
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+Vote where <Vote,SELECT> (v) (c)
+TBLREADRECORD  Vote [0,0,1,0]
+TBLWRITERECORD  Vote [1,2,0] Fields  [parent_comment,hat_id,comment,user,]
+Vote where( user_id => user_id,  story_id => story_id,       comment_id => comment_id) first_or_initialize <,SELECT> (v) (c)
+v destroy! <Vote,DELETE> (v) (c)
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+v new_record? <Vote,INSERT> (v) (c)
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+v save! <Vote,INSERT> (v) (c)
+TBLWRITERECORD  Vote [2,2,0] Fields  [vote,reason,parent_comment,hat_id,comment,user,]
+Comment find <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,2,0]
+TBLWRITERECORD  Comment [2,2,0] Fields  [vote,reason,parent_comment,hat_id,comment,user,]
+User update_counters <User,UPDATE> (v) (c)
+TBLWRITERECORD  User [1,0,14] Fields  []
+Comment connection execute <,UPDATE> (v) (c)
+self tags select <Tag,SELECT> (v) (c)
+TBLREADRECORD  Tag [0,0,2,0]
+TBLWRITERECORD  Tag [1,0,14] Fields  [upvotes,downvotes,]
+self comments where <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,1,0]
+TBLWRITERECORD  Comment [1,0,15] Fields  [upvotes,downvotes,]
+self comments where("user_id <> ?", self user_id) select <Story,SELECT> (v) (c)
+Story find <Story,SELECT> (v) (c)
+TBLREADRECORD  Story [0,0,2,0]
+TBLWRITERECORD  Story [2,2,0] Fields  [vote,reason,parent_comment,hat_id,comment,user,]
+User update_counters <User,UPDATE> (v) (c)
+TBLWRITERECORD  User [1,0,14] Fields  []
+Story connection execute <,UPDATE> (v) (c)
+Story select <Story,SELECT> (v) (c)
+TBLREADRECORD  Story [0,0,1,0]
+TBLWRITERECORD  Story [0,0,0] Fields  []
+Story select( id) where <,SELECT> (v) (c)
+Comment where <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,1,0]
+TBLWRITERECORD  Comment [2,2,0] Fields  [parent_comment,hat_id,comment,user,]
+self order <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,1,0]
+TBLWRITERECORD  Comment [2,2,1] Fields  [parent_comment,hat_id,comment,user,]
+comments count <Comment,SELECT> (v) (c)
+TBLREADRECORD  Comment [0,0,3,0]
+TBLWRITERECORD  Comment [2,2,1] Fields  [parent_comment,hat_id,comment,user,]
+self parent_comment try <Comment,SELECT> (v) (c)
+self plaintext_comment scan(/\B\@([\w\-]+)/) flatten uniq <Comment,SELECT> (v) (c)
+User where <User,SELECT> (v) (c)
+TBLREADRECORD  User [0,0,1,0]
+TBLWRITERECORD  User [2,2,0] Fields  [parent_comment,hat_id,comment,user,]
+User where( username => mention) first <,SELECT> (v) (c)
+comment new_record? <Comment,INSERT> (v) (c)
+TBLWRITERECORD  Comment [6,2,15] Fields  [parent_comment,hat_id,comment,user,comments_count,]
+comment save <Comment,INSERT>
+TBLWRITERECORD  Comment [1,2,0] Fields  [parent_comment,hat_id,comment,user,]
+
+STATS query in total  47
+STATS query total on single path: 43
+STATS read query on single path: 29
+STATS write query on single path: 14
+STATS query in view  31
+STATS query in closure  38
+STATS branch depend on query result  57
+STATS branch total  80
+STATS read queries  30
+STATS read to read query  24
+STATS read to write query  4
+STATS read to view  42
+STATS read to branch  30
+STATS materialized query  11
+STATS write queries  47
+STATS write from user input  30
+STATS write from other queries  43
+STATS write from const  132

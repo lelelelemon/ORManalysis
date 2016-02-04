@@ -1,0 +1,269 @@
+SET IRMethod, name = initialize
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 3, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		scope = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		page = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		user = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		line_num(;n: 6)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		put_field(%self, scope ;name: @scope)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 ] scope[2.5 ] ) #<%self>#	-- [PUT:%self].scope 
+		line_num(;n: 7)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		put_field(%self, page ;name: @page)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.9 ] page[2.6 ] ) #<%self>#	-- [PUT:%self].page 
+		line_num(;n: 8)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		put_field(%self, user ;name: @user)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.9 2.11 ] user[2.7 ] ) #<%self>#	-- [PUT:%self].user 
+		line_num(;n: 9)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = search_const(scope<1> ;name: STORIES_PER_PAGE, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		put_field(%self, %v_3 ;name: @per_page)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.9 2.11 2.13 ] %v_3[2.15 ] ) #<%self>#	-- [PUT:%self].per_page 
+		return(%v_3)		--org.jruby.ir.instructions.ReturnInstr(	%v_3[2.15 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = get
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 13)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = get_field(%self ;name: @scope)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].scope 
+		%v_4 = call_0o(%self ;n:per_page, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_5 = call_1f(%v_4, Fixnum:1 ;n:+, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneFixnumArgNoBlockCallInstr(	%v_4[2.7 ] ) 
+		%v_6 = call_1o(%v_3, %v_5 ;n:limit, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_3[2.6 ] %v_5[2.8 ] ) 
+		line_num(;n: 14)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_7 = get_field(%self ;name: @page)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 ] %self[2.0 2.7 ] ) #<%self>#	-- [GET:%self].page 
+		%v_8 = call_1f(%v_7, Fixnum:1 ;n:-, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneFixnumArgNoBlockCallInstr(	%v_7[2.11 ] ) 
+		%v_9 = call_0o(%self ;n:per_page, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 ] ) 
+		%v_10 = call_1o(%v_8, %v_9 ;n:*, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_8[2.12 ] %v_9[2.13 ] ) 
+		%v_11 = call_1o(%v_6, %v_10 ;n:offset, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_6[2.9 ] %v_10[2.14 ] ) 
+		%v_12 = copy({:'taggings'=>:'tag'})		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_13 = call(%v_11, :'user', %v_12 ;n:includes, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	%v_11[2.15 ] %v_12[2.16 ] ) 
+		%v_14 = call_1o(%self, %v_13 ;n:with_pagination_info, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.13 ] %v_13[2.17 ] ) 
+		return(%v_14)		--org.jruby.ir.instructions.ReturnInstr(	%v_14[2.18 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = with_pagination_info
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 4 9		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 1, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		scope = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		line_num(;n: 20)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = call_0o(scope ;n:to_a, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	scope[2.5 ] ) 
+		scope = copy(%v_3)		--org.jruby.ir.instructions.CopyInstr(	%v_3[2.7 ] ) 
+		line_num(;n: 21)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = call_0o(%v_3 ;n:count, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_3[2.7 ] ) 
+		%v_5 = call_0o(%self ;n:per_page, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_6 = call_1o(%v_4, %v_5 ;n:>, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_4[2.10 ] %v_5[2.11 ] ) 
+		show_more = copy(%v_6)		--org.jruby.ir.instructions.CopyInstr(	%v_6[2.12 ] ) 
+		line_num(;n: 22)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		b_false(LBL_0:19, %v_6)		--org.jruby.ir.instructions.BFalseInstr(	%v_6[2.12 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0 4 9		
+	Vars Live on Exit:  0 4 9		
+	outgoing edges:5, 
+	Instructions:
+		%v_7 = call_0o(scope ;n:pop, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	scope[2.5 2.8 ] ) 
+		jump(LBL_1:21)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0 4 9		
+	Vars Live on Exit:  0 4 9		
+	outgoing edges:5, 
+	Instructions:
+		%v_7 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0 4 9		
+	outgoing edges:6, 
+	Instructions:
+		line_num(;n: 24)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_8 = call_1o(%self, scope ;n:cache_votes, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] scope[2.5 2.8 ] ) 
+		%v_9 = copy(Array:[%v_8, show_more])		--org.jruby.ir.instructions.CopyInstr(	%v_8[5.1 ] show_more[2.13 ] ) 
+		return(%v_9)		--org.jruby.ir.instructions.ReturnInstr(	%v_9[5.2 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = cache_votes
+PRINT info for BB 1:
+	Vars Live on Entry:  4 11 19		
+	Vars Live on Exit:  4 11 19		
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 4 11 19		
+	Vars Live on Exit:  4 11 19		
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 1, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		scope = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		line_num(;n: 28)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		line_num(;n: 29)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		b_false(LBL_0:29, %v_3)		--org.jruby.ir.instructions.BFalseInstr(	%v_3[2.8 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  4 11 19		
+	Vars Live on Exit:  0 4 11 19		
+	outgoing edges:5, 
+	Instructions:
+		%v_4 = search_const(scope<1> ;name: Vote, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_5 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_6 = call_0o(%v_5 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_5[3.1 ] ) 
+		%v_7 = call(scope, :'id' ;n:map, t:NO, cl:true(org.jruby.ir.operands.Symbol))		--org.jruby.ir.instructions.CallInstr(	scope[2.5 ] ) 
+		%v_8 = call(%v_4, %v_6, %v_7 ;n:votes_by_user_for_stories_hash, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	%v_4[3.0 ] %v_6[3.2 ] %v_7[3.3 ] ) 
+		votes = copy(%v_8)		--org.jruby.ir.instructions.CopyInstr(	%v_8[3.4 ] ) 
+		line_num(;n: 31)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_9 = search_const(scope<1> ;name: HiddenStory, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_10 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_11 = call_0o(%v_10 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_10[3.8 ] ) 
+		%v_12 = call(scope, :'id' ;n:map, t:NO, cl:true(org.jruby.ir.operands.Symbol))		--org.jruby.ir.instructions.CallInstr(	scope[3.3 2.5 ] ) 
+		%v_13 = copy({:'user_id'=>%v_11, :'story_id'=>%v_12})		--org.jruby.ir.instructions.CopyInstr(	%v_11[3.9 ] %v_12[3.10 ] ) 
+		%v_14 = call_1o(%v_9, %v_13 ;n:where, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_9[3.7 ] %v_13[3.11 ] ) 
+		%v_15 = call(%v_14, :'story_id' ;n:map, t:NO, cl:true(org.jruby.ir.operands.Symbol))		--org.jruby.ir.instructions.CallInstr(	%v_14[3.12 ] ) 
+		hs = copy(%v_15)		--org.jruby.ir.instructions.CopyInstr(	%v_15[3.13 ] ) 
+		line_num(;n: 34)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_16 = call(scope, %self:CLOSURE cache_votes_CLOSURE_1[./lobsters/models/stories_paginator.rb:34] ;n:each, t:NO, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	scope[3.3 3.10 2.5 ] %self[2.0 ] ) 
+CLOSURE BEGIN: s[] votes[3.5,] hs[3.14,] 
+PRINT info for BB 1:
+	Vars Live on Entry:  7 12		
+	Vars Live on Exit:  7 12		
+	outgoing edges:12, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  2 7 12		
+	Vars Live on Exit:  7 12		
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_1_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		s = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry:  2 7 12		
+	Vars Live on Exit:  2 7 12		
+	outgoing edges:4, 5, 10, 
+	Instructions:
+		line_num(;n: 35)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_3 = call_0o(s ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	s[2.2 ] ) 
+		%cl_1_4 = call_1o(votes, %cl_1_3 ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	votes[] %cl_1_3[3.1 ] ) 
+		b_false(CL1_LBL_0:17, %cl_1_4)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_4[3.2 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  2 7 12		
+	Vars Live on Exit:  2 7 12		
+	outgoing edges:6, 10, 
+	Instructions:
+		line_num(;n: 36)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_5 = call_0o(s ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	s[2.2 ] ) 
+		%cl_1_6 = call_1o(votes, %cl_1_5 ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	votes[] %cl_1_5[4.1 ] ) 
+		attr_assign(s, %cl_1_6 ;n:vote=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	s[4.1 2.2 ] %cl_1_6[4.2 ] ) #<s>#	-- [PUT:s].vote 
+		jump(CL1_LBL_1:19)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  2 7 12		
+	Vars Live on Exit:  2 7 12		
+	outgoing edges:6, 
+	Instructions:
+		%cl_1_6 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 6:
+	Vars Live on Entry:  2 7 12		
+	Vars Live on Exit:  2 7 12		
+	outgoing edges:7, 8, 10, 
+	Instructions:
+		line_num(;n: 38)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_7 = call_0o(s ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	s[4.3 2.2 ] ) 
+		%cl_1_8 = call_1o(hs, %cl_1_7 ;n:include?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	hs[] %cl_1_7[6.1 ] ) 
+		b_false(CL1_LBL_2:28, %cl_1_8)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_8[6.2 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry: 
+	Vars Live on Exit:  2 7 12		
+	outgoing edges:10, 12, 
+	Instructions:
+		line_num(;n: 39)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		attr_assign(s, true ;n:is_hidden_by_cur_user=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	s[4.3 2.2 ] ) #<s>#	-- [PUT:s].is_hidden_by_cur_user 
+		%cl_1_9 = copy(true)		--org.jruby.ir.instructions.CopyInstr(	) 
+		return(true)		--org.jruby.ir.instructions.ReturnInstr(	) 
+PRINT info for BB 8:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 
+	Instructions:
+		return(nil)		--org.jruby.ir.instructions.ReturnInstr(	) 
+PRINT info for BB 10:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 
+	Instructions:
+		%cl_1_10 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_1_11 = runtime_helper(%cl_1_10 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_1_10[10.0 ] ) 
+		return(%cl_1_11)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_11[10.1 ] ) 
+PRINT info for BB 12:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		jump(LBL_1:31)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 4:
+	Vars Live on Entry:  4 11 19		
+	Vars Live on Exit:  4 11 19		
+	outgoing edges:5, 
+	Instructions:
+		%v_16 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  4 11 19		
+	Vars Live on Exit:  4 11 19		
+	outgoing edges:6, 
+	Instructions:
+		line_num(;n: 43)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		return(scope)		--org.jruby.ir.instructions.ReturnInstr(	scope[2.5 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  4 11 19		
+	Vars Live on Exit:  4 11 19		
+	outgoing edges:
+	Instructions:
+

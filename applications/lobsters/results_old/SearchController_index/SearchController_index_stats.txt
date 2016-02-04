@@ -1,0 +1,46 @@
+User.where <User,SELECT>
+User.where(:session_token => session[:u].to_s).first <,SELECT>
++FIELD+ User.deleted_at (datetime)
++FIELD+ User.banned_at (datetime)
++FIELD+ User.id (integer)
++FIELD+ User.username (string)
+Keystore.transaction <Keystore,TXN>
+self.lock <Keystore,TRANSACTION> (c)
+self.lock(true).where <Keystore,SELECT> (c)
+kv.save! <Keystore,INSERT> (c)
++FIELD+ Keystore.key (string)
+self.where <Keystore,SELECT> (c)
++FIELD+ Keystore.value (integer)
+traffic_kv.save! <Keystore,INSERT> (c)
+date_kv.save! <Keystore,INSERT> (c)
+self.order <Search,SELECT>
+self.order <Search,SELECT>
+Story.select <Story,SELECT>
+Story.select(:id).where <,SELECT>
++FIELD+ User.id (integer)
+self.results.select <Search,SELECT>
+self.where <Vote,SELECT>
++FIELD+ Vote.comment_id (integer)
++FIELD+ Vote.vote (integer)
++FIELD+ Vote.reason (string)
++FIELD+ User.id (integer)
++FIELD+ User.id (integer)
++FIELD+ User.id (integer)
+self.results.select <Search,SELECT>
++FIELD+ User.id (integer)
+self.where <Vote,SELECT>
++FIELD+ Vote.story_id (integer)
++FIELD+ Vote.vote (integer)
++FIELD+ Vote.reason (string)
++FIELD+ User.id (integer)
++FIELD+ User.id (integer)
+@search.order <Search,SELECT> (v) (c)
+@search.order <Search,SELECT> (v) (c)
+@search.order <Search,SELECT> (v) (c)
+[ :q, :what, :order ].map{|p| "#{p}=#{CGI.escape(self.send(p).to_s)}"      }.join <,JOIN> (v) (c)
+
+query in total: 21
+query in view: 4
+query in closure: 10
+read queries: 16
+write queries: 3

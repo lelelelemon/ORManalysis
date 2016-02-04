@@ -1,0 +1,56 @@
+User.where <User,SELECT>
+User.where(:session_token => session[:u].to_s).first <,SELECT>
++FIELD+ User.deleted_at (datetime)
++FIELD+ User.banned_at (datetime)
++FIELD+ User.id (integer)
++FIELD+ User.username (string)
+Keystore.transaction <Keystore,TXN>
+self.lock <Keystore,TRANSACTION> (c)
+self.lock(true).where <Keystore,SELECT> (c)
+kv.save! <Keystore,INSERT> (c)
++FIELD+ Keystore.key (string)
+self.where <Keystore,SELECT> (c)
++FIELD+ Keystore.value (integer)
+traffic_kv.save! <Keystore,INSERT> (c)
+date_kv.save! <Keystore,INSERT> (c)
+Message.where <Message,SELECT>
+Message.where(:short_id => params[:message_id] ||    params[:id]).first <,SELECT>
++FIELD+ Message.author_user_id (integer)
++FIELD+ User.id (integer)
++FIELD+ Message.recipient_user_id (integer)
++FIELD+ User.id (integer)
++FIELD+ User.id (integer)
+received_messages.where <,SELECT>
+@new_message.save <Message,INSERT>
++FIELD+ User.id (integer)
+self.where <Message,SELECT>
+self.received_messages.unread.count <User,SELECT>
+Keystore.connection.execute <,INSERT>
+Keystore.connection.execute <,INSERT>
+kv.save! <Keystore,INSERT>
++FIELD+ Message.deleted_by_author (boolean)
++FIELD+ Message.deleted_by_recipient (boolean)
+self.where <Message,SELECT>
++FIELD+ Message.subject (string)
++FIELD+ Message.body (text)
++FIELD+ User.username (string)
++FIELD+ Message.subject (string)
++FIELD+ Message.body (text)
++FIELD+ Message.short_id (string)
++FIELD+ User.username (string)
++FIELD+ User.pushover_user_key (string)
++FIELD+ User.pushover_user_key (string)
+@messages.includes <Message,SELECT> (v) (c)
++FIELD+ Message.has_been_read (boolean)
++FIELD+ Message.short_id (string)
++FIELD+ User.username (string)
++FIELD+ User.username (string)
++FIELD+ Message.created_at (datetime)
++FIELD+ Message.short_id (string)
++FIELD+ Message.subject (string)
+
+query in total: 20
+query in view: 1
+query in closure: 7
+read queries: 11
+write queries: 7

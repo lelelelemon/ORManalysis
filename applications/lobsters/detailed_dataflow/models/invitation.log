@@ -1,0 +1,153 @@
+SET IRMethod, name = create_code
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 4		
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 13)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = build_range(Fixnum:1, Fixnum:10 ;type: exclusive)		--org.jruby.ir.instructions.BuildRangeInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry:  5		
+	Vars Live on Exit:  0 4		
+	outgoing edges:5, 4, 
+	Instructions:
+		%v_4 = call(%v_3, %self:CLOSURE create_code_CLOSURE_1[./lobsters/models/invitation.rb:13] ;n:each, t:NO, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%v_3[2.6 ] %self[2.0 ] ) 
+CLOSURE BEGIN: tries[] %self[2.0,] 
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_1_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		tries = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0 2		
+	outgoing edges:4, 5, 10, 
+	Instructions:
+		line_num(;n: 14)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_3 = call_1f(tries, Fixnum:10 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneFixnumArgNoBlockCallInstr(	tries[2.2 ] ) 
+		b_false(CL1_LBL_0:15, %cl_1_3)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_3[3.1 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 10, 
+	Instructions:
+		line_num(;n: 15)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_4 = copy("too many hash collisions")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_5 = call_1o(%self, %cl_1_4 ;n:raise, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %cl_1_4[4.1 ] ) 
+		jump(CL1_LBL_1:17)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 
+	Instructions:
+		%cl_1_5 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:7, 8, 10, 
+	Instructions:
+		line_num(;n: 18)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_6 = search_const(scope<2> ;name: Utils, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%cl_1_7 = call_1f(%cl_1_6, Fixnum:15 ;n:random_str, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneFixnumArgNoBlockCallInstr(	%cl_1_6[6.1 ] ) 
+		attr_assign(%self, %cl_1_7 ;n:code=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%self[2.0 ] %cl_1_7[6.2 ] ) #<%self>#	-- [PUT:%self].code 
+		line_num(;n: 19)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_8 = search_const(scope<2> ;name: Invitation, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%cl_1_9 = call_0o(%self ;n:code, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[6.3 2.0 ] ) 
+		%cl_1_10 = copy({:'code'=>%cl_1_9})		--org.jruby.ir.instructions.CopyInstr(	%cl_1_9[6.6 ] ) 
+		%cl_1_11 = call_1o(%cl_1_8, %cl_1_10 ;n:exists?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%cl_1_8[6.5 ] %cl_1_10[6.7 ] ) 
+		b_false(CL1_LBL_2:30, %cl_1_11)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_11[6.8 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 
+	Instructions:
+		%cl_1_12 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+		return(%cl_1_12)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_12[7.0 ] ) 
+PRINT info for BB 8:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 
+	Instructions:
+		line_num(;n: 20)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		break(nil ;scope_name: create_code)		--org.jruby.ir.instructions.BreakInstr(	) 
+PRINT info for BB 10:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 
+	Instructions:
+		%cl_1_13 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_1_14 = runtime_helper(%cl_1_13 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_1_13[10.0 ] ) 
+		return(%cl_1_14)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_14[10.1 ] ) 
+PRINT info for BB 12:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		jump(LBL_1:16)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 4:
+	Vars Live on Entry:  5		
+	Vars Live on Exit: 
+	outgoing edges:5, 
+	Instructions:
+		%v_5 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%v_4 = runtime_helper(%v_5 ;method: HANDLE_PROPAGATE_BREAK)		--org.jruby.ir.instructions.RuntimeHelperCall(	%v_5[4.0 ] ) 
+PRINT info for BB 5:
+	Vars Live on Entry: 
+	Vars Live on Exit:  5		
+	outgoing edges:6, 
+	Instructions:
+		return(%v_4)		--org.jruby.ir.instructions.ReturnInstr(	%v_4[4.1 3.0 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = send_email
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 26)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = search_const(scope<1> ;name: InvitationMailer, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_4 = call_1o(%v_3, %self ;n:invitation, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_3[2.6 ] %self[2.0 ] ) 
+		%v_5 = call_0o(%v_4 ;n:deliver, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_4[2.7 ] ) 
+		return(%v_5)		--org.jruby.ir.instructions.ReturnInstr(	%v_5[2.8 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+

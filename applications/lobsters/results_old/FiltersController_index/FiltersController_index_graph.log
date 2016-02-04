@@ -1,0 +1,908 @@
+digraph FiltersController_index {
+FiltersController_before_filter__BB1:f0 -> ApplicationController_before_filter__BB1 [label = ""]; 
+ApplicationController_before_filter__BB1:f0 -> ApplicationController_authenticate_user__BB1 [label = ""]; 
+ApplicationController_authenticate_user__BB5:f0 -> User_before_filter__BB1 [label = ""]; 
+subgraph cluster_User_before_filter {
+	color=red;
+	node [style=filled];
+	label = "User_before_filter"
+	User_before_filter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+ApplicationController_authenticate_user__BB5:f0 -> User_is_active__BB1 [label = ""]; 
+User_is_active__BB1 -> ApplicationController_authenticate_user__BB5:f0 [label = "r: (true)"]; 
+User_is_active__BB3:f0 -> User_is_banned__BB1 [label = ""]; 
+subgraph cluster_User_is_banned {
+	color=red;
+	node [style=filled];
+	label = "User_is_banned?"
+	User_is_banned__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_banned__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_banned__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_banned__BB1 -> User_is_banned__BB3 [ color=blue ];
+	User_is_banned__BB1 -> User_is_banned__BB2 [ color=blue ];
+	User_is_banned__BB2 -> User_is_banned__BB3 [ color=blue ];
+}
+subgraph cluster_User_is_active {
+	color=red;
+	node [style=filled];
+	label = "User_is_active?"
+	User_is_active__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> User.is_banned?</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB1 -> User_is_active__BB5 [ color=blue ];
+	User_is_active__BB1 -> User_is_active__BB2 [ color=blue ];
+	User_is_active__BB2 -> User_is_active__BB3 [ color=blue ];
+	User_is_active__BB2 -> User_is_active__BB4 [ color=blue ];
+	User_is_active__BB3 -> User_is_active__BB4 [ color=blue ];
+	User_is_active__BB4 -> User_is_active__BB5 [ color=blue ];
+}
+subgraph cluster_ApplicationController_authenticate_user {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_authenticate_user"
+	ApplicationController_authenticate_user__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.session</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.session</td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]User.where </td></tr>
+			<tr><td port="f2" border="1" bgcolor="orange"> [QUERY]User.where.first </td></tr>
+			<tr><td port="f3" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> User.is_active?</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB10 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB1 -> ApplicationController_authenticate_user__BB10 [ color=blue ];
+	ApplicationController_authenticate_user__BB1 -> ApplicationController_authenticate_user__BB2 [ color=blue ];
+	ApplicationController_authenticate_user__BB2 -> ApplicationController_authenticate_user__BB3 [ color=blue ];
+	ApplicationController_authenticate_user__BB2 -> ApplicationController_authenticate_user__BB4 [ color=blue ];
+	ApplicationController_authenticate_user__BB3 -> ApplicationController_authenticate_user__BB4 [ color=blue ];
+	ApplicationController_authenticate_user__BB4 -> ApplicationController_authenticate_user__BB5 [ color=blue ];
+	ApplicationController_authenticate_user__BB4 -> ApplicationController_authenticate_user__BB6 [ color=blue ];
+	ApplicationController_authenticate_user__BB5 -> ApplicationController_authenticate_user__BB6 [ color=blue ];
+	ApplicationController_authenticate_user__BB6 -> ApplicationController_authenticate_user__BB7 [ color=blue ];
+	ApplicationController_authenticate_user__BB6 -> ApplicationController_authenticate_user__BB8 [ color=blue ];
+	ApplicationController_authenticate_user__BB7 -> ApplicationController_authenticate_user__BB9 [ color=blue ];
+	ApplicationController_authenticate_user__BB8 -> ApplicationController_authenticate_user__BB9 [ color=blue ];
+	ApplicationController_authenticate_user__BB9 -> ApplicationController_authenticate_user__BB10 [ color=blue ];
+}
+subgraph cluster_ApplicationController_before_filter {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_before_filter"
+	ApplicationController_before_filter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.authenticate_user</td></tr>
+			<tr><td port="f1" border="1"> ApplicationController.increase_traffic_counter</td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+User_is_active__BB3:f0 -> ApplicationController_increase_traffic_counter__BB1 [label = ""]; 
+ApplicationController_increase_traffic_counter__BB2:f0 -> ApplicationController_user_is_spider__BB1 [label = ""]; 
+ApplicationController_user_is_spider__BB1 -> ApplicationController_increase_traffic_counter__BB2:f0 [label = "r: (true)"]; 
+subgraph cluster_ApplicationController_user_is_spider {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_user_is_spider?"
+	ApplicationController_user_is_spider__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.request</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB1 -> ApplicationController_user_is_spider__BB5 [ color=blue ];
+	ApplicationController_user_is_spider__BB1 -> ApplicationController_user_is_spider__BB2 [ color=blue ];
+	ApplicationController_user_is_spider__BB2 -> ApplicationController_user_is_spider__BB3 [ color=blue ];
+	ApplicationController_user_is_spider__BB2 -> ApplicationController_user_is_spider__BB4 [ color=blue ];
+	ApplicationController_user_is_spider__BB3 -> ApplicationController_user_is_spider__BB5 [ color=blue ];
+	ApplicationController_user_is_spider__BB4 -> ApplicationController_user_is_spider__BB5 [ color=blue ];
+}
+ApplicationController_increase_traffic_counter_963448_closure0_BB3:f0 -> Keystore_before_filter_963448_closure0_BB1 [label = ""]; 
+subgraph cluster_Keystore_before_filter {
+	color=red;
+	node [style=filled];
+	label = "Keystore_before_filter"
+	Keystore_before_filter_963448_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+ApplicationController_increase_traffic_counter_963448_closure0_BB3:f0 -> Keystore_find_or_create_key_for_update_963448_closure0_BB1 [label = "now_i, "]; 
+Keystore_find_or_create_key_for_update_963448_closure0_BB1 -> ApplicationController_increase_traffic_counter_963448_closure0_BB3:f0 [label = "r: (date_kv)"]; 
+Keystore_before_save_997586_closure0_closure1_closure2_BB3:f0 -> Keystore_before_save_997586_closure0_closure1_closure2_BB1 [label = ""]; 
+subgraph cluster_Keystore_before_save {
+	color=red;
+	node [style=filled];
+	label = "Keystore_before_save"
+	Keystore_before_save_997586_closure0_closure1_closure2_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Keystore_before_validation_997586_closure0_closure1_closure2_BB3:f0 -> Keystore_before_validation_997586_closure0_closure1_closure2_BB1 [label = ""]; 
+subgraph cluster_Keystore_before_validation {
+	color=red;
+	node [style=filled];
+	label = "Keystore_before_validation"
+	Keystore_before_validation_997586_closure0_closure1_closure2_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]self.where </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Keystore_before_create_997586_closure0_closure1_closure2_BB3:f0 -> Keystore_before_create_997586_closure0_closure1_closure2_BB1 [label = ""]; 
+subgraph cluster_Keystore_before_create {
+	color=red;
+	node [style=filled];
+	label = "Keystore_before_create"
+	Keystore_before_create_997586_closure0_closure1_closure2_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+subgraph cluster_Keystore_find_or_create_key_for_update {
+	color=red;
+	node [style=filled];
+	label = "Keystore_find_or_create_key_for_update"
+	Keystore_find_or_create_key_for_update_963448_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]self.lock </td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]self.lock.where </td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]kv.save! </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Keystore.create!</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB10 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB11 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB12 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB13 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB14 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB15 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB16 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB17 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB18 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Keystore.loop</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB1 -> Keystore_find_or_create_key_for_update_963448_closure0_BB8 [ color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB1 -> Keystore_find_or_create_key_for_update_963448_closure0_BB2 [ color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB2 -> Keystore_find_or_create_key_for_update_963448_closure0_BB4 [ color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB2 -> Keystore_find_or_create_key_for_update_963448_closure0_BB5 [ color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB2 -> Keystore_find_or_create_key_for_update_963448_closure0_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB4 -> Keystore_find_or_create_key_for_update_963448_closure0_BB5 [ color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB5 -> Keystore_find_or_create_key_for_update_963448_closure0_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB5 -> Keystore_find_or_create_key_for_update_963448_closure0_BB8 [ color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB5:f0 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB1 [color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20:f0 -> Keystore_find_or_create_key_for_update_963448_closure0_BB5 [color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB1 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB1 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB2 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB2 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB3 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB3 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB4 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB3 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB5 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB3 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB18 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB4 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB18 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB4 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB5 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB7 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB7 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB9 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB7 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB10 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB7:f0 -> Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB1 [color=blue ];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB6:f0 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB7 [color=blue ];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB1 -> Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB1 -> Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB2 [ color=blue ];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB2 -> Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB3 [ color=blue ];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB3 -> Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB4 [ color=blue ];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB3 -> Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB4 -> Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB6 -> Keystore_find_or_create_key_for_update_997586_closure0_closure1_closure2_BB1 [color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB9 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB17 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB10 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB11 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB10 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB12 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB10 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB11 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB12 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB11 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB12 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB13 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB12 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB14 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB12 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB13 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB13 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB14 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB15 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB14 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB15 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB17 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB16 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB18 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB16 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB17 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB18 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB20 -> Keystore_find_or_create_key_for_update_743160_closure0_closure1_BB1 [color=blue ];
+	Keystore_find_or_create_key_for_update_963448_closure0_BB6 -> Keystore_find_or_create_key_for_update_963448_closure0_BB8 [ color=blue ];
+}
+subgraph cluster_ApplicationController_increase_traffic_counter {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_increase_traffic_counter"
+	ApplicationController_increase_traffic_counter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.user_is_spider?</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.params</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	ApplicationController_increase_traffic_counter__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Keystore.find_or_create_key_for_update</td></tr>
+			<tr><td port="f1" border="1"> Keystore.find_or_create_key_for_update</td></tr>
+			<tr><td port="f2" border="1" bgcolor="orange"> [QUERY]traffic_kv.save! </td></tr>
+			<tr><td port="f3" border="1" bgcolor="orange"> [QUERY]date_kv.save! </td></tr>
+			<tr><td port="f4" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Keystore.transaction </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB1 -> ApplicationController_increase_traffic_counter__BB8 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB1 -> ApplicationController_increase_traffic_counter__BB2 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB2 -> ApplicationController_increase_traffic_counter__BB3 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB2 -> ApplicationController_increase_traffic_counter__BB4 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB3 -> ApplicationController_increase_traffic_counter__BB4 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB4 -> ApplicationController_increase_traffic_counter__BB5 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB4 -> ApplicationController_increase_traffic_counter__BB6 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB5 -> ApplicationController_increase_traffic_counter__BB8 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB6 -> ApplicationController_increase_traffic_counter__BB8 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB6:f0 -> ApplicationController_increase_traffic_counter_963448_closure0_BB1 [color=blue ];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB6:f0 -> ApplicationController_increase_traffic_counter__BB6 [color=blue ];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB1 -> ApplicationController_increase_traffic_counter_963448_closure0_BB6 [ color=blue ];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB1 -> ApplicationController_increase_traffic_counter_963448_closure0_BB2 [ color=blue ];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB2 -> ApplicationController_increase_traffic_counter_963448_closure0_BB3 [ color=blue ];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB3 -> ApplicationController_increase_traffic_counter_963448_closure0_BB4 [ color=blue ];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB3 -> ApplicationController_increase_traffic_counter_963448_closure0_BB6 [ color=blue ];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB4 -> ApplicationController_increase_traffic_counter_963448_closure0_BB6 [ color=blue ];
+	ApplicationController_increase_traffic_counter_963448_closure0_BB6 -> ApplicationController_increase_traffic_counter_963448_closure0_BB1 [color=blue ];
+}
+subgraph cluster_FiltersController_before_filter {
+	color=red;
+	node [style=filled];
+	label = "FiltersController_before_filter"
+	FiltersController_before_filter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.increase_traffic_counter</td></tr>
+			<tr><td port="f1" border="1"> ApplicationController.authenticate_user</td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Keystore_before_create_997586_closure0_closure1_closure2_BB3:f0 -> FiltersController_index__BB1 [label = ""]; 
+FiltersController_index__BB2:f0 -> Tag_before_filter__BB1 [label = ""]; 
+subgraph cluster_Tag_before_filter {
+	color=red;
+	node [style=filled];
+	label = "Tag_before_filter"
+	Tag_before_filter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+FiltersController_index__BB2:f0 -> Tag_active__BB1 [label = ""]; 
+subgraph cluster_Tag_active {
+	color=red;
+	node [style=filled];
+	label = "Tag_active"
+	Tag_active__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]self.where </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+FiltersController_index__BB2:f1 -> Tag_all_with_story_counts_for__BB1 [label = "@user, "]; 
+Tag_all_with_story_counts_for__BB1 -> FiltersController_index__BB2:f1 [label = "r: (@tags)"]; 
+Tag_all_with_story_counts_for_66733_closure0_BB3:f0 -> Tag_valid_for_66733_closure0_BB1 [label = "user, "]; 
+subgraph cluster_Tag_valid_for {
+	color=red;
+	node [style=filled];
+	label = "Tag_valid_for?"
+	Tag_valid_for_66733_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_valid_for_66733_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_valid_for_66733_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]user.try </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_valid_for_66733_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_valid_for_66733_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_valid_for_66733_closure0_BB1 -> Tag_valid_for_66733_closure0_BB6 [ color=blue ];
+	Tag_valid_for_66733_closure0_BB1 -> Tag_valid_for_66733_closure0_BB2 [ color=blue ];
+	Tag_valid_for_66733_closure0_BB2 -> Tag_valid_for_66733_closure0_BB3 [ color=blue ];
+	Tag_valid_for_66733_closure0_BB2 -> Tag_valid_for_66733_closure0_BB4 [ color=blue ];
+	Tag_valid_for_66733_closure0_BB3 -> Tag_valid_for_66733_closure0_BB6 [ color=blue ];
+	Tag_valid_for_66733_closure0_BB4 -> Tag_valid_for_66733_closure0_BB6 [ color=blue ];
+}
+subgraph cluster_Tag_all_with_story_counts_for {
+	color=red;
+	node [style=filled];
+	label = "Tag_all_with_story_counts_for"
+	Tag_all_with_story_counts_for__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_66733_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_66733_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_66733_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Tag.valid_for?</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_66733_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_66733_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_74283_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_74283_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_74283_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_74283_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for_74283_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Tagging.group </td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]Tagging.group.count </td></tr>
+			<tr><td port="f2" border="1"> Tag.active</td></tr>
+			<tr><td port="f3" border="1" bgcolor="orange"> [QUERY]Tag.active.order </td></tr>
+			<tr><td port="f4" border="1" bgcolor="orange"> [QUERY]Tag.active.order.select </td></tr>
+			<tr><td port="f5" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Tag_all_with_story_counts_for__BB1 -> Tag_all_with_story_counts_for__BB3 [ color=blue ];
+	Tag_all_with_story_counts_for__BB1 -> Tag_all_with_story_counts_for__BB2 [ color=blue ];
+	Tag_all_with_story_counts_for__BB2 -> Tag_all_with_story_counts_for__BB3 [ color=blue ];
+	Tag_all_with_story_counts_for__BB2:f4 -> Tag_all_with_story_counts_for_66733_closure0_BB1 [color=blue ];
+	Tag_all_with_story_counts_for_66733_closure0_BB6:f0 -> Tag_all_with_story_counts_for__BB2 [color=blue ];
+	Tag_all_with_story_counts_for_66733_closure0_BB1 -> Tag_all_with_story_counts_for_66733_closure0_BB6 [ color=blue ];
+	Tag_all_with_story_counts_for_66733_closure0_BB1 -> Tag_all_with_story_counts_for_66733_closure0_BB2 [ color=blue ];
+	Tag_all_with_story_counts_for_66733_closure0_BB2 -> Tag_all_with_story_counts_for_66733_closure0_BB3 [ color=blue ];
+	Tag_all_with_story_counts_for_66733_closure0_BB3 -> Tag_all_with_story_counts_for_66733_closure0_BB4 [ color=blue ];
+	Tag_all_with_story_counts_for_66733_closure0_BB3 -> Tag_all_with_story_counts_for_66733_closure0_BB6 [ color=blue ];
+	Tag_all_with_story_counts_for_66733_closure0_BB4 -> Tag_all_with_story_counts_for_66733_closure0_BB6 [ color=blue ];
+	Tag_all_with_story_counts_for_66733_closure0_BB6 -> Tag_all_with_story_counts_for_66733_closure0_BB1 [color=blue ];
+	Tag_all_with_story_counts_for__BB2:f5 -> Tag_all_with_story_counts_for_74283_closure0_BB1 [color=blue ];
+	Tag_all_with_story_counts_for_74283_closure0_BB6:f0 -> Tag_all_with_story_counts_for__BB2 [color=blue ];
+	Tag_all_with_story_counts_for_74283_closure0_BB1 -> Tag_all_with_story_counts_for_74283_closure0_BB6 [ color=blue ];
+	Tag_all_with_story_counts_for_74283_closure0_BB1 -> Tag_all_with_story_counts_for_74283_closure0_BB2 [ color=blue ];
+	Tag_all_with_story_counts_for_74283_closure0_BB2 -> Tag_all_with_story_counts_for_74283_closure0_BB3 [ color=blue ];
+	Tag_all_with_story_counts_for_74283_closure0_BB3 -> Tag_all_with_story_counts_for_74283_closure0_BB4 [ color=blue ];
+	Tag_all_with_story_counts_for_74283_closure0_BB3 -> Tag_all_with_story_counts_for_74283_closure0_BB6 [ color=blue ];
+	Tag_all_with_story_counts_for_74283_closure0_BB4 -> Tag_all_with_story_counts_for_74283_closure0_BB6 [ color=blue ];
+	Tag_all_with_story_counts_for_74283_closure0_BB6 -> Tag_all_with_story_counts_for_74283_closure0_BB1 [color=blue ];
+}
+FiltersController_index__BB4:f0 -> ApplicationController_tags_filtered_by_cookie__BB1 [label = ""]; 
+subgraph cluster_ApplicationController_tags_filtered_by_cookie {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_tags_filtered_by_cookie"
+	ApplicationController_tags_filtered_by_cookie__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_tags_filtered_by_cookie__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_tags_filtered_by_cookie__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_tags_filtered_by_cookie__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_tags_filtered_by_cookie__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.cookies</td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]Tag.where </td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_tags_filtered_by_cookie__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_tags_filtered_by_cookie__BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_tags_filtered_by_cookie__BB1 -> ApplicationController_tags_filtered_by_cookie__BB7 [ color=blue ];
+	ApplicationController_tags_filtered_by_cookie__BB1 -> ApplicationController_tags_filtered_by_cookie__BB2 [ color=blue ];
+	ApplicationController_tags_filtered_by_cookie__BB2 -> ApplicationController_tags_filtered_by_cookie__BB3 [ color=blue ];
+	ApplicationController_tags_filtered_by_cookie__BB2 -> ApplicationController_tags_filtered_by_cookie__BB4 [ color=blue ];
+	ApplicationController_tags_filtered_by_cookie__BB3 -> ApplicationController_tags_filtered_by_cookie__BB4 [ color=blue ];
+	ApplicationController_tags_filtered_by_cookie__BB4 -> ApplicationController_tags_filtered_by_cookie__BB5 [ color=blue ];
+	ApplicationController_tags_filtered_by_cookie__BB4 -> ApplicationController_tags_filtered_by_cookie__BB6 [ color=blue ];
+	ApplicationController_tags_filtered_by_cookie__BB5 -> ApplicationController_tags_filtered_by_cookie__BB7 [ color=blue ];
+	ApplicationController_tags_filtered_by_cookie__BB6 -> ApplicationController_tags_filtered_by_cookie__BB7 [ color=blue ];
+}
+subgraph cluster_FiltersController_index {
+	color=red;
+	node [style=filled];
+	label = "FiltersController_index"
+	FiltersController_index__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	FiltersController_index__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Tag.active</td></tr>
+			<tr><td port="f1" border="1"> Tag.all_with_story_counts_for</td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	FiltersController_index__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> User.tag_filter_tags</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	FiltersController_index__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.tags_filtered_by_cookie</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	FiltersController_index__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	FiltersController_index__BB1 -> FiltersController_index__BB6 [ color=blue ];
+	FiltersController_index__BB1 -> FiltersController_index__BB2 [ color=blue ];
+	FiltersController_index__BB2 -> FiltersController_index__BB3 [ color=blue ];
+	FiltersController_index__BB2 -> FiltersController_index__BB4 [ color=blue ];
+	FiltersController_index__BB3 -> FiltersController_index__BB6 [ color=blue ];
+	FiltersController_index__BB4 -> FiltersController_index__BB6 [ color=blue ];
+}
+}

@@ -1,0 +1,38 @@
+dir = ../applications/lobsters/
+level 0: InvitationsController . before_filter (params: ) # (returnv: )
+	level 1: ApplicationController . before_filter (params: ) # (returnv: )
+		level 2: ApplicationController . authenticate_user (params: ) # (returnv: )
+				level 3:  [QUERY] User . where	{params: session[:u], } # {returnv: true} # {op: User.SELECT}
+				level 3:  [QUERY] User.where(:session_token => session[:u].to_s) . first	{params: } # {returnv: user} # {op: .SELECT}
+			level 3: User . before_filter (params: ) # (returnv: )
+			level 3: User . is_active? (params: ) # (returnv: true)
+				level 4:  +FIELD+ User . deleted_at?	(type: datetime) 
+				level 4: User . is_banned? (params: ) # (returnv: )
+					level 5:  +FIELD+ User . banned_at?	(type: datetime) 
+					level 3:  +FIELD+ User . id	(type: integer) 
+					level 3:  +FIELD+ User . username	(type: string) 
+				level 1: ApplicationController . increase_traffic_counter (params: ) # (returnv: )
+		level 2: ApplicationController . user_is_spider? (params: ) # (returnv: true)
+			level 2:  [QUERY] Keystore . transaction	{params: } # {returnv: } # {op: Keystore.TXN}
+		level 2: Keystore . before_filter (params: ) # (returnv: )
+		level 2: Keystore . find_or_create_key_for_update (params: now_i, ) # (returnv: date_kv)
+				level 3:  [QUERY] self . lock	{params: true, } # {returnv: } # {op: Keystore.TRANSACTION}
+				level 3:  [QUERY] self.lock(true) . where	{params: key, } # {returnv: } # {op: .SELECT}
+=====transaction begin=====
+				level 3:  [QUERY] kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+				level 4: Keystore . before_save (params: ) # (returnv: )
+				level 4: Keystore . before_validation (params: ) # (returnv: )
+					level 5:  +FIELD+ Keystore . key	(type: string) 
+					level 5:  [QUERY] self . where	{params: } # {returnv: } # {op: Keystore.SELECT}
+				level 4: Keystore . before_create (params: ) # (returnv: )
+=====transaction end=====
+					level 2:  +FIELD+ Keystore . value	(type: integer) 
+=====transaction begin=====
+					level 2:  [QUERY] traffic_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+=====transaction begin=====
+					level 2:  [QUERY] date_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+	level 1: ApplicationController . require_logged_in_user (params: ) # (returnv: )
+	level 0: InvitationsController . index (params: ) # (returnv: )
+		level 1:  [QUERY] InvitationRequest . where	{params: true, } # {returnv: @invitation_requests} # {op: InvitationRequest.SELECT}

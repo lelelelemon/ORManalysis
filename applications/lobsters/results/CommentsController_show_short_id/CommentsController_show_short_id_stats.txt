@@ -1,0 +1,50 @@
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,3]
+TBLWRITERECORD  User [0,0,0] Fields  []
+User where( session_token => session[ u] to_s) first <,SELECT>
+self lock(true) where( key => key) first <Keystore,SELECT> (c)
+self lock(true) where <Keystore,SELECT> (c)
+self lock <Keystore,TRANSACTION> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+key where <Keystore,SELECT> (c)
+kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+traffic_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+date_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+Comment where <Comment,SELECT>
+TBLREADRECORD  Comment [22,0,0,9]
+TBLWRITERECORD  Comment [0,1,0] Fields  []
+Comment where( short_id => params[ id]) first <,SELECT>
+Vote where <Vote,SELECT>
+TBLREADRECORD  Vote [18,0,0,8]
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+Vote where( user_id => @user id,         story_id => comment story_id,  comment_id => comment id) first <,SELECT>
+self moderation try( moderator) try <Comment,SELECT>
+self moderation try( moderator) try <Comment,SELECT>
+self moderation try( moderator) try <Comment,SELECT>
+k values first <,SELECT> (c)
+k keys first <,SELECT> (c)
+k values first <,SELECT> (c)
+k keys first <,SELECT> (c)
+k values first <,SELECT> (c)
+
+STATS query in total  21
+STATS query total on single path: 19
+STATS read query on single path: 15
+STATS write query on single path: 4
+STATS query in view  0
+STATS query in closure  12
+STATS branch depend on query result  12
+STATS branch total  17
+STATS read queries  17
+STATS read to read query  110
+STATS read to write query  0
+STATS read to view  0
+STATS read to branch  51
+STATS materialized query  2
+STATS write queries  21
+STATS write from user input  1
+STATS write from other queries  29
+STATS write from const  52

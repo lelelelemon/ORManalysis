@@ -1,0 +1,87 @@
+digraph sketch {
+	n20 [label=<<i>20__ User(User)   where</i>> color=blue]; 
+	n20 -> n21 [label="0"]
+	n21 [label=<<i>21__ User where( session_token =) session( u) to_s)   first</i>> color=blue]; 
+	n109 [label=<<i>109__ self(ApplicationController)   params</i>> color=crimson]; 
+	n142 [label=<<i>142__ self lock(true) where( key =) key)   first</i>> color=blue]; 
+	n143 [label=<<i>143__ self lock(true)   where</i>> color=blue]; 
+	n144 [label=<<i>144__ self(Keystore)   lock</i>> color=blue]; 
+	n151 [label=<<i>151__ key   where</i>> color=blue]; 
+	n153 [label=<<i>153__ kv(Keystore)   save!</i>> color=blue]; 
+	n184 [label=<<i>184__ traffic_kv(Keystore)   value</i>> color=darkorange]; 
+	n184 -> n186 [label="0"]
+	n186 [label=<<i>186__ traffic_kv(Keystore)   save!</i>> color=blue]; 
+	n188 [label=<<i>188__ date_kv(Keystore)   value</i>> color=darkorange]; 
+	n188 -> n190 [label="0"]
+	n190 [label=<<i>190__ date_kv(Keystore)   save!</i>> color=blue]; 
+	n246 [label=<<i>246__ self(CommentsController)   params</i>> color=crimson]; 
+	n246 -> n249 [label="2"]
+	n249 [label=<<i>249__ Comment(Comment)   where</i>> color=blue]; 
+	n249 -> n250 [label="0"]
+	n250 [label=<<i>250__ Comment where( short_id =) params( id))   first</i>> color=blue]; 
+	n250 -> n264 [label="3"]
+	n250 -> n358 [label="6"]
+	n250 -> n498 [label="6"]
+	n250 -> n500 [label="6"]
+	n250 -> n408 [label="7"]
+	n264 [label=<<i>264__ Vote(Vote)   where</i>> color=blue]; 
+	n264 -> n265 [label="0"]
+	n265 [label=<<i>265__ Vote where( user_id =) @user id,         story_id =) comment story_id,  comment_id =) comment id)   first</i>> color=blue]; 
+	n265 -> n266 [label="0"]
+	n266 [label=<<i>266__ comment(Comment)   current_vote</i>> color=darkorange]; 
+	n266 -> n358 [label="5"]
+	n266 -> n498 [label="5"]
+	n266 -> n500 [label="5"]
+	n266 -> n408 [label="6"]
+	n287 [label=<<i>287__ self(CommentsController)   params</i>> color=crimson]; 
+	n358 [label=<<i>358__ obj current_vote   try</i>> color=blue]; 
+	n387 [label=<<i>387__ self(CommentsController)   params</i>> color=crimson]; 
+	n387 -> n498 [label="3"]
+	n387 -> n500 [label="3"]
+	n387 -> n408 [label="4"]
+	n408 [label=<<i>408__ Vote(Vote)   where</i>> color=blue]; 
+	n408 -> n409 [label="0"]
+	n409 [label=<<i>409__ Vote where( user_id =) user_id,  story_id =) story_id,       comment_id =) comment_id)   first_or_initialize</i>> color=blue]; 
+	n409 -> n454 [label="1"]
+	n409 -> n460 [label="1"]
+	n409 -> n502 [label="1"]
+	n409 -> n519 [label="2"]
+	n409 -> n793 [label="2"]
+	n454 [label=<<i>454__ v(Vote)   destroy!</i>> color=blue]; 
+	n460 [label=<<i>460__ v(Vote)   new_record?</i>> color=blue]; 
+	n498 [label=<<i>498__ v(Vote)   vote</i>> color=darkorange]; 
+	n498 -> n502 [label="0"]
+	n498 -> n519 [label="1"]
+	n498 -> n793 [label="1"]
+	n500 [label=<<i>500__ v(Vote)   reason</i>> color=darkorange]; 
+	n500 -> n502 [label="0"]
+	n500 -> n519 [label="1"]
+	n500 -> n793 [label="1"]
+	n502 [label=<<i>502__ v(Vote)   save!</i>> color=blue]; 
+	n519 [label=<<i>519__ Comment(Comment)   find</i>> color=blue]; 
+	n519 -> n530 [label="2"]
+	n519 -> n548 [label="5"]
+	n519 -> n553 [label="5"]
+	n519 -> n641 [label="7"]
+	n519 -> n664 [label="8"]
+	n519 -> n699 [label="9"]
+	n530 [label=<<i>530__ User(User)   update_counters</i>> color=blue]; 
+	n548 [label=<<i>548__ _self(Comment)   upvotes</i>> color=darkorange]; 
+	n548 -> n641 [label="4"]
+	n548 -> n664 [label="5"]
+	n548 -> n699 [label="6"]
+	n553 [label=<<i>553__ _self(Comment)   downvotes</i>> color=darkorange]; 
+	n553 -> n641 [label="4"]
+	n553 -> n664 [label="5"]
+	n553 -> n699 [label="6"]
+	n641 [label=<<i>641__ Comment connection   execute</i>> color=blue]; 
+	n664 [label=<<i>664__ self tags(Tag)   select</i>> color=blue]; 
+	n699 [label=<<i>699__ self comments(Comment)   where</i>> color=blue]; 
+	n699 -> n700 [label="0"]
+	n700 [label=<<i>700__ self comments where("user_id () ?", self user_id)   select</i>> color=blue]; 
+	n793 [label=<<i>793__ Story(Story)   find</i>> color=blue]; 
+	n793 -> n804 [label="2"]
+	n793 -> n855 [label="6"]
+	n804 [label=<<i>804__ User(User)   update_counters</i>> color=blue]; 
+	n855 [label=<<i>855__ Story connection   execute</i>> color=blue]; 
+}

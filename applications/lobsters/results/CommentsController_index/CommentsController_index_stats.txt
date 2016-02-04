@@ -1,0 +1,46 @@
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,3]
+TBLWRITERECORD  User [0,0,0] Fields  []
+User where( session_token => session[ u] to_s) first <,SELECT>
+self lock(true) where( key => key) first <Keystore,SELECT> (c)
+self lock(true) where <Keystore,SELECT> (c)
+self lock <Keystore,TRANSACTION> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+key where <Keystore,SELECT> (c)
+kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+traffic_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+date_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,0]
+TBLWRITERECORD  User [0,1,0] Fields  []
+User where( rss_token => params[ token] to_s) first <,SELECT>
+Comment where <Comment,SELECT>
+TBLREADRECORD  Comment [8,0,0,2]
+TBLWRITERECORD  Comment [0,0,1] Fields  []
+Comment where(       is_deleted => false,  is_moderated => false    ) order <,SELECT>
+Comment where(       is_deleted => false,  is_moderated => false    ) order(      "created_at DESC"    ) offset(      (@page - 1) * COMMENTS_PER_PAGE    ) limit(      COMMENTS_PER_PAGE    ) includes <,SELECT>
+self where <Vote,SELECT>
+TBLREADRECORD  Vote [0,0,0,1]
+TBLWRITERECORD  Vote [1,1,8] Fields  [comments,page,title,heading,cur_url,rss_link,]
+
+STATS query in total  15
+STATS query total on single path: 15
+STATS read query on single path: 11
+STATS write query on single path: 4
+STATS query in view  0
+STATS query in closure  7
+STATS branch depend on query result  5
+STATS branch total  24
+STATS read queries  11
+STATS read to read query  22
+STATS read to write query  0
+STATS read to view  0
+STATS read to branch  13
+STATS materialized query  4
+STATS write queries  15
+STATS write from user input  3
+STATS write from other queries  5
+STATS write from const  17

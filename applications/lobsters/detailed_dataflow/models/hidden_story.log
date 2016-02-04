@@ -1,0 +1,31 @@
+SET IRMethod, name = hide_story_for_user
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 2, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		story_id = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		user_id = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		line_num(;n: 7)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = search_const(scope<1> ;name: HiddenStory, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_4 = copy({:'user_id'=>user_id, :'story_id'=>story_id})		--org.jruby.ir.instructions.CopyInstr(	user_id[2.6 ] story_id[2.5 ] ) 
+		%v_5 = call_1o(%v_3, %v_4 ;n:where, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_3[2.8 ] %v_4[2.9 ] ) 
+		%v_6 = call_0o(%v_5 ;n:first_or_initialize, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_5[2.10 ] ) 
+		%v_7 = call_0o(%v_6 ;n:save!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_6[2.11 ] ) 
+		return(%v_7)		--org.jruby.ir.instructions.ReturnInstr(	%v_7[2.12 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+

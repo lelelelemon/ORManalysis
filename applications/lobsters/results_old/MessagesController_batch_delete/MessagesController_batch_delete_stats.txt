@@ -1,0 +1,40 @@
+User.where <User,SELECT>
+User.where(:session_token => session[:u].to_s).first <,SELECT>
++FIELD+ User.deleted_at (datetime)
++FIELD+ User.banned_at (datetime)
++FIELD+ User.id (integer)
++FIELD+ User.username (string)
+Keystore.transaction <Keystore,TXN>
+self.lock <Keystore,TRANSACTION> (c)
+self.lock(true).where <Keystore,SELECT> (c)
+kv.save! <Keystore,INSERT> (c)
++FIELD+ Keystore.key (string)
+self.where <Keystore,SELECT> (c)
++FIELD+ Keystore.value (integer)
+traffic_kv.save! <Keystore,INSERT> (c)
+date_kv.save! <Keystore,INSERT> (c)
+Message.where <Message,SELECT>
+Message.where(:short_id => params[:message_id] ||    params[:id]).first <,SELECT>
++FIELD+ Message.author_user_id (integer)
++FIELD+ User.id (integer)
++FIELD+ Message.recipient_user_id (integer)
++FIELD+ User.id (integer)
+Message.where <Message,SELECT> (c)
+Message.where(:short_id => m[1]).first <,SELECT> (c)
++FIELD+ Message.author_user_id (integer)
++FIELD+ User.id (integer)
++FIELD+ Message.recipient_user_id (integer)
++FIELD+ User.id (integer)
+message.save! <Message,INSERT> (c)
++FIELD+ User.id (integer)
+self.where <Message,SELECT>
+self.received_messages.unread.count <User,SELECT>
+Keystore.connection.execute <,INSERT>
+Keystore.connection.execute <,INSERT>
+kv.save! <Keystore,INSERT>
+
+query in total: 19
+query in view: 0
+query in closure: 9
+read queries: 10
+write queries: 7

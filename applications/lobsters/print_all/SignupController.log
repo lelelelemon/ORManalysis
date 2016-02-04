@@ -1,0 +1,50 @@
+dir = ../applications/lobsters/
+Super cannot find upper: User . as_json
+######## BEGIN ########
+Class: SignupController
+Method before_filter:
+	 ** variables: {}
+	 
+	 
+	 
+Method index:
+	 ** variables: {flash[:error, @title, }
+	 
+Method invite:
+	 ** variables: {@title, }
+Method invited:
+	 ** variables: {flash[:error, @invitation, @title, @new_user, @new_user.email, }
+	 
+	 ++ CALL DB QUERY: Invitation.where(:code => params[:invitation_code].to_s) . first (params: , returnv: @invitation)
+	 ++ CALL DB QUERY: Invitation . where (params: params[:invitation_code], , returnv: true)
+	 
+	 
+	 
+	 
+	 
+Method signup:
+	 ** variables: {@invitation, flash[:error, @title, @new_user, @new_user.invited_by_user_id, session[:u, flash[:success, }
+	 ++ CALL DB QUERY: Invitation.where(:code => params[:invitation_code].to_s) . first (params: , returnv: @invitation)
+	 ++ CALL DB QUERY: Invitation . where (params: params[:invitation_code], , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: @new_user . save (params: , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method user_params:
+	 ** variables: {}
+	 
+	 
+	 

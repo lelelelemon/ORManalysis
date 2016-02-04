@@ -1,0 +1,173 @@
+SET IRMethod, name = index
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:18, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0		
+	Vars Live on Exit: 
+	outgoing edges:3, 16, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 2)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = copy("Search")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_3 ;name: @title)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 ] %v_3[2.6 ] ) #<%self>#	-- [PUT:%self].title 
+		line_num(;n: 3)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = copy("/search")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_4 ;name: @cur_url)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 ] %v_4[2.9 ] ) #<%self>#	-- [PUT:%self].cur_url 
+		line_num(;n: 5)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_5 = search_const(scope<1> ;name: Search, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_6 = call_0o(%v_5 ;n:new, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_5[2.12 ] ) 
+		put_field(%self, %v_6 ;name: @search)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 ] %v_6[2.13 ] ) #<%self>#	-- [PUT:%self].search 
+		line_num(;n: 7)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_7 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 ] ) 
+		%v_8 = call_1o(%v_7, :'q' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_7[2.16 ] ) 
+		%v_9 = call_0o(%v_8 ;n:to_s, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_8[2.17 ] ) 
+		%v_10 = call_0o(%v_9 ;n:present?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_9[2.18 ] ) 
+		b_false(LBL_0:84, %v_10)		--org.jruby.ir.instructions.BFalseInstr(	%v_10[2.19 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:4, 5, 
+	Instructions:
+		line_num(;n: 8)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_11 = get_field(%self ;name: @search)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 ] %self[2.0 2.14 ] ) #<%self>#	-- [GET:%self].search 
+		%v_12 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 ] ) 
+		%v_13 = call_1o(%v_12, :'q' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_12[3.2 ] ) 
+		%v_14 = call_0o(%v_13 ;n:to_s, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_13[3.3 ] ) 
+		attr_assign(%v_11, %v_14 ;n:q=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_11[3.1 ] %v_14[3.4 ] ) #<%v_11>#	-- [PUT:%v_11].q 
+		line_num(;n: 10)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_15 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[3.2 2.0 2.7 2.10 2.14 ] ) 
+		%v_16 = call_1o(%v_15, :'what' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_15[3.7 ] ) 
+		%v_17 = call_0o(%v_16 ;n:present?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_16[3.8 ] ) 
+		b_false(LBL_2:39, %v_17)		--org.jruby.ir.instructions.BFalseInstr(	%v_17[3.9 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 
+	Instructions:
+		line_num(;n: 11)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_18 = get_field(%self ;name: @search)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 ] %self[2.0 2.14 ] ) #<%self>#	-- [GET:%self].search 
+		%v_19 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 ] ) 
+		%v_20 = call_1o(%v_19, :'what' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_19[4.2 ] ) 
+		attr_assign(%v_18, %v_20 ;n:what=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_18[4.1 ] %v_20[4.3 ] ) #<%v_18>#	-- [PUT:%v_18].what 
+		jump(LBL_3:41)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 
+	Instructions:
+		%v_20 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:7, 8, 
+	Instructions:
+		line_num(;n: 13)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_21 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 ] ) 
+		%v_22 = call_1o(%v_21, :'order' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_21[6.1 ] ) 
+		%v_23 = call_0o(%v_22 ;n:present?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_22[6.2 ] ) 
+		b_false(LBL_4:53, %v_23)		--org.jruby.ir.instructions.BFalseInstr(	%v_23[6.3 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:9, 
+	Instructions:
+		line_num(;n: 14)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_24 = get_field(%self ;name: @search)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 ] %self[2.0 2.14 ] ) #<%self>#	-- [GET:%self].search 
+		%v_25 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 ] ) 
+		%v_26 = call_1o(%v_25, :'order' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_25[7.2 ] ) 
+		attr_assign(%v_24, %v_26 ;n:order=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_24[7.1 ] %v_26[7.3 ] ) #<%v_24>#	-- [PUT:%v_24].order 
+		jump(LBL_5:55)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 8:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:9, 
+	Instructions:
+		%v_26 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 9:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:10, 11, 
+	Instructions:
+		line_num(;n: 16)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_27 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 ] ) 
+		%v_28 = call_1o(%v_27, :'page' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_27[9.1 ] ) 
+		%v_29 = call_0o(%v_28 ;n:present?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_28[9.2 ] ) 
+		b_false(LBL_6:68, %v_29)		--org.jruby.ir.instructions.BFalseInstr(	%v_29[9.3 ] ) 
+PRINT info for BB 10:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:12, 
+	Instructions:
+		line_num(;n: 17)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_30 = get_field(%self ;name: @search)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 ] %self[2.0 2.14 ] ) #<%self>#	-- [GET:%self].search 
+		%v_31 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 ] ) 
+		%v_32 = call_1o(%v_31, :'page' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_31[10.2 ] ) 
+		%v_33 = call_0o(%v_32 ;n:to_i, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_32[10.3 ] ) 
+		attr_assign(%v_30, %v_33 ;n:page=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_30[10.1 ] %v_33[10.4 ] ) #<%v_30>#	-- [PUT:%v_30].page 
+		jump(LBL_7:70)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 11:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:12, 
+	Instructions:
+		%v_33 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 12:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:13, 14, 
+	Instructions:
+		line_num(;n: 20)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_34 = get_field(%self ;name: @search)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 ] %self[2.0 2.14 ] ) #<%self>#	-- [GET:%self].search 
+		%v_35 = call_0o(%v_34 ;n:valid?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_34[12.1 ] ) 
+		b_false(LBL_8:80, %v_35)		--org.jruby.ir.instructions.BFalseInstr(	%v_35[12.2 ] ) 
+PRINT info for BB 13:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:15, 
+	Instructions:
+		line_num(;n: 21)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_36 = get_field(%self ;name: @search)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 ] %self[2.0 2.14 ] ) #<%self>#	-- [GET:%self].search 
+		%v_37 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_38 = call_1o(%v_36, %v_37 ;n:search_for_user!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_36[13.1 ] %v_37[13.2 ] ) 
+		jump(LBL_9:82)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 14:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:15, 
+	Instructions:
+		%v_38 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 15:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:17, 
+	Instructions:
+		jump(LBL_1:86)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 16:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:17, 
+	Instructions:
+		%v_38 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 17:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:18, 
+	Instructions:
+		line_num(;n: 25)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_39 = copy("index")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_40 = copy({:'action'=>%v_39})		--org.jruby.ir.instructions.CopyInstr(	%v_39[17.1 ] ) 
+		%v_41 = call_1o(%self, %v_40 ;n:render, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 ] %v_40[17.2 ] ) 
+		return(%v_41)		--org.jruby.ir.instructions.ReturnInstr(	%v_41[17.3 ] ) 
+PRINT info for BB 18:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+

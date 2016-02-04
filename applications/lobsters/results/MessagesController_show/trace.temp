@@ -1,0 +1,57 @@
+level 0: MessagesController . before_filter (params: ) # (returnv: )
+	level 1: ApplicationController . before_filter (params: ) # (returnv: )
+		level 2: ApplicationController . authenticate_user (params: ) # (returnv: )
+			level 3:  [QUERY] User . where	{params: session[:u], } # {returnv: true} # {op: User.SELECT}
+			level 3:  [QUERY] User.where(:session_token => session[:u].to_s) . first	{params: } # {returnv: user} # {op: .SELECT}
+			level 3: User . before_filter (params: ) # (returnv: )
+			level 3: User . is_active? (params: ) # (returnv: true)
+				level 4: User . is_banned? (params: ) # (returnv: )
+			level 1: ApplicationController . increase_traffic_counter (params: ) # (returnv: )
+		level 2: ApplicationController . user_is_spider? (params: ) # (returnv: true)
+		level 2: Keystore . before_filter (params: ) # (returnv: )
+		level 2: Keystore . find_or_create_key_for_update (params: now_i, ) # (returnv: date_kv)
+			level 3:  [QUERY] self.lock(true).where(:key => key) . first	{params: } # {returnv: kv} # {op: .SELECT}
+			level 3:  [QUERY] self.lock(true) . where	{params: key, } # {returnv: } # {op: .SELECT}
+			level 3:  [QUERY] self . lock	{params: true, } # {returnv: } # {op: Keystore.TRANSACTION}
+=====transaction begin=====
+			level 3:  [QUERY] kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+				level 4: Keystore . before_save (params: ) # (returnv: )
+				level 4: Keystore . before_validation (params: ) # (returnv: )
+					level 5:  [QUERY] key . where	{params: } # {returnv: } # {op: .SELECT}
+				level 4: Keystore . before_create (params: ) # (returnv: )
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] traffic_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] date_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+	level 1: ApplicationController . require_logged_in_user (params: ) # (returnv: )
+	level 1: MessagesController . find_message (params: ) # (returnv: )
+		level 2:  [QUERY] Message . where	{params: } # {returnv: true} # {op: Message.SELECT}
+		level 2:  [QUERY] Message.where(:short_id => params[:message_id] ||    params[:id]) . first	{params: } # {returnv: @message} # {op: .SELECT}
+		level 0: MessagesController . show (params: ) # (returnv: )
+=====transaction begin=====
+	level 1:  [QUERY] @message . save	{params: } # {returnv: } # {op: Message.INSERT}
+		level 2: Message . before_filter (params: ) # (returnv: )
+		level 2: Message . before_save (params: ) # (returnv: )
+			level 3: Message . update_unread_counts (params: ) # (returnv: )
+				level 4: User . update_unread_message_count! (params: ) # (returnv: )
+					level 5:  [QUERY] self.received_messages.unread . count	{params: } # {returnv: } # {op: .SELECT}
+=====transaction begin=====
+					level 5:  [QUERY] Keystore . put	{params: self, self, } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+			level 3: Message . check_for_both_deleted (params: ) # (returnv: )
+		level 2: Message . before_validation (params: ) # (returnv: )
+			level 3:  [QUERY] recipient . where	{params: } # {returnv: } # {op: .SELECT}
+			level 3:  [QUERY] author . where	{params: } # {returnv: } # {op: .SELECT}
+			level 3: Message . assign_short_id (params: ) # (returnv: )
+				level 4: ShortId . before_filter (params: ) # (returnv: )
+				level 4: ShortId . generate (params: ) # (returnv: self.short_id)
+					level 5: ShortId . candidate_id (params: ) # (returnv: generated_id)
+		level 2: Message . before_create (params: ) # (returnv: )
+			level 3: Message . deliver_email_notifications (params: ) # (returnv: )
+				level 4: Message . plaintext_body (params: ) # (returnv: )
+				level 4: Message . url (params: ) # (returnv: )
+				level 4: User . pushover! (params: Rails, ) # (returnv: )
+=====transaction end=====

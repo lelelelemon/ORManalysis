@@ -1,0 +1,82 @@
+dir = ../applications/lobsters/
+Super cannot find upper: User . as_json
+######## BEGIN ########
+Class: InvitationsController
+Method before_filter:
+	 ** variables: {}
+	 
+	 
+	 
+Method build:
+	 ** variables: {@invitation_request, flash[:error, }
+	 
+	 
+	 
+	 
+Method index:
+	 ** variables: {@invitation_requests, }
+	 ++ CALL DB QUERY: InvitationRequest . where (params: true, , returnv: @invitation_requests)
+Method confirm_email:
+	 ** variables: {ir, flash[:error, ir.is_verified, flash[:success, }
+	 ++ CALL DB QUERY: InvitationRequest.where(:code => params[:code].to_s) . first (params: , returnv: ir)
+	 ++ CALL DB QUERY: InvitationRequest . where (params: params[:code], , returnv: true)
+	 
+	 
+	 
+	 ++ CALL DB QUERY: ir . save! (params: , returnv: )
+	 
+Method create:
+	 ** variables: {i, i.user_id, i.email, i.memo, flash[:success, flash[:error, }
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: i . save! (params: , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 
+Method create_by_request:
+	 ** variables: {@invitation_request, @invitation_request.ip_address, flash[:success, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: @invitation_request . save (params: , returnv: true)
+	 
+	 
+	 
+Method send_for_request:
+	 ** variables: {ir, flash[:error, i, i.user_id, i.email, flash[:success, }
+	 ++ CALL DB QUERY: InvitationRequest.where(:code => params[:code].to_s) . first (params: , returnv: ir)
+	 ++ CALL DB QUERY: InvitationRequest . where (params: params[:code], , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: i . save! (params: , returnv: )
+	 
+	 
+	 
+	 
+	 
+Method delete_request:
+	 ** variables: {ir, flash[:error, flash[:success, }
+	 
+	 ++ CALL DB QUERY: InvitationRequest.where(:code => params[:code].to_s) . first (params: , returnv: ir)
+	 ++ CALL DB QUERY: InvitationRequest . where (params: params[:code], , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 
+	 

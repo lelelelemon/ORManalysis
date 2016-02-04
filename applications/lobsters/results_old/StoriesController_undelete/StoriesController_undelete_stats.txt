@@ -1,0 +1,39 @@
+User.where <User,SELECT>
+User.where(:session_token => session[:u].to_s).first <,SELECT>
++FIELD+ User.deleted_at (datetime)
++FIELD+ User.banned_at (datetime)
++FIELD+ User.id (integer)
++FIELD+ User.username (string)
+Keystore.transaction <Keystore,TXN>
+self.lock <Keystore,TRANSACTION> (c)
+self.lock(true).where <Keystore,SELECT> (c)
+kv.save! <Keystore,INSERT> (c)
++FIELD+ Keystore.key (string)
+self.where <Keystore,SELECT> (c)
++FIELD+ Keystore.value (integer)
+traffic_kv.save! <Keystore,INSERT> (c)
+date_kv.save! <Keystore,INSERT> (c)
++FIELD+ User.is_moderator (boolean)
+Story.where <Story,SELECT>
+Story.where(:short_id => params[:story_id] || params[:id]).first <,SELECT>
++FIELD+ User.id (integer)
+Story.where <Story,SELECT>
+Story.where(:short_id => params[:story_id] || params[:id]).first <,SELECT>
++FIELD+ User.is_moderator (boolean)
++FIELD+ User.id (integer)
++FIELD+ Story.user_id (integer)
++FIELD+ Story.is_moderated (integer)
++FIELD+ Story.created_at (datetime)
++FIELD+ User.is_moderator (boolean)
++FIELD+ User.id (integer)
++FIELD+ Story.user_id (integer)
++FIELD+ Story.is_moderated (integer)
+@story.save <Story,INSERT>
++FIELD+ Story.short_id (string)
++FIELD+ Story.title (string)
+
+query in total: 14
+query in view: 0
+query in closure: 6
+read queries: 8
+write queries: 4

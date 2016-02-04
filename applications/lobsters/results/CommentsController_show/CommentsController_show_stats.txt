@@ -1,0 +1,50 @@
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,3]
+TBLWRITERECORD  User [0,0,0] Fields  []
+User where( session_token => session[ u] to_s) first <,SELECT>
+self lock(true) where( key => key) first <Keystore,SELECT> (c)
+self lock(true) where <Keystore,SELECT> (c)
+self lock <Keystore,TRANSACTION> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+key where <Keystore,SELECT> (c)
+kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+traffic_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+date_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+Comment where <Comment,SELECT>
+TBLREADRECORD  Comment [6,0,49,7]
+TBLWRITERECORD  Comment [0,1,0] Fields  []
+Comment where( short_id => params[ id]) first <,SELECT>
+Vote where <Vote,SELECT>
+TBLREADRECORD  Vote [2,0,49,6]
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+Vote where( user_id => @user id,         story_id => comment story_id,  comment_id => comment id) first <,SELECT>
+obj current_vote try <,SELECT> (v)
+Vote where <Vote,SELECT> (v)
+TBLREADRECORD  Vote [0,0,1,0]
+TBLWRITERECORD  Vote [2,0,0] Fields  [current_vote,]
+r_counts keys sort map{|k|      k == "" ? "+#{r_counts[k]}"   "#{r_counts[k]} #{VoteCOMMENT_REASONS[k]}"    } join <,JOIN> (v)
+self moderation try( moderator) try <Comment,SELECT> (v)
+self moderation try( moderator) try <Comment,SELECT> (v)
+self moderation try( moderator) try <Comment,SELECT> (v)
+
+STATS query in total  19
+STATS query total on single path: 19
+STATS read query on single path: 15
+STATS write query on single path: 4
+STATS query in view  6
+STATS query in closure  13
+STATS branch depend on query result  65
+STATS branch total  80
+STATS read queries  15
+STATS read to read query  14
+STATS read to write query  0
+STATS read to view  203
+STATS read to branch  32
+STATS materialized query  2
+STATS write queries  19
+STATS write from user input  1
+STATS write from other queries  15
+STATS write from const  9

@@ -1,0 +1,1543 @@
+SET IRMethod, name = index
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:18, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 5)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_3 ;name: @cur_url)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 ] %v_3[2.6 ] ) #<%self>#	-- [PUT:%self].cur_url 
+		line_num(;n: 6)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = copy("Messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_4 ;name: @title)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 ] %v_4[2.9 ] ) #<%self>#	-- [PUT:%self].title 
+		line_num(;n: 8)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_5 = search_const(scope<1> ;name: Message, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_6 = call_0o(%v_5 ;n:new, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_5[2.12 ] ) 
+		put_field(%self, %v_6 ;name: @new_message)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 ] %v_6[2.13 ] ) #<%self>#	-- [PUT:%self].new_message 
+		line_num(;n: 10)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		put_field(%self, :'in' ;name: @direction)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 2.14 ] ) #<%self>#	-- [PUT:%self].direction 
+		line_num(;n: 11)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_7 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 2.16 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_8 = call_0o(%v_7 ;n:undeleted_received_messages, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_7[2.18 ] ) 
+		put_field(%self, %v_8 ;name: @messages)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 2.14 2.16 ] %v_8[2.19 ] ) #<%self>#	-- [PUT:%self].messages 
+		line_num(;n: 13)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_9 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] ) 
+		%v_10 = call_1o(%v_9, :'to' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_9[2.22 ] ) 
+		b_false(LBL_0:32, %v_10)		--org.jruby.ir.instructions.BFalseInstr(	%v_10[2.23 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:5, 
+	Instructions:
+		line_num(;n: 14)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_11 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] %self[2.0 2.14 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_12 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] ) 
+		%v_13 = call_1o(%v_12, :'to' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_12[3.2 ] ) 
+		attr_assign(%v_11, %v_13 ;n:recipient_username=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_11[3.1 ] %v_13[3.3 ] ) #<%v_11>#	-- [PUT:%v_11].recipient_username 
+		jump(LBL_1:34)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:5, 
+	Instructions:
+		%v_13 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 7, 
+	Instructions:
+		line_num(;n: 16)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_14 = get_field(%self ;name: @direction)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] %self[2.0 2.16 ] ) #<%self>#	-- [GET:%self].direction 
+		%v_15 = call_1o(%v_14, :'out' ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_14[5.1 ] ) 
+		b_false(LBL_2:41, %v_15)		--org.jruby.ir.instructions.BFalseInstr(	%v_15[5.2 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:8, 
+	Instructions:
+		%v_16 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_3:43)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:8, 
+	Instructions:
+		%v_16 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 8:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:9, 10, 
+	Instructions:
+		line_num(;n: 19)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_17 = get_field(%self ;name: @direction)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] %self[2.0 2.16 ] ) #<%self>#	-- [GET:%self].direction 
+		%v_18 = call_1o(%v_17, :'out' ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_17[8.1 ] ) 
+		b_false(LBL_4:50, %v_18)		--org.jruby.ir.instructions.BFalseInstr(	%v_18[8.2 ] ) 
+PRINT info for BB 9:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:11, 
+	Instructions:
+		%v_19 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_5:52)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 10:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:11, 
+	Instructions:
+		%v_19 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 11:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:12, 13, 
+	Instructions:
+		line_num(;n: 21)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_20 = get_field(%self ;name: @messages)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] %self[2.0 2.20 ] ) #<%self>#	-- [GET:%self].messages 
+		%v_21 = call_0o(%v_20 ;n:any?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_20[11.1 ] ) 
+		b_false(LBL_6:61, %v_21)		--org.jruby.ir.instructions.BFalseInstr(	%v_21[11.2 ] ) 
+PRINT info for BB 12:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:17, 
+	Instructions:
+		line_num(;n: 22)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_22 = call_0o(%self ;n:batch_delete_messages_path, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] ) 
+		%v_23 = call_1ob(%self, %v_22, %self:CLOSURE index_CLOSURE_1[./lobsters/merged_controllers/messages_controller.rb:22] ;n:form_tag, t:FU, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.specialized.OneOperandArgBlockCallInstr(	%self[12.1 2.0 2.7 2.10 2.14 2.16 2.20 ] %v_22[12.1 ] %self[12.1 2.0 2.7 2.10 2.14 2.16 2.20 ] ) 
+CLOSURE BEGIN: %self[12.1,2.0,2.7,2.10,2.14,2.16,2.20,] 
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0		
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_1_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:4, 5, 10, 
+	Instructions:
+		line_num(;n: 23)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_3 = copy("delete_all")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_4 = copy("delete_all")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_5 = copy({:'id'=>%cl_1_4})		--org.jruby.ir.instructions.CopyInstr(	%cl_1_4[3.2 ] ) 
+		%cl_1_6 = call(%self, %cl_1_3, %cl_1_5 ;n:check_box_tag, t:FU, cl:false)		--org.jruby.ir.instructions.CallInstr(	%self[2.0 ] %cl_1_3[3.1 ] %cl_1_5[3.3 ] ) 
+		line_num(;n: 25)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_7 = get_field(%self ;name: @direction)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.4 2.0 ] %self[3.4 2.0 ] ) #<%self>#	-- [GET:%self].direction 
+		%cl_1_8 = call_1o(%cl_1_7, :'in' ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%cl_1_7[3.6 ] ) 
+		b_false(CL1_LBL_0:18, %cl_1_8)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_8[3.7 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 
+	Instructions:
+		%cl_1_9 = copy("From")		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(CL1_LBL_1:21)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 
+	Instructions:
+		%cl_1_10 = copy("To")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_9 = copy(%cl_1_10)		--org.jruby.ir.instructions.CopyInstr(	%cl_1_10[5.0 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:7, 8, 10, 
+	Instructions:
+		line_num(;n: 26)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_11 = get_field(%self ;name: @direction)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].direction 
+		%cl_1_12 = call_1o(%cl_1_11, :'in' ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%cl_1_11[6.1 ] ) 
+		b_false(CL1_LBL_2:28, %cl_1_12)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_12[6.2 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:9, 
+	Instructions:
+		%cl_1_13 = copy("Received")		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(CL1_LBL_3:31)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 8:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:9, 
+	Instructions:
+		%cl_1_14 = copy("Sent")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_13 = copy(%cl_1_14)		--org.jruby.ir.instructions.CopyInstr(	%cl_1_14[8.0 ] ) 
+PRINT info for BB 9:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:10, 12, 
+	Instructions:
+		line_num(;n: 27)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_15 = get_field(%self ;name: @messages)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].messages 
+		%cl_1_16 = call(%cl_1_15, :'author', :'recipient' ;n:includes, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	%cl_1_15[9.1 ] ) 
+		%cl_1_17 = call(%cl_1_16, %self:CLOSURE index_CLOSURE_1_CLOSURE_2[./lobsters/merged_controllers/messages_controller.rb:27] ;n:each, t:NO, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%cl_1_16[9.2 ] %self[2.0 ] ) 
+CLOSURE BEGIN: message[] %self[2.0,] 
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:15, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_2_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		message = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:4, 5, 13, 
+	Instructions:
+		line_num(;n: 28)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_3 = call_0o(message ;n:has_been_read?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[2.2 ] ) 
+		b_false(CL2_LBL_0:13, %cl_2_3)		--org.jruby.ir.instructions.BFalseInstr(	%cl_2_3[3.1 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:6, 
+	Instructions:
+		%cl_2_4 = copy("")		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(CL2_LBL_1:16)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:6, 
+	Instructions:
+		%cl_2_5 = copy("bold")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_2_4 = copy(%cl_2_5)		--org.jruby.ir.instructions.CopyInstr(	%cl_2_5[5.0 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:7, 11, 13, 
+	Instructions:
+		line_num(;n: 29)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_6 = copy("delete_")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_2_7 = call_0o(message ;n:short_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[2.2 ] ) 
+		%cl_2_8 = build_compound_string(%cl_2_6, #{%cl_2_7})		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%cl_2_6[6.1 ] %cl_2_7[6.2 ] ) 
+		%cl_2_9 = call_1o(%self, %cl_2_8 ;n:check_box_tag, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %cl_2_8[6.3 ] ) 
+		line_num(;n: 30)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_10 = get_field(%self ;name: @direction)		--org.jruby.ir.instructions.GetFieldInstr(	%self[6.4 2.0 ] %self[6.4 2.0 ] ) #<%self>#	-- [GET:%self].direction 
+		%cl_2_11 = call_1o(%cl_2_10, :'in' ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%cl_2_10[6.6 ] ) 
+		b_false(CL2_LBL_2:42, %cl_2_11)		--org.jruby.ir.instructions.BFalseInstr(	%cl_2_11[6.7 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:8, 9, 13, 
+	Instructions:
+		line_num(;n: 31)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_12 = call_0o(message ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[2.2 ] ) 
+		b_false(CL2_LBL_4:36, %cl_2_12)		--org.jruby.ir.instructions.BFalseInstr(	%cl_2_12[7.1 ] ) 
+PRINT info for BB 8:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:10, 13, 
+	Instructions:
+		line_num(;n: 32)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_13 = call_0o(message ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[2.2 ] ) 
+		%cl_2_14 = call_0o(%cl_2_13 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_2_13[8.1 ] ) 
+		line_num(;n: 34)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_15 = call_0o(message ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[8.1 2.2 ] ) 
+		%cl_2_16 = call_0o(%cl_2_15 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_2_15[8.4 ] ) 
+		jump(CL2_LBL_5:40)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 9:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:10, 13, 
+	Instructions:
+		line_num(;n: 36)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_17 = call_0o(message ;n:author_username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[2.2 ] ) 
+		%cl_2_16 = copy(%cl_2_17)		--org.jruby.ir.instructions.CopyInstr(	%cl_2_17[9.1 ] ) 
+PRINT info for BB 10:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:12, 
+	Instructions:
+		jump(CL2_LBL_3:50)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 11:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit:  0 2		
+	outgoing edges:12, 13, 
+	Instructions:
+		line_num(;n: 39)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_18 = call_0o(message ;n:recipient, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[2.2 ] ) 
+		%cl_2_19 = call_0o(%cl_2_18 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_2_18[11.1 ] ) 
+		line_num(;n: 41)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_20 = call_0o(message ;n:recipient, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[11.1 2.2 ] ) 
+		%cl_2_21 = call_0o(%cl_2_20 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_2_20[11.4 ] ) 
+		%cl_2_16 = copy(%cl_2_21)		--org.jruby.ir.instructions.CopyInstr(	%cl_2_21[11.5 ] ) 
+PRINT info for BB 12:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0 2		
+	outgoing edges:13, 15, 
+	Instructions:
+		line_num(;n: 43)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_22 = call_0o(message ;n:created_at, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[2.2 ] ) 
+		%cl_2_23 = call_1o(%self, %cl_2_22 ;n:time_ago_in_words_label, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %cl_2_22[12.1 ] ) 
+		line_num(;n: 44)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_24 = call_0o(message ;n:short_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[12.1 2.2 ] ) 
+		line_num(;n: 45)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_25 = call_0o(message ;n:subject, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[12.1 12.4 2.2 ] ) 
+		return(%cl_2_25)		--org.jruby.ir.instructions.ReturnInstr(	%cl_2_25[12.6 ] ) 
+PRINT info for BB 13:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:15, 
+	Instructions:
+		%cl_2_26 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_2_27 = runtime_helper(%cl_2_26 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_2_26[13.0 ] ) 
+		return(%cl_2_27)		--org.jruby.ir.instructions.ReturnInstr(	%cl_2_27[13.1 ] ) 
+PRINT info for BB 15:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		line_num(;n: 48)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_18 = copy("Delete Selected")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_19 = call_1o(%self, %cl_1_18 ;n:submit_tag, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %cl_1_18[9.5 ] ) 
+		return(%cl_1_19)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_19[9.6 ] ) 
+PRINT info for BB 10:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 
+	Instructions:
+		%cl_1_20 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_1_21 = runtime_helper(%cl_1_20 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_1_20[10.0 ] ) 
+		return(%cl_1_21)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_21[10.1 ] ) 
+PRINT info for BB 12:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		jump(LBL_7:73)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 13:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:14, 15, 
+	Instructions:
+		line_num(;n: 51)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_24 = get_field(%self ;name: @direction)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] %self[2.0 2.16 ] ) #<%self>#	-- [GET:%self].direction 
+		%v_25 = call_1o(%v_24, :'in' ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_24[13.1 ] ) 
+		b_false(LBL_8:68, %v_25)		--org.jruby.ir.instructions.BFalseInstr(	%v_25[13.2 ] ) 
+PRINT info for BB 14:
+	Vars Live on Entry:  0 27		
+	Vars Live on Exit:  0		
+	outgoing edges:16, 
+	Instructions:
+		%v_26 = copy("")		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_9:71)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 15:
+	Vars Live on Entry:  0 27		
+	Vars Live on Exit:  0		
+	outgoing edges:16, 
+	Instructions:
+		%v_27 = copy("sent")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_26 = copy(%v_27)		--org.jruby.ir.instructions.CopyInstr(	%v_27[15.0 ] ) 
+PRINT info for BB 16:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0 27		
+	outgoing edges:17, 
+	Instructions:
+		%v_23 = copy(%v_26)		--org.jruby.ir.instructions.CopyInstr(	%v_26[15.1 14.0 ] ) 
+PRINT info for BB 17:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:18, 
+	Instructions:
+		line_num(;n: 53)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_28 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] %self[2.0 2.14 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_29 = copy({:'method'=>:'post'})		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_30 = call(%self, %v_28, %v_29, %self:CLOSURE index_CLOSURE_3[./lobsters/merged_controllers/messages_controller.rb:53] ;n:form_for, t:FU, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%self[2.0 2.7 2.10 2.14 2.16 2.20 ] %v_28[17.1 ] %v_29[17.2 ] %self[2.0 2.7 2.10 2.14 2.16 2.20 ] ) 
+CLOSURE BEGIN: %self[2.0,2.7,2.10,2.14,2.16,2.20,] f[] 
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_3_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		f = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0 2		
+	outgoing edges:4, 6, 
+	Instructions:
+		line_num(;n: 54)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_3 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].new_message 
+		%cl_3_4 = call_1o(%self, %cl_3_3 ;n:error_messages_for, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %cl_3_3[3.1 ] ) 
+		line_num(;n: 55)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_5 = copy("To:")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_6 = copy("required")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_7 = copy({:'class'=>%cl_3_6})		--org.jruby.ir.instructions.CopyInstr(	%cl_3_6[3.5 ] ) 
+		%cl_3_8 = call(f, :'recipient_username', %cl_3_5, %cl_3_7 ;n:label, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	f[2.2 ] %cl_3_5[3.4 ] %cl_3_7[3.6 ] ) 
+		line_num(;n: 56)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_9 = copy("off")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_10 = copy({:'size'=>Fixnum:20, :'autocomplete'=>%cl_3_9})		--org.jruby.ir.instructions.CopyInstr(	%cl_3_9[3.9 ] ) 
+		%cl_3_11 = call(f, :'recipient_username', %cl_3_10 ;n:text_field, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	f[3.7 2.2 ] %cl_3_10[3.10 ] ) 
+		line_num(;n: 58)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_12 = copy("Subject:")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_13 = copy("required")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_14 = copy({:'class'=>%cl_3_13})		--org.jruby.ir.instructions.CopyInstr(	%cl_3_13[3.14 ] ) 
+		%cl_3_15 = call(f, :'subject', %cl_3_12, %cl_3_14 ;n:label, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	f[3.7 3.11 2.2 ] %cl_3_12[3.13 ] %cl_3_14[3.15 ] ) 
+		line_num(;n: 59)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_16 = copy("width: 500px;")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_17 = copy("off")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_18 = copy({:'style'=>%cl_3_16, :'autocomplete'=>%cl_3_17})		--org.jruby.ir.instructions.CopyInstr(	%cl_3_16[3.18 ] %cl_3_17[3.19 ] ) 
+		%cl_3_19 = call(f, :'subject', %cl_3_18 ;n:text_field, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	f[3.7 3.11 3.16 2.2 ] %cl_3_18[3.20 ] ) 
+		line_num(;n: 61)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_20 = copy("Message:")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_21 = copy("required")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_22 = copy({:'class'=>%cl_3_21})		--org.jruby.ir.instructions.CopyInstr(	%cl_3_21[3.24 ] ) 
+		%cl_3_23 = call(f, :'body', %cl_3_20, %cl_3_22 ;n:label, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	f[3.7 3.11 3.16 3.21 2.2 ] %cl_3_20[3.23 ] %cl_3_22[3.25 ] ) 
+		line_num(;n: 62)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_24 = copy("width: 500px;")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_25 = copy("off")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_26 = copy({:'style'=>%cl_3_24, :'rows'=>Fixnum:5, :'autocomplete'=>%cl_3_25})		--org.jruby.ir.instructions.CopyInstr(	%cl_3_24[3.28 ] %cl_3_25[3.29 ] ) 
+		%cl_3_27 = call(f, :'body', %cl_3_26 ;n:text_area, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	f[3.7 3.11 3.16 3.21 3.26 2.2 ] %cl_3_26[3.30 ] ) 
+		line_num(;n: 64)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_28 = copy("Send Message")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_29 = call_1o(%self, %cl_3_28 ;n:submit_tag, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[3.2 2.0 ] %cl_3_28[3.33 ] ) 
+		return(%cl_3_29)		--org.jruby.ir.instructions.ReturnInstr(	%cl_3_29[3.34 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		%cl_3_30 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_3_31 = runtime_helper(%cl_3_30 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_3_30[4.0 ] ) 
+		return(%cl_3_31)		--org.jruby.ir.instructions.ReturnInstr(	%cl_3_31[4.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		return(%v_30)		--org.jruby.ir.instructions.ReturnInstr(	%v_30[17.3 ] ) 
+PRINT info for BB 18:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = sent
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 71)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_3 ;name: @cur_url)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 ] %v_3[2.6 ] ) #<%self>#	-- [PUT:%self].cur_url 
+		line_num(;n: 72)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = copy("Messages Sent")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_4 ;name: @title)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 ] %v_4[2.9 ] ) #<%self>#	-- [PUT:%self].title 
+		line_num(;n: 74)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		put_field(%self, :'out' ;name: @direction)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 ] ) #<%self>#	-- [PUT:%self].direction 
+		line_num(;n: 75)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_5 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.12 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_6 = call_0o(%v_5 ;n:undeleted_sent_messages, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_5[2.14 ] ) 
+		put_field(%self, %v_6 ;name: @messages)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 2.12 ] %v_6[2.15 ] ) #<%self>#	-- [PUT:%self].messages 
+		line_num(;n: 77)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_7 = search_const(scope<1> ;name: Message, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_8 = call_0o(%v_7 ;n:new, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_7[2.18 ] ) 
+		put_field(%self, %v_8 ;name: @new_message)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 2.12 2.16 ] %v_8[2.19 ] ) #<%self>#	-- [PUT:%self].new_message 
+		line_num(;n: 79)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_9 = copy("index")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_10 = copy({:'action'=>%v_9})		--org.jruby.ir.instructions.CopyInstr(	%v_9[2.22 ] ) 
+		%v_11 = call_1o(%self, %v_10 ;n:render, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.12 2.16 2.20 ] %v_10[2.23 ] ) 
+		return(%v_11)		--org.jruby.ir.instructions.ReturnInstr(	%v_11[2.24 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = create
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 83)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_3 ;name: @cur_url)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 ] %v_3[2.6 ] ) #<%self>#	-- [PUT:%self].cur_url 
+		line_num(;n: 84)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = copy("Messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_4 ;name: @title)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 ] %v_4[2.9 ] ) #<%self>#	-- [PUT:%self].title 
+		line_num(;n: 86)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_5 = search_const(scope<1> ;name: Message, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_6 = call_0o(%self ;n:message_params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 ] ) 
+		%v_7 = call_1o(%v_5, %v_6 ;n:new, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_5[2.12 ] %v_6[2.13 ] ) 
+		put_field(%self, %v_7 ;name: @new_message)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 2.13 ] %v_7[2.14 ] ) #<%self>#	-- [PUT:%self].new_message 
+		line_num(;n: 87)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_8 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.13 2.15 ] %self[2.0 2.13 2.15 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_9 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.13 2.15 ] %self[2.0 2.13 ] ) #<%self>#	-- [GET:%self].user 
+		%v_10 = call_0o(%v_9 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_9[2.18 ] ) 
+		attr_assign(%v_8, %v_10 ;n:author_user_id=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_8[2.17 ] %v_10[2.19 ] ) #<%v_8>#	-- [PUT:%v_8].author_user_id 
+		line_num(;n: 89)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		put_field(%self, :'out' ;name: @direction)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 2.13 2.15 ] ) #<%self>#	-- [PUT:%self].direction 
+		line_num(;n: 90)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_11 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.13 2.15 2.22 ] %self[2.0 2.13 ] ) #<%self>#	-- [GET:%self].user 
+		%v_12 = call_0o(%v_11 ;n:undeleted_received_messages, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_11[2.24 ] ) 
+		put_field(%self, %v_12 ;name: @messages)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.10 2.13 2.15 2.22 ] %v_12[2.25 ] ) #<%self>#	-- [PUT:%self].messages 
+		line_num(;n: 92)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_13 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.10 2.13 2.15 2.22 2.26 ] %self[2.0 2.13 2.15 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_14 = call_0o(%v_13 ;n:save, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_13[2.28 ] ) 
+		b_false(LBL_0:47, %v_14)		--org.jruby.ir.instructions.BFalseInstr(	%v_14[2.29 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:6, 
+	Instructions:
+		line_num(;n: 93)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_15 = call_0o(%self ;n:flash, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.15 2.22 2.26 ] ) 
+		%v_16 = copy("Your message has been sent to ")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_17 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.1 2.0 2.7 2.10 2.15 2.22 2.26 ] %self[3.1 2.0 2.15 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_18 = call_0o(%v_17 ;n:recipient, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_17[3.3 ] ) 
+		%v_19 = call_0o(%v_18 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_18[3.4 ] ) 
+		%v_20 = call_0o(%v_19 ;n:to_s, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_19[3.5 ] ) 
+		%v_21 = call_1o(%v_16, %v_20 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_16[3.2 ] %v_20[3.6 ] ) 
+		%v_22 = copy(".")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_23 = call_1o(%v_21, %v_22 ;n:<<, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_21[3.7 ] %v_22[3.8 ] ) 
+		attr_assign(%v_15, :'success', %v_23 ;n:[]=, t:UN, cl:false)		--org.jruby.ir.instructions.AttrAssignInstr(	%v_15[3.1 ] %v_23[3.9 ] ) #<%v_15>#	-- [PUT:%v_15].[] 
+		line_num(;n: 95)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_24 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_25 = call_1o(%self, %v_24 ;n:redirect_to, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[3.1 2.0 2.7 2.10 2.15 2.22 2.26 ] %v_24[3.12 ] ) 
+		return(%v_25)		--org.jruby.ir.instructions.ReturnInstr(	%v_25[3.13 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:6, 
+	Instructions:
+		line_num(;n: 97)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_27 = copy("index")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_28 = copy({:'action'=>%v_27})		--org.jruby.ir.instructions.CopyInstr(	%v_27[4.1 ] ) 
+		%v_29 = call_1o(%self, %v_28 ;n:render, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.10 2.15 2.22 2.26 ] %v_28[4.2 ] ) 
+		return(%v_29)		--org.jruby.ir.instructions.ReturnInstr(	%v_29[4.3 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = show
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:33, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0		
+	Vars Live on Exit: 
+	outgoing edges:3, 10, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 102)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		put_field(%self, %v_3 ;name: @cur_url)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 ] %v_3[2.6 ] ) #<%self>#	-- [PUT:%self].cur_url 
+		line_num(;n: 103)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_5 = call_0o(%v_4 ;n:subject, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_4[2.9 ] ) 
+		put_field(%self, %v_5 ;name: @title)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 ] %v_5[2.10 ] ) #<%self>#	-- [PUT:%self].title 
+		line_num(;n: 105)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_6 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_7 = call_0o(%v_6 ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_6[2.13 ] ) 
+		b_false(LBL_0:63, %v_7)		--org.jruby.ir.instructions.BFalseInstr(	%v_7[2.14 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0 11		
+	Vars Live on Exit:  0		
+	outgoing edges:4, 5, 
+	Instructions:
+		line_num(;n: 106)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_8 = search_const(scope<1> ;name: Message, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_9 = call_0o(%v_8 ;n:new, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_8[3.1 ] ) 
+		put_field(%self, %v_9 ;name: @new_message)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 2.7 2.11 ] %v_9[3.2 ] ) #<%self>#	-- [PUT:%self].new_message 
+		line_num(;n: 107)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_10 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[3.3 2.0 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_11 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_12 = call_0o(%v_11 ;n:author_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_11[3.6 ] ) 
+		%v_13 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_14 = call_0o(%v_13 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_13[3.8 ] ) 
+		%v_15 = call_1o(%v_12, %v_14 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_12[3.7 ] %v_14[3.9 ] ) 
+		b_false(LBL_2:33, %v_15)		--org.jruby.ir.instructions.BFalseInstr(	%v_15[3.10 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0 11 19		
+	Vars Live on Exit:  0 11		
+	outgoing edges:6, 
+	Instructions:
+		%v_16 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_17 = call_0o(%v_16 ;n:recipient, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_16[4.0 ] ) 
+		%v_18 = call_0o(%v_17 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_17[4.1 ] ) 
+		jump(LBL_3:38)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0 11 19		
+	Vars Live on Exit:  0 11		
+	outgoing edges:6, 
+	Instructions:
+		%v_19 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_20 = call_0o(%v_19 ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_19[5.0 ] ) 
+		%v_21 = call_0o(%v_20 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_20[5.1 ] ) 
+		%v_18 = copy(%v_21)		--org.jruby.ir.instructions.CopyInstr(	%v_21[5.2 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0 11 19		
+	outgoing edges:7, 8, 
+	Instructions:
+		attr_assign(%v_10, %v_18 ;n:recipient_username=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_10[3.5 ] %v_18[5.3 4.2 ] ) #<%v_10>#	-- [PUT:%v_10].recipient_username 
+		line_num(;n: 110)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_22 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_23 = call_0o(%v_22 ;n:subject, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_22[6.2 ] ) 
+		%v_24 = copy(RE:|^re:|RegexpOptions(kcode: NONE, ignorecase, kcodeDefault))		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_25 = call_1o(%v_23, RE:|^re:|RegexpOptions(kcode: NONE, ignorecase, kcodeDefault) ;n:match, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_23[6.3 ] ) 
+		b_false(LBL_4:52, %v_25)		--org.jruby.ir.instructions.BFalseInstr(	%v_25[6.5 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:9, 
+	Instructions:
+		line_num(;n: 111)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_26 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[3.3 2.0 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_27 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_28 = call_0o(%v_27 ;n:subject, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_27[7.2 ] ) 
+		attr_assign(%v_26, %v_28 ;n:subject=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_26[7.1 ] %v_28[7.3 ] ) #<%v_26>#	-- [PUT:%v_26].subject 
+		jump(LBL_5:61)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 8:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:9, 
+	Instructions:
+		line_num(;n: 113)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_29 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[3.3 2.0 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_30 = copy("Re: ")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_31 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[3.3 2.0 2.7 2.11 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_32 = call_0o(%v_31 ;n:subject, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_31[8.3 ] ) 
+		%v_33 = build_compound_string(%v_30, #{%v_32})		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_30[8.2 ] %v_32[8.4 ] ) 
+		attr_assign(%v_29, %v_33 ;n:subject=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_29[8.1 ] %v_33[8.5 ] ) #<%v_29>#	-- [PUT:%v_29].subject 
+		%v_28 = copy(%v_33)		--org.jruby.ir.instructions.CopyInstr(	%v_33[8.5 ] ) 
+PRINT info for BB 9:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:11, 
+	Instructions:
+		jump(LBL_1:65)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 10:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:11, 
+	Instructions:
+		%v_28 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 11:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:12, 13, 
+	Instructions:
+		line_num(;n: 117)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_34 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_35 = call_0o(%v_34 ;n:recipient_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_34[11.1 ] ) 
+		%v_36 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_37 = call_0o(%v_36 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_36[11.3 ] ) 
+		%v_38 = call_1o(%v_35, %v_37 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_35[11.2 ] %v_37[11.4 ] ) 
+		b_false(LBL_6:80, %v_38)		--org.jruby.ir.instructions.BFalseInstr(	%v_38[11.5 ] ) 
+PRINT info for BB 12:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:14, 
+	Instructions:
+		line_num(;n: 118)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_39 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		attr_assign(%v_39, true ;n:has_been_read=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_39[12.1 ] ) #<%v_39>#	-- [PUT:%v_39].has_been_read 
+		line_num(;n: 119)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_40 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_41 = call_0o(%v_40 ;n:save, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_40[12.4 ] ) 
+		jump(LBL_7:82)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 13:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:14, 
+	Instructions:
+		%v_41 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 14:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:15, 16, 
+	Instructions:
+		line_num(;n: 121)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_42 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_43 = call_0o(%v_42 ;n:author_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_42[14.1 ] ) 
+		%v_44 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_45 = call_0o(%v_44 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_44[14.3 ] ) 
+		%v_46 = call_1o(%v_43, %v_45 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_43[14.2 ] %v_45[14.4 ] ) 
+		b_false(LBL_8:92, %v_46)		--org.jruby.ir.instructions.BFalseInstr(	%v_46[14.5 ] ) 
+PRINT info for BB 15:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:17, 
+	Instructions:
+		%v_47 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_9:94)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 16:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:17, 
+	Instructions:
+		%v_47 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 17:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:18, 25, 
+	Instructions:
+		line_num(;n: 124)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_48 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_49 = call_0o(%v_48 ;n:subject, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_48[17.1 ] ) 
+		line_num(;n: 125)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_50 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_51 = call_0o(%v_50 ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_50[17.4 ] ) 
+		b_false(LBL_10:131, %v_51)		--org.jruby.ir.instructions.BFalseInstr(	%v_51[17.5 ] ) 
+PRINT info for BB 18:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:19, 20, 
+	Instructions:
+		line_num(;n: 126)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_52 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_53 = call_0o(%v_52 ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_52[18.1 ] ) 
+		%v_54 = call_0o(%v_53 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_53[18.2 ] ) 
+		line_num(;n: 128)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_55 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_56 = call_0o(%v_55 ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_55[18.5 ] ) 
+		%v_57 = call_0o(%v_56 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_56[18.6 ] ) 
+		line_num(;n: 129)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_58 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_59 = call_0o(%v_58 ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_58[18.9 ] ) 
+		%v_60 = call_0o(%v_59 ;n:is_admin?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_59[18.10 ] ) 
+		b_false(LBL_12:117, %v_60)		--org.jruby.ir.instructions.BFalseInstr(	%v_60[18.11 ] ) 
+PRINT info for BB 19:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:24, 
+	Instructions:
+		%v_61 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_13:129)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 20:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:21, 22, 
+	Instructions:
+		line_num(;n: 130)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_62 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_63 = call_0o(%v_62 ;n:author, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_62[20.1 ] ) 
+		%v_64 = call_0o(%v_63 ;n:is_moderator?, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_63[20.2 ] ) 
+		b_false(LBL_14:125, %v_64)		--org.jruby.ir.instructions.BFalseInstr(	%v_64[20.3 ] ) 
+PRINT info for BB 21:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:23, 
+	Instructions:
+		%v_65 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_15:127)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 22:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:23, 
+	Instructions:
+		%v_65 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 23:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:24, 
+	Instructions:
+		%v_61 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 24:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:26, 
+	Instructions:
+		jump(LBL_11:136)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 25:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:26, 
+	Instructions:
+		line_num(;n: 133)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_66 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_67 = call_0o(%v_66 ;n:author_username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_66[25.1 ] ) 
+		%v_61 = copy(%v_67)		--org.jruby.ir.instructions.CopyInstr(	%v_67[25.2 ] ) 
+PRINT info for BB 26:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:27, 28, 
+	Instructions:
+		line_num(;n: 135)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_68 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_69 = call_0o(%v_68 ;n:recipient, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_68[26.1 ] ) 
+		%v_70 = call_0o(%v_69 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_69[26.2 ] ) 
+		line_num(;n: 137)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_71 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_72 = call_0o(%v_71 ;n:recipient, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_71[26.5 ] ) 
+		%v_73 = call_0o(%v_72 ;n:username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_72[26.6 ] ) 
+		line_num(;n: 138)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_74 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_75 = call_0o(%v_74 ;n:created_at, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_74[26.9 ] ) 
+		%v_76 = call_1o(%self, %v_75 ;n:time_ago_in_words_label, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 2.7 2.11 3.3 ] %v_75[26.10 ] ) 
+		line_num(;n: 139)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_77 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[26.11 2.0 2.7 2.11 3.3 ] %self[26.11 2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_78 = call_0o(%v_77 ;n:linkified_body, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_77[26.13 ] ) 
+		%v_79 = call_1o(%self, %v_78 ;n:raw, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[26.11 2.0 2.7 2.11 3.3 ] %v_78[26.14 ] ) 
+		line_num(;n: 140)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_80 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[26.11 26.15 2.0 2.7 2.11 3.3 ] %self[26.11 26.15 2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_81 = call_0o(%v_80 ;n:short_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_80[26.17 ] ) 
+		%v_82 = call_1o(%self, %v_81 ;n:message_path, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[26.11 26.15 2.0 2.7 2.11 3.3 ] %v_81[26.18 ] ) 
+		%v_83 = copy({:'method'=>:'delete'})		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_84 = call(%self, %v_82, %v_83, %self:CLOSURE show_CLOSURE_1[./lobsters/merged_controllers/messages_controller.rb:140] ;n:form_tag, t:FU, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%self[26.11 26.15 26.19 2.0 2.7 2.11 3.3 ] %v_82[26.19 ] %v_83[26.20 ] %self[26.11 26.15 26.19 2.0 2.7 2.11 3.3 ] ) 
+CLOSURE BEGIN: %self[26.11,26.15,26.19,2.0,2.7,2.11,3.3,] 
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0		
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_1_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:4, 6, 
+	Instructions:
+		line_num(;n: 141)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_3 = copy("Delete Message")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_4 = call_1o(%self, %cl_1_3 ;n:submit_tag, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %cl_1_3[3.1 ] ) 
+		return(%cl_1_4)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_4[3.2 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		%cl_1_5 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_1_6 = runtime_helper(%cl_1_5 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_1_5[4.0 ] ) 
+		return(%cl_1_6)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_6[4.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		line_num(;n: 143)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_85 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[26.11 26.15 26.19 26.21 2.0 2.7 2.11 3.3 ] %self[26.11 26.15 26.19 26.21 2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_86 = call_0o(%v_85 ;n:short_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_85[26.23 ] ) 
+		%v_87 = call_1o(%self, %v_86 ;n:message_path, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[26.11 26.15 26.19 26.21 2.0 2.7 2.11 3.3 ] %v_86[26.24 ] ) 
+		%v_88 = copy("/keep_as_new")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_89 = call_1o(%v_87, %v_88 ;n:+, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_87[26.25 ] %v_88[26.26 ] ) 
+		%v_90 = copy({:'method'=>:'post'})		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_91 = call(%self, %v_89, %v_90, %self:CLOSURE show_CLOSURE_2[./lobsters/merged_controllers/messages_controller.rb:144] ;n:form_tag, t:FU, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%self[26.11 26.15 26.19 26.21 26.25 2.0 2.7 2.11 3.3 ] %v_89[26.27 ] %v_90[26.28 ] %self[26.11 26.15 26.19 26.21 26.25 2.0 2.7 2.11 3.3 ] ) 
+CLOSURE BEGIN: %self[26.11,26.15,26.19,26.21,26.25,2.0,2.7,2.11,3.3,] 
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0		
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_2_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:4, 6, 
+	Instructions:
+		line_num(;n: 145)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_2_3 = copy("Keep As New")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_2_4 = call_1o(%self, %cl_2_3 ;n:submit_tag, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %cl_2_3[3.1 ] ) 
+		return(%cl_2_4)		--org.jruby.ir.instructions.ReturnInstr(	%cl_2_4[3.2 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		%cl_2_5 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_2_6 = runtime_helper(%cl_2_5 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_2_5[4.0 ] ) 
+		return(%cl_2_6)		--org.jruby.ir.instructions.ReturnInstr(	%cl_2_6[4.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		line_num(;n: 147)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		line_num(;n: 148)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_92 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[26.11 26.15 26.19 26.21 26.25 26.29 2.0 2.7 2.11 3.3 ] %self[26.11 26.15 26.19 26.21 26.25 26.29 2.0 3.3 ] ) #<%self>#	-- [GET:%self].new_message 
+		b_false(LBL_16:174, %v_92)		--org.jruby.ir.instructions.BFalseInstr(	%v_92[26.32 ] ) 
+PRINT info for BB 27:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:29, 
+	Instructions:
+		%v_93 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 3.3 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_94 = call_0o(%v_93 ;n:recipient_username, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_93[27.0 ] ) 
+		jump(LBL_17:176)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 28:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:29, 
+	Instructions:
+		%v_94 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 29:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:30, 31, 
+	Instructions:
+		line_num(;n: 150)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		line_num(;n: 151)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_95 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 3.3 ] ) #<%self>#	-- [GET:%self].new_message 
+		b_false(LBL_18:185, %v_95)		--org.jruby.ir.instructions.BFalseInstr(	%v_95[29.2 ] ) 
+PRINT info for BB 30:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:33, 
+	Instructions:
+		%v_96 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 2.7 2.11 3.3 ] %self[2.0 3.3 ] ) #<%self>#	-- [GET:%self].new_message 
+		%v_97 = copy({:'method'=>:'post'})		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_98 = call(%self, %v_96, %v_97, %self:CLOSURE show_CLOSURE_3[./lobsters/merged_controllers/messages_controller.rb:151] ;n:form_for, t:FU, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%self[2.0 2.7 2.11 3.3 ] %v_96[30.0 ] %v_97[30.1 ] %self[2.0 2.7 2.11 3.3 ] ) 
+CLOSURE BEGIN: f[] %self[2.0,2.7,2.11,3.3,] 
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 2		
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_3_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		f = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0 2		
+	outgoing edges:4, 6, 
+	Instructions:
+		line_num(;n: 152)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_3 = call_1o(f, :'recipient_username' ;n:hidden_field, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	f[2.2 ] ) 
+		line_num(;n: 153)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_4 = get_field(%self ;name: @new_message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].new_message 
+		%cl_3_5 = call_1o(%self, %cl_3_4 ;n:error_messages_for, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %cl_3_4[3.3 ] ) 
+		line_num(;n: 154)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_6 = copy("width: 500px;")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_7 = copy("off")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_8 = copy({:'style'=>%cl_3_6, :'autocomplete'=>%cl_3_7})		--org.jruby.ir.instructions.CopyInstr(	%cl_3_6[3.6 ] %cl_3_7[3.7 ] ) 
+		%cl_3_9 = call(f, :'subject', %cl_3_8 ;n:text_field, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	f[3.1 2.2 ] %cl_3_8[3.8 ] ) 
+		line_num(;n: 156)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_10 = copy("width: 500px;")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_11 = copy("off")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_12 = copy({:'style'=>%cl_3_10, :'rows'=>Fixnum:5, :'autocomplete'=>%cl_3_11})		--org.jruby.ir.instructions.CopyInstr(	%cl_3_10[3.11 ] %cl_3_11[3.12 ] ) 
+		%cl_3_13 = call(f, :'body', %cl_3_12 ;n:text_area, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	f[3.1 3.9 2.2 ] %cl_3_12[3.13 ] ) 
+		line_num(;n: 158)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_3_14 = copy("Send Message")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_3_15 = call_1o(%self, %cl_3_14 ;n:submit_tag, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[3.4 2.0 ] %cl_3_14[3.16 ] ) 
+		return(%cl_3_15)		--org.jruby.ir.instructions.ReturnInstr(	%cl_3_15[3.17 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:6, 
+	Instructions:
+		%cl_3_16 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_3_17 = runtime_helper(%cl_3_16 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_3_16[4.0 ] ) 
+		return(%cl_3_17)		--org.jruby.ir.instructions.ReturnInstr(	%cl_3_17[4.1 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		return(%v_98)		--org.jruby.ir.instructions.ReturnInstr(	%v_98[30.2 ] ) 
+PRINT info for BB 31:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:33, 
+	Instructions:
+		return(nil)		--org.jruby.ir.instructions.ReturnInstr(	) 
+PRINT info for BB 33:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = destroy
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:12, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 167)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_4 = call_0o(%v_3 ;n:author_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_3[2.6 ] ) 
+		%v_5 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_6 = call_0o(%v_5 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_5[2.8 ] ) 
+		%v_7 = call_1o(%v_4, %v_6 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_4[2.7 ] %v_6[2.9 ] ) 
+		b_false(LBL_0:18, %v_7)		--org.jruby.ir.instructions.BFalseInstr(	%v_7[2.10 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:5, 
+	Instructions:
+		line_num(;n: 168)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_8 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		attr_assign(%v_8, true ;n:deleted_by_author=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_8[3.1 ] ) #<%v_8>#	-- [PUT:%v_8].deleted_by_author 
+		%v_9 = copy(true)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_1:20)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:5, 
+	Instructions:
+		%v_9 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 7, 
+	Instructions:
+		line_num(;n: 171)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_10 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_11 = call_0o(%v_10 ;n:recipient_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_10[5.1 ] ) 
+		%v_12 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_13 = call_0o(%v_12 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_12[5.3 ] ) 
+		%v_14 = call_1o(%v_11, %v_13 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_11[5.2 ] %v_13[5.4 ] ) 
+		b_false(LBL_2:33, %v_14)		--org.jruby.ir.instructions.BFalseInstr(	%v_14[5.5 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:8, 
+	Instructions:
+		line_num(;n: 172)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_15 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		attr_assign(%v_15, true ;n:deleted_by_recipient=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_15[6.1 ] ) #<%v_15>#	-- [PUT:%v_15].deleted_by_recipient 
+		%v_16 = copy(true)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_3:35)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:8, 
+	Instructions:
+		%v_16 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 8:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:9, 10, 
+	Instructions:
+		line_num(;n: 175)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_17 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_18 = call_0o(%v_17 ;n:save!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_17[8.1 ] ) 
+		line_num(;n: 177)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_19 = call_0o(%self ;n:flash, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_20 = copy("Deleted message.")		--org.jruby.ir.instructions.CopyInstr(	) 
+		attr_assign(%v_19, :'success', %v_20 ;n:[]=, t:UN, cl:false)		--org.jruby.ir.instructions.AttrAssignInstr(	%v_19[8.4 ] %v_20[8.5 ] ) #<%v_19>#	-- [PUT:%v_19].[] 
+		line_num(;n: 179)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_21 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[8.4 2.0 ] %self[8.4 2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_22 = call_0o(%v_21 ;n:author_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_21[8.8 ] ) 
+		%v_23 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[8.4 2.0 ] %self[8.4 2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_24 = call_0o(%v_23 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_23[8.10 ] ) 
+		%v_25 = call_1o(%v_22, %v_24 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_22[8.9 ] %v_24[8.11 ] ) 
+		b_false(LBL_4:54, %v_25)		--org.jruby.ir.instructions.BFalseInstr(	%v_25[8.12 ] ) 
+PRINT info for BB 9:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:12, 
+	Instructions:
+		line_num(;n: 180)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_26 = copy("/messages/sent")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_27 = call_1o(%self, %v_26 ;n:redirect_to, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %v_26[9.1 ] ) 
+		return(%v_27)		--org.jruby.ir.instructions.ReturnInstr(	%v_27[9.2 ] ) 
+PRINT info for BB 10:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:12, 
+	Instructions:
+		line_num(;n: 182)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_29 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_30 = call_1o(%self, %v_29 ;n:redirect_to, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %v_29[10.1 ] ) 
+		return(%v_30)		--org.jruby.ir.instructions.ReturnInstr(	%v_30[10.2 ] ) 
+PRINT info for BB 12:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = batch_delete
+PRINT info for BB 1:
+	Vars Live on Entry:  4		
+	Vars Live on Exit:  4		
+	outgoing edges:7, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 4 7 8 9		
+	Vars Live on Exit:  4		
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 188)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		deleted = copy(Fixnum:0)		--org.jruby.ir.instructions.CopyInstr(	) 
+		line_num(;n: 190)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_4 = call(%v_3, %self:CLOSURE batch_delete_CLOSURE_1[./lobsters/merged_controllers/messages_controller.rb:190] ;n:each, t:NO, cl:true(org.jruby.ir.operands.WrappedIRClosure))		--org.jruby.ir.instructions.CallInstr(	%v_3[2.8 ] %self[2.0 2.8 ] ) 
+CLOSURE BEGIN: v[] k[] m[] message[] %self[2.0,2.8,] ok[] deleted[2.6,] 
+PRINT info for BB 1:
+	Vars Live on Entry:  11 31		
+	Vars Live on Exit:  11 31		
+	outgoing edges:23, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 2 3 11 31		
+	Vars Live on Exit:  11 31		
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%cl_1_0 = load_frame_closure()		--org.jruby.ir.instructions.LoadFrameClosureInstr(	) 
+		k = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		v = recv_pre_reqd_arg()		--org.jruby.ir.instructions.ReceivePreReqdArgInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0 2 8 11 31		
+	Vars Live on Exit:  0 2 3 11 31		
+	outgoing edges:4, 5, 21, 
+	Instructions:
+		line_num(;n: 191)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_3 = call_0o(v ;n:to_s, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	v[2.3 ] ) 
+		%cl_1_4 = copy("1")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_5 = call_1o(%cl_1_3, %cl_1_4 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%cl_1_3[3.1 ] %cl_1_4[3.2 ] ) 
+		b_false(CL1_LBL_2:18, %cl_1_5)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_5[3.3 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0 8 11 31		
+	Vars Live on Exit:  0 2 31		
+	outgoing edges:5, 21, 
+	Instructions:
+		%cl_1_6 = copy(RE:|^delete_(.+)$|RegexpOptions(kcode: NONE, kcodeDefault))		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_7 = call_1o(k, RE:|^delete_(.+)$|RegexpOptions(kcode: NONE, kcodeDefault) ;n:match, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	k[2.2 ] ) 
+		m = copy(%cl_1_7)		--org.jruby.ir.instructions.CopyInstr(	%cl_1_7[4.1 ] ) 
+		%cl_1_5 = copy(%cl_1_7)		--org.jruby.ir.instructions.CopyInstr(	%cl_1_7[4.1 ] ) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0 11 31		
+	Vars Live on Exit:  0 8 11 31		
+	outgoing edges:6, 19, 
+	Instructions:
+		b_false(CL1_LBL_0:76, %cl_1_5)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_5[4.3 3.3 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0 17 31		
+	Vars Live on Exit:  0 11 31		
+	outgoing edges:7, 17, 21, 
+	Instructions:
+		line_num(;n: 192)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_8 = search_const(scope<2> ;name: Message, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%cl_1_9 = call_1f(m, Fixnum:1 ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneFixnumArgNoBlockCallInstr(	m[4.2 ] ) 
+		%cl_1_10 = copy({:'short_id'=>%cl_1_9})		--org.jruby.ir.instructions.CopyInstr(	%cl_1_9[6.2 ] ) 
+		%cl_1_11 = call_1o(%cl_1_8, %cl_1_10 ;n:where, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%cl_1_8[6.1 ] %cl_1_10[6.3 ] ) 
+		%cl_1_12 = call_0o(%cl_1_11 ;n:first, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_1_11[6.4 ] ) 
+		message = copy(%cl_1_12)		--org.jruby.ir.instructions.CopyInstr(	%cl_1_12[6.5 ] ) 
+		b_false(CL1_LBL_3:72, %cl_1_12)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_12[6.5 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0 17 18 31		
+	Vars Live on Exit:  0 17 31		
+	outgoing edges:8, 9, 21, 
+	Instructions:
+		line_num(;n: 193)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		ok = copy(false)		--org.jruby.ir.instructions.CopyInstr(	) 
+		line_num(;n: 194)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_13 = call_0o(message ;n:author_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[6.6 ] ) 
+		%cl_1_14 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%cl_1_15 = call_0o(%cl_1_14 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_1_14[7.4 ] ) 
+		%cl_1_16 = call_1o(%cl_1_13, %cl_1_15 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%cl_1_13[7.3 ] %cl_1_15[7.5 ] ) 
+		b_false(CL1_LBL_5:42, %cl_1_16)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_16[7.6 ] ) 
+PRINT info for BB 8:
+	Vars Live on Entry:  0 17 18 31		
+	Vars Live on Exit:  0 17 31		
+	outgoing edges:10, 21, 
+	Instructions:
+		line_num(;n: 195)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		attr_assign(message, true ;n:deleted_by_author=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	message[6.6 ] ) #<message>#	-- [PUT:message].deleted_by_author 
+		line_num(;n: 196)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		ok = copy(true)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_17 = copy(true)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(CL1_LBL_6:44)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 9:
+	Vars Live on Entry:  0 17 18 31		
+	Vars Live on Exit:  0 17 18 31		
+	outgoing edges:10, 
+	Instructions:
+		%cl_1_17 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 10:
+	Vars Live on Entry:  17 18 31		
+	Vars Live on Exit:  0 17 18 31		
+	outgoing edges:11, 12, 21, 
+	Instructions:
+		line_num(;n: 198)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_18 = call_0o(message ;n:recipient_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[8.1 6.6 ] ) 
+		%cl_1_19 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%cl_1_20 = call_0o(%cl_1_19 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%cl_1_19[10.2 ] ) 
+		%cl_1_21 = call_1o(%cl_1_18, %cl_1_20 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%cl_1_18[10.1 ] %cl_1_20[10.3 ] ) 
+		b_false(CL1_LBL_7:57, %cl_1_21)		--org.jruby.ir.instructions.BFalseInstr(	%cl_1_21[10.4 ] ) 
+PRINT info for BB 11:
+	Vars Live on Entry:  17 18 31		
+	Vars Live on Exit:  17 31		
+	outgoing edges:13, 21, 
+	Instructions:
+		line_num(;n: 199)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		attr_assign(message, true ;n:deleted_by_recipient=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	message[8.1 6.6 ] ) #<message>#	-- [PUT:message].deleted_by_recipient 
+		line_num(;n: 200)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		ok = copy(true)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%cl_1_22 = copy(true)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(CL1_LBL_8:59)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 12:
+	Vars Live on Entry:  17 18 31		
+	Vars Live on Exit:  17 18 31		
+	outgoing edges:13, 
+	Instructions:
+		%cl_1_22 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 13:
+	Vars Live on Entry:  17 31		
+	Vars Live on Exit:  17 18 31		
+	outgoing edges:14, 15, 
+	Instructions:
+		line_num(;n: 203)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		b_false(CL1_LBL_9:68, ok)		--org.jruby.ir.instructions.BFalseInstr(	ok[11.3 8.3 7.1 ] ) 
+PRINT info for BB 14:
+	Vars Live on Entry:  30		
+	Vars Live on Exit:  17 31		
+	outgoing edges:16, 21, 
+	Instructions:
+		line_num(;n: 204)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_23 = call_0o(message ;n:save!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	message[11.1 8.1 6.6 ] ) 
+		line_num(;n: 205)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%cl_1_24 = call_1f(deleted, Fixnum:1 ;n:+, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneFixnumArgNoBlockCallInstr(	deleted[] ) 
+		deleted = copy(%cl_1_24)		--org.jruby.ir.instructions.CopyInstr(	%cl_1_24[14.3 ] ) 
+		jump(CL1_LBL_10:70)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 15:
+	Vars Live on Entry:  30		
+	Vars Live on Exit: 
+	outgoing edges:16, 
+	Instructions:
+		%cl_1_24 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 16:
+	Vars Live on Entry:  30		
+	Vars Live on Exit:  30		
+	outgoing edges:18, 
+	Instructions:
+		jump(CL1_LBL_4:74)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 17:
+	Vars Live on Entry:  30		
+	Vars Live on Exit: 
+	outgoing edges:18, 
+	Instructions:
+		%cl_1_24 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 18:
+	Vars Live on Entry: 
+	Vars Live on Exit:  30		
+	outgoing edges:23, 
+	Instructions:
+		return(%cl_1_24)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_24[17.0 15.0 14.3 ] ) 
+PRINT info for BB 19:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:23, 
+	Instructions:
+		return(nil)		--org.jruby.ir.instructions.ReturnInstr(	) 
+PRINT info for BB 21:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:23, 
+	Instructions:
+		%cl_1_25 = recv_jruby_exc()		--org.jruby.ir.instructions.ReceiveJRubyExceptionInstr(	) 
+		%cl_1_26 = runtime_helper(%cl_1_25 ;method: HANDLE_BREAK_AND_RETURNS_IN_LAMBDA)		--org.jruby.ir.instructions.RuntimeHelperCall(	%cl_1_25[21.0 ] ) 
+		return(%cl_1_26)		--org.jruby.ir.instructions.ReturnInstr(	%cl_1_26[21.1 ] ) 
+PRINT info for BB 23:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+CLOSURE END
+		line_num(;n: 211)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_5 = call_0o(%self ;n:flash, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 2.8 ] ) 
+		%v_6 = copy("Deleted ")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_7 = copy(" message")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_8 = call_1f(deleted, Fixnum:1 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneFixnumArgNoBlockCallInstr(	deleted[2.6 ] ) 
+		b_false(LBL_0:19, %v_8)		--org.jruby.ir.instructions.BFalseInstr(	%v_8[2.14 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0 4 7 8 9 11		
+	Vars Live on Exit:  0 4 7 8 9		
+	outgoing edges:5, 
+	Instructions:
+		%v_9 = copy("")		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_1:22)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0 4 7 8 9 11		
+	Vars Live on Exit:  0 4 7 8 9		
+	outgoing edges:5, 
+	Instructions:
+		%v_10 = copy("s")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_9 = copy(%v_10)		--org.jruby.ir.instructions.CopyInstr(	%v_10[4.0 ] ) 
+PRINT info for BB 5:
+	Vars Live on Entry:  4		
+	Vars Live on Exit:  0 4 7 8 9 11		
+	outgoing edges:7, 
+	Instructions:
+		%v_11 = copy(".")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_12 = build_compound_string(%v_6, #{deleted}, %v_7, #{%v_9}, %v_11)		--org.jruby.ir.instructions.BuildCompoundStringInstr(	%v_6[2.12 ] deleted[2.6 ] %v_7[2.13 ] %v_9[4.1 3.0 ] %v_11[5.0 ] ) 
+		attr_assign(%v_5, :'success', %v_12 ;n:[]=, t:UN, cl:false)		--org.jruby.ir.instructions.AttrAssignInstr(	%v_5[2.11 ] %v_12[5.1 ] ) #<%v_5>#	-- [PUT:%v_5].[] 
+		line_num(;n: 213)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_13 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_14 = call_0o(%v_13 ;n:update_unread_message_count!, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_13[5.4 ] ) 
+		line_num(;n: 215)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_15 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_16 = call_1o(%self, %v_15 ;n:redirect_to, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %v_15[5.7 ] ) 
+		return(%v_16)		--org.jruby.ir.instructions.ReturnInstr(	%v_16[5.8 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry:  4		
+	Vars Live on Exit:  4		
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = keep_as_new
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:4, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 220)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		attr_assign(%v_3, false ;n:has_been_read=, t:UN, cl:false)		--org.jruby.ir.instructions.specialized.OneArgOperandAttrAssignInstr(	%v_3[2.6 ] ) #<%v_3>#	-- [PUT:%v_3].has_been_read 
+		line_num(;n: 221)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_4 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_5 = call_0o(%v_4 ;n:save, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_4[2.9 ] ) 
+		line_num(;n: 223)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_6 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_7 = call_1o(%self, %v_6 ;n:redirect_to, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[2.0 ] %v_6[2.12 ] ) 
+		return(%v_7)		--org.jruby.ir.instructions.ReturnInstr(	%v_7[2.13 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = message_params
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:3, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 229)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_4 = call_1o(%v_3, :'message' ;n:require, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_3[2.6 ] ) 
+		%v_5 = call(%v_4, :'recipient_username', :'subject', :'body' ;n:permit, t:NO, cl:false)		--org.jruby.ir.instructions.CallInstr(	%v_4[2.7 ] ) 
+		return(%v_5)		--org.jruby.ir.instructions.ReturnInstr(	%v_5[2.8 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+
+SET IRMethod, name = find_message
+PRINT info for BB 1:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:14, 2, 
+	Instructions:
+PRINT info for BB 2:
+	Vars Live on Entry:  0 4 6		
+	Vars Live on Exit: 
+	outgoing edges:3, 4, 
+	Instructions:
+		%self = recv_self()		--org.jruby.ir.instructions.ReceiveSelfInstr(	) 
+		%v_0 = load_implicit_closure()		--org.jruby.ir.instructions.LoadImplicitClosureInstr(	) 
+		%current_scope = copy(scope<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		%current_module = copy(module<0>)		--org.jruby.ir.instructions.CopyInstr(	) 
+		check_arity(;req: 0, opt: 0, *r: false, kw: false)		--org.jruby.ir.instructions.CheckArityInstr(	) 
+		line_num(;n: 236)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_3 = search_const(scope<1> ;name: Message, no_priv: false)		--org.jruby.ir.instructions.SearchConstInstr(	) 
+		%v_4 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_5 = call_1o(%v_4, :'message_id' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_4[2.7 ] ) 
+		b_true(LBL_2:14, %v_5)		--org.jruby.ir.instructions.BTrueInstr(	%v_5[2.8 ] ) 
+PRINT info for BB 3:
+	Vars Live on Entry:  0 4 6		
+	Vars Live on Exit:  0 4		
+	outgoing edges:4, 
+	Instructions:
+		%v_6 = call_0o(%self ;n:params, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[2.0 ] ) 
+		%v_7 = call_1o(%v_6, :'id' ;n:[], t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_6[3.0 ] ) 
+		%v_5 = copy(%v_7)		--org.jruby.ir.instructions.CopyInstr(	%v_7[3.1 ] ) 
+PRINT info for BB 4:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0 4 6		
+	outgoing edges:5, 11, 
+	Instructions:
+		%v_8 = copy({:'short_id'=>%v_5})		--org.jruby.ir.instructions.CopyInstr(	%v_5[3.2 2.8 ] ) 
+		%v_9 = call_1o(%v_3, %v_8 ;n:where, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_3[2.6 ] %v_8[4.0 ] ) 
+		%v_10 = call_0o(%v_9 ;n:first, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_9[4.1 ] ) 
+		put_field(%self, %v_10 ;name: @message)		--org.jruby.ir.instructions.PutFieldInstr(	%self[2.0 ] %v_10[4.2 ] ) #<%self>#	-- [PUT:%self].message 
+		b_false(LBL_0:41, %v_10)		--org.jruby.ir.instructions.BFalseInstr(	%v_10[4.2 ] ) 
+PRINT info for BB 5:
+	Vars Live on Entry:  0 16		
+	Vars Live on Exit:  0		
+	outgoing edges:6, 7, 
+	Instructions:
+		line_num(;n: 238)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_11 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[4.3 2.0 ] %self[4.3 2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_12 = call_0o(%v_11 ;n:author_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_11[5.1 ] ) 
+		%v_13 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[4.3 2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_14 = call_0o(%v_13 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_13[5.3 ] ) 
+		%v_15 = call_1o(%v_12, %v_14 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_12[5.2 ] %v_14[5.4 ] ) 
+		b_true(LBL_5:33, %v_15)		--org.jruby.ir.instructions.BTrueInstr(	%v_15[5.5 ] ) 
+PRINT info for BB 6:
+	Vars Live on Entry:  0 16		
+	Vars Live on Exit:  0		
+	outgoing edges:7, 
+	Instructions:
+		%v_16 = get_field(%self ;name: @message)		--org.jruby.ir.instructions.GetFieldInstr(	%self[4.3 2.0 ] %self[4.3 2.0 ] ) #<%self>#	-- [GET:%self].message 
+		%v_17 = call_0o(%v_16 ;n:recipient_user_id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_16[6.0 ] ) 
+		%v_18 = get_field(%self ;name: @user)		--org.jruby.ir.instructions.GetFieldInstr(	%self[4.3 2.0 ] %self[2.0 ] ) #<%self>#	-- [GET:%self].user 
+		%v_19 = call_0o(%v_18 ;n:id, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%v_18[6.2 ] ) 
+		%v_20 = call_1o(%v_17, %v_19 ;n:==, t:NO, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%v_17[6.1 ] %v_19[6.3 ] ) 
+		%v_15 = copy(%v_20)		--org.jruby.ir.instructions.CopyInstr(	%v_20[6.4 ] ) 
+PRINT info for BB 7:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0 16		
+	outgoing edges:8, 9, 
+	Instructions:
+		b_false(LBL_3:37, %v_15)		--org.jruby.ir.instructions.BFalseInstr(	%v_15[6.5 5.5 ] ) 
+PRINT info for BB 8:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:14, 
+	Instructions:
+		line_num(;n: 240)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		return(true)		--org.jruby.ir.instructions.ReturnInstr(	) 
+PRINT info for BB 9:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:12, 
+	Instructions:
+		%v_21 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+		jump(LBL_1:43)		--org.jruby.ir.instructions.JumpInstr(	) 
+PRINT info for BB 11:
+	Vars Live on Entry:  0		
+	Vars Live on Exit:  0		
+	outgoing edges:12, 
+	Instructions:
+		%v_21 = copy(nil)		--org.jruby.ir.instructions.CopyInstr(	) 
+PRINT info for BB 12:
+	Vars Live on Entry: 
+	Vars Live on Exit:  0		
+	outgoing edges:14, 
+	Instructions:
+		line_num(;n: 244)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_22 = call_0o(%self ;n:flash, t:VA, cl:false)		--org.jruby.ir.instructions.specialized.ZeroOperandArgNoBlockCallInstr(	%self[4.3 2.0 ] ) 
+		%v_23 = copy("Could not find message.")		--org.jruby.ir.instructions.CopyInstr(	) 
+		attr_assign(%v_22, :'error', %v_23 ;n:[]=, t:UN, cl:false)		--org.jruby.ir.instructions.AttrAssignInstr(	%v_22[12.1 ] %v_23[12.2 ] ) #<%v_22>#	-- [PUT:%v_22].[] 
+		line_num(;n: 245)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		%v_24 = copy("/messages")		--org.jruby.ir.instructions.CopyInstr(	) 
+		%v_25 = call_1o(%self, %v_24 ;n:redirect_to, t:FU, cl:false)		--org.jruby.ir.instructions.specialized.OneOperandArgNoBlockCallInstr(	%self[12.1 4.3 2.0 ] %v_24[12.5 ] ) 
+		line_num(;n: 246)		--org.jruby.ir.instructions.LineNumberInstr(	) 
+		return(false)		--org.jruby.ir.instructions.ReturnInstr(	) 
+PRINT info for BB 14:
+	Vars Live on Entry: 
+	Vars Live on Exit: 
+	outgoing edges:
+	Instructions:
+

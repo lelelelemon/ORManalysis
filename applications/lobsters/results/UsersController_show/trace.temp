@@ -1,0 +1,65 @@
+level 0: UsersController . before_filter (params: ) # (returnv: )
+	level 1: ApplicationController . before_filter (params: ) # (returnv: )
+		level 2: ApplicationController . authenticate_user (params: ) # (returnv: )
+			level 3:  [QUERY] User . where	{params: session[:u], } # {returnv: true} # {op: User.SELECT}
+			level 3:  [QUERY] User.where(:session_token => session[:u].to_s) . first	{params: } # {returnv: user} # {op: .SELECT}
+			level 3: User . before_filter (params: ) # (returnv: )
+			level 3: User . is_active? (params: ) # (returnv: true)
+				level 4: User . is_banned? (params: ) # (returnv: )
+			level 1: ApplicationController . increase_traffic_counter (params: ) # (returnv: )
+		level 2: ApplicationController . user_is_spider? (params: ) # (returnv: true)
+		level 2: Keystore . before_filter (params: ) # (returnv: )
+		level 2: Keystore . find_or_create_key_for_update (params: now_i, ) # (returnv: date_kv)
+			level 3:  [QUERY] self.lock(true).where(:key => key) . first	{params: } # {returnv: kv} # {op: .SELECT}
+			level 3:  [QUERY] self.lock(true) . where	{params: key, } # {returnv: } # {op: .SELECT}
+			level 3:  [QUERY] self . lock	{params: true, } # {returnv: } # {op: Keystore.TRANSACTION}
+=====transaction begin=====
+			level 3:  [QUERY] kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+				level 4: Keystore . before_save (params: ) # (returnv: )
+				level 4: Keystore . before_validation (params: ) # (returnv: )
+					level 5:  [QUERY] key . where	{params: } # {returnv: } # {op: .SELECT}
+				level 4: Keystore . before_create (params: ) # (returnv: )
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] traffic_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+=====transaction begin=====
+		level 2:  [QUERY] date_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+	level 1: ApplicationController . require_logged_in_moderator (params: ) # (returnv: )
+		level 2: ApplicationController . require_logged_in_user (params: ) # (returnv: )
+		level 0: UsersController . show (params: ) # (returnv: )
+	level 1:  [QUERY] User . where	{params: params[:username], } # {returnv: } # {op: User.SELECT}
+	level 1:  [QUERY] User.where(:username => params[:username]) . first!	{params: } # {returnv: @showing_user} # {op: .SELECT}
+	level 1: User . is_new? (params: ) # (returnv: true)
+	level 1: User . avatar_url (params: ) # (returnv: )
+	level 1: Hat . before_filter (params: ) # (returnv: )
+	level 1: Hat . to_html_label (params: ) # (returnv: )
+	level 1: User . average_karma (params: ) # (returnv: )
+		level 2: User . stories_submitted_count (params: ) # (returnv: )
+			level 3: Keystore . value_for (params: self, ) # (returnv: )
+				level 4:  [QUERY] self.where(:key => key).first . try	{params: } # {returnv: } # {op: .SELECT}
+				level 4:  [QUERY] self.where(:key => key) . first	{params: } # {returnv: } # {op: .SELECT}
+				level 4:  [QUERY] self . where	{params: key, } # {returnv: } # {op: Keystore.SELECT}
+		level 2: User . comments_posted_count (params: ) # (returnv: )
+	level 1: User . most_common_story_tag (params: ) # (returnv: tag)
+		level 2: Tag . before_filter (params: ) # (returnv: )
+		level 2: Tag . active (params: ) # (returnv: )
+			level 3:  [QUERY] self . where	{params: } # {returnv: } # {op: Tag.SELECT}
+		level 2:  [QUERY] Tag.active.joins(      :stories    ) . where	{params: self, } # {returnv: } # {op: .SELECT}
+		level 2:  [QUERY] Tag.active.joins(      :stories    ).where(      :stories => { :user_id => self.id }    ) . group	{params: } # {returnv: } # {op: .GROUP}
+		level 2:  [QUERY] Tag.active.joins(      :stories    ).where(      :stories => { :user_id => self.id }    ).group(      Tag.arel_table[:id]    ) . order	{params: } # {returnv: } # {op: .SELECT}
+		level 2:  [QUERY] Tag.active.joins(      :stories    ).where(      :stories => { :user_id => self.id }    ).group(      Tag.arel_table[:id]    ).order(      'COUNT(*) desc'    ) . first	{params: } # {returnv: } # {op: .SELECT}
+	level 1: Tag . css_class (params: ) # (returnv: )
+	level 1: User . linkified_about (params: ) # (returnv: )
+	level 1: User . votes_for_others (params: ) # (returnv: )
+		level 2:  [QUERY] self.votes.joins(:story, :comment) . where	{params: } # {returnv: } # {op: .SELECT}
+		level 2:  [QUERY] self.votes.joins(:story, :comment).      where("comments.user_id <> votes.user_id AND " <<        "stories.user_id <> votes.user_id") . order	{params: } # {returnv: } # {op: .SELECT}
+	level 1: Comment . before_filter (params: ) # (returnv: )
+	level 1: Comment . short_id_url (params: ) # (returnv: )
+		level 2: Story . before_filter (params: ) # (returnv: )
+		level 2: Story . short_id_url (params: ) # (returnv: )
+	level 1:  [QUERY] v.comment.user . try	{params: } # {returnv: } # {op: User.SELECT}
+	level 1:  [QUERY] v.comment.user . try	{params: } # {returnv: } # {op: User.SELECT}
+	level 1:  [QUERY] v.story.user . try	{params: } # {returnv: } # {op: User.SELECT}
+	level 1:  [QUERY] v.story.user . try	{params: } # {returnv: } # {op: User.SELECT}

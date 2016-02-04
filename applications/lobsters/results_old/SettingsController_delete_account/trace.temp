@@ -1,0 +1,316 @@
+dir = ../applications/lobsters/
+level 0: SettingsController . before_filter (params: ) # (returnv: )
+	level 1: ApplicationController . before_filter (params: ) # (returnv: )
+		level 2: ApplicationController . authenticate_user (params: ) # (returnv: )
+				level 3:  [QUERY] User . where	{params: session[:u], } # {returnv: true} # {op: User.SELECT}
+				level 3:  [QUERY] User.where(:session_token => session[:u].to_s) . first	{params: } # {returnv: user} # {op: .SELECT}
+			level 3: User . before_filter (params: ) # (returnv: )
+			level 3: User . is_active? (params: ) # (returnv: true)
+				level 4:  +FIELD+ User . deleted_at?	(type: datetime) 
+				level 4: User . is_banned? (params: ) # (returnv: )
+					level 5:  +FIELD+ User . banned_at?	(type: datetime) 
+					level 3:  +FIELD+ User . id	(type: integer) 
+					level 3:  +FIELD+ User . username	(type: string) 
+				level 1: ApplicationController . increase_traffic_counter (params: ) # (returnv: )
+		level 2: ApplicationController . user_is_spider? (params: ) # (returnv: true)
+			level 2:  [QUERY] Keystore . transaction	{params: } # {returnv: } # {op: Keystore.TXN}
+		level 2: Keystore . before_filter (params: ) # (returnv: )
+		level 2: Keystore . find_or_create_key_for_update (params: now_i, ) # (returnv: date_kv)
+				level 3:  [QUERY] self . lock	{params: true, } # {returnv: } # {op: Keystore.TRANSACTION}
+				level 3:  [QUERY] self.lock(true) . where	{params: key, } # {returnv: } # {op: .SELECT}
+=====transaction begin=====
+				level 3:  [QUERY] kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+				level 4: Keystore . before_save (params: ) # (returnv: )
+				level 4: Keystore . before_validation (params: ) # (returnv: )
+					level 5:  +FIELD+ Keystore . key	(type: string) 
+					level 5:  [QUERY] self . where	{params: } # {returnv: } # {op: Keystore.SELECT}
+				level 4: Keystore . before_create (params: ) # (returnv: )
+=====transaction end=====
+					level 2:  +FIELD+ Keystore . value	(type: integer) 
+=====transaction begin=====
+					level 2:  [QUERY] traffic_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+=====transaction begin=====
+					level 2:  [QUERY] date_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+	level 1: ApplicationController . require_logged_in_user (params: ) # (returnv: )
+	level 0: SettingsController . delete_account (params: ) # (returnv: )
+		level 1:  [QUERY] @user . try	{params: } # {returnv: true} # {op: User.SELECT}
+	level 1: User . delete! (params: ) # (returnv: )
+		level 2:  [QUERY] User . transaction	{params: } # {returnv: } # {op: User.TXN}
+		level 2: Comment . before_filter (params: ) # (returnv: )
+		level 2: Comment . delete_for_user (params: self, ) # (returnv: )
+			level 3:  +FIELD+ User . is_moderator?	(type: boolean) 
+			level 3:  +FIELD+ User . id	(type: integer) 
+			level 3:  +FIELD+ Comment . user_id	(type: integer) 
+				level 3:  +FIELD+ Comment . id	(type: integer) 
+				level 3:  +FIELD+ User . id	(type: integer) 
+=====transaction begin=====
+				level 3:  [QUERY] m . save	{params: } # {returnv: } # {op: Moderation.INSERT}
+				level 4: Moderation . before_filter (params: ) # (returnv: )
+				level 4: Moderation . before_save (params: ) # (returnv: )
+				level 4: Moderation . before_validation (params: ) # (returnv: )
+				level 4: Moderation . before_create (params: ) # (returnv: )
+					level 5: Moderation . send_message_to_moderated (params: ) # (returnv: )
+							level 6:  +FIELD+ Moderation . moderator_user_id	(type: integer) 
+							level 6:  +FIELD+ Moderation . story	(type: integer) 
+							level 6:  +FIELD+ Moderation . story	(type: integer) 
+							level 6:  +FIELD+ Story . user_id	(type: integer) 
+							level 6:  +FIELD+ Moderation . story	(type: integer) 
+							level 6:  +FIELD+ Story . title	(type: string) 
+							level 6:  +FIELD+ Moderation . story	(type: integer) 
+						level 6: Story . before_filter (params: ) # (returnv: )
+						level 6: Story . comments_url (params: ) # (returnv: )
+							level 7: Story . short_id_url (params: ) # (returnv: )
+								level 8:  +FIELD+ Story . short_id	(type: string) 
+							level 7: Story . title_as_url (params: ) # (returnv: )
+								level 8:  +FIELD+ Story . title	(type: string) 
+								level 6:  +FIELD+ Moderation . action	(type: text) 
+								level 6:  +FIELD+ Moderation . reason	(type: text) 
+								level 6:  +FIELD+ Message . body	(type: text) 
+								level 6:  +FIELD+ Moderation . reason	(type: text) 
+								level 6:  +FIELD+ Moderation . comment	(type: integer) 
+								level 6:  +FIELD+ Moderation . comment	(type: integer) 
+								level 6:  +FIELD+ Comment . user_id	(type: integer) 
+								level 6:  +FIELD+ Moderation . comment	(type: integer) 
+								level 6:  +FIELD+ Moderation . story	(type: integer) 
+								level 6:  +FIELD+ Story . title	(type: string) 
+								level 6:  +FIELD+ Moderation . comment	(type: integer) 
+								level 6:  +FIELD+ Moderation . story	(type: integer) 
+								level 6:  +FIELD+ Moderation . comment	(type: integer) 
+								level 6:  +FIELD+ Moderation . comment	(type: integer) 
+								level 6:  +FIELD+ Moderation . reason	(type: text) 
+								level 6:  +FIELD+ Message . body	(type: text) 
+								level 6:  +FIELD+ Moderation . reason	(type: text) 
+								level 6:  +FIELD+ Message . body	(type: text) 
+=====transaction begin=====
+								level 6:  [QUERY] m . save	{params: } # {returnv: } # {op: Message.INSERT}
+							level 7: Message . before_filter (params: ) # (returnv: )
+							level 7: Message . before_save (params: ) # (returnv: )
+								level 8: Message . update_unread_counts (params: ) # (returnv: )
+									level 9: User . update_unread_message_count! (params: ) # (returnv: )
+										level 10:  +FIELD+ User . id	(type: integer) 
+										level 10: Message . unread (params: ) # (returnv: )
+											level 11:  [QUERY] self . where	{params: } # {returnv: } # {op: Message.SELECT}
+											level 10:  [QUERY] self.received_messages.unread . count	{params: } # {returnv: } # {op: .SELECT}
+										level 10: Keystore . put (params: self, self, ) # (returnv: )
+=====transaction begin=====
+												level 11:  [QUERY] Keystore.connection . execute	{params: Keystore, } # {returnv: } # {op: .INSERT}
+=====transaction end=====
+=====transaction begin=====
+												level 11:  [QUERY] Keystore.connection . execute	{params: Keystore, } # {returnv: } # {op: .INSERT}
+=====transaction end=====
+=====transaction begin=====
+												level 11:  [QUERY] kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+=====transaction end=====
+								level 8: Message . check_for_both_deleted (params: ) # (returnv: )
+									level 9:  +FIELD+ Message . deleted_by_author?	(type: boolean) 
+									level 9:  +FIELD+ Message . deleted_by_recipient?	(type: boolean) 
+							level 7: Message . before_validation (params: ) # (returnv: )
+								level 8:  [QUERY] self . where	{params: } # {returnv: } # {op: Message.SELECT}
+									level 8:  +FIELD+ Message . subject	(type: string) 
+									level 8:  +FIELD+ Message . body	(type: text) 
+								level 8: Message . assign_short_id (params: ) # (returnv: )
+									level 9: ShortId . before_filter (params: ) # (returnv: )
+									level 9: ShortId . generate (params: ) # (returnv: self.short_id)
+										level 10: ShortId . candidate_id (params: ) # (returnv: generated_id)
+							level 7: Message . before_create (params: ) # (returnv: )
+								level 8: Message . deliver_email_notifications (params: ) # (returnv: )
+									level 9:  +FIELD+ User . username	(type: string) 
+									level 9:  +FIELD+ Message . subject	(type: string) 
+									level 9: Message . plaintext_body (params: ) # (returnv: )
+										level 10:  +FIELD+ Message . body	(type: text) 
+									level 9: Message . url (params: ) # (returnv: )
+										level 10:  +FIELD+ Message . short_id	(type: string) 
+										level 9:  +FIELD+ User . username	(type: string) 
+									level 9: User . pushover! (params: Rails, ) # (returnv: )
+										level 10:  +FIELD+ User . pushover_user_key	(type: string) 
+										level 10:  +FIELD+ User . pushover_user_key	(type: string) 
+=====transaction end=====
+=====transaction end=====
+=====transaction begin=====
+										level 3:  [QUERY] self . save	{params: false, } # {returnv: } # {op: Comment.INSERT}
+				level 4: Comment . before_save (params: ) # (returnv: )
+				level 4: Comment . before_validation (params: ) # (returnv: )
+				level 4: Comment . before_create (params: ) # (returnv: )
+					level 5: Comment . record_initial_upvote (params: ) # (returnv: )
+						level 6:  +FIELD+ Comment . story_id	(type: integer) 
+						level 6:  +FIELD+ Comment . id	(type: integer) 
+						level 6:  +FIELD+ Comment . user_id	(type: integer) 
+						level 6: Vote . before_filter (params: ) # (returnv: )
+						level 6: Vote . vote_thusly_on_story_or_comment_for_user_because (params: self, self, self, nil, false, ) # (returnv: )
+							level 7:  [QUERY] Vote . where	{params: user_id, story_id, comment_id, } # {returnv: } # {op: Vote.SELECT}
+							level 7:  [QUERY] Vote.where(:user_id => user_id, :story_id => story_id,      :comment_id => comment_id) . first_or_initialize	{params: } # {returnv: v} # {op: .SELECT}
+							level 7:  +FIELD+ Vote . vote	(type: integer) 
+							level 7:  [QUERY] Vote . transaction	{params: } # {returnv: } # {op: Vote.TXN}
+							level 7:  +FIELD+ Vote . vote	(type: integer) 
+							level 7:  +FIELD+ Vote . vote	(type: integer) 
+=====transaction begin=====
+								level 7:  [QUERY] v . new_record?	{params: } # {returnv: true} # {op: Vote.INSERT}
+								level 8: Vote . before_save (params: ) # (returnv: )
+								level 8: Vote . before_validation (params: ) # (returnv: )
+								level 8: Vote . before_create (params: ) # (returnv: )
+=====transaction end=====
+									level 7:  +FIELD+ Vote . vote	(type: integer) 
+									level 7:  +FIELD+ Vote . vote	(type: integer) 
+=====transaction begin=====
+									level 7:  [QUERY] v . save!	{params: } # {returnv: } # {op: Vote.INSERT}
+=====transaction end=====
+									level 7:  +FIELD+ Vote . comment_id	(type: integer) 
+									level 7:  +FIELD+ Vote . comment_id	(type: integer) 
+									level 7:  [QUERY] Comment . find	{params: v, } # {returnv: c} # {op: Comment.SELECT}
+=====transaction begin=====
+									level 7:  [QUERY] User . update_counters	{params: } # {returnv: } # {op: User.UPDATE}
+								level 8: User . before_save (params: ) # (returnv: )
+									level 9: User . check_session_token (params: ) # (returnv: )
+										level 10:  +FIELD+ User . session_token	(type: string) 
+								level 8: User . before_validation (params: ) # (returnv: )
+									level 9:  +FIELD+ User . email	(type: string) 
+										level 9:  +FIELD+ User . username	(type: string) 
+										level 9:  +FIELD+ User . username	(type: string) 
+=====transaction end=====
+							level 7: Comment . give_upvote_or_downvote_and_recalculate_confidence! (params: upvote, downvote, ) # (returnv: )
+								level 8: Comment . calculated_confidence (params: ) # (returnv: )
+									level 9:  +FIELD+ Comment . upvotes	(type: integer) 
+									level 9:  +FIELD+ Comment . downvotes	(type: integer) 
+									level 9:  +FIELD+ Comment . upvotes	(type: integer) 
+									level 8:  +FIELD+ Comment . id	(type: integer) 
+=====transaction begin=====
+									level 8:  [QUERY] Comment.connection . execute	{params: Comment, } # {returnv: } # {op: .UPDATE}
+=====transaction end=====
+									level 8:  +FIELD+ Comment . story	(type: integer) 
+								level 8: Story . recalculate_hotness! (params: ) # (returnv: )
+									level 9: Story . calculated_hotness (params: ) # (returnv: )
+											level 10:  [QUERY] self.tags . select	{params: } # {returnv: } # {op: Tag.SELECT}
+											level 10:  +FIELD+ Story . user_id	(type: integer) 
+											level 10:  [QUERY] self.comments . where	{params: self, } # {returnv: } # {op: Comment.SELECT}
+											level 10:  [QUERY] self.comments.where("user_id <> ?", self.user_id) . select	{params: } # {returnv: } # {op: .SELECT}
+										level 10: Story . score (params: ) # (returnv: )
+											level 11:  +FIELD+ Story . upvotes	(type: integer) 
+											level 11:  +FIELD+ Story . downvotes	(type: integer) 
+											level 10:  +FIELD+ Story . created_at	(type: datetime) 
+											level 7:  +FIELD+ Vote . story_id	(type: integer) 
+											level 7:  [QUERY] Story . find	{params: v, } # {returnv: s} # {op: Story.SELECT}
+=====transaction begin=====
+											level 7:  [QUERY] User . update_counters	{params: } # {returnv: } # {op: User.UPDATE}
+=====transaction end=====
+							level 7: Story . give_upvote_or_downvote_and_recalculate_hotness! (params: upvote, downvote, ) # (returnv: )
+									level 8:  +FIELD+ Story . id	(type: integer) 
+=====transaction begin=====
+									level 8:  [QUERY] Story.connection . execute	{params: Story, } # {returnv: } # {op: .UPDATE}
+=====transaction end=====
+									level 6:  +FIELD+ Comment . story	(type: integer) 
+						level 6: Story . update_comments_count! (params: ) # (returnv: )
+							level 7: Story . merged_comments (params: ) # (returnv: )
+								level 8:  [QUERY] Story . select	{params: } # {returnv: } # {op: Story.SELECT}
+								level 8:  +FIELD+ Story . id	(type: integer) 
+								level 8:  [QUERY] Story.select(:id) . where	{params: self, } # {returnv: } # {op: .SELECT}
+								level 8:  +FIELD+ Story . id	(type: integer) 
+								level 8:  [QUERY] Comment . where	{params: Story, } # {returnv: } # {op: Comment.SELECT}
+							level 7: Comment . arrange_for_user (params: nil, ) # (returnv: comments)
+								level 8:  [QUERY] self . order	{params: } # {returnv: } # {op: Comment.SELECT}
+								level 8:  +FIELD+ Comment . id	(type: integer) 
+								level 8: Comment . is_gone? (params: ) # (returnv: true)
+									level 9:  +FIELD+ Comment . is_deleted?	(type: boolean) 
+									level 9:  +FIELD+ Comment . is_moderated?	(type: boolean) 
+									level 8:  +FIELD+ User . is_moderator?	(type: boolean) 
+									level 8:  +FIELD+ Comment . user_id	(type: integer) 
+									level 8:  +FIELD+ User . id	(type: integer) 
+									level 8:  +FIELD+ Comment . is_moderated?	(type: boolean) 
+									level 7:  [QUERY] comments . count	{params: } # {returnv: self.comments_count} # {op: Comment.SELECT}
+					level 5: Comment . mark_submitter (params: ) # (returnv: )
+						level 6:  +FIELD+ Comment . user_id	(type: integer) 
+						level 6: Keystore . increment_value_for (params: self, ) # (returnv: )
+							level 7: Keystore . incremented_value_for (params: key, amount, ) # (returnv: )
+								level 8:  [QUERY] Keystore . transaction	{params: } # {returnv: } # {op: Keystore.TXN}
+=====transaction begin=====
+								level 8:  [QUERY] Keystore.connection . execute	{params: Keystore, } # {returnv: } # {op: .INSERT}
+=====transaction end=====
+=====transaction begin=====
+								level 8:  [QUERY] Keystore.connection . execute	{params: Keystore, } # {returnv: } # {op: .INSERT}
+=====transaction end=====
+=====transaction begin=====
+								level 8:  [QUERY] Keystore.connection . execute	{params: Keystore, } # {returnv: } # {op: .INSERT}
+=====transaction end=====
+=====transaction begin=====
+								level 8:  [QUERY] kv . save!	{params: } # {returnv: } # {op: .INSERT}
+=====transaction end=====
+								level 8: Keystore . value_for (params: key, ) # (returnv: )
+									level 9:  [QUERY] self . where	{params: key, } # {returnv: } # {op: Keystore.SELECT}
+									level 9:  [QUERY] self.where(:key => key) . first	{params: } # {returnv: } # {op: .SELECT}
+					level 5: Comment . deliver_reply_notifications (params: ) # (returnv: )
+						level 6:  +FIELD+ Comment . parent_comment_id	(type: integer) 
+						level 6:  +FIELD+ Comment . parent_comment	(type: integer) 
+						level 6:  [QUERY] self.parent_comment . try	{params: } # {returnv: u} # {op: .SELECT}
+						level 6:  +FIELD+ User . id	(type: integer) 
+						level 6:  +FIELD+ Comment . user	(type: integer) 
+						level 6:  +FIELD+ User . id	(type: integer) 
+						level 6:  +FIELD+ User . email_replies?	(type: boolean) 
+						level 6: CommentsController . before_filter (params: ) # (returnv: )
+							level 7: ApplicationController . find_user_from_rss_token (params: ) # (returnv: )
+								level 8:  [QUERY] User . where	{params: params[:token], } # {returnv: } # {op: User.SELECT}
+								level 8:  [QUERY] User.where(:rss_token => params[:token].to_s) . first	{params: } # {returnv: @user} # {op: .SELECT}
+							level 7: ApplicationController . require_logged_in_user_or_400 (params: ) # (returnv: )
+							level 6: CommentsController . reply (params: self, u, ) # (returnv: )
+							level 7: CommentsController . find_comment (params: ) # (returnv: parent_comment)
+									level 8:  [QUERY] Comment . where	{params: params[:id], } # {returnv: } # {op: Comment.SELECT}
+									level 8:  [QUERY] Comment.where(:short_id => params[:id]) . first	{params: } # {returnv: comment} # {op: .SELECT}
+									level 8:  +FIELD+ User . id	(type: integer) 
+									level 8:  +FIELD+ Comment . story_id	(type: integer) 
+									level 8:  +FIELD+ Comment . id	(type: integer) 
+									level 8:  [QUERY] Vote . where	{params: @user, comment, comment, } # {returnv: } # {op: Vote.SELECT}
+									level 8:  [QUERY] Vote.where(:user_id => @user.id,        :story_id => comment.story_id, :comment_id => comment.id) . first	{params: } # {returnv: comment.current_vote} # {op: .SELECT}
+								level 7:  +FIELD+ Comment . short_id	(type: string) 
+								level 7:  +FIELD+ Comment . short_id	(type: string) 
+								level 7:  +FIELD+ Comment . short_id	(type: string) 
+								level 7:  +FIELD+ Comment . parent_comment	(type: integer) 
+								level 7:  +FIELD+ Comment . parent_comment	(type: integer) 
+								level 7:  +FIELD+ Comment . short_id	(type: string) 
+								level 7:  +FIELD+ Comment . comment	(type: text) 
+=====transaction begin=====
+								level 7:  [QUERY] comment . new_record?	{params: } # {returnv: } # {op: Comment.INSERT}
+=====transaction end=====
+								level 7:  +FIELD+ Comment . parent_comment_id	(type: integer) 
+								level 7:  +FIELD+ Comment . hat_id	(type: integer) 
+								level 6:  +FIELD+ User . email	(type: string) 
+								level 6:  +FIELD+ User . pushover_replies?	(type: boolean) 
+								level 6:  +FIELD+ Comment . user	(type: integer) 
+								level 6:  +FIELD+ User . username	(type: string) 
+								level 6:  +FIELD+ Comment . story	(type: integer) 
+								level 6:  +FIELD+ Story . title	(type: string) 
+						level 6: Comment . plaintext_comment (params: ) # (returnv: )
+							level 7:  +FIELD+ Comment . comment	(type: text) 
+						level 6: Comment . url (params: ) # (returnv: )
+							level 7:  +FIELD+ Comment . story	(type: integer) 
+							level 7:  +FIELD+ Comment . short_id	(type: string) 
+							level 7:  +FIELD+ Comment . short_id	(type: string) 
+							level 6:  +FIELD+ Comment . user	(type: integer) 
+							level 6:  +FIELD+ User . username	(type: string) 
+					level 5: Comment . deliver_mention_notifications (params: ) # (returnv: )
+						level 6:  [QUERY] User . where	{params: mention, } # {returnv: true} # {op: User.SELECT}
+						level 6:  [QUERY] User.where(:username => mention) . first	{params: } # {returnv: u} # {op: .SELECT}
+						level 6:  +FIELD+ User . id	(type: integer) 
+						level 6:  +FIELD+ Comment . user	(type: integer) 
+						level 6:  +FIELD+ User . id	(type: integer) 
+						level 6:  +FIELD+ User . email_mentions?	(type: boolean) 
+						level 6:  +FIELD+ User . email	(type: string) 
+						level 6:  +FIELD+ User . pushover_mentions?	(type: boolean) 
+						level 6:  +FIELD+ Comment . user	(type: integer) 
+						level 6:  +FIELD+ User . username	(type: string) 
+						level 6:  +FIELD+ Comment . story	(type: integer) 
+						level 6:  +FIELD+ Story . title	(type: string) 
+						level 6:  +FIELD+ Comment . user	(type: integer) 
+						level 6:  +FIELD+ User . username	(type: string) 
+					level 5: Comment . log_to_countinual (params: ) # (returnv: )
+=====transaction end=====
+						level 3:  +FIELD+ Comment . story	(type: integer) 
+=====transaction begin=====
+			level 2:  [QUERY] m . save	{params: } # {returnv: } # {op: .INSERT}
+=====transaction end=====
+=====transaction begin=====
+			level 2:  [QUERY] m . save	{params: } # {returnv: } # {op: .INSERT}
+=====transaction end=====
+=====transaction begin=====
+			level 2:  [QUERY] self . save!	{params: } # {returnv: } # {op: User.INSERT}
+			level 3: User . before_create (params: ) # (returnv: )
+=====transaction end=====

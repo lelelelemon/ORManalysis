@@ -1,0 +1,522 @@
+dir = ../applications/lobsters/
+Super cannot find upper: User . as_json
+######## BEGIN ########
+Class: Story
+Method unmerged:
+	 ** variables: {}
+	 ++ CALL DB QUERY: self . where (params: , returnv: )
+Method valid?:
+	 ** variables: {}
+Method new:
+	 ** variables: {}
+Method find_similar_by_url:
+	 ** variables: {urls, urls2, s, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: Story.where(:url => urls, :is_expired => false).order("id DESC") . first (params: , returnv: s)
+	 ++ CALL DB QUERY: Story.where(:url => urls, :is_expired => false) . order (params: , , returnv: true)
+	 ++ CALL DB QUERY: Story . where (params: urls, false, , returnv: true)
+Method recalculate_all_hotnesses!:
+	 ** variables: {}
+	 
+	 ++ CALL DB QUERY: Story.all . order (params: , , returnv: )
+	 
+	 
+Method score_sql:
+	 ** variables: {}
+	 
+	 
+Method votes_cast_type:
+	 ** variables: {}
+	 
+	 
+	 
+Method as_json:
+	 ** variables: {h, js, js[k, js[k.keys.first, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: k.values . first (params: , returnv: true)
+	 
+	 ++ CALL DB QUERY: k.keys . first (params: , returnv: )
+	 
+	 
+	 ++ CALL DB QUERY: k.values . first (params: , returnv: )
+	 
+	 ++ CALL DB QUERY: k.keys . first (params: , returnv: )
+	 
+	 ++ CALL DB QUERY: k.values . first (params: , returnv: js[k.keys.first)
+	 
+Method assign_initial_hotness:
+	 ** variables: {self.hotness, }
+	 
+Method assign_short_id_and_upvote:
+	 ** variables: {self.short_id, self.upvotes, }
+	 
+	 
+	 
+Method calculated_hotness:
+	 ** variables: {base, cpoints, order, sign, window, }
+	 
+	 ++ CALL DB QUERY: self.tags . select (params: , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: self.comments.where("user_id <> ?", self.user_id) . select (params: , , , returnv: )
+	 ++ CALL DB QUERY: self.comments . where (params: , self, , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method can_be_seen_by_user?:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+Method check_tags:
+	 ** variables: {u, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: t . new_record? (params: , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method comments_path:
+	 ** variables: {}
+	 
+	 
+Method comments_url:
+	 ** variables: {}
+	 
+	 
+Method description=:
+	 ** variables: {self[:description, self.markeddown_description, }
+	 
+	 
+	 
+Method description_or_story_cache:
+	 ** variables: {s, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method domain:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method domain_search_url:
+	 ** variables: {}
+	 
+Method fetch_story_cache!:
+	 ** variables: {self.story_cache, }
+	 
+	 
+	 
+	 
+Method generated_markeddown_description:
+	 ** variables: {}
+	 
+	 
+Method give_upvote_or_downvote_and_recalculate_hotness!:
+	 ** variables: {self.upvotes, self.downvotes, }
+	 
+	 
+	 ++ CALL DB QUERY: Story.connection . execute (params: Story, , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method hider_count:
+	 ** variables: {@hider_count, }
+	 ++ CALL DB QUERY: HiddenStory.where(:story_id => self.id) . count (params: , returnv: @hider_count)
+	 ++ CALL DB QUERY: HiddenStory . where (params: self, , returnv: )
+	 
+Method html_class_for_user:
+	 ** variables: {c, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: c . join (params: , , returnv: )
+Method is_downvotable?:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+Method is_editable_by_user?:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method is_gone?:
+	 ** variables: {}
+	 
+Method is_hidden_by_user?:
+	 ** variables: {}
+	 ++ CALL DB QUERY: HiddenStory.where(:user_id => user.id, :story_id => self.id) . first (params: , returnv: )
+	 ++ CALL DB QUERY: HiddenStory . where (params: user, self, , returnv: )
+	 
+	 
+Method is_recent?:
+	 ** variables: {}
+	 
+	 
+	 
+Method is_unavailable:
+	 ** variables: {}
+	 
+Method is_unavailable=:
+	 ** variables: {self.unavailable_at, }
+	 
+	 
+	 
+Method is_undeletable_by_user?:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+Method log_moderation:
+	 ** variables: {all_changes, m, m.moderator_user_id, m.story_id, m.action, m.reason, self.is_moderated, }
+	 ++ CALL DB QUERY: self . new_record? (params: , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: all_changes.map{|k,v|        if k == "merged_story_id"          if v[1]            "merged into #{self.merged_into_story.short_id} " <<              "(#{self.merged_into_story.title})"          else            "unmerged from another story"          end        else          "changed #{k} from #{v[0].inspect} to #{v[1].inspect}"        end      } . join (params: , , returnv: m.action)
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: m . save (params: , returnv: )
+Method mailing_list_message_id:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+	 
+Method mark_submitter:
+	 ** variables: {}
+	 
+	 
+Method merge_into_story!:
+	 ** variables: {self.merged_story_id, }
+	 
+	 ++ CALL DB QUERY: self . save! (params: , returnv: )
+Method merged_comments:
+	 ** variables: {}
+	 ++ CALL DB QUERY: Comment . where (params: Story, , returnv: )
+	 ++ CALL DB QUERY: Story.select(:id) . where (params: self, , returnv: )
+	 ++ CALL DB QUERY: Story . select (params: , , returnv: )
+	 
+	 
+Method merge_story_short_id=:
+	 ** variables: {self.merged_story_id, }
+	 
+	 
+	 ++ CALL DB QUERY: Story.where(:short_id => sid) . first (params: , returnv: )
+	 ++ CALL DB QUERY: Story . where (params: sid, , returnv: )
+Method recalculate_hotness!:
+	 ** variables: {}
+	 
+Method record_initial_upvote:
+	 ** variables: {}
+	 
+	 
+	 
+Method fix_bogus_chars:
+	 ** variables: {self.title, }
+	 ++ CALL DB QUERY: self.title.to_s.split("").map{|chr|      if chr.ord == 160        " "      else        chr      end    } . join (params: , , returnv: self.title)
+	 
+	 
+	 
+	 
+	 
+Method score:
+	 ** variables: {}
+	 
+	 
+Method short_id_path:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+	 
+Method short_id_url:
+	 ** variables: {}
+	 
+	 
+	 
+Method sorted_taggings:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method tagging_changes:
+	 ** variables: {old_tags_a, new_tags_a, }
+	 ++ CALL DB QUERY: self.taggings.reject{|tg| tg.new_record? }.map{|tg|      tg.tag.tag } . join (params: , , returnv: old_tags_a)
+	 
+	 
+	 
+	 ++ CALL DB QUERY: tg . new_record? (params: , returnv: )
+	 
+	 
+	 ++ CALL DB QUERY: self.taggings.reject{|tg| tg.marked_for_destruction?      }.map{|tg| tg.tag.tag } . join (params: , , returnv: new_tags_a)
+	 
+	 
+	 
+	 
+	 
+	 
+Method tags_a:
+	 ** variables: {@_tags_a, }
+	 
+	 
+	 
+	 
+Method tags_a=:
+	 ** variables: {t, tg, tg.tag_id, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: Tag.active.where(:tag => tag_name) . first (params: , returnv: t)
+	 ++ CALL DB QUERY: Tag.active . where (params: tag_name, , returnv: true)
+	 
+	 
+	 
+	 
+Method title=:
+	 ** variables: {self[:title, }
+	 
+Method title_as_url:
+	 ** variables: {u, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method to_param:
+	 ** variables: {}
+	 
+Method update_availability:
+	 ** variables: {self.unavailable_at, }
+	 
+	 
+	 
+	 
+	 
+Method update_comments_count!:
+	 ** variables: {comments, self.comments_count, }
+	 
+	 
+	 
+	 ++ CALL DB QUERY: comments . count (params: , returnv: self.comments_count)
+	 
+	 
+Method update_merged_into_story_comments:
+	 ** variables: {}
+	 
+	 
+	 
+Method url=:
+	 ** variables: {m, params, u, self[:url, }
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: params . join (params: , , returnv: )
+	 
+	 
+Method url_is_editable_by_user?:
+	 ** variables: {}
+	 ++ CALL DB QUERY: self . new_record? (params: , returnv: true)
+	 
+	 
+	 
+Method url_or_comments_path:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+Method url_or_comments_url:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+Method vote_summary_for:
+	 ** variables: {r_counts, r_whos, r_counts[v.reason.to_s, r_whos[v.reason.to_s, }
+	 
+	 ++ CALL DB QUERY: Vote.where(:story_id => self.id, :comment_id => nil) . where (params: , , returnv: )
+	 ++ CALL DB QUERY: Vote . where (params: self, nil, , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: r_counts.keys.sort.map{|k|      if k == ""        "+#{r_counts[k]}"      else        "#{r_counts[k]} " +          (Vote::STORY_REASONS[k] || Vote::OLD_STORY_REASONS[k] || k) +          (user && user.is_moderator?? " (#{r_whos[k].join(", ")})" : "")      end    } . join (params: , , returnv: )
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: r_whos[k] . join (params: , , returnv: )
+Method fetched_content:
+	 ** variables: {s, s.timeout, @fetched_content, }
+	 
+	 
+	 
+	 
+	 
+	 
+Method parsed_content:
+	 ** variables: {@parsed_content, }
+	 
+	 
+Method fetched_title:
+	 ** variables: {title, doc, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method fetched_canonical_url:
+	 ** variables: {doc, cu, ucu, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 

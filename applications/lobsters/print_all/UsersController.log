@@ -1,0 +1,64 @@
+dir = ../applications/lobsters/
+Super cannot find upper: User . as_json
+######## BEGIN ########
+Class: UsersController
+Method before_filter:
+	 ** variables: {}
+	 
+	 
+	 
+Method show:
+	 ** variables: {@showing_user, @title, }
+	 ++ CALL DB QUERY: User.where(:username => params[:username]) . first! (params: , returnv: @showing_user)
+	 ++ CALL DB QUERY: User . where (params: params[:username], , returnv: )
+	 
+	 
+	 
+	 
+	 
+Method tree:
+	 ** variables: {@title, @users, @user_count, users, @users_by_parent, @newest, }
+	 
+	 
+	 
+	 ++ CALL DB QUERY: User . order (params: , , returnv: )
+	 
+	 
+	 
+	 ++ CALL DB QUERY: User.where("is_admin = 1 OR is_moderator = 1") . order (params: , , returnv: )
+	 ++ CALL DB QUERY: User . where (params: , , returnv: )
+	 
+	 
+	 ++ CALL DB QUERY: User . order (params: , , returnv: )
+	 
+	 
+	 
+	 ++ CALL DB QUERY: User . order (params: , , returnv: )
+Method invite:
+	 ** variables: {@title, }
+Method ban:
+	 ** variables: {buser, flash[:error, flash[:success, }
+	 ++ CALL DB QUERY: User.where(:username => params[:username]) . first (params: , returnv: buser)
+	 ++ CALL DB QUERY: User . where (params: params[:username], , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method unban:
+	 ** variables: {buser, flash[:error, flash[:success, }
+	 ++ CALL DB QUERY: User.where(:username => params[:username]) . first (params: , returnv: buser)
+	 ++ CALL DB QUERY: User . where (params: params[:username], , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 

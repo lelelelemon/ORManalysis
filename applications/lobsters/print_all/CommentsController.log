@@ -1,0 +1,184 @@
+dir = ../applications/lobsters/
+Super cannot find upper: User . as_json
+######## BEGIN ########
+Class: CommentsController
+Method before_filter:
+	 ** variables: {}
+	 
+	 
+	 
+	 
+	 
+Method create:
+	 ** variables: {story, comment, comment.comment, comment.user, comment.hat_id, pc, comment.parent_comment, comment.current_vote, comment.upvotes, }
+	 ++ CALL DB QUERY: Story.where(:short_id => params[:story_id]) . first (params: , returnv: story)
+	 ++ CALL DB QUERY: Story . where (params: params[:story_id], , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: @user.hats . where (params: params[:hat_id], , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: Comment.where(:story_id => story.id, :short_id =>      params[:parent_comment_short_id]) . first (params: , returnv: pc)
+	 ++ CALL DB QUERY: Comment . where (params: story, params[:parent_comment_short_id], , returnv: true)
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: Comment.where(:story_id => story.id, :user_id => @user.id,      :parent_comment_id => comment.parent_comment_id) . first (params: , returnv: pc)
+	 ++ CALL DB QUERY: Comment . where (params: story, @user, comment, , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: comment . save (params: , returnv: true)
+Method show:
+	 ** variables: {comment, }
+	 
+	 
+Method show_short_id:
+	 ** variables: {comment, }
+	 
+	 
+Method redirect_from_short_id:
+	 ** variables: {comment, }
+	 
+	 
+Method edit:
+	 ** variables: {comment, }
+	 
+	 
+Method reply:
+	 ** variables: {parent_comment, comment, comment.story, comment.parent_comment, }
+	 
+	 
+	 
+Method delete:
+	 ** variables: {comment, }
+	 
+	 
+	 
+Method undelete:
+	 ** variables: {comment, }
+	 
+	 
+	 
+Method update:
+	 ** variables: {comment, comment.comment, comment.hat_id, votes, comment.current_vote, }
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: @user.hats . where (params: params[:hat_id], , returnv: true)
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: comment . save (params: , returnv: true)
+	 
+	 
+	 
+	 
+Method unvote:
+	 ** variables: {comment, }
+	 
+	 
+	 
+	 
+	 
+Method upvote:
+	 ** variables: {comment, }
+	 
+	 
+	 
+	 
+	 
+	 
+Method downvote:
+	 ** variables: {comment, }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method index:
+	 ** variables: {@rss_link, @heading, @title, @cur_url, @page, @comments, @votes, c.current_vote, }
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: Comment.where(      :is_deleted => false, :is_moderated => false    ).order(      "created_at DESC"    ).offset(      (@page - 1) * COMMENTS_PER_PAGE    ).limit(      COMMENTS_PER_PAGE    ) . includes (params: , , , returnv: @comments)
+	 
+	 
+	 ++ CALL DB QUERY: Comment.where(      :is_deleted => false, :is_moderated => false    ) . order (params: , , returnv: )
+	 ++ CALL DB QUERY: Comment . where (params: false, false, , returnv: )
+	 ++ CALL DB QUERY: @comments . where (params: , @user, , returnv: @comments)
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+Method threads:
+	 ** variables: {@showing_user, @heading, @title, @cur_url, thread_ids, comments, comments_by_thread_id, @threads, @votes, c.current_vote, }
+	 
+	 ++ CALL DB QUERY: User.where(:username => params[:user]) . first! (params: , returnv: @showing_user)
+	 ++ CALL DB QUERY: User . where (params: params[:user], , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: Comment.where(      :thread_id => thread_ids    ) . includes (params: , , , returnv: )
+	 ++ CALL DB QUERY: Comment . where (params: thread_ids, , returnv: )
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 ++ CALL DB QUERY: comments.map(&:story_id) . uniq (params: , returnv: )
+	 
+	 
+	 
+	 
+Method preview:
+	 ** variables: {comment.previewing, comment.is_deleted, }
+Method find_comment:
+	 ** variables: {comment, comment.current_vote, }
+	 ++ CALL DB QUERY: Comment.where(:short_id => params[:id]) . first (params: , returnv: comment)
+	 ++ CALL DB QUERY: Comment . where (params: params[:id], , returnv: )
+	 
+	 ++ CALL DB QUERY: Vote.where(:user_id => @user.id,        :story_id => comment.story_id, :comment_id => comment.id) . first (params: , returnv: comment.current_vote)
+	 ++ CALL DB QUERY: Vote . where (params: @user, comment, comment, , returnv: )
+	 
+	 
+	 

@@ -1,0 +1,1947 @@
+digraph StoriesController_downvote {
+StoriesController_before_filter__BB1:f0 -> ApplicationController_before_filter__BB1 [label = ""]; 
+ApplicationController_before_filter__BB1:f0 -> ApplicationController_authenticate_user__BB1 [label = ""]; 
+ApplicationController_authenticate_user__BB5:f0 -> User_before_filter__BB1 [label = ""]; 
+subgraph cluster_User_before_filter {
+	color=red;
+	node [style=filled];
+	label = "User_before_filter"
+	User_before_filter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+ApplicationController_authenticate_user__BB5:f0 -> User_is_active__BB1 [label = ""]; 
+User_is_active__BB1 -> ApplicationController_authenticate_user__BB5:f0 [label = "r: (true)"]; 
+User_is_active__BB3:f0 -> User_is_banned__BB1 [label = ""]; 
+subgraph cluster_User_is_banned {
+	color=red;
+	node [style=filled];
+	label = "User_is_banned?"
+	User_is_banned__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_banned__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_banned__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_banned__BB1 -> User_is_banned__BB3 [ color=blue ];
+	User_is_banned__BB1 -> User_is_banned__BB2 [ color=blue ];
+	User_is_banned__BB2 -> User_is_banned__BB3 [ color=blue ];
+}
+subgraph cluster_User_is_active {
+	color=red;
+	node [style=filled];
+	label = "User_is_active?"
+	User_is_active__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> User.is_banned?</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_is_active__BB1 -> User_is_active__BB5 [ color=blue ];
+	User_is_active__BB1 -> User_is_active__BB2 [ color=blue ];
+	User_is_active__BB2 -> User_is_active__BB3 [ color=blue ];
+	User_is_active__BB2 -> User_is_active__BB4 [ color=blue ];
+	User_is_active__BB3 -> User_is_active__BB4 [ color=blue ];
+	User_is_active__BB4 -> User_is_active__BB5 [ color=blue ];
+}
+subgraph cluster_ApplicationController_authenticate_user {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_authenticate_user"
+	ApplicationController_authenticate_user__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.session</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.session</td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]User.where </td></tr>
+			<tr><td port="f2" border="1" bgcolor="orange"> [QUERY]User.where.first </td></tr>
+			<tr><td port="f3" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> User.is_active?</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB10 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_authenticate_user__BB1 -> ApplicationController_authenticate_user__BB10 [ color=blue ];
+	ApplicationController_authenticate_user__BB1 -> ApplicationController_authenticate_user__BB2 [ color=blue ];
+	ApplicationController_authenticate_user__BB2 -> ApplicationController_authenticate_user__BB3 [ color=blue ];
+	ApplicationController_authenticate_user__BB2 -> ApplicationController_authenticate_user__BB4 [ color=blue ];
+	ApplicationController_authenticate_user__BB3 -> ApplicationController_authenticate_user__BB4 [ color=blue ];
+	ApplicationController_authenticate_user__BB4 -> ApplicationController_authenticate_user__BB5 [ color=blue ];
+	ApplicationController_authenticate_user__BB4 -> ApplicationController_authenticate_user__BB6 [ color=blue ];
+	ApplicationController_authenticate_user__BB5 -> ApplicationController_authenticate_user__BB6 [ color=blue ];
+	ApplicationController_authenticate_user__BB6 -> ApplicationController_authenticate_user__BB7 [ color=blue ];
+	ApplicationController_authenticate_user__BB6 -> ApplicationController_authenticate_user__BB8 [ color=blue ];
+	ApplicationController_authenticate_user__BB7 -> ApplicationController_authenticate_user__BB9 [ color=blue ];
+	ApplicationController_authenticate_user__BB8 -> ApplicationController_authenticate_user__BB9 [ color=blue ];
+	ApplicationController_authenticate_user__BB9 -> ApplicationController_authenticate_user__BB10 [ color=blue ];
+}
+subgraph cluster_ApplicationController_before_filter {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_before_filter"
+	ApplicationController_before_filter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.authenticate_user</td></tr>
+			<tr><td port="f1" border="1"> ApplicationController.increase_traffic_counter</td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+User_is_active__BB3:f0 -> ApplicationController_increase_traffic_counter__BB1 [label = ""]; 
+ApplicationController_increase_traffic_counter__BB2:f0 -> ApplicationController_user_is_spider__BB1 [label = ""]; 
+ApplicationController_user_is_spider__BB1 -> ApplicationController_increase_traffic_counter__BB2:f0 [label = "r: (true)"]; 
+subgraph cluster_ApplicationController_user_is_spider {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_user_is_spider?"
+	ApplicationController_user_is_spider__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.request</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_user_is_spider__BB1 -> ApplicationController_user_is_spider__BB5 [ color=blue ];
+	ApplicationController_user_is_spider__BB1 -> ApplicationController_user_is_spider__BB2 [ color=blue ];
+	ApplicationController_user_is_spider__BB2 -> ApplicationController_user_is_spider__BB3 [ color=blue ];
+	ApplicationController_user_is_spider__BB2 -> ApplicationController_user_is_spider__BB4 [ color=blue ];
+	ApplicationController_user_is_spider__BB3 -> ApplicationController_user_is_spider__BB5 [ color=blue ];
+	ApplicationController_user_is_spider__BB4 -> ApplicationController_user_is_spider__BB5 [ color=blue ];
+}
+ApplicationController_increase_traffic_counter_467677_closure0_BB3:f0 -> Keystore_before_filter_467677_closure0_BB1 [label = ""]; 
+subgraph cluster_Keystore_before_filter {
+	color=red;
+	node [style=filled];
+	label = "Keystore_before_filter"
+	Keystore_before_filter_467677_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+ApplicationController_increase_traffic_counter_467677_closure0_BB3:f0 -> Keystore_find_or_create_key_for_update_467677_closure0_BB1 [label = "now_i, "]; 
+Keystore_find_or_create_key_for_update_467677_closure0_BB1 -> ApplicationController_increase_traffic_counter_467677_closure0_BB3:f0 [label = "r: (date_kv)"]; 
+Keystore_before_save_991125_closure0_closure1_closure2_BB3:f0 -> Keystore_before_save_991125_closure0_closure1_closure2_BB1 [label = ""]; 
+subgraph cluster_Keystore_before_save {
+	color=red;
+	node [style=filled];
+	label = "Keystore_before_save"
+	Keystore_before_save_991125_closure0_closure1_closure2_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Keystore_before_validation_991125_closure0_closure1_closure2_BB3:f0 -> Keystore_before_validation_991125_closure0_closure1_closure2_BB1 [label = ""]; 
+subgraph cluster_Keystore_before_validation {
+	color=red;
+	node [style=filled];
+	label = "Keystore_before_validation"
+	Keystore_before_validation_991125_closure0_closure1_closure2_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]self.where </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Keystore_before_create_991125_closure0_closure1_closure2_BB3:f0 -> Keystore_before_create_991125_closure0_closure1_closure2_BB1 [label = ""]; 
+subgraph cluster_Keystore_before_create {
+	color=red;
+	node [style=filled];
+	label = "Keystore_before_create"
+	Keystore_before_create_991125_closure0_closure1_closure2_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+subgraph cluster_Keystore_find_or_create_key_for_update {
+	color=red;
+	node [style=filled];
+	label = "Keystore_find_or_create_key_for_update"
+	Keystore_find_or_create_key_for_update_467677_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]self.lock </td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]self.lock.where </td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]kv.save! </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Keystore.create!</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB10 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB11 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB12 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB13 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB14 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB15 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB16 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB17 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB18 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Keystore.loop</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB1 -> Keystore_find_or_create_key_for_update_467677_closure0_BB8 [ color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB1 -> Keystore_find_or_create_key_for_update_467677_closure0_BB2 [ color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB2 -> Keystore_find_or_create_key_for_update_467677_closure0_BB4 [ color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB2 -> Keystore_find_or_create_key_for_update_467677_closure0_BB5 [ color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB2 -> Keystore_find_or_create_key_for_update_467677_closure0_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB4 -> Keystore_find_or_create_key_for_update_467677_closure0_BB5 [ color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB5 -> Keystore_find_or_create_key_for_update_467677_closure0_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB5 -> Keystore_find_or_create_key_for_update_467677_closure0_BB8 [ color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB5:f0 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB1 [color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20:f0 -> Keystore_find_or_create_key_for_update_467677_closure0_BB5 [color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB1 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB1 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB2 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB2 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB3 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB3 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB4 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB3 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB5 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB3 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB18 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB4 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB18 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB4 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB5 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB7 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB7 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB9 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB7 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB10 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB7:f0 -> Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB1 [color=blue ];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB6:f0 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB7 [color=blue ];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB1 -> Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB1 -> Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB2 [ color=blue ];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB2 -> Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB3 [ color=blue ];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB3 -> Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB4 [ color=blue ];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB3 -> Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB4 -> Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB6 [ color=blue ];
+	Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB6 -> Keystore_find_or_create_key_for_update_991125_closure0_closure1_closure2_BB1 [color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB9 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB17 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB10 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB11 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB10 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB12 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB10 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB11 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB12 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB11 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB12 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB13 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB12 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB14 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB12 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB13 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB13 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB14 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB15 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB14 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB16 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB15 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB17 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB16 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB18 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB16 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB17 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB18 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20 [ color=blue ];
+	Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB20 -> Keystore_find_or_create_key_for_update_604116_closure0_closure1_BB1 [color=blue ];
+	Keystore_find_or_create_key_for_update_467677_closure0_BB6 -> Keystore_find_or_create_key_for_update_467677_closure0_BB8 [ color=blue ];
+}
+subgraph cluster_ApplicationController_increase_traffic_counter {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_increase_traffic_counter"
+	ApplicationController_increase_traffic_counter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.user_is_spider?</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.params</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	ApplicationController_increase_traffic_counter__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Keystore.find_or_create_key_for_update</td></tr>
+			<tr><td port="f1" border="1"> Keystore.find_or_create_key_for_update</td></tr>
+			<tr><td port="f2" border="1" bgcolor="orange"> [QUERY]traffic_kv.save! </td></tr>
+			<tr><td port="f3" border="1" bgcolor="orange"> [QUERY]date_kv.save! </td></tr>
+			<tr><td port="f4" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Keystore.transaction </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_increase_traffic_counter__BB1 -> ApplicationController_increase_traffic_counter__BB8 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB1 -> ApplicationController_increase_traffic_counter__BB2 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB2 -> ApplicationController_increase_traffic_counter__BB3 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB2 -> ApplicationController_increase_traffic_counter__BB4 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB3 -> ApplicationController_increase_traffic_counter__BB4 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB4 -> ApplicationController_increase_traffic_counter__BB5 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB4 -> ApplicationController_increase_traffic_counter__BB6 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB5 -> ApplicationController_increase_traffic_counter__BB8 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB6 -> ApplicationController_increase_traffic_counter__BB8 [ color=blue ];
+	ApplicationController_increase_traffic_counter__BB6:f0 -> ApplicationController_increase_traffic_counter_467677_closure0_BB1 [color=blue ];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB6:f0 -> ApplicationController_increase_traffic_counter__BB6 [color=blue ];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB1 -> ApplicationController_increase_traffic_counter_467677_closure0_BB6 [ color=blue ];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB1 -> ApplicationController_increase_traffic_counter_467677_closure0_BB2 [ color=blue ];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB2 -> ApplicationController_increase_traffic_counter_467677_closure0_BB3 [ color=blue ];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB3 -> ApplicationController_increase_traffic_counter_467677_closure0_BB4 [ color=blue ];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB3 -> ApplicationController_increase_traffic_counter_467677_closure0_BB6 [ color=blue ];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB4 -> ApplicationController_increase_traffic_counter_467677_closure0_BB6 [ color=blue ];
+	ApplicationController_increase_traffic_counter_467677_closure0_BB6 -> ApplicationController_increase_traffic_counter_467677_closure0_BB1 [color=blue ];
+}
+StoriesController_before_filter__BB1:f2 -> ApplicationController_require_logged_in_user_or_400__BB1 [label = ""]; 
+subgraph cluster_ApplicationController_require_logged_in_user_or_400 {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_require_logged_in_user_or_400"
+	ApplicationController_require_logged_in_user_or_400__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user_or_400__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user_or_400__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user_or_400__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user_or_400__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user_or_400__BB1 -> ApplicationController_require_logged_in_user_or_400__BB6 [ color=blue ];
+	ApplicationController_require_logged_in_user_or_400__BB1 -> ApplicationController_require_logged_in_user_or_400__BB2 [ color=blue ];
+	ApplicationController_require_logged_in_user_or_400__BB2 -> ApplicationController_require_logged_in_user_or_400__BB3 [ color=blue ];
+	ApplicationController_require_logged_in_user_or_400__BB2 -> ApplicationController_require_logged_in_user_or_400__BB4 [ color=blue ];
+	ApplicationController_require_logged_in_user_or_400__BB3 -> ApplicationController_require_logged_in_user_or_400__BB6 [ color=blue ];
+	ApplicationController_require_logged_in_user_or_400__BB4 -> ApplicationController_require_logged_in_user_or_400__BB6 [ color=blue ];
+}
+StoriesController_before_filter__BB1:f3 -> ApplicationController_require_logged_in_user__BB1 [label = ""]; 
+subgraph cluster_ApplicationController_require_logged_in_user {
+	color=red;
+	node [style=filled];
+	label = "ApplicationController_require_logged_in_user"
+	ApplicationController_require_logged_in_user__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.request</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.session</td></tr>
+			<tr><td port="f1" border="1"> ApplicationController.request</td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user__BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user__BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	ApplicationController_require_logged_in_user__BB1 -> ApplicationController_require_logged_in_user__BB9 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB1 -> ApplicationController_require_logged_in_user__BB2 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB2 -> ApplicationController_require_logged_in_user__BB3 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB2 -> ApplicationController_require_logged_in_user__BB4 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB3 -> ApplicationController_require_logged_in_user__BB9 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB4 -> ApplicationController_require_logged_in_user__BB5 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB4 -> ApplicationController_require_logged_in_user__BB6 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB5 -> ApplicationController_require_logged_in_user__BB7 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB6 -> ApplicationController_require_logged_in_user__BB7 [ color=blue ];
+	ApplicationController_require_logged_in_user__BB7 -> ApplicationController_require_logged_in_user__BB9 [ color=blue ];
+}
+StoriesController_before_filter__BB1:f4 -> StoriesController_find_user_story__BB1 [label = ""]; 
+subgraph cluster_StoriesController_find_user_story {
+	color=red;
+	node [style=filled];
+	label = "StoriesController_find_user_story"
+	StoriesController_find_user_story__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_user_story__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_user_story__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.params</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	StoriesController_find_user_story__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.params</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	StoriesController_find_user_story__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Story.where </td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]Story_where(short_id=Iparams[story_id]||params[id]).first </td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_user_story__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.params</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	StoriesController_find_user_story__BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.params</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	StoriesController_find_user_story__BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Story.where </td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]Story_where(short_id=Iparams[story_id]||params[id]).first </td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_user_story__BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_user_story__BB10 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.flash</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_user_story__BB11 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_user_story__BB13 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_user_story__BB1 -> StoriesController_find_user_story__BB13 [ color=blue ];
+	StoriesController_find_user_story__BB1 -> StoriesController_find_user_story__BB2 [ color=blue ];
+	StoriesController_find_user_story__BB2 -> StoriesController_find_user_story__BB3 [ color=blue ];
+	StoriesController_find_user_story__BB2 -> StoriesController_find_user_story__BB6 [ color=blue ];
+	StoriesController_find_user_story__BB3 -> StoriesController_find_user_story__BB4 [ color=blue ];
+	StoriesController_find_user_story__BB3 -> StoriesController_find_user_story__BB5 [ color=blue ];
+	StoriesController_find_user_story__BB4 -> StoriesController_find_user_story__BB5 [ color=blue ];
+	StoriesController_find_user_story__BB5 -> StoriesController_find_user_story__BB9 [ color=blue ];
+	StoriesController_find_user_story__BB6 -> StoriesController_find_user_story__BB7 [ color=blue ];
+	StoriesController_find_user_story__BB6 -> StoriesController_find_user_story__BB8 [ color=blue ];
+	StoriesController_find_user_story__BB7 -> StoriesController_find_user_story__BB8 [ color=blue ];
+	StoriesController_find_user_story__BB8 -> StoriesController_find_user_story__BB9 [ color=blue ];
+	StoriesController_find_user_story__BB9 -> StoriesController_find_user_story__BB10 [ color=blue ];
+	StoriesController_find_user_story__BB9 -> StoriesController_find_user_story__BB11 [ color=blue ];
+	StoriesController_find_user_story__BB10 -> StoriesController_find_user_story__BB13 [ color=blue ];
+	StoriesController_find_user_story__BB11 -> StoriesController_find_user_story__BB13 [ color=blue ];
+}
+subgraph cluster_StoriesController_before_filter {
+	color=red;
+	node [style=filled];
+	label = "StoriesController_before_filter"
+	StoriesController_before_filter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> ApplicationController.increase_traffic_counter</td></tr>
+			<tr><td port="f1" border="1"> ApplicationController.authenticate_user</td></tr>
+			<tr><td port="f2" border="1"> ApplicationController.require_logged_in_user_or_400</td></tr>
+			<tr><td port="f3" border="1"> ApplicationController.require_logged_in_user</td></tr>
+			<tr><td port="f4" border="1"> StoriesController.find_user_story</td></tr>
+			<tr><td port="f5" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+StoriesController_find_user_story__BB10:f0 -> StoriesController_downvote__BB1 [label = ""]; 
+StoriesController_downvote__BB2:f0 -> StoriesController_find_story__BB1 [label = ""]; 
+StoriesController_find_story__BB1 -> StoriesController_downvote__BB2:f0 [label = "r: (story)"]; 
+subgraph cluster_StoriesController_find_story {
+	color=red;
+	node [style=filled];
+	label = "StoriesController_find_story"
+	StoriesController_find_story__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_story__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.params</td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]Story.where </td></tr>
+			<tr><td port="f2" border="1" bgcolor="orange"> [QUERY]Story.where.first </td></tr>
+			<tr><td port="f3" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	StoriesController_find_story__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_story__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_story__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Vote.where </td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]Vote.where.first </td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_story__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_story__BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_story__BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_find_story__BB1 -> StoriesController_find_story__BB8 [ color=blue ];
+	StoriesController_find_story__BB1 -> StoriesController_find_story__BB2 [ color=blue ];
+	StoriesController_find_story__BB2 -> StoriesController_find_story__BB3 [ color=blue ];
+	StoriesController_find_story__BB2 -> StoriesController_find_story__BB4 [ color=blue ];
+	StoriesController_find_story__BB3 -> StoriesController_find_story__BB4 [ color=blue ];
+	StoriesController_find_story__BB4 -> StoriesController_find_story__BB5 [ color=blue ];
+	StoriesController_find_story__BB4 -> StoriesController_find_story__BB6 [ color=blue ];
+	StoriesController_find_story__BB5 -> StoriesController_find_story__BB7 [ color=blue ];
+	StoriesController_find_story__BB6 -> StoriesController_find_story__BB7 [ color=blue ];
+	StoriesController_find_story__BB7 -> StoriesController_find_story__BB8 [ color=blue ];
+}
+StoriesController_downvote__BB12:f1 -> Vote_before_filter__BB1 [label = ""]; 
+subgraph cluster_Vote_before_filter {
+	color=red;
+	node [style=filled];
+	label = "Vote_before_filter"
+	Vote_before_filter__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+StoriesController_downvote__BB12:f1 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB1 [label = "story, nil, @user, params[:reason], "]; 
+Vote_before_save_795869_closure0_BB11:f0 -> Vote_before_save_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_Vote_before_save {
+	color=red;
+	node [style=filled];
+	label = "Vote_before_save"
+	Vote_before_save_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Vote_before_validation_795869_closure0_BB11:f0 -> Vote_before_validation_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_Vote_before_validation {
+	color=red;
+	node [style=filled];
+	label = "Vote_before_validation"
+	Vote_before_validation_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Vote_before_create_795869_closure0_BB11:f0 -> Vote_before_create_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_Vote_before_create {
+	color=red;
+	node [style=filled];
+	label = "Vote_before_create"
+	Vote_before_create_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Vote_before_save_795869_closure0_BB34:f0 -> User_before_save_795869_closure0_BB1 [label = ""]; 
+User_before_save_795869_closure0_BB1:f0 -> User_check_session_token_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_User_check_session_token {
+	color=red;
+	node [style=filled];
+	label = "User_check_session_token"
+	User_check_session_token_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_check_session_token_795869_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_check_session_token_795869_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_check_session_token_795869_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_check_session_token_795869_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	User_check_session_token_795869_closure0_BB1 -> User_check_session_token_795869_closure0_BB6 [ color=blue ];
+	User_check_session_token_795869_closure0_BB1 -> User_check_session_token_795869_closure0_BB2 [ color=blue ];
+	User_check_session_token_795869_closure0_BB2 -> User_check_session_token_795869_closure0_BB3 [ color=blue ];
+	User_check_session_token_795869_closure0_BB2 -> User_check_session_token_795869_closure0_BB4 [ color=blue ];
+	User_check_session_token_795869_closure0_BB3 -> User_check_session_token_795869_closure0_BB6 [ color=blue ];
+	User_check_session_token_795869_closure0_BB4 -> User_check_session_token_795869_closure0_BB6 [ color=blue ];
+}
+subgraph cluster_User_before_save {
+	color=red;
+	node [style=filled];
+	label = "User_before_save"
+	User_before_save_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> User.check_session_token</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Vote_before_validation_795869_closure0_BB34:f0 -> User_before_validation_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_User_before_validation {
+	color=red;
+	node [style=filled];
+	label = "User_before_validation"
+	User_before_validation_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> User.password</td></tr>
+			<tr><td port="f1" border="1"> User.before_validation_do_block</td></tr>
+			<tr><td port="f2" border="1"> User.before_validation_do_block</td></tr>
+			<tr><td port="f3" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB36:f0 -> Comment_before_filter_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_Comment_before_filter {
+	color=red;
+	node [style=filled];
+	label = "Comment_before_filter"
+	Comment_before_filter_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB36:f0 -> Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB1 [label = "upvote, downvote, "]; 
+Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB2:f2 -> Comment_calculated_confidence_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_Comment_calculated_confidence {
+	color=red;
+	node [style=filled];
+	label = "Comment_calculated_confidence"
+	Comment_calculated_confidence_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Comment_calculated_confidence_795869_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Comment_calculated_confidence_795869_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Comment_calculated_confidence_795869_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Comment_calculated_confidence_795869_closure0_BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Comment_calculated_confidence_795869_closure0_BB1 -> Comment_calculated_confidence_795869_closure0_BB7 [ color=blue ];
+	Comment_calculated_confidence_795869_closure0_BB1 -> Comment_calculated_confidence_795869_closure0_BB2 [ color=blue ];
+	Comment_calculated_confidence_795869_closure0_BB2 -> Comment_calculated_confidence_795869_closure0_BB3 [ color=blue ];
+	Comment_calculated_confidence_795869_closure0_BB2 -> Comment_calculated_confidence_795869_closure0_BB4 [ color=blue ];
+	Comment_calculated_confidence_795869_closure0_BB3 -> Comment_calculated_confidence_795869_closure0_BB7 [ color=blue ];
+	Comment_calculated_confidence_795869_closure0_BB4 -> Comment_calculated_confidence_795869_closure0_BB7 [ color=blue ];
+}
+Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB2:f4 -> Story_before_filter_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_Story_before_filter {
+	color=red;
+	node [style=filled];
+	label = "Story_before_filter"
+	Story_before_filter_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+}
+Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB2:f4 -> Story_recalculate_hotness_795869_closure0_BB1 [label = ""]; 
+Story_recalculate_hotness_795869_closure0_BB2:f0 -> Story_calculated_hotness_795869_closure0_BB1 [label = ""]; 
+Story_calculated_hotness_795869_closure0_BB2:f5 -> Story_score_795869_closure0_BB1 [label = ""]; 
+subgraph cluster_Story_score {
+	color=red;
+	node [style=filled];
+	label = "Story_score"
+	Story_score_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_score_795869_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_score_795869_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_score_795869_closure0_BB1 -> Story_score_795869_closure0_BB3 [ color=blue ];
+	Story_score_795869_closure0_BB1 -> Story_score_795869_closure0_BB2 [ color=blue ];
+	Story_score_795869_closure0_BB2 -> Story_score_795869_closure0_BB3 [ color=blue ];
+}
+subgraph cluster_Story_calculated_hotness {
+	color=red;
+	node [style=filled];
+	label = "Story_calculated_hotness"
+	Story_calculated_hotness_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_109470_closure0_closure1_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_109470_closure0_closure1_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_109470_closure0_closure1_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_109470_closure0_closure1_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_109470_closure0_closure1_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_810652_closure0_closure1_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_810652_closure0_closure1_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_810652_closure0_closure1_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_810652_closure0_closure1_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_810652_closure0_closure1_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_625103_closure0_closure1_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_625103_closure0_closure1_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_625103_closure0_closure1_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_625103_closure0_closure1_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_625103_closure0_closure1_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Story.tags</td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]self.tags.select </td></tr>
+			<tr><td port="f2" border="1"> Story.comments</td></tr>
+			<tr><td port="f3" border="1" bgcolor="orange"> [QUERY]self.comments.where </td></tr>
+			<tr><td port="f4" border="1" bgcolor="orange"> [QUERY]self.comments.where.select </td></tr>
+			<tr><td port="f5" border="1"> Story.score</td></tr>
+			<tr><td port="f6" border="1"> Story.score</td></tr>
+			<tr><td port="f7" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Story.score</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB10 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB12 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_calculated_hotness_795869_closure0_BB1 -> Story_calculated_hotness_795869_closure0_BB12 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB1 -> Story_calculated_hotness_795869_closure0_BB2 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB2 -> Story_calculated_hotness_795869_closure0_BB3 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB2 -> Story_calculated_hotness_795869_closure0_BB4 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB2:f1 -> Story_calculated_hotness_109470_closure0_closure1_BB1 [color=blue ];
+	Story_calculated_hotness_109470_closure0_closure1_BB6:f0 -> Story_calculated_hotness_795869_closure0_BB2 [color=blue ];
+	Story_calculated_hotness_109470_closure0_closure1_BB1 -> Story_calculated_hotness_109470_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_109470_closure0_closure1_BB1 -> Story_calculated_hotness_109470_closure0_closure1_BB2 [ color=blue ];
+	Story_calculated_hotness_109470_closure0_closure1_BB2 -> Story_calculated_hotness_109470_closure0_closure1_BB3 [ color=blue ];
+	Story_calculated_hotness_109470_closure0_closure1_BB3 -> Story_calculated_hotness_109470_closure0_closure1_BB4 [ color=blue ];
+	Story_calculated_hotness_109470_closure0_closure1_BB3 -> Story_calculated_hotness_109470_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_109470_closure0_closure1_BB4 -> Story_calculated_hotness_109470_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_109470_closure0_closure1_BB6 -> Story_calculated_hotness_109470_closure0_closure1_BB1 [color=blue ];
+	Story_calculated_hotness_795869_closure0_BB2:f2 -> Story_calculated_hotness_810652_closure0_closure1_BB1 [color=blue ];
+	Story_calculated_hotness_810652_closure0_closure1_BB6:f0 -> Story_calculated_hotness_795869_closure0_BB2 [color=blue ];
+	Story_calculated_hotness_810652_closure0_closure1_BB1 -> Story_calculated_hotness_810652_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_810652_closure0_closure1_BB1 -> Story_calculated_hotness_810652_closure0_closure1_BB2 [ color=blue ];
+	Story_calculated_hotness_810652_closure0_closure1_BB2 -> Story_calculated_hotness_810652_closure0_closure1_BB3 [ color=blue ];
+	Story_calculated_hotness_810652_closure0_closure1_BB3 -> Story_calculated_hotness_810652_closure0_closure1_BB4 [ color=blue ];
+	Story_calculated_hotness_810652_closure0_closure1_BB3 -> Story_calculated_hotness_810652_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_810652_closure0_closure1_BB4 -> Story_calculated_hotness_810652_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_810652_closure0_closure1_BB6 -> Story_calculated_hotness_810652_closure0_closure1_BB1 [color=blue ];
+	Story_calculated_hotness_795869_closure0_BB2:f5 -> Story_calculated_hotness_625103_closure0_closure1_BB1 [color=blue ];
+	Story_calculated_hotness_625103_closure0_closure1_BB6:f0 -> Story_calculated_hotness_795869_closure0_BB2 [color=blue ];
+	Story_calculated_hotness_625103_closure0_closure1_BB1 -> Story_calculated_hotness_625103_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_625103_closure0_closure1_BB1 -> Story_calculated_hotness_625103_closure0_closure1_BB2 [ color=blue ];
+	Story_calculated_hotness_625103_closure0_closure1_BB2 -> Story_calculated_hotness_625103_closure0_closure1_BB3 [ color=blue ];
+	Story_calculated_hotness_625103_closure0_closure1_BB3 -> Story_calculated_hotness_625103_closure0_closure1_BB4 [ color=blue ];
+	Story_calculated_hotness_625103_closure0_closure1_BB3 -> Story_calculated_hotness_625103_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_625103_closure0_closure1_BB4 -> Story_calculated_hotness_625103_closure0_closure1_BB6 [ color=blue ];
+	Story_calculated_hotness_625103_closure0_closure1_BB6 -> Story_calculated_hotness_625103_closure0_closure1_BB1 [color=blue ];
+	Story_calculated_hotness_795869_closure0_BB3 -> Story_calculated_hotness_795869_closure0_BB8 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB4 -> Story_calculated_hotness_795869_closure0_BB5 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB4 -> Story_calculated_hotness_795869_closure0_BB6 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB5 -> Story_calculated_hotness_795869_closure0_BB7 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB6 -> Story_calculated_hotness_795869_closure0_BB7 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB7 -> Story_calculated_hotness_795869_closure0_BB8 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB8 -> Story_calculated_hotness_795869_closure0_BB9 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB8 -> Story_calculated_hotness_795869_closure0_BB10 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB9 -> Story_calculated_hotness_795869_closure0_BB10 [ color=blue ];
+	Story_calculated_hotness_795869_closure0_BB10 -> Story_calculated_hotness_795869_closure0_BB12 [ color=blue ];
+}
+subgraph cluster_Story_recalculate_hotness {
+	color=red;
+	node [style=filled];
+	label = "Story_recalculate_hotness!"
+	Story_recalculate_hotness_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_recalculate_hotness_795869_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Story.calculated_hotness</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_recalculate_hotness_795869_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_recalculate_hotness_795869_closure0_BB1 -> Story_recalculate_hotness_795869_closure0_BB3 [ color=blue ];
+	Story_recalculate_hotness_795869_closure0_BB1 -> Story_recalculate_hotness_795869_closure0_BB2 [ color=blue ];
+	Story_recalculate_hotness_795869_closure0_BB2 -> Story_recalculate_hotness_795869_closure0_BB3 [ color=blue ];
+}
+subgraph cluster_Comment_give_upvote_or_downvote_and_recalculate_confidence {
+	color=red;
+	node [style=filled];
+	label = "Comment_give_upvote_or_downvote_and_recalculate_confidence!"
+	Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Comment.connection</td></tr>
+			<tr><td port="f1" border="1"> Comment.table_name</td></tr>
+			<tr><td port="f2" border="1"> Comment.calculated_confidence</td></tr>
+			<tr><td port="f3" border="1" bgcolor="orange"> [QUERY]Comment.connection.execute </td></tr>
+			<tr><td port="f4" border="1"> Story.recalculate_hotness!</td></tr>
+			<tr><td port="f5" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB1 -> Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB3 [ color=blue ];
+	Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB1 -> Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB2 [ color=blue ];
+	Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB2 -> Comment_give_upvote_or_downvote_and_recalculate_confidence_795869_closure0_BB3 [ color=blue ];
+}
+Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB40:f0 -> Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB1 [label = "upvote, downvote, "]; 
+subgraph cluster_Story_give_upvote_or_downvote_and_recalculate_hotness {
+	color=red;
+	node [style=filled];
+	label = "Story_give_upvote_or_downvote_and_recalculate_hotness!"
+	Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Story.connection</td></tr>
+			<tr><td port="f1" border="1"> Story.table_name</td></tr>
+			<tr><td port="f2" border="1"> Story.calculated_hotness</td></tr>
+			<tr><td port="f3" border="1" bgcolor="orange"> [QUERY]Story.connection.execute </td></tr>
+			<tr><td port="f4" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB1 -> Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB3 [ color=blue ];
+	Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB1 -> Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB2 [ color=blue ];
+	Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB2 -> Story_give_upvote_or_downvote_and_recalculate_hotness_795869_closure0_BB3 [ color=blue ];
+}
+subgraph cluster_Vote_vote_thusly_on_story_or_comment_for_user_because {
+	color=red;
+	node [style=filled];
+	label = "Vote_vote_thusly_on_story_or_comment_for_user_because"
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Vote.where </td></tr>
+			<tr><td port="f1" border="1" bgcolor="orange"> [QUERY]Vote.where.first_or_initialize </td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB5 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB10 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Vote.destroy!</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB11 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]v.new_record? </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB12 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB13 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB14 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB15 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB16 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB17 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB18 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB19 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB20 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB21 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB22 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB23 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB24 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB25 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB26 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]v.save! </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB27 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB28 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB29 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB30 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB31 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB32 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB33 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Comment.find </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB34 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]User.update_counters </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB35 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB36 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Comment.give_upvote_or_downvote_and_recalculate_confidence!</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB37 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Story.find </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB38 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]User.update_counters </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB39 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB40 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> Story.give_upvote_or_downvote_and_recalculate_hotness!</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB41 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB42 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB46 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1" bgcolor="orange"> [QUERY]Vote.transaction </td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB10 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB1 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB10 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB1 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB2 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB2 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB3 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB2 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB4 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB3 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB4 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB4 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB5 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB4 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB6 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB5 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB6 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB6 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB7 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB6 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB8 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB7 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB10 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB8 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB10 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because__BB8:f0 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB1 [color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB46:f0 -> Vote_vote_thusly_on_story_or_comment_for_user_because__BB8 [color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB1 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB46 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB1 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB2 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB2 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB3 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB3 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB4 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB3 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB11 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB3 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB4 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB5 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB4 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB6 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB4 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB5 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB7 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB6 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB7 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB7 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB8 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB7 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB9 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB7 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB8 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB10 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB9 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB10 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB10 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB27 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB10 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB11 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB12 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB11 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB19 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB11 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB12 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB13 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB12 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB14 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB12 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB13 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB15 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB14 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB15 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB15 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB16 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB15 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB17 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB15 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB16 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB18 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB17 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB18 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB18 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB20 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB19 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB20 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB20 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB21 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB20 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB22 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB20 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB21 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB23 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB22 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB23 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB23 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB24 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB23 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB25 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB23 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB24 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB26 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB25 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB26 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB26 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB27 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB26 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB27 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB28 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB27 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB31 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB28 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB29 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB28 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB30 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB28 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB29 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB30 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB29 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB30 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB31 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB31 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB32 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB31 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB42 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB32 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB33 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB32 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB37 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB32 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB33 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB34 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB33 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB35 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB33 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB34 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB36 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB34 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB35 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB36 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB36 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB41 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB36 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB37 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB38 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB37 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB39 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB37 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB38 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB40 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB38 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB39 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB40 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB40 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB41 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB40 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB41 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB46 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB42 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB46 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB44 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB46 [ color=blue ];
+	Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB46 -> Vote_vote_thusly_on_story_or_comment_for_user_because_795869_closure0_BB1 [color=blue ];
+}
+subgraph cluster_StoriesController_downvote {
+	color=red;
+	node [style=filled];
+	label = "StoriesController_downvote"
+	StoriesController_downvote__BB1 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB2 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.find_story</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB3 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB4 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB6 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB7 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.params</td></tr>
+			<tr><td port="f1" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	StoriesController_downvote__BB8 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB9 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB11 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB12 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> StoriesController.params</td></tr>
+			<tr><td port="f1" border="1"> Vote.vote_thusly_on_story_or_comment_for_user_because</td></tr>
+			<tr><td port="f2" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+		color = green
+	];
+	StoriesController_downvote__BB14 [
+		label = <<table border="2">
+			<tr><td port="f0" border="1"> (nil) </td></tr>
+		</table>>
+		shape = none
+	];
+	StoriesController_downvote__BB1 -> StoriesController_downvote__BB14 [ color=blue ];
+	StoriesController_downvote__BB1 -> StoriesController_downvote__BB2 [ color=blue ];
+	StoriesController_downvote__BB2 -> StoriesController_downvote__BB3 [ color=blue ];
+	StoriesController_downvote__BB2 -> StoriesController_downvote__BB4 [ color=blue ];
+	StoriesController_downvote__BB3 -> StoriesController_downvote__BB14 [ color=blue ];
+	StoriesController_downvote__BB4 -> StoriesController_downvote__BB6 [ color=blue ];
+	StoriesController_downvote__BB4 -> StoriesController_downvote__BB7 [ color=blue ];
+	StoriesController_downvote__BB6 -> StoriesController_downvote__BB7 [ color=blue ];
+	StoriesController_downvote__BB7 -> StoriesController_downvote__BB8 [ color=blue ];
+	StoriesController_downvote__BB7 -> StoriesController_downvote__BB9 [ color=blue ];
+	StoriesController_downvote__BB8 -> StoriesController_downvote__BB14 [ color=blue ];
+	StoriesController_downvote__BB9 -> StoriesController_downvote__BB11 [ color=blue ];
+	StoriesController_downvote__BB9 -> StoriesController_downvote__BB12 [ color=blue ];
+	StoriesController_downvote__BB11 -> StoriesController_downvote__BB14 [ color=blue ];
+	StoriesController_downvote__BB12 -> StoriesController_downvote__BB14 [ color=blue ];
+}
+}

@@ -1,0 +1,103 @@
+User where <User,SELECT>
+TBLREADRECORD  User [2,0,0,3]
+TBLWRITERECORD  User [0,0,0] Fields  []
+User where( session_token => session[ u] to_s) first <,SELECT>
+self lock(true) where( key => key) first <Keystore,SELECT> (c)
+self lock(true) where <Keystore,SELECT> (c)
+self lock <Keystore,TRANSACTION> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+key where <Keystore,SELECT> (c)
+kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  []
+traffic_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+date_kv save! <Keystore,INSERT> (c)
+TBLWRITERECORD  Keystore [0,0,1] Fields  [value,]
+user_id where <Story,SELECT>
+self tags select <Tag,SELECT>
+TBLREADRECORD  Tag [0,0,0,0]
+TBLWRITERECORD  Tag [0,1,3] Fields  [story,title,cur_url,]
+self comments where <Comment,SELECT>
+TBLREADRECORD  Comment [2,4,0,3]
+TBLWRITERECORD  Comment [0,1,4] Fields  [story,title,cur_url,]
+self comments where("user_id <> ?", self user_id) select <Story,SELECT>
+Keystore connection execute <,INSERT>
+Keystore connection execute <,INSERT>
+Keystore connection execute <,INSERT>
+kv save! <,INSERT>
+self where( key => key) first try <Keystore,SELECT>
+self where( key => key) first <Keystore,SELECT>
+self where <Keystore,SELECT>
+TBLREADRECORD  Keystore [0,0,0,0]
+TBLWRITERECORD  Keystore [0,1,5] Fields  [story,title,cur_url,]
+Vote where <Vote,SELECT>
+TBLREADRECORD  Vote [6,14,0,11]
+TBLWRITERECORD  Vote [0,1,3] Fields  [story,title,cur_url,]
+Vote where( user_id => user_id,  story_id => story_id,       comment_id => comment_id) first_or_initialize <,SELECT>
+v destroy! <Vote,DELETE> (c)
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+v new_record? <Vote,INSERT> (c)
+TBLWRITERECORD  Vote [1,0,0] Fields  []
+v save! <Vote,INSERT> (c)
+TBLWRITERECORD  Vote [1,1,3] Fields  [vote,reason,story,title,cur_url,]
+Comment find <Comment,SELECT> (c)
+TBLREADRECORD  Comment [0,4,0,2]
+TBLWRITERECORD  Comment [1,1,3] Fields  [vote,reason,story,title,cur_url,]
+User update_counters <User,UPDATE> (c)
+TBLWRITERECORD  User [1,0,14] Fields  []
+Comment connection execute <,UPDATE> (c)
+Story find <Story,SELECT> (c)
+TBLREADRECORD  Story [0,4,0,1]
+TBLWRITERECORD  Story [1,1,3] Fields  [vote,reason,story,title,cur_url,]
+User update_counters <User,UPDATE> (c)
+TBLWRITERECORD  User [1,0,14] Fields  []
+Story connection execute <,UPDATE> (c)
+self new_record? <Story,INSERT>
+TBLWRITERECORD  Story [1,1,9] Fields  [hotness,story,title,cur_url,]
+tg new_record? <,INSERT> (c)
+self editor try <Story,SELECT>
+all_changes map{|k,v|        if k == "merged_story_id"          if v[1]            "merged into #{self merged_into_story short_id} " <<              "(#{self merged_into_story title})"          else            "unmerged from another story"          end        else          "changed #{k} from #{v[0] inspect} to #{v[1] inspect}"        end      } join <,JOIN>
+self received_messages unread count <User,SELECT>
+Keystore put <Keystore,INSERT>
+TBLWRITERECORD  Keystore [3,1,7] Fields  [reason,action,moderator_user_id,story_id,story,title,cur_url,]
+recipient where <Message,SELECT>
+recipient where <Message,SELECT>
+m save <Message,INSERT>
+TBLWRITERECORD  Message [15,2,45] Fields  [reason,action,moderator_user_id,story_id,story,title,cur_url,comment_id,is_moderated,is_deleted,comments_count,new_message,current_vote,]
+m save <Moderation,INSERT>
+TBLWRITERECORD  Moderation [15,2,45] Fields  [reason,action,moderator_user_id,story_id,story,title,cur_url,comment_id,is_moderated,is_deleted,comments_count,new_message,current_vote,]
+self title to_s split("") map{|chr|      if chr ord == 160        " "      else        chr      end    } join <Story,JOIN>
+Story select <Story,SELECT>
+TBLREADRECORD  Story [10,0,0,10]
+TBLWRITERECORD  Story [0,0,0] Fields  []
+Story select( id) where <,SELECT>
+Comment where <Comment,SELECT>
+TBLREADRECORD  Comment [6,0,0,10]
+TBLWRITERECORD  Comment [1,1,3] Fields  [story,title,cur_url,]
+self order <Comment,SELECT>
+TBLREADRECORD  Comment [0,0,0,8]
+TBLWRITERECORD  Comment [1,1,4] Fields  [story,title,cur_url,]
+comments count <Comment,SELECT>
+TBLREADRECORD  Comment [0,0,0,0]
+TBLWRITERECORD  Comment [1,1,4] Fields  [story,title,cur_url,]
+@story save <Story,INSERT>
+TBLWRITERECORD  Story [19,2,45] Fields  [is_moderated,title,story,cur_url,comments_count,reason,action,moderator_user_id,story_id,comment_id,is_deleted,new_message,current_vote,]
+
+STATS query in total  48
+STATS query total on single path: 44
+STATS read query on single path: 26
+STATS write query on single path: 18
+STATS query in view  0
+STATS query in closure  17
+STATS branch depend on query result  34
+STATS branch total  71
+STATS read queries  27
+STATS read to read query  50
+STATS read to write query  724
+STATS read to view  0
+STATS read to branch  90
+STATS materialized query  7
+STATS write queries  48
+STATS write from user input  33
+STATS write from other queries  75
+STATS write from const  335
