@@ -158,6 +158,9 @@ def classname_partial_match(name)
 end
 
 def transform_var_name(name)
+	if name == nil
+		return nil
+	end
 	$class_map.each do |keyc, arrayc|
 		cname = name
 		if name[0] == '@'

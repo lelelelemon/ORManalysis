@@ -23,6 +23,7 @@ for root, dirs, files in os.walk(apppath):
 				os.system("mkdir -p %s"%dir_name)
 			print "\tdes_file = %s"%des_file
 			os.system("jrubyc %s >> %s"%(fname, des_file))
+			os.system("rm %s/*.class"%dir_name)
 
 #for root, dirs, files in os.walk(model_path):
 #	for filename in files:

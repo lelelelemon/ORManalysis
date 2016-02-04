@@ -189,7 +189,7 @@ class Call_instr < Instruction
 	end
 	def isReadQuery
 		if @call_handler != nil
-			if ["SELECT","GROUP","JOIN"].include?@call_handler.getQueryType
+			if ["SELECT","GROUP","JOIN","TXN"].include?@call_handler.getQueryType
 				return true
 			else
 				return false
