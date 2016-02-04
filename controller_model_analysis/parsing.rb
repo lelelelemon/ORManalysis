@@ -18,6 +18,7 @@ load 'compute_stats.rb'
 load 'graph_component.rb'
 load 'compute_functional_dependency.rb'
 load 'compare_consequent_actions.rb'
+load 'type_inference.rb'
 #load 'random_path.rb'
 load 'util.rb'
 load 'read_schema.rb'
@@ -483,8 +484,8 @@ if options[:xml] == true
 end
 
 if options[:print_all] == true
-	$class_map.each do |keyc, valuec|
-		puts "class #{keyc} < #{valuec.getUpperClass} #{isActiveRecord(keyc)}"
+	#$class_map.each do |keyc, valuec|
+	#	puts "class #{keyc} < #{valuec.getUpperClass} #{isActiveRecord(keyc)}"
 		#valuec.getMethod("before_save").getCalls.each do |s|
 		#	puts "\t#{s.getFuncName}"
 		#end
@@ -502,9 +503,10 @@ if options[:print_all] == true
 		#	print "#{c.getFuncName}, "
 		#end
 		#puts ""
-	end
-	_file = File.open("#{$app_dir}/table_name.txt", "w")
-	$table_names.each do |t|
-		_file.write("#{t}\n")
-	end
+	#end
+	#_file = File.open("#{$app_dir}/table_name.txt", "w")
+	#$table_names.each do |t|
+	#	_file.write("#{t}\n")
+	#end
+	do_type_inference
 end

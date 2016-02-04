@@ -117,7 +117,7 @@ def searchARef(node)
 end
 
 def check_method_keyword(_caller, k)
-	if _caller.include?("Dir.glob") or _caller == "File"
+	if _caller != nil and _caller.include?("Dir.glob") or _caller == "File"
 		return nil
 	else
 		return $key_words[k]

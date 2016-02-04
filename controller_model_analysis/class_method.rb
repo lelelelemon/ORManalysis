@@ -63,7 +63,8 @@ class Class_class
 		@scope_list = Array.new
 		@fields = Array.new
 		@assocs = Hash.new
-		
+		@var_map = Hash.new	
+	
 		filter_meth = Method_class.new("before_filter")
 		@methods[filter_meth.getName] = filter_meth
 		save_meth = Method_class.new("before_save")
@@ -190,7 +191,8 @@ class Class_class
 	#def addBeforeValidation(valid_name)
 	#	@before_validation.push(valid_name)
 	#end
-	
+
+	#TODO: to be deprecated!!!	
 	#mappings of function name ane variable type list
 	def addMethodVar(func_name, var_name, class_name)
 		if @method_var_map.has_key?(func_name)
@@ -204,6 +206,15 @@ class Class_class
 	def getMethodVarMap
 		@method_var_map
 	end
+
+	#The following is defined in type inferece!
+	def getVarMap
+		@var_map
+	end
+	def addToVarMap(v_name, var)
+		@var_map[v_name] = var
+	end
+
 		
 	def addBeforeFilter(filter_name)
 		@before_filter.push(filter_name)

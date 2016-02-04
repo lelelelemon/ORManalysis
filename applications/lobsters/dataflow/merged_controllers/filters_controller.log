@@ -20,9 +20,9 @@ BB 2
 		 10: ATTRASSIGN %self->title %v_4[2.9,] 
 		 11: 
 		 12: (Tag) def_%v_5 
-		 13: %v_5->active def_%v_6 %v_5[2.12,] 
+		 13: %v_5->active def_%v_6 %v_5[2.12,] 	 ARGS:
 		 14: GETFIELD %self->user def_%v_7 %self[2.0,] 
-		 15: %v_6->all_with_story_counts_for def_%v_8 %v_6[2.13,] %v_7[2.14,] 
+		 15: %v_6->all_with_story_counts_for def_%v_8 %v_6[2.13,] %v_7[2.14,] 	 ARGS:%v_7,
 		 16: ATTRASSIGN %self->tags %v_8[2.15,] 
 		 17: 
 		 18: 
@@ -33,8 +33,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%v_10 %self[2.0,] 
-		 1: %v_10->tag_filter_tags def_%v_11 %v_10[3.0,] 
-		 2: %v_11->to_a def_%v_12 %v_11[3.1,] 
+		 1: %v_10->tag_filter_tags def_%v_11 %v_10[3.0,] 	 ARGS:
+		 2: %v_11->to_a def_%v_12 %v_11[3.1,] 	 ARGS:
 		 3: ATTRASSIGN %self->filtered_tags %v_12[3.2,] 
 		 4: 
 BB 4
@@ -42,8 +42,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->tags_filtered_by_cookie def_%v_13 %self[2.0,2.7,2.10,2.16,] 
-		 2: %v_13->to_a def_%v_14 %v_13[4.1,] 
+		 1: %self->tags_filtered_by_cookie def_%v_13 %self[2.0,2.7,2.10,2.16,] 	 ARGS:
+		 2: %v_13->to_a def_%v_14 %v_13[4.1,] 	 ARGS:
 		 3: ATTRASSIGN %self->filtered_tags %v_14[4.2,] 
 		 4: COPY def_%v_12 %v_14[4.2,] 
 BB 5
@@ -53,7 +53,7 @@ BB 5
 		 0: 
 		 1: 
 		 2: GETFIELD %self->user def_%v_15 %self[2.0,] 
-		 3: %v_15->! def_%v_16 %v_15[5.2,] 
+		 3: %v_15->! def_%v_16 %v_15[5.2,] 	 ARGS:
 		 4: BRANCH %v_16[5.3,] 
 BB 6
 	outgoing: 8 
@@ -73,7 +73,7 @@ BB 8
 		 0: 
 		 1: COPY def_%v_18 
 		 2: COPY def_%v_19 
-		 3: %self->form_tag def_%v_20 %self[4.3,3.3,2.0,2.7,2.10,2.16,] %v_18[8.1,] %v_19[8.2,] %self[4.3,3.3,2.0,2.7,2.10,2.16,] 
+		 3: %self->form_tag def_%v_20 %self[4.3,3.3,2.0,2.7,2.10,2.16,] %v_18[8.1,] %v_19[8.2,] %self[4.3,3.3,2.0,2.7,2.10,2.16,] 	 ARGS:%v_18,%v_19,%self,
 CLOSURE BEGIN: %self[4.3,3.3,2.0,2.7,2.10,2.16,] 
 BB 1
 	outgoing: 6 2 
@@ -93,7 +93,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->tags def_%cl_1_3 %self[2.0,] 
-		 2: %cl_1_3->each def_%cl_1_4 %cl_1_3[3.1,] %self[2.0,] 
+		 2: %cl_1_3->each def_%cl_1_4 %cl_1_3[3.1,] %self[2.0,] 	 ARGS:%cl_1_3,
 CLOSURE BEGIN: tag[] %self[2.0,] 
 BB 1
 	outgoing: 12 2 
@@ -114,29 +114,29 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY def_%cl_2_3 
-		 2: tag->tag def_%cl_2_4 tag[2.2,] 
+		 2: tag->tag def_%cl_2_4 tag[2.2,] 	 ARGS:
 		 3: GETFIELD %self->filtered_tags def_%cl_2_5 %self[2.0,] 
-		 4: %cl_2_5->include? def_%cl_2_6 %cl_2_5[3.3,] tag[3.2,2.2,] 
-		 5: %self->check_box_tag def_%cl_2_7 %self[2.0,] %cl_2_3[3.1,] %cl_2_4[3.2,] %cl_2_6[3.4,] 
+		 4: %cl_2_5->include? def_%cl_2_6 %cl_2_5[3.3,] tag[3.2,2.2,] 	 ARGS:tag,
+		 5: %self->check_box_tag def_%cl_2_7 %self[2.0,] %cl_2_3[3.1,] %cl_2_4[3.2,] %cl_2_6[3.4,] 	 ARGS:%cl_2_3,%cl_2_4,%cl_2_6,
 		 6: 
-		 7: tag->tag def_%cl_2_8 tag[3.2,2.2,] 
-		 8: %self->tag_path def_%cl_2_9 %self[3.5,2.0,] tag[3.2,3.7,2.2,] 
-		 9: tag->css_class def_%cl_2_10 tag[3.2,3.7,2.2,] 
+		 7: tag->tag def_%cl_2_8 tag[3.2,2.2,] 	 ARGS:
+		 8: %self->tag_path def_%cl_2_9 %self[3.5,2.0,] tag[3.2,3.7,2.2,] 	 ARGS:tag,
+		 9: tag->css_class def_%cl_2_10 tag[3.2,3.7,2.2,] 	 ARGS:
 		 10: COPY def_%cl_2_11 %cl_2_10[3.9,] 
-		 11: %self->link_to def_%cl_2_12 %self[3.5,3.8,2.0,] %cl_2_8[3.7,] %cl_2_9[3.8,] %cl_2_11[3.10,] 
+		 11: %self->link_to def_%cl_2_12 %self[3.5,3.8,2.0,] %cl_2_8[3.7,] %cl_2_9[3.8,] %cl_2_11[3.10,] 	 ARGS:%cl_2_8,%cl_2_9,%cl_2_11,
 		 12: 
-		 13: tag->description def_%cl_2_13 tag[3.2,3.7,3.9,2.2,] 
+		 13: tag->description def_%cl_2_13 tag[3.2,3.7,3.9,2.2,] 	 ARGS:
 		 14: 
-		 15: tag->hotness_mod def_%cl_2_14 tag[3.2,3.7,3.9,3.13,2.2,] 
-		 16: %cl_2_14->!= def_%cl_2_15 %cl_2_14[3.15,] 
+		 15: tag->hotness_mod def_%cl_2_14 tag[3.2,3.7,3.9,3.13,2.2,] 	 ARGS:
+		 16: %cl_2_14->!= def_%cl_2_15 %cl_2_14[3.15,] 	 ARGS:Fixnum,
 		 17: BRANCH %cl_2_15[3.16,] 
 BB 4
 	outgoing: 5 6 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: tag->hotness_mod def_%cl_2_16 tag[2.2,] 
-		 2: def_%cl_2_17 %cl_2_16[4.1,] 
+		 1: tag->hotness_mod def_%cl_2_16 tag[2.2,] 	 ARGS:
+		 2: def_%cl_2_17 %cl_2_16[4.1,] 	 ARGS:Fixnum,
 		 3: BRANCH %cl_2_17[4.2,] 
 BB 5
 	outgoing: 7 
@@ -155,7 +155,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: tag->hotness_mod def_%cl_2_20 tag[2.2,] 
+		 1: tag->hotness_mod def_%cl_2_20 tag[2.2,] 	 ARGS:
 		 2: 
 BB 8
 	outgoing: 9 
@@ -167,7 +167,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: tag->stories_count def_%cl_2_21 tag[2.2,] 
+		 1: tag->stories_count def_%cl_2_21 tag[2.2,] 	 ARGS:
 		 2: RETURN %cl_2_21[9.1,] %self[2.0,] 
 BB 10
 	outgoing: 12 
@@ -183,7 +183,7 @@ BB 12
 CLOSURE END
 		 3: 
 		 4: COPY def_%cl_1_5 
-		 5: %self->submit_tag def_%cl_1_6 %self[2.0,] %cl_1_5[3.4,] 
+		 5: %self->submit_tag def_%cl_1_6 %self[2.0,] %cl_1_5[3.4,] 	 ARGS:%cl_1_5,
 		 6: RETURN %cl_1_6[3.5,] %self[3.5,2.0,] 
 BB 4
 	outgoing: 6 
@@ -218,11 +218,11 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->params def_%v_3 %self[2.0,] 
-		 7: def_%v_4 %v_3[2.6,] 
+		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
+		 7: def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 		 8: COPY def_tags_param %v_4[2.7,] 
 		 9: 
-		 10: %v_4->blank? def_%v_5 %v_4[2.7,] 
+		 10: %v_4->blank? def_%v_5 %v_4[2.7,] 	 ARGS:
 		 11: BRANCH %v_5[2.10,] 
 BB 3
 	outgoing: 5 
@@ -235,10 +235,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: (Tag) def_%v_7 
-		 1: %v_7->active def_%v_8 %v_7[4.0,] 
+		 1: %v_7->active def_%v_8 %v_7[4.0,] 	 ARGS:
 		 2: COPY def_%v_9 tags_param[2.8,] 
-		 3: %v_8->where def_%v_10 %v_8[4.1,] %v_9[4.2,] 
-		 4: %v_10->to_a def_%v_11 %v_10[4.3,] 
+		 3: %v_8->where def_%v_10 %v_8[4.1,] %v_9[4.2,] 	 ARGS:%v_9,
+		 4: %v_10->to_a def_%v_11 %v_10[4.3,] 	 ARGS:
 		 5: COPY def_%v_6 %v_11[4.4,] 
 BB 5
 	outgoing: 6 7 
@@ -246,7 +246,7 @@ BB 5
 	instructions:
 		 0: COPY def_new_tags %v_6[4.5,3.0,] 
 		 1: 
-		 2: %v_6->keep_if def_%v_12 %v_6[4.5,3.0,] %self[2.0,] 
+		 2: %v_6->keep_if def_%v_12 %v_6[4.5,3.0,] %self[2.0,] 	 ARGS:%v_6,
 CLOSURE BEGIN: %self[2.0,] t[] 
 BB 1
 	outgoing: 6 2 
@@ -267,7 +267,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->user def_%cl_1_3 %self[2.0,] 
-		 2: t->valid_for? def_%cl_1_4 t[2.2,] %cl_1_3[3.1,] 
+		 2: t->valid_for? def_%cl_1_4 t[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -298,12 +298,12 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->cookies def_%v_16 %self[2.0,] 
-		 2: %v_16->permanent def_%v_17 %v_16[7.1,] 
+		 1: %self->cookies def_%v_16 %self[2.0,] 	 ARGS:
+		 2: %v_16->permanent def_%v_17 %v_16[7.1,] 	 ARGS:
 		 3: (TAG_FILTER_COOKIE) def_%v_18 
-		 4: new_tags->map def_%v_19 new_tags[5.0,] 
+		 4: new_tags->map def_%v_19 new_tags[5.0,] 	 ARGS:
 		 5: COPY def_%v_20 
-		 6: %v_19->join def_%v_21 %v_19[7.4,] %v_20[7.5,] 
+		 6: %v_19->join def_%v_21 %v_19[7.4,] %v_20[7.5,] 	 ARGS:%v_20,
 		 7: ATTRASSIGN %v_17->[] %v_18[7.3,] %v_21[7.6,] 
 		 8: COPY def_%v_15 %v_21[7.6,] 
 BB 8
@@ -311,12 +311,12 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_22 %self[2.0,] 
+		 1: %self->flash def_%v_22 %self[2.0,] 	 ARGS:
 		 2: COPY def_%v_23 
 		 3: ATTRASSIGN %v_22->[] %v_23[8.2,] 
 		 4: 
-		 5: %self->filters_path def_%v_24 %self[8.1,2.0,] 
-		 6: %self->redirect_to def_%v_25 %self[8.1,8.5,2.0,] %v_24[8.5,] 
+		 5: %self->filters_path def_%v_24 %self[8.1,2.0,] 	 ARGS:
+		 6: %self->redirect_to def_%v_25 %self[8.1,8.5,2.0,] %v_24[8.5,] 	 ARGS:%v_24,
 		 7: RETURN %v_25[8.6,] %self[8.1,8.5,8.6,2.0,] 
 BB 9
 	outgoing: 

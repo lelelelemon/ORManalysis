@@ -170,13 +170,30 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	if instr.instance_of?ReceiveArg_instr
 		if $general_call_stack.length > 0
 			dep = $general_call_stack[-1]
-			edge_name = "#{dep.getIndex}*#{node.getIndex}"
-			edge = Dataflow_edge.new(dep, node, instr.var_name)
-			dep.addDataflowEdge(edge)
-			if $dataflow_edges[edge_name] == nil
-				$dataflow_edges[edge_name] = Array.new
+			dep_inode = nil
+			arg_index = 0
+			instr.getBB.getInstr.each do |inner_i|
+				if inner_i == instr
+					break
+				elsif inner_i.instance_of?ReceiveArg_instr
+					arg_index += 1
+				end
 			end
-			$dataflow_edges[edge_name].push(edge)
+			arg_name = dep.getInstr.args[arg_index]
+			dep.getInstr.getDeps.each do |d|
+				if d.getVname == arg_name
+					dep_inode = d.getInstrHandler.getINode
+				end
+			end
+			if dep_inode != nil
+				edge_name = "#{dep_inode.getIndex}*#{node.getIndex}"
+				edge = Dataflow_edge.new(dep_inode, node, instr.var_name)
+				dep_inode.addDataflowEdge(edge)
+				if $dataflow_edges[edge_name] == nil
+					$dataflow_edges[edge_name] = Array.new
+				end
+				$dataflow_edges[edge_name].push(edge)
+			end
 		end
 	end
 

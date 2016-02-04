@@ -42,6 +42,12 @@ class Instruction
 		@bb = nil
 		@inode = nil
 		@defv = nil
+		@defv_var = nil
+		@args = Array.new
+	end
+	attr_accessor :defv_var
+	def getArgs
+		@args
 	end
 	def setDefv(d)
 		@defv = d
@@ -159,6 +165,7 @@ class Call_instr < Instruction
 		@call_handler = nil #Function_call
 		@call_cfg = nil #CFG
 		@field = nil
+		@args = Array.new
 	end
 	attr_accessor :field
 	def setCallCFG(c)
@@ -188,7 +195,11 @@ class Call_instr < Instruction
 				return false
 			end
 		else
-			return false
+			if check_method_keyword(nil, @funcname)
+				return true
+			else
+				return false
+			end
 		end
 	end
 	def isField
@@ -490,8 +501,17 @@ class CFG
 		@m_handler = nil
 		#All nodes that last defines "self", used for validation like "before_save"
 		@def_self_nodes = Array.new #INode
+		@var_map = Hash.new
+		@return_type = nil
+		@arg_types = Array.new
 	end
-	attr_accessor :explicit_return, :return_list
+	attr_accessor :explicit_return, :return_list, :return_type, :arg_types
+	def getVarMap
+		@var_map
+	end
+	def addToVarMap(v_name, var)
+		@var_map[v_name] = var
+	end
 	def getDefSelf
 		@def_self_nodes
 	end

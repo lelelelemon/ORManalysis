@@ -22,7 +22,7 @@ for root, dirs, files in os.walk(apppath):
 			if os.path.exists(dir_name) == False:
 				os.system("mkdir -p %s"%dir_name)
 			print "\tdes_file = %s"%des_file
-			os.system("/home/congy/jruby/bin/jrubyc %s >> %s"%(fname, des_file))
+			os.system("jrubyc %s >> %s"%(fname, des_file))
 
 #for root, dirs, files in os.walk(model_path):
 #	for filename in files:

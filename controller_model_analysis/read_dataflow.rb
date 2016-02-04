@@ -189,7 +189,11 @@ def handle_single_dataflow_file(item, class_name)
 												$view_ruby_code = true
 												$view_closure = true
 										end
-										
+									elsif single_attr.include?("ARGS:")
+										args = single_attr[5...-1].split(',')
+										args.each do |a|
+											cur_instr.getArgs.push(a)
+										end	
 									elsif single_attr.include?('[') and single_attr.include?(']')
 										bracket_begin = single_attr.index('[')
 										bracket_end = single_attr.index(']')

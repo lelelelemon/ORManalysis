@@ -16,16 +16,16 @@ BB 2
 		 6: COPY def_%v_3 
 		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: 
-		 9: %self->params def_%v_4 %self[2.0,2.7,] 
-		 10: def_%v_5 %v_4[2.9,] 
+		 9: %self->params def_%v_4 %self[2.0,2.7,] 	 ARGS:
+		 10: def_%v_5 %v_4[2.9,] 	 ARGS:Symbol,
 		 11: BRANCH %v_5[2.10,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %self->params def_%v_6 %self[2.0,2.7,] 
-		 1: def_%v_7 %v_6[3.0,] 
-		 2: %v_7->to_i def_%v_8 %v_7[3.1,] 
+		 0: %self->params def_%v_6 %self[2.0,2.7,] 	 ARGS:
+		 1: def_%v_7 %v_6[3.0,] 	 ARGS:Symbol,
+		 2: %v_7->to_i def_%v_8 %v_7[3.1,] 	 ARGS:
 		 3: 
 BB 4
 	outgoing: 5 
@@ -39,13 +39,13 @@ BB 5
 		 0: ATTRASSIGN %self->page %v_8[4.0,3.2,] 
 		 1: 
 		 2: (Moderation) def_%v_9 
-		 3: %v_9->count def_%v_10 %v_9[5.2,] 
-		 4: def_%v_11 %v_10[5.3,] 
-		 5: %v_11->ceil def_%v_12 %v_11[5.4,] 
+		 3: %v_9->count def_%v_10 %v_9[5.2,] 	 ARGS:
+		 4: def_%v_11 %v_10[5.3,] 	 ARGS:Fixnum,
+		 5: %v_11->ceil def_%v_12 %v_11[5.4,] 	 ARGS:
 		 6: ATTRASSIGN %self->pages %v_12[5.5,] 
 		 7: 
 		 8: GETFIELD %self->page def_%v_13 %self[5.0,2.0,] 
-		 9: def_%v_14 %v_13[5.8,] 
+		 9: def_%v_14 %v_13[5.8,] 	 ARGS:Fixnum,
 		 10: BRANCH %v_14[5.9,] 
 BB 6
 	outgoing: 11 
@@ -62,7 +62,7 @@ BB 7
 		 0: 
 		 1: GETFIELD %self->page def_%v_16 %self[5.0,2.0,] 
 		 2: GETFIELD %self->pages def_%v_17 %self[5.6,2.0,] 
-		 3: def_%v_18 %v_16[7.1,] %v_17[7.2,] 
+		 3: def_%v_18 %v_16[7.1,] %v_17[7.2,] 	 ARGS:%v_17,
 		 4: BRANCH %v_18[7.3,] 
 BB 8
 	outgoing: 10 
@@ -89,18 +89,18 @@ BB 11
 		 0: 
 		 1: (Moderation) def_%v_20 
 		 2: COPY def_%v_21 
-		 3: %v_20->order def_%v_22 %v_20[11.1,] %v_21[11.2,] 
-		 4: %v_22->limit def_%v_23 %v_22[11.3,] 
+		 3: %v_20->order def_%v_22 %v_20[11.1,] %v_21[11.2,] 	 ARGS:%v_21,
+		 4: %v_22->limit def_%v_23 %v_22[11.3,] 	 ARGS:Fixnum,
 		 5: GETFIELD %self->page def_%v_24 %self[6.1,8.2,5.0,2.0,] 
-		 6: def_%v_25 %v_24[11.5,] 
-		 7: def_%v_26 %v_25[11.6,] 
-		 8: %v_23->offset def_%v_27 %v_23[11.4,] %v_26[11.7,] 
+		 6: def_%v_25 %v_24[11.5,] 	 ARGS:Fixnum,
+		 7: def_%v_26 %v_25[11.6,] 	 ARGS:Fixnum,
+		 8: %v_23->offset def_%v_27 %v_23[11.4,] %v_26[11.7,] 	 ARGS:%v_26,
 		 9: ATTRASSIGN %self->moderations %v_27[11.8,] 
 		 10: 
 		 11: COPY def_bit 
 		 12: 
 		 13: GETFIELD %self->moderations def_%v_28 %self[11.9,2.0,] 
-		 14: %v_28->each def_%v_29 %v_28[11.13,] %self[11.9,6.1,8.2,5.0,5.6,2.0,2.7,] 
+		 14: %v_28->each def_%v_29 %v_28[11.13,] %self[11.9,6.1,8.2,5.0,5.6,2.0,2.7,] 	 ARGS:%v_28,
 CLOSURE BEGIN: mod[] bit[11.11,] 
 BB 1
 	outgoing: 33 2 
@@ -121,29 +121,29 @@ BB 3
 	instructions:
 		 0: 
 		 1: 
-		 2: mod->created_at def_%cl_1_3 mod[2.2,] 
+		 2: mod->created_at def_%cl_1_3 mod[2.2,] 	 ARGS:
 		 3: COPY def_%cl_1_4 
-		 4: %cl_1_3->strftime def_%cl_1_5 %cl_1_3[3.2,] %cl_1_4[3.3,] 
+		 4: %cl_1_3->strftime def_%cl_1_5 %cl_1_3[3.2,] %cl_1_4[3.3,] 	 ARGS:%cl_1_4,
 		 5: 
-		 6: mod->moderator def_%cl_1_6 mod[3.2,2.2,] 
+		 6: mod->moderator def_%cl_1_6 mod[3.2,2.2,] 	 ARGS:
 		 7: BRANCH %cl_1_6[3.6,] 
 BB 4
 	outgoing: 9 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->moderator def_%cl_1_7 mod[2.2,] 
-		 2: %cl_1_7->try def_%cl_1_8 %cl_1_7[4.1,] 
+		 1: mod->moderator def_%cl_1_7 mod[2.2,] 	 ARGS:
+		 2: %cl_1_7->try def_%cl_1_8 %cl_1_7[4.1,] 	 ARGS:Symbol,
 		 3: 
-		 4: mod->moderator def_%cl_1_9 mod[4.1,2.2,] 
-		 5: %cl_1_9->try def_%cl_1_10 %cl_1_9[4.4,] 
+		 4: mod->moderator def_%cl_1_9 mod[4.1,2.2,] 	 ARGS:
+		 5: %cl_1_9->try def_%cl_1_10 %cl_1_9[4.4,] 	 ARGS:Symbol,
 		 6: 
 BB 5
 	outgoing: 6 7 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->is_from_suggestions? def_%cl_1_11 mod[2.2,] 
+		 1: mod->is_from_suggestions? def_%cl_1_11 mod[2.2,] 	 ARGS:
 		 2: BRANCH %cl_1_11[5.1,] 
 BB 6
 	outgoing: 8 
@@ -166,69 +166,69 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->story def_%cl_1_13 mod[2.2,] 
+		 1: mod->story def_%cl_1_13 mod[2.2,] 	 ARGS:
 		 2: BRANCH %cl_1_13[9.1,] 
 BB 10
 	outgoing: 21 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->story def_%cl_1_14 mod[2.2,] 
-		 2: %cl_1_14->comments_path def_%cl_1_15 %cl_1_14[10.1,] 
+		 1: mod->story def_%cl_1_14 mod[2.2,] 	 ARGS:
+		 2: %cl_1_14->comments_path def_%cl_1_15 %cl_1_14[10.1,] 	 ARGS:
 		 3: 
-		 4: mod->story def_%cl_1_16 mod[10.1,2.2,] 
-		 5: %cl_1_16->title def_%cl_1_17 %cl_1_16[10.4,] 
+		 4: mod->story def_%cl_1_16 mod[10.1,2.2,] 	 ARGS:
+		 5: %cl_1_16->title def_%cl_1_17 %cl_1_16[10.4,] 	 ARGS:
 		 6: 
 BB 11
 	outgoing: 12 13 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->comment def_%cl_1_18 mod[2.2,] 
+		 1: mod->comment def_%cl_1_18 mod[2.2,] 	 ARGS:
 		 2: BRANCH %cl_1_18[11.1,] 
 BB 12
 	outgoing: 20 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->comment def_%cl_1_19 mod[2.2,] 
-		 2: %cl_1_19->url def_%cl_1_20 %cl_1_19[12.1,] 
+		 1: mod->comment def_%cl_1_19 mod[2.2,] 	 ARGS:
+		 2: %cl_1_19->url def_%cl_1_20 %cl_1_19[12.1,] 	 ARGS:
 		 3: 
-		 4: mod->comment def_%cl_1_21 mod[12.1,2.2,] 
-		 5: %cl_1_21->story def_%cl_1_22 %cl_1_21[12.4,] 
-		 6: %cl_1_22->title def_%cl_1_23 %cl_1_22[12.5,] 
+		 4: mod->comment def_%cl_1_21 mod[12.1,2.2,] 	 ARGS:
+		 5: %cl_1_21->story def_%cl_1_22 %cl_1_21[12.4,] 	 ARGS:
+		 6: %cl_1_22->title def_%cl_1_23 %cl_1_22[12.5,] 	 ARGS:
 		 7: 
 BB 13
 	outgoing: 14 18 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->user_id def_%cl_1_24 mod[2.2,] 
+		 1: mod->user_id def_%cl_1_24 mod[2.2,] 	 ARGS:
 		 2: BRANCH %cl_1_24[13.1,] 
 BB 14
 	outgoing: 15 16 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->user def_%cl_1_25 mod[2.2,] 
+		 1: mod->user def_%cl_1_25 mod[2.2,] 	 ARGS:
 		 2: BRANCH %cl_1_25[14.1,] 
 BB 15
 	outgoing: 17 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->user def_%cl_1_26 mod[2.2,] 
-		 2: %cl_1_26->username def_%cl_1_27 %cl_1_26[15.1,] 
+		 1: mod->user def_%cl_1_26 mod[2.2,] 	 ARGS:
+		 2: %cl_1_26->username def_%cl_1_27 %cl_1_26[15.1,] 	 ARGS:
 		 3: 
-		 4: mod->user def_%cl_1_28 mod[15.1,2.2,] 
-		 5: %cl_1_28->username def_%cl_1_29 %cl_1_28[15.4,] 
+		 4: mod->user def_%cl_1_28 mod[15.1,2.2,] 	 ARGS:
+		 5: %cl_1_28->username def_%cl_1_29 %cl_1_28[15.4,] 	 ARGS:
 		 6: 
 BB 16
 	outgoing: 17 31 
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->user_id def_%cl_1_30 mod[2.2,] 
+		 1: mod->user_id def_%cl_1_30 mod[2.2,] 	 ARGS:
 		 2: COPY def_%cl_1_29 %cl_1_30[16.1,] 
 BB 17
 	outgoing: 19 
@@ -256,8 +256,8 @@ BB 21
 	instructions:
 		 0: 
 		 1: 
-		 2: mod->reason def_%cl_1_31 mod[2.2,] 
-		 3: %cl_1_31->present? def_%cl_1_32 %cl_1_31[21.2,] 
+		 2: mod->reason def_%cl_1_31 mod[2.2,] 	 ARGS:
+		 3: %cl_1_31->present? def_%cl_1_32 %cl_1_31[21.2,] 	 ARGS:
 		 4: BRANCH %cl_1_32[21.3,] 
 BB 22
 	outgoing: 24 
@@ -276,10 +276,10 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: mod->action def_%cl_1_35 mod[2.2,] 
+		 1: mod->action def_%cl_1_35 mod[2.2,] 	 ARGS:
 		 2: 
-		 3: mod->reason def_%cl_1_36 mod[24.1,2.2,] 
-		 4: %cl_1_36->present? def_%cl_1_37 %cl_1_36[24.3,] 
+		 3: mod->reason def_%cl_1_36 mod[24.1,2.2,] 	 ARGS:
+		 4: %cl_1_36->present? def_%cl_1_37 %cl_1_36[24.3,] 	 ARGS:
 		 5: BRANCH %cl_1_37[24.4,] 
 BB 25
 	outgoing: 27 31 
@@ -287,7 +287,7 @@ BB 25
 	instructions:
 		 0: 
 		 1: 
-		 2: mod->reason def_%cl_1_38 mod[2.2,] 
+		 2: mod->reason def_%cl_1_38 mod[2.2,] 	 ARGS:
 		 3: 
 BB 26
 	outgoing: 27 
@@ -299,7 +299,7 @@ BB 27
 	datadep: 
 	instructions:
 		 0: 
-		 1: bit->== def_%cl_1_39 bit[] 
+		 1: bit->== def_%cl_1_39 bit[] 	 ARGS:Fixnum,
 		 2: BRANCH %cl_1_39[27.1,] 
 BB 28
 	outgoing: 30 
@@ -332,7 +332,7 @@ BB 33
 CLOSURE END
 		 15: 
 		 16: GETFIELD %self->page def_%v_30 %self[6.1,8.2,5.0,2.0,] 
-		 17: def_%v_31 %v_30[11.16,] 
+		 17: def_%v_31 %v_30[11.16,] 	 ARGS:Fixnum,
 		 18: BRANCH %v_31[11.17,] 
 BB 12
 	outgoing: 14 
@@ -340,10 +340,10 @@ BB 12
 	instructions:
 		 0: 
 		 1: GETFIELD %self->page def_%v_32 %self[6.1,8.2,5.0,2.0,] 
-		 2: def_%v_33 %v_32[12.1,] 
+		 2: def_%v_33 %v_32[12.1,] 	 ARGS:Fixnum,
 		 3: 
 		 4: GETFIELD %self->page def_%v_34 %self[6.1,8.2,5.0,2.0,] 
-		 5: def_%v_35 %v_34[12.4,] 
+		 5: def_%v_35 %v_34[12.4,] 	 ARGS:Fixnum,
 		 6: 
 BB 13
 	outgoing: 14 
@@ -356,7 +356,7 @@ BB 14
 	instructions:
 		 0: 
 		 1: GETFIELD %self->pages def_%v_36 %self[5.6,2.0,] 
-		 2: def_%v_37 %v_36[14.1,] 
+		 2: def_%v_37 %v_36[14.1,] 	 ARGS:Fixnum,
 		 3: BRANCH %v_37[14.2,] 
 BB 15
 	outgoing: 16 
@@ -364,7 +364,7 @@ BB 15
 	instructions:
 		 0: GETFIELD %self->page def_%v_38 %self[6.1,8.2,5.0,2.0,] 
 		 1: GETFIELD %self->pages def_%v_39 %self[5.6,2.0,] 
-		 2: def_%v_40 %v_38[15.0,] %v_39[15.1,] 
+		 2: def_%v_40 %v_38[15.0,] %v_39[15.1,] 	 ARGS:%v_39,
 		 3: COPY def_%v_37 %v_40[15.2,] 
 BB 16
 	outgoing: 17 21 
@@ -377,7 +377,7 @@ BB 17
 	instructions:
 		 0: 
 		 1: GETFIELD %self->page def_%v_41 %self[6.1,8.2,5.0,2.0,] 
-		 2: def_%v_42 %v_41[17.1,] 
+		 2: def_%v_42 %v_41[17.1,] 	 ARGS:Fixnum,
 		 3: BRANCH %v_42[17.2,] 
 BB 18
 	outgoing: 20 
@@ -396,10 +396,10 @@ BB 20
 	instructions:
 		 0: 
 		 1: GETFIELD %self->page def_%v_44 %self[6.1,8.2,5.0,2.0,] 
-		 2: def_%v_45 %v_44[20.1,] 
+		 2: def_%v_45 %v_44[20.1,] 	 ARGS:Fixnum,
 		 3: 
 		 4: GETFIELD %self->page def_%v_46 %self[6.1,8.2,5.0,2.0,] 
-		 5: def_%v_47 %v_46[20.4,] 
+		 5: def_%v_47 %v_46[20.4,] 	 ARGS:Fixnum,
 		 6: RETURN %v_47[20.5,] %self[11.9,6.1,8.2,5.0,5.6,2.0,2.7,] 
 BB 21
 	outgoing: 23 

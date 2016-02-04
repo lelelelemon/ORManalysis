@@ -50,15 +50,15 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->base_scope def_%v_3 %self[2.0,] 
-		 7: %self->positive_ranked def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 
+		 6: %self->base_scope def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %self->positive_ranked def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: COPY def_hottest %v_4[2.7,] 
 		 9: 
-		 10: %self->filter_hidden_and_tags def_%v_5 %self[2.0,2.6,2.7,] %v_4[2.7,] 
+		 10: %self->filter_hidden_and_tags def_%v_5 %self[2.0,2.6,2.7,] %v_4[2.7,] 	 ARGS:hottest,
 		 11: COPY def_hottest %v_5[2.10,] 
 		 12: 
 		 13: COPY def_%v_6 
-		 14: %v_5->order def_%v_7 %v_5[2.10,] %v_6[2.13,] 
+		 14: %v_5->order def_%v_7 %v_5[2.10,] %v_6[2.13,] 	 ARGS:%v_6,
 		 15: RETURN %v_7[2.14,] %self[2.0,2.6,2.7,2.10,] 
 BB 3
 	outgoing: 
@@ -80,7 +80,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->base_scope def_%v_3 %self[2.0,] 
+		 6: %self->base_scope def_%v_3 %self[2.0,] 	 ARGS:
 		 7: COPY def_hidden %v_3[2.6,] 
 		 8: 
 		 9: 
@@ -91,11 +91,11 @@ BB 3
 	datadep: 
 	instructions:
 		 0: (Story) def_%v_5 
-		 1: %v_5->arel_table def_%v_6 %v_5[3.0,] 
-		 2: def_%v_7 %v_6[3.1,] 
-		 3: %self->hidden_arel def_%v_8 %self[2.0,] 
-		 4: %v_7->in def_%v_9 %v_7[3.2,] %v_8[3.3,] 
-		 5: hidden->where def_%v_10 hidden[2.7,] %v_9[3.4,] 
+		 1: %v_5->arel_table def_%v_6 %v_5[3.0,] 	 ARGS:
+		 2: def_%v_7 %v_6[3.1,] 	 ARGS:Symbol,
+		 3: %self->hidden_arel def_%v_8 %self[2.0,] 	 ARGS:
+		 4: %v_7->in def_%v_9 %v_7[3.2,] %v_8[3.3,] 	 ARGS:%v_8,
+		 5: hidden->where def_%v_10 hidden[2.7,] %v_9[3.4,] 	 ARGS:%v_9,
 		 6: COPY def_hidden %v_10[3.5,] 
 		 7: 
 BB 4
@@ -109,8 +109,8 @@ BB 5
 	instructions:
 		 0: 
 		 1: GETFIELD %self->params def_%v_11 %self[2.0,] 
-		 2: def_%v_12 %v_11[5.1,] 
-		 3: %v_12->try def_%v_13 %v_12[5.2,] 
+		 2: def_%v_12 %v_11[5.1,] 	 ARGS:Symbol,
+		 3: %v_12->try def_%v_13 %v_12[5.2,] 	 ARGS:Symbol,
 		 4: BRANCH %v_13[5.3,] 
 BB 6
 	outgoing: 8 
@@ -118,8 +118,8 @@ BB 6
 	instructions:
 		 0: 
 		 1: GETFIELD %self->params def_%v_14 %self[2.0,] 
-		 2: def_%v_15 %v_14[6.1,] 
-		 3: %self->filter_tags def_%v_16 %self[2.0,] hidden[3.6,2.7,] %v_15[6.2,] 
+		 2: def_%v_15 %v_14[6.1,] 	 ARGS:Symbol,
+		 3: %self->filter_tags def_%v_16 %self[2.0,] hidden[3.6,2.7,] %v_15[6.2,] 	 ARGS:hidden,%v_15,
 		 4: COPY def_hidden %v_16[6.3,] 
 		 5: 
 BB 7
@@ -133,7 +133,7 @@ BB 8
 	instructions:
 		 0: 
 		 1: COPY def_%v_17 
-		 2: hidden->order def_%v_18 hidden[6.4,3.6,2.7,] %v_17[8.1,] 
+		 2: hidden->order def_%v_18 hidden[6.4,3.6,2.7,] %v_17[8.1,] 	 ARGS:%v_17,
 		 3: RETURN %v_18[8.2,] %self[2.0,] 
 BB 9
 	outgoing: 
@@ -155,12 +155,12 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->base_scope def_%v_3 %self[2.0,] 
-		 7: %self->filter_hidden_and_tags def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 
+		 6: %self->base_scope def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %self->filter_hidden_and_tags def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: COPY def_newest %v_4[2.7,] 
 		 9: 
 		 10: COPY def_%v_5 
-		 11: %v_4->order def_%v_6 %v_4[2.7,] %v_5[2.10,] 
+		 11: %v_4->order def_%v_6 %v_4[2.7,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: RETURN %v_6[2.11,] %self[2.0,2.6,2.7,] 
 BB 3
 	outgoing: 
@@ -183,12 +183,12 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: 
-		 7: %self->base_scope def_%v_3 %self[2.0,] 
-		 8: user->id def_%v_4 user[2.5,] 
+		 7: %self->base_scope def_%v_3 %self[2.0,] 	 ARGS:
+		 8: user->id def_%v_4 user[2.5,] 	 ARGS:
 		 9: COPY def_%v_5 %v_4[2.8,] 
-		 10: %v_3->where def_%v_6 %v_3[2.7,] %v_5[2.9,] 
+		 10: %v_3->where def_%v_6 %v_3[2.7,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: COPY def_%v_7 
-		 12: %v_6->order def_%v_8 %v_6[2.10,] %v_7[2.11,] 
+		 12: %v_6->order def_%v_8 %v_6[2.10,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: RETURN %v_8[2.12,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -210,7 +210,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->newest def_%v_3 %self[2.0,] 
+		 6: %self->newest def_%v_3 %self[2.0,] 	 ARGS:
 		 7: COPY def_stories %v_3[2.6,] 
 		 8: 
 		 9: COPY def_%v_4 
@@ -220,7 +220,7 @@ BB 3
 	outgoing: 5 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 
+		 0: def_%v_5 %self[2.0,] 	 ARGS:
 CLOSURE BEGIN: stories[2.7,] x[] %self[2.0,] story_ids[2.10,] keep_ids[] 
 BB 1
 	outgoing: 20 2 
@@ -240,20 +240,20 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: stories->select def_%cl_1_3 stories[] 
+		 1: stories->select def_%cl_1_3 stories[] 	 ARGS:Symbol,Symbol,Symbol,Symbol,
 		 2: (Story) def_%cl_1_4 
-		 3: %cl_1_4->arel_table def_%cl_1_5 %cl_1_4[3.2,] 
-		 4: def_%cl_1_6 %cl_1_5[3.3,] 
+		 3: %cl_1_4->arel_table def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:
+		 4: def_%cl_1_6 %cl_1_5[3.3,] 	 ARGS:Symbol,
 		 5: 
 		 6: (RECENT_DAYS_OLD) def_%cl_1_7 
-		 7: def_%cl_1_8 %cl_1_7[3.6,] x[2.2,] 
-		 8: %cl_1_8->days def_%cl_1_9 %cl_1_8[3.7,] 
-		 9: %cl_1_9->ago def_%cl_1_10 %cl_1_9[3.8,] 
-		 10: %cl_1_6->gt def_%cl_1_11 %cl_1_6[3.4,] %cl_1_10[3.9,] 
-		 11: %cl_1_3->where def_%cl_1_12 %cl_1_3[3.1,] %cl_1_11[3.10,] 
+		 7: def_%cl_1_8 %cl_1_7[3.6,] x[2.2,] 	 ARGS:x,
+		 8: %cl_1_8->days def_%cl_1_9 %cl_1_8[3.7,] 	 ARGS:
+		 9: %cl_1_9->ago def_%cl_1_10 %cl_1_9[3.8,] 	 ARGS:
+		 10: %cl_1_6->gt def_%cl_1_11 %cl_1_6[3.4,] %cl_1_10[3.9,] 	 ARGS:%cl_1_10,
+		 11: %cl_1_3->where def_%cl_1_12 %cl_1_3[3.1,] %cl_1_11[3.10,] 	 ARGS:%cl_1_11,
 		 12: COPY def_%cl_1_13 
-		 13: %cl_1_12->order def_%cl_1_14 %cl_1_12[3.11,] %cl_1_13[3.12,] 
-		 14: %cl_1_14->reject def_%cl_1_15 %cl_1_14[3.13,] %self[2.0,] 
+		 13: %cl_1_12->order def_%cl_1_14 %cl_1_12[3.11,] %cl_1_13[3.12,] 	 ARGS:%cl_1_13,
+		 14: %cl_1_14->reject def_%cl_1_15 %cl_1_14[3.13,] %self[2.0,] 	 ARGS:%cl_1_14,
 CLOSURE BEGIN: s[] 
 BB 1
 	outgoing: 6 2 
@@ -273,9 +273,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: s->score def_%cl_2_3 s[2.2,] 
+		 1: s->score def_%cl_2_3 s[2.2,] 	 ARGS:
 		 2: (HOT_STORY_POINTS) def_%cl_2_4 
-		 3: def_%cl_2_5 %cl_2_3[3.1,] %cl_2_4[3.2,] 
+		 3: def_%cl_2_5 %cl_2_3[3.1,] %cl_2_4[3.2,] 	 ARGS:%cl_2_4,
 		 4: RETURN %cl_2_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -291,7 +291,7 @@ BB 6
 CLOSURE END
 		 15: COPY def_story_ids %cl_1_15[3.14,] 
 		 16: 
-		 17: %cl_1_15->length def_%cl_1_16 %cl_1_15[3.14,] 
+		 17: %cl_1_15->length def_%cl_1_16 %cl_1_15[3.14,] 	 ARGS:
 		 18: (StoriesPaginator) def_%cl_1_17 
 		 19: def_%cl_1_18 %cl_1_17[3.18,] 
 		 20: %cl_1_18[3.19,] 
@@ -299,13 +299,13 @@ BB 4
 	outgoing: 5 18 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_18 %cl_1_17[3.18,] 
+		 0: def_%cl_1_18 %cl_1_17[3.18,] 	 ARGS:Symbol,
 BB 5
 	outgoing: 6 16 18 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_19 %cl_1_18[4.0,3.19,] 
-		 1: def_%cl_1_20 %cl_1_16[3.17,] %cl_1_19[5.0,] 
+		 0: def_%cl_1_19 %cl_1_18[4.0,3.19,] 	 ARGS:Fixnum,
+		 1: def_%cl_1_20 %cl_1_16[3.17,] %cl_1_19[5.0,] 	 ARGS:%cl_1_19,
 		 2: BRANCH %cl_1_20[5.1,] 
 BB 6
 	outgoing: 7 8 18 
@@ -319,29 +319,29 @@ BB 7
 	outgoing: 8 18 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_23 %cl_1_22[6.1,] 
+		 0: def_%cl_1_23 %cl_1_22[6.1,] 	 ARGS:Symbol,
 BB 8
 	outgoing: 9 18 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_24 %cl_1_23[7.0,6.2,] 
-		 1: def_%cl_1_25 %cl_1_24[8.0,] 
+		 0: def_%cl_1_24 %cl_1_23[7.0,6.2,] 	 ARGS:Fixnum,
+		 1: def_%cl_1_25 %cl_1_24[8.0,] 	 ARGS:Float,
 		 2: def_%cl_1_21 %cl_1_25[8.1,] 
-		 3: def_%cl_1_26 story_ids[3.15,] %cl_1_21[8.2,] 
+		 3: def_%cl_1_26 story_ids[3.15,] %cl_1_21[8.2,] 	 ARGS:%cl_1_21,
 		 4: COPY def_keep_ids %cl_1_26[8.3,] 
 		 5: 
-		 6: %cl_1_26->length def_%cl_1_28 %cl_1_26[8.3,] 
-		 7: def_%cl_1_29 %cl_1_28[8.6,] 
-		 8: story_ids->length def_%cl_1_30 story_ids[3.15,] 
+		 6: %cl_1_26->length def_%cl_1_28 %cl_1_26[8.3,] 	 ARGS:
+		 7: def_%cl_1_29 %cl_1_28[8.6,] 	 ARGS:Fixnum,
+		 8: story_ids->length def_%cl_1_30 story_ids[3.15,] 	 ARGS:
 		 9: def_%cl_1_27 %cl_1_29[8.7,] %cl_1_30[8.8,] 
-		 10: def_%cl_1_31 story_ids[8.8,3.15,] %cl_1_27[8.9,] 
+		 10: def_%cl_1_31 story_ids[8.8,3.15,] %cl_1_27[8.9,] 	 ARGS:%cl_1_27,
 		 11: COPY def_story_ids %cl_1_31[8.10,] 
 		 12: 
 BB 9
 	outgoing: 10 11 18 
 	datadep: 
 	instructions:
-		 0: keep_ids->length def_%cl_1_33 keep_ids[8.4,] 
+		 0: keep_ids->length def_%cl_1_33 keep_ids[8.4,] 	 ARGS:
 		 1: (StoriesPaginator) def_%cl_1_34 
 		 2: def_%cl_1_35 %cl_1_34[9.1,] 
 		 3: %cl_1_35[9.2,] 
@@ -349,13 +349,13 @@ BB 10
 	outgoing: 11 18 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_35 %cl_1_34[9.1,] 
+		 0: def_%cl_1_35 %cl_1_34[9.1,] 	 ARGS:Symbol,
 BB 11
 	outgoing: 12 14 18 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_36 %cl_1_35[10.0,9.2,] 
-		 1: def_%cl_1_37 %cl_1_33[9.0,] %cl_1_36[11.0,] 
+		 0: def_%cl_1_36 %cl_1_35[10.0,9.2,] 	 ARGS:Fixnum,
+		 1: def_%cl_1_37 %cl_1_33[9.0,] %cl_1_36[11.0,] 	 ARGS:%cl_1_36,
 		 2: BRANCH %cl_1_37[11.1,] 
 BB 12
 	outgoing: 13 18 
@@ -363,10 +363,10 @@ BB 12
 	instructions:
 		 0: 
 		 1: 
-		 2: story_ids->shuffle! def_%cl_1_38 story_ids[8.11,] 
+		 2: story_ids->shuffle! def_%cl_1_38 story_ids[8.11,] 	 ARGS:
 		 3: 
-		 4: story_ids->shift def_%cl_1_39 story_ids[12.2,8.11,] 
-		 5: keep_ids->push def_%cl_1_40 keep_ids[8.4,] %cl_1_39[12.4,] 
+		 4: story_ids->shift def_%cl_1_39 story_ids[12.2,8.11,] 	 ARGS:
+		 5: keep_ids->push def_%cl_1_40 keep_ids[8.4,] %cl_1_39[12.4,] 	 ARGS:%cl_1_39,
 BB 13
 	outgoing: 9 
 	datadep: 
@@ -384,7 +384,7 @@ BB 15
 		 0: 
 		 1: (Story) def_%cl_1_41 
 		 2: COPY def_%cl_1_42 keep_ids[8.4,] 
-		 3: %cl_1_41->where def_%cl_1_43 %cl_1_41[15.1,] %cl_1_42[15.2,] 
+		 3: %cl_1_41->where def_%cl_1_43 %cl_1_41[15.1,] %cl_1_42[15.2,] 	 ARGS:%cl_1_42,
 		 4: COPY def_stories %cl_1_43[15.3,] 
 		 5: 
 		 6: 
@@ -418,7 +418,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: COPY def_%v_7 
-		 2: stories->order def_%v_8 stories[2.7,] %v_7[5.1,] 
+		 2: stories->order def_%v_8 stories[2.7,] %v_7[5.1,] 	 ARGS:%v_7,
 		 3: RETURN %v_8[5.2,] %self[2.0,] 
 BB 6
 	outgoing: 
@@ -441,31 +441,31 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_tag 
 		 6: 
-		 7: %self->base_scope def_%v_3 %self[2.0,] 
-		 8: %self->positive_ranked def_%v_4 %self[2.0,2.7,] %v_3[2.7,] 
+		 7: %self->base_scope def_%v_3 %self[2.0,] 	 ARGS:
+		 8: %self->positive_ranked def_%v_4 %self[2.0,2.7,] %v_3[2.7,] 	 ARGS:%v_3,
 		 9: COPY def_tagged %v_4[2.8,] 
 		 10: 
 		 11: (Story) def_%v_5 
-		 12: %v_5->arel_table def_%v_6 %v_5[2.11,] 
-		 13: def_%v_7 %v_6[2.12,] 
+		 12: %v_5->arel_table def_%v_6 %v_5[2.11,] 	 ARGS:
+		 13: def_%v_7 %v_6[2.12,] 	 ARGS:Symbol,
 		 14: (Tagging) def_%v_8 
-		 15: %v_8->arel_table def_%v_9 %v_8[2.14,] 
+		 15: %v_8->arel_table def_%v_9 %v_8[2.14,] 	 ARGS:
 		 16: (Tagging) def_%v_10 
-		 17: %v_10->arel_table def_%v_11 %v_10[2.16,] 
-		 18: def_%v_12 %v_11[2.17,] 
-		 19: tag->id def_%v_13 tag[2.5,] 
-		 20: %v_12->eq def_%v_14 %v_12[2.18,] %v_13[2.19,] 
-		 21: %v_9->where def_%v_15 %v_9[2.15,] %v_14[2.20,] 
+		 17: %v_10->arel_table def_%v_11 %v_10[2.16,] 	 ARGS:
+		 18: def_%v_12 %v_11[2.17,] 	 ARGS:Symbol,
+		 19: tag->id def_%v_13 tag[2.5,] 	 ARGS:
+		 20: %v_12->eq def_%v_14 %v_12[2.18,] %v_13[2.19,] 	 ARGS:%v_13,
+		 21: %v_9->where def_%v_15 %v_9[2.15,] %v_14[2.20,] 	 ARGS:%v_14,
 		 22: (Tagging) def_%v_16 
-		 23: %v_16->arel_table def_%v_17 %v_16[2.22,] 
-		 24: def_%v_18 %v_17[2.23,] 
-		 25: %v_15->project def_%v_19 %v_15[2.21,] %v_18[2.24,] 
-		 26: %v_7->in def_%v_20 %v_7[2.13,] %v_19[2.25,] 
-		 27: tagged->where def_%v_21 tagged[2.9,] %v_20[2.26,] 
+		 23: %v_16->arel_table def_%v_17 %v_16[2.22,] 	 ARGS:
+		 24: def_%v_18 %v_17[2.23,] 	 ARGS:Symbol,
+		 25: %v_15->project def_%v_19 %v_15[2.21,] %v_18[2.24,] 	 ARGS:%v_18,
+		 26: %v_7->in def_%v_20 %v_7[2.13,] %v_19[2.25,] 	 ARGS:%v_19,
+		 27: tagged->where def_%v_21 tagged[2.9,] %v_20[2.26,] 	 ARGS:%v_20,
 		 28: COPY def_tagged %v_21[2.27,] 
 		 29: 
 		 30: COPY def_%v_22 
-		 31: %v_21->order def_%v_23 %v_21[2.27,] %v_22[2.30,] 
+		 31: %v_21->order def_%v_23 %v_21[2.27,] %v_22[2.30,] 	 ARGS:%v_22,
 		 32: RETURN %v_23[2.31,] %self[2.0,2.7,2.8,] 
 BB 3
 	outgoing: 
@@ -488,24 +488,24 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_length 
 		 6: 
-		 7: %self->base_scope def_%v_3 %self[2.0,] 
+		 7: %self->base_scope def_%v_3 %self[2.0,] 	 ARGS:
 		 8: COPY def_%v_4 
 		 9: 
-		 10: def_%v_5 length[2.5,] 
+		 10: def_%v_5 length[2.5,] 	 ARGS:Symbol,
 		 11: COPY def_%v_6 
-		 12: def_%v_7 length[2.5,] 
-		 13: %v_7->upcase def_%v_8 %v_7[2.12,] 
+		 12: def_%v_7 length[2.5,] 	 ARGS:Symbol,
+		 13: %v_7->upcase def_%v_8 %v_7[2.12,] 	 ARGS:
 		 14: COPY def_%v_9 
 		 15: def_%v_10 %v_5[2.10,] %v_6[2.11,] %v_8[2.13,] %v_9[2.14,] 
-		 16: def_%v_11 %v_4[2.8,] %v_10[2.15,] 
-		 17: %v_3->where def_%v_12 %v_3[2.7,] %v_11[2.16,] 
+		 16: def_%v_11 %v_4[2.8,] %v_10[2.15,] 	 ARGS:%v_10,
+		 17: %v_3->where def_%v_12 %v_3[2.7,] %v_11[2.16,] 	 ARGS:%v_11,
 		 18: COPY def_top %v_12[2.17,] 
 		 19: 
 		 20: (Story) def_%v_13 
-		 21: %v_13->score_sql def_%v_14 %v_13[2.20,] 
+		 21: %v_13->score_sql def_%v_14 %v_13[2.20,] 	 ARGS:
 		 22: COPY def_%v_15 
 		 23: def_%v_16 %v_14[2.21,] %v_15[2.22,] 
-		 24: top->order def_%v_17 top[2.18,] %v_16[2.23,] 
+		 24: top->order def_%v_17 top[2.18,] %v_16[2.23,] 	 ARGS:%v_16,
 		 25: RETURN %v_17[2.24,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -528,9 +528,9 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Story) def_%v_3 
-		 7: %v_3->unmerged def_%v_4 %v_3[2.6,] 
+		 7: %v_3->unmerged def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: COPY def_%v_5 
-		 9: %v_4->where def_%v_6 %v_4[2.7,] %v_5[2.8,] 
+		 9: %v_4->where def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: RETURN %v_6[2.9,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -560,7 +560,7 @@ BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %self->filter_hidden def_%v_4 %self[2.0,] scope[2.5,] 
+		 0: %self->filter_hidden def_%v_4 %self[2.0,] scope[2.5,] 	 ARGS:scope,
 		 1: COPY def_scope %v_4[3.0,] 
 		 2: 
 BB 4
@@ -574,8 +574,8 @@ BB 5
 	instructions:
 		 0: 
 		 1: GETFIELD %self->params def_%v_5 %self[2.0,] 
-		 2: def_%v_6 %v_5[5.1,] 
-		 3: %v_6->try def_%v_7 %v_6[5.2,] 
+		 2: def_%v_6 %v_5[5.1,] 	 ARGS:Symbol,
+		 3: %v_6->try def_%v_7 %v_6[5.2,] 	 ARGS:Symbol,
 		 4: BRANCH %v_7[5.3,] 
 BB 6
 	outgoing: 8 
@@ -583,8 +583,8 @@ BB 6
 	instructions:
 		 0: 
 		 1: GETFIELD %self->params def_%v_8 %self[2.0,] 
-		 2: def_%v_9 %v_8[6.1,] 
-		 3: %self->filter_tags def_%v_10 %self[2.0,] scope[3.1,2.5,] %v_9[6.2,] 
+		 2: def_%v_9 %v_8[6.1,] 	 ARGS:Symbol,
+		 3: %self->filter_tags def_%v_10 %self[2.0,] scope[3.1,2.5,] %v_9[6.2,] 	 ARGS:scope,%v_9,
 		 4: COPY def_scope %v_10[6.3,] 
 		 5: 
 BB 7
@@ -620,11 +620,11 @@ BB 2
 		 5: RECEIVEARG def_scope 
 		 6: 
 		 7: (Story) def_%v_3 
-		 8: %v_3->arel_table def_%v_4 %v_3[2.7,] 
-		 9: def_%v_5 %v_4[2.8,] 
-		 10: %self->hidden_arel def_%v_6 %self[2.0,] 
-		 11: %v_5->not_in def_%v_7 %v_5[2.9,] %v_6[2.10,] 
-		 12: scope->where def_%v_8 scope[2.5,] %v_7[2.11,] 
+		 8: %v_3->arel_table def_%v_4 %v_3[2.7,] 	 ARGS:
+		 9: def_%v_5 %v_4[2.8,] 	 ARGS:Symbol,
+		 10: %self->hidden_arel def_%v_6 %self[2.0,] 	 ARGS:
+		 11: %v_5->not_in def_%v_7 %v_5[2.9,] %v_6[2.10,] 	 ARGS:%v_6,
+		 12: scope->where def_%v_8 scope[2.5,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: RETURN %v_8[2.12,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
@@ -654,18 +654,18 @@ BB 3
 	datadep: 
 	instructions:
 		 0: (HiddenStory) def_%v_4 
-		 1: %v_4->arel_table def_%v_5 %v_4[3.0,] 
+		 1: %v_4->arel_table def_%v_5 %v_4[3.0,] 	 ARGS:
 		 2: (HiddenStory) def_%v_6 
-		 3: %v_6->arel_table def_%v_7 %v_6[3.2,] 
-		 4: def_%v_8 %v_7[3.3,] 
+		 3: %v_6->arel_table def_%v_7 %v_6[3.2,] 	 ARGS:
+		 4: def_%v_8 %v_7[3.3,] 	 ARGS:Symbol,
 		 5: GETFIELD %self->user def_%v_9 %self[2.0,] 
-		 6: %v_9->id def_%v_10 %v_9[3.5,] 
-		 7: %v_8->eq def_%v_11 %v_8[3.4,] %v_10[3.6,] 
-		 8: %v_5->where def_%v_12 %v_5[3.1,] %v_11[3.7,] 
+		 6: %v_9->id def_%v_10 %v_9[3.5,] 	 ARGS:
+		 7: %v_8->eq def_%v_11 %v_8[3.4,] %v_10[3.6,] 	 ARGS:%v_10,
+		 8: %v_5->where def_%v_12 %v_5[3.1,] %v_11[3.7,] 	 ARGS:%v_11,
 		 9: (HiddenStory) def_%v_13 
-		 10: %v_13->arel_table def_%v_14 %v_13[3.9,] 
-		 11: def_%v_15 %v_14[3.10,] 
-		 12: %v_12->project def_%v_16 %v_12[3.8,] %v_15[3.11,] 
+		 10: %v_13->arel_table def_%v_14 %v_13[3.9,] 	 ARGS:
+		 11: def_%v_15 %v_14[3.10,] 	 ARGS:Symbol,
+		 12: %v_12->project def_%v_16 %v_12[3.8,] %v_15[3.11,] 	 ARGS:%v_15,
 		 13: COPY def_hidden_arel %v_16[3.12,] 
 		 14: RETURN %v_16[3.12,] %self[2.0,] 
 BB 4
@@ -695,10 +695,10 @@ BB 2
 		 5: RECEIVEARG def_scope 
 		 6: 
 		 7: (Story) def_%v_3 
-		 8: %v_3->score_sql def_%v_4 %v_3[2.7,] 
+		 8: %v_3->score_sql def_%v_4 %v_3[2.7,] 	 ARGS:
 		 9: COPY def_%v_5 
 		 10: def_%v_6 %v_4[2.8,] %v_5[2.9,] 
-		 11: scope->where def_%v_7 scope[2.5,] %v_6[2.10,] 
+		 11: scope->where def_%v_7 scope[2.5,] %v_6[2.10,] 	 ARGS:%v_6,
 		 12: RETURN %v_7[2.11,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -723,21 +723,21 @@ BB 2
 		 6: RECEIVEARG def_tags 
 		 7: 
 		 8: (Story) def_%v_3 
-		 9: %v_3->arel_table def_%v_4 %v_3[2.8,] 
-		 10: def_%v_5 %v_4[2.9,] 
+		 9: %v_3->arel_table def_%v_4 %v_3[2.8,] 	 ARGS:
+		 10: def_%v_5 %v_4[2.9,] 	 ARGS:Symbol,
 		 11: (Tagging) def_%v_6 
-		 12: %v_6->arel_table def_%v_7 %v_6[2.11,] 
+		 12: %v_6->arel_table def_%v_7 %v_6[2.11,] 	 ARGS:
 		 13: (Tagging) def_%v_8 
-		 14: %v_8->arel_table def_%v_9 %v_8[2.13,] 
-		 15: def_%v_10 %v_9[2.14,] 
-		 16: %v_10->in def_%v_11 %v_10[2.15,] tags[2.6,] 
-		 17: %v_7->where def_%v_12 %v_7[2.12,] %v_11[2.16,] 
+		 14: %v_8->arel_table def_%v_9 %v_8[2.13,] 	 ARGS:
+		 15: def_%v_10 %v_9[2.14,] 	 ARGS:Symbol,
+		 16: %v_10->in def_%v_11 %v_10[2.15,] tags[2.6,] 	 ARGS:tags,
+		 17: %v_7->where def_%v_12 %v_7[2.12,] %v_11[2.16,] 	 ARGS:%v_11,
 		 18: (Tagging) def_%v_13 
-		 19: %v_13->arel_table def_%v_14 %v_13[2.18,] 
-		 20: def_%v_15 %v_14[2.19,] 
-		 21: %v_12->project def_%v_16 %v_12[2.17,] %v_15[2.20,] 
-		 22: %v_5->not_in def_%v_17 %v_5[2.10,] %v_16[2.21,] 
-		 23: scope->where def_%v_18 scope[2.5,] %v_17[2.22,] 
+		 19: %v_13->arel_table def_%v_14 %v_13[2.18,] 	 ARGS:
+		 20: def_%v_15 %v_14[2.19,] 	 ARGS:Symbol,
+		 21: %v_12->project def_%v_16 %v_12[2.17,] %v_15[2.20,] 	 ARGS:%v_15,
+		 22: %v_5->not_in def_%v_17 %v_5[2.10,] %v_16[2.21,] 	 ARGS:%v_16,
+		 23: scope->where def_%v_18 scope[2.5,] %v_17[2.22,] 	 ARGS:%v_17,
 		 24: RETURN %v_18[2.23,] %self[2.0,] 
 BB 3
 	outgoing: 

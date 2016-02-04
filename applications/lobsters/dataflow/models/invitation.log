@@ -18,7 +18,7 @@ BB 3
 	outgoing: 5 4 
 	datadep: 
 	instructions:
-		 0: %v_3->each def_%v_4 %v_3[2.6,] %self[2.0,] 
+		 0: %v_3->each def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
 CLOSURE BEGIN: tries[] %self[2.0,] 
 BB 1
 	outgoing: 12 2 
@@ -38,7 +38,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: tries->== def_%cl_1_3 tries[2.2,] 
+		 1: tries->== def_%cl_1_3 tries[2.2,] 	 ARGS:Fixnum,
 		 2: BRANCH %cl_1_3[3.1,] 
 BB 4
 	outgoing: 6 10 
@@ -46,7 +46,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: COPY def_%cl_1_4 
-		 2: %self->raise def_%cl_1_5 %self[2.0,] %cl_1_4[4.1,] 
+		 2: %self->raise def_%cl_1_5 %self[2.0,] %cl_1_4[4.1,] 	 ARGS:%cl_1_4,
 		 3: 
 BB 5
 	outgoing: 6 
@@ -59,13 +59,13 @@ BB 6
 	instructions:
 		 0: 
 		 1: (Utils) def_%cl_1_6 
-		 2: %cl_1_6->random_str def_%cl_1_7 %cl_1_6[6.1,] 
+		 2: %cl_1_6->random_str def_%cl_1_7 %cl_1_6[6.1,] 	 ARGS:Fixnum,
 		 3: ATTRASSIGN %self->code %cl_1_7[6.2,] 
 		 4: 
 		 5: (Invitation) def_%cl_1_8 
-		 6: %self->code def_%cl_1_9 %self[6.3,2.0,] 
+		 6: %self->code def_%cl_1_9 %self[6.3,2.0,] 	 ARGS:
 		 7: COPY def_%cl_1_10 %cl_1_9[6.6,] 
-		 8: %cl_1_8->exists? def_%cl_1_11 %cl_1_8[6.5,] %cl_1_10[6.7,] 
+		 8: %cl_1_8->exists? def_%cl_1_11 %cl_1_8[6.5,] %cl_1_10[6.7,] 	 ARGS:%cl_1_10,
 		 9: BRANCH %cl_1_11[6.8,] 
 BB 7
 	outgoing: 12 
@@ -124,8 +124,8 @@ BB 2
 		 4: 
 		 5: 
 		 6: (InvitationMailer) def_%v_3 
-		 7: %v_3->invitation def_%v_4 %v_3[2.6,] %self[2.0,] 
-		 8: %v_4->deliver def_%v_5 %v_4[2.7,] 
+		 7: %v_3->invitation def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%self,
+		 8: %v_4->deliver def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
 BB 3
 	outgoing: 
