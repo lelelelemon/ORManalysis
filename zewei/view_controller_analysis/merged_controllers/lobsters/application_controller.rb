@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
     true
   end
 
-
   def increase_traffic_counter
     @traffic = 1.0
 
@@ -52,7 +51,6 @@ class ApplicationController < ActionController::Base
     true
   end
 
-
   def require_logged_in_user
     if @user
       true
@@ -64,7 +62,6 @@ class ApplicationController < ActionController::Base
       redirect_to "/login"
     end
   end
-
 
   def require_logged_in_moderator
     require_logged_in_user
@@ -79,7 +76,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def require_logged_in_user_or_400
     if @user
       true
@@ -89,7 +85,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   @_tags_filtered = nil
   def tags_filtered_by_cookie
     @_tags_filtered ||= Tag.where(
@@ -97,17 +92,14 @@ class ApplicationController < ActionController::Base
     )
   end
 
-
   def user_is_spider?
     ua = request.env["HTTP_USER_AGENT"].to_s
     (ua == "" || ua.match(/(Google|bing)bot/))
   end
-
 
   def find_user_from_rss_token
     if !@user && request[:format] == "rss" && params[:token].to_s.present?
       @user = User.where(:rss_token => params[:token].to_s).first
     end
   end
-
 end

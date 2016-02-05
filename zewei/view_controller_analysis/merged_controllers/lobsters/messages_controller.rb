@@ -67,7 +67,6 @@ class MessagesController < ApplicationController
 
   end
 
-
   def sent
     @cur_url = "/messages"
     @title = "Messages Sent"
@@ -77,7 +76,57 @@ class MessagesController < ApplicationController
 
     @new_message = Message.new
 
-    render :action => "index"
+     if @direction == :out 
+ else 
+ end 
+ if @direction == :out 
+ end 
+ if @messages.any? 
+ form_tag batch_delete_messages_path do 
+ check_box_tag "delete_all",
+          :id => "delete_all" 
+ @direction == :in ? "From" : "To" 
+ @direction == :in ? "Received" : "Sent" 
+ @messages.includes(:author, :recipient).each do |message| 
+ message.has_been_read? ? "" : "bold" 
+ check_box_tag "delete_#{message.short_id}" 
+ if @direction == :in 
+ if message.author 
+ message.author.username 
+
+                  message.author.username 
+ else 
+ message.author_username 
+ end 
+ else 
+ message.recipient.username 
+
+                message.recipient.username 
+ end 
+ time_ago_in_words_label(message.created_at) 
+ message.short_id 
+ message.subject
+            
+ end 
+ submit_tag "Delete Selected" 
+ end 
+ else 
+ @direction == :in ? "" : "sent" 
+ end 
+ form_for @new_message, :method => :post do |f| 
+ error_messages_for @new_message 
+ f.label :recipient_username, "To:", :class => "required" 
+ f.text_field :recipient_username, :size => 20,
+        :autocomplete => "off" 
+ f.label :subject, "Subject:", :class => "required" 
+ f.text_field :subject, :style => "width: 500px;",
+        :autocomplete => "off" 
+ f.label :body, "Message:", :class => "required" 
+ f.text_area :body, :style => "width: 500px;", :rows => 5,
+        :autocomplete => "off" 
+ submit_tag "Send Message" 
+ end 
+
   end
 
   def create
@@ -95,7 +144,57 @@ class MessagesController < ApplicationController
         @new_message.recipient.username.to_s << "."
       return redirect_to "/messages"
     else
-      render :action => "index"
+       if @direction == :out 
+ else 
+ end 
+ if @direction == :out 
+ end 
+ if @messages.any? 
+ form_tag batch_delete_messages_path do 
+ check_box_tag "delete_all",
+          :id => "delete_all" 
+ @direction == :in ? "From" : "To" 
+ @direction == :in ? "Received" : "Sent" 
+ @messages.includes(:author, :recipient).each do |message| 
+ message.has_been_read? ? "" : "bold" 
+ check_box_tag "delete_#{message.short_id}" 
+ if @direction == :in 
+ if message.author 
+ message.author.username 
+
+                  message.author.username 
+ else 
+ message.author_username 
+ end 
+ else 
+ message.recipient.username 
+
+                message.recipient.username 
+ end 
+ time_ago_in_words_label(message.created_at) 
+ message.short_id 
+ message.subject
+            
+ end 
+ submit_tag "Delete Selected" 
+ end 
+ else 
+ @direction == :in ? "" : "sent" 
+ end 
+ form_for @new_message, :method => :post do |f| 
+ error_messages_for @new_message 
+ f.label :recipient_username, "To:", :class => "required" 
+ f.text_field :recipient_username, :size => 20,
+        :autocomplete => "off" 
+ f.label :subject, "Subject:", :class => "required" 
+ f.text_field :subject, :style => "width: 500px;",
+        :autocomplete => "off" 
+ f.label :body, "Message:", :class => "required" 
+ f.text_area :body, :style => "width: 500px;", :rows => 5,
+        :autocomplete => "off" 
+ submit_tag "Send Message" 
+ end 
+
     end
   end
 
@@ -163,7 +262,6 @@ class MessagesController < ApplicationController
 
   end
 
-
   def destroy
     if @message.author_user_id == @user.id
       @message.deleted_by_author = true
@@ -183,7 +281,6 @@ class MessagesController < ApplicationController
       return redirect_to "/messages"
     end
   end
-
 
   def batch_delete
     deleted = 0
@@ -216,7 +313,6 @@ class MessagesController < ApplicationController
     return redirect_to "/messages"
   end
 
-
   def keep_as_new
     @message.has_been_read = false
     @message.save
@@ -224,14 +320,12 @@ class MessagesController < ApplicationController
     return redirect_to "/messages"
   end
 
-
 private
   def message_params
     params.require(:message).permit(
       :recipient_username, :subject, :body,
     )
   end
-
 
   def find_message
     if @message = Message.where(:short_id => params[:message_id] ||
@@ -246,5 +340,4 @@ private
     redirect_to "/messages"
     return false
   end
-
 end

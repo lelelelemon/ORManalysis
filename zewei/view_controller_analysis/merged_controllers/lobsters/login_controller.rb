@@ -9,11 +9,24 @@ class LoginController < ApplicationController
     redirect_to "/"
   end
 
-
   def index
     @title = "Login"
     @referer ||= request.referer
-    render :action => "index"
+     form_tag login_path do 
+ label_tag :email, "E-mail or Username:" 
+ text_field_tag :email, "", :size => 30, :autofocus => "autofocus" 
+ label_tag :password, "Password:" 
+ password_field_tag :password, "", :size => 30 
+ submit_tag "Login" 
+ link_to "Reset your password", forgot_password_path 
+ if Rails.application.allow_invitation_requests? 
+ else 
+ end 
+ if @referer.present? 
+ hidden_field_tag :referer, @referer 
+ end 
+ end 
+
   end
 
   def login
@@ -72,10 +85,14 @@ class LoginController < ApplicationController
     index
   end
 
-
   def forgot_password
     @title = "Reset Password"
-    render :action => "forgot_password"
+     form_tag reset_password_path do 
+ label_tag :email, "E-mail or Username:" 
+ text_field_tag :email, "", :size => 30 
+ submit_tag "Reset Password" 
+ end 
+
   end
 
   def reset_password
@@ -93,7 +110,6 @@ class LoginController < ApplicationController
       "to you."
     return index
   end
-
 
   def set_new_password
     @title = "Reset Password"
@@ -141,5 +157,4 @@ class LoginController < ApplicationController
  end 
 
   end
-
 end

@@ -14,7 +14,6 @@ class SignupController < ApplicationController
 
   end
 
-
   def invite
     @title = "Pass Along an Invitation"
  @user.invited_by_user.try(:username) 
@@ -33,7 +32,6 @@ class SignupController < ApplicationController
 
   end
 
-
   def invited
     if @user
       flash[:error] = "You are already signed up."
@@ -50,7 +48,33 @@ class SignupController < ApplicationController
     @new_user = User.new
     @new_user.email = @invitation.email
 
-    render :action => "invited"
+     form_for @new_user, { :url => signup_path,
+  :autocomplete => "off" } do |f| 
+ hidden_field_tag "invitation_code", @invitation.code 
+ error_messages_for(@new_user) 
+ f.label :invitation, "Invited By:", :class => "required" 
+ @invitation.user.username 
+
+        @invitation.user.username 
+ f.label :username, "Username:", :class => "required" 
+ f.text_field :username, :size => 30 
+ User.username_regex 
+ f.label :email, "E-mail Address:", :class => "required" 
+ f.email_field :email, :size => 30 
+ f.label :password, "Password:", :class => "required" 
+ f.password_field :password, :size => 30, :autocomplete => "off" 
+ f.label :password_confirmation, "Password (again):",
+      :class => "required" 
+ f.password_field :password_confirmation, :size => 30,
+      :autocomplete => "off" 
+ f.label :about, "About:", :class => "required" 
+ f.text_area :about, :size => "100x5", :style => "width: 600px;" 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
+ submit_tag "Signup" 
+ end 
+
   end
 
   def signup
@@ -74,7 +98,33 @@ class SignupController < ApplicationController
 
       return redirect_to "/signup/invite"
     else
-      render :action => "invited"
+       form_for @new_user, { :url => signup_path,
+  :autocomplete => "off" } do |f| 
+ hidden_field_tag "invitation_code", @invitation.code 
+ error_messages_for(@new_user) 
+ f.label :invitation, "Invited By:", :class => "required" 
+ @invitation.user.username 
+
+        @invitation.user.username 
+ f.label :username, "Username:", :class => "required" 
+ f.text_field :username, :size => 30 
+ User.username_regex 
+ f.label :email, "E-mail Address:", :class => "required" 
+ f.email_field :email, :size => 30 
+ f.label :password, "Password:", :class => "required" 
+ f.password_field :password, :size => 30, :autocomplete => "off" 
+ f.label :password_confirmation, "Password (again):",
+      :class => "required" 
+ f.password_field :password_confirmation, :size => 30,
+      :autocomplete => "off" 
+ f.label :about, "About:", :class => "required" 
+ f.text_area :about, :size => "100x5", :style => "width: 600px;" 
+  if defined?(allow_images) && allow_images 
+ end 
+ 
+ submit_tag "Signup" 
+ end 
+
     end
   end
 
@@ -84,5 +134,4 @@ private
       :username, :email, :password, :password_confirmation, :about,
     )
   end
-
 end

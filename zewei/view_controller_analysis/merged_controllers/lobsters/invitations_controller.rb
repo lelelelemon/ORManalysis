@@ -22,7 +22,6 @@ class InvitationsController < ApplicationController
 
   end
 
-
   def index
     @invitation_requests = InvitationRequest.where(:is_verified => true)
  if @user.is_moderator? 
@@ -56,7 +55,6 @@ class InvitationsController < ApplicationController
 
   end
 
-
   def confirm_email
     if !(ir = InvitationRequest.where(:code => params[:code].to_s).first)
       flash[:error] = "Invalid or expired invitation request"
@@ -70,7 +68,6 @@ class InvitationsController < ApplicationController
       "will now be shown to other logged-in users."
     return redirect_to "/invitations/request"
   end
-
 
   def create
     i = Invitation.new
@@ -95,7 +92,6 @@ class InvitationsController < ApplicationController
     end
   end
 
-
   def create_by_request
     if Rails.application.allow_invitation_requests?
       @invitation_request = InvitationRequest.new(
@@ -114,7 +110,6 @@ class InvitationsController < ApplicationController
       return redirect_to "/login"
     end
   end
-
 
   def send_for_request
     if !(ir = InvitationRequest.where(:code => params[:code].to_s).first)
@@ -135,7 +130,6 @@ class InvitationsController < ApplicationController
     return redirect_to "/invitations"
   end
 
-
   def delete_request
     if !@user.is_moderator?
       return redirect_to "/invitations"
@@ -152,5 +146,4 @@ class InvitationsController < ApplicationController
 
     return redirect_to "/invitations"
   end
-
 end

@@ -61,5 +61,4 @@ class ModerationsController < ApplicationController
  end 
 
   end
-
 end

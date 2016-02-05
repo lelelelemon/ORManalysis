@@ -33,7 +33,6 @@ class FiltersController < ApplicationController
 
   end
 
-
   def update
     tags_param = params[:tags]
     new_tags = tags_param.blank? ? [] :
@@ -50,5 +49,4 @@ class FiltersController < ApplicationController
 
     redirect_to filters_path
   end
-
 end
