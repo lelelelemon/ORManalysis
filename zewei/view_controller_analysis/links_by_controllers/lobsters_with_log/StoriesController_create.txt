@@ -1,0 +1,231 @@
+---controller: stories
+---view: show
+---hrefs: 
+route.recognize_path '' #
+home,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: stories
+---view: form
+---hrefs: 
+#<%= f.object.already_posted_story.comments_path %>
+comments,index
+#<%= f.object.already_posted_story.comments_path %>
+comments,index
+#javascript:{window.open(%22<%= Rails.application.root_url
+        %>stories/new?url=%22+encodeURIComponent(document.location)+<%
+        %>%22&title=%22+encodeURIComponent(document.title));%20void(0);}
+home,index
+route.recognize_path '2' #<%= f.object.url %>
+route.recognize_path '#' ##
+home,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: comments
+---view: comment
+---hrefs: 
+#<%= comment.story.comments_path %>
+comments,index
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+route.recognize_path '/u/2' #/u/<%= comment.user.username %>
+users,show
+route.recognize_path '/u/2' #/u/<%= comment.user.username %>
+users,show
+route.recognize_path '2' #<%= comment.url %>
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to "", login_path, :class => "upvoter"
+login,index
+
+
+---controller: comments
+---view: commentbox
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+form_for comment,
+:html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
+ if comment.errors.any? 
+ errors_for comment 
+ end 
+ hidden_field_tag "story_id", comment.story.short_id 
+ if comment.parent_comment 
+ hidden_field_tag "parent_comment_short_id",
+      comment.parent_comment.short_id 
+ end 
+ text_area_tag "comment", comment.comment, :rows => 5,
+      :style => "width: 100%;", :autocomplete => "off", :disabled => !@user,
+      :placeholder => (@user ? "" : "You must be logged in to leave a comment.")
+      
+ if @user 
+ end 
+ button_tag "#{comment.new_record?? "Post" : "Update"}",
+        :class => "comment-post", :type => "button",
+        :disabled => !@user 
+ button_tag "Preview", :class => "comment-preview",
+        :type => "button", :disabled => !@user 
+ if comment.persisted? || comment.parent_comment_id 
+ button_tag "Cancel", :class => "comment-cancel",
+          :type => "button" 
+ end 
+ if @user && @user.hats.any? 
+ select_tag "hat_id",
+          options_from_collection_for_select(@user.hats, "id", "hat",
+          comment.hat_id), :include_blank => true 
+ end 
+ if @user 
+ render :partial => "global/markdownhelp" 
+ end 
+ end
+comments,new/create
+---link_to: 
+
+
+---controller: stories
+---view: listdetail
+---hrefs: 
+#<%= story.url_or_comments_path %>
+comments,index
+#<%= story.comments_path %>
+comments,index
+#<%= tag_path(tagging.tag.tag) %>
+home,tagged
+#<%= story.domain_search_url %>
+search,index
+#<%= ms.url_or_comments_path %>
+comments,index
+#<%= tag_path(tagging.tag.tag) %>
+home,tagged
+#<%= ms.domain_search_url %>
+search,index
+#<%= edit_story_path(story.short_id) %>
+stories,edit
+#<%= edit_story_path(story.short_id) %>
+stories,show
+#<%= story.comments_path %>
+comments,index
+#<%= story.comments_path %>
+comments,index
+route.recognize_path '' #
+home,index
+route.recognize_path '/u/2' #/u/<%= ms.user.username %>
+users,show
+route.recognize_path '/u/2' #/u/<%= ms.user.username %>
+users,show
+route.recognize_path '/u/2' #/u/<%= story.user.username %>
+users,show
+route.recognize_path '' #
+home,index
+route.recognize_path '/u/2' #/u/<%= story.user.username %>
+users,show
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to "hide", story_hide_path(story.short_id),
+              :class => "hider"
+stories,hide
+#link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider"
+stories,unhide
+#link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester"
+stories,suggest
+#link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" }
+stories,show
+#link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link"
+stories,show
+#link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" }
+stories,undelete
+#link_to "", login_path, :class => "upvoter"
+login,index
+
+
+---controller: comments
+---view: comment
+---hrefs: 
+#<%= comment.story.comments_path %>
+comments,index
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+route.recognize_path '/u/2' #/u/<%= comment.user.username %>
+users,show
+route.recognize_path '/u/2' #/u/<%= comment.user.username %>
+users,show
+route.recognize_path '2' #<%= comment.url %>
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to "", login_path, :class => "upvoter"
+login,index
+
+
+---controller: global
+---view: markdownhelp
+---hrefs: 
+route.recognize_path 'http://example.com/' #http://example.com/
+home,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+
+view file stories_create not exists!
+---redirect_to tags in stories_create: 
+#@story.comments_path
+comments,index
