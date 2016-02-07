@@ -12,30 +12,51 @@ class NotesController < ContentController
 
     if @notes.empty?
       @message = I18n.t('errors.no_notes_found')
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- @message 
-
-end
+       @message 
 
     end
+ for note in @notes 
+ note.html(:body) 
+ link_to_permalink(note, display_date_and_time(note.published_at)) 
+ end 
+ paginate @notes, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
+
   end
 
   def show
     @note = Note.published.find_by_permalink(CGI.escape(params[:permalink]))
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".page_not_found") 
+    return  t(".page_not_found") 
  t(".the_page_you_are_looking_for") 
-
-end
- @note
-
-    @canonical_url = @note.permalink_url
+ unless @note
 
     if @note.in_reply_to_message.present?
       @reply = JSON.parse(@note.in_reply_to_message)
-      render :show_in_reply
+       image_tag(@reply['user']['profile_image_url'] , class: "alignleft", alt: @reply['user']['name']) 
+ get_reply_context_url(@reply) 
+ nofollowify_links(PublifyApp::Textfilter::Twitterfilter.filtertext(nil,nil,@reply['text'],nil)) 
+ get_reply_context_twitter_link(@reply) 
+  author_picture note 
+ note.html(:body) 
+ link_to_permalink(note, display_date_and_time(note.published_at)) 
+ link_to note.redirect.from_url, note.redirect.from_url 
+ author_link note 
+ unless note.twitter_id.blank? 
+  " | #{link_to(t(".view_on_twitter"), note.twitter_url, {class: 'u-syndication', rel: 'syndication'})}" 
+ end 
+ 
+
     end
+  author_picture note 
+ note.html(:body) 
+ link_to_permalink(note, display_date_and_time(note.published_at)) 
+ link_to note.redirect.from_url, note.redirect.from_url 
+ author_link note 
+ unless note.twitter_id.blank? 
+  " | #{link_to(t(".view_on_twitter"), note.twitter_url, {class: 'u-syndication', rel: 'syndication'})}" 
+ end 
+ 
+
   end
 
   private

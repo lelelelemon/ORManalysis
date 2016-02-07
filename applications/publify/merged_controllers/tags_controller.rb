@@ -29,7 +29,6 @@ class TagsController < ContentController
     if @grouping.nil?
       @articles = []
     else
-      @canonical_url = permalink_with_page @grouping, params[:page]
       @page_title = this_blog.tag_title_template.to_title(@grouping, this_blog, params)
       @description = @grouping.description.to_s
       @keywords = ''
@@ -40,11 +39,8 @@ class TagsController < ContentController
     respond_to do |format|
       format.html do
         if @articles.empty?
-          ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".page_not_found") 
+           t(".page_not_found") 
  t(".the_page_you_are_looking_for") 
-
-end
 
         else
           render template_name(params[:id])
@@ -61,17 +57,18 @@ end
         render 'articles/index_rss_feed', layout: false
       end
     end
+  for article in articles 
+ render article 
+ render 'articles/article_links', article: article 
+ end 
+ paginate articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
+ 
+
   end
 
   private
 
   def template_name(value)
     template_exists?("tags/#{value}") ? value : :show
-  end
-
-  # For some reasons, the permalink_url does not take the pagination.
-  def permalink_with_page(grouping, page)
-    suffix = page.nil? ? '/' : "/page/#{page}/"
-    grouping.permalink_url + suffix
   end
 end

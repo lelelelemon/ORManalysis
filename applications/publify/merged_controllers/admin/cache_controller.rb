@@ -19,6 +19,15 @@ class Admin::CacheController < Admin::BaseController
         @cache_number += 1
       end
     end
+ content_for :page_heading do 
+ t(".cache") 
+ end 
+ t(".explaination") 
+ t(".stats", files_count: @cache_number.to_i, size: @cache_size.to_i / 1000) 
+ form_tag(admin_cache_path, method: :delete) do 
+ submit_tag(t(".sweep_cache"), class: 'btn btn-primary') 
+ end 
+
   end
 
   def destroy

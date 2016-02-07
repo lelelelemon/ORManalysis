@@ -7,13 +7,23 @@ class Admin::SidebarController < Admin::BaseController
  t(".sidebar") 
  end 
  t(".explain_how_its_works") 
- t(".download_more_plugins") 
+ t(".download_more_plugins_html") 
  form_tag(url_for(action: 'publish'), method: :put, class: 'spinner') do 
  link_to(t(".cancel"), {action: 'index'}) 
  t(".or") 
  submit_tag(t('.publish_changes'), class: 'btn btn-success') 
  end 
- render partial: 'config' 
+  t(".available_items") 
+ if @available.blank? 
+ t(".you_have_no_plugins_installed") 
+ else 
+ render :partial => 'available', :collection => @available 
+ end 
+ t(".active_sidebar_items") 
+ image_tag "spinner-blue.gif", :id => 'update_spinner',
+          :style => 'display:none;' 
+ render :partial => 'target' 
+ 
  form_tag(url_for(action: 'publish'), method: :put, class: 'spinner') do 
  link_to(t(".cancel"), {action: 'index'}) 
  t(".or") 
@@ -31,7 +41,21 @@ class Admin::SidebarController < Admin::BaseController
     respond_to do |format|
       format.js do
         # render partial _target for it
-        return render partial: 'target_sidebar', locals: { sortable_index: old_s_index, sidebar: sidebar }
+        return  sidebar.id 
+ sidebar.id 
+ link_to 'X', admin_sidebar_path(sidebar), {class: 'deletion_link', remote: true, method: :delete, :'data-confirm'=>'Are you sure?'} 
+ form_tag admin_sidebar_path(sidebar.id), {remote: true, method: :put} do |f| 
+ class_for_admin_state(sidebar, sortable_index)
+ sidebar.display_name 
+ sidebar.description 
+ sidebar.class.fields.each do |row| 
+ row.line_html(sidebar) 
+ end 
+ if sidebar.class.fields.length > 0 
+ submit_tag(t('.update'), class: 'btn btn-sm btn-success') 
+ end 
+ end 
+
       end
       format.html do
         return redirect_to(admin_sidebar_index_path)
@@ -46,7 +70,6 @@ class Admin::SidebarController < Admin::BaseController
       format.html { return redirect_to(admin_sidebar_index_path) }
       format.js
     end
-
   end
 
   def publish

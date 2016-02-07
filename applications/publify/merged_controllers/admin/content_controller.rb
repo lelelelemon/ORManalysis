@@ -9,7 +9,7 @@ class Admin::ContentController < Admin::BaseController
 
   def index
     @search = params[:search] ? params[:search] : {}
-    @articles = Article.search_with(@search).page(params[:page]).per(this_blog.admin_display_elements)
+    @articles = this_blog.articles.search_with(@search).page(params[:page]).per(this_blog.admin_display_elements)
 
     if request.xhr?
       respond_to do |format|
@@ -35,8 +35,7 @@ class Admin::ContentController < Admin::BaseController
  select_tag('search[published_at]', options_for_select(Article.find_by_published_at), {prompt: t('.publication_date'), class: 'form-control'}) 
  submit_tag(t('.search'), {class: 'btn btn-success'}) 
  image_tag('spinner.gif') 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @articles.empty? 
+  if @articles.empty? 
  t('.no_articles') 
  end 
  for article in @articles 
@@ -51,8 +50,6 @@ class Admin::ContentController < Admin::BaseController
  (article.allow_comments?) ? link_to("#{article.comments.ham.size.to_s} <i class='glyphicon glyphicon-comment'></i>".html_safe, controller: '/admin/feedback', id: article.id, action: 'article') : '-' 
  end 
  display_pagination(@articles, 5, 'first', 'last')
-
-end
  
  end 
 
@@ -62,32 +59,24 @@ end
     @article = Article::Factory.new(this_blog, current_user).default
     load_resources
  form_tag({action: 'create'}, id: 'article_form', multipart: true, class: 'autosave') do 
- render partial: 'form' 
- end 
-
-  end
-
-  def edit
-    return unless access_granted?(params[:id])
-    @article = Article.find(params[:id])
-    @article.text_filter ||= current_user.default_text_filter
-    @article.keywords = Tag.collection_to_string @article.tags
-    load_resources
- form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- hidden_field_tag 'user_textfilter', current_user.text_filter_name 
+  hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
  link_to(t('.cancel'), {action: 'index'}, {class: 'btn btn-default'}) 
  link_to(t('.preview'), {controller: '/articles', action: 'preview', id: @article.id}, {target: 'new', class: 'btn btn-default'}) if @article.id 
  t('.save_as_draft') 
  controller.action_name == 'new' ? t('.publish') : t('.save') 
- render 'shared/flash', flash: flash 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
  error_messages_for 'article' 
  @article.text_filter 
-#= render 'admin/shared/macros' 
  text_field 'article', 'title', class: 'form-control', placeholder: t('.title') 
  text_area('article', 'body_and_extended', {class: 'form-control ', style: 'height: 360px', placeholder: t('.type_your_post'), :"data-widearea" => "enable"}) 
-#= render 'admin/shared/macros' 
  t('.publish') 
  submit_tag(t('.publish'), class: 'btn btn-success pull-right') 
  t('.tags') 
@@ -111,7 +100,7 @@ t('.tags_explaination')
  check_box 'article', 'published'  
  t('.published') 
  toggle_element('status', t('.ok')) 
- t('.allowed_comments_and_trackbacks', allow_comment: content_tag(:strong, t('.allow_comments_status', count: @article.allow_comments ? 1 : 0)), allow_trackback: content_tag(:strong, t('.allow_pings_status', count: @article.allow_pings ? 1 : 0))) 
+ t('.allowed_comments_and_trackbacks_html', allow_comment: content_tag(:strong, t('.allow_comments_status', count: @article.allow_comments ? 1 : 0)), allow_trackback: content_tag(:strong, t('.allow_pings_status', count: @article.allow_pings ? 1 : 0))) 
  toggle_element('conversation') 
  check_box 'article', 'allow_pings' 
  t('.allow_trackbacks') 
@@ -135,8 +124,83 @@ t('.tags_explaination')
  toggle_element('visibility', t('.ok')) 
  t('.cancel') 
  submit_tag(t('.publish'), class: 'btn btn-success') 
+ 
+ end 
 
-end
+  end
+
+  def edit
+    return unless access_granted?(params[:id])
+    @article = Article.find(params[:id])
+    @article.text_filter ||= current_user.default_text_filter
+    @article.keywords = Tag.collection_to_string @article.tags
+    load_resources
+ form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
+  hidden_field_tag 'user_textfilter', current_user.text_filter_name 
+ hidden_field_tag('article[id]', @article.id) if @article.present? 
+ link_to(t('.cancel'), {action: 'index'}, {class: 'btn btn-default'}) 
+ link_to(t('.preview'), {controller: '/articles', action: 'preview', id: @article.id}, {target: 'new', class: 'btn btn-default'}) if @article.id 
+ t('.save_as_draft') 
+ controller.action_name == 'new' ? t('.publish') : t('.save') 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ error_messages_for 'article' 
+ @article.text_filter 
+ text_field 'article', 'title', class: 'form-control', placeholder: t('.title') 
+ text_area('article', 'body_and_extended', {class: 'form-control ', style: 'height: 360px', placeholder: t('.type_your_post'), :"data-widearea" => "enable"}) 
+ t('.publish') 
+ submit_tag(t('.publish'), class: 'btn btn-success pull-right') 
+ t('.tags') 
+ text_field 'article', 'keywords', {autocomplete: 'off', class: 'form-control tm-input'} 
+t('.tags_explaination') 
+ post_types = @post_types || [] 
+ if post_types.size.zero? 
+ hidden_field_tag 'article[post_type]', 'read' 
+ else 
+ t('.article_type') 
+ select :article, :post_type, post_types.map{|pt| [pt.name, pt.permalink]}, {include_blank: t('.default')} 
+ end 
+ t('.publish_settings') 
+ t('.permalink') 
+ toggle_element('permalink') 
+ text_field 'article', 'permalink', {autocomplete: 'off', class: 'form-control'} 
+ toggle_element('permalink', t('.ok')) 
+ t('.status') 
+ @article.state.to_s.downcase 
+ toggle_element('status') 
+ check_box 'article', 'published'  
+ t('.published') 
+ toggle_element('status', t('.ok')) 
+ t('.allowed_comments_and_trackbacks_html', allow_comment: content_tag(:strong, t('.allow_comments_status', count: @article.allow_comments ? 1 : 0)), allow_trackback: content_tag(:strong, t('.allow_pings_status', count: @article.allow_pings ? 1 : 0))) 
+ toggle_element('conversation') 
+ check_box 'article', 'allow_pings' 
+ t('.allow_trackbacks') 
+ check_box 'article', 'allow_comments' 
+ t('.allow_comments') 
+ toggle_element('conversation', t('.ok')) 
+ t('.published') 
+ if @article.published 
+ display_date_and_time(@article.published_at) 
+ else 
+ t('.now') 
+ end 
+ toggle_element('publish') 
+ text_field 'article', 'published_at' 
+ toggle_element('publish', t('.ok')) 
+ t('.visibility') 
+ @article.password.blank? ? t('.public') : t('.protected') 
+ toggle_element('visibility') 
+ t('.password') 
+ text_field 'article', 'password', class: 'form-control' 
+ toggle_element('visibility', t('.ok')) 
+ t('.cancel') 
+ submit_tag(t('.publish'), class: 'btn btn-success') 
  
  end 
 
@@ -154,12 +218,74 @@ end
     else
       @article.keywords = Tag.collection_to_string @article.tags
       load_resources
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_tag({action: 'create'}, id: 'article_form', multipart: true, class: 'autosave') do 
- render partial: 'form' 
+       form_tag({action: 'create'}, id: 'article_form', multipart: true, class: 'autosave') do 
+  hidden_field_tag 'user_textfilter', current_user.text_filter_name 
+ hidden_field_tag('article[id]', @article.id) if @article.present? 
+ link_to(t('.cancel'), {action: 'index'}, {class: 'btn btn-default'}) 
+ link_to(t('.preview'), {controller: '/articles', action: 'preview', id: @article.id}, {target: 'new', class: 'btn btn-default'}) if @article.id 
+ t('.save_as_draft') 
+ controller.action_name == 'new' ? t('.publish') : t('.save') 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
  end 
-
-end
+ end 
+ 
+ error_messages_for 'article' 
+ @article.text_filter 
+ text_field 'article', 'title', class: 'form-control', placeholder: t('.title') 
+ text_area('article', 'body_and_extended', {class: 'form-control ', style: 'height: 360px', placeholder: t('.type_your_post'), :"data-widearea" => "enable"}) 
+ t('.publish') 
+ submit_tag(t('.publish'), class: 'btn btn-success pull-right') 
+ t('.tags') 
+ text_field 'article', 'keywords', {autocomplete: 'off', class: 'form-control tm-input'} 
+t('.tags_explaination') 
+ post_types = @post_types || [] 
+ if post_types.size.zero? 
+ hidden_field_tag 'article[post_type]', 'read' 
+ else 
+ t('.article_type') 
+ select :article, :post_type, post_types.map{|pt| [pt.name, pt.permalink]}, {include_blank: t('.default')} 
+ end 
+ t('.publish_settings') 
+ t('.permalink') 
+ toggle_element('permalink') 
+ text_field 'article', 'permalink', {autocomplete: 'off', class: 'form-control'} 
+ toggle_element('permalink', t('.ok')) 
+ t('.status') 
+ @article.state.to_s.downcase 
+ toggle_element('status') 
+ check_box 'article', 'published'  
+ t('.published') 
+ toggle_element('status', t('.ok')) 
+ t('.allowed_comments_and_trackbacks_html', allow_comment: content_tag(:strong, t('.allow_comments_status', count: @article.allow_comments ? 1 : 0)), allow_trackback: content_tag(:strong, t('.allow_pings_status', count: @article.allow_pings ? 1 : 0))) 
+ toggle_element('conversation') 
+ check_box 'article', 'allow_pings' 
+ t('.allow_trackbacks') 
+ check_box 'article', 'allow_comments' 
+ t('.allow_comments') 
+ toggle_element('conversation', t('.ok')) 
+ t('.published') 
+ if @article.published 
+ display_date_and_time(@article.published_at) 
+ else 
+ t('.now') 
+ end 
+ toggle_element('publish') 
+ text_field 'article', 'published_at' 
+ toggle_element('publish', t('.ok')) 
+ t('.visibility') 
+ @article.password.blank? ? t('.public') : t('.protected') 
+ toggle_element('visibility') 
+ t('.password') 
+ text_field 'article', 'password', class: 'form-control' 
+ toggle_element('visibility', t('.ok')) 
+ t('.cancel') 
+ submit_tag(t('.publish'), class: 'btn btn-success') 
+ 
+ end 
 
     end
   end
@@ -184,22 +310,25 @@ end
     else
       @article.keywords = Tag.collection_to_string @article.tags
       load_resources
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- hidden_field_tag 'user_textfilter', current_user.text_filter_name 
+       form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
+  hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
  link_to(t('.cancel'), {action: 'index'}, {class: 'btn btn-default'}) 
  link_to(t('.preview'), {controller: '/articles', action: 'preview', id: @article.id}, {target: 'new', class: 'btn btn-default'}) if @article.id 
  t('.save_as_draft') 
  controller.action_name == 'new' ? t('.publish') : t('.save') 
- render 'shared/flash', flash: flash 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
  error_messages_for 'article' 
  @article.text_filter 
-#= render 'admin/shared/macros' 
  text_field 'article', 'title', class: 'form-control', placeholder: t('.title') 
  text_area('article', 'body_and_extended', {class: 'form-control ', style: 'height: 360px', placeholder: t('.type_your_post'), :"data-widearea" => "enable"}) 
-#= render 'admin/shared/macros' 
  t('.publish') 
  submit_tag(t('.publish'), class: 'btn btn-success pull-right') 
  t('.tags') 
@@ -223,7 +352,7 @@ t('.tags_explaination')
  check_box 'article', 'published'  
  t('.published') 
  toggle_element('status', t('.ok')) 
- t('.allowed_comments_and_trackbacks', allow_comment: content_tag(:strong, t('.allow_comments_status', count: @article.allow_comments ? 1 : 0)), allow_trackback: content_tag(:strong, t('.allow_pings_status', count: @article.allow_pings ? 1 : 0))) 
+ t('.allowed_comments_and_trackbacks_html', allow_comment: content_tag(:strong, t('.allow_comments_status', count: @article.allow_comments ? 1 : 0)), allow_trackback: content_tag(:strong, t('.allow_pings_status', count: @article.allow_pings ? 1 : 0))) 
  toggle_element('conversation') 
  check_box 'article', 'allow_pings' 
  t('.allow_trackbacks') 
@@ -247,12 +376,8 @@ t('.tags_explaination')
  toggle_element('visibility', t('.ok')) 
  t('.cancel') 
  submit_tag(t('.publish'), class: 'btn btn-success') 
-
-end
  
  end 
-
-end
 
     end
   end
@@ -296,12 +421,6 @@ end
         format.js
       end
     end
- hidden_field_tag('article[id]', @article.id) 
- link_to('Preview', {:controller => '/articles', :action => 'preview', :id => @article.id}, {:target => 'new', :class => 'btn btn-default'}); 
- if @article.state.to_s.downcase == "draft" 
- Time.now() 
- end 
-
   end
 
   protected
@@ -309,7 +428,8 @@ end
   def get_fresh_or_existing_draft_for_article
     if @article.published && @article.id
       parent_id = @article.id
-      @article = Article.drafts.child_of(parent_id).first || Article.new
+      @article =
+        this_blog.articles.drafts.child_of(parent_id).first || this_blog.articles.build
       @article.allow_comments = this_blog.default_allow_comments
       @article.allow_pings = this_blog.default_allow_pings
       @article.parent_id = parent_id

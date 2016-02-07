@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   def set_paths
     prepend_view_path "#{::Rails.root}/themes/#{this_blog.theme}/views"
     Dir.glob(File.join(::Rails.root.to_s, 'lib', '*_sidebar/app/views')).select do |file|
+      puts File.join(::Rails.root.to_s, 'lib', '*_sidebar/app/views')
       append_view_path file
     end
   end
@@ -50,17 +51,9 @@ class ApplicationController < ActionController::Base
     @current_user = nil
   end
 
-  # The base URL for this request, calculated by looking up the URL for the main
-  # blog index page.
-  def blog_base_url
-    url_for(controller: '/articles').gsub(%r{/$}, '')
-  end
-
   def add_to_cookies(name, value, path = nil, _expires = nil)
     cookies[name] = { value: value, path: path || "/#{controller_name}", expires: 6.weeks.from_now }
   end
 
-  def this_blog
-    @blog ||= Blog.default
-  end
+  include BlogHelper
 end

@@ -18,8 +18,7 @@ class Admin::PagesController < Admin::BaseController
  end 
  t(".title") 
  t(".author")
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @pages.empty? 
+  if @pages.empty? 
  t(".no_pages") 
  end 
  for page in @pages 
@@ -29,8 +28,6 @@ class Admin::PagesController < Admin::BaseController
  l(page.created_at) 
  end 
  display_pagination(@pages, 5) 
-
-end
  
 
   end
@@ -40,8 +37,7 @@ end
     @page.text_filter ||= default_textfilter
     @page.published = true
     @page.user_id = current_user.id
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for([:admin, @page]) do |f| 
+  form_for([:admin, @page]) do |f| 
  if @page.errors.any? 
  pluralize(@page.errors.count, "error") 
  @page.errors.full_messages.each do |message| 
@@ -73,16 +69,13 @@ end
  toggle_element 'text_filter', "OK" 
  submit_tag( t(".publish"), class: 'btn btn-success') 
  end 
-
-end
  
 
   end
 
   def edit
     @page.text_filter ||= default_textfilter
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for([:admin, @page]) do |f| 
+  form_for([:admin, @page]) do |f| 
  if @page.errors.any? 
  pluralize(@page.errors.count, "error") 
  @page.errors.full_messages.each do |message| 
@@ -114,8 +107,6 @@ end
  toggle_element 'text_filter', "OK" 
  submit_tag( t(".publish"), class: 'btn btn-success') 
  end 
-
-end
  
 
   end
@@ -123,12 +114,46 @@ end
   def create
     @page = Page.new(page_params)
     @page.published_at = Time.now
+    @page.blog = this_blog
     @page.user_id = current_user.id
 
     if @page.save
       redirect_to admin_pages_url, notice: I18n.t('admin.pages.new.success')
     else
-      render :new
+        form_for([:admin, @page]) do |f| 
+ if @page.errors.any? 
+ pluralize(@page.errors.count, "error") 
+ @page.errors.full_messages.each do |message| 
+ message 
+ end 
+ end 
+ current_user.text_filter_name 
+ link_to(t('.cancel'), {action: 'index'}, {class: 'btn btn-default'}) 
+ controller.action_name == "new" ? t(".publish") : t(".save") 
+ error_messages_for 'page' 
+ @page.text_filter 
+ text_field 'page', 'title', :class => 'form-control', :placeholder => t('.title')  
+ text_area('page', 'body', {:class => 'form-control ', style: 'height: 360px', :rows => '20', placeholder: t('.type_your_post'), :"data-widearea" => "enable"}) 
+ t('.publish') 
+ submit_tag( t(".publish"), class: 'btn btn-success pull-right') 
+ t(".permanent_link")
+ text_field 'page', 'name', :class => 'form-control' 
+ t(".publish_settings") 
+ t(".status") 
+ (@page.published) ? t(".published") : t(".offline") 
+ toggle_element('status') 
+ check_box 'page', 'published'  
+ t(".online")
+ toggle_element 'status', "OK" 
+ t(".article_filter") 
+ @page.text_filter.description 
+ toggle_element 'text_filter' 
+ options_for_select text_filter_options, @page.text_filter 
+ toggle_element 'text_filter', "OK" 
+ submit_tag( t(".publish"), class: 'btn btn-success') 
+ end 
+ 
+
     end
   end
 
@@ -137,7 +162,40 @@ end
     if @page.update(page_params)
       redirect_to admin_pages_url, notice: I18n.t('admin.pages.edit.success')
     else
-      render :edit
+        form_for([:admin, @page]) do |f| 
+ if @page.errors.any? 
+ pluralize(@page.errors.count, "error") 
+ @page.errors.full_messages.each do |message| 
+ message 
+ end 
+ end 
+ current_user.text_filter_name 
+ link_to(t('.cancel'), {action: 'index'}, {class: 'btn btn-default'}) 
+ controller.action_name == "new" ? t(".publish") : t(".save") 
+ error_messages_for 'page' 
+ @page.text_filter 
+ text_field 'page', 'title', :class => 'form-control', :placeholder => t('.title')  
+ text_area('page', 'body', {:class => 'form-control ', style: 'height: 360px', :rows => '20', placeholder: t('.type_your_post'), :"data-widearea" => "enable"}) 
+ t('.publish') 
+ submit_tag( t(".publish"), class: 'btn btn-success pull-right') 
+ t(".permanent_link")
+ text_field 'page', 'name', :class => 'form-control' 
+ t(".publish_settings") 
+ t(".status") 
+ (@page.published) ? t(".published") : t(".offline") 
+ toggle_element('status') 
+ check_box 'page', 'published'  
+ t(".online")
+ toggle_element 'status', "OK" 
+ t(".article_filter") 
+ @page.text_filter.description 
+ toggle_element 'text_filter' 
+ options_for_select text_filter_options, @page.text_filter 
+ toggle_element 'text_filter', "OK" 
+ submit_tag( t(".publish"), class: 'btn btn-success') 
+ end 
+ 
+
     end
   end
 

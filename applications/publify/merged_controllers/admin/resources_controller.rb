@@ -64,19 +64,6 @@ h upload.size rescue 0
 
   end
 
-  def get_thumbnails
-    position = params[:position].to_i
-    @resources = Resource.without_images.by_created_at.limit(10).offset(position)
-
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- @resources.each do |image| 
- show_thumbnail_for_editor(image) 
- end 
-
-end
-
-  end
-
   def destroy
     @record = Resource.find(params[:id])
     @record.destroy

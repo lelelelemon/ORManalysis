@@ -6,17 +6,13 @@ class Admin::NotesController < Admin::BaseController
   before_action :find_note, only: [:edit, :update, :show, :destroy]
 
   def index
-    @note = Publisher.new(current_user).new_note
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- content_for :page_heading do 
+    @note = new_note
+  content_for :page_heading do 
  t(".notes") 
  end 
-
-end
  
  form_for @note, url: admin_notes_path do |n| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- n.hidden_field :text_filter, value: current_user.text_filter_name 
+  n.hidden_field :text_filter, value: current_user.text_filter_name 
  n.text_area :body, {class: 'form-control', rows: '7', placeholder: t(".compose_new_note")} 
  t(".publish_settings") 
  unless twitter_available?(this_blog, current_user) 
@@ -34,18 +30,13 @@ end
  link_to(t(".cancel"), {action: 'index'}) 
  t(".or") 
  submit_tag(t(".publish"), class: 'btn btn-success') 
-
-end
  
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @notes.empty? 
+  if @notes.empty? 
  t("admin.notes.form.no_notes") 
  end 
  render @notes 
  display_pagination(@notes, 3, 'first', 'last')
-
-end
  
 
   end
@@ -60,22 +51,18 @@ end
  end 
  t(".are_you_sure", note: @note)
  form_for @note, url: admin_note_path(@note), method: :delete do 
- t(".action_or_other", first_action: link_to(t(".cancel"), {action: 'index'}), second_action: submit_tag(t(".delete"), class: "btn btn-danger")) 
+ t(".action_or_other_html", first_action: link_to(t(".cancel"), {action: 'index'}), second_action: submit_tag(t(".delete"), class: "btn btn-danger")) 
  end 
 
   end
 
   def edit
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- content_for :page_heading do 
+  content_for :page_heading do 
  t(".notes") 
  end 
-
-end
  
  form_for @note, url: admin_note_path(@note) do |n| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- n.hidden_field :text_filter, value: current_user.text_filter_name 
+  n.hidden_field :text_filter, value: current_user.text_filter_name 
  n.text_area :body, {class: 'form-control', rows: '7', placeholder: t(".compose_new_note")} 
  t(".publish_settings") 
  unless twitter_available?(this_blog, current_user) 
@@ -93,24 +80,19 @@ end
  link_to(t(".cancel"), {action: 'index'}) 
  t(".or") 
  submit_tag(t(".publish"), class: 'btn btn-success') 
-
-end
  
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @notes.empty? 
+  if @notes.empty? 
  t("admin.notes.form.no_notes") 
  end 
  render @notes 
  display_pagination(@notes, 3, 'first', 'last')
-
-end
  
 
   end
 
   def create
-    note = Publisher.new(current_user).new_note
+    note = new_note
 
     note.published = true
     note.published_at = parse_date_time params[:note][:published_at]
@@ -151,5 +133,10 @@ end
 
   def find_note
     @note = Note.find(params[:id])
+  end
+
+  def new_note
+    this_blog.notes.build(author: current_user,
+                          text_filter: current_user.text_filter)
   end
 end

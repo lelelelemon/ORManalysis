@@ -32,12 +32,18 @@ class CommentsController < FeedbackController
     end
 
     @comment = Comment.new(comment_params)
+  avatar_tag(email: comment.email, url: comment.url) 
+h @comment[:author] 
+ t(".is_about_to_say")
+ @comment.html 
+ 
+
   end
 
   protected
 
   def recaptcha_ok_for?(comment)
-    use_recaptcha = Blog.default.settings['use_recaptcha']
+    use_recaptcha = comment.blog.use_recaptcha
     ((use_recaptcha && verify_recaptcha(model: comment)) || !use_recaptcha)
   end
 

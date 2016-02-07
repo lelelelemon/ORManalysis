@@ -33,17 +33,13 @@ class Admin::DashboardController < Admin::BaseController
  content_for :page_heading do 
  t(".welcome_back", user_name: current_user.name) 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".dashboard_explain_html", available_actions: dashboard_action_links) 
+  t(".dashboard_explain_html", available_actions: dashboard_action_links) 
  if current_user.can_access_to_themes? 
  t(".customization_explain_html", theme_link: link_to(t(".change_your_blog_presentation"), controller: 'themes'), sidebar_link: link_to(t(".enable_plugins"), controller: 'sidebar')) 
  end 
  t(".help_explain_html", doc_link: link_to(t('.read_our_documentation'), 'http://publify.co')) 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".today") 
+  t(".today") 
  t(".articles_and_comments_count_since", articles_count: @newposts_count, comments_count: @newcomments_count) 
  t(".running_publify", version: PUBLIFY_VERSION) 
  @version_message 
@@ -62,17 +58,24 @@ end
  link_to(t('.unconfirmed_count', count: @unconfirmed), controller: 'admin/feedback', only: 'unapproved') 
  link_to(t(".spam_count", count: @statspam), controller: 'admin/feedback', only: 'spam') 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".latest_comments") 
- render partial: "comment" 
-
-end
+  t(".latest_comments") 
+  if @comments.size == 0 
+ t(".no_comments_yet") 
+ else 
+ for comment in @comments 
+ comment.id 
+ avatar_tag(:email => comment.email, :url => comment.url, class: 'pull-left img-circle gravatar') 
+ t(".by") 
+ comment.url.blank? ? h(comment.author) : nofollowify_links(link_to(h(comment.author), comment.url)) 
+ display_date_and_time comment.created_at 
+ comment.html.strip_html.slice(0..300) 
+ show_feedback_actions(comment, 'dashboard') 
+ end 
+ end 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".your_drafts") 
+ 
+  t(".your_drafts") 
  if @drafts.empty? 
  link_to t(".no_drafts_yet"), controller: 'content', action: 'new' 
  else 
@@ -82,11 +85,8 @@ end
  post.body.strip_html.slice(0,300) if post.body 
  end 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".inbound_links") 
+  t(".inbound_links") 
  if @inbound_links.nil? 
  t('.you_have_no_internet_connection') 
  else 
@@ -100,8 +100,6 @@ end
  end 
  end 
  end 
-
-end
  
 
   end

@@ -11,13 +11,13 @@ class ArticlesController < ContentController
   helper :'admin/base'
 
   def index
-    conditions = (Blog.default.statuses_in_timeline) ? ['type in (?, ?)', 'Article', 'Note'] : ['type = ?', 'Article']
+    conditions = (this_blog.statuses_in_timeline) ? ['type in (?, ?)', 'Article', 'Note'] : ['type = ?', 'Article']
 
     limit = this_blog.per_page(params[:format])
     if params[:year].blank?
-      @articles = Content.published.where(conditions).page(params[:page]).per(limit)
+      @articles = this_blog.contents.published.where(conditions).page(params[:page]).per(limit)
     else
-      @articles = Content.published_at(params.values_at(:year, :month, :day)).where(conditions).page(params[:page]).per(limit)
+      @articles = this_blog.contents.published_at(params.values_at(:year, :month, :day)).where(conditions).page(params[:page]).per(limit)
     end
 
     @page_title = this_blog.home_title_template
@@ -44,14 +44,11 @@ class ArticlesController < ContentController
         render_articles_feed('rss')
       end
     end
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- for article in articles 
+  for article in articles 
  render article 
  render 'articles/article_links', article: article 
  end 
  paginate articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
-
-end
  
 
   end
@@ -62,31 +59,40 @@ end
     @page_title = this_blog.search_title_template.to_title(@articles, this_blog, params)
     @description = this_blog.search_desc_template.to_title(@articles, this_blog, params)
     respond_to do |format|
-      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+      format.html {  for article in @articles 
+ link_to_permalink article,article.title 
+ article.html(:body).gsub(/<\/?[^>]*>/, "").slice(0..300) 
+ end 
+ paginate @articles, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
+ }
+      format.rss { render 'index_rss_feed', layout: false }
+      format.atom { render 'index_atom_feed', layout: false }
+    end
  for article in @articles 
  link_to_permalink article,article.title 
  article.html(:body).gsub(/<\/?[^>]*>/, "").slice(0..300) 
  end 
  paginate @articles, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
 
-end
- }
-      format.rss { render 'index_rss_feed', layout: false }
-      format.atom { render 'index_atom_feed', layout: false }
-    end
   end
 
   def live_search
     @search = params[:q]
     @articles = Article.search(@search)
-    render :live_search, layout: false
+     if !@search.to_s.blank? 
+h @search 
+ for article in @articles.to_a 
+ link_to_permalink article,h(article.title) 
+ end 
+ else 
+ end 
+
   end
 
   def preview
     @article = Article.last_draft(params[:id])
     @page_title = this_blog.article_title_template.to_title(@article, this_blog, params)
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @article.allow_pings? 
+     if @article.allow_pings? 
  @article.trackback_url 
  end 
 h @article.title.gsub(/-+/, '-') 
@@ -97,24 +103,21 @@ h (html(@article).strip_html[0..255]).gsub(/-+/, '-')
  onhover_show_admin_tools(:article) 
  link_to(t(".edit"), { controller: "admin/content", action: "edit", id: @article.id }, class: "admintools", style: "display: none", id: "admin_article") 
  render @article 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".tags") + " " + article.tags.map { |tag| link_to tag.display_name, tag.permalink_url(nil, true), rel: "tag"}.sort.join(", ") if article.tags.any? 
+  if article.tags.any? 
+ t(".tags") 
+ tag_links article 
+ end 
  link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
  link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
-
-end
  
  if @article.allow_comments? or @article.published_comments.size > 0 
  t('.comments') 
  unless @article.comments_closed? 
  t(".leave_a_response")
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if @article.published_comments.any? 
+  if @article.published_comments.any? 
  render @article.published_comments 
  end 
-
-end
  
  end 
  if @article.allow_pings? 
@@ -122,7 +125,15 @@ end
  t(".use_the_following_link_to_trackback")
  @article.trackback_url 
  unless @article.published_trackbacks.blank? 
- render(partial: "trackback", collection: @article.published_trackbacks) 
+  trackback.id 
+ onhover_show_admin_tools(:trackback, trackback.id) 
+ trackback.id 
+ t(".from")
+ trackback.blog_name 
+ trackback.url 
+h trackback.title 
+ trackback.excerpt 
+ 
  end 
  end 
  @article.feed_url('rss') 
@@ -132,8 +143,7 @@ end
  t(".trackback_uri")
  end 
  unless @article.comments_closed? 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_tag @article.comment_url, id: 'comment_form', remote: true do 
+  form_tag @article.comment_url, id: 'comment_form', remote: true do 
  t(".your_name")
  text_field "comment", "author", size: 20 
  link_to '#', onclick: "$('.optional_field').fadeToggle();return false" do 
@@ -152,14 +162,10 @@ end
  @article.preview_comment_url 
  t(".preview_comment")
  end 
-
-end
  
  else 
  t(".comments_are_disabled")
  end 
-
-end
 
   end
 
@@ -167,9 +173,19 @@ end
     return unless request.xhr?
     @article = Article.find(params[:article][:id])
     if @article.password == params[:article][:password]
-      render partial: 'articles/full_article_content', locals: { article: @article }
+       article.html(:body) 
+ article.html(:extended) 
+
     else
-      render partial: 'articles/password_form', locals: { article: @article }
+       article.id 
+ form_for(article, {:remote => true,
+                      :url => { :controller => 'articles', :action => 'check_password'},
+                      :update => "content-#{article.id}"}) do |f| 
+ password_field(:article, :password) 
+ article.id 
+ submit_tag(t('.submit') + '!', name: 'check_password') 
+ end 
+
     end
   end
 
@@ -190,17 +206,14 @@ end
     r = Redirect.find_by_from_path(from)
     return redirect_to r.full_to_path, status: 301 if r # Let redirection made outside of the blog on purpose (deal with it, Brakeman!)
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".page_not_found") 
+     t(".page_not_found") 
  t(".the_page_you_are_looking_for") 
-
-end
 
   end
 
   def archives
     limit = this_blog.limit_archives_display
-    @articles = Article.published.page(params[:page]).per(limit)
+    @articles = this_blog.published_articles.page(params[:page]).per(limit)
     @page_title = this_blog.archives_title_template.to_title(@articles, this_blog, params)
     @keywords = this_blog.meta_keywords
     @description = this_blog.archives_desc_template.to_title(@articles, this_blog, params)
@@ -233,10 +246,7 @@ for article in @articles
 
   def preview_page
     @page = Page.find(params[:id])
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- html @page 
-
-end
+     html @page 
 
   end
 
@@ -246,13 +256,12 @@ end
       @description = this_blog.meta_description
       @keywords = this_blog.meta_keywords
     else
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t(".page_not_found") 
+       t(".page_not_found") 
  t(".the_page_you_are_looking_for") 
 
-end
-
     end
+ html @page 
+
   end
 
   # TODO: Move to TextfilterController?
@@ -312,18 +321,12 @@ end
       @auto_discovery_url_rss = "http://feeds2.feedburner.com/#{this_blog.feedburner_url}"
       @auto_discovery_url_atom = "http://feeds2.feedburner.com/#{this_blog.feedburner_url}"
     end
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- for article in articles 
+      for article in articles 
  render article 
  render 'articles/article_links', article: article 
  end 
  paginate articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
-
-end
  
-
-end
 
   end
 
@@ -340,10 +343,7 @@ end
 
   def error!
     @message = I18n.t('errors.no_posts_found')
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- @message 
-
-end
+     @message 
 
   end
 end

@@ -37,8 +37,7 @@ class Admin::UsersController < Admin::BaseController
  content_for :page_heading do 
  t(".add_user") 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for([:admin, @user]) do |f| 
+  form_for([:admin, @user]) do |f| 
  if @user.errors.any? 
  pluralize(@user.errors.count, "error") 
  @user.errors.full_messages.each do |message| 
@@ -125,8 +124,6 @@ class Admin::UsersController < Admin::BaseController
  t(".or") 
  submit_tag(t(".save"), class: 'btn btn-success') 
  end 
-
-end
  
 
   end
@@ -138,8 +135,21 @@ end
  t(".edit_user") 
  end 
  form_tag :action=>"update", :id => @user.id do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for([:admin, @user]) do |f| 
+ render :partial => "form" 
+ end 
+
+  end
+
+  def create
+    @user = User.new(user_params)
+    @user.name = @user.login
+    if @user.save
+      redirect_to admin_users_url, notice: I18n.t('admin.users.new.success')
+    else
+       content_for :page_heading do 
+ t(".add_user") 
+ end 
+  form_for([:admin, @user]) do |f| 
  if @user.errors.any? 
  pluralize(@user.errors.count, "error") 
  @user.errors.full_messages.each do |message| 
@@ -226,20 +236,8 @@ end
  t(".or") 
  submit_tag(t(".save"), class: 'btn btn-success') 
  end 
-
-end
  
- end 
 
-  end
-
-  def create
-    @user = User.new(user_params)
-    @user.name = @user.login
-    if @user.save
-      redirect_to admin_users_url, notice: I18n.t('admin.users.new.success')
-    else
-      render :new
     end
   end
 
@@ -247,7 +245,13 @@ end
     if @user.update(user_params)
       redirect_to admin_users_url, notice: 'User was successfully updated.'
     else
-      render :edit
+       content_for :page_heading do 
+ t(".edit_user") 
+ end 
+ form_tag :action=>"update", :id => @user.id do 
+ render :partial => "form" 
+ end 
+
     end
   end
 
