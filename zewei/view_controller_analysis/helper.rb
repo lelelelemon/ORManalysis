@@ -8,15 +8,12 @@ def read_content(path)
 end
 
 def get_view_name_from_render_statement(r)
+	puts "r: " + r
 	r = r.split("\n")[0]
-	r = r[6..-1] if r.start_with?"return"
-	r.strip!
 	r = r[6..-1] if r.start_with?"render"
-	r.strip!
 	while r[0] == '(' 
 		r = r[1..-1]
 	end
-
 
 	arr = r.split(",")
 	view = ""
@@ -24,21 +21,34 @@ def get_view_name_from_render_statement(r)
 	view_exists = false
 
 	arr[0].strip!
-	if arr[0].start_with?"\"" or arr[0].start_with?"'"
-		view = arr[0]
-		view.gsub! "\"", ""
-		view.gsub! "'", ""
-		view_exists = true
+	if arr[0].start_with?"\"" or arr[0].start_with?"'" or arr[0].start_with?":"
+		
+		if arr[0].include?("=>")
+			arr[0].gsub! /["':]/, ""
+			a = arr[0].split("=>")
+			if a[0] == "partial" or a[0] == "template" or a[0] == "action"
+				view = a[1]
+				view_exists = true
+			end
+		else
+			view = arr[0]
+			view.gsub! /["':]/, ""
+			view_exists = true
+		end
 	else 
 		arr.each do |a|
+			a.gsub! /["'\t]/, ""
 			a.gsub! " ", ""
-			a.gsub! "\"", ""
-			a.gsub! "'", ""
-			a.gsub! "\t", ""
-			a = a.split("=>")
-			a[0].strip!
-			a[1].strip!
-			if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" 
+			if a.include?("=>")
+				a = a.split("=>")
+			elsif a.include?":" 
+				a = a.split(":")		
+			else 
+				a = [a]
+				a[1] = ""	
+			end
+			if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" or 
+				a[0] == "partial" or a[0] == "template" or a[0] == "action" 
 				view = a[1]
 				view_exists = true
 			end
@@ -61,7 +71,7 @@ end
 def get_filename_from_path(filename)
 	i = filename.rindex('/')
 	if i == nil
-		return nil
+		return filename
 	end
 	n = filename[i+1..-1]
 	return n
@@ -74,6 +84,15 @@ def get_nested_path(filepath, basepath)
 		return ""
 	end
 	n = filepath[i+basepath.length..j]
+	return n
+end
+
+def get_nested_path(filepath)
+	j = filepath.rindex('/')
+	if j == nil
+		return ""
+	end
+	n = filepath[0..j]
 	return n
 end
 
@@ -149,7 +168,7 @@ end
 def get_array_with_keyword(ast, keyword)
 	res_arr = Array.new
 	ast_arr = Array.new
-	ast_arr.push ast
+	ast_arr.push @ast
 	while ast_arr.length > 0
 		cur_ast = ast_arr.pop
 		if cur_ast.source.start_with? keyword 
@@ -281,7 +300,8 @@ def get_href_tags(tag_arr, named_routes_class)
 	File.write("temp.rb", rb_console_code)
 
 	system("rails console < temp.rb > temp2.txt")
-	File.readlines("temp2.txt").each do |line|
+	text = File.open("temp2.txt").read
+	text.each_line do |line|
 		if $log and line.start_with?"route.recognize"
 				res += line
 		end
@@ -321,7 +341,11 @@ def get_redirect_to_tags(tag_arr, named_routes_class)
 	File.write("temp.rb", rb_console_code)
 
 	system("rails console < temp.rb > temp2.txt")
-	File.readlines("temp2.txt").each do |line|
+	
+	puts "after wrtiting to temp2.txt"
+	text = File.open("temp2.txt").read
+	text.each_line do |line|
+		puts "reading from temp2"
 		if $log and line.start_with?"route.recognize"
 				res += line
 		end

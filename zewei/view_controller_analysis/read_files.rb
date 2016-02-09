@@ -6,7 +6,7 @@ def load_all_controllers_from_path(controller_path)
 	controller_hash = Hash.new
 	Dir.glob(controller_path + "**/*") do |item|
 		next if not item.end_with?"_controller.rb"
-		controller = Controller_Class.new(item)
+		controller = Controller_Class.new(item, controller_path)
 		controller_hash[controller.get_controller_name] = controller
 
 	end
@@ -49,19 +49,19 @@ def controller_print_all_controllers_render_replaced(controller_path, view_path,
 	view_hash = load_all_views_from_path(view_path)
 	
 	controller_hash.each do |item_path, controller_class|
-		nested_path = get_nested_path(item_path, controller_path)
+		nested_path = get_nested_path(controller_class.get_controller_name)
+		filename = get_filename_from_path(controller_class.get_controller_name)
+		puts "nested_path: " + nested_path
+		puts "filename: " + filename
 		if not File.directory?(new_controller_path + nested_path)
 			FileUtils.mkdir_p new_controller_path + nested_path
 		end
-		controller_file_path = new_controller_path + nested_path + controller_class.get_controller_name + "_controller.rb"
+		controller_file_path = new_controller_path + nested_path + filename + "_controller.rb"
 		res = controller_class.get_content
 		controller_class.get_functions.each do |k, v|
 			
 			#replace all controller_functions by functions with render statemenrs replaced
-			#old = v.get_content
-			#new = v.replace_render_statements(view_hash)
-			#puts res.include?v.get_content
-#			puts "def #{v.get_function_name}[.*]end" 
+			
 
 			res = res.gsub(v.get_content, v.replace_render_statements(view_hash))
 			#break
@@ -225,14 +225,14 @@ def controller_print_links_controller_view_recursively(view_path, controller_pat
 	
 	indent = "---"
 	controller_hash.each do |controller_name, controller_class|
-		nested_path = get_nested_path(controller_name, controller_path)
+		nested_path = get_nested_path(controller_class.get_controller_name)
 		if not File.directory?(new_view_path + nested_path)
 			FileUtils.mkdir_p new_view_path + nested_path
 		end
 		puts "-------------------Start of Controller Class: " + controller_name + "-------------------"
 		controller_class.get_functions.each do |function_name, function_class|
-			filename = new_view_path + nested_path + controller_name + "_" + function_name + ".txt"
-			
+			filename = new_view_path + controller_class.get_controller_name + "_" + function_name + ".txt"
+			puts "filename: " + filename
 			
 			puts "-------------------Start of Action Function: " + function_name
 			File.write(filename, function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash))

@@ -4,12 +4,12 @@ require "nokogiri"
 load "helper.rb"
 	
 class Controller_Class
-	def initialize(path)
-		@path = path
+	def initialize(path, base_path)
+		@path = path.dup
+		path.gsub! base_path, ""
 		@content = read_content(@path)
-		i = path.rindex("/")
 		j = path.index("_controller.rb")
-		@controller = path[i+1, j-18]
+		@controller = path[0..j-1]
 		@ast = parse_content(@content)
 		@functions = parse_functions(@ast)
 		
@@ -115,26 +115,10 @@ class Function_Class
 	end
 	
 	def get_render_statement_array(ast=nil)
-		keyword = "render"
-		ast = @ast if ast == nil
-		res_arr = Array.new
-		ast_arr = Array.new
-		ast_arr.push ast
-		while ast_arr.length > 0
-			cur_ast = ast_arr.pop
-			if cur_ast.source.start_with? keyword
-				if cur_ast.parent.source.start_with?"return" 
-					res_arr.push cur_ast.parent.source
-				else 
-					res_arr.push cur_ast.source
-				end
-			else
-				cur_ast.children.each do |child|
-					ast_arr.push child
-				end
-			end
+		if ast == nil
+			ast = @ast
 		end
-		return res_arr
+		get_array_with_keyword @ast, "render"
 	end
 
 	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
@@ -148,13 +132,14 @@ class Function_Class
 			view_name = get_view_name_from_render_statement(stmt)
 			view_name_arr.push view_name
 		end
-		
+
 		#the view file with the same name of the current controller action may also be rendered by default
 
 		view_name_arr.push self.get_controller_name + "_" + self.get_function_name unless view_name_arr.include?(self.get_controller_name + "_" + self.get_function_name)
 		
 		view_name_arr.each do |view_name|
 			if view_name != "not_valid"
+				puts "view_name: " + view_name
 				view_class = view_class_hash[view_name]
 				if view_class == nil
 					res += ("view file " + view_name + " not exists!") if $log
@@ -166,8 +151,10 @@ class Function_Class
 			
 		res += ("\n---redirect_to tags in " + self.get_controller_name + "_" + self.get_function_name + ": \n") if $log
 		redirect_to_arr = self.get_redirect_to_array 
+		puts "here"
 		res += get_redirect_to_tags(redirect_to_arr, named_routes)
 
+		puts "here2"
 		return res
 	end
 
@@ -176,6 +163,8 @@ class Function_Class
 		render_view_mapping = Hash.new
 
 		self.get_render_statement_array.each do |r|
+			
+			puts "render statements: " + r
 			view_name = get_view_name_from_render_statement(r)
 			view_class = view_class_hash[view_name]
 		
@@ -357,10 +346,13 @@ class View_Class
 		end
 		render_stmt_arr.each do |stmt|
 			view_name = get_view_name_from_render_statement(stmt)
-			view_class = view_class_hash[view_name]
-			_render_arr = view_class.get_render_statements_recursively(view_class_hash)
-			_render_arr.each do |_stmt|
-				render_arr.push _stmt
+			puts "view_name: " + view_name
+			if view_name != "not_valid"	
+				view_class = view_class_hash[view_name]
+				_render_arr = view_class.get_render_statements_recursively(view_class_hash)
+				_render_arr.each do |_stmt|
+					render_arr.push _stmt
+				end
 			end
 		end
 		return render_arr
@@ -370,9 +362,11 @@ class View_Class
 		view_arr = get_render_statements_recursively(view_class_hash)
 		res = ""
 		view_arr.each do |view_name|
-			view_class = view_class_hash[view_name]
-			res += view_class.get_all_links_controller_view(named_routes, controller_hash)
-			res += "\n"
+			if view_name != "not_valid"
+				view_class = view_class_hash[view_name]
+				res += view_class.get_all_links_controller_view(named_routes, controller_hash)
+				res += "\n"
+			end
 		end
 		return res
 	end
@@ -384,17 +378,21 @@ class View_Class
 
 		self.get_render_statement_array.each do |r|
 			view_name = get_view_name_from_render_statement(r)
-			view_class = view_class_hash[view_name]
-			view_class.get_controller_name		
+			
+			puts "view_name: " + view_name
+			if view_name != "not_valid"
+				view_class = view_class_hash[view_name]
+				view_class.get_controller_name		
 
-			if view_class != nil
-				value = view_class.replace_render_statements(view_class_hash)
-				render_view_mapping[r] = view_class.replace_render_statements(view_class_hash)
-			else
-				#do something if the view file does not exisst
+				if view_class != nil
+					value = view_class.replace_render_statements(view_class_hash)
+					render_view_mapping[r] = view_class.replace_render_statements(view_class_hash)
+				else
+					#do something if the view file does not exisst
+				end
 			end
 		end
-	
+		
 		return render_view_mapping	
 	end
 
