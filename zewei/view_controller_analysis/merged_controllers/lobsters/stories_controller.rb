@@ -23,7 +23,7 @@ class StoriesController < ApplicationController
       end
     end
 
-    return  form_for @story do |f| 
+     form_for @story do |f| 
   if f.object.errors.count == 1 && f.object.already_posted_story 
 
     time_ago_in_words_label(f.object.already_posted_story.created_at) 
@@ -1128,7 +1128,7 @@ class StoriesController < ApplicationController
 
     @story.seen_previous = true
 
-    return  form_for @story do |f| 
+     form_for @story do |f| 
   if f.object.errors.count == 1 && f.object.already_posted_story 
 
     time_ago_in_words_label(f.object.already_posted_story.created_at) 
@@ -2614,7 +2614,7 @@ class StoriesController < ApplicationController
     if @story.save
       return redirect_to @story.comments_path
     else
-      return  form_for @story, :url => story_path(@story.short_id),
+       form_for @story, :url => story_path(@story.short_id),
   :method => :put, :html => { :id => "edit_story" } do |f| 
   if f.object.errors.count == 1 && f.object.already_posted_story 
 

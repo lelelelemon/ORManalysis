@@ -9,7 +9,10 @@ end
 
 def get_view_name_from_render_statement(r)
 	r = r.split("\n")[0]
+	r = r[6..-1] if r.start_with?"return"
+	r.strip!
 	r = r[6..-1] if r.start_with?"render"
+	r.strip!
 	while r[0] == '(' 
 		r = r[1..-1]
 	end
@@ -146,7 +149,7 @@ end
 def get_array_with_keyword(ast, keyword)
 	res_arr = Array.new
 	ast_arr = Array.new
-	ast_arr.push @ast
+	ast_arr.push ast
 	while ast_arr.length > 0
 		cur_ast = ast_arr.pop
 		if cur_ast.source.start_with? keyword 

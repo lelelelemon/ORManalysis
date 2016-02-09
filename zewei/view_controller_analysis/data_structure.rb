@@ -115,10 +115,26 @@ class Function_Class
 	end
 	
 	def get_render_statement_array(ast=nil)
-		if ast == nil
-			ast = @ast
+		keyword = "render"
+		ast = @ast if ast == nil
+		res_arr = Array.new
+		ast_arr = Array.new
+		ast_arr.push ast
+		while ast_arr.length > 0
+			cur_ast = ast_arr.pop
+			if cur_ast.source.start_with? keyword
+				if cur_ast.parent.source.start_with?"return" 
+					res_arr.push cur_ast.parent.source
+				else 
+					res_arr.push cur_ast.source
+				end
+			else
+				cur_ast.children.each do |child|
+					ast_arr.push child
+				end
+			end
 		end
-		get_array_with_keyword @ast, "render"
+		return res_arr
 	end
 
 	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
