@@ -1,0 +1,48 @@
+---controller: articles
+---view: comment_form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+link_to '#', onclick: "$('.optional_field').fadeToggle();return false" do 
+ t(".leave_url_email") 
+ end
+
+
+---controller: articles
+---view: trackback
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: articles
+---view: comment_list
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: articles
+---view: article_links
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings?
+link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments?
+
+
+
+view file articles_preview not exists!
+---redirect_to tags in articles_preview: 
