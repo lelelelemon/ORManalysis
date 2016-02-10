@@ -115,10 +115,26 @@ class Function_Class
 	end
 	
 	def get_render_statement_array(ast=nil)
-		if ast == nil
-			ast = @ast
+		keyword = "render"
+		ast = @ast if ast == nil
+		res_arr = Array.new
+		ast_arr = Array.new
+		ast_arr.push ast
+		while ast_arr.length > 0
+			cur_ast = ast_arr.pop
+			if cur_ast.source.start_with? keyword
+				if cur_ast.parent.source.start_with?"return" 
+					res_arr.push cur_ast.parent.source
+				else 
+					res_arr.push cur_ast.source
+				end
+			else
+				cur_ast.children.each do |child|
+					ast_arr.push child
+				end
+			end
 		end
-		get_array_with_keyword @ast, "render"
+		return res_arr
 	end
 
 	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
@@ -139,7 +155,6 @@ class Function_Class
 		
 		view_name_arr.each do |view_name|
 			if view_name != "not_valid"
-				puts "view_name: " + view_name
 				view_class = view_class_hash[view_name]
 				if view_class == nil
 					res += ("view file " + view_name + " not exists!") if $log
@@ -151,10 +166,7 @@ class Function_Class
 			
 		res += ("\n---redirect_to tags in " + self.get_controller_name + "_" + self.get_function_name + ": \n") if $log
 		redirect_to_arr = self.get_redirect_to_array 
-		puts "here"
 		res += get_redirect_to_tags(redirect_to_arr, named_routes)
-
-		puts "here2"
 		return res
 	end
 
@@ -166,13 +178,16 @@ class Function_Class
 			
 			puts "render statements: " + r
 			view_name = get_view_name_from_render_statement(r)
-			view_class = view_class_hash[view_name]
-		
-			if view_class != nil
-				value = view_class.replace_render_statements(view_class_hash)
-				render_view_mapping[r] = value
-			else
-				#do something the view file does not exist! It could mean we parse the file wrong. 
+			puts "view name: " + view_name
+			if view_name != "not_valid"
+				view_class = view_class_hash[view_name]
+			
+				if view_class != nil
+					value = view_class.replace_render_statements(view_class_hash)
+					render_view_mapping[r] = value
+				else
+					#do something the view file does not exist! It could mean we parse the file wrong. 
+				end
 			end
 		end
 	
@@ -208,10 +223,6 @@ class Function_Class
 			end
 		end
 
-		#testing
-#		render_view_mapping.each do |k, v|
-#			content += (k + "\n" + v + "\n")
-#		end
 
 		return content
 	end
