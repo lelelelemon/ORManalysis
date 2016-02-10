@@ -1,5 +1,5 @@
 require "optparse"
-
+require "unicode"
 load "data_structure.rb"
 
 def load_all_controllers_from_path(controller_path)
@@ -130,38 +130,7 @@ def print_links_in_all_views(view_path, controller_path)
 		puts "-------------------------------------"
 	end
 
-#	view_hash["/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb"] = View_Class.new("/home/osboxes/ORM/lobsters/app/views/layouts/application.html.erb", view_path)
-
-#	indent = "---"
-
-#	view_hash.each do |item_path, view_class|
-#		puts indent + "view_path: " + item_path
-#		puts indent + "controller: " + view_class.get_controller_name
-#		puts indent + "view: " + view_class.get_view_name
-#
-#		# get html tags
-#		puts indent + "hrefs: "# + view_class.get_href_tags
-#		print_href_tags(view_class.get_href_tag_array_from_html, named_routes_class)
-##		print_rails_tag(view_class.get_href_tag_array_from_html, named_routes_class)
-#		puts indent + "forms: "
-#		print_rails_tag(view_class.get_form_tag_array_from_html, named_routes_class)
-#		
-#
-#		# get "ruby helper tags"
-#		puts indent + "form_for: "
-#		print_form_for_tag(view_class.get_form_for_array, named_routes_class, controller_hash)
-#
-#		puts indent + "link_to: "
-#		print_rails_tag(view_class.get_link_to_array, named_routes_class)
-#
-#	#	puts indent + "replace render statements: "
-#	#	puts view_class.replace_render_statements(view_hash)
-#
-#		puts "-------------------------------------------"
-#
-#	end	
 end
-
 
 def load_all_views_render_statement(view_path)
 	view_hash = load_all_views_from_path(view_path)
@@ -231,7 +200,7 @@ def controller_print_links_controller_view_recursively(view_path, controller_pat
 		end
 		puts "-------------------Start of Controller Class: " + controller_name + "-------------------"
 		controller_class.get_functions.each do |function_name, function_class|
-			filename = new_view_path + controller_class.get_controller_name + "_" + function_name + ".txt"
+			filename = new_view_path + Unicode::capitalize(controller_class.get_controller_name) + "Controller_" + function_name + ".txt"
 			puts "filename: " + filename
 			
 			puts "-------------------Start of Action Function: " + function_name
