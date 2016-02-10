@@ -20,14 +20,11 @@ def get_view_name_from_render_statement(r)
 	view = ""
 	view_exists = false
 	arr[0].strip!
-	puts arr[0]
 	if arr[0].start_with?"\"" or arr[0].start_with?"'" or arr[0].start_with?":"
 		if arr[0].include?("=>")
 			arr[0].gsub! /["':]/, ""
 			arr[0].gsub! " ", ""
 			a = arr[0].split("=>")
-			puts a[0]
-			puts a[1]
 			if a[0] == "partial" or a[0] == "template" or a[0] == "action"
 				view = a[1]
 				view_exists = true
@@ -215,7 +212,7 @@ def get_rails_tag(tag_arr, named_routes_class)
 			end
 		end
 		if not url_inside
-			res += (tag + "\n")
+			res += (tag + "\n") if $log
 		end
 	end
 	return res

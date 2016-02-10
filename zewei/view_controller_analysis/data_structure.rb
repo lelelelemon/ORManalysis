@@ -176,9 +176,7 @@ class Function_Class
 
 		self.get_render_statement_array.each do |r|
 			
-			puts "render statements: " + r
 			view_name = get_view_name_from_render_statement(r)
-			puts "view name: " + view_name
 			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
 			
@@ -357,7 +355,6 @@ class View_Class
 		end
 		render_stmt_arr.each do |stmt|
 			view_name = get_view_name_from_render_statement(stmt)
-			puts "view_name: " + view_name
 			if view_name != "not_valid"	
 				view_class = view_class_hash[view_name]
 				_render_arr = view_class.get_render_statements_recursively(view_class_hash)
@@ -390,14 +387,13 @@ class View_Class
 		self.get_render_statement_array.each do |r|
 			view_name = get_view_name_from_render_statement(r)
 			
-			puts "view_name: " + view_name
 			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
 				view_class.get_controller_name		
-
+				
 				if view_class != nil
 					value = view_class.replace_render_statements(view_class_hash)
-					render_view_mapping[r] = view_class.replace_render_statements(view_class_hash)
+					render_view_mapping[r] = value
 				else
 					#do something if the view file does not exisst
 				end
@@ -407,10 +403,14 @@ class View_Class
 		return render_view_mapping	
 	end
 
+#replace the render statements inside the ruby code of current view file
 	def replace_render_statements(view_class_hash)
 		render_view_mapping = self.get_render_view_mapping(view_class_hash)
-		rb_content = self.get_rb_content
+		rb_content = self.get_rb_content.dup 
+		puts "------------------------------current view file: " + self.to_str
 		render_view_mapping.each do |k, v|
+			puts "key: " + k
+			puts "value: " + v
 			rb_content.gsub! k, v
 		end
 

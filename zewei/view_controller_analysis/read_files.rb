@@ -43,16 +43,23 @@ def load_all_views_from_path(view_path)
 	return view_hash
 end
 
+def print_view_hash(view_hash)
+	view_hash.each do |view_name, view_class|
+		puts "view name of view hash: " + view_name
+	end
+end
+		
+
 #print all controller classes with render statements replaced by the correponding view files, all render statements replaced recursively 
 def controller_print_all_controllers_render_replaced(controller_path, view_path, new_controller_path)
 	controller_hash = load_all_controllers_from_path(controller_path)
 	view_hash = load_all_views_from_path(view_path)
 	
+	print_view_hash view_hash
+
 	controller_hash.each do |item_path, controller_class|
 		nested_path = get_nested_path(controller_class.get_controller_name)
 		filename = get_filename_from_path(controller_class.get_controller_name)
-		puts "nested_path: " + nested_path
-		puts "filename: " + filename
 		if not File.directory?(new_controller_path + nested_path)
 			FileUtils.mkdir_p new_controller_path + nested_path
 		end
@@ -189,22 +196,28 @@ end
 
 def controller_print_links_controller_view_recursively(view_path, controller_path, new_view_path)
 	view_hash = load_all_views_from_path(view_path)
+	
+	view_hash.each do |view_name, view_class|
+		puts view_name
+	end
+
 	controller_hash = load_all_controllers_from_path(controller_path)
 	named_routes_class = load_named_routes_from_path("named_routes.txt")
 	
 	indent = "---"
 	controller_hash.each do |controller_name, controller_class|
 		nested_path = get_nested_path(controller_class.get_controller_name)
+		filename = get_filename_from_path(controller_class.get_controller_name)	
+		puts nested_path
 		if not File.directory?(new_view_path + nested_path)
 			FileUtils.mkdir_p new_view_path + nested_path
 		end
 		puts "-------------------Start of Controller Class: " + controller_name + "-------------------"
 		controller_class.get_functions.each do |function_name, function_class|
-			filename = new_view_path + Unicode::capitalize(controller_class.get_controller_name) + "Controller_" + function_name + ".txt"
-			puts "filename: " + filename
+			filepath = new_view_path + nested_path + Unicode::capitalize(filename) + "Controller_" + function_name + ".txt"
 			
 			puts "-------------------Start of Action Function: " + function_name
-			File.write(filename, function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash))
+			File.write(filepath, function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash))
 			puts "-------------------End of Action Function: " + function_name
 		end
 		puts "-------------------End of Controller Class: " + controller_name + "-------------------"
@@ -359,31 +372,3 @@ elsif options[:controller]
 	controller_print_links_controller_view_recursively($view_path, $controller_path, $new_view_path)
 end
 
-#load_all_views_render_statement "./app/views/"
-
-
-#path = "../app/controllers/users_controller.rb"
-#
-#users_controller = Controller_Class.new(path)
-#
-#puts users_controller
-##puts users_controller.getContent
-##puts users_controller.getAst.source
-#users_controller.getFunctions.each do |k, v|
-#	puts "key: " + k
-#	v.get_render_array.each do |x|
-#		puts "source: " + x.source
-#		puts "type: " + x.type.to_s
-#	end
-#end
-#
-#view_path = "../app/views/activities/index.html.erb"
-#base_path = "../app/views";
-#activities_index_view = View_Class.new(view_path, base_path)
-#
-#puts activities_index_view.getRBContent
-#puts activities_index_view.getAst.source
-#
-#puts activities_index_view.getNestedPath
-#puts activities_index_view.getControllerName
-#puts activities_index_view.getViewName
