@@ -398,8 +398,7 @@ class View_Class
 			
 			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
-				view_class.get_controller_name		
-				
+        puts "view_name: " + view_name
 				if view_class != nil
 					value = view_class.replace_render_statements(view_class_hash, dep+1)
 					render_view_mapping[r] = value
@@ -414,7 +413,6 @@ class View_Class
 
 #replace the render statements inside the ruby code of current view file
 	def replace_render_statements(view_class_hash, dep)
-    puts "current dep: " + dep
     return self.get_rb_content if dep > 10
 		render_view_mapping = self.get_render_view_mapping(view_class_hash, dep)
 		rb_content = self.get_rb_content.dup 
