@@ -225,6 +225,35 @@ def controller_print_links_controller_view_recursively(view_path, controller_pat
 	
 end
 
+def controller_print_links_controller_view_recursively_by_controller(view_path, controller_path, new_view_path, controller_name)
+  view_hash = load_all_views_from_path(view_path)
+
+  view_hash.each do |view_name, view_class|
+    puts view_name
+  end
+
+  controller_hash = load_all_controllers_from_path(controller_path)
+  named_routes_class = load_named_routes_from_path("named_routes.txt")
+
+  indent = "---"
+  controller_class = controller_hash[controller_name]
+  nested_path = get_nested_path(controller_class.get_controller_name)
+  filename = get_filename_from_path(controller_class.get_controller_name)	
+  if not File.directory?(new_view_path + nested_path)
+    FileUtils.mkdir_p new_view_path + nested_path
+  end
+  puts "-------------------Start of Controller Class: " + controller_name + "-------------------"
+  controller_class.get_functions.each do |function_name, function_class|
+    filepath = new_view_path + nested_path + Unicode::capitalize(filename) + "Controller_" + function_name + ".txt"
+
+    puts "-------------------Start of Action Function: " + function_name
+    File.write(filepath, function_class.get_links_controller_view_recursively(view_hash, named_routes_class, controller_hash))
+    puts "-------------------End of Action Function: " + function_name
+  end
+  puts "-------------------End of Controller Class: " + controller_name + "-------------------"
+
+end
+
 def controller_replace_render_statements(controller_path, view_path, controller=nil, action=nil)
 	controller_hash = load_all_controllers_from_path(controller_path)
 	view_hash = load_all_views_from_path(view_path)
@@ -353,11 +382,7 @@ elsif options[:controller] and options[:render]
 	else
 		view = nil
 	end
-	
-	puts "controller: " + controller
-	puts "-----------------------------------------------------------"
-
-	controller_replace_render_statements($controller_path, $view_path, controller, view)
+  controller_print_links_controller_view_recursively_by_controller($view_path, $controller_path, $new_view_path, controller)
 
 elsif options[:render]
 	controller = options[:target][0]

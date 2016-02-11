@@ -181,7 +181,7 @@ class Function_Class
 				view_class = view_class_hash[view_name]
 			
 				if view_class != nil
-					value = view_class.replace_render_statements(view_class_hash)
+					value = view_class.replace_render_statements(view_class_hash, 0)
 					render_view_mapping[r] = value
 				else
 					#do something the view file does not exist! It could mean we parse the file wrong. 
@@ -210,7 +210,7 @@ class Function_Class
 			view_name = self.get_controller_name + "_" + self.get_function_name
 			view_class = view_class_hash[view_name]
 			if view_class != nil
-				value = view_class.replace_render_statements(view_class_hash)
+				value = view_class.replace_render_statements(view_class_hash, 0)
 				content = content.split "\n"
 				len = content.length
 				content[len] = content[len-1]
@@ -346,7 +346,8 @@ class View_Class
 	end
 
 	# This function is used to get all render statements recursively, so we can know what view files will be rendered by this controller action, further, we can get the information about what links exist in the corresponding view files
-	def get_render_statements_recursively(view_class_hash)
+	def get_render_statements_recursively(view_class_hash, dep)
+    return [] if dep > 10
 		render_arr = []
 		render_stmt_arr = []
 		get_render_statement_array.each do |stmt|
@@ -355,25 +356,33 @@ class View_Class
 		end
 		render_stmt_arr.each do |stmt|
 			view_name = get_view_name_from_render_statement(stmt)
+      puts "render statement: " + stmt
+      puts "view_name: " + view_name
 			if view_name != "not_valid"	
-				view_class = view_class_hash[view_name]
-				_render_arr = view_class.get_render_statements_recursively(view_class_hash)
-				_render_arr.each do |_stmt|
-					render_arr.push _stmt
-				end
+			  view_class = view_class_hash[view_name]
+				if view_class != nil
+          _render_arr = view_class.get_render_statements_recursively(view_class_hash, dep + 1)
+          _render_arr.each do |_stmt|
+            render_arr.push _stmt
+          end
+        end
 			end
 		end
 		return render_arr
 	end
 
 	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
-		view_arr = get_render_statements_recursively(view_class_hash)
+		view_arr = get_render_statements_recursively(view_class_hash, 0)
+
 		res = ""
 		view_arr.each do |view_name|
+      puts "view_name: " + view_name
 			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
-				res += view_class.get_all_links_controller_view(named_routes, controller_hash)
-				res += "\n"
+			  if view_class != nil
+          res += view_class.get_all_links_controller_view(named_routes, controller_hash)
+	  			res += "\n"
+        end
 			end
 		end
 		return res
@@ -381,7 +390,7 @@ class View_Class
 
 #	get a hash of hash[render_statement] = view_file_content
 #	the render statements inside view_file_content will be replaces recursively before it is assigned to the hash
-	def get_render_view_mapping(view_class_hash)
+	def get_render_view_mapping(view_class_hash, dep)
 		render_view_mapping = Hash.new
 
 		self.get_render_statement_array.each do |r|
@@ -392,7 +401,7 @@ class View_Class
 				view_class.get_controller_name		
 				
 				if view_class != nil
-					value = view_class.replace_render_statements(view_class_hash)
+					value = view_class.replace_render_statements(view_class_hash, dep+1)
 					render_view_mapping[r] = value
 				else
 					#do something if the view file does not exisst
@@ -404,8 +413,10 @@ class View_Class
 	end
 
 #replace the render statements inside the ruby code of current view file
-	def replace_render_statements(view_class_hash)
-		render_view_mapping = self.get_render_view_mapping(view_class_hash)
+	def replace_render_statements(view_class_hash, dep)
+    puts "current dep: " + dep
+    return self.get_rb_content if dep > 10
+		render_view_mapping = self.get_render_view_mapping(view_class_hash, dep)
 		rb_content = self.get_rb_content.dup 
 		puts "------------------------------current view file: " + self.to_str
 		render_view_mapping.each do |k, v|

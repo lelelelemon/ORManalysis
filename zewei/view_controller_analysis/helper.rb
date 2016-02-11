@@ -16,6 +16,9 @@ def get_view_name_from_render_statement(r)
 	while r[0] == '(' 
 		r = r[1..-1]
 	end
+  while r[-1] == ')'
+    r = r[0..-2]
+  end
 	arr = r.split(",")
 	view = ""
 	view_exists = false
@@ -27,11 +30,17 @@ def get_view_name_from_render_statement(r)
 			a = arr[0].split("=>")
 			if a[0] == "partial" or a[0] == "template" or a[0] == "action"
 				view = a[1]
+        while view[0] == '/'
+          view = view[1..-1]
+        end
 				view_exists = true
 			end
 		else
 			view = arr[0]
 			view.gsub! /["':]/, ""
+      while view[0] == '/'
+        view = view[1..-1]
+      end
 			view_exists = true
 		end
 	else 
@@ -49,11 +58,17 @@ def get_view_name_from_render_statement(r)
 			if a[0] == ":partial" or a[0] == ":template" or a[0] == ":action" or 
 				a[0] == "partial" or a[0] == "template" or a[0] == "action" 
 				view = a[1]
+        while view[0] == '/'
+          view = view[1..-1]
+        end
 				view_exists = true
 			end
 		end
 	end
 
+  if view.end_with?".html.erb"
+    view = view[0..-10]
+  end
 	k = view.rindex("/")
 	if k == nil
 		view = self.get_controller_name + "_" + view
