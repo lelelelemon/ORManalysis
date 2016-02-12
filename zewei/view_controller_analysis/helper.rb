@@ -7,6 +7,14 @@ def read_content(path)
 	return File.open(path, "r").read
 end
 
+def get_func_name(func_line)
+  func_line.strip!
+  func_name = func_line[3..-1] if func_line.start_with?"def"
+  func_name.strip!
+  func_name.gsub! /\(.*\)/, ""
+  return func_name
+end
+	
 def get_view_name_from_render_statement(r)
 	r = r.split("\n")[0]
 	r = r[6..-1] if r.start_with?"return"
@@ -325,13 +333,125 @@ def get_href_tags(tag_arr, named_routes_class)
 		end
 	end
 	return res
+end 
+
+def parse_params(tag, curr_controller)
+  tag.gsub! /["':{}]/, ""
+  url_params = tag.split ","
+  
+  hash = {}
+  url_params.each do |p|
+    puts p
+    arr = p.split("=>")
+    arr[0].strip!
+    if arr[1] != nil
+      arr[1].strip!
+      hash[arr[0]] = arr[1]
+    else
+      hash[arr[0]] = ""
+    end
+  end
+
+  hash.each do |k, v|
+    puts "k: " + k
+    puts "v: " + v
+  end
+
+  res = ""
+  if hash.has_key?"controller"
+    res += hash["controller"]
+  else
+    res += curr_controller
+  end
+
+  if hash.has_key?"action"
+    res += ("," + hash["action"] + "\n")
+  else
+    res += ",\n"
+  end
+  return res
 end
 
-def get_redirect_to_tags(tag_arr, named_routes_class)
+#tag_arr: an array of all link_to statements
+#named_routes_class: all named routes
+def get_link_to_tags(tag_arr, named_routes_class, curr_controller)
+  
+  res = ""
+  rb_console_code = "route = Rails.application.routes\n"
+  tag_arr.each do |tag|
+    puts "link_to: " + tag
+    #puts form_for_tag.source
+    url_inside = false
+    named_routes_class.get_named_routes.each do |k, v|
+      if tag.include? k
+        res += ("#" + tag + "\n") if $log
+        res += ("" + v[0] + "," + v[1] + "\n")
+        url_inside = true
+      end
+    end
+    if not url_inside
+      tag2 = tag.dup #back up tag
+      tag.strip!
+      tag = tag[7..-1] if tag.start_with?"link_to"
+      tag.strip!
+      tag = tag[1..-2] if tag.start_with?"(" and tag.end_with?")"
+      #the url of the link may be specified by the controller and action parameters
+      if tag.include?"controller" and tag.include?"action"
+        res += ("#" + tag + "\n") if $log
+        res += parse_params(tag, curr_controller)
+      else
+        params = tag.split ","
+        url = params[1]
+        if url != nil 
+          url.strip!
+          url.gsub /['"]/, ""
+          url.gsub! /<%.*%>/, "2"
+          rb_console_code += ("route.recognize_path '" + url + "' #" + tag2 + "\n")
+        else
+          res += (tag2 + "\n")
+        end
+      end
+    end
+
+    File.write("temp.rb", rb_console_code)
+
+    system("rails console < temp.rb > temp2.txt")
+    text = File.open("temp2.txt").read
+    text.each_line do |line|
+      if $log and line.start_with?"route.recognize"
+        res += line
+      end
+      if line.start_with?"{"
+        hash = parse_rails_console_get_controller_action(line)
+        res += (hash[":controller"] + "," + hash[":action"] + "\n")
+      end
+    end
+
+    return res
+  end
+
+  File.write("temp.rb", rb_console_code)
+
+  system("rails console < temp.rb > temp2.txt")
+  text = File.open("temp2.txt").read
+  text.each_line do |line|
+    if $log and line.start_with?"route.recognize"
+      res += line
+    end
+    if line.start_with?"{"
+      hash = parse_rails_console_get_controller_action(line)
+      res += (hash[":controller"] + "," + hash[":action"] + "\n")
+    end
+  end
+  return res
+end
+
+def get_redirect_to_tags(tag_arr, named_routes_class, curr_controller)
 	res = ""
 	rb_console_code = "route = Rails.application.routes\n"
 	tag_arr.each do |tag|
 		
+    tag2 = tag.dup
 		tag = tag[11..-1] if tag.start_with? "redirect_to" 
 		tag.strip!
 		tag.gsub! /["']/, ""		
@@ -346,9 +466,15 @@ def get_redirect_to_tags(tag_arr, named_routes_class)
 			end
 		end
 		if not url_inside
-			tag2 = tag + ""
-			tag.gsub! /<%.*%>/, "2"
-			rb_console_code += ("route.recognize_path '" + tag + "' #" + tag2 + "\n")
+      #redirect_to :controller => 'projects', :action => 'edit', :id => @milestone.project
+		  	
+			if tag.include?"controller" and tag.include?"action"
+        res += (tag2 + "\n") if $log
+        res += parse_params(tag, curr_controller)
+      else
+        tag.gsub! /<%.*%>/, "2"
+        rb_console_code += ("route.recognize_path '" + tag + "' #" + tag2 + "\n")
+      end
 		end
 	end
 

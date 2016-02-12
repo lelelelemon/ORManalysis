@@ -1,0 +1,20 @@
+---controller: wiki
+---view: versions
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#( t("wiki.revision_n", n: rev_num), :controller => "wiki", :action => "show", :id => @page.name, :rev => rev_num )
+ t("shared.time_ago", time: time_ago_in_words(revision.created_at, false)) 
+ t("shared.by_html", user: revision.user.name) 
+ (" <small> - #{h(revision.change)}</small>").html_safe if revision.change && revision.change.length > 0 
+
+  rev_num = rev_num - 1
+wiki,show
+
+
+
+
+---redirect_to tags in wiki_versions: 

@@ -1,0 +1,53 @@
+---controller: triggers
+---view: edit
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: triggers
+---view: form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+form_for(@trigger, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.label :task_filter_id, t("triggers.task_filter") 
+ f.select :task_filter_id, objects_to_names_and_ids(current_user.visible_task_filters) 
+ f.label :event_id, t("triggers.event") 
+ f.select :event_id, objects_to_names_and_ids(Trigger::Event.all) 
+ t("triggers.add_action") 
+ t("shared.none") 
+ options_from_collection_for_select(Trigger::ActionFactory.all, :id, :name) 
+ @trigger.actions.each do |action| 
+ fields_for('trigger[actions_attributes]', action,  :index=>'') do |fields| 
+  render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>nil 
+ end 
+ end 
+ cit_submit_tag(f.object) 
+ end
+---link_to: 
+
+
+---controller: companies
+---view: navigation
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to ResourceType.model_name.human(:count => 1), resource_types_path
+resource_types,index
+
+
+
+
+---redirect_to tags in triggers_edit: 

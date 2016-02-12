@@ -35,12 +35,6 @@ class Controller_Class
 		@path
 	end
 
-	def get_func_name(func_line)
-		func_name = func_line.split(" ")[1]
-		func_name.strip!
-		return func_name
-	end
-	
 	#traverse the ast of the controller class and get all action functions stored in its function hash
 	def parse_functions(ast)
 		functions = Hash.new
@@ -166,7 +160,7 @@ class Function_Class
 			
 		res += ("\n---redirect_to tags in " + self.get_controller_name + "_" + self.get_function_name + ": \n") if $log
 		redirect_to_arr = self.get_redirect_to_array 
-		res += get_redirect_to_tags(redirect_to_arr, named_routes)
+		res += get_redirect_to_tags(redirect_to_arr, named_routes, self.get_controller_name)
 		return res
 	end
 
@@ -271,9 +265,9 @@ class View_Class
 		end
 		j = @view_name.index(".")
 		@view_name = @view_name[0..j-1]
-		if @file_type == "rss" or @file_type == "js"
-			@view_name += ("." + @file_type)
-		end
+#		if @file_type == "rss" or @file_type == "js"
+#			@view_name += ("." + @file_type)
+#		end
 
 		@controller_name = path[0..i-1]
 	end
@@ -372,9 +366,12 @@ class View_Class
 	end
 
 	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
-		view_arr = get_render_statements_recursively(view_class_hash, 0)
-
 		res = ""
+    res += self.get_all_links_controller_view(named_routes, controller_hash)
+    res += "\n"
+
+    view_arr = get_render_statements_recursively(view_class_hash, 0)
+
 		view_arr.each do |view_name|
       puts "view_name: " + view_name
 			if view_name != "not_valid"
@@ -442,7 +439,7 @@ class View_Class
 			res += (get_form_for_tag(self.get_form_for_array, named_routes, controller_hash))
 			res += (indent + "link_to: \n") if $log
 
-			res += (get_rails_tag(self.get_link_to_array, named_routes) + "\n")  
+			res += (get_link_to_tags(self.get_link_to_array, named_routes, self.get_controller_name) + "\n")  
 			@links_controller_view = res
 		end
 		@links_controller_view 

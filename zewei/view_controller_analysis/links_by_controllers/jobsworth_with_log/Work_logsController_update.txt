@@ -1,0 +1,44 @@
+---controller: work_logs
+---view: edit
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+form_for(@log, :as => :work_log, :html => {:class => "form-horizontal"}) do |f| 
+ render :partial => "form" 
+ cit_submit_tag(@log) 
+ if can_delete_log?(@log) 
+ link_to t("work_logs.delete_title"),  {:controller => 'work_logs', :action => 'destroy', :id => @log}, :confirm => t("work_logs.delete_confirmation"), :method => :delete, :class => "btn btn-danger"  
+ end 
+ end
+---link_to: 
+#t("work_logs.delete_title"),  {:controller => 'work_logs', :action => 'destroy', :id => @log}, :confirm => t("work_logs.delete_confirmation"), :method => :delete, :class => "btn btn-danger"
+work_logs,destroy
+
+
+---controller: work_logs
+---view: form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: common
+---view: custom_attributes
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+
+view file work_logs_update not exists!
+---redirect_to tags in work_logs_update: 
+#tasks_path
+tasks,index

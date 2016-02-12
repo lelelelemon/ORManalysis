@@ -1,0 +1,46 @@
+---controller: score_rules
+---view: edit
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: score_rules
+---view: score_rule_form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
+ render 'shared/validation_errors', :object => form.object 
+ form.label t("score_rules.name") 
+ form.text_field :name 
+ form.label t("score_rules.score") 
+ form.text_field :score 
+ form.label t("score_rules.exponent") 
+ form.text_field :exponent 
+ form.label t("score_rules.score_type") 
+ select('score_rule', 'score_type', ScoreRuleTypes::to_select_list) 
+ submit_tag t("button.save"), :class => 'btn' 
+ end
+score_rules,new/create---link_to: 
+
+
+---controller: shared
+---view: validation_errors
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+
+view file score_rules_update not exists!
+---redirect_to tags in score_rules_update: 
+route.recognize_path 'container_score_rules_path(@container)' #redirect_to container_score_rules_path(@container)

@@ -1,0 +1,73 @@
+---controller: properties
+---view: new
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: properties
+---view: form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+form_for(@property, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ t("properties.name") 
+ f.text_field :name 
+ t("properties.mandatory") 
+ f.check_box :mandatory 
+ t("properties.default_sort") 
+ f.check_box :default_sort 
+ t("properties.default_color") 
+ f.check_box :default_color 
+ t("properties.possible_values") 
+ @property.property_values.each do |pv| 
+ render :partial => "property_value", :locals => { :pv => pv } 
+ end 
+ cit_submit_tag(@property) 
+ add_value_link 
+ end
+---link_to: 
+
+
+---controller: companies
+---view: navigation
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to ResourceType.model_name.human(:count => 1), resource_types_path
+resource_types,index
+
+
+---controller: properties
+---view: property_value
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+route.recognize_path '"#"' #link_to "Remove value", "#", :class => "remove_property_value_link"
+
+
+---controller: shared
+---view: score_rules_container
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+
+
+---redirect_to tags in properties_new: 

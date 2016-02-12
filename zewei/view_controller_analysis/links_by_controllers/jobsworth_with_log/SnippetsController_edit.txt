@@ -1,0 +1,55 @@
+---controller: snippets
+---view: edit
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: snippets
+---view: form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+#form_for(@snippet) do |f| 
+ if @snippet.errors.any? 
+ t("shared.#{pluralize(@snippet.errors.count, "error")}") 
+ t("snippets.error_msg") 
+ @snippet.errors.full_messages.each do |msg| 
+ msg 
+ end 
+ end 
+ f.label t("snippets.name") 
+ f.text_field :name, :class => "required input-xxlarge" 
+ f.label t("snippets.body") 
+ f.text_area :body, :style => "width:100%;", :class => "required" 
+ f.submit :class => "btn btn-primary" 
+ unless @snippet.new_record? 
+ link_to t("button.delete"), snippet_path(@snippet), :method => "delete", :class => "btn btn-danger", :confirm => t("shared.are_you_sure") 
+ end 
+ end
+snippets,show
+---link_to: 
+#link_to t("button.delete"), snippet_path(@snippet), :method => "delete", :class => "btn btn-danger", :confirm => t("shared.are_you_sure")
+snippets,show
+
+
+---controller: companies
+---view: navigation
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to ResourceType.model_name.human(:count => 1), resource_types_path
+resource_types,index
+
+
+
+
+---redirect_to tags in snippets_edit: 

@@ -1,0 +1,368 @@
+---controller: customers
+---view: edit
+---hrefs: 
+route.recognize_path '#' ##
+activities,index
+route.recognize_path '#active-users-pane' ##active-users-pane
+activities,index
+route.recognize_path '#inactive-users-pane' ##inactive-users-pane
+activities,index
+route.recognize_path '#current-projects-pane' ##current-projects-pane
+activities,index
+route.recognize_path '#completed-projects-pane' ##completed-projects-pane
+activities,index
+route.recognize_path '#score-rules-pane' ##score-rules-pane
+activities,index
+route.recognize_path '#sites-pane' ##sites-pane
+activities,index
+route.recognize_path '#resources-pane' ##resources-pane
+activities,index
+route.recognize_path '#sla-pane' ##sla-pane
+activities,index
+
+---forms: 
+
+---form_for: 
+#form_for(@customer, :html => {:class => "form-horizontal"}) do |f| 
+ link_to_tasks_filtered_by(t("customers.view_tasks"), @customer, :class => "btn btn-success pull-right") 
+ @customer.name 
+ render "form", :f => f 
+ submit_tag t("button.save"), :class => "btn btn-primary" 
+ if current_user.admin?
+ link_to t("button.delete"), customer_path(@customer), :method => "delete", :confirm => "Really delete #{@customer.name}?", :class => "btn btn-mini btn-danger pull-right" 
+ end 
+ end
+customers,show
+---link_to: 
+#link_to(@org_unit, edit_organizational_unit_path(@org_unit)) 
+ e
+organizational_units,edit
+#link_to(@org_unit, edit_organizational_unit_path(@org_unit)) 
+ e
+organizational_units,show
+
+
+---controller: projects
+---view: project
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#'<i class="icon-list-alt"></i>'.html_safe, { :controller => 'projects', :action => 'show', :id => project },
+        :class => "pull-left hide action", :rel => "tooltip", :title => t("projects.view_project_html", project: escape_twice(project.name))
+projects,show
+
+
+---controller: projects
+---view: project
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#'<i class="icon-list-alt"></i>'.html_safe, { :controller => 'projects', :action => 'show', :id => project },
+        :class => "pull-left hide action", :rel => "tooltip", :title => t("projects.view_project_html", project: escape_twice(project.name))
+projects,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: service_level_agreements
+---view: service_level_agreement
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+route.recognize_path ':class => "delete" do 
+
+
+---controller: shared
+---view: score_rules_container
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: users
+---view: user
+---hrefs: 
+route.recognize_path 'mailto:2' #mailto:<%= h user.email %>
+
+---forms: 
+
+---form_for: 
+---link_to: 
+route.recognize_path 'project)' #link_to_tasks_filtered_by(project.full_name, project)
+
+
+---controller: users
+---view: user
+---hrefs: 
+route.recognize_path 'mailto:2' #mailto:<%= h user.email %>
+
+---forms: 
+
+---form_for: 
+---link_to: 
+route.recognize_path 'project)' #link_to_tasks_filtered_by(project.full_name, project)
+
+
+---controller: customers
+---view: form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: milestones
+---view: milestone_row
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,edit
+#link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,show
+
+
+---controller: milestones
+---view: milestone_row
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,edit
+#link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,show
+
+
+---controller: milestones
+---view: milestone_row
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,edit
+#link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,show
+
+
+---controller: milestones
+---view: milestone_row
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,edit
+#link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: resources
+---view: resource
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to resource.name, edit_resource_path(resource)
+resources,edit
+#link_to resource.name, edit_resource_path(resource)
+resources,show
+
+
+---controller: common
+---view: custom_attributes_dl
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: common
+---view: custom_attributes_dl
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: common
+---view: custom_attributes
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+
+
+---redirect_to tags in customers_edit: 

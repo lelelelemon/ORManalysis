@@ -1,0 +1,83 @@
+---controller: users
+---view: projects
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+route.recognize_path '@user' #link_to_tasks_filtered_by(t("users.new_user"), @user, :class => "btn btn-success pull-right")
+
+
+---controller: users
+---view: project_permissions
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: users
+---view: navigation
+---hrefs: 
+#<%= edit_user_path(user) %>
+users,edit
+#<%= edit_user_path(user) %>
+users,update
+#<%= access_user_path(user) %>
+users,access
+#<%= access_user_path(user) %>
+users,update
+#<%= emails_user_path(user) %>
+users,emails
+#<%= emails_user_path(user) %>
+users,update
+#<%= filters_user_path(user) %>
+users,filters
+#<%= filters_user_path(user) %>
+users,update
+#<%= projects_user_path(user) %>
+users,projects
+#<%= projects_user_path(user) %>
+users,update
+#<%= workplan_user_path(user) %>
+users,workplan
+#<%= workplan_user_path(user) %>
+users,update
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: users
+---view: project
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :user_edit => user_edit)}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" 
+ for p in perms 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" if perm.can?(p) 
+ link_to_function image_tag("delete.png", :title => t("users.grant_access", access: p, user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_add_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" unless perm.can?(p) 
+ end
+users,ajax_add_permission
+
+
+
+
+---redirect_to tags in users_projects: 
