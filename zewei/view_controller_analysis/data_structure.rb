@@ -319,7 +319,7 @@ class View_Class
 		page = Nokogiri::HTML(get_content)
 		res = Array.new
 		page.css("form").each do |form|
-			res.push(form)
+			res.push(form.to_s)
 		end
 		return res
 	end
