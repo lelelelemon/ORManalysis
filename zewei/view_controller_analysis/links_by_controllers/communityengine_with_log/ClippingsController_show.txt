@@ -1,0 +1,71 @@
+---controller: clippings
+---view: show
+---hrefs: 
+#<%= tag_url(t) %>
+tags,show
+route.recognize_path '2' #<%= h @clipping.url  %>
+route.recognize_path '' #
+
+---forms: 
+
+---form_for: 
+---link_to: 
+route.recognize_path ':alt=> @clipping.description' #link_to image_tag(@clipping.image_uri(:large), :alt=> @clipping.description, :class => 'thumbnail'), @clipping.url
+
+
+---controller: comments
+---view: comment
+---hrefs: 
+#<%= user_path(comment.user) %>
+users,show
+route.recognize_path '2' #<%= commentable_url(comment) %>
+route.recognize_path '#' ##
+route.recognize_path '2' #<%= commentable_url(comment) %>
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item"
+comments,show
+#link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item"
+comments,show
+
+
+---controller: comments
+---view: comment_form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to :log_in_to_leave_a_comment.l, new_commentable_comment_path(commentable.class, commentable.id), :class => 'btn btn-primary' 
+ link_to :create_an_account.l, signup_path, :class => 'btn btn-primary'
+users,new
+#link_to :log_in_to_leave_a_comment.l, new_commentable_comment_path(commentable.class, commentable.id), :class => 'btn btn-primary' 
+ link_to :create_an_account.l, signup_path, :class => 'btn btn-primary'
+comments,new
+#link_to :log_in_to_leave_a_comment.l, new_commentable_comment_path(commentable.class, commentable.id), :class => 'btn btn-primary' 
+ link_to :create_an_account.l, signup_path, :class => 'btn btn-primary'
+comments,show
+#link_to :log_in_to_leave_a_comment.l, new_commentable_comment_path(commentable.class, commentable.id), :class => 'btn btn-primary' 
+ link_to :create_an_account.l, signup_path, :class => 'btn btn-primary'
+comments,show
+
+
+---controller: posts
+---view: author_profile
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to fa_icon('rss', :text => :rss_feed.l), user_posts_path(user, :format => :rss)
+posts,index
+
+
+
+
+---redirect_to tags in clippings_show: 

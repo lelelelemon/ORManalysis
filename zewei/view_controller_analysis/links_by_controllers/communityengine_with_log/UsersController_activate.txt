@@ -1,0 +1,41 @@
+view file users_activate not exists!
+---redirect_to tags in users_activate: 
+#signup_path and return if params[:id].blank?
+    @user = User.find_by_activation_code(params[:id])
+    if @user and @user.activate
+      self.current_user = @user
+      @user.track_activity(:joined_the_site)
+      flash[:notice] = :thanks_for_activating_your_account.l
+      redirect_to welcome_photo_user_path(@user) and return
+    end
+
+    flash[:error] = :account_activation_error.l_with_args(:email => configatron.support_email)
+    redirect_to signup_path
+  e
+users,new
+#signup_path and return if params[:id].blank?
+    @user = User.find_by_activation_code(params[:id])
+    if @user and @user.activate
+      self.current_user = @user
+      @user.track_activity(:joined_the_site)
+      flash[:notice] = :thanks_for_activating_your_account.l
+      redirect_to welcome_photo_user_path(@user) and return
+    end
+
+    flash[:error] = :account_activation_error.l_with_args(:email => configatron.support_email)
+    redirect_to signup_path
+  e
+users,welcome_photo
+#signup_path and return if params[:id].blank?
+    @user = User.find_by_activation_code(params[:id])
+    if @user and @user.activate
+      self.current_user = @user
+      @user.track_activity(:joined_the_site)
+      flash[:notice] = :thanks_for_activating_your_account.l
+      redirect_to welcome_photo_user_path(@user) and return
+    end
+
+    flash[:error] = :account_activation_error.l_with_args(:email => configatron.support_email)
+    redirect_to signup_path
+  e
+users,show

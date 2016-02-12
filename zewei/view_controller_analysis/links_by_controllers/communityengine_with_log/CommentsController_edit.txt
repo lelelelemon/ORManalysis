@@ -1,0 +1,44 @@
+---controller: comments
+---view: edit
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: comments
+---view: edit_form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#:cancel.l, {:controller => 'comments', :action => 'edit', :id => comment.id, :cancel => true}, :class => 'btn btn-default edit-via-ajax'
+comments,edit
+
+
+---controller: comments
+---view: comment
+---hrefs: 
+#<%= user_path(comment.user) %>
+users,show
+route.recognize_path '2' #<%= commentable_url(comment) %>
+route.recognize_path '#' ##
+route.recognize_path '2' #<%= commentable_url(comment) %>
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item"
+comments,show
+#link_to fa_icon("trash-o fw", :text => :delete.l), commentable_comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 'data-confirm' => :are_you_sure_you_want_to_permanently_delete_this_comment.l, :remote => true, :class => "list-group-item"
+comments,show
+
+
+
+
+---redirect_to tags in comments_edit: 
