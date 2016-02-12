@@ -298,7 +298,8 @@ class View_Class
 
 	
 	def parse_content(content)
-		return YARD::Parser::Ruby::RubyParser.parse(content).root
+    puts @path
+    return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
 
 	def get_href_tag_array_from_html
