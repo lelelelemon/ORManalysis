@@ -36,7 +36,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->find_by_name def_%v_6 %self[2.0,] c[4.2,] 
+		 1: %self->find_by_name def_%v_6 %self[2.0,] c[4.2,] 	 ARGS:c,
 		 2: RETURN %v_6[6.1,] %self[6.1,2.0,] 
 BB 7
 	outgoing: 
@@ -59,13 +59,13 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Country) def_%v_3 
-		 7: %v_3->joins def_%v_4 %v_3[2.6,] 
+		 7: %v_3->joins def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 		 8: COPY def_%v_5 
-		 9: %v_4->where def_%v_6 %v_4[2.7,] %v_5[2.8,] 
+		 9: %v_4->where def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: COPY def_%v_7 
-		 11: %v_6->order def_%v_8 %v_6[2.9,] %v_7[2.10,] 
-		 12: %v_8->to_a def_%v_9 %v_8[2.11,] 
-		 13: %v_9->uniq def_%v_10 %v_9[2.12,] 
+		 11: %v_6->order def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 ARGS:%v_7,
+		 12: %v_8->to_a def_%v_9 %v_8[2.11,] 	 ARGS:
+		 13: %v_9->uniq def_%v_10 %v_9[2.12,] 	 ARGS:
 		 14: RETURN %v_10[2.13,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -88,14 +88,14 @@ BB 2
 		 4: 
 		 5: 
 		 6: (State) def_%v_3 
-		 7: %v_3->joins def_%v_4 %v_3[2.6,] 
+		 7: %v_3->joins def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 		 8: COPY def_%v_5 
-		 9: %self->metro_area_ids def_%v_6 %self[2.0,] 
-		 10: %v_4->where def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
+		 9: %self->metro_area_ids def_%v_6 %self[2.0,] 	 ARGS:
+		 10: %v_4->where def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_5,%v_6,
 		 11: COPY def_%v_8 
-		 12: %v_7->order def_%v_9 %v_7[2.10,] %v_8[2.11,] 
-		 13: %v_9->to_a def_%v_10 %v_9[2.12,] 
-		 14: %v_10->uniq def_%v_11 %v_10[2.13,] 
+		 12: %v_7->order def_%v_9 %v_7[2.10,] %v_8[2.11,] 	 ARGS:%v_8,
+		 13: %v_9->to_a def_%v_10 %v_9[2.12,] 	 ARGS:
+		 14: %v_10->uniq def_%v_11 %v_10[2.13,] 	 ARGS:
 		 15: RETURN %v_11[2.14,] %self[2.0,2.9,] 
 BB 3
 	outgoing: 
@@ -117,8 +117,8 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->metro_areas def_%v_3 %self[2.0,] 
-		 7: %v_3->map def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 
+		 6: %self->metro_areas def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->map def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
 CLOSURE BEGIN: m[] 
 BB 1
 	outgoing: 6 2 
@@ -138,7 +138,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: m->id def_%cl_1_3 m[2.2,] 
+		 1: m->id def_%cl_1_3 m[2.2,] 	 ARGS:
 		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -152,7 +152,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: %v_4->to_ary def_%v_5 %v_4[2.7,] 
+		 8: %v_4->to_ary def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 

@@ -14,12 +14,12 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Comment) def_%v_3 
-		 7: %self->params def_%v_4 %self[2.0,] 
-		 8: def_%v_5 %v_4[2.7,] 
-		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: ATTRASSIGN %self->comment %v_6[2.9,] 
 		 11: 
-		 12: %self->respond_to def_%v_7 %self[2.0,2.7,2.10,] %self[2.0,2.7,2.10,] 
+		 12: %self->respond_to def_%v_7 %self[2.0,2.7,2.10,] %self[2.0,2.7,2.10,] 	 ARGS:%self,
 CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
@@ -39,7 +39,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: format->js def_%cl_1_3 format[2.2,] 
+		 1: format->js def_%cl_1_3 format[2.2,] 	 ARGS:
 		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -81,14 +81,14 @@ BB 4
 		 0: 
 		 1: 
 		 2: (Comment) def_%v_7 
-		 3: %self->params def_%v_8 %self[2.0,] 
-		 4: def_%v_9 %v_8[4.3,] 
-		 5: %v_7->find def_%v_10 %v_7[4.2,] %v_9[4.4,] 
+		 3: %self->params def_%v_8 %self[2.0,] 	 ARGS:
+		 4: %v_8->[] def_%v_9 %v_8[4.3,] 	 ARGS:Symbol,
+		 5: %v_7->find def_%v_10 %v_7[4.2,] %v_9[4.4,] 	 ARGS:%v_9,
 		 6: ATTRASSIGN %self->comment %v_10[4.5,] 
 		 7: 
 		 8: GETFIELD %self->comment def_%v_11 %self[4.3,4.6,2.0,] 
-		 9: %self->comment_params def_%v_12 %self[4.3,4.6,2.0,] 
-		 10: %v_11->update_attributes! def_%v_13 %v_11[4.8,] %v_12[4.9,] 
+		 9: %self->comment_params def_%v_12 %self[4.3,4.6,2.0,] 	 ARGS:
+		 10: %v_11->update_attributes! def_%v_13 %v_11[4.8,] %v_12[4.9,] 	 ARGS:%v_12,
 		 11: COPY def_%v_6 %v_13[4.10,] 
 		 12: %v_3[2.5,] 
 BB 5
@@ -96,7 +96,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_4 %self[4.6,2.0,] %self[4.6,2.0,] 
+		 1: %self->respond_to def_%v_4 %self[4.6,2.0,] %self[4.6,2.0,] 	 ARGS:%self,
 CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
@@ -116,7 +116,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: format->js def_%cl_1_3 format[2.2,] 
+		 1: format->js def_%cl_1_3 format[2.2,] 	 ARGS:
 		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -143,7 +143,7 @@ BB 7
 	outgoing: 8 12 
 	datadep: 
 	instructions:
-		 0: def_%v_16 %v_15[6.1,] 
+		 0: %v_15->const_missing def_%v_16 %v_15[6.1,] 	 ARGS:Symbol,
 BB 8
 	outgoing: 9 10 12 
 	datadep: 
@@ -160,8 +160,8 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_18 %self[4.6,2.0,] 
-		 2: def_%v_19 
+		 1: %self->flash def_%v_18 %self[4.6,2.0,] 	 ARGS:
+		 2: def_%v_19 	 ARGS:
 		 3: ATTRASSIGN %v_18->[] %v_19[10.2,] 
 		 4: COPY def_%v_6 %v_19[10.2,] 
 		 5: %v_3[2.5,] 
@@ -170,7 +170,7 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_4 %self[4.6,2.0,] %self[4.6,2.0,] 
+		 1: %self->respond_to def_%v_4 %self[4.6,2.0,] %self[4.6,2.0,] 	 ARGS:%self,
 CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
@@ -190,7 +190,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: format->js def_%cl_1_3 format[2.2,] 
+		 1: format->js def_%cl_1_3 format[2.2,] 	 ARGS:
 		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -212,7 +212,7 @@ BB 12
 		 0: def_%v_20 
 		 1: def_%v_21 %v_20[12.0,] %v_3[2.5,] 
 		 2: 
-		 3: %self->respond_to def_%v_4 %self[4.6,2.0,] %self[4.6,2.0,] 
+		 3: %self->respond_to def_%v_4 %self[4.6,2.0,] %self[4.6,2.0,] 	 ARGS:%self,
 CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
@@ -232,7 +232,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: format->js def_%cl_1_3 format[2.2,] 
+		 1: format->js def_%cl_1_3 format[2.2,] 	 ARGS:
 		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -273,20 +273,20 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Comment) def_%v_3 
-		 7: %self->params def_%v_4 %self[2.0,] 
-		 8: def_%v_5 %v_4[2.7,] 
-		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: ATTRASSIGN %self->comment %v_6[2.9,] 
 		 11: 
-		 12: %self->configatron def_%v_7 %self[2.0,2.7,2.10,] 
-		 13: %v_7->has_key? def_%v_8 %v_7[2.12,] 
+		 12: %self->configatron def_%v_7 %self[2.0,2.7,2.10,] 	 ARGS:
+		 13: %v_7->has_key? def_%v_8 %v_7[2.12,] 	 ARGS:Symbol,
 		 14: BRANCH %v_8[2.13,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->comment def_%v_9 %self[2.0,2.10,] 
-		 1: %v_9->ham! def_%v_10 %v_9[3.0,] 
+		 1: %v_9->ham! def_%v_10 %v_9[3.0,] 	 ARGS:
 		 2: 
 BB 4
 	outgoing: 5 
@@ -303,9 +303,9 @@ BB 5
 		 3: ATTRASSIGN %v_11->role %v_12[5.2,] 
 		 4: 
 		 5: GETFIELD %self->comment def_%v_13 %self[2.0,2.10,] 
-		 6: %v_13->save! def_%v_14 %v_13[5.5,] 
+		 6: %v_13->save! def_%v_14 %v_13[5.5,] 	 ARGS:
 		 7: 
-		 8: %self->respond_to def_%v_15 %self[2.0,2.10,] %self[2.0,2.10,] 
+		 8: %self->respond_to def_%v_15 %self[2.0,2.10,] %self[2.0,2.10,] 	 ARGS:%self,
 CLOSURE BEGIN: format[] 
 BB 1
 	outgoing: 6 2 
@@ -325,7 +325,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: format->js def_%cl_1_3 format[2.2,] 
+		 1: format->js def_%cl_1_3 format[2.2,] 	 ARGS:
 		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -360,24 +360,24 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->params def_%v_3 %self[2.0,] 
-		 7: def_%v_4 %v_3[2.6,] 
-		 8: %self->get_commentable_type def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 
+		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+		 8: %self->get_commentable_type def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: COPY def_commentable_type %v_5[2.8,] 
 		 10: 
-		 11: %v_5->singularize def_%v_6 %v_5[2.8,] 
-		 12: %v_6->constantize def_%v_7 %v_6[2.11,] 
+		 11: %v_5->singularize def_%v_6 %v_5[2.8,] 	 ARGS:
+		 12: %v_6->constantize def_%v_7 %v_6[2.11,] 	 ARGS:
 		 13: COPY def_commentable_class %v_7[2.12,] 
 		 14: 
-		 15: commentable_type->humanize def_%v_8 commentable_type[2.9,] 
+		 15: commentable_type->humanize def_%v_8 commentable_type[2.9,] 	 ARGS:
 		 16: COPY def_commentable_type_humanized %v_8[2.15,] 
 		 17: 
-		 18: commentable_type->tableize def_%v_9 commentable_type[2.9,2.15,] 
+		 18: commentable_type->tableize def_%v_9 commentable_type[2.9,2.15,] 	 ARGS:
 		 19: COPY def_commentable_type_tableized %v_9[2.18,] 
 		 20: 
-		 21: %self->params def_%v_10 %self[2.0,2.6,2.8,] 
-		 22: def_%v_11 %v_10[2.21,] 
-		 23: commentable_class->find def_%v_12 commentable_class[2.13,] %v_11[2.22,] 
+		 21: %self->params def_%v_10 %self[2.0,2.6,2.8,] 	 ARGS:
+		 22: %v_10->[] def_%v_11 %v_10[2.21,] 	 ARGS:Symbol,
+		 23: commentable_class->find def_%v_12 commentable_class[2.13,] %v_11[2.22,] 	 ARGS:%v_11,
 		 24: ATTRASSIGN %self->commentable %v_12[2.23,] 
 		 25: BRANCH %v_12[2.23,] 
 BB 4
@@ -385,22 +385,22 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->logged_in? def_%v_13 %self[2.0,2.24,] 
+		 1: %self->logged_in? def_%v_13 %self[2.0,2.24,] 	 ARGS:
 		 2: BRANCH %v_13[4.1,] 
 BB 5
 	outgoing: 6 7 35 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->commentable def_%v_14 %self[2.0,2.24,] 
-		 1: %v_14->owner def_%v_15 %v_14[5.0,] 
+		 1: %v_14->owner def_%v_15 %v_14[5.0,] 	 ARGS:
 		 2: BRANCH %v_15[5.1,] 
 BB 6
 	outgoing: 7 35 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->commentable def_%v_16 %self[2.0,2.24,] 
-		 1: %v_16->owner def_%v_17 %v_16[6.0,] 
-		 2: %v_17->profile_public? def_%v_18 %v_17[6.1,] 
+		 1: %v_16->owner def_%v_17 %v_16[6.0,] 	 ARGS:
+		 2: %v_17->profile_public? def_%v_18 %v_17[6.1,] 	 ARGS:
 		 3: COPY def_%v_15 %v_18[6.2,] 
 BB 7
 	outgoing: 8 
@@ -423,13 +423,13 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_20 %self[2.0,2.24,] 
-		 2: %v_20->now def_%v_21 %v_20[10.1,] 
-		 3: def_%v_22 
+		 1: %self->flash def_%v_20 %self[2.0,2.24,] 	 ARGS:
+		 2: %v_20->now def_%v_21 %v_20[10.1,] 	 ARGS:
+		 3: def_%v_22 	 ARGS:
 		 4: ATTRASSIGN %v_21->[] %v_22[10.3,] 
 		 5: 
-		 6: %self->login_path def_%v_23 %self[10.1,2.0,2.24,] 
-		 7: %self->redirect_to def_%v_24 %self[10.1,10.6,2.0,2.24,] %v_23[10.6,] 
+		 6: %self->login_path def_%v_23 %self[10.1,2.0,2.24,] 	 ARGS:
+		 7: %self->redirect_to def_%v_24 %self[10.1,10.6,2.0,2.24,] %v_23[10.6,] 	 ARGS:%v_23,
 		 8: BRANCH %v_24[10.7,] 
 BB 11
 	outgoing: 37 
@@ -447,22 +447,22 @@ BB 14
 	instructions:
 		 0: 
 		 1: GETFIELD %self->commentable def_%v_25 %self[2.0,2.24,] 
-		 2: %v_25->comments def_%v_26 %v_25[14.1,] 
-		 3: %v_26->recent def_%v_27 %v_26[14.2,] 
-		 4: %self->params def_%v_28 %self[2.0,2.24,] 
-		 5: def_%v_29 %v_28[14.4,] 
-		 6: %v_27->page def_%v_30 %v_27[14.3,] %v_29[14.5,] 
+		 2: %v_25->comments def_%v_26 %v_25[14.1,] 	 ARGS:
+		 3: %v_26->recent def_%v_27 %v_26[14.2,] 	 ARGS:
+		 4: %self->params def_%v_28 %self[2.0,2.24,] 	 ARGS:
+		 5: %v_28->[] def_%v_29 %v_28[14.4,] 	 ARGS:Symbol,
+		 6: %v_27->page def_%v_30 %v_27[14.3,] %v_29[14.5,] 	 ARGS:%v_29,
 		 7: ATTRASSIGN %self->comments %v_30[14.6,] 
 		 8: 
 		 9: ATTRASSIGN %self->title commentable_type_humanized[2.16,] 
 		 10: 
 		 11: GETFIELD %self->commentable def_%v_31 %self[14.4,2.0,2.24,] 
-		 12: COPY def_%v_32 
-		 13: %self->commentable_comments_url def_%v_33 %self[14.4,14.7,14.9,2.0,2.24,] commentable_type_tableized[2.19,] %v_31[14.11,] %v_32[14.12,] 
+		 12: HASH-format- def_%v_32 
+		 13: %self->commentable_comments_url def_%v_33 %self[14.4,14.7,14.9,2.0,2.24,] commentable_type_tableized[2.19,] %v_31[14.11,] %v_32[14.12,] 	 ARGS:commentable_type_tableized,%v_31,%v_32,
 		 14: ATTRASSIGN %self->rss_url %v_33[14.13,] 
 		 15: 
 		 16: GETFIELD %self->comments def_%v_34 %self[14.4,14.7,14.13,2.0,] 
-		 17: %v_34->any? def_%v_35 %v_34[14.16,] 
+		 17: %v_34->any? def_%v_35 %v_34[14.16,] 	 ARGS:
 		 18: BRANCH %v_35[14.17,] 
 BB 15
 	outgoing: 26 35 
@@ -470,19 +470,19 @@ BB 15
 	instructions:
 		 0: 
 		 1: GETFIELD %self->comments def_%v_36 %self[14.7,2.0,] 
-		 2: %v_36->first def_%v_37 %v_36[15.1,] 
+		 2: %v_36->first def_%v_37 %v_36[15.1,] 	 ARGS:
 		 3: COPY def_first_comment %v_37[15.2,] 
 		 4: 
-		 5: %v_37->recipient def_%v_38 %v_37[15.2,] 
+		 5: %v_37->recipient def_%v_38 %v_37[15.2,] 	 ARGS:
 		 6: ATTRASSIGN %self->user %v_38[15.5,] 
 		 7: 
-		 8: first_comment->commentable_name def_%v_39 first_comment[15.3,] 
+		 8: first_comment->commentable_name def_%v_39 first_comment[15.3,] 	 ARGS:
 		 9: ATTRASSIGN %self->title %v_39[15.8,] 
 		 10: 
-		 11: %self->commentable_url def_%v_40 %self[15.6,15.9,14.7,14.9,14.14,2.0,2.24,] first_comment[15.3,15.8,] 
+		 11: %self->commentable_url def_%v_40 %self[15.6,15.9,14.7,14.9,14.14,2.0,2.24,] first_comment[15.3,15.8,] 	 ARGS:first_comment,
 		 12: ATTRASSIGN %self->back_url %v_40[15.11,] 
 		 13: 
-		 14: %self->respond_to def_%v_41 %self[15.6,15.9,15.11,15.12,14.7,14.9,14.14,2.0,2.24,] %self[15.6,15.9,15.11,15.12,14.7,14.9,14.14,2.0,2.24,] 
+		 14: %self->respond_to def_%v_41 %self[15.6,15.9,15.11,15.12,14.7,14.9,14.14,2.0,2.24,] %self[15.6,15.9,15.11,15.12,14.7,14.9,14.14,2.0,2.24,] 	 ARGS:%self,
 CLOSURE BEGIN: %self[15.6,15.9,15.11,15.12,14.7,14.9,14.14,2.0,2.24,] commentable_type_humanized[2.16,] format[] 
 BB 1
 	outgoing: 6 2 
@@ -502,17 +502,17 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->configatron def_%cl_1_3 %self[2.0,] 
-		 2: %cl_1_3->community_name def_%cl_1_4 %cl_1_3[3.1,] 
+		 1: %self->configatron def_%cl_1_3 %self[2.0,] 	 ARGS:
+		 2: %cl_1_3->community_name def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:
 		 3: COPY def_%cl_1_5 
 		 4: COPY def_%cl_1_6 
 		 5: GETFIELD %self->title def_%cl_1_7 %self[3.1,2.0,] 
-		 6: def_%cl_1_8 %cl_1_4[3.2,] %cl_1_5[3.3,] commentable_type_humanized[] %cl_1_6[3.4,] %cl_1_7[3.5,] 
+		 6: BUILDSTRING def_%cl_1_8 %cl_1_4[3.2,] %cl_1_5[3.3,] commentable_type_humanized[] %cl_1_6[3.4,] %cl_1_7[3.5,] 
 		 7: ATTRASSIGN %self->rss_title %cl_1_8[3.6,] 
 		 8: 
-		 9: format->html def_%cl_1_9 format[2.2,] 
+		 9: format->html def_%cl_1_9 format[2.2,] 	 ARGS:
 		 10: 
-		 11: format->rss def_%cl_1_10 format[3.9,2.2,] %self[3.1,3.7,2.0,] 
+		 11: format->rss def_%cl_1_10 format[3.9,2.2,] %self[3.1,3.7,2.0,] 	 ARGS:format,
 CLOSURE BEGIN: %self[3.1,3.7,2.0,] 
 BB 1
 	outgoing: 9 2 
@@ -534,7 +534,7 @@ BB 3
 		 1: GETFIELD %self->comments def_%cl_2_3 %self[2.0,] 
 		 2: GETFIELD %self->commentable def_%cl_2_4 %self[2.0,] 
 		 3: GETFIELD %self->rss_title def_%cl_2_5 %self[2.0,] 
-		 4: %self->render_comments_rss_feed_for def_%cl_2_6 %self[2.0,] %cl_2_3[3.1,] %cl_2_4[3.2,] %cl_2_5[3.3,] 
+		 4: %self->render_comments_rss_feed_for def_%cl_2_6 %self[2.0,] %cl_2_3[3.1,] %cl_2_4[3.2,] %cl_2_5[3.3,] 	 ARGS:%cl_2_3,%cl_2_4,%cl_2_5,
 		 5: BRANCH %cl_2_6[3.4,] 
 BB 4
 	outgoing: 7 9 
@@ -580,7 +580,7 @@ BB 16
 		 0: 
 		 1: GETFIELD %self->commentable def_%v_42 %self[2.0,2.24,] 
 		 2: (User) def_%v_43 
-		 3: %v_42->is_a? def_%v_44 %v_42[16.1,] %v_43[16.2,] 
+		 3: %v_42->is_a? def_%v_44 %v_42[16.1,] %v_43[16.2,] 	 ARGS:%v_43,
 		 4: BRANCH %v_44[16.3,] 
 BB 17
 	outgoing: 25 35 
@@ -591,11 +591,11 @@ BB 17
 		 2: ATTRASSIGN %self->user %v_45[17.1,] 
 		 3: 
 		 4: GETFIELD %self->user def_%v_46 %self[17.2,2.0,] 
-		 5: %v_46->login def_%v_47 %v_46[17.4,] 
+		 5: %v_46->login def_%v_47 %v_46[17.4,] 	 ARGS:
 		 6: ATTRASSIGN %self->title %v_47[17.5,] 
 		 7: 
 		 8: GETFIELD %self->user def_%v_48 %self[17.2,2.0,] 
-		 9: %self->user_path def_%v_49 %self[17.2,17.6,14.7,14.9,14.14,2.0,2.24,] %v_48[17.8,] 
+		 9: %self->user_path def_%v_49 %self[17.2,17.6,14.7,14.9,14.14,2.0,2.24,] %v_48[17.8,] 	 ARGS:%v_48,
 		 10: ATTRASSIGN %self->back_url %v_49[17.9,] 
 		 11: 
 BB 18
@@ -604,7 +604,7 @@ BB 18
 	instructions:
 		 0: 
 		 1: GETFIELD %self->commentable def_%v_50 %self[2.0,2.24,] 
-		 2: %v_50->user def_%v_51 %v_50[18.1,] 
+		 2: %v_50->user def_%v_51 %v_50[18.1,] 	 ARGS:
 		 3: ATTRASSIGN %self->user %v_51[18.2,] 
 		 4: BRANCH %v_51[18.2,] 
 BB 19
@@ -613,14 +613,14 @@ BB 19
 	instructions:
 		 0: 
 		 1: GETFIELD %self->commentable def_%v_52 %self[2.0,2.24,] 
-		 2: %v_52->respond_to? def_%v_53 %v_52[19.1,] 
+		 2: %v_52->respond_to? def_%v_53 %v_52[19.1,] 	 ARGS:Symbol,
 		 3: BRANCH %v_53[19.2,] 
 BB 20
 	outgoing: 22 35 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->commentable def_%v_54 %self[2.0,2.24,] 
-		 1: %v_54->title def_%v_55 %v_54[20.0,] 
+		 1: %v_54->title def_%v_55 %v_54[20.0,] 	 ARGS:
 		 2: 
 BB 21
 	outgoing: 22 
@@ -637,7 +637,7 @@ BB 22
 		 2: GETFIELD %self->user def_%v_57 %self[18.3,2.0,] 
 		 3: GETFIELD %self->commentable def_%v_58 %self[2.0,2.24,] 
 		 4: COPY def_%v_59 %v_57[22.2,] %v_58[22.3,] 
-		 5: %self->url_for def_%v_60 %self[22.0,18.3,14.7,14.9,14.14,2.0,2.24,] %v_59[22.4,] 
+		 5: %self->url_for def_%v_60 %self[22.0,18.3,14.7,14.9,14.14,2.0,2.24,] %v_59[22.4,] 	 ARGS:%v_59,
 		 6: ATTRASSIGN %self->back_url %v_60[22.5,] 
 		 7: 
 BB 23
@@ -655,7 +655,7 @@ BB 25
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_61 %self[17.2,17.6,17.10,22.0,22.6,18.3,14.7,14.9,14.14,2.0,2.24,] %self[17.2,17.6,17.10,22.0,22.6,18.3,14.7,14.9,14.14,2.0,2.24,] 
+		 1: %self->respond_to def_%v_61 %self[17.2,17.6,17.10,22.0,22.6,18.3,14.7,14.9,14.14,2.0,2.24,] %self[17.2,17.6,17.10,22.0,22.6,18.3,14.7,14.9,14.14,2.0,2.24,] 	 ARGS:%self,
 CLOSURE BEGIN: format[] %self[17.2,17.6,17.10,22.0,22.6,18.3,14.7,14.9,14.14,2.0,2.24,] 
 BB 1
 	outgoing: 6 2 
@@ -675,9 +675,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: format->html def_%cl_3_3 format[2.2,] 
+		 1: format->html def_%cl_3_3 format[2.2,] 	 ARGS:
 		 2: 
-		 3: format->rss def_%cl_3_4 format[3.1,2.2,] %self[2.0,] 
+		 3: format->rss def_%cl_3_4 format[3.1,2.2,] %self[2.0,] 	 ARGS:format,
 CLOSURE BEGIN: %self[2.0,] commentable_type_humanized[] 
 BB 1
 	outgoing: 9 2 
@@ -696,18 +696,18 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->configatron def_%cl_4_3 %self[2.0,] 
-		 2: %cl_4_3->community_name def_%cl_4_4 %cl_4_3[3.1,] 
+		 1: %self->configatron def_%cl_4_3 %self[2.0,] 	 ARGS:
+		 2: %cl_4_3->community_name def_%cl_4_4 %cl_4_3[3.1,] 	 ARGS:
 		 3: COPY def_%cl_4_5 
 		 4: COPY def_%cl_4_6 
 		 5: GETFIELD %self->title def_%cl_4_7 %self[3.1,2.0,] 
-		 6: def_%cl_4_8 %cl_4_4[3.2,] %cl_4_5[3.3,] commentable_type_humanized[] %cl_4_6[3.4,] %cl_4_7[3.5,] 
+		 6: BUILDSTRING def_%cl_4_8 %cl_4_4[3.2,] %cl_4_5[3.3,] commentable_type_humanized[] %cl_4_6[3.4,] %cl_4_7[3.5,] 
 		 7: ATTRASSIGN %self->rss_title %cl_4_8[3.6,] 
 		 8: 
 		 9: COPY def_%cl_4_9 
 		 10: GETFIELD %self->commentable def_%cl_4_10 %self[3.1,2.0,] 
 		 11: GETFIELD %self->rss_title def_%cl_4_11 %self[3.1,3.7,2.0,] 
-		 12: %self->render_comments_rss_feed_for def_%cl_4_12 %self[3.1,3.7,2.0,] %cl_4_9[3.9,] %cl_4_10[3.10,] %cl_4_11[3.11,] 
+		 12: %self->render_comments_rss_feed_for def_%cl_4_12 %self[3.1,3.7,2.0,] %cl_4_9[3.9,] %cl_4_10[3.10,] %cl_4_11[3.11,] 	 ARGS:%cl_4_9,%cl_4_10,%cl_4_11,
 		 13: BRANCH %cl_4_12[3.12,] 
 BB 4
 	outgoing: 7 9 
@@ -756,13 +756,13 @@ BB 27
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_62 %self[2.0,2.24,] 
-		 2: COPY def_%v_63 commentable_type_humanized[2.16,] 
-		 3: %v_63->l_with_args def_%v_64 %v_63[27.2,] 
+		 1: %self->flash def_%v_62 %self[2.0,2.24,] 	 ARGS:
+		 2: HASH-type- def_%v_63 commentable_type_humanized[2.16,] 
+		 3: %v_63->l_with_args def_%v_64 %v_63[27.2,] 	 ARGS:%v_63,
 		 4: ATTRASSIGN %v_62->[] %v_64[27.3,] 
 		 5: 
-		 6: %self->home_path def_%v_65 %self[27.1,2.0,2.24,] 
-		 7: %self->redirect_to def_%v_66 %self[27.1,27.6,2.0,2.24,] %v_65[27.6,] 
+		 6: %self->home_path def_%v_65 %self[27.1,2.0,2.24,] 	 ARGS:
+		 7: %self->redirect_to def_%v_66 %self[27.1,27.6,2.0,2.24,] %v_65[27.6,] 	 ARGS:%v_65,
 		 8: COPY def_%v_41 %v_66[27.7,] 
 BB 28
 	outgoing: 29 30 
@@ -777,9 +777,9 @@ BB 29
 	instructions:
 		 0: COPY def_%v_68 
 		 1: GETFIELD %self->user def_%v_69 %self[2.0,15.6,17.2,18.3,] 
-		 2: COPY def_%v_70 %v_69[29.1,] 
-		 3: COPY def_%v_71 %v_68[29.0,] %v_70[29.2,] 
-		 4: %self->render def_%v_72 %self[2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] %v_71[29.3,] 
+		 2: HASH-user- def_%v_70 %v_69[29.1,] 
+		 3: HASH-partial-locals- def_%v_71 %v_68[29.0,] %v_70[29.2,] 
+		 4: %self->render def_%v_72 %self[2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] %v_71[29.3,] 	 ARGS:%v_71,
 		 5: 
 BB 30
 	outgoing: 31 
@@ -790,15 +790,15 @@ BB 31
 	outgoing: 32 33 35 
 	datadep: 
 	instructions:
-		 0: def_%v_73 
+		 0: def_%v_73 	 ARGS:
 		 1: COPY def_%v_74 
-		 2: def_%v_75 %v_73[31.0,] %v_74[31.1,] 
+		 2: %v_73->+ def_%v_75 %v_73[31.0,] %v_74[31.1,] 	 ARGS:%v_74,
 		 3: GETFIELD %self->title def_%v_76 %self[2.0,15.9,17.6,14.9,22.0,] 
-		 4: def_%v_77 %v_75[31.2,] %v_76[31.3,] 
+		 4: %v_75->+ def_%v_77 %v_75[31.2,] %v_76[31.3,] 	 ARGS:%v_76,
 		 5: ATTRASSIGN %self->page_title %v_77[31.4,] 
 		 6: 
 		 7: GETFIELD %self->comments def_%v_78 %self[2.0,14.7,] 
-		 8: %v_78->empty? def_%v_79 %v_78[31.7,] 
+		 8: %v_78->empty? def_%v_79 %v_78[31.7,] 	 ARGS:
 		 9: BRANCH %v_79[31.8,] 
 BB 32
 	outgoing: 34 35 
@@ -806,19 +806,19 @@ BB 32
 	instructions:
 		 0: 
 		 1: GETFIELD %self->commentable def_%v_80 %self[2.0,2.24,] 
-		 2: %v_80->class def_%v_81 %v_80[32.1,] 
-		 3: %v_81->to_s def_%v_82 %v_81[32.2,] 
-		 4: %v_82->underscore def_%v_83 %v_82[32.3,] 
-		 5: COPY def_%v_84 %v_83[32.4,] 
-		 6: %v_84->l_with_args def_%v_85 %v_84[32.5,] 
+		 2: %v_80->class def_%v_81 %v_80[32.1,] 	 ARGS:
+		 3: %v_81->to_s def_%v_82 %v_81[32.2,] 	 ARGS:
+		 4: %v_82->underscore def_%v_83 %v_82[32.3,] 	 ARGS:
+		 5: HASH-type- def_%v_84 %v_83[32.4,] 
+		 6: %v_84->l_with_args def_%v_85 %v_84[32.5,] 	 ARGS:%v_84,
 		 7: 
 BB 33
 	outgoing: 34 35 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->ruby_code_from_view def_%v_86 %self[31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 
-		 2: %v_86->ruby_code_from_view def_%v_87 %v_86[33.1,] %self[33.1,31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 
+		 1: %self->ruby_code_from_view def_%v_86 %self[31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 	 ARGS:
+		 2: %v_86->ruby_code_from_view def_%v_87 %v_86[33.1,] %self[33.1,31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 	 ARGS:%v_86,
 CLOSURE BEGIN: %self[33.1,31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 
 BB 1
 	outgoing: 35 2 
@@ -838,11 +838,11 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_3 %self[2.0,] 
-		 2: %cl_5_3->id def_%cl_5_4 %cl_5_3[3.1,] 
+		 1: %self->comment def_%cl_5_3 %self[2.0,] 	 ARGS:
+		 2: %cl_5_3->id def_%cl_5_4 %cl_5_3[3.1,] 	 ARGS:
 		 3: 
-		 4: %self->comment def_%cl_5_5 %self[3.1,2.0,] 
-		 5: %cl_5_5->pending? def_%cl_5_6 %cl_5_5[3.4,] 
+		 4: %self->comment def_%cl_5_5 %self[3.1,2.0,] 	 ARGS:
+		 5: %cl_5_5->pending? def_%cl_5_6 %cl_5_5[3.4,] 	 ARGS:
 		 6: BRANCH %cl_5_6[3.5,] 
 BB 4
 	outgoing: 6 
@@ -860,77 +860,77 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_8 %self[2.0,] 
-		 2: %cl_5_8->user def_%cl_5_9 %cl_5_8[6.1,] 
+		 1: %self->comment def_%cl_5_8 %self[2.0,] 	 ARGS:
+		 2: %cl_5_8->user def_%cl_5_9 %cl_5_8[6.1,] 	 ARGS:
 		 3: BRANCH %cl_5_9[6.2,] 
 BB 7
 	outgoing: 8 11 33 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_10 %self[2.0,] 
-		 2: %cl_5_10->user def_%cl_5_11 %cl_5_10[7.1,] 
-		 3: %cl_5_11->avatar_photo_url def_%cl_5_12 %cl_5_11[7.2,] 
-		 4: %self->comment def_%cl_5_13 %self[7.1,2.0,] 
-		 5: %cl_5_13->user def_%cl_5_14 %cl_5_13[7.4,] 
-		 6: %cl_5_14->login def_%cl_5_15 %cl_5_14[7.5,] 
+		 1: %self->comment def_%cl_5_10 %self[2.0,] 	 ARGS:
+		 2: %cl_5_10->user def_%cl_5_11 %cl_5_10[7.1,] 	 ARGS:
+		 3: %cl_5_11->avatar_photo_url def_%cl_5_12 %cl_5_11[7.2,] 	 ARGS:Symbol,
+		 4: %self->comment def_%cl_5_13 %self[7.1,2.0,] 	 ARGS:
+		 5: %cl_5_13->user def_%cl_5_14 %cl_5_13[7.4,] 	 ARGS:
+		 6: %cl_5_14->login def_%cl_5_15 %cl_5_14[7.5,] 	 ARGS:
 		 7: COPY def_%cl_5_16 
-		 8: COPY def_%cl_5_17 %cl_5_15[7.6,] %cl_5_16[7.7,] 
-		 9: %self->image_tag def_%cl_5_18 %self[7.1,7.4,2.0,] %cl_5_12[7.3,] %cl_5_17[7.8,] 
-		 10: %self->comment def_%cl_5_19 %self[7.1,7.4,7.9,2.0,] 
-		 11: %cl_5_19->user def_%cl_5_20 %cl_5_19[7.10,] 
-		 12: %self->user_path def_%cl_5_21 %self[7.1,7.4,7.9,7.10,2.0,] %cl_5_20[7.11,] 
+		 8: HASH-alt-class- def_%cl_5_17 %cl_5_15[7.6,] %cl_5_16[7.7,] 
+		 9: %self->image_tag def_%cl_5_18 %self[7.1,7.4,2.0,] %cl_5_12[7.3,] %cl_5_17[7.8,] 	 ARGS:%cl_5_12,%cl_5_17,
+		 10: %self->comment def_%cl_5_19 %self[7.1,7.4,7.9,2.0,] 	 ARGS:
+		 11: %cl_5_19->user def_%cl_5_20 %cl_5_19[7.10,] 	 ARGS:
+		 12: %self->user_path def_%cl_5_21 %self[7.1,7.4,7.9,7.10,2.0,] %cl_5_20[7.11,] 	 ARGS:%cl_5_20,
 		 13: COPY def_%cl_5_22 
-		 14: %self->comment def_%cl_5_23 %self[7.1,7.4,7.9,7.10,7.12,2.0,] 
-		 15: %cl_5_23->user def_%cl_5_24 %cl_5_23[7.14,] 
-		 16: %cl_5_24->login def_%cl_5_25 %cl_5_24[7.15,] 
-		 17: COPY def_%cl_5_26 %cl_5_25[7.16,] 
-		 18: %cl_5_26->l def_%cl_5_27 %cl_5_26[7.17,] 
+		 14: %self->comment def_%cl_5_23 %self[7.1,7.4,7.9,7.10,7.12,2.0,] 	 ARGS:
+		 15: %cl_5_23->user def_%cl_5_24 %cl_5_23[7.14,] 	 ARGS:
+		 16: %cl_5_24->login def_%cl_5_25 %cl_5_24[7.15,] 	 ARGS:
+		 17: HASH-user- def_%cl_5_26 %cl_5_25[7.16,] 
+		 18: %cl_5_26->l def_%cl_5_27 %cl_5_26[7.17,] 	 ARGS:%cl_5_26,
 		 19: COPY def_%cl_5_28 
-		 20: COPY def_%cl_5_29 %cl_5_22[7.13,] %cl_5_27[7.18,] %cl_5_28[7.19,] 
-		 21: %self->link_to def_%cl_5_30 %self[7.1,7.4,7.9,7.10,7.12,7.14,2.0,] %cl_5_18[7.9,] %cl_5_21[7.12,] %cl_5_29[7.20,] 
+		 20: HASH-rel-title-class- def_%cl_5_29 %cl_5_22[7.13,] %cl_5_27[7.18,] %cl_5_28[7.19,] 
+		 21: %self->link_to def_%cl_5_30 %self[7.1,7.4,7.9,7.10,7.12,7.14,2.0,] %cl_5_18[7.9,] %cl_5_21[7.12,] %cl_5_29[7.20,] 	 ARGS:%cl_5_18,%cl_5_21,%cl_5_29,
 		 22: 
-		 23: %self->comment def_%cl_5_31 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,2.0,] 
-		 24: %cl_5_31->user def_%cl_5_32 %cl_5_31[7.23,] 
-		 25: %self->user_path def_%cl_5_33 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,2.0,] %cl_5_32[7.24,] 
+		 23: %self->comment def_%cl_5_31 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,2.0,] 	 ARGS:
+		 24: %cl_5_31->user def_%cl_5_32 %cl_5_31[7.23,] 	 ARGS:
+		 25: %self->user_path def_%cl_5_33 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,2.0,] %cl_5_32[7.24,] 	 ARGS:%cl_5_32,
 		 26: 
 		 27: COPY def_%cl_5_34 
-		 28: %self->comment def_%cl_5_35 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,2.0,] 
-		 29: %cl_5_35->user def_%cl_5_36 %cl_5_35[7.28,] 
-		 30: %cl_5_36->login def_%cl_5_37 %cl_5_36[7.29,] 
-		 31: COPY def_%cl_5_38 %cl_5_37[7.30,] 
-		 32: %self->fa_icon def_%cl_5_39 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,2.0,] %cl_5_34[7.27,] %cl_5_38[7.31,] 
+		 28: %self->comment def_%cl_5_35 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,2.0,] 	 ARGS:
+		 29: %cl_5_35->user def_%cl_5_36 %cl_5_35[7.28,] 	 ARGS:
+		 30: %cl_5_36->login def_%cl_5_37 %cl_5_36[7.29,] 	 ARGS:
+		 31: HASH-text- def_%cl_5_38 %cl_5_37[7.30,] 
+		 32: %self->fa_icon def_%cl_5_39 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,2.0,] %cl_5_34[7.27,] %cl_5_38[7.31,] 	 ARGS:%cl_5_34,%cl_5_38,
 		 33: 
-		 34: %self->comment def_%cl_5_40 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,2.0,] 
-		 35: %self->commentable_url def_%cl_5_41 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,2.0,] %cl_5_40[7.34,] 
+		 34: %self->comment def_%cl_5_40 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,2.0,] 	 ARGS:
+		 35: %self->commentable_url def_%cl_5_41 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,2.0,] %cl_5_40[7.34,] 	 ARGS:%cl_5_40,
 		 36: 
 		 37: COPY def_%cl_5_42 
-		 38: %self->fa_icon def_%cl_5_43 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,7.35,2.0,] %cl_5_42[7.37,] 
+		 38: %self->fa_icon def_%cl_5_43 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,7.35,2.0,] %cl_5_42[7.37,] 	 ARGS:%cl_5_42,
 		 39: 
-		 40: %self->comment def_%cl_5_44 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,7.35,7.38,2.0,] 
-		 41: %cl_5_44->created_at def_%cl_5_45 %cl_5_44[7.40,] 
+		 40: %self->comment def_%cl_5_44 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,7.35,7.38,2.0,] 	 ARGS:
+		 41: %cl_5_44->created_at def_%cl_5_45 %cl_5_44[7.40,] 	 ARGS:
 		 42: 
 		 43: (I18n) def_%cl_5_46 
-		 44: %self->comment def_%cl_5_47 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,7.35,7.38,7.40,2.0,] 
-		 45: %cl_5_47->created_at def_%cl_5_48 %cl_5_47[7.44,] 
-		 46: COPY def_%cl_5_49 
-		 47: %cl_5_46->l def_%cl_5_50 %cl_5_46[7.43,] %cl_5_48[7.45,] %cl_5_49[7.46,] 
+		 44: %self->comment def_%cl_5_47 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,7.35,7.38,7.40,2.0,] 	 ARGS:
+		 45: %cl_5_47->created_at def_%cl_5_48 %cl_5_47[7.44,] 	 ARGS:
+		 46: HASH-format- def_%cl_5_49 
+		 47: %cl_5_46->l def_%cl_5_50 %cl_5_46[7.43,] %cl_5_48[7.45,] %cl_5_49[7.46,] 	 ARGS:%cl_5_48,%cl_5_49,
 		 48: 
-		 49: %self->logged_in? def_%cl_5_51 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,7.35,7.38,7.40,7.44,2.0,] 
+		 49: %self->logged_in? def_%cl_5_51 %self[7.1,7.4,7.9,7.10,7.12,7.14,7.21,7.23,7.25,7.28,7.32,7.34,7.35,7.38,7.40,7.44,2.0,] 	 ARGS:
 		 50: BRANCH %cl_5_51[7.49,] 
 BB 8
 	outgoing: 9 10 33 
 	datadep: 
 	instructions:
-		 0: %self->current_user def_%cl_5_52 %self[2.0,] 
-		 1: %cl_5_52->admin? def_%cl_5_53 %cl_5_52[8.0,] 
+		 0: %self->current_user def_%cl_5_52 %self[2.0,] 	 ARGS:
+		 1: %cl_5_52->admin? def_%cl_5_53 %cl_5_52[8.0,] 	 ARGS:
 		 2: BRANCH %cl_5_53[8.1,] 
 BB 9
 	outgoing: 10 33 
 	datadep: 
 	instructions:
-		 0: %self->current_user def_%cl_5_54 %self[2.0,] 
-		 1: %cl_5_54->moderator? def_%cl_5_55 %cl_5_54[9.0,] 
+		 0: %self->current_user def_%cl_5_54 %self[2.0,] 	 ARGS:
+		 1: %cl_5_54->moderator? def_%cl_5_55 %cl_5_54[9.0,] 	 ARGS:
 		 2: COPY def_%cl_5_53 %cl_5_55[9.1,] 
 BB 10
 	outgoing: 11 
@@ -948,18 +948,18 @@ BB 12
 	instructions:
 		 0: 
 		 1: COPY def_%cl_5_56 
-		 2: def_%cl_5_57 
-		 3: COPY def_%cl_5_58 %cl_5_57[12.2,] 
-		 4: %self->fa_icon def_%cl_5_59 %self[2.0,] %cl_5_56[12.1,] %cl_5_58[12.3,] 
-		 5: %self->comment def_%cl_5_60 %self[12.4,2.0,] 
-		 6: %cl_5_60->commentable_type def_%cl_5_61 %cl_5_60[12.5,] 
-		 7: %self->comment def_%cl_5_62 %self[12.4,12.5,2.0,] 
-		 8: %cl_5_62->commentable_id def_%cl_5_63 %cl_5_62[12.7,] 
-		 9: %self->comment def_%cl_5_64 %self[12.4,12.5,12.7,2.0,] 
-		 10: %self->edit_commentable_comment_path def_%cl_5_65 %self[12.4,12.5,12.7,12.9,2.0,] %cl_5_61[12.6,] %cl_5_63[12.8,] %cl_5_64[12.9,] 
+		 2: def_%cl_5_57 	 ARGS:
+		 3: HASH-text- def_%cl_5_58 %cl_5_57[12.2,] 
+		 4: %self->fa_icon def_%cl_5_59 %self[2.0,] %cl_5_56[12.1,] %cl_5_58[12.3,] 	 ARGS:%cl_5_56,%cl_5_58,
+		 5: %self->comment def_%cl_5_60 %self[12.4,2.0,] 	 ARGS:
+		 6: %cl_5_60->commentable_type def_%cl_5_61 %cl_5_60[12.5,] 	 ARGS:
+		 7: %self->comment def_%cl_5_62 %self[12.4,12.5,2.0,] 	 ARGS:
+		 8: %cl_5_62->commentable_id def_%cl_5_63 %cl_5_62[12.7,] 	 ARGS:
+		 9: %self->comment def_%cl_5_64 %self[12.4,12.5,12.7,2.0,] 	 ARGS:
+		 10: %self->edit_commentable_comment_path def_%cl_5_65 %self[12.4,12.5,12.7,12.9,2.0,] %cl_5_61[12.6,] %cl_5_63[12.8,] %cl_5_64[12.9,] 	 ARGS:%cl_5_61,%cl_5_63,%cl_5_64,
 		 11: COPY def_%cl_5_66 
-		 12: COPY def_%cl_5_67 %cl_5_66[12.11,] 
-		 13: %self->link_to def_%cl_5_68 %self[12.4,12.5,12.7,12.9,12.10,2.0,] %cl_5_59[12.4,] %cl_5_65[12.10,] %cl_5_67[12.12,] 
+		 12: HASH-class- def_%cl_5_67 %cl_5_66[12.11,] 
+		 13: %self->link_to def_%cl_5_68 %self[12.4,12.5,12.7,12.9,12.10,2.0,] %cl_5_59[12.4,] %cl_5_65[12.10,] %cl_5_67[12.12,] 	 ARGS:%cl_5_59,%cl_5_65,%cl_5_67,
 		 14: 
 BB 13
 	outgoing: 14 
@@ -971,9 +971,9 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_69 %self[2.0,] 
-		 2: %self->current_user def_%cl_5_70 %self[14.1,2.0,] 
-		 3: %cl_5_69->can_be_deleted_by def_%cl_5_71 %cl_5_69[14.1,] %cl_5_70[14.2,] 
+		 1: %self->comment def_%cl_5_69 %self[2.0,] 	 ARGS:
+		 2: %self->current_user def_%cl_5_70 %self[14.1,2.0,] 	 ARGS:
+		 3: %cl_5_69->can_be_deleted_by def_%cl_5_71 %cl_5_69[14.1,] %cl_5_70[14.2,] 	 ARGS:%cl_5_70,
 		 4: BRANCH %cl_5_71[14.3,] 
 BB 15
 	outgoing: 17 33 
@@ -981,20 +981,20 @@ BB 15
 	instructions:
 		 0: 
 		 1: COPY def_%cl_5_72 
-		 2: def_%cl_5_73 
-		 3: COPY def_%cl_5_74 %cl_5_73[15.2,] 
-		 4: %self->fa_icon def_%cl_5_75 %self[2.0,] %cl_5_72[15.1,] %cl_5_74[15.3,] 
-		 5: %self->comment def_%cl_5_76 %self[15.4,2.0,] 
-		 6: %cl_5_76->commentable_type def_%cl_5_77 %cl_5_76[15.5,] 
-		 7: %self->comment def_%cl_5_78 %self[15.4,15.5,2.0,] 
-		 8: %cl_5_78->commentable_id def_%cl_5_79 %cl_5_78[15.7,] 
-		 9: %self->comment def_%cl_5_80 %self[15.4,15.5,15.7,2.0,] 
-		 10: %self->commentable_comment_path def_%cl_5_81 %self[15.4,15.5,15.7,15.9,2.0,] %cl_5_77[15.6,] %cl_5_79[15.8,] %cl_5_80[15.9,] 
+		 2: def_%cl_5_73 	 ARGS:
+		 3: HASH-text- def_%cl_5_74 %cl_5_73[15.2,] 
+		 4: %self->fa_icon def_%cl_5_75 %self[2.0,] %cl_5_72[15.1,] %cl_5_74[15.3,] 	 ARGS:%cl_5_72,%cl_5_74,
+		 5: %self->comment def_%cl_5_76 %self[15.4,2.0,] 	 ARGS:
+		 6: %cl_5_76->commentable_type def_%cl_5_77 %cl_5_76[15.5,] 	 ARGS:
+		 7: %self->comment def_%cl_5_78 %self[15.4,15.5,2.0,] 	 ARGS:
+		 8: %cl_5_78->commentable_id def_%cl_5_79 %cl_5_78[15.7,] 	 ARGS:
+		 9: %self->comment def_%cl_5_80 %self[15.4,15.5,15.7,2.0,] 	 ARGS:
+		 10: %self->commentable_comment_path def_%cl_5_81 %self[15.4,15.5,15.7,15.9,2.0,] %cl_5_77[15.6,] %cl_5_79[15.8,] %cl_5_80[15.9,] 	 ARGS:%cl_5_77,%cl_5_79,%cl_5_80,
 		 11: COPY def_%cl_5_82 
-		 12: def_%cl_5_83 
+		 12: def_%cl_5_83 	 ARGS:
 		 13: COPY def_%cl_5_84 
-		 14: COPY def_%cl_5_85 %cl_5_82[15.11,] %cl_5_83[15.12,] %cl_5_84[15.13,] 
-		 15: %self->link_to def_%cl_5_86 %self[15.4,15.5,15.7,15.9,15.10,2.0,] %cl_5_75[15.4,] %cl_5_81[15.10,] %cl_5_85[15.14,] 
+		 14: HASH-method-remote-class- def_%cl_5_85 %cl_5_82[15.11,] %cl_5_83[15.12,] %cl_5_84[15.13,] 
+		 15: %self->link_to def_%cl_5_86 %self[15.4,15.5,15.7,15.9,15.10,2.0,] %cl_5_75[15.4,] %cl_5_81[15.10,] %cl_5_85[15.14,] 	 ARGS:%cl_5_75,%cl_5_81,%cl_5_85,
 		 16: 
 BB 16
 	outgoing: 17 
@@ -1006,36 +1006,36 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_87 %self[2.0,] 
-		 2: %cl_5_87->comment def_%cl_5_88 %cl_5_87[17.1,] 
-		 3: %cl_5_88->html_safe def_%cl_5_89 %cl_5_88[17.2,] 
+		 1: %self->comment def_%cl_5_87 %self[2.0,] 	 ARGS:
+		 2: %cl_5_87->comment def_%cl_5_88 %cl_5_87[17.1,] 	 ARGS:
+		 3: %cl_5_88->html_safe def_%cl_5_89 %cl_5_88[17.2,] 	 ARGS:
 		 4: 
 BB 18
 	outgoing: 19 20 33 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->configatron def_%cl_5_90 %self[2.0,] 
-		 2: %cl_5_90->photo def_%cl_5_91 %cl_5_90[18.1,] 
-		 3: %cl_5_91->missing_thumb def_%cl_5_92 %cl_5_91[18.2,] 
+		 1: %self->configatron def_%cl_5_90 %self[2.0,] 	 ARGS:
+		 2: %cl_5_90->photo def_%cl_5_91 %cl_5_90[18.1,] 	 ARGS:
+		 3: %cl_5_91->missing_thumb def_%cl_5_92 %cl_5_91[18.2,] 	 ARGS:
 		 4: COPY def_%cl_5_93 
 		 5: COPY def_%cl_5_94 
 		 6: COPY def_%cl_5_95 
-		 7: COPY def_%cl_5_96 %cl_5_93[18.4,] %cl_5_94[18.5,] %cl_5_95[18.6,] 
-		 8: %self->image_tag def_%cl_5_97 %self[18.1,2.0,] %cl_5_92[18.3,] %cl_5_96[18.7,] 
+		 7: HASH-height-width-class- def_%cl_5_96 %cl_5_93[18.4,] %cl_5_94[18.5,] %cl_5_95[18.6,] 
+		 8: %self->image_tag def_%cl_5_97 %self[18.1,2.0,] %cl_5_92[18.3,] %cl_5_96[18.7,] 	 ARGS:%cl_5_92,%cl_5_96,
 		 9: 
-		 10: %self->comment def_%cl_5_98 %self[18.1,18.8,2.0,] 
-		 11: %cl_5_98->author_url def_%cl_5_99 %cl_5_98[18.10,] 
-		 12: %cl_5_99->blank? def_%cl_5_100 %cl_5_99[18.11,] 
+		 10: %self->comment def_%cl_5_98 %self[18.1,18.8,2.0,] 	 ARGS:
+		 11: %cl_5_98->author_url def_%cl_5_99 %cl_5_98[18.10,] 	 ARGS:
+		 12: %cl_5_99->blank? def_%cl_5_100 %cl_5_99[18.11,] 	 ARGS:
 		 13: BRANCH %cl_5_100[18.12,] 
 BB 19
 	outgoing: 21 33 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_101 %self[2.0,] 
-		 2: %cl_5_101->username def_%cl_5_102 %cl_5_101[19.1,] 
-		 3: %self->h def_%cl_5_103 %self[19.1,2.0,] %cl_5_102[19.2,] 
+		 1: %self->comment def_%cl_5_101 %self[2.0,] 	 ARGS:
+		 2: %cl_5_101->username def_%cl_5_102 %cl_5_101[19.1,] 	 ARGS:
+		 3: %self->h def_%cl_5_103 %self[19.1,2.0,] %cl_5_102[19.2,] 	 ARGS:%cl_5_102,
 		 4: 
 BB 20
 	outgoing: 21 33 
@@ -1043,51 +1043,51 @@ BB 20
 	instructions:
 		 0: 
 		 1: COPY def_%cl_5_104 
-		 2: %self->comment def_%cl_5_105 %self[2.0,] 
-		 3: %cl_5_105->username def_%cl_5_106 %cl_5_105[20.2,] 
-		 4: %self->h def_%cl_5_107 %self[20.2,2.0,] %cl_5_106[20.3,] 
-		 5: COPY def_%cl_5_108 %cl_5_107[20.4,] 
-		 6: %self->fa_icon def_%cl_5_109 %self[20.2,20.4,2.0,] %cl_5_104[20.1,] %cl_5_108[20.5,] 
-		 7: %self->comment def_%cl_5_110 %self[20.2,20.4,20.6,2.0,] 
-		 8: %cl_5_110->author_url def_%cl_5_111 %cl_5_110[20.7,] 
-		 9: %self->h def_%cl_5_112 %self[20.2,20.4,20.6,20.7,2.0,] %cl_5_111[20.8,] 
-		 10: %self->link_to def_%cl_5_113 %self[20.2,20.4,20.6,20.7,20.9,2.0,] %cl_5_109[20.6,] %cl_5_112[20.9,] 
+		 2: %self->comment def_%cl_5_105 %self[2.0,] 	 ARGS:
+		 3: %cl_5_105->username def_%cl_5_106 %cl_5_105[20.2,] 	 ARGS:
+		 4: %self->h def_%cl_5_107 %self[20.2,2.0,] %cl_5_106[20.3,] 	 ARGS:%cl_5_106,
+		 5: HASH-text- def_%cl_5_108 %cl_5_107[20.4,] 
+		 6: %self->fa_icon def_%cl_5_109 %self[20.2,20.4,2.0,] %cl_5_104[20.1,] %cl_5_108[20.5,] 	 ARGS:%cl_5_104,%cl_5_108,
+		 7: %self->comment def_%cl_5_110 %self[20.2,20.4,20.6,2.0,] 	 ARGS:
+		 8: %cl_5_110->author_url def_%cl_5_111 %cl_5_110[20.7,] 	 ARGS:
+		 9: %self->h def_%cl_5_112 %self[20.2,20.4,20.6,20.7,2.0,] %cl_5_111[20.8,] 	 ARGS:%cl_5_111,
+		 10: %self->link_to def_%cl_5_113 %self[20.2,20.4,20.6,20.7,20.9,2.0,] %cl_5_109[20.6,] %cl_5_112[20.9,] 	 ARGS:%cl_5_109,%cl_5_112,
 		 11: COPY def_%cl_5_103 %cl_5_113[20.10,] 
 BB 21
 	outgoing: 22 25 33 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_114 %self[2.0,] 
-		 2: %self->commentable_url def_%cl_5_115 %self[21.1,2.0,] %cl_5_114[21.1,] 
+		 1: %self->comment def_%cl_5_114 %self[2.0,] 	 ARGS:
+		 2: %self->commentable_url def_%cl_5_115 %self[21.1,2.0,] %cl_5_114[21.1,] 	 ARGS:%cl_5_114,
 		 3: 
 		 4: COPY def_%cl_5_116 
-		 5: %self->fa_icon def_%cl_5_117 %self[21.1,21.2,2.0,] %cl_5_116[21.4,] 
+		 5: %self->fa_icon def_%cl_5_117 %self[21.1,21.2,2.0,] %cl_5_116[21.4,] 	 ARGS:%cl_5_116,
 		 6: 
-		 7: %self->comment def_%cl_5_118 %self[21.1,21.2,21.5,2.0,] 
-		 8: %cl_5_118->created_at def_%cl_5_119 %cl_5_118[21.7,] 
+		 7: %self->comment def_%cl_5_118 %self[21.1,21.2,21.5,2.0,] 	 ARGS:
+		 8: %cl_5_118->created_at def_%cl_5_119 %cl_5_118[21.7,] 	 ARGS:
 		 9: 
 		 10: (I18n) def_%cl_5_120 
-		 11: %self->comment def_%cl_5_121 %self[21.1,21.2,21.5,21.7,2.0,] 
-		 12: %cl_5_121->created_at def_%cl_5_122 %cl_5_121[21.11,] 
-		 13: COPY def_%cl_5_123 
-		 14: %cl_5_120->l def_%cl_5_124 %cl_5_120[21.10,] %cl_5_122[21.12,] %cl_5_123[21.13,] 
+		 11: %self->comment def_%cl_5_121 %self[21.1,21.2,21.5,21.7,2.0,] 	 ARGS:
+		 12: %cl_5_121->created_at def_%cl_5_122 %cl_5_121[21.11,] 	 ARGS:
+		 13: HASH-format- def_%cl_5_123 
+		 14: %cl_5_120->l def_%cl_5_124 %cl_5_120[21.10,] %cl_5_122[21.12,] %cl_5_123[21.13,] 	 ARGS:%cl_5_122,%cl_5_123,
 		 15: 
-		 16: %self->logged_in? def_%cl_5_125 %self[21.1,21.2,21.5,21.7,21.11,2.0,] 
+		 16: %self->logged_in? def_%cl_5_125 %self[21.1,21.2,21.5,21.7,21.11,2.0,] 	 ARGS:
 		 17: BRANCH %cl_5_125[21.16,] 
 BB 22
 	outgoing: 23 24 33 
 	datadep: 
 	instructions:
-		 0: %self->current_user def_%cl_5_126 %self[2.0,] 
-		 1: %cl_5_126->admin? def_%cl_5_127 %cl_5_126[22.0,] 
+		 0: %self->current_user def_%cl_5_126 %self[2.0,] 	 ARGS:
+		 1: %cl_5_126->admin? def_%cl_5_127 %cl_5_126[22.0,] 	 ARGS:
 		 2: BRANCH %cl_5_127[22.1,] 
 BB 23
 	outgoing: 24 33 
 	datadep: 
 	instructions:
-		 0: %self->current_user def_%cl_5_128 %self[2.0,] 
-		 1: %cl_5_128->moderator? def_%cl_5_129 %cl_5_128[23.0,] 
+		 0: %self->current_user def_%cl_5_128 %self[2.0,] 	 ARGS:
+		 1: %cl_5_128->moderator? def_%cl_5_129 %cl_5_128[23.0,] 	 ARGS:
 		 2: COPY def_%cl_5_127 %cl_5_129[23.1,] 
 BB 24
 	outgoing: 25 
@@ -1105,18 +1105,18 @@ BB 26
 	instructions:
 		 0: 
 		 1: COPY def_%cl_5_130 
-		 2: def_%cl_5_131 
-		 3: COPY def_%cl_5_132 %cl_5_131[26.2,] 
-		 4: %self->fa_icon def_%cl_5_133 %self[2.0,] %cl_5_130[26.1,] %cl_5_132[26.3,] 
-		 5: %self->comment def_%cl_5_134 %self[26.4,2.0,] 
-		 6: %cl_5_134->commentable_type def_%cl_5_135 %cl_5_134[26.5,] 
-		 7: %self->comment def_%cl_5_136 %self[26.4,26.5,2.0,] 
-		 8: %cl_5_136->commentable_id def_%cl_5_137 %cl_5_136[26.7,] 
-		 9: %self->comment def_%cl_5_138 %self[26.4,26.5,26.7,2.0,] 
-		 10: %self->edit_commentable_comment_path def_%cl_5_139 %self[26.4,26.5,26.7,26.9,2.0,] %cl_5_135[26.6,] %cl_5_137[26.8,] %cl_5_138[26.9,] 
+		 2: def_%cl_5_131 	 ARGS:
+		 3: HASH-text- def_%cl_5_132 %cl_5_131[26.2,] 
+		 4: %self->fa_icon def_%cl_5_133 %self[2.0,] %cl_5_130[26.1,] %cl_5_132[26.3,] 	 ARGS:%cl_5_130,%cl_5_132,
+		 5: %self->comment def_%cl_5_134 %self[26.4,2.0,] 	 ARGS:
+		 6: %cl_5_134->commentable_type def_%cl_5_135 %cl_5_134[26.5,] 	 ARGS:
+		 7: %self->comment def_%cl_5_136 %self[26.4,26.5,2.0,] 	 ARGS:
+		 8: %cl_5_136->commentable_id def_%cl_5_137 %cl_5_136[26.7,] 	 ARGS:
+		 9: %self->comment def_%cl_5_138 %self[26.4,26.5,26.7,2.0,] 	 ARGS:
+		 10: %self->edit_commentable_comment_path def_%cl_5_139 %self[26.4,26.5,26.7,26.9,2.0,] %cl_5_135[26.6,] %cl_5_137[26.8,] %cl_5_138[26.9,] 	 ARGS:%cl_5_135,%cl_5_137,%cl_5_138,
 		 11: COPY def_%cl_5_140 
-		 12: COPY def_%cl_5_141 %cl_5_140[26.11,] 
-		 13: %self->link_to def_%cl_5_142 %self[26.4,26.5,26.7,26.9,26.10,2.0,] %cl_5_133[26.4,] %cl_5_139[26.10,] %cl_5_141[26.12,] 
+		 12: HASH-class- def_%cl_5_141 %cl_5_140[26.11,] 
+		 13: %self->link_to def_%cl_5_142 %self[26.4,26.5,26.7,26.9,26.10,2.0,] %cl_5_133[26.4,] %cl_5_139[26.10,] %cl_5_141[26.12,] 	 ARGS:%cl_5_133,%cl_5_139,%cl_5_141,
 		 14: 
 BB 27
 	outgoing: 28 
@@ -1128,9 +1128,9 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_143 %self[2.0,] 
-		 2: %self->current_user def_%cl_5_144 %self[28.1,2.0,] 
-		 3: %cl_5_143->can_be_deleted_by def_%cl_5_145 %cl_5_143[28.1,] %cl_5_144[28.2,] 
+		 1: %self->comment def_%cl_5_143 %self[2.0,] 	 ARGS:
+		 2: %self->current_user def_%cl_5_144 %self[28.1,2.0,] 	 ARGS:
+		 3: %cl_5_143->can_be_deleted_by def_%cl_5_145 %cl_5_143[28.1,] %cl_5_144[28.2,] 	 ARGS:%cl_5_144,
 		 4: BRANCH %cl_5_145[28.3,] 
 BB 29
 	outgoing: 31 33 
@@ -1138,20 +1138,20 @@ BB 29
 	instructions:
 		 0: 
 		 1: COPY def_%cl_5_146 
-		 2: def_%cl_5_147 
-		 3: COPY def_%cl_5_148 %cl_5_147[29.2,] 
-		 4: %self->fa_icon def_%cl_5_149 %self[2.0,] %cl_5_146[29.1,] %cl_5_148[29.3,] 
-		 5: %self->comment def_%cl_5_150 %self[29.4,2.0,] 
-		 6: %cl_5_150->commentable_type def_%cl_5_151 %cl_5_150[29.5,] 
-		 7: %self->comment def_%cl_5_152 %self[29.4,29.5,2.0,] 
-		 8: %cl_5_152->commentable_id def_%cl_5_153 %cl_5_152[29.7,] 
-		 9: %self->comment def_%cl_5_154 %self[29.4,29.5,29.7,2.0,] 
-		 10: %self->commentable_comment_path def_%cl_5_155 %self[29.4,29.5,29.7,29.9,2.0,] %cl_5_151[29.6,] %cl_5_153[29.8,] %cl_5_154[29.9,] 
+		 2: def_%cl_5_147 	 ARGS:
+		 3: HASH-text- def_%cl_5_148 %cl_5_147[29.2,] 
+		 4: %self->fa_icon def_%cl_5_149 %self[2.0,] %cl_5_146[29.1,] %cl_5_148[29.3,] 	 ARGS:%cl_5_146,%cl_5_148,
+		 5: %self->comment def_%cl_5_150 %self[29.4,2.0,] 	 ARGS:
+		 6: %cl_5_150->commentable_type def_%cl_5_151 %cl_5_150[29.5,] 	 ARGS:
+		 7: %self->comment def_%cl_5_152 %self[29.4,29.5,2.0,] 	 ARGS:
+		 8: %cl_5_152->commentable_id def_%cl_5_153 %cl_5_152[29.7,] 	 ARGS:
+		 9: %self->comment def_%cl_5_154 %self[29.4,29.5,29.7,2.0,] 	 ARGS:
+		 10: %self->commentable_comment_path def_%cl_5_155 %self[29.4,29.5,29.7,29.9,2.0,] %cl_5_151[29.6,] %cl_5_153[29.8,] %cl_5_154[29.9,] 	 ARGS:%cl_5_151,%cl_5_153,%cl_5_154,
 		 11: COPY def_%cl_5_156 
-		 12: def_%cl_5_157 
+		 12: def_%cl_5_157 	 ARGS:
 		 13: COPY def_%cl_5_158 
-		 14: COPY def_%cl_5_159 %cl_5_156[29.11,] %cl_5_157[29.12,] %cl_5_158[29.13,] 
-		 15: %self->link_to def_%cl_5_160 %self[29.4,29.5,29.7,29.9,29.10,2.0,] %cl_5_149[29.4,] %cl_5_155[29.10,] %cl_5_159[29.14,] 
+		 14: HASH-method-remote-class- def_%cl_5_159 %cl_5_156[29.11,] %cl_5_157[29.12,] %cl_5_158[29.13,] 
+		 15: %self->link_to def_%cl_5_160 %self[29.4,29.5,29.7,29.9,29.10,2.0,] %cl_5_149[29.4,] %cl_5_155[29.10,] %cl_5_159[29.14,] 	 ARGS:%cl_5_149,%cl_5_155,%cl_5_159,
 		 16: 
 BB 30
 	outgoing: 31 
@@ -1163,9 +1163,9 @@ BB 31
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->comment def_%cl_5_161 %self[2.0,] 
-		 2: %cl_5_161->comment def_%cl_5_162 %cl_5_161[31.1,] 
-		 3: %cl_5_162->html_safe def_%cl_5_163 %cl_5_162[31.2,] 
+		 1: %self->comment def_%cl_5_161 %self[2.0,] 	 ARGS:
+		 2: %cl_5_161->comment def_%cl_5_162 %cl_5_161[31.1,] 	 ARGS:
+		 3: %cl_5_162->html_safe def_%cl_5_163 %cl_5_162[31.2,] 	 ARGS:
 		 4: RETURN %cl_5_163[31.3,] %self[31.1,2.0,] 
 BB 32
 	outgoing: 35 
@@ -1190,10 +1190,10 @@ BB 34
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_88 
+		 1: def_%v_88 	 ARGS:
 		 2: 
-		 3: %self->ruby_code_from_view def_%v_89 %self[31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 
-		 4: %v_89->ruby_code_from_view def_%v_90 %v_89[34.3,] %self[34.3,31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 
+		 3: %self->ruby_code_from_view def_%v_89 %self[31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 	 ARGS:
+		 4: %v_89->ruby_code_from_view def_%v_90 %v_89[34.3,] %self[34.3,31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 	 ARGS:%v_89,
 CLOSURE BEGIN: %self[34.3,31.5,2.0,2.24,15.6,15.9,15.12,17.2,17.6,17.10,14.7,14.9,14.14,22.0,22.6,18.3,] 
 BB 1
 	outgoing: 11 2 
@@ -1213,14 +1213,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->logged_in? def_%cl_6_3 %self[2.0,] 
+		 1: %self->logged_in? def_%cl_6_3 %self[2.0,] 	 ARGS:
 		 2: BRANCH %cl_6_3[3.1,] 
 BB 4
 	outgoing: 5 9 
 	datadep: 
 	instructions:
-		 0: %self->configatron def_%cl_6_4 %self[2.0,] 
-		 1: %cl_6_4->allow_anonymous_commenting def_%cl_6_5 %cl_6_4[4.0,] 
+		 0: %self->configatron def_%cl_6_4 %self[2.0,] 	 ARGS:
+		 1: %cl_6_4->allow_anonymous_commenting def_%cl_6_5 %cl_6_4[4.0,] 	 ARGS:
 		 2: COPY def_%cl_6_3 %cl_6_5[4.1,] 
 BB 5
 	outgoing: 6 7 
@@ -1232,16 +1232,16 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->commentable def_%cl_6_6 %self[2.0,] 
-		 2: %cl_6_6->class def_%cl_6_7 %cl_6_6[6.1,] 
-		 3: %cl_6_7->to_s def_%cl_6_8 %cl_6_7[6.2,] 
-		 4: %cl_6_8->tableize def_%cl_6_9 %cl_6_8[6.3,] 
-		 5: %self->commentable def_%cl_6_10 %self[6.1,2.0,] 
-		 6: %self->commentable_comments_path def_%cl_6_11 %self[6.1,6.5,2.0,] %cl_6_9[6.4,] %cl_6_10[6.5,] 
+		 1: %self->commentable def_%cl_6_6 %self[2.0,] 	 ARGS:
+		 2: %cl_6_6->class def_%cl_6_7 %cl_6_6[6.1,] 	 ARGS:
+		 3: %cl_6_7->to_s def_%cl_6_8 %cl_6_7[6.2,] 	 ARGS:
+		 4: %cl_6_8->tableize def_%cl_6_9 %cl_6_8[6.3,] 	 ARGS:
+		 5: %self->commentable def_%cl_6_10 %self[6.1,2.0,] 	 ARGS:
+		 6: %self->commentable_comments_path def_%cl_6_11 %self[6.1,6.5,2.0,] %cl_6_9[6.4,] %cl_6_10[6.5,] 	 ARGS:%cl_6_9,%cl_6_10,
 		 7: COPY def_%cl_6_12 
-		 8: COPY def_%cl_6_13 %cl_6_12[6.7,] 
-		 9: COPY def_%cl_6_14 %cl_6_11[6.6,] %cl_6_13[6.8,] 
-		 10: %self->bootstrap_form_for def_%cl_6_15 %self[6.1,6.5,6.6,2.0,] %cl_6_14[6.9,] %self[6.1,6.5,6.6,2.0,] 
+		 8: HASH-id- def_%cl_6_13 %cl_6_12[6.7,] 
+		 9: HASH-url-remote-layout-html- def_%cl_6_14 %cl_6_11[6.6,] %cl_6_13[6.8,] 
+		 10: %self->bootstrap_form_for def_%cl_6_15 %self[6.1,6.5,6.6,2.0,] %cl_6_14[6.9,] %self[6.1,6.5,6.6,2.0,] 	 ARGS:Symbol,%cl_6_14,%self,
 CLOSURE BEGIN: f[] %self[6.1,6.5,6.6,2.0,] 
 BB 1
 	outgoing: 13 2 
@@ -1263,19 +1263,19 @@ BB 3
 		 0: 
 		 1: COPY def_%cl_7_3 
 		 2: COPY def_%cl_7_4 
-		 3: def_%cl_7_5 
-		 4: COPY def_%cl_7_6 %cl_7_3[3.1,] %cl_7_4[3.2,] %cl_7_5[3.3,] 
-		 5: f->text_area def_%cl_7_7 f[2.2,] %cl_7_6[3.4,] 
+		 3: def_%cl_7_5 	 ARGS:
+		 4: HASH-rows-style-class-help- def_%cl_7_6 %cl_7_3[3.1,] %cl_7_4[3.2,] %cl_7_5[3.3,] 
+		 5: f->text_area def_%cl_7_7 f[2.2,] %cl_7_6[3.4,] 	 ARGS:Symbol,%cl_7_6,
 		 6: 
-		 7: %self->logged_in? def_%cl_7_8 %self[2.0,] 
-		 8: %cl_7_8->! def_%cl_7_9 %cl_7_8[3.7,] 
+		 7: %self->logged_in? def_%cl_7_8 %self[2.0,] 	 ARGS:
+		 8: %cl_7_8->! def_%cl_7_9 %cl_7_8[3.7,] 	 ARGS:
 		 9: BRANCH %cl_7_9[3.8,] 
 BB 4
 	outgoing: 5 11 
 	datadep: 
 	instructions:
-		 0: %self->configatron def_%cl_7_10 %self[2.0,] 
-		 1: %cl_7_10->recaptcha_pub_key def_%cl_7_11 %cl_7_10[4.0,] 
+		 0: %self->configatron def_%cl_7_10 %self[2.0,] 	 ARGS:
+		 1: %cl_7_10->recaptcha_pub_key def_%cl_7_11 %cl_7_10[4.0,] 	 ARGS:
 		 2: COPY def_%cl_7_9 %cl_7_11[4.1,] 
 BB 5
 	outgoing: 6 7 
@@ -1286,8 +1286,8 @@ BB 6
 	outgoing: 7 11 
 	datadep: 
 	instructions:
-		 0: %self->configatron def_%cl_7_12 %self[2.0,] 
-		 1: %cl_7_12->recaptcha_priv_key def_%cl_7_13 %cl_7_12[6.0,] 
+		 0: %self->configatron def_%cl_7_12 %self[2.0,] 	 ARGS:
+		 1: %cl_7_12->recaptcha_priv_key def_%cl_7_13 %cl_7_12[6.0,] 	 ARGS:
 		 2: COPY def_%cl_7_9 %cl_7_13[6.1,] 
 BB 7
 	outgoing: 8 9 
@@ -1299,12 +1299,12 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: f->text_field def_%cl_7_14 f[2.2,] 
+		 1: f->text_field def_%cl_7_14 f[2.2,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY def_%cl_7_15 
-		 4: f->text_field def_%cl_7_16 f[8.1,2.2,] %cl_7_15[8.3,] 
+		 3: HASH-required- def_%cl_7_15 
+		 4: f->text_field def_%cl_7_16 f[8.1,2.2,] %cl_7_15[8.3,] 	 ARGS:Symbol,%cl_7_15,
 		 5: 
-		 6: f->form_group def_%cl_7_17 f[8.1,8.4,2.2,] %self[2.0,] 
+		 6: f->form_group def_%cl_7_17 f[8.1,8.4,2.2,] %self[2.0,] 	 ARGS:f,
 CLOSURE BEGIN: f[8.1,8.4,2.2,] %self[2.0,] 
 BB 1
 	outgoing: 11 2 
@@ -1323,20 +1323,20 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_8_3 
-		 2: COPY def_%cl_8_4 %cl_8_3[3.1,] 
-		 3: f->check_box def_%cl_8_5 f[] %cl_8_4[3.2,] 
+		 1: def_%cl_8_3 	 ARGS:
+		 2: HASH-label- def_%cl_8_4 %cl_8_3[3.1,] 
+		 3: f->check_box def_%cl_8_5 f[] %cl_8_4[3.2,] 	 ARGS:Symbol,%cl_8_4,
 		 4: 
-		 5: %self->commentable def_%cl_8_6 %self[2.0,] 
-		 6: %cl_8_6->respond_to? def_%cl_8_7 %cl_8_6[3.5,] 
+		 5: %self->commentable def_%cl_8_6 %self[2.0,] 	 ARGS:
+		 6: %cl_8_6->respond_to? def_%cl_8_7 %cl_8_6[3.5,] 	 ARGS:Symbol,
 		 7: BRANCH %cl_8_7[3.6,] 
 BB 4
 	outgoing: 5 9 
 	datadep: 
 	instructions:
-		 0: %self->commentable def_%cl_8_8 %self[2.0,] 
-		 1: %cl_8_8->send_comment_notifications? def_%cl_8_9 %cl_8_8[4.0,] 
-		 2: %cl_8_9->! def_%cl_8_10 %cl_8_9[4.1,] 
+		 0: %self->commentable def_%cl_8_8 %self[2.0,] 	 ARGS:
+		 1: %cl_8_8->send_comment_notifications? def_%cl_8_9 %cl_8_8[4.0,] 	 ARGS:
+		 2: %cl_8_9->! def_%cl_8_10 %cl_8_9[4.1,] 	 ARGS:
 		 3: COPY def_%cl_8_7 %cl_8_10[4.2,] 
 BB 5
 	outgoing: 6 7 
@@ -1348,7 +1348,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_8_11 
+		 1: def_%cl_8_11 	 ARGS:
 		 2: 
 BB 7
 	outgoing: 11 
@@ -1373,11 +1373,11 @@ BB 11
 	instructions:
 CLOSURE END
 		 7: 
-		 8: def_%cl_7_18 
-		 9: COPY def_%cl_7_19 %cl_7_18[8.8,] 
-		 10: f->text_field def_%cl_7_20 f[8.1,8.4,8.6,2.2,] %cl_7_19[8.9,] 
+		 8: def_%cl_7_18 	 ARGS:
+		 9: HASH-label- def_%cl_7_19 %cl_7_18[8.8,] 
+		 10: f->text_field def_%cl_7_20 f[8.1,8.4,8.6,2.2,] %cl_7_19[8.9,] 	 ARGS:Symbol,%cl_7_19,
 		 11: 
-		 12: f->form_group def_%cl_7_21 f[8.1,8.4,8.6,8.10,2.2,] %self[2.0,] 
+		 12: f->form_group def_%cl_7_21 f[8.1,8.4,8.6,8.10,2.2,] %self[2.0,] 	 ARGS:f,
 CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -1396,8 +1396,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%cl_9_3 
-		 2: %self->recaptcha_tags def_%cl_9_4 %self[2.0,] %cl_9_3[3.1,] 
+		 1: HASH-ajax- def_%cl_9_3 
+		 2: %self->recaptcha_tags def_%cl_9_4 %self[2.0,] %cl_9_3[3.1,] 	 ARGS:%cl_9_3,
 		 3: RETURN %cl_9_4[3.2,] %self[3.2,2.0,] 
 BB 4
 	outgoing: 6 
@@ -1422,7 +1422,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_7_22 f[2.2,] %self[2.0,] 
+		 1: f->form_group def_%cl_7_22 f[2.2,] %self[2.0,] 	 ARGS:Symbol,f,
 CLOSURE BEGIN: f[2.2,] 
 BB 1
 	outgoing: 6 2 
@@ -1441,11 +1441,11 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_10_3 
+		 1: def_%cl_10_3 	 ARGS:
 		 2: COPY def_%cl_10_4 
-		 3: COPY def_%cl_10_5 %cl_10_4[3.2,] 
-		 4: COPY def_%cl_10_6 %cl_10_5[3.3,] 
-		 5: f->primary def_%cl_10_7 f[] %cl_10_3[3.1,] %cl_10_6[3.4,] 
+		 3: HASH-disable_with- def_%cl_10_5 %cl_10_4[3.2,] 
+		 4: HASH-data- def_%cl_10_6 %cl_10_5[3.3,] 
+		 5: f->primary def_%cl_10_7 f[] %cl_10_3[3.1,] %cl_10_6[3.4,] 	 ARGS:%cl_10_3,%cl_10_6,
 		 6: RETURN %cl_10_7[3.5,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -1478,21 +1478,21 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_6_16 
-		 2: %self->commentable def_%cl_6_17 %self[2.0,] 
-		 3: %cl_6_17->class def_%cl_6_18 %cl_6_17[7.2,] 
-		 4: %self->commentable def_%cl_6_19 %self[7.2,2.0,] 
-		 5: %cl_6_19->id def_%cl_6_20 %cl_6_19[7.4,] 
-		 6: %self->new_commentable_comment_path def_%cl_6_21 %self[7.2,7.4,2.0,] %cl_6_18[7.3,] %cl_6_20[7.5,] 
+		 1: def_%cl_6_16 	 ARGS:
+		 2: %self->commentable def_%cl_6_17 %self[2.0,] 	 ARGS:
+		 3: %cl_6_17->class def_%cl_6_18 %cl_6_17[7.2,] 	 ARGS:
+		 4: %self->commentable def_%cl_6_19 %self[7.2,2.0,] 	 ARGS:
+		 5: %cl_6_19->id def_%cl_6_20 %cl_6_19[7.4,] 	 ARGS:
+		 6: %self->new_commentable_comment_path def_%cl_6_21 %self[7.2,7.4,2.0,] %cl_6_18[7.3,] %cl_6_20[7.5,] 	 ARGS:%cl_6_18,%cl_6_20,
 		 7: COPY def_%cl_6_22 
-		 8: COPY def_%cl_6_23 %cl_6_22[7.7,] 
-		 9: %self->link_to def_%cl_6_24 %self[7.2,7.4,7.6,2.0,] %cl_6_16[7.1,] %cl_6_21[7.6,] %cl_6_23[7.8,] 
+		 8: HASH-class- def_%cl_6_23 %cl_6_22[7.7,] 
+		 9: %self->link_to def_%cl_6_24 %self[7.2,7.4,7.6,2.0,] %cl_6_16[7.1,] %cl_6_21[7.6,] %cl_6_23[7.8,] 	 ARGS:%cl_6_16,%cl_6_21,%cl_6_23,
 		 10: 
-		 11: def_%cl_6_25 
-		 12: %self->signup_path def_%cl_6_26 %self[7.2,7.4,7.6,7.9,2.0,] 
+		 11: def_%cl_6_25 	 ARGS:
+		 12: %self->signup_path def_%cl_6_26 %self[7.2,7.4,7.6,7.9,2.0,] 	 ARGS:
 		 13: COPY def_%cl_6_27 
-		 14: COPY def_%cl_6_28 %cl_6_27[7.13,] 
-		 15: %self->link_to def_%cl_6_29 %self[7.2,7.4,7.6,7.9,7.12,2.0,] %cl_6_25[7.11,] %cl_6_26[7.12,] %cl_6_28[7.14,] 
+		 14: HASH-class- def_%cl_6_28 %cl_6_27[7.13,] 
+		 15: %self->link_to def_%cl_6_29 %self[7.2,7.4,7.6,7.9,7.12,2.0,] %cl_6_25[7.11,] %cl_6_26[7.12,] %cl_6_28[7.14,] 	 ARGS:%cl_6_25,%cl_6_26,%cl_6_28,
 		 16: RETURN %cl_6_29[7.15,] %self[7.2,7.4,7.6,7.9,7.12,7.15,2.0,] 
 BB 8
 	outgoing: 11 
@@ -1539,23 +1539,23 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->params def_%v_3 %self[2.0,] 
-		 7: def_%v_4 %v_3[2.6,] 
-		 8: %self->get_commentable_type def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 
-		 9: %v_5->constantize def_%v_6 %v_5[2.8,] 
-		 10: %self->params def_%v_7 %self[2.0,2.6,2.8,] 
-		 11: def_%v_8 %v_7[2.10,] 
-		 12: %v_6->find def_%v_9 %v_6[2.9,] %v_8[2.11,] 
+		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+		 8: %self->get_commentable_type def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: %v_5->constantize def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %self->params def_%v_7 %self[2.0,2.6,2.8,] 	 ARGS:
+		 11: %v_7->[] def_%v_8 %v_7[2.10,] 	 ARGS:Symbol,
+		 12: %v_6->find def_%v_9 %v_6[2.9,] %v_8[2.11,] 	 ARGS:%v_8,
 		 13: ATTRASSIGN %self->commentable %v_9[2.12,] 
 		 14: 
 		 15: GETFIELD %self->commentable def_%v_10 %self[2.0,2.6,2.8,2.10,2.13,] 
-		 16: %v_10->class def_%v_11 %v_10[2.15,] 
-		 17: %v_11->to_s def_%v_12 %v_11[2.16,] 
-		 18: %v_12->tableize def_%v_13 %v_12[2.17,] 
+		 16: %v_10->class def_%v_11 %v_10[2.15,] 	 ARGS:
+		 17: %v_11->to_s def_%v_12 %v_11[2.16,] 	 ARGS:
+		 18: %v_12->tableize def_%v_13 %v_12[2.17,] 	 ARGS:
 		 19: GETFIELD %self->commentable def_%v_14 %self[2.0,2.6,2.8,2.10,2.13,] 
-		 20: %v_14->id def_%v_15 %v_14[2.19,] 
-		 21: %self->commentable_comments_url def_%v_16 %self[2.0,2.6,2.8,2.10,2.13,] %v_13[2.18,] %v_15[2.20,] 
-		 22: %self->redirect_to def_%v_17 %self[2.0,2.6,2.8,2.10,2.13,2.21,] %v_16[2.21,] 
+		 20: %v_14->id def_%v_15 %v_14[2.19,] 	 ARGS:
+		 21: %self->commentable_comments_url def_%v_16 %self[2.0,2.6,2.8,2.10,2.13,] %v_13[2.18,] %v_15[2.20,] 	 ARGS:%v_13,%v_15,
+		 22: %self->redirect_to def_%v_17 %self[2.0,2.6,2.8,2.10,2.13,2.21,] %v_16[2.21,] 	 ARGS:%v_16,
 		 23: RETURN %v_17[2.22,] %self[2.0,2.6,2.8,2.10,2.13,2.21,2.22,] 
 BB 3
 	outgoing: 
@@ -1577,38 +1577,38 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->params def_%v_3 %self[2.0,] 
-		 7: def_%v_4 %v_3[2.6,] 
-		 8: %self->get_commentable_type def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 
+		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+		 8: %self->get_commentable_type def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: COPY def_commentable_type %v_5[2.8,] 
 		 10: 
-		 11: %v_5->singularize def_%v_6 %v_5[2.8,] 
-		 12: %v_6->constantize def_%v_7 %v_6[2.11,] 
-		 13: %self->params def_%v_8 %self[2.0,2.6,2.8,] 
-		 14: def_%v_9 %v_8[2.13,] 
-		 15: %v_7->find def_%v_10 %v_7[2.12,] %v_9[2.14,] 
+		 11: %v_5->singularize def_%v_6 %v_5[2.8,] 	 ARGS:
+		 12: %v_6->constantize def_%v_7 %v_6[2.11,] 	 ARGS:
+		 13: %self->params def_%v_8 %self[2.0,2.6,2.8,] 	 ARGS:
+		 14: %v_8->[] def_%v_9 %v_8[2.13,] 	 ARGS:Symbol,
+		 15: %v_7->find def_%v_10 %v_7[2.12,] %v_9[2.14,] 	 ARGS:%v_9,
 		 16: ATTRASSIGN %self->commentable %v_10[2.15,] 
 		 17: 
 		 18: GETFIELD %self->commentable def_%v_11 %self[2.0,2.6,2.8,2.13,2.16,] 
-		 19: %v_11->comments def_%v_12 %v_11[2.18,] 
-		 20: %self->comment_params def_%v_13 %self[2.0,2.6,2.8,2.13,2.16,] 
-		 21: %v_12->new def_%v_14 %v_12[2.19,] %v_13[2.20,] 
+		 19: %v_11->comments def_%v_12 %v_11[2.18,] 	 ARGS:
+		 20: %self->comment_params def_%v_13 %self[2.0,2.6,2.8,2.13,2.16,] 	 ARGS:
+		 21: %v_12->new def_%v_14 %v_12[2.19,] %v_13[2.20,] 	 ARGS:%v_13,
 		 22: ATTRASSIGN %self->comment %v_14[2.21,] 
 		 23: 
 		 24: GETFIELD %self->comment def_%v_15 %self[2.0,2.6,2.8,2.13,2.20,2.22,] 
 		 25: GETFIELD %self->commentable def_%v_16 %self[2.0,2.6,2.8,2.13,2.16,2.20,] 
-		 26: %v_16->owner def_%v_17 %v_16[2.25,] 
+		 26: %v_16->owner def_%v_17 %v_16[2.25,] 	 ARGS:
 		 27: ATTRASSIGN %v_15->recipient %v_17[2.26,] 
 		 28: 
-		 29: %self->current_user def_%v_18 %self[2.0,2.6,2.8,2.13,2.16,2.20,2.22,] 
+		 29: %self->current_user def_%v_18 %self[2.0,2.6,2.8,2.13,2.16,2.20,2.22,] 	 ARGS:
 		 30: BRANCH %v_18[2.29,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->comment def_%v_19 %self[2.0,2.22,] 
-		 1: %self->current_user def_%v_20 %self[2.0,2.16,2.22,] 
-		 2: %v_20->id def_%v_21 %v_20[3.1,] 
+		 1: %self->current_user def_%v_20 %self[2.0,2.16,2.22,] 	 ARGS:
+		 2: %v_20->id def_%v_21 %v_20[3.1,] 	 ARGS:
 		 3: ATTRASSIGN %v_19->user_id %v_21[3.2,] 
 		 4: 
 BB 4
@@ -1622,11 +1622,11 @@ BB 5
 	instructions:
 		 0: 
 		 1: GETFIELD %self->comment def_%v_22 %self[2.0,2.22,] 
-		 2: %self->request def_%v_23 %self[2.0,2.16,2.22,] 
-		 3: %v_23->remote_ip def_%v_24 %v_23[5.2,] 
+		 2: %self->request def_%v_23 %self[2.0,2.16,2.22,] 	 ARGS:
+		 3: %v_23->remote_ip def_%v_24 %v_23[5.2,] 	 ARGS:
 		 4: ATTRASSIGN %v_22->author_ip %v_24[5.3,] 
 		 5: 
-		 6: %self->respond_to def_%v_25 %self[5.2,2.0,2.16,2.22,] %self[5.2,2.0,2.16,2.22,] 
+		 6: %self->respond_to def_%v_25 %self[5.2,2.0,2.16,2.22,] %self[5.2,2.0,2.16,2.22,] 	 ARGS:%self,
 CLOSURE BEGIN: %self[5.2,2.0,2.16,2.22,] format[] 
 BB 1
 	outgoing: 13 2 
@@ -1646,14 +1646,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->logged_in? def_%cl_1_3 %self[2.0,] 
+		 1: %self->logged_in? def_%cl_1_3 %self[2.0,] 	 ARGS:
 		 2: BRANCH %cl_1_3[3.1,] 
 BB 4
 	outgoing: 5 11 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->comment def_%cl_1_4 %self[2.0,] 
-		 1: %self->verify_recaptcha def_%cl_1_5 %self[2.0,] %cl_1_4[4.0,] 
+		 1: %self->verify_recaptcha def_%cl_1_5 %self[2.0,] %cl_1_4[4.0,] 	 ARGS:%cl_1_4,
 		 2: COPY def_%cl_1_3 %cl_1_5[4.1,] 
 BB 5
 	outgoing: 6 7 
@@ -1665,7 +1665,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->comment def_%cl_1_6 %self[2.0,] 
-		 1: %cl_1_6->save def_%cl_1_7 %cl_1_6[6.0,] 
+		 1: %cl_1_6->save def_%cl_1_7 %cl_1_6[6.0,] 	 ARGS:
 		 2: COPY def_%cl_1_3 %cl_1_7[6.1,] 
 BB 7
 	outgoing: 8 9 
@@ -1677,12 +1677,12 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%cl_1_8 %self[2.0,] 
-		 2: %cl_1_8->now def_%cl_1_9 %cl_1_8[8.1,] 
-		 3: def_%cl_1_10 
+		 1: %self->flash def_%cl_1_8 %self[2.0,] 	 ARGS:
+		 2: %cl_1_8->now def_%cl_1_9 %cl_1_8[8.1,] 	 ARGS:
+		 3: def_%cl_1_10 	 ARGS:
 		 4: ATTRASSIGN %cl_1_9->[] %cl_1_10[8.3,] 
 		 5: 
-		 6: format->html def_%cl_1_11 format[2.2,] %self[8.1,2.0,] 
+		 6: format->html def_%cl_1_11 format[2.2,] %self[8.1,2.0,] 	 ARGS:format,
 CLOSURE BEGIN: %self[8.1,2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -1702,8 +1702,8 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->comment def_%cl_2_3 %self[2.0,] 
-		 2: %self->commentable_url def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 
-		 3: %self->redirect_to def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] 
+		 2: %self->commentable_url def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
+		 3: %self->redirect_to def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] 	 ARGS:%cl_2_4,
 		 4: RETURN %cl_2_5[3.3,] %self[3.2,3.3,2.0,] 
 BB 4
 	outgoing: 6 
@@ -1718,24 +1718,24 @@ BB 6
 	instructions:
 CLOSURE END
 		 7: 
-		 8: format->js def_%cl_1_12 format[8.6,2.2,] 
+		 8: format->js def_%cl_1_12 format[8.6,2.2,] 	 ARGS:
 		 9: 
 BB 9
 	outgoing: 11 13 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%cl_1_13 %self[2.0,] 
-		 2: %cl_1_13->now def_%cl_1_14 %cl_1_13[9.1,] 
+		 1: %self->flash def_%cl_1_13 %self[2.0,] 	 ARGS:
+		 2: %cl_1_13->now def_%cl_1_14 %cl_1_13[9.1,] 	 ARGS:
 		 3: GETFIELD %self->comment def_%cl_1_15 %self[9.1,2.0,] 
-		 4: %cl_1_15->errors def_%cl_1_16 %cl_1_15[9.3,] 
-		 5: %cl_1_16->full_messages def_%cl_1_17 %cl_1_16[9.4,] 
-		 6: %cl_1_17->to_sentence def_%cl_1_18 %cl_1_17[9.5,] 
-		 7: COPY def_%cl_1_19 %cl_1_18[9.6,] 
-		 8: %cl_1_19->l_with_args def_%cl_1_20 %cl_1_19[9.7,] 
+		 4: %cl_1_15->errors def_%cl_1_16 %cl_1_15[9.3,] 	 ARGS:
+		 5: %cl_1_16->full_messages def_%cl_1_17 %cl_1_16[9.4,] 	 ARGS:
+		 6: %cl_1_17->to_sentence def_%cl_1_18 %cl_1_17[9.5,] 	 ARGS:
+		 7: HASH-error- def_%cl_1_19 %cl_1_18[9.6,] 
+		 8: %cl_1_19->l_with_args def_%cl_1_20 %cl_1_19[9.7,] 	 ARGS:%cl_1_19,
 		 9: ATTRASSIGN %cl_1_14->[] %cl_1_20[9.8,] 
 		 10: 
-		 11: format->html def_%cl_1_21 format[2.2,] %self[9.1,2.0,] 
+		 11: format->html def_%cl_1_21 format[2.2,] %self[9.1,2.0,] 	 ARGS:format,
 CLOSURE BEGIN: commentable_type[] %self[9.1,2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -1754,10 +1754,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: commentable_type->tableize def_%cl_3_3 commentable_type[] 
+		 1: commentable_type->tableize def_%cl_3_3 commentable_type[] 	 ARGS:
 		 2: GETFIELD %self->commentable def_%cl_3_4 %self[2.0,] 
-		 3: %self->commentable_comments_path def_%cl_3_5 %self[2.0,] %cl_3_3[3.1,] %cl_3_4[3.2,] 
-		 4: %self->redirect_to def_%cl_3_6 %self[3.3,2.0,] %cl_3_5[3.3,] 
+		 3: %self->commentable_comments_path def_%cl_3_5 %self[2.0,] %cl_3_3[3.1,] %cl_3_4[3.2,] 	 ARGS:%cl_3_3,%cl_3_4,
+		 4: %self->redirect_to def_%cl_3_6 %self[3.3,2.0,] %cl_3_5[3.3,] 	 ARGS:%cl_3_5,
 		 5: RETURN %cl_3_6[3.4,] %self[3.3,3.4,2.0,] 
 BB 4
 	outgoing: 6 
@@ -1772,7 +1772,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 12: 
-		 13: format->js def_%cl_1_22 format[9.11,2.2,] 
+		 13: format->js def_%cl_1_22 format[9.11,2.2,] 	 ARGS:
 		 14: RETURN %cl_1_22[9.13,] %self[9.1,2.0,] 
 BB 10
 	outgoing: 13 
@@ -1813,21 +1813,21 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Comment) def_%v_3 
-		 7: %self->params def_%v_4 %self[2.0,] 
-		 8: def_%v_5 %v_4[2.7,] 
-		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: ATTRASSIGN %self->comment %v_6[2.9,] 
 		 11: 
 		 12: GETFIELD %self->comment def_%v_7 %self[2.0,2.7,2.10,] 
-		 13: %self->current_user def_%v_8 %self[2.0,2.7,2.10,] 
-		 14: %v_7->can_be_deleted_by def_%v_9 %v_7[2.12,] %v_8[2.13,] 
+		 13: %self->current_user def_%v_8 %self[2.0,2.7,2.10,] 	 ARGS:
+		 14: %v_7->can_be_deleted_by def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 ARGS:%v_8,
 		 15: BRANCH %v_9[2.14,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->comment def_%v_10 %self[2.0,2.10,] 
-		 1: %v_10->destroy def_%v_11 %v_10[3.0,] 
+		 1: %v_10->destroy def_%v_11 %v_10[3.0,] 	 ARGS:
 		 2: COPY def_%v_9 %v_11[3.1,] 
 BB 4
 	outgoing: 5 11 
@@ -1839,15 +1839,15 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_12 %self[2.0,2.10,] 
-		 2: def_%v_13 %v_12[5.1,] 
+		 1: %self->params def_%v_12 %self[2.0,2.10,] 	 ARGS:
+		 2: %v_12->[] def_%v_13 %v_12[5.1,] 	 ARGS:Symbol,
 		 3: BRANCH %v_13[5.2,] 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: %self->configatron def_%v_14 %self[2.0,2.10,] 
-		 1: %v_14->has_key? def_%v_15 %v_14[6.0,] 
+		 0: %self->configatron def_%v_14 %self[2.0,2.10,] 	 ARGS:
+		 1: %v_14->has_key? def_%v_15 %v_14[6.0,] 	 ARGS:Symbol,
 		 2: COPY def_%v_13 %v_15[6.1,] 
 BB 7
 	outgoing: 8 9 
@@ -1860,7 +1860,7 @@ BB 8
 	instructions:
 		 0: 
 		 1: GETFIELD %self->comment def_%v_16 %self[2.0,2.10,] 
-		 2: %v_16->spam! def_%v_17 %v_16[8.1,] 
+		 2: %v_16->spam! def_%v_17 %v_16[8.1,] 	 ARGS:
 		 3: 
 BB 9
 	outgoing: 10 
@@ -1872,9 +1872,9 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_18 %self[2.0,2.10,] 
-		 2: %v_18->now def_%v_19 %v_18[10.1,] 
-		 3: def_%v_20 
+		 1: %self->flash def_%v_18 %self[2.0,2.10,] 	 ARGS:
+		 2: %v_18->now def_%v_19 %v_18[10.1,] 	 ARGS:
+		 3: def_%v_20 	 ARGS:
 		 4: ATTRASSIGN %v_19->[] %v_20[10.3,] 
 		 5: 
 BB 11
@@ -1882,9 +1882,9 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_21 %self[2.0,2.10,] 
-		 2: %v_21->now def_%v_22 %v_21[11.1,] 
-		 3: def_%v_23 
+		 1: %self->flash def_%v_21 %self[2.0,2.10,] 	 ARGS:
+		 2: %v_21->now def_%v_22 %v_21[11.1,] 	 ARGS:
+		 3: def_%v_23 	 ARGS:
 		 4: ATTRASSIGN %v_22->[] %v_23[11.3,] 
 		 5: COPY def_%v_20 %v_23[11.3,] 
 BB 12
@@ -1892,7 +1892,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->respond_to def_%v_24 %self[2.0,2.10,] %self[2.0,2.10,] 
+		 1: %self->respond_to def_%v_24 %self[2.0,2.10,] %self[2.0,2.10,] 	 ARGS:%self,
 CLOSURE BEGIN: format[] %self[2.0,2.10,] 
 BB 1
 	outgoing: 6 2 
@@ -1912,7 +1912,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 
+		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 	 ARGS:format,
 CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -1931,8 +1931,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->users_url def_%cl_2_3 %self[2.0,] 
-		 2: %self->redirect_to def_%cl_2_4 %self[3.1,2.0,] %cl_2_3[3.1,] 
+		 1: %self->users_url def_%cl_2_3 %self[2.0,] 	 ARGS:
+		 2: %self->redirect_to def_%cl_2_4 %self[3.1,2.0,] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
 		 3: RETURN %cl_2_4[3.2,] %self[3.1,3.2,2.0,] 
 BB 4
 	outgoing: 6 
@@ -1947,7 +1947,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 2: 
-		 3: format->js def_%cl_1_4 format[3.1,2.2,] %self[2.0,] 
+		 3: format->js def_%cl_1_4 format[3.1,2.2,] %self[2.0,] 	 ARGS:format,
 CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 12 2 
@@ -1966,17 +1966,17 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%cl_3_3 %self[2.0,] 
-		 2: def_%cl_3_4 %cl_3_3[3.1,] 
+		 1: %self->flash def_%cl_3_3 %self[2.0,] 	 ARGS:
+		 2: %cl_3_3->[] def_%cl_3_4 %cl_3_3[3.1,] 	 ARGS:Symbol,
 		 3: BRANCH %cl_3_4[3.2,] 
 BB 4
 	outgoing: 6 10 
 	datadep: 
 	instructions:
-		 0: %self->flash def_%cl_3_5 %self[2.0,] 
-		 1: def_%cl_3_6 %cl_3_5[4.0,] 
-		 2: COPY def_%cl_3_7 %cl_3_6[4.1,] 
-		 3: %self->render def_%cl_3_8 %self[4.0,2.0,] %cl_3_7[4.2,] 
+		 0: %self->flash def_%cl_3_5 %self[2.0,] 	 ARGS:
+		 1: %cl_3_5->[] def_%cl_3_6 %cl_3_5[4.0,] 	 ARGS:Symbol,
+		 2: HASH-inline-status- def_%cl_3_7 %cl_3_6[4.1,] 
+		 3: %self->render def_%cl_3_8 %self[4.0,2.0,] %cl_3_7[4.2,] 	 ARGS:%cl_3_7,
 		 4: 
 BB 5
 	outgoing: 6 
@@ -1988,14 +1988,14 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%cl_3_9 %self[2.0,] 
-		 2: def_%cl_3_10 %cl_3_9[6.1,] 
+		 1: %self->flash def_%cl_3_9 %self[2.0,] 	 ARGS:
+		 2: %cl_3_9->[] def_%cl_3_10 %cl_3_9[6.1,] 	 ARGS:Symbol,
 		 3: BRANCH %cl_3_10[6.2,] 
 BB 7
 	outgoing: 9 10 
 	datadep: 
 	instructions:
-		 0: %self->render def_%cl_3_11 %self[2.0,] 
+		 0: %self->render def_%cl_3_11 %self[2.0,] 	 ARGS:
 		 1: 
 BB 8
 	outgoing: 12 
@@ -2053,25 +2053,25 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->request def_%v_3 %self[2.0,] 
-		 7: %v_3->delete? def_%v_4 %v_3[2.6,] 
+		 6: %self->request def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->delete? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 4 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_5 %self[2.0,] 
-		 2: def_%v_6 %v_5[3.1,] 
+		 1: %self->params def_%v_5 %self[2.0,] 	 ARGS:
+		 2: %v_5->[] def_%v_6 %v_5[3.1,] 	 ARGS:Symbol,
 		 3: BRANCH %v_6[3.2,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->params def_%v_7 %self[2.0,] 
-		 2: def_%v_8 %v_7[4.1,] 
-		 3: %v_8->each def_%v_9 %v_8[4.2,] %self[4.1,2.0,] 
+		 1: %self->params def_%v_7 %self[2.0,] 	 ARGS:
+		 2: %v_7->[] def_%v_8 %v_7[4.1,] 	 ARGS:Symbol,
+		 3: %v_8->each def_%v_9 %v_8[4.2,] %self[4.1,2.0,] 	 ARGS:%v_8,
 CLOSURE BEGIN: id[] %self[4.1,2.0,] comment[] 
 BB 1
 	outgoing: 14 2 
@@ -2092,18 +2092,18 @@ BB 3
 	instructions:
 		 0: 
 		 1: (Comment) def_%cl_1_3 
-		 2: %cl_1_3->find def_%cl_1_4 %cl_1_3[3.1,] id[2.2,] 
+		 2: %cl_1_3->find def_%cl_1_4 %cl_1_3[3.1,] id[2.2,] 	 ARGS:id,
 		 3: COPY def_comment %cl_1_4[3.2,] 
 		 4: 
-		 5: %self->params def_%cl_1_5 %self[2.0,] 
-		 6: def_%cl_1_6 %cl_1_5[3.5,] 
+		 5: %self->params def_%cl_1_5 %self[2.0,] 	 ARGS:
+		 6: %cl_1_5->[] def_%cl_1_6 %cl_1_5[3.5,] 	 ARGS:Symbol,
 		 7: BRANCH %cl_1_6[3.6,] 
 BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: %self->configatron def_%cl_1_7 %self[2.0,] 
-		 1: %cl_1_7->has_key? def_%cl_1_8 %cl_1_7[4.0,] 
+		 0: %self->configatron def_%cl_1_7 %self[2.0,] 	 ARGS:
+		 1: %cl_1_7->has_key? def_%cl_1_8 %cl_1_7[4.0,] 	 ARGS:Symbol,
 		 2: COPY def_%cl_1_6 %cl_1_8[4.1,] 
 BB 5
 	outgoing: 6 7 
@@ -2114,7 +2114,7 @@ BB 6
 	outgoing: 8 12 
 	datadep: 
 	instructions:
-		 0: comment->spam! def_%cl_1_9 comment[3.3,] 
+		 0: comment->spam! def_%cl_1_9 comment[3.3,] 	 ARGS:
 		 1: 
 BB 7
 	outgoing: 8 
@@ -2126,14 +2126,14 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->current_user def_%cl_1_10 %self[2.0,] 
-		 2: comment->can_be_deleted_by def_%cl_1_11 comment[3.3,] %cl_1_10[8.1,] 
+		 1: %self->current_user def_%cl_1_10 %self[2.0,] 	 ARGS:
+		 2: comment->can_be_deleted_by def_%cl_1_11 comment[3.3,] %cl_1_10[8.1,] 	 ARGS:%cl_1_10,
 		 3: BRANCH %cl_1_11[8.2,] 
 BB 9
 	outgoing: 11 12 
 	datadep: 
 	instructions:
-		 0: comment->destroy def_%cl_1_12 comment[3.3,] 
+		 0: comment->destroy def_%cl_1_12 comment[3.3,] 	 ARGS:
 		 1: 
 BB 10
 	outgoing: 14 
@@ -2168,8 +2168,8 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_10 %self[2.0,] 
-		 2: def_%v_11 
+		 1: %self->flash def_%v_10 %self[2.0,] 	 ARGS:
+		 2: def_%v_11 	 ARGS:
 		 3: ATTRASSIGN %v_10->[] %v_11[6.2,] 
 		 4: 
 BB 7
@@ -2177,8 +2177,8 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->flash def_%v_12 %self[2.0,] 
-		 2: def_%v_13 
+		 1: %self->flash def_%v_12 %self[2.0,] 	 ARGS:
+		 2: def_%v_13 	 ARGS:
 		 3: ATTRASSIGN %v_12->[] %v_13[7.2,] 
 		 4: COPY def_%v_11 %v_13[7.2,] 
 BB 8
@@ -2186,8 +2186,8 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->admin_comments_path def_%v_14 %self[2.0,] 
-		 2: %self->redirect_to def_%v_15 %self[8.1,2.0,] %v_14[8.1,] 
+		 1: %self->admin_comments_path def_%v_14 %self[2.0,] 	 ARGS:
+		 2: %self->redirect_to def_%v_15 %self[8.1,2.0,] %v_14[8.1,] 	 ARGS:%v_14,
 		 3: RETURN %v_15[8.2,] %self[8.1,8.2,2.0,] 
 BB 9
 	outgoing: 
@@ -2210,18 +2210,18 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Comment) def_%v_3 
-		 7: %self->params def_%v_4 %self[2.0,] 
-		 8: def_%v_5 %v_4[2.7,] 
-		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: ATTRASSIGN %self->comment %v_6[2.9,] 
 		 11: 
 		 12: GETFIELD %self->comment def_%v_7 %self[2.0,2.7,2.10,] 
-		 13: %self->params def_%v_8 %self[2.0,2.7,2.10,] 
-		 14: def_%v_9 %v_8[2.13,] 
-		 15: %v_7->token_for def_%v_10 %v_7[2.12,] %v_9[2.14,] 
-		 16: %self->params def_%v_11 %self[2.0,2.7,2.10,2.13,] 
-		 17: def_%v_12 %v_11[2.16,] 
-		 18: %v_10->eql? def_%v_13 %v_10[2.15,] %v_12[2.17,] 
+		 13: %self->params def_%v_8 %self[2.0,2.7,2.10,] 	 ARGS:
+		 14: %v_8->[] def_%v_9 %v_8[2.13,] 	 ARGS:Symbol,
+		 15: %v_7->token_for def_%v_10 %v_7[2.12,] %v_9[2.14,] 	 ARGS:%v_9,
+		 16: %self->params def_%v_11 %self[2.0,2.7,2.10,2.13,] 	 ARGS:
+		 17: %v_11->[] def_%v_12 %v_11[2.16,] 	 ARGS:Symbol,
+		 18: %v_10->eql? def_%v_13 %v_10[2.15,] %v_12[2.17,] 	 ARGS:%v_12,
 		 19: BRANCH %v_13[2.18,] 
 BB 3
 	outgoing: 5 
@@ -2229,12 +2229,12 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->comment def_%v_14 %self[2.0,2.10,] 
-		 2: %self->params def_%v_15 %self[2.0,2.10,] 
-		 3: def_%v_16 %v_15[3.2,] 
-		 4: %v_14->unsubscribe_notifications def_%v_17 %v_14[3.1,] %v_16[3.3,] 
+		 2: %self->params def_%v_15 %self[2.0,2.10,] 	 ARGS:
+		 3: %v_15->[] def_%v_16 %v_15[3.2,] 	 ARGS:Symbol,
+		 4: %v_14->unsubscribe_notifications def_%v_17 %v_14[3.1,] %v_16[3.3,] 	 ARGS:%v_16,
 		 5: 
-		 6: %self->flash def_%v_18 %self[3.2,2.0,2.10,] 
-		 7: def_%v_19 
+		 6: %self->flash def_%v_18 %self[3.2,2.0,2.10,] 	 ARGS:
+		 7: def_%v_19 	 ARGS:
 		 8: ATTRASSIGN %v_18->[] %v_19[3.7,] 
 		 9: 
 BB 4
@@ -2248,8 +2248,8 @@ BB 5
 	instructions:
 		 0: 
 		 1: GETFIELD %self->comment def_%v_20 %self[2.0,2.10,] 
-		 2: %self->commentable_url def_%v_21 %self[2.0,2.10,] %v_20[5.1,] 
-		 3: %self->redirect_to def_%v_22 %self[5.2,2.0,2.10,] %v_21[5.2,] 
+		 2: %self->commentable_url def_%v_21 %self[2.0,2.10,] %v_20[5.1,] 	 ARGS:%v_20,
+		 3: %self->redirect_to def_%v_22 %self[5.2,2.0,2.10,] %v_21[5.2,] 	 ARGS:%v_21,
 		 4: RETURN %v_22[5.3,] %self[5.2,5.3,2.0,2.10,] 
 BB 6
 	outgoing: 
@@ -2272,7 +2272,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_string 
 		 6: 
-		 7: string->camelize def_%v_3 string[2.5,] 
+		 7: string->camelize def_%v_3 string[2.5,] 	 ARGS:
 		 8: RETURN %v_3[2.7,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -2297,14 +2297,14 @@ BB 2
 		 6: RECEIVEARG def_commentable 
 		 7: RECEIVEARG def_title 
 		 8: 
-		 9: commentable->class def_%v_3 commentable[2.6,] 
-		 10: commentable->class def_%v_4 commentable[2.6,2.9,] 
-		 11: %v_4->to_s def_%v_5 %v_4[2.10,] 
-		 12: %v_5->tableize def_%v_6 %v_5[2.11,] 
-		 13: %self->commentable_comments_url def_%v_7 %self[2.0,] %v_6[2.12,] commentable[2.6,2.9,2.10,] 
-		 14: COPY def_%v_8 title[2.7,] %v_7[2.13,] 
+		 9: commentable->class def_%v_3 commentable[2.6,] 	 ARGS:
+		 10: commentable->class def_%v_4 commentable[2.6,2.9,] 	 ARGS:
+		 11: %v_4->to_s def_%v_5 %v_4[2.10,] 	 ARGS:
+		 12: %v_5->tableize def_%v_6 %v_5[2.11,] 	 ARGS:
+		 13: %self->commentable_comments_url def_%v_7 %self[2.0,] %v_6[2.12,] commentable[2.6,2.9,2.10,] 	 ARGS:%v_6,commentable,
+		 14: HASH-title-link- def_%v_8 title[2.7,] %v_7[2.13,] 
 		 15: (Proc) def_%v_9 
-		 16: %v_9->new def_%v_10 %v_9[2.15,] %self[2.0,2.13,] 
+		 16: %v_9->new def_%v_10 %v_9[2.15,] %self[2.0,2.13,] 	 ARGS:%v_9,
 CLOSURE BEGIN: %self[2.0,2.13,] comment[] 
 BB 1
 	outgoing: 6 2 
@@ -2324,7 +2324,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->commentable_url def_%cl_1_3 %self[2.0,] comment[2.2,] 
+		 1: %self->commentable_url def_%cl_1_3 %self[2.0,] comment[2.2,] 	 ARGS:comment,
 		 2: RETURN %cl_1_3[3.1,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 
@@ -2338,9 +2338,9 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 17: COPY def_%v_11 %v_10[2.16,] 
-		 18: COPY def_%v_12 %v_3[2.9,] %v_8[2.14,] %v_11[2.17,] 
-		 19: %self->render_rss_feed_for def_%v_13 %self[2.0,2.13,] comments[2.5,] %v_12[2.18,] 
+		 17: HASH-title-description-link-pub_date- def_%v_11 %v_10[2.16,] 
+		 18: HASH-class-feed-item- def_%v_12 %v_3[2.9,] %v_8[2.14,] %v_11[2.17,] 
+		 19: %self->render_rss_feed_for def_%v_13 %self[2.0,2.13,] comments[2.5,] %v_12[2.18,] 	 ARGS:comments,%v_12,
 		 20: RETURN %v_13[2.19,] %self[2.0,2.13,2.19,] 
 BB 3
 	outgoing: 
@@ -2362,9 +2362,9 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->params def_%v_3 %self[2.0,] 
-		 7: %v_3->require def_%v_4 %v_3[2.6,] 
-		 8: %v_4->permit def_%v_5 %v_4[2.7,] 
+		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->require def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+		 8: %v_4->permit def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,Symbol,Symbol,Symbol,Symbol,
 		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 

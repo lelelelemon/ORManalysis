@@ -13,10 +13,10 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->email_addresses def_%v_3 %self[2.0,] 
+		 6: %self->email_addresses def_%v_3 %self[2.0,] 	 ARGS:
 		 7: COPY def_%v_4 
-		 8: %v_3->split def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: %v_5->collect def_%v_6 %v_5[2.8,] %self[2.0,2.6,] 
+		 8: %v_3->split def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: %v_5->collect def_%v_6 %v_5[2.8,] %self[2.0,2.6,] 	 ARGS:%v_5,
 CLOSURE BEGIN: email[] 
 BB 1
 	outgoing: 6 2 
@@ -36,7 +36,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: email->strip def_%cl_1_3 email[2.2,] 
+		 1: email->strip def_%cl_1_3 email[2.2,] 	 ARGS:
 		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -50,10 +50,10 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 10: %v_6->uniq def_%v_7 %v_6[2.9,] 
+		 10: %v_6->uniq def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: COPY def_emails %v_7[2.10,] 
 		 12: 
-		 13: %v_7->each def_%v_8 %v_7[2.10,] %self[2.0,2.6,] 
+		 13: %v_7->each def_%v_8 %v_7[2.10,] %self[2.0,2.6,] 	 ARGS:%v_7,
 CLOSURE BEGIN: %self[2.0,2.6,] email[] 
 BB 1
 	outgoing: 6 2 
@@ -74,10 +74,10 @@ BB 3
 	instructions:
 		 0: 
 		 1: (UserNotifier) def_%cl_2_3 
-		 2: %self->user def_%cl_2_4 %self[2.0,] 
-		 3: %self->message def_%cl_2_5 %self[3.2,2.0,] 
-		 4: %cl_2_3->signup_invitation def_%cl_2_6 %cl_2_3[3.1,] email[2.2,] %cl_2_4[3.2,] %cl_2_5[3.3,] 
-		 5: %cl_2_6->deliver def_%cl_2_7 %cl_2_6[3.4,] 
+		 2: %self->user def_%cl_2_4 %self[2.0,] 	 ARGS:
+		 3: %self->message def_%cl_2_5 %self[3.2,2.0,] 	 ARGS:
+		 4: %cl_2_3->signup_invitation def_%cl_2_6 %cl_2_3[3.1,] email[2.2,] %cl_2_4[3.2,] %cl_2_5[3.3,] 	 ARGS:email,%cl_2_4,%cl_2_5,
+		 5: %cl_2_6->deliver def_%cl_2_7 %cl_2_6[3.4,] 	 ARGS:
 		 6: RETURN %cl_2_7[3.5,] %self[3.2,3.3,2.0,] 
 BB 4
 	outgoing: 6 

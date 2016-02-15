@@ -258,7 +258,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	graph_fname = "#{output_dir}/sketch_stats.txt"
 	$graph_file = File.open(graph_fname, "w")
 
-	compute_functional_dependency($graph_file)
+	#compute_functional_dependency($graph_file)
 	compute_chain_stats
 
 #	graph_fname = "#{output_dir}/backward_forward.log"
@@ -315,19 +315,19 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					if n.getInstr.getCallHandler.caller != nil
 						@tbl_name = n.getInstr.getCallHandler.caller.getName
 					end
-				graph_write($graph_file, "#{n.getInstr.getCallHandler.getObjName}.#{n.getInstr.getFuncname} <#{@tbl_name},#{n.getInstr.getCallHandler.getQueryType}>")
+				#graph_write($graph_file, "#{n.getInstr.getCallHandler.getObjName}.#{n.getInstr.getFuncname} <#{@tbl_name},#{n.getInstr.getCallHandler.getQueryType}>")
 			else
-				graph_write($graph_file, "#{n.getInstr.getCaller}.#{n.getInstr.getFuncname}")
+				#graph_write($graph_file, "#{n.getInstr.getCaller}.#{n.getInstr.getFuncname}")
 			end
 			if n.getInClosure
 				query_in_closure += 1
 				if n.getInView
-					graph_write($graph_file, " (v)")
+					#graph_write($graph_file, " (v)")
 					query_in_view += 1
 				end
 				if n.getInView and n.getClosureStack.length == 1
 				else #n.getInView == false or n.getClosureStack.length > 1
-					graph_write($graph_file, " (c)")
+					#graph_write($graph_file, " (c)")
 				end
 			end
 			if ["SELECT","GROUP","JOIN"].include?n.getInstr.getCallHandler.getQueryType
@@ -389,7 +389,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 				end
 				if n.getInstr.getCallHandler.caller != nil
-					graph_write($graph_file, "\nTBLREADRECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_to_read_query},#{single_tbl_to_write_query},#{single_tbl_to_view},#{single_tbl_to_branch}]")
+					#graph_write($graph_file, "\nTBLREADRECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_to_read_query},#{single_tbl_to_write_query},#{single_tbl_to_view},#{single_tbl_to_branch}]")
 				end
 			#elsif ["DELETE","UPDATE","INSERT"].include?n.getInstr.getCallHandler.getQueryType
 			end
@@ -441,14 +441,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					end
 				end
 				if n.getInstr.getCallHandler.caller != nil
-					graph_write($graph_file, "\nTBLWRITERECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_from_query},#{single_tbl_from_user},#{single_tbl_from_const}] Fields: [");
+					#graph_write($graph_file, "\nTBLWRITERECORD: #{n.getInstr.getCallHandler.caller.getName} [#{single_tbl_from_query},#{single_tbl_from_user},#{single_tbl_from_const}] Fields: [");
 					assigned_fields.each do |k,v|
-						graph_write($graph_file, "#{k},")
+						#graph_write($graph_file, "#{k},")
 					end
-					graph_write($graph_file, "]")
+					#graph_write($graph_file, "]")
 				end
 			end
-			graph_write($graph_file, "\n")
+			#graph_write($graph_file, "\n")
 	
 		elsif n.isField?
 			#graph_write($graph_file, "+FIELD+ #{n.getInstr.getCallHandler.getObjName} #{n.getInstr.getCallHandler.caller.getName}.#{n.getInstr.getCallHandler.getField.field_name} (#{n.getInstr.getCallHandler.getField.type})\n")

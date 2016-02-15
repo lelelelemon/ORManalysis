@@ -182,6 +182,13 @@ def handle_single_dataflow_file(item, class_name)
 										else
 											cur_instr = Call_instr.new(fc_array[0], fc_array[1])
 										end
+										#TODO: previous instr may not be dataflow dependent instr...
+										if $cur_bb.getInstr.length > 0 and $cur_bb.getInstr[-1].instance_of?HashField_instr and cur_instr.instance_of?Call_instr
+											prev_instr = $cur_bb.getInstr[-1]
+											prev_instr.hash_fields.each do |h|
+												cur_instr.hash_fields.push(h)
+											end
+										end
 										if cur_instr.getCaller.include?("self") and cur_instr.getFuncname == "params"
 												cur_instr.setFromUserInput
 										end
@@ -246,6 +253,9 @@ def handle_single_dataflow_file(item, class_name)
 									
 									elsif single_attr == "BRANCH"
 										cur_instr = Branch_instr.new
+				
+									elsif single_attr == "BUILDSTRING"
+										cur_instr = BuildString_instr.new
 
 									elsif single_attr == "RECEIVEARG"
 										cur_instr = ReceiveArg_instr.new
@@ -258,6 +268,16 @@ def handle_single_dataflow_file(item, class_name)
 	
 									elsif single_attr == "COPY"
 										cur_instr = Copy_instr.new	
+
+									elsif single_attr.include?("HASH")
+										cur_instr = HashField_instr.new
+										fields = single_attr.split('-')
+										for i in 1...fields.length do
+											h_k = fields[i]
+											if h_k.length > 0
+												cur_instr.addHash(h_k)
+											end
+										end
 	
 									elsif single_attr.include?('(') and single_attr.include?(')')
 										bracket_begin = single_attr.index('(')

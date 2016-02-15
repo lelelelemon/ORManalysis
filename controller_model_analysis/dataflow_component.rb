@@ -45,7 +45,7 @@ class Instruction
 		@defv_var = nil
 		@args = Array.new
 	end
-	attr_accessor :defv_var
+	attr_accessor :defv_var, :args
 	def getArgs
 		@args
 	end
@@ -165,9 +165,10 @@ class Call_instr < Instruction
 		@call_handler = nil #Function_call
 		@call_cfg = nil #CFG
 		@field = nil
+		@hash_fields = Array.new
 		@args = Array.new
 	end
-	attr_accessor :field
+	attr_accessor :field, :hash_fields
 	def setCallCFG(c)
 		@call_cfg = c
 	end
@@ -250,7 +251,8 @@ class Call_instr < Instruction
 		else
 			s = s + " #{@caller} -> #{@funcname}"
 		end
-		return s.tr(']', ')').tr('[', '(').tr('<', '(').tr('>', ')')
+		return s
+		#return s.tr(']', ')').tr('[', '(').tr('<', '(').tr('>', ')')
 	end
 end
 
@@ -258,7 +260,8 @@ class Const_instr < Instruction
 	def initialize(const)
 		@const = const
 		@deps = Array.new	
-		@resolved = false
+		@resolved = true
+		@resolved_caller = @const
 	end
 	def getConst
 		@const
@@ -283,6 +286,12 @@ class Return_instr < Instruction
 	end
 end
 
+class BuildString_instr < Instruction
+	def initialize
+		super
+	end
+end
+
 class Branch_instr < Instruction
 	def initialize
 		super
@@ -301,6 +310,26 @@ class Copy_instr < Instruction
 	def toString
 		s = "COPY "
 		s = s + super
+		return s
+	end
+end
+
+class HashField_instr < Instruction
+	def initialize
+		super
+		@hash_fields = Array.new
+	end
+	attr_accessor :hash_fields
+	def addHash(h)
+		@hash_fields.push(h)
+	end
+	def toString
+		s = "HashField "
+		@hash_fields.each do |h|
+			s += "#{h} "
+		end
+		s += "] "
+		s += super
 		return s
 	end
 end
@@ -440,6 +469,7 @@ class Basic_block
 		return nil
 	end
 	def findCalls
+=begin
 		@instructions.each do |instr|
 			if instr.is_a?Call_instr
 				#caller = self
@@ -470,6 +500,7 @@ class Basic_block
 				end
 			end
 		end
+=end
 	end
 	def self_print
 		puts "BB #{@index}"
@@ -506,6 +537,9 @@ class CFG
 		@arg_types = Array.new
 	end
 	attr_accessor :explicit_return, :return_list, :return_type, :arg_types
+	def setReturnType(type)
+		@return_type = type
+	end
 	def getVarMap
 		@var_map
 	end
@@ -579,6 +613,12 @@ class Closure < CFG
 		super
 	end
 	attr_accessor :parent_instr
+	def setReturnType(type)
+		@return_type = type
+		if parent_instr != nil
+			parent_instr.getBB.getCFG.setReturnType(type)
+		end
+	end
 	def setViewClosure
 	  @view_closure = true
 	end

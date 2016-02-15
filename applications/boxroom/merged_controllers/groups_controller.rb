@@ -5,7 +5,6 @@ class GroupsController < ApplicationController
 
   def index
     @groups = Group.order(:name)
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:groups) 
  content_for :title 
  image_tag('group_add.png', :alt => t(:create_a_new_group)) 
@@ -23,12 +22,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to image_tag('delete.png', :alt => t(:delete_item)), group_path(group), :method => :delete, :data => { :confirm => t(:are_you_sure) }, :title => t(:delete_item) 
  end 
  end 
-end
+
   end
 
   def new
     @group = Group.new
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:new_group) 
  content_for :title 
   form_for @group do |f| 
@@ -38,7 +36,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit t(:save) 
  link_to t(:back), groups_url 
  end 
- end
+ 
 
   end
 
@@ -48,7 +46,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
     if @group.save
       redirect_to groups_url
     else
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:new_group) 
  content_for :title 
   form_for @group do |f| 
@@ -58,14 +55,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit t(:save) 
  link_to t(:back), groups_url 
  end 
- end
+ 
 
     end
   end
 
   # Note: @group is set in require_existing_group
   def edit
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:rename_group) 
  content_for :title 
   form_for @group do |f| 
@@ -76,7 +72,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(:back), groups_url 
  end 
  
-end
+
   end
 
   # Note: @group is set in require_existing_group
@@ -84,7 +80,6 @@ end
     if @group.update_attributes(permitted_params.group)
       redirect_to edit_group_url(@group), :notice => t(:your_changes_were_saved)
     else
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:rename_group) 
  content_for :title 
   form_for @group do |f| 
@@ -95,7 +90,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(:back), groups_url 
  end 
  
-end
+
     end
   end
 

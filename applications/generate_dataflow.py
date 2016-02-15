@@ -11,6 +11,8 @@ for root, dirs, files in os.walk(apppath):
 			n_end = filename.rfind('.')
 			class_name = filename[n_begin+1:n_end]
 			print class_name
+			if class_name == "schema":
+				continue
 			fname = os.path.join(root, filename)
 			k = fname.find("%s"%sys.argv[1])
 			#des_file = "%s/%s.log"%(des_controller,class_name)
@@ -23,7 +25,7 @@ for root, dirs, files in os.walk(apppath):
 				os.system("mkdir -p %s"%dir_name)
 			print "\tdes_file = %s"%des_file
 			os.system("jrubyc %s >> %s"%(fname, des_file))
-			os.system("rm %s/*.class"%dir_name)
+			os.system("rm %s"%fname.replace(".rb",".class"))
 
 #for root, dirs, files in os.walk(model_path):
 #	for filename in files:

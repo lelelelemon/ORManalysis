@@ -47,15 +47,15 @@ BB 2
 		 5: 
 		 6: GETFIELD %self->scope def_%v_3 %self[2.0,] 
 		 7: %self->per_page def_%v_4 %self[2.0,] 	 ARGS:
-		 8: def_%v_5 %v_4[2.7,] 	 ARGS:Fixnum,
+		 8: %v_4->+ def_%v_5 %v_4[2.7,] 	 ARGS:Fixnum,
 		 9: %v_3->limit def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: 
 		 11: GETFIELD %self->page def_%v_7 %self[2.0,2.7,] 
-		 12: def_%v_8 %v_7[2.11,] 	 ARGS:Fixnum,
+		 12: %v_7->- def_%v_8 %v_7[2.11,] 	 ARGS:Fixnum,
 		 13: %self->per_page def_%v_9 %self[2.0,2.7,] 	 ARGS:
-		 14: def_%v_10 %v_8[2.12,] %v_9[2.13,] 	 ARGS:%v_9,
+		 14: %v_8->* def_%v_10 %v_8[2.12,] %v_9[2.13,] 	 ARGS:%v_9,
 		 15: %v_6->offset def_%v_11 %v_6[2.9,] %v_10[2.14,] 	 ARGS:%v_10,
-		 16: COPY def_%v_12 
+		 16: HASH-taggings- def_%v_12 
 		 17: %v_11->includes def_%v_13 %v_11[2.15,] %v_12[2.16,] 	 ARGS:Symbol,%v_12,
 		 18: %self->with_pagination_info def_%v_14 %self[2.0,2.7,2.13,] %v_13[2.17,] 	 ARGS:%v_13,
 		 19: RETURN %v_14[2.18,] %self[2.0,2.7,2.13,2.18,] 
@@ -85,7 +85,7 @@ BB 2
 		 9: 
 		 10: %v_3->count def_%v_4 %v_3[2.7,] 	 ARGS:
 		 11: %self->per_page def_%v_5 %self[2.0,] 	 ARGS:
-		 12: def_%v_6 %v_4[2.10,] %v_5[2.11,] 	 ARGS:%v_5,
+		 12: %v_4->> def_%v_6 %v_4[2.10,] %v_5[2.11,] 	 ARGS:%v_5,
 		 13: COPY def_show_more %v_6[2.12,] 
 		 14: 
 		 15: BRANCH %v_6[2.12,] 
@@ -147,7 +147,7 @@ BB 3
 		 8: GETFIELD %self->user def_%v_10 %self[2.0,] 
 		 9: %v_10->id def_%v_11 %v_10[3.8,] 	 ARGS:
 		 10: scope->map def_%v_12 scope[3.3,2.5,] 	 ARGS:
-		 11: COPY def_%v_13 %v_11[3.9,] %v_12[3.10,] 
+		 11: HASH-user_id-story_id- def_%v_13 %v_11[3.9,] %v_12[3.10,] 
 		 12: %v_9->where def_%v_14 %v_9[3.7,] %v_13[3.11,] 	 ARGS:%v_13,
 		 13: %v_14->map def_%v_15 %v_14[3.12,] 	 ARGS:
 		 14: COPY def_hs %v_15[3.13,] 
@@ -173,7 +173,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: s->id def_%cl_1_3 s[2.2,] 	 ARGS:
-		 2: def_%cl_1_4 votes[] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
+		 2: votes->[] def_%cl_1_4 votes[] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
 	outgoing: 6 10 
@@ -181,7 +181,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: s->id def_%cl_1_5 s[2.2,] 	 ARGS:
-		 2: def_%cl_1_6 votes[] %cl_1_5[4.1,] 	 ARGS:%cl_1_5,
+		 2: votes->[] def_%cl_1_6 votes[] %cl_1_5[4.1,] 	 ARGS:%cl_1_5,
 		 3: ATTRASSIGN s->vote %cl_1_6[4.2,] 
 		 4: 
 BB 5

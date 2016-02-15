@@ -15,19 +15,19 @@ BB 2
 		 5: RECEIVEARG def_id 
 		 6: RECEIVEARG def_reader 
 		 7: 
-		 8: %self->reader def_%v_3 %self[2.0,] reader[2.6,] 
-		 9: %v_3->find def_%v_4 %v_3[2.8,] id[2.5,] 
+		 8: %self->reader def_%v_3 %self[2.0,] reader[2.6,] 	 ARGS:reader,
+		 9: %v_3->find def_%v_4 %v_3[2.8,] id[2.5,] 	 ARGS:id,
 		 10: COPY def_message %v_4[2.9,] 
 		 11: 
-		 12: %v_4->read_at def_%v_5 %v_4[2.9,] 
-		 13: %v_5->nil? def_%v_6 %v_5[2.12,] 
+		 12: %v_4->read_at def_%v_5 %v_4[2.9,] 	 ARGS:
+		 13: %v_5->nil? def_%v_6 %v_5[2.12,] 	 ARGS:
 		 14: BRANCH %v_6[2.13,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: message->recipient def_%v_7 message[2.10,] 
-		 1: reader->== def_%v_8 reader[2.6,] %v_7[3.0,] 
+		 0: message->recipient def_%v_7 message[2.10,] 	 ARGS:
+		 1: reader->== def_%v_8 reader[2.6,] %v_7[3.0,] 	 ARGS:%v_7,
 		 2: COPY def_%v_6 %v_8[3.1,] 
 BB 4
 	outgoing: 5 6 
@@ -40,10 +40,10 @@ BB 5
 	instructions:
 		 0: 
 		 1: (Time) def_%v_9 
-		 2: %v_9->now def_%v_10 %v_9[5.1,] 
+		 2: %v_9->now def_%v_10 %v_9[5.1,] 	 ARGS:
 		 3: ATTRASSIGN message->read_at %v_10[5.2,] 
 		 4: 
-		 5: message->save! def_%v_11 message[5.3,2.10,] 
+		 5: message->save! def_%v_11 message[5.3,2.10,] 	 ARGS:
 		 6: 
 BB 6
 	outgoing: 7 
@@ -76,8 +76,8 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->read_at def_%v_3 %self[2.0,] 
-		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
+		 6: %self->read_at def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 
@@ -111,8 +111,8 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: 
-		 7: %self->sender def_%v_3 %self[2.0,] 
-		 8: %v_3->== def_%v_4 %v_3[2.7,] user[2.5,] 
+		 7: %self->sender def_%v_3 %self[2.0,] 	 ARGS:
+		 8: %v_3->== def_%v_4 %v_3[2.7,] user[2.5,] 	 ARGS:user,
 		 9: BRANCH %v_4[2.8,] 
 BB 3
 	outgoing: 5 
@@ -131,8 +131,8 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->recipient def_%v_6 %self[3.0,2.0,] 
-		 2: %v_6->== def_%v_7 %v_6[5.1,] user[2.5,] 
+		 1: %self->recipient def_%v_6 %self[3.0,2.0,] 	 ARGS:
+		 2: %v_6->== def_%v_7 %v_6[5.1,] user[2.5,] 	 ARGS:user,
 		 3: BRANCH %v_7[5.2,] 
 BB 6
 	outgoing: 8 
@@ -151,13 +151,13 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->sender_deleted def_%v_9 %self[6.0,3.0,2.0,] 
+		 1: %self->sender_deleted def_%v_9 %self[6.0,3.0,2.0,] 	 ARGS:
 		 2: BRANCH %v_9[8.1,] 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: %self->recipient_deleted def_%v_10 %self[6.0,3.0,2.0,] 
+		 0: %self->recipient_deleted def_%v_10 %self[6.0,3.0,2.0,] 	 ARGS:
 		 1: COPY def_%v_9 %v_10[9.0,] 
 BB 10
 	outgoing: 11 12 
@@ -168,13 +168,13 @@ BB 11
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: %self->destroy def_%v_11 %self[6.0,3.0,2.0,] 
+		 0: %self->destroy def_%v_11 %self[6.0,3.0,2.0,] 	 ARGS:
 		 1: RETURN %v_11[11.0,] %self[11.0,6.0,3.0,2.0,] 
 BB 12
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: %self->save! def_%v_12 %self[6.0,3.0,2.0,] 
+		 0: %self->save! def_%v_12 %self[6.0,3.0,2.0,] 	 ARGS:
 		 1: RETURN %v_12[12.0,] %self[12.0,6.0,3.0,2.0,] 
 BB 14
 	outgoing: 
@@ -196,15 +196,15 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->recipient def_%v_3 %self[2.0,] 
+		 6: %self->recipient def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: %self->recipient def_%v_4 %self[2.0,] 
-		 1: %self->sender def_%v_5 %self[3.0,2.0,] 
-		 2: %v_4->eql? def_%v_6 %v_4[3.0,] %v_5[3.1,] 
+		 0: %self->recipient def_%v_4 %self[2.0,] 	 ARGS:
+		 1: %self->sender def_%v_5 %self[3.0,2.0,] 	 ARGS:
+		 2: %v_4->eql? def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 ARGS:%v_5,
 		 3: COPY def_%v_3 %v_6[3.2,] 
 BB 4
 	outgoing: 5 6 
@@ -215,9 +215,9 @@ BB 5
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: %self->errors def_%v_7 %self[2.0,] 
+		 0: %self->errors def_%v_7 %self[2.0,] 	 ARGS:
 		 1: COPY def_%v_8 
-		 2: %v_7->add def_%v_9 %v_7[5.0,] %v_8[5.1,] 
+		 2: %v_7->add def_%v_9 %v_7[5.0,] %v_8[5.1,] 	 ARGS:Symbol,%v_8,
 		 3: RETURN %v_9[5.2,] %self[5.0,2.0,] 
 BB 6
 	outgoing: 8 
@@ -245,8 +245,8 @@ BB 2
 		 4: 
 		 5: 
 		 6: (UserNotifier) def_%v_3 
-		 7: %v_3->message_notification def_%v_4 %v_3[2.6,] %self[2.0,] 
-		 8: %v_4->deliver def_%v_5 %v_4[2.7,] 
+		 7: %v_3->message_notification def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%self,
+		 8: %v_4->deliver def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -269,32 +269,32 @@ BB 2
 		 4: 
 		 5: 
 		 6: (MessageThread) def_%v_3 
-		 7: %self->recipient_id def_%v_4 %self[2.0,] 
-		 8: %self->parent_id def_%v_5 %self[2.0,2.7,] 
+		 7: %self->recipient_id def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %self->parent_id def_%v_5 %self[2.0,2.7,] 	 ARGS:
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: %self->id def_%v_6 %self[2.0,] 
+		 0: %self->id def_%v_6 %self[2.0,] 	 ARGS:
 		 1: COPY def_%v_5 %v_6[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_7 %v_4[2.7,] %v_5[3.1,2.8,] 
-		 1: %v_3->find_or_create_by def_%v_8 %v_3[2.6,] %v_7[4.0,] 
+		 0: HASH-recipient_id-parent_message_id- def_%v_7 %v_4[2.7,] %v_5[3.1,2.8,] 
+		 1: %v_3->find_or_create_by def_%v_8 %v_3[2.6,] %v_7[4.0,] 	 ARGS:%v_7,
 		 2: COPY def_recipients_thread %v_8[4.1,] 
 		 3: 
-		 4: %self->sender def_%v_9 %self[2.0,] 
+		 4: %self->sender def_%v_9 %self[2.0,] 	 ARGS:
 		 5: ATTRASSIGN recipients_thread->sender %v_9[4.4,] 
 		 6: 
-		 7: %self->recipient def_%v_10 %self[4.4,2.0,] 
+		 7: %self->recipient def_%v_10 %self[4.4,2.0,] 	 ARGS:
 		 8: ATTRASSIGN recipients_thread->recipient %v_10[4.7,] 
 		 9: 
 		 10: ATTRASSIGN recipients_thread->message %self[4.4,4.7,2.0,] 
 		 11: 
-		 12: %self->parent def_%v_11 %self[4.4,4.7,2.0,] 
+		 12: %self->parent def_%v_11 %self[4.4,4.7,2.0,] 	 ARGS:
 		 13: BRANCH %v_11[4.12,] 
 BB 5
 	outgoing: 6 
@@ -307,9 +307,9 @@ BB 6
 	instructions:
 		 0: ATTRASSIGN recipients_thread->parent_message %v_11[5.0,4.12,] 
 		 1: 
-		 2: recipients_thread->save def_%v_12 recipients_thread[6.0,4.2,4.5,4.8,4.10,] 
+		 2: recipients_thread->save def_%v_12 recipients_thread[6.0,4.2,4.5,4.8,4.10,] 	 ARGS:
 		 3: 
-		 4: %self->parent def_%v_13 %self[2.0,] 
+		 4: %self->parent def_%v_13 %self[2.0,] 	 ARGS:
 		 5: BRANCH %v_13[6.4,] 
 BB 7
 	outgoing: 10 
@@ -317,15 +317,15 @@ BB 7
 	instructions:
 		 0: 
 		 1: (MessageThread) def_%v_14 
-		 2: %self->sender_id def_%v_15 %self[2.0,] 
-		 3: %self->parent_id def_%v_16 %self[7.2,2.0,] 
-		 4: COPY def_%v_17 %v_15[7.2,] %v_16[7.3,] 
-		 5: %v_14->find_or_create_by def_%v_18 %v_14[7.1,] %v_17[7.4,] 
+		 2: %self->sender_id def_%v_15 %self[2.0,] 	 ARGS:
+		 3: %self->parent_id def_%v_16 %self[7.2,2.0,] 	 ARGS:
+		 4: HASH-recipient_id-parent_message_id- def_%v_17 %v_15[7.2,] %v_16[7.3,] 
+		 5: %v_14->find_or_create_by def_%v_18 %v_14[7.1,] %v_17[7.4,] 	 ARGS:%v_17,
 		 6: COPY def_senders_thread %v_18[7.5,] 
 		 7: 
 		 8: ATTRASSIGN %v_18->message %self[7.2,7.3,2.0,] 
 		 9: 
-		 10: senders_thread->save def_%v_19 senders_thread[7.6,] 
+		 10: senders_thread->save def_%v_19 senders_thread[7.6,] 	 ARGS:
 		 11: RETURN %v_19[7.10,] %self[7.2,7.3,2.0,] 
 BB 8
 	outgoing: 10 
@@ -369,31 +369,31 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_3 
+		 0: HASH- def_%v_3 
 		 1: COPY def_params %v_3[5.0,] 
 BB 6
 	outgoing: 7 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_4 params[5.1,4.0,] 
-		 2: %self->new def_%v_5 %self[2.0,] %v_4[6.1,] 
+		 1: params->[] def_%v_4 params[5.1,4.0,] 	 ARGS:Symbol,
+		 2: %self->new def_%v_5 %self[2.0,] %v_4[6.1,] 	 ARGS:%v_4,
 		 3: COPY def_message %v_5[6.2,] 
 		 4: 
-		 5: def_%v_6 params[5.1,4.0,] 
+		 5: params->[] def_%v_6 params[6.1,5.1,4.0,] 	 ARGS:Symbol,
 		 6: BRANCH %v_6[6.5,] 
 BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: message->to def_%v_7 message[6.3,] 
+		 0: message->to def_%v_7 message[6.3,] 	 ARGS:
 		 1: BRANCH %v_7[7.0,] 
 BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: def_%v_9 params[5.1,4.0,] 
-		 1: message->to= def_%v_8 message[6.3,] %v_9[8.0,] 
+		 0: params->[] def_%v_9 params[5.1,4.0,] 	 ARGS:Symbol,
+		 1: message->to= def_%v_8 message[6.3,] %v_9[8.0,] 	 ARGS:%v_9,
 		 2: COPY def_%v_7 %v_9[8.0,] 
 BB 9
 	outgoing: 11 
@@ -416,18 +416,18 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: message_thread->parent_message def_%v_10 message_thread[3.0,2.6,] 
+		 1: message_thread->parent_message def_%v_10 message_thread[3.0,2.6,] 	 ARGS:
 		 2: ATTRASSIGN message->parent %v_10[12.1,] 
 		 3: 
-		 4: message_thread->message def_%v_11 message_thread[12.1,3.0,2.6,] 
+		 4: message_thread->message def_%v_11 message_thread[12.1,3.0,2.6,] 	 ARGS:
 		 5: ATTRASSIGN message->reply_to %v_11[12.4,] 
 		 6: 
-		 7: message_thread->sender def_%v_12 message_thread[12.1,12.4,3.0,2.6,] 
-		 8: %v_12->login def_%v_13 %v_12[12.7,] 
+		 7: message_thread->sender def_%v_12 message_thread[12.1,12.4,3.0,2.6,] 	 ARGS:
+		 8: %v_12->login def_%v_13 %v_12[12.7,] 	 ARGS:
 		 9: ATTRASSIGN message->to %v_13[12.8,] 
 		 10: 
-		 11: message_thread->parent_message def_%v_14 message_thread[12.1,12.4,12.7,3.0,2.6,] 
-		 12: %v_14->subject def_%v_15 %v_14[12.11,] 
+		 11: message_thread->parent_message def_%v_14 message_thread[12.1,12.4,12.7,3.0,2.6,] 	 ARGS:
+		 12: %v_14->subject def_%v_15 %v_14[12.11,] 	 ARGS:
 		 13: ATTRASSIGN message->subject %v_15[12.12,] 
 		 14: 
 		 15: ATTRASSIGN message->sender sender[2.5,] 

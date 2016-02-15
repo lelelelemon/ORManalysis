@@ -10,9 +10,11 @@ class INode
 		@label = ""
 		@in_closure = false
 		@in_view = $in_view	
-		@in_loop = ($in_loop.length > 0)	
+		@in_loop = ($in_loop.length > 0)
+		@in_validation = ($in_validation.length > 0)	
 		@closure_stack = Array.new
 		@call_stack = Array.new
+		@validation_stack = Array.new
 		@dataflow_edges = Array.new
 		@controlflow_edges = Array.new
 		@backward_dataflow_edges = Array.new
@@ -33,6 +35,9 @@ class INode
 		$funccall_stack.each do |f|
 			@call_stack.push(f)
 		end
+		$in_validation.each do |v|
+			@validation_stack.push(v)
+		end
 	end
 	attr_accessor :index, :Tnode, :source_list, :sink_list
 	attr_accessor :longest_control_path_nextnode, :path_length
@@ -42,11 +47,17 @@ class INode
 	def getCallStack
 		@call_stack
 	end
+	def getValidationStack
+		@validation_stack
+	end
 	def getInView
 		@in_view
 	end
 	def getInLoop
 		@in_loop
+	end
+	def getInValidation
+		@in_validation
 	end
 	def addDataflowEdge(edge)
 		@dataflow_edges.push(edge)

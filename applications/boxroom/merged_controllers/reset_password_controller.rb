@@ -3,7 +3,6 @@ class ResetPasswordController < ApplicationController
   skip_before_action :require_login
 
   def new
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:reset_password) 
  content_for :title 
  render 'message' 
@@ -13,7 +12,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  submit_tag t(:send_email) 
  link_to t(:back), new_session_path 
  end 
-end
+
   end
 
   def create
@@ -29,7 +28,6 @@ end
 
   # Note: @user is set in require_valid_token
   def edit
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:reset_password) 
  content_for :title 
  form_for @user, :url => { :action => 'update' } do |f| 
@@ -41,7 +39,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit t(:reset_password) 
  link_to t(:back), new_session_path 
  end 
-end
+
   end
 
   # Note: @user is set in require_valid_token
@@ -49,7 +47,6 @@ end
     if @user.update_attributes(permitted_params.user.merge({ :password_required => true }))
       redirect_to new_session_url, :notice => t(:password_reset_successfully)
     else
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:reset_password) 
  content_for :title 
  form_for @user, :url => { :action => 'update' } do |f| 
@@ -61,7 +58,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit t(:reset_password) 
  link_to t(:back), new_session_path 
  end 
-end
+
     end
   end
 

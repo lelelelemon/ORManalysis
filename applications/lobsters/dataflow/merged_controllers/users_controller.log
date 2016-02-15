@@ -15,8 +15,8 @@ BB 2
 		 5: 
 		 6: (User) def_%v_3 
 		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
-		 8: def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
-		 9: COPY def_%v_6 %v_5[2.8,] 
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: HASH-username- def_%v_6 %v_5[2.8,] 
 		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: %v_7->first! def_%v_8 %v_7[2.10,] 	 ARGS:
 		 12: ATTRASSIGN %self->showing_user %v_8[2.11,] 
@@ -24,7 +24,7 @@ BB 2
 		 14: COPY def_%v_9 
 		 15: GETFIELD %self->showing_user def_%v_10 %self[2.0,2.7,2.12,] 
 		 16: %v_10->username def_%v_11 %v_10[2.15,] 	 ARGS:
-		 17: def_%v_12 %v_9[2.14,] %v_11[2.16,] 
+		 17: BUILDSTRING def_%v_12 %v_9[2.14,] %v_11[2.16,] 
 		 18: ATTRASSIGN %self->title %v_12[2.17,] 
 		 19: 
 		 20: %self->respond_to def_%v_13 %self[2.0,2.7,2.12,2.18,] %self[2.0,2.7,2.12,2.18,] 	 ARGS:%self,
@@ -437,7 +437,7 @@ BB 48
 		 3: 
 		 4: GETFIELD %self->showing_user def_%cl_2_86 %self[2.0,] 
 		 5: %cl_2_86->average_karma def_%cl_2_87 %cl_2_86[48.4,] 	 ARGS:
-		 6: COPY def_%cl_2_88 
+		 6: HASH-precision- def_%cl_2_88 
 		 7: %self->number_with_precision def_%cl_2_89 %self[2.0,] %cl_2_87[48.5,] %cl_2_88[48.6,] 	 ARGS:%cl_2_87,%cl_2_88,
 		 8: 
 BB 49
@@ -638,13 +638,13 @@ BB 7
 	outgoing: 8 22 
 	datadep: 
 	instructions:
-		 0: def_%cl_4_9 %cl_4_8[6.1,] 	 ARGS:Symbol,
+		 0: %cl_4_8->const_missing def_%cl_4_9 %cl_4_8[6.1,] 	 ARGS:Symbol,
 BB 8
 	outgoing: 12 22 
 	datadep: 
 	instructions:
 		 0: v->reason def_%cl_4_10 v[2.2,] 	 ARGS:
-		 1: def_%cl_4_11 %cl_4_9[7.0,6.2,] %cl_4_10[8.0,] 	 ARGS:%cl_4_10,
+		 1: %cl_4_9->[] def_%cl_4_11 %cl_4_9[7.0,6.2,] %cl_4_10[8.0,] 	 ARGS:%cl_4_10,
 		 2: 
 BB 9
 	outgoing: 10 11 22 
@@ -658,13 +658,13 @@ BB 10
 	outgoing: 11 22 
 	datadep: 
 	instructions:
-		 0: def_%cl_4_13 %cl_4_12[9.1,] 	 ARGS:Symbol,
+		 0: %cl_4_12->const_missing def_%cl_4_13 %cl_4_12[9.1,] 	 ARGS:Symbol,
 BB 11
 	outgoing: 12 22 
 	datadep: 
 	instructions:
 		 0: v->reason def_%cl_4_14 v[2.2,] 	 ARGS:
-		 1: def_%cl_4_15 %cl_4_13[10.0,9.2,] %cl_4_14[11.0,] 	 ARGS:%cl_4_14,
+		 1: %cl_4_13->[] def_%cl_4_15 %cl_4_13[10.0,9.2,] %cl_4_14[11.0,] 	 ARGS:%cl_4_14,
 		 2: COPY def_%cl_4_11 %cl_4_15[11.1,] 
 BB 12
 	outgoing: 13 
@@ -775,7 +775,7 @@ BB 68
 	instructions:
 		 0: 
 		 1: %self->user_unban_path def_%cl_2_129 %self[2.0,] 	 ARGS:
-		 2: COPY def_%cl_2_130 
+		 2: HASH-method- def_%cl_2_130 
 		 3: %self->form_tag def_%cl_2_131 %self[68.1,2.0,] %cl_2_129[68.1,] %cl_2_130[68.2,] %self[68.1,2.0,] 	 ARGS:%cl_2_129,%cl_2_130,%self,
 CLOSURE BEGIN: %self[68.1,2.0,] 
 BB 1
@@ -817,7 +817,7 @@ BB 69
 	instructions:
 		 0: 
 		 1: %self->user_ban_path def_%cl_2_132 %self[2.0,] 	 ARGS:
-		 2: COPY def_%cl_2_133 
+		 2: HASH-method- def_%cl_2_133 
 		 3: %self->form_tag def_%cl_2_134 %self[69.1,2.0,] %cl_2_132[69.1,] %cl_2_133[69.2,] %self[69.1,2.0,] 	 ARGS:%cl_2_132,%cl_2_133,%self,
 CLOSURE BEGIN: %self[69.1,2.0,] 
 BB 1
@@ -839,11 +839,11 @@ BB 3
 		 0: 
 		 1: COPY def_%cl_6_3 
 		 2: COPY def_%cl_6_4 
-		 3: COPY def_%cl_6_5 %cl_6_4[3.2,] 
+		 3: HASH-class- def_%cl_6_5 %cl_6_4[3.2,] 
 		 4: %self->label_tag def_%cl_6_6 %self[2.0,] %cl_6_3[3.1,] %cl_6_5[3.3,] 	 ARGS:Symbol,%cl_6_3,%cl_6_5,
 		 5: 
 		 6: COPY def_%cl_6_7 
-		 7: COPY def_%cl_6_8 
+		 7: HASH-size- def_%cl_6_8 
 		 8: %self->text_field_tag def_%cl_6_9 %self[3.4,2.0,] %cl_6_7[3.6,] %cl_6_8[3.7,] 	 ARGS:Symbol,%cl_6_7,%cl_6_8,
 		 9: 
 		 10: COPY def_%cl_6_10 
@@ -905,7 +905,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->showing_user def_%cl_7_3 %self[2.0,] 
-		 2: COPY def_%cl_7_4 %cl_7_3[3.1,] 
+		 2: HASH-json- def_%cl_7_4 %cl_7_3[3.1,] 
 		 3: %self->render def_%cl_7_5 %self[2.0,] %cl_7_4[3.2,] 	 ARGS:%cl_7_4,
 		 4: RETURN %cl_7_5[3.3,] %self[3.3,2.0,] 
 BB 4
@@ -1305,7 +1305,7 @@ BB 47
 		 3: 
 		 4: GETFIELD %self->showing_user def_%v_97 %self[2.0,2.12,] 
 		 5: %v_97->average_karma def_%v_98 %v_97[47.4,] 	 ARGS:
-		 6: COPY def_%v_99 
+		 6: HASH-precision- def_%v_99 
 		 7: %self->number_with_precision def_%v_100 %self[2.0,2.12,2.18,] %v_98[47.5,] %v_99[47.6,] 	 ARGS:%v_98,%v_99,
 		 8: 
 BB 48
@@ -1506,13 +1506,13 @@ BB 7
 	outgoing: 8 22 
 	datadep: 
 	instructions:
-		 0: def_%cl_9_9 %cl_9_8[6.1,] 	 ARGS:Symbol,
+		 0: %cl_9_8->const_missing def_%cl_9_9 %cl_9_8[6.1,] 	 ARGS:Symbol,
 BB 8
 	outgoing: 12 22 
 	datadep: 
 	instructions:
 		 0: v->reason def_%cl_9_10 v[2.2,] 	 ARGS:
-		 1: def_%cl_9_11 %cl_9_9[7.0,6.2,] %cl_9_10[8.0,] 	 ARGS:%cl_9_10,
+		 1: %cl_9_9->[] def_%cl_9_11 %cl_9_9[7.0,6.2,] %cl_9_10[8.0,] 	 ARGS:%cl_9_10,
 		 2: 
 BB 9
 	outgoing: 10 11 22 
@@ -1526,13 +1526,13 @@ BB 10
 	outgoing: 11 22 
 	datadep: 
 	instructions:
-		 0: def_%cl_9_13 %cl_9_12[9.1,] 	 ARGS:Symbol,
+		 0: %cl_9_12->const_missing def_%cl_9_13 %cl_9_12[9.1,] 	 ARGS:Symbol,
 BB 11
 	outgoing: 12 22 
 	datadep: 
 	instructions:
 		 0: v->reason def_%cl_9_14 v[2.2,] 	 ARGS:
-		 1: def_%cl_9_15 %cl_9_13[10.0,9.2,] %cl_9_14[11.0,] 	 ARGS:%cl_9_14,
+		 1: %cl_9_13->[] def_%cl_9_15 %cl_9_13[10.0,9.2,] %cl_9_14[11.0,] 	 ARGS:%cl_9_14,
 		 2: COPY def_%cl_9_11 %cl_9_15[11.1,] 
 BB 12
 	outgoing: 13 
@@ -1643,7 +1643,7 @@ BB 67
 	instructions:
 		 0: 
 		 1: %self->user_unban_path def_%v_140 %self[2.0,2.12,2.18,] 	 ARGS:
-		 2: COPY def_%v_141 
+		 2: HASH-method- def_%v_141 
 		 3: %self->form_tag def_%v_142 %self[67.1,2.0,2.12,2.18,] %v_140[67.1,] %v_141[67.2,] %self[67.1,2.0,2.12,2.18,] 	 ARGS:%v_140,%v_141,%self,
 CLOSURE BEGIN: %self[67.1,2.0,2.12,2.18,] 
 BB 1
@@ -1685,7 +1685,7 @@ BB 68
 	instructions:
 		 0: 
 		 1: %self->user_ban_path def_%v_143 %self[2.0,2.12,2.18,] 	 ARGS:
-		 2: COPY def_%v_144 
+		 2: HASH-method- def_%v_144 
 		 3: %self->form_tag def_%v_145 %self[68.1,2.0,2.12,2.18,] %v_143[68.1,] %v_144[68.2,] %self[68.1,2.0,2.12,2.18,] 	 ARGS:%v_143,%v_144,%self,
 CLOSURE BEGIN: %self[68.1,2.0,2.12,2.18,] 
 BB 1
@@ -1707,11 +1707,11 @@ BB 3
 		 0: 
 		 1: COPY def_%cl_11_3 
 		 2: COPY def_%cl_11_4 
-		 3: COPY def_%cl_11_5 %cl_11_4[3.2,] 
+		 3: HASH-class- def_%cl_11_5 %cl_11_4[3.2,] 
 		 4: %self->label_tag def_%cl_11_6 %self[2.0,] %cl_11_3[3.1,] %cl_11_5[3.3,] 	 ARGS:Symbol,%cl_11_3,%cl_11_5,
 		 5: 
 		 6: COPY def_%cl_11_7 
-		 7: COPY def_%cl_11_8 
+		 7: HASH-size- def_%cl_11_8 
 		 8: %self->text_field_tag def_%cl_11_9 %self[3.4,2.0,] %cl_11_7[3.6,] %cl_11_8[3.7,] 	 ARGS:Symbol,%cl_11_7,%cl_11_8,
 		 9: 
 		 10: COPY def_%cl_11_10 
@@ -1764,7 +1764,7 @@ BB 2
 		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: 
 		 9: %self->params def_%v_4 %self[2.0,2.7,] 	 ARGS:
-		 10: def_%v_5 %v_4[2.9,] 	 ARGS:Symbol,
+		 10: %v_4->[] def_%v_5 %v_4[2.9,] 	 ARGS:Symbol,
 		 11: %v_5->to_s def_%v_6 %v_5[2.10,] 	 ARGS:
 		 12: COPY def_%v_7 
 		 13: %v_6->== def_%v_8 %v_6[2.11,] %v_7[2.12,] 	 ARGS:%v_7,
@@ -1786,7 +1786,7 @@ BB 3
 		 10: 
 		 11: GETFIELD %self->title def_%v_15 %self[2.0,2.7,] 
 		 12: COPY def_%v_16 
-		 13: def_%v_17 %v_15[3.11,] %v_16[3.12,] 	 ARGS:%v_16,
+		 13: %v_15-><< def_%v_17 %v_15[3.11,] %v_16[3.12,] 	 ARGS:%v_16,
 		 14: 
 		 15: GETFIELD %self->title def_%v_18 %self[2.0,2.7,] 
 		 16: 
@@ -1905,7 +1905,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->params def_%v_22 %self[2.0,2.7,] 	 ARGS:
-		 2: def_%v_23 %v_22[4.1,] 	 ARGS:Symbol,
+		 2: %v_22->[] def_%v_23 %v_22[4.1,] 	 ARGS:Symbol,
 		 3: BRANCH %v_23[4.2,] 
 BB 5
 	outgoing: 7 
@@ -2098,7 +2098,7 @@ BB 3
 		 1: COPY def_%cl_3_3 
 		 2: u->username def_%cl_3_4 u[2.2,] 	 ARGS:
 		 3: COPY def_%cl_3_5 
-		 4: def_%cl_3_6 %cl_3_3[3.1,] %cl_3_4[3.2,] %cl_3_5[3.3,] 
+		 4: BUILDSTRING def_%cl_3_6 %cl_3_3[3.1,] %cl_3_4[3.2,] %cl_3_5[3.3,] 
 		 5: 
 		 6: u->is_new? def_%cl_3_7 u[3.2,2.2,] 	 ARGS:
 		 7: BRANCH %cl_3_7[3.6,] 
@@ -2118,18 +2118,18 @@ BB 6
 	outgoing: 7 9 
 	datadep: 
 	instructions:
-		 0: def_%cl_3_10 %cl_3_6[3.4,] %cl_3_8[5.1,4.0,] 	 ARGS:%cl_3_8,
+		 0: %cl_3_6-><< def_%cl_3_10 %cl_3_6[3.4,] %cl_3_8[5.1,4.0,] 	 ARGS:%cl_3_8,
 		 1: COPY def_%cl_3_11 
 		 2: u->username def_%cl_3_12 u[2.2,] 	 ARGS:
 		 3: COPY def_%cl_3_13 
-		 4: def_%cl_3_14 %cl_3_11[6.1,] %cl_3_12[6.2,] %cl_3_13[6.3,] 
-		 5: def_%cl_3_15 %cl_3_10[6.0,] %cl_3_14[6.4,] 	 ARGS:%cl_3_14,
+		 4: BUILDSTRING def_%cl_3_14 %cl_3_11[6.1,] %cl_3_12[6.2,] %cl_3_13[6.3,] 
+		 5: %cl_3_10-><< def_%cl_3_15 %cl_3_10[6.0,] %cl_3_14[6.4,] 	 ARGS:%cl_3_14,
 		 6: COPY def_%cl_3_16 
 		 7: 
 		 8: u->karma def_%cl_3_17 u[6.2,2.2,] 	 ARGS:
 		 9: COPY def_%cl_3_18 
-		 10: def_%cl_3_19 %cl_3_16[6.6,] %cl_3_17[6.8,] %cl_3_18[6.9,] 
-		 11: def_%cl_3_20 %cl_3_15[6.5,] %cl_3_19[6.10,] 	 ARGS:%cl_3_19,
+		 10: BUILDSTRING def_%cl_3_19 %cl_3_16[6.6,] %cl_3_17[6.8,] %cl_3_18[6.9,] 
+		 11: %cl_3_15-><< def_%cl_3_20 %cl_3_15[6.5,] %cl_3_19[6.10,] 	 ARGS:%cl_3_19,
 		 12: RETURN %cl_3_20[6.11,] %self[2.0,] 
 BB 7
 	outgoing: 9 
@@ -2148,7 +2148,7 @@ CLOSURE END
 		 8: %self->raw def_%v_53 %self[3.5,3.9,6.8,6.11,6.17,5.7,5.11,5.14,2.0,2.7,] %v_52[8.7,] 	 ARGS:%v_52,
 		 9: 
 		 10: GETFIELD %self->users_by_parent def_%v_54 %self[8.8,6.11,2.0,] 
-		 11: def_%v_55 %v_54[8.10,] 	 ARGS:Nil,
+		 11: %v_54->[] def_%v_55 %v_54[8.10,] 	 ARGS:Nil,
 		 12: COPY def_subtree %v_55[8.11,] 
 		 13: 
 		 14: COPY def_%v_56 
@@ -2254,7 +2254,7 @@ BB 23
 		 0: 
 		 1: GETFIELD %self->users_by_parent def_%v_71 %self[6.11,2.0,] 
 		 2: user->id def_%v_72 user[10.3,] 	 ARGS:
-		 3: def_%v_73 %v_71[23.1,] %v_72[23.2,] 	 ARGS:%v_72,
+		 3: %v_71->[] def_%v_73 %v_71[23.1,] %v_72[23.2,] 	 ARGS:%v_72,
 		 4: COPY def_children %v_73[23.3,] 
 		 5: BRANCH %v_73[23.3,] 
 BB 24
@@ -2262,7 +2262,7 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_74 ancestors[8.15,] subtree[8.12,27.2,] 	 ARGS:subtree,
+		 1: ancestors-><< def_%v_74 ancestors[8.15,] subtree[8.12,27.2,] 	 ARGS:subtree,
 		 2: 
 		 3: COPY def_subtree children[23.4,] 
 		 4: COPY def_%v_75 children[23.4,] 
@@ -2357,8 +2357,8 @@ BB 2
 		 5: 
 		 6: (User) def_%v_3 
 		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
-		 8: def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
-		 9: COPY def_%v_6 %v_5[2.8,] 
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: HASH-username- def_%v_6 %v_5[2.8,] 
 		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: %v_7->first def_%v_8 %v_7[2.10,] 	 ARGS:
 		 12: COPY def_buser %v_8[2.11,] 
@@ -2384,7 +2384,7 @@ BB 4
 		 0: COPY def_%v_14 
 		 1: 
 		 2: %self->params def_%v_15 %self[2.0,] 	 ARGS:
-		 3: def_%v_16 %v_15[4.2,] 	 ARGS:Symbol,
+		 3: %v_15->[] def_%v_16 %v_15[4.2,] 	 ARGS:Symbol,
 		 4: %v_16->present? def_%v_17 %v_16[4.3,] 	 ARGS:
 		 5: %v_17->! def_%v_18 %v_17[4.4,] 	 ARGS:
 		 6: BRANCH %v_18[4.5,] 
@@ -2398,7 +2398,7 @@ BB 6
 		 3: ATTRASSIGN %v_19->[] %v_20[6.2,] 
 		 4: 
 		 5: buser->username def_%v_21 buser[2.12,] 	 ARGS:
-		 6: COPY def_%v_22 %v_21[6.5,] 
+		 6: HASH-user- def_%v_22 %v_21[6.5,] 
 		 7: %self->user_path def_%v_23 %self[6.1,2.0,] %v_22[6.6,] 	 ARGS:%v_22,
 		 8: %self->redirect_to def_%v_24 %self[6.1,6.7,2.0,] %v_23[6.7,] 	 ARGS:%v_23,
 		 9: RETURN %v_24[6.8,] %self[6.1,6.7,6.8,2.0,] 
@@ -2410,7 +2410,7 @@ BB 7
 		 1: 
 		 2: GETFIELD %self->user def_%v_26 %self[2.0,] 
 		 3: %self->params def_%v_27 %self[2.0,] 	 ARGS:
-		 4: def_%v_28 %v_27[7.3,] 	 ARGS:Symbol,
+		 4: %v_27->[] def_%v_28 %v_27[7.3,] 	 ARGS:Symbol,
 		 5: buser->ban_by_user_for_reason! def_%v_29 buser[2.12,] %v_26[7.2,] %v_28[7.4,] 	 ARGS:%v_26,%v_28,
 		 6: 
 		 7: %self->flash def_%v_30 %self[7.3,2.0,] 	 ARGS:
@@ -2418,7 +2418,7 @@ BB 7
 		 9: ATTRASSIGN %v_30->[] %v_31[7.8,] 
 		 10: 
 		 11: buser->username def_%v_32 buser[7.5,2.12,] 	 ARGS:
-		 12: COPY def_%v_33 %v_32[7.11,] 
+		 12: HASH-user- def_%v_33 %v_32[7.11,] 
 		 13: %self->user_path def_%v_34 %self[7.3,7.7,2.0,] %v_33[7.12,] 	 ARGS:%v_33,
 		 14: %self->redirect_to def_%v_35 %self[7.3,7.7,7.13,2.0,] %v_34[7.13,] 	 ARGS:%v_34,
 		 15: RETURN %v_35[7.14,] %self[7.3,7.7,7.13,7.14,2.0,] 
@@ -2444,8 +2444,8 @@ BB 2
 		 5: 
 		 6: (User) def_%v_3 
 		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
-		 8: def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
-		 9: COPY def_%v_6 %v_5[2.8,] 
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: HASH-username- def_%v_6 %v_5[2.8,] 
 		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: %v_7->first def_%v_8 %v_7[2.10,] 	 ARGS:
 		 12: COPY def_buser %v_8[2.11,] 
@@ -2478,7 +2478,7 @@ BB 4
 		 7: ATTRASSIGN %v_17->[] %v_18[4.6,] 
 		 8: 
 		 9: buser->username def_%v_19 buser[4.3,2.12,] 	 ARGS:
-		 10: COPY def_%v_20 %v_19[4.9,] 
+		 10: HASH-user- def_%v_20 %v_19[4.9,] 
 		 11: %self->user_path def_%v_21 %self[4.5,2.0,] %v_20[4.10,] 	 ARGS:%v_20,
 		 12: %self->redirect_to def_%v_22 %self[4.5,4.11,2.0,] %v_21[4.11,] 	 ARGS:%v_21,
 		 13: RETURN %v_22[4.12,] %self[4.5,4.11,4.12,2.0,] 

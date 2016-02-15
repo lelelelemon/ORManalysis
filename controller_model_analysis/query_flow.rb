@@ -1,6 +1,7 @@
 #load 'read_dataflow.rb'
 $in_view = false
 $in_loop = Array.new
+$in_validation = Array.new
 $general_call_stack = Array.new
 $funccall_stack = Array.new
 
@@ -53,6 +54,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 					end
 				end
 
+				$in_validation.push(temp_node)
 				temp_actions.each do |action|
 						temp_name = "#{caller_class}.#{action}"
 						if $non_repeat_list.include?(temp_name) == false
@@ -91,6 +93,7 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 							end
 						end
 				end
+				$in_validation.pop
 				temp_node.index = $ins_cnt
 				$node_list.push(temp_node)
 				@outnodes.each do |rt|

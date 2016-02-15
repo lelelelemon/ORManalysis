@@ -13,18 +13,18 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->id def_%v_3 %self[2.0,] 
-		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 
+		 6: %self->id def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: COPY def_%v_5 
-		 9: def_%v_6 %v_4[2.7,] %v_5[2.8,] 
-		 10: %self->name def_%v_7 %self[2.0,2.6,] 
+		 9: %v_4-><< def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: %self->name def_%v_7 %self[2.0,2.6,] 	 ARGS:
 		 11: BRANCH %v_7[2.10,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %self->name def_%v_8 %self[2.0,] 
-		 1: %v_8->parameterize def_%v_9 %v_8[3.0,] 
+		 0: %self->name def_%v_8 %self[2.0,] 	 ARGS:
+		 1: %v_8->parameterize def_%v_9 %v_8[3.0,] 	 ARGS:
 		 2: 
 BB 4
 	outgoing: 5 
@@ -36,7 +36,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_11 %v_6[2.9,] %v_9[4.1,3.1,] 
+		 0: %v_6-><< def_%v_11 %v_6[2.9,] %v_9[4.1,3.1,] 	 ARGS:%v_9,
 		 1: RETURN %v_11[5.0,] %self[2.0,] 
 BB 6
 	outgoing: 

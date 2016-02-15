@@ -30,7 +30,7 @@ BB 2
 		 20: ATTRASSIGN %self->messages %v_8[2.19,] 
 		 21: 
 		 22: %self->params def_%v_9 %self[2.0,2.7,2.10,2.14,2.16,2.20,] 	 ARGS:
-		 23: def_%v_10 %v_9[2.22,] 	 ARGS:Symbol,
+		 23: %v_9->[] def_%v_10 %v_9[2.22,] 	 ARGS:Symbol,
 		 24: BRANCH %v_10[2.23,] 
 BB 3
 	outgoing: 5 
@@ -39,7 +39,7 @@ BB 3
 		 0: 
 		 1: GETFIELD %self->new_message def_%v_11 %self[2.0,2.14,] 
 		 2: %self->params def_%v_12 %self[2.0,2.7,2.10,2.14,2.16,2.20,] 	 ARGS:
-		 3: def_%v_13 %v_12[3.2,] 	 ARGS:Symbol,
+		 3: %v_12->[] def_%v_13 %v_12[3.2,] 	 ARGS:Symbol,
 		 4: ATTRASSIGN %v_11->recipient_username %v_13[3.3,] 
 		 5: 
 BB 4
@@ -99,7 +99,7 @@ BB 12
 	instructions:
 		 0: 
 		 1: %self->batch_delete_messages_path def_%v_22 %self[2.0,2.7,2.10,2.14,2.16,2.20,] 	 ARGS:
-		 2: def_%v_23 %self[12.1,2.0,2.7,2.10,2.14,2.16,2.20,] %v_22[12.1,] %self[12.1,2.0,2.7,2.10,2.14,2.16,2.20,] 	 ARGS:%v_22,%self,
+		 2: %self->form_tag def_%v_23 %self[12.1,2.0,2.7,2.10,2.14,2.16,2.20,] %v_22[12.1,] %self[12.1,2.0,2.7,2.10,2.14,2.16,2.20,] 	 ARGS:%v_22,%self,
 CLOSURE BEGIN: %self[12.1,2.0,2.7,2.10,2.14,2.16,2.20,] 
 BB 1
 	outgoing: 12 2 
@@ -120,7 +120,7 @@ BB 3
 		 0: 
 		 1: COPY def_%cl_1_3 
 		 2: COPY def_%cl_1_4 
-		 3: COPY def_%cl_1_5 %cl_1_4[3.2,] 
+		 3: HASH-id- def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: %self->check_box_tag def_%cl_1_6 %self[2.0,] %cl_1_3[3.1,] %cl_1_5[3.3,] 	 ARGS:%cl_1_3,%cl_1_5,
 		 5: 
 		 6: GETFIELD %self->direction def_%cl_1_7 %self[3.4,2.0,] 
@@ -206,7 +206,7 @@ BB 6
 		 0: 
 		 1: COPY def_%cl_2_6 
 		 2: message->short_id def_%cl_2_7 message[2.2,] 	 ARGS:
-		 3: def_%cl_2_8 %cl_2_6[6.1,] %cl_2_7[6.2,] 
+		 3: BUILDSTRING def_%cl_2_8 %cl_2_6[6.1,] %cl_2_7[6.2,] 
 		 4: %self->check_box_tag def_%cl_2_9 %self[2.0,] %cl_2_8[6.3,] 	 ARGS:%cl_2_8,
 		 5: 
 		 6: GETFIELD %self->direction def_%cl_2_10 %self[6.4,2.0,] 
@@ -325,7 +325,7 @@ BB 17
 	instructions:
 		 0: 
 		 1: GETFIELD %self->new_message def_%v_28 %self[2.0,2.14,] 
-		 2: COPY def_%v_29 
+		 2: HASH-method- def_%v_29 
 		 3: %self->form_for def_%v_30 %self[2.0,2.7,2.10,2.14,2.16,2.20,] %v_28[17.1,] %v_29[17.2,] %self[2.0,2.7,2.10,2.14,2.16,2.20,] 	 ARGS:%v_28,%v_29,%self,
 CLOSURE BEGIN: %self[2.0,2.7,2.10,2.14,2.16,2.20,] f[] 
 BB 1
@@ -351,31 +351,31 @@ BB 3
 		 3: 
 		 4: COPY def_%cl_3_5 
 		 5: COPY def_%cl_3_6 
-		 6: COPY def_%cl_3_7 %cl_3_6[3.5,] 
+		 6: HASH-class- def_%cl_3_7 %cl_3_6[3.5,] 
 		 7: f->label def_%cl_3_8 f[2.2,] %cl_3_5[3.4,] %cl_3_7[3.6,] 	 ARGS:Symbol,%cl_3_5,%cl_3_7,
 		 8: 
 		 9: COPY def_%cl_3_9 
-		 10: COPY def_%cl_3_10 %cl_3_9[3.9,] 
+		 10: HASH-size-autocomplete- def_%cl_3_10 %cl_3_9[3.9,] 
 		 11: f->text_field def_%cl_3_11 f[3.7,2.2,] %cl_3_10[3.10,] 	 ARGS:Symbol,%cl_3_10,
 		 12: 
 		 13: COPY def_%cl_3_12 
 		 14: COPY def_%cl_3_13 
-		 15: COPY def_%cl_3_14 %cl_3_13[3.14,] 
+		 15: HASH-class- def_%cl_3_14 %cl_3_13[3.14,] 
 		 16: f->label def_%cl_3_15 f[3.7,3.11,2.2,] %cl_3_12[3.13,] %cl_3_14[3.15,] 	 ARGS:Symbol,%cl_3_12,%cl_3_14,
 		 17: 
 		 18: COPY def_%cl_3_16 
 		 19: COPY def_%cl_3_17 
-		 20: COPY def_%cl_3_18 %cl_3_16[3.18,] %cl_3_17[3.19,] 
+		 20: HASH-style-autocomplete- def_%cl_3_18 %cl_3_16[3.18,] %cl_3_17[3.19,] 
 		 21: f->text_field def_%cl_3_19 f[3.7,3.11,3.16,2.2,] %cl_3_18[3.20,] 	 ARGS:Symbol,%cl_3_18,
 		 22: 
 		 23: COPY def_%cl_3_20 
 		 24: COPY def_%cl_3_21 
-		 25: COPY def_%cl_3_22 %cl_3_21[3.24,] 
+		 25: HASH-class- def_%cl_3_22 %cl_3_21[3.24,] 
 		 26: f->label def_%cl_3_23 f[3.7,3.11,3.16,3.21,2.2,] %cl_3_20[3.23,] %cl_3_22[3.25,] 	 ARGS:Symbol,%cl_3_20,%cl_3_22,
 		 27: 
 		 28: COPY def_%cl_3_24 
 		 29: COPY def_%cl_3_25 
-		 30: COPY def_%cl_3_26 %cl_3_24[3.28,] %cl_3_25[3.29,] 
+		 30: HASH-style-rows-autocomplete- def_%cl_3_26 %cl_3_24[3.28,] %cl_3_25[3.29,] 
 		 31: f->text_area def_%cl_3_27 f[3.7,3.11,3.16,3.21,3.26,2.2,] %cl_3_26[3.30,] 	 ARGS:Symbol,%cl_3_26,
 		 32: 
 		 33: COPY def_%cl_3_28 
@@ -477,7 +477,7 @@ BB 9
 	instructions:
 		 0: 
 		 1: %self->batch_delete_messages_path def_%v_17 %self[2.0,2.7,2.10,2.12,2.16,2.20,] 	 ARGS:
-		 2: def_%v_18 %self[9.1,2.0,2.7,2.10,2.12,2.16,2.20,] %v_17[9.1,] %self[9.1,2.0,2.7,2.10,2.12,2.16,2.20,] 	 ARGS:%v_17,%self,
+		 2: %self->form_tag def_%v_18 %self[9.1,2.0,2.7,2.10,2.12,2.16,2.20,] %v_17[9.1,] %self[9.1,2.0,2.7,2.10,2.12,2.16,2.20,] 	 ARGS:%v_17,%self,
 CLOSURE BEGIN: %self[9.1,2.0,2.7,2.10,2.12,2.16,2.20,] 
 BB 1
 	outgoing: 12 2 
@@ -498,7 +498,7 @@ BB 3
 		 0: 
 		 1: COPY def_%cl_1_3 
 		 2: COPY def_%cl_1_4 
-		 3: COPY def_%cl_1_5 %cl_1_4[3.2,] 
+		 3: HASH-id- def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: %self->check_box_tag def_%cl_1_6 %self[2.0,] %cl_1_3[3.1,] %cl_1_5[3.3,] 	 ARGS:%cl_1_3,%cl_1_5,
 		 5: 
 		 6: GETFIELD %self->direction def_%cl_1_7 %self[3.4,2.0,] 
@@ -584,7 +584,7 @@ BB 6
 		 0: 
 		 1: COPY def_%cl_2_6 
 		 2: message->short_id def_%cl_2_7 message[2.2,] 	 ARGS:
-		 3: def_%cl_2_8 %cl_2_6[6.1,] %cl_2_7[6.2,] 
+		 3: BUILDSTRING def_%cl_2_8 %cl_2_6[6.1,] %cl_2_7[6.2,] 
 		 4: %self->check_box_tag def_%cl_2_9 %self[2.0,] %cl_2_8[6.3,] 	 ARGS:%cl_2_8,
 		 5: 
 		 6: GETFIELD %self->direction def_%cl_2_10 %self[6.4,2.0,] 
@@ -703,7 +703,7 @@ BB 14
 	instructions:
 		 0: 
 		 1: GETFIELD %self->new_message def_%v_23 %self[2.0,2.20,] 
-		 2: COPY def_%v_24 
+		 2: HASH-method- def_%v_24 
 		 3: %self->form_for def_%v_25 %self[2.0,2.7,2.10,2.12,2.16,2.20,] %v_23[14.1,] %v_24[14.2,] %self[2.0,2.7,2.10,2.12,2.16,2.20,] 	 ARGS:%v_23,%v_24,%self,
 CLOSURE BEGIN: %self[2.0,2.7,2.10,2.12,2.16,2.20,] f[] 
 BB 1
@@ -729,31 +729,31 @@ BB 3
 		 3: 
 		 4: COPY def_%cl_3_5 
 		 5: COPY def_%cl_3_6 
-		 6: COPY def_%cl_3_7 %cl_3_6[3.5,] 
+		 6: HASH-class- def_%cl_3_7 %cl_3_6[3.5,] 
 		 7: f->label def_%cl_3_8 f[2.2,] %cl_3_5[3.4,] %cl_3_7[3.6,] 	 ARGS:Symbol,%cl_3_5,%cl_3_7,
 		 8: 
 		 9: COPY def_%cl_3_9 
-		 10: COPY def_%cl_3_10 %cl_3_9[3.9,] 
+		 10: HASH-size-autocomplete- def_%cl_3_10 %cl_3_9[3.9,] 
 		 11: f->text_field def_%cl_3_11 f[3.7,2.2,] %cl_3_10[3.10,] 	 ARGS:Symbol,%cl_3_10,
 		 12: 
 		 13: COPY def_%cl_3_12 
 		 14: COPY def_%cl_3_13 
-		 15: COPY def_%cl_3_14 %cl_3_13[3.14,] 
+		 15: HASH-class- def_%cl_3_14 %cl_3_13[3.14,] 
 		 16: f->label def_%cl_3_15 f[3.7,3.11,2.2,] %cl_3_12[3.13,] %cl_3_14[3.15,] 	 ARGS:Symbol,%cl_3_12,%cl_3_14,
 		 17: 
 		 18: COPY def_%cl_3_16 
 		 19: COPY def_%cl_3_17 
-		 20: COPY def_%cl_3_18 %cl_3_16[3.18,] %cl_3_17[3.19,] 
+		 20: HASH-style-autocomplete- def_%cl_3_18 %cl_3_16[3.18,] %cl_3_17[3.19,] 
 		 21: f->text_field def_%cl_3_19 f[3.7,3.11,3.16,2.2,] %cl_3_18[3.20,] 	 ARGS:Symbol,%cl_3_18,
 		 22: 
 		 23: COPY def_%cl_3_20 
 		 24: COPY def_%cl_3_21 
-		 25: COPY def_%cl_3_22 %cl_3_21[3.24,] 
+		 25: HASH-class- def_%cl_3_22 %cl_3_21[3.24,] 
 		 26: f->label def_%cl_3_23 f[3.7,3.11,3.16,3.21,2.2,] %cl_3_20[3.23,] %cl_3_22[3.25,] 	 ARGS:Symbol,%cl_3_20,%cl_3_22,
 		 27: 
 		 28: COPY def_%cl_3_24 
 		 29: COPY def_%cl_3_25 
-		 30: COPY def_%cl_3_26 %cl_3_24[3.28,] %cl_3_25[3.29,] 
+		 30: HASH-style-rows-autocomplete- def_%cl_3_26 %cl_3_24[3.28,] %cl_3_25[3.29,] 
 		 31: f->text_area def_%cl_3_27 f[3.7,3.11,3.16,3.21,3.26,2.2,] %cl_3_26[3.30,] 	 ARGS:Symbol,%cl_3_26,
 		 32: 
 		 33: COPY def_%cl_3_28 
@@ -828,9 +828,9 @@ BB 3
 		 4: %v_17->recipient def_%v_18 %v_17[3.3,] 	 ARGS:
 		 5: %v_18->username def_%v_19 %v_18[3.4,] 	 ARGS:
 		 6: %v_19->to_s def_%v_20 %v_19[3.5,] 	 ARGS:
-		 7: def_%v_21 %v_16[3.2,] %v_20[3.6,] 	 ARGS:%v_20,
+		 7: %v_16-><< def_%v_21 %v_16[3.2,] %v_20[3.6,] 	 ARGS:%v_20,
 		 8: COPY def_%v_22 
-		 9: def_%v_23 %v_21[3.7,] %v_22[3.8,] 	 ARGS:%v_22,
+		 9: %v_21-><< def_%v_23 %v_21[3.7,] %v_22[3.8,] 	 ARGS:%v_22,
 		 10: ATTRASSIGN %v_15->[] %v_23[3.9,] 
 		 11: 
 		 12: COPY def_%v_24 
@@ -888,7 +888,7 @@ BB 11
 	instructions:
 		 0: 
 		 1: %self->batch_delete_messages_path def_%v_35 %self[2.0,2.7,2.10,2.15,2.22,2.26,] 	 ARGS:
-		 2: def_%v_36 %self[11.1,2.0,2.7,2.10,2.15,2.22,2.26,] %v_35[11.1,] %self[11.1,2.0,2.7,2.10,2.15,2.22,2.26,] 	 ARGS:%v_35,%self,
+		 2: %self->form_tag def_%v_36 %self[11.1,2.0,2.7,2.10,2.15,2.22,2.26,] %v_35[11.1,] %self[11.1,2.0,2.7,2.10,2.15,2.22,2.26,] 	 ARGS:%v_35,%self,
 CLOSURE BEGIN: %self[11.1,2.0,2.7,2.10,2.15,2.22,2.26,] 
 BB 1
 	outgoing: 12 2 
@@ -909,7 +909,7 @@ BB 3
 		 0: 
 		 1: COPY def_%cl_1_3 
 		 2: COPY def_%cl_1_4 
-		 3: COPY def_%cl_1_5 %cl_1_4[3.2,] 
+		 3: HASH-id- def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: %self->check_box_tag def_%cl_1_6 %self[2.0,] %cl_1_3[3.1,] %cl_1_5[3.3,] 	 ARGS:%cl_1_3,%cl_1_5,
 		 5: 
 		 6: GETFIELD %self->direction def_%cl_1_7 %self[3.4,2.0,] 
@@ -995,7 +995,7 @@ BB 6
 		 0: 
 		 1: COPY def_%cl_2_6 
 		 2: message->short_id def_%cl_2_7 message[2.2,] 	 ARGS:
-		 3: def_%cl_2_8 %cl_2_6[6.1,] %cl_2_7[6.2,] 
+		 3: BUILDSTRING def_%cl_2_8 %cl_2_6[6.1,] %cl_2_7[6.2,] 
 		 4: %self->check_box_tag def_%cl_2_9 %self[2.0,] %cl_2_8[6.3,] 	 ARGS:%cl_2_8,
 		 5: 
 		 6: GETFIELD %self->direction def_%cl_2_10 %self[6.4,2.0,] 
@@ -1114,7 +1114,7 @@ BB 16
 	instructions:
 		 0: 
 		 1: GETFIELD %self->new_message def_%v_41 %self[2.0,2.15,] 
-		 2: COPY def_%v_42 
+		 2: HASH-method- def_%v_42 
 		 3: %self->form_for def_%v_43 %self[2.0,2.7,2.10,2.15,2.22,2.26,] %v_41[16.1,] %v_42[16.2,] %self[2.0,2.7,2.10,2.15,2.22,2.26,] 	 ARGS:%v_41,%v_42,%self,
 CLOSURE BEGIN: %self[2.0,2.7,2.10,2.15,2.22,2.26,] f[] 
 BB 1
@@ -1140,31 +1140,31 @@ BB 3
 		 3: 
 		 4: COPY def_%cl_3_5 
 		 5: COPY def_%cl_3_6 
-		 6: COPY def_%cl_3_7 %cl_3_6[3.5,] 
+		 6: HASH-class- def_%cl_3_7 %cl_3_6[3.5,] 
 		 7: f->label def_%cl_3_8 f[2.2,] %cl_3_5[3.4,] %cl_3_7[3.6,] 	 ARGS:Symbol,%cl_3_5,%cl_3_7,
 		 8: 
 		 9: COPY def_%cl_3_9 
-		 10: COPY def_%cl_3_10 %cl_3_9[3.9,] 
+		 10: HASH-size-autocomplete- def_%cl_3_10 %cl_3_9[3.9,] 
 		 11: f->text_field def_%cl_3_11 f[3.7,2.2,] %cl_3_10[3.10,] 	 ARGS:Symbol,%cl_3_10,
 		 12: 
 		 13: COPY def_%cl_3_12 
 		 14: COPY def_%cl_3_13 
-		 15: COPY def_%cl_3_14 %cl_3_13[3.14,] 
+		 15: HASH-class- def_%cl_3_14 %cl_3_13[3.14,] 
 		 16: f->label def_%cl_3_15 f[3.7,3.11,2.2,] %cl_3_12[3.13,] %cl_3_14[3.15,] 	 ARGS:Symbol,%cl_3_12,%cl_3_14,
 		 17: 
 		 18: COPY def_%cl_3_16 
 		 19: COPY def_%cl_3_17 
-		 20: COPY def_%cl_3_18 %cl_3_16[3.18,] %cl_3_17[3.19,] 
+		 20: HASH-style-autocomplete- def_%cl_3_18 %cl_3_16[3.18,] %cl_3_17[3.19,] 
 		 21: f->text_field def_%cl_3_19 f[3.7,3.11,3.16,2.2,] %cl_3_18[3.20,] 	 ARGS:Symbol,%cl_3_18,
 		 22: 
 		 23: COPY def_%cl_3_20 
 		 24: COPY def_%cl_3_21 
-		 25: COPY def_%cl_3_22 %cl_3_21[3.24,] 
+		 25: HASH-class- def_%cl_3_22 %cl_3_21[3.24,] 
 		 26: f->label def_%cl_3_23 f[3.7,3.11,3.16,3.21,2.2,] %cl_3_20[3.23,] %cl_3_22[3.25,] 	 ARGS:Symbol,%cl_3_20,%cl_3_22,
 		 27: 
 		 28: COPY def_%cl_3_24 
 		 29: COPY def_%cl_3_25 
-		 30: COPY def_%cl_3_26 %cl_3_24[3.28,] %cl_3_25[3.29,] 
+		 30: HASH-style-rows-autocomplete- def_%cl_3_26 %cl_3_24[3.28,] %cl_3_25[3.29,] 
 		 31: f->text_area def_%cl_3_27 f[3.7,3.11,3.16,3.21,3.26,2.2,] %cl_3_26[3.30,] 	 ARGS:Symbol,%cl_3_26,
 		 32: 
 		 33: COPY def_%cl_3_28 
@@ -1275,7 +1275,7 @@ BB 8
 		 2: COPY def_%v_30 
 		 3: GETFIELD %self->message def_%v_31 %self[2.0,] 
 		 4: %v_31->subject def_%v_32 %v_31[8.3,] 	 ARGS:
-		 5: def_%v_33 %v_30[8.2,] %v_32[8.4,] 
+		 5: BUILDSTRING def_%v_33 %v_30[8.2,] %v_32[8.4,] 
 		 6: ATTRASSIGN %v_29->subject %v_33[8.5,] 
 		 7: COPY def_%v_28 %v_33[8.5,] 
 BB 9
@@ -1433,7 +1433,7 @@ BB 26
 		 17: GETFIELD %self->message def_%v_80 %self[26.11,26.15,2.0,] 
 		 18: %v_80->short_id def_%v_81 %v_80[26.17,] 	 ARGS:
 		 19: %self->message_path def_%v_82 %self[26.11,26.15,2.0,2.7,2.11,3.3,] %v_81[26.18,] 	 ARGS:%v_81,
-		 20: COPY def_%v_83 
+		 20: HASH-method- def_%v_83 
 		 21: %self->form_tag def_%v_84 %self[26.11,26.15,26.19,2.0,2.7,2.11,3.3,] %v_82[26.19,] %v_83[26.20,] %self[26.11,26.15,26.19,2.0,2.7,2.11,3.3,] 	 ARGS:%v_82,%v_83,%self,
 CLOSURE BEGIN: %self[26.11,26.15,26.19,2.0,2.7,2.11,3.3,] 
 BB 1
@@ -1473,8 +1473,8 @@ CLOSURE END
 		 24: %v_85->short_id def_%v_86 %v_85[26.23,] 	 ARGS:
 		 25: %self->message_path def_%v_87 %self[26.11,26.15,26.19,26.21,2.0,2.7,2.11,3.3,] %v_86[26.24,] 	 ARGS:%v_86,
 		 26: COPY def_%v_88 
-		 27: def_%v_89 %v_87[26.25,] %v_88[26.26,] 	 ARGS:%v_88,
-		 28: COPY def_%v_90 
+		 27: %v_87->+ def_%v_89 %v_87[26.25,] %v_88[26.26,] 	 ARGS:%v_88,
+		 28: HASH-method- def_%v_90 
 		 29: %self->form_tag def_%v_91 %self[26.11,26.15,26.19,26.21,26.25,2.0,2.7,2.11,3.3,] %v_89[26.27,] %v_90[26.28,] %self[26.11,26.15,26.19,26.21,26.25,2.0,2.7,2.11,3.3,] 	 ARGS:%v_89,%v_90,%self,
 CLOSURE BEGIN: %self[26.11,26.15,26.19,26.21,26.25,2.0,2.7,2.11,3.3,] 
 BB 1
@@ -1538,7 +1538,7 @@ BB 30
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->new_message def_%v_96 %self[2.0,3.3,] 
-		 1: COPY def_%v_97 
+		 1: HASH-method- def_%v_97 
 		 2: %self->form_for def_%v_98 %self[2.0,2.7,2.11,3.3,] %v_96[30.0,] %v_97[30.1,] %self[2.0,2.7,2.11,3.3,] 	 ARGS:%v_96,%v_97,%self,
 CLOSURE BEGIN: f[] %self[2.0,2.7,2.11,3.3,] 
 BB 1
@@ -1566,12 +1566,12 @@ BB 3
 		 5: 
 		 6: COPY def_%cl_3_6 
 		 7: COPY def_%cl_3_7 
-		 8: COPY def_%cl_3_8 %cl_3_6[3.6,] %cl_3_7[3.7,] 
+		 8: HASH-style-autocomplete- def_%cl_3_8 %cl_3_6[3.6,] %cl_3_7[3.7,] 
 		 9: f->text_field def_%cl_3_9 f[3.1,2.2,] %cl_3_8[3.8,] 	 ARGS:Symbol,%cl_3_8,
 		 10: 
 		 11: COPY def_%cl_3_10 
 		 12: COPY def_%cl_3_11 
-		 13: COPY def_%cl_3_12 %cl_3_10[3.11,] %cl_3_11[3.12,] 
+		 13: HASH-style-rows-autocomplete- def_%cl_3_12 %cl_3_10[3.11,] %cl_3_11[3.12,] 
 		 14: f->text_area def_%cl_3_13 f[3.1,3.9,2.2,] %cl_3_12[3.13,] 	 ARGS:Symbol,%cl_3_12,
 		 15: 
 		 16: COPY def_%cl_3_14 
@@ -1761,8 +1761,8 @@ BB 6
 	instructions:
 		 0: 
 		 1: (Message) def_%cl_1_8 
-		 2: def_%cl_1_9 m[4.2,] 	 ARGS:Fixnum,
-		 3: COPY def_%cl_1_10 %cl_1_9[6.2,] 
+		 2: m->[] def_%cl_1_9 m[4.2,] 	 ARGS:Fixnum,
+		 3: HASH-short_id- def_%cl_1_10 %cl_1_9[6.2,] 
 		 4: %cl_1_8->where def_%cl_1_11 %cl_1_8[6.1,] %cl_1_10[6.3,] 	 ARGS:%cl_1_10,
 		 5: %cl_1_11->first def_%cl_1_12 %cl_1_11[6.4,] 	 ARGS:
 		 6: COPY def_message %cl_1_12[6.5,] 
@@ -1832,7 +1832,7 @@ BB 14
 		 0: 
 		 1: message->save! def_%cl_1_23 message[11.1,8.1,6.6,] 	 ARGS:
 		 2: 
-		 3: def_%cl_1_24 deleted[] 	 ARGS:Fixnum,
+		 3: deleted->+ def_%cl_1_24 deleted[] 	 ARGS:Fixnum,
 		 4: COPY def_deleted %cl_1_24[14.3,] 
 		 5: 
 BB 15
@@ -1895,7 +1895,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: COPY def_%v_11 
-		 1: def_%v_12 %v_6[2.12,] deleted[2.6,] %v_7[2.13,] %v_9[4.1,3.0,] %v_11[5.0,] 
+		 1: BUILDSTRING def_%v_12 %v_6[2.12,] deleted[2.6,] %v_7[2.13,] %v_9[4.1,3.0,] %v_11[5.0,] 
 		 2: ATTRASSIGN %v_5->[] %v_12[5.1,] 
 		 3: 
 		 4: GETFIELD %self->user def_%v_13 %self[2.0,] 
@@ -1979,20 +1979,20 @@ BB 2
 		 5: 
 		 6: (Message) def_%v_3 
 		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
-		 8: def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
 		 0: %self->params def_%v_6 %self[2.0,] 	 ARGS:
-		 1: def_%v_7 %v_6[3.0,] 	 ARGS:Symbol,
+		 1: %v_6->[] def_%v_7 %v_6[3.0,] 	 ARGS:Symbol,
 		 2: COPY def_%v_5 %v_7[3.1,] 
 BB 4
 	outgoing: 5 11 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_8 %v_5[3.2,2.8,] 
+		 0: HASH-short_id- def_%v_8 %v_5[3.2,2.8,] 
 		 1: %v_3->where def_%v_9 %v_3[2.6,] %v_8[4.0,] 	 ARGS:%v_8,
 		 2: %v_9->first def_%v_10 %v_9[4.1,] 	 ARGS:
 		 3: ATTRASSIGN %self->message %v_10[4.2,] 

@@ -426,7 +426,7 @@ class Story < ActiveRecord::Base
   end
 
   def recalculate_hotness!
-    update_column :hotness, calculated_hotness
+    self.hotness = calculated_hotness
   end
 
   def record_initial_upvote
@@ -529,7 +529,7 @@ class Story < ActiveRecord::Base
     comments = self.merged_comments.arrange_for_user(nil)
 
     # calculate count after removing deleted comments and threads
-    self.update_column :comments_count,
+    self.comments_count =
       (self.comments_count = comments.count{|c| !c.is_gone? })
 
     self.recalculate_hotness!

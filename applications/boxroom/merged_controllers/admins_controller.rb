@@ -4,7 +4,6 @@ class AdminsController < ApplicationController
 
   def new
     @user = User.new
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:create_admin) 
  content_for :title 
  t :no_administrator_yet 
@@ -20,7 +19,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.password_field :password_confirmation, { :class => 'text_input' } 
  f.submit t(:create_admin_account) 
  end 
-end
+
   end
 
   def create
@@ -31,7 +30,6 @@ end
     if @user.save
       redirect_to new_session_url, :notice => t(:admin_user_created_successfully)
     else
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:create_admin) 
  content_for :title 
  t :no_administrator_yet 
@@ -47,7 +45,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.password_field :password_confirmation, { :class => 'text_input' } 
  f.submit t(:create_admin_account) 
  end 
-end
+
     end
   end
 

@@ -15,7 +15,6 @@ class FilesController < ApplicationController
   # @target_folder is set in require_existing_target_folder
   def new
     @file = @target_folder.user_files.build
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:upload_file) 
  content_for :title 
  form_for [@target_folder, @file], :url => { :action => 'create' } do |f| 
@@ -27,7 +26,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  image_tag 'failed.png', :class => 'failed', :style => 'display:none;' 
  image_tag 'tick.png', :class => 'tick', :style => 'display:none;' 
  t(:exists_already) 
-end
+
   end
 
   # @target_folder is set in require_existing_target_folder
@@ -38,7 +37,6 @@ end
 
   # @file and @folder are set in require_existing_file
   def edit
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:rename_file) 
  content_for :title 
  form_for @file, :url => { :action => 'update' } do |f| 
@@ -48,7 +46,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit t(:save) 
  link_to t(:back), @folder 
  end 
-end
+
   end
 
   # @file and @folder are set in require_existing_file
@@ -56,7 +54,6 @@ end
     if @file.update_attributes(permitted_params.user_file)
       redirect_to edit_file_url(@file), :notice => t(:your_changes_were_saved)
     else
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:rename_file) 
  content_for :title 
  form_for @file, :url => { :action => 'update' } do |f| 
@@ -66,7 +63,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit t(:save) 
  link_to t(:back), @folder 
  end 
-end
+
     end
   end
 

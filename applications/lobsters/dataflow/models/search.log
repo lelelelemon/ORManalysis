@@ -58,7 +58,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+		 0: %v_3->const_missing def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -66,7 +66,7 @@ BB 4
 		 0: %v_4->instance def_%v_5 %v_4[3.0,2.7,] 	 ARGS:
 		 1: %v_5->settings def_%v_6 %v_5[4.0,] 	 ARGS:
 		 2: COPY def_%v_7 
-		 3: def_%v_8 %v_6[4.1,] %v_7[4.2,] 	 ARGS:%v_7,
+		 3: %v_6->[] def_%v_8 %v_6[4.1,] %v_7[4.2,] 	 ARGS:%v_7,
 		 4: BRANCH %v_8[4.3,] 
 BB 5
 	outgoing: 7 
@@ -145,7 +145,7 @@ BB 3
 		 3: %self->send def_%cl_1_5 %self[2.0,] p[2.2,] 	 ARGS:p,
 		 4: %cl_1_5->to_s def_%cl_1_6 %cl_1_5[3.3,] 	 ARGS:
 		 5: %cl_1_4->escape def_%cl_1_7 %cl_1_4[3.2,] %cl_1_6[3.4,] 	 ARGS:%cl_1_6,
-		 6: def_%cl_1_8 p[2.2,] %cl_1_3[3.1,] %cl_1_7[3.5,] 
+		 6: BUILDSTRING def_%cl_1_8 p[2.2,] %cl_1_3[3.1,] %cl_1_7[3.5,] 
 		 7: RETURN %cl_1_8[3.6,] %self[3.3,2.0,] 
 BB 4
 	outgoing: 6 
@@ -200,7 +200,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->max_matches def_%v_6 %self[2.0,] 	 ARGS:
-		 1: def_%v_7 total[2.8,] %v_6[3.0,] 	 ARGS:%v_6,
+		 1: total->> def_%v_7 total[2.8,] %v_6[3.0,] 	 ARGS:%v_6,
 		 2: COPY def_%v_5 %v_7[3.1,] 
 BB 4
 	outgoing: 5 6 
@@ -225,11 +225,11 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_9 total[5.2,2.8,] 	 ARGS:Fixnum,
+		 1: total->- def_%v_9 total[5.2,2.8,] 	 ARGS:Fixnum,
 		 2: %self->per_page def_%v_10 %self[2.0,] 	 ARGS:
 		 3: %v_10->to_i def_%v_11 %v_10[7.2,] 	 ARGS:
-		 4: def_%v_12 %v_9[7.1,] %v_11[7.3,] 	 ARGS:%v_11,
-		 5: def_%v_13 %v_12[7.4,] 	 ARGS:Fixnum,
+		 4: %v_9->/ def_%v_12 %v_9[7.1,] %v_11[7.3,] 	 ARGS:%v_11,
+		 5: %v_12->+ def_%v_13 %v_12[7.4,] 	 ARGS:Fixnum,
 		 6: RETURN %v_13[7.5,] %self[7.2,2.0,] 
 BB 8
 	outgoing: 
@@ -258,7 +258,7 @@ BB 2
 		 10: %v_5->min def_%v_6 %v_5[2.9,] 	 ARGS:
 		 11: %self->per_page def_%v_7 %self[2.0,2.7,2.8,] 	 ARGS:
 		 12: COPY def_%v_8 
-		 13: COPY def_%v_9 %v_6[2.10,] %v_7[2.11,] %v_8[2.12,] 
+		 13: HASH-ranker-page-per_page-include- def_%v_9 %v_6[2.10,] %v_7[2.11,] %v_8[2.12,] 
 		 14: COPY def_opts %v_9[2.13,] 
 		 15: 
 		 16: %self->order def_%v_10 %self[2.0,2.7,2.8,2.11,] 	 ARGS:
@@ -340,7 +340,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_5 m[3.3,] 	 ARGS:Fixnum,
+		 1: m->[] def_%cl_1_5 m[3.3,] 	 ARGS:Fixnum,
 		 2: COPY def_domain %cl_1_5[4.1,] 
 		 3: 
 BB 5
@@ -389,16 +389,16 @@ BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: def_%v_31 %v_30[9.7,] 	 ARGS:Symbol,
+		 0: %v_30->const_missing def_%v_31 %v_30[9.7,] 	 ARGS:Symbol,
 BB 11
 	outgoing: 12 13 
 	datadep: 
 	instructions:
 		 0: %v_31->connection def_%v_32 %v_31[10.0,9.8,] 	 ARGS:
 		 1: %v_32->quote_string def_%v_33 %v_32[11.0,] domain[8.1,] 	 ARGS:domain,
-		 2: def_%v_34 %v_29[9.6,] %v_33[11.1,] 	 ARGS:%v_33,
+		 2: %v_29->+ def_%v_34 %v_29[9.6,] %v_33[11.1,] 	 ARGS:%v_33,
 		 3: COPY def_%v_35 
-		 4: def_%v_36 %v_34[11.2,] %v_35[11.3,] 	 ARGS:%v_35,
+		 4: %v_34->+ def_%v_36 %v_34[11.2,] %v_35[11.3,] 	 ARGS:%v_35,
 		 5: %v_28->where def_%v_37 %v_28[9.5,] %v_36[11.4,] 	 ARGS:%v_36,
 		 6: %v_37->collect def_%v_38 %v_37[11.5,] 	 ARGS:
 		 7: COPY def_story_ids %v_38[11.6,] 
@@ -410,7 +410,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_40 story_ids[11.7,] 
+		 1: HASH-story_id- def_%v_40 story_ids[11.7,] 
 		 2: ATTRASSIGN opts->[] %v_40[12.1,] 
 		 3: 
 BB 13
@@ -550,7 +550,7 @@ BB 30
 		 4: %v_72->logger def_%v_73 %v_72[30.3,] 	 ARGS:
 		 5: COPY def_%v_74 
 		 6: e->inspect def_%v_75 e[30.1,] 	 ARGS:
-		 7: def_%v_76 %v_74[30.5,] %v_75[30.6,] 
+		 7: BUILDSTRING def_%v_76 %v_74[30.5,] %v_75[30.6,] 
 		 8: %v_73->info def_%v_77 %v_73[30.4,] %v_76[30.7,] 	 ARGS:%v_76,
 		 9: COPY def_%v_64 %v_77[30.8,] 
 		 10: %v_62[24.12,] 
@@ -573,7 +573,7 @@ BB 33
 		 0: 
 		 1: %self->page def_%v_80 %self[26.4,26.8,24.8,24.10,9.2,2.0,] 	 ARGS:
 		 2: %self->page_count def_%v_81 %self[33.1,26.4,26.8,24.8,24.10,9.2,2.0,] 	 ARGS:
-		 3: def_%v_82 %v_80[33.1,] %v_81[33.2,] 	 ARGS:%v_81,
+		 3: %v_80->> def_%v_82 %v_80[33.1,] %v_81[33.2,] 	 ARGS:%v_81,
 		 4: BRANCH %v_82[33.3,] 
 BB 34
 	outgoing: 36 
@@ -593,7 +593,7 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_84 opts[24.0,12.2,3.2,5.2,2.14,] 	 ARGS:Symbol,
+		 1: opts->[] def_%v_84 opts[24.0,12.2,3.2,5.2,2.14,] 	 ARGS:Symbol,
 		 2: (Comment) def_%v_85 
 		 3: %v_84->include? def_%v_86 %v_84[36.1,] %v_85[36.2,] 	 ARGS:%v_85,
 		 4: BRANCH %v_86[36.3,] 
@@ -718,7 +718,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: r->id def_%cl_4_6 r[2.2,] 	 ARGS:
-		 1: def_%cl_4_7 votes[] %cl_4_6[4.0,] 	 ARGS:%cl_4_6,
+		 1: votes->[] def_%cl_4_7 votes[] %cl_4_6[4.0,] 	 ARGS:%cl_4_6,
 		 2: COPY def_%cl_4_5 %cl_4_7[4.1,] 
 BB 5
 	outgoing: 6 7 
@@ -731,7 +731,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: r->id def_%cl_4_8 r[2.2,] 	 ARGS:
-		 2: def_%cl_4_9 votes[] %cl_4_8[6.1,] 	 ARGS:%cl_4_8,
+		 2: votes->[] def_%cl_4_9 votes[] %cl_4_8[6.1,] 	 ARGS:%cl_4_8,
 		 3: ATTRASSIGN r->current_vote %cl_4_9[6.2,] 
 		 4: 
 BB 7
@@ -767,7 +767,7 @@ BB 41
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_95 opts[24.0,12.2,3.2,5.2,2.14,] 	 ARGS:Symbol,
+		 1: opts->[] def_%v_95 opts[24.0,12.2,3.2,5.2,2.14,] 	 ARGS:Symbol,
 		 2: (Story) def_%v_96 
 		 3: %v_95->include? def_%v_97 %v_95[41.1,] %v_96[41.2,] 	 ARGS:%v_96,
 		 4: BRANCH %v_97[41.3,] 
@@ -892,7 +892,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: r->id def_%cl_7_6 r[2.2,] 	 ARGS:
-		 1: def_%cl_7_7 votes[] %cl_7_6[4.0,] 	 ARGS:%cl_7_6,
+		 1: votes->[] def_%cl_7_7 votes[] %cl_7_6[4.0,] 	 ARGS:%cl_7_6,
 		 2: COPY def_%cl_7_5 %cl_7_7[4.1,] 
 BB 5
 	outgoing: 6 7 
@@ -905,7 +905,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: r->id def_%cl_7_8 r[2.2,] 	 ARGS:
-		 2: def_%cl_7_9 votes[] %cl_7_8[6.1,] 	 ARGS:%cl_7_8,
+		 2: votes->[] def_%cl_7_9 votes[] %cl_7_8[6.1,] 	 ARGS:%cl_7_8,
 		 3: ATTRASSIGN r->vote %cl_7_9[6.2,] 
 		 4: 
 BB 7

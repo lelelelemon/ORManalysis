@@ -14,7 +14,6 @@ class FoldersController < ApplicationController
 
   # Note: @folder is set in require_existing_folder
   def show
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, @folder.name 
  content_for :title 
  unless @folder.is_root? 
@@ -164,13 +163,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(:back), '#', :class => 'back_link' 
  end 
  
-end
+
   end
 
   # Note: @target_folder is set in require_existing_target_folder
   def new
     @folder = @target_folder.children.build
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:new_folder) 
  content_for :title 
  form_for [@target_folder, @folder] do |f| 
@@ -181,7 +179,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(:back), @folder.parent 
  
  end 
-end
+
   end
 
   # Note: @target_folder is set in require_existing_target_folder
@@ -191,7 +189,6 @@ end
     if @folder.save
       redirect_to @target_folder
     else
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:new_folder) 
  content_for :title 
  form_for [@target_folder, @folder] do |f| 
@@ -202,13 +199,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(:back), @folder.parent 
  
  end 
-end
+
     end
   end
 
   # Note: @folder is set in require_existing_folder
   def edit
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:rename_folder) 
  content_for :title 
  form_for @folder do |f| 
@@ -219,7 +215,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(:back), @folder.parent 
  
  end 
-end
+
   end
 
   # Note: @folder is set in require_existing_folder
@@ -227,7 +223,6 @@ end
     if @folder.update_attributes(permitted_params.folder)
       redirect_to edit_folder_url(@folder), :notice => t(:your_changes_were_saved)
     else
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
        content_for :title, t(:rename_folder) 
  content_for :title 
  form_for @folder do |f| 
@@ -238,7 +233,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(:back), @folder.parent 
  
  end 
-end
+
     end
   end
 

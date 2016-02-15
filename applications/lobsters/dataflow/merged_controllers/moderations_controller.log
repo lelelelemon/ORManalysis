@@ -17,14 +17,14 @@ BB 2
 		 7: ATTRASSIGN %self->title %v_3[2.6,] 
 		 8: 
 		 9: %self->params def_%v_4 %self[2.0,2.7,] 	 ARGS:
-		 10: def_%v_5 %v_4[2.9,] 	 ARGS:Symbol,
+		 10: %v_4->[] def_%v_5 %v_4[2.9,] 	 ARGS:Symbol,
 		 11: BRANCH %v_5[2.10,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: %self->params def_%v_6 %self[2.0,2.7,] 	 ARGS:
-		 1: def_%v_7 %v_6[3.0,] 	 ARGS:Symbol,
+		 1: %v_6->[] def_%v_7 %v_6[3.0,] 	 ARGS:Symbol,
 		 2: %v_7->to_i def_%v_8 %v_7[3.1,] 	 ARGS:
 		 3: 
 BB 4
@@ -40,12 +40,12 @@ BB 5
 		 1: 
 		 2: (Moderation) def_%v_9 
 		 3: %v_9->count def_%v_10 %v_9[5.2,] 	 ARGS:
-		 4: def_%v_11 %v_10[5.3,] 	 ARGS:Fixnum,
+		 4: %v_10->/ def_%v_11 %v_10[5.3,] 	 ARGS:Fixnum,
 		 5: %v_11->ceil def_%v_12 %v_11[5.4,] 	 ARGS:
 		 6: ATTRASSIGN %self->pages %v_12[5.5,] 
 		 7: 
 		 8: GETFIELD %self->page def_%v_13 %self[5.0,2.0,] 
-		 9: def_%v_14 %v_13[5.8,] 	 ARGS:Fixnum,
+		 9: %v_13->< def_%v_14 %v_13[5.8,] 	 ARGS:Fixnum,
 		 10: BRANCH %v_14[5.9,] 
 BB 6
 	outgoing: 11 
@@ -62,7 +62,7 @@ BB 7
 		 0: 
 		 1: GETFIELD %self->page def_%v_16 %self[5.0,2.0,] 
 		 2: GETFIELD %self->pages def_%v_17 %self[5.6,2.0,] 
-		 3: def_%v_18 %v_16[7.1,] %v_17[7.2,] 	 ARGS:%v_17,
+		 3: %v_16->> def_%v_18 %v_16[7.1,] %v_17[7.2,] 	 ARGS:%v_17,
 		 4: BRANCH %v_18[7.3,] 
 BB 8
 	outgoing: 10 
@@ -92,8 +92,8 @@ BB 11
 		 3: %v_20->order def_%v_22 %v_20[11.1,] %v_21[11.2,] 	 ARGS:%v_21,
 		 4: %v_22->limit def_%v_23 %v_22[11.3,] 	 ARGS:Fixnum,
 		 5: GETFIELD %self->page def_%v_24 %self[6.1,8.2,5.0,2.0,] 
-		 6: def_%v_25 %v_24[11.5,] 	 ARGS:Fixnum,
-		 7: def_%v_26 %v_25[11.6,] 	 ARGS:Fixnum,
+		 6: %v_24->- def_%v_25 %v_24[11.5,] 	 ARGS:Fixnum,
+		 7: %v_25->* def_%v_26 %v_25[11.6,] 	 ARGS:Fixnum,
 		 8: %v_23->offset def_%v_27 %v_23[11.4,] %v_26[11.7,] 	 ARGS:%v_26,
 		 9: ATTRASSIGN %self->moderations %v_27[11.8,] 
 		 10: 
@@ -332,7 +332,7 @@ BB 33
 CLOSURE END
 		 15: 
 		 16: GETFIELD %self->page def_%v_30 %self[6.1,8.2,5.0,2.0,] 
-		 17: def_%v_31 %v_30[11.16,] 	 ARGS:Fixnum,
+		 17: %v_30->> def_%v_31 %v_30[11.16,] 	 ARGS:Fixnum,
 		 18: BRANCH %v_31[11.17,] 
 BB 12
 	outgoing: 14 
@@ -340,10 +340,10 @@ BB 12
 	instructions:
 		 0: 
 		 1: GETFIELD %self->page def_%v_32 %self[6.1,8.2,5.0,2.0,] 
-		 2: def_%v_33 %v_32[12.1,] 	 ARGS:Fixnum,
+		 2: %v_32->- def_%v_33 %v_32[12.1,] 	 ARGS:Fixnum,
 		 3: 
 		 4: GETFIELD %self->page def_%v_34 %self[6.1,8.2,5.0,2.0,] 
-		 5: def_%v_35 %v_34[12.4,] 	 ARGS:Fixnum,
+		 5: %v_34->- def_%v_35 %v_34[12.4,] 	 ARGS:Fixnum,
 		 6: 
 BB 13
 	outgoing: 14 
@@ -356,7 +356,7 @@ BB 14
 	instructions:
 		 0: 
 		 1: GETFIELD %self->pages def_%v_36 %self[5.6,2.0,] 
-		 2: def_%v_37 %v_36[14.1,] 	 ARGS:Fixnum,
+		 2: %v_36->> def_%v_37 %v_36[14.1,] 	 ARGS:Fixnum,
 		 3: BRANCH %v_37[14.2,] 
 BB 15
 	outgoing: 16 
@@ -364,7 +364,7 @@ BB 15
 	instructions:
 		 0: GETFIELD %self->page def_%v_38 %self[6.1,8.2,5.0,2.0,] 
 		 1: GETFIELD %self->pages def_%v_39 %self[5.6,2.0,] 
-		 2: def_%v_40 %v_38[15.0,] %v_39[15.1,] 	 ARGS:%v_39,
+		 2: %v_38->< def_%v_40 %v_38[15.0,] %v_39[15.1,] 	 ARGS:%v_39,
 		 3: COPY def_%v_37 %v_40[15.2,] 
 BB 16
 	outgoing: 17 21 
@@ -377,7 +377,7 @@ BB 17
 	instructions:
 		 0: 
 		 1: GETFIELD %self->page def_%v_41 %self[6.1,8.2,5.0,2.0,] 
-		 2: def_%v_42 %v_41[17.1,] 	 ARGS:Fixnum,
+		 2: %v_41->> def_%v_42 %v_41[17.1,] 	 ARGS:Fixnum,
 		 3: BRANCH %v_42[17.2,] 
 BB 18
 	outgoing: 20 
@@ -396,10 +396,10 @@ BB 20
 	instructions:
 		 0: 
 		 1: GETFIELD %self->page def_%v_44 %self[6.1,8.2,5.0,2.0,] 
-		 2: def_%v_45 %v_44[20.1,] 	 ARGS:Fixnum,
+		 2: %v_44->+ def_%v_45 %v_44[20.1,] 	 ARGS:Fixnum,
 		 3: 
 		 4: GETFIELD %self->page def_%v_46 %self[6.1,8.2,5.0,2.0,] 
-		 5: def_%v_47 %v_46[20.4,] 	 ARGS:Fixnum,
+		 5: %v_46->+ def_%v_47 %v_46[20.4,] 	 ARGS:Fixnum,
 		 6: RETURN %v_47[20.5,] %self[11.9,6.1,8.2,5.0,5.6,2.0,2.7,] 
 BB 21
 	outgoing: 23 

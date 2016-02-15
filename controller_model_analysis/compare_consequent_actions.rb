@@ -33,11 +33,11 @@ def compare_consequent_actions(prev_list, next_list)
 			puts "Table #{k} operation overlap:"
 			puts "\tPrevious action queries:"
 			v.each do |n|
-				puts "\t\t#{n.getIndex}:#{n.getInstr.toString} (#{n.getInstr.getCallHandler.complete_string})"
+				puts "\t\t#{n.getIndex}: (#{n.getInstr.getCallHandler.complete_string.gsub("\n"," ")})"
 			end
 			puts "\tNext action queries:"
 			@next_tables[k].each do |n|
-				puts "\t\t#{n.getIndex}:#{n.getInstr.toString} (#{n.getInstr.getCallHandler.complete_string})"
+				puts "\t\t#{n.getIndex}: (#{n.getInstr.getCallHandler.complete_string.gsub("\n"," ")})"
 			end
 		end
 	end

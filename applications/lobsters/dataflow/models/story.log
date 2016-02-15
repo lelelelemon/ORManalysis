@@ -94,7 +94,7 @@ BB 3
 		 4: urls2->push def_%cl_2_6 urls2[] %cl_2_5[3.3,] 	 ARGS:%cl_2_5,
 		 5: 
 		 6: COPY def_%cl_2_7 
-		 7: def_%cl_2_8 u[3.3,2.2,] %cl_2_7[3.6,] 	 ARGS:%cl_2_7,
+		 7: u->+ def_%cl_2_8 u[3.3,2.2,] %cl_2_7[3.6,] 	 ARGS:%cl_2_7,
 		 8: urls2->push def_%cl_2_9 urls2[3.4,] %cl_2_8[3.7,] 	 ARGS:%cl_2_8,
 		 9: RETURN %cl_2_9[3.8,] %self[2.0,] 
 BB 4
@@ -134,7 +134,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY def_%cl_3_3 
-		 2: def_%cl_3_4 u[2.2,] %self[2.0,] 	 ARGS:%cl_3_3,u,
+		 2: u->gsub def_%cl_3_4 u[2.2,] %self[2.0,] 	 ARGS:%cl_3_3,u,
 CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
@@ -160,7 +160,7 @@ CLOSURE END
 		 3: urls2->push def_%cl_3_5 urls2[] %cl_3_4[3.2,] 	 ARGS:%cl_3_4,
 		 4: 
 		 5: COPY def_%cl_3_6 
-		 6: def_%cl_3_7 u[2.2,] %self[2.0,] 	 ARGS:%cl_3_6,u,
+		 6: u->gsub def_%cl_3_7 u[3.2,2.2,] %self[2.0,] 	 ARGS:%cl_3_6,u,
 CLOSURE BEGIN: 
 BB 1
 	outgoing: 6 2 
@@ -182,7 +182,7 @@ BB 3
 		 0: 
 		 1: COPY def_%cl_5_3 
 		 2: COPY def_%cl_5_4 
-		 3: def_%cl_5_5 %cl_5_3[3.1,] %cl_5_4[3.2,] 
+		 3: BUILDSTRING def_%cl_5_5 %cl_5_3[3.1,] %cl_5_4[3.2,] 
 		 4: RETURN %cl_5_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -215,7 +215,7 @@ CLOSURE END
 		 28: COPY def_urls %v_12[2.27,] 
 		 29: 
 		 30: (Story) def_%v_13 
-		 31: COPY def_%v_14 %v_12[2.27,] 
+		 31: HASH-url-is_expired- def_%v_14 %v_12[2.27,] 
 		 32: %v_13->where def_%v_15 %v_13[2.30,] %v_14[2.31,] 	 ARGS:%v_14,
 		 33: COPY def_%v_16 
 		 34: %v_15->order def_%v_17 %v_15[2.32,] %v_16[2.33,] 	 ARGS:%v_16,
@@ -318,13 +318,13 @@ BB 2
 		 6: COPY def_%v_3 
 		 7: %self->votes_cast_type def_%v_4 %self[2.0,] 	 ARGS:
 		 8: COPY def_%v_5 
-		 9: def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
+		 9: BUILDSTRING def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: COPY def_%v_7 
 		 11: 
 		 12: %self->votes_cast_type def_%v_8 %self[2.0,2.7,] 	 ARGS:
 		 13: COPY def_%v_9 
-		 14: def_%v_10 %v_7[2.10,] %v_8[2.12,] %v_9[2.13,] 
-		 15: def_%v_11 %v_6[2.9,] %v_10[2.14,] 	 ARGS:%v_10,
+		 14: BUILDSTRING def_%v_10 %v_7[2.10,] %v_8[2.12,] %v_9[2.13,] 
+		 15: %v_6-><< def_%v_11 %v_6[2.9,] %v_10[2.14,] 	 ARGS:%v_10,
 		 16: RETURN %v_11[2.15,] %self[2.0,2.7,2.12,] 
 BB 3
 	outgoing: 
@@ -389,16 +389,16 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_3 
+		 0: HASH- def_%v_3 
 		 1: COPY def_options %v_3[4.0,] 
 BB 5
 	outgoing: 6 7 11 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_4 
-		 2: COPY def_%v_5 
-		 3: COPY def_%v_6 
+		 1: HASH-comment_count- def_%v_4 
+		 2: HASH-description- def_%v_5 
+		 3: HASH-submitter_user- def_%v_6 
 		 4: %self->tags def_%v_7 %self[2.0,] 	 ARGS:
 		 5: %v_7->map def_%v_8 %v_7[5.4,] %self[5.4,2.0,] 	 ARGS:%v_7,
 CLOSURE BEGIN: t[] 
@@ -435,7 +435,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 6: %v_8->sort def_%v_9 %v_8[5.5,] 	 ARGS:
-		 7: COPY def_%v_10 %v_9[5.6,] 
+		 7: HASH-tags- def_%v_10 %v_9[5.6,] 
 		 8: COPY def_%v_11 %v_4[5.1,] %v_5[5.2,] %v_6[5.3,] %v_10[5.7,] 
 		 9: COPY def_h %v_11[5.8,] 
 		 10: 
@@ -445,7 +445,7 @@ BB 6
 	outgoing: 7 11 
 	datadep: 
 	instructions:
-		 0: def_%v_13 options[4.1,2.5,] 	 ARGS:Symbol,
+		 0: options->[] def_%v_13 options[4.1,2.5,] 	 ARGS:Symbol,
 		 1: COPY def_%v_12 %v_13[6.0,] 
 BB 7
 	outgoing: 8 9 
@@ -457,8 +457,8 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_14 options[4.1,2.5,] 	 ARGS:Symbol,
-		 2: COPY def_%v_15 %v_14[8.1,] 
+		 1: options->[] def_%v_14 options[4.1,2.5,] 	 ARGS:Symbol,
+		 2: HASH-comments- def_%v_15 %v_14[8.1,] 
 		 3: h->push def_%v_16 h[5.9,] %v_15[8.2,] 	 ARGS:%v_15,
 		 4: 
 BB 9
@@ -471,7 +471,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_17 
+		 1: HASH- def_%v_17 
 		 2: COPY def_js %v_17[10.1,] 
 		 3: 
 		 4: h->each def_%v_18 h[5.9,] %self[2.0,] 	 ARGS:h,
@@ -717,7 +717,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: t->hotness_mod def_%cl_2_3 t[2.2,] 	 ARGS:
-		 2: def_%cl_2_4 base[] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
+		 2: base->+ def_%cl_2_4 base[] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
 		 3: COPY def_base %cl_2_4[3.2,] 
 		 4: RETURN %cl_2_4[3.2,] %self[2.0,] 
 BB 4
@@ -759,9 +759,9 @@ BB 3
 	instructions:
 		 0: 
 		 1: c->upvotes def_%cl_3_3 c[2.2,] 	 ARGS:
-		 2: def_%cl_3_4 %cl_3_3[3.1,] 	 ARGS:Fixnum,
+		 2: %cl_3_3->+ def_%cl_3_4 %cl_3_3[3.1,] 	 ARGS:Fixnum,
 		 3: c->downvotes def_%cl_3_5 c[3.1,2.2,] 	 ARGS:
-		 4: def_%cl_3_6 %cl_3_4[3.2,] %cl_3_5[3.3,] 	 ARGS:%cl_3_5,
+		 4: %cl_3_4->- def_%cl_3_6 %cl_3_4[3.2,] %cl_3_5[3.3,] 	 ARGS:%cl_3_5,
 		 5: RETURN %cl_3_6[3.4,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -777,21 +777,21 @@ BB 6
 CLOSURE END
 		 18: %v_11->inject def_%v_12 %v_11[2.17,] 	 ARGS:
 		 19: %v_12->to_f def_%v_13 %v_12[2.18,] 	 ARGS:
-		 20: def_%v_14 %v_13[2.19,] 	 ARGS:Float,
+		 20: %v_13->* def_%v_14 %v_13[2.19,] 	 ARGS:Float,
 		 21: COPY def_cpoints %v_14[2.20,] 
 		 22: 
 		 23: (Math) def_%v_15 
 		 24: %self->score def_%v_16 %self[2.0,2.8,2.12,2.14,] 	 ARGS:
-		 25: def_%v_17 %v_16[2.24,] 	 ARGS:Fixnum,
+		 25: %v_16->+ def_%v_17 %v_16[2.24,] 	 ARGS:Fixnum,
 		 26: %v_17->abs def_%v_18 %v_17[2.25,] 	 ARGS:
-		 27: def_%v_19 %v_18[2.26,] cpoints[2.21,] 	 ARGS:cpoints,
+		 27: %v_18->+ def_%v_19 %v_18[2.26,] cpoints[2.21,] 	 ARGS:cpoints,
 		 28: COPY def_%v_20 %v_19[2.27,] 
 		 29: %v_20->max def_%v_21 %v_20[2.28,] 	 ARGS:
 		 30: %v_15->log def_%v_22 %v_15[2.23,] %v_21[2.29,] 	 ARGS:%v_21,Fixnum,
 		 31: COPY def_order %v_22[2.30,] 
 		 32: 
 		 33: %self->score def_%v_23 %self[2.0,2.8,2.12,2.14,2.24,] 	 ARGS:
-		 34: def_%v_24 %v_23[2.33,] 	 ARGS:Fixnum,
+		 34: %v_23->> def_%v_24 %v_23[2.33,] 	 ARGS:Fixnum,
 		 35: BRANCH %v_24[2.34,] 
 BB 3
 	outgoing: 8 
@@ -807,7 +807,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->score def_%v_26 %self[2.0,] 	 ARGS:
-		 2: def_%v_27 %v_26[4.1,] 	 ARGS:Fixnum,
+		 2: %v_26->< def_%v_27 %v_26[4.1,] 	 ARGS:Fixnum,
 		 3: BRANCH %v_27[4.2,] 
 BB 5
 	outgoing: 7 
@@ -835,11 +835,11 @@ BB 8
 	instructions:
 		 0: 
 		 1: def_%v_29 	 ARGS:Fixnum,
-		 2: def_%v_30 %v_29[8.1,] 	 ARGS:Fixnum,
+		 2: %v_29->* def_%v_30 %v_29[8.1,] 	 ARGS:Fixnum,
 		 3: COPY def_window %v_30[8.2,] 
 		 4: 
-		 5: def_%v_31 order[2.31,] sign[3.1,6.1,5.1,] 	 ARGS:sign,
-		 6: def_%v_32 %v_31[8.5,] base[2.6,] 	 ARGS:base,
+		 5: order->* def_%v_31 order[2.31,] sign[3.1,6.1,5.1,] 	 ARGS:sign,
+		 6: %v_31->+ def_%v_32 %v_31[8.5,] base[2.6,] 	 ARGS:base,
 		 7: 
 		 8: %self->created_at def_%v_33 %self[2.0,] 	 ARGS:
 		 9: BRANCH %v_33[8.8,] 
@@ -855,10 +855,10 @@ BB 10
 	datadep: 
 	instructions:
 		 0: %v_33->to_f def_%v_36 %v_33[9.2,8.8,] 	 ARGS:
-		 1: def_%v_37 %v_36[10.0,] window[8.3,] 	 ARGS:window,
-		 2: def_%v_38 %v_32[8.6,] %v_37[10.1,] 	 ARGS:%v_37,
+		 1: %v_36->/ def_%v_37 %v_36[10.0,] window[8.3,] 	 ARGS:window,
+		 2: %v_32->+ def_%v_38 %v_32[8.6,] %v_37[10.1,] 	 ARGS:%v_37,
 		 3: %v_38->round def_%v_39 %v_38[10.2,] 	 ARGS:Fixnum,
-		 4: def_%v_40 %v_39[10.3,] 	 ARGS:
+		 4: %v_39->-@ def_%v_40 %v_39[10.3,] 	 ARGS:
 		 5: RETURN %v_40[10.4,] %self[2.0,] 
 BB 12
 	outgoing: 
@@ -998,13 +998,13 @@ BB 4
 		 0: 
 		 1: u->username def_%cl_1_6 u[] 	 ARGS:
 		 2: COPY def_%cl_1_7 
-		 3: def_%cl_1_8 %cl_1_6[4.1,] %cl_1_7[4.2,] 
+		 3: BUILDSTRING def_%cl_1_8 %cl_1_6[4.1,] %cl_1_7[4.2,] 
 		 4: COPY def_%cl_1_9 
 		 5: 
 		 6: t->tag def_%cl_1_10 t[2.2,] 	 ARGS:
 		 7: %cl_1_10->tag def_%cl_1_11 %cl_1_10[4.6,] 	 ARGS:
-		 8: def_%cl_1_12 %cl_1_9[4.4,] %cl_1_11[4.7,] 
-		 9: def_%cl_1_13 %cl_1_8[4.3,] %cl_1_12[4.8,] 	 ARGS:%cl_1_12,
+		 8: BUILDSTRING def_%cl_1_12 %cl_1_9[4.4,] %cl_1_11[4.7,] 
+		 9: %cl_1_8-><< def_%cl_1_13 %cl_1_8[4.3,] %cl_1_12[4.8,] 	 ARGS:%cl_1_12,
 		 10: %self->raise def_%cl_1_14 %self[2.0,] %cl_1_13[4.9,] 	 ARGS:%cl_1_13,
 		 11: 
 BB 5
@@ -1048,7 +1048,7 @@ BB 10
 		 2: COPY def_%cl_1_22 
 		 3: t->tag def_%cl_1_23 t[2.2,] 	 ARGS:
 		 4: %cl_1_23->tag def_%cl_1_24 %cl_1_23[10.3,] 	 ARGS:
-		 5: def_%cl_1_25 %cl_1_21[10.1,] %cl_1_22[10.2,] %cl_1_24[10.4,] 
+		 5: BUILDSTRING def_%cl_1_25 %cl_1_21[10.1,] %cl_1_22[10.2,] %cl_1_24[10.4,] 
 		 6: %self->raise def_%cl_1_26 %self[2.0,] %cl_1_25[10.5,] 	 ARGS:%cl_1_25,
 		 7: 
 BB 11
@@ -1137,9 +1137,9 @@ BB 5
 		 1: %self->errors def_%v_11 %self[2.0,] 	 ARGS:
 		 2: COPY def_%v_12 
 		 3: COPY def_%v_13 
-		 4: def_%v_14 %v_12[5.2,] %v_13[5.3,] 	 ARGS:%v_13,
+		 4: %v_12-><< def_%v_14 %v_12[5.2,] %v_13[5.3,] 	 ARGS:%v_13,
 		 5: COPY def_%v_15 
-		 6: def_%v_16 %v_14[5.4,] %v_15[5.5,] 	 ARGS:%v_15,
+		 6: %v_14-><< def_%v_16 %v_14[5.4,] %v_15[5.5,] 	 ARGS:%v_15,
 		 7: %v_11->add def_%v_17 %v_11[5.1,] %v_16[5.6,] 	 ARGS:Symbol,%v_16,
 		 8: RETURN %v_17[5.7,] %self[5.1,2.0,] 
 BB 6
@@ -1170,7 +1170,7 @@ BB 2
 		 6: %self->short_id_path def_%v_3 %self[2.0,] 	 ARGS:
 		 7: COPY def_%v_4 
 		 8: %self->title_as_url def_%v_5 %self[2.0,2.6,] 	 ARGS:
-		 9: def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
+		 9: BUILDSTRING def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,2.8,] 
 BB 3
 	outgoing: 
@@ -1195,7 +1195,7 @@ BB 2
 		 6: %self->short_id_url def_%v_3 %self[2.0,] 	 ARGS:
 		 7: COPY def_%v_4 
 		 8: %self->title_as_url def_%v_5 %self[2.0,2.6,] 	 ARGS:
-		 9: def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
+		 9: BUILDSTRING def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,2.8,] 
 BB 3
 	outgoing: 
@@ -1282,7 +1282,7 @@ BB 7
 	instructions:
 		 0: COPY def_s %v_8[6.2,5.4,] 
 		 1: 
-		 2: def_%v_10 chars[3.0,2.5,] 	 ARGS:Fixnum,
+		 2: chars->> def_%v_10 chars[3.0,2.5,] 	 ARGS:Fixnum,
 		 3: BRANCH %v_10[7.2,] 
 BB 8
 	outgoing: 10 
@@ -1290,7 +1290,7 @@ BB 8
 	instructions:
 		 0: 
 		 1: s->to_s def_%v_11 s[7.0,] 	 ARGS:
-		 2: def_%v_12 %v_11[8.1,] chars[3.0,2.5,] 	 ARGS:Fixnum,chars,
+		 2: %v_11->[] def_%v_12 %v_11[8.1,] chars[3.0,2.5,] 	 ARGS:Fixnum,chars,
 		 3: COPY def_%v_13 
 		 4: COPY def_%v_14 
 		 5: %v_12->gsub def_%v_15 %v_12[8.2,] %v_14[8.4,] 	 ARGS:%v_13,%v_14,
@@ -1383,7 +1383,7 @@ BB 2
 		 6: COPY def_%v_3 
 		 7: %self->domain def_%v_4 %self[2.0,] 	 ARGS:
 		 8: COPY def_%v_5 
-		 9: def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
+		 9: BUILDSTRING def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: RETURN %v_6[2.9,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -1445,7 +1445,7 @@ BB 2
 		 5: 
 		 6: (Markdowner) def_%v_3 
 		 7: %self->description def_%v_4 %self[2.0,] 	 ARGS:
-		 8: COPY def_%v_5 
+		 8: HASH-allow_images- def_%v_5 
 		 9: %v_3->to_html def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_4,%v_5,
 		 10: RETURN %v_6[2.9,] %self[2.0,2.7,] 
 BB 3
@@ -1472,12 +1472,12 @@ BB 2
 		 7: 
 		 8: %self->upvotes def_%v_3 %self[2.0,] 	 ARGS:
 		 9: upvote->to_i def_%v_5 upvote[2.5,] 	 ARGS:
-		 10: def_%v_6 %v_3[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
+		 10: %v_3->+ def_%v_6 %v_3[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: %self->upvotes= def_%v_4 %v_6[2.10,] 	 ARGS:%v_6,
 		 12: 
 		 13: %self->downvotes def_%v_7 %self[2.0,2.8,2.11,] 	 ARGS:
 		 14: downvote->to_i def_%v_9 downvote[2.6,] 	 ARGS:
-		 15: def_%v_10 %v_7[2.13,] %v_9[2.14,] 	 ARGS:%v_9,
+		 15: %v_7->+ def_%v_10 %v_7[2.13,] %v_9[2.14,] 	 ARGS:%v_9,
 		 16: %self->downvotes= def_%v_8 %v_10[2.15,] 	 ARGS:%v_10,
 		 17: 
 		 18: (Story) def_%v_11 
@@ -1486,27 +1486,27 @@ BB 2
 		 21: (Story) def_%v_14 
 		 22: %v_14->table_name def_%v_15 %v_14[2.21,] 	 ARGS:
 		 23: COPY def_%v_16 
-		 24: def_%v_17 %v_13[2.20,] %v_15[2.22,] %v_16[2.23,] 
+		 24: BUILDSTRING def_%v_17 %v_13[2.20,] %v_15[2.22,] %v_16[2.23,] 
 		 25: COPY def_%v_18 
 		 26: 
 		 27: upvote->to_i def_%v_19 upvote[2.5,2.9,] 	 ARGS:
 		 28: COPY def_%v_20 
-		 29: def_%v_21 %v_18[2.25,] %v_19[2.27,] %v_20[2.28,] 
-		 30: def_%v_22 %v_17[2.24,] %v_21[2.29,] 	 ARGS:%v_21,
+		 29: BUILDSTRING def_%v_21 %v_18[2.25,] %v_19[2.27,] %v_20[2.28,] 
+		 30: %v_17-><< def_%v_22 %v_17[2.24,] %v_21[2.29,] 	 ARGS:%v_21,
 		 31: COPY def_%v_23 
 		 32: 
 		 33: downvote->to_i def_%v_24 downvote[2.6,2.14,] 	 ARGS:
 		 34: COPY def_%v_25 
-		 35: def_%v_26 %v_23[2.31,] %v_24[2.33,] %v_25[2.34,] 
-		 36: def_%v_27 %v_22[2.30,] %v_26[2.35,] 	 ARGS:%v_26,
+		 35: BUILDSTRING def_%v_26 %v_23[2.31,] %v_24[2.33,] %v_25[2.34,] 
+		 36: %v_22-><< def_%v_27 %v_22[2.30,] %v_26[2.35,] 	 ARGS:%v_26,
 		 37: COPY def_%v_28 
 		 38: 
 		 39: %self->calculated_hotness def_%v_29 %self[2.0,2.8,2.11,2.13,2.16,] 	 ARGS:
 		 40: COPY def_%v_30 
 		 41: %self->id def_%v_31 %self[2.0,2.8,2.11,2.13,2.16,2.39,] 	 ARGS:
 		 42: %v_31->to_i def_%v_32 %v_31[2.41,] 	 ARGS:
-		 43: def_%v_33 %v_28[2.37,] %v_29[2.39,] %v_30[2.40,] %v_32[2.42,] 
-		 44: def_%v_34 %v_27[2.36,] %v_33[2.43,] 	 ARGS:%v_33,
+		 43: BUILDSTRING def_%v_33 %v_28[2.37,] %v_29[2.39,] %v_30[2.40,] %v_32[2.42,] 
+		 44: %v_27-><< def_%v_34 %v_27[2.36,] %v_33[2.43,] 	 ARGS:%v_33,
 		 45: %v_12->execute def_%v_35 %v_12[2.19,] %v_34[2.44,] 	 ARGS:%v_34,
 		 46: RETURN %v_35[2.45,] %self[2.0,2.8,2.11,2.13,2.16,2.39,2.41,] 
 BB 3
@@ -1549,7 +1549,7 @@ BB 5
 	instructions:
 		 0: (HiddenStory) def_%v_6 
 		 1: %self->id def_%v_7 %self[2.0,] 	 ARGS:
-		 2: COPY def_%v_8 %v_7[5.1,] 
+		 2: HASH-story_id- def_%v_8 %v_7[5.1,] 
 		 3: %v_6->where def_%v_9 %v_6[5.0,] %v_8[5.2,] 	 ARGS:%v_8,
 		 4: %v_9->count def_%v_10 %v_9[5.3,] 	 ARGS:
 		 5: ATTRASSIGN %self->hider_count %v_10[5.4,] 
@@ -1763,10 +1763,10 @@ BB 11
 		 3: %v_13->to_i def_%v_14 %v_13[11.2,] 	 ARGS:
 		 4: %self->created_at def_%v_15 %self[2.0,] 	 ARGS:
 		 5: %v_15->to_i def_%v_16 %v_15[11.4,] 	 ARGS:
-		 6: def_%v_17 %v_14[11.3,] %v_16[11.5,] 	 ARGS:%v_16,
+		 6: %v_14->- def_%v_17 %v_14[11.3,] %v_16[11.5,] 	 ARGS:%v_16,
 		 7: (MAX_EDIT_MINS) def_%v_18 
-		 8: def_%v_19 %v_18[11.7,] 	 ARGS:%v_18,
-		 9: def_%v_20 %v_17[11.6,] %v_19[11.8,] 	 ARGS:%v_19,
+		 8: %v_18->* def_%v_19 %v_18[11.7,] 	 ARGS:%v_18,
+		 9: %v_17->< def_%v_20 %v_17[11.6,] %v_19[11.8,] 	 ARGS:%v_19,
 		 10: RETURN %v_20[11.9,] %self[11.4,2.0,] 
 BB 12
 	outgoing: 14 
@@ -1820,7 +1820,7 @@ BB 2
 		 7: (HiddenStory) def_%v_3 
 		 8: user->id def_%v_4 user[2.5,] 	 ARGS:
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 10: COPY def_%v_6 %v_4[2.8,] %v_5[2.9,] 
+		 10: HASH-user_id-story_id- def_%v_6 %v_4[2.8,] %v_5[2.9,] 
 		 11: %v_3->where def_%v_7 %v_3[2.7,] %v_6[2.10,] 	 ARGS:%v_6,
 		 12: %v_7->first def_%v_8 %v_7[2.11,] 	 ARGS:
 		 13: %v_8->! def_%v_9 %v_8[2.12,] 	 ARGS:
@@ -1850,7 +1850,7 @@ BB 2
 		 7: (RECENT_DAYS) def_%v_4 
 		 8: %v_4->days def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: %v_5->ago def_%v_6 %v_5[2.8,] 	 ARGS:
-		 10: def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
+		 10: %v_3->>= def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: RETURN %v_7[2.10,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -2108,7 +2108,7 @@ BB 11
 		 11: ATTRASSIGN m->story_id %v_23[11.10,] 
 		 12: 
 		 13: COPY def_%v_24 
-		 14: def_%v_25 all_changes[8.5,] %v_24[11.13,] 	 ARGS:%v_24,
+		 14: all_changes->[] def_%v_25 all_changes[8.5,] %v_24[11.13,] 	 ARGS:%v_24,
 		 15: BRANCH %v_25[11.14,] 
 BB 13
 	outgoing: 14 
@@ -2135,7 +2135,7 @@ BB 16
 	instructions:
 		 0: 
 		 1: COPY def_%v_28 
-		 2: def_%v_29 all_changes[8.5,] %v_28[16.1,] 	 ARGS:%v_28,
+		 2: all_changes->[] def_%v_29 all_changes[8.5,] %v_28[16.1,] 	 ARGS:%v_28,
 		 3: BRANCH %v_29[16.2,] 
 BB 17
 	outgoing: 18 
@@ -2191,7 +2191,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_5 v[2.3,] 	 ARGS:Fixnum,
+		 1: v->[] def_%cl_1_5 v[2.3,] 	 ARGS:Fixnum,
 		 2: BRANCH %cl_1_5[4.1,] 
 BB 5
 	outgoing: 7 10 
@@ -2202,14 +2202,14 @@ BB 5
 		 2: %self->merged_into_story def_%cl_1_7 %self[2.0,] 	 ARGS:
 		 3: %cl_1_7->short_id def_%cl_1_8 %cl_1_7[5.2,] 	 ARGS:
 		 4: COPY def_%cl_1_9 
-		 5: def_%cl_1_10 %cl_1_6[5.1,] %cl_1_8[5.3,] %cl_1_9[5.4,] 
+		 5: BUILDSTRING def_%cl_1_10 %cl_1_6[5.1,] %cl_1_8[5.3,] %cl_1_9[5.4,] 
 		 6: COPY def_%cl_1_11 
 		 7: 
 		 8: %self->merged_into_story def_%cl_1_12 %self[5.2,2.0,] 	 ARGS:
 		 9: %cl_1_12->title def_%cl_1_13 %cl_1_12[5.8,] 	 ARGS:
 		 10: COPY def_%cl_1_14 
-		 11: def_%cl_1_15 %cl_1_11[5.6,] %cl_1_13[5.9,] %cl_1_14[5.10,] 
-		 12: def_%cl_1_16 %cl_1_10[5.5,] %cl_1_15[5.11,] 	 ARGS:%cl_1_15,
+		 11: BUILDSTRING def_%cl_1_15 %cl_1_11[5.6,] %cl_1_13[5.9,] %cl_1_14[5.10,] 
+		 12: %cl_1_10-><< def_%cl_1_16 %cl_1_10[5.5,] %cl_1_15[5.11,] 	 ARGS:%cl_1_15,
 		 13: 
 BB 6
 	outgoing: 7 
@@ -2230,12 +2230,12 @@ BB 8
 		 0: 
 		 1: COPY def_%cl_1_18 
 		 2: COPY def_%cl_1_19 
-		 3: def_%cl_1_20 v[2.3,] 	 ARGS:Fixnum,
+		 3: v->[] def_%cl_1_20 v[2.3,] 	 ARGS:Fixnum,
 		 4: %cl_1_20->inspect def_%cl_1_21 %cl_1_20[8.3,] 	 ARGS:
 		 5: COPY def_%cl_1_22 
-		 6: def_%cl_1_23 v[2.3,] 	 ARGS:Fixnum,
+		 6: v->[] def_%cl_1_23 v[8.3,2.3,] 	 ARGS:Fixnum,
 		 7: %cl_1_23->inspect def_%cl_1_24 %cl_1_23[8.6,] 	 ARGS:
-		 8: def_%cl_1_25 %cl_1_18[8.1,] k[2.2,] %cl_1_19[8.2,] %cl_1_21[8.4,] %cl_1_22[8.5,] %cl_1_24[8.7,] 
+		 8: BUILDSTRING def_%cl_1_25 %cl_1_18[8.1,] k[2.2,] %cl_1_19[8.2,] %cl_1_21[8.4,] %cl_1_22[8.5,] %cl_1_24[8.7,] 
 		 9: RETURN %cl_1_25[8.8,] %self[2.0,] 
 BB 10
 	outgoing: 12 
@@ -2299,7 +2299,7 @@ BB 2
 		 12: (Rails) def_%v_9 
 		 13: %v_9->application def_%v_10 %v_9[2.12,] 	 ARGS:
 		 14: %v_10->domain def_%v_11 %v_10[2.13,] 	 ARGS:
-		 15: def_%v_12 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_7[2.10,] %v_8[2.11,] %v_11[2.14,] 
+		 15: BUILDSTRING def_%v_12 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_7[2.10,] %v_8[2.11,] %v_11[2.14,] 
 		 16: RETURN %v_12[2.15,] %self[2.0,2.7,2.9,] 
 BB 3
 	outgoing: 
@@ -2325,7 +2325,7 @@ BB 2
 		 7: COPY def_%v_4 
 		 8: %self->user_id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: COPY def_%v_6 
-		 10: def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
+		 10: BUILDSTRING def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
 		 11: %v_3->increment_value_for def_%v_8 %v_3[2.6,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: RETURN %v_8[2.11,] %self[2.0,2.8,] 
 BB 3
@@ -2378,12 +2378,12 @@ BB 2
 		 7: (Story) def_%v_4 
 		 8: %v_4->select def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
 		 9: %self->id def_%v_6 %self[2.0,] 	 ARGS:
-		 10: COPY def_%v_7 %v_6[2.9,] 
+		 10: HASH-merged_story_id- def_%v_7 %v_6[2.9,] 
 		 11: %v_5->where def_%v_8 %v_5[2.8,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: %self->id def_%v_9 %self[2.0,2.9,] 	 ARGS:
 		 13: COPY def_%v_10 %v_9[2.12,] 
-		 14: def_%v_11 %v_8[2.11,] %v_10[2.13,] 	 ARGS:%v_10,
-		 15: COPY def_%v_12 %v_11[2.14,] 
+		 14: %v_8->+ def_%v_11 %v_8[2.11,] %v_10[2.13,] 	 ARGS:%v_10,
+		 15: HASH-story_id- def_%v_12 %v_11[2.14,] 
 		 16: %v_3->where def_%v_13 %v_3[2.6,] %v_12[2.15,] 	 ARGS:%v_12,
 		 17: RETURN %v_13[2.16,] %self[2.0,2.9,2.12,] 
 BB 3
@@ -2414,7 +2414,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: (Story) def_%v_4 
-		 1: COPY def_%v_5 sid[2.5,] 
+		 1: HASH-short_id- def_%v_5 sid[2.5,] 
 		 2: %v_4->where def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 ARGS:%v_5,
 		 3: %v_6->first def_%v_7 %v_6[3.2,] 	 ARGS:
 		 4: %v_7->id def_%v_8 %v_7[3.3,] 	 ARGS:
@@ -2451,8 +2451,8 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->calculated_hotness def_%v_3 %self[2.0,] 	 ARGS:
-		 7: %self->update_column def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 ARGS:Symbol,%v_3,
-		 8: RETURN %v_4[2.7,] %self[2.0,2.6,2.7,] 
+		 7: ATTRASSIGN %self->hotness %v_3[2.6,] 
+		 8: RETURN %v_3[2.6,] %self[2.0,2.6,2.7,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -2577,7 +2577,7 @@ BB 2
 		 5: 
 		 6: %self->upvotes def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %self->downvotes def_%v_4 %self[2.0,2.6,] 	 ARGS:
-		 8: def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 8: %v_3->- def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: RETURN %v_5[2.8,] %self[2.0,2.6,2.7,] 
 BB 3
 	outgoing: 
@@ -2606,8 +2606,8 @@ BB 2
 		 10: %v_6->root_path def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: COPY def_%v_8 
 		 12: %self->short_id def_%v_9 %self[2.0,] 	 ARGS:
-		 13: def_%v_10 %v_8[2.11,] %v_9[2.12,] 
-		 14: def_%v_11 %v_7[2.10,] %v_10[2.13,] 	 ARGS:%v_10,
+		 13: BUILDSTRING def_%v_10 %v_8[2.11,] %v_9[2.12,] 
+		 14: %v_7->+ def_%v_11 %v_7[2.10,] %v_10[2.13,] 	 ARGS:%v_10,
 		 15: RETURN %v_11[2.14,] %self[2.0,2.12,] 
 BB 3
 	outgoing: 
@@ -2634,8 +2634,8 @@ BB 2
 		 8: %v_4->root_url def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: COPY def_%v_6 
 		 10: %self->short_id def_%v_7 %self[2.0,] 	 ARGS:
-		 11: def_%v_8 %v_6[2.9,] %v_7[2.10,] 
-		 12: def_%v_9 %v_5[2.8,] %v_8[2.11,] 	 ARGS:%v_8,
+		 11: BUILDSTRING def_%v_8 %v_6[2.9,] %v_7[2.10,] 
+		 12: %v_5->+ def_%v_9 %v_5[2.8,] %v_8[2.11,] 	 ARGS:%v_8,
 		 13: RETURN %v_9[2.12,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
@@ -2915,7 +2915,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_14 
+		 1: HASH- def_%v_14 
 		 2: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2924,7 +2924,7 @@ BB 4
 		 0: 
 		 1: COPY def_%v_15 
 		 2: COPY def_%v_16 old_tags_a[2.11,] new_tags_a[2.18,] 
-		 3: COPY def_%v_17 %v_15[4.1,] %v_16[4.2,] 
+		 3: HASH- def_%v_17 %v_15[4.1,] %v_16[4.2,] 
 		 4: RETURN %v_17[4.3,] %self[2.0,] 
 BB 6
 	outgoing: 
@@ -3113,7 +3113,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: %self->tags def_%cl_2_6 %self[2.0,] 	 ARGS:
-		 1: COPY def_%cl_2_7 tag_name[2.2,] 
+		 1: HASH-tag- def_%cl_2_7 tag_name[2.2,] 
 		 2: %cl_2_6->exists? def_%cl_2_8 %cl_2_6[4.0,] %cl_2_7[4.1,] 	 ARGS:%cl_2_7,
 		 3: %cl_2_8->! def_%cl_2_9 %cl_2_8[4.2,] 	 ARGS:
 		 4: COPY def_%cl_2_5 %cl_2_9[4.3,] 
@@ -3129,7 +3129,7 @@ BB 6
 		 0: 
 		 1: (Tag) def_%cl_2_10 
 		 2: %cl_2_10->active def_%cl_2_11 %cl_2_10[6.1,] 	 ARGS:
-		 3: COPY def_%cl_2_12 tag_name[2.2,] 
+		 3: HASH-tag- def_%cl_2_12 tag_name[2.2,] 
 		 4: %cl_2_11->where def_%cl_2_13 %cl_2_11[6.2,] %cl_2_12[6.3,] 	 ARGS:%cl_2_12,
 		 5: %cl_2_13->first def_%cl_2_14 %cl_2_13[6.4,] 	 ARGS:
 		 6: COPY def_t %cl_2_14[6.5,] 
@@ -3418,10 +3418,10 @@ BB 6
 	instructions:
 CLOSURE END
 		 12: ATTRASSIGN %self->comments_count %v_5[2.11,] 
-		 13: %self->update_column def_%v_6 %self[2.0,2.6,2.12,] %v_5[2.11,] 	 ARGS:Symbol,%v_5,
+		 13: ATTRASSIGN %self->comments_count %v_5[2.11,] 
 		 14: 
-		 15: %self->recalculate_hotness! def_%v_7 %self[2.0,2.6,2.12,2.13,] 	 ARGS:
-		 16: RETURN %v_7[2.15,] %self[2.0,2.6,2.12,2.13,2.15,] 
+		 15: %self->recalculate_hotness! def_%v_6 %self[2.0,2.6,2.12,2.13,] 	 ARGS:
+		 16: RETURN %v_6[2.15,] %self[2.0,2.6,2.12,2.13,2.15,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -3498,7 +3498,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_6 m[3.2,] 	 ARGS:Fixnum,
+		 1: m->[] def_%v_6 m[3.2,] 	 ARGS:Fixnum,
 		 2: COPY def_%v_7 
 		 3: %v_6->split def_%v_8 %v_6[5.1,] %v_7[5.2,] 	 ARGS:%v_7,
 		 4: COPY def_params %v_8[5.3,] 
@@ -3539,7 +3539,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 7: 
-		 8: def_%v_10 m[3.2,] 	 ARGS:Fixnum,
+		 8: m->[] def_%v_10 m[5.1,3.2,] 	 ARGS:Fixnum,
 		 9: params->any? def_%v_11 params[5.4,] 	 ARGS:
 		 10: BRANCH %v_11[5.9,] 
 BB 6
@@ -3549,7 +3549,7 @@ BB 6
 		 0: COPY def_%v_12 
 		 1: COPY def_%v_13 
 		 2: params->join def_%v_14 params[5.4,] %v_13[6.1,] 	 ARGS:%v_13,
-		 3: def_%v_15 %v_12[6.0,] %v_14[6.2,] 	 ARGS:%v_14,
+		 3: %v_12-><< def_%v_15 %v_12[6.0,] %v_14[6.2,] 	 ARGS:%v_14,
 		 4: 
 BB 7
 	outgoing: 8 
@@ -3561,7 +3561,7 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: def_%v_17 %v_10[5.8,] %v_15[7.1,6.3,] 	 ARGS:%v_15,
+		 0: %v_10-><< def_%v_17 %v_10[5.8,] %v_15[7.1,6.3,] 	 ARGS:%v_15,
 		 1: COPY def_u %v_17[8.0,] 
 		 2: 
 BB 9
@@ -3746,15 +3746,15 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: 
-		 7: COPY def_%v_3 
+		 7: HASH- def_%v_3 
 		 8: COPY def_r_counts %v_3[2.7,] 
 		 9: 
-		 10: COPY def_%v_4 
+		 10: HASH- def_%v_4 
 		 11: COPY def_r_whos %v_4[2.10,] 
 		 12: 
 		 13: (Vote) def_%v_5 
 		 14: %self->id def_%v_6 %self[2.0,] 	 ARGS:
-		 15: COPY def_%v_7 %v_6[2.14,] 
+		 15: HASH-story_id-comment_id- def_%v_7 %v_6[2.14,] 
 		 16: %v_5->where def_%v_8 %v_5[2.13,] %v_7[2.15,] 	 ARGS:%v_7,
 		 17: COPY def_%v_9 
 		 18: %v_8->where def_%v_10 %v_8[2.16,] %v_9[2.17,] 	 ARGS:%v_9,
@@ -3780,13 +3780,13 @@ BB 3
 		 0: 
 		 1: v->reason def_%cl_1_4 v[2.2,] 	 ARGS:
 		 2: %cl_1_4->to_s def_%cl_1_5 %cl_1_4[3.1,] 	 ARGS:
-		 3: def_%cl_1_3 r_counts[] %cl_1_5[3.2,] 	 ARGS:%cl_1_5,
+		 3: r_counts->[] def_%cl_1_3 r_counts[] %cl_1_5[3.2,] 	 ARGS:%cl_1_5,
 		 4: BRANCH %cl_1_3[3.3,] 
 BB 4
 	outgoing: 5 13 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_3 r_counts[] %cl_1_5[3.2,] 	 ARGS:%cl_1_5,Fixnum,
+		 0: r_counts->[]= def_%cl_1_3 r_counts[] %cl_1_5[3.2,] 	 ARGS:%cl_1_5,Fixnum,
 		 1: COPY def_%cl_1_3 
 BB 5
 	outgoing: 6 7 13 
@@ -3795,10 +3795,10 @@ BB 5
 		 0: 
 		 1: v->reason def_%cl_1_6 v[2.2,] 	 ARGS:
 		 2: %cl_1_6->to_s def_%cl_1_7 %cl_1_6[5.1,] 	 ARGS:
-		 3: def_%cl_1_8 r_counts[4.0,] %cl_1_7[5.2,] 	 ARGS:%cl_1_7,
+		 3: r_counts->[] def_%cl_1_8 r_counts[4.0,] %cl_1_7[5.2,] 	 ARGS:%cl_1_7,
 		 4: v->vote def_%cl_1_9 v[5.1,2.2,] 	 ARGS:
-		 5: def_%cl_1_8 %cl_1_8[5.3,] %cl_1_9[5.4,] 	 ARGS:%cl_1_9,
-		 6: def_%cl_1_10 r_counts[4.0,] %cl_1_7[5.2,] %cl_1_8[5.3,5.5,] 	 ARGS:%cl_1_7,%cl_1_8,
+		 5: %cl_1_8->+ def_%cl_1_8 %cl_1_8[5.3,] %cl_1_9[5.4,] 	 ARGS:%cl_1_9,
+		 6: r_counts->[]= def_%cl_1_10 r_counts[5.3,4.0,] %cl_1_7[5.2,] %cl_1_8[5.3,5.5,] 	 ARGS:%cl_1_7,%cl_1_8,
 		 7: 
 		 8: COPY def_%cl_1_11 user[] 
 		 9: BRANCH user[] 
@@ -3820,14 +3820,14 @@ BB 8
 		 0: 
 		 1: v->reason def_%cl_1_14 v[2.2,] 	 ARGS:
 		 2: %cl_1_14->to_s def_%cl_1_15 %cl_1_14[8.1,] 	 ARGS:
-		 3: def_%cl_1_13 r_whos[] %cl_1_15[8.2,] 	 ARGS:%cl_1_15,
+		 3: r_whos->[] def_%cl_1_13 r_whos[] %cl_1_15[8.2,] 	 ARGS:%cl_1_15,
 		 4: BRANCH %cl_1_13[8.3,] 
 BB 9
 	outgoing: 10 13 
 	datadep: 
 	instructions:
 		 0: COPY def_%cl_1_16 
-		 1: def_%cl_1_13 r_whos[] %cl_1_15[8.2,] %cl_1_16[9.0,] 	 ARGS:%cl_1_15,%cl_1_16,
+		 1: r_whos->[]= def_%cl_1_13 r_whos[] %cl_1_15[8.2,] %cl_1_16[9.0,] 	 ARGS:%cl_1_15,%cl_1_16,
 		 2: COPY def_%cl_1_13 %cl_1_16[9.0,] 
 BB 10
 	outgoing: 12 13 
@@ -3836,7 +3836,7 @@ BB 10
 		 0: 
 		 1: v->reason def_%cl_1_17 v[2.2,] 	 ARGS:
 		 2: %cl_1_17->to_s def_%cl_1_18 %cl_1_17[10.1,] 	 ARGS:
-		 3: def_%cl_1_19 r_whos[9.1,] %cl_1_18[10.2,] 	 ARGS:%cl_1_18,
+		 3: r_whos->[] def_%cl_1_19 r_whos[9.1,] %cl_1_18[10.2,] 	 ARGS:%cl_1_18,
 		 4: v->user def_%cl_1_20 v[10.1,2.2,] 	 ARGS:
 		 5: %cl_1_20->username def_%cl_1_21 %cl_1_20[10.4,] 	 ARGS:
 		 6: %cl_1_19->push def_%cl_1_22 %cl_1_19[10.3,] %cl_1_21[10.5,] 	 ARGS:%cl_1_21,
@@ -3895,17 +3895,17 @@ BB 4
 	instructions:
 		 0: 
 		 1: COPY def_%cl_2_5 
-		 2: def_%cl_2_6 r_counts[] k[2.2,] 	 ARGS:k,
-		 3: def_%cl_2_7 %cl_2_5[4.1,] %cl_2_6[4.2,] 
+		 2: r_counts->[] def_%cl_2_6 r_counts[] k[2.2,] 	 ARGS:k,
+		 3: BUILDSTRING def_%cl_2_7 %cl_2_5[4.1,] %cl_2_6[4.2,] 
 		 4: 
 BB 5
 	outgoing: 6 7 20 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_8 r_counts[] k[2.2,] 	 ARGS:k,
+		 1: r_counts->[] def_%cl_2_8 r_counts[] k[2.2,] 	 ARGS:k,
 		 2: COPY def_%cl_2_9 
-		 3: def_%cl_2_10 %cl_2_8[5.1,] %cl_2_9[5.2,] 
+		 3: BUILDSTRING def_%cl_2_10 %cl_2_8[5.1,] %cl_2_9[5.2,] 
 		 4: 
 		 5: (Vote) def_%cl_2_11 
 		 6: def_%cl_2_12 %cl_2_11[5.5,] 
@@ -3914,12 +3914,12 @@ BB 6
 	outgoing: 7 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_12 %cl_2_11[5.5,] 	 ARGS:Symbol,
+		 0: %cl_2_11->const_missing def_%cl_2_12 %cl_2_11[5.5,] 	 ARGS:Symbol,
 BB 7
 	outgoing: 8 11 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_13 %cl_2_12[6.0,5.6,] k[2.2,] 	 ARGS:k,
+		 0: %cl_2_12->[] def_%cl_2_13 %cl_2_12[6.0,5.6,] k[2.2,] 	 ARGS:k,
 		 1: BRANCH %cl_2_13[7.0,] 
 BB 8
 	outgoing: 9 10 20 
@@ -3932,12 +3932,12 @@ BB 9
 	outgoing: 10 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_15 %cl_2_14[8.0,] 	 ARGS:Symbol,
+		 0: %cl_2_14->const_missing def_%cl_2_15 %cl_2_14[8.0,] 	 ARGS:Symbol,
 BB 10
 	outgoing: 11 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_16 %cl_2_15[9.0,8.1,] k[2.2,] 	 ARGS:k,
+		 0: %cl_2_15->[] def_%cl_2_16 %cl_2_15[9.0,8.1,] k[2.2,] 	 ARGS:k,
 		 1: COPY def_%cl_2_13 %cl_2_16[10.0,] 
 BB 11
 	outgoing: 12 13 
@@ -3953,7 +3953,7 @@ BB 13
 	outgoing: 14 15 20 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_17 %cl_2_10[5.3,] %cl_2_13[12.0,10.1,7.0,] 	 ARGS:%cl_2_13,
+		 0: %cl_2_10->+ def_%cl_2_17 %cl_2_10[5.3,] %cl_2_13[12.0,10.1,7.0,] 	 ARGS:%cl_2_13,
 		 1: 
 		 2: COPY def_%cl_2_18 user[] 
 		 3: BRANCH user[] 
@@ -3973,11 +3973,11 @@ BB 16
 	datadep: 
 	instructions:
 		 0: COPY def_%cl_2_20 
-		 1: def_%cl_2_21 r_whos[] k[2.2,] 	 ARGS:k,
+		 1: r_whos->[] def_%cl_2_21 r_whos[] k[2.2,] 	 ARGS:k,
 		 2: COPY def_%cl_2_22 
 		 3: %cl_2_21->join def_%cl_2_23 %cl_2_21[16.1,] %cl_2_22[16.2,] 	 ARGS:%cl_2_22,
 		 4: COPY def_%cl_2_24 
-		 5: def_%cl_2_25 %cl_2_20[16.0,] %cl_2_23[16.3,] %cl_2_24[16.4,] 
+		 5: BUILDSTRING def_%cl_2_25 %cl_2_20[16.0,] %cl_2_23[16.3,] %cl_2_24[16.4,] 
 		 6: 
 BB 17
 	outgoing: 18 
@@ -3989,7 +3989,7 @@ BB 18
 	outgoing: 20 22 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_27 %cl_2_17[13.0,] %cl_2_25[17.1,16.5,] 	 ARGS:%cl_2_25,
+		 0: %cl_2_17->+ def_%cl_2_27 %cl_2_17[13.0,] %cl_2_25[17.1,16.5,] 	 ARGS:%cl_2_25,
 		 1: RETURN %cl_2_27[18.0,] %self[2.0,] 
 BB 19
 	outgoing: 22 
@@ -4066,8 +4066,8 @@ BB 6
 		 13: %v_14->domain def_%v_15 %v_14[6.12,] 	 ARGS:
 		 14: COPY def_%v_16 
 		 15: %self->fetching_ip def_%v_17 %self[6.8,2.0,] 	 ARGS:
-		 16: def_%v_18 %v_15[6.13,] %v_16[6.14,] %v_17[6.15,] 
-		 17: COPY def_%v_19 %v_12[6.9,] %v_18[6.16,] 
+		 16: BUILDSTRING def_%v_18 %v_15[6.13,] %v_16[6.14,] %v_17[6.15,] 
+		 17: HASH- def_%v_19 %v_12[6.9,] %v_18[6.16,] 
 		 18: s->fetch def_%v_20 s[6.4,] %v_11[6.8,] %v_19[6.17,] 	 ARGS:%v_11,Symbol,Nil,Nil,%v_19,Fixnum,
 		 19: ATTRASSIGN %self->fetched_content %v_20[6.18,] 
 		 20: COPY def_%v_8 %v_20[6.18,] 
@@ -4208,7 +4208,7 @@ BB 6
 		 3: doc->at_css def_%v_12 doc[2.10,] %v_11[6.2,] 	 ARGS:%v_11,
 		 4: %v_12->attributes def_%v_13 %v_12[6.3,] 	 ARGS:
 		 5: COPY def_%v_14 
-		 6: def_%v_15 %v_13[6.4,] %v_14[6.5,] 	 ARGS:%v_14,
+		 6: %v_13->[] def_%v_15 %v_13[6.4,] %v_14[6.5,] 	 ARGS:%v_14,
 		 7: %v_15->text def_%v_16 %v_15[6.6,] 	 ARGS:
 		 8: COPY def_title %v_16[6.7,] 
 		 9: COPY def_%v_10 %v_16[6.7,] 
@@ -4276,7 +4276,7 @@ BB 17
 		 3: doc->at_css def_%v_28 doc[2.10,] %v_27[17.2,] 	 ARGS:%v_27,
 		 4: %v_28->attributes def_%v_29 %v_28[17.3,] 	 ARGS:
 		 5: COPY def_%v_30 
-		 6: def_%v_31 %v_29[17.4,] %v_30[17.5,] 	 ARGS:%v_30,
+		 6: %v_29->[] def_%v_31 %v_29[17.4,] %v_30[17.5,] 	 ARGS:%v_30,
 		 7: %v_31->text def_%v_32 %v_31[17.6,] 	 ARGS:
 		 8: COPY def_title %v_32[17.7,] 
 		 9: COPY def_%v_26 %v_32[17.7,] 
@@ -4413,7 +4413,7 @@ BB 8
 		 3: doc->at_css def_%v_11 doc[4.3,] %v_10[8.2,] 	 ARGS:%v_10,
 		 4: %v_11->attributes def_%v_12 %v_11[8.3,] 	 ARGS:
 		 5: COPY def_%v_13 
-		 6: def_%v_14 %v_12[8.4,] %v_13[8.5,] 	 ARGS:%v_13,
+		 6: %v_12->[] def_%v_14 %v_12[8.4,] %v_13[8.5,] 	 ARGS:%v_13,
 		 7: %v_14->text def_%v_15 %v_14[8.6,] 	 ARGS:
 		 8: COPY def_cu %v_15[8.7,] 
 		 9: COPY def_%v_16 %v_15[8.7,] 

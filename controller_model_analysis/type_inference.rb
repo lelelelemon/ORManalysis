@@ -34,7 +34,7 @@ def add_to_var_table(f_name, c_name, v_name, type)
 		_type_name = $class_map[c_name].getMethod(f_name).getVars[v_name]
 		if _type_name == type
 		else
-			puts "TYPE doesn't match! #{v_name}: [#{_type_name}] [#{type}]"
+			#puts "TYPE doesn't match! #{v_name}: [#{_type_name}] [#{type}]"
 		end
 	else
 		$class_map[c_name].getMethod(f_name).getVars[v_name] = type
@@ -125,8 +125,29 @@ def read_util_function
 		$util_function_list[chs[0]] = chs[1]
 	end
 end
-def util_function(fname)
-	return $util_function_list[fname]
+def util_function(fname, instr, cfg, c_name)
+	t = $util_function_list[fname]
+  if t == nil
+		return nil
+	end
+	if t == "PASS"
+		type = nil
+		instr.getDeps.each do |d|
+			if type_not_found(known_type(d.getVname, cfg, c_name))
+			else
+				type = known_type(d.getVname, cfg, c_name)
+			end
+		end
+		if type != nil
+			return type.type
+		else
+			return nil
+		end
+	elsif t == "SELF"
+		return c_name
+	else
+		return t
+	end
 end
 
 def do_type_inference
@@ -136,7 +157,7 @@ def do_type_inference
 		valuec.getFields.each do |f|
 			@class_var_list[f.field_name] = f.type	
 		end
-		puts "Class: #{keyc}"
+		#puts "Class: #{keyc}"
 		valuec.getAssocs.each do |_name, ary|
 			ary.each do |a|
 				if a.attribs["class_name"] != nil
@@ -144,7 +165,7 @@ def do_type_inference
 				elsif $class_map[a.name.singularize.capitalize] != nil
 					@class_var_list[a.name] = a.name.singularize.capitalize
 				end
-				puts "ADD assocs: #{a.name}, #{@class_var_list[a.name]}"
+				#puts "ADD assocs: #{a.name}, #{@class_var_list[a.name]}"
 			end
 		end
 		@class_var_list.each do |k, v|
@@ -159,6 +180,7 @@ def do_type_inference
 			end
 		end
 	end
+=begin
 	$class_map.each do |keyc, valuec|
 		puts ""
 		puts "==="
@@ -172,39 +194,77 @@ def do_type_inference
 				if cfg.arg_types.length > 0
 					s = ""
 					cfg.arg_types.each do |a|
-						s = s + "#{a.type} "
+						if a == nil
+							s = s + "unknown_type "
+						else
+							s = s + "#{a.type} "
+						end
 					end
 					puts "\t * args: #{s}"
 				end
 			end
 		end
 	end
+=end
 	$class_map.each do |keyc, valuec|
 		valuec.getMethods.each do |key, value|
 			cfg = value.getCFG
-			if cfg != nil and keyc=="UsersController"
-				puts "Function: #{key}"
-				do_type_inference_cfg(cfg, key, keyc, true)
-			elsif cfg!= nil
+			if cfg != nil
+			#if cfg != nil and keyc=="UsersController"
+			#	puts "Function: #{key}"
+			#	do_type_inference_cfg(cfg, key, keyc, true)
+			#elsif cfg!= nil
 				do_type_inference_cfg(cfg, key, keyc)
 			end
 		end
 	end
 
+=begin
 	$class_map.each do |keyc, valuec|
-		valuec.getMethodVarMap.each do |f_name, m|
-			if valuec.getMethod(f_name) != nil
-			m.get_var_map.each do |v_name, t|
-				var_type = find_var_type(v_name.gsub('@',''), f_name, keyc)
-				if type_not_found(var_type)
-					puts "#{keyc}.#{f_name} var #{v_name} type inference don't work, type #{t}"
-				else
-					puts "\t - \t - #{keyc}.#{f_name}: #{v_name} [#{t}] [#{var_type.type}]"
-				end 
-			end
+		valuec.getMethods.each do |key, value|
+			if keyc.include?("Controller")==false and value.getCFG != nil
+				puts "Class #{keyc} Function #{key}:"
+				print_unknown_types(value.getCFG, "", keyc)
 			end
 		end
 	end
+
+	controller_not_found = 0
+	controller_found = 0
+	model_not_found = 0
+	model_found = 0
+	$class_map.each do |keyc, valuec|
+		valuec.getMethods.each do |key, value|
+			cfg = value.getCFG
+			if cfg!= nil
+				cfg.getVarMap.each do |k, v|
+					if type_not_found(v)
+						if keyc.include?("Controller")
+							controller_not_found += 1
+						else
+							model_not_found += 1
+						end
+					else
+						if keyc.include?("Controller")
+							controller_found += 1
+						else
+							model_found += 1
+						end
+					end
+				end	
+			end
+		end
+	end
+	puts "\n***************\n"
+
+	puts "Controller:"
+	puts "\tTYPE FOUND: #{controller_found}"
+	puts "\tTYPE NOT FOUND: #{controller_not_found}"
+	puts "Others:"
+	puts "\tTYPE FOUND: #{model_found}"
+	puts "\tTYPE NOT FOUND: #{model_not_found}"
+	puts "\n***************\n"
+=end
 end
 
 def set_initial_type(cfg, f_name, c_name)
@@ -214,7 +274,13 @@ def set_initial_type(cfg, f_name, c_name)
 		bb.getInstr.each do |instr|
 			if instr.getDefv != nil
 				if cfg.getVarMap[instr.getDefv] == nil
-					var = Variable.new(instr.getDefv, "unknown")	
+					tname = searchTableName(instr.getDefv)
+					var = nil
+					if tname
+						var = Variable.new(instr.getDefv, tname)
+					else
+						var = Variable.new(instr.getDefv, "unknown")
+					end	
 					cfg.getVarMap[instr.getDefv] = var
 				end
 				if instr.hasClosure?
@@ -224,6 +290,29 @@ def set_initial_type(cfg, f_name, c_name)
 		end
 	end
 end
+
+def print_unknown_types(cfg, blank, c_name)
+		cfg.getBB.each do |bb|
+			#puts "\tBB#{bb.getIndex}:"
+			bb.getInstr.each do |instr|
+				if instr.getDefv != nil
+					tp = known_type(instr.getDefv, cfg, c_name);
+					if type_not_found(tp)
+						puts "#{blank}\t* #{instr.getDefv} : #{instr.toString2}"
+					else
+						puts "#{blank}\t#{instr.getDefv} -> #{tp.type}"
+					end
+				end 
+				if instr.hasClosure?
+					puts "CLOSURE BEGIN"
+					temp_blank = "\t#{blank}"
+					print_unknown_types(instr.getClosure, temp_blank, c_name)
+					puts "CLOSURE END"
+				end
+			end
+		end
+end
+
 
 #f_name: function_name
 #c_name: class_name
@@ -243,9 +332,9 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 				end
 				$last_closure_arg = known_type(instr.getDeps[0].getVname, cfg, c_name)
 				do_type_inference_cfg(instr.getClosure, f_name, c_name, print)
-				if type_not_found(instr.getClosure.return_type)==false and type_not_found(cfg.return_type)
-					cfg.return_type = instr.getClosure.return_type
-				end
+				#if type_not_found(instr.getClosure.return_type)==false and type_not_found(cfg.return_type)
+				#	cfg.return_type = instr.getClosure.return_type
+				#end
 				$last_closure_arg = nil
 				if print
 					puts "CLOSURE END"
@@ -257,7 +346,9 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 				#end
 				if instr.instance_of?Const_instr
 					add_to_cfg_varmap(cfg, c_name, instr.getDefv, instr.getConst)
-				elsif instr.instance_of?Copy_instr
+				elsif instr.instance_of?BuildString_instr
+					add_to_cfg_varmap(cfg, c_name, instr.getDefv, "string")
+				elsif instr.instance_of?Copy_instr or instr.instance_of?HashField_instr
 					if instr.getDeps.length > 0
 						var = known_type(instr.getDeps[0].getVname, cfg, c_name)
 						#COPY des source
@@ -266,7 +357,7 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 							add_to_cfg_varmap(cfg, c_name, instr.getDefv, var.type)
 						end
 					else
-						add_to_cfg_varmap(cfg, c_name, instr.getDefv, "String")
+						add_to_cfg_varmap(cfg, c_name, instr.getDefv, "string")
 					end
 				elsif instr.instance_of?ReceiveArg_instr
 					if $last_closure_arg == nil
@@ -300,14 +391,24 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 				#	end
 				elsif instr.is_a?Call_instr
 					caller_type = known_type(instr.getCaller, cfg, c_name)
-					if type=util_function(instr.getFuncname)
+					if type=util_function(instr.getFuncname, instr, cfg, c_name)
 						add_to_cfg_varmap(cfg, c_name, instr.getDefv, type)
 					elsif type_not_found(caller_type)
 					else
+						if instr.getResolvedCaller.length == 0
+							instr.setResolvedCaller(caller_type.type)
+						end
 						#is field?
 						is_field = known_type(instr.getFuncname.gsub('!','').gsub('?',''), cfg, caller_type.type)
 						if type_not_found(is_field) == false
 							add_to_cfg_varmap(cfg, c_name, instr.getDefv, is_field.type)
+						else
+							#TODO: This may be a bad heuristic: if field matches a table name...
+							#In community engine, tag.taggings, but taggings is not defined as a field in Tag model??!!
+							tname = searchTableName(instr.getFuncname)
+							if tname != nil and isActiveRecord(c_name)
+								add_to_cfg_varmap(cfg, c_name, instr.getDefv, tname)
+							end
 						end
 						#puts "Caller type found: #{caller_type.type}"
 						if instr.isReadQuery or ["new"].include?instr.getFuncname
@@ -369,7 +470,7 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 						end 
 					end
 					if type_not_found(r_type)==false
-						cfg.return_type = r_type
+						cfg.setReturnType(r_type)
 					end
 				else
 					#var = Variable.new("returnv", "NIL")	

@@ -13,13 +13,13 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->new_record? def_%v_3 %self[2.0,] 
+		 6: %self->new_record? def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: %self->initiator def_%v_4 %self[2.0,] 
+		 0: %self->initiator def_%v_4 %self[2.0,] 	 ARGS:
 		 1: COPY def_%v_3 %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -30,8 +30,8 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: %self->user def_%v_5 %self[2.0,] 
-		 1: %v_5->has_reached_daily_friend_request_limit? def_%v_6 %v_5[5.0,] 
+		 0: %self->user def_%v_5 %self[2.0,] 	 ARGS:
+		 1: %v_5->has_reached_daily_friend_request_limit? def_%v_6 %v_5[5.0,] 	 ARGS:
 		 2: COPY def_%v_3 %v_6[5.1,] 
 BB 6
 	outgoing: 7 8 
@@ -43,9 +43,9 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->errors def_%v_7 %self[2.0,] 
+		 1: %self->errors def_%v_7 %self[2.0,] 	 ARGS:
 		 2: COPY def_%v_8 
-		 3: %v_7->add def_%v_9 %v_7[7.1,] %v_8[7.2,] 
+		 3: %v_7->add def_%v_9 %v_7[7.1,] %v_8[7.2,] 	 ARGS:Symbol,%v_8,
 		 4: RETURN %v_9[7.3,] %self[7.1,2.0,] 
 BB 8
 	outgoing: 10 
@@ -74,10 +74,10 @@ BB 2
 		 5: 
 		 6: (Friendship) def_%v_3 
 		 7: COPY def_%v_4 
-		 8: %self->friend_id def_%v_5 %self[2.0,] 
-		 9: %self->user_id def_%v_6 %self[2.0,2.8,] 
-		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
-		 11: %v_7->first def_%v_8 %v_7[2.10,] 
+		 8: %self->friend_id def_%v_5 %self[2.0,] 	 ARGS:
+		 9: %self->user_id def_%v_6 %self[2.0,2.8,] 	 ARGS:
+		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_4,%v_5,%v_6,
+		 11: %v_7->first def_%v_8 %v_7[2.10,] 	 ARGS:
 		 12: RETURN %v_8[2.11,] %self[2.0,2.8,2.9,] 
 BB 3
 	outgoing: 
@@ -99,10 +99,10 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->friendship_status def_%v_3 %self[2.0,] 
+		 6: %self->friendship_status def_%v_3 %self[2.0,] 	 ARGS:
 		 7: (FriendshipStatus) def_%v_4 
-		 8: def_%v_5 %v_4[2.7,] 
-		 9: %v_3->eql? def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->eql? def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -124,10 +124,10 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->friendship_status def_%v_3 %self[2.0,] 
+		 6: %self->friendship_status def_%v_3 %self[2.0,] 	 ARGS:
 		 7: (FriendshipStatus) def_%v_4 
-		 8: def_%v_5 %v_4[2.7,] 
-		 9: %v_3->eql? def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->eql? def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -149,10 +149,10 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->friendship_status def_%v_3 %self[2.0,] 
+		 6: %self->friendship_status def_%v_3 %self[2.0,] 	 ARGS:
 		 7: (FriendshipStatus) def_%v_4 
-		 8: def_%v_5 %v_4[2.7,] 
-		 9: %v_3->eql? def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->eql? def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -177,13 +177,13 @@ BB 2
 		 6: RECEIVEARG def_friend 
 		 7: 
 		 8: COPY def_%v_3 
-		 9: user->id def_%v_4 user[2.5,] 
-		 10: friend->id def_%v_5 friend[2.6,] 
+		 9: user->id def_%v_4 user[2.5,] 	 ARGS:
+		 10: friend->id def_%v_5 friend[2.6,] 	 ARGS:
 		 11: (FriendshipStatus) def_%v_6 
-		 12: def_%v_7 %v_6[2.11,] 
-		 13: %v_7->id def_%v_8 %v_7[2.12,] 
-		 14: %self->where def_%v_9 %self[2.0,] %v_3[2.8,] %v_4[2.9,] %v_5[2.10,] %v_8[2.13,] 
-		 15: %v_9->first def_%v_10 %v_9[2.14,] 
+		 12: %v_6->[] def_%v_7 %v_6[2.11,] 	 ARGS:Symbol,
+		 13: %v_7->id def_%v_8 %v_7[2.12,] 	 ARGS:
+		 14: %self->where def_%v_9 %self[2.0,] %v_3[2.8,] %v_4[2.9,] %v_5[2.10,] %v_8[2.13,] 	 ARGS:%v_3,%v_4,%v_5,%v_8,
+		 15: %v_9->first def_%v_10 %v_9[2.14,] 	 ARGS:
 		 16: RETURN %v_10[2.15,] %self[2.0,2.14,] 
 BB 3
 	outgoing: 
@@ -206,8 +206,8 @@ BB 2
 		 4: 
 		 5: 
 		 6: (UserNotifier) def_%v_3 
-		 7: %v_3->friendship_accepted def_%v_4 %v_3[2.6,] %self[2.0,] 
-		 8: %v_4->deliver def_%v_5 %v_4[2.7,] 
+		 7: %v_3->friendship_accepted def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%self,
+		 8: %v_4->deliver def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -230,8 +230,8 @@ BB 2
 		 4: 
 		 5: 
 		 6: (FriendshipStatus) def_%v_3 
-		 7: def_%v_4 %v_3[2.6,] 
-		 8: %v_4->id def_%v_5 %v_4[2.7,] 
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+		 8: %v_4->id def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: COPY def_friendship_status_id %v_5[2.8,] 
 		 10: RETURN %v_5[2.8,] %self[2.0,] 
 BB 3

@@ -51,7 +51,7 @@ def searchTableName(name)
 		_name = name[0..(name.index('.')-1)]
 	end
 	$table_names.each do |t|
-		if t.downcase == _name.delete('@').downcase
+		if t.downcase.singularize == _name.delete('@').downcase.singularize
 			return t
 		end
 	end
@@ -119,6 +119,8 @@ end
 def check_method_keyword(_caller, k)
 	if _caller != nil and _caller.include?("Dir.glob") or _caller == "File"
 		return nil
+	elsif k.index("find_by")==0
+		return "SELECT"
 	else
 		return $key_words[k]
 	end
@@ -330,8 +332,8 @@ def graph_write(file, word)
 end
 
 def OUTPUT_Direct(w)
-	#puts w
-	$trace_output_file.write("#{w}\n")
+	puts w
+	#$trace_output_file.write("#{w}\n")
 end
 
 def clear_data_structure
@@ -361,6 +363,7 @@ def clear_data_structure
 	
 	$closure_stack = Array.new
 	$in_loop = Array.new
+	$in_validation = Array.new
 	$general_call_stack = Array.new
 	$funccall_stack = Array.new
 	$root = nil

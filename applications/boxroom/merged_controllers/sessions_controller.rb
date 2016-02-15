@@ -2,7 +2,6 @@ class SessionsController < ApplicationController
   skip_before_action :require_login
 
   def new
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title, t(:sign_in) 
  content_for :title 
  form_tag(sessions_path) do 
@@ -15,7 +14,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  submit_tag t(:sign_in) 
  link_to t(:reset_password), new_reset_password_path 
  end 
-end
+
   end
 
   def create

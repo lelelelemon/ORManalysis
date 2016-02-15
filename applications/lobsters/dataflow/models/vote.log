@@ -15,11 +15,11 @@ BB 2
 		 5: RECEIVEARG def_user 
 		 6: RECEIVEARG def_stories 
 		 7: 
-		 8: COPY def_%v_3 
+		 8: HASH- def_%v_3 
 		 9: COPY def_votes %v_3[2.8,] 
 		 10: 
 		 11: (Vote) def_%v_4 
-		 12: COPY def_%v_5 user[2.5,] stories[2.6,] 
+		 12: HASH-user_id-story_id-comment_id- def_%v_5 user[2.5,] stories[2.6,] 
 		 13: %v_4->where def_%v_6 %v_4[2.11,] %v_5[2.12,] 	 ARGS:%v_5,
 		 14: %v_6->each def_%v_7 %v_6[2.13,] %self[2.0,] 	 ARGS:%v_6,
 CLOSURE BEGIN: v[] votes[2.9,] 
@@ -44,7 +44,7 @@ BB 3
 		 1: v->story_id def_%cl_1_3 v[2.2,] 	 ARGS:
 		 2: v->vote def_%cl_1_4 v[3.1,2.2,] 	 ARGS:
 		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.2,] 	 ARGS:
-		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 4: HASH-vote-reason- def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: ATTRASSIGN votes->[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: RETURN %cl_1_6[3.4,] %self[2.0,] 
 BB 4
@@ -83,11 +83,11 @@ BB 2
 		 5: RECEIVEARG def_user_id 
 		 6: RECEIVEARG def_story_id 
 		 7: 
-		 8: COPY def_%v_3 
+		 8: HASH- def_%v_3 
 		 9: COPY def_votes %v_3[2.8,] 
 		 10: 
 		 11: (Vote) def_%v_4 
-		 12: COPY def_%v_5 user_id[2.5,] story_id[2.6,] 
+		 12: HASH-user_id-story_id- def_%v_5 user_id[2.5,] story_id[2.6,] 
 		 13: %v_4->where def_%v_6 %v_4[2.11,] %v_5[2.12,] 	 ARGS:%v_5,
 		 14: COPY def_%v_7 
 		 15: %v_6->where def_%v_8 %v_6[2.13,] %v_7[2.14,] 	 ARGS:%v_7,
@@ -114,7 +114,7 @@ BB 3
 		 1: v->comment_id def_%cl_1_3 v[2.2,] 	 ARGS:
 		 2: v->vote def_%cl_1_4 v[3.1,2.2,] 	 ARGS:
 		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.2,] 	 ARGS:
-		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 4: HASH-vote-reason- def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: ATTRASSIGN votes->[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: RETURN %cl_1_6[3.4,] %self[2.0,] 
 BB 4
@@ -160,19 +160,19 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_4 
+		 1: HASH- def_%v_4 
 		 2: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_5 user_id[2.5,] story_ids[2.6,] 
+		 1: HASH-user_id-comment_id-story_id- def_%v_5 user_id[2.5,] story_ids[2.6,] 
 		 2: %self->where def_%v_6 %self[2.0,] %v_5[4.1,] 	 ARGS:%v_5,
 		 3: COPY def_votes %v_6[4.2,] 
 		 4: 
-		 5: COPY def_%v_7 
-		 6: def_%v_8 %v_6[4.2,] %v_7[4.5,] %self[4.2,2.0,] 	 ARGS:%v_7,%v_6,
+		 5: HASH- def_%v_7 
+		 6: %v_6->inject def_%v_8 %v_6[4.2,] %v_7[4.5,] %self[4.2,2.0,] 	 ARGS:%v_7,%v_6,
 CLOSURE BEGIN: v[] memo[] 
 BB 1
 	outgoing: 6 2 
@@ -196,7 +196,7 @@ BB 3
 		 1: v->story_id def_%cl_1_3 v[2.3,] 	 ARGS:
 		 2: v->vote def_%cl_1_4 v[3.1,2.3,] 	 ARGS:
 		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.3,] 	 ARGS:
-		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 4: HASH-vote-reason- def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: ATTRASSIGN memo->[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: 
 		 7: RETURN memo[3.5,2.2,] %self[2.0,] 
@@ -242,19 +242,19 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_4 
+		 1: HASH- def_%v_4 
 		 2: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_5 user_id[2.5,] comment_ids[2.6,] 
+		 1: HASH-user_id-comment_id- def_%v_5 user_id[2.5,] comment_ids[2.6,] 
 		 2: %self->where def_%v_6 %self[2.0,] %v_5[4.1,] 	 ARGS:%v_5,
 		 3: COPY def_votes %v_6[4.2,] 
 		 4: 
-		 5: COPY def_%v_7 
-		 6: def_%v_8 %v_6[4.2,] %v_7[4.5,] %self[4.2,2.0,] 	 ARGS:%v_7,%v_6,
+		 5: HASH- def_%v_7 
+		 6: %v_6->inject def_%v_8 %v_6[4.2,] %v_7[4.5,] %self[4.2,2.0,] 	 ARGS:%v_7,%v_6,
 CLOSURE BEGIN: v[] memo[] 
 BB 1
 	outgoing: 6 2 
@@ -278,7 +278,7 @@ BB 3
 		 1: v->comment_id def_%cl_1_3 v[2.3,] 	 ARGS:
 		 2: v->vote def_%cl_1_4 v[3.1,2.3,] 	 ARGS:
 		 3: v->reason def_%cl_1_5 v[3.1,3.2,2.3,] 	 ARGS:
-		 4: COPY def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 4: HASH-vote-reason- def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: ATTRASSIGN memo->[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: 
 		 7: RETURN memo[3.5,2.2,] %self[2.0,] 
@@ -332,7 +332,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: (Vote) def_%v_3 
-		 2: COPY def_%v_4 user_id[2.8,] story_id[2.6,] comment_id[2.7,] 
+		 2: HASH-user_id-story_id-comment_id- def_%v_4 user_id[2.8,] story_id[2.6,] comment_id[2.7,] 
 		 3: %v_3->where def_%v_5 %v_3[4.1,] %v_4[4.2,] 	 ARGS:%v_4,
 		 4: %v_5->first_or_initialize def_%v_6 %v_5[4.3,] 	 ARGS:
 		 5: COPY def_v %v_6[4.4,] 
@@ -517,7 +517,7 @@ BB 23
 	outgoing: 24 25 44 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_21 upvote[15.0,] %cl_1_20[22.0,21.0,] 	 ARGS:%cl_1_20,
+		 0: upvote->+ def_%cl_1_21 upvote[15.0,] %cl_1_20[22.0,21.0,] 	 ARGS:%cl_1_20,
 		 1: COPY def_upvote %cl_1_21[23.0,] 
 		 2: 
 		 3: vote->== def_%cl_1_22 vote[] 	 ARGS:Fixnum,
@@ -537,7 +537,7 @@ BB 26
 	outgoing: 27 44 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_24 downvote[18.0,] %cl_1_23[25.0,24.0,] 	 ARGS:%cl_1_23,
+		 0: downvote->+ def_%cl_1_24 downvote[18.0,] %cl_1_23[25.0,24.0,] 	 ARGS:%cl_1_23,
 		 1: COPY def_downvote %cl_1_24[26.0,] 
 		 2: 
 		 3: ATTRASSIGN v->vote vote[] 
@@ -602,8 +602,8 @@ BB 34
 		 0: 
 		 1: (User) def_%cl_1_35 
 		 2: c->user_id def_%cl_1_36 c[33.4,] 	 ARGS:
-		 3: def_%cl_1_37 upvote[29.0,23.1,7.0,] downvote[28.0,26.1,10.0,] 	 ARGS:downvote,
-		 4: COPY def_%cl_1_38 %cl_1_37[34.3,] 
+		 3: upvote->- def_%cl_1_37 upvote[29.0,23.1,7.0,] downvote[28.0,26.1,10.0,] 	 ARGS:downvote,
+		 4: HASH-karma- def_%cl_1_38 %cl_1_37[34.3,] 
 		 5: %cl_1_35->update_counters def_%cl_1_39 %cl_1_35[34.1,] %cl_1_36[34.2,] %cl_1_38[34.4,] 	 ARGS:%cl_1_36,%cl_1_38,
 		 6: 
 BB 35
@@ -638,8 +638,8 @@ BB 38
 		 0: 
 		 1: (User) def_%cl_1_46 
 		 2: s->user_id def_%cl_1_47 s[37.4,] 	 ARGS:
-		 3: def_%cl_1_48 upvote[29.0,23.1,7.0,] downvote[28.0,26.1,10.0,] 	 ARGS:downvote,
-		 4: COPY def_%cl_1_49 %cl_1_48[38.3,] 
+		 3: upvote->- def_%cl_1_48 upvote[29.0,23.1,7.0,] downvote[28.0,26.1,10.0,] 	 ARGS:downvote,
+		 4: HASH-karma- def_%cl_1_49 %cl_1_48[38.3,] 
 		 5: %cl_1_46->update_counters def_%cl_1_50 %cl_1_46[38.1,] %cl_1_47[38.2,] %cl_1_49[38.4,] 	 ARGS:%cl_1_47,%cl_1_49,
 		 6: 
 BB 39

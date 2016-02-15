@@ -25,16 +25,16 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->dup def_%v_3 %self[2.0,] 
+		 1: %self->dup def_%v_3 %self[2.0,] 	 ARGS:
 		 2: COPY def_new_folder %v_3[4.1,] 
 		 3: 
 		 4: ATTRASSIGN %v_3->is_copied_folder 
 		 5: 
 		 6: ATTRASSIGN new_folder->parent target_folder[2.5,] 
 		 7: 
-		 8: new_folder->save! def_%v_4 new_folder[4.2,4.6,] 
+		 8: new_folder->save! def_%v_4 new_folder[4.2,4.6,] 	 ARGS:
 		 9: 
-		 10: originally_copied_folder->nil? def_%v_5 originally_copied_folder[3.0,2.6,] 
+		 10: originally_copied_folder->nil? def_%v_5 originally_copied_folder[3.0,2.6,] 	 ARGS:
 		 11: BRANCH %v_5[4.10,] 
 BB 5
 	outgoing: 7 
@@ -53,8 +53,8 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->permissions def_%v_7 %self[2.0,] 
-		 2: %v_7->each def_%v_8 %v_7[7.1,] %self[7.1,2.0,] 
+		 1: %self->permissions def_%v_7 %self[2.0,] 	 ARGS:
+		 2: %v_7->each def_%v_8 %v_7[7.1,] %self[7.1,2.0,] 	 ARGS:%v_7,
 CLOSURE BEGIN: permission[] new_folder[4.2,4.6,] new_permission[] 
 BB 1
 	outgoing: 6 2 
@@ -74,12 +74,12 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: permission->dup def_%cl_1_3 permission[2.2,] 
+		 1: permission->dup def_%cl_1_3 permission[2.2,] 	 ARGS:
 		 2: COPY def_new_permission %cl_1_3[3.1,] 
 		 3: 
 		 4: ATTRASSIGN %cl_1_3->folder new_folder[] 
 		 5: 
-		 6: new_permission->save! def_%cl_1_4 new_permission[3.2,] 
+		 6: new_permission->save! def_%cl_1_4 new_permission[3.2,] 	 ARGS:
 		 7: RETURN %cl_1_4[3.6,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -94,8 +94,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 3: 
-		 4: %self->user_files def_%v_9 %self[7.1,2.0,] 
-		 5: %v_9->each def_%v_10 %v_9[7.4,] %self[7.1,7.4,2.0,] 
+		 4: %self->user_files def_%v_9 %self[7.1,2.0,] 	 ARGS:
+		 5: %v_9->each def_%v_10 %v_9[7.4,] %self[7.1,7.4,2.0,] 	 ARGS:%v_9,
 CLOSURE BEGIN: file[] new_folder[4.2,4.6,] 
 BB 1
 	outgoing: 6 2 
@@ -115,7 +115,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: file->copy def_%cl_2_3 file[2.2,] new_folder[] 
+		 1: file->copy def_%cl_2_3 file[2.2,] new_folder[] 	 ARGS:new_folder,
 		 2: RETURN %cl_2_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -130,8 +130,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 6: 
-		 7: %self->children def_%v_11 %self[7.1,7.4,2.0,] 
-		 8: %v_11->each def_%v_12 %v_11[7.7,] %self[7.1,7.4,7.7,2.0,] 
+		 7: %self->children def_%v_11 %self[7.1,7.4,2.0,] 	 ARGS:
+		 8: %v_11->each def_%v_12 %v_11[7.7,] %self[7.1,7.4,7.7,2.0,] 	 ARGS:%v_11,
 CLOSURE BEGIN: folder[] originally_copied_folder[5.0,3.0,2.6,] new_folder[4.2,4.6,] 
 BB 1
 	outgoing: 9 2 
@@ -151,7 +151,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: folder->== def_%cl_3_3 folder[2.2,] originally_copied_folder[] 
+		 1: folder->== def_%cl_3_3 folder[2.2,] originally_copied_folder[] 	 ARGS:originally_copied_folder,
 		 2: BRANCH %cl_3_3[3.1,] 
 BB 4
 	outgoing: 9 
@@ -163,7 +163,7 @@ BB 5
 	outgoing: 7 9 
 	datadep: 
 	instructions:
-		 0: folder->copy def_%cl_3_5 folder[2.2,] new_folder[] originally_copied_folder[] 
+		 0: folder->copy def_%cl_3_5 folder[2.2,] new_folder[] originally_copied_folder[] 	 ARGS:new_folder,originally_copied_folder,
 		 1: RETURN %cl_3_5[5.0,] %self[2.0,] 
 BB 7
 	outgoing: 9 
@@ -200,13 +200,13 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_target_folder 
 		 6: 
-		 7: target_folder->== def_%v_3 target_folder[2.5,] %self[2.0,] 
+		 7: target_folder->== def_%v_3 target_folder[2.5,] %self[2.0,] 	 ARGS:%self,
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: %self->parent_of? def_%v_4 %self[2.0,] target_folder[2.5,] 
+		 0: %self->parent_of? def_%v_4 %self[2.0,] target_folder[2.5,] 	 ARGS:target_folder,
 		 1: COPY def_%v_3 %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
@@ -219,7 +219,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: COPY def_%v_5 
-		 2: %self->raise def_%v_6 %self[2.0,] %v_5[5.1,] 
+		 2: %self->raise def_%v_6 %self[2.0,] %v_5[5.1,] 	 ARGS:%v_5,
 		 3: RETURN %v_6[5.2,] %self[5.2,2.0,] 
 BB 6
 	outgoing: 8 
@@ -228,7 +228,7 @@ BB 6
 		 0: 
 		 1: ATTRASSIGN %self->parent target_folder[2.5,] 
 		 2: 
-		 3: %self->save! def_%v_7 %self[6.1,2.0,] 
+		 3: %self->save! def_%v_7 %self[6.1,2.0,] 	 ARGS:
 		 4: RETURN %v_7[6.3,] %self[6.1,6.3,2.0,] 
 BB 8
 	outgoing: 
@@ -251,7 +251,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_permissions_to_copy 
 		 6: 
-		 7: permissions_to_copy->each def_%v_3 permissions_to_copy[2.5,] %self[2.0,] 
+		 7: permissions_to_copy->each def_%v_3 permissions_to_copy[2.5,] %self[2.0,] 	 ARGS:permissions_to_copy,
 CLOSURE BEGIN: permission[] %self[2.0,] attributes[] 
 BB 1
 	outgoing: 6 2 
@@ -271,19 +271,19 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: permission->attributes def_%cl_1_3 permission[2.2,] 
+		 1: permission->attributes def_%cl_1_3 permission[2.2,] 	 ARGS:
 		 2: COPY def_%cl_1_4 
 		 3: COPY def_%cl_1_5 
 		 4: COPY def_%cl_1_6 
-		 5: %cl_1_3->except def_%cl_1_7 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_6[3.4,] 
+		 5: %cl_1_3->except def_%cl_1_7 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_6[3.4,] 	 ARGS:%cl_1_4,%cl_1_5,%cl_1_6,
 		 6: COPY def_attributes %cl_1_7[3.5,] 
 		 7: 
 		 8: (Permission) def_%cl_1_8 
-		 9: %self->children def_%cl_1_9 %self[2.0,] 
-		 10: permission->group_id def_%cl_1_10 permission[3.1,2.2,] 
-		 11: COPY def_%cl_1_11 %cl_1_9[3.9,] %cl_1_10[3.10,] 
-		 12: %cl_1_8->where def_%cl_1_12 %cl_1_8[3.8,] %cl_1_11[3.11,] 
-		 13: %cl_1_12->update_all def_%cl_1_13 %cl_1_12[3.12,] attributes[3.6,] 
+		 9: %self->children def_%cl_1_9 %self[2.0,] 	 ARGS:
+		 10: permission->group_id def_%cl_1_10 permission[3.1,2.2,] 	 ARGS:
+		 11: HASH-folder_id-group_id- def_%cl_1_11 %cl_1_9[3.9,] %cl_1_10[3.10,] 
+		 12: %cl_1_8->where def_%cl_1_12 %cl_1_8[3.8,] %cl_1_11[3.11,] 	 ARGS:%cl_1_11,
+		 13: %cl_1_12->update_all def_%cl_1_13 %cl_1_12[3.12,] attributes[3.6,] 	 ARGS:attributes,
 		 14: RETURN %cl_1_13[3.13,] %self[3.9,2.0,] 
 BB 4
 	outgoing: 6 
@@ -298,8 +298,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 8: 
-		 9: %self->children def_%v_4 %self[2.0,] 
-		 10: %v_4->each def_%v_5 %v_4[2.9,] %self[2.0,2.9,] 
+		 9: %self->children def_%v_4 %self[2.0,] 	 ARGS:
+		 10: %v_4->each def_%v_5 %v_4[2.9,] %self[2.0,2.9,] 	 ARGS:%v_4,
 CLOSURE BEGIN: child[] permissions_to_copy[2.5,2.7,] 
 BB 1
 	outgoing: 9 2 
@@ -319,13 +319,13 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: child->has_children? def_%cl_2_3 child[2.2,] 
+		 1: child->has_children? def_%cl_2_3 child[2.2,] 	 ARGS:
 		 2: BRANCH %cl_2_3[3.1,] 
 BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: child->copy_permissions_to_children def_%cl_2_4 child[2.2,] permissions_to_copy[] 
+		 0: child->copy_permissions_to_children def_%cl_2_4 child[2.2,] permissions_to_copy[] 	 ARGS:permissions_to_copy,
 		 1: 
 BB 5
 	outgoing: 9 
@@ -371,8 +371,8 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_folder 
 		 6: 
-		 7: %self->children def_%v_3 %self[2.0,] 
-		 8: %v_3->each def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 
+		 7: %self->children def_%v_3 %self[2.0,] 	 ARGS:
+		 8: %v_3->each def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 	 ARGS:%v_3,
 CLOSURE BEGIN: child[] folder[2.5,] 
 BB 1
 	outgoing: 8 2 
@@ -392,7 +392,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: child->== def_%cl_1_3 child[2.2,] folder[] 
+		 1: child->== def_%cl_1_3 child[2.2,] folder[] 	 ARGS:folder,
 		 2: BRANCH %cl_1_3[3.1,] 
 BB 4
 	outgoing: 6 8 
@@ -406,7 +406,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: child->parent_of? def_%cl_1_5 child[2.2,] folder[] 
+		 1: child->parent_of? def_%cl_1_5 child[2.2,] folder[] 	 ARGS:folder,
 		 2: 
 		 3: RETURN %cl_1_5[5.1,] %self[2.0,] 
 BB 6
@@ -450,15 +450,15 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->parent def_%v_3 %self[2.0,] 
-		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
+		 6: %self->parent def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %self->new_record? def_%v_5 %self[2.0,] 
-		 1: %v_5->! def_%v_6 %v_5[3.0,] 
+		 0: %self->new_record? def_%v_5 %self[2.0,] 	 ARGS:
+		 1: %v_5->! def_%v_6 %v_5[3.0,] 	 ARGS:
 		 2: RETURN %v_6[3.1,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 5 
@@ -485,9 +485,9 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->children def_%v_3 %self[2.0,] 
-		 7: %v_3->count def_%v_4 %v_3[2.6,] 
-		 8: def_%v_5 %v_4[2.7,] 
+		 6: %self->children def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->count def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->> def_%v_5 %v_4[2.7,] 	 ARGS:Fixnum,
 		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -528,7 +528,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: COPY def_%v_6 
-		 1: %self->find_by_name_and_parent_id def_%v_7 %self[2.0,] %v_6[5.0,] 
+		 1: %self->find_by_name_and_parent_id def_%v_7 %self[2.0,] %v_6[5.0,] 	 ARGS:%v_6,Nil,
 		 2: ATTRASSIGN %self->root_folder %v_7[5.1,] 
 		 3: RETURN %v_7[5.1,] %self[5.1,5.2,2.0,] 
 BB 6
@@ -556,16 +556,16 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->parent def_%v_3 %self[2.0,] 
-		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 
+		 6: %self->parent def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: %self->name def_%v_5 %self[2.0,] 
+		 0: %self->name def_%v_5 %self[2.0,] 	 ARGS:
 		 1: COPY def_%v_6 
-		 2: %v_5->!= def_%v_7 %v_5[3.0,] %v_6[3.1,] 
+		 2: %v_5->!= def_%v_7 %v_5[3.0,] %v_6[3.1,] 	 ARGS:%v_6,
 		 3: COPY def_%v_4 %v_7[3.2,] 
 BB 4
 	outgoing: 5 6 
@@ -577,7 +577,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: COPY def_%v_8 
-		 1: %self->raise def_%v_9 %self[2.0,] %v_8[5.0,] 
+		 1: %self->raise def_%v_9 %self[2.0,] %v_8[5.0,] 	 ARGS:%v_8,
 		 2: RETURN %v_9[5.1,] %self[5.1,2.0,] 
 BB 6
 	outgoing: 8 
@@ -604,7 +604,7 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->is_root? def_%v_3 %self[2.0,] 
+		 6: %self->is_root? def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
@@ -617,9 +617,9 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->parent def_%v_5 %self[2.0,] 
-		 2: %v_5->permissions def_%v_6 %v_5[4.1,] 
-		 3: %v_6->each def_%v_7 %v_6[4.2,] %self[4.1,2.0,] 
+		 1: %self->parent def_%v_5 %self[2.0,] 	 ARGS:
+		 2: %v_5->permissions def_%v_6 %v_5[4.1,] 	 ARGS:
+		 3: %v_6->each def_%v_7 %v_6[4.2,] %self[4.1,2.0,] 	 ARGS:%v_6,
 CLOSURE BEGIN: %self[4.1,2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -640,7 +640,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (Permission) def_%cl_1_3 
-		 2: %cl_1_3->create! def_%cl_1_4 %cl_1_3[3.1,] %self[2.0,] 
+		 2: %cl_1_3->create! def_%cl_1_4 %cl_1_3[3.1,] %self[2.0,] 	 ARGS:%cl_1_3,
 CLOSURE BEGIN: permission[2.2,] p[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -660,21 +660,21 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: permission->group def_%cl_2_3 permission[] 
+		 1: permission->group def_%cl_2_3 permission[] 	 ARGS:
 		 2: ATTRASSIGN p->group %cl_2_3[3.1,] 
 		 3: 
 		 4: ATTRASSIGN p->folder %self[2.0,] 
 		 5: 
-		 6: permission->can_create def_%cl_2_4 permission[3.1,] 
+		 6: permission->can_create def_%cl_2_4 permission[3.1,] 	 ARGS:
 		 7: ATTRASSIGN p->can_create %cl_2_4[3.6,] 
 		 8: 
-		 9: permission->can_read def_%cl_2_5 permission[3.1,3.6,] 
+		 9: permission->can_read def_%cl_2_5 permission[3.1,3.6,] 	 ARGS:
 		 10: ATTRASSIGN p->can_read %cl_2_5[3.9,] 
 		 11: 
-		 12: permission->can_update def_%cl_2_6 permission[3.1,3.6,3.9,] 
+		 12: permission->can_update def_%cl_2_6 permission[3.1,3.6,3.9,] 	 ARGS:
 		 13: ATTRASSIGN p->can_update %cl_2_6[3.12,] 
 		 14: 
-		 15: permission->can_delete def_%cl_2_7 permission[3.1,3.6,3.9,3.12,] 
+		 15: permission->can_delete def_%cl_2_7 permission[3.1,3.6,3.9,3.12,] 	 ARGS:
 		 16: ATTRASSIGN p->can_delete %cl_2_7[3.15,] 
 		 17: RETURN %cl_2_7[3.15,] %self[2.0,] 
 BB 4
@@ -723,14 +723,14 @@ BB 2
 		 3: COPY def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->is_root? def_%v_3 %self[2.0,] 
+		 6: %self->is_root? def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: COPY def_%v_4 
-		 1: %self->raise def_%v_5 %self[2.0,] %v_4[3.0,] 
+		 1: %self->raise def_%v_5 %self[2.0,] %v_4[3.0,] 	 ARGS:%v_4,
 		 2: RETURN %v_5[3.1,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 

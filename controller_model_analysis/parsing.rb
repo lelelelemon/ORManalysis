@@ -19,6 +19,7 @@ load 'graph_component.rb'
 load 'compute_functional_dependency.rb'
 load 'compare_consequent_actions.rb'
 load 'type_inference.rb'
+load 'check_validation.rb'
 #load 'random_path.rb'
 load 'util.rb'
 load 'read_schema.rb'
@@ -209,7 +210,7 @@ $model_files = ""
 $log_files = ""
 $table_file = ""
 
-$type_inference = false
+$type_inference = true
 
 def print_classes(class_name=nil)
 	if class_name == nil
@@ -278,6 +279,10 @@ opt_parser = OptionParser.new do |opt|
 		options[:inference] = true
 	end
 
+	opt.on("-v", "--print-validation",String,"Print queries in validation") do |print_validation|
+		options[:print_validation] = true
+	end
+
 
 	opt.on("-n", "--print-instr [CLASS_NAME]",String,"Print instructions and CFG of all methods in the specified class") do |class_name|
 		options[:printinstr] = class_name
@@ -338,10 +343,12 @@ if options[:dir] != nil
 	else
 		read_ruby_files(options[:dir])
 		read_dataflow(options[:dir])
+		do_type_inference
 	end
 else
 	read_ruby_files
 	read_dataflow
+	do_type_inference
 end
 
 
@@ -463,8 +470,21 @@ if options[:consequent] != nil
 		@prev_list.push(n)
 	end
 
-	next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
-	File.open(next_file, "r").each do |line|
+	view_by_controllers_dir = "../zewei/view_controller_analysis/links_by_controllers/lobsters/#{start_class}_#{start_function}.txt"
+	@next_action = Array.new
+	File.open(view_by_controllers_dir, "r").each do |line|
+		if line.length > 1
+			line = line.gsub("\n","")
+			if @next_action.include?line
+			else
+				@next_action.push(line)
+			end
+		end
+	end
+			
+#	next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
+#	File.open(next_file, "r").each do |line|
+	@next_action.each do |line|
 		clear_data_structure
 
 		line = line.gsub("\n","")
@@ -479,12 +499,38 @@ if options[:consequent] != nil
 	end
 end
 
+if options[:print_validation] == true
+	call_file = "#{$app_dir}/calls.txt"
+	File.open(call_file, "r").each do |line|
+		line = line.gsub("\n","")
+		chs = line.split(',')
+		start_function = chs[1]
+		chs[0] = chs[0].capitalize
+		start_class = "#{chs[0]}Controller"
+		puts "Handling #{start_class}, #{start_function}"
+		level = 0
+
+		$output_dir = "#{$app_dir}/results/#{start_class}_#{start_function}"
+		system("mkdir #{$output_dir}")
+		graph_fname = "#{$output_dir}/validation.log"
+		puts "Graph_name = #{graph_fname}"
+		$graph_file = File.open(graph_fname, "w");
+		clear_data_structure
+
+		$cfg = trace_query_flow(start_class, start_function, "", "", 0)
+		addAllControlEdges
+		compute_source_sink_for_all_nodes
+		check_validations
+
+	end
+end
+
 if options[:xml] == true
 	generate_xml_files
 end
 
 if options[:print_all] == true
-	#$class_map.each do |keyc, valuec|
+	$class_map.each do |keyc, valuec|
 	#	puts "class #{keyc} < #{valuec.getUpperClass} #{isActiveRecord(keyc)}"
 		#valuec.getMethod("before_save").getCalls.each do |s|
 		#	puts "\t#{s.getFuncName}"
@@ -507,6 +553,25 @@ if options[:print_all] == true
 	#_file = File.open("#{$app_dir}/table_name.txt", "w")
 	#$table_names.each do |t|
 	#	_file.write("#{t}\n")
-	#end
+=begin
+		valuec.getMethods.each do |keym, valuem|
+			cfg = valuem.getCFG
+			if cfg!= nil
+				cfg.getBB.each do |bb|
+					bb.getInstr.each do |instr|
+						if instr.instance_of?Call_instr and instr.isReadQuery and instr.hash_fields.length > 0
+							puts "#{keyc}.#{keym}: Read QUERY #{instr.toString} fields:"
+							s = ""
+							instr.hash_fields.each do |h|
+								s = s + "#{h} "
+							end
+							puts "\t\t#{s}"
+						end
+					end
+				end
+			end
+		end
+=end
+	end
 	do_type_inference
 end
