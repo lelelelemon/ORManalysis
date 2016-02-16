@@ -14,6 +14,7 @@ class MessagesController < ApplicationController
     if params[:to]
       @new_message.recipient_username = params[:to]
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @direction == :out 
  else 
  end 
@@ -64,6 +65,8 @@ class MessagesController < ApplicationController
         :autocomplete => "off" 
  submit_tag "Send Message" 
  end 
+
+end
 
   end
 
@@ -76,7 +79,8 @@ class MessagesController < ApplicationController
 
     @new_message = Message.new
 
-     if @direction == :out 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @direction == :out 
  else 
  end 
  if @direction == :out 
@@ -127,11 +131,16 @@ class MessagesController < ApplicationController
  submit_tag "Send Message" 
  end 
 
+end
+
   end
 
   def create
     @cur_url = "/messages"
     @title = "Messages"
+
+    puts "message params: "
+    puts message_params
 
     @new_message = Message.new(message_params)
     @new_message.author_user_id = @user.id
@@ -144,7 +153,8 @@ class MessagesController < ApplicationController
         @new_message.recipient.username.to_s << "."
       return redirect_to "/messages"
     else
-       if @direction == :out 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @direction == :out 
  else 
  end 
  if @direction == :out 
@@ -194,6 +204,8 @@ class MessagesController < ApplicationController
         :autocomplete => "off" 
  submit_tag "Send Message" 
  end 
+
+end
 
     end
   end
@@ -218,6 +230,7 @@ class MessagesController < ApplicationController
       @message.has_been_read = true
       @message.save
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @message.author_user_id == @user.id 
  else 
  end 
@@ -259,6 +272,8 @@ class MessagesController < ApplicationController
  end 
  else 
  end 
+
+end
 
   end
 

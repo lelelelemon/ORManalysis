@@ -8,14 +8,18 @@ class SignupController < ApplicationController
     end
 
     @title = "Signup"
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if Rails.application.allow_invitation_requests? 
  else 
  end 
+
+end
 
   end
 
   def invite
     @title = "Pass Along an Invitation"
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @user.invited_by_user.try(:username) 
   form_tag "/invitations", :method => :post do |f| 
  if defined?(return_home) && return_home 
@@ -29,6 +33,8 @@ class SignupController < ApplicationController
  end 
  
  button_to "Skip", "/", :method => :get 
+
+end
 
   end
 
@@ -48,7 +54,8 @@ class SignupController < ApplicationController
     @new_user = User.new
     @new_user.email = @invitation.email
 
-     form_for @new_user, { :url => signup_path,
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_for @new_user, { :url => signup_path,
   :autocomplete => "off" } do |f| 
  hidden_field_tag "invitation_code", @invitation.code 
  error_messages_for(@new_user) 
@@ -74,6 +81,8 @@ class SignupController < ApplicationController
  
  submit_tag "Signup" 
  end 
+
+end
 
   end
 
@@ -98,7 +107,8 @@ class SignupController < ApplicationController
 
       return redirect_to "/signup/invite"
     else
-       form_for @new_user, { :url => signup_path,
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_for @new_user, { :url => signup_path,
   :autocomplete => "off" } do |f| 
  hidden_field_tag "invitation_code", @invitation.code 
  error_messages_for(@new_user) 
@@ -124,6 +134,8 @@ class SignupController < ApplicationController
  
  submit_tag "Signup" 
  end 
+
+end
 
     end
   end

@@ -41,7 +41,8 @@ class CommentsController < ApplicationController
         comment.errors.add(:comment, "^You have already posted a comment " <<
           "here recently.")
 
-         comment.short_id if comment.persisted? 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
  if comment.errors.any? 
@@ -152,13 +153,16 @@ class CommentsController < ApplicationController
  
  end 
 
+end
+
       end
     end
 
     if comment.valid? && params[:preview].blank? && comment.save
       comment.current_vote = { :vote => 1 }
 
-        comment.short_id 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  comment.short_id 
  comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
@@ -230,6 +234,8 @@ class CommentsController < ApplicationController
  end 
  
 
+end
+
     else
       comment.upvotes = 1
       comment.current_vote = { :vote => 1 }
@@ -243,7 +249,8 @@ class CommentsController < ApplicationController
       return render :text => "can't find comment", :status => 400
     end
 
-     comment.short_id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.short_id 
  comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
@@ -313,6 +320,8 @@ class CommentsController < ApplicationController
  else 
  raw comment.markeddown_comment 
  end 
+
+end
 
   end
 
@@ -337,7 +346,8 @@ class CommentsController < ApplicationController
       return render :text => "can't find comment", :status => 400
     end
 
-     comment.short_id if comment.persisted? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
  if comment.errors.any? 
@@ -447,6 +457,8 @@ class CommentsController < ApplicationController
  end 
  
  end 
+
+end
 
   end
 
@@ -459,7 +471,8 @@ class CommentsController < ApplicationController
     comment.story = parent_comment.story
     comment.parent_comment = parent_comment
 
-     comment.short_id if comment.persisted? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
  if comment.errors.any? 
@@ -570,6 +583,8 @@ class CommentsController < ApplicationController
  
  end 
 
+end
+
   end
 
   def delete
@@ -579,7 +594,8 @@ class CommentsController < ApplicationController
 
     comment.delete_for_user(@user)
 
-     comment.short_id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.short_id 
  comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
@@ -649,6 +665,8 @@ class CommentsController < ApplicationController
  else 
  raw comment.markeddown_comment 
  end 
+
+end
 
   end
 
@@ -659,7 +677,8 @@ class CommentsController < ApplicationController
 
     comment.undelete_for_user(@user)
 
-     comment.short_id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.short_id 
  comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
@@ -729,6 +748,8 @@ class CommentsController < ApplicationController
  else 
  raw comment.markeddown_comment 
  end 
+
+end
 
   end
 
@@ -748,7 +769,8 @@ class CommentsController < ApplicationController
         [comment.id])
       comment.current_vote = votes[comment.id]
 
-       comment.short_id 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.short_id 
  comment.short_id 
  comment.short_id if comment.persisted? 
  comment.current_vote ? (comment.current_vote[:vote] == 1 ?
@@ -818,6 +840,8 @@ class CommentsController < ApplicationController
  else 
  raw comment.markeddown_comment 
  end 
+
+end
 
     else
       comment.current_vote = { :vote => 1 }
@@ -906,96 +930,8 @@ class CommentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html {  @comments.each do |comment| 
-  comment.short_id 
- comment.short_id 
- comment.short_id if comment.persisted? 
- comment.current_vote ? (comment.current_vote[:vote] == 1 ?
-"upvoted" : "downvoted") : "" 
- comment.highlighted ? "highlighted" : "" 
- comment.score <= 0 ? "negative" : "" 
- comment.score <= -1 ? "negative_1" : "" 
- comment.score <= -3 ? "negative_3" : "" 
- comment.score <= -5 ? "negative_5" : "" 
- if !comment.is_gone? 
- if @user 
- else 
- link_to "", login_path, :class => "upvoter" 
- end 
- comment.score 
- if @user && @user.can_downvote?(comment) 
- else 
- end 
- end 
- comment.short_id 
- comment.short_id 
- if defined?(was_merged) && was_merged 
- end 
- if @user && @user.show_avatars? 
- comment.user.username 
- comment.user.avatar_url(16) 
- end 
- comment.user.username 
- comment.html_class_for_user 
-
-        comment.user.username 
- if comment.hat 
- comment.hat.to_html_label 
- end 
- if comment.previewing 
- else 
- if comment.has_been_edited? 
- elsif comment.is_from_email? 
- end 
- time_ago_in_words_label((comment.has_been_edited? ?
-          comment.updated_at : comment.created_at), :strip_about => true) 
- end 
- if !comment.previewing 
- comment.url 
- if comment.is_editable_by_user?(@user) 
- end 
- if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
- elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
- end 
- if @user && !comment.story.is_gone? && !comment.is_gone? 
- end 
- if comment.downvotes > 0 &&
-          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
-          @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
- elsif comment.current_vote && comment.current_vote[:vote] == -1 
- Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
- end 
- end 
- if defined?(show_story) && show_story 
- comment.story.comments_path 
- comment.story.title
-          
- end 
- if comment.is_gone? 
- comment.gone_text 
- else 
- raw comment.markeddown_comment 
- end 
- 
- end 
- if @page && @page > 1 
- @page == 2 ? "" : "/page/#{@page - 1}" 
- @page - 1 
- end 
- if @comments.any? 
- if @page && @page > 1 
- end 
- @page + 1 
- @page + 1 
- end 
- }
-      format.rss {
-        if @user && params[:token].present?
-          @title = "Private comments feed for #{@user.username}"
-        end
-
-         coder = HTMLEntities.new 
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ coder = HTMLEntities.new 
  Rails.application.name 
  @title.present? ?
       ": " + h(@title) : "" 
@@ -1012,91 +948,35 @@ class CommentsController < ApplicationController
           :decimal) 
  end 
 
+end
+ }
+      format.rss {
+        if @user && params[:token].present?
+          @title = "Private comments feed for #{@user.username}"
+        end
+
+        render :action => "index.rss", :layout => false
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ coder = HTMLEntities.new 
+ Rails.application.name 
+ @title.present? ?
+      ": " + h(@title) : "" 
+ @title 
+ Rails.application.root_url 
  @comments.each do |comment| 
-  comment.short_id 
- comment.short_id 
- comment.short_id if comment.persisted? 
- comment.current_vote ? (comment.current_vote[:vote] == 1 ?
-"upvoted" : "downvoted") : "" 
- comment.highlighted ? "highlighted" : "" 
- comment.score <= 0 ? "negative" : "" 
- comment.score <= -1 ? "negative_1" : "" 
- comment.score <= -3 ? "negative_3" : "" 
- comment.score <= -5 ? "negative_5" : "" 
- if !comment.is_gone? 
- if @user 
- else 
- link_to "", login_path, :class => "upvoter" 
- end 
- comment.score 
- if @user && @user.can_downvote?(comment) 
- else 
- end 
- end 
- comment.short_id 
- comment.short_id 
- if defined?(was_merged) && was_merged 
- end 
- if @user && @user.show_avatars? 
- comment.user.username 
- comment.user.avatar_url(16) 
- end 
- comment.user.username 
- comment.html_class_for_user 
-
-        comment.user.username 
- if comment.hat 
- comment.hat.to_html_label 
- end 
- if comment.previewing 
- else 
- if comment.has_been_edited? 
- elsif comment.is_from_email? 
- end 
- time_ago_in_words_label((comment.has_been_edited? ?
-          comment.updated_at : comment.created_at), :strip_about => true) 
- end 
- if !comment.previewing 
+ raw coder.encode(comment.story.title, :decimal) 
  comment.url 
- if comment.is_editable_by_user?(@user) 
+ comment.short_id_url 
+ comment.user.username 
+ comment.created_at.rfc2822 
+ comment.url 
+ raw coder.encode(comment.markeddown_comment,
+          :decimal) 
  end 
- if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
- elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
- end 
- if @user && !comment.story.is_gone? && !comment.is_gone? 
- end 
- if comment.downvotes > 0 &&
-          ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
-          @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
- elsif comment.current_vote && comment.current_vote[:vote] == -1 
- Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
- end 
- end 
- if defined?(show_story) && show_story 
- comment.story.comments_path 
- comment.story.title
-          
- end 
- if comment.is_gone? 
- comment.gone_text 
- else 
- raw comment.markeddown_comment 
- end 
- 
- end 
- if @page && @page > 1 
- @page == 2 ? "" : "/page/#{@page - 1}" 
- @page - 1 
- end 
- if @comments.any? 
- if @page && @page > 1 
- end 
- @page + 1 
- @page + 1 
- end 
+
+end
 
   end
 
@@ -1150,6 +1030,7 @@ class CommentsController < ApplicationController
     #    end
     #  end
     #end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @threads.each do |thread| 
  comments_by_parent = thread.group_by(&:parent_comment_id) 
  subtree = comments_by_parent[nil] 
@@ -1232,6 +1113,8 @@ class CommentsController < ApplicationController
  end 
  end 
 
+end
+
   end
 
 private
@@ -1240,7 +1123,8 @@ private
     comment.previewing = true
     comment.is_deleted = false # show normal preview for deleted comments
 
-     comment.short_id if comment.persisted? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
  if comment.errors.any? 
@@ -1350,6 +1234,8 @@ private
  end 
  
  end 
+
+end
 
   end
 

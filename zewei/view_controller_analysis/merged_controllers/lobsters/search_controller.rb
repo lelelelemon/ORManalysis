@@ -23,7 +23,8 @@ class SearchController < ApplicationController
       end
     end
 
-     form_tag "/search", :method => :get do 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_tag "/search", :method => :get do 
  text_field_tag "q", @search.q, { :size => 40 }.
         merge(@search.q.present? ? {} : { :autofocus => "autofocus" }) 
  radio_button_tag "what", "all", @search.what == "all" 
@@ -282,6 +283,8 @@ class SearchController < ApplicationController
  end 
  end 
  end 
+
+end
 
   end
 end

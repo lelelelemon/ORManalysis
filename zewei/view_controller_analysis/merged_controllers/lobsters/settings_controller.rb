@@ -5,6 +5,7 @@ class SettingsController < ApplicationController
     @title = "Account Settings"
 
     @edit_user = @user.dup
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @user.username 
  form_for @edit_user, :url => settings_path, :method => :post,
   :html => { :id => "edit_user" } do |f| 
@@ -83,6 +84,8 @@ class SettingsController < ApplicationController
  end 
  
 
+end
+
   end
 
   def delete_account
@@ -149,7 +152,8 @@ class SettingsController < ApplicationController
       @user = @edit_user
     end
 
-     @user.username 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @user.username 
  form_for @edit_user, :url => settings_path, :method => :post,
   :html => { :id => "edit_user" } do |f| 
  error_messages_for f.object 
@@ -226,6 +230,8 @@ class SettingsController < ApplicationController
  submit_tag "Send Invitation" 
  end 
  
+
+end
 
   end
 

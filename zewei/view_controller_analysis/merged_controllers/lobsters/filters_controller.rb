@@ -12,6 +12,7 @@ class FiltersController < ApplicationController
     else
       @filtered_tags = tags_filtered_by_cookie.to_a
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if !@user 
  end 
  form_tag "/filters", :method => :post do 
@@ -30,6 +31,8 @@ class FiltersController < ApplicationController
  end 
  submit_tag "Save Filters" 
  end 
+
+end
 
   end
 

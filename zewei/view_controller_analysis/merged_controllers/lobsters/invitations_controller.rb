@@ -9,6 +9,7 @@ class InvitationsController < ApplicationController
       flash[:error] = "Public invitation requests are not allowed."
       return redirect_to "/login"
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_for @invitation_request,
   :url => create_invitation_by_request_path do |f| 
  f.label :name, "Name:" 
@@ -20,10 +21,13 @@ class InvitationsController < ApplicationController
  submit_tag "Request Invitation" 
  end 
 
+end
+
   end
 
   def index
     @invitation_requests = InvitationRequest.where(:is_verified => true)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @user.is_moderator? 
  end 
  bit = 0 
@@ -52,6 +56,8 @@ class InvitationsController < ApplicationController
  if @invitation_requests.count == 0 
  @user.is_moderator?? 5 : 4 
  end 
+
+end
 
   end
 
@@ -104,7 +110,8 @@ class InvitationsController < ApplicationController
           params[:invitation_request][:email].to_s << "."
         return redirect_to "/invitations/request"
       else
-         form_for @invitation_request,
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_for @invitation_request,
   :url => create_invitation_by_request_path do |f| 
  f.label :name, "Name:" 
  f.text_field :name, :size => 30 
@@ -114,6 +121,8 @@ class InvitationsController < ApplicationController
  f.text_field :memo, :size => 30 
  submit_tag "Request Invitation" 
  end 
+
+end
 
       end
     else

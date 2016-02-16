@@ -12,7 +12,8 @@ class LoginController < ApplicationController
   def index
     @title = "Login"
     @referer ||= request.referer
-     form_tag login_path do 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_tag login_path do 
  label_tag :email, "E-mail or Username:" 
  text_field_tag :email, "", :size => 30, :autofocus => "autofocus" 
  label_tag :password, "Password:" 
@@ -26,6 +27,8 @@ class LoginController < ApplicationController
  hidden_field_tag :referer, @referer 
  end 
  end 
+
+end
 
   end
 
@@ -87,11 +90,14 @@ class LoginController < ApplicationController
 
   def forgot_password
     @title = "Reset Password"
-     form_tag reset_password_path do 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_tag reset_password_path do 
  label_tag :email, "E-mail or Username:" 
  text_field_tag :email, "", :size => 30 
  submit_tag "Reset Password" 
  end 
+
+end
 
   end
 
@@ -144,6 +150,7 @@ class LoginController < ApplicationController
         "used or you may have copied it incorrectly."
       return redirect_to forgot_password_path
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_tag set_new_password_path, { :autocomplete => "off" } do 
  error_messages_for(@reset_user) 
  hidden_field_tag "token", params[:token] 
@@ -155,6 +162,8 @@ class LoginController < ApplicationController
  password_field_tag :password_confirmation, "", :size => 30 
  submit_tag "Set New Password" 
  end 
+
+end
 
   end
 end

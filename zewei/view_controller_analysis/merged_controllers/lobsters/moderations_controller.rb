@@ -13,6 +13,7 @@ class ModerationsController < ApplicationController
 
     @moderations = Moderation.order("id desc").limit(50).offset((@page - 1) *
       50)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  bit = 0 
  @moderations.each do |mod| 
  bit 
@@ -59,6 +60,8 @@ class ModerationsController < ApplicationController
  @page + 1
       
  end 
+
+end
 
   end
 end
