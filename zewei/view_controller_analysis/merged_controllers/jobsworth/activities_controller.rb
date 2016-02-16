@@ -9,6 +9,7 @@ class ActivitiesController < ApplicationController
       @columns[w.column] ||= []
       @columns[w.column] << w
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "#{t("activities.dashboard")} - #{Setting.productName}" 
  content_for :head do 
  javascript_include_tag "excanvas" 
@@ -82,6 +83,8 @@ widget.configured
 widget.gadget_url
  end 
  end 
+
+end
 
   end
 end

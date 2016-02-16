@@ -8,6 +8,7 @@ class ServiceLevelAgreementsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @service_level_agreements }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("service_level_agreements.list_sla") 
  t("service_level_agreements.service") 
  t("service_level_agreements.customer") 
@@ -24,6 +25,8 @@ class ServiceLevelAgreementsController < ApplicationController
  end 
  link_to t("service_level_agreements.new_sla"), new_service_level_agreement_path 
 
+end
+
   end
 
   def show
@@ -33,6 +36,7 @@ class ServiceLevelAgreementsController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @service_level_agreement }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  notice 
  t("service_level_agreements.service") 
  @service_level_agreement.service_id 
@@ -45,6 +49,8 @@ class ServiceLevelAgreementsController < ApplicationController
  link_to t("button.edit"), edit_service_level_agreement_path(@service_level_agreement) 
  link_to t("button.back"), service_level_agreements_path 
 
+end
+
   end
 
   def new
@@ -54,6 +60,7 @@ class ServiceLevelAgreementsController < ApplicationController
       format.html # new.html.erb
       format.json { render json: @service_level_agreement }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("service_level_agreements.new_sla") 
   form_for(@service_level_agreement) do |f| 
   if object.errors.any? 
@@ -67,10 +74,13 @@ class ServiceLevelAgreementsController < ApplicationController
  
  link_to t("button.back"), service_level_agreements_path 
 
+end
+
   end
 
   def edit
     @service_level_agreement = current_user.company.service_level_agreements.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("service_level_agreements.edit_sla") 
   form_for(@service_level_agreement) do |f| 
   if object.errors.any? 
@@ -84,6 +94,8 @@ class ServiceLevelAgreementsController < ApplicationController
  
  link_to t("button.show"), @service_level_agreement 
  link_to t("button.back"), service_level_agreements_path 
+
+end
 
   end
 

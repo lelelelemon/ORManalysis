@@ -47,7 +47,8 @@ class WidgetsController < ApplicationController
     # TODO unify case's
     case @widget.widget_type
       when 0 then
-         for task in tasks 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ for task in tasks 
   if session[:hide_deferred].to_i == 0 || task.snoozed? 
 task.id 
 
@@ -133,6 +134,8 @@ task.id
  end 
 nd 
 
+end
+
       when 1 then
         # removed
       when 2 then
@@ -144,7 +147,8 @@ nd
   end
 
   def add
-     form_tag({:controller => 'widgets', :action => 'create' }, :id => "add_widget", :remote => true, :class => "form-inline") do  
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_tag({:controller => 'widgets', :action => 'create' }, :id => "add_widget", :remote => true, :class => "form-inline") do  
  t("widgets.widget_title") 
  text_field 'widget', 'name', {:size => 15} 
 
@@ -167,6 +171,8 @@ nd
  submit_tag t("button.create"), :class => "btn" 
  link_to_function(t("button.cancel"), "jQuery('#add-widget').addClass('hide');") 
  end 
+
+end
 nd
 
   def destroy

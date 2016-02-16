@@ -6,6 +6,7 @@ class CompaniesController < ApplicationController
 
   def edit
     @company = current_user.company
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "#{t("companies.company_settings")} - #{Setting.productName}" 
  content_for :navigation do 
   scripts = all_custom_scripts 
@@ -79,10 +80,13 @@ class CompaniesController < ApplicationController
  
  end 
 
+end
+
   end
 
   def score_rules
     @company = current_user.company
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "#{t('score_rules.score_rules')} - #{Setting.productName}" 
  content_for :navigation do 
   scripts = all_custom_scripts 
@@ -133,10 +137,13 @@ class CompaniesController < ApplicationController
  container_id 
  
 
+end
+
   end
 
   def custom_scripts
     @company = current_user.company
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "#{t('custom_scripts.custom_scripts')} - #{Setting.productName}" 
  content_for :navigation do 
   scripts = all_custom_scripts 
@@ -193,6 +200,8 @@ class CompaniesController < ApplicationController
  t('custom_scripts.no_scripts_found', :custom_scripts_root => Setting.custom_scripts_root) 
  end 
 
+end
+
   end
 
   def update
@@ -204,7 +213,8 @@ class CompaniesController < ApplicationController
     @internal = @company.internal_customer
     if @internal.nil?
       flash[:error] = t('error.company.no_internal_customer')
-       @page_title = "#{t("companies.company_settings")} - #{Setting.productName}" 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = "#{t("companies.company_settings")} - #{Setting.productName}" 
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -276,6 +286,8 @@ class CompaniesController < ApplicationController
  t("companies.logo_hint") 
  
  end 
+
+end
 
       return
     end
@@ -288,7 +300,8 @@ class CompaniesController < ApplicationController
       redirect_from_last
     else
       flash[:error] = @company.errors.full_messages.join(". ")
-       @page_title = "#{t("companies.company_settings")} - #{Setting.productName}" 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = "#{t("companies.company_settings")} - #{Setting.productName}" 
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -360,6 +373,8 @@ class CompaniesController < ApplicationController
  t("companies.logo_hint") 
  
  end 
+
+end
 
     end
   end

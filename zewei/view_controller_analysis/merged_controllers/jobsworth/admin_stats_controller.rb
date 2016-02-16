@@ -15,6 +15,7 @@ class AdminStatsController < ApplicationController
     @tasks_total          = TaskRecord.count
 
     @last_50_users = User.recent_users
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("admin_stats.admin_stats") 
  link_to t("admin_stats.admin"), :action => "index" 
  link_to t("admin_stats.news"), :action => "news" 
@@ -90,6 +91,8 @@ total_count_for(@tasks_from_this_year,"this_week")
  tz.utc_to_local(u.created_at).strftime("%d/%m %Y %H:%M") 
  u.time_zone 
  end 
+
+end
 
   end
 end

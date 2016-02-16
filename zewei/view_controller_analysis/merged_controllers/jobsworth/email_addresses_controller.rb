@@ -4,6 +4,7 @@ class EmailAddressesController < ApplicationController
 
   def index
     @email_addresses = current_user.company.email_addresses.where("user_id IS NULL").order("email ASC").paginate(:page => params[:page], :per_page => 50)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -55,6 +56,8 @@ class EmailAddressesController < ApplicationController
  end 
  will_paginate @email_addresses 
 
+end
+
   end
 
   def create
@@ -91,70 +94,7 @@ class EmailAddressesController < ApplicationController
     flash[:success] = t('flash.notice.model_attached_to_other',
                         model: EmailAddress.model_name.human,
                         other: User.model_name.human)
-     content_for :navigation do 
-  scripts = all_custom_scripts 
- t("companies.admin_panel") 
- active_class(selected, "general") 
- link_to( t("companies.general"), edit_company_path(current_user.company) ) 
- if current_user.company.use_score_rules? 
- active_class(selected, "score-rules") 
- link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
- end 
- if scripts.size > 0 
- active_class(selected, "custom-scripts") 
- link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
- end 
- active_class(selected, "templates") 
- link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
- active_class(selected, "triggers") 
- link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
- if current_user.can_use_billing? 
- active_class(selected, "services") 
- link_to( Service.model_name.human(:count => 2), services_path ) 
- end 
- active_class(selected, "news-items") 
- link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
- active_class(selected, "snippets") 
- link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
- active_class(selected, "orphaned-emails") 
- link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
- t("companies.properties") 
- active_class(selected, "users-properties") 
- link_to t("companies.person"), "/custom_attributes/edit?type=User" 
- active_class(selected, "customers-properties") 
- link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
- active_class(selected, "organizational-units-properties") 
- link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
- active_class(selected, "work-logs-properties") 
- link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
- active_class(selected, "task-properties") 
- link_to TaskRecord.model_name.human(:count => 1), properties_path 
- if current_user.use_resources? 
- active_class(selected, "resource-type") 
- link_to ResourceType.model_name.human(:count => 1), resource_types_path 
- end 
- 
- end 
- content_tag :legend, t('email_addresses.attach') 
- @email_address.email 
- form_for(@email_address, :html => {:class => "form-inline"}) do 
-@email_address.user.nil? ? 0 :@email_address.user.id 
- text_field :user, :name, {
-        :id=>"email_attach_user_name",
-        :size => 24,
-        :value => @email_address.user ? @email_address.user.name : '',
-        :autocomplete => "off",
-        :title => t('email_addresses.input_title'),
-        :rel => "tooltip"
-      }
-  
- submit_tag t("button.save"), :class => "btn btn-primary" 
- end 
-
-  end
-
-  def edit
-    @email_address = current_user.company.email_addresses.find(params[:id])
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -214,6 +154,75 @@ class EmailAddressesController < ApplicationController
   
  submit_tag t("button.save"), :class => "btn btn-primary" 
  end 
+
+end
+
+  end
+
+  def edit
+    @email_address = current_user.company.email_addresses.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ content_tag :legend, t('email_addresses.attach') 
+ @email_address.email 
+ form_for(@email_address, :html => {:class => "form-inline"}) do 
+@email_address.user.nil? ? 0 :@email_address.user.id 
+ text_field :user, :name, {
+        :id=>"email_attach_user_name",
+        :size => 24,
+        :value => @email_address.user ? @email_address.user.name : '',
+        :autocomplete => "off",
+        :title => t('email_addresses.input_title'),
+        :rel => "tooltip"
+      }
+  
+ submit_tag t("button.save"), :class => "btn btn-primary" 
+ end 
+
+end
 
   end
 

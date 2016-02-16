@@ -8,6 +8,7 @@ class MilestonesController < ApplicationController
     
     @scheduled_milestones = current_user.company.milestones.active.where([ "project_id in (?)", all_project_ids ]).where("due_at IS NOT NULL").order("due_at ASC")
     @unscheduled_milestones = current_user.company.milestones.active.where([ "project_id in (?)", all_project_ids ]).where(:due_at => nil)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("milestones.edit_title", title: Setting.productName) 
  t("milestones.milestones") 
  current_day = nil 
@@ -45,6 +46,8 @@ class MilestonesController < ApplicationController
  end 
  end 
 
+end
+
   end
 
   def new
@@ -64,7 +67,8 @@ class MilestonesController < ApplicationController
     end
 
     if request.xhr?
-       t("milestones.create") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("milestones.create") 
  form_tag '/milestones/create' , :remote => true, :name => 'milestoneForm', :id => "add_milestone_form", :class => "form-horizontal" do 
   t("milestones.project") 
  select 'milestone', 'project_id', grouped_client_projects_options(current_user.projects) 
@@ -81,7 +85,10 @@ class MilestonesController < ApplicationController
  
  end 
 
+end
+
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("milestones.new_title", title: Setting.productName) 
  form_tag({:action => 'create'}, {:class => "form-horizontal"}) do 
  "<legend>#{ t("milestones.new") }</legend>".html_safe unless @disable_title 
@@ -100,6 +107,8 @@ class MilestonesController < ApplicationController
  
  t("button.create") 
  end 
+
+end
 
   end
 
@@ -128,7 +137,8 @@ class MilestonesController < ApplicationController
     else
       flash[:error] = @milestone.errors.full_messages.join(". ")
       if request.xhr?
-         @page_title = t("milestones.new_title", title: Setting.productName) 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("milestones.new_title", title: Setting.productName) 
  form_tag({:action => 'create'}, {:class => "form-horizontal"}) do 
  "<legend>#{ t("milestones.new") }</legend>".html_safe unless @disable_title 
   t("milestones.project") 
@@ -147,8 +157,11 @@ class MilestonesController < ApplicationController
  t("button.create") 
  end 
 
+end
+
       else
-         @page_title = t("milestones.new_title", title: Setting.productName) 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("milestones.new_title", title: Setting.productName) 
  form_tag({:action => 'create'}, {:class => "form-horizontal"}) do 
  "<legend>#{ t("milestones.new") }</legend>".html_safe unless @disable_title 
   t("milestones.project") 
@@ -166,6 +179,8 @@ class MilestonesController < ApplicationController
  
  t("button.create") 
  end 
+
+end
 
       end
     end
@@ -176,6 +191,7 @@ class MilestonesController < ApplicationController
       flash[:error] = t('flash.error.model_closed', model: Milestone.model_name.human)
       redirect_to edit_project_path(@milestone.project)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("milestones.edit_title", title: "#{@milestone.name} - #{Setting.productName}") 
  form_for(@milestone, :html => {:class => "form-horizontal"}) do 
  t("milestones.edit") 
@@ -210,6 +226,8 @@ class MilestonesController < ApplicationController
  
  end 
 
+end
+
   end
 
   def update
@@ -225,7 +243,8 @@ class MilestonesController < ApplicationController
       redirect_to :controller => 'projects', :action => 'edit', :id => @milestone.project
     else
       flash[:error] = @milestone.errors.full_messages.join(". ")
-       @page_title = t("milestones.edit_title", title: "#{@milestone.name} - #{Setting.productName}") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("milestones.edit_title", title: "#{@milestone.name} - #{Setting.productName}") 
  form_for(@milestone, :html => {:class => "form-horizontal"}) do 
  t("milestones.edit") 
  link_to_tasks_filtered_by(t("milestones.view_tasks"), @milestone, :class => "btn btn-success pull-right") 
@@ -258,6 +277,8 @@ class MilestonesController < ApplicationController
  container_id 
  
  end 
+
+end
 
     end
   end

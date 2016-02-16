@@ -10,7 +10,8 @@ class WikiController < ApplicationController
       @page.company_id = current_user.company_id
       @page.name = name
       @page.project_id = nil
-       @page_title = t("wiki.title", title: "#{@page.name} - #{Setting.productName}") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("wiki.title", title: "#{@page.name} - #{Setting.productName}") 
  @page.name 
  t("wiki.linking_to_pages") 
  t("wiki.link_helper") 
@@ -26,8 +27,11 @@ class WikiController < ApplicationController
  end 
  end 
 
+end
+
     end
 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("wiki.title", title: Setting.productName) 
 
     headings = []
@@ -65,6 +69,8 @@ idx
  t("wiki.under_revision_by", user: @page.locked_by.name) 
  tz.utc_to_local(@page.locked_at).strftime(current_user.time_format) 
  end 
+
+end
 
   end
 
@@ -114,6 +120,7 @@ idx
     unless @page.new_record?
       @page.lock(Time.now.utc, current_user.id)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("wiki.title", title: "#{@page.name} - #{Setting.productName}") 
  @page.name 
  t("wiki.linking_to_pages") 
@@ -129,6 +136,8 @@ idx
  unless @page.revisions.empty?
  end 
  end 
+
+end
 
   end
 
@@ -148,6 +157,7 @@ idx
 
   def versions
     @page = WikiPage.where("company_id = ? AND name = ?", current_user.company_id, params[:id]).first
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("wiki.revisions_title", title: "#{@page.name} - #{Setting.productName}")  
  t("wiki.revisions") 
  @page.name 
@@ -176,6 +186,8 @@ idx
  tz.utc_to_local(@page.locked_at).strftime(current_user.time_format) 
  end 
  end 
+
+end
 
   end
 

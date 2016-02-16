@@ -5,6 +5,7 @@ class NewsItemsController < ApplicationController
 
   def index
     @news = current_user.company.news_items.paginate(:page => params[:page], :per_page => 10)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -57,10 +58,13 @@ class NewsItemsController < ApplicationController
  link_to t("button.delete"), news_item_path(news), :method => "delete" 
  end 
 
+end
+
   end
 
   def new
     @news = NewsItem.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -113,6 +117,8 @@ class NewsItemsController < ApplicationController
  check_box 'news', 'portal' 
  
  end 
+
+end
 
   end
 
@@ -125,7 +131,8 @@ class NewsItemsController < ApplicationController
       redirect_to news_items_path
     else
       flash[:error] = @news.errors.full_messages.join(". ")
-       content_for :navigation do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -178,11 +185,14 @@ class NewsItemsController < ApplicationController
  
  end 
 
+end
+
     end
   end
 
   def edit
     @news = current_user.company.news_items.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -236,6 +246,8 @@ class NewsItemsController < ApplicationController
  
  end 
 
+end
+
   end
 
   def update
@@ -246,7 +258,8 @@ class NewsItemsController < ApplicationController
       redirect_to news_items_path
     else
       flash[:error] = @news.errors.full_messages.join(". ")
-       content_for :navigation do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -298,6 +311,8 @@ class NewsItemsController < ApplicationController
  check_box 'news', 'portal' 
  
  end 
+
+end
 
     end
   end

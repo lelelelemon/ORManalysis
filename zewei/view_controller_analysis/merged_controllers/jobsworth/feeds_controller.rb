@@ -134,6 +134,9 @@ class FeedsController < ApplicationController
     render :text => content.to_s
     content = nil
     user = nil
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 

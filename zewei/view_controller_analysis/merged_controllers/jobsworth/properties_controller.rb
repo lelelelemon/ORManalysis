@@ -11,6 +11,7 @@ class PropertiesController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @properties }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -62,6 +63,8 @@ class PropertiesController < ApplicationController
  t("properties.default_color") 
  render :partial => @properties 
 
+end
+
   end
 
   # GET /properties/new
@@ -73,6 +76,7 @@ class PropertiesController < ApplicationController
       format.html # new.html.erb
       format.xml  { render :xml => @property }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -160,11 +164,14 @@ class PropertiesController < ApplicationController
  end 
  
 
+end
+
   end
 
   # GET /properties/1/edit
   def edit
     @property = current_user.company.properties.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -252,6 +259,8 @@ class PropertiesController < ApplicationController
  end 
  
 
+end
+
   end
 
   # POST /properties
@@ -267,7 +276,8 @@ class PropertiesController < ApplicationController
         format.html { redirect_to(edit_property_path(@property)) }
         format.xml  { render :xml => @property, :status => :created, :location => @property }
       else
-        format.html {  content_for :navigation do 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -353,6 +363,8 @@ class PropertiesController < ApplicationController
  add_value_link 
  end 
  
+
+end
  }
         format.xml  { render :xml => @property.errors, :status => :unprocessable_entity }
       end
@@ -377,7 +389,8 @@ class PropertiesController < ApplicationController
         format.html { redirect_to(edit_property_path(@property)) }
         format.xml  { head :ok }
       else
-        format.html {  content_for :navigation do 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -463,6 +476,8 @@ class PropertiesController < ApplicationController
  add_value_link 
  end 
  
+
+end
  }
         format.xml  { render :xml => @property.errors, :status => :unprocessable_entity }
       end

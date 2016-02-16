@@ -4,6 +4,7 @@ class TagsController < ApplicationController
 
   def index
     @tags = current_user.company.tags
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("tags.tags") 
  t("tags.name") 
  t("tags.task_info") 
@@ -12,6 +13,8 @@ class TagsController < ApplicationController
  t("tags.tag_count", open: tag.count, all: tag.total_count) 
  link_to '<i class="icon-pencil"></i>'.html_safe, edit_tag_path(tag) 
  end 
+
+end
 
   end
 
@@ -22,6 +25,7 @@ class TagsController < ApplicationController
       flash[:error] = t('flash.alert.unauthorized_operation')
       redirect_to tags_path
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_for(@tag) do |f| 
  t("tags.edit_tags", :tag => @tag.name) 
  f.label t("tags.name") 
@@ -31,6 +35,8 @@ class TagsController < ApplicationController
  link_to(t("button.delete"), tag_path(@tag), :class => "btn btn-danger", :method => :delete, :confirm => t("shared.are_you_sure")) 
  end 
  end 
+
+end
 
   end
 

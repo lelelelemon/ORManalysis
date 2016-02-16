@@ -6,6 +6,7 @@ class WorkLogsController < ApplicationController
   include WorkLogsHelper
 
   def new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("work_logs.title", title: Setting.productName) 
  t("work_logs.new_title") 
  form_for(@log, :as => :work_log, :html => {:class => "form-horizontal"}) do |f| 
@@ -50,6 +51,8 @@ class WorkLogsController < ApplicationController
  text_area(:work_log, :body, :rows => 10, :value => @log.body, :class => "input-xxlarge") 
  
  end 
+
+end
 
   end
 
@@ -65,7 +68,8 @@ class WorkLogsController < ApplicationController
       redirect_to tasks_path
     else
       flash[:error] = @log.errors.full_messages.join(". ")
-       @page_title = t("work_logs.title", title: Setting.productName) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("work_logs.title", title: Setting.productName) 
  t("work_logs.new_title") 
  form_for(@log, :as => :work_log, :html => {:class => "form-horizontal"}) do |f| 
   hidden_field_tag :task_id, @log.task.task_num 
@@ -110,10 +114,13 @@ class WorkLogsController < ApplicationController
  
  end 
 
+end
+
     end
   end
 
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("work_logs.title", title: Setting.productName) 
  t("work_logs.edit_title") 
  @log.task 
@@ -160,6 +167,8 @@ class WorkLogsController < ApplicationController
  
  end 
 
+end
+
   end
 
   def update
@@ -173,7 +182,8 @@ class WorkLogsController < ApplicationController
       redirect_to tasks_path
     else
       flash[:error] = @log.errors.full_messages.join(". ")
-       @page_title = t("work_logs.title", title: Setting.productName) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("work_logs.title", title: Setting.productName) 
  t("work_logs.edit_title") 
  @log.task 
  form_for(@log, :as => :work_log, :html => {:class => "form-horizontal"}) do |f| 
@@ -218,6 +228,8 @@ class WorkLogsController < ApplicationController
  text_area(:work_log, :body, :rows => 10, :value => @log.body, :class => "input-xxlarge") 
  
  end 
+
+end
 
     end
   end

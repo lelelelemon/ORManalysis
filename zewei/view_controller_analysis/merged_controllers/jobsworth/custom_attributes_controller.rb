@@ -6,6 +6,7 @@ class CustomAttributesController < ApplicationController
   layout  "admin"
 
   def index
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "#{t('custom_attributes.custom_attributes')} - #{Setting.productName}" 
  content_tag :legend, t('custom_attributes.custom_properties') 
  edit_custom_attribute_link_for('user') 
@@ -15,10 +16,13 @@ class CustomAttributesController < ApplicationController
  link_to(TaskRecord.model_name.human(:count => 2), properties_path) 
  link_to(ResourceType.model_name.human(:count => 2), resource_types_path) 
 
+end
+
   end
 
   def edit
     @attributes = CustomAttribute.attributes_for(current_user.company, params[:type])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "Custom Attributes - #{Setting.productName}" 
  content_for :navigation do 
   scripts = all_custom_scripts 
@@ -107,6 +111,8 @@ class CustomAttributesController < ApplicationController
  link_to_add_attribute 
  end 
 
+end
+
   end
 
   def update
@@ -118,7 +124,8 @@ class CustomAttributesController < ApplicationController
   end
 
   def fields
-     dom_id(attribute) 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ dom_id(attribute) 
 
      preset = attribute.custom_attribute_choices.any?
    
@@ -153,6 +160,8 @@ class CustomAttributesController < ApplicationController
  
  add_choice_link(attribute) 
  end 
+
+end
 nd
 
   def choice
@@ -161,16 +170,7 @@ nd
       attribute = current_user.company.custom_attributes.find(params[:id])
     end
 
-     fields_for(choice_prefix(choice, attribute), choice) do |cf| 
- t("custom_attributes.choice") 
- cf.text_field(:value) 
- sortable_handle_tag(choice) 
- link_to_function(t("custom_attributes.remove_choice"), "jQuery(this).parents('.choice').remove()", :class => "remove_attribute") 
- t("custom_attributes.color") 
- cf.text_field(:color) 
- cf.hidden_field :position, :class => "position" 
- end 
-
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  fields_for(choice_prefix(choice, attribute), choice) do |cf| 
  t("custom_attributes.choice") 
  cf.text_field(:value) 
@@ -180,6 +180,21 @@ nd
  cf.text_field(:color) 
  cf.hidden_field :position, :class => "position" 
  end 
+
+end
+
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ fields_for(choice_prefix(choice, attribute), choice) do |cf| 
+ t("custom_attributes.choice") 
+ cf.text_field(:value) 
+ sortable_handle_tag(choice) 
+ link_to_function(t("custom_attributes.remove_choice"), "jQuery(this).parents('.choice').remove()", :class => "remove_attribute") 
+ t("custom_attributes.color") 
+ cf.text_field(:color) 
+ cf.hidden_field :position, :class => "position" 
+ end 
+
+end
 
   end
 

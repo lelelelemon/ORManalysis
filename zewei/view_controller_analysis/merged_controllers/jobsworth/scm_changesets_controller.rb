@@ -17,9 +17,12 @@ class ScmChangesetsController < ApplicationController
     if @scm_changesets.nil?
       render :text=>"" and return
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @scm_changesets.each do |changeset| 
  h changeset.inspect 
  end 
+
+end
 
   end
 end

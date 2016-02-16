@@ -10,6 +10,7 @@ class ResourceTypesController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @resource_types }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -64,6 +65,8 @@ class ResourceTypesController < ApplicationController
  link_to(t("button.delete"), resource_type_path(rt), :method => :delete, :confirm => t("shared.are_you_sure")) 
  end 
 
+end
+
   end
 
   def new
@@ -73,6 +76,7 @@ class ResourceTypesController < ApplicationController
       format.html # new.html.erb
       format.xml  { render :xml => @resource_type }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -154,10 +158,13 @@ class ResourceTypesController < ApplicationController
  end 
  
 
+end
+
   end
 
   def edit
     @resource_type = current_user.company.resource_types.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -239,6 +246,8 @@ class ResourceTypesController < ApplicationController
  end 
  
 
+end
+
   end
 
   def create
@@ -251,7 +260,8 @@ class ResourceTypesController < ApplicationController
         format.html { redirect_to(edit_resource_type_path(@resource_type)) }
         format.xml  { render :xml => @resource_type, :status => :created, :location => @resource_type }
       else
-        format.html {  content_for :navigation do 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -331,6 +341,8 @@ class ResourceTypesController < ApplicationController
  add_attribute_link 
  end 
  
+
+end
  }
         format.xml  { render :xml => @resource_type.errors, :status => :unprocessable_entity }
       end
@@ -353,7 +365,8 @@ class ResourceTypesController < ApplicationController
         format.html { redirect_to(edit_resource_type_path(@resource_type)) }
         format.xml  { head :ok }
       else
-        format.html {  content_for :navigation do 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -433,6 +446,8 @@ class ResourceTypesController < ApplicationController
  add_attribute_link 
  end 
  
+
+end
  }
         format.xml  { render :xml => @resource_type.errors, :status => :unprocessable_entity }
       end
@@ -450,7 +465,8 @@ class ResourceTypesController < ApplicationController
   end
 
   def attribute
-     attribute.id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ attribute.id 
 
      prefix = "type_attributes"
      prefix = "new_#{ prefix }" if attribute.new_record?
@@ -474,5 +490,7 @@ class ResourceTypesController < ApplicationController
  t("resource_types.default_length") 
  f.text_field :default_field_length, :index => ids 
  end 
+
+end
 nd
 end

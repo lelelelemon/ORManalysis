@@ -8,6 +8,7 @@ class ScoreRulesController < ApplicationController
 
   def index
     @score_rules = @container.score_rules
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @score_rules.any? 
   t("score_rules.name") 
  t("score_rules.score") 
@@ -24,15 +25,21 @@ class ScoreRulesController < ApplicationController
  t("score_rules.new_html", link: link_to(t("shared.here"), new_container_score_rule_path(@container), :class => 'new-score-rule')) 
  end 
 
+end
+
   end
 
   def show
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  render @score_rule, :container => @container 
+
+end
 
   end
 
   def new
     @score_rule = @container.score_rules.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("score_rules.add_new") 
  t("score_rules.explanation", container: @container.class.to_s.humanize) 
   form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
@@ -46,6 +53,8 @@ class ScoreRulesController < ApplicationController
  end 
  
 
+end
+
   end
 
   def create
@@ -57,7 +66,8 @@ class ScoreRulesController < ApplicationController
       flash[:success] = t('flash.notice.model_created', model: ScoreRule.model_name.human)
       redirect_to container_score_rules_path(@container)
     else
-       t("score_rules.add_new") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("score_rules.add_new") 
  t("score_rules.explanation", container: @container.class.to_s.humanize) 
   form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
   if object.errors.any? 
@@ -70,10 +80,13 @@ class ScoreRulesController < ApplicationController
  end 
  
 
+end
+
     end
   end
 
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("score_rules.edit") 
   form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
   if object.errors.any? 
@@ -86,6 +99,8 @@ class ScoreRulesController < ApplicationController
  end 
  
 
+end
+
   end
 
   def update
@@ -95,7 +110,8 @@ class ScoreRulesController < ApplicationController
       flash[:success] = t('flash.notice.model_updated', model: ScoreRule.model_name.human)
       redirect_to container_score_rules_path(@container)
     else
-       t("score_rules.edit") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("score_rules.edit") 
   form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
   if object.errors.any? 
  t("shared.form_errors") 
@@ -106,6 +122,8 @@ class ScoreRulesController < ApplicationController
  
  end 
  
+
+end
 
     end
   end

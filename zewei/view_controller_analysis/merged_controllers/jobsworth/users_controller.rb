@@ -7,6 +7,7 @@ class UsersController < ApplicationController
                  .includes(:project_permissions => {:project => :customer})
                  .order("users.name")
                  .paginate(:page => params[:page], :per_page => 100)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("users.access_title", title: Setting.productName) 
  link_to t("users.new_user"), new_user_path, :class => "pull-right" 
  for user in @users 
@@ -38,6 +39,8 @@ user.dom_id
 nd 
  will_paginate @users 
 
+end
+
   end
 
   def new
@@ -59,7 +62,8 @@ nd
 
     if @user.errors.size > 0
       flash[:error] = @user.errors.full_messages.join(". ")
-      return  @page_title = t("users.new_user_title", title: Setting.productName) 
+      return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("users.new_user_title", title: Setting.productName) 
 
   @user_ids = []
   @current_user.company.projects.each do |p|
@@ -116,6 +120,8 @@ nd
  options_for_select @users, params[:copy_user].to_i 
  submit_tag t("button.create"), :class => 'btn btn-primary' 
  end 
+
+end
 
     end
 
@@ -144,7 +150,8 @@ nd
       redirect_to edit_user_path(@user)
     else
       flash[:error] = @user.errors.full_messages.join(". ")
-       @page_title = t("users.new_user_title", title: Setting.productName) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("users.new_user_title", title: Setting.productName) 
 
   @user_ids = []
   @current_user.company.projects.each do |p|
@@ -202,10 +209,13 @@ nd
  submit_tag t("button.create"), :class => 'btn btn-primary' 
  end 
 
+end
+
     end
   end
 
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
  content_for :navigation do 
   user.name 
@@ -301,6 +311,8 @@ nd
  
  end 
 
+end
+
   end
 
   def access
@@ -316,6 +328,7 @@ nd
       flash[:error] = t('flash.alert.access_denied_to_model', model: t('users.access_control'))
       redirect_to edit_user_path(@user)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
  content_for :navigation do 
   user.name 
@@ -369,9 +382,12 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
  submit_tag t("button.save"), :class => 'btn btn-primary' 
  end 
 
+end
+
   end
 
   def emails
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
  content_for :navigation do 
   user.name 
@@ -405,6 +421,8 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
  t("button.add") 
  @user.id 
 
+end
+
   end
 
   def tasks
@@ -414,6 +432,7 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
   def filters
     @private_filters = @user.private_task_filters.order("task_filters.name")
     @shared_filters = @user.shared_task_filters.order("task_filters.name")
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   user.name 
  active_class(selected, "general") 
@@ -467,9 +486,12 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
  end 
  t("users.no_filters") if @private_filters.size == 0 
 
+end
+
   end
 
   def projects
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("users.access_title", title: Setting.productName) 
  content_for :navigation do 
   user.name 
@@ -545,6 +567,8 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
  @user.id 
  
 
+end
+
   end
 
   def workplan
@@ -556,6 +580,7 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
         flash[:error] = @user.work_plan.errors.full_messages.join(', ')
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "User : #{@user.name} - #{Setting.productName}" 
  content_for :navigation do 
   user.name 
@@ -653,6 +678,8 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
  submit_tag t("button.update"), :class => 'btn btn-primary' 
  end 
 
+end
+
   end
 
   def update
@@ -663,7 +690,8 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
       redirect_to edit_user_path(@user)
     else
       flash[:error] = @user.errors.full_messages.join(". ")
-       @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
  content_for :navigation do 
   user.name 
  active_class(selected, "general") 
@@ -758,6 +786,8 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
  
  end 
 
+end
+
     end
   end
 
@@ -829,7 +859,8 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
 
     ProjectPermission.create(:user => @user, :company => @user.company, :project => project)
 
-     project.dom_id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ project.dom_id 
  if user_edit 
  link_to project.name, "/projects/edit/#{project.id}" 
  else 
@@ -854,6 +885,8 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
                })" unless perm.can?(p) 
  end 
  end 
+
+end
 
   end
 

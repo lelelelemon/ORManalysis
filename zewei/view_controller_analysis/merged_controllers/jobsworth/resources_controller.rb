@@ -10,6 +10,7 @@ class ResourcesController < ApplicationController
       format.html # new.html.erb
       format.xml  { render :xml => @resource }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("resources.new_title", title: "New Resource - #{Setting.productName}") 
   form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
  if @resource.new_record? 
@@ -54,6 +55,8 @@ class ResourcesController < ApplicationController
  end 
  
 
+end
+
   end
 
   def show
@@ -62,6 +65,7 @@ class ResourcesController < ApplicationController
 
   def edit
     @resource = current_user.company.resources.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("resources.edit_title", title: "#{@resource.name} - #{Setting.productName}") 
   form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
  if @resource.new_record? 
@@ -115,6 +119,8 @@ class ResourcesController < ApplicationController
  end 
  
 
+end
+
   end
 
   def create
@@ -128,7 +134,8 @@ class ResourcesController < ApplicationController
         format.xml  { render :xml => @resource, :status => :created, :location => @resource }
       else
         flash[:error] = @resource.errors.full_messages.join(". ")
-        format.html {  @page_title = t("resources.new_title", title: "New Resource - #{Setting.productName}") 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("resources.new_title", title: "New Resource - #{Setting.productName}") 
   form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
  if @resource.new_record? 
  t("resources.new") 
@@ -171,6 +178,8 @@ class ResourcesController < ApplicationController
  end 
  end 
  
+
+end
  }
         format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
       end
@@ -194,7 +203,8 @@ class ResourcesController < ApplicationController
         format.xml  { head :ok }
       else
         flash[:error] = @resource.errors.full_messages.join(". ")
-        format.html {  @page_title = t("resources.edit_title", title: "#{@resource.name} - #{Setting.productName}") 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("resources.edit_title", title: "#{@resource.name} - #{Setting.productName}") 
   form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
  if @resource.new_record? 
  t("resources.new") 
@@ -246,6 +256,8 @@ class ResourcesController < ApplicationController
  log.body.html_safe 
  end 
  
+
+end
  }
         format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
       end
@@ -272,7 +284,8 @@ class ResourcesController < ApplicationController
       attr
     end
 
-     
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ 
      field_id = "attribute_#{ attribute.id }" 
      prefix = "resource[attribute_values][]"
      type = attribute.resource_type_attribute
@@ -284,6 +297,8 @@ class ResourcesController < ApplicationController
  hidden_field_tag("#{ prefix }[resource_type_attribute_id]", type.id, :class => "type_id") 
  hidden_field_tag "#{ prefix }[id]", attribute.id, :class => "attr_id" 
  value_field(attribute, prefix, field_id, same_as_last_type) 
+
+end
 
   end
 
@@ -300,7 +315,8 @@ class ResourcesController < ApplicationController
                       :target => resource
                      )
     el.save!
-    
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
    name = "resource[attribute_values][][password]"
    id = "attribute_#{ @attribute.id }"
 
@@ -308,6 +324,8 @@ class ResourcesController < ApplicationController
    field = text_field_tag(name, @attribute.password, :id => id, :class => "value",
                            :size => @attribute.resource_type_attribute.default_field_length)
 
+
+end
 
   end
 
@@ -320,10 +338,13 @@ class ResourcesController < ApplicationController
       @resources = current_user.company.resources.where(cond)
       render :json=> @resources.collect{|resource| {:value => resource.name, :id=> resource.id} }.to_json
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @resources.each do |r| 
  r.id 
  r 
  end 
+
+end
 
   end
 

@@ -10,6 +10,7 @@ class ServicesController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @services }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -62,6 +63,8 @@ class ServicesController < ApplicationController
  link_to '<i class="icon-pencil"></i>'.html_safe, edit_service_path(service) 
  end 
 
+end
+
   end
 
   def show
@@ -80,6 +83,7 @@ class ServicesController < ApplicationController
       format.html # new.html.erb
       format.json { render json: @service }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -136,10 +140,13 @@ class ServicesController < ApplicationController
  end 
  
 
+end
+
   end
 
   def edit
     @service = current_user.company.services.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -209,6 +216,8 @@ class ServicesController < ApplicationController
  t("services.customer_placeholder") 
  @service.id 
 
+end
+
   end
 
   def create
@@ -220,7 +229,8 @@ class ServicesController < ApplicationController
         format.html { redirect_to services_path, notice: t('flash.notice.model_created', model: Service.model_name.human) }
         format.json { render json: @service, status: :created, location: @service }
       else
-        format.html {  content_for :navigation do 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -275,6 +285,8 @@ class ServicesController < ApplicationController
  
  end 
  
+
+end
  }
         format.json { render json: @service.errors, status: :unprocessable_entity }
       end
@@ -289,7 +301,8 @@ class ServicesController < ApplicationController
         format.html { redirect_to services_path, notice: t('flash.notice.model_updated', model: Service.model_name.human) }
         format.json { head :ok }
       else
-        format.html {  content_for :navigation do 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -357,6 +370,8 @@ class ServicesController < ApplicationController
  
  t("services.customer_placeholder") 
  @service.id 
+
+end
  }
         format.json { render json: @service.errors, status: :unprocessable_entity }
       end

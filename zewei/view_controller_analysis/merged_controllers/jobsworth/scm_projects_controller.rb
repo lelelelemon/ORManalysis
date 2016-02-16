@@ -5,6 +5,7 @@ class ScmProjectsController < ApplicationController
 
   def new
     @scm_project= ScmProject.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_for(@scm_project, :html => {:class => "form-horizontal"}) do |f| 
  t("scm_projects.new") 
  f.label :scm_type, t("scm_project.scm_type") 
@@ -18,6 +19,8 @@ class ScmProjectsController < ApplicationController
  end 
  end 
 
+end
+
   end
 
   def create
@@ -28,7 +31,8 @@ class ScmProjectsController < ApplicationController
       redirect_to scm_project_url(@scm_project)
     else
       flash[:error] = @scm_project.errors.full_messages.join(". ")
-       form_for(@scm_project, :html => {:class => "form-horizontal"}) do |f| 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_for(@scm_project, :html => {:class => "form-horizontal"}) do |f| 
  t("scm_projects.new") 
  f.label :scm_type, t("scm_project.scm_type") 
  f.text_field :scm_type 
@@ -41,11 +45,14 @@ class ScmProjectsController < ApplicationController
  end 
  end 
 
+end
+
     end
   end
 
   def show
     @scm_project=ScmProject.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @scm_project.dom_id 
  t("scm_projects.scm_type") 
  @scm_project.scm_type 
@@ -53,6 +60,8 @@ class ScmProjectsController < ApplicationController
  @scm_project.location 
  t("scm_projects.secret_key") 
  @scm_project.secret_key
+
+end
 
   end
 end

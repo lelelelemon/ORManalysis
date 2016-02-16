@@ -13,7 +13,8 @@ class TodosController < ApplicationController
 
   def update
     @todo.update_attributes(params[:todo])
-     @task.id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @task.id 
   todo.dom_id 
 todo.css_classes
  todo.id 
@@ -33,6 +34,8 @@ h "[#{ todo.completed_by_user.name }]" if todo.completed_by_user
  link_to '<i class="icon-remove"></i>'.html_safe, "#", :class => "delete_todo" 
  
  text_field_tag("todo[name]", "", :size => 50, :placeholder => t("todos.add_todo_placeholder")) 
+
+end
 
   end
 
@@ -59,7 +62,8 @@ h "[#{ todo.completed_by_user.name }]" if todo.completed_by_user
       todo.completed_by_user_id = nil
     end
 
-     todo.position 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ todo.position 
  todo.css_classes
  new_todo_open_close_check_box(todo) 
  hidden_field_tag "todos[][creator_id]", todo.creator_id, :class => "creator_id" 
@@ -76,6 +80,8 @@ h "[#{ todo.completed_by_user.name }]" if todo.completed_by_user
  end 
  link_to '<i class="icon-remove"></i>'.html_safe, "#", :rel => "tooltip", :title => t("todos.delete_todo_html", todo: h(todo.name)),
               :onClick => "jQuery(this).parent().remove(); return false;"
+
+end
 
   end
 
@@ -94,7 +100,8 @@ h "[#{ todo.completed_by_user.name }]" if todo.completed_by_user
     @task = TaskRecord.new
     Template.find(params[:id]).clone_todos.collect{|t| @task.todos.build(t.attributes) }
 
-     @task.todos.each do |todo| 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @task.todos.each do |todo| 
   todo.position 
  todo.css_classes
  new_todo_open_close_check_box(todo) 
@@ -117,6 +124,8 @@ h "[#{ todo.completed_by_user.name }]" if todo.completed_by_user
  template = render_to_string(:partial => "todos/new_todo", :locals => {:todo => Todo.new(:creator_id => current_user.id )}) 
  template 
  text_field_tag("todo[name]", "", :size => 50, :placeholder => t("todos.add_todo_placeholder")) 
+
+end
 
   end
 

@@ -10,6 +10,7 @@ class TriggersController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @triggers }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("triggers.trigger_title", title: Setting.productName) 
  content_for :navigation do 
   scripts = all_custom_scripts 
@@ -68,6 +69,8 @@ h trigger.actions.collect(&:name).join(', ')
  link_to t("button.edit"), edit_trigger_path(trigger) 
  end 
 
+end
+
   end
 
   def show
@@ -86,6 +89,7 @@ h trigger.actions.collect(&:name).join(', ')
       format.html # new.html.erb
       format.xml  { render :xml => @trigger }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("triggers.new_trigger_title", title: Setting.productName) 
  content_for :navigation do 
   scripts = all_custom_scripts 
@@ -160,10 +164,13 @@ factory.id
  end 
  
 
+end
+
   end
 
   def edit
     @trigger = current_user.company.triggers.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("triggers.trigger_title", title: Setting.productName) 
  content_for :navigation do 
   scripts = all_custom_scripts 
@@ -238,6 +245,8 @@ factory.id
  end 
  
 
+end
+
   end
 
   def create
@@ -250,7 +259,8 @@ factory.id
         format.html { redirect_to(triggers_path) }
         format.xml  { render :xml => @trigger, :status => :created, :location => @trigger }
       else
-        format.html {  @page_title = t("triggers.new_trigger_title", title: Setting.productName) 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("triggers.new_trigger_title", title: Setting.productName) 
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -323,6 +333,8 @@ factory.id
  end 
  end 
  
+
+end
  }
         format.xml  { render :xml => @trigger.errors, :status => :unprocessable_entity }
       end
@@ -338,7 +350,8 @@ factory.id
         format.html { redirect_to(triggers_path) }
         format.xml  { head :ok }
       else
-        format.html {  @page_title = t("triggers.trigger_title", title: Setting.productName) 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("triggers.trigger_title", title: Setting.productName) 
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -411,6 +424,8 @@ factory.id
  end 
  end 
  
+
+end
  }
         format.xml  { render :xml => @trigger.errors, :status => :unprocessable_entity }
       end

@@ -13,6 +13,7 @@ class ProjectsController < ApplicationController
                 .paginate(:page => params[:page], :per_page => 100)
 
     @completed_projects = @project_relation.completed
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("projects.index_title", title: Setting.productName) 
  Project.model_name.human(count: 2) 
  render @projects 
@@ -21,10 +22,13 @@ class ProjectsController < ApplicationController
               controller: 'projects', action: 'list_completed' 
  end 
 
+end
+
   end
 
   def new
     @project = Project.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("projects.new_title", title: Setting.productName) 
  form_tag({:action => 'create'}, :class => "form-horizontal") do 
  t("projects.new_project") 
@@ -73,6 +77,8 @@ class ProjectsController < ApplicationController
  t("button.create") 
  end 
 
+end
+
   end
 
   def add_default_user
@@ -85,12 +91,15 @@ class ProjectsController < ApplicationController
         user = []
       end
     end
-     if user.present? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if user.present? 
  active_class = user.active ? "":"inactive" 
  link_to user.to_html, [:edit, user], :class => "username pull-left #{active_class}", :target => "_blank" 
  hidden_field_tag("project[default_user_ids][]", user.id) 
  link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "removeLink") 
  end 
+
+end
 
   end
 
@@ -110,7 +119,8 @@ class ProjectsController < ApplicationController
       check_if_project_has_users(@project)
     else
       flash[:error] = @project.errors.full_messages.join(". ")
-       @page_title = t("projects.new_title", title: Setting.productName) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("projects.new_title", title: Setting.productName) 
  form_tag({:action => 'create'}, :class => "form-horizontal") do 
  t("projects.new_project") 
   t("projects.name") 
@@ -158,6 +168,8 @@ class ProjectsController < ApplicationController
  t("button.create") 
  end 
 
+end
+
     end
   end
 
@@ -171,6 +183,7 @@ class ProjectsController < ApplicationController
       @users = User.where("company_id = ?", current_user.company_id).order("users.name")
       @default_users = User.joins("INNER JOIN default_project_users on default_project_users.user_id = users.id").where("default_project_users.project_id = ?", @project.id)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
  form_for(@project, :html => {:class => "form-horizontal"}) do 
  t("projects.edit") 
@@ -322,6 +335,8 @@ nd
  
  end 
 
+end
+
   end
 
   def show
@@ -332,6 +347,7 @@ nd
     else
       @users = User.where("company_id = ?", current_user.company_id).order("users.name")
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
  @project.name 
  link_to_tasks_filtered_by( t("projects.view_tasks"), @project, :class => "btn btn-success pull-right") 
@@ -405,6 +421,8 @@ nd
  
  end 
 
+end
+
   end
 
   def update
@@ -414,7 +432,8 @@ nd
       flash[:success] = t('flash.notice.model_updated', model: Project.model_name.human)
       redirect_to projects_path
     else
-       @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
  form_for(@project, :html => {:class => "form-horizontal"}) do 
  t("projects.edit") 
  link_to_tasks_filtered_by(t('projects.view_tasks'), @project, :class => "btn btn-success pull-right") 
@@ -565,6 +584,8 @@ nd
  
  end 
 
+end
+
     end
   end
 
@@ -610,6 +631,7 @@ nd
 
   def list_completed
     @completed_projects = @project_relation.completed.order("completed_at DESC")
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("projects.completed_title", title: Setting.productName) 
  t("projects.completed_projects") 
  t("projects.name") 
@@ -621,6 +643,8 @@ nd
  p.tasks.size 
  link_to( t("projects.revert"), revert_project_path(p), :method => :post, :confirm => t("shared.are_you_sure") ) 
  end 
+
+end
 
   end
 
@@ -639,7 +663,8 @@ nd
 
     if params[:user_edit] == "true"
       @user = current_user.company.users.find(params[:user_id])
-       t("users.project") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("users.project") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -684,10 +709,13 @@ nd
  end 
  @user.id 
 
+end
+
     else
       @project = current_user.company.projects.find(params[:id])
       @users = Company.find(current_user.company_id).users.order("users.name")
-       t("projects.user") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("projects.user") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -732,6 +760,8 @@ nd
  t("users.add_project_to_user") 
  text_field :user, :name, {:id => "project_user_name_autocomplete", :value => "" } 
  @project.id 
+
+end
 
     end
   end
@@ -762,7 +792,8 @@ nd
 
     if params[:user_edit] == "true" && current_user.admin?
       @user = current_user.company.users.find(params[:user_id])
-       t("users.project") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("users.project") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -807,9 +838,12 @@ nd
  end 
  @user.id 
 
+end
+
     else
       @users = Company.find(current_user.company_id).users.order("users.name")
-       t("projects.user") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("projects.user") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -854,6 +888,8 @@ nd
  t("users.add_project_to_user") 
  text_field :user, :name, {:id => "project_user_name_autocomplete", :value => "" } 
  @project.id 
+
+end
 
     end
   end

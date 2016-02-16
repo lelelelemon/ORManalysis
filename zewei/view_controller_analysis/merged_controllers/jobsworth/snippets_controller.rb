@@ -11,6 +11,7 @@ class SnippetsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @snippets }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -68,6 +69,8 @@ class SnippetsController < ApplicationController
  link_to '<i class="icon-pencil"></i>'.html_safe, edit_snippet_path(snippet) 
  end 
 
+end
+
   end
 
   def show
@@ -77,6 +80,7 @@ class SnippetsController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @snippet }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -126,6 +130,8 @@ class SnippetsController < ApplicationController
  link_to t("button.edit"), :action => 'edit', :id => @snippet 
  link_to t("button.delete"), { :action => 'destroy', :id => @snippet}, :confirm => t("shared.are_you_sure"), :method=> :delete 
 
+end
+
   end
 
   def new
@@ -135,6 +141,7 @@ class SnippetsController < ApplicationController
       format.html # new.html.erb
       format.json { render json: @snippet }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -199,10 +206,13 @@ class SnippetsController < ApplicationController
  end 
  
 
+end
+
   end
 
   def edit
     @snippet = current_user.company.snippets.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
@@ -267,6 +277,8 @@ class SnippetsController < ApplicationController
  end 
  
 
+end
+
   end
 
   def create
@@ -279,7 +291,8 @@ class SnippetsController < ApplicationController
         format.html { redirect_to @snippet, notice: t('flash.notice.model_created', model: Snippet.model_name.human) }
         format.json { render json: @snippet, status: :created, location: @snippet }
       else
-        format.html {  content_for :navigation do 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -342,6 +355,8 @@ class SnippetsController < ApplicationController
  end 
  end 
  
+
+end
  }
         format.json { render json: @snippet.errors, status: :unprocessable_entity }
       end
@@ -367,7 +382,8 @@ class SnippetsController < ApplicationController
         format.html { redirect_to @snippet, notice: t('flash.notice.model_created', model: Snippet.model_name.human) }
         format.json { head :ok }
       else
-        format.html {  content_for :navigation do 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :navigation do 
   scripts = all_custom_scripts 
  t("companies.admin_panel") 
  active_class(selected, "general") 
@@ -430,6 +446,8 @@ class SnippetsController < ApplicationController
  end 
  end 
  
+
+end
  }
         format.json { render json: @snippet.errors, status: :unprocessable_entity }
       end

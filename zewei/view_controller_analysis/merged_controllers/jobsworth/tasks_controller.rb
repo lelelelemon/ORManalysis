@@ -28,6 +28,7 @@ class TasksController < ApplicationController
       format.html
       format.json { render :template => "tasks/index.json"}
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @task 
  @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
  else 
@@ -83,6 +84,8 @@ class TasksController < ApplicationController
  @task.task_num 
  end 
 
+end
+
   end
 
   def new
@@ -92,7 +95,8 @@ class TasksController < ApplicationController
     @task.duration = 0
     @task.watchers << current_user
 
-     @page_title = t("tasks.new_title", title: Setting.productName) 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("tasks.new_title", title: Setting.productName) 
  if controller.class == TaskTemplatesController 
  action = '/task_templates/create' 
  else 
@@ -101,6 +105,8 @@ class TasksController < ApplicationController
  form_tag(action, { :multipart => "true", :id => "taskform" }) do 
  render_task_form(false) 
  end 
+
+end
 
   end
 
@@ -138,7 +144,8 @@ class TasksController < ApplicationController
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved
       flash[:error] = @task.errors.full_messages.join(". ")
       return if request.xhr?
-       @page_title = t("tasks.new_title", title: Setting.productName) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("tasks.new_title", title: Setting.productName) 
  if controller.class == TaskTemplatesController 
  action = '/task_templates/create' 
  else 
@@ -147,6 +154,8 @@ class TasksController < ApplicationController
  form_tag(action, { :multipart => "true", :id => "taskform" }) do 
  render_task_form(false) 
  end 
+
+end
 
     end
   end
@@ -158,6 +167,7 @@ class TasksController < ApplicationController
         @tasks = current_task_filter.tasks_for_fullcalendar(params)
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("tasks.calendar_title", title: Setting.productName) 
   content_for(:side_panel) do 
  cache([ "search_filter", current_task_filter ]) do 
@@ -206,6 +216,8 @@ class TasksController < ApplicationController
  t("tasks.icon_gantt") 
  select_tag("chngroup", options_for_changegroup, :onChange => "change_group()") 
 
+end
+
   end
 
   def gantt
@@ -215,6 +227,7 @@ class TasksController < ApplicationController
         @tasks = current_task_filter.tasks_for_gantt(params)
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @tasks.collect{|task|
   customClass = (task.due_at.nil? or task.estimate_date.nil? or task.estimate_date < task.due_at) ? "ganttOrange" : "ganttRed"
   if task.resolved?
@@ -238,6 +251,8 @@ class TasksController < ApplicationController
   }
 }.to_json.html_safe
 
+
+end
 
   end
 
@@ -276,16 +291,20 @@ class TasksController < ApplicationController
 
   def resource
     resource = current_user.company.resources.find(params[:resource_id])
-     link_to '<i class="icon-remove"></i>'.html_safe, :class => "remove_link pull-right" 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ link_to '<i class="icon-remove"></i>'.html_safe, :class => "remove_link pull-right" 
  hidden_field_tag("resource[ids][]", resource.id) 
  resource.id 
  link_to resource, edit_resource_path(resource), :target=> "_blank" 
+
+end
 
   end
 
   def dependency
     dependency = TaskRecord.accessed_by(current_user).find_by_task_num(params[:dependency_id])
-     dependency.id 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ dependency.id 
  if perms.empty? or perms['edit'].empty? 
  dependency.id 
  end 
@@ -295,6 +314,9 @@ class TasksController < ApplicationController
  link_to_task(dependency) 
  hidden_field_tag("dependencies[]", dependency.task_num) 
 
+end
+
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  dependency.id 
  if perms.empty? or perms['edit'].empty? 
  dependency.id 
@@ -304,6 +326,8 @@ class TasksController < ApplicationController
  end 
  link_to_task(dependency) 
  hidden_field_tag("dependencies[]", dependency.task_num) 
+
+end
 
   end
 
@@ -319,67 +343,7 @@ class TasksController < ApplicationController
     set_last_task(@task)
     @task.set_task_read(current_user)
     respond_to do |format|
-      format.html {  @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
-  attrs = ajax ? {:remote => true, :'data-type' => "json"} : {} 
- show_timer = current_user.option_tracktime.to_i == 1 && !(@current_sheet && @current_sheet.task) && controller.class == TasksController 
- form_tag({ :action => 'update', :id => @task}, { :multipart => "true", :id => "taskform", :method => :put }.merge(attrs)) do 
- render_task_form(show_timer) 
- end 
- 
-  last = @task.work_logs.worktimes.where(:user_id => current_user.id).last
-  # set default log settings
-  if last
-    @log = last.dup
-    @log.custom_attribute_values = last.custom_attribute_values
-  else
-    @log  = current_user.company.work_logs.build()
-    @log.task = @task
-    @log.started_at = Time.now.utc - @log.duration
-  end
-
- t("tasks.new_log_entry") 
- @log.task 
- hidden_field_tag :task_id, @log.task.task_num 
- label :started_at, t("tasks.start") 
- text_field :work_log, :started_at, :value => tz.utc_to_local(Time.now.utc).strftime("#{current_user.date_format} #{current_user.time_format}"), :size => 20 
-  values = object.all_custom_attribute_values 
- values.each do |value| 
- prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
- ca = value.custom_attribute 
- field_id = custom_attribute_field_id 
- fields_for(prefix, value) do |f| 
- f.hidden_field(:custom_attribute_id, :index => nil) 
- label_tag field_id, value.custom_attribute.display_name 
- if ca and ca.preset? 
- options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
- options.unshift("") if ca.mandatory? 
- f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
- elsif value.custom_attribute.max_length.to_i >= 100 
- f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
- else 
- f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
- end 
- multi_links(value) 
- end 
- end 
- 
- label :work_log, :customer_name, t("tasks.client") 
- select :work_log, :customer_id, work_log_customer_options(@log) 
- t("tasks.time_worked") 
- text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
-             :size => 10, :rel => 'tooltip', :title => t("tasks.work_log_tooltip"), "data-placement" => "right") 
- t("button.ok") 
- t("button.cancel") 
- 
- if show_timer 
- end 
- 
-}
-      format.js {
-        html = render_to_string(:template=>'tasks/edit', :layout => false)
-        render :json => { :html => html, :task_num => @task.task_num, :task_name => @task.name }
-      }
-    end
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
   attrs = ajax ? {:remote => true, :'data-type' => "json"} : {} 
  show_timer = current_user.option_tracktime.to_i == 1 && !(@current_sheet && @current_sheet.task) && controller.class == TasksController 
@@ -436,52 +400,15 @@ class TasksController < ApplicationController
  end 
  
 
-  end
-
-  def update
-    @task = AbstractTask.accessed_by(current_user).find_by_id(params[:id])
-    if @task.nil?
-      flash[:error] = t('flash.error.not_exists_or_no_permission', model: TaskRecord.model_name.human)
-      redirect_from_last and return
+end
+}
+      format.js {
+        html = render_to_string(:template=>'tasks/edit', :layout => false)
+        render :json => { :html => html, :task_num => @task.task_num, :task_name => @task.name }
+      }
     end
-
-    # TODO this should be a before_filter
-    unless task_edit_permissions? (['edit', 'comment', 'milestone']) 
-      flash[:error] = ProjectPermission.message_for('edit')
-      redirect_from_last and return
-    end
-    
-    # if user only have comment rights
-    if !task_edit_permissions? (['edit', 'milestone']) and task_edit_permissions? (['comment'])
-      params[:task] = {}
-    end
-    
-    # TODO this should go into Task model
-    begin
-      ActiveRecord::Base.transaction do
-        TaskRecord.update(@task, params, current_user)
-      end
-      
-      # TODO this should be an observer
-      Trigger.fire(@task, Trigger::Event::UPDATED)
-      flash[:success] ||= link_to_task(@task) + " - #{t('flash.notice.model_updated', model: TaskRecord.model_name.human)}"
-
-      respond_to do |format|
-        format.html { redirect_to :action=> "edit", :id => @task.task_num  }
-        format.js {
-          render :json => {
-            :status => :success,
-            :tasknum => @task.task_num,
-            :tags => render_to_string(:partial => "tags/panel_list"),
-            :message => render_to_string(:partial => "layouts/flash", :locals => {:flash => flash}).html_safe }
-        }
-
-      end
-    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved
-      respond_to do |format|
-        format.html {
-          flash[:error] = @task.errors.full_messages.join(". ")
-           @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
   attrs = ajax ? {:remote => true, :'data-type' => "json"} : {} 
  show_timer = current_user.option_tracktime.to_i == 1 && !(@current_sheet && @current_sheet.task) && controller.class == TasksController 
  form_tag({ :action => 'update', :id => @task}, { :multipart => "true", :id => "taskform", :method => :put }.merge(attrs)) do 
@@ -537,6 +464,112 @@ class TasksController < ApplicationController
  end 
  
 
+end
+
+  end
+
+  def update
+    @task = AbstractTask.accessed_by(current_user).find_by_id(params[:id])
+    if @task.nil?
+      flash[:error] = t('flash.error.not_exists_or_no_permission', model: TaskRecord.model_name.human)
+      redirect_from_last and return
+    end
+
+    # TODO this should be a before_filter
+    unless task_edit_permissions? (['edit', 'comment', 'milestone']) 
+      flash[:error] = ProjectPermission.message_for('edit')
+      redirect_from_last and return
+    end
+    
+    # if user only have comment rights
+    if !task_edit_permissions? (['edit', 'milestone']) and task_edit_permissions? (['comment'])
+      params[:task] = {}
+    end
+    
+    # TODO this should go into Task model
+    begin
+      ActiveRecord::Base.transaction do
+        TaskRecord.update(@task, params, current_user)
+      end
+      
+      # TODO this should be an observer
+      Trigger.fire(@task, Trigger::Event::UPDATED)
+      flash[:success] ||= link_to_task(@task) + " - #{t('flash.notice.model_updated', model: TaskRecord.model_name.human)}"
+
+      respond_to do |format|
+        format.html { redirect_to :action=> "edit", :id => @task.task_num  }
+        format.js {
+          render :json => {
+            :status => :success,
+            :tasknum => @task.task_num,
+            :tags => render_to_string(:partial => "tags/panel_list"),
+            :message => render_to_string(:partial => "layouts/flash", :locals => {:flash => flash}).html_safe }
+        }
+
+      end
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved
+      respond_to do |format|
+        format.html {
+          flash[:error] = @task.errors.full_messages.join(". ")
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
+  attrs = ajax ? {:remote => true, :'data-type' => "json"} : {} 
+ show_timer = current_user.option_tracktime.to_i == 1 && !(@current_sheet && @current_sheet.task) && controller.class == TasksController 
+ form_tag({ :action => 'update', :id => @task}, { :multipart => "true", :id => "taskform", :method => :put }.merge(attrs)) do 
+ render_task_form(show_timer) 
+ end 
+ 
+  last = @task.work_logs.worktimes.where(:user_id => current_user.id).last
+  # set default log settings
+  if last
+    @log = last.dup
+    @log.custom_attribute_values = last.custom_attribute_values
+  else
+    @log  = current_user.company.work_logs.build()
+    @log.task = @task
+    @log.started_at = Time.now.utc - @log.duration
+  end
+
+ t("tasks.new_log_entry") 
+ @log.task 
+ hidden_field_tag :task_id, @log.task.task_num 
+ label :started_at, t("tasks.start") 
+ text_field :work_log, :started_at, :value => tz.utc_to_local(Time.now.utc).strftime("#{current_user.date_format} #{current_user.time_format}"), :size => 20 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ label :work_log, :customer_name, t("tasks.client") 
+ select :work_log, :customer_id, work_log_customer_options(@log) 
+ t("tasks.time_worked") 
+ text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
+             :size => 10, :rel => 'tooltip', :title => t("tasks.work_log_tooltip"), "data-placement" => "right") 
+ t("button.ok") 
+ t("button.cancel") 
+ 
+ if show_timer 
+ end 
+ 
+
+end
+
         }
         format.js { render :json => {:status => :error, :messages => @task.errors.full_messages}.to_json }
       end
@@ -586,7 +619,8 @@ class TasksController < ApplicationController
     user = current_user.company.users.active.find(params[:user_id])
     @task.task_watchers.build(:user => user)
 
-    
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
    user = notification
    classname = "watcher clearfix access_level_#{user.access_level_id}"
    is_assigned = @task.owners.include?(user)
@@ -609,6 +643,8 @@ class TasksController < ApplicationController
  link_to user.to_html, "/users/edit/#{user.id}", :class => "username pull-left #{active_class}", :target => "_blank" 
  link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "removeLink") 
 
+end
+
   end
 
   def get_customer
@@ -620,10 +656,13 @@ class TasksController < ApplicationController
     customer = current_user.company.customers.find(params[:customer_id])
     @task.task_customers.build(:customer => customer)
 
-     task_customer.id
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ task_customer.id
  hidden_field_tag "task[customer_attributes][#{ task_customer.id }]", "1" 
  link_to task_customer.name, {:controller => "customers", :action => "edit", :id => task_customer} 
  link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "removeLink") 
+
+end
 
   end
 
@@ -639,10 +678,13 @@ class TasksController < ApplicationController
     @customers << @project.customer
     @customers += @task.customers
 
-     task_customer.id
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ task_customer.id
  hidden_field_tag "task[customer_attributes][#{ task_customer.id }]", "1" 
  link_to task_customer.name, {:controller => "customers", :action => "edit", :id => task_customer} 
  link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "removeLink") 
+
+end
 
   end
 
@@ -802,7 +844,8 @@ class TasksController < ApplicationController
     @task.watchers = @template.watchers
     @task.owners = @template.owners
     @task.task_property_values = @template.task_property_values
-     @page_title = t("tasks.new_title", title: Setting.productName) 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("tasks.new_title", title: Setting.productName) 
  if controller.class == TaskTemplatesController 
  action = '/task_templates/create' 
  else 
@@ -811,6 +854,8 @@ class TasksController < ApplicationController
  form_tag(action, { :multipart => "true", :id => "taskform" }) do 
  render_task_form(false) 
  end 
+
+end
 
   end
 
@@ -824,6 +869,7 @@ class TasksController < ApplicationController
       # Force score recalculation
       @task.save(:validation => false)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("tasks.score") 
  @task.weight 
  t("tasks.score_adjustment") 
@@ -840,6 +886,8 @@ class TasksController < ApplicationController
  ScoreRuleTypes::get_name_of(score_rule.score_type) 
  score_rule.final_value 
  end 
+
+end
 
   end
 
@@ -871,7 +919,8 @@ class TasksController < ApplicationController
 
     unless current_user.can?(@task.project, 'create')
       flash[:error] = t('flash.alert.unauthorized_operation')
-       @page_title = t("tasks.new_title", title: Setting.productName) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("tasks.new_title", title: Setting.productName) 
  if controller.class == TaskTemplatesController 
  action = '/task_templates/create' 
  else 
@@ -880,6 +929,8 @@ class TasksController < ApplicationController
  form_tag(action, { :multipart => "true", :id => "taskform" }) do 
  render_task_form(false) 
  end 
+
+end
 
     end
   end

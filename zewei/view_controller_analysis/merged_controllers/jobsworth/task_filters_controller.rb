@@ -136,7 +136,8 @@ class TaskFiltersController < ApplicationController
       flash[:error] = t('flash.alert.access_denied_to_model', model: TaskFilter.model_name.human)
     end
     if request.xhr?
-        hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_id]", qualifier.qualifiable_id, :class => "id" 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_id]", qualifier.qualifiable_id, :class => "id" 
  hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_type]", qualifier.qualifiable_type, :class => "type" 
  hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_column]", qualifier.qualifiable_column, :class => "column" 
  hidden_field_tag "task_filter[qualifiers_attributes][][reversed]", qualifier.reversed, :class => "reversed" 
@@ -159,6 +160,8 @@ class TaskFiltersController < ApplicationController
  link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "pull-right remove-search-filter") 
  end 
  
+
+end
 
     else
       redirect_to '/tasks'
@@ -171,7 +174,8 @@ class TaskFiltersController < ApplicationController
     current_task_filter.store_for(current_user)
 
     if request.xhr?
-        hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_id]", qualifier.qualifiable_id, :class => "id" 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_id]", qualifier.qualifiable_id, :class => "id" 
  hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_type]", qualifier.qualifiable_type, :class => "type" 
  hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_column]", qualifier.qualifiable_column, :class => "column" 
  hidden_field_tag "task_filter[qualifiers_attributes][][reversed]", qualifier.reversed, :class => "reversed" 
@@ -194,6 +198,8 @@ class TaskFiltersController < ApplicationController
  link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "pull-right remove-search-filter") 
  end 
  
+
+end
 
     else
       redirect_to(params[:redirect_action] || "/tasks")
@@ -212,7 +218,8 @@ class TaskFiltersController < ApplicationController
     end
 
     if request.xhr?
-       t("task_filters.filters") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("task_filters.filters") 
  t("task_filters.save_current") 
  filters_user_path(current_user) 
  t("task_filters.manage") 
@@ -225,6 +232,8 @@ class TaskFiltersController < ApplicationController
  current_user.visible_task_filters.each do |tf| 
  select_task_filter_link(tf) 
  end 
+
+end
 
     else
       redirect_to "/tasks"
@@ -240,7 +249,8 @@ class TaskFiltersController < ApplicationController
         @filter.task_filter_users.create(:user_id => current_user.id)
       end
     end
-     t("task_filters.filters") 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("task_filters.filters") 
  t("task_filters.save_current") 
  filters_user_path(current_user) 
  t("task_filters.manage") 
@@ -253,6 +263,8 @@ class TaskFiltersController < ApplicationController
  current_user.visible_task_filters.each do |tf| 
  select_task_filter_link(tf) 
  end 
+
+end
 
   end
 

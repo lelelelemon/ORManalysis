@@ -4,6 +4,7 @@ class OrganizationalUnitsController < ApplicationController
 
   def new
     @org_unit = OrganizationalUnit.new(:customer => @customer)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("new_title", customer: @org_unit.customer) 
   form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
  f.error_messages 
@@ -42,6 +43,8 @@ class OrganizationalUnitsController < ApplicationController
  end 
  
 
+end
+
   end
 
   def create
@@ -53,7 +56,8 @@ class OrganizationalUnitsController < ApplicationController
         flash[:success] = t('flash.notice.model_created', model: OrganizationalUnit.model_name.human)
         format.html { send_to_customer_page }
       else
-        format.html {  t("new_title", customer: @org_unit.customer) 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("new_title", customer: @org_unit.customer) 
   form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
  f.error_messages 
  f.hidden_field(:customer_id) 
@@ -90,6 +94,8 @@ class OrganizationalUnitsController < ApplicationController
  end 
  end 
  
+
+end
  }
       end
     end
@@ -97,6 +103,7 @@ class OrganizationalUnitsController < ApplicationController
 
   def edit
     @org_unit = @customer.organizational_units.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("edit_title", unit: @org_unit) 
   form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
  f.error_messages 
@@ -135,6 +142,8 @@ class OrganizationalUnitsController < ApplicationController
  end 
  
 
+end
+
   end
 
   def update
@@ -146,7 +155,8 @@ class OrganizationalUnitsController < ApplicationController
         @org_unit.update_attribute(:customer_id, @customer.id)
         format.html { send_to_customer_page }
       else
-        format.html {  t("edit_title", unit: @org_unit) 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t("edit_title", unit: @org_unit) 
   form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
  f.error_messages 
  f.hidden_field(:customer_id) 
@@ -183,6 +193,8 @@ class OrganizationalUnitsController < ApplicationController
  end 
  end 
  
+
+end
  }
       end
     end

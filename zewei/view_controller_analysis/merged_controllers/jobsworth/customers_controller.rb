@@ -8,11 +8,15 @@ class CustomersController < ApplicationController
 
   def show
     @customer = Customer.from_company(current_user.company_id).find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 
   def new
     @customer = current_user.company.customers.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "#{t('customers.new')} - #{Setting.productName}" 
  form_for(@customer, :html => {:class => "form-horizontal"}) do |f| 
  t('customers.new') 
@@ -49,6 +53,8 @@ class CustomersController < ApplicationController
  submit_tag t("button.create"), :class => "btn btn-primary" 
  end 
 
+end
+
   end
 
   def create
@@ -59,7 +65,8 @@ class CustomersController < ApplicationController
       redirect_to root_path, notice: t('flash.notice.model_created', model: Customer.model_name.human)
     else
       flash[:error] = @customer.errors.full_messages.join(".")
-       @page_title = "#{t('customers.new')} - #{Setting.productName}" 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = "#{t('customers.new')} - #{Setting.productName}" 
  form_for(@customer, :html => {:class => "form-horizontal"}) do |f| 
  t('customers.new') 
   if !@customer.internal_customer? 
@@ -95,11 +102,14 @@ class CustomersController < ApplicationController
  submit_tag t("button.create"), :class => "btn btn-primary" 
  end 
 
+end
+
     end
   end
 
   def edit
     @customer = Customer.from_company(current_user.company_id).where(:id => params[:id]).includes(:projects).first
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "Customer : #{@customer.name} - #{Setting.productName}" 
  form_for(@customer, :html => {:class => "form-horizontal"}) do |f| 
  link_to_tasks_filtered_by(t("customers.view_tasks"), @customer, :class => "btn btn-success pull-right") 
@@ -423,6 +433,8 @@ nd
  end 
  @customer.id 
 
+end
+
   end
 
   def update
@@ -432,7 +444,8 @@ nd
       flash[:success] = t('flash.notice.model_updated', model: Customer.model_name.human)
       redirect_to :action => :edit, :id => @customer.id
     else
-       @page_title = "Customer : #{@customer.name} - #{Setting.productName}" 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = "Customer : #{@customer.name} - #{Setting.productName}" 
  form_for(@customer, :html => {:class => "form-horizontal"}) do |f| 
  link_to_tasks_filtered_by(t("customers.view_tasks"), @customer, :class => "btn btn-success pull-right") 
  @customer.name 
@@ -755,6 +768,8 @@ nd
  end 
  @customer.id 
 
+end
+
     end
   end
 
@@ -790,10 +805,13 @@ nd
     else
       render :nothing=> true
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @customers.each do |c| 
  c.id 
  c 
  end 
+
+end
 
   end
 
