@@ -5,6 +5,7 @@ class Admin::PostTypesController < Admin::BaseController
   def index
     @post_types = PostType.all
     @post_type = PostType.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   content_for :page_heading do 
  t(".post_types") 
  end 
@@ -34,11 +35,14 @@ class Admin::PostTypesController < Admin::BaseController
  end 
  t(".explain") 
  
+
+end
 
   end
 
   def edit
     @post_types = PostType.all
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   content_for :page_heading do 
  t(".post_types") 
  end 
@@ -68,6 +72,8 @@ class Admin::PostTypesController < Admin::BaseController
  end 
  t(".explain") 
  
+
+end
 
   end
 
@@ -77,7 +83,8 @@ class Admin::PostTypesController < Admin::BaseController
     if @post_type.save
       redirect_to admin_post_types_url, notice: 'Post type was successfully created.'
     else
-        content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  content_for :page_heading do 
  t(".post_types") 
  end 
  form_for([:admin, @post_type]) do |f| 
@@ -106,6 +113,8 @@ class Admin::PostTypesController < Admin::BaseController
  end 
  t(".explain") 
  
+
+end
 
     end
   end
@@ -114,7 +123,8 @@ class Admin::PostTypesController < Admin::BaseController
     if @post_type.update(post_type_params)
       redirect_to admin_post_types_url, notice: 'Post type was successfully updated.'
     else
-        content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  content_for :page_heading do 
  t(".post_types") 
  end 
  form_for([:admin, @post_type]) do |f| 
@@ -143,6 +153,8 @@ class Admin::PostTypesController < Admin::BaseController
  end 
  t(".explain") 
  
+
+end
 
     end
   end

@@ -5,6 +5,7 @@ class Admin::MigrationsController < Admin::BaseController
   def show
     @current_version = migrator.current_schema_version
     @needed_migrations = migrator.pending_migrations
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".database_migration") 
  end 
@@ -27,6 +28,8 @@ class Admin::MigrationsController < Admin::BaseController
  t(".may_take_a_moment")
  end 
  end 
+
+end
 
   end
 

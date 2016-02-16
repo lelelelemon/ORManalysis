@@ -12,6 +12,7 @@ class TagsController < ContentController
     @page_title = controller_name.capitalize
     @keywords = ''
     @description = "#{self.class.to_s.sub(/Controller$/, '')} for #{this_blog.blog_name}"
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title 
  unless @tags.empty? 
  for tag in @tags.sort_by{|grp|grp.display_name} 
@@ -21,6 +22,8 @@ class TagsController < ContentController
  t(".there_is_no_tags") 
  end 
  paginate(@tags, right: "#{t(".next_page")} &raquo;", left: "&laquo; #{t('.previous_page')}") 
+
+end
 
   end
 
@@ -39,8 +42,11 @@ class TagsController < ContentController
     respond_to do |format|
       format.html do
         if @articles.empty?
-           t(".page_not_found") 
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t(".page_not_found") 
  t(".the_page_you_are_looking_for") 
+
+end
 
         else
           render template_name(params[:id])
@@ -57,12 +63,15 @@ class TagsController < ContentController
         render 'articles/index_rss_feed', layout: false
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
  render article 
  render 'articles/article_links', article: article 
  end 
  paginate articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
  
+
+end
 
   end
 

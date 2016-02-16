@@ -3,6 +3,7 @@ class Admin::SidebarController < Admin::BaseController
   def index
     @available = available
     @ordered_sidebars = Sidebar.ordered_sidebars
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".sidebar") 
  end 
@@ -53,6 +54,8 @@ class Admin::SidebarController < Admin::BaseController
  submit_tag(t('.publish_changes'), class: 'btn btn-success') 
  end 
 
+end
+
   end
 
   # Just update a single active Sidebar instance at once
@@ -64,7 +67,8 @@ class Admin::SidebarController < Admin::BaseController
     respond_to do |format|
       format.js do
         # render partial _target for it
-         sidebar.id 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ sidebar.id 
  sidebar.id 
  link_to 'X', admin_sidebar_path(sidebar), {class: 'deletion_link', remote: true, method: :delete, :'data-confirm'=>'Are you sure?'} 
  form_tag admin_sidebar_path(sidebar.id), {remote: true, method: :put} do |f| 
@@ -78,6 +82,8 @@ class Admin::SidebarController < Admin::BaseController
  submit_tag(t('.update'), class: 'btn btn-sm btn-success') 
  end 
  end 
+
+end
 
       end
       format.html do
@@ -93,6 +99,10 @@ class Admin::SidebarController < Admin::BaseController
       format.html { return redirect_to(admin_sidebar_index_path) }
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+
   end
 
   def publish
@@ -138,9 +148,12 @@ class Admin::SidebarController < Admin::BaseController
   # TODO: Rename and move to a AdminSidebarHelpers module. Or use in instance variable.
   def available
     ::Sidebar.available_sidebars
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  9000 + available_counter 
  available.display_name 
  available.description 
+
+end
 
   end
 

@@ -20,6 +20,9 @@ class ThemeController < ContentController
   end
 
   def static_view_test
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 
@@ -28,8 +31,11 @@ class ThemeController < ContentController
   def render_theme_item(type, file, mime = nil)
     mime ||= mime_for(file)
     if file.split(%r{[\/]}).include?('..')
-      return ( t(".page_not_found") 
+      return (ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t(".page_not_found") 
  t(".the_page_you_are_looking_for") 
+
+end
 )
     end
 

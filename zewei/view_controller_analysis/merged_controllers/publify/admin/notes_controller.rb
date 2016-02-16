@@ -7,6 +7,7 @@ class Admin::NotesController < Admin::BaseController
 
   def index
     @note = new_note
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   content_for :page_heading do 
  t(".notes") 
  end 
@@ -39,6 +40,8 @@ class Admin::NotesController < Admin::BaseController
  display_pagination(@notes, 3, 'first', 'last')
  
 
+end
+
   end
 
   def show
@@ -46,6 +49,7 @@ class Admin::NotesController < Admin::BaseController
       flash[:error] = I18n.t('admin.base.not_allowed')
       redirect_to admin_notes_url
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t('.destroy_confirmation') 
  end 
@@ -54,9 +58,12 @@ class Admin::NotesController < Admin::BaseController
  t(".action_or_other_html", first_action: link_to(t(".cancel"), {action: 'index'}), second_action: submit_tag(t(".delete"), class: "btn btn-danger")) 
  end 
 
+end
+
   end
 
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   content_for :page_heading do 
  t(".notes") 
  end 
@@ -88,6 +95,8 @@ class Admin::NotesController < Admin::BaseController
  render @notes 
  display_pagination(@notes, 3, 'first', 'last')
  
+
+end
 
   end
 

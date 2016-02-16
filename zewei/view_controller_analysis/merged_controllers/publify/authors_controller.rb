@@ -17,6 +17,7 @@ class AuthorsController < ContentController
       format.atom { render_feed 'atom' }
       format.html
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @author.nickname 
  display_user_avatar(@author, 'thumb', 'alignright') 
  author_description @author 
@@ -47,6 +48,8 @@ for article in @articles
  end 
  paginate @articles, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
   end 
+
+end
 
   end
 

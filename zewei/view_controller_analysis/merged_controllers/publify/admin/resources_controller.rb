@@ -25,6 +25,7 @@ class Admin::ResourcesController < Admin::BaseController
   def index
     @r = Resource.new
     @resources = Resource.order('created_at DESC').page(params[:page]).per(this_blog.admin_display_elements)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".media_library") 
  end 
@@ -61,6 +62,8 @@ h upload.size rescue 0
  l(upload.created_at, format: :short) 
  end 
  display_pagination(@resources, 6)
+
+end
 
   end
 

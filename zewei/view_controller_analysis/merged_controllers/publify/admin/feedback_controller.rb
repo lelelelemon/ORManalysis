@@ -13,6 +13,7 @@ class Admin::FeedbackController < Admin::BaseController
     params.delete(:page) if params[:page].blank? || params[:page] == '0'
 
     @feedback = scoped_feedback.paginated(params[:page], this_blog.admin_display_elements)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".feedback") 
  end 
@@ -96,6 +97,8 @@ class Admin::FeedbackController < Admin::BaseController
  
  end 
 
+end
+
   end
 
   def destroy
@@ -135,6 +138,7 @@ class Admin::FeedbackController < Admin::BaseController
       redirect_to admin_feedback_index_url
       return
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".comments_for_html", article_link: link_to(h(@comment.article.title), controller: '/admin/content', action: 'edit', id: @comment.article.id).html_safe) 
  end 
@@ -153,6 +157,8 @@ class Admin::FeedbackController < Admin::BaseController
  text_area 'comment', 'body', { :rows => '10', :class => 'form-control'} 
  t(".action_or_other_html", first_action: link_to(t(".cancel"), {action: 'index'}), second_action: submit_tag(t(".save"), class: 'btn btn-primary')) 
  end 
+
+end
 
   end
 
@@ -176,6 +182,7 @@ class Admin::FeedbackController < Admin::BaseController
     @feedback = @article.comments.ham if params[:ham] && params[:spam].blank?
     @feedback = @article.comments.spam if params[:spam] && params[:ham].blank?
     @feedback ||= @article.comments
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".comments_for_html", title: @article.title) 
  end 
@@ -243,6 +250,8 @@ class Admin::FeedbackController < Admin::BaseController
  t(".action_or_other_html", first_action: link_to(t(".cancel"), {action: 'index'}), second_action: submit_tag(t(".save"), class: 'btn btn-primary')) 
  end 
 
+end
+
   end
 
   def change_state
@@ -257,7 +266,8 @@ class Admin::FeedbackController < Admin::BaseController
         page.replace_html('commentList', partial: 'admin/dashboard/comment')
       else
         if template == 'ham'
-          format.js {  comment.id 
+          format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ comment.id 
  avatar_tag(:email => comment.email, :url => comment.url, :size => 80, :class => 'img-circle') 
  comment_class comment.state.to_s.downcase 
  t("admin.feedback.state.#{comment.state}") 
@@ -269,9 +279,12 @@ class Admin::FeedbackController < Admin::BaseController
  l(comment.created_at) 
  comment.html(:all) 
  show_feedback_actions comment 
+
+end
  }
         else
-          format.js {  avatar_tag(:email => comment.email, :url => comment.url, :size => 48, :class => 'img-circle') 
+          format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ avatar_tag(:email => comment.email, :url => comment.url, :size => 48, :class => 'img-circle') 
  t("admin.feedback.state.#{comment.state}") 
  link_to comment.article.title, :controller => 'feedback', :action => 'article', :id => comment.article_id 
  t('.by:')
@@ -281,6 +294,8 @@ class Admin::FeedbackController < Admin::BaseController
  l(comment.created_at) 
  t(".this_comment_by_was_flagged_as_spam", author: comment.author, cancel_link: link_to(t('.cancel'), url: {action: 'change_state', id: comment.id, remote: true})) 
  toggle_element "feedback_#{comment.id}" 
+
+end
  }
         end
       end

@@ -4,6 +4,7 @@ class Admin::SettingsController < Admin::BaseController
   def index
     this_blog.base_url = blog_base_url if this_blog.base_url.blank?
     load_settings
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".general_settings") 
  end 
@@ -33,10 +34,13 @@ class Admin::SettingsController < Admin::BaseController
  submit_tag(t(".update_settings"), class: 'btn btn-success') 
  end 
 
+end
+
   end
 
   def write
     load_settings
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".write") 
  end 
@@ -74,10 +78,13 @@ class Admin::SettingsController < Admin::BaseController
  submit_tag(t(".update_settings"), class: 'btn btn-success') 
  end 
 
+end
+
   end
 
   def feedback
     load_settings
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".feedback_settings") 
  end 
@@ -125,10 +132,13 @@ class Admin::SettingsController < Admin::BaseController
  submit_tag(t(".update_settings"), class: 'btn btn-success') 
  end 
 
+end
+
   end
 
   def display
     load_settings
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t('.display_settings') 
  end 
@@ -176,6 +186,8 @@ class Admin::SettingsController < Admin::BaseController
  t(".or") 
  submit_tag(t(".update_settings"), class: 'btn btn-success') 
  end 
+
+end
 
   end
 

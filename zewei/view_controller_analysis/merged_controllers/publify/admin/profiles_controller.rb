@@ -5,6 +5,7 @@ class Admin::ProfilesController < Admin::BaseController
 
   def index
     @profiles = Profile.order('id')
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".your_profile") 
  end 
@@ -97,6 +98,8 @@ class Admin::ProfilesController < Admin::BaseController
  end 
  
 
+end
+
   end
 
   def update
@@ -105,7 +108,8 @@ class Admin::ProfilesController < Admin::BaseController
     if @user.update(user_params)
       redirect_to admin_profiles_url, notice: I18n.t('admin.profiles.index.success')
     else
-       content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :page_heading do 
  t(".your_profile") 
  end 
   form_for([:admin, @user], url: admin_profile_path(current_user)) do |f| 
@@ -196,6 +200,8 @@ class Admin::ProfilesController < Admin::BaseController
  submit_tag("Save", class: 'btn btn-success') 
  end 
  
+
+end
 
     end
   end

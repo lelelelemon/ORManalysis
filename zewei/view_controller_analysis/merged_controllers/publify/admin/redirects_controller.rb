@@ -4,6 +4,7 @@ class Admin::RedirectsController < Admin::BaseController
   def index
     @redirects = Redirect.where(content_id: nil).order('id desc').page(params[:page]).per(this_blog.admin_display_elements)
     @redirect = Redirect.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   content_for :page_heading do 
  t(".redirects") 
  end 
@@ -33,11 +34,14 @@ class Admin::RedirectsController < Admin::BaseController
  end 
  display_pagination(@redirects, 2) 
  
+
+end
 
   end
 
   def edit
     @redirects = Redirect.where(content_id: nil).order('id desc').page(params[:page]).per(this_blog.admin_display_elements)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   content_for :page_heading do 
  t(".redirects") 
  end 
@@ -67,6 +71,8 @@ class Admin::RedirectsController < Admin::BaseController
  end 
  display_pagination(@redirects, 2) 
  
+
+end
 
   end
 
@@ -76,7 +82,8 @@ class Admin::RedirectsController < Admin::BaseController
     if @redirect.save
       redirect_to admin_redirects_url, notice: 'Redirect was successfully created.'
     else
-        content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  content_for :page_heading do 
  t(".redirects") 
  end 
  form_for([:admin, @redirect]) do |f| 
@@ -105,6 +112,8 @@ class Admin::RedirectsController < Admin::BaseController
  end 
  display_pagination(@redirects, 2) 
  
+
+end
 
     end
   end
@@ -113,7 +122,8 @@ class Admin::RedirectsController < Admin::BaseController
     if @redirect.update(redirect_params)
       redirect_to admin_redirects_url, notice: 'Redirect was successfully updated.'
     else
-        content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  content_for :page_heading do 
  t(".redirects") 
  end 
  form_for([:admin, @redirect]) do |f| 
@@ -142,6 +152,8 @@ class Admin::RedirectsController < Admin::BaseController
  end 
  display_pagination(@redirects, 2) 
  
+
+end
 
     end
   end

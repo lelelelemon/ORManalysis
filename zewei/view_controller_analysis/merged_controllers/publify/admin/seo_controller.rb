@@ -10,6 +10,7 @@ class Admin::SeoController < Admin::BaseController
       @setting.custom_permalink = @setting.permalink_format
       @setting.permalink_format = 'custom'
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
 
       case @section
@@ -160,6 +161,8 @@ class Admin::SeoController < Admin::BaseController
  submit_tag(t(".update_settings"), class: 'btn btn-success') 
  end 
 
+end
+
   end
 
   def update
@@ -172,7 +175,8 @@ class Admin::SeoController < Admin::BaseController
     else
       flash[:error] = I18n.t('admin.settings.update.error',
                              messages: this_blog.errors.full_messages.join(', '))
-       content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :page_heading do 
 
       case @section
       when 'titles' then t(".title_settings")
@@ -321,6 +325,8 @@ class Admin::SeoController < Admin::BaseController
  t(".or") 
  submit_tag(t(".update_settings"), class: 'btn btn-success') 
  end 
+
+end
 
     end
   end

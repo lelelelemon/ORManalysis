@@ -19,6 +19,7 @@ class Admin::CacheController < Admin::BaseController
         @cache_number += 1
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".cache") 
  end 
@@ -27,6 +28,8 @@ class Admin::CacheController < Admin::BaseController
  form_tag(admin_cache_path, method: :delete) do 
  submit_tag(t(".sweep_cache"), class: 'btn btn-primary') 
  end 
+
+end
 
   end
 

@@ -44,12 +44,15 @@ class ArticlesController < ContentController
         render_articles_feed('rss')
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
  render article 
  render 'articles/article_links', article: article 
  end 
  paginate articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
  
+
+end
 
   end
 
@@ -59,27 +62,34 @@ class ArticlesController < ContentController
     @page_title = this_blog.search_title_template.to_title(@articles, this_blog, params)
     @description = this_blog.search_desc_template.to_title(@articles, this_blog, params)
     respond_to do |format|
-      format.html {  for article in @articles 
- link_to_permalink article,article.title 
- article.html(:body).gsub(/<\/?[^>]*>/, "").slice(0..300) 
- end 
- paginate @articles, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
- }
-      format.rss { render 'index_rss_feed', layout: false }
-      format.atom { render 'index_atom_feed', layout: false }
-    end
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  for article in @articles 
  link_to_permalink article,article.title 
  article.html(:body).gsub(/<\/?[^>]*>/, "").slice(0..300) 
  end 
  paginate @articles, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
 
+end
+ }
+      format.rss { render 'index_rss_feed', layout: false }
+      format.atom { render 'index_atom_feed', layout: false }
+    end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ for article in @articles 
+ link_to_permalink article,article.title 
+ article.html(:body).gsub(/<\/?[^>]*>/, "").slice(0..300) 
+ end 
+ paginate @articles, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
+
+end
+
   end
 
   def live_search
     @search = params[:q]
     @articles = Article.search(@search)
-     if !@search.to_s.blank? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if !@search.to_s.blank? 
 h @search 
  for article in @articles.to_a 
  link_to_permalink article,h(article.title) 
@@ -87,12 +97,15 @@ h @search
  else 
  end 
 
+end
+
   end
 
   def preview
     @article = Article.last_draft(params[:id])
     @page_title = this_blog.article_title_template.to_title(@article, this_blog, params)
-     if @article.allow_pings? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @article.allow_pings? 
  @article.trackback_url 
  end 
 h @article.title.gsub(/-+/, '-') 
@@ -167,17 +180,23 @@ h trackback.title
  t(".comments_are_disabled")
  end 
 
+end
+
   end
 
   def check_password
     return unless request.xhr?
     @article = Article.find(params[:article][:id])
     if @article.password == params[:article][:password]
-       article.html(:body) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ article.html(:body) 
  article.html(:extended) 
 
+end
+
     else
-       article.id 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ article.id 
  form_for(article, {:remote => true,
                       :url => { :controller => 'articles', :action => 'check_password'},
                       :update => "content-#{article.id}"}) do |f| 
@@ -185,6 +204,8 @@ h trackback.title
  article.id 
  submit_tag(t('.submit') + '!', name: 'check_password') 
  end 
+
+end
 
     end
   end
@@ -206,8 +227,11 @@ h trackback.title
     r = Redirect.find_by_from_path(from)
     return redirect_to r.full_to_path, status: 301 if r # Let redirection made outside of the blog on purpose (deal with it, Brakeman!)
 
-     t(".page_not_found") 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t(".page_not_found") 
  t(".the_page_you_are_looking_for") 
+
+end
 
   end
 
@@ -217,6 +241,7 @@ h trackback.title
     @page_title = this_blog.archives_title_template.to_title(@articles, this_blog, params)
     @keywords = this_blog.meta_keywords
     @description = this_blog.archives_desc_template.to_title(@articles, this_blog, params)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @articles.empty? 
  t(".no_articles_found")
  else
@@ -238,6 +263,8 @@ for article in @articles
  end 
  paginate @articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
 
+end
+
   end
 
   def tag
@@ -246,7 +273,10 @@ for article in @articles
 
   def preview_page
     @page = Page.find(params[:id])
-     html @page 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ html @page 
+
+end
 
   end
 
@@ -256,11 +286,17 @@ for article in @articles
       @description = this_blog.meta_description
       @keywords = this_blog.meta_keywords
     else
-       t(".page_not_found") 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t(".page_not_found") 
  t(".the_page_you_are_looking_for") 
 
+end
+
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  html @page 
+
+end
 
   end
 
@@ -337,7 +373,10 @@ for article in @articles
 
   def error!
     @message = I18n.t('errors.no_posts_found')
-     @message 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @message 
+
+end
 
   end
 end

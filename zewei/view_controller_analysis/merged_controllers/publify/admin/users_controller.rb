@@ -4,6 +4,7 @@ class Admin::UsersController < Admin::BaseController
 
   def index
     @users = User.order('login asc').page(params[:page]).per(this_blog.admin_display_elements)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".users") 
  link_to(t(".new_user"), new_admin_user_path, id: 'dialog-link', class: 'btn btn-info pull-right') 
@@ -28,12 +29,15 @@ class Admin::UsersController < Admin::BaseController
  end 
  display_pagination(@users, 7) 
 
+end
+
   end
 
   def new
     @user = User.new
     @user.text_filter = TextFilter.find_by_name(this_blog.text_filter)
     setup_profiles
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".add_user") 
  end 
@@ -126,11 +130,14 @@ class Admin::UsersController < Admin::BaseController
  end 
  
 
+end
+
   end
 
   def edit
     @user = params[:id] ? User.find_by_id(params[:id]) : current_user
     setup_profiles
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".edit_user") 
  end 
@@ -224,6 +231,8 @@ class Admin::UsersController < Admin::BaseController
  end 
  
  end 
+
+end
 
   end
 
@@ -233,7 +242,8 @@ class Admin::UsersController < Admin::BaseController
     if @user.save
       redirect_to admin_users_url, notice: I18n.t('admin.users.new.success')
     else
-       content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :page_heading do 
  t(".add_user") 
  end 
   form_for([:admin, @user]) do |f| 
@@ -325,6 +335,8 @@ class Admin::UsersController < Admin::BaseController
  end 
  
 
+end
+
     end
   end
 
@@ -332,7 +344,8 @@ class Admin::UsersController < Admin::BaseController
     if @user.update(user_params)
       redirect_to admin_users_url, notice: 'User was successfully updated.'
     else
-       content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :page_heading do 
  t(".edit_user") 
  end 
  form_tag :action=>"update", :id => @user.id do 
@@ -425,6 +438,8 @@ class Admin::UsersController < Admin::BaseController
  end 
  
  end 
+
+end
 
     end
   end

@@ -12,6 +12,7 @@ class Admin::PagesController < Admin::BaseController
   def index
     @search = params[:search] ? params[:search] : {}
     @pages = Page.search_with(@search).page(params[:page]).per(this_blog.admin_display_elements)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".manage_pages") 
  link_to(t(".new_page"), {controller: 'pages', action: 'new'}, id: 'dialog-link', class: 'btn btn-info pull-right') 
@@ -30,6 +31,8 @@ class Admin::PagesController < Admin::BaseController
  display_pagination(@pages, 5) 
  
 
+end
+
   end
 
   def new
@@ -37,6 +40,7 @@ class Admin::PagesController < Admin::BaseController
     @page.text_filter ||= default_textfilter
     @page.published = true
     @page.user_id = current_user.id
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   form_for([:admin, @page]) do |f| 
  if @page.errors.any? 
  pluralize(@page.errors.count, "error") 
@@ -70,11 +74,14 @@ class Admin::PagesController < Admin::BaseController
  submit_tag( t(".publish"), class: 'btn btn-success') 
  end 
  
+
+end
 
   end
 
   def edit
     @page.text_filter ||= default_textfilter
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   form_for([:admin, @page]) do |f| 
  if @page.errors.any? 
  pluralize(@page.errors.count, "error") 
@@ -108,6 +115,8 @@ class Admin::PagesController < Admin::BaseController
  submit_tag( t(".publish"), class: 'btn btn-success') 
  end 
  
+
+end
 
   end
 
@@ -120,7 +129,8 @@ class Admin::PagesController < Admin::BaseController
     if @page.save
       redirect_to admin_pages_url, notice: I18n.t('admin.pages.new.success')
     else
-        form_for([:admin, @page]) do |f| 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  form_for([:admin, @page]) do |f| 
  if @page.errors.any? 
  pluralize(@page.errors.count, "error") 
  @page.errors.full_messages.each do |message| 
@@ -153,6 +163,8 @@ class Admin::PagesController < Admin::BaseController
  submit_tag( t(".publish"), class: 'btn btn-success') 
  end 
  
+
+end
 
     end
   end
@@ -162,7 +174,8 @@ class Admin::PagesController < Admin::BaseController
     if @page.update(page_params)
       redirect_to admin_pages_url, notice: I18n.t('admin.pages.edit.success')
     else
-        form_for([:admin, @page]) do |f| 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  form_for([:admin, @page]) do |f| 
  if @page.errors.any? 
  pluralize(@page.errors.count, "error") 
  @page.errors.full_messages.each do |message| 
@@ -195,6 +208,8 @@ class Admin::PagesController < Admin::BaseController
  submit_tag( t(".publish"), class: 'btn btn-success') 
  end 
  
+
+end
 
     end
   end

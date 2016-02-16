@@ -5,6 +5,7 @@ class Admin::TagsController < Admin::BaseController
 
   def index
     @tag = Tag.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   content_for :page_heading do 
  t('.manage_tags') 
  end 
@@ -33,10 +34,13 @@ class Admin::TagsController < Admin::BaseController
  end 
  display_pagination(@tags, 3) 
  
+
+end
 
   end
 
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   content_for :page_heading do 
  t('.manage_tags') 
  end 
@@ -65,6 +69,8 @@ class Admin::TagsController < Admin::BaseController
  end 
  display_pagination(@tags, 3) 
  
+
+end
 
   end
 
@@ -75,7 +81,8 @@ class Admin::TagsController < Admin::BaseController
       redirect_to admin_tags_url, notice: 'Tag was successfully created.'
     else
       fetch_tags
-        content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  content_for :page_heading do 
  t('.manage_tags') 
  end 
  form_for([:admin, @tag]) do |f| 
@@ -103,6 +110,8 @@ class Admin::TagsController < Admin::BaseController
  end 
  display_pagination(@tags, 3) 
  
+
+end
 
     end
   end
@@ -113,7 +122,8 @@ class Admin::TagsController < Admin::BaseController
       Redirect.create(from_path: "/tag/#{old_name}", to_path: @tag.permalink_url(nil, true))
       redirect_to admin_tags_url, notice: I18n.t('admin.tags.edit.success')
     else
-        content_for :page_heading do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  content_for :page_heading do 
  t('.manage_tags') 
  end 
  form_for([:admin, @tag]) do |f| 
@@ -141,6 +151,8 @@ class Admin::TagsController < Admin::BaseController
  end 
  display_pagination(@tags, 3) 
  
+
+end
 
     end
   end

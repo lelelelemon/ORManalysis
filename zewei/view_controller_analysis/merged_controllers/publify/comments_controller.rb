@@ -32,11 +32,14 @@ class CommentsController < FeedbackController
     end
 
     @comment = Comment.new(comment_params)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   avatar_tag(email: comment.email, url: comment.url) 
 h @comment[:author] 
  t(".is_about_to_say")
  @comment.html 
  
+
+end
 
   end
 

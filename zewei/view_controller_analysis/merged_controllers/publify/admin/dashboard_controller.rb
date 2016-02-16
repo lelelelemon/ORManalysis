@@ -30,6 +30,7 @@ class Admin::DashboardController < Admin::BaseController
     @inbound_links = inbound_links
     @publify_links = publify_dev
     publify_version
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".welcome_back", user_name: current_user.name) 
  end 
@@ -101,6 +102,8 @@ class Admin::DashboardController < Admin::BaseController
  end 
  end 
  
+
+end
 
   end
 

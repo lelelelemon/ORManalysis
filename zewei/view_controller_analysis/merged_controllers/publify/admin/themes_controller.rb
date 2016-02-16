@@ -12,6 +12,7 @@ class Admin::ThemesController < Admin::BaseController
       theme.description_html = TextFilter.filter_text(this_blog, theme.description, nil, [:markdown, :smartypants]).html_safe
     end
     @active = this_blog.current_theme
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t(".choose_a_theme") 
  end 
@@ -29,6 +30,8 @@ class Admin::ThemesController < Admin::BaseController
  link_to(t(".use_this_theme"), switch_url, class: 'btn btn-info') 
  end 
  end 
+
+end
 
   end
 

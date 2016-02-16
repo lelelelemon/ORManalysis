@@ -20,6 +20,7 @@ class AccountsController < ApplicationController
       flash[:error] = t('accounts.login.error')
       @login = params[:user][:login]
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_title do 
  "#{this_blog.blog_name} - #{t('.title')}" 
  end 
@@ -37,6 +38,8 @@ class AccountsController < ApplicationController
  end 
  link_to(t("accounts.back_to", place: this_blog.blog_name).html_safe, this_blog.base_url) 
  end 
+
+end
 
   end
 
@@ -60,6 +63,7 @@ class AccountsController < ApplicationController
       redirect_to confirm_accounts_url
       return
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_title do 
  "#{this_blog.blog_name} - #{t('.title')}" 
  end 
@@ -73,6 +77,8 @@ class AccountsController < ApplicationController
  link_to(t("accounts.back_to_login"), action: 'login') 
  link_to(t("accounts.back_to", place: this_blog.blog_name).html_safe, this_blog.base_url) 
  end 
+
+end
 
   end
 
@@ -88,6 +94,7 @@ class AccountsController < ApplicationController
     else
       flash[:error] = t('accounts.recover_password.error')
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_title do 
  "#{this_blog.blog_name} - #{t('.title')}" 
  end 
@@ -102,6 +109,8 @@ class AccountsController < ApplicationController
  end 
  link_to(t("accounts.back_to", place: this_blog.blog_name).html_safe, this_blog.base_url) 
  end 
+
+end
 
   end
 

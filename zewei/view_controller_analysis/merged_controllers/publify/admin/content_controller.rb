@@ -18,6 +18,7 @@ class Admin::ContentController < Admin::BaseController
     else
       @article = Article.new(params[:article])
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_heading do 
  t('.manage_articles') 
  link_to(t('.new_article'), {controller: 'content', action: 'new'}, id: 'dialog-link', class: 'btn btn-info pull-right') 
@@ -53,11 +54,14 @@ class Admin::ContentController < Admin::BaseController
  
  end 
 
+end
+
   end
 
   def new
     @article = Article::Factory.new(this_blog, current_user).default
     load_resources
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_tag({action: 'create'}, id: 'article_form', multipart: true, class: 'autosave') do 
   hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
@@ -127,6 +131,8 @@ t('.tags_explaination')
  
  end 
 
+end
+
   end
 
   def edit
@@ -135,6 +141,7 @@ t('.tags_explaination')
     @article.text_filter ||= current_user.default_text_filter
     @article.keywords = Tag.collection_to_string @article.tags
     load_resources
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
   hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
@@ -204,6 +211,8 @@ t('.tags_explaination')
  
  end 
 
+end
+
   end
 
   def create
@@ -218,7 +227,8 @@ t('.tags_explaination')
     else
       @article.keywords = Tag.collection_to_string @article.tags
       load_resources
-       form_tag({action: 'create'}, id: 'article_form', multipart: true, class: 'autosave') do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_tag({action: 'create'}, id: 'article_form', multipart: true, class: 'autosave') do 
   hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
  link_to(t('.cancel'), {action: 'index'}, {class: 'btn btn-default'}) 
@@ -286,6 +296,8 @@ t('.tags_explaination')
  submit_tag(t('.publish'), class: 'btn btn-success') 
  
  end 
+
+end
 
     end
   end
@@ -310,7 +322,8 @@ t('.tags_explaination')
     else
       @article.keywords = Tag.collection_to_string @article.tags
       load_resources
-       form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
   hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
  link_to(t('.cancel'), {action: 'index'}, {class: 'btn btn-default'}) 
@@ -378,6 +391,8 @@ t('.tags_explaination')
  submit_tag(t('.publish'), class: 'btn btn-success') 
  
  end 
+
+end
 
     end
   end
@@ -421,6 +436,15 @@ t('.tags_explaination')
         format.js
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ hidden_field_tag('article[id]', @article.id) 
+ link_to('Preview', {:controller => '/articles', :action => 'preview', :id => @article.id}, {:target => 'new', :class => 'btn btn-default'}); 
+ if @article.state.to_s.downcase == "draft" 
+ Time.now() 
+ end 
+
+end
+
   end
 
   protected
