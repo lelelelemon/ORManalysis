@@ -22,6 +22,7 @@ class MessagesController < BaseController
     else
       @messages = @user.message_threads_as_recipient.order('updated_at DESC').page(params[:page]).per(20)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   widget do 
  :links.l 
  user_messages_path(@user) 
@@ -59,12 +60,15 @@ class MessagesController < BaseController
  end 
  end 
 
+end
+
   end
 
   def show
     @message = Message.read(params[:id], @user)
     @message_thread = MessageThread.for(@message, (admin? ? @message.recipient : current_user ))
     @reply = Message.new_reply(@user, @message_thread, params)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @message_thread 
  @page_title = @message_thread.parent_message.sender.login + ':' + @message_thread.parent_message.subject 
  else 
@@ -118,6 +122,8 @@ class MessagesController < BaseController
  
  end 
 
+end
+
   end
 
   def new
@@ -126,6 +132,7 @@ class MessagesController < BaseController
       message_thread = MessageThread.for(in_reply_to, current_user)
     end
     @message = Message.new_reply(@user, message_thread, params)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :compose_message.l 
   widget do 
  :links.l 
@@ -158,6 +165,8 @@ class MessagesController < BaseController
  f.primary :send.l 
  end 
  
+
+end
 
   end
 

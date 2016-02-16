@@ -46,6 +46,7 @@ class BaseController < ApplicationController
           })
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = configatron.community_name + ' ' + :home.l 
  @meta = { :description => configatron.meta_description, :keywords => configatron.meta_keywords, :robots => configatron.robots_meta_list_content } 
  unless logged_in? 
@@ -103,6 +104,8 @@ class BaseController < ApplicationController
  end 
  end 
 
+end
+
   end
 
   def footer_content
@@ -117,8 +120,11 @@ class BaseController < ApplicationController
   end
 
   def advertise
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :advertise_on.l + " #{configatron.community_name}" 
  mail_to "#{configatron.support_email}" 
+
+end
 
   end
 

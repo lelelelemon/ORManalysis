@@ -38,6 +38,7 @@ class EventsController < BaseController
     @is_admin_user = (current_user && current_user.admin?)
     @event = Event.find(params[:id])
     @comments = @event.comments.includes(:user).order('created_at DESC').limit(20)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = 'events' 
  @page_title = @event.name 
  widget do 
@@ -157,11 +158,14 @@ class EventsController < BaseController
  
  more_comments_links(@event) 
 
+end
+
   end
 
   def index
     @is_admin_user = (current_user && current_user.admin?)
     @events = Event.upcoming.page(params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = 'events' 
  @page_title = :events.l 
  :find_out_where_to_be_and_when_to_be_there.l 
@@ -213,12 +217,15 @@ class EventsController < BaseController
  
  paginate @events , :theme => 'bootstrap'     
 
+end
+
   end
 
   def past
     @is_admin_user = (current_user && current_user.admin?)
     @events = Event.past.page(params[:page])
-     @section = 'events' 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @section = 'events' 
  @page_title = :events.l 
  :find_out_where_to_be_and_when_to_be_there.l 
  if @is_admin_user 
@@ -269,12 +276,15 @@ class EventsController < BaseController
  
  paginate @events , :theme => 'bootstrap'     
 
+end
+
   end
 
   def new
     @event = Event.new
     @metro_areas, @states = setup_metro_area_choices_for(current_user)
     @metro_area_id, @state_id, @country_id = setup_location_for(current_user)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :new_event.l 
   bootstrap_form_for(@event, :layout => :horizontal) do |f| 
  f.text_field :name 
@@ -308,12 +318,15 @@ class EventsController < BaseController
  end 
  
 
+end
+
   end
 
   def edit
     @event = Event.find(params[:id])
     @metro_areas, @states = setup_metro_area_choices_for(@event)
     @metro_area_id, @state_id, @country_id = setup_location_for(@event)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :edit_event.l 
  link_to :back.l, events_path, :class => 'btn btn-default' 
  link_to :show.l, event_path(@event), :class => 'btn btn-primary' 
@@ -351,6 +364,8 @@ class EventsController < BaseController
  end 
  
 
+end
+
   end
 
   def create
@@ -374,7 +389,8 @@ class EventsController < BaseController
             @state_id = params[:state_id].to_i
             @country_id = params[:country_id].to_i
           end
-           @page_title = :new_event.l 
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :new_event.l 
   bootstrap_form_for(@event, :layout => :horizontal) do |f| 
  f.text_field :name 
  f.text_area :description, :rows => 10, :class => "rich_text_editor" 
@@ -407,6 +423,8 @@ class EventsController < BaseController
  end 
  
 
+end
+
         }
       end
     end
@@ -431,7 +449,8 @@ class EventsController < BaseController
             @state_id = params[:state_id].to_i
             @country_id = params[:country_id].to_i
           end
-           @page_title = :edit_event.l 
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :edit_event.l 
  link_to :back.l, events_path, :class => 'btn btn-default' 
  link_to :show.l, event_path(@event), :class => 'btn btn-primary' 
  link_to :clone.l, clone_event_path(@event), :class => 'btn btn-success' 
@@ -468,6 +487,8 @@ class EventsController < BaseController
  end 
  
 
+end
+
         }
       end
     end
@@ -486,7 +507,8 @@ class EventsController < BaseController
     @event = Event.find(params[:id]).clone
     @metro_areas, @states = setup_metro_area_choices_for(@event)
     @metro_area_id, @state_id, @country_id = setup_location_for(@event)
-     @page_title = :new_event.l 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :new_event.l 
   bootstrap_form_for(@event, :layout => :horizontal) do |f| 
  f.text_field :name 
  f.text_area :description, :rows => 10, :class => "rich_text_editor" 
@@ -518,6 +540,8 @@ class EventsController < BaseController
  end 
  end 
  
+
+end
 
   end
 

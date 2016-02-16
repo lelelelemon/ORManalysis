@@ -18,6 +18,7 @@ class CommentsController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if params[:cancel] 
  @comment.id 
  escape_javascript( comment.id 
@@ -83,6 +84,8 @@ class CommentsController < BaseController
  end 
  @comment.id 
 
+end
+
   end
 
   def update
@@ -94,6 +97,7 @@ class CommentsController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @comment.nil? 
  params[:id].to_s 
  escape_javascript() 
@@ -143,6 +147,8 @@ class CommentsController < BaseController
  @comment.id 
  end 
 
+end
+
   end
 
   def approve
@@ -153,6 +159,9 @@ class CommentsController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 
@@ -206,6 +215,7 @@ class CommentsController < BaseController
       flash[:notice] = :no_comments_found.l_with_args(:type => commentable_type_humanized)
       redirect_to home_path
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   widget do 
  :author.l 
  link_to tag(:img, :src => user.avatar_photo_url(:medium), "alt"=>"#{user.login}", :class => "img-responsive"), user_path(user), :title => "#{user.login}'s"+ :profile.l 
@@ -296,6 +306,8 @@ class CommentsController < BaseController
  end 
    
 
+end
+
   end
 
   def new
@@ -325,6 +337,7 @@ class CommentsController < BaseController
         format.js
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @comment.new_record? 
  escape_javascript() 
  else 
@@ -376,6 +389,8 @@ class CommentsController < BaseController
  end 
  @comment.id 
 
+end
+
   end
 
   def destroy
@@ -395,7 +410,10 @@ class CommentsController < BaseController
         render if flash[:notice]
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @comment.id.to_s 
+
+end
 
   end
 

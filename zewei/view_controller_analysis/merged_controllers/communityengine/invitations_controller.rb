@@ -8,17 +8,21 @@ class InvitationsController < BaseController
     respond_to do |format|
       format.html
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :listing_invitations.l 
  for invitation in @invitations 
  invitation.email_addresses 
  end 
  link_to fa_icon('plus-circle', :text => :new_invitation.l), new_user_invitation_path 
 
+end
+
   end
 
   def new
     @user = current_user
     @invitation = Invitation.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:invite_your_friends_to_join.l 
  widget do 
  :spread_the_word.l 
@@ -34,6 +38,8 @@ class InvitationsController < BaseController
  f.primary :send_invitations.l 
  end 
  end 
+
+end
 
   end
 
@@ -60,7 +66,8 @@ class InvitationsController < BaseController
           end
         }
       else
-        format.html {  @page_title=:invite_your_friends_to_join.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title=:invite_your_friends_to_join.l 
  widget do 
  :spread_the_word.l 
  :invite_message.l(:site => configatron.community_name) 
@@ -75,6 +82,8 @@ class InvitationsController < BaseController
  f.primary :send_invitations.l 
  end 
  end 
+
+end
  }
       end
     end

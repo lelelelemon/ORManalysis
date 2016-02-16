@@ -3,6 +3,7 @@ class PasswordResetsController < BaseController
   before_action :load_user_using_perishable_token, :only => [ :edit, :update ]
 
   def new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:forgot_your_password.l 
   widget do 
  :help.l 
@@ -20,6 +21,8 @@ class PasswordResetsController < BaseController
  f.primary :reset_my_password.l 
  end 
  end 
+
+end
 
   end
 
@@ -34,7 +37,8 @@ class PasswordResetsController < BaseController
     else
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
 
-       @page_title=:forgot_your_password.l 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title=:forgot_your_password.l 
   widget do 
  :help.l 
  :dont_have_an_account.l 
@@ -52,10 +56,13 @@ class PasswordResetsController < BaseController
  end 
  end 
 
+end
+
     end
   end
 
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:forgot_your_password.l 
  bootstrap_form_tag :url => password_reset_path, :method => :put, :layout => :horizontal do |f| 
  f.password_field :password 
@@ -64,6 +71,8 @@ class PasswordResetsController < BaseController
  f.primary :reset_my_password.l 
  end 
  end 
+
+end
 
   end
 
@@ -77,7 +86,8 @@ class PasswordResetsController < BaseController
       redirect_to dashboard_user_path(@user)
     else
       flash[:error] = @user.errors.full_messages.to_sentence
-       @page_title=:forgot_your_password.l 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title=:forgot_your_password.l 
  bootstrap_form_tag :url => password_reset_path, :method => :put, :layout => :horizontal do |f| 
  f.password_field :password 
  f.password_field :password_confirmation, :label => :confirm_password.l 
@@ -85,6 +95,8 @@ class PasswordResetsController < BaseController
  f.primary :reset_my_password.l 
  end 
  end 
+
+end
 
     end
   end

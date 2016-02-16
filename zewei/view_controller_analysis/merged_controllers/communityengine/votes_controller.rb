@@ -14,6 +14,7 @@ class VotesController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @vote.valid? 
  @choice.poll.id.to_s 
  ( has_voted = logged_in? && poll.voted?(current_user) 
@@ -42,6 +43,8 @@ class VotesController < BaseController
  else 
  @vote.errors.full_messages.join(', ') 
  end 
+
+end
 
   end
   

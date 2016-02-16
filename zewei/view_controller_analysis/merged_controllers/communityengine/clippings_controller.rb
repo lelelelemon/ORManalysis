@@ -32,6 +32,7 @@ class ClippingsController < BaseController
       }
     end
 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = 'clippings' 
  box do  
  params[:recent] ? :recent.l : :popular.l 
@@ -54,6 +55,8 @@ class ClippingsController < BaseController
  widget do  
  link_to "#{:view.l} #{params[:recent] ? :popular.l : :recent.l} #{:clippings.l}", site_clippings_path(:recent => params[:recent] ? nil : 'true') 
  end 
+
+end
 
   end
 
@@ -89,6 +92,7 @@ class ClippingsController < BaseController
 
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = 'my_clippings' 
  if @is_current_user 
  widget :id => 'clipping_tools' do 
@@ -138,6 +142,8 @@ class ClippingsController < BaseController
  @is_current_user ? :you_have_no_clippings_use_the_bookmarklet_on_the_right_to_add_some.l : :no_clippings_yet.l 
  end 
 
+end
+
   end
 
   # GET /clippings/1
@@ -153,6 +159,7 @@ class ClippingsController < BaseController
     respond_to do |format|
       format.html # show.rhtml
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = 'my_clippings' 
  @meta = { :description => "#{@clipping.description}.",:keywords => "#{@clipping.tags.join(', ') if @clipping.tags}"} 
   widget do 
@@ -279,6 +286,8 @@ class ClippingsController < BaseController
  
  more_comments_links(@clipping) 
 
+end
+
   end
 
   def load_images_from_uri
@@ -306,10 +315,13 @@ class ClippingsController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @images ?  images.each do |src| 
  src 
  end 
 .gsub('"', '\"').gsub("\n", "").html_safe : "<h1>Sorry, there was an error fetching the images from the page you requested</h1><a href='#{params[:uri]}'>Go back...</a>" 
+
+end
 
   end
 
@@ -317,7 +329,8 @@ class ClippingsController < BaseController
     @user = current_user
     @clipping = @user.clippings.new({:url => params[:uri], :description => params[:selection]})
     @post = @user.posts.new_from_bookmarklet(params)
-     csrf_meta_tag   
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ csrf_meta_tag   
  configatron.community_name 
  :new_clipping.l 
  javascript_include_tag 'community_engine' 
@@ -339,12 +352,15 @@ class ClippingsController < BaseController
  f.primary :create.l 
  end 
 
+end
+
   end
 
   # GET /clippings/new
   def new
     @user = User.find(params[:user_id])
     @clipping = @user.clippings.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :new_clipping.l 
  widget do  
  :help.l 
@@ -373,12 +389,15 @@ class ClippingsController < BaseController
  end 
  
 
+end
+
   end
 
   # GET /clippings/1;edit
   def edit
     @clipping = Clipping.find(params[:id])
     @user = User.find(params[:user_id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :editing_clipping.l 
  widget do 
  :help.l 
@@ -407,6 +426,8 @@ class ClippingsController < BaseController
  end 
  
 
+end
+
   end
 
   # POST /clippings
@@ -428,7 +449,8 @@ class ClippingsController < BaseController
           end
         }
       else
-        format.html {  @page_title= :new_clipping.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title= :new_clipping.l 
  widget do  
  :help.l 
  :clippings_are_a_way_to_save_images_you_like_from_around_the_web.l 
@@ -455,6 +477,8 @@ class ClippingsController < BaseController
  f.primary :save.l 
  end 
  
+
+end
  }
       end
     end
@@ -473,7 +497,8 @@ class ClippingsController < BaseController
       end
     else
       respond_to do |format|
-        format.html {  @page_title = :editing_clipping.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :editing_clipping.l 
  widget do 
  :help.l 
  :tags_are_keywords_you_use_to_organize_your_clippings_separate_multiple_tags_with_commas.l 
@@ -500,6 +525,8 @@ class ClippingsController < BaseController
  f.primary :save.l 
  end 
  
+
+end
  }
       end
     end

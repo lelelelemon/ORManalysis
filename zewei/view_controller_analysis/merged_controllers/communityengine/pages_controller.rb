@@ -15,6 +15,7 @@ class PagesController < BaseController
 
   def index
     @pages = Page.unscoped.order('created_at DESC').page(params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:manage_pages.l 
   widget do 
  :admin.l 
@@ -63,11 +64,16 @@ class PagesController < BaseController
  paginate @pages, :theme => 'bootstrap' 
  link_to :new_page.l, new_admin_page_path, :class => 'btn btn-success' 
 
+end
+
   end
 
   def preview
     @page = Page.unscoped.find(params[:id])
-    
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+
   end
 
   def show
@@ -83,6 +89,7 @@ class PagesController < BaseController
   
   def new
     @page = Page.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :new_page.l 
  link_to :back.l, admin_pages_path, :class => 'btn btn-default' 
   if @page.new_record? 
@@ -106,10 +113,13 @@ class PagesController < BaseController
  end 
  
 
+end
+
   end 
   
   def edit
     @page = Page.unscoped.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :edit_page.l 
   if @page.new_record? 
  url = admin_pages_path 
@@ -132,6 +142,8 @@ class PagesController < BaseController
  end 
  
 
+end
+
   end
 
   def create
@@ -140,7 +152,8 @@ class PagesController < BaseController
       flash[:notice] = :page_was_successfully_created.l
       redirect_to admin_pages_path
     else
-       @page_title= :new_page.l 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title= :new_page.l 
  link_to :back.l, admin_pages_path, :class => 'btn btn-default' 
   if @page.new_record? 
  url = admin_pages_path 
@@ -163,6 +176,8 @@ class PagesController < BaseController
  end 
  
 
+end
+
     end
   end
 
@@ -171,7 +186,8 @@ class PagesController < BaseController
       flash[:notice] = :page_was_successfully_updated.l
       redirect_to admin_pages_path
     else
-       @page_title= :edit_page.l 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title= :edit_page.l 
   if @page.new_record? 
  url = admin_pages_path 
  else 
@@ -192,6 +208,8 @@ class PagesController < BaseController
  end 
  end 
  
+
+end
 
     end
   end

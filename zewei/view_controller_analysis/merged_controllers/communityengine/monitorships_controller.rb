@@ -8,7 +8,10 @@ class MonitorshipsController < BaseController
       format.html { redirect_to forum_topic_path(params[:forum_id], params[:topic_id]) }
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  :watching_topic.l 
+
+end
 
   end
   
@@ -18,7 +21,10 @@ class MonitorshipsController < BaseController
       format.html { redirect_to forum_topic_path(params[:forum_id], params[:topic_id]) }
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  :watch_topic.l 
+
+end
 
   end
 end

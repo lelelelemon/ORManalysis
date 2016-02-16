@@ -23,6 +23,7 @@ class StatisticsController < BaseController
     @featured_writers = User.find_featured
 
     @posts = Post.includes(:user).where('? <= posts.published_at AND posts.published_at <= ? AND users.featured_writer = ?', Time.now.beginning_of_month, (Time.now.end_of_month + 1.day), true).includes(:users)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   widget do 
  :admin.l 
  link_to_unless_current :features.l, homepage_features_path 
@@ -78,6 +79,8 @@ class StatisticsController < BaseController
  @featured_writers.each do |w| 
  link_to w.login, statistics_user_path(w) 
  end 
+
+end
 
   end  
 

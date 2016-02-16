@@ -18,12 +18,16 @@ class AdminController < BaseController
 
   def events
     @events = Event.order('start_time DESC').page(params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 
   def messages
     @user = current_user
     @messages = Message.order('created_at DESC').page(params[:page]).per(50)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :sent_messages.l 
   widget do 
  :admin.l 
@@ -62,6 +66,8 @@ class AdminController < BaseController
  end 
  
 
+end
+
   end
 
   def users
@@ -83,6 +89,7 @@ class AdminController < BaseController
         render :xml => @users.to_xml(:except => [ :password, :crypted_password, :single_access_token, :perishable_token, :password_salt, :persistence_token ])
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   widget do 
  :admin.l 
  link_to_unless_current :features.l, homepage_features_path 
@@ -148,12 +155,15 @@ class AdminController < BaseController
  end 
  end 
 
+end
+
   end
 
   def comments
     @search = Comment.search(params[:q])
     @comments = @search.result.distinct
     @comments = @comments.order("created_at DESC").page(params[:page]).per(100)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = 'Comments' 
   widget do 
  :admin.l 
@@ -212,6 +222,8 @@ class AdminController < BaseController
  end 
  end 
  paginate @comments, :theme => 'bootstrap' 
+
+end
 
   end
 

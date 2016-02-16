@@ -10,6 +10,7 @@ class SessionsController < BaseController
   def new
     redirect_to user_path(current_user) and return if current_user
     @user_session = UserSession.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:log_in_to_site.l(:site => configatron.community_name) 
   widget do 
  :help.l 
@@ -43,6 +44,8 @@ class SessionsController < BaseController
  end 
  end 
 
+end
+
   end
 
   def create
@@ -55,7 +58,8 @@ class SessionsController < BaseController
       redirect_back_or_default(dashboard_user_path(current_user))
     else
       flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
-       @page_title=:log_in_to_site.l(:site => configatron.community_name) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title=:log_in_to_site.l(:site => configatron.community_name) 
   widget do 
  :help.l 
  :dont_have_an_account.l 
@@ -87,6 +91,8 @@ class SessionsController < BaseController
  f.primary :log_in.l 
  end 
  end 
+
+end
 
     end
   end

@@ -7,6 +7,7 @@ class PhotoManagerController < BaseController
   def index
     @albums = current_user.albums.order('id DESC').page(params[:page_albums])
     @photos_no_albums = current_user.photos.where('album_id IS NULL').order('id DESC').page(params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :photo_manager.l 
  widget do 
  :links.l 
@@ -48,6 +49,8 @@ class PhotoManagerController < BaseController
  end 
  paginate @photos_no_albums, :theme => 'bootstrap' 
  link_to :new_photo.l, new_user_photo_path(current_user), :class => 'btn btn-success' 
+
+end
 
   end
 end

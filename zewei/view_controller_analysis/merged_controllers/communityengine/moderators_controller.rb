@@ -9,6 +9,7 @@ class ModeratorsController < BaseController
       format.js
     end
 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @moderatorship.valid? 
   if !user.moderator_of?(forum) 
  link_to :make_moderator.l, forum_moderators_path(:forum_id => forum.id, :user_id => user.id), :method => :post, :class => 'act-via-ajax', :id => 'moderator-'+user.id.to_s 
@@ -21,6 +22,8 @@ class ModeratorsController < BaseController
  :failed.l 
  end 
 
+end
+
   end
 
   def destroy
@@ -29,6 +32,7 @@ class ModeratorsController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   if !user.moderator_of?(forum) 
  link_to :make_moderator.l, forum_moderators_path(:forum_id => forum.id, :user_id => user.id), :method => :post, :class => 'act-via-ajax', :id => 'moderator-'+user.id.to_s 
  else 
@@ -36,6 +40,8 @@ class ModeratorsController < BaseController
  link_to :remove_moderator.l, forum_moderator_path(forum, moderatorship.id), :method => :delete, :class => 'act-via-ajax', :id => 'moderator-'+user.id.to_s 
  end 
  
+
+end
 
   end
 

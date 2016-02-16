@@ -20,6 +20,7 @@ class AlbumsController < BaseController
       format.html # show.html.erb
       format.xml  { render :xml => @album }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = @album.title 
   widget do 
  :author.l 
@@ -122,6 +123,8 @@ class AlbumsController < BaseController
  more_comments_links(@album) 
  end 
 
+end
+
   end
   
 
@@ -135,6 +138,7 @@ class AlbumsController < BaseController
       format.html # new.html.erb
       format.xml  { render :xml => @album }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :new_album.l 
  widget do  
  :album_tip.l :community_name => configatron.community_name 
@@ -161,11 +165,14 @@ class AlbumsController < BaseController
  end 
  
 
+end
+
   end
 
   # GET /albums/1/edit
   def edit
     @album = Album.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :edit_album.l 
  widget do 
  :album_tip.l :community_name => configatron.community_name 
@@ -195,6 +202,8 @@ class AlbumsController < BaseController
  end 
  
 
+end
+
   end
 
   # POST /albums
@@ -212,7 +221,8 @@ class AlbumsController < BaseController
           format.html { redirect_to(new_user_album_photo_path(current_user, @album)) }
         end
       else
-        format.html {  @page_title= :new_album.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title= :new_album.l 
  widget do  
  :album_tip.l :community_name => configatron.community_name 
  end 
@@ -237,6 +247,8 @@ class AlbumsController < BaseController
  f.primary button1 
  end 
  
+
+end
  }
       end 
     end
@@ -256,7 +268,8 @@ class AlbumsController < BaseController
           format.html { redirect_to(new_user_album_photo_path(current_user, @album)) }
         end
       else
-        format.html {  @page_title = :edit_album.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :edit_album.l 
  widget do 
  :album_tip.l :community_name => configatron.community_name 
  end 
@@ -284,6 +297,8 @@ class AlbumsController < BaseController
  f.primary button1 
  end 
  
+
+end
  }
         format.xml  { render :xml => @album.errors, :status => :unprocessable_entity }
       end

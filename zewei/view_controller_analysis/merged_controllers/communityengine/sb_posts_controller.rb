@@ -27,6 +27,7 @@ class SbPostsController < BaseController
     @posts = SbPost.with_query_options.where(conditions).page(params[:page])
 
     @users = User.distinct.where(:id => @posts.collect(&:user_id).uniq).to_a.index_by(&:id)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = 'forums' 
  @page_title = search_posts_title 
  box do  
@@ -59,6 +60,8 @@ class SbPostsController < BaseController
  paginate @posts, :theme => 'bootstrap' 
  end 
 
+end
+
   end
 
   def search
@@ -67,7 +70,8 @@ class SbPostsController < BaseController
     @posts = SbPost.with_query_options.where(conditions).page(params[:page])
 
     @users = User.distinct.where(:id => @posts.collect(&:user_id).uniq).to_a.index_by(&:id)
-     @section = 'forums' 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @section = 'forums' 
  @page_title = search_posts_title 
  box do  
  link_to :forums.l, forums_path 
@@ -99,11 +103,14 @@ class SbPostsController < BaseController
  paginate @posts, :theme => 'bootstrap' 
  end 
 
+end
+
   end
 
   def monitored
     @user = User.find params[:user_id]
     @posts = SbPost.with_query_options.joins('INNER JOIN monitorships ON monitorships.topic_id = topics.id').where('monitorships.user_id = ? AND sb_posts.user_id != ?', params[:user_id], @user.id).page(params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "Posts that #{h @user.display_name} is monitoring" 
  link_to @user.display_name, user_path(@user) 
  's '+:monitored_topics.l 
@@ -131,6 +138,8 @@ class SbPostsController < BaseController
  post.body_html 
  end 
  paginate @posts, :theme => 'bootstrap' 
+
+end
 
   end
 
@@ -180,6 +189,7 @@ class SbPostsController < BaseController
         format.js
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @post.new_record? 
 raw escape_javascript() 
  else 
@@ -220,6 +230,8 @@ raw escape_javascript()
  if configatron.has_key?(:recaptcha_pub_key) 
  end 
 
+end
+
   end
 
   def edit
@@ -227,6 +239,7 @@ raw escape_javascript()
       format.html
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  :edit_post.l 
  link_to h(@post.topic.title), forum_topic_path(@post.forum_id, @post.topic) 
  link_to(:delete_this_post.l, sb_post_path(@post, :forum_id => @post.forum_id, :topic_id => @post.topic, :page => params[:page]),
@@ -239,6 +252,8 @@ raw escape_javascript()
  :or.l 
  link_to :cancel.l, forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]) 
  end 
+
+end
 
   end
 
@@ -254,8 +269,11 @@ raw escape_javascript()
       format.js
       format.xml { head 200 }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @post.id 
 raw escape_javascript(@post.body) 
+
+end
 
   end
 
@@ -271,7 +289,10 @@ raw escape_javascript(@post.body)
       format.js
       format.xml { head 200 }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @post.id 
+
+end
 
   end
 

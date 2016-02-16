@@ -8,6 +8,7 @@ class ActivitiesController < BaseController
 
   def network
     @activities = @user.network_activity(:per_page => 15, :page => params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
  unless @activities.empty? 
  :activity_from_your_network.l 
@@ -20,11 +21,14 @@ class ActivitiesController < BaseController
  link_to :add_some_friends_to_get_started.l, users_path 
  end 
 
+end
+
   end
 
   def index
     @activities = User.recent_activity(:per_page => 30, :page => params[:page], :limit => 1000)
     @popular_tags = popular_tags(30).to_a
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = 'activities' 
  @page_title = 'Recent Activities' 
  :whats_fresh.l 
@@ -38,6 +42,8 @@ class ActivitiesController < BaseController
  link_to fa_icon('plus-circle', :text => :all_tags.l.downcase.capitalize), tags_path 
  end 
 
+end
+
   end
 
   def destroy
@@ -48,7 +54,10 @@ class ActivitiesController < BaseController
       format.html {redirect_to :back and return}
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @activity.id.to_s 
+
+end
 
   end
 

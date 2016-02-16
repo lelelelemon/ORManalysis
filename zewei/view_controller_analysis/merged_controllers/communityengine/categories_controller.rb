@@ -13,6 +13,7 @@ class CategoriesController < BaseController
       format.html # index.rhtml
       format.xml  { render :xml => @categories.to_xml }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:categories.l 
   widget do 
  :admin.l 
@@ -46,6 +47,8 @@ class CategoriesController < BaseController
  end 
  link_to :new_category.l, new_category_path, :class => 'btn btn-success' 
 
+end
+
   end
 
   # GET /categories/1
@@ -75,6 +78,7 @@ class CategoriesController < BaseController
                     :pub_date => :published_at} })
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @meta = { :description => "#{@category.name} posts.",:keywords => "#{@category.name}"} 
  @section = @category.name 
  unless @active_users.empty? 
@@ -114,11 +118,14 @@ class CategoriesController < BaseController
         
  paginate @posts, :theme => 'bootstrap' 
 
+end
+
   end
 
   # GET /categories/new
   def new
     @category = Category.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :new_category.l 
   widget do 
  :admin.l 
@@ -151,11 +158,14 @@ class CategoriesController < BaseController
  end 
  
 
+end
+
   end
 
   # GET /categories/1;edit
   def edit
     @category = Category.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :editing_category.l 
   widget do 
  :admin.l 
@@ -188,6 +198,8 @@ class CategoriesController < BaseController
  end 
  
 
+end
+
   end
 
   # POST /categories
@@ -205,7 +217,8 @@ class CategoriesController < BaseController
           render :nothing => true, :status => "201 Created"
         end
       else
-        format.html {  @page_title= :new_category.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title= :new_category.l 
   widget do 
  :admin.l 
  link_to_unless_current :features.l, homepage_features_path 
@@ -236,6 +249,8 @@ class CategoriesController < BaseController
  end 
  end 
  
+
+end
  }
         format.xml  { render :xml => @category.errors.to_xml }
       end
@@ -252,7 +267,8 @@ class CategoriesController < BaseController
         format.html { redirect_to category_url(@category) }
         format.xml  { render :nothing => true }
       else
-        format.html {  @page_title = :editing_category.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :editing_category.l 
   widget do 
  :admin.l 
  link_to_unless_current :features.l, homepage_features_path 
@@ -283,6 +299,8 @@ class CategoriesController < BaseController
  end 
  end 
  
+
+end
  }
         format.xml  { render :xml => @category.errors.to_xml }
       end
@@ -303,7 +321,8 @@ class CategoriesController < BaseController
 
   def show_tips
     @category = Category.find(params[:id] )
-     if !category.nil? && !category.tips.blank? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if !category.nil? && !category.tips.blank? 
  category.name 
  category.tips 
  else  
@@ -311,14 +330,19 @@ class CategoriesController < BaseController
  :every_person_has_something_to_say.l 
  end 
 
+end
+
   rescue ActiveRecord::RecordNotFound
-     if !category.nil? && !category.tips.blank? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if !category.nil? && !category.tips.blank? 
  category.name 
  category.tips 
  else  
  :we_need_you.l 
  :every_person_has_something_to_say.l 
  end 
+
+end
 
   end
 

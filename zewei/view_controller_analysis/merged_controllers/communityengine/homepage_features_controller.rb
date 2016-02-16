@@ -13,6 +13,7 @@ class HomepageFeaturesController < BaseController
     respond_to do |format|
       format.html
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :homepage_features.l 
   widget do 
  :admin.l 
@@ -51,6 +52,8 @@ class HomepageFeaturesController < BaseController
  end 
  link_to :new_homepage_feature.l, new_homepage_feature_path, :class => 'btn btn-success' 
 
+end
+
   end
   
   def show
@@ -59,6 +62,7 @@ class HomepageFeaturesController < BaseController
     respond_to do |format|
       format.html 
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = @homepage_feature.title 
  link_to :back.l, homepage_features_path, :class => 'btn btn-default' 
  link_to :edit.l, edit_homepage_feature_path(@homepage_feature), :class => 'btn btn-warning' 
@@ -81,10 +85,13 @@ class HomepageFeaturesController < BaseController
  h @homepage_feature.updated_at 
  image_tag @homepage_feature.image.url(:large), :class => 'thumbnail' 
 
+end
+
   end
   
   def new
     @homepage_feature = HomepageFeature.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :new_homepage_feature.l 
   bootstrap_form_for(@homepage_feature, :html => {:multipart => true}, :layout => :horizontal) do |f| 
  f.text_field :url 
@@ -95,10 +102,13 @@ class HomepageFeaturesController < BaseController
  end 
  
 
+end
+
   end
   
   def edit
     @homepage_feature = HomepageFeature.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to :back.l, homepage_features_path, :class => 'btn btn-default' 
  link_to :show.l, homepage_feature_path(@homepage_feature), :class => 'btn btn-primary' 
  link_to :delete.l, homepage_feature_path(@homepage_feature), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
@@ -111,6 +121,8 @@ class HomepageFeaturesController < BaseController
  end 
  
 
+end
+
   end
 
   def create
@@ -122,7 +134,8 @@ class HomepageFeaturesController < BaseController
         
         format.html { redirect_to homepage_feature_url(@homepage_feature) }
       else
-        format.html {  @page_title = :new_homepage_feature.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :new_homepage_feature.l 
   bootstrap_form_for(@homepage_feature, :html => {:multipart => true}, :layout => :horizontal) do |f| 
  f.text_field :url 
  f.text_field :title 
@@ -131,6 +144,8 @@ class HomepageFeaturesController < BaseController
  f.primary :save.l 
  end 
  
+
+end
  }
       end
     end
@@ -143,7 +158,8 @@ class HomepageFeaturesController < BaseController
       if @homepage_feature.update_attributes(homepage_feature_params)
         format.html { redirect_to homepage_feature_url(@homepage_feature) }
       else
-        format.html {  link_to :back.l, homepage_features_path, :class => 'btn btn-default' 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ link_to :back.l, homepage_features_path, :class => 'btn btn-default' 
  link_to :show.l, homepage_feature_path(@homepage_feature), :class => 'btn btn-primary' 
  link_to :delete.l, homepage_feature_path(@homepage_feature), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
   bootstrap_form_for(@homepage_feature, :html => {:multipart => true}, :layout => :horizontal) do |f| 
@@ -154,6 +170,8 @@ class HomepageFeaturesController < BaseController
  f.primary :save.l 
  end 
  
+
+end
  }
       end
     end

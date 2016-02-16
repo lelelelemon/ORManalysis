@@ -11,6 +11,7 @@ class ForumsController < BaseController
       format.html
       format.xml { render :xml => @forums }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @meta = { :description => "#{configatron.community_name} forums.",:keywords => "#{configatron.meta_keywords}", :robots => configatron.robots_meta_list_content} 
  @section = 'forums' 
  @page_title = :forums.l 
@@ -64,6 +65,8 @@ class ForumsController < BaseController
  end 
  end 
 
+end
+
   end
 
   def show
@@ -80,6 +83,7 @@ class ForumsController < BaseController
         render :xml => @forum
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @meta = { :description => "#{@forum.name.capitalize} discussion forum.",:keywords => "#{@forum.tags.join(', ') if @forum.tags}",:robots => configatron.robots_meta_show_content} 
  @section = 'forums' 
  @page_title = @forum.name 
@@ -155,10 +159,13 @@ class ForumsController < BaseController
  end 
  end 
 
+end
+
   end
 
   def new
     @forum = Forum.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :new_forum.l 
  link_to :back.l, forums_path, :class => 'btn btn-default' 
   bootstrap_form_for @forum, :layout => :horizontal do |f| 
@@ -175,6 +182,8 @@ class ForumsController < BaseController
  end 
  
 
+end
+
   end
   
   def create
@@ -189,6 +198,7 @@ class ForumsController < BaseController
 
   def edit
     @forum = Forum.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :edit_forum.l 
  link_to :back.l, forums_path, :class => 'btn btn-default' 
  link_to :show.l, forum_path(@forum), :class => 'btn btn-primary' 
@@ -206,6 +216,8 @@ class ForumsController < BaseController
  end 
  end 
  
+
+end
 
   end
 

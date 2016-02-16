@@ -14,6 +14,7 @@ class SitemapController < BaseController
       }
       format.xml
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= "#{configatron.community_name} Sitemap" 
  box do 
  @categories.each do |c| 
@@ -29,6 +30,8 @@ class SitemapController < BaseController
  end 
  link_to :log_in.l, '/login' 
  end 
+
+end
 
   end
 

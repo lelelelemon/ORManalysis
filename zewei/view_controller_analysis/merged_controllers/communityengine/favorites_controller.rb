@@ -13,6 +13,7 @@ class FavoritesController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @favorite.new_record? 
  @favorite.errors.full_messages.join(', ').html_safe 
  else 
@@ -36,6 +37,8 @@ class FavoritesController < BaseController
  end 
  end 
 
+end
+
   end
 
   def destroy
@@ -45,6 +48,7 @@ class FavoritesController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  case @favorite.favoritable.class.to_s.tableize 
  when 'clippings' 
   if favorite = clipping.has_been_favorited_by(current_user, request.remote_ip) 
@@ -64,6 +68,8 @@ class FavoritesController < BaseController
  render :partial => 'posts/meta', :locals => {:post => @favorite.favoritable} 
  end 
 
+end
+
   end
 
   def show
@@ -72,6 +78,7 @@ class FavoritesController < BaseController
 
   def index
     @favorites = Favorite.recent.by_user(@user).page(params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = "#{@user.login}'s "+:favorites.l 
  @favorites.each do |f| 
   case favorite.favoritable.class.to_s.tableize 
@@ -88,6 +95,8 @@ class FavoritesController < BaseController
  
  end 
  paginate @favorites, :theme => 'bootstrap'      
+
+end
 
   end
 

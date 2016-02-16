@@ -25,6 +25,7 @@ class PostsController < BaseController
       @posts = @search.result
       @posts = @posts.where(:user_id => @user.id).order('created_at DESC').page(params[:page]).per(params[:size]||10)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :manage_posts.l 
  widget do 
  :search.l 
@@ -63,6 +64,8 @@ class PostsController < BaseController
  paginate @posts, :theme => 'bootstrap' 
  link_to :new_post.l, new_user_post_path(current_user), :class => 'btn btn-success' 
 
+end
+
   end
 
   def index
@@ -91,6 +94,7 @@ class PostsController < BaseController
                        :pub_date => :published_at} })
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :users_blog.l(:user => @user.login) 
   widget do 
  :author.l 
@@ -124,6 +128,8 @@ class PostsController < BaseController
   
  paginate @posts, :theme => 'bootstrap' 
 
+end
+
   end
 
   # GET /posts/1
@@ -146,6 +152,7 @@ class PostsController < BaseController
     @popular_posts = @user.posts.except(:order).order('view_count DESC').limit(10).to_a
     @related = Post.find_related_to(@post)
     @most_commented = Post.find_most_commented
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = (@post.category && @post.category.name) 
  @meta = { :title => "#{@post.title}", :description => "#{truncate_words(@post.post, 75, '...' )}", :keywords => "#{@post.tags.join(", ") unless @post.tags.nil?}", :robots => configatron.robots_meta_show_content } 
   widget do 
@@ -306,6 +313,8 @@ class PostsController < BaseController
  content_for :end_javascript do 
  end 
 
+end
+
   end
 
   def update_views
@@ -326,6 +335,7 @@ class PostsController < BaseController
     @post.category = Category.find(params[:category_id]) if params[:category_id]
     @post.published_as = 'live'
     @categories = Category.all
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = @post.category ? (:new_post_for_category.l :category => @post.category.name) : :new_post.l 
  widget :id => 'category_tips' do 
  if @post.category 
@@ -378,11 +388,14 @@ class PostsController < BaseController
  end 
  
 
+end
+
   end
 
   # GET /posts/1;edit
   def edit
     @post = Post.unscoped.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :editing_post.l 
  widget :id => 'category_tips' do 
  if @post.category 
@@ -437,6 +450,8 @@ class PostsController < BaseController
  end 
  
 
+end
+
   end
 
   # POST /posts
@@ -460,7 +475,8 @@ class PostsController < BaseController
         }
         format.js
       else
-        format.html {  @page_title = @post.category ? (:new_post_for_category.l :category => @post.category.name) : :new_post.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = @post.category ? (:new_post_for_category.l :category => @post.category.name) : :new_post.l 
  widget :id => 'category_tips' do 
  if @post.category 
   if !category.nil? && !category.tips.blank? 
@@ -511,6 +527,8 @@ class PostsController < BaseController
  end 
  end 
  
+
+end
  }
         format.js
       end
@@ -529,7 +547,8 @@ class PostsController < BaseController
 
         format.html { redirect_to user_post_path(@post.user, @post) }
       else
-        format.html {  @page_title = :editing_post.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :editing_post.l 
  widget :id => 'category_tips' do 
  if @post.category 
   if !category.nil? && !category.tips.blank? 
@@ -582,6 +601,8 @@ class PostsController < BaseController
  end 
  end 
  
+
+end
  }
       end
     end
@@ -604,34 +625,7 @@ class PostsController < BaseController
 
   def send_to_friend
     unless params[:emails]
-       form_tag send_to_friend_user_post_path(:user_id => params[:user_id], :id => params[:id]), :class => 'form form-horizontal submit-via-ajax', :id => 'send_to_friend_form' do 
- true 
- :send_this_story_to_friends.l 
- :enter_a_message.l 
- text_area_tag :message, :this_story_is_awesome.l, :class => "form-control" 
- :enter_e_mail_addresses_comma_sep.l 
- text_area_tag :emails, '', :class => "form-control" 
- image_tag "http://www.plaxo.com/images/abc/buttons/add_button.gif", :alt => :add_from_my_address_book.l 
- ajax_spinner_for 'send_to_friend_form' 
- submit_tag :send.l, :class => 'btn btn-primary' 
- end 
-
-    end
-    @post = Post.find(params[:id])
-    if @post.send_to(params[:emails], params[:message], (current_user || nil))
-      flash[:notice] = "Your message has been sent."
-      respond_to do |format|
-        format.html {}
-        format.js
-      end
-    else
-      flash[:error] = "You entered invalid addresses: "+ @post.invalid_emails.join(', ')+". Please correct these and try again."
-
-      respond_to do |format|
-        format.html {}
-        format.js
-      end
-    end
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_tag send_to_friend_user_post_path(:user_id => params[:user_id], :id => params[:id]), :class => 'form form-horizontal submit-via-ajax', :id => 'send_to_friend_form' do 
  true 
  :send_this_story_to_friends.l 
@@ -643,6 +637,45 @@ class PostsController < BaseController
  ajax_spinner_for 'send_to_friend_form' 
  submit_tag :send.l, :class => 'btn btn-primary' 
  end 
+
+end
+
+    end
+    @post = Post.find(params[:id])
+    if @post.send_to(params[:emails], params[:message], (current_user || nil))
+      flash[:notice] = "Your message has been sent."
+      respond_to do |format|
+        format.html {ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+}
+        format.js
+      end
+    else
+      flash[:error] = "You entered invalid addresses: "+ @post.invalid_emails.join(', ')+". Please correct these and try again."
+
+      respond_to do |format|
+        format.html {ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+}
+        format.js
+      end
+    end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_tag send_to_friend_user_post_path(:user_id => params[:user_id], :id => params[:id]), :class => 'form form-horizontal submit-via-ajax', :id => 'send_to_friend_form' do 
+ true 
+ :send_this_story_to_friends.l 
+ :enter_a_message.l 
+ text_area_tag :message, :this_story_is_awesome.l, :class => "form-control" 
+ :enter_e_mail_addresses_comma_sep.l 
+ text_area_tag :emails, '', :class => "form-control" 
+ image_tag "http://www.plaxo.com/images/abc/buttons/add_button.gif", :alt => :add_from_my_address_book.l 
+ ajax_spinner_for 'send_to_friend_form' 
+ submit_tag :send.l, :class => 'btn btn-primary' 
+ end 
+
+end
 
   end
 
@@ -666,6 +699,9 @@ class PostsController < BaseController
           })
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 
@@ -685,6 +721,9 @@ class PostsController < BaseController
           })
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 
@@ -702,6 +741,7 @@ class PostsController < BaseController
           })
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @section = 'posts' 
  @page_title = :featured_posts.l 
  widget do 
@@ -718,6 +758,8 @@ class PostsController < BaseController
   
  paginate @posts, :theme => 'bootstrap' 
 
+end
+
   end
 
   def category_tips_update
@@ -725,13 +767,16 @@ class PostsController < BaseController
     @category = Category.find(params[:post_category_id] )
     render :partial => "categories/tips", :locals => {:category => @category}
   rescue ActiveRecord::RecordNotFound
-     if !category.nil? && !category.tips.blank? 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if !category.nil? && !category.tips.blank? 
  category.name 
  category.tips 
  else  
  :we_need_you.l 
  :every_person_has_something_to_say.l 
  end 
+
+end
 
   end
 

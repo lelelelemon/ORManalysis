@@ -54,6 +54,7 @@ class UsersController < BaseController
     @tags = User.tag_counts :limit => 10
 
     setup_metro_areas_for_cloud
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:site_members.l :site => configatron.community_name 
  @section = (params[:metro_area_id] ? 'metro_area' : 'users') 
   
@@ -83,12 +84,17 @@ class UsersController < BaseController
  
  paginate @users, :theme => 'bootstrap' 
 
+end
+
   end
 
   def dashboard
     @user = current_user
     @network_activity = @user.network_activity
     @recommended_posts = @user.recommended_posts
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 
@@ -109,6 +115,7 @@ class UsersController < BaseController
     @my_activity = Activity.recent.by_users([@user.id]).limit(10)
 
     update_view_count(@user) unless current_user && current_user.eql?(@user)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @meta = { :description => "#{@user.login}'s profile on #{configatron.community_name}.", :keywords => "#{@user.login}, #{@user.tags.join(", ") unless @user.tags.nil?}", :robots => configatron.robots_meta_show_content } 
  @section = @user.eql?(current_user) ? 'my_profile' : 'users' 
  @sidebar_left = true 
@@ -256,12 +263,15 @@ class UsersController < BaseController
  
  more_comments_links(@user) 
 
+end
+
   end
 
   def new
     @user         = User.new(:birthday => Date.parse((Time.now - 25.years).to_s))
     @inviter_id   = params[:id]
     @inviter_code = params[:code]
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:sign_up.l 
  widget do 
  :why_sign_up.l 
@@ -292,6 +302,8 @@ class UsersController < BaseController
  end 
  end 
 
+end
+
   end
 
   def create
@@ -303,7 +315,8 @@ class UsersController < BaseController
       flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email)
       redirect_to signup_completed_user_path(@user)
     else
-       @page_title=:sign_up.l 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title=:sign_up.l 
  widget do 
  :why_sign_up.l 
  :sign_up_reason_1.l 
@@ -333,12 +346,15 @@ class UsersController < BaseController
  end 
  end 
 
+end
+
     end
   end
 
   def edit
     @metro_areas, @states = setup_locations_for(@user)
     @avatar     = (@user.avatar || @user.build_avatar)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  widget do 
  :you_are_editing_your_profile.l 
  link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) 
@@ -411,6 +427,8 @@ class UsersController < BaseController
  f.primary :save_changes.l 
  end 
  end 
+
+end
 
   end
 
@@ -440,7 +458,8 @@ class UsersController < BaseController
           redirect_to :action => "welcome_#{params[:welcome]}", :id => @user
         end
       else
-         widget do 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ widget do 
  :you_are_editing_your_profile.l 
  link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) 
  end 
@@ -513,9 +532,12 @@ class UsersController < BaseController
  end 
  end 
 
+end
+
       end
     else
-       widget do 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ widget do 
  :you_are_editing_your_profile.l 
  link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) 
  end 
@@ -587,6 +609,8 @@ class UsersController < BaseController
  f.primary :save_changes.l 
  end 
  end 
+
+end
 
     end
   end
@@ -607,7 +631,10 @@ class UsersController < BaseController
         render if flash[:notice]
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @user.id.to_s 
+
+end
 
   end
 
@@ -622,7 +649,8 @@ class UsersController < BaseController
     end
   rescue ActiveRecord::RecordInvalid
     @metro_areas, @states = setup_locations_for(@user)
-     widget do 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ widget do 
  :you_are_editing_your_profile.l 
  link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) 
  end 
@@ -694,6 +722,8 @@ class UsersController < BaseController
  f.primary :save_changes.l 
  end 
  end 
+
+end
 
   end
 
@@ -718,6 +748,7 @@ class UsersController < BaseController
       @user.save
       redirect_to crop_profile_photo_user_path(@user)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:profile_photo.l 
  bootstrap_form_for :avatar, :url => upload_profile_photo_user_url(@user), :method => 'put', :multipart => true, :layout => :horiztonal do |f| 
  @user.vendor ? "<div class='right_corner'><div class='community_pro'></div></div>" : '' 
@@ -726,12 +757,15 @@ class UsersController < BaseController
  f.primary :save_changes.l 
  end 
 
+end
+
   end
 
   def edit_account
     @user             = current_user
     @authorizations   = current_user.authorizations
     @is_current_user  = true
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  widget do 
  :you_are_editing_your_account.l 
  link_to :edit_your_user_profile.l, edit_user_path(@user) 
@@ -777,6 +811,8 @@ class UsersController < BaseController
  link_to :deactivate_link.l, deactivate_user_path(@user), :method => :patch, data: { confirm: :deactivate_confirmation.l }, :class => 'btn btn-danger' 
  :deactivate_tip.l 
  end 
+
+end
 
   end
 
@@ -791,7 +827,8 @@ class UsersController < BaseController
       end
     else
       respond_to do |format|
-        format.html { widget do 
+        format.html {ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ widget do 
  :you_are_editing_your_account.l 
  link_to :edit_your_user_profile.l, edit_user_path(@user) 
  end 
@@ -836,6 +873,8 @@ class UsersController < BaseController
  link_to :deactivate_link.l, deactivate_user_path(@user), :method => :patch, data: { confirm: :deactivate_confirmation.l }, :class => 'btn btn-danger' 
  :deactivate_tip.l 
  end 
+
+end
 }
         format.js
       end
@@ -894,6 +933,7 @@ class UsersController < BaseController
   def welcome_photo
     @user = User.find(params[:id])
     @avatar = (@user.avatar || @user.build_avatar)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:profile_photo.l 
  widget do 
  :get_started.l + ' ' + :upload_a_profile_photo.l 
@@ -914,11 +954,14 @@ class UsersController < BaseController
  f.primary :upload_and_continue_to_step_two.l 
  end 
 
+end
+
   end
 
   def welcome_about
     @user = User.find(params[:id])
     @metro_areas, @states = setup_locations_for(@user)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:about_you.l 
  widget do 
  :get_started.l + ' ' + :tell_us_about_yourself.l 
@@ -982,10 +1025,13 @@ class UsersController < BaseController
  submit_tag :save_and_continue_to_step_three.l, :class => 'btn btn-primary' 
  end 
 
+end
+
   end
 
   def welcome_invite
     @user = User.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :get_started.l + ' ' + :invite_some_friends.l 
  @page_title= :invite_some_customers.l if @user.vendor? 
  :invite_message.l(:site=> configatron.community_name) 
@@ -1000,10 +1046,13 @@ class UsersController < BaseController
  end 
  end 
 
+end
+
   end
 
   def invite
     @user = User.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:invite_your_friends_to_join.l 
  widget do 
  :spread_the_word.l 
@@ -1016,6 +1065,8 @@ class UsersController < BaseController
  f.text_area :message, :rows => "5", :label => :write_a_message.l 
  f.primary :send_invitations.l 
  end 
+
+end
 
   end
 
@@ -1034,6 +1085,7 @@ class UsersController < BaseController
     else
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:forgot_your_username.l 
   widget do 
  :help.l 
@@ -1052,6 +1104,8 @@ class UsersController < BaseController
  end 
  end 
 
+end
+
   end
 
   def resend_activation
@@ -1069,6 +1123,7 @@ class UsersController < BaseController
     else
       flash[:notice] = :activation_email_not_sent_message.l
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:resend_your_activation_e_mail.l 
   widget do 
  :help.l 
@@ -1085,6 +1140,8 @@ class UsersController < BaseController
  text_field_tag 'email', nil 
  submit_tag :resend_my_activation_e_mail.l, :class => 'btn btn-primary' 
  end 
+
+end
 
   end
 
@@ -1116,7 +1173,8 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.js {
-         :country.l 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ :country.l 
  select_tag(:country_id, options_from_collection_for_select(Country.find_countries_with_metros, "id", "name", selected_country), {:include_blank => true, :class => "form-control"}) 
  :state.l 
  select_tag(:state_id, options_from_collection_for_select(states, "id", "name", (selected_state rescue nil)), {:disabled => states.empty?, :class => "form-control" }) 
@@ -1130,6 +1188,8 @@ class UsersController < BaseController
  content_for :end_javascript do 
  end 
  end 
+
+end
 
       }
     end
@@ -1175,6 +1235,7 @@ class UsersController < BaseController
         render :xml => @posts.to_xml(:include => :category)
       }
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  box do 
  bootstrap_form_tag :url => statistics_user_path(@user), :layout => :horiztonal do 
  :month.l 
@@ -1199,6 +1260,8 @@ class UsersController < BaseController
  end 
  end 
  end 
+
+end
 
   end
 

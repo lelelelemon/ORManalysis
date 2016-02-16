@@ -40,6 +40,7 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :denied_friendships.l 
   
   user = friendship.friend 
@@ -54,6 +55,8 @@ class FriendshipsController < BaseController
  friendship_control_links(friendship) if @is_current_user 
  
 
+end
+
   end
 
 
@@ -67,6 +70,7 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :accepted_friendships.l(:count => @friend_count) 
   
  box :id => "friends" do 
@@ -85,6 +89,8 @@ class FriendshipsController < BaseController
  paginate @friendships, :theme => 'bootstrap' 
  end 
 
+end
+
   end
 
   def pending
@@ -94,6 +100,7 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
  @page_title= :pending_friendships.l 
   user = friendship.friend 
@@ -108,6 +115,8 @@ class FriendshipsController < BaseController
  friendship_control_links(friendship) if @is_current_user 
  
 
+end
+
   end
 
   def show
@@ -117,6 +126,7 @@ class FriendshipsController < BaseController
     respond_to do |format|
       format.html
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :friendship_request_detail.l 
  if @friendship.initiator? && @friendship.pending? 
  :waiting_for.l  
@@ -127,6 +137,8 @@ class FriendshipsController < BaseController
  link_to :click_to_accept_it.l, accept_user_friendship_path(@user, @friendship), :method => :put 
  end 
  link_to :back.l, accepted_user_friendships_path(@user) 
+
+end
 
   end
 
@@ -153,6 +165,9 @@ class FriendshipsController < BaseController
         format.js {@text = "#{:friendship_request_failed.l}."}
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 

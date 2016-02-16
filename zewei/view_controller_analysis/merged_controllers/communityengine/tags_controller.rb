@@ -25,6 +25,7 @@ class TagsController < BaseController
     @photo_tags = popular_tags(75, 'Photo').to_a
 
     @clipping_tags = popular_tags(75, 'Clipping').to_a
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :browse_content_by_tags.l 
  widget do  
  :what_are_tags.l 
@@ -45,12 +46,15 @@ class TagsController < BaseController
  link_to tag.name, tag_url(tag.to_param), :class => css_class 
  end 
 
+end
+
   end
 
   def manage
     @search = ActsAsTaggableOn::Tag.search(params[:q])
     @tags = @search.result
     @tags = @tags.order('name ASC').distinct.page(params[:page]).per(100)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:tags.l 
   widget do 
  :admin.l 
@@ -93,11 +97,14 @@ class TagsController < BaseController
  end 
  paginate @tags, :theme => 'bootstrap' 
 
+end
+
   end
 
 
   def edit
     @tag = ActsAsTaggableOn::Tag.find_by_name(URI::decode(params[:id]))
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:editing_tag.l 
   widget do 
  :admin.l 
@@ -129,6 +136,8 @@ class TagsController < BaseController
  end 
  end 
 
+end
+
   end
 
   def update
@@ -140,7 +149,8 @@ class TagsController < BaseController
         format.html { redirect_to admin_tags_url }
         format.xml  { render :nothing => true }
       else
-        format.html {  @page_title=:editing_tag.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title=:editing_tag.l 
   widget do 
  :admin.l 
  link_to_unless_current :features.l, homepage_features_path 
@@ -170,6 +180,8 @@ class TagsController < BaseController
  f.primary :update.l 
  end 
  end 
+
+end
  }
         format.xml  { render :xml => @tag.errors.to_xml }
       end
@@ -223,6 +235,7 @@ class TagsController < BaseController
       @users      = User.recent.limit(10).tagged_with(tag_array)
       @clippings  = Clipping.recent.limit(10).tagged_with(tag_array)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  widget do 
  if params[:type] 
  (params[:type].downcase.pluralize + '_tagged').l 
@@ -278,6 +291,8 @@ class TagsController < BaseController
  if @pages && !params[:type].eql?('Post') 
  paginate @pages, :theme => 'bootstrap' 
  end 
+
+end
 
   end
 

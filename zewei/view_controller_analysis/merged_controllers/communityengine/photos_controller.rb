@@ -16,11 +16,14 @@ class PhotosController < BaseController
 
   def recent
     @photos = Photo.recent.page(params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:recent_photos.l 
  @photos.each do |photo| 
  link_to image_tag(photo.photo.url(:medium)), user_photo_path(photo.user, photo), :class => 'thumbnail' 
  end 
  paginate @photos, :theme => 'bootstrap' 
+
+end
 
   end
 
@@ -52,6 +55,7 @@ class PhotosController < BaseController
       }
       format.xml { render :action => 'index.rxml', :layout => false}
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:users_photos.l(:user=>@user.login) 
   widget do 
  :author.l 
@@ -99,6 +103,8 @@ class PhotosController < BaseController
  link_to :new_photo.l, new_user_photo_path(@user), :class => 'btn btn-success' 
  end 
 
+end
+
   end
 
   def manage_photos
@@ -114,8 +120,11 @@ class PhotosController < BaseController
     respond_to do |format|
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
  paginate @photos, :per_page => 20 
+
+end
 
   end
 
@@ -135,6 +144,7 @@ class PhotosController < BaseController
     respond_to do |format|
       format.html # show.rhtml
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = @photo.display_name 
  if @related.any? 
  widget do 
@@ -255,6 +265,8 @@ class PhotosController < BaseController
  more_comments_links(@photo) 
  end 
 
+end
+
   end
 
   # GET /photos/new
@@ -265,6 +277,7 @@ class PhotosController < BaseController
       render :action => 'inline_new', :layout => false
     end
 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:new_photo.l 
  widget do  
  :tips.l 
@@ -301,12 +314,15 @@ class PhotosController < BaseController
  end 
  
 
+end
+
   end
 
   # GET /photos/1;edit
   def edit
     @photo = Photo.find(params[:id])
     @user = @photo.user
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title= :editing_photo.l 
  widget do 
  :help.l 
@@ -343,6 +359,8 @@ class PhotosController < BaseController
  end 
  end 
  
+
+end
 
   end
 
@@ -384,9 +402,12 @@ class PhotosController < BaseController
         }
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @photo.photo.url() 
  @photo.display_name 
  @photo.id 
+
+end
 
   end
 
@@ -403,7 +424,8 @@ class PhotosController < BaseController
       if @photo.update_attributes(photo_params)
         format.html { redirect_to user_photo_url(@photo.user, @photo) }
       else
-        format.html {  @page_title= :editing_photo.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title= :editing_photo.l 
  widget do 
  :help.l 
  :tags_are_keywords_you_use_to_organize_your_photos.l 
@@ -439,6 +461,8 @@ class PhotosController < BaseController
  end 
  end 
  
+
+end
  }
       end
     end

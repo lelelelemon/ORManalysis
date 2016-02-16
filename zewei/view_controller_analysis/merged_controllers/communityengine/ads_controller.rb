@@ -18,6 +18,7 @@ class AdsController < BaseController
     respond_to do |format|
       format.html
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :ads.l 
   widget do 
  :admin.l 
@@ -62,6 +63,8 @@ class AdsController < BaseController
  paginate @ads, :theme => 'bootstrap' 
  link_to :new_ad.l, new_ad_path, :class => 'btn btn-success' 
 
+end
+
   end
 
   # GET /ads/1
@@ -72,6 +75,7 @@ class AdsController < BaseController
     respond_to do |format|
       format.html 
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=@ad.name 
  link_to :back.l, ads_path, :class => 'btn btn-default' 
  link_to :edit.l, edit_ad_path(@ad), :class => 'btn btn-warning' 
@@ -89,11 +93,14 @@ class AdsController < BaseController
  :location.l 
  h @ad.location 
 
+end
+
   end
 
   # GET /ads/new
   def new
     @ad = Ad.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title=:new_ad.l 
  link_to :back.l, ads_path, :class => 'btn btn-default' 
   bootstrap_form_for(@ad, :layout => :horizontal) do |f| 
@@ -115,11 +122,14 @@ class AdsController < BaseController
  end 
  
 
+end
+
   end
 
   # GET /ads/1;edit
   def edit
     @ad = Ad.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = :editing_ad.l 
  link_to :back.l, ads_path, :class => 'btn btn-default' 
  link_to :show.l, ad_path(@ad), :class => 'btn btn-primary' 
@@ -143,6 +153,8 @@ class AdsController < BaseController
  end 
  
 
+end
+
   end
 
   # POST /ads
@@ -155,7 +167,8 @@ class AdsController < BaseController
         flash[:notice] = :ad_was_successfully_created.l
         format.html { redirect_to ad_url(@ad) }
       else
-        format.html {  @page_title=:new_ad.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title=:new_ad.l 
  link_to :back.l, ads_path, :class => 'btn btn-default' 
   bootstrap_form_for(@ad, :layout => :horizontal) do |f| 
  f.text_field :name 
@@ -175,6 +188,8 @@ class AdsController < BaseController
  f.primary :save.l 
  end 
  
+
+end
  }
       end
     end
@@ -190,7 +205,8 @@ class AdsController < BaseController
         flash[:notice] = :ad_was_successfully_updated.l
         format.html { redirect_to ad_url(@ad) }
       else
-        format.html {  @page_title = :editing_ad.l 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = :editing_ad.l 
  link_to :back.l, ads_path, :class => 'btn btn-default' 
  link_to :show.l, ad_path(@ad), :class => 'btn btn-primary' 
  link_to :destroy.l, ad_path(@ad), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
@@ -212,6 +228,8 @@ class AdsController < BaseController
  f.primary :save.l 
  end 
  
+
+end
  }
       end
     end
