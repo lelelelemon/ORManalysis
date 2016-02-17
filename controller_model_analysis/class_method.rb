@@ -6,6 +6,7 @@ class Method_class
 		@name = name
 		@calls = Array.new
 		@cfg = nil
+		@caller_class = nil
 		#only for before_xxx calls
 	end
 	def getVars
@@ -37,6 +38,12 @@ class Method_class
 	def getCFG
 		@cfg
 	end
+	def getCallerClass
+		@caller_class
+	end
+	def setCallerClass(c)
+		@caller_class = c
+	end
 end
 
 class Assoc_attrib
@@ -61,18 +68,23 @@ class Class_class
 		@save_actions = Array.new
 		@create_actions = Array.new
 		@scope_list = Array.new
-		@fields = Array.new
+		#table_fields is a list of Table_field
+		@table_fields = Array.new
+		#class_fields is actually a super set of table_fields
+		#but class_fields is a list of string
+		#XXX: If the class field is not explicitly defined, we don't deal with it
+		@class_fields = Array.new
 		@assocs = Hash.new
 		@var_map = Hash.new	
 	
 		filter_meth = Method_class.new("before_filter")
-		@methods[filter_meth.getName] = filter_meth
+		addMethod(filter_meth)
 		save_meth = Method_class.new("before_save")
-		@methods[save_meth.getName] = save_meth
+		addMethod(save_meth)
 		valid_meth = Method_class.new("before_validation")
-		@methods[valid_meth.getName] = valid_meth
+		addMethod(valid_meth)
 		create_meth = Method_class.new("before_create")
-		@methods[create_meth.getName] = create_meth
+		addMethod(create_meth)
 		#If there is keyword "only":
 		#Final pass, remove from "before_xxx" list and insert into the function
 		#If there is keyword "on":
@@ -92,12 +104,26 @@ class Class_class
 			@assocs[_name] = Array.new
 		end
 		@assocs[_name].push(assoc)
+		if assoc.attribs.has_key?("foreign_key")
+			@class_fields.push(assoc.attribs["foreign_key"])
+		end
+		@class_fields.push(assoc.name)
 	end
-	def getFields
-		@fields
+	def getTableFields
+		@table_fields
 	end
-	def addField(t_field)
-		@fields.push(t_field)
+	def addTableField(t_field)
+		@table_fields.push(t_field)
+		addClassField(t_field.field_name)
+	end
+	def addClassField(c_field)
+		if @class_fields.include?(c_field)
+		else
+			@class_fields.push(c_field)
+		end
+	end
+	def getClassFields
+		@class_fields
 	end
 	def getName
 		@name
@@ -119,12 +145,26 @@ class Class_class
 	end
 	def addMethod(meth)
 		@methods[meth.getName] = meth
+		meth.setCallerClass(self)
 	end
 	def getMethod(name)
 		@methods[name]
 	end
-	def getMethod(meth_name)
-		@methods[meth_name]
+	#findMethod traces up to parent class
+	def findMethodRecursive(name)
+		if @methods[name]
+			return @methods[name]
+		else
+			temp_class_name = @upper_class
+			while $class_map[temp_class_name] != nil
+				if $class_map[temp_class_name].getMethod(name)
+					return $class_map[temp_class_name].getMethod(name)
+				else
+					temp_class_name = $class_map[temp_class_name].getUpperClass
+				end
+			end
+			return nil
+		end
 	end
 	def addBelongsTo(belong_name)
 		@belongs_to.push(belong_name)

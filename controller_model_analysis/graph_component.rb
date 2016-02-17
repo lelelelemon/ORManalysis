@@ -20,7 +20,9 @@ class INode
 		@backward_dataflow_edges = Array.new
 		@backward_controlflow_edges = Array.new
 		@longest_control_path_nextnode = nil
+		@shortest_control_path_nextnode = nil
 		@path_length = -1
+		@shortest_path_length = -1
 		@Tnode = nil
 		@source_list = Array.new
 		@sink_list = Array.new
@@ -40,7 +42,7 @@ class INode
 		end
 	end
 	attr_accessor :index, :Tnode, :source_list, :sink_list
-	attr_accessor :longest_control_path_nextnode, :path_length
+	attr_accessor :longest_control_path_nextnode, :shortest_control_path_nextnode, :path_length, :shortest_path_length
 	def getClosureStack
 		@closure_stack
 	end
@@ -103,12 +105,19 @@ class INode
 	def isWriteQuery?
 		return (isQuery? and (!isReadQuery?))
 	end
-	def isField?
+	def isTableField?
 		if @instr != nil and (@instr.is_a?Call_instr)
-			return @instr.isField
+			return @instr.isTableField
 		end
 		return false
 	end
+	def isClassField?
+		if @instr != nil and (@instr.is_a?Call_instr)
+			return @instr.isClassField
+		end
+		return false
+	end
+
 	def isBranch?
 		if @instr != nil and @instr.instance_of?Branch_instr
 			return true
@@ -127,10 +136,11 @@ class INode
 		#end
 
 		if @instr.is_a?Call_instr 
-			if@instr.getCallHandler != nil
-				@label = "#{remove_special_chars(@instr.getCallHandler.getObjName)}.#{@instr.getFuncname}"
+			t = type_valid(@instr, @instr.getCaller)
+			if t != nil
+				@label = "#{t}.#{@instr.getFuncname}"
 			else
-				@label = "#{remove_special_chars(@instr.getCaller)}.#{@instr.getFuncname}"
+				@label = "Unknown.#{@instr.getFuncname}"
 			end
 		end
 	end
@@ -235,7 +245,7 @@ def add_dataflow_edge(node)
 		if dep.getInstrHandler.getINode != nil
 			#XXX: If it is a field instr, then we know it is not a blackbox func call, if it is not attrassign, then it is a read only instr
 			from_node = dep.getInstrHandler.getINode
-			if (from_node.isField?) and (dep.getVname == "%self" or dep.getVname.index('%') == nil)
+			if (from_node.isClassField?) and (dep.getVname == "%self")
 			#elsif from_node.isField? and to_ins.instance_of?AttrAssign_instr and to_ins.field == from_node.getInstr.field 
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
 			else
@@ -291,23 +301,43 @@ def addAllControlEdges
 		if n.getControlflowEdges.length == 0
 			n.path_length = 0	
 		else
-			shortest_length = -1
+			@longest_length = -1
 			n_node = nil
 			n.getControlflowEdges.each do |e|
-				if shortest_length < e.getToNode.path_length
-					shortest_length = e.getToNode.path_length
+				if @longest_length < e.getToNode.path_length
+					@longest_length = e.getToNode.path_length
 					n_node = e.getToNode
 				end
 			end
-			if shortest_length > -1
+			if @longest_length > -1
 				n.longest_control_path_nextnode = n_node
-				n.path_length = shortest_length + 1
+				n.path_length = @longest_length + 1
 			end
 		end
 	end
+
+	$node_list.reverse.each do |n|
+		if n.getControlflowEdges.length == 0
+			n.shortest_path_length = 0	
+		else
+			@shortest_length = $node_list.length
+			n_node = nil
+			n.getControlflowEdges.each do |e|
+				if @shortest_length > e.getToNode.shortest_path_length and e.getToNode.shortest_path_length != -1
+					@shortest_length = e.getToNode.shortest_path_length
+					n_node = e.getToNode
+				end
+			end
+			if @shortest_length < $node_list.length and n_node != nil
+				n.shortest_control_path_nextnode = n_node
+				n.shortest_path_length = @shortest_length + 1
+			end
+		end
+	end
+
 end
 
-def compute_longest_single_path(file_to_write)
+def compute_longest_single_path
 	temp_node = $node_list[0]
 	p_length = 0
 	query_num = 0
@@ -323,8 +353,38 @@ def compute_longest_single_path(file_to_write)
 		#puts "Longest path #{p_length}: #{temp_node.getIndex}: #{temp_node.getInstr.toString}"
 		temp_node = temp_node.longest_control_path_nextnode
 	end
-	file_to_write.write("STATS query total on single path: #{query_num}\n")
-	file_to_write.write("STATS read query on single path: #{read_query}\n")
-	file_to_write.write("STATS write query on single path: #{query_num-read_query}\n")
+
+	min_query_num = 0
+	min_read_query = 0
+	min_p_length = 0
+	temp_node = $node_list[0]
+	while temp_node.getControlflowEdges.length > 0
+		min_p_length += 1
+		if temp_node.isQuery?
+			min_query_num += 1
+			if temp_node.isReadQuery?
+				min_read_query += 1
+			end
+		end
+		#puts "Longest path #{p_length}: #{temp_node.getIndex}: #{temp_node.getInstr.toString}"
+		temp_node = temp_node.shortest_control_path_nextnode
+	end
+
+	$graph_file.puts("\t<total>")
+	$graph_file.puts("\t\t<max>#{query_num}<\/max>")
+	$graph_file.puts("\t\t<min>#{min_query_num}<\/min>")
+	$graph_file.puts("\t<\/total>")
+	$graph_file.puts("\t<read>")
+	$graph_file.puts("\t\t<max>#{read_query}<\/max>")
+	$graph_file.puts("\t\t<min>#{min_read_query}<\/min>")
+	$graph_file.puts("\t<\/read>")
+	$graph_file.puts("\t<write>")
+	$graph_file.puts("\t\t<max>#{query_num-read_query}<\/max>")
+	$graph_file.puts("\t\t<min>#{min_query_num-min_read_query}<\/min>")
+	$graph_file.puts("\t<\/write>")
+  $graph_file.puts("\t<shortestPath>#{min_p_length}<\/shortestPath>")
+	$graph_file.puts("\t<longestPath>#{p_length}<\/longestPath>")
+	$graph_file.puts("\t<instrTotal>#{$node_list.length}<\/instrTotal>")
 	#puts "PATH length: ##{p_length} (qnum: #{query_num}) Vs #{$node_list.length}"
+
 end

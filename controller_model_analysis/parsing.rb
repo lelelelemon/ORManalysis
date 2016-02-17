@@ -433,15 +433,16 @@ if options[:run_all]
 		puts "Handling #{start_class}, #{start_function}"
 		level = 0
 
+	#start print query trace
 		$output_dir = "#{$app_dir}/results/#{start_class}_#{start_function}"
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
-		puts "Graph_name = #{graph_fname}"
 		$graph_file = File.open(graph_fname, "w");
 
 		$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
 		trace_flow(start_class, start_function, "", "", level)
 
+	#start compute stat
 		$cur_node = nil
 		$root = nil
 		$non_repeat_list = Array.new
@@ -451,6 +452,57 @@ if options[:run_all]
 		$query_edges = Array.new
 
 		compute_dataflow_stat($output_dir, start_class, start_function)
+		puts "\t..Finish computing stats"
+	#start print overlap between current and next controller actions
+		next_file = nil
+		if start_class.include?("::")
+			l = start_class.gsub("\n","")
+			chs = l.split('::')
+ 			chs[0] = chs[0].downcase
+			next_file = "#{$app_dir}/next_calls/#{chs[0]}/#{chs[1]}_#{start_function}.txt"
+		else	
+			next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
+		end
+		if File.exist?(next_file)
+
+			graph_fname = "#{$output_dir}/next_action.xml"
+			$graph_file = File.open(graph_fname, "w")
+			$graph_file.puts("<NEXTACTION>")
+
+			@next_action = Array.new
+			@prev_list = Array.new 
+			$node_list.each do |n|
+				@prev_list.push(n)
+			end
+			
+			File.open(next_file, "r").each do |line|
+				if line.length > 1
+					line = line.gsub("\n","")
+					if @next_action.include?line
+					else
+						@next_action.push(line)
+					end
+				end
+			end
+				
+			@next_action.each do |line|
+				clear_data_structure
+
+				line = line.gsub("\n","")
+				chs = line.split(',')
+				next_function = chs[1]
+				chs[0] = chs[0].capitalize
+				next_class = "#{chs[0]}Controller"
+
+				compute_dataflow_stat($output_dir, next_class, next_function, true)
+			
+				puts "Compare with: #{next_class}.#{next_function}"
+				compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list)
+			end
+
+			$graph_file.puts("<\/NEXTACTION>")
+			$graph_file.close
+		end
 
 		clear_data_structure
 	end
@@ -495,7 +547,7 @@ if options[:consequent] != nil
 		compute_dataflow_stat($output_dir, next_class, next_function, true)
 	
 		puts "Compare with: #{next_class}.#{next_function}"
-		compare_consequent_actions(@prev_list, $node_list)
+		compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list)
 	end
 end
 

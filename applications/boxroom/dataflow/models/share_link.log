@@ -9,11 +9,11 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY def_%v_3 
+		 6: COPY TYPE_StringLiteral def_%v_3 
 		 7: (DateTime) def_%v_4 
 		 8: %v_4->now def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: %self->where def_%v_6 %self[2.0,] %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_3,%v_5,
@@ -35,13 +35,13 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_token 
 		 6: 
 		 7: %self->find_by_link_token def_%v_3 %self[2.0,] token[2.5,] 	 ARGS:token,
-		 8: COPY def_share_link %v_3[2.7,] 
+		 8: COPY TYPE_PASS def_share_link %v_3[2.7,] 
 		 9: 
 		 10: %v_3->link_expires_at def_%v_4 %v_3[2.7,] 	 ARGS:
 		 11: (DateTime) def_%v_5 
@@ -53,7 +53,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_8 
+		 1: COPY TYPE_StringLiteral def_%v_8 
 		 2: %self->raise def_%v_9 %self[2.0,] %v_8[3.1,] 	 ARGS:%v_8,
 		 3: RETURN %v_9[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -79,12 +79,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->emails def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY def_%v_4 
+		 7: COPY TYPE_Regexp def_%v_4 
 		 8: %v_3->split def_%v_5 %v_3[2.6,] 	 ARGS:%v_4,
 		 9: %v_5->each def_%v_6 %v_5[2.8,] %self[2.0,2.6,] 	 ARGS:%v_5,
 CLOSURE BEGIN: email[] %self[2.0,2.6,] 
@@ -99,22 +99,22 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_email 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
 		 1: email->strip def_%cl_1_3 email[2.2,] 	 ARGS:
-		 2: COPY def_%cl_1_4 
+		 2: COPY TYPE_Regexp def_%cl_1_4 
 		 3: %cl_1_3->=~ def_%cl_1_5 %cl_1_3[3.1,] 	 ARGS:%cl_1_4,
 		 4: BRANCH %cl_1_5[3.3,] 
 BB 4
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%cl_1_6 
+		 0: COPY TYPE_Nil def_%cl_1_6 
 		 1: RETURN %cl_1_6[4.0,] %self[2.0,] 
 BB 5
 	outgoing: 7 9 
@@ -156,8 +156,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (SecureRandom) def_%v_3 

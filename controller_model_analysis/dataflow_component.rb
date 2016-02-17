@@ -181,38 +181,56 @@ class Call_instr < Instruction
 	def getCallHandler
 		@call_handler
 	end
+	def getCallerType
+		return type_valid(self, @caller)
+	end
+	def getQueryType
+		t = type_valid(self, @caller)
+		if isActiveRecord(t)
+			qtype = check_method_keyword(t, @funcname)
+			return qtype
+		end	
+	end
 	def isQuery
-		if @call_handler != nil
-			return @call_handler.isQuery
+		if getQueryType
+			return true
 		else
 			return false
 		end
 	end
 	def isReadQuery
-		if @call_handler != nil
-			if ["SELECT","GROUP","JOIN","TXN"].include?@call_handler.getQueryType
-				return true
-			else
-				return false
-			end
-		else
-			if check_method_keyword(nil, @funcname)
-				return true
-			else
-				return false
-			end
+		qtype = getQueryType
+		if qtype != nil and ["SELECT","GROUP","JOIN","TXN"].include?qtype
+			return true
 		end
+		return false
 	end
-	def isField
+	def isTableField
 		if self.instance_of?AttrAssign_instr 
 			return false
 		end
-		if @call_handler != nil and @call_handler.isField
-			@field = @call_handler.getField.field_name
-			return true
-		else
-			return self.instance_of?GetField_instr
+		t = type_valid(self, @caller)
+		if t != nil
+			if testTableField(t, @funcname)
+				return true
+			else
+				return false	
+			end
 		end
+		return false
+	end
+	def isClassField
+		if self.instance_of?AttrAssign_instr
+			return false
+		else
+			t = type_valid(self, @caller)
+			if t != nil
+				if $class_map[t] != nil
+					return $class_map[t].getClassFields.include?(@funcname)
+				end
+			end
+		end
+		return false
 	end
 	def getCaller
 		@caller
@@ -306,11 +324,20 @@ end
 class Copy_instr < Instruction
 	def initialize
 		super
+		@type = nil
 	end
+	attr_accessor :type
 	def toString
 		s = "COPY "
 		s = s + super
 		return s
+	end
+	def isFromConst
+		if @type == nil or @type == "PASS"	
+			return false
+		else
+			return true	
+		end
 	end
 end
 
@@ -324,7 +351,7 @@ class HashField_instr < Instruction
 		@hash_fields.push(h)
 	end
 	def toString
-		s = "HashField "
+		s = "HashField ["
 		@hash_fields.each do |h|
 			s += "#{h} "
 		end
@@ -388,13 +415,19 @@ class Basic_block
 	end
 	attr_accessor :explicit_return, :return_list
 	def addExplicitReturn(r)
-		@explicit_return.push(r)
+		if @explicit_return.include?(r)
+		else
+			@explicit_return.push(r)
+		end
 	end
 	def getExplicitReturn
 		@explicit_return
 	end
 	def addReturn(r)
-		@return_list.push(r)
+		if @return_list.include?(r)
+		else
+			@return_list.push(r)
+		end
 	end
 	def getReturns
 		@return_list
@@ -538,7 +571,12 @@ class CFG
 	end
 	attr_accessor :explicit_return, :return_list, :return_type, :arg_types
 	def setReturnType(type)
-		@return_type = type
+		if @return_type == nil
+			@return_type = type
+		#TODO: multiple return types, polymorphic!
+		elsif $class_map[type.type] != nil
+			@return_type = type
+		end
 	end
 	def getVarMap
 		@var_map
@@ -551,6 +589,9 @@ class CFG
 	end
 	def addDefSelf(s)
 		@def_self_nodes.push(s)
+	end
+	def clear
+		@def_self_nodes = Array.new
 	end
 	def getInstrNum
 		cnt = 0
@@ -615,8 +656,8 @@ class Closure < CFG
 	attr_accessor :parent_instr
 	def setReturnType(type)
 		@return_type = type
-		if parent_instr != nil
-			parent_instr.getBB.getCFG.setReturnType(type)
+		if @parent_instr != nil
+			@parent_instr.getBB.getCFG.setReturnType(type)
 		end
 	end
 	def setViewClosure
@@ -642,6 +683,9 @@ class Closure < CFG
 			end
 		end
 		return r
+	end
+	def getMHandler
+		return @parent_instr.getBB.getCFG.getMHandler
 	end
 	def getRand
 		@rnd

@@ -42,6 +42,13 @@ def add_to_var_table(f_name, c_name, v_name, type)
 end
 
 def add_to_cfg_varmap(cfg, c_name, v_name, type)
+	if type == "StringLiteral"
+		type = "string"
+	elsif type == "Boolean"
+		type = "boolean"
+	elsif type == "Fixnum"
+		type = "integer"
+	end
 	var = nil
 	if v_name.include?("self")
 		var = Local_variable.new(v_name, c_name)
@@ -56,6 +63,20 @@ def add_to_cfg_varmap(cfg, c_name, v_name, type)
 end
 
 $unknown_types = Hash.new
+
+#takes two params: node, and var_name
+def type_valid(instr, v_name)
+	c_name = instr.getBB.getCFG.getMHandler.getCallerClass.getName
+	if v_name.include?("self")
+		return c_name
+	end
+	t = known_type(v_name, instr.getBB.getCFG, c_name)
+	if type_not_found(t)
+		return nil
+	else
+		return t.type
+	end 
+end
 
 def known_type(v_name, cfg, c_name)
 	#first look for the cfg var_map
@@ -154,7 +175,7 @@ def do_type_inference
 	read_util_function
 	$class_map.each do |keyc, valuec|
 		@class_var_list = Hash.new
-		valuec.getFields.each do |f|
+		valuec.getTableFields.each do |f|
 			@class_var_list[f.field_name] = f.type	
 		end
 		#puts "Class: #{keyc}"
@@ -228,7 +249,6 @@ def do_type_inference
 			end
 		end
 	end
-
 	controller_not_found = 0
 	controller_found = 0
 	model_not_found = 0
@@ -238,7 +258,7 @@ def do_type_inference
 			cfg = value.getCFG
 			if cfg!= nil
 				cfg.getVarMap.each do |k, v|
-					if type_not_found(v)
+					if type_not_found(v) and k != "%v_0" and k != "%current_module" and k != "%current_scope"
 						if keyc.include?("Controller")
 							controller_not_found += 1
 						else
@@ -265,10 +285,12 @@ def do_type_inference
 	puts "\tTYPE NOT FOUND: #{model_not_found}"
 	puts "\n***************\n"
 =end
+
 end
 
 def set_initial_type(cfg, f_name, c_name)
 	add_to_cfg_varmap(cfg, c_name, "%self", nil)
+	add_to_cfg_varmap(cfg, c_name, "self", nil)
 	cfg.getBB.each do |bb|
 		#puts "\tBB#{bb.getIndex}:"
 		bb.getInstr.each do |instr|
@@ -297,8 +319,11 @@ def print_unknown_types(cfg, blank, c_name)
 			bb.getInstr.each do |instr|
 				if instr.getDefv != nil
 					tp = known_type(instr.getDefv, cfg, c_name);
-					if type_not_found(tp)
-						puts "#{blank}\t* #{instr.getDefv} : #{instr.toString2}"
+					k = instr.getDefv
+					if type_not_found(tp) 
+						if k != "%v_0" and k != "%current_module" and k != "%current_scope"
+							puts "#{blank}\t* #{instr.getDefv} : #{instr.toString2}"
+						end
 					else
 						puts "#{blank}\t#{instr.getDefv} -> #{tp.type}"
 					end
@@ -348,16 +373,16 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 					add_to_cfg_varmap(cfg, c_name, instr.getDefv, instr.getConst)
 				elsif instr.instance_of?BuildString_instr
 					add_to_cfg_varmap(cfg, c_name, instr.getDefv, "string")
-				elsif instr.instance_of?Copy_instr or instr.instance_of?HashField_instr
-					if instr.getDeps.length > 0
+				elsif instr.instance_of?Copy_instr #or instr.instance_of?HashField_instr
+					if instr.getDeps.length > 0 and instr.type == "PASS"
 						var = known_type(instr.getDeps[0].getVname, cfg, c_name)
 						#COPY des source
 						#type of source known
 						if type_not_found(var)==false
 							add_to_cfg_varmap(cfg, c_name, instr.getDefv, var.type)
 						end
-					else
-						add_to_cfg_varmap(cfg, c_name, instr.getDefv, "string")
+					elsif instr.type != nil
+						add_to_cfg_varmap(cfg, c_name, instr.getDefv, instr.type)
 					end
 				elsif instr.instance_of?ReceiveArg_instr
 					if $last_closure_arg == nil

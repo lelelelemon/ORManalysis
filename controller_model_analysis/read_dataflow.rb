@@ -189,7 +189,7 @@ def handle_single_dataflow_file(item, class_name)
 												cur_instr.hash_fields.push(h)
 											end
 										end
-										if cur_instr.getCaller.include?("self") and cur_instr.getFuncname == "params"
+										if cur_instr.getCaller.include?("self") and ["params","session","cookies"].include?cur_instr.getFuncname
 												cur_instr.setFromUserInput
 										end
 										if cur_instr.getFuncname == "ruby_code_from_view"
@@ -230,13 +230,13 @@ def handle_single_dataflow_file(item, class_name)
 													#end
 													#if dep_instr != nil
 													#XXX:Here is some non-beautiful trick, attrassign don't use the class instance, it only assigns. So avoid defining the use of class instance
-													if cur_instr.instance_of?AttrAssign_instr
-														if v_name.include?('%')==true
+													#if cur_instr.instance_of?AttrAssign_instr
+														#if v_name.include?('%')==true
 															cur_instr.addDatadep(dep, v_name)
-														end
-													else
-														cur_instr.addDatadep(dep, v_name)
-													end
+														#end
+													#else
+														#cur_instr.addDatadep(dep, v_name)
+													#end
 													#else
 													#	puts "DEP instructions cannot be found: #{dep_str[0].to_i}.#{dep_str[1].to_i}"
 													#end
@@ -247,6 +247,9 @@ def handle_single_dataflow_file(item, class_name)
 									elsif single_attr.index("def_") == 0
 										single_attr.gsub('def_', '')
 										cur_instr.setDefv(single_attr.gsub('def_',''))
+
+									elsif single_attr.index("TYPE_") == 0 and cur_instr.instance_of?Copy_instr
+										cur_instr.type = single_attr.gsub('TYPE_','')
 
 									elsif single_attr == "RETURN"
 										cur_instr = Return_instr.new

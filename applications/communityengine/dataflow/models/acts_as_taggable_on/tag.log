@@ -9,8 +9,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: def_limit 
 		 6: limit[2.5,] 
@@ -18,7 +18,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY def_limit 
+		 0: COPY TYPE_Fixnum def_limit 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -29,7 +29,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_type 
+		 0: COPY TYPE_Nil def_type 
 BB 6
 	outgoing: 7 8 
 	datadep: 
@@ -50,25 +50,25 @@ BB 8
 		 0: HASH-at_least- def_%v_5 
 		 1: %v_4->counts def_%v_6 %v_4[7.0,6.2,] %v_5[8.0,] 	 ARGS:%v_5,
 		 2: %v_6->limit def_%v_7 %v_6[8.1,] limit[3.0,2.5,] 	 ARGS:limit,
-		 3: COPY def_%v_8 
+		 3: COPY TYPE_StringLiteral def_%v_8 
 		 4: %v_7->order def_%v_9 %v_7[8.2,] %v_8[8.3,] 	 ARGS:%v_8,
-		 5: COPY def_tags %v_9[8.4,] 
+		 5: COPY TYPE_PASS def_tags %v_9[8.4,] 
 		 6: 
 		 7: BRANCH type[5.0,4.0,] 
 BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_10 
+		 0: COPY TYPE_StringLiteral def_%v_10 
 		 1: type->capitalize def_%v_11 type[5.0,4.0,] 	 ARGS:
 		 2: tags->where def_%v_12 tags[8.5,] %v_10[9.0,] %v_11[9.1,] 	 ARGS:%v_10,%v_11,
-		 3: COPY def_tags %v_12[9.2,] 
+		 3: COPY TYPE_PASS def_tags %v_12[9.2,] 
 		 4: 
 BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_12 
+		 0: COPY TYPE_Nil def_%v_12 
 BB 11
 	outgoing: 12 
 	datadep: 
@@ -91,8 +91,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: RETURN %self[2.0,] 
@@ -112,8 +112,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: def_options 
 		 6: options[2.5,] 
@@ -122,7 +122,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: HASH- def_%v_3 
-		 1: COPY def_options %v_3[3.0,] 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
 BB 4
 	outgoing: 5 8 
 	datadep: 
@@ -131,20 +131,20 @@ BB 4
 		 1: options->assert_valid_keys def_%v_4 options[3.1,2.5,] 	 ARGS:Symbol,Symbol,Symbol,Symbol,Symbol,Symbol,Symbol,Symbol,
 		 2: 
 		 3: %self->quoted_table_name def_%v_5 %self[2.0,] 	 ARGS:
-		 4: COPY def_%v_6 
+		 4: COPY TYPE_StringLiteral def_%v_6 
 		 5: BUILDSTRING def_%v_7 %v_5[4.3,] %v_6[4.4,] 
 		 6: %self->quoted_table_name def_%v_8 %self[4.3,2.0,] 	 ARGS:
-		 7: COPY def_%v_9 
+		 7: COPY TYPE_StringLiteral def_%v_9 
 		 8: BUILDSTRING def_%v_10 %v_8[4.6,] %v_9[4.7,] 
-		 9: COPY def_%v_11 
+		 9: COPY TYPE_StringLiteral def_%v_11 
 		 10: %self->quoted_table_name def_%v_12 %self[4.3,4.6,2.0,] 	 ARGS:
-		 11: COPY def_%v_13 
+		 11: COPY TYPE_StringLiteral def_%v_13 
 		 12: BUILDSTRING def_%v_14 %v_11[4.9,] %v_12[4.10,] %v_13[4.11,] 
 		 13: %self->select def_%v_15 %self[4.3,4.6,4.10,2.0,] %v_7[4.5,] %v_10[4.8,] %v_14[4.12,] 	 ARGS:%v_7,%v_10,%v_14,
-		 14: COPY def_tags %v_15[4.13,] 
+		 14: COPY TYPE_PASS def_tags %v_15[4.13,] 
 		 15: 
 		 16: %v_15->joins def_%v_16 %v_15[4.13,] 	 ARGS:Symbol,
-		 17: COPY def_tags %v_16[4.16,] 
+		 17: COPY TYPE_PASS def_tags %v_16[4.16,] 
 		 18: 
 		 19: options->[] def_%v_17 options[4.1,3.1,2.5,] 	 ARGS:Symbol,
 		 20: BRANCH %v_17[4.19,] 
@@ -152,7 +152,7 @@ BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_18 
+		 0: COPY TYPE_StringLiteral def_%v_18 
 		 1: (ActsAsTaggableOn) def_%v_19 
 		 2: def_%v_20 %v_19[5.1,] 
 		 3: %v_20[5.2,] 
@@ -166,18 +166,18 @@ BB 7
 	datadep: 
 	instructions:
 		 0: %v_20->quoted_table_name def_%v_21 %v_20[6.0,5.2,] 	 ARGS:
-		 1: COPY def_%v_22 
+		 1: COPY TYPE_StringLiteral def_%v_22 
 		 2: BUILDSTRING def_%v_23 %v_18[5.0,] %v_21[7.0,] %v_22[7.1,] 
 		 3: options->[] def_%v_24 options[3.1,2.5,] 	 ARGS:Symbol,
-		 4: COPY def_%v_25 %v_23[7.2,] %v_24[7.3,] 
+		 4: COPY TYPE_Array def_%v_25 %v_23[7.2,] %v_24[7.3,] 
 		 5: tags->having def_%v_26 tags[4.14,4.17,] %v_25[7.4,] 	 ARGS:%v_25,
-		 6: COPY def_tags %v_26[7.5,] 
+		 6: COPY TYPE_PASS def_tags %v_26[7.5,] 
 		 7: 
 BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_26 
+		 0: COPY TYPE_Nil def_%v_26 
 BB 9
 	outgoing: 10 13 
 	datadep: 
@@ -189,7 +189,7 @@ BB 10
 	outgoing: 11 12 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_28 
+		 0: COPY TYPE_StringLiteral def_%v_28 
 		 1: (ActsAsTaggableOn) def_%v_29 
 		 2: def_%v_30 %v_29[10.1,] 
 		 3: %v_30[10.2,] 
@@ -203,18 +203,18 @@ BB 12
 	datadep: 
 	instructions:
 		 0: %v_30->quoted_table_name def_%v_31 %v_30[11.0,10.2,] 	 ARGS:
-		 1: COPY def_%v_32 
+		 1: COPY TYPE_StringLiteral def_%v_32 
 		 2: BUILDSTRING def_%v_33 %v_28[10.0,] %v_31[12.0,] %v_32[12.1,] 
 		 3: options->[] def_%v_34 options[3.1,2.5,] 	 ARGS:Symbol,
-		 4: COPY def_%v_35 %v_33[12.2,] %v_34[12.3,] 
+		 4: COPY TYPE_Array def_%v_35 %v_33[12.2,] %v_34[12.3,] 
 		 5: tags->having def_%v_36 tags[7.6,4.14,4.17,] %v_35[12.4,] 	 ARGS:%v_35,
-		 6: COPY def_tags %v_36[12.5,] 
+		 6: COPY TYPE_PASS def_tags %v_36[12.5,] 
 		 7: 
 BB 13
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_36 
+		 0: COPY TYPE_Nil def_%v_36 
 BB 14
 	outgoing: 15 18 
 	datadep: 
@@ -239,17 +239,17 @@ BB 17
 	datadep: 
 	instructions:
 		 0: %v_39->quoted_table_name def_%v_40 %v_39[16.0,15.1,] 	 ARGS:
-		 1: COPY def_%v_41 
+		 1: COPY TYPE_StringLiteral def_%v_41 
 		 2: BUILDSTRING def_%v_42 %v_40[17.0,] %v_41[17.1,] 
 		 3: options->[] def_%v_43 options[3.1,2.5,] 	 ARGS:Symbol,
 		 4: tags->where def_%v_44 tags[12.6,7.6,4.14,4.17,] %v_42[17.2,] %v_43[17.3,] 	 ARGS:%v_42,%v_43,
-		 5: COPY def_tags %v_44[17.4,] 
+		 5: COPY TYPE_PASS def_tags %v_44[17.4,] 
 		 6: 
 BB 18
 	outgoing: 19 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_44 
+		 0: COPY TYPE_Nil def_%v_44 
 BB 19
 	outgoing: 20 23 
 	datadep: 
@@ -274,17 +274,17 @@ BB 22
 	datadep: 
 	instructions:
 		 0: %v_47->quoted_table_name def_%v_48 %v_47[21.0,20.1,] 	 ARGS:
-		 1: COPY def_%v_49 
+		 1: COPY TYPE_StringLiteral def_%v_49 
 		 2: BUILDSTRING def_%v_50 %v_48[22.0,] %v_49[22.1,] 
 		 3: options->[] def_%v_51 options[3.1,2.5,] 	 ARGS:Symbol,
 		 4: tags->where def_%v_52 tags[17.5,12.6,7.6,4.14,4.17,] %v_50[22.2,] %v_51[22.3,] 	 ARGS:%v_50,%v_51,
-		 5: COPY def_tags %v_52[22.4,] 
+		 5: COPY TYPE_PASS def_tags %v_52[22.4,] 
 		 6: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_52 
+		 0: COPY TYPE_Nil def_%v_52 
 BB 24
 	outgoing: 25 26 
 	datadep: 
@@ -298,13 +298,13 @@ BB 25
 	instructions:
 		 0: options->[] def_%v_54 options[3.1,2.5,] 	 ARGS:Symbol,
 		 1: tags->where def_%v_55 tags[22.5,17.5,12.6,7.6,4.14,4.17,] %v_54[25.0,] 	 ARGS:%v_54,
-		 2: COPY def_tags %v_55[25.1,] 
+		 2: COPY TYPE_PASS def_tags %v_55[25.1,] 
 		 3: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_55 
+		 0: COPY TYPE_Nil def_%v_55 
 BB 27
 	outgoing: 28 29 
 	datadep: 
@@ -318,13 +318,13 @@ BB 28
 	instructions:
 		 0: options->[] def_%v_57 options[3.1,2.5,] 	 ARGS:Symbol,
 		 1: tags->limit def_%v_58 tags[25.2,22.5,17.5,12.6,7.6,4.14,4.17,] %v_57[28.0,] 	 ARGS:%v_57,
-		 2: COPY def_tags %v_58[28.1,] 
+		 2: COPY TYPE_PASS def_tags %v_58[28.1,] 
 		 3: 
 BB 29
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_58 
+		 0: COPY TYPE_Nil def_%v_58 
 BB 30
 	outgoing: 31 32 
 	datadep: 
@@ -338,20 +338,20 @@ BB 31
 	instructions:
 		 0: options->[] def_%v_60 options[3.1,2.5,] 	 ARGS:Symbol,
 		 1: tags->order def_%v_61 tags[28.2,25.2,22.5,17.5,12.6,7.6,4.14,4.17,] %v_60[31.0,] 	 ARGS:%v_60,
-		 2: COPY def_tags %v_61[31.1,] 
+		 2: COPY TYPE_PASS def_tags %v_61[31.1,] 
 		 3: 
 BB 32
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_61 
+		 0: COPY TYPE_Nil def_%v_61 
 BB 33
 	outgoing: 34 35 
 	datadep: 
 	instructions:
 		 0: 
 		 1: options->delete def_%v_62 options[3.1,2.5,] 	 ARGS:Symbol,
-		 2: COPY def_joins %v_62[33.1,] 
+		 2: COPY TYPE_PASS def_joins %v_62[33.1,] 
 		 3: BRANCH %v_62[33.1,] 
 BB 34
 	outgoing: 36 
@@ -359,22 +359,22 @@ BB 34
 	instructions:
 		 0: 
 		 1: tags->joins def_%v_63 tags[31.2,28.2,25.2,22.5,17.5,12.6,7.6,4.14,4.17,] joins[33.2,] 	 ARGS:joins,
-		 2: COPY def_tags %v_63[34.1,] 
+		 2: COPY TYPE_PASS def_tags %v_63[34.1,] 
 		 3: 
 BB 35
 	outgoing: 36 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_63 
+		 0: COPY TYPE_Nil def_%v_63 
 BB 36
 	outgoing: 37 
 	datadep: 
 	instructions:
 		 0: 
 		 1: %self->quoted_table_name def_%v_64 %self[2.0,] 	 ARGS:
-		 2: COPY def_%v_65 
+		 2: COPY TYPE_StringLiteral def_%v_65 
 		 3: %self->quoted_table_name def_%v_66 %self[36.1,2.0,] 	 ARGS:
-		 4: COPY def_%v_67 
+		 4: COPY TYPE_StringLiteral def_%v_67 
 		 5: BUILDSTRING def_%v_68 %v_64[36.1,] %v_65[36.2,] %v_66[36.3,] %v_67[36.4,] 
 		 6: tags->group def_%v_69 tags[34.2,31.2,28.2,25.2,22.5,17.5,12.6,7.6,4.14,4.17,] %v_68[36.5,] 	 ARGS:%v_68,
 		 7: RETURN %v_69[36.6,] %self[36.1,36.3,2.0,] 
@@ -394,15 +394,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (URI) def_%v_3 
 		 7: (URI) def_%v_4 
 		 8: %self->name def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_4->escape def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
-		 10: COPY def_%v_7 
+		 10: COPY TYPE_Regexp def_%v_7 
 		 11: %v_3->escape def_%v_8 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,%v_7,
 		 12: RETURN %v_8[2.11,] %self[2.0,2.8,] 
 BB 3
@@ -421,8 +421,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: def_limit 
 		 6: limit[2.5,] 
@@ -430,7 +430,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY def_limit 
+		 0: COPY TYPE_Fixnum def_limit 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -452,8 +452,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_t 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -474,7 +474,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 5: %v_6->compact def_%v_7 %v_6[4.4,] 	 ARGS:
-		 6: COPY def_taggables %v_7[4.5,] 
+		 6: COPY TYPE_PASS def_taggables %v_7[4.5,] 
 		 7: 
 		 8: %v_7->map def_%v_8 %v_7[4.5,] %self[4.1,2.0,] 	 ARGS:%v_7,
 CLOSURE BEGIN: t[] 
@@ -489,8 +489,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_2_0 
 		 2: RECEIVEARG def_t 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -514,7 +514,7 @@ BB 6
 CLOSURE END
 		 9: %v_8->flatten def_%v_9 %v_8[4.8,] 	 ARGS:
 		 10: %v_9->uniq def_%v_10 %v_9[4.9,] 	 ARGS:
-		 11: COPY def_tagging_ids %v_10[4.10,] 
+		 11: COPY TYPE_PASS def_tagging_ids %v_10[4.10,] 
 		 12: 
 		 13: %v_10->blank? def_%v_11 %v_10[4.10,] 	 ARGS:
 		 14: BRANCH %v_11[4.13,] 
@@ -522,13 +522,13 @@ BB 5
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_12 
+		 0: COPY TYPE_Array def_%v_12 
 		 1: RETURN %v_12[5.0,] %self[2.0,] 
 BB 6
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_13 
+		 0: COPY TYPE_Nil def_%v_13 
 		 1: 
 		 2: (ActsAsTaggableOn) def_%v_14 
 		 3: def_%v_15 %v_14[6.2,] 
@@ -542,20 +542,20 @@ BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_16 
+		 0: COPY TYPE_StringLiteral def_%v_16 
 		 1: %self->id def_%v_17 %self[2.0,] 	 ARGS:
-		 2: COPY def_%v_18 
+		 2: COPY TYPE_StringLiteral def_%v_18 
 		 3: BUILDSTRING def_%v_19 %v_16[9.0,] %v_17[9.1,] %v_18[9.2,] 
 		 4: %v_15->where def_%v_20 %v_15[8.0,6.3,] %v_19[9.3,] 	 ARGS:%v_19,
-		 5: COPY def_%v_21 
+		 5: COPY TYPE_StringLiteral def_%v_21 
 		 6: %v_20->select def_%v_22 %v_20[9.4,] %v_21[9.5,] 	 ARGS:%v_21,
 		 7: %v_22->joins def_%v_23 %v_22[9.6,] 	 ARGS:Symbol,
 		 8: HASH-id- def_%v_24 tagging_ids[4.11,] 
 		 9: HASH-taggings- def_%v_25 %v_24[9.8,] 
 		 10: %v_23->where def_%v_26 %v_23[9.7,] %v_25[9.9,] 	 ARGS:%v_25,
-		 11: COPY def_%v_27 
+		 11: COPY TYPE_StringLiteral def_%v_27 
 		 12: %v_26->group def_%v_28 %v_26[9.10,] %v_27[9.11,] 	 ARGS:%v_27,
-		 13: COPY def_%v_29 
+		 13: COPY TYPE_StringLiteral def_%v_29 
 		 14: %v_28->order def_%v_30 %v_28[9.12,] %v_29[9.13,] 	 ARGS:%v_29,
 		 15: %v_30->limit def_%v_31 %v_30[9.14,] limit[3.0,2.5,] 	 ARGS:limit,
 		 16: RETURN %v_31[9.15,] %self[9.1,2.0,] 

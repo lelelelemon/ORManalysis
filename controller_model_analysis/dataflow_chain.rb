@@ -148,7 +148,7 @@ def isRecognizedSource(node)
 		return true
 	elsif node.isReadQuery?
 		return true
-	elsif node.getInstr.instance_of?Copy_instr
+	elsif node.getInstr.instance_of?Copy_instr and node.getInstr.type != nil and node.getInstr.type != "PASS"
 		return true
 	else
 		return false
@@ -311,7 +311,9 @@ def find_path_between_two_nodes(start_node, end_node)
 	@temp_node_list = Array.new
 	@temp_node_list.push(start_node)
 	reach_end = false
-	while !reach_end
+	step = 0
+	while !reach_end and @temp_node_list.length > 0 and step < 50000
+		step = step + 1
 		temp_node = @temp_node_list.shift
 		if temp_node == end_node
 			reach_end = true
@@ -347,6 +349,7 @@ def compute_single_chain_node(cur_node)
 		chain_length = $processed_node_stack.length
 		#if combining all the queries on this chain into a single big node...
 		out_sink_nodes = 0
+
 		out_nodes = 0
 		in_source_nodes = 0
 		in_nodes = 0
@@ -409,12 +412,25 @@ def compute_single_chain_node(cur_node)
 		#	puts "\t\t$ From #{t}: #{v}"
 		#end
 
-		$graph_file.write("chain: #{chain_length} #{out_nodes} #{in_nodes} #{out_sink_nodes} #{in_source_nodes}\n")
-
+		$graph_file.puts("\t<chain>")
+		$graph_file.puts("\t\t<length>#{chain_length}<\/length>")
+		$graph_file.puts("\t\t<outNodes>#{out_nodes}<\/outNodes>")
+		$graph_file.puts("\t\t<inNodes>#{in_nodes}<\/inNodes>")
+		$graph_file.puts("\t\t<outSinks>#{out_sink_nodes}<\/outSinks>")
+		$graph_file.puts("\t\t<inSources>#{in_source_nodes}<\/inSources>")
+		$graph_file.puts("\t<\/chain>")
+	
 		$processed_node_stack.pop
 	elsif cur_node.Tnode.children.length == 0
 		#Only one node on the chain
-		$graph_file.write("chain: 1 0 0 0 0\n")
+		$graph_file.puts("\t<chain>")
+		$graph_file.puts("\t\t<length>1<\/length>")
+		$graph_file.puts("\t\t<outNodes>0<\/outNodes>")
+		$graph_file.puts("\t\t<inNodes>0<\/inNodes>")
+		$graph_file.puts("\t\t<outSinks>0<\/outSinks>")
+		$graph_file.puts("\t\t<inSources>0<\/inSources>")
+		$graph_file.puts("\t<\/chain>")
+
 	else
 		$processed_node_stack.push(cur_node)
 		cur_node.Tnode.children.each do |c|
@@ -447,6 +463,19 @@ def compute_reachability(n)
 	return @reaches.length
 end
 
+class Temp_field_stat
+	def initialize
+		@num_assign = 0
+		@num_use = 0
+		@total_source = 0
+		@type = nil
+	end
+	attr_accessor :num_assign, :num_use, :total_source, :type
+	def getAvgSource
+		return @total_source.to_f / @num_assign.to_f
+	end
+end
+
 def compute_chain_stats
 	$sketch_node_list.each do |n|
 		#puts "#{n.node.getIndex}:#{n.node.getInstr.toString}"
@@ -465,7 +494,7 @@ def compute_chain_stats
 			
 			if n.node.getInstr.getFromUserInput
 				reaches = compute_reachability(n.node)
-				$graph_file.write("Input: #{reaches}\n")
+				$graph_file.puts("\t<inputReaches>#{reaches}<\/inputReaches>")
 				if reaches == 0
 					#puts "ZERO reach #{n.node.getIndex}:#{n.node.getInstr.toString}"
 				end
@@ -476,57 +505,87 @@ def compute_chain_stats
 
 	#OK, here we compute fields being assigned but not part of schema
 	#should be in compute_stats.rb...
-	@notstored_fields = Hash.new
-	@notstored_f_source = Hash.new
-	@stored_fields = Hash.new
-	@stored_f_source = Hash.new
-	@stored_f_type = Hash.new
+	@notstored = Hash.new
+	@stored = Hash.new
 	$node_list.each do |n|
-		if n.isField? or n.getInstr.instance_of?AttrAssign_instr and n.getInstr.getCallHandler != nil and n.getInstr.getCallHandler.caller != nil
-			var_name = n.getInstr.getCallHandler.getObjName
-			field_name = n.getInstr.getCallHandler.getFuncName
-			#field_instance = n.getInstr.getCallHandler.getField
-			tbl_name = n.getInstr.getCallHandler.caller.getName
-			p_s = "#{var_name} (#{tbl_name}) . #{field_name}"
-			s = "#{tbl_name}.#{field_name}"
-			f = isTableField(tbl_name, field_name)
-			if f != nil
-				p_s = p_s + " -> field"
-				if @stored_fields.has_key?(s)
-					@stored_fields[s] += 1
-					@stored_f_type[s] = f.type
-				else
-					@stored_fields[s] = 1
-					@stored_f_source[s] = 0
-					@stored_f_type[s] = f.type
-				end
-				if n.getInstr.instance_of?AttrAssign_instr
-					n.source_list.each do |sn|
-						r_lst = find_path_between_two_nodes(sn, n)
-						@stored_f_source[s] += r_lst.length
+		if n.isClassField? or n.getInstr.instance_of?AttrAssign_instr #and n.getInstr.getCallHandler != nil and n.getInstr.getCallHandler.caller != nil
+		  tbl_name = type_valid(n.getInstr, n.getInstr.getCaller)
+			field_name = n.getInstr.getFuncname
+			if tbl_name != nil
+				#puts "Found field: #{tbl_name}.#{field_name}"
+				#var_name = n.getInstr.getCallHandler.getObjName
+				#field_name = n.getInstr.getCallHandler.getFuncName
+				#tbl_name = n.getInstr.getCallHandler.caller.getName
+				p_s = "#{tbl_name}) . #{field_name}"
+				s = "#{tbl_name}.#{field_name}"
+				f = testTableField(tbl_name, field_name)
+				if f != nil
+					p_s = p_s + " -> field"
+					if @stored.has_key?(s)
+					else
+						@stored[s] = Temp_field_stat.new
 					end
-				end
-			elsif isActiveRecord(tbl_name)
-				p_s = p_s + " -> non field"
-				if @notstored_fields.has_key?(s)
-					@notstored_fields[s] += 1
-				else
-					@notstored_fields[s] = 1
-					@notstored_f_source[s] = 0
-					n.source_list.each do |sn|
-						r_lst = find_path_between_two_nodes(sn, n)
-						@notstored_f_source[s] += r_lst.length
+					if n.getInstr.isClassField
+						@stored[s].num_use += 1
+						@stored[s].type = f.type
+					elsif n.getInstr.instance_of?AttrAssign_instr
+						#puts "ATTRassign: #{n.getIndex}: #{n.getInstr.toString}:"
+						@stored[s].type = f.type
+						@stored[s].num_assign += 1
+						n.source_list.each do |sn|
+							r_lst = find_path_between_two_nodes(sn, n)
+							@stored[s].total_source += r_lst.length
+							#puts "\t source = #{sn.getIndex} (dist = #{r_lst.length}): #{sn.getInstr.toString}"
+						end
 					end
+				elsif tbl_name.include?("Controllers")
+				else#if isActiveRecord(tbl_name)
+					p_s = p_s + " -> non field"
+					ftype = nil
+					if $class_map[tbl_name] != nil and $class_map[tbl_name].getVarMap[field_name] != nil
+						ftype = $class_map[tbl_name].getVarMap[field_name].type 
+					end
+					if @notstored.has_key?(s)
+					else
+						@notstored[s] = Temp_field_stat.new
+					end
+					if n.getInstr.isClassField
+						@notstored[s].num_use += 1
+						if ftype != nil
+							@notstored[s].type = ftype
+						end
+					elsif n.getInstr.instance_of?AttrAssign_instr
+						if ftype != nil
+							@notstored[s].type = ftype
+						end
+						@notstored[s].num_assign += 1
+						n.source_list.each do |sn|
+							r_lst = find_path_between_two_nodes(sn, n)
+							@notstored[s].total_source += r_lst.length
+						end
+					end
+					#puts "#{p_s}"	
 				end
-				#puts "#{p_s}"	
 			end
 		end
 	end	
-	@notstored_fields.each do |f,v|
-		$graph_file.write("Nonfield: #{f} #{v} #{@notstored_f_source[f]}\n")
+	@notstored.each do |f,v|
+		$graph_file.puts("\t<nonField>")
+		$graph_file.puts("\t\t<name>#{f}<\/name>")
+		$graph_file.puts("\t\t<numUses>#{v.num_use}<\/numUses>")
+		$graph_file.puts("\t\t<numAssigns>#{v.num_assign}<\/numAssigns>")
+		$graph_file.puts("\t\t<type>#{@notstored[f].type}<\/type>")
+		$graph_file.puts("\t\t<avgSourceDist>#{@notstored[f].getAvgSource}<\/avgSourceDist>")
+		$graph_file.puts("\t<\/nonField>")
 	end
-	@stored_fields.each do |f,v|
-		$graph_file.write("FieldAssign: #{f} #{v} #{@stored_f_type[f]} #{@stored_f_source[f]}\n")
+	@stored.each do |f,v|
+		$graph_file.puts("\t<field>")
+		$graph_file.puts("\t\t<name>#{f}<\/name>")
+		$graph_file.puts("\t\t<numUses>#{v.num_use}<\/numUses>")
+		$graph_file.puts("\t\t<numAssigns>#{v.num_assign}<\/numAssigns>")
+		$graph_file.puts("\t\t<type>#{@stored[f].type}<\/type>")
+		$graph_file.puts("\t\t<avgSourceDist>#{@stored[f].getAvgSource}<\/avgSourceDist>")
+		$graph_file.puts("\t<\/field>")
 	end
 end
 #pattern 1: root1 is on the path of root2, which means node in root1 defines sth that node in root2 uses

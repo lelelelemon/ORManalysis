@@ -10,25 +10,14 @@ level 0: SettingsController . before_filter (params: ) # (returnv: )
 		level 2: ApplicationController . user_is_spider? (params: ) # (returnv: true)
 		level 2: Keystore . before_filter (params: ) # (returnv: )
 		level 2: Keystore . find_or_create_key_for_update (params: now_i, ) # (returnv: date_kv)
-			level 3:  [QUERY] self.lock(true).where(:key => key) . first	{params: } # {returnv: kv} # {op: .SELECT}
+			level 3:  [QUERY] self . lock	{params: true, } # {returnv: } # {op: .TXN}
 			level 3:  [QUERY] self.lock(true) . where	{params: key, } # {returnv: } # {op: .SELECT}
-			level 3:  [QUERY] self . lock	{params: true, } # {returnv: } # {op: Keystore.TRANSACTION}
+			level 3:  [QUERY] self.lock(true).where(:key => key) . first	{params: } # {returnv: kv} # {op: .SELECT}
 =====transaction begin=====
-			level 3:  [QUERY] kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
-				level 4: Keystore . before_save (params: ) # (returnv: )
-				level 4: Keystore . before_validation (params: ) # (returnv: )
-					level 5:  [QUERY] key . where	{params: } # {returnv: } # {op: .SELECT}
-				level 4: Keystore . before_create (params: ) # (returnv: )
-=====transaction end=====
-=====transaction begin=====
-		level 2:  [QUERY] traffic_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
-=====transaction end=====
-=====transaction begin=====
-		level 2:  [QUERY] date_kv . save!	{params: } # {returnv: } # {op: Keystore.INSERT}
+			level 3:  [QUERY] kv . save!	{params: } # {returnv: } # {op: .INSERT}
 =====transaction end=====
 	level 1: ApplicationController . require_logged_in_user (params: ) # (returnv: )
 	level 0: SettingsController . update (params: ) # (returnv: )
-	level 1: SettingsController . user_params (params: ) # (returnv: true)
 	level 1: User . username_regex (params: ) # (returnv: )
 		level 2:  [QUERY] User.validators_on(:username) . select	{params: } # {returnv: } # {op: .SELECT}
 		level 2:  [QUERY] User.validators_on(:username).select{|v|      v.class == ActiveModel::Validations::FormatValidator } . first	{params: } # {returnv: } # {op: .SELECT}

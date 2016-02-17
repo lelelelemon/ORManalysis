@@ -9,8 +9,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->tag def_%v_3 %self[2.0,] 	 ARGS:
@@ -31,15 +31,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: 
 		 7: (TagFilter) def_%v_3 
 		 8: %v_3->group def_%v_4 %v_3[2.7,] 	 ARGS:Symbol,
 		 9: %v_4->count def_%v_5 %v_4[2.8,] 	 ARGS:
-		 10: COPY def_counts %v_5[2.9,] 
+		 10: COPY TYPE_PASS def_counts %v_5[2.9,] 
 		 11: 
 		 12: (Tag) def_%v_6 
 		 13: %v_6->active def_%v_7 %v_6[2.12,] 	 ARGS:
@@ -57,8 +57,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_t 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -91,8 +91,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_2_0 
 		 2: RECEIVEARG def_t 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -133,15 +133,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: 
 		 7: (Tagging) def_%v_3 
 		 8: %v_3->group def_%v_4 %v_3[2.7,] 	 ARGS:Symbol,
 		 9: %v_4->count def_%v_5 %v_4[2.8,] 	 ARGS:
-		 10: COPY def_counts %v_5[2.9,] 
+		 10: COPY TYPE_PASS def_counts %v_5[2.9,] 
 		 11: 
 		 12: (Tag) def_%v_6 
 		 13: %v_6->active def_%v_7 %v_6[2.12,] 	 ARGS:
@@ -159,8 +159,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_t 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -193,8 +193,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_2_0 
 		 2: RECEIVEARG def_t 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -235,11 +235,11 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY def_%v_3 
+		 6: COPY TYPE_StringLiteral def_%v_3 
 		 7: %self->tag def_%v_4 %self[2.0,] 	 ARGS:
 		 8: BUILDSTRING def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: %self->is_media? def_%v_6 %self[2.0,2.7,] 	 ARGS:
@@ -248,14 +248,14 @@ BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_7 
+		 0: COPY TYPE_StringLiteral def_%v_7 
 		 1: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_8 
-		 1: COPY def_%v_7 %v_8[4.0,] 
+		 0: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_PASS def_%v_7 %v_8[4.0,] 
 BB 5
 	outgoing: 6 
 	datadep: 
@@ -278,8 +278,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: 
@@ -316,19 +316,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: def_%v_4 %self[2.0,] 
-		 7: COPY def_%v_3 %v_4[2.6,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->filtered_count def_%v_5 %self[2.0,] 
-		 1: COPY def_%v_3 %v_5[3.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 

@@ -5,41 +5,23 @@ $in_validation = Array.new
 $general_call_stack = Array.new
 $funccall_stack = Array.new
 
-def handle_single_call_node2(start_class, start_function, class_handler, call, level)
-	
-		#callerv_name = call.findCaller(start_class, start_function)
-		#callerv = $class_map[callerv_name]
-		#pre-computed after reading all files, in #read_file.rb
-		callerv = call.caller
-		pass_params = ""
-		pass_returnv = ""
-		call.getParams.each do |param|
-			if param.getVar.length > 0
-					pass_params += "#{param.getVar}, "
-			end
-		end
-		pass_returnv = call.getReturnValue
-		if call.isQuery
+def handle_single_call_node2(start_class, start_function, instr, level)
+
+		caller_class = instr.getCallerType
+		if instr.isQuery
 			$cur_node.setIsQuery
 			$cur_node.setLabel
-			caller_class = nil
-			if class_handler.getMethodVarMap[start_function] != nil
-				caller_class = class_handler.getMethodVarMap[start_function].search_var(call.getObjName)
-			end
-			if caller_class == nil
-				caller_class = call.getTableName
-			end
 		
-			if trigger_save?(call) or trigger_create?(call)
+			if instr_trigger_save?(instr) or instr_trigger_create?(instr)
 				$node_list.pop
 				$ins_cnt -= 1
 
 				temp_actions = Array.new
-				if caller_class != nil and trigger_save?(call)
+				if caller_class != nil and instr_trigger_save?(instr)
 						temp_actions.push("before_save")
 						temp_actions.push("before_validation")
 				end
-				if caller_class != nil and trigger_create?(call)
+				if caller_class != nil and instr_trigger_create?(instr)
 							temp_actions.push("before_create")
 				end
 
@@ -59,8 +41,8 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 						temp_name = "#{caller_class}.#{action}"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
-							if callerv != nil and $class_map[callerv.getUpperClass] != nil
-								cur_cfg = trace_query_flow(callerv.getUpperClass, action, "", "", level+2)
+							if $class_map[caller_class] != nil and $class_map[$class_map[caller_class].getUpperClass] != nil
+								cur_cfg = trace_query_flow($class_map[caller_class].getUpperClass, action, "", "", level+2)
 								#TODO: add control flow edges...
 							end
 							cur_cfg = trace_query_flow(caller_class, action, "", "", level+2)
@@ -105,15 +87,15 @@ def handle_single_call_node2(start_class, start_function, class_handler, call, l
 				$ins_cnt += 1
 			end
 				
-		elsif callerv != nil	
-			temp_name = "#{callerv.getName}.#{call.getFuncName}"
+		elsif caller_class != nil	
+			temp_name = "#{caller_class}.#{instr.getFuncname}"
 
 			if $non_repeat_list.include?(temp_name) == false
-				if is_repeatable_function(call.getFuncName)==false
+				if is_repeatable_function(instr.getFuncname)==false
 					$non_repeat_list.push(temp_name)
 				end
 				temp_node = $cur_node	
-				cur_cfg = trace_query_flow(callerv.getName, call.getFuncName, pass_params, pass_returnv, level+1)
+				cur_cfg = trace_query_flow(caller_class, instr.getFuncname, "", "", level+1)
 				if cur_cfg != nil
 					temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
 					cur_cfg.getExplicitReturn.each do |rt|
@@ -149,25 +131,11 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	$ins_cnt += 1
 
 	if instr.is_a?Call_instr
-		call = call_match_name(instr.getResolvedCaller, instr.getFuncname, function_handler)
-		if call != nil
-			instr.setCallHandler(call)
-			if instr.getResolvedCaller == ("self")
-				instr.setResolvedCaller(start_class)
-			end
-			$funccall_stack.push($cur_node)
-			$general_call_stack.push($cur_node)
-			handle_single_call_node2(start_class, start_function, class_handler, call, level)
-			$funccall_stack.pop
-			$general_call_stack.pop
-		elsif (instr.instance_of?AttrAssign_instr or instr.instance_of?GetField_instr) and instr.getCaller == "%self"
-			call = Function_call.new(instr.getCaller, instr.getFuncname)
-			call.caller = $class_map[start_class]
-			call.setField
-			instr.setCallHandler(call)
-		else
-			#puts "CANNOT find caller: #{instr.toString} #{instr.getResolvedCaller} [#{instr.getCaller}] #{instr.getFuncname} #{call==nil} #{function_handler.getName}"
-		end
+		$funccall_stack.push($cur_node)
+		$general_call_stack.push($cur_node)
+		handle_single_call_node2(start_class, start_function, instr, level)
+		$funccall_stack.pop
+		$general_call_stack.pop
 	end
 
 	if instr.instance_of?ReceiveArg_instr
@@ -349,7 +317,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 	
 	class_handler = $class_map[start_class]
 	if class_handler != nil
-		function_handler = class_handler.getMethod(start_function)
+		function_handler = class_handler.findMethodRecursive(start_function)
 	else
 		function_handler = nil
 	end
@@ -375,6 +343,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 		$non_repeat_list.push(before_filter_name)
 		
 		cfg = CFG.new
+		filter_handler.setCFG(cfg)
 		bb = Basic_block.new(1)
 		def_self = Instruction.new
 		def_self.setDefv("%self")
@@ -397,6 +366,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 		return function_handler.getCFG
 	else
 		cfg = CFG.new
+		function_handler.setCFG(cfg)
 		bb = Basic_block.new(1)
 		def_self = Instruction.new
 		def_self.setDefv("%self")

@@ -9,8 +9,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->logged_in? def_%v_3 %self[2.0,] 	 ARGS:
@@ -21,7 +21,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->controller_name def_%v_5 %self[2.0,] 	 ARGS:
-		 1: COPY def_%v_6 
+		 1: COPY TYPE_StringLiteral def_%v_6 
 		 2: %v_5->eql? def_%v_7 %v_5[3.0,] %v_6[3.1,] 	 ARGS:%v_6,
 		 3: RETURN %v_7[3.2,] %self[3.0,2.0,] 
 BB 4
@@ -45,13 +45,13 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Page) def_%v_3 
 		 7: %v_3->unscoped def_%v_4 %v_3[2.6,] 	 ARGS:
-		 8: COPY def_%v_5 
+		 8: COPY TYPE_StringLiteral def_%v_5 
 		 9: %v_4->order def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: %self->params def_%v_7 %self[2.0,] 	 ARGS:
 		 11: %v_7->[] def_%v_8 %v_7[2.10,] 	 ARGS:Symbol,
@@ -75,8 +75,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_rb_from_view 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -94,8 +94,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
@@ -165,8 +165,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_3_0 
 		 2: RECEIVEARG def_link 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -193,7 +193,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%cl_2_37 
+		 0: COPY TYPE_Nil def_%cl_2_37 
 BB 6
 	outgoing: 7 9 
 	datadep: 
@@ -244,8 +244,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_4_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -292,8 +292,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_5_0 
 		 2: RECEIVEARG def_page 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 13 
 	datadep: 
@@ -318,7 +318,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->t def_%cl_5_8 %self[2.0,] 	 ARGS:Symbol,
-		 2: COPY def_%cl_5_7 %cl_5_8[5.1,] 
+		 2: COPY TYPE_PASS def_%cl_5_7 %cl_5_8[5.1,] 
 BB 6
 	outgoing: 7 8 13 
 	datadep: 
@@ -339,7 +339,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: def_%cl_5_13 	 ARGS:
-		 1: COPY def_%cl_5_12 %cl_5_13[8.0,] 
+		 1: COPY TYPE_PASS def_%cl_5_12 %cl_5_13[8.0,] 
 BB 9
 	outgoing: 10 11 13 
 	datadep: 
@@ -347,7 +347,7 @@ BB 9
 		 0: 
 		 1: def_%cl_5_14 	 ARGS:
 		 2: %self->pages_path def_%cl_5_15 %self[2.0,] page[2.2,] 	 ARGS:page,
-		 3: COPY def_%cl_5_16 
+		 3: COPY TYPE_StringLiteral def_%cl_5_16 
 		 4: HASH-class- def_%cl_5_17 %cl_5_16[9.3,] 
 		 5: %self->link_to def_%cl_5_18 %self[9.2,2.0,] %cl_5_14[9.1,] %cl_5_15[9.2,] %cl_5_17[9.4,] 	 ARGS:%cl_5_14,%cl_5_15,%cl_5_17,
 		 6: 
@@ -357,7 +357,7 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY def_%cl_5_20 
+		 0: COPY TYPE_Nil def_%cl_5_20 
 		 1: 
 BB 11
 	outgoing: 12 13 
@@ -366,10 +366,10 @@ BB 11
 		 0: 
 		 1: def_%cl_5_21 	 ARGS:
 		 2: %self->preview_admin_page_path def_%cl_5_22 %self[2.0,] page[2.2,] 	 ARGS:page,
-		 3: COPY def_%cl_5_23 
+		 3: COPY TYPE_StringLiteral def_%cl_5_23 
 		 4: HASH-class- def_%cl_5_24 %cl_5_23[11.3,] 
 		 5: %self->link_to def_%cl_5_25 %self[11.2,2.0,] %cl_5_21[11.1,] %cl_5_22[11.2,] %cl_5_24[11.4,] 	 ARGS:%cl_5_21,%cl_5_22,%cl_5_24,
-		 6: COPY def_%cl_5_20 %cl_5_25[11.5,] 
+		 6: COPY TYPE_PASS def_%cl_5_20 %cl_5_25[11.5,] 
 BB 12
 	outgoing: 13 15 
 	datadep: 
@@ -377,16 +377,16 @@ BB 12
 		 0: 
 		 1: def_%cl_5_26 	 ARGS:
 		 2: %self->edit_admin_page_path def_%cl_5_27 %self[2.0,] page[2.2,] 	 ARGS:page,
-		 3: COPY def_%cl_5_28 
+		 3: COPY TYPE_StringLiteral def_%cl_5_28 
 		 4: HASH-class- def_%cl_5_29 %cl_5_28[12.3,] 
 		 5: %self->link_to def_%cl_5_30 %self[12.2,2.0,] %cl_5_26[12.1,] %cl_5_27[12.2,] %cl_5_29[12.4,] 	 ARGS:%cl_5_26,%cl_5_27,%cl_5_29,
 		 6: 
 		 7: def_%cl_5_31 	 ARGS:
 		 8: %self->pages_path def_%cl_5_32 %self[12.2,12.5,2.0,] page[2.2,] 	 ARGS:page,
-		 9: COPY def_%cl_5_33 
+		 9: COPY TYPE_StringLiteral def_%cl_5_33 
 		 10: def_%cl_5_34 	 ARGS:
 		 11: HASH-confirm- def_%cl_5_35 %cl_5_34[12.10,] 
-		 12: COPY def_%cl_5_36 
+		 12: COPY TYPE_StringLiteral def_%cl_5_36 
 		 13: HASH-method-data-class- def_%cl_5_37 %cl_5_33[12.9,] %cl_5_35[12.11,] %cl_5_36[12.12,] 
 		 14: %self->link_to def_%cl_5_38 %self[12.2,12.5,12.8,2.0,] %cl_5_31[12.7,] %cl_5_32[12.8,] %cl_5_37[12.13,] 	 ARGS:%cl_5_31,%cl_5_32,%cl_5_37,
 		 15: RETURN %cl_5_38[12.14,] %self[12.2,12.5,12.8,12.14,2.0,] 
@@ -404,13 +404,13 @@ BB 15
 CLOSURE END
 		 35: 
 		 36: GETFIELD %self->pages def_%v_21 %self[2.0,2.10,2.13,2.18,2.21,] 
-		 37: COPY def_%v_22 
+		 37: COPY TYPE_StringLiteral def_%v_22 
 		 38: HASH-theme- def_%v_23 %v_22[2.37,] 
 		 39: %self->paginate def_%v_24 %self[2.0,2.10,2.13,2.16,2.18,2.21,] %v_21[2.36,] %v_23[2.38,] 	 ARGS:%v_21,%v_23,
 		 40: 
 		 41: def_%v_25 	 ARGS:
 		 42: %self->new_admin_page_path def_%v_26 %self[2.0,2.10,2.13,2.16,2.18,2.21,2.39,] 	 ARGS:
-		 43: COPY def_%v_27 
+		 43: COPY TYPE_StringLiteral def_%v_27 
 		 44: HASH-class- def_%v_28 %v_27[2.43,] 
 		 45: %self->link_to def_%v_29 %self[2.0,2.10,2.13,2.16,2.18,2.21,2.39,2.42,] %v_25[2.41,] %v_26[2.42,] %v_28[2.44,] 	 ARGS:%v_25,%v_26,%v_28,
 		 46: RETURN %v_29[2.45,] %self[2.0,2.10,2.13,2.16,2.18,2.21,2.39,2.42,2.45,] 
@@ -430,8 +430,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Page) def_%v_3 
@@ -460,8 +460,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: def_%v_3 
 BB 4
@@ -485,7 +485,7 @@ BB 5
 	instructions:
 		 0: GETFIELD %self->page def_%v_12 %self[4.7,2.0,] 
 		 1: %v_12->page_public def_%v_13 %v_12[5.0,] 	 ARGS:
-		 2: COPY def_%v_11 %v_13[5.1,] 
+		 2: COPY TYPE_PASS def_%v_11 %v_13[5.1,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
@@ -495,7 +495,7 @@ BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_14 
+		 0: COPY TYPE_Nil def_%v_14 
 		 1: 
 BB 8
 	outgoing: 9 11 
@@ -506,16 +506,16 @@ BB 8
 		 2: def_%v_16 	 ARGS:
 		 3: ATTRASSIGN %v_15->[] %v_16[8.2,] 
 		 4: 
-		 5: COPY def_%v_17 
-		 6: COPY def_%v_18 
+		 5: COPY TYPE_StringLiteral def_%v_17 
+		 6: COPY TYPE_StringLiteral def_%v_18 
 		 7: HASH-controller-action- def_%v_19 %v_17[8.5,] %v_18[8.6,] 
 		 8: %self->redirect_to def_%v_20 %self[8.1,4.7,2.0,] %v_19[8.7,] 	 ARGS:%v_19,
-		 9: COPY def_%v_14 %v_20[8.8,] 
+		 9: COPY TYPE_PASS def_%v_14 %v_20[8.8,] 
 BB 9
 	outgoing: 10 11 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_5 %v_14[8.9,7.0,] 
+		 0: COPY TYPE_PASS def_%v_5 %v_14[8.9,7.0,] 
 		 1: %v_3[2.5,] 
 BB 10
 	outgoing: 16 
@@ -545,7 +545,7 @@ BB 13
 		 4: 
 		 5: %self->home_path def_%v_25 %self[13.1,4.7,2.0,] 	 ARGS:
 		 6: %self->redirect_to def_%v_26 %self[13.1,13.5,4.7,2.0,] %v_25[13.5,] 	 ARGS:%v_25,
-		 7: COPY def_%v_5 %v_26[13.6,] 
+		 7: COPY TYPE_PASS def_%v_5 %v_26[13.6,] 
 		 8: %v_3[2.5,] 
 BB 14
 	outgoing: 16 
@@ -580,8 +580,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Page) def_%v_3 
@@ -593,7 +593,7 @@ BB 2
 		 12: 
 		 13: def_%v_6 	 ARGS:
 		 14: %self->admin_pages_path def_%v_7 %self[2.0,2.8,2.11,] 	 ARGS:
-		 15: COPY def_%v_8 
+		 15: COPY TYPE_StringLiteral def_%v_8 
 		 16: HASH-class- def_%v_9 %v_8[2.15,] 
 		 17: %self->link_to def_%v_10 %self[2.0,2.8,2.11,2.14,] %v_6[2.13,] %v_7[2.14,] %v_9[2.16,] 	 ARGS:%v_6,%v_7,%v_9,
 		 18: 
@@ -611,8 +611,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_rb_from_view 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
@@ -627,7 +627,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->admin_pages_path def_%cl_1_5 %self[2.0,] 	 ARGS:
-		 2: COPY def_url %cl_1_5[4.1,] 
+		 2: COPY TYPE_PASS def_url %cl_1_5[4.1,] 
 		 3: 
 BB 5
 	outgoing: 6 7 
@@ -636,8 +636,8 @@ BB 5
 		 0: 
 		 1: GETFIELD %self->page def_%cl_1_6 %self[2.0,] 
 		 2: %self->admin_page_path def_%cl_1_7 %self[2.0,] %cl_1_6[5.1,] 	 ARGS:%cl_1_6,
-		 3: COPY def_url %cl_1_7[5.2,] 
-		 4: COPY def_%cl_1_5 %cl_1_7[5.2,] 
+		 3: COPY TYPE_PASS def_url %cl_1_7[5.2,] 
+		 4: COPY TYPE_PASS def_%cl_1_5 %cl_1_7[5.2,] 
 BB 6
 	outgoing: 7 9 
 	datadep: 
@@ -658,8 +658,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_2_0 
 		 2: RECEIVEARG def_f 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -667,7 +667,7 @@ BB 3
 		 0: 
 		 1: f->text_field def_%cl_2_3 f[2.2,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY def_%cl_2_4 
+		 3: COPY TYPE_StringLiteral def_%cl_2_4 
 		 4: HASH-class- def_%cl_2_5 %cl_2_4[3.3,] 
 		 5: f->text_area def_%cl_2_6 f[3.1,2.2,] %cl_2_5[3.4,] 	 ARGS:Symbol,%cl_2_5,
 		 6: 
@@ -683,8 +683,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_3_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -715,12 +715,12 @@ BB 6
 CLOSURE END
 		 8: 
 		 9: def_%cl_2_8 	 ARGS:
-		 10: COPY def_%cl_2_9 
-		 11: COPY def_%cl_2_10 %cl_2_8[3.9,] %cl_2_9[3.10,] 
+		 10: COPY TYPE_StringLiteral def_%cl_2_9 
+		 11: COPY TYPE_Array def_%cl_2_10 %cl_2_8[3.9,] %cl_2_9[3.10,] 
 		 12: def_%cl_2_11 	 ARGS:
-		 13: COPY def_%cl_2_12 
-		 14: COPY def_%cl_2_13 %cl_2_11[3.12,] %cl_2_12[3.13,] 
-		 15: COPY def_%cl_2_14 %cl_2_10[3.11,] %cl_2_13[3.14,] 
+		 13: COPY TYPE_StringLiteral def_%cl_2_12 
+		 14: COPY TYPE_Array def_%cl_2_13 %cl_2_11[3.12,] %cl_2_12[3.13,] 
+		 15: COPY TYPE_Array def_%cl_2_14 %cl_2_10[3.11,] %cl_2_13[3.14,] 
 		 16: def_%cl_2_15 	 ARGS:
 		 17: HASH-label- def_%cl_2_16 %cl_2_15[3.16,] 
 		 18: f->select def_%cl_2_17 f[3.1,3.5,3.7,2.2,] %cl_2_14[3.15,] %cl_2_16[3.17,] 	 ARGS:Symbol,%cl_2_14,%cl_2_16,
@@ -737,8 +737,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_4_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -802,8 +802,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Page) def_%v_3 
@@ -830,8 +830,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_rb_from_view 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
@@ -846,7 +846,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->admin_pages_path def_%cl_1_5 %self[2.0,] 	 ARGS:
-		 2: COPY def_url %cl_1_5[4.1,] 
+		 2: COPY TYPE_PASS def_url %cl_1_5[4.1,] 
 		 3: 
 BB 5
 	outgoing: 6 7 
@@ -855,8 +855,8 @@ BB 5
 		 0: 
 		 1: GETFIELD %self->page def_%cl_1_6 %self[2.0,] 
 		 2: %self->admin_page_path def_%cl_1_7 %self[2.0,] %cl_1_6[5.1,] 	 ARGS:%cl_1_6,
-		 3: COPY def_url %cl_1_7[5.2,] 
-		 4: COPY def_%cl_1_5 %cl_1_7[5.2,] 
+		 3: COPY TYPE_PASS def_url %cl_1_7[5.2,] 
+		 4: COPY TYPE_PASS def_%cl_1_5 %cl_1_7[5.2,] 
 BB 6
 	outgoing: 7 9 
 	datadep: 
@@ -877,8 +877,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_2_0 
 		 2: RECEIVEARG def_f 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -886,7 +886,7 @@ BB 3
 		 0: 
 		 1: f->text_field def_%cl_2_3 f[2.2,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY def_%cl_2_4 
+		 3: COPY TYPE_StringLiteral def_%cl_2_4 
 		 4: HASH-class- def_%cl_2_5 %cl_2_4[3.3,] 
 		 5: f->text_area def_%cl_2_6 f[3.1,2.2,] %cl_2_5[3.4,] 	 ARGS:Symbol,%cl_2_5,
 		 6: 
@@ -902,8 +902,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_3_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -934,12 +934,12 @@ BB 6
 CLOSURE END
 		 8: 
 		 9: def_%cl_2_8 	 ARGS:
-		 10: COPY def_%cl_2_9 
-		 11: COPY def_%cl_2_10 %cl_2_8[3.9,] %cl_2_9[3.10,] 
+		 10: COPY TYPE_StringLiteral def_%cl_2_9 
+		 11: COPY TYPE_Array def_%cl_2_10 %cl_2_8[3.9,] %cl_2_9[3.10,] 
 		 12: def_%cl_2_11 	 ARGS:
-		 13: COPY def_%cl_2_12 
-		 14: COPY def_%cl_2_13 %cl_2_11[3.12,] %cl_2_12[3.13,] 
-		 15: COPY def_%cl_2_14 %cl_2_10[3.11,] %cl_2_13[3.14,] 
+		 13: COPY TYPE_StringLiteral def_%cl_2_12 
+		 14: COPY TYPE_Array def_%cl_2_13 %cl_2_11[3.12,] %cl_2_12[3.13,] 
+		 15: COPY TYPE_Array def_%cl_2_14 %cl_2_10[3.11,] %cl_2_13[3.14,] 
 		 16: def_%cl_2_15 	 ARGS:
 		 17: HASH-label- def_%cl_2_16 %cl_2_15[3.16,] 
 		 18: f->select def_%cl_2_17 f[3.1,3.5,3.7,2.2,] %cl_2_14[3.15,] %cl_2_16[3.17,] 	 ARGS:Symbol,%cl_2_14,%cl_2_16,
@@ -956,8 +956,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_4_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -1021,8 +1021,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Page) def_%v_3 
@@ -1069,8 +1069,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: GETFIELD %self->page def_%v_3 %self[2.0,] 
@@ -1113,8 +1113,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: GETFIELD %self->page def_%v_3 %self[2.0,] 
@@ -1143,8 +1143,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
@@ -1155,14 +1155,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: def_%v_6 %self[2.0,] 
-		 1: COPY def_%v_5 %v_6[3.0,] 
+		 1: COPY TYPE_PASS def_%v_5 %v_6[3.0,] 
 		 2: %v_6[3.0,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->page def_%v_7 %self[2.0,] 
-		 1: COPY def_%v_5 %v_7[4.0,] 
+		 1: COPY TYPE_PASS def_%v_5 %v_7[4.0,] 
 BB 5
 	outgoing: 6 7 
 	datadep: 
@@ -1178,7 +1178,7 @@ BB 6
 		 3: %v_10->[] def_%v_11 %v_10[6.2,] 	 ARGS:Symbol,
 		 4: %v_9->find def_%v_12 %v_9[6.1,] %v_11[6.3,] 	 ARGS:%v_11,
 		 5: ATTRASSIGN %self->page %v_12[6.4,] 
-		 6: COPY def_%v_7 %v_12[6.4,] 
+		 6: COPY TYPE_PASS def_%v_7 %v_12[6.4,] 
 BB 7
 	outgoing: 9 
 	datadep: 
@@ -1188,7 +1188,7 @@ BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_7 
+		 0: COPY TYPE_Nil def_%v_7 
 BB 9
 	outgoing: 10 11 
 	datadep: 
@@ -1201,7 +1201,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: %self->moderator? def_%v_14 %self[2.0,6.5,] 	 ARGS:
-		 1: COPY def_%v_13 %v_14[10.0,] 
+		 1: COPY TYPE_PASS def_%v_13 %v_14[10.0,] 
 BB 11
 	outgoing: 12 13 
 	datadep: 
@@ -1211,15 +1211,15 @@ BB 12
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_15 
+		 0: COPY TYPE_Nil def_%v_15 
 		 1: RETURN %v_15[12.0,] %self[2.0,6.5,] 
 BB 13
 	outgoing: 14 16 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_16 
-		 2: COPY def_%v_17 
+		 1: COPY TYPE_StringLiteral def_%v_16 
+		 2: COPY TYPE_StringLiteral def_%v_17 
 		 3: HASH-controller-action- def_%v_18 %v_16[13.1,] %v_17[13.2,] 
 		 4: %self->redirect_to def_%v_19 %self[2.0,6.5,] %v_18[13.3,] 	 ARGS:%v_18,
 		 5: BRANCH %v_19[13.4,] 
@@ -1249,8 +1249,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:

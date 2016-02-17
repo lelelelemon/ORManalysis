@@ -9,8 +9,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->user def_%v_3 %self[2.0,] 	 ARGS:
@@ -19,7 +19,7 @@ BB 3
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
 		 2: (Monitorship) def_%v_5 
 		 3: %self->user def_%v_6 %self[2.0,] 	 ARGS:
@@ -29,7 +29,7 @@ BB 3
 		 7: HASH-user_id-topic_id- def_%v_10 %v_7[3.4,] %v_9[3.6,] 
 		 8: %v_5->where def_%v_11 %v_5[3.2,] %v_10[3.7,] 	 ARGS:%v_10,
 		 9: %v_11->first_or_initialize def_%v_12 %v_11[3.8,] 	 ARGS:
-		 10: COPY def_monitorship %v_12[3.9,] 
+		 10: COPY TYPE_PASS def_monitorship %v_12[3.9,] 
 		 11: 
 		 12: %v_12->new_record? def_%v_13 %v_12[3.9,] 	 ARGS:
 		 13: BRANCH %v_13[3.12,] 
@@ -66,8 +66,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->topic def_%v_3 %self[2.0,] 	 ARGS:
@@ -89,12 +89,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: 
-		 7: COPY def_%v_3 user[2.5,] 
+		 7: COPY TYPE_PASS def_%v_3 user[2.5,] 
 		 8: BRANCH user[2.5,] 
 BB 3
 	outgoing: 4 5 
@@ -109,7 +109,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: user->admin? def_%v_7 user[2.5,] 	 ARGS:
-		 1: COPY def_%v_6 %v_7[4.0,] 
+		 1: COPY TYPE_PASS def_%v_6 %v_7[4.0,] 
 BB 5
 	outgoing: 6 7 
 	datadep: 
@@ -122,7 +122,7 @@ BB 6
 		 0: %self->topic def_%v_8 %self[2.0,] 	 ARGS:
 		 1: %v_8->forum_id def_%v_9 %v_8[6.0,] 	 ARGS:
 		 2: user->moderator_of? def_%v_10 user[2.5,] %v_9[6.1,] 	 ARGS:%v_9,
-		 3: COPY def_%v_6 %v_10[6.2,] 
+		 3: COPY TYPE_PASS def_%v_6 %v_10[6.2,] 
 BB 7
 	outgoing: 9 
 	datadep: 
@@ -149,8 +149,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->user def_%v_3 %self[2.0,] 	 ARGS:
@@ -180,7 +180,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: %self->author_name def_%v_9 %self[2.0,] 	 ARGS:
-		 1: COPY def_%v_8 %v_9[6.0,] 
+		 1: COPY TYPE_PASS def_%v_8 %v_9[6.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
@@ -202,8 +202,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->configatron def_%v_3 %self[2.0,] 	 ARGS:
@@ -214,7 +214,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->spam? def_%v_5 %self[2.0,] 	 ARGS:
-		 1: COPY def_%v_4 %v_5[3.0,] 
+		 1: COPY TYPE_PASS def_%v_4 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 

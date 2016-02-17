@@ -95,8 +95,6 @@ def handle_single_call_node(start_class, start_function, class_handler, call, le
 				OUTPUT_Direct "=====transaction end====="
 			end
 
-		#elsif call.isField
-		#	OUTPUT_Direct "#{$blank}\tlevel #{(level+1)}:  +FIELD+ #{callerv.getName} . #{call.getFuncName}	(type: #{call.getField.type}) "
 
 		elsif callerv != nil
 			temp_name = "#{callerv.getName}.#{call.getFuncName}"

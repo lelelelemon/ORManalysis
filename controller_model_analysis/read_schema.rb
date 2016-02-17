@@ -58,10 +58,10 @@ def isActiveRecord(caller_name)
 	return false
 end
 
-def isTableField(caller_name, f_name)
+def testTableField(caller_name, f_name)
 	if $class_map[caller_name] != nil
-		#puts "### #{caller_name} fields length = #{$class_map[caller_name].getFields.length}, f_name = #{f_name}"
-		$class_map[caller_name].getFields.each do |f|
+		#puts "### #{caller_name} fields length = #{$class_map[caller_name].getTableFields.length}, f_name = #{f_name}"
+		$class_map[caller_name].getTableFields.each do |f|
 			#puts "\t #{f.field_name} #{f.type}"
 			if f.field_name == f_name.delete('?')
 				return f
@@ -88,9 +88,11 @@ def read_schema(app_dir)
 			@cur_class = find_class(tbl_name)
 			t_field = Table_field.new("integer", "id")
 			if @cur_class != nil
-				@cur_class.addField(t_field)
+				@cur_class.addTableField(t_field)
 			end
 			if @cur_class == nil
+				@cur_class = Class_class.new(tbl_name)
+				$class_map[tbl_name] = @cur_class 
 				#puts "read schema: class #{tbl_name} (#{convert_tablename(tbl_name)}) cannot be found!"
 			end
 			$table_names.push(convert_tablename(tbl_name))
@@ -111,7 +113,7 @@ def read_schema(app_dir)
 				end	
 			end
 			if @cur_class != nil
-				@cur_class.addField(t_field)
+				@cur_class.addTableField(t_field)
 			end
 		end	
 	end

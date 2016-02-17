@@ -125,6 +125,19 @@ def check_method_keyword(_caller, k)
 		return $key_words[k]
 	end
 end
+def instr_trigger_save?(instr)
+	if ["INSERT", "UPDATE"].include?instr.getQueryType
+		return true
+	end
+	return false
+end
+def instr_trigger_create?(instr)
+	if ["INSERT"].include?instr.getQueryType
+		return true
+	else
+		return false
+	end
+end
 
 def trigger_save?(call)
 	if ["INSERT", "UPDATE"].include?call.getQueryType	
@@ -332,8 +345,19 @@ def graph_write(file, word)
 end
 
 def OUTPUT_Direct(w)
-	puts w
-	#$trace_output_file.write("#{w}\n")
+	#puts w
+	$trace_output_file.write("#{w}\n")
+end
+
+def clear_cfg(cfg)
+ 	cfg.clear
+	cfg.getBB.each do |bb|
+		bb.getInstr.each do |instr|
+			if instr.hasClosure?
+				instr.getClosure.clear
+			end
+		end
+	end
 end
 
 def clear_data_structure
@@ -345,6 +369,15 @@ def clear_data_structure
 			n.getInstr.getBB.getCFG.return_list = Array.new
 		end
 	end
+	$class_map.each do |keyc, valuec|
+		valuec.getMethods.each do |key, value|
+			cfg = value.getCFG
+			if cfg != nil
+				clear_cfg(cfg)
+			end
+		end
+	end
+
 	$node_list = Array.new
 	$root = nil
 	$view_ruby_code = false

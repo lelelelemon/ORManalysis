@@ -9,8 +9,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->new_record? def_%v_3 %self[2.0,] 	 ARGS:
@@ -20,7 +20,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->initiator def_%v_4 %self[2.0,] 	 ARGS:
-		 1: COPY def_%v_3 %v_4[3.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -32,7 +32,7 @@ BB 5
 	instructions:
 		 0: %self->user def_%v_5 %self[2.0,] 	 ARGS:
 		 1: %v_5->has_reached_daily_friend_request_limit? def_%v_6 %v_5[5.0,] 	 ARGS:
-		 2: COPY def_%v_3 %v_6[5.1,] 
+		 2: COPY TYPE_PASS def_%v_3 %v_6[5.1,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
@@ -44,7 +44,7 @@ BB 7
 	instructions:
 		 0: 
 		 1: %self->errors def_%v_7 %self[2.0,] 	 ARGS:
-		 2: COPY def_%v_8 
+		 2: COPY TYPE_StringLiteral def_%v_8 
 		 3: %v_7->add def_%v_9 %v_7[7.1,] %v_8[7.2,] 	 ARGS:Symbol,%v_8,
 		 4: RETURN %v_9[7.3,] %self[7.1,2.0,] 
 BB 8
@@ -68,12 +68,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Friendship) def_%v_3 
-		 7: COPY def_%v_4 
+		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->friend_id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %self->user_id def_%v_6 %self[2.0,2.8,] 	 ARGS:
 		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_4,%v_5,%v_6,
@@ -95,8 +95,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->friendship_status def_%v_3 %self[2.0,] 	 ARGS:
@@ -120,8 +120,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->friendship_status def_%v_3 %self[2.0,] 	 ARGS:
@@ -145,8 +145,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: %self->friendship_status def_%v_3 %self[2.0,] 	 ARGS:
@@ -170,13 +170,13 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: RECEIVEARG def_friend 
 		 7: 
-		 8: COPY def_%v_3 
+		 8: COPY TYPE_StringLiteral def_%v_3 
 		 9: user->id def_%v_4 user[2.5,] 	 ARGS:
 		 10: friend->id def_%v_5 friend[2.6,] 	 ARGS:
 		 11: (FriendshipStatus) def_%v_6 
@@ -201,8 +201,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (UserNotifier) def_%v_3 
@@ -225,14 +225,14 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (FriendshipStatus) def_%v_3 
 		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 		 8: %v_4->id def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY def_friendship_status_id %v_5[2.8,] 
+		 9: COPY TYPE_PASS def_friendship_status_id %v_5[2.8,] 
 		 10: RETURN %v_5[2.8,] %self[2.0,] 
 BB 3
 	outgoing: 

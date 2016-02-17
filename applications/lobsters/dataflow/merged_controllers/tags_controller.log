@@ -9,14 +9,14 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY def_%v_3 
+		 6: COPY TYPE_StringLiteral def_%v_3 
 		 7: ATTRASSIGN %self->cur_url %v_3[2.6,] 
 		 8: 
-		 9: COPY def_%v_4 
+		 9: COPY TYPE_StringLiteral def_%v_4 
 		 10: ATTRASSIGN %self->title %v_4[2.9,] 
 		 11: 
 		 12: (Tag) def_%v_5 
@@ -36,8 +36,8 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_format 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
@@ -55,16 +55,16 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: GETFIELD %self->tags def_%cl_2_3 %self[2.0,] 
-		 2: %cl_2_3->map def_%cl_2_4 %cl_2_3[3.1,] %self[2.0,] 	 ARGS:%cl_2_3,
-CLOSURE BEGIN: t[] 
+		 1: %self->ruby_code_from_view def_%cl_2_3 %self[2.0,] 	 ARGS:
+		 2: %cl_2_3->ruby_code_from_view def_%cl_2_4 %cl_2_3[3.1,] %self[3.1,2.0,] 	 ARGS:%cl_2_3,
+CLOSURE BEGIN: %self[3.1,2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -75,34 +75,17 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_3_0 
-		 2: RECEIVEARG def_t 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: t->stories_count def_%cl_3_3 t[2.2,] 	 ARGS:
-		 2: RETURN %cl_3_3[3.1,] %self[2.0,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: def_%cl_3_4 
-		 1: def_%cl_3_5 %cl_3_4[4.0,] 
-		 2: RETURN %cl_3_5[4.1,] %self[2.0,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 3: %cl_2_4->max def_%cl_2_5 %cl_2_4[3.2,] 	 ARGS:
-		 4: COPY def_max_size %cl_2_5[3.3,] 
-		 5: 
-		 6: GETFIELD %self->tags def_%cl_2_6 %self[2.0,] 
-		 7: %cl_2_6->each def_%cl_2_7 %cl_2_6[3.6,] %self[2.0,] 	 ARGS:%cl_2_6,
-CLOSURE BEGIN: max_size[3.4,] tag[] %self[2.0,] mod[] 
+		 1: GETFIELD %self->tags def_%cl_3_3 %self[2.0,] 
+		 2: %cl_3_3->map def_%cl_3_4 %cl_3_3[3.1,] %self[2.0,] 	 ARGS:%cl_3_3,
+CLOSURE BEGIN: t[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -113,56 +96,107 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_4_0 
-		 2: RECEIVEARG def_tag 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 2: RECEIVEARG def_t 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: max_size->to_f def_%cl_4_3 max_size[] 	 ARGS:
-		 2: tag->stories_count def_%cl_4_4 tag[2.2,] 	 ARGS:
-		 3: %cl_4_4->to_f def_%cl_4_5 %cl_4_4[3.2,] 	 ARGS:
-		 4: %cl_4_3->/ def_%cl_4_6 %cl_4_3[3.1,] %cl_4_5[3.3,] 	 ARGS:%cl_4_5,
-		 5: COPY def_mod %cl_4_6[3.4,] 
-		 6: 
-		 7: tag->tag def_%cl_4_7 tag[3.2,2.2,] 	 ARGS:
-		 8: %self->tag_path def_%cl_4_8 %self[2.0,] tag[3.2,3.7,2.2,] 	 ARGS:tag,
-		 9: tag->css_class def_%cl_4_9 tag[3.2,3.7,2.2,] 	 ARGS:
-		 10: COPY def_%cl_4_10 
-		 11: COPY def_%cl_4_11 
-		 12: 
-		 13: mod->+ def_%cl_4_12 mod[3.5,] 	 ARGS:Fixnum,
-		 14: %cl_4_12->/ def_%cl_4_13 %cl_4_12[3.13,] 	 ARGS:%cl_4_12,
-		 15: %cl_4_13->+ def_%cl_4_14 %cl_4_13[3.14,] 	 ARGS:Fixnum,
-		 16: %cl_4_14->ceil def_%cl_4_15 %cl_4_14[3.15,] 	 ARGS:
-		 17: COPY def_%cl_4_16 
-		 18: BUILDSTRING def_%cl_4_17 %cl_4_11[3.11,] %cl_4_15[3.16,] %cl_4_16[3.17,] 
-		 19: %cl_4_10-><< def_%cl_4_18 %cl_4_10[3.10,] %cl_4_17[3.18,] 	 ARGS:%cl_4_17,
-		 20: HASH-class-style- def_%cl_4_19 %cl_4_9[3.9,] %cl_4_18[3.19,] 
-		 21: %self->link_to def_%cl_4_20 %self[3.8,2.0,] %cl_4_7[3.7,] %cl_4_8[3.8,] %cl_4_19[3.20,] 	 ARGS:%cl_4_7,%cl_4_8,%cl_4_19,
-		 22: RETURN %cl_4_20[3.21,] %self[3.8,3.21,2.0,] 
+		 1: t->stories_count def_%cl_4_3 t[2.2,] 	 ARGS:
+		 2: RETURN %cl_4_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_4_21 
-		 1: def_%cl_4_22 %cl_4_21[4.0,] 
-		 2: RETURN %cl_4_22[4.1,] %self[2.0,] 
+		 0: def_%cl_4_4 
+		 1: def_%cl_4_5 %cl_4_4[4.0,] 
+		 2: RETURN %cl_4_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: RETURN %cl_2_7[3.7,] %self[2.0,] 
+		 3: %cl_3_4->max def_%cl_3_5 %cl_3_4[3.2,] 	 ARGS:
+		 4: COPY TYPE_PASS def_max_size %cl_3_5[3.3,] 
+		 5: 
+		 6: GETFIELD %self->tags def_%cl_3_6 %self[2.0,] 
+		 7: %cl_3_6->each def_%cl_3_7 %cl_3_6[3.6,] %self[2.0,] 	 ARGS:%cl_3_6,
+CLOSURE BEGIN: max_size[3.4,] tag[] %self[2.0,] mod[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: RECEIVEARG def_tag 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: max_size->to_f def_%cl_5_3 max_size[] 	 ARGS:
+		 2: tag->stories_count def_%cl_5_4 tag[2.2,] 	 ARGS:
+		 3: %cl_5_4->to_f def_%cl_5_5 %cl_5_4[3.2,] 	 ARGS:
+		 4: %cl_5_3->/ def_%cl_5_6 %cl_5_3[3.1,] %cl_5_5[3.3,] 	 ARGS:%cl_5_5,
+		 5: COPY TYPE_PASS def_mod %cl_5_6[3.4,] 
+		 6: 
+		 7: tag->tag def_%cl_5_7 tag[3.2,2.2,] 	 ARGS:
+		 8: %self->tag_path def_%cl_5_8 %self[2.0,] tag[3.2,3.7,2.2,] 	 ARGS:tag,
+		 9: tag->css_class def_%cl_5_9 tag[3.2,3.7,2.2,] 	 ARGS:
+		 10: COPY TYPE_StringLiteral def_%cl_5_10 
+		 11: COPY TYPE_StringLiteral def_%cl_5_11 
+		 12: 
+		 13: mod->+ def_%cl_5_12 mod[3.5,] 	 ARGS:Fixnum,
+		 14: %cl_5_12->/ def_%cl_5_13 %cl_5_12[3.13,] 	 ARGS:%cl_5_12,
+		 15: %cl_5_13->+ def_%cl_5_14 %cl_5_13[3.14,] 	 ARGS:Fixnum,
+		 16: %cl_5_14->ceil def_%cl_5_15 %cl_5_14[3.15,] 	 ARGS:
+		 17: COPY TYPE_StringLiteral def_%cl_5_16 
+		 18: BUILDSTRING def_%cl_5_17 %cl_5_11[3.11,] %cl_5_15[3.16,] %cl_5_16[3.17,] 
+		 19: %cl_5_10-><< def_%cl_5_18 %cl_5_10[3.10,] %cl_5_17[3.18,] 	 ARGS:%cl_5_17,
+		 20: HASH-class-style- def_%cl_5_19 %cl_5_9[3.9,] %cl_5_18[3.19,] 
+		 21: %self->link_to def_%cl_5_20 %self[3.8,2.0,] %cl_5_7[3.7,] %cl_5_8[3.8,] %cl_5_19[3.20,] 	 ARGS:%cl_5_7,%cl_5_8,%cl_5_19,
+		 22: RETURN %cl_5_20[3.21,] %self[3.8,3.21,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_8 
-		 1: def_%cl_2_9 %cl_2_8[4.0,] 
-		 2: RETURN %cl_2_9[4.1,] %self[2.0,] 
+		 0: def_%cl_5_21 
+		 1: def_%cl_5_22 %cl_5_21[4.0,] 
+		 2: RETURN %cl_5_22[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %cl_3_7[3.7,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_8 
+		 1: def_%cl_3_9 %cl_3_8[4.0,] 
+		 2: RETURN %cl_3_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_2_4[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -180,25 +214,25 @@ BB 2
 	datadep: 
 	instructions:
 		 0: def_%self 
-		 1: def_%cl_5_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 1: def_%cl_6_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: GETFIELD %self->tags def_%cl_5_3 %self[2.0,] 
-		 2: HASH-json- def_%cl_5_4 %cl_5_3[3.1,] 
-		 3: %self->render def_%cl_5_5 %self[2.0,] %cl_5_4[3.2,] 	 ARGS:%cl_5_4,
-		 4: RETURN %cl_5_5[3.3,] %self[3.3,2.0,] 
+		 1: GETFIELD %self->tags def_%cl_6_3 %self[2.0,] 
+		 2: HASH-json- def_%cl_6_4 %cl_6_3[3.1,] 
+		 3: %self->render def_%cl_6_5 %self[2.0,] %cl_6_4[3.2,] 	 ARGS:%cl_6_4,
+		 4: RETURN %cl_6_5[3.3,] %self[3.3,2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_5_6 
-		 1: def_%cl_5_7 %cl_5_6[4.0,] 
-		 2: RETURN %cl_5_7[4.1,] %self[2.0,] 
+		 0: def_%cl_6_6 
+		 1: def_%cl_6_7 %cl_6_6[4.0,] 
+		 2: RETURN %cl_6_7[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
@@ -218,47 +252,9 @@ BB 6
 	instructions:
 CLOSURE END
 		 17: 
-		 18: GETFIELD %self->tags def_%v_8 %self[2.0,2.14,2.16,] 
-		 19: %v_8->map def_%v_9 %v_8[2.18,] %self[2.0,2.7,2.10,2.14,2.16,] 	 ARGS:%v_8,
-CLOSURE BEGIN: t[] 
-BB 1
-	outgoing: 6 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: def_%self 
-		 1: def_%cl_6_0 
-		 2: RECEIVEARG def_t 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
-BB 3
-	outgoing: 4 6 
-	datadep: 
-	instructions:
-		 0: 
-		 1: t->stories_count def_%cl_6_3 t[2.2,] 	 ARGS:
-		 2: RETURN %cl_6_3[3.1,] %self[2.0,] 
-BB 4
-	outgoing: 6 
-	datadep: 
-	instructions:
-		 0: def_%cl_6_4 
-		 1: def_%cl_6_5 %cl_6_4[4.0,] 
-		 2: RETURN %cl_6_5[4.1,] %self[2.0,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END
-		 20: %v_9->max def_%v_10 %v_9[2.19,] 	 ARGS:
-		 21: COPY def_max_size %v_10[2.20,] 
-		 22: 
-		 23: GETFIELD %self->tags def_%v_11 %self[2.0,2.14,2.16,] 
-		 24: %v_11->each def_%v_12 %v_11[2.23,] %self[2.0,2.7,2.10,2.14,2.16,] 	 ARGS:%v_11,
-CLOSURE BEGIN: max_size[2.21,] tag[] %self[2.0,2.7,2.10,2.14,2.16,] mod[] 
+		 18: %self->ruby_code_from_view def_%v_8 %self[2.0,2.7,2.10,2.14,2.16,] 	 ARGS:
+		 19: %v_8->ruby_code_from_view def_%v_9 %v_8[2.18,] %self[2.0,2.7,2.10,2.14,2.16,2.18,] 	 ARGS:%v_8,
+CLOSURE BEGIN: %self[2.0,2.7,2.10,2.14,2.16,2.18,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -269,49 +265,121 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_7_0 
-		 2: RECEIVEARG def_tag 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: max_size->to_f def_%cl_7_3 max_size[] 	 ARGS:
-		 2: tag->stories_count def_%cl_7_4 tag[2.2,] 	 ARGS:
-		 3: %cl_7_4->to_f def_%cl_7_5 %cl_7_4[3.2,] 	 ARGS:
-		 4: %cl_7_3->/ def_%cl_7_6 %cl_7_3[3.1,] %cl_7_5[3.3,] 	 ARGS:%cl_7_5,
-		 5: COPY def_mod %cl_7_6[3.4,] 
-		 6: 
-		 7: tag->tag def_%cl_7_7 tag[3.2,2.2,] 	 ARGS:
-		 8: %self->tag_path def_%cl_7_8 %self[2.0,] tag[3.2,3.7,2.2,] 	 ARGS:tag,
-		 9: tag->css_class def_%cl_7_9 tag[3.2,3.7,2.2,] 	 ARGS:
-		 10: COPY def_%cl_7_10 
-		 11: COPY def_%cl_7_11 
-		 12: 
-		 13: mod->+ def_%cl_7_12 mod[3.5,] 	 ARGS:Fixnum,
-		 14: %cl_7_12->/ def_%cl_7_13 %cl_7_12[3.13,] 	 ARGS:%cl_7_12,
-		 15: %cl_7_13->+ def_%cl_7_14 %cl_7_13[3.14,] 	 ARGS:Fixnum,
-		 16: %cl_7_14->ceil def_%cl_7_15 %cl_7_14[3.15,] 	 ARGS:
-		 17: COPY def_%cl_7_16 
-		 18: BUILDSTRING def_%cl_7_17 %cl_7_11[3.11,] %cl_7_15[3.16,] %cl_7_16[3.17,] 
-		 19: %cl_7_10-><< def_%cl_7_18 %cl_7_10[3.10,] %cl_7_17[3.18,] 	 ARGS:%cl_7_17,
-		 20: HASH-class-style- def_%cl_7_19 %cl_7_9[3.9,] %cl_7_18[3.19,] 
-		 21: %self->link_to def_%cl_7_20 %self[3.8,2.0,] %cl_7_7[3.7,] %cl_7_8[3.8,] %cl_7_19[3.20,] 	 ARGS:%cl_7_7,%cl_7_8,%cl_7_19,
-		 22: RETURN %cl_7_20[3.21,] %self[3.8,3.21,2.0,] 
+		 1: GETFIELD %self->tags def_%cl_7_3 %self[2.0,] 
+		 2: %cl_7_3->map def_%cl_7_4 %cl_7_3[3.1,] %self[2.0,] 	 ARGS:%cl_7_3,
+CLOSURE BEGIN: t[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_8_0 
+		 2: RECEIVEARG def_t 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: t->stories_count def_%cl_8_3 t[2.2,] 	 ARGS:
+		 2: RETURN %cl_8_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_7_21 
-		 1: def_%cl_7_22 %cl_7_21[4.0,] 
-		 2: RETURN %cl_7_22[4.1,] %self[2.0,] 
+		 0: def_%cl_8_4 
+		 1: def_%cl_8_5 %cl_8_4[4.0,] 
+		 2: RETURN %cl_8_5[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
 	datadep: 
 	instructions:
 CLOSURE END
-		 25: RETURN %v_12[2.24,] %self[2.0,2.7,2.10,2.14,2.16,] 
+		 3: %cl_7_4->max def_%cl_7_5 %cl_7_4[3.2,] 	 ARGS:
+		 4: COPY TYPE_PASS def_max_size %cl_7_5[3.3,] 
+		 5: 
+		 6: GETFIELD %self->tags def_%cl_7_6 %self[2.0,] 
+		 7: %cl_7_6->each def_%cl_7_7 %cl_7_6[3.6,] %self[2.0,] 	 ARGS:%cl_7_6,
+CLOSURE BEGIN: max_size[3.4,] tag[] %self[2.0,] mod[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_9_0 
+		 2: RECEIVEARG def_tag 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: max_size->to_f def_%cl_9_3 max_size[] 	 ARGS:
+		 2: tag->stories_count def_%cl_9_4 tag[2.2,] 	 ARGS:
+		 3: %cl_9_4->to_f def_%cl_9_5 %cl_9_4[3.2,] 	 ARGS:
+		 4: %cl_9_3->/ def_%cl_9_6 %cl_9_3[3.1,] %cl_9_5[3.3,] 	 ARGS:%cl_9_5,
+		 5: COPY TYPE_PASS def_mod %cl_9_6[3.4,] 
+		 6: 
+		 7: tag->tag def_%cl_9_7 tag[3.2,2.2,] 	 ARGS:
+		 8: %self->tag_path def_%cl_9_8 %self[2.0,] tag[3.2,3.7,2.2,] 	 ARGS:tag,
+		 9: tag->css_class def_%cl_9_9 tag[3.2,3.7,2.2,] 	 ARGS:
+		 10: COPY TYPE_StringLiteral def_%cl_9_10 
+		 11: COPY TYPE_StringLiteral def_%cl_9_11 
+		 12: 
+		 13: mod->+ def_%cl_9_12 mod[3.5,] 	 ARGS:Fixnum,
+		 14: %cl_9_12->/ def_%cl_9_13 %cl_9_12[3.13,] 	 ARGS:%cl_9_12,
+		 15: %cl_9_13->+ def_%cl_9_14 %cl_9_13[3.14,] 	 ARGS:Fixnum,
+		 16: %cl_9_14->ceil def_%cl_9_15 %cl_9_14[3.15,] 	 ARGS:
+		 17: COPY TYPE_StringLiteral def_%cl_9_16 
+		 18: BUILDSTRING def_%cl_9_17 %cl_9_11[3.11,] %cl_9_15[3.16,] %cl_9_16[3.17,] 
+		 19: %cl_9_10-><< def_%cl_9_18 %cl_9_10[3.10,] %cl_9_17[3.18,] 	 ARGS:%cl_9_17,
+		 20: HASH-class-style- def_%cl_9_19 %cl_9_9[3.9,] %cl_9_18[3.19,] 
+		 21: %self->link_to def_%cl_9_20 %self[3.8,2.0,] %cl_9_7[3.7,] %cl_9_8[3.8,] %cl_9_19[3.20,] 	 ARGS:%cl_9_7,%cl_9_8,%cl_9_19,
+		 22: RETURN %cl_9_20[3.21,] %self[3.8,3.21,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_9_21 
+		 1: def_%cl_9_22 %cl_9_21[4.0,] 
+		 2: RETURN %cl_9_22[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %cl_7_7[3.7,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_7_8 
+		 1: def_%cl_7_9 %cl_7_8[4.0,] 
+		 2: RETURN %cl_7_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 20: RETURN %v_9[2.19,] %self[2.0,2.7,2.10,2.14,2.16,2.18,] 
 BB 3
 	outgoing: 
 	datadep: 

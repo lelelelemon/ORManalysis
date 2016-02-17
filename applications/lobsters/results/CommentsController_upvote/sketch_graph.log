@@ -1,83 +1,117 @@
 digraph sketch {
-	n20 [label=<<i>20__ User(User)   where</i>> color=blue]; 
-	n20 -> n21 [label="0"]
-	n21 [label=<<i>21__ User where( session_token =) session( u) to_s)   first</i>> color=blue]; 
-	n109 [label=<<i>109__ self(ApplicationController)   params</i>> color=crimson]; 
-	n142 [label=<<i>142__ self lock(true) where( key =) key)   first</i>> color=blue]; 
-	n143 [label=<<i>143__ self lock(true)   where</i>> color=blue]; 
-	n144 [label=<<i>144__ self(Keystore)   lock</i>> color=blue]; 
-	n151 [label=<<i>151__ key   where</i>> color=blue]; 
-	n153 [label=<<i>153__ kv(Keystore)   save!</i>> color=blue]; 
-	n184 [label=<<i>184__ traffic_kv(Keystore)   value</i>> color=darkorange]; 
-	n184 -> n186 [label="0"]
-	n186 [label=<<i>186__ traffic_kv(Keystore)   save!</i>> color=blue]; 
-	n188 [label=<<i>188__ date_kv(Keystore)   value</i>> color=darkorange]; 
-	n188 -> n190 [label="0"]
-	n190 [label=<<i>190__ date_kv(Keystore)   save!</i>> color=blue]; 
-	n246 [label=<<i>246__ self(CommentsController)   params</i>> color=crimson]; 
-	n246 -> n249 [label="2"]
-	n249 [label=<<i>249__ Comment(Comment)   where</i>> color=blue]; 
-	n249 -> n250 [label="0"]
-	n250 [label=<<i>250__ Comment where( short_id =) params( id))   first</i>> color=blue]; 
-	n250 -> n264 [label="3"]
-	n250 -> n399 [label="6"]
-	n250 -> n401 [label="6"]
-	n250 -> n309 [label="7"]
-	n264 [label=<<i>264__ Vote(Vote)   where</i>> color=blue]; 
-	n264 -> n265 [label="0"]
-	n265 [label=<<i>265__ Vote where( user_id =) @user id,         story_id =) comment story_id,  comment_id =) comment id)   first</i>> color=blue]; 
-	n265 -> n266 [label="0"]
-	n266 [label=<<i>266__ comment(Comment)   current_vote</i>> color=darkorange]; 
-	n266 -> n399 [label="5"]
-	n266 -> n401 [label="5"]
-	n266 -> n309 [label="6"]
-	n288 [label=<<i>288__ self(CommentsController)   params</i>> color=crimson]; 
-	n288 -> n399 [label="3"]
-	n288 -> n401 [label="3"]
-	n288 -> n309 [label="4"]
-	n309 [label=<<i>309__ Vote(Vote)   where</i>> color=blue]; 
-	n309 -> n310 [label="0"]
-	n310 [label=<<i>310__ Vote where( user_id =) user_id,  story_id =) story_id,       comment_id =) comment_id)   first_or_initialize</i>> color=blue]; 
-	n310 -> n355 [label="1"]
-	n310 -> n361 [label="1"]
-	n310 -> n403 [label="1"]
-	n310 -> n420 [label="2"]
-	n310 -> n694 [label="2"]
-	n355 [label=<<i>355__ v(Vote)   destroy!</i>> color=blue]; 
-	n361 [label=<<i>361__ v(Vote)   new_record?</i>> color=blue]; 
-	n399 [label=<<i>399__ v(Vote)   vote</i>> color=darkorange]; 
-	n399 -> n403 [label="0"]
-	n399 -> n420 [label="1"]
-	n399 -> n694 [label="1"]
-	n401 [label=<<i>401__ v(Vote)   reason</i>> color=darkorange]; 
-	n401 -> n403 [label="0"]
-	n401 -> n420 [label="1"]
-	n401 -> n694 [label="1"]
-	n403 [label=<<i>403__ v(Vote)   save!</i>> color=blue]; 
-	n420 [label=<<i>420__ Comment(Comment)   find</i>> color=blue]; 
-	n420 -> n431 [label="2"]
-	n420 -> n449 [label="5"]
-	n420 -> n454 [label="5"]
-	n420 -> n542 [label="7"]
-	n420 -> n565 [label="8"]
-	n420 -> n600 [label="9"]
-	n431 [label=<<i>431__ User(User)   update_counters</i>> color=blue]; 
-	n449 [label=<<i>449__ _self(Comment)   upvotes</i>> color=darkorange]; 
-	n449 -> n542 [label="4"]
-	n449 -> n565 [label="5"]
-	n449 -> n600 [label="6"]
-	n454 [label=<<i>454__ _self(Comment)   downvotes</i>> color=darkorange]; 
-	n454 -> n542 [label="4"]
-	n454 -> n565 [label="5"]
-	n454 -> n600 [label="6"]
-	n542 [label=<<i>542__ Comment connection   execute</i>> color=blue]; 
-	n565 [label=<<i>565__ self tags(Tag)   select</i>> color=blue]; 
-	n600 [label=<<i>600__ self comments(Comment)   where</i>> color=blue]; 
-	n600 -> n601 [label="0"]
-	n601 [label=<<i>601__ self comments where("user_id () ?", self user_id)   select</i>> color=blue]; 
-	n694 [label=<<i>694__ Story(Story)   find</i>> color=blue]; 
-	n694 -> n705 [label="2"]
-	n694 -> n756 [label="6"]
-	n705 [label=<<i>705__ User(User)   update_counters</i>> color=blue]; 
-	n756 [label=<<i>756__ Story connection   execute</i>> color=blue]; 
+	n21 [label=<<i>21__ _self -> session</i>> color=crimson]; 
+	n26 [label=<<i>26__ _self -> session</i>> color=crimson]; 
+	n26 -> n30 [label="3"]
+	n30 [label=<<i>30__ _v_5 -> where</i>> color=blue]; 
+	n30 -> n31 [label="0"]
+	n31 [label=<<i>31__ _v_10 -> first</i>> color=blue]; 
+	n97 [label=<<i>97__ _self -> params</i>> color=crimson]; 
+	n141 [label=<<i>141__ _self -> lock</i>> color=blue]; 
+	n141 -> n143 [label="0"]
+	n143 [label=<<i>143__ _cl_1_3 -> where</i>> color=blue]; 
+	n143 -> n144 [label="0"]
+	n144 [label=<<i>144__ _cl_1_5 -> first</i>> color=blue]; 
+	n144 -> n172 [label="1"]
+	n172 [label=<<i>172__ kv -> save!</i>> color=blue]; 
+	n241 [label=<<i>241__ traffic_kv -> save!</i>> color=blue]; 
+	n245 [label=<<i>245__ date_kv -> save!</i>> color=blue]; 
+	n289 [label=<<i>289__ _self -> params</i>> color=crimson]; 
+	n346 [label=<<i>346__ traffic_kv -> save!</i>> color=blue]; 
+	n350 [label=<<i>350__ date_kv -> save!</i>> color=blue]; 
+	n376 [label=<<i>376__ _self -> session</i>> color=crimson]; 
+	n381 [label=<<i>381__ _self -> session</i>> color=crimson]; 
+	n381 -> n385 [label="3"]
+	n385 [label=<<i>385__ _v_5 -> where</i>> color=blue]; 
+	n385 -> n386 [label="0"]
+	n386 [label=<<i>386__ _v_10 -> first</i>> color=blue]; 
+	n449 [label=<<i>449__ _self -> params</i>> color=crimson]; 
+	n449 -> n452 [label="2"]
+	n452 [label=<<i>452__ _v_3 -> where</i>> color=blue]; 
+	n452 -> n453 [label="0"]
+	n453 [label=<<i>453__ _v_7 -> first</i>> color=blue]; 
+	n453 -> n467 [label="3"]
+	n453 -> n512 [label="6"]
+	n467 [label=<<i>467__ _v_10 -> where</i>> color=blue]; 
+	n467 -> n468 [label="0"]
+	n468 [label=<<i>468__ _v_16 -> first</i>> color=blue]; 
+	n468 -> n512 [label="6"]
+	n491 [label=<<i>491__ _self -> params</i>> color=crimson]; 
+	n491 -> n606 [label="3"]
+	n491 -> n623 [label="4"]
+	n491 -> n1173 [label="4"]
+	n512 [label=<<i>512__ _v_3 -> where</i>> color=blue]; 
+	n512 -> n513 [label="0"]
+	n513 [label=<<i>513__ _v_5 -> first_or_initialize</i>> color=blue]; 
+	n513 -> n519 [label="0"]
+	n513 -> n561 [label="1"]
+	n513 -> n564 [label="1"]
+	n513 -> n606 [label="1"]
+	n513 -> n623 [label="2"]
+	n513 -> n1173 [label="2"]
+	n519 [label=<<i>519__ _v_6 -> new_record?</i>> color=blue]; 
+	n561 [label=<<i>561__ v -> destroy!</i>> color=blue]; 
+	n564 [label=<<i>564__ v -> new_record?</i>> color=blue]; 
+	n606 [label=<<i>606__ v -> save!</i>> color=blue]; 
+	n623 [label=<<i>623__ _cl_1_30 -> find</i>> color=blue]; 
+	n623 -> n697 [label="2"]
+	n623 -> n1021 [label="7"]
+	n623 -> n1044 [label="8"]
+	n623 -> n1079 [label="9"]
+	n697 [label=<<i>697__ _cl_1_35 -> update_counters</i>> color=blue]; 
+	n902 [label=<<i>902__ _cl_1_9 -> execute</i>> color=blue]; 
+	n918 [label=<<i>918__ _cl_1_23 -> execute</i>> color=blue]; 
+	n948 [label=<<i>948__ _cl_1_42 -> execute</i>> color=blue]; 
+	n959 [label=<<i>959__ kv -> save!</i>> color=blue]; 
+	n976 [label=<<i>976__ _self -> where</i>> color=blue]; 
+	n976 -> n977 [label="0"]
+	n977 [label=<<i>977__ _v_4 -> first</i>> color=blue]; 
+	n977 -> n978 [label="0"]
+	n978 [label=<<i>978__ _v_5 -> try</i>> color=blue]; 
+	n1021 [label=<<i>1021__ _v_10 -> execute</i>> color=blue]; 
+	n1044 [label=<<i>1044__ _v_3 -> select</i>> color=blue]; 
+	n1079 [label=<<i>1079__ _v_6 -> where</i>> color=blue]; 
+	n1079 -> n1080 [label="0"]
+	n1080 [label=<<i>1080__ _v_9 -> select</i>> color=blue]; 
+	n1173 [label=<<i>1173__ _cl_1_41 -> find</i>> color=blue]; 
+	n1173 -> n1184 [label="2"]
+	n1173 -> n2142 [label="6"]
+	n1173 -> n1324 [label="9"]
+	n1173 -> n1450 [label="10"]
+	n1173 -> n1942 [label="11"]
+	n1173 -> n1362 [label="13"]
+	n1173 -> n2036 [label="15"]
+	n1173 -> n1939 [label="16"]
+	n1173 -> n2018 [label="16"]
+	n1173 -> n1790 [label="17"]
+	n1173 -> n1792 [label="17"]
+	n1173 -> n2023 [label="18"]
+	n1173 -> n1765 [label="24"]
+	n1173 -> n1763 [label="25"]
+	n1184 [label=<<i>1184__ _cl_1_46 -> update_counters</i>> color=blue]; 
+	n1324 [label=<<i>1324__ _self -> new_record?</i>> color=blue]; 
+	n1362 [label=<<i>1362__ tg -> new_record?</i>> color=blue]; 
+	n1450 [label=<<i>1450__ _v_21 -> try</i>> color=blue]; 
+	n1450 -> n1942 [label="1"]
+	n1450 -> n2142 [label="4"]
+	n1450 -> n1939 [label="6"]
+	n1450 -> n1790 [label="7"]
+	n1450 -> n1792 [label="7"]
+	n1450 -> n1765 [label="14"]
+	n1450 -> n1763 [label="15"]
+	n1763 [label=<<i>1763__ self -> where</i>> color=blue]; 
+	n1765 [label=<<i>1765__ _v_3 -> put</i>> color=blue]; 
+	n1790 [label=<<i>1790__ recipient -> where</i>> color=blue]; 
+	n1792 [label=<<i>1792__ author -> where</i>> color=blue]; 
+	n1939 [label=<<i>1939__ m -> save</i>> color=blue]; 
+	n1942 [label=<<i>1942__ m -> save</i>> color=blue]; 
+	n2015 [label=<<i>2015__ _v_4 -> select</i>> color=blue]; 
+	n2015 -> n2018 [label="0"]
+	n2018 [label=<<i>2018__ _v_5 -> where</i>> color=blue]; 
+	n2018 -> n2023 [label="2"]
+	n2023 [label=<<i>2023__ _v_3 -> where</i>> color=blue]; 
+	n2023 -> n2036 [label="3"]
+	n2036 [label=<<i>2036__ _self -> order</i>> color=blue]; 
+	n2036 -> n2037 [label="0"]
+	n2037 [label=<<i>2037__ _v_4 -> group_by</i>> color=blue]; 
+	n2142 [label=<<i>2142__ _v_12 -> execute</i>> color=blue]; 
 }

@@ -141,7 +141,7 @@ class Function_call
 	def findCaller(calling_func_class, calling_func)
 
 		caller_class = nil
-			if @obj_name == "self"
+			if @obj_name == "%self"
 				caller_class = calling_func_class
 				if @is_query == false
 					if $class_map[caller_class].getMethod(@func_name) == nil
@@ -249,7 +249,7 @@ class Function_call
 		#test if the function call is actually a field of a table
 		#tracking how the database return value is being used
 		if $table_names.find(caller_class) != nil and self.caller != nil
-			self.caller.getFields.each do |f|
+			self.caller.getTableFields.each do |f|
 				#boolean field in table can append ?, for example, user.is_moderator?, when is_moderator is a boolean field in table User
 				if f.field_name == @func_name.delete('?')
 					@is_field = true

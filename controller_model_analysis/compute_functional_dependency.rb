@@ -7,8 +7,8 @@
 #		if @processed.include?(e.getToNode) == false
 #			if e.getToNode.getInstr.instance_of?Return_instr
 #				e.getToNode.getDataflowEdges.each do |e1|
-#					if @processed.include?e1.getToNode == false and e.getToNode.getIndex > starting_node.getIndex
-#						@temp_node_list.push(e.getToNode)
+#					if @processed.include?e1.getToNode == false and e1.getToNode.getIndex > starting_node.getIndex
+#						@temp_node_list.push(e1.getToNode)
 #					end
 #				end
 #			elsif e.getToNode.getIndex > starting_node.getIndex
@@ -107,7 +107,7 @@ def compute_functional_dependency(file_to_write)
 				if (isTableAttrAssign(a) or a.isField?) and a.getInstr.getCallHandler != nil and a.getInstr.getCallHandler.caller != nil and a != n
 					field_name = a.getInstr.getCallHandler.getFuncName
 					tbl_name = a.getInstr.getCallHandler.caller.getName
-					if isTableField(tbl_name, field_name)
+					if testTableField(tbl_name, field_name)
 						@func_dep_map[n].addLiteral(a)
 					end
 				end
@@ -232,7 +232,7 @@ def compute_functional_dependency(file_to_write)
 			var_name = n.getInstr.getCallHandler.getObjName
 			field_name = n.getInstr.getCallHandler.getFuncName
 			tbl_name = n.getInstr.getCallHandler.caller.getName
-			if isTableField(tbl_name, field_name)
+			if testTableField(tbl_name, field_name)
 				for j in i+1...$node_list.length-1
 					if isTableAttrAssign($node_list[j])
 						ancestor = test_functional_dependency($node_list[i], $node_list[j])
