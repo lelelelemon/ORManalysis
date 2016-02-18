@@ -1,0 +1,179 @@
+SET IRMethod, name = sub
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->serialization_options def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+		 8: COPY TYPE_PASS def_auth %v_4[2.7,] 
+		 9: 
+		 10: (Api) def_%v_5 
+		 11: (inherit OpenidConnect) def_%v_6 %v_5[2.10,] 
+		 12: %v_6[2.11,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[2.10,] 	 ARGS:Symbol,
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: (inherit SubjectIdentifierCreator) def_%v_7 %v_6[3.0,2.11,] 
+		 1: %v_7[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %v_6->const_missing def_%v_7 %v_6[3.0,2.11,] 	 ARGS:Symbol,
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %v_7->create def_%v_8 %v_7[5.0,4.0,] auth[2.8,] 	 ARGS:auth,
+		 1: RETURN %v_8[6.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = name
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->object def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->first_name def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_PASS def_%v_4 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: %self->object def_%v_6 %self[2.0,] 	 ARGS:
+		 1: %v_6->last_name def_%v_7 %v_6[4.0,] 	 ARGS:
+		 2: BRANCH %v_7[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_PASS def_%v_7 %v_8[5.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %v_4->+ def_%v_9 %v_4[3.1,2.7,] %v_7[5.1,4.1,] 	 ARGS:%v_7,
+		 1: RETURN %v_9[6.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = nickname
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->object def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->name def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = profile
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (File) def_%v_3 
+		 7: (AppConfig) def_%v_4 
+		 8: %v_4->environment def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: %v_5->url def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: COPY TYPE_StringLiteral def_%v_7 
+		 11: %self->object def_%v_8 %self[2.0,] 	 ARGS:
+		 12: %v_8->guid def_%v_9 %v_8[2.11,] 	 ARGS:
+		 13: %v_3->join def_%v_10 %v_3[2.6,] %v_6[2.9,] %v_7[2.10,] %v_9[2.12,] 	 ARGS:%v_6,%v_7,%v_9,
+		 14: %v_10->to_s def_%v_11 %v_10[2.13,] 	 ARGS:
+		 15: RETURN %v_11[2.14,] %self[2.0,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = picture
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (File) def_%v_3 
+		 7: (AppConfig) def_%v_4 
+		 8: %v_4->environment def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: %v_5->url def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %self->object def_%v_7 %self[2.0,] 	 ARGS:
+		 11: %v_7->image_url def_%v_8 %v_7[2.10,] 	 ARGS:
+		 12: %v_3->join def_%v_9 %v_3[2.6,] %v_6[2.9,] %v_8[2.11,] 	 ARGS:%v_6,%v_8,
+		 13: %v_9->to_s def_%v_10 %v_9[2.12,] 	 ARGS:
+		 14: RETURN %v_10[2.13,] %self[2.0,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

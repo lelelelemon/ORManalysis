@@ -1,0 +1,35 @@
+SET IRMethod, name = set_headers
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_target_id 
+		 6: 
+		 7: (Mention) def_%v_3 
+		 8: %v_3->find_by_id def_%v_4 %v_3[2.7,] target_id[2.5,] 	 ARGS:target_id,
+		 9: %v_4->post def_%v_5 %v_4[2.8,] 	 ARGS:
+		 10: ATTRASSIGN %self->post %v_5[2.9,] 
+		 11: 
+		 12: GETFIELD %self->headers def_%v_6 %self[2.0,] 
+		 13: (I18n) def_%v_7 
+		 14: COPY TYPE_StringLiteral def_%v_8 
+		 15: GETFIELD %self->sender def_%v_9 %self[2.0,] 
+		 16: %v_9->name def_%v_10 %v_9[2.15,] 	 ARGS:
+		 17: HASH-name- def_%v_11 %v_10[2.16,] 
+		 18: %v_7->t def_%v_12 %v_7[2.13,] %v_8[2.14,] %v_11[2.17,] 	 ARGS:%v_8,%v_11,
+		 19: ATTRASSIGN %v_6->[] %v_12[2.18,] 
+		 20: RETURN %v_12[2.18,] %self[2.0,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

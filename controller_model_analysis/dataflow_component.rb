@@ -182,9 +182,17 @@ class Call_instr < Instruction
 		@call_handler
 	end
 	def getCallerType
-		return type_valid(self, @caller)
+		#This is only for method without CFG, for example, scope
+		if @call_handler != nil and @call_handler.caller != nil
+			return @call_handler.caller.getName
+		else
+			return type_valid(self, @caller)
+		end
 	end
 	def getQueryType
+		if @call_handler != nil and @call_handler.getQueryType != nil 
+			return @call_handler.getQueryType
+		end
 		t = type_valid(self, @caller)
 		if isActiveRecord(t)
 			qtype = check_method_keyword(t, @funcname)
@@ -290,6 +298,12 @@ class Const_instr < Instruction
 	def toString
 		s = "(#{@const})"
 		return s
+	end
+end
+
+class InheritConst_instr < Const_instr
+	def initialize(const)
+		super(const)
 	end
 end
 
@@ -524,7 +538,7 @@ class Basic_block
 						end
 					end
 				end
-			elsif instr.instance_of?Const_instr
+			elsif instr.is_a?Const_instr
 				instr.setResolved
 			end
 			if instr.hasClosure?

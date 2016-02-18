@@ -264,7 +264,7 @@ def parse_method_call(astnode, method)
 		if astnode.children[2] != nil and astnode.children[2].type.to_s == "arg_paren"
 			fcall.parseParams(astnode.children[2].children[0])
 		end	
-		method.getCalls.push(fcall)
+		#$cur_method.getCalls.push(fcall)
 		$cur_funccall = fcall
 
 	elsif astnode.type.to_s == "command" or (astnode.children[0].type.to_s == "ident" and in_key_words(astnode.children[0].source.to_s))

@@ -41,10 +41,10 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 						temp_name = "#{caller_class}.#{action}"
 						if $non_repeat_list.include?(temp_name) == false
 							$non_repeat_list.push(temp_name)
-							if $class_map[caller_class] != nil and $class_map[$class_map[caller_class].getUpperClass] != nil
-								cur_cfg = trace_query_flow($class_map[caller_class].getUpperClass, action, "", "", level+2)
+							#if $class_map[caller_class] != nil and $class_map[$class_map[caller_class].getUpperClass] != nil
+								#cur_cfg = trace_query_flow($class_map[caller_class].getUpperClass, action, "", "", level+2)
 								#TODO: add control flow edges...
-							end
+							#end
 							cur_cfg = trace_query_flow(caller_class, action, "", "", level+2)
 							if cur_cfg != nil
 								#XXX: If it is validation function before an insert/update query, then the all the outlet of the validation function goes to that query
@@ -365,20 +365,21 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 		handle_single_cfg2(start_class, start_function, class_handler, function_handler, function_handler.getCFG, level)
 		return function_handler.getCFG
 	else
-		cfg = CFG.new
-		function_handler.setCFG(cfg)
-		bb = Basic_block.new(1)
-		def_self = Instruction.new
-		def_self.setDefv("%self")
-		bb.addInstr(def_self)
-		function_handler.getCalls.each do |c|
-			call_instr = Call_instr.new(c.getObjName, c.getFuncName)
-			call_instr.addDatadep("1.0", "%self", def_self)
-			bb.addInstr(call_instr)
-		end
-		cfg.addBB(bb)
-		handle_single_cfg2(start_class, start_function, class_handler, function_handler, cfg, level)
-		return cfg
+		#cfg = CFG.new
+		#function_handler.setCFG(cfg)
+		#bb = Basic_block.new(1)
+		#def_self = Instruction.new
+		#def_self.setDefv("%self")
+		#bb.addInstr(def_self)
+		#function_handler.getCalls.each do |c|
+		#	call_instr = Call_instr.new(c.getObjName, c.getFuncName)
+		#	call_instr.setCallHandler(c)
+		#	call_instr.addDatadep("1.0", "%self", def_self)
+		#	bb.addInstr(call_instr)
+		#end
+		#cfg.addBB(bb)
+		#handle_single_cfg2(start_class, start_function, class_handler, function_handler, cfg, level)
+		#return cfg
 	end
 end
 

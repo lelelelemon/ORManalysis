@@ -32,7 +32,7 @@ def read_dataflow(application_dir=nil)
 
 	root, files, dirs = os_walk($dataflow_dir)
 	for filename in files
-		if filename.to_s.end_with?(".log")
+		if filename.to_s.end_with?(".log") and filename.to_s.include?("schema.log") == false
 			class_name = dataflow_filename_match(filename.to_s) 
 			if class_name != nil
 				handle_single_dataflow_file(filename.to_s, class_name)
@@ -88,6 +88,7 @@ def handle_single_dataflow_file(item, class_name)
 				m = find_method(class_name, func_name)
 				if m == nil
 					#puts "Function not found: #{class_name} . #{func_name}"
+					#exit
 				else
 						m.setCFG($cur_cfg)
 				end
@@ -285,7 +286,13 @@ def handle_single_dataflow_file(item, class_name)
 									elsif single_attr.include?('(') and single_attr.include?(')')
 										bracket_begin = single_attr.index('(')
 										bracket_end = single_attr.index(')')
-										cur_instr = Const_instr.new(single_attr[bracket_begin+1...bracket_end])
+										if single_attr.include?("inherit ") and $cur_bb.getInstr[-1].is_a?Const_instr
+												upper_name = $cur_bb.getInstr[-1].getConst
+												cur_name = single_attr[bracket_begin+1...bracket_end].gsub('inherit ','')	
+												cur_instr = InheritConst_instr.new("#{upper_name}::#{cur_name}") 
+										else
+											cur_instr = Const_instr.new(single_attr[bracket_begin+1...bracket_end])
+										end
 									end
 								end
 								index += 1

@@ -1,3 +1,4 @@
+import numpy as np
 import xml.etree.ElementTree as ET
 import sys
 import glob
@@ -66,6 +67,14 @@ for subdir, folders, files in os.walk(base_path):
 			tree = ET.parse(fname)
 			roots.append(tree.getroot())
 
+def remove_xticks(ax):
+	ax.tick_params(
+    axis='x',          # changes apply to the x-axis
+    which='both',      # both major and minor ticks are affected
+    bottom='off',      # ticks along the bottom edge are off
+    top='off',         # ticks along the top edge are off
+    labelbottom='off') # labels along the bottom edge are off	
+
 print "Root length : %d"%len(roots)
 prefix1 = ["stat"]
 general_stats_prefix = prefix1[:]
@@ -91,6 +100,8 @@ field_stats_content = ["name", "numUses", "numAssigns", "type", "avgSourceDist"]
 prefix3 = ["singlePath"]
 path_stats_content = ["total", "read", "write"]
 path_stats_content2 = ["shortestPath", "longestPath", "instrTotal"]
+
+colors = [5,2,7,9,3,4,10,12,13]	
 
 # stats
 def print_general_stat(prefix, content, plot_branch):
@@ -118,9 +129,7 @@ def print_general_stat(prefix, content, plot_branch):
 		r = calculateAllActions(cond_list)
 		writes[g] = getAverage(r)
 		print "%f, %d"%(writes[g], len(r))
-		print r
 	
-	colors = [5,2,7,9,3,4,10,12,13]	
 	fig = plt.figure(figsize=(15, 7))
 	#first bar: Qread + Qwrite = Qtotal
 	ax1 = fig.add_subplot(161)
@@ -128,7 +137,8 @@ def print_general_stat(prefix, content, plot_branch):
 	rect2 = ax1.bar(range(1, 2), [writes["total"]], bottom=reads["total"], color=tableau_colors[colors[1]], edgecolor='black')
 	ax1.set_xlabel("query total")
 	ax1.set_ylabel("number of queries")
-	ax1.legend((rect1[0], rect2[0]), ('read','write'))
+	ax1.set_xticklabels(('',''))
+	ax1.legend((rect1[0], rect2[0]), ('read','write'),prop={'size':'12'}, loc='upper right')
 
 	#second bar: queryInView
 	ax2 = fig.add_subplot(162)
@@ -149,7 +159,7 @@ def print_general_stat(prefix, content, plot_branch):
 		rect2 = ax4.bar(range(1, 2), [data["branchTotal"]-data["branchOnQuery"]], bottom=data["branchOnQuery"], color=tableau_colors[colors[4]], edgecolor='black')
 		ax4.set_xlabel("branch total")
 		ax4.set_ylabel("number of queries")
-		ax4.legend((rect1[0], rect2[0]), ('branch depend on query','branch others'))
+		ax4.legend((rect1[0], rect2[0]), ('branch depend on query','branch others'), prop={'size':'12'}, loc='upper right')
 
 	#fifth bar: readSink
 	ax5 = fig.add_subplot(165)
@@ -163,7 +173,7 @@ def print_general_stat(prefix, content, plot_branch):
 	rect4 = ax5.bar(range(1, 2), [reads["toView"]], bottom=sum3, color=tableau_colors[colors[8]])
 	ax5.set_xlabel("read sink")
 	ax5.set_ylabel("number of sink instr")
-	ax5.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('to read query','to write query','to branch', 'to view'))
+	ax5.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('to read query','to write query','to branch', 'to view'), prop={'size':'12'}, loc='upper right')
 	#sixth bar: writeSource
 	ax6 = fig.add_subplot(166)
 	sum1 = writes["fromUserInput"]
@@ -174,12 +184,11 @@ def print_general_stat(prefix, content, plot_branch):
 	rect3 = ax6.bar(range(1, 2), [writes["fromConst"]], bottom=sum2, color=tableau_colors[colors[7]])
 	ax6.set_xlabel("write source")
 	ax6.set_ylabel("number of source instr")
-	ax6.legend((rect1[0], rect2[0], rect3[0]), ('from user input','from query','from const'), prop={'size':'8'}, loc=3)
+	ax6.legend((rect1[0], rect2[0], rect3[0]), ('from user input','from query','from const'), prop={'size':'12'}, loc='upper right')
 
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 	plt.show()
 
-#print_general_stat(general_stats_prefix, general_stats_content, True)
 
 #chain
 def print_chain(prefix, content):
@@ -239,4 +248,51 @@ def print_fields(prefix, content):
 	plt.show()
 
 
-print_fields(nonfield_prefix, field_stats_content)
+#path
+def print_path(prefix, content):
+	data = {}
+	fig = plt.figure(figsize=(8, 4))
+
+	for g in content:
+		cond_list = prefix[:]
+		cond_list.append(g)
+		if g == "total" or g == "read" or g == "write":	
+			data[g] = {}
+			cond_list.append("min")
+			r = calculateAllActions(cond_list)
+			data[g]["min"] = getAverage(r)
+			cond_list[-1] = "max"
+			r = calculateAllActions(cond_list)
+			data[g]["max"] = getAverage(r)
+		else:
+			r = calculateAllActions(cond_list)
+			data[g] = getAverage(r)
+
+	ind = np.arange(2)
+	width = 0.2
+
+	ax1 = fig.add_subplot(121)
+	rect1 = ax1.bar(ind, [data["read"]["min"], data["read"]["max"]], width, color=tableau_colors[colors[0]], edgecolor='black')
+	rect2 = ax1.bar(ind, [data["write"]["min"], data["write"]["max"]], width, bottom=[data["read"]["min"], data["read"]["max"]], color=tableau_colors[colors[1]], edgecolor='black')
+	ax1.set_xlabel("queries on a single path")
+	ax1.set_ylabel("number of queries")
+	ax1.set_xticklabels(('min','max'))
+	ax1.legend((rect1[0], rect2[0]), ('read','write'),prop={'size':'12'}, loc='upper right')
+
+	ind = np.arange(1)
+	ax2 = fig.add_subplot(122)
+	rect1 = ax2.bar(ind, [data["shortestPath"]], width, color=tableau_colors[colors[2]], edgecolor='black')
+	rect2 = ax2.bar(ind+width, [data["longestPath"]], width, color=tableau_colors[colors[3]], edgecolor='black')
+	rect3 = ax2.bar(ind+width*2, [data["instrTotal"]], width, color=tableau_colors[colors[4]], edgecolor='black')
+
+	#rect1 = ax2.bar(range(1, 2), [data["shortestPath"], data["longestPath"], data["instrTotal"]], color=tableau_colors[colors[2], colors[3], colors[4]], edgecolor='black')
+	ax2.set_xlabel("path length")
+	ax2.set_ylabel("number of instructions")
+	ax2.set_xticklabels(('shortestPath','longestPath', 'ignorePathTotal'))
+	
+	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
+	plt.show()
+
+#print_general_stat(general_stats_prefix, general_stats_content, True)
+#print_fields(nonfield_prefix, field_stats_content)
+print_path(prefix3, path_stats_content+path_stats_content2)

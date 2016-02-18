@@ -230,7 +230,7 @@ end
 
 def dataflow_filename_match(dataflow_file_name)
 	$class_map.each do |k, v|
-		if v.filename.tr('/','').gsub('.rb','') == dataflow_file_name.tr('/','').gsub('dataflow','').gsub('.log','')
+		if v.filename != nil and v.filename.tr('/','').gsub('.rb','') == dataflow_file_name.tr('/','').gsub('dataflow','').gsub('.log','')
 			return k
 		end
 	end
