@@ -163,6 +163,11 @@ class Class_class
 					temp_class_name = $class_map[temp_class_name].getUpperClass
 				end
 			end
+			if $class_map[@include_module] != nil
+				if $class_map[@include_module].getMethod(name) != nil
+					return $class_map[@include_module].getMethod(name)
+				end
+			end
 			return nil
 		end
 	end
@@ -184,6 +189,7 @@ class Class_class
 				@save_actions.push(s)
 			end
 		end
+		self.mergeValidation(c, "before_save")
 	end
 	def addCreate(func)
 		@create_actions.push(func)
@@ -197,6 +203,7 @@ class Class_class
 				@create_actions.push(cr)
 			end
 		end
+		self.mergeValidation(c, "before_create")
 	end
 	def addScope(s)
 		@scope_list.push(s)
@@ -262,24 +269,27 @@ class Class_class
 	def getBeforeFilter
 		@before_filter
 	end
-	def mergeBeforeFilter(c)
-		if c.getMethod("before_filter") != nil
-			if @methods["before_filter"] == nil
-				@methods["before_filter"] = c.getMethod("before_filter")
+	def mergeValidation(c, validation_name)
+		if c.getMethod(validation_name) != nil
+			if @methods[validation_name] == nil
+				@methods[validation_name] = c.getMethod(validation_name)
 			else
-				c.getMethod("before_filter").getCalls.each do |call|
+				c.getMethod(validation_name).getCalls.each do |call|
 					exist = false
-					@methods["before_filter"].getCalls.each do |inner_call|
+					@methods[validation_name].getCalls.each do |inner_call|
 						if inner_call.getFuncName == call.getFuncName
 							exist = true
 						end
 					end
 					if exist == false
-						@methods["before_filter"].getCalls.insert(0, call)
+						@methods[validation_name].getCalls.insert(0, call)
 					end
 				end
 			end
 		end
+	end
+	def mergeBeforeFilter(c)
+		self.mergeValidation(c, "before_filter")
 	end
 	def print_var_types
 		puts "######## BEGIN ########"

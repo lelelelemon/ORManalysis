@@ -257,10 +257,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	
 	$node_list.each do |n|
 		n.setLabel
-		#puts "#{n.getIndex}:#{n.getInstr.toString}"
-		#if n.getInstr.is_a?Call_instr
-			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
-		#end
+		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		if n.getInstr.is_a?Call_instr
+			puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
+		end
 		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
 				#puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"

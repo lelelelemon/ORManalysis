@@ -1,0 +1,486 @@
+SET IRMethod, name = create
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Rack) def_%v_3 
+		 7: (inherit Request) def_%v_4 %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: %self->request def_%v_5 %self[2.0,] 	 ARGS:
+		 1: %v_5->env def_%v_6 %v_5[4.0,] 	 ARGS:
+		 2: %v_4->new def_%v_7 %v_4[3.0,2.7,] %v_6[4.1,] 	 ARGS:%v_6,
+		 3: COPY TYPE_PASS def_req %v_7[4.2,] 
+		 4: 
+		 5: COPY TYPE_StringLiteral def_%v_8 
+		 6: %v_7->[] def_%v_9 %v_7[4.2,] %v_8[4.5,] 	 ARGS:%v_8,
+		 7: COPY TYPE_StringLiteral def_%v_10 
+		 8: %v_9->== def_%v_11 %v_9[4.6,] %v_10[4.7,] 	 ARGS:%v_10,
+		 9: BRANCH %v_11[4.8,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->handle_jwt_bearer def_%v_12 %self[2.0,] req[4.3,] 	 ARGS:req,
+		 2: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_12 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Api) def_%v_13 
+		 2: (inherit OpenidConnect) def_%v_14 %v_13[7.1,] 
+		 3: %v_14[7.2,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %v_13->const_missing def_%v_14 %v_13[7.1,] 	 ARGS:Symbol,
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: (inherit TokenEndpoint) def_%v_15 %v_14[8.0,7.2,] 
+		 1: %v_15[9.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: %v_14->const_missing def_%v_15 %v_14[8.0,7.2,] 	 ARGS:Symbol,
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: %v_15->new def_%v_16 %v_15[10.0,9.0,] 	 ARGS:
+		 1: %self->request def_%v_17 %self[2.0,] 	 ARGS:
+		 2: %v_17->env def_%v_18 %v_17[11.1,] 	 ARGS:
+		 3: %v_16->call def_%v_19 %v_16[11.0,] %v_18[11.2,] 	 ARGS:%v_18,
+		 4: def_%v_20 %v_19[11.3,] 
+		 5: def_%v_21 %v_20[11.4,] 
+		 6: def_%v_22 %v_20[11.4,] 
+		 7: def_%v_23 %v_20[11.4,] 
+		 8: ATTRASSIGN %self->status %v_21[11.5,] 
+		 9: %self->response def_%v_24 %self[11.1,11.8,2.0,] 	 ARGS:
+		 10: ATTRASSIGN %v_24->headers %v_22[11.6,] 
+		 11: ATTRASSIGN %self->response_body %v_23[11.7,] 
+		 12: 
+		 13: RETURN %self[11.1,11.8,11.9,11.11,2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = handle_jwt_bearer
+BB 1
+	outgoing: 22 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_req 
+		 6: 
+		 7: COPY TYPE_StringLiteral def_%v_3 
+		 8: req->[] def_%v_4 req[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
+		 9: COPY TYPE_PASS def_jwt_string %v_4[2.8,] 
+		 10: 
+		 11: (JSON) def_%v_5 
+		 12: (inherit JWT) def_%v_6 %v_5[2.11,] 
+		 13: %v_6[2.12,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[2.11,] 	 ARGS:Symbol,
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: %v_6->decode def_%v_7 %v_6[3.0,2.12,] jwt_string[2.9,] 	 ARGS:jwt_string,Symbol,
+		 1: COPY TYPE_PASS def_jwt %v_7[4.0,] 
+		 2: 
+		 3: (Api) def_%v_8 
+		 4: (inherit OpenidConnect) def_%v_9 %v_8[4.3,] 
+		 5: %v_9[4.4,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %v_8->const_missing def_%v_9 %v_8[4.3,] 	 ARGS:Symbol,
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: (inherit OAuthApplication) def_%v_10 %v_9[5.0,4.4,] 
+		 1: %v_10[6.0,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %v_9->const_missing def_%v_10 %v_9[5.0,4.4,] 	 ARGS:Symbol,
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_11 
+		 1: jwt->[] def_%v_12 jwt[4.1,] %v_11[8.0,] 	 ARGS:%v_11,
+		 2: HASH-client_id- def_%v_13 %v_12[8.1,] 
+		 3: %v_10->find_by def_%v_14 %v_10[7.0,6.0,] %v_13[8.2,] 	 ARGS:%v_13,
+		 4: COPY TYPE_PASS def_o_auth_app %v_14[8.3,] 
+		 5: 
+		 6: BRANCH %v_14[8.3,] 
+BB 9
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_15 
+		 1: 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: (Rack) def_%v_16 
+		 1: (inherit OAuth2) def_%v_17 %v_16[10.0,] 
+		 2: %v_17[10.1,] 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: %v_16->const_missing def_%v_17 %v_16[10.0,] 	 ARGS:Symbol,
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: (inherit Server) def_%v_18 %v_17[11.0,10.1,] 
+		 1: %v_18[12.0,] 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: %v_17->const_missing def_%v_18 %v_17[11.0,10.1,] 	 ARGS:Symbol,
+BB 14
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: (inherit Authorize) def_%v_19 %v_18[13.0,12.0,] 
+		 1: %v_19[14.0,] 
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: %v_18->const_missing def_%v_19 %v_18[13.0,12.0,] 	 ARGS:Symbol,
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: %v_19->BadRequest def_%v_20 %v_19[15.0,14.0,] 	 ARGS:Symbol,
+		 1: %self->raise def_%v_21 %self[2.0,] %v_20[16.0,] 	 ARGS:%v_20,
+		 2: COPY TYPE_PASS def_%v_15 %v_21[16.1,] 
+BB 17
+	outgoing: 18 19 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->fetch_public_key def_%v_22 %self[2.0,] o_auth_app[8.4,] jwt[4.1,] 	 ARGS:o_auth_app,jwt,
+		 2: COPY TYPE_PASS def_public_key %v_22[17.1,] 
+		 3: 
+		 4: (JSON) def_%v_23 
+		 5: (inherit JWT) def_%v_24 %v_23[17.4,] 
+		 6: %v_24[17.5,] 
+BB 18
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: %v_23->const_missing def_%v_24 %v_23[17.4,] 	 ARGS:Symbol,
+BB 19
+	outgoing: 20 21 
+	datadep: 
+	instructions:
+		 0: (JSON) def_%v_25 
+		 1: (inherit JWK) def_%v_26 %v_25[19.0,] 
+		 2: %v_26[19.1,] 
+BB 20
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: %v_25->const_missing def_%v_26 %v_25[19.0,] 	 ARGS:Symbol,
+BB 21
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: %v_26->new def_%v_27 %v_26[20.0,19.1,] public_key[17.2,] 	 ARGS:public_key,
+		 1: %v_27->to_key def_%v_28 %v_27[21.0,] 	 ARGS:
+		 2: %v_24->decode def_%v_29 %v_24[18.0,17.5,] jwt_string[2.9,] %v_28[21.1,] 	 ARGS:jwt_string,%v_28,
+		 3: 
+		 4: COPY TYPE_StringLiteral def_%v_30 
+		 5: o_auth_app->client_id def_%v_31 o_auth_app[8.4,] 	 ARGS:
+		 6: req->update_param def_%v_32 req[2.5,] %v_30[21.4,] %v_31[21.5,] 	 ARGS:%v_30,%v_31,
+		 7: 
+		 8: COPY TYPE_StringLiteral def_%v_33 
+		 9: o_auth_app->client_secret def_%v_34 o_auth_app[21.5,8.4,] 	 ARGS:
+		 10: req->update_param def_%v_35 req[21.6,2.5,] %v_33[21.8,] %v_34[21.9,] 	 ARGS:%v_33,%v_34,
+		 11: RETURN %v_35[21.10,] %self[2.0,] 
+BB 22
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = fetch_public_key
+BB 1
+	outgoing: 17 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_o_auth_app 
+		 6: RECEIVEARG def_jwt 
+		 7: 
+		 8: o_auth_app->jwks def_%v_3 o_auth_app[2.5,] 	 ARGS:
+		 9: %self->fetch_public_key_from_json def_%v_4 %self[2.0,] %v_3[2.8,] jwt[2.6,] 	 ARGS:%v_3,jwt,
+		 10: COPY TYPE_PASS def_public_key %v_4[2.9,] 
+		 11: 
+		 12: %v_4->empty? def_%v_5 %v_4[2.9,] 	 ARGS:
+		 13: BRANCH %v_5[2.12,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: o_auth_app->jwks_uri def_%v_6 o_auth_app[2.5,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_5 %v_6[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_5[3.1,2.12,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Faraday) def_%v_7 
+		 2: o_auth_app->jwks_uri def_%v_8 o_auth_app[2.5,] 	 ARGS:
+		 3: %v_7->get def_%v_9 %v_7[5.1,] %v_8[5.2,] 	 ARGS:%v_8,
+		 4: COPY TYPE_PASS def_response %v_9[5.3,] 
+		 5: 
+		 6: %v_9->body def_%v_10 %v_9[5.3,] 	 ARGS:
+		 7: %self->fetch_public_key_from_json def_%v_11 %self[2.0,] %v_10[5.6,] jwt[2.6,] 	 ARGS:%v_10,jwt,
+		 8: COPY TYPE_PASS def_public_key %v_11[5.7,] 
+		 9: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_11 
+BB 7
+	outgoing: 8 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: public_key->empty? def_%v_12 public_key[5.8,2.10,] 	 ARGS:
+		 2: BRANCH %v_12[7.1,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: (Rack) def_%v_13 
+		 1: (inherit OAuth2) def_%v_14 %v_13[8.0,] 
+		 2: %v_14[8.1,] 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: %v_13->const_missing def_%v_14 %v_13[8.0,] 	 ARGS:Symbol,
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: (inherit Server) def_%v_15 %v_14[9.0,8.1,] 
+		 1: %v_15[10.0,] 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: %v_14->const_missing def_%v_15 %v_14[9.0,8.1,] 	 ARGS:Symbol,
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: (inherit Authorize) def_%v_16 %v_15[11.0,10.0,] 
+		 1: %v_16[12.0,] 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: %v_15->const_missing def_%v_16 %v_15[11.0,10.0,] 	 ARGS:Symbol,
+BB 14
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: %v_16->BadRequest def_%v_17 %v_16[13.0,12.0,] 	 ARGS:Symbol,
+		 1: %self->raise def_%v_18 %self[2.0,] %v_17[14.0,] 	 ARGS:%v_17,
+		 2: 
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_18 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN public_key[5.8,2.10,] %self[2.0,] 
+BB 17
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = fetch_public_key_from_json
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_string 
+		 6: RECEIVEARG def_jwt 
+		 7: 
+		 8: (JSON) def_%v_3 
+		 9: %v_3->parse def_%v_4 %v_3[2.8,] string[2.5,] 	 ARGS:string,
+		 10: COPY TYPE_PASS def_json %v_4[2.9,] 
+		 11: 
+		 12: COPY TYPE_StringLiteral def_%v_5 
+		 13: %v_4->[] def_%v_6 %v_4[2.9,] %v_5[2.12,] 	 ARGS:%v_5,
+		 14: COPY TYPE_PASS def_keys %v_6[2.13,] 
+		 15: 
+		 16: jwt->header def_%v_7 jwt[2.6,] 	 ARGS:
+		 17: COPY TYPE_StringLiteral def_%v_8 
+		 18: %v_7->[] def_%v_9 %v_7[2.16,] %v_8[2.17,] 	 ARGS:%v_8,
+		 19: %self->get_key_from_kid def_%v_10 %self[2.0,] keys[2.14,] %v_9[2.18,] 	 ARGS:keys,%v_9,
+		 20: COPY TYPE_PASS def_public_key %v_10[2.19,] 
+		 21: 
+		 22: RETURN %v_10[2.19,] %self[2.0,2.19,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get_key_from_kid
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_keys 
+		 6: RECEIVEARG def_kid 
+		 7: 
+		 8: keys->each def_%v_3 keys[2.5,] %self[2.0,] 	 ARGS:keys,
+CLOSURE BEGIN: key[] kid[2.6,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_key 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: key->has_value? def_%cl_1_3 key[2.2,] kid[] 	 ARGS:kid,
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN key[2.2,] %self[2.0,] 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[7.0,] 
+		 2: RETURN %cl_1_6[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 9: RETURN %v_3[2.8,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%v_4 
+		 1: def_%v_5 %v_4[4.0,] 
+		 2: RETURN %v_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

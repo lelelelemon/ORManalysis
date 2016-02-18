@@ -80,15 +80,17 @@ def resolve_upper_class
 		#valuec.adjustFilters
 		if $class_map.has_key?(valuec.getUpperClass)
 			valuec.setUpperClassInstance($class_map[valuec.getUpperClass])
-			if $class_map[valuec.getUpperClass] != nil
+			temp_upper_class = valuec.getUpperClass
+			while $class_map[temp_upper_class] != nil
 				#puts "Set parent class: #{keyc} < #{valuec.getUpperClass}"
-				parent = $class_map[valuec.getUpperClass]
+				parent = $class_map[temp_upper_class]
 				valuec.mergeBeforeFilter(parent)
 				valuec.mergeSave(parent)
 				valuec.mergeCreate(parent)
 				if valuec.include_module == nil
 					valuec.include_module = parent.include_module
 				end
+				temp_upper_class = $class_map[temp_upper_class].getUpperClass
 			end
 			
 			#create valid? function
@@ -342,7 +344,19 @@ if options[:dir] != nil
 		read_ruby_files_with_template(options[:dir], options[:template])
 	else
 		read_ruby_files(options[:dir])
+		puts "Finish reading files"
 		read_dataflow(options[:dir])
+		
+		$class_map.each do |k, v|
+			v.getMethods.each do |k1, v1|
+				puts "#{k} . #{k1}:"
+				if v1.getCFG == nil
+					v1.getCalls.each do |c|
+						puts "\t#{c.getObjName} . #{c.getFuncName}"
+					end
+				end
+			end
+		end
 		do_type_inference
 	end
 else
@@ -429,6 +443,10 @@ if options[:run_all]
 		chs = line.split(',')
 		start_function = chs[1]
 		chs[0] = chs[0].capitalize
+		if chs[0].include?("::")
+			i = chs[0].index('::')
+			chs[0][i+2] = chs[0][i+2].upcase
+		end
 		start_class = "#{chs[0]}Controller"
 		puts "Handling #{start_class}, #{start_function}"
 		level = 0

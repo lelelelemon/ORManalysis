@@ -1,0 +1,280 @@
+SET IRMethod, name = initialize
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_params 
+		 6: 
+		 7: params->[] def_%v_3 params[2.5,] 	 ARGS:Symbol,
+		 8: ATTRASSIGN %self->user %v_3[2.7,] 
+		 9: 
+		 10: params->[] def_%v_4 params[2.5,2.7,] 	 ARGS:Symbol,
+		 11: ATTRASSIGN %self->post_id %v_4[2.10,] 
+		 12: 
+		 13: params->[] def_%v_5 params[2.5,2.7,2.10,] 	 ARGS:Symbol,
+		 14: ATTRASSIGN %self->comment_id %v_5[2.13,] 
+		 15: 
+		 16: params->[] def_%v_6 params[2.5,2.7,2.10,2.13,] 	 ARGS:Symbol,
+		 17: ATTRASSIGN %self->text %v_6[2.16,] 
+		 18: 
+		 19: GETFIELD %self->post_id def_%v_7 %self[2.0,2.11,] 
+		 20: BRANCH %v_7[2.19,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->find_post! def_%v_8 %self[2.0,2.8,2.11,2.14,2.17,] 	 ARGS:
+		 1: ATTRASSIGN %self->post %v_8[3.0,] 
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->post def_%v_9 %self[3.1,2.0,] 
+		 2: BRANCH %v_9[5.1,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->post def_%v_10 %self[3.1,2.0,] 
+		 1: %v_10->comments def_%v_11 %v_10[6.0,] 	 ARGS:
+		 2: %v_11->for_a_stream def_%v_12 %v_11[6.1,] 	 ARGS:
+		 3: ATTRASSIGN %self->comments %v_12[6.2,] 
+		 4: RETURN %v_12[6.2,] %self[6.3,3.1,2.0,2.8,2.11,2.14,2.17,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[3.1,2.0,2.8,2.11,2.14,2.17,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_comment
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->post def_%v_3 %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->user def_%v_4 %self[2.0,] 
+		 1: %self->post def_%v_5 %self[2.0,] 	 ARGS:
+		 2: GETFIELD %self->text def_%v_6 %self[3.1,2.0,] 
+		 3: %v_4->comment! def_%v_7 %v_4[3.0,] %v_5[3.1,] %v_6[3.2,] 	 ARGS:%v_5,%v_6,
+		 4: RETURN %v_7[3.3,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy_comment
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Comment) def_%v_3 
+		 7: GETFIELD %self->comment_id def_%v_4 %self[2.0,] 
+		 8: %v_3->find def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: ATTRASSIGN %self->comment %v_5[2.8,] 
+		 10: 
+		 11: GETFIELD %self->user def_%v_6 %self[2.0,] 
+		 12: GETFIELD %self->comment def_%v_7 %self[2.0,2.9,] 
+		 13: %v_6->owns? def_%v_8 %v_6[2.11,] %v_7[2.12,] 	 ARGS:%v_7,
+		 14: BRANCH %v_8[2.13,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->user def_%v_9 %self[2.0,] 
+		 1: GETFIELD %self->comment def_%v_10 %self[2.0,2.9,] 
+		 2: %v_10->parent def_%v_11 %v_10[3.1,] 	 ARGS:
+		 3: %v_9->owns? def_%v_12 %v_9[3.0,] %v_11[3.2,] 	 ARGS:%v_11,
+		 4: COPY TYPE_PASS def_%v_8 %v_12[3.3,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_8[3.4,2.13,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->user def_%v_13 %self[2.0,] 
+		 2: GETFIELD %self->comment def_%v_14 %self[2.0,2.9,] 
+		 3: %v_13->retract def_%v_15 %v_13[5.1,] %v_14[5.2,] 	 ARGS:%v_14,
+		 4: 
+		 5: COPY TYPE_Boolean def_%v_16 
+		 6: RETURN %self[2.0,2.9,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,2.9,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_post!
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->find_post def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->tap def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
+CLOSURE BEGIN: post[] %self[2.0,2.6,] 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_post 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+		 5: 
+		 6: BRANCH post[2.2,] 
+BB 4
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_3 
+		 1: RETURN %cl_1_3[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 6 7 9 
+	datadep: 
+	instructions:
+		 0: (ActiveRecord) def_%cl_1_4 
+		 1: (inherit RecordNotFound) def_%cl_1_5 %cl_1_4[5.0,] 
+		 2: %cl_1_5[5.1,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: %cl_1_4->const_missing def_%cl_1_5 %cl_1_4[5.0,] 	 ARGS:Symbol,
+BB 7
+	outgoing: 9 11 
+	datadep: 
+	instructions:
+		 0: %self->raise def_%cl_1_6 %self[2.0,] %cl_1_5[6.0,5.1,] 	 ARGS:%cl_1_5,
+		 1: RETURN %cl_1_6[7.0,] %self[7.0,2.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 
+		 1: def_%cl_1_8 %cl_1_7[9.0,] 
+		 2: RETURN %cl_1_8[9.1,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_post
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: 
+		 7: GETFIELD %self->user def_%v_3 %self[2.0,] 
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->user def_%v_4 %self[2.0,] 
+		 1: (Post) def_%v_5 
+		 2: GETFIELD %self->post_id def_%v_6 %self[2.0,] 
+		 3: %v_4->find_visible_shareable_by_id def_%v_7 %v_4[3.0,] %v_5[3.1,] %v_6[3.2,] 	 ARGS:%v_5,%v_6,
+		 4: RETURN %v_7[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Post) def_%v_8 
+		 2: GETFIELD %self->post_id def_%v_9 %self[2.0,] 
+		 3: %v_8->find_by_id_and_public def_%v_10 %v_8[4.1,] %v_9[4.2,] 	 ARGS:%v_9,Boolean,
+		 4: RETURN %v_10[4.3,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

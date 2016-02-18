@@ -173,6 +173,31 @@ end
 
 def do_type_inference
 	read_util_function
+
+	#Fill in the empty CFG
+	#Do it here so that we can still look at the type inference
+	$class_map.each do |keyc, valuec|
+		valuec.getMethods.each do |key, value|
+			cfg = value.getCFG
+			#Before filter should not be included here, since some has "on" property, so not all the functions defined in before filter will be executed all the time
+			if cfg == nil and key != "before_filter"
+				cfg = CFG.new
+				value.setCFG(cfg)
+				bb = Basic_block.new(1)
+				def_self = Instruction.new
+				def_self.setDefv("%self")
+				bb.addInstr(def_self)
+				value.getCalls.each do |c|
+					call_instr = Call_instr.new(c.getObjName, c.getFuncName)
+					call_instr.setCallHandler(c)
+					call_instr.addDatadep("1.0", "%self", def_self)
+					bb.addInstr(call_instr)
+				end
+				cfg.addBB(bb)
+			end
+		end
+	end
+	
 	$class_map.each do |keyc, valuec|
 		@class_var_list = Hash.new
 		valuec.getTableFields.each do |f|
@@ -197,6 +222,7 @@ def do_type_inference
 			cfg = value.getCFG
 			if cfg != nil
 				set_initial_type(cfg, key, keyc)
+				puts "First type info: #{keyc} . #{key}"
 				do_type_inference_cfg(cfg, key, keyc)
 			end
 		end
@@ -235,15 +261,16 @@ def do_type_inference
 			#	puts "Function: #{key}"
 			#	do_type_inference_cfg(cfg, key, keyc, true)
 			#elsif cfg!= nil
+				puts "\tSecond type info: #{keyc} . #{key}"
 				do_type_inference_cfg(cfg, key, keyc)
 			end
 		end
 	end
 
-=begin
 	$class_map.each do |keyc, valuec|
 		valuec.getMethods.each do |key, value|
-			if keyc.include?("Controller")==false and value.getCFG != nil
+			if value.getCFG != nil
+			#if keyc.include?("Controller")==false and value.getCFG != nil
 				puts "Class #{keyc} Function #{key}:"
 				print_unknown_types(value.getCFG, "", keyc)
 			end
@@ -284,7 +311,6 @@ def do_type_inference
 	puts "\tTYPE FOUND: #{model_found}"
 	puts "\tTYPE NOT FOUND: #{model_not_found}"
 	puts "\n***************\n"
-=end
 
 end
 
@@ -369,7 +395,7 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 				#if instr.getResolvedCaller != ""
 				#	add_to_cfg_varmap(cfg, c_name, instr.getCaller, instr.getResolvedCaller)
 				#end
-				if instr.instance_of?Const_instr
+				if instr.is_a?Const_instr
 					add_to_cfg_varmap(cfg, c_name, instr.getDefv, instr.getConst)
 				elsif instr.instance_of?BuildString_instr
 					add_to_cfg_varmap(cfg, c_name, instr.getDefv, "string")
@@ -444,7 +470,7 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 							#normal call instr
 							#caller?
 							if ($class_map[caller_type.type]!= nil)# instr.getCallHandler != nil and (instr.getCallHandler.caller != nil)
-								meth = $class_map[caller_type.type].getMethod(instr.getFuncname)
+								meth = $class_map[caller_type.type].findMethodRecursive(instr.getFuncname)
 								#meth = instr.getCallHandler.caller.getMethod(instr.getFuncname)
 								if meth != nil and meth.getCFG != nil
 									#Fill in arg types

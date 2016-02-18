@@ -38,7 +38,7 @@ class Function_call
 		@is_query = false
 		@is_field = false
 		@field = nil
-		@query_type = ""
+		@query_type = nil
 		@table_name = nil
 		@params = Array.new
 		@returnv = ""
@@ -296,13 +296,15 @@ class Function_call
 				if is_ast_node(assoc_node.children[1]) and ["aref","call"].include?assoc_node.children[1].type.to_s
 					aref_node = searchARef(assoc_node.children[1])
 					lmost = get_left_most_leaf(assoc_node.children[1])
-					if ["params","cookies","session"].include?lmost.source.to_s
-						new_param.setVarName(aref_node.source.to_s)
-						new_param.setSource("FRONTEND")
-					else
-						var_ref = searchVarRef(assoc_node.children[1])
-						if var_ref != nil
-							new_param.setVarName(var_ref.source.to_s)
+					if aref_node != nil
+						if ["params","cookies","session"].include?lmost.source.to_s
+							new_param.setVarName(aref_node.source.to_s)
+							new_param.setSource("FRONTEND")
+						else
+							var_ref = searchVarRef(assoc_node.children[1])
+							if var_ref != nil
+								new_param.setVarName(var_ref.source.to_s)
+							end
 						end
 					end
 				else 
