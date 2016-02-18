@@ -222,7 +222,7 @@ def do_type_inference
 			cfg = value.getCFG
 			if cfg != nil
 				set_initial_type(cfg, key, keyc)
-				puts "First type info: #{keyc} . #{key}"
+				#puts "First type info: #{keyc} . #{key}"
 				do_type_inference_cfg(cfg, key, keyc)
 			end
 		end
@@ -261,12 +261,13 @@ def do_type_inference
 			#	puts "Function: #{key}"
 			#	do_type_inference_cfg(cfg, key, keyc, true)
 			#elsif cfg!= nil
-				puts "\tSecond type info: #{keyc} . #{key}"
+				#puts "\tSecond type info: #{keyc} . #{key}"
 				do_type_inference_cfg(cfg, key, keyc)
 			end
 		end
 	end
 
+=begin
 	$class_map.each do |keyc, valuec|
 		valuec.getMethods.each do |key, value|
 			if value.getCFG != nil
@@ -311,7 +312,7 @@ def do_type_inference
 	puts "\tTYPE FOUND: #{model_found}"
 	puts "\tTYPE NOT FOUND: #{model_not_found}"
 	puts "\n***************\n"
-
+=end
 end
 
 def set_initial_type(cfg, f_name, c_name)

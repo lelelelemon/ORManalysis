@@ -344,19 +344,19 @@ if options[:dir] != nil
 		read_ruby_files_with_template(options[:dir], options[:template])
 	else
 		read_ruby_files(options[:dir])
-		puts "Finish reading files"
+		#puts "Finish reading files"
 		read_dataflow(options[:dir])
 		
-		$class_map.each do |k, v|
-			v.getMethods.each do |k1, v1|
-				puts "#{k} . #{k1}:"
-				if v1.getCFG == nil
-					v1.getCalls.each do |c|
-						puts "\t#{c.getObjName} . #{c.getFuncName}"
-					end
-				end
-			end
-		end
+		#$class_map.each do |k, v|
+		#	v.getMethods.each do |k1, v1|
+		#		puts "#{k} . #{k1}:"
+		#		if v1.getCFG == nil
+		#			v1.getCalls.each do |c|
+		#				puts "\t#{c.getObjName} . #{c.getFuncName}"
+		#			end
+		#		end
+		#	end
+		#end
 		do_type_inference
 	end
 else

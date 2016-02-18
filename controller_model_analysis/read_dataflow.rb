@@ -79,7 +79,6 @@ end
 
 def handle_single_dataflow_file(item, class_name)
 		file = File.open(item, "r")
-		puts "Dataflow: #{item}"
 		file.each_line do |line|
 			if line.include?("SET IRMethod")
 				i = line.index(" = ")
@@ -88,7 +87,7 @@ def handle_single_dataflow_file(item, class_name)
 				#$cfg_map[func_name] = $cur_cfg
 				m = find_method(class_name, func_name)
 				if m == nil
-					puts "Function not found: #{class_name} . #{func_name}"
+					#puts "Function not found: #{class_name} . #{func_name}"
 					#exit
 				else
 						m.setCFG($cur_cfg)
