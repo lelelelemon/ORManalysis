@@ -3,7 +3,7 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 
 	prev_list.each do |pn|
 		if pn.isQuery?
-			tbl_name = pn.getInstr.getCallerType
+			tbl_name = pn.getInstr.getTableName
 			if @tables[tbl_name] == nil
 				@tables[tbl_name] = Array.new
 			end
@@ -15,7 +15,7 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 	@next_tables = Hash.new
 	next_list.each do |n|
 		if n.isQuery?
-			tbl_name = n.getInstr.getCallerType
+			tbl_name = n.getInstr.getTableName
 			if @tables[tbl_name] != nil
 				if @next_tables[tbl_name] == nil
 					@next_tables[tbl_name] = Array.new

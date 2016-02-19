@@ -189,6 +189,12 @@ class Call_instr < Instruction
 			return type_valid(self, @caller)
 		end
 	end
+	def getTableName
+		if @funcname.end_with?("_count") and testTableField(getCallerType, @func_name[0...-6].downcase.singularize)
+			return @func_name[0...-6].downcase.singularize.capitalize
+		end	
+		return self.getCallerType
+	end
 	def getQueryType
 		if @call_handler != nil and @call_handler.getQueryType != nil 
 			return @call_handler.getQueryType

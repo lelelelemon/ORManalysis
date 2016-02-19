@@ -7,6 +7,10 @@ class ForumsController < BaseController
   
   def index
     @forums = Forum.order("position")
+		Topic.count
+		SbPost.count
+		User.where("sb_posts_count>0").count
+		User.currently_online
     respond_to do |format|
       format.html
       format.xml { render :xml => @forums }

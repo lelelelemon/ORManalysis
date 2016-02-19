@@ -121,9 +121,12 @@ def parse_association(astnode, op)
 			attri.each do |k, v|
 				assoc.attribs[k] = v
 			end
-			#if assoc.attribs.has_key?("foreign_key")
+			if assoc.attribs.has_key?("foreign_key")
+				assoc2 = assoc
+				assoc2.name = assoc.attribs("foreign_key"]
+				$cur_class.addAssoc(op, assoc2)
 			#	assoc.name = assoc.attribs["foreign_key"]
-			#end
+			end
 			$cur_class.addAssoc(op, assoc)
 		end
 	end

@@ -324,7 +324,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$node_list.each do |n|
 		if n.isQuery?
 			@general_stat.total += 1
-			@table_name = n.getInstr.getCallerType
+			@table_name = n.getInstr.getTableName
 			if @table_name == nil
 				@table_name = "UNKNOWN"
 			end

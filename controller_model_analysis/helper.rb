@@ -116,15 +116,6 @@ def searchARef(node)
 	return nil
 end
 
-def check_method_keyword(_caller, k)
-	if _caller != nil and _caller.include?("Dir.glob") or _caller == "File"
-		return nil
-	elsif k.index("find_by")==0
-		return "SELECT"
-	else
-		return $key_words[k]
-	end
-end
 def instr_trigger_save?(instr)
 	if ["INSERT", "UPDATE"].include?instr.getQueryType
 		return true

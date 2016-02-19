@@ -104,9 +104,9 @@ class Class_class
 			@assocs[_name] = Array.new
 		end
 		@assocs[_name].push(assoc)
-		if assoc.attribs.has_key?("foreign_key")
-			@class_fields.push(assoc.attribs["foreign_key"])
-		end
+		#if assoc.attribs.has_key?("foreign_key")
+		#	@class_fields.push(assoc.attribs["foreign_key"])
+		#end
 		@class_fields.push(assoc.name)
 	end
 	def getTableFields
