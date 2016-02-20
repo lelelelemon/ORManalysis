@@ -1,7 +1,6 @@
 require "fileutils"
 
 $view_path = ARGV[0]
-$new_view_path = "new_" + $view_path
 
 def get_file_name_from_path(filename)
 	i = filename.rindex('/')
@@ -31,12 +30,7 @@ Dir.glob($view_path + "**/*") do |item|
 		next
 	end
 	
-	if not File.directory?($new_view_path + nested_path)
-		puts $new_view_path + nested_path
-		FileUtils.mkdir_p $new_view_path + nested_path
-	end
-
 	file_name.gsub!(".haml", ".erb")
-	system("ruby haml2erb.rb " + item + " > " + $new_view_path + nested_path + file_name)
+	system("ruby haml2erb.rb " + item + " > " + $view_path + nested_path + file_name)
 
 end

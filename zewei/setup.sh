@@ -12,12 +12,16 @@ project_path=$2
 
 cp $1/zewei/named_routes/* $2
 cp $1/zewei/extract_erb/* $2
+cp $1/zewei/haml2erb/* $2
 cp $1/zewei/view_controller_analysis/read_files.rb $2
 cp $1/zewei/view_controller_analysis/data_structure.rb $2
 cp $1/zewei/view_controller_analysis/helper.rb $2
 
 echo "generating named_routes.txt..."
 bash named_routes.sh 
+
+echo "dealing with haml..."
+ruby traverse_view_dir_convert_haml.rb haml2erb.rb app/views
 
 echo "compiling extract_ruby..."
 g++ extract_ruby.cpp -o extract_ruby
