@@ -151,6 +151,7 @@ class Class_class
 		@methods[name]
 	end
 	#findMethod traces up to parent class
+	#Actually the logic here is just like "findCaller" in Function_call
 	def findMethodRecursive(name)
 		if @methods[name]
 			return @methods[name]
@@ -167,6 +168,9 @@ class Class_class
 				if $class_map[@include_module].getMethod(name) != nil
 					return $class_map[@include_module].getMethod(name)
 				end
+			end
+			if cname = search_distinct_func_name(name)
+				return $class_map[cname].getMethod(name)
 			end
 			return nil
 		end
