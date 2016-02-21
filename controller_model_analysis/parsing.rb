@@ -460,6 +460,9 @@ if options[:run_all]
 
 		$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
 		trace_flow(start_class, start_function, "", "", level)
+		$trace_output_file.close
+
+		puts "Trace output finish"
 
 	#start compute stat
 		$cur_node = nil

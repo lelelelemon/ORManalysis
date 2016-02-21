@@ -33,7 +33,7 @@ def traceback_data_dep(cur_node, stop_at_query=false)
 					#else
 						#test is both nodes are in the same basic block, prevent from tracing too far
 						#if e.getFromNode.getInstr.getBB == node.getInstr.getBB
-						if @node_list.include?(e.getFromNode) or @dep_array.include?(e.getFromNode)
+						if @dep_array.include?(e.getFromNode)
 						else
 							@dep_array.push(e.getFromNode)
 							@node_list.push(e.getFromNode)
@@ -251,6 +251,26 @@ class Temp_singleQ_stat
 	attr_accessor :result_used_in_view, :only_from_user_input
 end
 
+class Temp_view_stat
+	def initialize
+		@table_list = Array.new
+		@field_list = Array.new
+	end
+	attr_accessor :table_list, :field_list
+	def addTable(t)
+		if @table_list.include?t
+		else
+			@table_list.push(t)
+		end
+	end
+	def addField(f)
+		if @field_list.include?f
+		else
+			@field_list.push(f)
+		end
+	end
+end
+
 def compute_dataflow_stat(output_dir, start_class, start_function, build_node_list_only=false)
 
 	if $root == nil
@@ -265,9 +285,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	
 	$node_list.each do |n|
 		n.setLabel
-		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		#puts "#{n.getIndex}:#{n.getInstr.toString}"
 		if n.getInstr.is_a?Call_instr
-			puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
+			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
 		end
 		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
@@ -287,6 +307,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	end
 
 
+	@clique_stat = Array.new
 	graph_fname = "#{output_dir}/sketch_graph.log"
 	$graph_file = File.open(graph_fname, "w")
 
@@ -295,12 +316,23 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	i = 0
 	cliques.each do |c|
 		i = i + 1
-		puts "CLIQUE: #{i}"
-		c.each do |n|
-			puts "\t#{n.getIndex}: #{n.getInstr.toString2} (#{n.getInstr.getTableName})"
+		#puts "CLIQUE: #{i}"
+		#c.each do |n|
+		#	puts "\t#{n.getIndex}: #{n.getInstr.toString2} (#{n.getInstr.getTableName})"
+		#end
+		if c.length > 1
+			@different_tables = Array.new
+			c.each do |n|
+				if @different_tables.include?(n.getInstr.getTableName)
+				else
+					@different_tables.push(n.getInstr.getTableName)
+				end
+			end
+			if @different_tables.length > 1
+				@clique_stat.push(c.length)
+			end
 		end
 	end
-	exit
 
 	$graph_file.close
 
@@ -335,10 +367,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	@read_stat = Temp_Qsink_stat.new
 	@write_stat = Temp_Qsource_stat.new
 	@singleQ_stat = Temp_singleQ_stat.new
+	@view_stat = Temp_view_stat.new
 
 	@table_read_stat = Hash.new
 	@table_write_stat = Hash.new
 	@table_general_stat = Hash.new
+
+	@validation_stat = Hash.new
 
 	$node_list.each do |n|
 		if n.isQuery?
@@ -360,6 +395,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				@table_general_stat[@table_name] = Temp_Qgeneral_stat.new
 			end
 			@table_general_stat[@table_name].total += 1
+
+			n.getValidationStack.each do |vl|
+				if @validation_stat[vl]
+				else
+					@validation_stat[vl] = 0
+				end
+				@validation_stat[vl] += 1
+			end
 
 			if n.getInClosure
 				@general_stat.in_closure += 1
@@ -454,7 +497,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				end
 				@only_from_user_input = true
 				traceback_data_dep(n).each do |n1|
-					if n1.isQuery?
+					if n1.instance_of?Dataflow_edge
+					elsif n1.isQuery?
 						@only_from_user_input = false
 					end
 				end
@@ -517,10 +561,27 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		end
 	end
 
+	$node_list.each do |n|
+		if n.getInView
+			if n.isQuery?
+				tbl_name = n.getInstr.getTableName
+				@view_stat.addTable(tbl_name)
+			elsif n.isTableField?
+				tbl_name = type_valid(n.getInstr, n.getInstr.getCaller)
+				field_name = n.getInstr.getFuncname
+				f = testTableField(tbl_name, field_name)
+				if f != nil
+					@view_stat.addField("#{tbl_name}.#{field_name}")
+				end
+			end 
+		end
+	end
 
 	$graph_file.puts("<stat>")
 	$graph_file.puts("\t<general>")
 	helper_print_stat(@general_stat, @read_stat, @write_stat, "STATS")
+	$graph_file.puts("\t\t<queryOnlyFromUser>#{@singleQ_stat.only_from_user_input}<\/queryOnlyFromUser>")
+	$graph_file.puts("\t\t<queryUsedInView>#{@singleQ_stat.result_used_in_view}<\/queryUsedInView>")
 	$graph_file.puts("\t<\/general>")
 
 
@@ -531,6 +592,25 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	end
 	$graph_file.puts("<\/stat>")
 	$graph_file.puts("")
+
+
+	$graph_file.puts("<viewStats>")
+	@view_stat.table_list.each do |t|
+		$graph_file.puts("\t<table>#{t}<\/table>")
+	end
+	@view_stat.field_list.each do |f|
+		$graph_file.puts("\t<field>#{f}<\/field>")
+	end
+	$graph_file.puts("<\/viewStats>")
+
+	$graph_file.puts("<cliqueStat>")
+	@validation_stat.each do |k, vd|
+		$graph_file.puts("\t<validation>#{vd}<\/validation>")
+	end
+	@clique_stat.each do |cq|
+		$graph_file.puts("\t<clique>#{cq}<\/clique>")
+	end
+	$graph_file.puts("<\/cliqueStat>")
 
 	$graph_file.puts("<chainStats>")
 	compute_chain_stats
