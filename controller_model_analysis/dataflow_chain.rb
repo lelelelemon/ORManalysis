@@ -10,14 +10,20 @@ class TreeNode
   def initialize(node)
 		@node = node
 		@children = Array.new
+		@parents = Array.new
 		@dist = Array.new
 		@tag = nil
 	end
-	attr_accessor :children, :node, :tag
+	attr_accessor :children, :parents, :node, :tag
 	#c has type TreeNode
 	def addChildren(c, dist)
 		edge = TEdge.new(dist, c)
 		@children.push(edge)
+		c.addParent(self, dist)
+	end
+	def addParent(p, dist)
+		edge = TEdge.new(dist, p)
+		@parents.push(edge)
 	end
 	def hasChildren(c)
 		@children.each do |c1|
@@ -131,6 +137,47 @@ def build_sketch_graph
 		end
 	end
 	graph_write($graph_file, "}")
+end
+
+def getCliqueList(limit)
+	@processed_list = Array.new
+	#An array of array
+	@result = Array.new
+	while @processed_list.length < $sketch_node_list.length
+		$node_list.each do |n|
+			if @processed_list.include?n
+			elsif n.Tnode != nil and n.isQuery?
+				@clique = Array.new
+				@temp_processed_list = Array.new	
+				@temp_processed_list.push(n)
+				while @temp_processed_list.length > 0
+					cur_node = @temp_processed_list.shift
+					@clique.push(cur_node)
+					@processed_list.push(cur_node)
+					cur_node.Tnode.children.each do |c|
+						if c.dist < limit and @clique.include?(c.node.node) == false and @processed_list.include?(c.node.node)==false
+							@in_clique = true
+							c.node.parents.each do |p|
+								#already in clique
+								if @clique.include?p.node.node
+								elsif p.dist >= limit
+									@in_clique = false
+								else
+								end
+							end
+							if @in_clique
+								@temp_processed_list.push(c.node.node)
+							end
+						end
+					end
+				end
+				@result.push(@clique)
+			elsif n.Tnode != nil
+				@processed_list.push(n)
+			end
+		end
+	end
+	return @result
 end
 
 def isSource(node)

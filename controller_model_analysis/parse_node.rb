@@ -123,7 +123,7 @@ def parse_association(astnode, op)
 			end
 			if assoc.attribs.has_key?("foreign_key")
 				assoc2 = assoc
-				assoc2.name = assoc.attribs("foreign_key"]
+				assoc2.name = assoc.attribs["foreign_key"]
 				$cur_class.addAssoc(op, assoc2)
 			#	assoc.name = assoc.attribs["foreign_key"]
 			end

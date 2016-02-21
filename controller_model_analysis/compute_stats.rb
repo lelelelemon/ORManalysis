@@ -243,6 +243,14 @@ class Temp_Qsource_stat < Temp_Qgeneral_stat
 	attr_accessor :from_query, :from_const, :from_user_input, :source_total
 end
 
+class Temp_singleQ_stat
+	def initialize
+		@result_used_in_view = 0
+		@only_from_user_input = 0
+	end
+	attr_accessor :result_used_in_view, :only_from_user_input
+end
+
 def compute_dataflow_stat(output_dir, start_class, start_function, build_node_list_only=false)
 
 	if $root == nil
@@ -257,9 +265,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	
 	$node_list.each do |n|
 		n.setLabel
-		#puts "#{n.getIndex}:#{n.getInstr.toString}"
+		puts "#{n.getIndex}:#{n.getInstr.toString}"
 		if n.getInstr.is_a?Call_instr
-			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
+			puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
 		end
 		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
@@ -283,6 +291,16 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$graph_file = File.open(graph_fname, "w")
 
 	build_sketch_graph
+	cliques = getCliqueList(10)
+	i = 0
+	cliques.each do |c|
+		i = i + 1
+		puts "CLIQUE: #{i}"
+		c.each do |n|
+			puts "\t#{n.getIndex}: #{n.getInstr.toString2} (#{n.getInstr.getTableName})"
+		end
+	end
+	exit
 
 	$graph_file.close
 
@@ -316,6 +334,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	@general_stat = Temp_Qgeneral_stat.new
 	@read_stat = Temp_Qsink_stat.new
 	@write_stat = Temp_Qsource_stat.new
+	@singleQ_stat = Temp_singleQ_stat.new
 
 	@table_read_stat = Hash.new
 	@table_write_stat = Hash.new
@@ -377,6 +396,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#	#graph_write($graph_file, " into_#{self_v_name}")
 				#end
 				#puts "Forward length = #{traceforward_data_dep(n).length}"
+				@used_in_view = false
 				traceforward_data_dep(n).each do |n1|
 					#if n1.isTableField?
 					#	var_name = n1.getInstr.getCallHandler.getObjName
@@ -424,7 +444,22 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						#puts " * (To unknown sink)"
 						end
 					end
+					if n1.getInView
+						@used_in_view = true
+					end
 					#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
+				end
+				if @used_in_view
+					@singleQ_stat.result_used_in_view += 1
+				end
+				@only_from_user_input = true
+				traceback_data_dep(n).each do |n1|
+					if n1.isQuery?
+						@only_from_user_input = false
+					end
+				end
+				if @only_from_user_input
+					@singleQ_stat.only_from_user_input += 1
 				end
 			end
 			if n.isWriteQuery?
@@ -432,6 +467,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				@table_write_stat[@table_name].total += 1
 				#puts "READ / DELETE/UPDATE/INSERT instr #{n.getIndex}:#{n.getInstr.toString} backflow:"
 				#puts "backward length = #{traceback_data_dep(n).length}"
+				@only_from_user_input = true
 				traceback_data_dep(n).each do |n1|
 					if n1.instance_of?Dataflow_edge
 						#puts " x (From user input)"
@@ -441,6 +477,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						@table_write_stat[@table_name].source_total += 1
 					else
 						if n1.isQuery? 
+							@only_from_user_input = false
 							if n1.isReadQuery?
 								@write_stat.from_query += 1
 								@write_stat.source_total += 1
@@ -463,6 +500,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						end
 						#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 					end
+				end
+				if @only_from_user_input
+					@singleQ_stat.only_from_user_input += 1
 				end
 			end
 			#graph_write($graph_file, "\n")
