@@ -66,13 +66,7 @@ def controller_print_all_controllers_render_replaced(controller_path, view_path,
 		controller_file_path = new_controller_path + nested_path + filename + "_controller.rb"
 		res = controller_class.get_content
 		controller_class.get_functions.each do |k, v|
-			
-			#replace all controller_functions by functions with render statemenrs replaced
-			
-
 			res = res.gsub(v.get_content, v.replace_render_statements(view_hash))
-			#break
-			
 		end
 
 		File.write(controller_file_path, res)

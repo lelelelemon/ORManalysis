@@ -10,40 +10,65 @@ class Controller_Class
 		@content = read_content(@path)
 		j = path.index("_controller.rb")
 		@controller = path[0..j-1]
-		@ast = parse_content(@content)
-		@functions = parse_functions(@ast)
-		
-	end
-
+    @ast = parse_content(@content)
+    set_class_node(@ast)
+    set_upper_class
+    @functions = parse_functions(@ast)
+    if @layout == nil
+      set_default_layout
+    end
+  end
 	def get_controller_name
 		@controller
 	end
-
 	def get_functions
 		@functions
 	end
-
 	def get_ast
 		@ast
 	end
-
 	def get_content
 		@content
 	end
-
 	def get_path
 		@path
 	end
-
+  def set_class_node(astnode)
+    if astnode.type.to_s == "class"
+      @class_node = astnode
+    else
+      astnode.children.each do |child|
+        set_class_node(child)
+      end
+    end
+  end
+  def set_upper_class(upper_class = nil)
+    if upper_class != nil
+      @upper_class = upper_class
+    else
+      if @class_node.children[1].type.to_s == "const_path_ref" or @class_node.children[1].type.to_s == "var_ref"
+        puts @controller + "<" +  @class_node.children[1].source.to_s
+        @upper_class = @class_node.children[1].source.to_s
+      end
+    end
+  end
 	#traverse the ast of the controller class and get all action functions stored in its function hash
 	def parse_functions(ast)
 		functions = Hash.new
 		ast_arr = Array.new
 		ast_arr.push ast
 		while ast_arr.length > 0
-			cur_ast = ast_arr.pop
-			if cur_ast.type.to_s == "def" 
-				func_name = get_func_name(cur_ast.source.split("\n")[0])
+      cur_ast = ast_arr.pop
+
+      #handle layout
+      if cur_ast.type.to_s == "command" and cur_ast.source.to_s.start_with?"layout"
+        @layout = cur_ast.children[1].source.to_s
+        @layout.gsub! /['"]/, ""
+      end
+
+      if cur_ast.type.to_s == "def"
+
+        func_name = get_func_name(cur_ast.source.split("\n")[0])
 				source = cur_ast.source
 				source.strip!
 				functions[func_name] = Function_Class.new(self, source)
@@ -55,10 +80,13 @@ class Controller_Class
 		end
 		return functions
 	end
-
 	def parse_content(content)
 		return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
+  def set_default_layout
+    puts "controller: " + @controller
+    puts "default layout: " + "layouts/" + @controller
+  end
 end
 
 class Function_Class
@@ -187,7 +215,10 @@ class Function_Class
 	end
 
 	def replace_render_statements(view_class_hash)
-		render_view_mapping = self.get_render_view_mapping(view_class_hash)
+	  
+
+
+    render_view_mapping = self.get_render_view_mapping(view_class_hash)
 		content = self.get_content.dup
 		
 		need_default_render = true
@@ -235,7 +266,7 @@ end
 
 class View_Class
 	def initialize(path, base_path)
-		@path = path
+		@path = path.dup
 		@rb_path = path + ".rb"	
 		@content = read_content(@path)		
 		@rb_content = read_content(@rb_path)
@@ -265,6 +296,7 @@ class View_Class
 		end
 		j = @view_name.index(".")
 		@view_name = @view_name[0..j-1]
+    puts "view_name: " + @view_name
 #		if @file_type == "rss" or @file_type == "js"
 #			@view_name += ("." + @file_type)
 #		end
