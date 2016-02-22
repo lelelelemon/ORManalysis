@@ -47,10 +47,15 @@ class Controller_Class
       @upper_class = upper_class
     else
       if @class_node.children[1].type.to_s == "const_path_ref" or @class_node.children[1].type.to_s == "var_ref"
-        puts @controller + "<" +  @class_node.children[1].source.to_s
         @upper_class = @class_node.children[1].source.to_s
+        @upper_class.gsub! "Controller", ""
+        @upper_class.gsub! /::/, "_"
+        @upper_class.downcase!
       end
     end
+  end
+  def get_upper_class()
+    @upper_class
   end
 	#traverse the ast of the controller class and get all action functions stored in its function hash
 	def parse_functions(ast)
@@ -84,8 +89,14 @@ class Controller_Class
 		return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
   def set_default_layout
-    puts "controller: " + @controller
-    puts "default layout: " + "layouts/" + @controller
+    @layout = "layouts_" + @controller
+    @layout.gsub! "/", "_"
+  end
+  def get_layout
+    @layout
+  end
+  def to_s
+    @controller
   end
 end
 
@@ -103,7 +114,7 @@ class Function_Class
 		end
 	end
 
-	def to_str
+	def to_s
 		return self.get_controller_name + "_" + self.get_function_name
 	end
 
@@ -146,10 +157,14 @@ class Function_Class
 			cur_ast = ast_arr.pop
 			if cur_ast.source.start_with? keyword
 				if cur_ast.parent.source.start_with?"return" 
-					res_arr.push cur_ast.parent.source
+          res = cur_ast.parent.source.to_s
 				else 
-					res_arr.push cur_ast.source
+          res = cur_ast.source.to_s
 				end
+        if res.end_with?"\n e"
+          res = res[0..-3]
+        end
+        res_arr.push res
 			else
 				cur_ast.children.each do |child|
 					ast_arr.push child
@@ -214,9 +229,30 @@ class Function_Class
 		return render_view_mapping	
 	end
 
-	def replace_render_statements(view_class_hash)
-	  
+	def replace_render_statements(view_class_hash, controller_hash)
+    parent_class = self.get_class
+    default_layout = parent_class.get_layout
+    default_layout_view = nil
+    while not view_class_hash.has_key?(default_layout) and parent_class != nil
+      default_layout = parent_class.get_layout
+      parent_class = controller_hash[parent_class.get_upper_class]
+    end
 
+    if view_class_hash.has_key?(default_layout)
+      default_layout_view = view_class_hash[default_layout]
+    end
+
+    layout_content = ""
+    if default_layout_view != nil
+      layout_content = default_layout_view.replace_render_statements(view_class_hash, 0)
+    end
+
+
+    ###################################################################
+    #Up to this point, we have got the default layout content, 
+    #the next step is to merge the content into the layout, 
+    #we assume that we only have default layout at this moment
+    #
 
     render_view_mapping = self.get_render_view_mapping(view_class_hash)
 		content = self.get_content.dup
@@ -225,8 +261,9 @@ class Function_Class
 		temp = content.split("\n")
 		#if the second last line contains "render" or "redirect_to" we assume that we don't need to do default rendering
 		need_default_render = false if temp[temp.length-2].include?"render" or temp[temp.length-2].include?"redirect_to"
-		
+
 		render_view_mapping.each do |k, v|
+      v = merge_layout_content(layout_content, v)
 			content.gsub! k, "ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + v + "\nend\n"
 		end
 
@@ -235,11 +272,12 @@ class Function_Class
 			view_name = self.get_controller_name + "_" + self.get_function_name
 			view_class = view_class_hash[view_name]
 			if view_class != nil
-				value = view_class.replace_render_statements(view_class_hash, 0)
+				v = view_class.replace_render_statements(view_class_hash, 0)
+        v = merge_layout_content(layout_content, v)
 				content = content.split "\n"
 				len = content.length
 				content[len] = content[len-1]
-				content[len-1] = "ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + value + "\nend\n"
+				content[len-1] = "ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + v + "\nend\n"
 				content = content.join("\n")
 			else
 				#do something the view file does not exist! It could mean we parse the file wrong. 
@@ -330,7 +368,6 @@ class View_Class
 
 	
 	def parse_content(content)
-    puts @path
     return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
 
@@ -369,7 +406,17 @@ class View_Class
 	end
 
 	def get_render_statement_array
-		get_render_array @ast
+		res_arr = get_render_array @ast
+    
+    res_arr2 = []
+    res_arr.each do |res|
+      if res.end_with?"\n e"
+        res = res[0..-3]
+      end
+      res_arr2.push res
+    end
+
+    return res_arr2
 	end
 
 	# This function is used to get all render statements recursively, so we can know what view files will be rendered by this controller action, further, we can get the information about what links exist in the corresponding view files
@@ -446,10 +493,8 @@ class View_Class
     return self.get_rb_content if dep > 10
 		render_view_mapping = self.get_render_view_mapping(view_class_hash, dep)
 		rb_content = self.get_rb_content.dup 
-		puts "------------------------------current view file: " + self.to_str
+		puts "------------------------------current view file: " + self.to_s
 		render_view_mapping.each do |k, v|
-			puts "key: " + k
-			puts "value: " + v
 			rb_content.gsub! k, v
 		end
 
@@ -478,7 +523,7 @@ class View_Class
 		@links_controller_view 
 	end
 
-	def to_str
+	def to_s
 		@controller_name + "_" + @view_name
 	end
 end 

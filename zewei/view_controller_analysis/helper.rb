@@ -514,3 +514,44 @@ def get_render_array(ast)
 	return res_arr
 end
 
+def merge_layout_content(layout, content)
+  layout_ast = YARD::Parser::Ruby::RubyParser.parse(layout).root
+  puts content
+  content_ast = YARD::Parser::Ruby::RubyParser.parse(content).root
+
+  content_hash = {}
+  proc_merge_layout_content(content_ast, content_hash)
+
+  content_hash.each do |key, value|
+    if layout.include?"yield(#{key})"
+      layout.gsub! "yield(#{key})", value
+      content.gsub! value, ""
+    elsif layout.include?"yield #{key}"
+      layout.gsub! "yield #{key}", value
+      content.gsub! value, ""
+    end
+  end
+
+  if layout.include?"yield :layout"
+    layout.gsub! "yield :layout", content
+  elsif layout.include?"yield\n"
+    layout.gsub! "yield\n", content
+  end
+
+  return layout
+end
+
+def proc_merge_layout_content(content_ast, content_hash)
+  if content_ast != nil and content_ast.source.to_s.start_with?"content_for"
+    key = content_ast.source.to_s
+    value = content_ast.children[1].source.to_s
+    key.strip!
+    content_hash[key] = value
+  else
+    content_ast.children.each do |child|
+      proc_merge_layout_content(child, content_hash)
+    end
+  end
+end
+
+
