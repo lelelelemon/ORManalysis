@@ -49,6 +49,9 @@ for subdir, folders, files in os.walk(base_path):
 			f.close()
 			newdata = filedata.replace("::","")
 			newdata = newdata.replace("Admin/","Admin")
+			newdata = newdata.replace("new/create","NEWCREATE")
+			newdata = newdata.replace("<>","<EMPTY>")
+			newdata = newdata.replace("</>","</EMPTY>")
 			f = open(fname,'w+')
 			f.write(newdata)
 			f.close()
@@ -137,7 +140,7 @@ for subdir, folders, files in os.walk(base_path):
 					i = 0
 					for child in c:
 					#child.tag = User
-						if child.tag != "string" and child.tag != "integer" and child.tag != "boolean":
+						if child.tag != "string" and child.tag != "integer" and child.tag != "boolean" and child.tag != "NEWCREATE" and child.tag != "EMPTY":
 							#assign colors
 							table_name = child.tag
 							colors = []
