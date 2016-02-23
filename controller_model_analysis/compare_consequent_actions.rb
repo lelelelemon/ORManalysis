@@ -80,12 +80,12 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 					if pn.isReadQuery?
 						if pn.getInstr.getCaller == n.getInstr.getCaller and pn.getInstr.getFuncname == n.getInstr.getFuncname
 							@same_q = true
-							@next_read_same += 1
 						end
 					end
 				end
 				#sub/super set
 				if @same_q
+					@next_read_same += 1
 				else
 					@superset = false
 					@temp_next_fields.each do |f|

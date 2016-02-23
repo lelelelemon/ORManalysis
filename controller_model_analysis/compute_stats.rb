@@ -342,7 +342,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	#compute_functional_dependency($graph_file)
 
-
+	puts "-1"
 	total_query_num = 0
 	query_in_closure = 0
 	query_in_view = 0
@@ -584,7 +584,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$graph_file.puts("\t\t<queryUsedInView>#{@singleQ_stat.result_used_in_view}<\/queryUsedInView>")
 	$graph_file.puts("\t<\/general>")
 
-
 	@table_general_stat.each do |k, v|
 		$graph_file.puts("\t<#{k}>")
 		helper_print_stat(v, @table_read_stat[k], @table_write_stat[k], k, false)
@@ -611,11 +610,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		$graph_file.puts("\t<clique>#{cq}<\/clique>")
 	end
 	$graph_file.puts("<\/cliqueStat>")
-
+			
 	$graph_file.puts("<chainStats>")
 	compute_chain_stats
 	$graph_file.puts("<\/chainStats>")
-
 
 	$graph_file.puts("<singlePath>")
 	compute_longest_single_path	

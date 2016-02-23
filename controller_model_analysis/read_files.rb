@@ -104,6 +104,10 @@ def read_key_words
 		line_array = line.chomp.split(' ')
 		$key_words[line_array[0]] = line_array[1]
 	end
+	File.open("ignore_method_list.txt").each do |line|
+		line = line.gsub("\n","")
+		$ignore_method_list.push(line)
+	end
 end
 
 def handle_single_file(item)

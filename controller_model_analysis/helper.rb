@@ -271,6 +271,9 @@ def get_class_list(astnode, class_list)
 end
 
 def search_distinct_func_name(func_name)
+	if $ignore_method_list.include?(func_name)
+		return nil
+	end
 	count = 0
 	class_name = ""
 	$class_map.each do |keyc, valuec|

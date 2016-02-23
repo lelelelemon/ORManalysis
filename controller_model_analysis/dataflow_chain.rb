@@ -226,7 +226,9 @@ end
 def compute_source_sink_for_all_nodes
 	#source
 	@processed_list = Array.new
-	while @processed_list.length < $node_list.length
+  @iter = 0
+	while @processed_list.length < $node_list.length and @iter < 5000
+		@iter = @iter + 1
 		$node_list.each do |n|
 			if @processed_list.include?n
 			else
@@ -358,9 +360,7 @@ def find_path_between_two_nodes(start_node, end_node)
 	@temp_node_list = Array.new
 	@temp_node_list.push(start_node)
 	reach_end = false
-	step = 0
-	while !reach_end and @temp_node_list.length > 0 and step < 50000
-		step = step + 1
+	while !reach_end and @temp_node_list.length > 0
 		temp_node = @temp_node_list.shift
 		if temp_node == end_node
 			reach_end = true
@@ -370,6 +370,7 @@ def find_path_between_two_nodes(start_node, end_node)
 		else
 			temp_node.getDataflowEdges.each do |e|
 				if @processed_list.include?(e.getToNode)
+				elsif e.getToNode.getIndex > end_node.getIndex
 				else
 					@processed_list.push(e.getToNode)
 					@pre_node[e.getToNode] = temp_node

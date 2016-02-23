@@ -55,6 +55,8 @@ $table_names = Array.new
 #read keywords list
 $key_words = Hash.new
 
+#when find unique method by name, ignore these methods...
+$ignore_method_list = Array.new
 #when issuing a function call, find the caller's class
 def retrieve_func_calls
 	$class_map.each do |keyc, valuec|
