@@ -1,0 +1,172 @@
+lobster_trap=WGJvc291VW5uNElKQ3ZPUVJSK05TUEorVlJwR3o0OHFKRHpsMk9tU0d0RVNNaHBpUEw3aDdRQlBhMCtqQXh2d3grVUNZaHJFZVIzcjEyWVVXRE4zWWlvTzV0OVpzK2ZJVXkyZHN5QmpFeWFBc3crWnJ0cVJMYkZKN1lNdWdQajg2ZG8vbG5WVE1lOUdBOFpDN212cWpHNk5Ianc3TUVZQ2ZkbDhHNHNzekIvekYvOXBya1pWd0ZCTUUrQklwUkFkei9vRWhrNkhRc1EvaUZrc1VLRUVNckNJdFZTQkJJT0FacGE0R05yR3lyS1ZNdWlHdWY0cjRaWFhzdTJNbVM5Vi0tb3MyYVZtU29UT2hickl2SGZqdEZBdz09--7567a28633bc9a28440f702ec6750cdab655b48e; path=/; expires=Tue, 22 Mar 2016 05:25:11 -0000; HttpOnly
+http://localhost:3000/stories/new
+<form accept-charset="UTF-8" action="/stories" class="new_story" id="new_story" method="post">
+<div style="display:none">
+<input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="FqxF1/8wIf8GBrBat/vlgf0XxrxbZFJIgfeFVNus+6E=">
+</div>
+      
+<div class="box">
+    <div class="boxline">
+      <label class="required" for="story_url">URL:</label>
+      <input autocomplete="off" id="story_url" name="story[url]" type="text" value="">
+      <button id="story_fetch_title" name="button" type="button">Fetch Title</button>
+    </div>
+
+  <div class="boxline">
+    <label class="required" for="story_title">Title:</label>
+    <input autocomplete="off" id="story_title" maxlength="100" name="story[title]" size="100" type="text" value="">
+  </div>
+
+
+  <div class="boxline" style="margin-bottom: 2px;">
+  <label class="required" for="story_tags_a" style="line-height: 2.3em;">Tags:</label>
+  <input name="story[tags_a][]" type="hidden" value=""><select id="story_tags_a" multiple name="story[tags_a][]"><option data-html="&lt;strong&gt;test&lt;/strong&gt; -  &lt;em&gt;1 user filtering&lt;/em&gt;" value="test">test - </option></select>
+  </div>
+
+
+    <div class="boxline">
+      <label class="required" for="story_description">Text:</label>
+      <textarea autocomplete="off" id="story_description" name="story[description]" placeholder="Optional when submitting a URL; please see guidelines" rows="15">
+</textarea>
+    </div>
+
+    <div class="boxline actions markdown_help_toggler">
+      <a href="#" id="story_guidelines_toggler">
+        Story submission guidelines
+      </a>
+      <div id="story_guidelines" style="">
+        <div style="float: right;">
+        <a href="javascript:%7Bwindow.open(%22https://example.com/stories/new?url=%22+encodeURIComponent(document.location)+%22&amp;title=%22+encodeURIComponent(document.title));%20void(0);%7D" style="border: 1px solid #ddd; padding: 0.5em; background-color:
+        #f8f8f8; line-height: 1.5em; margin-left: 1em;">Submit to
+        Example News</a>
+        </div>
+        <ul>
+
+          <li><p>
+          To be able to easily submit a page you're viewing in your browser
+          to Example News, drag the bookmarklet to the right
+          to your bookmark bar.  You'll be taken to this page with the viewed
+          page's URL and title.
+          </p></li>
+
+          <li><p>
+          When submitting a URL, the text field is optional and should only
+          be used when additional context or explanation of the URL is
+          needed.  Commentary or opinion should be reserved for a comment,
+          so that it can be voted on separately from the story.
+          </p></li>
+
+          <li><p>
+          Do not editorialize story titles, but when the original story's
+          title has no context or is unclear, please change it.  <strong>Please
+          remove extraneous components from titles such as the name of the
+          site or section.</strong>
+          </p></li>
+
+          <li><p>
+          If no tags clearly apply to the story you are submitting, chances
+          are it does not belong here.  Do not overreach with tags if they
+          are not the primary focus of the story.
+          </p></li>
+
+          <li><p>
+          When the story being submitted is more than a year or so old,
+          please add the year the story was written to the post title in
+          parentheses.
+          </p></li>
+
+        </ul>
+      </div>
+    </div>
+</div>
+  <div class="box">
+    <div class="boxline">
+      <label class="required" for="story_user_is_author">Author:</label>
+      <input name="story[user_is_author]" type="hidden" value="0"><input id="story_user_is_author" name="story[user_is_author]" type="checkbox" value="1">
+      <label class="normal" for="story_user_is_author">I am the author of the story at this URL (or this text)</label>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $("#story_fetch_title").click(function() {
+        Lobsters.fetchURLTitle($(this), $("#story_url"), $("#story_title"));
+        return false;
+      });
+    });
+  </script>
+
+
+      <p></p>
+
+      <div class="box">
+        <div class="boxline actions markdown_help_toggler">
+          <div class="markdown_help_label">
+            Markdown formatting available
+          </div>
+
+          <input name="commit" type="submit" value="Submit">
+
+           
+          <button type="button" class="story-preview">Preview</button>
+
+          <div style="clear: both;"></div>
+
+          <div class="markdown_help" style="display: none; padding-top: 0.5em;">
+  <table>
+  <tr>
+    <td width="125"><em>emphasized text</em></td>
+    <td>surround text with <tt>*asterisks*</tt>
+</td>
+  </tr>
+  <tr>
+    <td><strong>strong text</strong></td>
+    <td>surround text with <tt>**two asterisks**</tt>
+</td>
+  </tr>
+  <tr>
+    <td><strike>struck-through</strike></td>
+    <td>surround text with <tt>~~two tilde characters~~</tt>
+</td>
+  </tr>
+  <tr>
+    <td><tt>fixed width</tt></td>
+    <td>surround text with <tt>`backticks`</tt>
+</td>
+  </tr>
+  <tr>
+    <td><a href="http://example.com/" style="color: inherit;">linked text</a></td>
+    <td>
+<tt>[linked text](http://example.com/)</tt> or just a bare URL
+      to create without a title</td>
+  </tr>
+  <tr>
+    <td><blockquote> quoted text</blockquote></td>
+    <td>prefix text with <tt>&gt;</tt>
+</td>
+  </tr>
+  <tr>
+    <td><pre style="margin: 0px;">pre
+  text</pre></td>
+    <td>prefix text with at least<tt>    4 spaces</tt>
+</td>
+  </tr>
+    <tr>
+      <td>(inline image)</td>
+      <td>
+<tt>![alt text](http://example.com/image.jpg)</tt> (only allowed in
+        story text</td>
+    </tr>
+  </table>
+</div>
+
+        </div>
+      </div>
+</form>
+params: 
+{"utf8"=>"✓", "authenticity_token"=>"FqxF1/8wIf8GBrBat/vlgf0XxrxbZFJIgfeFVNus+6E=", "story[url]"=>"", "story[title]"=>"", "story[tags_a][]"=>"", "story[user_is_author]"=>"1", "commit"=>"Submit"}
+------params: 
+{"utf8"=>"✓", "authenticity_token"=>"FqxF1/8wIf8GBrBat/vlgf0XxrxbZFJIgfeFVNus+6E=", "story[url]"=>"http://www.cs.uchicago.edu/~zewei", "story[title]"=>"shan lu home page", "story[tags_a][]"=>"test", "story[user_is_author]"=>"1", "commit"=>"Submit", "story[description]"=>"shan lu home page"}
+#<Net::HTTPFound:0x007f7c319c1288>
+<html><body>You are being <a href="http://localhost:3000/s/m3gwbk/shan_lu_home_page">redirected</a>.</body></html>
+Found 
