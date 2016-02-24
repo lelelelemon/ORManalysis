@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
       has_permission = false
 
       Permission.where(:group_id => groups, :folder_id => folder.id).each do |permission|
-        has_permission = permission.send("can_create")
+        has_permission = permission.can_create
         break if has_permission
       end
 
@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
       has_permission = false
 
       Permission.where(:group_id => groups, :folder_id => folder.id).each do |permission|
-        has_permission = permission.send("can_read")
+        has_permission = permission.can_read
         break if has_permission
       end
 
@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
       has_permission = false
 
       Permission.where(:group_id => groups, :folder_id => folder.id).each do |permission|
-        has_permission = permission.send("can_update")
+        has_permission = permission.can_update
         break if has_permission
       end
 
@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
       has_permission = false
 
       Permission.where(:group_id => groups, :folder_id => folder.id).each do |permission|
-        has_permission = permission.send("can_delete")
+        has_permission = permission.can_delete
         break if has_permission
       end
 

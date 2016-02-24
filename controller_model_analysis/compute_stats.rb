@@ -574,6 +574,23 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					@view_stat.addField("#{tbl_name}.#{field_name}")
 				end
 			end 
+		elsif n.isTableField?
+			@used_in_view = false
+			tbl_name = type_valid(n.getInstr, n.getInstr.getCaller)
+			field_name = n.getInstr.getFuncname
+			f = testTableField(tbl_name, field_name)
+			if f != nil
+				traceforward_data_dep(n).each do |n1|
+					if n1.getInView?
+						@used_in_view = true
+						break
+					end
+				end
+				if @used_in_view
+					@view_stat.addField("#{tbl_name}.#{field_name}")
+					@view_stat.addTable(tbl_name)
+				end
+			end 
 		end
 	end
 

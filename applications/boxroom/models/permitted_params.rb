@@ -1,8 +1,7 @@
 class PermittedParams < Struct.new(:params, :current_user)
   %w{folder group share_link user user_file}.each do |model_name|
-    define_method model_name do
+	def folder
       params.require(model_name.to_sym).permit(*send("#{model_name}_attributes"))
-    end
   end
 
   def folder_attributes

@@ -15,17 +15,41 @@ class FilesController < ApplicationController
   # @target_folder is set in require_existing_target_folder
   def new
     @file = @target_folder.user_files.build
- content_for :title, t(:upload_file) 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
  content_for :title 
- form_for [@target_folder, @file], :url => { :action => 'create' } do |f| 
- hidden_field_tag :target_folder_id, @target_folder.id 
- file_field_tag :attachment, :multiple => true, :name => 'user_file[attachment]' 
- link_to t(:back), @target_folder 
+ else 
  end 
- image_tag 'spinner.gif', :class => 'spinner' 
- image_tag 'failed.png', :class => 'failed', :style => 'display:none;' 
- image_tag 'tick.png', :class => 'tick', :style => 'display:none;' 
- t(:exists_already) 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
+ yield 
+  
+
+end
 
   end
 
@@ -37,15 +61,41 @@ class FilesController < ApplicationController
 
   # @file and @folder are set in require_existing_file
   def edit
- content_for :title, t(:rename_file) 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
  content_for :title 
- form_for @file, :url => { :action => 'update' } do |f| 
- f.error_messages 
- f.label :name 
- f.text_field :attachment_file_name 
- f.submit t(:save) 
- link_to t(:back), @folder 
+ else 
  end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
+ yield 
+  
+
+end
 
   end
 
@@ -54,15 +104,41 @@ class FilesController < ApplicationController
     if @file.update_attributes(permitted_params.user_file)
       redirect_to edit_file_url(@file), :notice => t(:your_changes_were_saved)
     else
-       content_for :title, t(:rename_file) 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
  content_for :title 
- form_for @file, :url => { :action => 'update' } do |f| 
- f.error_messages 
- f.label :name 
- f.text_field :attachment_file_name 
- f.submit t(:save) 
- link_to t(:back), @folder 
+ else 
  end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
+ yield 
+  
+
+end
 
     end
   end
