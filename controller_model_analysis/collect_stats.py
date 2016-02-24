@@ -301,8 +301,19 @@ def print_view_stat(prefix):
 	cond_list.append("table")
 	r = calculateAllActions(cond_list, False)
 	for t in r:
-		if t not in table:
+		if t not in table and t not in ["boolean","integer","None"]:
 			table.append(t)
+
+	cond_list = prefix[:]
+	cond_list.append("field")
+	r = calculateAllActions(cond_list, False)
+	for t in r:
+		if t not in field:
+			field.append(t)
+			p = t.split('.')
+			if p[0] not in table and p[0] not in ["boolean","integer","None"]:
+				table.append(p[0])
+
 	table.sort()
 	print "Table used in view:"
 	for t in table:
@@ -328,12 +339,6 @@ def print_view_stat(prefix):
 	ax1.set_xticklabels((''))
 	ax1.legend((rect1[0], rect2[0]), ('table presented in view','table not presented in view'),prop={'size':'10'}, loc='upper right')
 
-	cond_list = prefix[:]
-	cond_list.append("field")
-	r = calculateAllActions(cond_list, False)
-	for t in r:
-		if t not in field:
-			field.append(t)
 
 	ax2 = fig.add_subplot(122)
 	ax2.set_ylim(0, len(tablefields)*1.4)

@@ -51,7 +51,7 @@ def searchTableName(name)
 		_name = name[0..(name.index('.')-1)]
 	end
 	$table_names.each do |t|
-		if t.downcase.singularize == _name.delete('@').downcase.singularize
+		if t.downcase.singularize == _name.delete('@').delete('_').downcase.singularize
 			return t
 		end
 	end
