@@ -119,7 +119,7 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 	end
 	$graph_file.puts("\t<nextReadOverlap>#{@next_read_overlap}<\/nextReadOverlap>")
 	$graph_file.puts("\t<nextReadTotal>#{@next_read_total}<\/nextReadTotal>")
-	$graph_file.puts("\t<nextReadSame>#{@next_read_same}<\/nextReadTotal>")
+	$graph_file.puts("\t<nextReadSame>#{@next_read_same}<\/nextReadSame>")
 	$graph_file.puts("\t<nextReadSuper>#{@next_read_superset}<\/nextReadSuper>")
 	$graph_file.puts("\t<nextReadSub>#{@next_read_subset}<\/nextReadSub>")
 	$graph_file.puts("<\/#{action_name}>")
