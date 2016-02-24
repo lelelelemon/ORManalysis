@@ -581,7 +581,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			f = testTableField(tbl_name, field_name)
 			if f != nil
 				traceforward_data_dep(n).each do |n1|
-					if n1.getInView?
+					if n1.getInView
 						@used_in_view = true
 						break
 					end

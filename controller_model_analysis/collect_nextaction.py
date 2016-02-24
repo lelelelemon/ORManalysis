@@ -112,6 +112,28 @@ color_index = 0
 
 overlap_table_name = {}
 overlap_table_count = []
+stat_list = {}
+avg_list = {}
+total_read_num = {}
+
+stats_content = ["nextReadOverlap", "nextReadTotal", "nextReadSame", "nextReadSuper", "nextReadSub"]
+for s in stats_content:
+	avg_list[s] = []
+
+for subdir, folders, files in os.walk(base_path):
+	for fn in files:
+		if fn.endswith("stats.xml"):
+			fname = os.path.join(subdir, fn)
+			temp_l = list(find(fname, "/"))
+			cur_action_name = fname[temp_l[-2]+1:temp_l[-1]]
+			tree = ET.parse(fname)
+			root = tree.getroot()
+			for child1 in root:
+				if child1.tag == "general":
+					for child2 in child1:
+						if child2.tag == "read":
+							total_read_num[cur_action_name] = float(child2[0].text)
+
 
 for subdir, folders, files in os.walk(base_path):
 	for fn in files:
@@ -129,18 +151,26 @@ for subdir, folders, files in os.walk(base_path):
 				continue
 
 			with pdfp.PdfPages('%s/%s.pdf'%(fig_path, cur_action_name)) as pdf:
-				print "num_actions = %d"%num_actions
+				#print "num_actions = %d"%num_actions
 				for c in (root):
 					#c.tag = CommentsController_index
 					#initiate a figure here
 					fig = plt.figure()
 					num_tables = len(c)
 					overlap_table_count.append(num_tables)
-					print "num_tables = %d"%num_tables
+					#print "num_tables = %d"%num_tables
 					i = 0
+					if c.tag not in stat_list:
+						stat_list[c.tag] = {}
+						for content in stats_content:
+							stat_list[c.tag][content] = []
 					for child in c:
+						#general stats
+						if child.tag in stats_content:
+							stat_list[c.tag][child.tag].append(float(child.text))
+							avg_list[child.tag].append(float(child.text))
 					#child.tag = User
-						if child.tag != "string" and child.tag != "integer" and child.tag != "boolean" and child.tag != "NEWCREATE" and child.tag != "EMPTY":
+						elif child.tag != "string" and child.tag != "integer" and child.tag != "boolean" and child.tag != "NEWCREATE" and child.tag != "EMPTY":
 							#assign colors
 							table_name = child.tag
 							colors = []
@@ -169,11 +199,11 @@ for subdir, folders, files in os.walk(base_path):
 							#print prev_field
 							#print next_field
 							#print stat
-							print_single_action(ax, ax_stat, stat, prev_field, next_field, colors, table_name)
+							#print_single_action(ax, ax_stat, stat, prev_field, next_field, colors, table_name)
 							i = i + 1
 					#plt.show()
-					plt.suptitle('%s'%c.tag)
-					pdf.savefig(fig)
+					#plt.suptitle('%s'%c.tag)
+					#pdf.savefig(fig)
 				#exit()	
 
 def getAverage(l):
@@ -182,7 +212,26 @@ def getAverage(l):
 	else:
 		return float(sum(l)) / float(len(l))
 
+print "Which table has most overlap?"
 for k, v in overlap_table_name.items():
 	print "%s, %d outof %d"%(k, v, len(overlap_table_count))
+
+printed_title = False
+for k, v in stat_list.items():
+	totalread = 0
+	if k in total_read_num:
+		totalread = total_read_num[k]
+	if printed_title == False:
+		for k1, v1 in v.items():
+			print "%s\t"%(k1),
+		print ""
+		printed_title = True
+	print "%s, total =\t%d"%(k, totalread),
+	for k1, v1 in v.items():
+		print "\t%f"%(getAverage(v1)),
+	print ""
+
+for k, v in avg_list.items():
+	print "%s:\t%f"%(k, getAverage(v))
 
 print "Average table overlap for each next_action: %f"%getAverage(overlap_table_count)

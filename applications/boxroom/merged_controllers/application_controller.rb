@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def "require_delete_permission
+    def require_delete_permission
       unless (method == 'read' && @folder.is_root?) || current_user.can_delete(@folder)
         redirect_folder = @folder.parent.nil? ? Folder.root : @folder.parent
         redirect_to redirect_folder, :alert => t(:no_permissions_for_this_type, :method => t(:create), :type => t(:this_folder))

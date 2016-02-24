@@ -84,21 +84,23 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 					end
 				end
 				#sub/super set
-				if @same_q
-					@next_read_same += 1
-				else
-					@superset = false
-					@temp_next_fields.each do |f|
-						if @prev_fields_select.include?(f)
-						else
-							@superset  = true
-						end
-					end
-					if @superset
-						@next_read_superset += 1
+				if n.isReadQuery?
+					if @same_q
+						@next_read_same += 1
 					else
-						@next_read_subset += 1
-					end	
+						@superset = false
+						@temp_next_fields.each do |f|
+							if @prev_fields_select.include?(f)
+							else
+								@superset  = true
+							end
+						end
+						if @superset
+							@next_read_superset += 1
+						elsif @temp_next_fields.length > 0
+							@next_read_subset += 1
+						end	
+					end
 				end
 			end
 
