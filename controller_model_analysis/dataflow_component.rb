@@ -47,7 +47,7 @@ class Instruction
 		@defv_var = nil
 		@args = Array.new
 	end
-	attr_accessor :defv_var, :args
+	attr_accessor :defv_var, :args, :inodes, :inode
 	def getArgs
 		@args
 	end

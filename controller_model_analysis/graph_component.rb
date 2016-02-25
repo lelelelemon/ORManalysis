@@ -281,7 +281,7 @@ def addAllControlEdges
 					else
 						o_bb = pren.getInstr.getBB.getCFG.getBBByIndex(o)
 						next_nodes = o_bb.getInstr[0].getINodes
-						next_node = next_nodes[0]
+						next_node = o_bb.getInstr[0].getINode
 						if next_nodes.length > 1
 							next_nodes.each do |nn|
 								if nn.getIndex > pren.getIndex
@@ -356,6 +356,9 @@ def compute_longest_single_path
 	#	puts "#{n.getIndex}: #{n.getInstr.toString}"
 	#	n.getControlflowEdges.each do |e|
 	#		puts "\t -> #{e.getToNode.getIndex}"
+	#		if e.getToNode == n.shortest_control_path_nextnode
+	#			puts "\t\t(shortest path: #{n.shortest_path_length})"
+	#		end
 	#		if e.getToNode == n.longest_control_path_nextnode
 	#			puts "\t\t(longest path: #{n.path_length})"
 	#		end

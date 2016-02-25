@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
   end
 
   def highlight_safe_html( text, k, raw = false )
-    res = text.gsub(/(#{Regexp.escape(k)})/i, '{{{}}}')
+    res = text.gsub(/(#{Regexp.escape(k)})/i, '{{{\1}}}')
     res = ERB::Util.h(res).gsub("{{{", "<strong>").gsub("}}}", "</strong>").html_safe unless raw
     res
   end

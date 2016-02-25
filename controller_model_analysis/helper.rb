@@ -362,6 +362,10 @@ def clear_data_structure
 			n.getInstr.getBB.getCFG.explicit_return = Array.new
 			n.getInstr.getBB.getCFG.return_list = Array.new
 		end
+		if n.getInstr != nil
+			n.getInstr.inode = nil
+			n.getInstr.inodes = Array.new
+		end
 	end
 	$class_map.each do |keyc, valuec|
 		valuec.getMethods.each do |key, value|

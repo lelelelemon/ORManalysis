@@ -499,6 +499,7 @@ if options[:run_all]
 				@prev_list.push(n)
 			end
 			
+			clear_data_structure
 			File.open(next_file, "r").each do |line|
 				if line.length > 1
 					line = line.gsub("\n","")
@@ -510,7 +511,6 @@ if options[:run_all]
 			end
 				
 			@next_action.each do |line|
-				clear_data_structure
 
 				line = line.gsub("\n","")
 				chs = line.split(',')
@@ -522,6 +522,7 @@ if options[:run_all]
 			
 				puts "Compare with: #{next_class}.#{next_function}"
 				compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list)
+				clear_data_structure
 			end
 
 			$graph_file.puts("<\/NEXTACTION>")
