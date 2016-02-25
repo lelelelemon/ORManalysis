@@ -532,11 +532,18 @@ def merge_layout_content(layout, content)
     end
   end
 
-  if layout.include?"yield :layout"
-    layout.gsub! "yield :layout", content
-  elsif layout.include?"yield\n"
+  #handle a special case for jobsworth
+  if content_hash.has_key?":content"
+    layout.gsub! "content_for?(:content) ? yield(:content) : yield ", content_hash["content_for?(:content) ? yield(:content) : yield "]
+    content.gsub! "content_for?(:content) ? yield(:content) : yield ", ""
+  end
+
+  if layout.include?"yield\n"
     layout.gsub! "yield\n", content
   end
+
+  #handle a special case for jobsworth
+  layout.gsub! "content_for?(:content) ? yield(:content) : yield ", content
 
   return layout
 end
@@ -555,3 +562,49 @@ def proc_merge_layout_content(content_ast, content_hash)
 end
 
 
+def get_layout_name_from_render_statement(r)
+  r = r.split("\n")[0]
+  r = r[6..-1] if r.start_with?"return"
+  r.strip!
+  r = r[6..-1] if r.start_with?"render"
+  r.strip!
+  while r[0] == '(' 
+    r = r[1..-1]
+  end
+  while r[-1] == ')'
+    r = r[0..-2]
+  end
+  arr = r.split(",")
+  layout = ""
+  layout_exists = false
+  arr[0].strip!
+  arr.each do |a|
+    a.gsub! /["'\t]/, ""
+    a.gsub! " ", ""
+    if a.include?("=>")
+      a = a.split("=>")
+    elsif a.include?":" 
+      a = a.split(":")		
+    else 
+      a = [a]
+      a[1] = ""	
+    end
+    if a[0] == ":layout" or a[0] == "layout"
+      layout = a[1]
+      while layout[0] == '/'
+        layout = layout[1..-1]
+      end
+      layout_exists = true
+    end
+  end
+
+  if layout.end_with?".html.erb"
+    layout.gsub! ".html.erb", ""
+  end
+
+  if layout_exists
+    return layout
+  else
+    return "not_valid"
+  end
+end

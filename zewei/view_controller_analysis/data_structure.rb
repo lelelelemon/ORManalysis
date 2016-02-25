@@ -208,17 +208,41 @@ class Function_Class
 	end
 
 	# get the mapping of render statemnets to view file content	
-	def get_render_view_mapping(view_class_hash)
+	def get_render_view_mapping(view_class_hash, controller_hash)
 		render_view_mapping = Hash.new
 
 		self.get_render_statement_array.each do |r|
 			
 			view_name = get_view_name_from_render_statement(r)
-			if view_name != "not_valid"
+		  layout_name = get_layout_name_from_render_statement(r)
+
+      layout_content = nil
+      
+      if layout_name != "not_valid"
+        layout_content = view_class_hash[layout_name]
+      end
+
+      if layout_content == nil
+        layout_content = get_default_layout(view_class_hash, controller_hash)
+      end
+    
+
+      if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
 			
 				if view_class != nil
 					value = view_class.replace_render_statements(view_class_hash, 0)
+          puts "view_name: " + view_name
+          puts "layout content:"
+          puts layout_content
+          puts "old value: "
+          puts value
+          if layout_content != nil
+            value = merge_layout_content(layout_content, value)
+          end
+          puts "new value:"
+          puts value
+
 					render_view_mapping[r] = value
 				else
 					#do something the view file does not exist! It could mean we parse the file wrong. 
@@ -229,7 +253,7 @@ class Function_Class
 		return render_view_mapping	
 	end
 
-	def replace_render_statements(view_class_hash, controller_hash)
+  def get_default_layout(view_class_hash, controller_hash)
     parent_class = self.get_class
     default_layout = parent_class.get_layout
     default_layout_view = nil
@@ -242,19 +266,22 @@ class Function_Class
       default_layout_view = view_class_hash[default_layout]
     end
 
-    layout_content = ""
+    layout_content = nil
     if default_layout_view != nil
       layout_content = default_layout_view.replace_render_statements(view_class_hash, 0)
     end
 
+    return layout_content
+  end
 
+	def replace_render_statements(view_class_hash, controller_hash)
     ###################################################################
     #Up to this point, we have got the default layout content, 
     #the next step is to merge the content into the layout, 
     #we assume that we only have default layout at this moment
     #
 
-    render_view_mapping = self.get_render_view_mapping(view_class_hash)
+    render_view_mapping = self.get_render_view_mapping(view_class_hash, controller_hash)
 		content = self.get_content.dup
 		
 		need_default_render = true
@@ -263,7 +290,6 @@ class Function_Class
 		need_default_render = false if temp[temp.length-2].include?"render" or temp[temp.length-2].include?"redirect_to"
 
 		render_view_mapping.each do |k, v|
-      v = merge_layout_content(layout_content, v)
 			content.gsub! k, "ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + v + "\nend\n"
 		end
 
@@ -273,8 +299,11 @@ class Function_Class
 			view_class = view_class_hash[view_name]
 			if view_class != nil
 				v = view_class.replace_render_statements(view_class_hash, 0)
-        v = merge_layout_content(layout_content, v)
-				content = content.split "\n"
+		    layout_content = get_default_layout(view_class_hash, controller_hash)
+        if layout_content != nil
+          v = merge_layout_content(layout_content, v)
+        end
+        content = content.split "\n"
 				len = content.length
 				content[len] = content[len-1]
 				content[len-1] = "ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + v + "\nend\n"
