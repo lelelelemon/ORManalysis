@@ -7,13 +7,12 @@ class UsersController < ApplicationController
                  .includes(:project_permissions => {:project => :customer})
                  .order("users.name")
                  .paginate(:page => params[:page], :per_page => 100)
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -23,13 +22,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -38,8 +33,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -47,15 +41,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -96,10 +85,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -109,17 +95,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -129,20 +109,11 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = t("users.access_title", title: Setting.productName) 
+  @page_title = t("users.access_title", title: Setting.productName) 
  link_to t("users.new_user"), new_user_path, :class => "pull-right" 
  for user in @users 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- link_to(user.name, "/users/edit/#{user.id}") 
+  link_to(user.name, "/users/edit/#{user.id}") 
  t("users.email") 
  h user.email 
  h user.email 
@@ -151,8 +122,7 @@ end
  else 
  t("shared.never") 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
-
+ 
   values = object.all_custom_attribute_values
   values.each do |value|
     if (value.value)
@@ -161,8 +131,6 @@ end
  value.value.gsub("\n", "<br/>").html_safe 
  end 
  end 
-
-end
  
  if user.projects.size > 0 
  t("users.projects") 
@@ -170,10 +138,12 @@ end
 user.dom_id
  user.projects.collect{|project| link_to_tasks_filtered_by(project.full_name, project)}.join("<br/> ").html_safe 
  end 
-
-end
  end 
  will_paginate @users 
+
+ current_user.id 
+ current_user.dateFormat 
+ 
 
 end
 
@@ -198,13 +168,12 @@ end
 
     if @user.errors.size > 0
       flash[:error] = @user.errors.full_messages.join(". ")
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+      return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -214,13 +183,9 @@ end
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -229,8 +194,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -238,15 +202,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -287,10 +246,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -300,17 +256,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -320,16 +270,8 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = t("users.new_user_title", title: Setting.productName) 
+  @page_title = t("users.new_user_title", title: Setting.productName) 
 
   @user_ids = []
   @current_user.company.projects.each do |p|
@@ -354,8 +296,7 @@ end
  text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
  @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
  t("users.goto_company") 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- values = object.all_custom_attribute_values 
+  values = object.all_custom_attribute_values 
  values.each do |value| 
  prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
  ca = value.custom_attribute 
@@ -375,23 +316,22 @@ end
  multi_links(value) 
  end 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- label_tag t("users.send_welcome_email") 
+  label_tag t("users.send_welcome_email") 
  check_box_tag :send_welcome_email, "1", params[:send_welcome_email] 
  t('users.welcome_message_header') 
  text_area_tag t("users.welcome_message"), "", :rows => 10, :class => "input-xxlarge", :placeholder => t("users.welcome_message_input") 
  t('users.welcome_message_optional') 
-
-end
  
  t("permissions.copy_permissions") 
  t("tasks.no_one") 
  options_for_select @users, params[:copy_user].to_i 
  submit_tag t("button.create"), :class => 'btn btn-primary' 
  end 
+
+ current_user.id 
+ current_user.dateFormat 
+ 
 
 end
 
@@ -422,13 +362,12 @@ end
       redirect_to edit_user_path(@user)
     else
       flash[:error] = @user.errors.full_messages.join(". ")
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -438,13 +377,9 @@ end
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -453,8 +388,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -462,15 +396,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -511,10 +440,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -524,17 +450,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -544,16 +464,8 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = t("users.new_user_title", title: Setting.productName) 
+  @page_title = t("users.new_user_title", title: Setting.productName) 
 
   @user_ids = []
   @current_user.company.projects.each do |p|
@@ -578,8 +490,7 @@ end
  text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
  @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
  t("users.goto_company") 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- values = object.all_custom_attribute_values 
+  values = object.all_custom_attribute_values 
  values.each do |value| 
  prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
  ca = value.custom_attribute 
@@ -599,17 +510,12 @@ end
  multi_links(value) 
  end 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- label_tag t("users.send_welcome_email") 
+  label_tag t("users.send_welcome_email") 
  check_box_tag :send_welcome_email, "1", params[:send_welcome_email] 
  t('users.welcome_message_header') 
  text_area_tag t("users.welcome_message"), "", :rows => 10, :class => "input-xxlarge", :placeholder => t("users.welcome_message_input") 
  t('users.welcome_message_optional') 
-
-end
  
  t("permissions.copy_permissions") 
  t("tasks.no_one") 
@@ -617,19 +523,22 @@ end
  submit_tag t("button.create"), :class => 'btn btn-primary' 
  end 
 
+ current_user.id 
+ current_user.dateFormat 
+ 
+
 end
 
     end
   end
 
   def edit
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -639,13 +548,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -654,8 +559,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -663,15 +567,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -712,10 +611,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -725,17 +621,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -745,19 +635,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+  @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
  content_for :navigation do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- user.name 
+  user.name 
  active_class(selected, "general") 
  edit_user_path(user) 
  t("users.general") 
@@ -780,15 +661,12 @@ end
  active_class(selected, "workplan") 
  workplan_user_path(user) 
  t("users.work_plan") 
-
-end
  
  end 
  @user.name 
  link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
  form_tag(user_path(@user), :method => :put, :class => "form-horizontal", :multipart => true) do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t("users.name") 
+  t("users.name") 
  text_field 'user', 'name'  
  t("users.username") 
  text_field 'user', 'username', :autocomplete => "off" 
@@ -799,8 +677,7 @@ end
  text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
  @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
  t("users.goto_company") 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- values = object.all_custom_attribute_values 
+  values = object.all_custom_attribute_values 
  values.each do |value| 
  prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
  ca = value.custom_attribute 
@@ -820,8 +697,6 @@ end
  multi_links(value) 
  end 
  end 
-
-end
  
  if @user.avatar? 
  t("users.current_avatar") 
@@ -853,10 +728,12 @@ end
  check_box 'user', 'option_tracktime' 
  t("users.show_avatars") 
  check_box 'user', 'option_avatars' 
-
-end
  
  end 
+
+ current_user.id 
+ current_user.dateFormat 
+ 
 
 end
 
@@ -875,13 +752,12 @@ end
       flash[:error] = t('flash.alert.access_denied_to_model', model: t('users.access_control'))
       redirect_to edit_user_path(@user)
     end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -891,13 +767,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -906,8 +778,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -915,15 +786,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -964,10 +830,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -977,17 +840,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -997,19 +854,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+  @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
  content_for :navigation do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- user.name 
+  user.name 
  active_class(selected, "general") 
  edit_user_path(user) 
  t("users.general") 
@@ -1032,8 +880,6 @@ end
  active_class(selected, "workplan") 
  workplan_user_path(user) 
  t("users.work_plan") 
-
-end
  
  end 
  @user.name 
@@ -1062,18 +908,21 @@ select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
  submit_tag t("button.save"), :class => 'btn btn-primary' 
  end 
 
+ current_user.id 
+ current_user.dateFormat 
+ 
+
 end
 
   end
 
   def emails
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -1083,13 +932,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -1098,8 +943,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -1107,15 +951,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -1156,10 +995,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -1169,17 +1005,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -1189,19 +1019,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+  @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
  content_for :navigation do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- user.name 
+  user.name 
  active_class(selected, "general") 
  edit_user_path(user) 
  t("users.general") 
@@ -1224,8 +1045,6 @@ end
  active_class(selected, "workplan") 
  workplan_user_path(user) 
  t("users.work_plan") 
-
-end
  
  end 
  @user.name 
@@ -1234,209 +1053,27 @@ end
  t("button.add") 
  @user.id 
 
+ current_user.id 
+ current_user.dateFormat 
+ 
+
 end
 
   end
 
   def tasks
     redirect_to [:workplan, @user]
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- content_for :content do 
- yield(:navigation) 
- yield :layout 
- end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
- 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
-
-end
- 
- end 
-
-end
- 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
- 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
-key.to_s
- val 
- end 
-
-end
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
-
-end
- 
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- t("users.recent_work") 
- @user_recent_work_logs.each do |wl| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
-
-end
- 
- end 
- t("users.next_tasks") 
- @user.schedule_tasks(:limit => 20, :save => false) do |task| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
-
-end
- 
- end 
- if @user.tasks.open_only.not_snoozed.count > 20 
- t("tasks.more_tasks") 
- end 
-
-end
-
   end
 
   def filters
     @private_filters = @user.private_task_filters.order("task_filters.name")
     @shared_filters = @user.shared_task_filters.order("task_filters.name")
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -1446,13 +1083,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -1461,8 +1094,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -1470,15 +1102,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -1519,10 +1146,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -1532,17 +1156,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -1552,18 +1170,9 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- content_for :navigation do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- user.name 
+  content_for :navigation do 
+  user.name 
  active_class(selected, "general") 
  edit_user_path(user) 
  t("users.general") 
@@ -1586,8 +1195,6 @@ end
  active_class(selected, "workplan") 
  workplan_user_path(user) 
  t("users.work_plan") 
-
-end
  
  end 
  @user.name 
@@ -1617,18 +1224,21 @@ end
  end 
  t("users.no_filters") if @private_filters.size == 0 
 
+ current_user.id 
+ current_user.dateFormat 
+ 
+
 end
 
   end
 
   def projects
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -1638,13 +1248,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -1653,8 +1259,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -1662,15 +1267,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -1711,10 +1311,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -1724,17 +1321,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -1744,19 +1335,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = t("users.access_title", title: Setting.productName) 
+  @page_title = t("users.access_title", title: Setting.productName) 
  content_for :navigation do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- user.name 
+  user.name 
  active_class(selected, "general") 
  edit_user_path(user) 
  t("users.general") 
@@ -1779,14 +1361,11 @@ end
  active_class(selected, "workplan") 
  workplan_user_path(user) 
  t("users.work_plan") 
-
-end
  
  end 
  @user.name 
  link_to_tasks_filtered_by(t("users.new_user"), @user, :class => "btn btn-success pull-right") 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t("users.project") 
+  t("users.project") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -1799,8 +1378,7 @@ end
  t("permissions.reports") 
  t("permissions.grant") 
  t("permissions.all") 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- project.dom_id 
+  project.dom_id 
  if user_edit 
  link_to project.name, "/projects/edit/#{project.id}" 
  else 
@@ -1825,16 +1403,16 @@ end
                })" unless perm.can?(p) 
  end 
  end 
-
-end
  
  if @user.active 
  t("users.add_project_to_user") 
  text_field :project, :name, {:id => "user_project_name_autocomplete", :value => "" }
  end 
  @user.id 
+ 
 
-end
+ current_user.id 
+ current_user.dateFormat 
  
 
 end
@@ -1850,13 +1428,12 @@ end
         flash[:error] = @user.work_plan.errors.full_messages.join(', ')
       end
     end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -1866,13 +1443,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -1881,8 +1454,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -1890,15 +1462,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -1939,10 +1506,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -1952,17 +1516,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -1972,19 +1530,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = "User : #{@user.name} - #{Setting.productName}" 
+  @page_title = "User : #{@user.name} - #{Setting.productName}" 
  content_for :navigation do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- user.name 
+  user.name 
  active_class(selected, "general") 
  edit_user_path(user) 
  t("users.general") 
@@ -2007,17 +1556,13 @@ end
  active_class(selected, "workplan") 
  workplan_user_path(user) 
  t("users.work_plan") 
-
-end
  
  end 
  @user.name 
  link_to_tasks_filtered_by(t("users.new_user"), @user, :class => "btn btn-success pull-right") 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t("users.recent_work") 
+  t("users.recent_work") 
  @user_recent_work_logs.each do |wl| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- pill_date ||= task.estimate_date 
+  pill_date ||= task.estimate_date 
  time ||= :minutes_left 
  sorting_disabled ||= false 
  user.top_next_task == task ? 'top-next-task' : nil 
@@ -2034,14 +1579,11 @@ end
  unless sorting_disabled 
  link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
  end 
-
-end
  
  end 
  t("users.next_tasks") 
  @user.schedule_tasks(:limit => 20, :save => false) do |task| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- pill_date ||= task.estimate_date 
+  pill_date ||= task.estimate_date 
  time ||= :minutes_left 
  sorting_disabled ||= false 
  user.top_next_task == task ? 'top-next-task' : nil 
@@ -2058,20 +1600,15 @@ end
  unless sorting_disabled 
  link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
  end 
-
-end
  
  end 
  if @user.tasks.open_only.not_snoozed.count > 20 
  t("tasks.more_tasks") 
  end 
-
-end
  
  form_tag(workplan_user_path(@user), :method => :put, :class => "form-horizontal") do 
  t("users.work_plan") 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- fields_for("user[work_plan_attributes]", @user.work_plan) do |f| 
+  fields_for("user[work_plan_attributes]", @user.work_plan) do |f| 
  t("shared.monday_short") 
  t("shared.tuesday_short") 
  t("shared.wednesday_short") 
@@ -2087,11 +1624,13 @@ end
  f.text_field 'saturday', :class => "input-tiny"  
  f.text_field 'sunday', :class => "input-tiny"  
  end 
-
-end
  
  submit_tag t("button.update"), :class => 'btn btn-primary' 
  end 
+
+ current_user.id 
+ current_user.dateFormat 
+ 
 
 end
 
@@ -2105,13 +1644,12 @@ end
       redirect_to edit_user_path(@user)
     else
       flash[:error] = @user.errors.full_messages.join(". ")
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -2121,13 +1659,9 @@ end
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -2136,8 +1670,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -2145,15 +1678,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -2194,10 +1722,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -2207,17 +1732,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -2227,19 +1746,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+  @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
  content_for :navigation do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- user.name 
+  user.name 
  active_class(selected, "general") 
  edit_user_path(user) 
  t("users.general") 
@@ -2262,15 +1772,12 @@ end
  active_class(selected, "workplan") 
  workplan_user_path(user) 
  t("users.work_plan") 
-
-end
  
  end 
  @user.name 
  link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
  form_tag(user_path(@user), :method => :put, :class => "form-horizontal", :multipart => true) do 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t("users.name") 
+  t("users.name") 
  text_field 'user', 'name'  
  t("users.username") 
  text_field 'user', 'username', :autocomplete => "off" 
@@ -2281,8 +1788,7 @@ end
  text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
  @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
  t("users.goto_company") 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- values = object.all_custom_attribute_values 
+  values = object.all_custom_attribute_values 
  values.each do |value| 
  prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
  ca = value.custom_attribute 
@@ -2302,8 +1808,6 @@ end
  multi_links(value) 
  end 
  end 
-
-end
  
  if @user.avatar? 
  t("users.current_avatar") 
@@ -2335,10 +1839,12 @@ end
  check_box 'user', 'option_tracktime' 
  t("users.show_avatars") 
  check_box 'user', 'option_avatars' 
-
-end
  
  end 
+
+ current_user.id 
+ current_user.dateFormat 
+ 
 
 end
 
@@ -2413,14 +1919,12 @@ end
 
     ProjectPermission.create(:user => @user, :company => @user.company, :project => project)
 
-    render(:partial => "project", :locals => { :project => project, :user_edit => true })
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
  yield(:navigation) 
  yield :layout 
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -2430,13 +1934,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -2445,8 +1945,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -2454,15 +1953,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -2503,10 +1997,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -2516,17 +2007,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -2536,16 +2021,8 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
- content_for?(:content) ? yield(:content) : yield 
- current_user.id 
- current_user.dateFormat 
-
-end
- 
- project.dom_id 
+  project.dom_id 
  if user_edit 
  link_to project.name, "/projects/edit/#{project.id}" 
  else 
@@ -2570,6 +2047,10 @@ end
                })" unless perm.can?(p) 
  end 
  end 
+
+ current_user.id 
+ current_user.dateFormat 
+ 
 
 end
 
