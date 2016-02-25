@@ -40,7 +40,9 @@ class Instruction
 		@index = 0
 		@f_tag = 0
 		@bb = nil
+		#TODO: an instruction can match multiple nodes....
 		@inode = nil
+		@inodes = Array.new
 		@defv = nil
 		@defv_var = nil
 		@args = Array.new
@@ -70,9 +72,13 @@ class Instruction
 	end
 	def setINode(i)
 		@inode = i
+		@inodes.push(i)
 	end
 	def getINode
 		@inode
+	end
+	def getINodes
+		@inodes
 	end
 	def getMethodDefCFG
 		return @bb.getMethodDefCFG
@@ -167,6 +173,7 @@ class Call_instr < Instruction
 		@field = nil
 		@hash_fields = Array.new
 		@args = Array.new
+		@inodes = Array.new
 	end
 	attr_accessor :field, :hash_fields
 	def setCallCFG(c)
@@ -294,6 +301,7 @@ class Const_instr < Instruction
 		@deps = Array.new	
 		@resolved = true
 		@resolved_caller = @const
+		@inodes = Array.new
 	end
 	def getConst
 		@const

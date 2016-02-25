@@ -269,6 +269,7 @@ def addAllControlEdges
 			if pren.getInstr.getBB == curn.getInstr.getBB
 				edge = Controlflow_edge.new(pren, curn)
 				pren.addControlflowEdge(edge)
+			#last instr in BB
 			elsif pren.getInstr != nil and pren.getInstr == pren.getInstr.getBB.getInstr[-1]
 				#Since for each CFG, there is always a control flow edge from the first BB to last BB, 
 				#I want to remove this edge.
@@ -279,7 +280,16 @@ def addAllControlEdges
 					if cond and tmp_cnt == 0
 					else
 						o_bb = pren.getInstr.getBB.getCFG.getBBByIndex(o)
-						next_node = o_bb.getInstr[0].getINode
+						next_nodes = o_bb.getInstr[0].getINodes
+						next_node = next_nodes[0]
+						if next_nodes.length > 1
+							next_nodes.each do |nn|
+								if nn.getIndex > pren.getIndex
+									next_node = nn
+									break
+								end
+							end
+						end
 						edge = Controlflow_edge.new(pren, next_node)
 						pren.addControlflowEdge(edge)
 					end
@@ -342,6 +352,15 @@ def compute_longest_single_path
 	p_length = 0
 	query_num = 0
 	read_query = 0
+	#$node_list.each do |n|
+	#	puts "#{n.getIndex}: #{n.getInstr.toString}"
+	#	n.getControlflowEdges.each do |e|
+	#		puts "\t -> #{e.getToNode.getIndex}"
+	#		if e.getToNode == n.longest_control_path_nextnode
+	#			puts "\t\t(longest path: #{n.path_length})"
+	#		end
+	#	end
+	#end
 	while temp_node.getControlflowEdges.length > 0
 		p_length += 1
 		if temp_node.isQuery?
