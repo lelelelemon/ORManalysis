@@ -342,7 +342,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	#compute_functional_dependency($graph_file)
 
-	puts "-1"
 	total_query_num = 0
 	query_in_closure = 0
 	query_in_view = 0
@@ -636,6 +635,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	compute_longest_single_path	
 	$graph_file.puts("<\/singlePath>")
 
+	$graph_file.puts("<schema>")
+	compute_schema_design_stat($graph_file)
+	$graph_file.puts("<\/schema>")
+	
 	#if $query_depends_on.length > 0	
 	#	graph_write($graph_file, "query backward dependencies: #{($query_depends_on.inject{|sum,x| sum + x })/($query_depends_on.length)}\n")
 	#end

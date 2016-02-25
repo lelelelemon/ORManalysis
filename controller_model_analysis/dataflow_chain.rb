@@ -586,7 +586,7 @@ def compute_chain_stats
 							#puts "\t source = #{sn.getIndex} (dist = #{r_lst.length}): #{sn.getInstr.toString}"
 						end
 					end
-				elsif tbl_name.include?("Controllers")
+				elsif tbl_name.include?("Controller")
 				else#if isActiveRecord(tbl_name)
 					p_s = p_s + " -> non field"
 					ftype = nil

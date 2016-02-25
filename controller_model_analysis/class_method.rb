@@ -109,6 +109,20 @@ class Class_class
 		#end
 		@class_fields.push(assoc.name)
 	end
+	def searchAssoc(fieldname)
+	#for example, if self.name == "Comment" and 
+	#class Comment
+	#  belongs_to: user
+	#then self.searchAssoc("user") -> belongs_to
+		@assocs.each do |k, v|
+			v.each do |a|
+				if a.name == fieldname
+					return k
+				end
+			end
+		end
+		return nil
+	end
 	def getTableFields
 		@table_fields
 	end

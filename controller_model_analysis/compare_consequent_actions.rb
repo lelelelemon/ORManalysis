@@ -89,6 +89,16 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 						@next_read_same += 1
 					else
 						@superset = false
+						#s = "prevf: "
+						#@prev_fields_select.each do |pf|
+						#	s += "#{pf}, "
+						#end
+						#puts "#{s}"
+						#s = "nextf: "
+						#@temp_next_fields.each do |tf|
+						#	s += "#{tf}, "
+						#end
+						#puts "#{s}"
 						@temp_next_fields.each do |f|
 							if @prev_fields_select.include?(f)
 							else
@@ -97,9 +107,11 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 						end
 						if @superset
 							@next_read_superset += 1
+							#puts "\t SUPERSET"
 						elsif @temp_next_fields.length > 0
 							@next_read_subset += 1
-						end	
+							#puts "\t SUBSET"
+						end
 					end
 				end
 			end

@@ -120,19 +120,19 @@ stats_content = ["nextReadOverlap", "nextReadTotal", "nextReadSame", "nextReadSu
 for s in stats_content:
 	avg_list[s] = []
 
-for subdir, folders, files in os.walk(base_path):
-	for fn in files:
-		if fn.endswith("stats.xml"):
-			fname = os.path.join(subdir, fn)
-			temp_l = list(find(fname, "/"))
-			cur_action_name = fname[temp_l[-2]+1:temp_l[-1]]
-			tree = ET.parse(fname)
-			root = tree.getroot()
-			for child1 in root:
-				if child1.tag == "general":
-					for child2 in child1:
-						if child2.tag == "read":
-							total_read_num[cur_action_name] = float(child2[0].text)
+#for subdir, folders, files in os.walk(base_path):
+#	for fn in files:
+#		if fn.endswith("stats.xml"):
+#			fname = os.path.join(subdir, fn)
+#			temp_l = list(find(fname, "/"))
+#			cur_action_name = fname[temp_l[-2]+1:temp_l[-1]]
+#			tree = ET.parse(fname)
+#			root = tree.getroot()
+#			for child1 in root:
+#				if child1.tag == "general":
+#					for child2 in child1:
+#						if child2.tag == "read":
+#							total_read_num[cur_action_name] = float(child2[0].text)
 
 
 for subdir, folders, files in os.walk(base_path):
@@ -154,6 +154,8 @@ for subdir, folders, files in os.walk(base_path):
 				#print "num_actions = %d"%num_actions
 				for c in (root):
 					#c.tag = CommentsController_index
+					if "NEWCREATE" in c.tag or "EMPTY" in c.tag:
+						continue
 					#initiate a figure here
 					fig = plt.figure()
 					num_tables = len(c)
@@ -170,7 +172,7 @@ for subdir, folders, files in os.walk(base_path):
 							stat_list[c.tag][child.tag].append(float(child.text))
 							avg_list[child.tag].append(float(child.text))
 					#child.tag = User
-						elif child.tag != "string" and child.tag != "integer" and child.tag != "boolean" and child.tag != "NEWCREATE" and child.tag != "EMPTY":
+						elif child.tag != "string" and child.tag != "integer" and child.tag != "boolean":
 							#assign colors
 							table_name = child.tag
 							colors = []
@@ -219,14 +221,17 @@ for k, v in overlap_table_name.items():
 printed_title = False
 for k, v in stat_list.items():
 	totalread = 0
-	if k in total_read_num:
-		totalread = total_read_num[k]
+	#if k in total_read_num:
+	#	totalread = total_read_num[k]
 	if printed_title == False:
 		for k1, v1 in v.items():
 			print "%s\t"%(k1),
 		print ""
 		printed_title = True
-	print "%s, total =\t%d"%(k, totalread),
+	for k1, v1 in v.items():
+		if k1 == "nextReadSub":
+			print v1
+	print "%s,"%(k),
 	for k1, v1 in v.items():
 		print "\t%f"%(getAverage(v1)),
 	print ""

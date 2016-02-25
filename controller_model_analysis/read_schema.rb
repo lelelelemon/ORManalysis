@@ -118,3 +118,50 @@ def read_schema(app_dir)
 		end	
 	end
 end
+
+def compute_schema_design_stat(file)
+	@table_crossrefs = Hash.new
+	@crossref_type = Hash.new
+	@total_field_ref = Hash.new
+	$node_list.each do |n|
+		if n.isClassField?
+			tbl_name = type_valid(n.getInstr, n.getInstr.getCaller)
+			field_name = n.getInstr.getFuncname
+			if isActiveRecord(tbl_name)
+				if @table_crossrefs[tbl_name] == nil
+					@table_crossrefs[tbl_name] = Hash.new
+					@total_field_ref[tbl_name] = 0
+				end
+				if n.getInstr.getDefv != nil
+					@total_field_ref[tbl_name] += 1
+					rtype = type_valid(n.getInstr, n.getInstr.getDefv)
+					if rtype != nil and rtype != tbl_name and isActiveRecord(rtype)
+						@relationship_name = $class_map[tbl_name].searchAssoc(field_name)
+						#puts "FIELD REF: #{tbl_name} -> #{field_name} (#{rtype}), relationship_name = #{@relationship_name}"
+						if @relationship_name
+							@crossref_type["#{tbl_name}->#{rtype}"] = @relationship_name
+						end
+						if @table_crossrefs[tbl_name][rtype] == nil
+							@table_crossrefs[tbl_name][rtype] = 0
+						end
+						@table_crossrefs[tbl_name][rtype] += 1
+					end
+				end
+			end
+		end
+	end
+
+	@table_crossrefs.each do |tbl_name, v|
+		#search for assoc relationship...
+		file.puts("\t<#{tbl_name}>")
+		v.each do |refname, cnt|
+			cr_type = @crossref_type["#{tbl_name}->#{refname}"]
+			if cr_type == nil
+				cr_type = "unknown"
+			end
+			file.puts("\t\t<#{refname} relationship=\"#{cr_type}\">#{cnt}<\/#{refname}>")
+		end
+		file.puts("\t\t<totalFieldRef>#{@total_field_ref[tbl_name]}<\/totalFieldRef>")
+		file.puts("\t<\/#{tbl_name}>")
+	end	
+end
