@@ -48,7 +48,7 @@ int main(int argc, char** argv){
         }   
         fputc('\n', fout);
         if (c != '>')
-          a = fgetc(fin);
+          a = c;
         else 
           a = fgetc(fin);
         b = fgetc(fin);

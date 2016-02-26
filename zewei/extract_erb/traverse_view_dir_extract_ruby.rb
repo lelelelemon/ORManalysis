@@ -16,10 +16,9 @@ def walk(start, base_dir, script)
 		if File.directory?(path)
 			walk(path, base_dir, script)
 		else
-			FileUtils.cp(File.join(base_dir, script), File.join(start, script))
 			if x.end_with?".erb"
 				new_x = x + ".rb"
-				system(File.join(start, script) + " " + File.join(start, x) + " " + File.join(start, new_x))
+				system(File.join(base_dir, script) + " " + File.join(start, x) + " " + File.join(start, new_x))
 			end
 		end
 	end
