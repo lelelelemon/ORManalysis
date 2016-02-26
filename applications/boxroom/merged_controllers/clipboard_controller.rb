@@ -24,11 +24,13 @@ class ClipboardController < ApplicationController
   end
 
   def copy
-    paste :copy
+    @item.copy(@target_folder)
+		clipboard.remove(@item)
   end
 
   def move
-    paste :move
+    @item.move(@target_folder)
+		clipboard.remove(@item)
   end
 
   private
