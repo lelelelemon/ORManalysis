@@ -34,7 +34,8 @@ def load_all_views_from_path(view_path)
 	view_hash = Hash.new
 	Dir.glob(view_path + "**/*") do |item|
 		next if not item.end_with?".erb"
-		view_class = View_Class.new(item, view_path)
+	  puts item
+    view_class = View_Class.new(item, view_path)
 		key = view_class.get_controller_name + "_" + view_class.get_view_name
 #		key = view_class.get_file_type + "_" + key if view_class.get_file_type != "html"
 		view_hash[key] = view_class
