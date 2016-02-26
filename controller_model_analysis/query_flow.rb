@@ -192,11 +192,15 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		else
 			$in_loop.push(true)
 		end
-		$closure_stack.push($cur_node)
-		$general_call_stack.push($cur_node)
-		handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
-		$closure_stack.pop
-		$general_call_stack.pop
+		if ["transaction","form_for","form_tag"].include?instr.getFuncname
+			handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
+		else
+			$closure_stack.push($cur_node)
+			$general_call_stack.push($cur_node)
+			handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
+			$closure_stack.pop
+			$general_call_stack.pop
+		end
 		cl.getReturns.each do |r|
 			new_return_l.push(r)
 		end

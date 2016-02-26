@@ -117,8 +117,11 @@ def traceforward_data_dep(query_node)
 			#if e.getToNode.getInView
 				#@traversed.push(e.getToNode)
 			if e.getToNode.isQuery? and e.getToNode != query_node
-				@traversed.push(e.getToNode)
-				@node_list.push(e.getToNode)
+				if @traversed.include?(e.getToNode)
+				else
+					@traversed.push(e.getToNode)
+					@node_list.push(e.getToNode)
+				end
 			elsif @node_list.include?(e.getToNode) or @traversed.include?(e.getToNode)
 			else
 				if e.getToNode.getInstr.instance_of?Return_instr
@@ -289,6 +292,16 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$node_list.each do |n|
 		n.setLabel
 		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		#if n.getInClosure
+		#	if n.getInView and n.getClosureStack.length == 1
+		#	else
+		#		s = ""
+		#		n.getClosureStack.each do |n1|
+		#			s += "#{n1.getIndex}," 
+		#		end
+		#		puts "\t * IN CLOSURE (#{n.isQuery?})  [#{s}]"
+		#	end
+		#end
 		if n.getInstr.is_a?Call_instr
 			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
 		end
@@ -306,6 +319,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 
 	if build_node_list_only
+				#puts "#{n.getIndex}: Forward ARRAY length: #{@forwardarray.length}  (write: #{temp_to_write}) (stat: #{@read_sink_stat.to_write_query})"
 		return
 	end
 
@@ -445,7 +459,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#puts "Forward length = #{traceforward_data_dep(n).length}"
 				@used_in_view = false
 				@forwardarray = traceforward_data_dep(n)
-				puts "Forward ARRAY length: #{@forwardarray.length}"
 				@forwardarray.each do |n1|
 					#if n1.isTableField?
 					#	var_name = n1.getInstr.getCallHandler.getObjName
@@ -498,6 +511,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					end
 					#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 				end
+				
 				if @used_in_view
 					@singleQ_stat.result_used_in_view += 1
 				end
