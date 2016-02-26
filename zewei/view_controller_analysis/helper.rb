@@ -14,7 +14,64 @@ def get_func_name(func_line)
   func_name.gsub! /\(.*\)/, ""
   return func_name
 end
-	
+
+def get_view_name_from_render_statement2(r)
+  puts r
+  view = nil
+  ast = YARD::Parser::Ruby::RubyParser.parse(r).root
+  if ast.type.to_s == "list"
+    ast = ast[0]
+  end
+  if ast.type.to_s == "if_mod" or ast.type.to_s == "unless_mod"
+    ast = ast[1]
+  end
+  if ast[0].source.to_s != "render"
+    return "not_valid"
+  end
+  params = ast[1][0]
+  puts params.type.to_s
+  puts params.source.to_s
+  if params[0].type.to_s == "string_literal"
+    view =  params[0].source.to_s
+  elsif params[0].type.to_s == "symbol_literal"
+    view = params[0].source.to_s
+  elsif params[0].type.to_s == "vcall"
+    view = params[0].source.to_s
+  elsif params[0].type.to_s == "var_ref"
+    view = params[0].source.to_s
+  else
+    puts params.type.to_s
+    puts params.source.to_s
+    params.children.each do |assoc|
+      if assoc[0].source.to_s == "partial" or 
+        assoc[0].source.to_s == "template" or 
+        assoc[0].source.to_s == "action" or 
+        assoc[0].source.to_s == ":partial" or 
+        assoc[0].source.to_s == ":template" or 
+        assoc[0].source.to_s == ":action" 
+        view = assoc[1].source.to_s
+      end
+    end
+  end
+
+  puts "raw view: " 
+  if view == nil
+    return "not_valid"
+  end
+  if view.end_with?".html.erb"
+    view = view[0..-10]
+  end
+  view.gsub! /["':]/, ""
+  k = view.rindex("/")
+  if k == nil
+    view = self.get_controller_name + "_" + view
+  else
+    view = view[0..k-1] + "_" + view[k+1..-1]
+  end
+  puts view
+  return view
+end
+
 def get_view_name_from_render_statement(r)
 	r = r.split("\n")[0]
 	r = r[6..-1] if r.start_with?"return"
@@ -542,6 +599,10 @@ def merge_layout_content(layout, content)
 
   if layout.include?"yield\n"
     layout.gsub! "yield\n", content
+  end
+
+  if layout.include?"yield \n"
+    layout.gsub! "yield \n", content
   end
 
   #handle a special case for jobsworth

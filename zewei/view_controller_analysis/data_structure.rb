@@ -161,8 +161,8 @@ class Function_Class
 				else 
           res = cur_ast.source.to_s
 				end
-        if res.end_with?"\n e"
-          res = res[0..-3]
+        if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
+          res = res[0..-2]
         end
         res_arr.push res
 			else
@@ -171,6 +171,9 @@ class Function_Class
 				end
 			end
 		end
+    puts "res_arr: #{get_controller_name}_#{get_function_name}"
+    puts res_arr 
+
 		return res_arr
 	end
 
@@ -247,8 +250,11 @@ class Function_Class
 				else
 					#do something the view file does not exist! It could mean we parse the file wrong. 
 				end
-			end
-		end
+      elsif layout_content != nil
+  
+        render_view_mapping[r] = layout_content 
+      end
+    end
 	
 		return render_view_mapping	
 	end
@@ -439,8 +445,8 @@ class View_Class
     
     res_arr2 = []
     res_arr.each do |res|
-      if res.end_with?"\n e"
-        res = res[0..-3]
+      if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
+        res = res[0..-2]
       end
       res_arr2.push res
     end
