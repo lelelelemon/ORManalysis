@@ -503,7 +503,8 @@ def get_render_array(ast)
 	ast_arr.push @ast
 	while ast_arr.length > 0
 		cur_ast = ast_arr.pop
-		if cur_ast.source.start_with?"render" and (cur_ast.type.to_s == "fcall" or cur_ast.type.to_s == "command" or cur_ast.type.to_s == "list")
+		if cur_ast.source.start_with?"render" and (cur_ast.type.to_s == "fcall" or cur_ast.type.to_s == "command" or 
+                                               cur_ast.type.to_s == "list" or cur_ast.type.to_s == "if_mod" or cur_ast.type.to_s == "unless_mod")
 			res_arr.push cur_ast.source
 		else
 			cur_ast.children.each do |child|
@@ -515,6 +516,7 @@ def get_render_array(ast)
 end
 
 def merge_layout_content(layout, content)
+  puts layout
   layout_ast = YARD::Parser::Ruby::RubyParser.parse(layout).root
   puts content
   content_ast = YARD::Parser::Ruby::RubyParser.parse(content).root
