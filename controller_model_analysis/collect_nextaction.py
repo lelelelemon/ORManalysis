@@ -39,6 +39,8 @@ fig_path = "../applications/%s/figs/next_actions"%app_name
 if os.path.isdir(fig_path) == False:
 	os.system("mkdir %s"%fig_path)
 
+index_colors = [5,2,7,9,3,4,10,12,13]	
+
 #preprocess
 for subdir, folders, files in os.walk(base_path):
 	for fn in files:
@@ -149,15 +151,15 @@ for subdir, folders, files in os.walk(base_path):
 			num_actions = len(root)
 			if num_actions == 0:
 				continue
-
-			with pdfp.PdfPages('%s/%s.pdf'%(fig_path, cur_action_name)) as pdf:
+			else:
+			#with pdfp.PdfPages('%s/%s.pdf'%(fig_path, cur_action_name)) as pdf:
 				#print "num_actions = %d"%num_actions
 				for c in (root):
 					#c.tag = CommentsController_index
 					if "NEWCREATE" in c.tag or "EMPTY" in c.tag:
 						continue
 					#initiate a figure here
-					fig = plt.figure()
+					#fig = plt.figure()
 					num_tables = len(c)
 					overlap_table_count.append(num_tables)
 					#print "num_tables = %d"%num_tables
@@ -185,8 +187,8 @@ for subdir, folders, files in os.walk(base_path):
 							colors.append(table_color_map[table_name]+1)
 							overlap_table_name[table_name] += 1
 
-							ax = fig.add_subplot(num_tables, 2, i*2)
-							ax_stat = fig.add_subplot(num_tables, 2, i*2+1)
+							#ax = fig.add_subplot(num_tables, 2, i*2)
+							#ax_stat = fig.add_subplot(num_tables, 2, i*2+1)
 							prev_field = []
 							next_field = []
 							stat = {}
@@ -228,15 +230,35 @@ for k, v in stat_list.items():
 			print "%s\t"%(k1),
 		print ""
 		printed_title = True
-	for k1, v1 in v.items():
-		if k1 == "nextReadSub":
-			print v1
 	print "%s,"%(k),
 	for k1, v1 in v.items():
 		print "\t%f"%(getAverage(v1)),
 	print ""
 
+data_avg_list = {}
 for k, v in avg_list.items():
 	print "%s:\t%f"%(k, getAverage(v))
+	data_avg_list[k] = getAverage(v)
 
-print "Average table overlap for each next_action: %f"%getAverage(overlap_table_count)
+ind = np.arange(1)
+width = 0.2
+fig = plt.figure(figsize=(4.5,4))
+ax1 = fig.add_subplot(111)
+sum1 = data_avg_list["nextReadSub"]
+sum2 = sum1 + data_avg_list["nextReadSame"]
+sum3 = sum2 + data_avg_list["nextReadSuper"]
+rect1 = ax1.bar(ind, [data_avg_list["nextReadSub"]], width, color=tableau_colors[index_colors[0]])
+rect2 = ax1.bar(ind, [data_avg_list["nextReadSame"]], width, bottom=sum1, color=tableau_colors[index_colors[1]])
+rect3 = ax1.bar(ind, [data_avg_list["nextReadSuper"]], width, bottom=sum2, color=tableau_colors[index_colors[2]])
+rect4 = ax1.bar(ind, [data_avg_list["nextReadOverlap"]-sum3], width, bottom=sum3, color=tableau_colors[index_colors[3]])
+rect5 = ax1.bar(ind+width*2, [data_avg_list["nextReadTotal"]], width, color=tableau_colors[index_colors[4]])
+
+ax1.set_ylabel("average #queries of next action")
+ax1.set_xticklabels((''))
+ax1.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0]), ('sub','same','super','overlapOther','readQTotal'), loc='upper center', prop={'size':'10'})
+#plt.show()
+fig.savefig("%s/nextaction.png"%(fig_path))
+
+
+
+print "Average table overlap for each next_action:\t%f"%getAverage(overlap_table_count)

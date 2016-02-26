@@ -101,8 +101,14 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->paste def_%v_3 %self[2.0,] 	 ARGS:Symbol,
-		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+		 6: GETFIELD %self->item def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->target_folder def_%v_4 %self[2.0,] 
+		 8: %v_3->copy def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: 
+		 10: %self->clipboard def_%v_6 %self[2.0,] 	 ARGS:
+		 11: GETFIELD %self->item def_%v_7 %self[2.0,2.10,] 
+		 12: %v_6->remove def_%v_8 %v_6[2.10,] %v_7[2.11,] 	 ARGS:%v_7,
+		 13: RETURN %v_8[2.12,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -123,8 +129,14 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->paste def_%v_3 %self[2.0,] 	 ARGS:Symbol,
-		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+		 6: GETFIELD %self->item def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->target_folder def_%v_4 %self[2.0,] 
+		 8: %v_3->move def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: 
+		 10: %self->clipboard def_%v_6 %self[2.0,] 	 ARGS:
+		 11: GETFIELD %self->item def_%v_7 %self[2.0,2.10,] 
+		 12: %v_6->remove def_%v_8 %v_6[2.10,] %v_7[2.11,] 	 ARGS:%v_7,
+		 13: RETURN %v_8[2.12,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
 	datadep: 

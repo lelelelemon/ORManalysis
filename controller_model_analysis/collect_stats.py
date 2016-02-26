@@ -58,6 +58,7 @@ for line in tablefield_fp:
 def calculateAverageRecursive(cond_list, pos, node, to_float):
 	results = []
 	for child in node:
+
 		if child.tag == cond_list[pos]:
 			if pos ==  len(cond_list)-1:
 				if to_float:
@@ -127,10 +128,11 @@ general_stats_content.append("branchTotal")
                                  
 read_stats_content = ["total", "sinkTotal", "toReadQuery", "toWriteQuery", "toView", "toBranch"]
                                  
-write_stats_content = ["total", "sourceTotal", "fromUserInput", "fromQuery", "fromConst"]
+write_stats_content = ["total", "sourceTotal", "fromUserInput", "fromQuery", "fromConst", "fromUtil"]
                                  
 view_stat_prefix = ["viewStats"] 
 clique_stat_prefix = ["cliqueStat"]
+schema_stat_prefix = ["schema"]
 
 prefix2 = ["chainStats"]
 field_prefix = prefix2[:]
@@ -148,7 +150,7 @@ path_stats_content2 = ["shortestPath", "longestPath", "instrTotal"]
 colors = [5,2,7,9,3,4,10,12,13]	
 
 # stats
-def print_general_stat(prefix, content, plot_branch):
+def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	print "pref =:"
 	print prefix
 	data = {}
@@ -163,18 +165,24 @@ def print_general_stat(prefix, content, plot_branch):
 	reads = {}
 	for g in read_stats_content:
 		cond_list = prefix[:]
-		cond_list.append("read")
+		cond_list.append("readSink")
 		cond_list.append(g)
-		print cond_list
 		r = calculateAllActions(cond_list)
 		reads[g] = getAverage(r)
+
+	readSource = {}
+	for g in read_stats_content:
+		cond_list = prefix[:]
+		cond_list.append("readSource")
+		cond_list.append(g)
+		r = calculateAllActions(cond_list)
+		readSource[g] = getAverage(r)
 
 	writes = {}
 	for g in write_stats_content:
 		cond_list = prefix[:]
-		cond_list.append("write")
+		cond_list.append("writeSource")
 		cond_list.append(g)
-		print cond_list
 		r = calculateAllActions(cond_list)
 		writes[g] = getAverage(r)
 		#print "%f, %d"%(writes[g], len(r))
@@ -187,7 +195,7 @@ def print_general_stat(prefix, content, plot_branch):
 	print "onlyFromUser:\t%f"%data["queryOnlyFromUser"]
 
 	print "READsink:\t%f\t%f\t%f\t%f"%(reads["toReadQuery"], reads["toWriteQuery"], reads["toBranch"], reads["toView"])
-	print "WRITEsource:\t%f\t%f\t%f"%(writes["fromQuery"], writes["fromUserInput"], writes["fromConst"])
+	print "WRITEsource:\t%f\t%f\t%f"%(writes["fromQuery"], writes["fromUserInput"], writes["fromConst"], writes["fromUtil"])
 	ind = np.arange(1)
 	width = 0.2
 	
@@ -249,7 +257,7 @@ def print_general_stat(prefix, content, plot_branch):
 
 	#2.1 bar: branchOnQuery + branchOther
 	if plot_branch:
-		ax4 = fig.add_subplot(131)
+		ax4 = fig.add_subplot(141)
 		rect1 = ax4.bar(range(1, 2), [data["branchOnQuery"]], width, color=tableau_colors[colors[3]], edgecolor='black')
 		rect2 = ax4.bar(range(1, 2), [data["branchTotal"]-data["branchOnQuery"]], width, bottom=data["branchOnQuery"], color=tableau_colors[colors[4]], edgecolor='black')
 		ax4.set_xticklabels((''))
@@ -259,7 +267,7 @@ def print_general_stat(prefix, content, plot_branch):
 		ax4.legend((rect1[0], rect2[0]), ('branch depend on query','branch others'), prop={'size':'10'}, loc='upper right')
 
 	#2.2 bar: readSink
-	ax5 = fig.add_subplot(132)
+	ax5 = fig.add_subplot(142)
 	sum1 = reads["toReadQuery"]
 	sum2 = sum1 + reads["toWriteQuery"]
 	sum3 = sum2 + reads["toBranch"]
@@ -271,22 +279,42 @@ def print_general_stat(prefix, content, plot_branch):
 	rect4 = ax5.bar(ind, [reads["toView"]/float(reads["total"])], width, bottom=[sum3/float(reads["total"])], color=tableau_colors[colors[8]])
 	ax5.set_xticklabels((''))
 	ax5.set_xlabel("read sink")
-	ax5.set_ylabel("number of sink instr")
+	ax5.set_ylabel("number of sinks")
 	ax5.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('to read query','to write query','to branch', 'to view'), prop={'size':'10'}, loc='upper right')
-	
-	#2.3 bar: writeSource
-	ax6 = fig.add_subplot(133)
+
+	if plot_read_source:
+		#2.3 bar: readSource
+		ax6 = fig.add_subplot(143)
+		sum1 = readSource["fromUserInput"]
+		sum2 = sum1 + readSource["fromQuery"]
+		sum3 = sum2 + readSource["fromConst"]
+		sum4 = sum3 + readSource["fromUtil"]
+		ax6.set_ylim(0, sum3*1.4/float(readSource["total"]))
+		rect1 = ax6.bar(ind, [readSource["fromUserInput"]/float(readSource["total"])], width, color=tableau_colors[colors[5]])
+		rect2 = ax6.bar(ind, [readSource["fromQuery"]/float(readSource["total"])], width, bottom=[sum1/float(readSource["total"])], color=tableau_colors[colors[6]])
+		rect3 = ax6.bar(ind, [readSource["fromConst"]/float(readSource["total"])], width, bottom=[sum2/float(readSource["total"])], color=tableau_colors[colors[7]])
+		rect4 = ax6.bar(ind, [readSource["fromUtil"]/float(readSource["total"])], width, bottom=[sum3/float(readSource["total"])], color=tableau_colors[colors[8]])
+		ax6.set_xticklabels((''))
+		ax6.set_xlabel("read source")
+		ax6.set_ylabel("number of sources")
+		ax6.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('from user input','from query','from const','from util'), prop={'size':'10'}, loc='upper right')
+
+
+	#2.4 bar: writeSource
+	ax7 = fig.add_subplot(144)
 	sum1 = writes["fromUserInput"]
 	sum2 = sum1 + writes["fromQuery"]
 	sum3 = sum2 + writes["fromConst"]
-	ax6.set_ylim(0, sum3*1.4/float(writes["total"]))
-	rect1 = ax6.bar(ind, [writes["fromUserInput"]/float(writes["total"])], width, color=tableau_colors[colors[5]])
-	rect2 = ax6.bar(ind, [writes["fromQuery"]/float(writes["total"])], width, bottom=[sum1/float(writes["total"])], color=tableau_colors[colors[6]])
-	rect3 = ax6.bar(ind, [writes["fromConst"]/float(writes["total"])], width, bottom=[sum2/float(writes["total"])], color=tableau_colors[colors[7]])
-	ax6.set_xticklabels((''))
-	ax6.set_xlabel("write source")
-	ax6.set_ylabel("number of source instr")
-	ax6.legend((rect1[0], rect2[0], rect3[0]), ('from user input','from query','from const'), prop={'size':'10'}, loc='upper right')
+	sum4 = sum3 + writes["fromUtil"]
+	ax7.set_ylim(0, sum3*1.4/float(writes["total"]))
+	rect1 = ax7.bar(ind, [writes["fromUserInput"]/float(writes["total"])], width, color=tableau_colors[colors[5]])
+	rect2 = ax7.bar(ind, [writes["fromQuery"]/float(writes["total"])], width, bottom=[sum1/float(writes["total"])], color=tableau_colors[colors[6]])
+	rect3 = ax7.bar(ind, [writes["fromConst"]/float(writes["total"])], width, bottom=[sum2/float(writes["total"])], color=tableau_colors[colors[7]])
+	rect4 = ax7.bar(ind, [writes["fromUtil"]/float(writes["total"])], width, bottom=[sum3/float(writes["total"])], color=tableau_colors[colors[8]])
+	ax7.set_xticklabels((''))
+	ax7.set_xlabel("write source")
+	ax7.set_ylabel("number of sources")
+	ax7.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('from user input','from query','from const','from util'), prop={'size':'10'}, loc='upper right')
 
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 	print "%s/querystat_%s2.png"%(fig_path, prefix[-1])
@@ -427,9 +455,51 @@ def print_clique_stat(prefix):
 	cond_list.append("clique")
 	r = calculateAllActions(cond_list)
 	clique = clique + r
-	print "Average validation length:\t%f\t%d validations"%(getAverage(validation), len(validation))
+	print "Average validation length:\t%f\t%d\tvalidations"%(getAverage(validation), len(validation))
 	print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
 
+
+def print_schema_stat(prefix):
+	table_list = {}
+	assoc_cnt = {}
+	tblfield_total = {}
+	relation = {}
+	for table in tables:
+		table_list[table] = {}
+		tblfield_total[table] = 0
+
+	for table in tables:
+		for root in roots:
+			for rnode in root:
+				if rnode.tag == prefix[0]:
+					for child in rnode:
+					#child.tag = "User"
+						if child.tag == table:
+							for c in child:
+							#c.tag = "Group" or "totalFieldRef"
+								if c.tag == "totalFieldRef":
+									tblfield_total[table] += float(c.text)
+								else:
+									if c.tag not in table_list[table]:
+										table_list[table][c.tag] = 0
+									table_list[table][c.tag] += float(c.text)
+									relation["%s->%s"%(table,c.tag)] = c.attrib["relationship"]
+
+	fieldref_sum = 0
+	for table in tables:
+		print "Table %s (total field use %d):"%(table, tblfield_total[table])
+		fieldref_sum += tblfield_total[table]
+		for k,v in table_list[table].items():
+			print "\t%s(%d) [%s]"%(k, v, relation["%s->%s"%(table, k)])
+			r = relation["%s->%s"%(table, k)]
+			if r not in assoc_cnt:
+				assoc_cnt[r] = 0
+			assoc_cnt[r] += v
+	print "----"
+	print "general:"
+	print "refsum:\t%d"%fieldref_sum
+	for k,v in assoc_cnt.items():
+		print "%s:\t%d"%(k,v)
 
 #path
 def print_path(prefix, content):
@@ -489,9 +559,9 @@ for table in table_names:
 	pref = table_stats_prefix[:]
 	pref.append(table)
 	if table == "general":
-		print_general_stat(pref, general_stats_content, True)
+		print_general_stat(pref, general_stats_content, True, True)
 	else:
-		print_general_stat(pref, table_stats_content, False)
+		print_general_stat(pref, table_stats_content, False, False)
 
 print_fields(nonfield_prefix, field_stats_content, True)
 print_fields(field_prefix, field_stats_content)
@@ -499,3 +569,4 @@ print_path(prefix3, path_stats_content+path_stats_content2)
 
 print_view_stat(view_stat_prefix)
 print_clique_stat(clique_stat_prefix)
+print_schema_stat(schema_stat_prefix)
