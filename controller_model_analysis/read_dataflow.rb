@@ -337,7 +337,7 @@ def calculate_depinstr_for_cfg(cfg)
 				if dep_instr != nil
 					d.setInstrHandler(dep_instr)
 				else
-					puts "DEP instr nil: #{keyc}.#{key}: BB#{d.getBlock.to_i}.#{d.getInstr.to_i}"
+					puts "DEP instr nil: #{cfg.getMHandler.getCallerClass.getName}.#{cfg.getMHandler.getName}: cur BB#{bb.getIndex}.#{instr.getIndex} depend on BB#{d.getBlock.to_i}.#{d.getInstr.to_i}"
 				end 
 			end	
 			#puts ""

@@ -1,0 +1,160 @@
+SET IRMethod, name = eager_matching
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_term 
+		 6: 
+		 7: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral def_%v_4 
+		 9: BUILDSTRING def_%v_5 %v_3[2.7,] term[2.5,] %v_4[2.8,] 
+		 10: RETURN %v_5[2.9,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = search
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_search_params 
+		 6: 
+		 7: (Hash) def_%v_3 
+		 8: search_params->is_a? def_%v_4 search_params[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: search_params->[] def_%v_5 search_params[2.5,] 	 ARGS:Symbol,
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_5 search_params[2.5,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_term %v_5[4.0,3.0,] 
+		 1: 
+		 2: (Hash) def_%v_6 
+		 3: search_params->is_a? def_%v_7 search_params[2.5,] %v_6[5.2,] 	 ARGS:%v_6,
+		 4: BRANCH %v_7[5.3,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: search_params->[] def_%v_8 search_params[2.5,] 	 ARGS:Symbol,
+		 1: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_%v_8 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_include_body %v_8[7.0,6.0,] 
+		 1: 
+		 2: COPY TYPE_StringLiteral def_%v_9 
+		 3: %self->eager_matching def_%v_10 %self[2.0,] term[5.0,] 	 ARGS:term,
+		 4: COPY TYPE_Array def_%v_11 %v_9[8.2,] %v_10[8.3,] 
+		 5: COPY TYPE_PASS def_conditions %v_11[8.4,] 
+		 6: 
+		 7: BRANCH include_body[8.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: conditions->[] def_%v_12 conditions[8.5,] 	 ARGS:Fixnum,
+		 2: COPY TYPE_StringLiteral def_%v_13 
+		 3: %v_12-><< def_%v_14 %v_12[9.1,] %v_13[9.2,] 	 ARGS:%v_13,
+		 4: 
+		 5: %self->eager_matching def_%v_15 %self[2.0,] term[5.0,] 	 ARGS:term,
+		 6: conditions-><< def_%v_16 conditions[9.1,8.5,] %v_15[9.5,] 	 ARGS:%v_15,
+		 7: 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_16 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->where def_%v_17 %self[2.0,] conditions[8.5,] 	 ARGS:conditions,
+		 2: RETURN %v_17[11.1,] %self[11.1,2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = display_name
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = display_name_plural
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -192,7 +192,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		else
 			$in_loop.push(true)
 		end
-		if ["transaction","form_for","form_tag"].include?instr.getFuncname
+		if instr.instance_of?Call_instr and ["transaction","form_for","form_tag"].include?instr.getFuncname
 			handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
 		else
 			$closure_stack.push($cur_node)

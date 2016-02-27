@@ -1,0 +1,199 @@
+SET IRMethod, name = field
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_name 
+		 6: 
+		 7: %self->fields def_%v_3 %self[2.0,] 	 ARGS:
+		 8: %v_3->select def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 	 ARGS:%v_3,
+CLOSURE BEGIN: f[] name[2.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_f 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: f->name def_%cl_1_3 f[2.2,] 	 ARGS:
+		 2: %cl_1_3->== def_%cl_1_4 %cl_1_3[3.1,] name[] 	 ARGS:name,
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 9: %v_4->first def_%v_5 %v_4[2.8,] 	 ARGS:
+		 10: RETURN %v_5[2.9,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = required?
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_name 
+		 6: 
+		 7: %self->field def_%v_3 %self[2.0,] name[2.5,] 	 ARGS:name,
+		 8: COPY TYPE_PASS def_field %v_3[2.7,] 
+		 9: 
+		 10: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: field->required? def_%v_4 field[2.8,] 	 ARGS:
+		 1: RETURN %v_4[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = field_names
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->fields def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->collect def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
+CLOSURE BEGIN: f[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_f 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: f->name def_%cl_1_3 f[2.2,] 	 ARGS:
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show_text?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->confirmation_behavior def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->to_sym def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->== def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new_entry
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Entry) def_%v_3 
+		 7: HASH-form- def_%v_4 %self[2.0,] 
+		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

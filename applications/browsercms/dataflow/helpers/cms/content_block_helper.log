@@ -1,0 +1,398 @@
+SET IRMethod, name = block_row_tag
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_block 
+		 6: 
+		 7: %self->class_name_for def_%v_3 %self[2.0,] block[2.5,] 	 ARGS:block,
+		 8: COPY TYPE_PASS def_cname %v_3[2.7,] 
+		 9: 
+		 10: %self->current_user def_%v_4 %self[2.0,2.7,] 	 ARGS:
+		 11: %v_4->able_to_modify? def_%v_5 %v_4[2.10,] block[2.5,] 	 ARGS:block,
+		 12: COPY TYPE_PASS def_can_modify %v_5[2.11,] 
+		 13: 
+		 14: 
+		 15: COPY TYPE_StringLiteral def_%v_6 
+		 16: block->id def_%v_7 block[2.5,] 	 ARGS:
+		 17: BUILDSTRING def_%v_8 cname[2.8,] %v_6[2.15,] %v_7[2.16,] 
+		 18: HASH-id-class- def_%v_9 %v_8[2.17,] cname[2.8,] 
+		 19: COPY TYPE_PASS def_options %v_9[2.18,] 
+		 20: 
+		 21: %v_9->[] def_%v_10 %v_9[2.18,] 	 ARGS:Symbol,
+		 22: block->class def_%v_11 block[2.5,2.16,] 	 ARGS:
+		 23: %v_11->publishable? def_%v_12 %v_11[2.22,] 	 ARGS:
+		 24: BRANCH %v_12[2.23,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: block->published? def_%v_13 block[2.5,] 	 ARGS:
+		 1: %v_13->! def_%v_14 %v_13[3.0,] 	 ARGS:
+		 2: COPY TYPE_PASS def_%v_12 %v_14[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_12[3.2,2.23,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_15 
+		 1: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_PASS def_%v_15 %v_16[6.0,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: %v_10->+ def_%v_10 %v_10[2.21,] %v_15[6.1,5.0,] 	 ARGS:%v_15,
+		 1: options->[]= def_%v_17 options[2.19,] %v_10[7.0,] 	 ARGS:Symbol,%v_10,
+		 2: 
+		 3: COPY TYPE_PASS def_%v_18 can_modify[2.12,] 
+		 4: BRANCH can_modify[2.12,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %self->current_user def_%v_19 %self[2.0,] 	 ARGS:
+		 1: %v_19->able_to? def_%v_20 %v_19[8.0,] 	 ARGS:Symbol,
+		 2: COPY TYPE_PASS def_%v_18 %v_20[8.1,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_18[8.2,7.3,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_21 
+		 1: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: options->[] def_%v_22 options[7.1,2.19,] 	 ARGS:Symbol,
+		 1: COPY TYPE_StringLiteral def_%v_23 
+		 2: %v_22->+ def_%v_22 %v_22[11.0,] %v_23[11.1,] 	 ARGS:%v_23,
+		 3: options->[]= def_%v_24 options[11.0,7.1,2.19,] %v_22[11.0,11.2,] 	 ARGS:Symbol,%v_22,
+		 4: COPY TYPE_PASS def_%v_21 %v_22[11.0,11.2,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_PASS def_%v_25 can_modify[2.12,] 
+		 2: BRANCH can_modify[2.12,] 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: %self->current_user def_%v_26 %self[2.0,] 	 ARGS:
+		 1: %v_26->able_to? def_%v_27 %v_26[13.0,] 	 ARGS:Symbol,
+		 2: COPY TYPE_PASS def_%v_25 %v_27[13.1,] 
+BB 14
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_25[13.2,12.1,] 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_28 
+		 1: 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: options->[] def_%v_29 options[11.3,7.1,2.19,] 	 ARGS:Symbol,
+		 1: COPY TYPE_StringLiteral def_%v_30 
+		 2: %v_29->+ def_%v_29 %v_29[16.0,] %v_30[16.1,] 	 ARGS:%v_30,
+		 3: options->[]= def_%v_31 options[16.0,11.3,7.1,2.19,] %v_29[16.0,16.2,] 	 ARGS:Symbol,%v_29,
+		 4: COPY TYPE_PASS def_%v_28 %v_29[16.0,16.2,] 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_32 
+		 2: %self->tag def_%v_33 %self[2.0,] %v_32[17.1,] options[16.3,11.3,7.1,2.19,] 	 ARGS:%v_32,options,Boolean,
+		 3: RETURN %v_33[17.2,] %self[17.2,2.0,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = content_block_tr_tag
+BB 1
+	outgoing: 27 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_block 
+		 6: 
+		 7: %self->class_name_for def_%v_3 %self[2.0,] block[2.5,] 	 ARGS:block,
+		 8: COPY TYPE_PASS def_cname %v_3[2.7,] 
+		 9: 
+		 10: %self->current_user def_%v_4 %self[2.0,2.7,] 	 ARGS:
+		 11: %v_4->able_to_modify? def_%v_5 %v_4[2.10,] block[2.5,] 	 ARGS:block,
+		 12: COPY TYPE_PASS def_can_modify %v_5[2.11,] 
+		 13: 
+		 14: HASH- def_%v_6 
+		 15: COPY TYPE_PASS def_options %v_6[2.14,] 
+		 16: 
+		 17: HASH- def_%v_7 
+		 18: ATTRASSIGN %v_6->[] %v_7[2.17,] 
+		 19: COPY TYPE_PASS def_data %v_7[2.17,] 
+		 20: 
+		 21: block->class def_%v_8 block[2.5,] 	 ARGS:
+		 22: %v_8->publishable? def_%v_9 %v_8[2.21,] 	 ARGS:
+		 23: BRANCH %v_9[2.22,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: block->published? def_%v_10 block[2.5,] 	 ARGS:
+		 1: %v_10->! def_%v_11 %v_10[3.0,] 	 ARGS:
+		 2: COPY TYPE_PASS def_%v_9 %v_11[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_9[3.2,2.22,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_12 
+		 1: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_13 
+		 1: COPY TYPE_PASS def_%v_12 %v_13[6.0,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: ATTRASSIGN data->[] %v_12[6.1,5.0,] 
+		 1: 
+		 2: COPY TYPE_StringLiteral def_%v_14 
+		 3: block->id def_%v_15 block[2.5,] 	 ARGS:
+		 4: BUILDSTRING def_%v_16 cname[2.8,] %v_14[7.2,] %v_15[7.3,] 
+		 5: ATTRASSIGN options->[] %v_16[7.4,] 
+		 6: 
+		 7: COPY TYPE_Array def_%v_17 cname[2.8,] 
+		 8: ATTRASSIGN options->[] %v_17[7.7,] 
+		 9: 
+		 10: COPY TYPE_PASS def_%v_18 can_modify[2.12,] 
+		 11: BRANCH can_modify[2.12,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %self->current_user def_%v_19 %self[2.0,] 	 ARGS:
+		 1: %v_19->able_to? def_%v_20 %v_19[8.0,] 	 ARGS:Symbol,
+		 2: COPY TYPE_PASS def_%v_18 %v_20[8.1,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_18[8.2,7.10,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_21 
+		 1: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: options->[] def_%v_22 options[7.5,7.8,2.15,] 	 ARGS:Symbol,
+		 1: COPY TYPE_StringLiteral def_%v_23 
+		 2: %v_22-><< def_%v_24 %v_22[11.0,] %v_23[11.1,] 	 ARGS:%v_23,
+		 3: COPY TYPE_PASS def_%v_21 %v_24[11.2,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_PASS def_%v_25 can_modify[2.12,] 
+		 2: BRANCH can_modify[2.12,] 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: %self->current_user def_%v_26 %self[2.0,] 	 ARGS:
+		 1: %v_26->able_to? def_%v_27 %v_26[13.0,] 	 ARGS:Symbol,
+		 2: COPY TYPE_PASS def_%v_25 %v_27[13.1,] 
+BB 14
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_25[13.2,12.1,] 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_28 
+		 1: 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: options->[] def_%v_29 options[7.5,7.8,2.15,] 	 ARGS:Symbol,
+		 1: COPY TYPE_StringLiteral def_%v_30 
+		 2: %v_29-><< def_%v_31 %v_29[16.0,] %v_30[16.1,] 	 ARGS:%v_30,
+		 3: COPY TYPE_PASS def_%v_28 %v_31[16.2,] 
+BB 17
+	outgoing: 18 19 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_32 
+		 2: %self->new_engine_aware_path def_%v_33 %self[2.0,] block[2.5,] 	 ARGS:block,
+		 3: %self->url_for def_%v_34 %self[17.2,2.0,] %v_33[17.2,] 	 ARGS:%v_33,
+		 4: ATTRASSIGN options->[] %v_32[17.1,] %v_34[17.3,] 
+		 5: 
+		 6: COPY TYPE_StringLiteral def_%v_35 
+		 7: %self->engine_aware_path def_%v_36 %self[17.2,17.3,2.0,] block[2.5,] 	 ARGS:block,Nil,
+		 8: %self->url_for def_%v_37 %self[17.2,17.3,17.7,2.0,] %v_36[17.7,] 	 ARGS:%v_36,
+		 9: ATTRASSIGN options->[] %v_35[17.6,] %v_37[17.8,] 
+		 10: 
+		 11: COPY TYPE_StringLiteral def_%v_38 
+		 12: %self->edit_engine_aware_path def_%v_39 %self[17.2,17.3,17.7,17.8,2.0,] block[2.5,] 	 ARGS:block,
+		 13: %self->url_for def_%v_40 %self[17.2,17.3,17.7,17.8,17.12,2.0,] %v_39[17.12,] 	 ARGS:%v_39,
+		 14: ATTRASSIGN options->[] %v_38[17.11,] %v_40[17.13,] 
+		 15: 
+		 16: block->class def_%v_41 block[2.5,] 	 ARGS:
+		 17: %v_41->addressable? def_%v_42 %v_41[17.16,] 	 ARGS:
+		 18: BRANCH %v_42[17.17,] 
+BB 18
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_43 
+		 1: block->path def_%v_44 block[2.5,] 	 ARGS:
+		 2: ATTRASSIGN options->[] %v_43[18.0,] %v_44[18.1,] 
+		 3: 
+BB 19
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_44 
+BB 20
+	outgoing: 21 22 
+	datadep: 
+	instructions:
+		 0: 
+		 1: block->class def_%v_45 block[2.5,] 	 ARGS:
+		 2: %v_45->versioned? def_%v_46 %v_45[20.1,] 	 ARGS:
+		 3: BRANCH %v_46[20.2,] 
+BB 21
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_47 
+		 1: %self->engine def_%v_48 %self[2.0,] block[2.5,] 	 ARGS:block,
+		 2: HASH-action- def_%v_49 
+		 3: %v_48->polymorphic_path def_%v_50 %v_48[21.1,] block[2.5,] %v_49[21.2,] 	 ARGS:block,%v_49,
+		 4: ATTRASSIGN options->[] %v_47[21.0,] %v_50[21.3,] 
+		 5: 
+BB 22
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_50 
+BB 23
+	outgoing: 24 25 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_51 
+		 2: %self->engine_aware_path def_%v_52 %self[2.0,] block[2.5,] 	 ARGS:block,
+		 3: %self->url_for def_%v_53 %self[23.2,2.0,] %v_52[23.2,] 	 ARGS:%v_52,
+		 4: ATTRASSIGN options->[] %v_51[23.1,] %v_53[23.3,] 
+		 5: 
+		 6: block->class def_%v_54 block[2.5,] 	 ARGS:
+		 7: %v_54->publishable? def_%v_55 %v_54[23.6,] 	 ARGS:
+		 8: BRANCH %v_55[23.7,] 
+BB 24
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_56 
+		 1: %self->engine def_%v_57 %self[2.0,] block[2.5,] 	 ARGS:block,
+		 2: COPY TYPE_Array def_%v_58 block[2.5,] 
+		 3: %v_57->polymorphic_path def_%v_59 %v_57[24.1,] %v_58[24.2,] 	 ARGS:%v_58,
+		 4: ATTRASSIGN options->[] %v_56[24.0,] %v_59[24.3,] 
+		 5: 
+BB 25
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_59 
+BB 26
+	outgoing: 27 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_60 
+		 2: %self->tag def_%v_61 %self[2.0,] %v_60[26.1,] options[24.4,23.4,21.4,18.2,17.4,17.9,17.14,7.5,7.8,2.15,] 	 ARGS:%v_60,options,Boolean,
+		 3: RETURN %v_61[26.2,] %self[26.2,2.0,] 
+BB 27
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = class_name_for
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_block 
+		 6: 
+		 7: block->class def_%v_3 block[2.5,] 	 ARGS:
+		 8: %v_3->name def_%v_4 %v_3[2.7,] 	 ARGS:
+		 9: %v_4->underscore def_%v_5 %v_4[2.8,] 	 ARGS:
+		 10: RETURN %v_5[2.9,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -1,0 +1,616 @@
+SET IRMethod, name = draggable_class?
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_modifiable_sections 
+		 6: RECEIVEARG def_section_node 
+		 7: RECEIVEARG def_parent 
+		 8: 
+		 9: section_node->root? def_%v_3 section_node[2.6,] 	 ARGS:
+		 10: %v_3->! def_%v_4 %v_3[2.9,] 	 ARGS:
+		 11: BRANCH %v_4[2.10,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->current_user_can_modify def_%v_5 %self[2.0,] modifiable_sections[2.5,] section_node[2.6,] parent[2.7,] 	 ARGS:modifiable_sections,section_node,parent,
+		 1: COPY TYPE_PASS def_%v_4 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_4[3.1,2.10,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_6 
+		 2: RETURN %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_7 
+		 2: RETURN %v_7[6.1,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_page_path_data
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section_node 
+		 6: RECEIVEARG def_parent_section_node 
+		 7: 
+		 8: %self->figure_out_target_section def_%v_3 %self[2.0,] parent_section_node[2.6,] section_node[2.5,] 	 ARGS:parent_section_node,section_node,
+		 9: COPY TYPE_PASS def_section %v_3[2.8,] 
+		 10: 
+		 11: %self->new_section_page_path def_%v_4 %self[2.0,2.8,] %v_3[2.8,] 	 ARGS:section,
+		 12: RETURN %v_4[2.11,] %self[2.0,2.8,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_link_path_data
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section_node 
+		 6: RECEIVEARG def_parent_section_node 
+		 7: 
+		 8: %self->figure_out_target_section def_%v_3 %self[2.0,] parent_section_node[2.6,] section_node[2.5,] 	 ARGS:parent_section_node,section_node,
+		 9: COPY TYPE_PASS def_section %v_3[2.8,] 
+		 10: 
+		 11: %self->new_section_link_path def_%v_4 %self[2.0,2.8,] %v_3[2.8,] 	 ARGS:section,
+		 12: RETURN %v_4[2.11,] %self[2.0,2.8,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_section_path_data
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section_node 
+		 6: RECEIVEARG def_parent_section_node 
+		 7: 
+		 8: %self->figure_out_target_section def_%v_3 %self[2.0,] parent_section_node[2.6,] section_node[2.5,] 	 ARGS:parent_section_node,section_node,
+		 9: COPY TYPE_PASS def_section %v_3[2.8,] 
+		 10: 
+		 11: HASH-section_id- def_%v_4 %v_3[2.8,] 
+		 12: %self->new_section_path def_%v_5 %self[2.0,2.8,] %v_4[2.11,] 	 ARGS:%v_4,
+		 13: RETURN %v_5[2.12,] %self[2.0,2.8,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = initial_visibility_class
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section_node 
+		 6: 
+		 7: section_node->depth def_%v_3 section_node[2.5,] 	 ARGS:
+		 8: %v_3->>= def_%v_4 %v_3[2.7,] 	 ARGS:Fixnum,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_6 
+		 1: RETURN %v_6[4.0,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sitemap_depth_class
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section_node 
+		 6: 
+		 7: section_node->depth def_%v_3 section_node[2.5,] 	 ARGS:
+		 8: %v_3->+ def_%v_4 %v_3[2.7,] 	 ARGS:Fixnum,
+		 9: COPY TYPE_PASS def_one_based_depth %v_4[2.8,] 
+		 10: 
+		 11: COPY TYPE_StringLiteral def_%v_5 
+		 12: BUILDSTRING def_%v_6 %v_5[2.11,] %v_4[2.8,] 
+		 13: RETURN %v_6[2.12,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = hidden_icon_tag
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_content 
+		 6: 
+		 7: content->respond_to? def_%v_3 content[2.5,] 	 ARGS:Symbol,
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: content->hidden? def_%v_4 content[2.5,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_3 %v_4[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_5 
+		 2: %v_5->html_safe def_%v_6 %v_5[5.1,] 	 ARGS:
+		 3: RETURN %v_6[5.2,] %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_7 
+		 2: RETURN %v_7[6.1,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = guest_accessible_icon_tag
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_parent 
+		 6: RECEIVEARG def_content 
+		 7: 
+		 8: GETFIELD %self->public_sections def_%v_3 %self[2.0,] 
+		 9: content->accessible_to_guests? def_%v_4 content[2.6,] %v_3[2.8,] parent[2.5,] 	 ARGS:%v_3,parent,
+		 10: BRANCH %v_4[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_5 
+		 2: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_6 
+		 2: %v_6->html_safe def_%v_7 %v_6[4.1,] 	 ARGS:
+		 3: RETURN %v_7[4.2,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = icon_tag
+BB 1
+	outgoing: 23 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section_node 
+		 6: RECEIVEARG def_children 
+		 7: 
+		 8: section_node->ancestors def_%v_3 section_node[2.5,] 	 ARGS:
+		 9: %v_3->size def_%v_4 %v_3[2.8,] 	 ARGS:
+		 10: %v_4->== def_%v_5 %v_4[2.9,] 	 ARGS:Fixnum,
+		 11: BRANCH %v_5[2.10,] 
+BB 3
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_6 
+		 2: 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: section_node->home? def_%v_7 section_node[2.5,] 	 ARGS:
+		 2: BRANCH %v_7[4.1,] 
+BB 5
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_8 
+		 2: 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: section_node->link? def_%v_9 section_node[2.5,] 	 ARGS:
+		 2: BRANCH %v_9[6.1,] 
+BB 7
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_10 
+		 2: 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: section_node->page? def_%v_11 section_node[2.5,] 	 ARGS:
+		 2: BRANCH %v_11[8.1,] 
+BB 9
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_12 
+		 2: 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: section_node->section? def_%v_13 section_node[2.5,] 	 ARGS:
+		 2: BRANCH %v_13[10.1,] 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: children->empty? def_%v_14 children[2.6,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_13 %v_14[11.0,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_13[11.1,10.1,] 
+BB 13
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_15 
+		 2: 
+BB 14
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: section_node->section? def_%v_16 section_node[2.5,] 	 ARGS:
+		 2: BRANCH %v_16[14.1,] 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_17 
+		 2: 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_18 
+		 2: COPY TYPE_PASS def_%v_17 %v_18[16.1,] 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_15 %v_17[16.2,15.1,] 
+BB 18
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_12 %v_15[17.0,13.1,] 
+BB 19
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_10 %v_12[18.0,9.1,] 
+BB 20
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_8 %v_10[19.0,7.1,] 
+BB 21
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_6 %v_8[20.0,5.1,] 
+BB 22
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_name %v_6[21.0,3.1,] 
+		 1: 
+		 2: COPY TYPE_StringLiteral def_%v_19 
+		 3: COPY TYPE_StringLiteral def_%v_20 
+		 4: COPY TYPE_StringLiteral def_%v_21 
+		 5: COPY TYPE_StringLiteral def_%v_22 
+		 6: BUILDSTRING def_%v_23 %v_22[22.5,] %v_6[21.0,3.1,] 
+		 7: HASH-class- def_%v_24 %v_21[22.4,] %v_23[22.6,] 
+		 8: %self->content_tag def_%v_25 %self[2.0,] %v_19[22.2,] %v_20[22.3,] %v_24[22.7,] 	 ARGS:%v_19,%v_20,%v_24,
+		 9: RETURN %v_25[22.8,] %self[22.8,2.0,] 
+BB 23
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = closable_data
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section_node 
+		 6: RECEIVEARG def_children 
+		 7: 
+		 8: section_node->root? def_%v_3 section_node[2.5,] 	 ARGS:
+		 9: BRANCH %v_3[2.8,] 
+BB 3
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_Boolean def_%v_4 
+		 2: RETURN %self[2.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: children->empty? def_%v_5 children[2.6,] 	 ARGS:
+		 1: %v_5->! def_%v_6 %v_5[4.0,] 	 ARGS:
+		 2: BRANCH %v_6[4.1,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_Boolean def_%v_7 
+		 2: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_Boolean def_%v_7 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %v_7[6.1,5.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = current_user_can_modify
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_modifiable_sections 
+		 6: RECEIVEARG def_section_node 
+		 7: RECEIVEARG def_parent_section_node 
+		 8: 
+		 9: section_node->section? def_%v_3 section_node[2.6,] 	 ARGS:
+		 10: BRANCH %v_3[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: section_node->node def_%v_4 section_node[2.6,] 	 ARGS:
+		 2: modifiable_sections->include? def_%v_5 modifiable_sections[2.5,] %v_4[3.1,] 	 ARGS:%v_4,
+		 3: RETURN %v_5[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: parent_section_node->node def_%v_6 parent_section_node[2.7,] 	 ARGS:
+		 2: modifiable_sections->include? def_%v_7 modifiable_sections[2.5,] %v_6[4.1,] 	 ARGS:%v_6,
+		 3: RETURN %v_7[4.2,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = row_type_tag
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section_node 
+		 6: 
+		 7: section_node->section? def_%v_3 section_node[2.5,] 	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_4 
+		 1: RETURN %v_4[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_5 
+		 1: RETURN %v_5[4.0,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = figure_out_target_section
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_parent_section_node 
+		 6: RECEIVEARG def_section_node 
+		 7: 
+		 8: section_node->section? def_%v_3 section_node[2.6,] 	 ARGS:
+		 9: BRANCH %v_3[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: section_node->node def_%v_4 section_node[2.6,] 	 ARGS:
+		 2: RETURN %v_4[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: parent_section_node->node def_%v_5 parent_section_node[2.5,] 	 ARGS:
+		 2: RETURN %v_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

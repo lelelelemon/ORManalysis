@@ -136,7 +136,7 @@ def parse_attrib(astnode)
 	case astnode.children[0].source.to_s
 		when "include"
 			$cur_class.include_module = get_left_most_leaf(astnode.children[1]).source.to_s
-		when "has_many","belongs_to","has_one","has_and_belongs_to_many","has_enumerated","attr_accessor"
+		when "has_many","belongs_to","has_one","has_and_belongs_to_many","has_enumerated","attr_accessor","cattr_accessor"
 			parse_association(astnode, astnode.children[0].source.to_s)
 		when "scope"
 			scope_func_list = Array.new
@@ -164,7 +164,7 @@ def parse_attrib(astnode)
 					end
 				end
 			end
-		when "attr_accessor"
+		when "attr_accessor","cattr_accessor"
 			if astnode.children[1].type.to_s == "list"
 				astnode.children[1].children.each do |child|
 					if child.type.to_s == "symbol_literal"

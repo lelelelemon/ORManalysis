@@ -607,8 +607,8 @@ if options[:xml] == true
 end
 
 if options[:print_all] == true
-	$class_map.each do |keyc, valuec|
-	#	puts "class #{keyc} < #{valuec.getUpperClass} #{isActiveRecord(keyc)}"
+	#$class_map.each do |keyc, valuec|
+		#puts "class #{keyc} < #{valuec.getUpperClass} #{isActiveRecord(keyc)}"
 		#valuec.getMethod("before_save").getCalls.each do |s|
 		#	puts "\t#{s.getFuncName}"
 		#end
@@ -627,9 +627,20 @@ if options[:print_all] == true
 		#end
 		#puts ""
 	#end
-	#_file = File.open("#{$app_dir}/table_name.txt", "w")
-	#$table_names.each do |t|
-	#	_file.write("#{t}\n")
+	_file = File.open("#{$app_dir}/table_name.txt", "w")
+	f2 = File.open("#{$app_dir}/tablefields.txt","w")
+	$table_names.each do |t|
+		_file.write("#{t}\n")
+	end
+	$table_names.each do |t|
+		if $class_map[t] != nil
+			$class_map[t].getTableFields.each do |f|
+				f2.puts("#{t}.#{f.field_name}")
+			end
+		else
+			puts "Table #{t} doesn't have a class!"
+		end
+	end
 =begin
 		valuec.getMethods.each do |keym, valuem|
 			cfg = valuem.getCFG
@@ -649,6 +660,5 @@ if options[:print_all] == true
 			end
 		end
 =end
-	end
-	do_type_inference
+	#end
 end
