@@ -3,6 +3,8 @@ def check_method_keyword(_caller, k)
 		return nil
 	elsif k.index("find_by")==0
 		return "SELECT"
+	elsif k.index("not_")==0 and testTableField(_caller, k.gsub("not_",""))
+		return "SELECT"
 	elsif k.end_with?("count")
 	#for example: User.tags_count = Tag.where(user_id = :id).count
 			

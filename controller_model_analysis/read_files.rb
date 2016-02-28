@@ -54,32 +54,18 @@ def read_dynamic_typing_info
 	end
 end
 
-def read_each_class(class_list, module_name, filename)
-	class_list.each do |class_node|
-		if module_name == "" or class_node.children[0].source.to_s.include?(module_name)
-			class_name = class_node.children[0].source.to_s
-		else
-			class_name = "#{module_name}::#{class_node.children[0].source.to_s}"
-		end
-		#puts "\t -- class_name = #{class_name}"
-		#puts ""
-		#if is_controller
-		#	$cur_class = Controller_class.new(class_name)
-		#else
-		#	$cur_class = Model_class.new(class_name)
-		#end
+def read_each_class(class_name, class_node, filename)
 		$cur_class = Class_class.new(class_name)
 		if class_node.children[1].type.to_s == "const_path_ref" or class_node.children[1].type.to_s  == "var_ref"
 			#upper_class = class_node.children[1].source.to_s
 			$cur_class.setUpperClass(class_node.children[1].source.to_s)
-		#puts "class #{class_name} < #{$cur_class.getUpperClass}"
 		end
 		
+		#puts "class #{class_name} < #{$cur_class.getUpperClass}"	
 		$class_map[class_name] = $cur_class
 		$cur_class.filename = filename
 		level = 0
 		traverse_ast(class_node, level)
-	end
 end
 
 #read table name list 
@@ -113,31 +99,10 @@ end
 def handle_single_file(item)
 	file = File.open(item, "r")
 	contents = file.read
-	puts "HANDLE file: #{item}"
+	#puts "HANDLE file: #{item}"
 	ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
-	class_list = Array.new
-	module_node = get_module_node(ast)
-	module_name = ""
-	if module_node != nil
-		module_name = get_left_most_leaf(module_node).source.to_s
-	end
-	get_class_list(ast, class_list)
-	if class_list.length == 0
-		if module_node != nil
-			class_list.push(module_node)
-			read_each_class(class_list, "")
-		else
-			#If no module nor class can be found, then skip the file
-			#abort("Neither class nor module can be found")
-			return 
-		end
-	else
-		#puts "class_list:"
-		#class_list.each do |c|
-		#	puts "\t--#{c.children[0].source.to_s}"
-		#end
-		read_each_class(class_list, module_name, item)
-	end
+	@class_stack = Array.new
+	recursive_get_class_stack(ast, @class_stack, item)
 end
 
 

@@ -3,7 +3,6 @@
   module AdminController
     extend ActiveSupport::Concern
 
-    included do
       include Authentication::Controller
       include ErrorHandling
       include DomainSupport
@@ -19,7 +18,6 @@
       helper UiElementsHelper
       include NavMenuHelper
 
-    end
 
     protected
     def escape_javascript(javascript)

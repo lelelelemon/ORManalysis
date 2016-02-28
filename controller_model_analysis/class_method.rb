@@ -62,7 +62,7 @@ class Class_class
 		@variable = Array.new
 		@upper_class = nil
 		@upper_class_instance = nil
-		@include_module = nil
+		@include_module = Array.new
 		@method_var_map = Hash.new
 		@before_filter = Array.new
 		@save_actions = Array.new
@@ -166,21 +166,30 @@ class Class_class
 	end
 	#findMethod traces up to parent class
 	#Actually the logic here is just like "findCaller" in Function_call
-	def findMethodRecursive(name)
+	#TODO: here we use depth... to force stop searching
+	def findMethodRecursive(name, step = 0)
+		if step > 5
+			return nil
+		end
 		if @methods[name]
 			return @methods[name]
 		else
 			temp_class_name = @upper_class
+			@searched_class = Array.new
 			while $class_map[temp_class_name] != nil
-				if $class_map[temp_class_name].getMethod(name)
-					return $class_map[temp_class_name].getMethod(name)
+				f = $class_map[temp_class_name].findMethodRecursive(name, step+1)
+				if f != nil
+					return f
 				else
 					temp_class_name = $class_map[temp_class_name].getUpperClass
 				end
 			end
-			if $class_map[@include_module] != nil
-				if $class_map[@include_module].getMethod(name) != nil
-					return $class_map[@include_module].getMethod(name)
+			@include_module.each do |inc|
+				if $class_map[inc] != nil
+					f = $class_map[inc].findMethodRecursive(name, step+1)
+					if f != nil
+						return f
+					end
 				end
 			end
 			if cname = search_distinct_func_name(name)

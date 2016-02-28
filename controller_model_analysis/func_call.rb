@@ -155,7 +155,7 @@ class Function_call
 					end
 					#find upper fails
 					if $class_map[caller_class] == nil or $class_map[caller_class].getMethod(@func_name) == nil
-						include_m = $class_map[$class_map[calling_func_class].include_module]
+						include_m = $class_map[$class_map[calling_func_class].include_module[0]]
 						if include_m != nil and include_m.getMethod(@func_name) != nil
 							caller_class = include_m.getName
 						else

@@ -453,7 +453,12 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 						#is field?
 						is_field = known_type(instr.getFuncname.gsub('!','').gsub('?',''), cfg, caller_type.type)
 						if type_not_found(is_field) == false
-							add_to_cfg_varmap(cfg, c_name, instr.getDefv, is_field.type)
+							#TODO: Don't know if it is true...sometimes use boolean just as selection
+							if is_field.type == "boolean"
+								add_to_cfg_varmap(cfg, c_name, instr.getDefv, c_name)
+							else
+								add_to_cfg_varmap(cfg, c_name, instr.getDefv, is_field.type)
+							end
 						else
 							#TODO: This may be a bad heuristic: if field matches a table name...
 							#In community engine, tag.taggings, but taggings is not defined as a field in Tag model??!!

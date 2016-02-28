@@ -91,7 +91,7 @@ def resolve_upper_class
 				valuec.mergeSave(parent)
 				valuec.mergeCreate(parent)
 				if valuec.include_module == nil
-					valuec.include_module = parent.include_module
+					valuec.include_module = parent.include_module.dup
 				end
 				temp_upper_class = $class_map[temp_upper_class].getUpperClass
 			end
@@ -348,18 +348,20 @@ if options[:dir] != nil
 	else
 		read_ruby_files(options[:dir])
 		#puts "Finish reading files"
-		read_dataflow(options[:dir])
-		
+	
 		#$class_map.each do |k, v|
 		#	v.getMethods.each do |k1, v1|
 		#		puts "#{k} . #{k1}:"
-		#		if v1.getCFG == nil
+		#		#if v1.getCFG == nil
 		#			v1.getCalls.each do |c|
 		#				puts "\t#{c.getObjName} . #{c.getFuncName}"
 		#			end
-		#		end
+		#		#end
 		#	end
 		#end
+
+		read_dataflow(options[:dir])
+		
 		do_type_inference
 	end
 else

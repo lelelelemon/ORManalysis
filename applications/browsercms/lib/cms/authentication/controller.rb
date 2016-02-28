@@ -17,7 +17,6 @@
 # To Dos: It appears as though we are storing the 'current' user in two places, @current_user and User.current. This is probably not DRY, but
 #   more testing would be needed.
 #
-module Cms
   module Authentication
     module Controller
       # Inclusion hook to make #current_user and #logged_in?
@@ -117,4 +116,3 @@ module Cms
 
     end
   end
-end

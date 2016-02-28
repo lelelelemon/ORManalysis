@@ -169,33 +169,6 @@
            #attr_accessible :name, :value, "#{base_class.to_s}_id".to_sym
           end
 
-          # Modify main class
-          class_eval do
-            has_many options[:relationship_name],
-                     :class_name => options[:class_name],
-                     :foreign_key => options[:foreign_key],
-                     :dependent => :destroy
-
-            # The following is only setup once
-            unless private_method_defined? :method_missing_without_dynamic_attributes
-
-              # Carry out delayed actions before save
-              after_validation :save_modified_dynamic_attributes
-
-              # Make attributes seem real
-              alias_method :method_missing_without_dynamic_attributes, :method_missing
-              alias_method :method_missing, :method_missing_with_dynamic_attributes
-
-              private
-
-              alias_method :read_attribute_without_dynamic_attributes, :read_attribute
-              alias_method :read_attribute, :read_attribute_with_dynamic_attributes
-              alias_method :write_attribute_without_dynamic_attributes, :write_attribute
-              alias_method :write_attribute, :write_attribute_with_dynamic_attributes
-
-            end
-          end
-
 
         end
       end

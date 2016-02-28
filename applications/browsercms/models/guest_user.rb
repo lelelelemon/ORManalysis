@@ -4,7 +4,6 @@
 #
 # Every request that a non-logged in user makes will use this User's permissions to determine what they can/can't do.
 #
-module Cms
   class GuestUser < User
 
     def initialize(attributes={})
@@ -54,4 +53,3 @@ module Cms
     end
 
   end
-end

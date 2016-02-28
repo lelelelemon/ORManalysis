@@ -135,7 +135,7 @@ end
 def parse_attrib(astnode)
 	case astnode.children[0].source.to_s
 		when "include"
-			$cur_class.include_module = get_left_most_leaf(astnode.children[1]).source.to_s
+			$cur_class.include_module.push(get_left_most_leaf(astnode.children[1]).source.to_s)
 		when "has_many","belongs_to","has_one","has_and_belongs_to_many","has_enumerated","attr_accessor","cattr_accessor"
 			parse_association(astnode, astnode.children[0].source.to_s)
 		when "scope"

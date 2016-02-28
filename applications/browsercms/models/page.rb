@@ -121,7 +121,7 @@ class Page < ActiveRecord::Base
   # Find live version of a page.
   # @return [Page] Or nil if not found.
   def self.find_live_by_path(path)
-    published.not_archived.where(path: path).first
+    published.archived.where(path: path).first
   end
 
   # Returns all content for the current page, excluding any deleted ones.

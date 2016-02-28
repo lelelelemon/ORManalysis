@@ -304,10 +304,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		#end
 		if n.getInstr.is_a?Call_instr
 			puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
+			if n.getInstr.getDefv != nil
+				puts "\t\treturn type: #{type_valid(n.getInstr, n.getInstr.getDefv)}"
+			end
 		end
 		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
-				puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+				#puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
 			else
 				#puts "\t\t <- params"
 			end
@@ -317,6 +320,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		end
 	end
 
+	exit
 
 	if build_node_list_only
 				#puts "#{n.getIndex}: Forward ARRAY length: #{@forwardarray.length}  (write: #{temp_to_write}) (stat: #{@read_sink_stat.to_write_query})"

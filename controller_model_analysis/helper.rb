@@ -261,14 +261,39 @@ def get_class_node(astnode)
 	end
 end
 
-def get_class_list(astnode, class_list)
-	if astnode.type.to_s == "class" or astnode.type.to_s == "module"
-		class_list.push(astnode)
-	end
-	astnode.children.each do |child|
-		get_class_list(child, class_list)
+def recursive_get_class_stack(astnode, class_stack, filename)
+	if astnode.is_a?YARD::Parser::Ruby::AstNode
+		if astnode.type.to_s == "class" or astnode.type.to_s == "module"
+			class_stack.push(astnode)
+			@class_name = ""
+			for i in 0...class_stack.length-1
+				@class_name += "#{get_left_most_leaf(class_stack[i]).source.to_s}::"
+			end
+			@class_name += "#{get_left_most_leaf(class_stack[-1]).source.to_s}"
+			astnode.children.each do |child|
+				@has_subclass = false
+				if child.type.to_s == "list"
+					child.children.each do |c|
+						if c.type.to_s == "class" or c.type.to_s == "module"
+							@has_subclass = true
+						end
+					end
+				end
+				if @has_subclass
+					recursive_get_class_stack(child, class_stack, filename)
+				else
+					read_each_class(@class_name, astnode, filename)
+				end
+			end
+			class_stack.pop
+		else
+			astnode.each do |child|
+				recursive_get_class_stack(child, class_stack, filename)
+			end
+		end 
 	end
 end
+
 
 def search_distinct_func_name(func_name)
 	if $ignore_method_list.include?(func_name)
