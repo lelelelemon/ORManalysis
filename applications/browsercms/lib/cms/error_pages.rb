@@ -1,4 +1,3 @@
-
   module ErrorPages
 
     NOT_FOUND_PATH = '/system/not_found'

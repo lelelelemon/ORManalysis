@@ -1,4 +1,3 @@
-
   module Concerns
     module CanBeAddressable
 

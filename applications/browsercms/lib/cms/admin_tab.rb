@@ -1,5 +1,4 @@
 
-
   # Any controller that is considered to be on the 'Admin' tab should include this.
   module AdminTab
     extend ActiveSupport::Concern

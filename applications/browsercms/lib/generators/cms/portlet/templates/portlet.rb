@@ -1,4 +1,4 @@
-class <%= class_name %>Portlet < Portlet
+class Portlet
 
   description "TODO: Provide a suitable description for this portlet."
 

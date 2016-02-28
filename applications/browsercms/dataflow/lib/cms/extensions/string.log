@@ -1,0 +1,159 @@
+SET IRMethod, name = indent
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: def_n 
+		 6: n[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_n 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_3 
+		 2: n->to_i def_%v_4 n[3.0,2.5,] 	 ARGS:
+		 3: %v_3->* def_%v_5 %v_3[4.1,] %v_4[4.2,] 	 ARGS:%v_4,
+		 4: %v_5->+ def_%v_6 %v_5[4.3,] %self[2.0,] 	 ARGS:%self,
+		 5: RETURN %v_6[4.4,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = markdown
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Cms) def_%v_3 
+		 7: %v_3->markdown? def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: (Markdown) def_%v_5 
+		 1: %v_5->new def_%v_6 %v_5[3.0,] %self[2.0,] 	 ARGS:%self,
+		 2: %v_6->to_html def_%v_7 %v_6[3.1,] 	 ARGS:
+		 3: RETURN %v_7[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_8 
+		 1: RETURN %v_8[4.0,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = to_slug
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_Regexp def_%v_3 
+		 7: COPY TYPE_StringLiteral def_%v_4 
+		 8: %self->gsub def_%v_5 %self[2.0,] %v_4[2.7,] 	 ARGS:%v_3,%v_4,
+		 9: %v_5->strip def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %v_6->downcase def_%v_7 %v_6[2.9,] 	 ARGS:
+		 11: COPY TYPE_Regexp def_%v_8 
+		 12: COPY TYPE_StringLiteral def_%v_9 
+		 13: %v_7->gsub def_%v_10 %v_7[2.10,] %v_9[2.12,] 	 ARGS:%v_8,%v_9,
+		 14: RETURN %v_10[2.13,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = pluralize_unless_one
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: def_count 
+		 6: count[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_count 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: count->== def_%v_3 count[3.0,2.5,] 	 ARGS:Fixnum,
+		 2: BRANCH %v_3[4.1,] 
+BB 5
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_4 %self[2.0,] 
+		 1: RETURN %v_4[5.0,] %self[2.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: (ActiveSupport) def_%v_5 
+		 1: (inherit Inflector) def_%v_6 %v_5[6.0,] 
+		 2: %v_6[6.1,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[6.0,] 	 ARGS:Symbol,
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: %v_6->pluralize def_%v_7 %v_6[7.0,6.1,] %self[2.0,] 	 ARGS:%self,
+		 1: RETURN %v_7[8.0,] %self[2.0,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+

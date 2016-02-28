@@ -1,4 +1,3 @@
-
   module DefaultCaches
     # Returns the directory where BrowserCMS should write out it's Page cache files for the mobile version of the site.
     # (Optionally) It can be configured in environment files via:

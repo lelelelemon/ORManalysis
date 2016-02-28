@@ -1,5 +1,4 @@
 
-
   # Before for any controller that is considered an admin page within BrowserCMS.
   module AdminController
     extend ActiveSupport::Concern

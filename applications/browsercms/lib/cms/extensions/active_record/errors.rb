@@ -1,4 +1,4 @@
-
+module Cms
   module Extensions
     module ActiveModel
       module Errors
@@ -9,4 +9,4 @@
     end
   end
 end
-ActiveModel::Errors.s
+ActiveModel::Errors.send(:include, Extensions::ActiveModel::Errors)

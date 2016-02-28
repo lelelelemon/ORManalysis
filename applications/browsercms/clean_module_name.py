@@ -11,12 +11,12 @@ for root, dirs, files in os.walk("./"):
 				#if "extend" in line[-1] and "end" in line[-2]:
 					#newdata = "\n".join(line[:-2])
 					#newdata = newdata.replace("module Cms","")
-				if newdata.endswith("end") or newdata.endswith("end\n")
-					newdata = newdata.replace("module Cms","")
-					newdata = newdata[:newdata.rfind('end')]
-				else:
-					newdata = "\n".join(line[:-2])
-					newdata = newdata.replace("module Cms","")
+				if line[-1].endswith("end"):
+					if "module Cms" in line[0]:
+						newdata = "\n".join(line[1:-1])
+				elif line[-2].endswith("end"):
+					if "module Cms" in line[0]:
+						newdata = "\n".join(line[1:-2])
 
 			
 			newdata = newdata.replace("Cms::","")

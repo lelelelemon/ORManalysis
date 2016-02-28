@@ -1,4 +1,3 @@
-
   module Behaviors
     module Searching
       def self.included(model_class)

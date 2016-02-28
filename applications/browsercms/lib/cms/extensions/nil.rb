@@ -1,4 +1,3 @@
-
   module Extensions 
     module NilClass
       def round_bytes
@@ -15,5 +14,3 @@
       end
     end
   end
-end
-NilClass.s

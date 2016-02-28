@@ -1,4 +1,3 @@
-
   module Behaviors
     module Userstamping
       def self.included(model_class)

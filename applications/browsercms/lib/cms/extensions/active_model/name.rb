@@ -1,4 +1,3 @@
-
   module ActiveModel
     module Name
 
@@ -9,4 +8,3 @@
       end
     end
   end
-end

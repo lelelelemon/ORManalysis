@@ -1,4 +1,3 @@
-
   # Allows STI classes to be handled by a single resource controller
   # i.e. LoginPortlet can be handled by the PortletController as a resource.
   #

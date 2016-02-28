@@ -1,4 +1,3 @@
-
   module Behaviors
     module FlushCacheOnChange
       def self.included(model_class)

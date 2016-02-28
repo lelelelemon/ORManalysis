@@ -1,4 +1,3 @@
-
   module Behaviors
     module Hiding
       def self.included(model_class)

@@ -1,5 +1,4 @@
 
-
   module MobileAware
 
     include DefaultCaches
@@ -63,4 +62,3 @@
       log m
     end
   end
-

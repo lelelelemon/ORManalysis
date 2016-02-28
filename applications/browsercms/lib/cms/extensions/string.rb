@@ -1,4 +1,3 @@
-
   module Extensions
     module String
       def indent(n=0)
@@ -20,5 +19,3 @@
       end
     end
   end
-end
-String.s

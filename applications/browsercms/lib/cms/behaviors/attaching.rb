@@ -1,4 +1,3 @@
-
   # @todo Comments need to be cleaned up to get rid of 'uses_paperclip'
   module Behaviors
     # Allows one or more files to be attached to content blocks.

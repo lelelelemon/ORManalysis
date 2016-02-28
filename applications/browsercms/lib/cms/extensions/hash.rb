@@ -1,4 +1,3 @@
-
   module Extensions
     module Hash
       #Returns a copy of the hash without the keys passed as arguments
@@ -7,5 +6,3 @@
       end
     end
   end
-end
-Hash.s

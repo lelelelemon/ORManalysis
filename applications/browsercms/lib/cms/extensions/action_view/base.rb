@@ -1,4 +1,3 @@
-
   module Extensions
     module ActionView
       module Base
@@ -9,5 +8,3 @@
       end
     end
   end
-end
-ActionView::Base.s

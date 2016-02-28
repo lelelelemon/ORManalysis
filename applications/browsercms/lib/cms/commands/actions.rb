@@ -1,4 +1,3 @@
-
   module Commands
     module Actions
 

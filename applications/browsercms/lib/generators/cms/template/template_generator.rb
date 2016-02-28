@@ -1,4 +1,3 @@
-
   module Generators
     class TemplateGenerator < Rails::Generators::NamedBase
 

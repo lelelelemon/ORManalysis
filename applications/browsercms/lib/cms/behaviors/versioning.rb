@@ -1,5 +1,4 @@
 
-
   class IgnoreSanitizer
 
     # Skip sanitizing attributes from mass assignment. This should be used sparingly, since it bypasses security.

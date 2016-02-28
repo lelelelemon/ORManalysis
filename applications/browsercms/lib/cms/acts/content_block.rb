@@ -1,4 +1,3 @@
-
   module Acts
     module ContentBlock
 

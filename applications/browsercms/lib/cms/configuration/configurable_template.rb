@@ -1,4 +1,3 @@
-
   module Configuration
 
     # Handles content that has configurable templates. Use the following rails configuration:

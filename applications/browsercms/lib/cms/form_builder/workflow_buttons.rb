@@ -1,4 +1,3 @@
-
   module WorkflowButtons
     def publish_button(*args, &block)
       button_with_normalized_options(args, "Publish") do |options|
@@ -34,5 +33,3 @@
       button(:submit, *args, &block)
     end
   end
-end
-SimpleForm::FormBuilder.s

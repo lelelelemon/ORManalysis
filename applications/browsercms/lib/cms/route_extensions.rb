@@ -1,4 +1,3 @@
-::RouteExtensions
 
 
   # Adds all necessary routes to manage a new content type. Works very similar to the Rails _resources_ method, adding basic CRUD routes, as well as additional ones

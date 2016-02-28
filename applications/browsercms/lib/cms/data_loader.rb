@@ -1,4 +1,3 @@
-
   # A DSL for creating CMS content in seed data. Creating content in this manner will log the creation of the record
   # and store any created records in a hash.
   # To use, add the following to your seeds.rb.

@@ -1,4 +1,3 @@
-
   module Behaviors
     # The DynamicAttributes behavior allows a model to store values for any attributes.
     # A model that uses DynamicAttributes should have corresponding "_attributes" table

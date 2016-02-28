@@ -1,4 +1,3 @@
-
   module Behaviors
     # The Rendering Behavior allows a model to be rendered within a view.
     # The key methods are the instance methods perform_render, render and 

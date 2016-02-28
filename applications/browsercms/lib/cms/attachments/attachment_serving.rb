@@ -1,4 +1,3 @@
-
   module Attachments
 
     # Can be added to Controllers to handle serving files.

@@ -1,4 +1,3 @@
-
   module Acts
 
     # Allows any ActiveRecord object to behave like a Cms User. This is a bit of an experiment being added to 3.4, so
@@ -15,7 +14,7 @@
     # everyone in a custom model.  It's not quite a drop in authentication
     # schema, but it does make it easier to wire up just about any model to be
     # the current_user on CMS pages.
-    User
+    module CmsUser
       def self.included(model_class)
         model_class.extend(MacroMethods)
       end

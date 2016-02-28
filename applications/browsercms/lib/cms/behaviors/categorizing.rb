@@ -1,4 +1,3 @@
-
   module Behaviors
     module Categorizing
       def self.included(model_class)

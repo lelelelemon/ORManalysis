@@ -1,4 +1,3 @@
-
   class ContentFilter
 
     # Strips HTML from any attribute that's not :content

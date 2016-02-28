@@ -1,4 +1,4 @@
-
+module Cms
   module Generators
     class PortletGenerator < Rails::Generators::NamedBase
 
@@ -34,3 +34,5 @@
       end
     end
   end
+end
+

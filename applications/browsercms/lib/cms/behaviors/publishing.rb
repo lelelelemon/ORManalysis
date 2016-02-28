@@ -1,4 +1,3 @@
-
   module Behaviors
 
     # Allows content to be marked as publishable or not. In practice, this has a direct dependency on

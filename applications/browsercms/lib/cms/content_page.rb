@@ -1,5 +1,4 @@
 
-
   # Add to controllers to allow them to behave like pages. A newer version of Acts::ContentPage
   module ContentPage
     extend ActiveSupport::Concern

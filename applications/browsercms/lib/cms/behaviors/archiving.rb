@@ -1,4 +1,3 @@
-
   module Behaviors
     module Archiving
       def self.included(model_class)

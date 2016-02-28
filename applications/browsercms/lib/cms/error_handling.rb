@@ -1,4 +1,3 @@
-
   module ErrorHandling
     def self.included(controller)
       controller.class_eval do

@@ -1,4 +1,4 @@
-
+module Cms
   module Extensions
     module ActiveRecord
 
@@ -32,4 +32,6 @@
   end
 end
 ActiveRecord::Base.send(:include, Extensions::ActiveRecord::Base)
-ActiveRecord::Base.ext
+ActiveRecord::Base.extend(Extensions::ActiveRecord::ClassMethods)
+
+

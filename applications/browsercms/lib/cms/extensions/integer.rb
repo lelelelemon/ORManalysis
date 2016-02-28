@@ -1,4 +1,3 @@
-
   module Extensions
     module Integer
       def round_bytes
@@ -12,5 +11,3 @@
       end
     end
   end
-end
-Integer.s

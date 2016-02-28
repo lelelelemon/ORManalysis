@@ -1,5 +1,4 @@
 
-
   # A generic generator for installing BrowserCMS modules into a project. This will do the following:
   #
   # 1. Add the Gem to your Gemfile

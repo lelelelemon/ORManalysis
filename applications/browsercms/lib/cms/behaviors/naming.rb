@@ -1,4 +1,3 @@
-
   module Behaviors
     # Assumes the 'extended' class is an instance of ActiveModel
     module Naming

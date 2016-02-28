@@ -1,4 +1,3 @@
-
   module FormBuilder
     # These FormBuilder inputs are deprecated as of BrowserCMS v4.0 and will be remove in 4.1.
     module DeprecatedInputs

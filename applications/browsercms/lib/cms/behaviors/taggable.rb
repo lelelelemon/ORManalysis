@@ -1,4 +1,3 @@
-
   module Behaviors
     module Taggable
       def self.included(model_class)

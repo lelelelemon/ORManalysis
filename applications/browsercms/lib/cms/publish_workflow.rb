@@ -1,4 +1,3 @@
-
   # Can be added to controllers that allow for SaveDraft/Publish
   module PublishWorkflow
 

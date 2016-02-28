@@ -1,4 +1,3 @@
-
   module DefaultAccessible
 
     def permitted_params

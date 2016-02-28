@@ -1,4 +1,3 @@
-
   class ContentResponder < ActionController::Responder
 
     def initialize(controller, resources, options={})

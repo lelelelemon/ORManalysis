@@ -1,4 +1,3 @@
-
   module Behaviors
     module SoftDeleting
       def self.included(model_class)
