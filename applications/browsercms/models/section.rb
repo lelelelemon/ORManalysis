@@ -1,3 +1,4 @@
+
   class Section < ActiveRecord::Base
     flush_cache_on_change
 

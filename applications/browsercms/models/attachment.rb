@@ -1,3 +1,4 @@
+
   class Attachment < ActiveRecord::Base
 
     MULTIPLE = 'multiple'

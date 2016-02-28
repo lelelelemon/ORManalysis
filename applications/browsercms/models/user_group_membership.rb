@@ -1,3 +1,4 @@
+
   class UserGroupMembership < ActiveRecord::Base
 
     extend DefaultAccessible

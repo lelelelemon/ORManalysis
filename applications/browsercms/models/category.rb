@@ -1,3 +1,4 @@
+
   class Category < ActiveRecord::Base
     belongs_to :category_type, :class_name => 'CategoryType'
     belongs_to :parent, :class_name => 'Category'

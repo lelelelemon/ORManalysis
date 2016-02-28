@@ -1,3 +1,4 @@
+
   class GroupPermission < ActiveRecord::Base
 
     extend DefaultAccessible

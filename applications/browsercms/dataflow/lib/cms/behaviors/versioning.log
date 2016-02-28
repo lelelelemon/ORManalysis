@@ -1,0 +1,2040 @@
+SET IRMethod, name = sanitize
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_klass 
+		 6: RECEIVEARG def_attributes 
+		 7: RECEIVEARG def_authorizer 
+		 8: 
+		 9: RETURN attributes[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = build_object_from_version
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->versioned_class def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->new def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: COPY TYPE_PASS def_obj %v_4[2.7,] 
+		 9: 
+		 10: %self->versioned_class def_%v_5 %self[2.0,2.6,] 	 ARGS:
+		 11: %v_5->versioned_columns def_%v_6 %v_5[2.10,] 	 ARGS:
+		 12: COPY TYPE_Array def_%v_7 
+		 13: %v_6->+ def_%v_8 %v_6[2.11,] %v_7[2.12,] 	 ARGS:%v_7,
+		 14: %v_8->each def_%v_9 %v_8[2.13,] %self[2.0,2.6,2.10,] 	 ARGS:%v_8,
+CLOSURE BEGIN: a[] %self[2.0,2.6,2.10,] obj[2.8,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_a 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: BUILDSTRING def_%cl_1_4 a[2.2,] %cl_1_3[3.1,] 
+		 3: %self->send def_%cl_1_5 %self[2.0,] a[2.2,] 	 ARGS:a,
+		 4: obj->send def_%cl_1_6 obj[] %cl_1_4[3.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_4,%cl_1_5,
+		 5: RETURN %cl_1_6[3.4,] %self[3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 
+		 1: def_%cl_1_8 %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 15: 
+		 16: %self->original_record_id def_%v_10 %self[2.0,2.6,2.10,] 	 ARGS:
+		 17: ATTRASSIGN obj->id %v_10[2.16,] 
+		 18: 
+		 19: COPY TYPE_StringLiteral def_%v_11 
+		 20: obj->instance_variable_set def_%v_12 obj[2.8,2.17,] %v_11[2.19,] 	 ARGS:%v_11,Boolean,
+		 21: 
+		 22: COPY TYPE_StringLiteral def_%v_13 
+		 23: obj->instance_variable_set def_%v_14 obj[2.8,2.17,2.20,] %v_13[2.22,] 	 ARGS:%v_13,Boolean,
+		 24: 
+		 25: obj->respond_to? def_%v_15 obj[2.8,2.17,2.20,2.23,] 	 ARGS:Symbol,
+		 26: BRANCH %v_15[2.25,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: obj->after_as_of_version def_%v_16 obj[2.8,2.17,] 	 ARGS:
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_16 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: obj->send def_%v_17 obj[2.8,2.17,] 	 ARGS:Symbol,
+		 2: COPY TYPE_PASS def_changed_attrs %v_17[6.1,] 
+		 3: BRANCH %v_17[6.1,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: changed_attrs->clear def_%v_18 changed_attrs[6.2,] 	 ARGS:
+		 2: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_18 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN obj[2.8,2.17,] %self[2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%v_19 
+		 1: def_%v_20 %v_19[10.0,] 
+		 2: RETURN %v_20[10.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = included
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_model_class 
+		 6: 
+		 7: (MacroMethods) def_%v_3 
+		 8: model_class->extend def_%v_4 model_class[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
+		 9: RETURN %v_4[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = versioned?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->is_versioned def_%v_3 %self[2.0,] 
+		 7: %v_3->! def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->! def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = is_versioned
+SET IRMethod, name = versioned_class
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->class def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->versioned_class def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = versioned_object_id
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->versioned_class def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->name def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->underscore def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: COPY TYPE_StringLiteral def_%v_6 
+		 10: BUILDSTRING def_%v_7 %v_5[2.8,] %v_6[2.9,] 
+		 11: %self->send def_%v_8 %self[2.0,2.6,] %v_7[2.10,] 	 ARGS:%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.6,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = versioned_object
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->versioned_class def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->name def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->underscore def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: %v_5->to_sym def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %self->send def_%v_7 %self[2.0,2.6,] %v_6[2.9,] 	 ARGS:%v_6,
+		 11: RETURN %v_7[2.10,] %self[2.0,2.6,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 16 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: def_options 
+		 6: options[2.5,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[4.0,] 
+BB 5
+	outgoing: 6 7 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: ATTRASSIGN %self->is_versioned 
+		 2: 
+		 3: options->[] def_%v_4 options[4.1,2.5,] 	 ARGS:Symbol,
+		 4: BRANCH %v_4[5.3,] 
+BB 6
+	outgoing: 7 16 
+	datadep: 
+	instructions:
+		 0: %self->table_name def_%v_5 %self[5.1,2.0,] 	 ARGS:
+		 1: %v_5->singularize def_%v_6 %v_5[6.0,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%v_7 
+		 3: BUILDSTRING def_%v_8 %v_6[6.1,] %v_7[6.2,] 
+		 4: COPY TYPE_PASS def_%v_4 %v_8[6.3,] 
+BB 7
+	outgoing: 8 9 16 
+	datadep: 
+	instructions:
+		 0: %v_4->to_s def_%v_9 %v_4[6.4,5.3,] 	 ARGS:
+		 1: ATTRASSIGN %self->version_table_name %v_9[7.0,] 
+		 2: 
+		 3: (ClassMethods) def_%v_10 
+		 4: %self->extend def_%v_11 %self[7.1,5.1,2.0,] %v_10[7.3,] 	 ARGS:%v_10,
+		 5: 
+		 6: (InstanceMethods) def_%v_12 
+		 7: %self->include def_%v_13 %self[7.1,7.4,5.1,2.0,] %v_12[7.6,] 	 ARGS:%v_12,
+		 8: 
+		 9: %self->version_class_name def_%v_14 %self[7.1,7.4,7.7,5.1,2.0,] 	 ARGS:
+		 10: %self->version_foreign_key def_%v_15 %self[7.1,7.4,7.7,7.9,5.1,2.0,] 	 ARGS:
+		 11: HASH-class_name-foreign_key- def_%v_16 %v_14[7.9,] %v_15[7.10,] 
+		 12: %self->has_many def_%v_17 %self[7.1,7.4,7.7,7.9,7.10,5.1,2.0,] %v_16[7.11,] 	 ARGS:Symbol,%v_16,
+		 13: 
+		 14: %self->after_save def_%v_18 %self[7.1,7.4,7.7,7.9,7.10,7.12,5.1,2.0,] 	 ARGS:Symbol,
+		 15: 
+		 16: %self->before_validation def_%v_19 %self[7.1,7.4,7.7,7.9,7.10,7.12,7.14,5.1,2.0,] 	 ARGS:Symbol,
+		 17: 
+		 18: %self->before_save def_%v_20 %self[7.1,7.4,7.7,7.9,7.10,7.12,7.14,7.16,5.1,2.0,] 	 ARGS:Symbol,
+		 19: 
+		 20: %self->attr_accessor def_%v_21 %self[7.1,7.4,7.7,7.9,7.10,7.12,7.14,7.16,7.18,5.1,2.0,] 	 ARGS:Symbol,
+		 21: 
+		 22: COPY TYPE_StringLiteral def_%v_22 
+		 23: %self->const_defined? def_%v_23 %self[7.1,7.4,7.7,7.9,7.10,7.12,7.14,7.16,7.18,7.20,5.1,2.0,] %v_22[7.22,] 	 ARGS:%v_22,
+		 24: BRANCH %v_23[7.23,] 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_24 
+		 1: 
+BB 9
+	outgoing: 10 11 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_25 
+		 1: (Class) def_%v_26 
+		 2: (ActiveRecord) def_%v_27 
+		 3: (inherit Base) def_%v_28 %v_27[9.2,] 
+		 4: %v_28[9.3,] 
+BB 10
+	outgoing: 11 16 
+	datadep: 
+	instructions:
+		 0: %v_27->const_missing def_%v_28 %v_27[9.2,] 	 ARGS:Symbol,
+BB 11
+	outgoing: 12 16 
+	datadep: 
+	instructions:
+		 0: %v_26->new def_%v_29 %v_26[9.1,] %v_28[10.0,9.3,] 	 ARGS:%v_28,
+		 1: %self->const_set def_%v_30 %self[7.1,5.1,2.0,] %v_25[9.0,] %v_29[11.0,] 	 ARGS:%v_25,%v_29,
+		 2: %v_30->class_eval def_%v_31 %v_30[11.1,] %self[11.1,7.1,5.1,2.0,] 	 ARGS:%v_30,
+CLOSURE BEGIN: %self[11.1,7.1,5.1,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_3 %self[2.0,] 
+		 2: def_%cl_1_4 %cl_1_3[3.1,] %cl_1_0[2.1,] 
+		 3: 
+		 4: (VersionRecord) def_%cl_1_5 
+		 5: %self->include def_%cl_1_6 %self[2.0,] %cl_1_5[3.4,] 	 ARGS:%cl_1_5,
+		 6: 
+		 7: 
+		 8: 
+		 9: 
+		 10: 
+		 11: 
+		 12: RETURN %self[3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 
+		 1: def_%cl_1_8 %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: COPY TYPE_PASS def_%v_24 %v_31[11.2,] 
+BB 12
+	outgoing: 13 14 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->version_class def_%v_32 %self[7.1,5.1,2.0,] 	 ARGS:
+		 2: ATTRASSIGN %v_32->versioned_class %self[12.1,7.1,5.1,2.0,] 
+		 3: 
+		 4: %self->version_class def_%v_33 %self[12.1,7.1,5.1,2.0,] 	 ARGS:
+		 5: %self->name def_%v_34 %self[12.1,12.4,7.1,5.1,2.0,] 	 ARGS:
+		 6: %v_34->demodulize def_%v_35 %v_34[12.5,] 	 ARGS:
+		 7: %v_35->underscore def_%v_36 %v_35[12.6,] 	 ARGS:
+		 8: %v_36->to_sym def_%v_37 %v_36[12.7,] 	 ARGS:
+		 9: %self->version_foreign_key def_%v_38 %self[12.1,12.4,12.5,7.1,5.1,2.0,] 	 ARGS:
+		 10: %self->name def_%v_39 %self[12.1,12.4,12.5,12.9,7.1,5.1,2.0,] 	 ARGS:
+		 11: HASH-foreign_key-class_name- def_%v_40 %v_38[12.9,] %v_39[12.10,] 
+		 12: %v_33->belongs_to def_%v_41 %v_33[12.4,] %v_37[12.8,] %v_40[12.11,] 	 ARGS:%v_37,%v_40,
+		 13: 
+		 14: %self->userstamped? def_%v_42 %self[12.1,12.4,12.5,12.9,12.10,7.1,5.1,2.0,] 	 ARGS:
+		 15: BRANCH %v_42[12.14,] 
+BB 13
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: %self->version_class def_%v_43 %self[7.1,5.1,2.0,] 	 ARGS:
+		 1: %v_43->is_userstamped def_%v_44 %v_43[13.0,] 	 ARGS:
+		 2: 
+BB 14
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: RETURN %self[7.1,5.1,2.0,] 
+BB 15
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: RETURN %v_44[13.1,] %self[7.1,5.1,2.0,] 
+BB 16
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: def_%v_45 
+		 1: def_%v_46 %v_45[16.0,] 
+		 2: RETURN %v_46[16.1,] %self[5.1,7.1,2.0,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = version_class
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: %self->const_get def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = version_class_name
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->name def_%v_3 %self[2.0,] 	 ARGS:
+		 7: COPY TYPE_StringLiteral def_%v_4 
+		 8: BUILDSTRING def_%v_5 %v_3[2.6,] %v_4[2.7,] 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = version_foreign_key
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = version_table_name
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->version_table_name def_%v_3 %self[2.0,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = versioned_columns
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->versioned_columns def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %self->version_class def_%v_6 %self[2.0,] 	 ARGS:
+		 1: %v_6->new def_%v_7 %v_6[5.0,] 	 ARGS:
+		 2: %v_7->attributes def_%v_8 %v_7[5.1,] 	 ARGS:
+		 3: %v_8->keys def_%v_9 %v_8[5.2,] 	 ARGS:
+		 4: %self->non_versioned_columns def_%v_10 %self[5.0,2.0,] 	 ARGS:
+		 5: %v_9->- def_%v_11 %v_9[5.3,] %v_10[5.4,] 	 ARGS:%v_10,
+		 6: ATTRASSIGN %self->versioned_columns %v_11[5.5,] 
+		 7: RETURN %v_11[5.5,] %self[5.0,5.4,5.6,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = non_versioned_columns
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral def_%v_8 
+		 12: COPY TYPE_StringLiteral def_%v_9 
+		 13: COPY TYPE_StringLiteral def_%v_10 
+		 14: COPY TYPE_StringLiteral def_%v_11 
+		 15: COPY TYPE_StringLiteral def_%v_12 
+		 16: COPY TYPE_Array def_%v_13 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] %v_9[2.12,] %v_10[2.13,] %v_11[2.14,] %v_12[2.15,] 
+		 17: RETURN %v_13[2.16,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = initialize_version
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->new_record? def_%v_3 %self[2.0,] 	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: ATTRASSIGN %self->version 
+		 1: COPY TYPE_Fixnum def_%v_4 
+		 2: RETURN %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_latest_version
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->respond_to? def_%v_3 %self[2.0,] 	 ARGS:Symbol,
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_4 
+		 2: %self->class def_%v_5 %self[2.0,] 	 ARGS:
+		 3: %v_5->table_name def_%v_6 %v_5[3.2,] 	 ARGS:
+		 4: COPY TYPE_StringLiteral def_%v_7 
+		 5: %self->draft def_%v_8 %self[3.2,2.0,] 	 ARGS:
+		 6: %v_8->version def_%v_9 %v_8[3.5,] 	 ARGS:
+		 7: COPY TYPE_StringLiteral def_%v_10 
+		 8: %self->id def_%v_11 %self[3.2,3.5,2.0,] 	 ARGS:
+		 9: BUILDSTRING def_%v_12 %v_4[3.1,] %v_6[3.3,] %v_7[3.4,] %v_9[3.6,] %v_10[3.7,] %v_11[3.8,] 
+		 10: COPY TYPE_PASS def_sql %v_12[3.9,] 
+		 11: 
+		 12: %self->class def_%v_13 %self[3.2,3.5,3.8,2.0,] 	 ARGS:
+		 13: %v_13->connection def_%v_14 %v_13[3.12,] 	 ARGS:
+		 14: %v_14->execute def_%v_15 %v_14[3.13,] sql[3.10,] 	 ARGS:sql,
+		 15: 
+		 16: %self->draft def_%v_16 %self[3.2,3.5,3.8,3.12,2.0,] 	 ARGS:
+		 17: %v_16->version def_%v_17 %v_16[3.16,] 	 ARGS:
+		 18: ATTRASSIGN %self->latest_version %v_17[3.17,] 
+		 19: RETURN %v_17[3.17,] %self[3.2,3.5,3.8,3.12,3.16,3.18,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = build_new_version_and_add_to_versions_list_for_saving
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 12 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->draft_attributes def_%v_3 %self[2.0,] 	 ARGS:
+		 7: COPY TYPE_PASS def_attrs %v_3[2.6,] 
+		 8: 
+		 9: %self->class def_%v_4 %self[2.0,2.6,] 	 ARGS:
+		 10: %v_4->versioned_columns def_%v_5 %v_4[2.9,] 	 ARGS:
+		 11: COPY TYPE_StringLiteral def_%v_6 
+		 12: COPY TYPE_Array def_%v_7 %v_6[2.11,] 
+		 13: %v_5->- def_%v_8 %v_5[2.10,] %v_7[2.12,] 	 ARGS:%v_7,
+		 14: %v_8->each def_%v_9 %v_8[2.13,] %self[2.0,2.6,2.9,] 	 ARGS:%v_8,
+CLOSURE BEGIN: %self[2.0,2.6,2.9,] col[] attrs[2.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_col 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->send def_%cl_1_3 %self[2.0,] col[2.2,] 	 ARGS:col,
+		 2: ATTRASSIGN attrs->[] col[2.2,] %cl_1_3[3.1,] 
+		 3: RETURN %cl_1_3[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 15: 
+		 16: GETFIELD %self->version_comment def_%v_10 %self[2.0,2.6,2.9,] 
+		 17: BRANCH %v_10[2.16,] 
+BB 4
+	outgoing: 5 12 
+	datadep: 
+	instructions:
+		 0: %self->default_version_comment def_%v_11 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_10 %v_11[4.0,] 
+BB 5
+	outgoing: 6 7 12 
+	datadep: 
+	instructions:
+		 0: ATTRASSIGN attrs->[] %v_10[4.1,2.16,] 
+		 1: 
+		 2: ATTRASSIGN %self->version_comment 
+		 3: 
+		 4: %self->versions def_%v_12 %self[5.2,2.0,] 	 ARGS:
+		 5: %v_12->build def_%v_13 %v_12[5.4,] attrs[5.0,2.7,] 	 ARGS:attrs,
+		 6: COPY TYPE_PASS def_new_version %v_13[5.5,] 
+		 7: 
+		 8: %self->new_record? def_%v_14 %self[5.2,5.4,2.0,] 	 ARGS:
+		 9: BRANCH %v_14[5.8,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_%v_15 
+		 1: 
+BB 7
+	outgoing: 8 12 
+	datadep: 
+	instructions:
+		 0: %self->draft def_%v_16 %self[5.2,2.0,] 	 ARGS:
+		 1: %v_16->version def_%v_17 %v_16[7.0,] 	 ARGS:
+		 2: %v_17->to_i def_%v_18 %v_17[7.1,] 	 ARGS:
+		 3: %v_18->+ def_%v_19 %v_18[7.2,] 	 ARGS:Fixnum,
+		 4: COPY TYPE_PASS def_%v_15 %v_19[7.3,] 
+BB 8
+	outgoing: 9 10 12 
+	datadep: 
+	instructions:
+		 0: ATTRASSIGN new_version->version %v_15[7.4,6.0,] 
+		 1: 
+		 2: %self->respond_to? def_%v_20 %self[5.2,2.0,] 	 ARGS:Symbol,
+		 3: BRANCH %v_20[8.2,] 
+BB 9
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: %self->after_build_new_version def_%v_21 %self[5.2,2.0,] new_version[8.0,5.6,] 	 ARGS:new_version,
+		 1: 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_21 
+BB 11
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN new_version[8.0,5.6,] %self[5.2,2.0,] 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: def_%v_22 
+		 1: def_%v_23 %v_22[12.0,] 
+		 2: RETURN %v_23[12.1,] %self[5.2,2.0,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = draft_attributes
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->new_record? def_%v_3 %self[2.0,] 	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_4 %self[2.0,] 
+		 1: 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: %self->draft def_%v_5 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_4 %v_5[5.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_d %v_4[5.1,4.0,] 
+		 1: 
+		 2: %self->class def_%v_6 %self[2.0,] 	 ARGS:
+		 3: %v_6->versioned_columns def_%v_7 %v_6[6.2,] 	 ARGS:
+		 4: HASH- def_%v_8 
+		 5: %v_7->inject def_%v_9 %v_7[6.3,] %v_8[6.4,] %self[6.2,2.0,] 	 ARGS:%v_8,%v_7,
+CLOSURE BEGIN: d[6.0,] col[] attrs[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_attrs 
+		 3: RECEIVEARG def_col 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: d->send def_%cl_1_3 d[] col[2.3,] 	 ARGS:col,
+		 2: ATTRASSIGN attrs->[] col[2.3,] %cl_1_3[3.1,] 
+		 3: RETURN attrs[3.2,2.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: RETURN %v_9[6.5,] %self[6.2,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%v_10 
+		 1: def_%v_11 %v_10[7.0,] 
+		 2: RETURN %v_11[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = default_version_comment
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->new_record? def_%v_3 %self[2.0,] 	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_4 
+		 2: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_5 
+		 2: %self->changes def_%v_6 %self[2.0,] 	 ARGS:
+		 3: %v_6->keys def_%v_7 %v_6[4.2,] 	 ARGS:
+		 4: COPY TYPE_StringLiteral def_%v_8 
+		 5: COPY TYPE_StringLiteral def_%v_9 
+		 6: COPY TYPE_StringLiteral def_%v_10 
+		 7: COPY TYPE_Array def_%v_11 %v_8[4.4,] %v_9[4.5,] %v_10[4.6,] 
+		 8: %v_7->- def_%v_12 %v_7[4.3,] %v_11[4.7,] 	 ARGS:%v_11,
+		 9: %v_12->sort def_%v_13 %v_12[4.8,] 	 ARGS:
+		 10: COPY TYPE_StringLiteral def_%v_14 
+		 11: %v_13->join def_%v_15 %v_13[4.9,] %v_14[4.10,] 	 ARGS:%v_14,
+		 12: BUILDSTRING def_%v_16 %v_5[4.1,] %v_15[4.11,] 
+		 13: RETURN %v_16[4.12,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_or_update
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->logger def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->debug def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
+CLOSURE BEGIN: %self[2.0,2.6,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->class def_%cl_1_3 %self[2.0,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 3: %self->publish_on_save def_%cl_1_5 %self[3.1,2.0,] 	 ARGS:
+		 4: %cl_1_5->! def_%cl_1_6 %cl_1_5[3.3,] 	 ARGS:
+		 5: %cl_1_6->! def_%cl_1_7 %cl_1_6[3.4,] 	 ARGS:
+		 6: BUILDSTRING def_%cl_1_8 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_7[3.5,] 
+		 7: RETURN %cl_1_8[3.6,] %self[3.1,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[4.0,] 
+		 2: RETURN %cl_1_10[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: 
+		 9: ATTRASSIGN %self->skip_callbacks 
+		 10: 
+		 11: %self->different_from_last_draft? def_%v_5 %self[2.0,2.6,2.9,] 	 ARGS:
+		 12: BRANCH %v_5[2.11,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: 
+		 2: %self->logger def_%v_9 %self[2.0,2.9,] 	 ARGS:
+		 3: %v_9->debug def_%v_10 %v_9[3.2,] %self[3.2,2.0,2.9,] 	 ARGS:%v_9,
+CLOSURE BEGIN: %self[3.2,2.0,2.9,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 2: %self->class def_%cl_3_4 %self[2.0,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%cl_3_5 
+		 4: %self->attributes def_%cl_3_6 %self[3.2,2.0,] 	 ARGS:
+		 5: BUILDSTRING def_%cl_3_7 %cl_3_3[3.1,] %cl_3_4[3.2,] %cl_3_5[3.3,] %cl_3_6[3.4,] 
+		 6: RETURN %cl_3_7[3.5,] %self[3.2,3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_8 
+		 1: def_%cl_3_9 %cl_3_8[4.0,] 
+		 2: RETURN %cl_3_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: 
+		 5: %self->new_record? def_%v_11 %self[3.2,2.0,2.9,] 	 ARGS:
+		 6: BRANCH %v_11[3.5,] 
+BB 4
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->logger def_%v_7 %self[2.0,2.9,] 	 ARGS:
+		 2: %v_7->debug def_%v_8 %v_7[4.1,] %self[4.1,2.0,2.9,] 	 ARGS:%v_7,
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: COPY TYPE_StringLiteral def_%cl_2_3 
+		 6: RETURN %cl_2_3[2.5,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+		 4: ATTRASSIGN %self->skip_callbacks 
+		 5: 
+		 6: RETURN %self[4.1,4.4,2.0,2.9,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: ATTRASSIGN %self->version 
+		 2: 
+		 3: %self->-unknown-super-target- def_%v_12 %self[6.1,2.0,2.9,] %v_0[2.1,] 	 ARGS:
+		 4: COPY TYPE_PASS def_saved_correctly %v_12[6.3,] 
+		 5: 
+		 6: %self->changed_attributes def_%v_13 %self[6.1,6.3,2.0,2.9,] 	 ARGS:
+		 7: %v_13->clear def_%v_14 %v_13[6.6,] 	 ARGS:
+		 8: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->logger def_%v_15 %self[2.0,2.9,] 	 ARGS:
+		 2: %v_15->debug def_%v_16 %v_15[7.1,] %self[7.1,2.0,2.9,] 	 ARGS:%v_15,
+CLOSURE BEGIN: %self[7.1,2.0,2.9,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->class def_%cl_4_3 %self[2.0,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%cl_4_4 
+		 3: BUILDSTRING def_%cl_4_5 %cl_4_3[3.1,] %cl_4_4[3.2,] 
+		 4: RETURN %cl_4_5[3.3,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_6 
+		 1: def_%cl_4_7 %cl_4_6[4.0,] 
+		 2: RETURN %cl_4_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+		 4: %self->run_callbacks def_%v_17 %self[7.1,2.0,2.9,] %self[7.1,2.0,2.9,] 	 ARGS:Symbol,%self,
+CLOSURE BEGIN: %self[7.1,2.0,2.9,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->new_version def_%cl_5_3 %self[2.0,] 
+		 2: %cl_5_3->save def_%cl_5_4 %cl_5_3[3.1,] 	 ARGS:
+		 3: COPY TYPE_PASS def_saved_correctly %cl_5_4[3.2,] 
+		 4: RETURN %cl_5_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_5 
+		 1: def_%cl_5_6 %cl_5_5[4.0,] 
+		 2: RETURN %cl_5_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 5: COPY TYPE_PASS def_%v_14 %v_17[7.4,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->publish_if_needed def_%v_18 %self[6.1,2.0,2.9,] 	 ARGS:
+		 2: 
+		 3: RETURN saved_correctly[6.4,] %self[8.1,6.1,2.0,2.9,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = build_new_version
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->build_new_version_and_add_to_versions_list_for_saving def_%v_3 %self[2.0,] 	 ARGS:
+		 7: ATTRASSIGN %self->new_version %v_3[2.6,] 
+		 8: 
+		 9: %self->logger def_%v_4 %self[2.0,2.6,2.7,] 	 ARGS:
+		 10: %v_4->debug def_%v_5 %v_4[2.9,] %self[2.0,2.6,2.7,2.9,] 	 ARGS:%v_4,
+CLOSURE BEGIN: %self[2.0,2.6,2.7,2.9,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: %self->class def_%cl_1_4 %self[2.0,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 4: GETFIELD %self->new_version def_%cl_1_6 %self[3.2,2.0,] 
+		 5: %cl_1_6->attributes def_%cl_1_7 %cl_1_6[3.4,] 	 ARGS:
+		 6: BUILDSTRING def_%cl_1_8 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_7[3.5,] 
+		 7: RETURN %cl_1_8[3.6,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[4.0,] 
+		 2: RETURN %cl_1_10[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 11: RETURN %v_5[2.10,] %self[2.0,2.6,2.7,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = save!
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: def_perform_validations 
+		 6: perform_validations[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_perform_validations 
+BB 4
+	outgoing: 5 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH-validate- def_%v_3 perform_validations[3.0,2.5,] 
+		 2: %self->save def_%v_4 %self[2.0,] %v_3[4.1,] 	 ARGS:%v_3,
+		 3: BRANCH %v_4[4.2,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: (ActiveRecord) def_%v_5 
+		 1: (inherit RecordNotSaved) def_%v_6 %v_5[5.0,] 
+		 2: %v_6[5.1,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[5.0,] 	 ARGS:Symbol,
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %self->errors def_%v_7 %self[2.0,] 	 ARGS:
+		 1: %v_7->full_messages def_%v_8 %v_7[7.0,] 	 ARGS:
+		 2: %v_6->new def_%v_9 %v_6[6.0,5.1,] %v_8[7.1,] 	 ARGS:%v_8,
+		 3: %self->raise def_%v_10 %self[7.0,2.0,] %v_9[7.2,] 	 ARGS:%v_9,
+		 4: RETURN %v_10[7.3,] %self[7.0,7.3,2.0,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %v_4[4.2,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = draft
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->versions def_%v_3 %self[2.0,] 	 ARGS:
+		 7: COPY TYPE_StringLiteral def_%v_4 
+		 8: %v_3->order def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: %v_5->first def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = draft_version?
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->draft def_%v_3 %self[2.0,] 	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->version def_%v_5 %self[2.0,] 	 ARGS:
+		 3: %self->draft def_%v_6 %self[3.2,2.0,] 	 ARGS:
+		 4: %v_6->version def_%v_7 %v_6[3.3,] 	 ARGS:
+		 5: %v_5->== def_%v_8 %v_5[3.2,] %v_7[3.4,] 	 ARGS:%v_7,
+		 6: RETURN %v_8[3.5,] %self[3.2,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = live_version
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->class def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %self->id def_%v_4 %self[2.0,2.6,] 	 ARGS:
+		 8: %v_3->find def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: %v_5->version def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %self->find_version def_%v_7 %self[2.0,2.6,2.7,] %v_6[2.9,] 	 ARGS:%v_6,
+		 11: RETURN %v_7[2.10,] %self[2.0,2.6,2.7,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = live_version?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->version def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %self->class def_%v_4 %self[2.0,2.6,] 	 ARGS:
+		 8: %self->id def_%v_5 %self[2.0,2.6,2.7,] 	 ARGS:
+		 9: %v_4->find def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: %v_6->version def_%v_7 %v_6[2.9,] 	 ARGS:
+		 11: %v_3->== def_%v_8 %v_3[2.6,] %v_7[2.10,] 	 ARGS:%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.6,2.7,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = current_version
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->version def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %self->find_version def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_version
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_number 
+		 6: 
+		 7: %self->versions def_%v_3 %self[2.0,] 	 ARGS:
+		 8: HASH-version- def_%v_4 number[2.5,] 
+		 9: %v_3->where def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
+		 10: %v_5->first def_%v_6 %v_5[2.9,] 	 ARGS:
+		 11: RETURN %v_6[2.10,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = as_of_draft_version
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->draft def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->build_object_from_version def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = as_of_version
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_version 
+		 6: 
+		 7: %self->find_version def_%v_3 %self[2.0,] version[2.5,] 	 ARGS:version,
+		 8: COPY TYPE_PASS def_v %v_3[2.7,] 
+		 9: 
+		 10: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: (ActiveRecord) def_%v_5 
+		 1: (inherit RecordNotFound) def_%v_6 %v_5[4.0,] 
+		 2: %v_6[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[4.0,] 	 ARGS:Symbol,
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_7 
+		 1: version->inspect def_%v_8 version[2.5,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%v_9 
+		 3: %self->class def_%v_10 %self[2.0,] 	 ARGS:
+		 4: COPY TYPE_StringLiteral def_%v_11 
+		 5: %self->id def_%v_12 %self[6.3,2.0,] 	 ARGS:
+		 6: COPY TYPE_StringLiteral def_%v_13 
+		 7: BUILDSTRING def_%v_14 %v_7[6.0,] %v_8[6.1,] %v_9[6.2,] %v_10[6.3,] %v_11[6.4,] %v_12[6.5,] %v_13[6.6,] 
+		 8: %v_6->new def_%v_15 %v_6[5.0,4.1,] %v_14[6.7,] 	 ARGS:%v_14,
+		 9: %self->raise def_%v_16 %self[6.3,6.5,2.0,] %v_15[6.8,] 	 ARGS:%v_15,
+		 10: COPY TYPE_PASS def_%v_4 %v_16[6.9,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: v->build_object_from_version def_%v_17 v[2.8,] 	 ARGS:
+		 2: RETURN %v_17[7.1,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = revert
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->draft def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->version def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: COPY TYPE_PASS def_draft_version %v_4[2.7,] 
+		 9: 
+		 10: %v_4->== def_%v_5 %v_4[2.7,] 	 ARGS:Fixnum,
+		 11: BRANCH %v_5[2.10,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: RETURN %v_6[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: draft_version->- def_%v_7 draft_version[2.8,] 	 ARGS:Fixnum,
+		 1: %self->revert_to def_%v_8 %self[2.0,] %v_7[4.0,] 	 ARGS:%v_7,
+		 2: RETURN %v_8[4.1,] %self[4.1,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = revert_to_without_save
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 16 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_version 
+		 6: RECEIVEARG def_options 
+		 7: 
+		 8: version->blank? def_%v_3 version[2.5,] 	 ARGS:
+		 9: BRANCH %v_3[2.8,] 
+BB 4
+	outgoing: 6 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_4 
+		 1: %self->raise def_%v_5 %self[2.0,] %v_4[4.0,] 	 ARGS:%v_4,
+		 2: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+BB 6
+	outgoing: 7 8 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->find_version def_%v_6 %self[2.0,] version[2.5,] 	 ARGS:version,
+		 2: COPY TYPE_PASS def_revert_to_version %v_6[6.1,] 
+		 3: 
+		 4: BRANCH %v_6[6.1,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_7 
+		 1: 
+BB 8
+	outgoing: 9 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_8 
+		 1: BUILDSTRING def_%v_9 %v_8[8.0,] version[2.5,] 
+		 2: %self->raise def_%v_10 %self[2.0,] %v_9[8.1,] 	 ARGS:%v_9,
+		 3: COPY TYPE_PASS def_%v_7 %v_10[8.2,] 
+BB 9
+	outgoing: 10 11 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->respond_to? def_%v_11 %self[2.0,] 	 ARGS:Symbol,
+		 2: BRANCH %v_11[9.1,] 
+BB 10
+	outgoing: 12 16 
+	datadep: 
+	instructions:
+		 0: %self->before_revert def_%v_12 %self[2.0,] revert_to_version[6.2,] 	 ARGS:revert_to_version,
+		 1: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_12 
+BB 12
+	outgoing: 13 14 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->class def_%v_13 %self[2.0,] 	 ARGS:
+		 2: %v_13->versioned_columns def_%v_14 %v_13[12.1,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%v_15 
+		 4: COPY TYPE_Array def_%v_16 %v_15[12.3,] 
+		 5: %v_14->- def_%v_17 %v_14[12.2,] %v_16[12.4,] 	 ARGS:%v_16,
+		 6: %v_17->each def_%v_18 %v_17[12.5,] %self[12.1,2.0,] 	 ARGS:%v_17,
+CLOSURE BEGIN: a[] revert_to_version[6.2,] %self[12.1,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_a 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: BUILDSTRING def_%cl_1_4 a[2.2,] %cl_1_3[3.1,] 
+		 3: revert_to_version->send def_%cl_1_5 revert_to_version[] a[2.2,] 	 ARGS:a,
+		 4: %self->send def_%cl_1_6 %self[2.0,] %cl_1_4[3.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_4,%cl_1_5,
+		 5: RETURN %cl_1_6[3.4,] %self[3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 
+		 1: def_%cl_1_8 %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: 
+		 8: options->keys def_%v_19 options[2.6,] 	 ARGS:
+		 9: %v_19->each def_%v_20 %v_19[12.8,] %self[12.1,2.0,] 	 ARGS:%v_19,
+CLOSURE BEGIN: key[] options[12.8,2.6,] %self[12.1,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_key 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 2: BUILDSTRING def_%cl_2_4 key[2.2,] %cl_2_3[3.1,] 
+		 3: options->[] def_%cl_2_5 options[] key[2.2,] 	 ARGS:key,
+		 4: %self->send def_%cl_2_6 %self[2.0,] %cl_2_4[3.2,] %cl_2_5[3.3,] 	 ARGS:%cl_2_4,%cl_2_5,
+		 5: RETURN %cl_2_6[3.4,] %self[3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_7 
+		 1: def_%cl_2_8 %cl_2_7[4.0,] 
+		 2: RETURN %cl_2_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 10: 
+		 11: %self->respond_to? def_%v_21 %self[12.1,2.0,] 	 ARGS:Symbol,
+		 12: BRANCH %v_21[12.11,] 
+BB 13
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: %self->after_revert def_%v_22 %self[2.0,] revert_to_version[6.2,] 	 ARGS:revert_to_version,
+		 1: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_22 
+BB 15
+	outgoing: 16 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%v_23 
+		 2: BUILDSTRING def_%v_24 %v_23[15.1,] version[2.5,] 
+		 3: ATTRASSIGN %self->version_comment %v_24[15.2,] 
+		 4: 
+		 5: ATTRASSIGN %self->publish_on_save 
+		 6: 
+		 7: RETURN %self[15.3,15.5,2.0,] %self[15.3,15.5,2.0,] 
+BB 16
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: def_%v_25 
+		 1: def_%v_26 %v_25[16.0,] 
+		 2: RETURN %v_26[16.1,] %self[15.3,15.5,2.0,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = revert_to
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_version 
+		 6: def_options 
+		 7: options[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->revert_to_without_save def_%v_4 %self[2.0,] version[2.5,] options[3.1,2.6,] 	 ARGS:version,options,
+		 2: 
+		 3: %self->save def_%v_5 %self[4.1,2.0,] 	 ARGS:
+		 4: RETURN %v_5[4.3,] %self[4.1,4.3,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = version_comment
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->version_comment def_%v_3 %self[2.0,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = version_comment=
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_version_comment 
+		 6: 
+		 7: ATTRASSIGN %self->version_comment version_comment[2.5,] 
+		 8: 
+		 9: %self->send def_%v_3 %self[2.0,2.7,] 	 ARGS:Symbol,
+		 10: COPY TYPE_StringLiteral def_%v_4 
+		 11: GETFIELD %self->version_comment def_%v_5 %self[2.0,2.7,2.9,] 
+		 12: ATTRASSIGN %v_3->[] %v_4[2.10,] %v_5[2.11,] 
+		 13: RETURN %v_5[2.11,] %self[2.0,2.7,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = different_from_last_draft?
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->changed? def_%v_3 %self[2.0,] 	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 4
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->draft def_%v_5 %self[2.0,] 	 ARGS:
+		 2: COPY TYPE_PASS def_last_draft %v_5[6.1,] 
+		 3: 
+		 4: BRANCH %v_5[6.1,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 9
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->class def_%v_7 %self[2.0,] 	 ARGS:
+		 2: %v_7->versioned_columns def_%v_8 %v_7[9.1,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%v_9 
+		 4: COPY TYPE_Array def_%v_10 %v_9[9.3,] 
+		 5: %v_8->- def_%v_11 %v_8[9.2,] %v_10[9.4,] 	 ARGS:%v_10,
+		 6: %v_11->each def_%v_12 %v_11[9.5,] %self[9.1,2.0,] 	 ARGS:%v_11,
+CLOSURE BEGIN: %self[9.1,2.0,] col[] last_draft[6.2,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_col 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->send def_%cl_1_3 %self[2.0,] col[2.2,] 	 ARGS:col,
+		 2: last_draft->send def_%cl_1_4 last_draft[] col[2.2,] 	 ARGS:col,
+		 3: %cl_1_3->!= def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
+		 4: BRANCH %cl_1_5[3.3,] 
+BB 4
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 
+		 1: def_%cl_1_8 %cl_1_7[7.0,] 
+		 2: RETURN %cl_1_8[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: 
+		 8: RETURN %self[9.1,2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%v_13 
+		 1: def_%v_14 %v_13[10.0,] 
+		 2: RETURN %v_14[10.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+

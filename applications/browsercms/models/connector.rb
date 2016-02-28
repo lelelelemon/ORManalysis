@@ -1,3 +1,4 @@
+
   class Connector < ActiveRecord::Base
 
     belongs_to :page, :class_name => 'Page'

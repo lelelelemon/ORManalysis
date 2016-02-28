@@ -1,3 +1,4 @@
+
   class PagePartial < DynamicView
 
     before_validation :prepend_underscore

@@ -1,4 +1,5 @@
 
+
   # A parent class for users that need to be persisted in the CMS database.
   class PersistentUser < ActiveRecord::Base
 

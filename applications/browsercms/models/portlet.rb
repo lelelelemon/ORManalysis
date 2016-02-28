@@ -1,3 +1,4 @@
+
   class Portlet < ActiveRecord::Base
     validates_presence_of :name
     is_searchable
@@ -27,6 +28,46 @@
              :current_user, :logged_in?,
              :to => :controller
 
+    def self.inherited(subclass)
+      super if defined? super
+    ensure
+      subclass.class_eval do
+        extend PolymorphicSingleTableInheritance
+
+        has_dynamic_attributes :class_name => "CmsPortletAttribute",
+                               :foreign_key => "portlet_id",
+                               :table_name => "cms_portlet_attributes",
+                               :relationship_name => :portlet_attributes
+
+        acts_as_content_block(
+            :versioned => false,
+            :publishable => false,
+            :renderable => {:instance_variable_name_for_view => "@portlet"})
+
+        # Used to skip the 'after_save' callbacks that connect blocks to pages.
+        # Portlets aren't verisonable but are connectable, so this will prevent the saving of portlets.
+        attr_accessor :skip_callbacks
+
+        def self.template_path
+          default_template_path
+        end
+
+        def self.helper_path
+          "app/portlets/helpers/#{name.underscore}_helper.rb"
+        end
+
+        def self.helper_class
+          "#{name}Helper".constantize
+        end
+
+        # Portlets don't generally support inline editing. Subclasses can override this if they do though.
+        def supports_inline_editing?
+          false
+        end
+
+
+      end
+    end
 
     def self.has_edit_link?
       false

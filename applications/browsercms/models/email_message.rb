@@ -1,3 +1,4 @@
+
   class EmailMessage < ActiveRecord::Base
 
     extend DefaultAccessible

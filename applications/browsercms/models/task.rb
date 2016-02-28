@@ -1,3 +1,4 @@
+
   class Task < ActiveRecord::Base
 
     CANT_ASSIGN_MESSAGE = "must have permission to assign tasks"

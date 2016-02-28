@@ -1,4 +1,5 @@
 
+
   # Represents a user that has been authenticated from an external data source. Typical use case might be:
   #
   # ```

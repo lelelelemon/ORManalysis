@@ -68,6 +68,269 @@ BB 11
 	datadep: 
 	instructions:
 
+SET IRMethod, name = inherited
+SET IRMethod, name = template_path
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->default_template_path def_%v_3 %self[2.0,] 	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = helper_path
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: %self->name def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->underscore def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: COPY TYPE_StringLiteral def_%v_6 
+		 10: BUILDSTRING def_%v_7 %v_3[2.6,] %v_5[2.8,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = helper_class
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->name def_%v_3 %self[2.0,] 	 ARGS:
+		 7: COPY TYPE_StringLiteral def_%v_4 
+		 8: BUILDSTRING def_%v_5 %v_3[2.6,] %v_4[2.7,] 
+		 9: %v_5->constantize def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = supports_inline_editing?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_subclass 
+		 6: def_%v_3 
+BB 3
+	outgoing: 4 5 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_6 %self[2.0,] 
+		 2: BRANCH %v_6[3.1,] 
+BB 4
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: %current_module->inherited def_%v_7 %current_module[2.3,] subclass[2.5,] %v_0[2.1,] 	 ARGS:subclass,
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_7 
+BB 6
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_5 %v_7[5.0,4.0,] 
+		 1: 
+		 2: subclass->class_eval def_%v_4 subclass[2.5,] %self[2.0,] 	 ARGS:subclass,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (PolymorphicSingleTableInheritance) def_%cl_1_3 
+		 2: %self->extend def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: COPY TYPE_StringLiteral def_%cl_1_6 
+		 6: COPY TYPE_StringLiteral def_%cl_1_7 
+		 7: HASH-class_name-foreign_key-table_name-relationship_name- def_%cl_1_8 %cl_1_5[3.4,] %cl_1_6[3.5,] %cl_1_7[3.6,] 
+		 8: %self->has_dynamic_attributes def_%cl_1_9 %self[3.2,2.0,] %cl_1_8[3.7,] 	 ARGS:%cl_1_8,
+		 9: 
+		 10: COPY TYPE_StringLiteral def_%cl_1_10 
+		 11: HASH-instance_variable_name_for_view- def_%cl_1_11 %cl_1_10[3.10,] 
+		 12: HASH-versioned-publishable-renderable- def_%cl_1_12 %cl_1_11[3.11,] 
+		 13: %self->acts_as_content_block def_%cl_1_13 %self[3.2,3.8,2.0,] %cl_1_12[3.12,] 	 ARGS:%cl_1_12,
+		 14: 
+		 15: %self->attr_accessor def_%cl_1_14 %self[3.2,3.8,3.13,2.0,] 	 ARGS:Symbol,
+		 16: 
+		 17: %self[3.2,3.8,3.13,3.15,2.0,] 
+		 18: 
+		 19: %self[3.2,3.8,3.13,3.15,2.0,] 
+		 20: 
+		 21: %self[3.2,3.8,3.13,3.15,2.0,] 
+		 22: 
+		 23: 
+		 24: RETURN %self[3.2,3.8,3.13,3.15,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_15 
+		 1: def_%cl_1_16 %cl_1_15[4.0,] 
+		 2: RETURN %cl_1_16[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: 
+BB 8
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: def_%v_8 
+		 1: def_%v_9 %v_8[8.0,] %v_3[2.6,] 
+		 2: 
+		 3: subclass->class_eval def_%v_4 subclass[2.5,] %self[2.0,] 	 ARGS:subclass,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (PolymorphicSingleTableInheritance) def_%cl_1_3 
+		 2: %self->extend def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: COPY TYPE_StringLiteral def_%cl_1_6 
+		 6: COPY TYPE_StringLiteral def_%cl_1_7 
+		 7: HASH-class_name-foreign_key-table_name-relationship_name- def_%cl_1_8 %cl_1_5[3.4,] %cl_1_6[3.5,] %cl_1_7[3.6,] 
+		 8: %self->has_dynamic_attributes def_%cl_1_9 %self[3.2,2.0,] %cl_1_8[3.7,] 	 ARGS:%cl_1_8,
+		 9: 
+		 10: COPY TYPE_StringLiteral def_%cl_1_10 
+		 11: HASH-instance_variable_name_for_view- def_%cl_1_11 %cl_1_10[3.10,] 
+		 12: HASH-versioned-publishable-renderable- def_%cl_1_12 %cl_1_11[3.11,] 
+		 13: %self->acts_as_content_block def_%cl_1_13 %self[3.2,3.8,2.0,] %cl_1_12[3.12,] 	 ARGS:%cl_1_12,
+		 14: 
+		 15: %self->attr_accessor def_%cl_1_14 %self[3.2,3.8,3.13,2.0,] 	 ARGS:Symbol,
+		 16: 
+		 17: %self[3.2,3.8,3.13,3.15,2.0,] 
+		 18: 
+		 19: %self[3.2,3.8,3.13,3.15,2.0,] 
+		 20: 
+		 21: %self[3.2,3.8,3.13,3.15,2.0,] 
+		 22: 
+		 23: 
+		 24: RETURN %self[3.2,3.8,3.13,3.15,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_15 
+		 1: def_%cl_1_16 %cl_1_15[4.0,] 
+		 2: RETURN %cl_1_16[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: %v_8[8.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[6.0,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
 SET IRMethod, name = has_edit_link?
 BB 1
 	outgoing: 3 2 

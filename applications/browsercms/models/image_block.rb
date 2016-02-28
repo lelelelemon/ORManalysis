@@ -1,3 +1,4 @@
+
   class ImageBlock < AbstractFileBlock
 
     acts_as_content_block :taggable => true

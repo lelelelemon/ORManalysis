@@ -1,3 +1,4 @@
+
   class FormEntry < ActiveRecord::Base
 
     store :data_columns

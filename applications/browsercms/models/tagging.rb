@@ -1,3 +1,4 @@
+
   class Tagging < ActiveRecord::Base
     belongs_to :tag, :class_name => 'Tag'
     belongs_to :taggable, :polymorphic => true, :class_name => 'Taggable', :foreign_type => 'taggable_type'

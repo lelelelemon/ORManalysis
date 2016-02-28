@@ -1,3 +1,4 @@
+
   class ContentType
 
     attr_accessor :name

@@ -1,3 +1,4 @@
+
   # An API for interacting with the Content API of BrowserCMS.
   module Content
 

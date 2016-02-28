@@ -1,3 +1,4 @@
+
   class FormField < ActiveRecord::Base
     extend DefaultAccessible
 

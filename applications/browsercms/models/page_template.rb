@@ -1,3 +1,4 @@
+
   class PageTemplate < DynamicView
 
     validates_format_of :name, :with => /\A[a-z]+[a-z0-9_]*\Z/, :message => "can only contain lowercase letters, numbers and underscores and must begin with a lowercase letter"

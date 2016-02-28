@@ -1,3 +1,4 @@
+
   class DynamicView < ActiveRecord::Base
     store_templates
 

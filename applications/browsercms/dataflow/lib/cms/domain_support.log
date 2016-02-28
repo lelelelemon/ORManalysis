@@ -1,0 +1,153 @@
+SET IRMethod, name = cms_domain_prefix
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = request_is_for_cms_subdomain?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->cms_site? def_%v_3 %self[2.0,] 	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = cms_site?
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->request def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->subdomains def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: COPY TYPE_PASS def_subdomains %v_4[2.7,] 
+		 9: 
+		 10: %v_4->first def_%v_5 %v_4[2.7,] 	 ARGS:
+		 11: COPY TYPE_StringLiteral def_%v_6 
+		 12: %v_5->== def_%v_7 %v_5[2.10,] %v_6[2.11,] 	 ARGS:%v_6,
+		 13: BRANCH %v_7[2.12,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: subdomains->shift def_%v_8 subdomains[2.8,] 	 ARGS:
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: subdomains->first def_%v_9 subdomains[2.8,] 	 ARGS:
+		 2: %self->cms_domain_prefix def_%v_10 %self[2.0,] 	 ARGS:
+		 3: %v_9->== def_%v_11 %v_9[5.1,] %v_10[5.2,] 	 ARGS:%v_10,
+		 4: RETURN %v_11[5.3,] %self[5.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = using_cms_subdomains?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->wants_to_use_subdomains? def_%v_3 %self[2.0,] 	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->perform_caching def_%v_4 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_3 %v_4[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_result %v_3[3.1,2.6,] 
+		 1: 
+		 2: RETURN %v_3[3.1,2.6,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = wants_to_use_subdomains?
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Rails) def_%v_3 
+		 7: %v_3->configuration def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->cms def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: %v_5->use_single_domain def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %v_6->! def_%v_7 %v_6[2.9,] 	 ARGS:
+		 11: RETURN %v_7[2.10,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

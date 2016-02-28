@@ -1,6 +1,20 @@
-  class GroupTypePermission < ActiveRecord::Base
-    belongs_to :group_type, :class_name => 'GroupType'
-    belongs_to :permission, :class_name => 'Permission'
+class Link < ActiveRecord::Base
+  acts_as_content_block connectable: false, content_module: false
 
-    extend DefaultAccessible
+  scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
+
+  validates_presence_of :name
+
+  is_addressable
+  include Concerns::Addressable::DeprecatedPageAccessors
+
+  #needed by menu_helper
+  def path
+    url
   end
+
+  # @override
+  def self.permitted_params
+    super + [:publish_on_save]
+  end
+end

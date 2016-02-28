@@ -1,4 +1,5 @@
 
+
   # Represents a CMS users that is managed through the CMS UI.
   class User < PersistentUser
     include Devise::Models::Validatable

@@ -1,3 +1,4 @@
+
   # Captures values for the search form.
   class SearchFilter
     include ::ActiveModel::Model

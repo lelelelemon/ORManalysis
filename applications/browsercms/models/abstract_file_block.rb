@@ -1,3 +1,4 @@
+
   class AbstractFileBlock < ActiveRecord::Base
     self.table_name = "cms_file_blocks"
 

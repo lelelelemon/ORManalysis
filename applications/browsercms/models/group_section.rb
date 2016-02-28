@@ -1,3 +1,4 @@
+
   class GroupSection < ActiveRecord::Base
 
     extend DefaultAccessible
