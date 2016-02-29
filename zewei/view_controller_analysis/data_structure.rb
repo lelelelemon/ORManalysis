@@ -217,7 +217,8 @@ class Function_Class
 		self.get_render_statement_array.each do |r|
 			
 			view_name = get_view_name_from_render_statement(r)
-		  layout_name = get_layout_name_from_render_statement(r)
+=begin
+      layout_name = get_layout_name_from_render_statement(r)
 
       layout_content = nil
       
@@ -228,7 +229,7 @@ class Function_Class
       if layout_content == nil
         layout_content = get_default_layout(view_class_hash, controller_hash)
       end
-    
+=end
 
       if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
@@ -236,23 +237,23 @@ class Function_Class
 				if view_class != nil
 					value = view_class.replace_render_statements(view_class_hash, 0)
           puts "view_name: " + view_name
-          puts "layout content:"
-          puts layout_content
-          puts "old value: "
-          puts value
-          if layout_content != nil
-            value = merge_layout_content(layout_content, value)
-          end
-          puts "new value:"
-          puts value
+#          puts "layout content:"
+#          puts layout_content
+#          puts "old value: "
+#          puts value
+#          if layout_content != nil
+#            value = merge_layout_content(layout_content, value)
+#          end
+#          puts "new value:"
+#          puts value
 
 					render_view_mapping[r] = value
 				else
 					#do something the view file does not exist! It could mean we parse the file wrong. 
 				end
-      elsif layout_content != nil
+#      elsif layout_content != nil
   
-        render_view_mapping[r] = layout_content 
+#        render_view_mapping[r] = layout_content 
       end
     end
 	
@@ -305,10 +306,10 @@ class Function_Class
 			view_class = view_class_hash[view_name]
 			if view_class != nil
 				v = view_class.replace_render_statements(view_class_hash, 0)
-		    layout_content = get_default_layout(view_class_hash, controller_hash)
-        if layout_content != nil
-          v = merge_layout_content(layout_content, v)
-        end
+#		    layout_content = get_default_layout(view_class_hash, controller_hash)
+#        if layout_content != nil
+#          v = merge_layout_content(layout_content, v)
+#        end
         content = content.split "\n"
 				len = content.length
 				content[len] = content[len-1]
