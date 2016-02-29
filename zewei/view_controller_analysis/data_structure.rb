@@ -457,7 +457,7 @@ class View_Class
 
 	# This function is used to get all render statements recursively, so we can know what view files will be rendered by this controller action, further, we can get the information about what links exist in the corresponding view files
 	def get_render_statements_recursively(view_class_hash, dep)
-    return [] if dep > 10
+    return [] if dep > 3
 		render_arr = []
 		render_stmt_arr = []
 		get_render_statement_array.each do |stmt|
@@ -526,12 +526,13 @@ class View_Class
 
 #replace the render statements inside the ruby code of current view file
 	def replace_render_statements(view_class_hash, dep)
-    return self.get_rb_content if dep > 10
+    return self.get_rb_content if dep > 3
 		render_view_mapping = self.get_render_view_mapping(view_class_hash, dep)
 		rb_content = self.get_rb_content.dup 
 		puts "------------------------------current view file: " + self.to_s
 		render_view_mapping.each do |k, v|
-			rb_content.gsub! k, v
+			puts k
+      rb_content.gsub! k, v
 		end
 
 		return rb_content
