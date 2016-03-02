@@ -14,15 +14,18 @@
       where(conditions)
     end
 
-    def self.inherited(subclass)
-      super if defined? super
-    ensure
-      subclass.class_eval do
-        flush_cache_on_change
-        is_publishable
-        uses_soft_delete
-        is_userstamped
-        is_versioned
+	scope :published, -> { where(:published => true) }
+  scope :unpublished, -> {
+    if self.versioned?
+      q = "#{connection.quote_table_name(version_table_name)}.#{connection.quote_column_name('version')} > " +
+          "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name('version')}"
+      select("distinct #{connection.quote_table_name(table_name)}.*").where(q).joins(:versions)
+    else
+      where(:published => false)
+    end
+  }
+	scope :created_by, lambda{|user| {:conditions => {:created_by => user}}}
+  scope :updated_by, lambda{|user| {:conditions => {:updated_by => user}}}      
 
         before_validation :set_publish_on_save
         before_validation :set_defaults, :set_path
@@ -32,8 +35,6 @@
                                 :message => "Must have a unique combination of name, format and handler",
                                 conditions: -> { where(deleted: false) }
 
-      end
-    end
 
     # Returns the title of this class
     def self.title
