@@ -76,6 +76,12 @@ def get_view_name_from_render_statement(r)
 	r = r.split("\n")[0]
 	r = r[6..-1] if r.start_with?"return"
 	r.strip!
+  while r[0] == '(' 
+    r = r[1..-1]
+  end
+  while r[-1] == ')'
+    r = r[0..-2]
+  end
 	r = r[6..-1] if r.start_with?"render"
 	r.strip!
 	while r[0] == '(' 
