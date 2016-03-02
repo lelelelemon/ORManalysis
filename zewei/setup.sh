@@ -21,7 +21,13 @@ echo "generating named_routes.txt..."
 bash named_routes.sh 
 
 echo "dealing with haml..."
+ruby traverse_view_dir_preprocess_haml.rb app/views
+
+sleep 20
+
 ruby traverse_view_dir_convert_haml.rb app/views
+
+sleep 60
 
 echo "compiling extract_ruby..."
 g++ extract_ruby.cpp -o extract_ruby
