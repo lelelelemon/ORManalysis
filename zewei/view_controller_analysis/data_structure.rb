@@ -156,7 +156,12 @@ class Function_Class
 		while ast_arr.length > 0
 			cur_ast = ast_arr.pop
 			if cur_ast.source.start_with? keyword
-				if cur_ast.parent.source.start_with?"return" 
+				#if cur_ast.parent.source.start_with?"return" 
+       
+
+        if cur_ast.parent.type.to_s.eql?(["arg_paran"]) and cur_ast.parent.parent.type.to_s.eql?(["fcall", "return"])
+          res = cur_ast.parent.parent.source.to_s
+        elsif cur_ast.parent.type.to_s.eql?(["return", "fcall"])
           res = cur_ast.parent.source.to_s
 				else 
           res = cur_ast.source.to_s

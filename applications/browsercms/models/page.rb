@@ -4,13 +4,23 @@ class Page < ActiveRecord::Base
     path
   end
 
-  is_archivable
-  flush_cache_on_change
-  is_hideable
-  is_publishable
-  uses_soft_delete
-  is_userstamped
-  is_versioned
+
+  scope :published, -> { where(:published => true) }
+  scope :unpublished, -> {
+    if self.versioned?
+      q = "#{connection.quote_table_name(version_table_name)}.#{connection.quote_column_name('version')} > " +
+          "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name('version')}"
+      select("distinct #{connection.quote_table_name(table_name)}.*").where(q).joins(:versions)
+    else
+      where(:published => false)
+    end
+  }
+	scope :archived, ->{where(:archived => true)}
+  scope :not_archived, ->{where(:archived => false)}
+	scope :hidden, ->{where(:hidden => true)}
+  scope :not_hidden, ->{where(:hidden => false)}
+	scope :created_by, lambda{|user| {:conditions => {:created_by => user}}}
+  scope :updated_by, lambda{|user| {:conditions => {:updated_by => user}}}        
 
   has_many :connectors, -> { order("#{Connector.table_name}.container, #{Connector.table_name}.position") }, :class_name => 'Connector'
   has_many :page_routes, :class_name => 'PageRoute'
