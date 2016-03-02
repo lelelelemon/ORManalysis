@@ -21,26 +21,22 @@ echo "generating named_routes.txt..."
 bash named_routes.sh 
 
 echo "dealing with haml..."
-ruby traverse_view_dir_preprocess_haml.rb app/views
+#ruby traverse_view_dir_preprocess_haml.rb app/views
 
-sleep 20
-
-ruby traverse_view_dir_convert_haml.rb app/views
-
-sleep 60
+#ruby traverse_view_dir_convert_haml.rb app/views
 
 echo "compiling extract_ruby..."
 g++ extract_ruby.cpp -o extract_ruby
 
 echo "extracting ruby code out of erb files..."
-ruby traverse_view_dir_extract_ruby.rb extract_ruby app/views
+#ruby traverse_view_dir_extract_ruby.rb extract_ruby app/views
 
 echo "Generating controllers merged with views..."
-ruby read_files.rb -c -a > controller-log.txt
+#ruby read_files.rb -c -a > controller-log.txt
 echo "Now you may find merged controllers inside app/new_controllers"
 
 echo "Generating links for each controller action..."
-ruby read_files.rb -c > links-log.txt
+#ruby read_files.rb -c > links-log.txt
 echo "Now you may find links for each controller action inside app/new_views"
 
 echo "If you want links with log info, try: ruby read_files.rb -c > links-log.txt"
