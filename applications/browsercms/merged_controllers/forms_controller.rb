@@ -1,36 +1,35 @@
-  # Handles the login/logout function of the site.
-  class SessionsController < Devise::SessionsController
-    include AdminController
-    before_filter :redirect_to_cms_site, :only => [:new]
+class FormsController < ContentBlockController
 
-    layout 'cms/application'
+  before_filter :associate_form_fields, only: [:create, :update]
+  before_filter :strip_new_entry_params, only: [:create, :update]
 
-    def new
-      use_page_title 'Login'
-      super
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- use_page_title 'Sign in' 
-  span = 'span6' unless local_assigns.has_key? :span 
- span 
- page_title 
- yield 
- 
- simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| 
- render layout: 'cms/application/main_with_sidebar' do 
- f.input :login, :required => false, :autofocus => true 
- f.input :password, :required => false 
- f.input :remember_me, :as => :boolean if devise_mapping.rememberable? 
- render "devise/shared/links" 
- end 
- render layout: 'cms/application/row' do 
- button_menu :bottom do 
- f.button :submit, "Sign in", class: 'right btn-primary' 
- end 
- end 
- end 
-
-end
-
+  helper do
+    # For new forms, if the user doesn't complete and save them, we need to delete them from the database.
+    # The reason :new creates a form object (which is not conventional) is to allow AJAX FormField creation/association.
+    def cleanup_before_abandoning
+      ["new", "create"].include? action_name
     end
-
   end
+
+  def new
+    super
+    @block.confirmation_text = "Thanks for filling out this form."
+    @block.save!
+  end
+
+  protected
+
+  # Split the space separated list of ids into an actual array of ids.
+  # Rails might have a more conventional way to do this, but I couldn't figure it out.'
+  def associate_form_fields
+    field_ids = params[:field_ids].split(" ")
+    params[:form][:field_ids] = field_ids
+  end
+
+
+  # params[:form][:new_entry] is just a garbage parameter that exists to make displaying forms work.
+  # We want to ignore anything submitted here
+  def strip_new_entry_params
+    params[:form].delete(:new_entry)
+  end
+end
