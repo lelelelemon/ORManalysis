@@ -1,7 +1,17 @@
 is_comment = false
 indent = ""
 content = ""
+
+encoding_options = {
+  :invalid => :replace,
+  :undef => :replace,
+  :replace => '',
+  :univseral_newline => true
+}
+
 File.open(ARGV[0], "r").each_line do |line|
+
+  line = line.encode(Encoding.find('ASCII'), encoding_options)
 
   if is_comment and (line.start_with?"#{indent} " or line.start_with?"#{indent}\t" or line.start_with?"\n")
     next
