@@ -28,11 +28,6 @@
              :current_user, :logged_in?,
              :to => :controller
 
-    def self.inherited(subclass)
-      super if defined? super
-    ensure
-      subclass.class_eval do
-        extend PolymorphicSingleTableInheritance
 
         has_dynamic_attributes :class_name => "CmsPortletAttribute",
                                :foreign_key => "portlet_id",
@@ -66,8 +61,6 @@
         end
 
 
-      end
-    end
 
     def self.has_edit_link?
       false

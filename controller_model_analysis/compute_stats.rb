@@ -303,6 +303,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		#	end
 		#end
 		if n.getInstr.is_a?Call_instr
+			caller_type = type_valid(n.getInstr, n.getInstr.getCaller)
 			puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
 			if n.getInstr.getDefv != nil
 				puts "\t\treturn type: #{type_valid(n.getInstr, n.getInstr.getDefv)}"

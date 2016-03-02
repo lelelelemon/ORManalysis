@@ -203,12 +203,13 @@ class Call_instr < Instruction
 		return self.getCallerType
 	end
 	def getQueryType
-		if @call_handler != nil and @call_handler.getQueryType != nil 
+		if @call_handler and @call_handler.getQueryType 
 			return @call_handler.getQueryType
 		end
 		t = type_valid(self, @caller)
 		if isActiveRecord(t)
 			qtype = check_method_keyword(t, @funcname)
+			
 			return qtype
 		end	
 	end

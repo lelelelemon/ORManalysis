@@ -91,7 +91,7 @@ class INode
 		@in_closure
 	end
 	def isQuery?
-		if @instr != nil and @instr.instance_of?Call_instr
+		if @instr and @instr.instance_of?Call_instr
 			return @instr.isQuery
 		end
 		return false
