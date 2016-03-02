@@ -14,169 +14,13 @@ class ProjectsController < ApplicationController
 
     @completed_projects = @project_relation.completed
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  @page_title = t("projects.index_title", title: Setting.productName) 
+ @page_title = t("projects.index_title", title: Setting.productName) 
  Project.model_name.human(count: 2) 
  render @projects 
  if current_user.completed_projects.size > 0 
  link_to t("projects.n_completed_projects", n: current_user.completed_projects.size),
               controller: 'projects', action: 'list_completed' 
  end 
-
- current_user.id 
- current_user.dateFormat 
- 
 
 end
 
@@ -185,159 +29,7 @@ end
   def new
     @project = Project.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  @page_title = t("projects.new_title", title: Setting.productName) 
+ @page_title = t("projects.new_title", title: Setting.productName) 
  form_tag({:action => 'create'}, :class => "form-horizontal") do 
  t("projects.new_project") 
   t("projects.name") 
@@ -385,10 +77,6 @@ unless news.nil?
  t("button.create") 
  end 
 
- current_user.id 
- current_user.dateFormat 
- 
-
 end
 
   end
@@ -404,168 +92,12 @@ end
       end
     end
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  if user.present? 
+ if user.present? 
  active_class = user.active ? "":"inactive" 
  link_to user.to_html, [:edit, user], :class => "username pull-left #{active_class}", :target => "_blank" 
  hidden_field_tag("project[default_user_ids][]", user.id) 
  link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "removeLink") 
  end 
-
- current_user.id 
- current_user.dateFormat 
- 
 
 end
 
@@ -588,159 +120,7 @@ end
     else
       flash[:error] = @project.errors.full_messages.join(". ")
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  @page_title = t("projects.new_title", title: Setting.productName) 
+ @page_title = t("projects.new_title", title: Setting.productName) 
  form_tag({:action => 'create'}, :class => "form-horizontal") do 
  t("projects.new_project") 
   t("projects.name") 
@@ -788,10 +168,6 @@ unless news.nil?
  t("button.create") 
  end 
 
- current_user.id 
- current_user.dateFormat 
- 
-
 end
 
     end
@@ -808,159 +184,7 @@ end
       @default_users = User.joins("INNER JOIN default_project_users on default_project_users.user_id = users.id").where("default_project_users.project_id = ?", @project.id)
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
+ @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
  form_for(@project, :html => {:class => "form-horizontal"}) do 
  t("projects.edit") 
  link_to_tasks_filtered_by(t('projects.view_tasks'), @project, :class => "btn btn-success pull-right") 
@@ -1032,7 +256,7 @@ unless news.nil?
  end 
  milestone.description 
  number_to_percentage(milestone.percent_complete, :precision => 0)  
- end 
+end 
  for milestone in @project.milestones.active.unscheduled.order("due_at, milestones.name").includes(:user) 
   milestone.due_at ? milestone.due_at.strftime("%a, %d %b %Y") : t("milestones.unscheduled") 
  link_to_milestone milestone 
@@ -1042,7 +266,7 @@ unless news.nil?
  end 
  milestone.description 
  number_to_percentage(milestone.percent_complete, :precision => 0)  
- end 
+end 
   t("milestones.name") 
  t("milestones.completed") 
  t("milestones.tasks") 
@@ -1111,10 +335,6 @@ unless news.nil?
  
  end 
 
- current_user.id 
- current_user.dateFormat 
- 
-
 end
 
   end
@@ -1128,159 +348,7 @@ end
       @users = User.where("company_id = ?", current_user.company_id).order("users.name")
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
+ @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
  @project.name 
  link_to_tasks_filtered_by( t("projects.view_tasks"), @project, :class => "btn btn-success pull-right") 
  t("projects.name") 
@@ -1322,7 +390,7 @@ unless news.nil?
  end 
  milestone.description 
  number_to_percentage(milestone.percent_complete, :precision => 0)  
- end 
+end 
  for milestone in @project.milestones.active.unscheduled.order("due_at, milestones.name").includes(:user) 
   milestone.due_at ? milestone.due_at.strftime("%a, %d %b %Y") : t("milestones.unscheduled") 
  link_to_milestone milestone 
@@ -1332,7 +400,7 @@ unless news.nil?
  end 
  milestone.description 
  number_to_percentage(milestone.percent_complete, :precision => 0)  
- end 
+end 
   t("milestones.name") 
  t("milestones.completed") 
  t("milestones.tasks") 
@@ -1353,10 +421,6 @@ unless news.nil?
  
  end 
 
- current_user.id 
- current_user.dateFormat 
- 
-
 end
 
   end
@@ -1369,159 +433,7 @@ end
       redirect_to projects_path
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
+ @page_title = t("projects.edit_title", title: "#{@project.name} - #{Setting.productName}") 
  form_for(@project, :html => {:class => "form-horizontal"}) do 
  t("projects.edit") 
  link_to_tasks_filtered_by(t('projects.view_tasks'), @project, :class => "btn btn-success pull-right") 
@@ -1593,7 +505,7 @@ unless news.nil?
  end 
  milestone.description 
  number_to_percentage(milestone.percent_complete, :precision => 0)  
- end 
+end 
  for milestone in @project.milestones.active.unscheduled.order("due_at, milestones.name").includes(:user) 
   milestone.due_at ? milestone.due_at.strftime("%a, %d %b %Y") : t("milestones.unscheduled") 
  link_to_milestone milestone 
@@ -1603,7 +515,7 @@ unless news.nil?
  end 
  milestone.description 
  number_to_percentage(milestone.percent_complete, :precision => 0)  
- end 
+end 
   t("milestones.name") 
  t("milestones.completed") 
  t("milestones.tasks") 
@@ -1671,10 +583,6 @@ unless news.nil?
  @project.id 
  
  end 
-
- current_user.id 
- current_user.dateFormat 
- 
 
 end
 
@@ -1724,159 +632,7 @@ end
   def list_completed
     @completed_projects = @project_relation.completed.order("completed_at DESC")
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  @page_title = t("projects.completed_title", title: Setting.productName) 
+ @page_title = t("projects.completed_title", title: Setting.productName) 
  t("projects.completed_projects") 
  t("projects.name") 
  t("projects.completed") 
@@ -1887,10 +643,6 @@ unless news.nil?
  p.tasks.size 
  link_to( t("projects.revert"), revert_project_path(p), :method => :post, :confirm => t("shared.are_you_sure") ) 
  end 
-
- current_user.id 
- current_user.dateFormat 
- 
 
 end
 
@@ -1912,159 +664,7 @@ end
     if params[:user_edit] == "true"
       @user = current_user.company.users.find(params[:user_id])
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  t("users.project") 
+ t("users.project") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -2109,169 +709,13 @@ unless news.nil?
  end 
  @user.id 
 
- current_user.id 
- current_user.dateFormat 
- 
-
 end
 
     else
       @project = current_user.company.projects.find(params[:id])
       @users = Company.find(current_user.company_id).users.order("users.name")
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  t("projects.user") 
+ t("projects.user") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -2316,10 +760,6 @@ unless news.nil?
  t("users.add_project_to_user") 
  text_field :user, :name, {:id => "project_user_name_autocomplete", :value => "" } 
  @project.id 
-
- current_user.id 
- current_user.dateFormat 
- 
 
 end
 
@@ -2353,159 +793,7 @@ end
     if params[:user_edit] == "true" && current_user.admin?
       @user = current_user.company.users.find(params[:user_id])
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  t("users.project") 
+ t("users.project") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -2550,168 +838,12 @@ unless news.nil?
  end 
  @user.id 
 
- current_user.id 
- current_user.dateFormat 
- 
-
 end
 
     else
       @users = Company.find(current_user.company_id).users.order("users.name")
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :content do 
- yield :layout 
- yield(:side_panel) 
-  t("task_filters.filters") 
- t("task_filters.save_current") 
- filters_user_path(current_user) 
- t("task_filters.manage") 
- TaskFilter.recent_for(current_user).each do |filter| 
- select_task_filter_link(filter) 
- end 
- link_to_open_tasks 
- link_to_open_tasks(current_user) 
- link_to_unread_tasks(current_user) 
- current_user.visible_task_filters.each do |tf| 
- select_task_filter_link(tf) 
- end 
- 
-  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
- t("tags.tags") 
- if current_user.admin? 
- t("button.edit") 
- end 
- tag_links 
- end 
- 
-  current_user.id 
- current_user.id 
- t("tasks.next_tasks") 
- count = 5 if ( count.nil? || count < 5) 
- current_user.schedule_tasks(:limit => count, :save => false) do |task| 
-  pill_date ||= task.estimate_date 
- time ||= :minutes_left 
- sorting_disabled ||= false 
- user.top_next_task == task ? 'top-next-task' : nil 
- human_future_date(pill_date, user.tz) 
- task.css_classes 
- link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
- task.name 
- case time 
- when :minutes_left 
- "(" + TimeParser.format_duration(task.minutes_left) + ")" 
- when :worked_minutes 
- "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
- end 
- unless sorting_disabled 
- link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
- end 
- 
- end 
- if current_user.tasks.open_only.not_snoozed.count > count 
- t("tasks.more_tasks") 
- end 
- 
- end 
-  javascript_include_tag 'application' 
- yield :head 
- stylesheet_link_tag 'application' 
- auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
- csrf_meta_tag 
- @page_title || Setting.productName 
- if Setting.version 
- Setting.version 
- end 
- new_user_session_url 
-  image_tag('spinner.gif', :border => 0) 
- 
-  if current_user.company.logo? 
- image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
- else 
- image_tag("logo.gif", :alt => "logo" ) 
- end 
- if total_today > 0 
- t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
- end 
- if @current_sheet && @current_sheet.task 
-  start_stop_work_link(@current_sheet.task) 
- cancel_work_link(@current_sheet.task) 
- pause_task_link(@current_sheet.task) 
- link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
- percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
- TimeParser.format_duration(@current_sheet.duration/60) 
- TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
- percent.nil? ? 0 : percent 
- 
- end 
- 
-  t('tabmenu.overview') 
- link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
- if current_user.admin? 
- link_to t('tabmenu.planning'), planning_tasks_path 
- end 
- if current_user.can_any?(current_user.projects, 'report') 
- billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
- link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
- end 
- link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
- t('tabmenu.create') 
- link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
- if current_templates.size > 0 
- t('tabmenu.from_template') 
- current_templates.order("tasks.position_task_template").each do |task| 
- link_to task, clone_task_path(task.task_num) 
- end 
- end 
- if current_user.create_projects? 
- link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
- end 
- link_to t('tabmenu.milestone'), new_milestone_path 
- if Setting.contact_creation_allowed && current_user.can_view_clients? 
- link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
- link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
- end 
- if current_user.use_resources? 
- link_to(t('tabmenu.resource'), new_resource_path) 
- end 
- if menu_class("activities") == "active" 
- link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
- end 
- menu_class("tasks") 
- link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
- menu_class("milestones") 
- link_to t('tabmenu.milestones'), milestones_path 
- if current_user.company.show_wiki? 
- menu_class("wiki") 
- link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
- end 
- link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
-  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
- 
- current_user.display_login 
- if current_user.admin? 
- link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
- link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
- else 
- link_to t('tabmenu.my_account'), edit_user_path(current_user) 
- end 
- link_to t('tabmenu.log_out'), destroy_user_session_path 
- 
-   flash.each do |key, val| 
-key.to_s
- val 
- end 
- 
- news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
-unless news.nil? 
- tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
- news.body 
- link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
-        :onclick => "jQuery('#news').fadeOut(500)",
-        :remote => true) 
- end 
- 
-  t("projects.user") 
+ t("projects.user") 
  t("permissions.read") 
  t("permissions.comment") 
  t("permissions.work") 
@@ -2756,10 +888,6 @@ unless news.nil?
  t("users.add_project_to_user") 
  text_field :user, :name, {:id => "project_user_name_autocomplete", :value => "" } 
  @project.id 
-
- current_user.id 
- current_user.dateFormat 
- 
 
 end
 
