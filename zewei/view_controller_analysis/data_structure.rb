@@ -147,40 +147,6 @@ class Function_Class
 		get_array_with_keyword @ast, "redirect_to"
 	end
 	
-	def get_render_statement_array(ast=nil)
-		keyword = "render"
-		ast = @ast if ast == nil
-		res_arr = Array.new
-		ast_arr = Array.new
-		ast_arr.push ast
-		while ast_arr.length > 0
-			cur_ast = ast_arr.pop
-			if cur_ast.source.start_with? keyword
-				#if cur_ast.parent.source.start_with?"return" 
-       
-
-        if cur_ast.parent.type.to_s.eql?(["arg_paran"]) and cur_ast.parent.parent.type.to_s.eql?(["fcall", "return"])
-          res = cur_ast.parent.parent.source.to_s
-        elsif cur_ast.parent.type.to_s.eql?(["return", "fcall"])
-          res = cur_ast.parent.source.to_s
-				else 
-          res = cur_ast.source.to_s
-				end
-        if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
-          res = res[0..-2]
-        end
-        res_arr.push res
-			else
-				cur_ast.children.each do |child|
-					ast_arr.push child
-				end
-			end
-		end
-    puts "res_arr: #{get_controller_name}_#{get_function_name}"
-    puts res_arr 
-
-		return res_arr
-	end
 
 	def get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash)
 		res = ""
@@ -219,7 +185,7 @@ class Function_Class
 	def get_render_view_mapping(view_class_hash, controller_hash)
 		render_view_mapping = Hash.new
 
-		self.get_render_statement_array.each do |r|
+		get_render_statement_array.each do |r|
 			
 			view_name = get_view_name_from_render_statement(r)
 =begin
@@ -446,19 +412,19 @@ class View_Class
 		get_array_with_keyword @ast, "button_to"
 	end
 
-	def get_render_statement_array
-		res_arr = get_render_array @ast
-    
-    res_arr2 = []
-    res_arr.each do |res|
-      if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
-        res = res[0..-2]
-      end
-      res_arr2.push res
-    end
-
-    return res_arr2
-	end
+#	def get_render_statement_array
+#		res_arr = get_render_array @ast
+#    
+#    res_arr2 = []
+#    res_arr.each do |res|
+#      if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
+#        res = res[0..-2]
+#      end
+#      res_arr2.push res
+#    end
+#
+#    return res_arr2
+#	end
 
 	# This function is used to get all render statements recursively, so we can know what view files will be rendered by this controller action, further, we can get the information about what links exist in the corresponding view files
 	def get_render_statements_recursively(view_class_hash, dep)
@@ -511,7 +477,7 @@ class View_Class
 	def get_render_view_mapping(view_class_hash, dep)
 		render_view_mapping = Hash.new
 
-		self.get_render_statement_array.each do |r|
+		get_render_statement_array.each do |r|
 			view_name = get_view_name_from_render_statement(r)
 			
 			if view_name != "not_valid"
