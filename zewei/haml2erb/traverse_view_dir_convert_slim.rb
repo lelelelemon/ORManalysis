@@ -26,11 +26,12 @@ Dir.glob($view_path + "**/*") do |item|
 
 	file_name = get_file_name_from_path(item)
 
-	if not item.end_with?(".haml")
+	if not item.end_with?(".slim")
 		next
 	end
-
+	
   system("cp #{item} #{item}.bk")
-	system("ruby haml_preprocessing.rb #{item}.bk > #{item}")
+	file_name.gsub!(".slim", ".erb")
+  system("slimrb -e --rails #{item} > #{$view_path}#{nested_path}#{file_name}")
 
 end
