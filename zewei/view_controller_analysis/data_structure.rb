@@ -268,7 +268,7 @@ class Function_Class
 		need_default_render = false if temp[temp.length-2].include?"render" or temp[temp.length-2].include?"redirect_to"
 
 		render_view_mapping.each do |k, v|
-			content.gsub! k, "ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + v + "\nend\n"
+			content = content.gsub(k){"ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + v + "\nend\n"}
 		end
 
 		#we need to append the default view at the end of the function, this may be inaccuate because some views may already been rendered, we need to figure out a way to avoid duplicated rendering
@@ -503,7 +503,7 @@ class View_Class
 		puts "------------------------------current view file: " + self.to_s
 		render_view_mapping.each do |k, v|
 			puts k
-      rb_content.gsub! k, v
+      rb_content = rb_content.gsub(k){v}
 		end
 
 		return rb_content
