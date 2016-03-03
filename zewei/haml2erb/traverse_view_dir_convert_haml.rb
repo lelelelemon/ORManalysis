@@ -30,6 +30,8 @@ Dir.glob($view_path + "**/*") do |item|
 		next
 	end
 	
+  system("cp #{item} #{item}.bk")
+  system("ruby haml_preprocessing.rb #{item}.bk > #{item}")
 	file_name.gsub!(".haml", ".erb")
 	system("ruby haml2erb.rb " + item + " > " + $view_path + nested_path + file_name)
 

@@ -10,6 +10,9 @@ fi
 git_path=$1
 project_path=$2
 
+sudo gem install yard
+sudo gem install unicode
+
 cp $1/zewei/named_routes/* $2
 cp $1/zewei/extract_erb/* $2
 cp $1/zewei/haml2erb/* $2
