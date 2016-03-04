@@ -1,0 +1,777 @@
+SET IRMethod, name = index
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Forum) def_%v_3 
+		 7: %v_3->sorted def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->all def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: ATTRASSIGN %self->forums %v_5[2.8,] 
+		 10: 
+		 11: %self->ruby_code_from_view def_%v_6 %self[2.0,2.9,] 	 ARGS:
+		 12: %v_6->ruby_code_from_view def_%v_7 %v_6[2.11,] %self[2.0,2.9,2.11,] 	 ARGS:%v_6,
+CLOSURE BEGIN: %self[2.0,2.9,2.11,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: %self->h1 def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: %self->new_admin_forum_path def_%cl_1_6 %self[3.2,2.0,] 	 ARGS:
+		 6: %self->link_to def_%cl_1_7 %self[3.2,3.5,2.0,] %cl_1_5[3.4,] %cl_1_6[3.5,] 	 ARGS:%cl_1_5,%cl_1_6,
+		 7: 
+		 8: GETFIELD %self->forums def_%cl_1_8 %self[3.2,3.5,3.6,2.0,] 
+		 9: %cl_1_8->empty? def_%cl_1_9 %cl_1_8[3.8,] 	 ARGS:
+		 10: BRANCH %cl_1_9[3.9,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_10 
+		 1: RETURN %cl_1_10[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->forums def_%cl_1_11 %self[2.0,] 
+		 2: %cl_1_11->each def_%cl_1_12 %cl_1_11[5.1,] %self[2.0,] 	 ARGS:%cl_1_11,
+CLOSURE BEGIN: forum[] %self[2.0,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_forum 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: forum->title def_%cl_2_3 forum[2.2,] 	 ARGS:
+		 2: %self->link_to def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] forum[3.1,2.2,] 	 ARGS:%cl_2_3,forum,
+		 3: 
+		 4: COPY TYPE_StringLiteral def_%cl_2_5 
+		 5: %cl_2_5->html_safe def_%cl_2_6 %cl_2_5[3.4,] 	 ARGS:
+		 6: %self->higher_admin_forum_path def_%cl_2_7 %self[3.2,2.0,] forum[3.1,2.2,] 	 ARGS:forum,
+		 7: %self->button_to def_%cl_2_8 %self[3.2,3.6,2.0,] %cl_2_6[3.5,] %cl_2_7[3.6,] 	 ARGS:%cl_2_6,%cl_2_7,
+		 8: 
+		 9: COPY TYPE_StringLiteral def_%cl_2_9 
+		 10: %cl_2_9->html_safe def_%cl_2_10 %cl_2_9[3.9,] 	 ARGS:
+		 11: %self->lower_admin_forum_path def_%cl_2_11 %self[3.2,3.6,3.7,2.0,] forum[3.1,2.2,] 	 ARGS:forum,
+		 12: %self->button_to def_%cl_2_12 %self[3.2,3.6,3.7,3.11,2.0,] %cl_2_10[3.10,] %cl_2_11[3.11,] 	 ARGS:%cl_2_10,%cl_2_11,
+		 13: 
+		 14: COPY TYPE_StringLiteral def_%cl_2_13 
+		 15: %self->edit_admin_forum_path def_%cl_2_14 %self[3.2,3.6,3.7,3.11,3.12,2.0,] forum[3.1,2.2,] 	 ARGS:forum,
+		 16: %self->link_to def_%cl_2_15 %self[3.2,3.6,3.7,3.11,3.12,3.15,2.0,] %cl_2_13[3.14,] %cl_2_14[3.15,] 	 ARGS:%cl_2_13,%cl_2_14,
+		 17: 
+		 18: forum->active? def_%cl_2_16 forum[3.1,2.2,] 	 ARGS:
+		 19: BRANCH %cl_2_16[3.18,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_2_17 
+		 2: %self->archive_admin_forum_path def_%cl_2_18 %self[2.0,] forum[2.2,] 	 ARGS:forum,
+		 3: COPY TYPE_StringLiteral def_%cl_2_19 
+		 4: HASH-confirm- def_%cl_2_20 %cl_2_19[4.3,] 
+		 5: COPY TYPE_StringLiteral def_%cl_2_21 
+		 6: HASH-data-class- def_%cl_2_22 %cl_2_20[4.4,] %cl_2_21[4.5,] 
+		 7: %self->button_to def_%cl_2_23 %self[4.2,2.0,] %cl_2_17[4.1,] %cl_2_18[4.2,] %cl_2_22[4.6,] 	 ARGS:%cl_2_17,%cl_2_18,%cl_2_22,
+		 8: 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_2_24 
+		 2: %self->reopen_admin_forum_path def_%cl_2_25 %self[2.0,] forum[2.2,] 	 ARGS:forum,
+		 3: COPY TYPE_StringLiteral def_%cl_2_26 
+		 4: HASH-confirm- def_%cl_2_27 %cl_2_26[5.3,] 
+		 5: COPY TYPE_StringLiteral def_%cl_2_28 
+		 6: HASH-data-class- def_%cl_2_29 %cl_2_27[5.4,] %cl_2_28[5.5,] 
+		 7: %self->button_to def_%cl_2_30 %self[5.2,2.0,] %cl_2_24[5.1,] %cl_2_25[5.2,] %cl_2_29[5.6,] 	 ARGS:%cl_2_24,%cl_2_25,%cl_2_29,
+		 8: COPY TYPE_PASS def_%cl_2_23 %cl_2_30[5.7,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_2_31 
+		 2: COPY TYPE_Array def_%cl_2_32 forum[2.2,] 
+		 3: COPY TYPE_StringLiteral def_%cl_2_33 
+		 4: HASH-confirm- def_%cl_2_34 %cl_2_33[6.3,] 
+		 5: COPY TYPE_StringLiteral def_%cl_2_35 
+		 6: HASH-method-data-class- def_%cl_2_36 %cl_2_34[6.4,] %cl_2_35[6.5,] 
+		 7: %self->button_to def_%cl_2_37 %self[2.0,] %cl_2_31[6.1,] %cl_2_32[6.2,] %cl_2_36[6.6,] 	 ARGS:%cl_2_31,%cl_2_32,%cl_2_36,
+		 8: RETURN %cl_2_37[6.7,] %self[6.7,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_38 
+		 1: def_%cl_2_39 %cl_2_38[7.0,] 
+		 2: RETURN %cl_2_39[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %cl_1_12[5.2,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_13 
+		 1: def_%cl_1_14 %cl_1_13[7.0,] 
+		 2: RETURN %cl_1_14[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 13: RETURN %v_7[2.12,] %self[2.0,2.9,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Forum) def_%v_3 
+		 7: %v_3->new def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: ATTRASSIGN %self->forum %v_4[2.7,] 
+		 9: 
+		 10: %self->ruby_code_from_view def_%v_5 %self[2.0,2.8,] 	 ARGS:
+		 11: %v_5->ruby_code_from_view def_%v_6 %v_5[2.10,] %self[2.0,2.8,2.10,] 	 ARGS:%v_5,
+CLOSURE BEGIN: %self[2.0,2.8,2.10,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: %self->h1 def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
+		 3: 
+		 4: GETFIELD %self->forum def_%cl_1_5 %self[3.2,2.0,] 
+		 5: COPY TYPE_Array def_%cl_1_6 %cl_1_5[3.4,] 
+		 6: %self->form_for def_%cl_1_7 %self[3.2,2.0,] %cl_1_6[3.5,] %self[3.2,2.0,] 	 ARGS:%cl_1_6,%self,
+CLOSURE BEGIN: %self[3.2,2.0,] form[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_form 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->render def_%cl_2_3 %self[2.0,] form[2.2,] 	 ARGS:form,
+		 2: RETURN %cl_2_3[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_4 
+		 1: def_%cl_2_5 %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: RETURN %cl_1_7[3.6,] %self[3.2,3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 12: RETURN %v_6[2.11,] %self[2.0,2.8,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Forum) def_%v_3 
+		 7: %v_3->new def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: ATTRASSIGN %self->forum %v_4[2.7,] 
+		 9: 
+		 10: GETFIELD %self->forum def_%v_5 %self[2.0,2.8,] 
+		 11: %self->params def_%v_6 %self[2.0,2.8,] 	 ARGS:
+		 12: %v_6->[] def_%v_7 %v_6[2.11,] 	 ARGS:Symbol,
+		 13: ATTRASSIGN %v_5->attributes %v_7[2.12,] 
+		 14: 
+		 15: GETFIELD %self->forum def_%v_8 %self[2.0,2.8,2.11,] 
+		 16: %v_8->save def_%v_9 %v_8[2.15,] 	 ARGS:
+		 17: BRANCH %v_9[2.16,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->forum def_%v_10 %self[2.0,2.8,] 
+		 2: %v_10->move_to_bottom def_%v_11 %v_10[3.1,] 	 ARGS:
+		 3: 
+		 4: %self->admin_forums_url def_%v_12 %self[2.0,2.8,] 	 ARGS:
+		 5: COPY TYPE_StringLiteral def_%v_13 
+		 6: HASH-notice- def_%v_14 %v_13[3.5,] 
+		 7: %self->redirect_to def_%v_15 %self[3.4,2.0,2.8,] %v_12[3.4,] %v_14[3.6,] 	 ARGS:%v_12,%v_14,
+		 8: RETURN %v_15[3.7,] %self[3.4,3.7,2.0,2.8,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_16 %self[2.0,2.8,] 	 ARGS:
+		 2: %v_16->now def_%v_17 %v_16[4.1,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%v_18 
+		 4: ATTRASSIGN %v_17->[] %v_18[4.3,] 
+		 5: 
+		 6: %self->ruby_code_from_view def_%v_19 %self[4.1,2.0,2.8,] 	 ARGS:
+		 7: %v_19->ruby_code_from_view def_%v_20 %v_19[4.6,] %self[4.1,4.6,2.0,2.8,] 	 ARGS:%v_19,
+CLOSURE BEGIN: %self[4.1,4.6,2.0,2.8,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: %self->h1 def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
+		 3: 
+		 4: GETFIELD %self->forum def_%cl_1_5 %self[3.2,2.0,] 
+		 5: COPY TYPE_Array def_%cl_1_6 %cl_1_5[3.4,] 
+		 6: %self->form_for def_%cl_1_7 %self[3.2,2.0,] %cl_1_6[3.5,] %self[3.2,2.0,] 	 ARGS:%cl_1_6,%self,
+CLOSURE BEGIN: %self[3.2,2.0,] form[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_form 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->render def_%cl_2_3 %self[2.0,] form[2.2,] 	 ARGS:form,
+		 2: RETURN %cl_2_3[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_4 
+		 1: def_%cl_2_5 %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: RETURN %cl_1_7[3.6,] %self[3.2,3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_20[4.7,] %self[4.1,4.6,2.0,2.8,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = edit
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->ruby_code_from_view def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->ruby_code_from_view def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
+CLOSURE BEGIN: %self[2.0,2.6,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: %self->h1 def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
+		 3: 
+		 4: GETFIELD %self->forum def_%cl_1_5 %self[3.2,2.0,] 
+		 5: COPY TYPE_Array def_%cl_1_6 %cl_1_5[3.4,] 
+		 6: %self->form_for def_%cl_1_7 %self[3.2,2.0,] %cl_1_6[3.5,] %self[3.2,2.0,] 	 ARGS:%cl_1_6,%self,
+CLOSURE BEGIN: %self[3.2,2.0,] form[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_form 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->render def_%cl_2_3 %self[2.0,] form[2.2,] 	 ARGS:form,
+		 2: RETURN %cl_2_3[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_4 
+		 1: def_%cl_2_5 %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: RETURN %cl_1_7[3.6,] %self[3.2,3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->forum def_%v_3 %self[2.0,] 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: ATTRASSIGN %v_3->attributes %v_5[2.8,] 
+		 10: 
+		 11: GETFIELD %self->forum def_%v_6 %self[2.0,2.7,] 
+		 12: %v_6->save def_%v_7 %v_6[2.11,] 	 ARGS:
+		 13: BRANCH %v_7[2.12,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->admin_forums_url def_%v_8 %self[2.0,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%v_9 
+		 3: HASH-notice- def_%v_10 %v_9[3.2,] 
+		 4: %self->redirect_to def_%v_11 %self[3.1,2.0,] %v_8[3.1,] %v_10[3.3,] 	 ARGS:%v_8,%v_10,
+		 5: RETURN %v_11[3.4,] %self[3.1,3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_12 %self[2.0,] 	 ARGS:
+		 2: %v_12->now def_%v_13 %v_12[4.1,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%v_14 
+		 4: ATTRASSIGN %v_13->[] %v_14[4.3,] 
+		 5: 
+		 6: %self->ruby_code_from_view def_%v_15 %self[4.1,2.0,] 	 ARGS:
+		 7: %v_15->ruby_code_from_view def_%v_16 %v_15[4.6,] %self[4.1,4.6,2.0,] 	 ARGS:%v_15,
+CLOSURE BEGIN: %self[4.1,4.6,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: %self->h1 def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
+		 3: 
+		 4: GETFIELD %self->forum def_%cl_1_5 %self[3.2,2.0,] 
+		 5: COPY TYPE_Array def_%cl_1_6 %cl_1_5[3.4,] 
+		 6: %self->form_for def_%cl_1_7 %self[3.2,2.0,] %cl_1_6[3.5,] %self[3.2,2.0,] 	 ARGS:%cl_1_6,%self,
+CLOSURE BEGIN: %self[3.2,2.0,] form[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_form 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->render def_%cl_2_3 %self[2.0,] form[2.2,] 	 ARGS:form,
+		 2: RETURN %cl_2_3[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_4 
+		 1: def_%cl_2_5 %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 7: RETURN %cl_1_7[3.6,] %self[3.2,3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_16[4.7,] %self[4.1,4.6,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = archive
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->forum def_%v_3 %self[2.0,] 
+		 7: %v_3->archive def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: 
+		 9: %self->admin_forums_url def_%v_5 %self[2.0,] 	 ARGS:
+		 10: COPY TYPE_StringLiteral def_%v_6 
+		 11: HASH-notice- def_%v_7 %v_6[2.10,] 
+		 12: %self->redirect_to def_%v_8 %self[2.0,2.9,] %v_5[2.9,] %v_7[2.11,] 	 ARGS:%v_5,%v_7,
+		 13: RETURN %v_8[2.12,] %self[2.0,2.9,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = reopen
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->forum def_%v_3 %self[2.0,] 
+		 7: %v_3->reopen def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: 
+		 9: %self->admin_forums_url def_%v_5 %self[2.0,] 	 ARGS:
+		 10: COPY TYPE_StringLiteral def_%v_6 
+		 11: HASH-notice- def_%v_7 %v_6[2.10,] 
+		 12: %self->redirect_to def_%v_8 %self[2.0,2.9,] %v_5[2.9,] %v_7[2.11,] 	 ARGS:%v_5,%v_7,
+		 13: RETURN %v_8[2.12,] %self[2.0,2.9,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->forum def_%v_3 %self[2.0,] 
+		 7: %v_3->destroy def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: 
+		 9: %self->admin_forums_url def_%v_5 %self[2.0,] 	 ARGS:
+		 10: COPY TYPE_StringLiteral def_%v_6 
+		 11: HASH-notice- def_%v_7 %v_6[2.10,] 
+		 12: %self->redirect_to def_%v_8 %self[2.0,2.9,] %v_5[2.9,] %v_7[2.11,] 	 ARGS:%v_5,%v_7,
+		 13: RETURN %v_8[2.12,] %self[2.0,2.9,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = lower
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->forum def_%v_3 %self[2.0,] 
+		 7: %v_3->move_lower def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: 
+		 9: %self->admin_forums_url def_%v_5 %self[2.0,] 	 ARGS:
+		 10: %self->redirect_to def_%v_6 %self[2.0,2.9,] %v_5[2.9,] 	 ARGS:%v_5,
+		 11: RETURN %v_6[2.10,] %self[2.0,2.9,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = higher
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->forum def_%v_3 %self[2.0,] 
+		 7: %v_3->move_higher def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: 
+		 9: %self->admin_forums_url def_%v_5 %self[2.0,] 	 ARGS:
+		 10: %self->redirect_to def_%v_6 %self[2.0,2.9,] %v_5[2.9,] 	 ARGS:%v_5,
+		 11: RETURN %v_6[2.10,] %self[2.0,2.9,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_forum
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Forum) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->forum %v_6[2.9,] 
+		 11: RETURN %v_6[2.9,] %self[2.0,2.7,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

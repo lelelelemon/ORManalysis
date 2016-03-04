@@ -1,0 +1,498 @@
+SET IRMethod, name = show
+BB 1
+	outgoing: 20 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
+		 8: COPY TYPE_PASS def_conversation_id %v_4[2.7,] 
+		 9: 
+		 10: (MarketplaceService) def_%v_5 
+		 11: (inherit Conversation) def_%v_6 %v_5[2.10,] 
+		 12: %v_6[2.11,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[2.10,] 	 ARGS:Symbol,
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: (inherit Query) def_%v_7 %v_6[3.0,2.11,] 
+		 1: %v_7[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %v_6->const_missing def_%v_7 %v_6[3.0,2.11,] 	 ARGS:Symbol,
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->current_user def_%v_8 %self[2.0,] 
+		 1: %v_8->id def_%v_9 %v_8[6.0,] 	 ARGS:
+		 2: GETFIELD %self->current_community def_%v_10 %self[2.0,] 
+		 3: %v_10->id def_%v_11 %v_10[6.2,] 	 ARGS:
+		 4: %v_7->conversation_for_person def_%v_12 %v_7[5.0,4.0,] conversation_id[2.8,] %v_9[6.1,] %v_11[6.3,] 	 ARGS:conversation_id,%v_9,%v_11,
+		 5: COPY TYPE_PASS def_conversation %v_12[6.4,] 
+		 6: 
+		 7: %v_12->blank? def_%v_13 %v_12[6.4,] 	 ARGS:
+		 8: BRANCH %v_13[6.7,] 
+BB 7
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_14 %self[2.0,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%v_15 
+		 3: %self->t def_%v_16 %self[7.1,2.0,] %v_15[7.2,] 	 ARGS:%v_15,
+		 4: ATTRASSIGN %v_14->[] %v_16[7.3,] 
+		 5: 
+		 6: %self->root def_%v_17 %self[7.1,7.3,2.0,] 	 ARGS:
+		 7: %self->redirect_to def_%v_18 %self[7.1,7.3,7.6,2.0,] %v_17[7.6,] 	 ARGS:%v_17,
+		 8: RETURN %v_18[7.7,] %self[7.1,7.3,7.6,7.7,2.0,] 
+BB 8
+	outgoing: 10 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_19 
+		 1: 
+		 2: (Transaction) def_%v_20 
+		 3: conversation->[] def_%v_21 conversation[6.5,] 	 ARGS:Symbol,
+		 4: %v_20->find_by_conversation_id def_%v_22 %v_20[8.2,] %v_21[8.3,] 	 ARGS:%v_21,
+		 5: COPY TYPE_PASS def_transaction %v_22[8.4,] 
+		 6: 
+		 7: %v_22->present? def_%v_23 %v_22[8.4,] 	 ARGS:
+		 8: BRANCH %v_23[8.7,] 
+BB 10
+	outgoing: 11 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->current_user def_%v_24 %self[2.0,] 
+		 2: transaction->id def_%v_25 transaction[8.5,] 	 ARGS:
+		 3: HASH-id- def_%v_26 %v_25[10.2,] 
+		 4: %self->person_transaction_url def_%v_27 %self[2.0,] %v_24[10.1,] %v_26[10.3,] 	 ARGS:%v_24,%v_26,
+		 5: %self->redirect_to def_%v_28 %self[10.4,2.0,] %v_27[10.4,] 	 ARGS:%v_27,
+		 6: BRANCH %v_28[10.5,] 
+BB 11
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_28 
+BB 15
+	outgoing: 16 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (MessageForm) def_%v_29 
+		 2: GETFIELD %self->current_user def_%v_30 %self[2.0,] 
+		 3: %v_30->id def_%v_31 %v_30[15.2,] 	 ARGS:
+		 4: HASH-sender_id-conversation_id- def_%v_32 %v_31[15.3,] conversation_id[2.8,] 
+		 5: %v_29->new def_%v_33 %v_29[15.1,] %v_32[15.4,] 	 ARGS:%v_32,
+		 6: COPY TYPE_PASS def_message_form %v_33[15.5,] 
+		 7: 
+		 8: conversation->[] def_%v_34 conversation[6.5,] 	 ARGS:Symbol,
+		 9: %self->person_entity_with_url def_%v_35 %self[2.0,] %v_34[15.8,] 	 ARGS:%v_34,
+		 10: ATTRASSIGN conversation->[] %v_35[15.9,] 
+		 11: 
+		 12: (TransactionViewUtils) def_%v_36 
+		 13: conversation->[] def_%v_37 conversation[15.8,15.10,6.5,] 	 ARGS:Symbol,
+		 14: GETFIELD %self->current_community def_%v_38 %self[15.9,2.0,] 
+		 15: %v_38->name_display_type def_%v_39 %v_38[15.14,] 	 ARGS:
+		 16: %v_36->conversation_messages def_%v_40 %v_36[15.12,] %v_37[15.13,] %v_39[15.15,] 	 ARGS:%v_37,%v_39,
+		 17: COPY TYPE_PASS def_messages %v_40[15.16,] 
+		 18: 
+		 19: (MarketplaceService) def_%v_41 
+		 20: (inherit Conversation) def_%v_42 %v_41[15.19,] 
+		 21: %v_42[15.20,] 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: %v_41->const_missing def_%v_42 %v_41[15.19,] 	 ARGS:Symbol,
+BB 17
+	outgoing: 18 19 
+	datadep: 
+	instructions:
+		 0: (inherit Command) def_%v_43 %v_42[16.0,15.20,] 
+		 1: %v_43[17.0,] 
+BB 18
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: %v_42->const_missing def_%v_43 %v_42[16.0,15.20,] 	 ARGS:Symbol,
+BB 19
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: conversation->[] def_%v_44 conversation[15.10,6.5,] 	 ARGS:Symbol,
+		 1: GETFIELD %self->current_user def_%v_45 %self[2.0,] 
+		 2: %v_45->id def_%v_46 %v_45[19.1,] 	 ARGS:
+		 3: %v_43->mark_as_read def_%v_47 %v_43[18.0,17.0,] %v_44[19.0,] %v_46[19.2,] 	 ARGS:%v_44,%v_46,
+		 4: 
+		 5: messages->reverse def_%v_48 messages[15.17,] 	 ARGS:
+		 6: GETFIELD %self->current_user def_%v_49 %self[2.0,] 
+		 7: conversation->[] def_%v_50 conversation[19.0,15.10,6.5,] 	 ARGS:Symbol,
+		 8: HASH-message_id- def_%v_51 %v_50[19.7,] 
+		 9: %self->person_message_messages_path def_%v_52 %self[2.0,] %v_49[19.6,] %v_51[19.8,] 	 ARGS:%v_49,%v_51,
+		 10: HASH-messages-conversation_data-message_form-message_form_action- def_%v_53 %v_48[19.5,] conversation[19.0,19.7,15.10,6.5,] message_form[15.6,] %v_52[19.9,] 
+		 11: HASH-locals- def_%v_54 %v_53[19.10,] 
+		 12: %self->render def_%v_55 %self[19.9,2.0,] %v_54[19.11,] 	 ARGS:%v_54,
+		 13: 
+		 14: %self->ruby_code_from_view def_%v_56 %self[19.9,19.12,2.0,] 	 ARGS:
+		 15: %v_56->ruby_code_from_view def_%v_57 %v_56[19.14,] %self[19.9,19.12,19.14,2.0,] 	 ARGS:%v_56,
+CLOSURE BEGIN: %self[19.9,19.12,19.14,2.0,] message_form[15.6,] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->content_for def_%cl_1_3 %self[2.0,] %self[2.0,] 	 ARGS:Symbol,%self,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->current_user def_%cl_2_3 %self[2.0,] 
+		 2: %self->person_inbox_path def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
+		 3: %self->link_to def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] %self[3.2,2.0,] 	 ARGS:%cl_2_4,%self,
+CLOSURE BEGIN: %self[3.2,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 2: %self->t def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 ARGS:%cl_3_3,
+		 3: RETURN %cl_3_4[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_5 
+		 1: def_%cl_3_6 %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 4: 
+		 5: COPY TYPE_StringLiteral def_%cl_2_6 
+		 6: %self->other_party def_%cl_2_7 %self[3.2,3.3,2.0,] 	 ARGS:
+		 7: %cl_2_7->[] def_%cl_2_8 %cl_2_7[3.6,] 	 ARGS:Symbol,
+		 8: %self->other_party def_%cl_2_9 %self[3.2,3.3,3.6,2.0,] 	 ARGS:
+		 9: %cl_2_9->[] def_%cl_2_10 %cl_2_9[3.8,] 	 ARGS:Symbol,
+		 10: %self->other_party def_%cl_2_11 %self[3.2,3.3,3.6,3.8,2.0,] 	 ARGS:
+		 11: %cl_2_11->[] def_%cl_2_12 %cl_2_11[3.10,] 	 ARGS:Symbol,
+		 12: %self->link_to_unless def_%cl_2_13 %self[3.2,3.3,3.6,3.8,3.10,2.0,] %cl_2_8[3.7,] %cl_2_10[3.9,] %cl_2_12[3.11,] 	 ARGS:%cl_2_8,%cl_2_10,%cl_2_12,
+		 13: HASH-person- def_%cl_2_14 %cl_2_13[3.12,] 
+		 14: %self->t def_%cl_2_15 %self[3.2,3.3,3.6,3.8,3.10,3.12,2.0,] %cl_2_6[3.5,] %cl_2_14[3.13,] 	 ARGS:%cl_2_6,%cl_2_14,
+		 15: %cl_2_15->html_safe def_%cl_2_16 %cl_2_15[3.14,] 	 ARGS:
+		 16: RETURN %cl_2_16[3.15,] %self[3.2,3.3,3.6,3.8,3.10,3.12,3.14,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_17 
+		 1: def_%cl_2_18 %cl_2_17[4.0,] 
+		 2: RETURN %cl_2_18[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: 
+		 3: %self->role def_%cl_1_4 %self[3.1,2.0,] 	 ARGS:
+		 4: %cl_1_4->== def_%cl_1_5 %cl_1_4[3.3,] 	 ARGS:Symbol,
+		 5: BRANCH %cl_1_5[3.4,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->content_for def_%cl_1_6 %self[2.0,] %self[2.0,] 	 ARGS:Symbol,%self,
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 2: 
+		 3: %self->message_form_action def_%cl_1_7 %self[4.1,2.0,] 	 ARGS:
+		 4: HASH-url- def_%cl_1_8 %cl_1_7[4.3,] 
+		 5: %self->form_for def_%cl_1_9 %self[4.1,4.3,2.0,] message_form[] %cl_1_8[4.4,] %self[4.1,4.3,2.0,] 	 ARGS:message_form,%cl_1_8,%self,
+CLOSURE BEGIN: %self[4.1,4.3,2.0,] f[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: RECEIVEARG def_f 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 2: %self->t def_%cl_5_4 %self[2.0,] %cl_5_3[3.1,] 	 ARGS:%cl_5_3,
+		 3: f->label def_%cl_5_5 f[2.2,] %cl_5_4[3.2,] 	 ARGS:Symbol,%cl_5_4,
+		 4: 
+		 5: COPY TYPE_StringLiteral def_%cl_5_6 
+		 6: HASH-class- def_%cl_5_7 %cl_5_6[3.5,] 
+		 7: f->text_area def_%cl_5_8 f[3.3,2.2,] %cl_5_7[3.6,] 	 ARGS:Symbol,%cl_5_7,
+		 8: 
+		 9: f->hidden_field def_%cl_5_9 f[3.3,3.7,2.2,] 	 ARGS:Symbol,
+		 10: 
+		 11: f->hidden_field def_%cl_5_10 f[3.3,3.7,3.9,2.2,] 	 ARGS:Symbol,
+		 12: 
+		 13: COPY TYPE_StringLiteral def_%cl_5_11 
+		 14: %self->t def_%cl_5_12 %self[3.2,2.0,] %cl_5_11[3.13,] 	 ARGS:%cl_5_11,
+		 15: f->button def_%cl_5_13 f[3.3,3.7,3.9,3.11,2.2,] %cl_5_12[3.14,] 	 ARGS:%cl_5_12,
+		 16: RETURN %cl_5_13[3.15,] %self[3.2,3.14,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_14 
+		 1: def_%cl_5_15 %cl_5_14[4.0,] 
+		 2: RETURN %cl_5_15[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 6: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_9 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->message_or_action def_%cl_1_10 %self[2.0,] 	 ARGS:
+		 2: %cl_1_10->[] def_%cl_1_11 %cl_1_10[6.1,] 	 ARGS:Symbol,
+		 3: %cl_1_11->[] def_%cl_1_12 %cl_1_11[6.2,] 	 ARGS:Symbol,
+		 4: GETFIELD %self->current_user def_%cl_1_13 %self[6.1,2.0,] 
+		 5: %cl_1_13->id def_%cl_1_14 %cl_1_13[6.4,] 	 ARGS:
+		 6: %cl_1_12->== def_%cl_1_15 %cl_1_12[6.3,] %cl_1_14[6.5,] 	 ARGS:%cl_1_14,
+		 7: BRANCH %cl_1_15[6.6,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%cl_1_16 
+		 1: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%cl_1_17 
+		 1: COPY TYPE_PASS def_%cl_1_16 %cl_1_17[8.0,] 
+BB 9
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_avatar_side %cl_1_16[8.1,7.0,] 
+		 1: 
+		 2: 
+		 3: %self->message_or_action def_%cl_1_18 %self[2.0,] 	 ARGS:
+		 4: %cl_1_18->[] def_%cl_1_19 %cl_1_18[9.3,] 	 ARGS:Symbol,
+		 5: %cl_1_19->[] def_%cl_1_20 %cl_1_19[9.4,] 	 ARGS:Symbol,
+		 6: COPY TYPE_StringLiteral def_%cl_1_21 
+		 7: HASH-class- def_%cl_1_22 %cl_1_21[9.6,] 
+		 8: %self->image_tag def_%cl_1_23 %self[9.3,2.0,] %cl_1_20[9.5,] %cl_1_22[9.7,] 	 ARGS:%cl_1_20,%cl_1_22,
+		 9: 
+		 10: 
+		 11: 
+		 12: %self->message_or_action def_%cl_1_24 %self[9.3,9.8,2.0,] 	 ARGS:
+		 13: %cl_1_24->[] def_%cl_1_25 %cl_1_24[9.12,] 	 ARGS:Symbol,
+		 14: %cl_1_25->[] def_%cl_1_26 %cl_1_25[9.13,] 	 ARGS:Symbol,
+		 15: %self->message_or_action def_%cl_1_27 %self[9.3,9.8,9.12,2.0,] 	 ARGS:
+		 16: %cl_1_27->[] def_%cl_1_28 %cl_1_27[9.15,] 	 ARGS:Symbol,
+		 17: %cl_1_28->[] def_%cl_1_29 %cl_1_28[9.16,] 	 ARGS:Symbol,
+		 18: %self->message_or_action def_%cl_1_30 %self[9.3,9.8,9.12,9.15,2.0,] 	 ARGS:
+		 19: %cl_1_30->[] def_%cl_1_31 %cl_1_30[9.18,] 	 ARGS:Symbol,
+		 20: %cl_1_31->[] def_%cl_1_32 %cl_1_31[9.19,] 	 ARGS:Symbol,
+		 21: HASH-id- def_%cl_1_33 %cl_1_32[9.20,] 
+		 22: %self->person_path def_%cl_1_34 %self[9.3,9.8,9.12,9.15,9.18,2.0,] %cl_1_33[9.21,] 	 ARGS:%cl_1_33,
+		 23: %self->link_to_unless def_%cl_1_35 %self[9.3,9.8,9.12,9.15,9.18,9.22,2.0,] %cl_1_26[9.14,] %cl_1_29[9.17,] %cl_1_34[9.22,] 	 ARGS:%cl_1_26,%cl_1_29,%cl_1_34,
+		 24: 
+		 25: %self->message_or_action def_%cl_1_36 %self[9.3,9.8,9.12,9.15,9.18,9.22,9.23,2.0,] 	 ARGS:
+		 26: %cl_1_36->[] def_%cl_1_37 %cl_1_36[9.25,] 	 ARGS:Symbol,
+		 27: %self->time_ago def_%cl_1_38 %self[9.3,9.8,9.12,9.15,9.18,9.22,9.23,9.25,2.0,] %cl_1_37[9.26,] 	 ARGS:%cl_1_37,
+		 28: 
+		 29: 
+		 30: %self->message_or_action def_%cl_1_39 %self[9.3,9.8,9.12,9.15,9.18,9.22,9.23,9.25,9.27,2.0,] 	 ARGS:
+		 31: %cl_1_39->[] def_%cl_1_40 %cl_1_39[9.30,] 	 ARGS:Symbol,
+		 32: 
+		 33: %self->message_or_action def_%cl_1_41 %self[9.3,9.8,9.12,9.15,9.18,9.22,9.23,9.25,9.27,9.30,2.0,] 	 ARGS:
+		 34: %cl_1_41->[] def_%cl_1_42 %cl_1_41[9.33,] 	 ARGS:Symbol,
+		 35: 
+		 36: %self->text_with_line_breaks def_%cl_1_43 %self[9.3,9.8,9.12,9.15,9.18,9.22,9.23,9.25,9.27,9.30,9.33,2.0,] %self[9.3,9.8,9.12,9.15,9.18,9.22,9.23,9.25,9.27,9.30,9.33,2.0,] 	 ARGS:%self,
+CLOSURE BEGIN: %self[9.3,9.8,9.12,9.15,9.18,9.22,9.23,9.25,9.27,9.30,9.33,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_6_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->message_or_action def_%cl_6_3 %self[2.0,] 	 ARGS:
+		 2: %cl_6_3->[] def_%cl_6_4 %cl_6_3[3.1,] 	 ARGS:Symbol,
+		 3: RETURN %cl_6_4[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_6_5 
+		 1: def_%cl_6_6 %cl_6_5[4.0,] 
+		 2: RETURN %cl_6_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 37: RETURN %cl_1_43[9.36,] %self[9.3,9.8,9.12,9.15,9.18,9.22,9.23,9.25,9.27,9.30,9.33,9.36,2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_44 
+		 1: def_%cl_1_45 %cl_1_44[10.0,] 
+		 2: RETURN %cl_1_45[10.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 16: RETURN %v_57[19.15,] %self[19.9,19.12,19.14,2.0,] 
+BB 20
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = person_entity_with_url
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_person_entity 
+		 6: 
+		 7: person_entity->[] def_%v_3 person_entity[2.5,] 	 ARGS:Symbol,
+		 8: HASH-id- def_%v_4 %v_3[2.7,] 
+		 9: %self->person_path def_%v_5 %self[2.0,] %v_4[2.8,] 	 ARGS:%v_4,
+		 10: (PersonViewUtils) def_%v_6 
+		 11: GETFIELD %self->current_community def_%v_7 %self[2.0,2.9,] 
+		 12: %v_7->name_display_type def_%v_8 %v_7[2.11,] 	 ARGS:
+		 13: %v_6->person_entity_display_name def_%v_9 %v_6[2.10,] person_entity[2.5,2.7,] %v_8[2.12,] 	 ARGS:person_entity,%v_8,
+		 14: HASH-url-display_name- def_%v_10 %v_5[2.9,] %v_9[2.13,] 
+		 15: person_entity->merge def_%v_11 person_entity[2.5,2.7,] %v_10[2.14,] 	 ARGS:%v_10,
+		 16: RETURN %v_11[2.15,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

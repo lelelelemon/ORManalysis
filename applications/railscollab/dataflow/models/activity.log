@@ -1,0 +1,527 @@
+SET IRMethod, name = process_params
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = friendly_action
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (I18n) def_%v_3 
+		 7: COPY TYPE_StringLiteral def_%v_4 
+		 8: %self->action def_%v_5 %self[2.0,] 	 ARGS:
+		 9: BUILDSTRING def_%v_6 %v_4[2.7,] %v_5[2.8,] 
+		 10: %v_3->t def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
+		 11: RETURN %v_7[2.10,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = action
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_3 
+		 7: %self->action_id def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_3->[] def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = action=
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_val 
+		 6: 
+		 7: def_%v_3 
+		 8: val->to_sym def_%v_4 val[2.5,] 	 ARGS:
+		 9: %v_3->[] def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
+		 10: ATTRASSIGN %self->action_id %v_5[2.9,] 
+		 11: RETURN %v_5[2.9,] %self[2.0,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = is_today?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->created_on def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->to_date def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: (Date) def_%v_5 
+		 9: %v_5->today def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %v_4->>= def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 ARGS:%v_6,
+		 11: BRANCH %v_7[2.10,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->created_on def_%v_8 %self[2.0,] 	 ARGS:
+		 1: %v_8->to_date def_%v_9 %v_8[3.0,] 	 ARGS:
+		 2: (Date) def_%v_10 
+		 3: %v_10->tomorrow def_%v_11 %v_10[3.2,] 	 ARGS:
+		 4: %v_9->< def_%v_12 %v_9[3.1,] %v_11[3.3,] 	 ARGS:%v_11,
+		 5: RETURN %v_12[3.4,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_7[2.10,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = is_yesterday?
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->created_on def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->to_date def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: (Date) def_%v_5 
+		 9: %v_5->yesterday def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %v_4->>= def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 ARGS:%v_6,
+		 11: BRANCH %v_7[2.10,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->created_on def_%v_8 %self[2.0,] 	 ARGS:
+		 1: %v_8->to_date def_%v_9 %v_8[3.0,] 	 ARGS:
+		 2: (Date) def_%v_10 
+		 3: %v_10->today def_%v_11 %v_10[3.2,] 	 ARGS:
+		 4: %v_9->< def_%v_12 %v_9[3.1,] %v_11[3.3,] 	 ARGS:%v_11,
+		 5: RETURN %v_12[3.4,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_7[2.10,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new_log
+BB 1
+	outgoing: 30 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_obj 
+		 6: RECEIVEARG def_user 
+		 7: RECEIVEARG def_action 
+		 8: def_private 
+		 9: private[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_private 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: def_real_project 
+		 1: real_project[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_real_project 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Rails) def_%v_3 
+		 2: %v_3->configuration def_%v_4 %v_3[6.1,] 	 ARGS:
+		 3: %v_4->log_really_silent def_%v_5 %v_4[6.2,] 	 ARGS:
+		 4: BRANCH %v_5[6.3,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: action->== def_%v_6 action[2.7,] 	 ARGS:Symbol,
+		 1: COPY TYPE_PASS def_%v_5 %v_6[7.0,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_really_silent %v_5[7.1,6.3,] 
+		 1: 
+		 2: BRANCH %v_5[7.1,6.3,] 
+BB 9
+	outgoing: 30 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Activity) def_%v_7 
+		 2: COPY TYPE_StringLiteral def_%v_8 
+		 3: obj->class def_%v_9 obj[2.5,] 	 ARGS:
+		 4: %v_9->to_s def_%v_10 %v_9[9.3,] 	 ARGS:
+		 5: COPY TYPE_StringLiteral def_%v_11 
+		 6: obj->id def_%v_12 obj[9.3,2.5,] 	 ARGS:
+		 7: HASH- def_%v_13 %v_8[9.2,] %v_10[9.4,] %v_11[9.5,] %v_12[9.6,] 
+		 8: %v_7->destroy_all def_%v_14 %v_7[9.1,] %v_13[9.7,] 	 ARGS:%v_13,
+		 9: RETURN %v_14[9.8,] %self[2.0,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Activity) def_%v_15 
+		 2: %v_15->new def_%v_16 %v_15[10.1,] 	 ARGS:
+		 3: ATTRASSIGN %self->log %v_16[10.2,] 
+		 4: 
+		 5: GETFIELD %self->log def_%v_17 %self[10.3,2.0,] 
+		 6: ATTRASSIGN %v_17->action action[2.7,] 
+		 7: 
+		 8: action->== def_%v_18 action[2.7,] 	 ARGS:Symbol,
+		 9: BRANCH %v_18[10.8,] 
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_19 %self[10.3,2.0,] 
+		 2: ATTRASSIGN %v_19->rel_object_id 
+		 3: 
+		 4: GETFIELD %self->log def_%v_20 %self[10.3,2.0,] 
+		 5: obj->class def_%v_21 obj[2.5,] 	 ARGS:
+		 6: %v_21->to_s def_%v_22 %v_21[11.5,] 	 ARGS:
+		 7: ATTRASSIGN %v_20->rel_object_type %v_22[11.6,] 
+		 8: 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_23 %self[10.3,2.0,] 
+		 2: ATTRASSIGN %v_23->rel_object obj[2.5,] 
+		 3: COPY TYPE_PASS def_%v_22 obj[2.5,] 
+BB 13
+	outgoing: 14 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_24 %self[10.3,2.0,] 
+		 2: obj->object_name def_%v_25 obj[2.5,] 	 ARGS:
+		 3: ATTRASSIGN %v_24->object_name %v_25[13.2,] 
+		 4: 
+		 5: GETFIELD %self->log def_%v_26 %self[10.3,2.0,] 
+		 6: ATTRASSIGN %v_26->project 
+		 7: 
+		 8: real_project->nil? def_%v_27 real_project[5.0,4.0,] 	 ARGS:
+		 9: BRANCH %v_27[13.8,] 
+BB 14
+	outgoing: 15 19 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Project) def_%v_28 
+		 2: obj->is_a? def_%v_29 obj[2.5,] %v_28[14.1,] 	 ARGS:%v_28,
+		 3: BRANCH %v_29[14.2,] 
+BB 15
+	outgoing: 16 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: action->== def_%v_30 action[2.7,] 	 ARGS:Symbol,
+		 2: BRANCH %v_30[15.1,] 
+BB 16
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_31 %self[10.3,2.0,] 
+		 2: ATTRASSIGN %v_31->project_id 
+		 3: COPY TYPE_Fixnum def_%v_32 
+		 4: 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_33 %self[10.3,2.0,] 
+		 2: ATTRASSIGN %v_33->project obj[2.5,] 
+		 3: COPY TYPE_PASS def_%v_32 obj[2.5,] 
+BB 18
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: 
+BB 19
+	outgoing: 20 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: obj->respond_to? def_%v_34 obj[2.5,] 	 ARGS:Symbol,
+		 2: BRANCH %v_34[19.1,] 
+BB 20
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_35 %self[10.3,2.0,] 
+		 2: obj->project def_%v_36 obj[2.5,] 	 ARGS:
+		 3: ATTRASSIGN %v_35->project %v_36[20.2,] 
+		 4: 
+BB 21
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_36 
+BB 22
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_32 %v_36[21.0,20.2,] 
+BB 23
+	outgoing: 25 
+	datadep: 
+	instructions:
+		 0: 
+BB 24
+	outgoing: 25 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_37 %self[10.3,2.0,] 
+		 2: ATTRASSIGN %v_37->project real_project[5.0,4.0,] 
+		 3: COPY TYPE_PASS def_%v_32 real_project[5.0,4.0,] 
+BB 25
+	outgoing: 26 27 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_38 %self[10.3,2.0,] 
+		 2: ATTRASSIGN %v_38->created_by user[2.6,] 
+		 3: 
+		 4: user->nil? def_%v_39 user[2.6,] 	 ARGS:
+		 5: BRANCH %v_39[25.4,] 
+BB 26
+	outgoing: 28 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_40 
+		 1: 
+BB 27
+	outgoing: 28 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Time) def_%v_41 
+		 2: %v_41->now def_%v_42 %v_41[27.1,] 	 ARGS:
+		 3: %v_42->utc def_%v_43 %v_42[27.2,] 	 ARGS:
+		 4: ATTRASSIGN user->last_activity %v_43[27.3,] 
+		 5: 
+		 6: user->save def_%v_44 user[27.4,2.6,] 	 ARGS:
+		 7: COPY TYPE_PASS def_%v_40 %v_44[27.6,] 
+BB 28
+	outgoing: 30 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->log def_%v_45 %self[10.3,2.0,] 
+		 2: ATTRASSIGN %v_45->is_private private[3.0,2.8,] 
+		 3: 
+		 4: GETFIELD %self->log def_%v_46 %self[10.3,2.0,] 
+		 5: %v_46->save def_%v_47 %v_46[28.4,] 	 ARGS:
+		 6: RETURN %v_47[28.5,] %self[10.3,2.0,] 
+BB 30
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = logs_for
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_project 
+		 6: RECEIVEARG def_include_private 
+		 7: RECEIVEARG def_include_silent 
+		 8: def_limit 
+		 9: limit[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_limit 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: project->class def_%v_3 project[2.5,] 	 ARGS:
+		 2: (Array) def_%v_4 
+		 3: %v_3->== def_%v_5 %v_3[4.1,] %v_4[4.2,] 	 ARGS:%v_4,
+		 4: BRANCH %v_5[4.3,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH-project_id- def_%v_6 project[2.5,] 
+		 2: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: project->id def_%v_7 project[2.5,] 	 ARGS:
+		 2: HASH-project_id- def_%v_8 %v_7[6.1,] 
+		 3: COPY TYPE_PASS def_%v_6 %v_8[6.2,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_conditions %v_6[6.3,5.1,] 
+		 1: 
+		 2: COPY TYPE_StringLiteral def_%v_9 
+		 3: COPY TYPE_PASS def_private_conditions %v_9[7.2,] 
+		 4: 
+		 5: BRANCH include_private[2.6,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_10 
+		 1: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_11 
+		 1: private_conditions->+ def_%v_12 private_conditions[7.3,] %v_11[9.0,] 	 ARGS:%v_11,
+		 2: COPY TYPE_PASS def_private_conditions %v_12[9.1,] 
+		 3: COPY TYPE_PASS def_%v_10 %v_12[9.1,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: BRANCH include_silent[2.7,] 
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_13 
+		 1: 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral def_%v_14 
+		 1: private_conditions->+ def_%v_15 private_conditions[9.2,7.3,] %v_14[12.0,] 	 ARGS:%v_14,
+		 2: COPY TYPE_PASS def_private_conditions %v_15[12.1,] 
+		 3: COPY TYPE_PASS def_%v_13 %v_15[12.1,] 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Activity) def_%v_16 
+		 2: %v_16->where def_%v_17 %v_16[13.1,] conditions[7.0,] 	 ARGS:conditions,
+		 3: %v_17->where def_%v_18 %v_17[13.2,] private_conditions[12.2,9.2,7.3,] 	 ARGS:private_conditions,
+		 4: COPY TYPE_StringLiteral def_%v_19 
+		 5: %v_18->order def_%v_20 %v_18[13.3,] %v_19[13.4,] 	 ARGS:%v_19,
+		 6: %v_20->limit def_%v_21 %v_20[13.5,] limit[3.0,2.8,] 	 ARGS:limit,
+		 7: RETURN %v_21[13.6,] %self[2.0,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+
