@@ -9,25 +9,25 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->setting def_%v_3 %self[2.0,] 
+		 6: %self->setting def_%v_3 %self[2.0,] 	 ARGS:Symbol,Symbol,
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 5 
 	datadep: 
 	instructions:
-		 0: %self->setting def_%v_4 %self[2.0,] 
+		 0: %self->setting def_%v_4 %self[2.0,] 	 ARGS:Symbol,Symbol,
 		 1: BRANCH %v_4[3.0,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->logged_in def_%v_5 %self[2.0,] 
-		 1: %v_5->admin? def_%v_6 %v_5[4.0,] 
-		 2: COPY def_%v_4 %v_6[4.1,] 
+		 1: %v_5->admin? def_%v_6 %v_5[4.0,] 	 ARGS:Symbol,
+		 2: COPY TYPE_PASS def_%v_4 %v_6[4.1,] 
 BB 5
 	outgoing: 7 
 	datadep: 

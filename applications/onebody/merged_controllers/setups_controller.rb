@@ -13,6 +13,7 @@ class SetupsController < ApplicationController
     @person = Person.new
     @host = URI.parse(request.url).host
     @host = nil if @host =~ /\A(localhost|\d+\.\d+\.\d+\.\d+)\z/
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('setup.heading') 
  form_for @person, url: setup_path, method: 'POST', html: { role: 'form' } do |form| 
  t('setup.congratulations') 
@@ -36,6 +37,8 @@ class SetupsController < ApplicationController
  button_tag t('setup.submit_button_html'), class: 'btn btn-success' 
  end 
 
+end
+
   end
 
   def create
@@ -46,7 +49,32 @@ class SetupsController < ApplicationController
       redirect_to root_path
     else
       @person = @setup.person
-      render action: 'new'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t('setup.heading') 
+ form_for @person, url: setup_path, method: 'POST', html: { role: 'form' } do |form| 
+ t('setup.congratulations') 
+ t('setup.do_right_away') 
+ error_messages_for(form) 
+ t('setup.domain_name') 
+ text_field_tag 'domain_name', @host, class: 'form-control' 
+ t('setup.domain_name_note') 
+ t('setup.admin_account') 
+ t('setup.more_accounts_later') 
+ t('setup.first_name') 
+ form.text_field :first_name, class: 'form-control' 
+ t('setup.last_name') 
+ form.text_field :last_name, class: 'form-control' 
+ t('setup.email') 
+ form.text_field :email, class: 'form-control' 
+ t('setup.password') 
+ form.password_field :password, class: 'form-control' 
+ t('setup.password_confirmation') 
+ form.password_field :password_confirmation, class: 'form-control' 
+ button_tag t('setup.submit_button_html'), class: 'btn btn-success' 
+ end 
+
+end
+
     end
   end
 

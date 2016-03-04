@@ -9,13 +9,13 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Thread) def_%v_3 
-		 7: %v_3->current def_%v_4 %v_3[2.6,] 
-		 8: def_%v_5 %v_4[2.7,] 
+		 7: %v_3->current def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
 		 9: RETURN %v_5[2.8,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -33,13 +33,13 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_person 
 		 6: 
 		 7: (Thread) def_%v_3 
-		 8: %v_3->current def_%v_4 %v_3[2.7,] 
+		 8: %v_3->current def_%v_4 %v_3[2.7,] 	 ARGS:
 		 9: ATTRASSIGN %v_4->[] person[2.5,] 
 		 10: RETURN person[2.5,] %self[2.0,] 
 BB 3
@@ -58,19 +58,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->email def_%v_3 %self[2.0,] 
-		 7: %v_3->blank? def_%v_4 %v_3[2.6,] 
+		 6: %self->email def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->blank? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: %self->deleted? def_%v_5 %self[2.0,] 
-		 1: COPY def_%v_4 %v_5[3.0,] 
+		 0: %self->deleted? def_%v_5 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_4 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -85,51 +85,51 @@ BB 6
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_6 
+		 0: COPY TYPE_Nil def_%v_6 
 		 1: 
 		 2: (Person) def_%v_7 
-		 3: %v_7->undeleted def_%v_8 %v_7[6.2,] 
-		 4: %self->email def_%v_9 %self[2.0,] 
-		 5: COPY def_%v_10 %v_9[6.4,] 
-		 6: %v_8->where def_%v_11 %v_8[6.3,] %v_10[6.5,] 
-		 7: %v_11->where def_%v_12 %v_11[6.6,] 
-		 8: %self->id def_%v_13 %self[6.4,2.0,] 
+		 3: %v_7->undeleted def_%v_8 %v_7[6.2,] 	 ARGS:
+		 4: %self->email def_%v_9 %self[2.0,] 	 ARGS:
+		 5: HASH-email- def_%v_10 %v_9[6.4,] 
+		 6: %v_8->where def_%v_11 %v_8[6.3,] %v_10[6.5,] 	 ARGS:%v_10,
+		 7: %v_11->where def_%v_12 %v_11[6.6,] 	 ARGS:
+		 8: %self->id def_%v_13 %self[6.4,2.0,] 	 ARGS:
 		 9: BRANCH %v_13[6.8,] 
 BB 8
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_13 
+		 0: COPY TYPE_Fixnum def_%v_13 
 BB 9
 	outgoing: 10 11 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_14 %v_13[8.0,6.8,] 
-		 1: %v_12->not def_%v_15 %v_12[6.7,] %v_14[9.0,] 
-		 2: %v_15->where def_%v_16 %v_15[9.1,] 
-		 3: %self->family_id def_%v_17 %self[2.0,] 
+		 0: HASH-id- def_%v_14 %v_13[8.0,6.8,] 
+		 1: %v_12->not def_%v_15 %v_12[6.7,] %v_14[9.0,] 	 ARGS:%v_14,
+		 2: %v_15->where def_%v_16 %v_15[9.1,] 	 ARGS:
+		 3: %self->family_id def_%v_17 %self[2.0,] 	 ARGS:
 		 4: BRANCH %v_17[9.3,] 
 BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_17 
+		 0: COPY TYPE_Fixnum def_%v_17 
 BB 11
 	outgoing: 12 13 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_18 %v_17[10.0,9.3,] 
-		 1: %v_16->not def_%v_19 %v_16[9.2,] %v_18[11.0,] 
-		 2: %v_19->any? def_%v_20 %v_19[11.1,] 
+		 0: HASH-family_id- def_%v_18 %v_17[10.0,9.3,] 
+		 1: %v_16->not def_%v_19 %v_16[9.2,] %v_18[11.0,] 	 ARGS:%v_18,
+		 2: %v_19->any? def_%v_20 %v_19[11.1,] 	 ARGS:
 		 3: BRANCH %v_20[11.2,] 
 BB 12
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_21 
+		 0: COPY TYPE_Nil def_%v_21 
 		 1: 
-		 2: %self->errors def_%v_22 %self[2.0,] 
-		 3: %v_22->add def_%v_23 %v_22[12.2,] 
+		 2: %self->errors def_%v_22 %self[2.0,] 	 ARGS:
+		 3: %v_22->add def_%v_23 %v_22[12.2,] 	 ARGS:Symbol,Symbol,
 		 4: RETURN %v_23[12.3,] %self[12.2,2.0,] 
 BB 13
 	outgoing: 15 
@@ -152,20 +152,20 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->family def_%v_3 %self[2.0,] 
+		 6: %self->family def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
-		 2: %self->family def_%v_5 %self[2.0,] 
-		 3: %v_5->last_name def_%v_6 %v_5[3.2,] 
+		 2: %self->family def_%v_5 %self[2.0,] 	 ARGS:
+		 3: %v_5->last_name def_%v_6 %v_5[3.2,] 	 ARGS:
 		 4: ATTRASSIGN %self->last_name %v_6[3.3,] 
 		 5: RETURN %v_6[3.3,] %self[3.2,3.4,2.0,] 
 BB 4
@@ -189,49 +189,49 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->family def_%v_3 %self[2.0,] 
+		 6: %self->family def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
-		 2: %self->email def_%v_6 %self[2.0,] 
-		 3: %v_6->present? def_%v_7 %v_6[3.2,] 
+		 2: %self->email def_%v_6 %self[2.0,] 	 ARGS:
+		 3: %v_6->present? def_%v_7 %v_6[3.2,] 	 ARGS:
 		 4: BRANCH %v_7[3.3,] 
 BB 4
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_5 
+		 0: COPY TYPE_Array def_%v_5 
 		 1: RETURN %v_5[4.0,] %self[2.0,] 
 BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_8 
+		 0: COPY TYPE_Nil def_%v_8 
 		 1: 
-		 2: %self->family def_%v_10 %self[2.0,] 
-		 3: %v_10->people def_%v_11 %v_10[6.2,] 
-		 4: %v_11->undeleted def_%v_12 %v_11[6.3,] 
-		 5: %self->email def_%v_13 %self[6.2,2.0,] 
-		 6: COPY def_%v_14 %v_13[6.5,] 
-		 7: %v_12->where def_%v_15 %v_12[6.4,] %v_14[6.6,] 
-		 8: %v_15->where def_%v_16 %v_15[6.7,] 
-		 9: %self->id def_%v_17 %self[6.2,6.5,2.0,] 
-		 10: COPY def_%v_18 %v_17[6.9,] 
-		 11: %v_16->not def_%v_19 %v_16[6.8,] %v_18[6.10,] 
+		 2: %self->family def_%v_10 %self[2.0,] 	 ARGS:
+		 3: %v_10->people def_%v_11 %v_10[6.2,] 	 ARGS:
+		 4: %v_11->undeleted def_%v_12 %v_11[6.3,] 	 ARGS:
+		 5: %self->email def_%v_13 %self[6.2,2.0,] 	 ARGS:
+		 6: HASH-email- def_%v_14 %v_13[6.5,] 
+		 7: %v_12->where def_%v_15 %v_12[6.4,] %v_14[6.6,] 	 ARGS:%v_14,
+		 8: %v_15->where def_%v_16 %v_15[6.7,] 	 ARGS:
+		 9: %self->id def_%v_17 %self[6.2,6.5,2.0,] 	 ARGS:
+		 10: HASH-id- def_%v_18 %v_17[6.9,] 
+		 11: %v_16->not def_%v_19 %v_16[6.8,] %v_18[6.10,] 	 ARGS:%v_18,
 		 12: RETURN %v_19[6.11,] %self[6.2,6.5,6.9,2.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_9 
+		 0: COPY TYPE_Array def_%v_9 
 		 1: RETURN %v_9[7.0,] %self[2.0,] 
 BB 9
 	outgoing: 
@@ -249,18 +249,18 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->family def_%v_3 %self[2.0,] 
+		 6: %self->family def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: %self->primary_emailer? def_%v_4 %self[2.0,] 
-		 1: COPY def_%v_3 %v_4[3.0,] 
+		 0: %self->primary_emailer? def_%v_4 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_3 %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -270,20 +270,20 @@ BB 5
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_5 
+		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: %self->family def_%v_6 %self[2.0,] 
-		 3: %v_6->people def_%v_7 %v_6[5.2,] 
-		 4: %v_7->undeleted def_%v_8 %v_7[5.3,] 
-		 5: %self->email def_%v_9 %self[5.2,2.0,] 
-		 6: COPY def_%v_10 %v_9[5.5,] 
-		 7: %v_8->where def_%v_11 %v_8[5.4,] %v_10[5.6,] 
-		 8: %v_11->where def_%v_12 %v_11[5.7,] 
-		 9: %self->id def_%v_13 %self[5.2,5.5,2.0,] 
-		 10: COPY def_%v_14 %v_13[5.9,] 
-		 11: %v_12->not def_%v_15 %v_12[5.8,] %v_14[5.10,] 
-		 12: COPY def_%v_16 
-		 13: %v_15->update_all def_%v_17 %v_15[5.11,] %v_16[5.12,] 
+		 2: %self->family def_%v_6 %self[2.0,] 	 ARGS:
+		 3: %v_6->people def_%v_7 %v_6[5.2,] 	 ARGS:
+		 4: %v_7->undeleted def_%v_8 %v_7[5.3,] 	 ARGS:
+		 5: %self->email def_%v_9 %self[5.2,2.0,] 	 ARGS:
+		 6: HASH-email- def_%v_10 %v_9[5.5,] 
+		 7: %v_8->where def_%v_11 %v_8[5.4,] %v_10[5.6,] 	 ARGS:%v_10,
+		 8: %v_11->where def_%v_12 %v_11[5.7,] 	 ARGS:
+		 9: %self->id def_%v_13 %self[5.2,5.5,2.0,] 	 ARGS:
+		 10: HASH-id- def_%v_14 %v_13[5.9,] 
+		 11: %v_12->not def_%v_15 %v_12[5.8,] %v_14[5.10,] 	 ARGS:%v_14,
+		 12: HASH-primary_emailer- def_%v_16 
+		 13: %v_15->update_all def_%v_17 %v_15[5.11,] %v_16[5.12,] 	 ARGS:%v_16,
 		 14: RETURN %v_17[5.13,] %self[5.2,5.5,5.9,2.0,] 
 BB 6
 	outgoing: 8 
@@ -306,19 +306,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: def_%v_4 %self[2.0,] 
-		 7: COPY def_%v_3 %v_4[2.6,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->name def_%v_5 %self[2.0,] 
-		 1: COPY def_%v_3 %v_5[3.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 12 
 	datadep: 
@@ -329,49 +329,49 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->deleted? def_%v_6 %self[2.0,] 
+		 1: %self->deleted? def_%v_6 %self[2.0,] 	 ARGS:
 		 2: BRANCH %v_6[5.1,] 
 BB 6
 	outgoing: 11 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_7 
+		 1: COPY TYPE_StringLiteral def_%v_7 
 		 2: 
 BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->suffix def_%v_8 %self[2.0,] 
+		 1: %self->suffix def_%v_8 %self[2.0,] 	 ARGS:
 		 2: BRANCH %v_8[7.1,] 
 BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->first_name def_%v_9 %self[2.0,] 
-		 2: COPY def_%v_10 
-		 3: %self->last_name def_%v_11 %self[8.1,2.0,] 
-		 4: COPY def_%v_12 
-		 5: %self->suffix def_%v_13 %self[8.1,8.3,2.0,] 
-		 6: def_%v_14 %v_9[8.1,] %v_10[8.2,] %v_11[8.3,] %v_12[8.4,] %v_13[8.5,] 
+		 1: %self->first_name def_%v_9 %self[2.0,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%v_10 
+		 3: %self->last_name def_%v_11 %self[8.1,2.0,] 	 ARGS:
+		 4: COPY TYPE_StringLiteral def_%v_12 
+		 5: %self->suffix def_%v_13 %self[8.1,8.3,2.0,] 	 ARGS:
+		 6: BUILDSTRING def_%v_14 %v_9[8.1,] %v_10[8.2,] %v_11[8.3,] %v_12[8.4,] %v_13[8.5,] 
 		 7: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->first_name def_%v_15 %self[2.0,] 
-		 2: COPY def_%v_16 
-		 3: %self->last_name def_%v_17 %self[9.1,2.0,] 
-		 4: def_%v_18 %v_15[9.1,] %v_16[9.2,] %v_17[9.3,] 
-		 5: COPY def_%v_14 %v_18[9.4,] 
+		 1: %self->first_name def_%v_15 %self[2.0,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%v_16 
+		 3: %self->last_name def_%v_17 %self[9.1,2.0,] 	 ARGS:
+		 4: BUILDSTRING def_%v_18 %v_15[9.1,] %v_16[9.2,] %v_17[9.3,] 
+		 5: COPY TYPE_PASS def_%v_14 %v_18[9.4,] 
 BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_7 %v_14[9.5,8.6,] 
+		 0: COPY TYPE_PASS def_%v_7 %v_14[9.5,8.6,] 
 BB 11
 	outgoing: 13 
 	datadep: 
@@ -399,21 +399,21 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->email def_%v_3 %self[2.0,] 
-		 7: %v_3->present? def_%v_4 %v_3[2.6,] 
+		 6: %self->email def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->present? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_5 
+		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
 		 2: (Mail) def_%v_6 
-		 3: def_%v_7 %v_6[3.2,] 
+		 3: (inherit Address) def_%v_7 %v_6[3.2,] 
 		 4: %v_7[3.3,] 
 BB 4
 	outgoing: 8 
@@ -424,14 +424,14 @@ BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: def_%v_7 %v_6[3.2,] 
+		 0: %v_6->const_missing def_%v_7 %v_6[3.2,] 	 ARGS:Symbol,
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: %self->email def_%v_8 %self[2.0,] 
-		 1: %v_7->new def_%v_9 %v_7[6.0,3.3,] %v_8[7.0,] 
-		 2: %v_9->tap def_%v_10 %v_9[7.1,] %self[7.0,2.0,] 
+		 0: %self->email def_%v_8 %self[2.0,] 	 ARGS:
+		 1: %v_7->new def_%v_9 %v_7[6.0,3.3,] %v_8[7.0,] 	 ARGS:%v_8,
+		 2: %v_9->tap def_%v_10 %v_9[7.1,] %self[7.0,2.0,] 	 ARGS:%v_9,
 CLOSURE BEGIN: %self[7.0,2.0,] address[] 
 BB 1
 	outgoing: 6 2 
@@ -444,14 +444,14 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_address 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->name def_%cl_1_3 %self[2.0,] 
+		 1: %self->name def_%cl_1_3 %self[2.0,] 	 ARGS:
 		 2: ATTRASSIGN address->display_name %cl_1_3[3.1,] 
 		 3: RETURN %cl_1_3[3.1,] %self[3.1,2.0,] 
 BB 4
@@ -483,16 +483,16 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY def_%v_3 
-		 7: %self->id def_%v_4 %self[2.0,] 
-		 8: COPY def_%v_5 
-		 9: %self->name def_%v_6 %self[2.0,2.7,] 
-		 10: COPY def_%v_7 
-		 11: def_%v_8 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: %self->id def_%v_4 %self[2.0,] 	 ARGS:
+		 8: COPY TYPE_StringLiteral def_%v_5 
+		 9: %self->name def_%v_6 %self[2.0,2.7,] 	 ARGS:
+		 10: COPY TYPE_StringLiteral def_%v_7 
+		 11: BUILDSTRING def_%v_8 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] 
 		 12: RETURN %v_8[2.11,] %self[2.0,2.7,2.9,] 
 BB 3
 	outgoing: 
@@ -510,18 +510,18 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->active? def_%v_3 %self[2.0,] 
+		 6: %self->active? def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: %self->pending? def_%v_4 %self[2.0,] 
-		 1: COPY def_%v_3 %v_4[3.0,] 
+		 0: %self->pending? def_%v_4 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_3 %v_4[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -531,8 +531,8 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: %self->adult_or_consent? def_%v_5 %self[2.0,] 
-		 1: COPY def_%v_3 %v_5[5.0,] 
+		 0: %self->adult_or_consent? def_%v_5 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_3 %v_5[5.0,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
@@ -542,8 +542,8 @@ BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: %self->email def_%v_6 %self[2.0,] 
-		 1: %v_6->present? def_%v_7 %v_6[7.0,] 
+		 0: %self->email def_%v_6 %self[2.0,] 	 ARGS:
+		 1: %v_6->present? def_%v_7 %v_6[7.0,] 	 ARGS:
 		 2: RETURN %v_7[7.1,] %self[7.0,2.0,] 
 BB 8
 	outgoing: 9 
@@ -566,18 +566,18 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->read_attribute def_%v_3 %self[2.0,] 
+		 6: %self->read_attribute def_%v_3 %self[2.0,] 	 ARGS:Symbol,
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %self->email def_%v_4 %self[2.0,] 
-		 1: %v_4->present? def_%v_5 %v_4[3.0,] 
+		 0: %self->email def_%v_4 %self[2.0,] 	 ARGS:
+		 1: %v_4->present? def_%v_5 %v_4[3.0,] 	 ARGS:
 		 2: RETURN %v_5[3.1,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 5 
@@ -600,12 +600,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->parental_consent def_%v_3 %self[2.0,] 
-		 7: %v_3->present? def_%v_4 %v_3[2.6,] 
+		 6: %self->parental_consent def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->present? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -623,17 +623,17 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->adult? def_%v_3 %self[2.0,] 
+		 6: %self->adult? def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %self->parental_consent? def_%v_4 %self[2.0,] 
+		 0: %self->parental_consent? def_%v_4 %self[2.0,] 	 ARGS:
 		 1: RETURN %v_4[3.0,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 5 
@@ -656,8 +656,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: def_fam 
 		 6: fam[2.5,] 
@@ -665,35 +665,35 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY def_fam 
+		 0: COPY TYPE_Nil def_fam 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_3 fam[3.0,2.5,] 
-		 2: COPY def_%v_4 fam[3.0,2.5,] 
+		 1: COPY TYPE_PASS def_%v_3 fam[3.0,2.5,] 
+		 2: COPY TYPE_PASS def_%v_4 fam[3.0,2.5,] 
 		 3: BRANCH fam[3.0,2.5,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: %self->family def_%v_5 %self[2.0,] 
-		 1: COPY def_fam %v_5[5.0,] 
-		 2: COPY def_%v_4 %v_5[5.0,] 
+		 0: %self->family def_%v_5 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_fam %v_5[5.0,] 
+		 2: COPY TYPE_PASS def_%v_4 %v_5[5.0,] 
 BB 6
 	outgoing: 7 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_6 fam[5.1,3.0,2.5,] 
+		 1: COPY TYPE_PASS def_%v_6 fam[5.1,3.0,2.5,] 
 		 2: BRANCH fam[5.1,3.0,2.5,] 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: fam->visible? def_%v_7 fam[5.1,3.0,2.5,] 
-		 1: COPY def_%v_6 %v_7[7.0,] 
+		 0: fam->visible? def_%v_7 fam[5.1,3.0,2.5,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_6 %v_7[7.0,] 
 BB 8
 	outgoing: 9 10 
 	datadep: 
@@ -703,8 +703,8 @@ BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: %self->read_attribute def_%v_8 %self[2.0,] 
-		 1: COPY def_%v_6 %v_8[9.0,] 
+		 0: %self->read_attribute def_%v_8 %self[2.0,] 	 ARGS:Symbol,
+		 1: COPY TYPE_PASS def_%v_6 %v_8[9.0,] 
 BB 10
 	outgoing: 11 12 
 	datadep: 
@@ -714,8 +714,8 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: %self->adult_or_consent? def_%v_9 %self[2.0,] 
-		 1: COPY def_%v_6 %v_9[11.0,] 
+		 0: %self->adult_or_consent? def_%v_9 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_6 %v_9[11.0,] 
 BB 12
 	outgoing: 13 16 
 	datadep: 
@@ -725,14 +725,14 @@ BB 13
 	outgoing: 14 15 
 	datadep: 
 	instructions:
-		 0: %self->active? def_%v_10 %self[2.0,] 
+		 0: %self->active? def_%v_10 %self[2.0,] 	 ARGS:
 		 1: BRANCH %v_10[13.0,] 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: %self->pending? def_%v_11 %self[2.0,] 
-		 1: COPY def_%v_10 %v_11[14.0,] 
+		 0: %self->pending? def_%v_11 %self[2.0,] 	 ARGS:
+		 1: COPY TYPE_PASS def_%v_10 %v_11[14.0,] 
 BB 15
 	outgoing: 17 
 	datadep: 
@@ -759,24 +759,24 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_g 
 		 6: 
-		 7: g->present? def_%v_3 g[2.5,] 
+		 7: g->present? def_%v_3 g[2.5,] 	 ARGS:
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: g->capitalize def_%v_4 g[2.5,] 
+		 0: g->capitalize def_%v_4 g[2.5,] 	 ARGS:
 		 1: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Nil def_%v_4 
 BB 5
 	outgoing: 6 
 	datadep: 
@@ -799,15 +799,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 BB 3
 	outgoing: 5 4 
 	datadep: 
 	instructions:
-		 0: %self->loop def_%v_3 %self[2.0,] %self[2.0,] 
+		 0: %self->loop def_%v_3 %self[2.0,] %self[2.0,] 	 ARGS:%self,
 CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 9 2 
@@ -819,30 +819,30 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (SecureRandom) def_%cl_1_3 
-		 2: %cl_1_3->hex def_%cl_1_4 %cl_1_3[3.1,] 
+		 2: %cl_1_3->hex def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:Fixnum,
 		 3: def_%cl_1_5 
-		 4: def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 4: %cl_1_4->[] def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
 		 5: ATTRASSIGN %self->feed_code %cl_1_6[3.4,] 
 		 6: 
 		 7: (Person) def_%cl_1_7 
-		 8: %self->feed_code def_%cl_1_8 %self[3.5,2.0,] 
-		 9: COPY def_%cl_1_9 %cl_1_8[3.8,] 
-		 10: %cl_1_7->where def_%cl_1_10 %cl_1_7[3.7,] %cl_1_9[3.9,] 
-		 11: %cl_1_10->any? def_%cl_1_11 %cl_1_10[3.10,] 
+		 8: %self->feed_code def_%cl_1_8 %self[3.5,2.0,] 	 ARGS:
+		 9: HASH-feed_code- def_%cl_1_9 %cl_1_8[3.8,] 
+		 10: %cl_1_7->where def_%cl_1_10 %cl_1_7[3.7,] %cl_1_9[3.9,] 	 ARGS:%cl_1_9,
+		 11: %cl_1_10->any? def_%cl_1_11 %cl_1_10[3.10,] 	 ARGS:
 		 12: BRANCH %cl_1_11[3.11,] 
 BB 4
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY def_%cl_1_12 
+		 0: COPY TYPE_Nil def_%cl_1_12 
 		 1: RETURN %cl_1_12[4.0,] %self[3.5,2.0,] 
 BB 5
 	outgoing: 9 
@@ -889,20 +889,20 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_attribute 
 		 6: RECEIVEARG def_who 
 		 7: 
-		 8: %self->send def_%v_3 %self[2.0,] attribute[2.5,] 
-		 9: %v_3->present? def_%v_4 %v_3[2.8,] 
+		 8: %self->send def_%v_3 %self[2.0,] attribute[2.5,] 	 ARGS:attribute,
+		 9: %v_3->present? def_%v_4 %v_3[2.8,] 	 ARGS:
 		 10: BRANCH %v_4[2.9,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %self->share_attribute_with? def_%v_5 %self[2.0,] attribute[2.5,] who[2.6,] 
+		 0: %self->share_attribute_with? def_%v_5 %self[2.0,] attribute[2.5,] who[2.6,] 	 ARGS:attribute,who,
 		 1: RETURN %v_5[3.0,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 5 
@@ -925,26 +925,26 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_attribute 
 		 6: RECEIVEARG def_who 
 		 7: 
-		 8: COPY def_%v_3 
-		 9: COPY def_%v_4 
-		 10: def_%v_5 %v_3[2.8,] attribute[2.5,] %v_4[2.9,] 
-		 11: %self->respond_to? def_%v_6 %self[2.0,] %v_5[2.10,] 
-		 12: %v_6->! def_%v_7 %v_6[2.11,] 
+		 8: COPY TYPE_StringLiteral def_%v_3 
+		 9: COPY TYPE_StringLiteral def_%v_4 
+		 10: BUILDSTRING def_%v_5 %v_3[2.8,] attribute[2.5,] %v_4[2.9,] 
+		 11: %self->respond_to? def_%v_6 %self[2.0,] %v_5[2.10,] 	 ARGS:%v_5,
+		 12: %v_6->! def_%v_7 %v_6[2.11,] 	 ARGS:
 		 13: BRANCH %v_7[2.12,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_8 
-		 1: COPY def_%v_9 
-		 2: def_%v_10 %v_8[3.0,] attribute[2.5,] %v_9[3.1,] 
-		 3: %self->send def_%v_11 %self[2.0,] %v_10[3.2,] who[2.6,] 
+		 0: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral def_%v_9 
+		 2: BUILDSTRING def_%v_10 %v_8[3.0,] attribute[2.5,] %v_9[3.1,] 
+		 3: %self->send def_%v_11 %self[2.0,] %v_10[3.2,] who[2.6,] 	 ARGS:%v_10,who,
 		 4: RETURN %v_11[3.3,] %self[3.3,2.0,] 
 BB 4
 	outgoing: 5 
@@ -967,29 +967,29 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->classes def_%v_3 %self[2.0,] 
-		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 
-		 8: COPY def_%v_5 
-		 9: %v_4->split def_%v_6 %v_4[2.7,] %v_5[2.8,] 
-		 10: COPY def_%v_7 
-		 11: %v_6->grep def_%v_8 %v_6[2.9,] 
-		 12: %v_8->first def_%v_9 %v_8[2.11,] 
-		 13: COPY def_code %v_9[2.12,] 
+		 6: %self->classes def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: COPY TYPE_StringLiteral def_%v_5 
+		 9: %v_4->split def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: COPY TYPE_Regexp def_%v_7 
+		 11: %v_6->grep def_%v_8 %v_6[2.9,] 	 ARGS:%v_7,
+		 12: %v_8->first def_%v_9 %v_8[2.11,] 	 ARGS:
+		 13: COPY TYPE_PASS def_code %v_9[2.12,] 
 		 14: 
 		 15: BRANCH %v_9[2.12,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_10 
+		 0: COPY TYPE_Nil def_%v_10 
 		 1: 
-		 2: COPY def_%v_11 
-		 3: code->match def_%v_12 code[2.13,] 
-		 4: def_%v_13 %v_12[3.3,] 
+		 2: COPY TYPE_Regexp def_%v_11 
+		 3: code->match def_%v_12 code[2.13,] 	 ARGS:%v_11,
+		 4: %v_12->[] def_%v_13 %v_12[3.3,] 	 ARGS:Fixnum,
 		 5: RETURN %v_13[3.4,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -1012,16 +1012,16 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->attendance_records def_%v_3 %self[2.0,] 
+		 6: %self->attendance_records def_%v_3 %self[2.0,] 	 ARGS:
 		 7: (Date) def_%v_4 
-		 8: %v_4->today def_%v_5 %v_4[2.7,] 
-		 9: %v_3->on_date def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: %v_6->includes def_%v_7 %v_6[2.9,] 
-		 11: %v_7->order def_%v_8 %v_7[2.10,] 
+		 8: %v_4->today def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: %v_3->on_date def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: %v_6->includes def_%v_7 %v_6[2.9,] 	 ARGS:Symbol,
+		 11: %v_7->order def_%v_8 %v_7[2.10,] 	 ARGS:Symbol,
 		 12: RETURN %v_8[2.11,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -1039,11 +1039,11 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] %self[2.0,] 
+		 6: %self->run_callbacks def_%v_3 %self[2.0,] %self[2.0,] 	 ARGS:Symbol,%self,
 CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -1055,17 +1055,17 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->update_attribute def_%cl_1_3 %self[2.0,] 
+		 1: %self->update_attribute def_%cl_1_3 %self[2.0,] 	 ARGS:Symbol,Boolean,
 		 2: 
-		 3: %self->updates def_%cl_1_4 %self[3.1,2.0,] 
-		 4: %cl_1_4->destroy_all def_%cl_1_5 %cl_1_4[3.3,] 
+		 3: %self->updates def_%cl_1_4 %self[3.1,2.0,] 	 ARGS:
+		 4: %cl_1_4->destroy_all def_%cl_1_5 %cl_1_4[3.3,] 	 ARGS:
 		 5: RETURN %cl_1_5[3.4,] %self[3.1,3.3,2.0,] 
 BB 4
 	outgoing: 6 
@@ -1079,7 +1079,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 7: RETURN %v_3[2.6,] %self[2.0,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -1096,8 +1096,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_stream_item 
 		 6: 
@@ -1106,11 +1106,11 @@ BB 3
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_3 
+		 0: COPY TYPE_Nil def_%v_3 
 		 1: 
-		 2: stream_item->created_at def_%v_4 stream_item[2.5,] 
-		 3: %self->last_seen_stream_item def_%v_5 %self[2.0,] 
-		 4: %v_5->try def_%v_6 %v_5[3.3,] 
+		 2: stream_item->created_at def_%v_4 stream_item[2.5,] 	 ARGS:
+		 3: %self->last_seen_stream_item def_%v_5 %self[2.0,] 	 ARGS:
+		 4: %v_5->try def_%v_6 %v_5[3.3,] 	 ARGS:Symbol,
 		 5: BRANCH %v_6[3.4,] 
 BB 4
 	outgoing: 11 
@@ -1122,13 +1122,13 @@ BB 6
 	datadep: 
 	instructions:
 		 0: (Time) def_%v_7 
-		 1: %v_7->now def_%v_8 %v_7[6.0,] 
-		 2: COPY def_%v_6 %v_8[6.1,] 
+		 1: %v_7->now def_%v_8 %v_7[6.0,] 	 ARGS:
+		 2: COPY TYPE_PASS def_%v_6 %v_8[6.1,] 
 BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: def_%v_9 %v_4[3.2,] %v_6[6.2,3.4,] 
+		 0: %v_4-><= def_%v_9 %v_4[3.2,] %v_6[6.2,3.4,] 	 ARGS:%v_6,
 		 1: BRANCH %v_9[7.0,] 
 BB 8
 	outgoing: 11 
@@ -1139,9 +1139,9 @@ BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_10 
+		 0: COPY TYPE_Nil def_%v_10 
 		 1: 
-		 2: %self->update_attribute def_%v_11 %self[2.0,] stream_item[2.5,] 
+		 2: %self->update_attribute def_%v_11 %self[2.0,] stream_item[2.5,] 	 ARGS:Symbol,stream_item,
 		 3: RETURN %v_11[9.2,] %self[9.2,2.0,] 
 BB 11
 	outgoing: 
@@ -1159,16 +1159,16 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_attrs 
 		 6: 
 		 7: (HashWithIndifferentAccess) def_%v_3 
-		 8: %v_3->new def_%v_4 %v_3[2.7,] attrs[2.5,] 
-		 9: %self->default_sharing_attributes def_%v_5 %self[2.0,] 
-		 10: %v_4->merge def_%v_6 %v_4[2.8,] %v_5[2.9,] 
-		 11: %self->new def_%v_7 %self[2.0,2.9,] %v_6[2.10,] 
+		 8: %v_3->new def_%v_4 %v_3[2.7,] attrs[2.5,] 	 ARGS:attrs,
+		 9: %self->default_sharing_attributes def_%v_5 %self[2.0,] 	 ARGS:
+		 10: %v_4->merge def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
+		 11: %self->new def_%v_7 %self[2.0,2.9,] %v_6[2.10,] 	 ARGS:%v_6,
 		 12: RETURN %v_7[2.11,] %self[2.0,2.9,2.11,] 
 BB 3
 	outgoing: 
@@ -1186,27 +1186,27 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Setting) def_%v_3 
-		 7: %v_3->get def_%v_4 %v_3[2.6,] 
+		 7: %v_3->get def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,Symbol,
 		 8: (Setting) def_%v_5 
-		 9: %v_5->get def_%v_6 %v_5[2.8,] 
+		 9: %v_5->get def_%v_6 %v_5[2.8,] 	 ARGS:Symbol,Symbol,
 		 10: (Setting) def_%v_7 
-		 11: %v_7->get def_%v_8 %v_7[2.10,] 
+		 11: %v_7->get def_%v_8 %v_7[2.10,] 	 ARGS:Symbol,Symbol,
 		 12: (Setting) def_%v_9 
-		 13: %v_9->get def_%v_10 %v_9[2.12,] 
+		 13: %v_9->get def_%v_10 %v_9[2.12,] 	 ARGS:Symbol,Symbol,
 		 14: (Setting) def_%v_11 
-		 15: %v_11->get def_%v_12 %v_11[2.14,] 
+		 15: %v_11->get def_%v_12 %v_11[2.14,] 	 ARGS:Symbol,Symbol,
 		 16: (Setting) def_%v_13 
-		 17: %v_13->get def_%v_14 %v_13[2.16,] 
+		 17: %v_13->get def_%v_14 %v_13[2.16,] 	 ARGS:Symbol,Symbol,
 		 18: (Setting) def_%v_15 
-		 19: %v_15->get def_%v_16 %v_15[2.18,] 
+		 19: %v_15->get def_%v_16 %v_15[2.18,] 	 ARGS:Symbol,Symbol,
 		 20: (Setting) def_%v_17 
-		 21: %v_17->get def_%v_18 %v_17[2.20,] 
-		 22: COPY def_%v_19 %v_4[2.7,] %v_6[2.9,] %v_8[2.11,] %v_10[2.13,] %v_12[2.15,] %v_14[2.17,] %v_16[2.19,] %v_18[2.21,] 
+		 21: %v_17->get def_%v_18 %v_17[2.20,] 	 ARGS:Symbol,Symbol,
+		 22: HASH-share_address-share_home_phone-share_mobile_phone-share_work_phone-share_fax-share_email-share_birthday-share_anniversary- def_%v_19 %v_4[2.7,] %v_6[2.9,] %v_8[2.11,] %v_10[2.13,] %v_12[2.15,] %v_14[2.17,] %v_16[2.19,] %v_18[2.21,] 
 		 23: RETURN %v_19[2.22,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -1224,15 +1224,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY def_%v_3 
-		 7: %self->where def_%v_4 %self[2.0,] %v_3[2.6,] 
-		 8: %v_4->order def_%v_5 %v_4[2.7,] 
-		 9: COPY def_%v_6 
-		 10: %v_5->pluck def_%v_7 %v_5[2.8,] %v_6[2.9,] 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: %self->where def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
+		 8: %v_4->order def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: COPY TYPE_StringLiteral def_%v_6 
+		 10: %v_5->pluck def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: RETURN %v_7[2.10,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -1250,15 +1250,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY def_%v_3 
-		 7: %self->where def_%v_4 %self[2.0,] %v_3[2.6,] 
-		 8: %v_4->order def_%v_5 %v_4[2.7,] 
-		 9: COPY def_%v_6 
-		 10: %v_5->pluck def_%v_7 %v_5[2.8,] %v_6[2.9,] 
+		 6: COPY TYPE_StringLiteral def_%v_3 
+		 7: %self->where def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
+		 8: %v_4->order def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: COPY TYPE_StringLiteral def_%v_6 
+		 10: %v_5->pluck def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: RETURN %v_7[2.10,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 

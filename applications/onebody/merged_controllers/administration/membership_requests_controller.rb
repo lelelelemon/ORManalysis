@@ -3,6 +3,7 @@ class Administration::MembershipRequestsController < ApplicationController
 
   def index
     @reqs_by_group = MembershipRequest.all.to_a.group_by(&:group)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('admin.group_membership_requests') 
  if @reqs_by_group.any? 
  @reqs_by_group.each do |group, reqs| 
@@ -13,6 +14,8 @@ class Administration::MembershipRequestsController < ApplicationController
  else 
  t('none') 
  end 
+
+end
 
   end
 

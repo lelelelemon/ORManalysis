@@ -24,6 +24,7 @@ class MembershipsController < ApplicationController
       @memberships = @memberships.order_by_name
     end
     @requests = @group.membership_requests
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('.heading', group: link_to(@group.name, @group)).html_safe 
  if @logged_in.can_update?(@group) and @requests.any? 
  form_tag batch_group_memberships_path(@group) do |form| 
@@ -62,7 +63,7 @@ class MembershipsController < ApplicationController
  end 
  @memberships.includes(:person).order('people.last_name', 'people.first_name').each do |membership| 
  if person = membership.person 
- render partial: 'membership', object: membership 
+  
  end 
  end 
  if @logged_in.can_update?(@group) 
@@ -101,6 +102,8 @@ class MembershipsController < ApplicationController
  end 
  end 
 
+end
+
   end
 
   # join group
@@ -123,6 +126,14 @@ class MembershipsController < ApplicationController
     else
       render text: t('not_authorized'), layout: true, status: 401
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @group.id 
+ if @get_email 
+ else 
+ end 
+
+end
+
   end
 
   def update_email
@@ -162,8 +173,11 @@ class MembershipsController < ApplicationController
       format.html { redirect_to :back }
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  params[:id] 
  escape_javascript t('people.person', count: @group.people.count) 
+
+end
 
   end
 
@@ -180,8 +194,11 @@ class MembershipsController < ApplicationController
       format.js
       format.html { redirect_to :back }
     end
- escape_javascript render(partial: 'membership', collection: @added, locals: { hide: true }) 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ escape_javascript  
  @added.map { |m| '#'+dom_id(m) }.join(',') 
+
+end
 
   end
 

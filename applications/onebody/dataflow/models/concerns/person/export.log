@@ -9,13 +9,13 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_mod 
 		 6: 
 		 7: (ClassMethods) def_%v_3 
-		 8: mod->extend def_%v_4 mod[2.5,] %v_3[2.7,] 
+		 8: mod->extend def_%v_4 mod[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
 		 9: RETURN %v_4[2.8,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -33,12 +33,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (CSV) def_%v_3 
-		 7: %v_3->generate def_%v_4 %v_3[2.6,] %self[2.0,] 
+		 7: %v_3->generate def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
 CLOSURE BEGIN: %self[2.0,] csv[] 
 BB 1
 	outgoing: 8 2 
@@ -51,18 +51,18 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_csv 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (EXPORT_COLS) def_%cl_1_3 
-		 2: def_%cl_1_4 %cl_1_3[3.1,] 
+		 2: %cl_1_3->[] def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:Symbol,
 		 3: (EXPORT_COLS) def_%cl_1_5 
-		 4: def_%cl_1_6 %cl_1_5[3.3,] 
-		 5: %cl_1_6->map def_%cl_1_7 %cl_1_6[3.4,] %self[2.0,] 
+		 4: %cl_1_5->[] def_%cl_1_6 %cl_1_5[3.3,] 	 ARGS:Symbol,
+		 5: %cl_1_6->map def_%cl_1_7 %cl_1_6[3.4,] %self[2.0,] 	 ARGS:%cl_1_6,
 CLOSURE BEGIN: c[] 
 BB 1
 	outgoing: 6 2 
@@ -75,15 +75,15 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_2_0 
 		 2: RECEIVEARG def_c 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%cl_2_3 
-		 2: def_%cl_2_4 %cl_2_3[3.1,] c[2.2,] 
+		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 2: BUILDSTRING def_%cl_2_4 %cl_2_3[3.1,] c[2.2,] 
 		 3: RETURN %cl_2_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -97,28 +97,28 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 6: def_%cl_1_8 %cl_1_4[3.2,] %cl_1_7[3.5,] 
-		 7: def_%cl_1_9 csv[2.2,] %cl_1_8[3.6,] 
+		 6: %cl_1_4->+ def_%cl_1_8 %cl_1_4[3.2,] %cl_1_7[3.5,] 	 ARGS:%cl_1_7,
+		 7: csv-><< def_%cl_1_9 csv[2.2,] %cl_1_8[3.6,] 	 ARGS:%cl_1_8,
 		 8: 
-		 9: def_%cl_1_10 
+		 9: (inherit Person) def_%cl_1_10 
 		 10: %cl_1_10[3.9,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_10 
+		 0: def_%cl_1_10 	 ARGS:Symbol,
 BB 5
 	outgoing: 6 8 
 	datadep: 
 	instructions:
-		 0: %cl_1_10->undeleted def_%cl_1_11 %cl_1_10[4.0,3.9,] 
-		 1: %cl_1_11->count def_%cl_1_12 %cl_1_11[5.0,] 
-		 2: COPY def_total %cl_1_12[5.1,] 
+		 0: %cl_1_10->undeleted def_%cl_1_11 %cl_1_10[4.0,3.9,] 	 ARGS:
+		 1: %cl_1_11->count def_%cl_1_12 %cl_1_11[5.0,] 	 ARGS:
+		 2: COPY TYPE_PASS def_total %cl_1_12[5.1,] 
 		 3: 
-		 4: def_%cl_1_14 %cl_1_12[5.1,] 
-		 5: def_%cl_1_15 %cl_1_14[5.4,] 
+		 4: %cl_1_12->/ def_%cl_1_14 %cl_1_12[5.1,] 	 ARGS:Fixnum,
+		 5: %cl_1_14->+ def_%cl_1_15 %cl_1_14[5.4,] 	 ARGS:Fixnum,
 		 6: def_%cl_1_13 %cl_1_15[5.5,] 
-		 7: %cl_1_13->each def_%cl_1_16 %cl_1_13[5.6,] %self[2.0,] 
+		 7: %cl_1_13->each def_%cl_1_16 %cl_1_13[5.6,] %self[2.0,] 	 ARGS:%cl_1_13,
 CLOSURE BEGIN: page[] %self[2.0,] 
 BB 1
 	outgoing: 8 2 
@@ -131,29 +131,29 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_3_0 
 		 2: RECEIVEARG def_page 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_3_3 
+		 1: (inherit Person) def_%cl_3_3 
 		 2: %cl_3_3[3.1,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_3_3 
+		 0: def_%cl_3_3 	 ARGS:Symbol,
 BB 5
 	outgoing: 6 8 
 	datadep: 
 	instructions:
-		 0: %cl_3_3->undeleted def_%cl_3_4 %cl_3_3[4.0,3.1,] 
-		 1: %cl_3_4->includes def_%cl_3_5 %cl_3_4[5.0,] 
-		 2: COPY def_%cl_3_6 page[2.2,] 
-		 3: %cl_3_5->paginate def_%cl_3_7 %cl_3_5[5.1,] %cl_3_6[5.2,] 
-		 4: %cl_3_7->each def_%cl_3_8 %cl_3_7[5.3,] %self[2.0,] 
+		 0: %cl_3_3->undeleted def_%cl_3_4 %cl_3_3[4.0,3.1,] 	 ARGS:
+		 1: %cl_3_4->includes def_%cl_3_5 %cl_3_4[5.0,] 	 ARGS:Symbol,
+		 2: HASH-per_page-page- def_%cl_3_6 page[2.2,] 
+		 3: %cl_3_5->paginate def_%cl_3_7 %cl_3_5[5.1,] %cl_3_6[5.2,] 	 ARGS:%cl_3_6,
+		 4: %cl_3_7->each def_%cl_3_8 %cl_3_7[5.3,] %self[2.0,] 	 ARGS:%cl_3_7,
 CLOSURE BEGIN: person[] %self[2.0,] csv[] 
 BB 1
 	outgoing: 9 2 
@@ -166,20 +166,20 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_4_0 
 		 2: RECEIVEARG def_person 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: person->family def_%cl_4_3 person[2.2,] 
+		 1: person->family def_%cl_4_3 person[2.2,] 	 ARGS:
 		 2: BRANCH %cl_4_3[3.1,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%cl_4_4 
+		 0: COPY TYPE_Nil def_%cl_4_4 
 		 1: 
 BB 5
 	outgoing: 7 9 
@@ -193,8 +193,8 @@ BB 6
 	instructions:
 		 0: 
 		 1: (EXPORT_COLS) def_%cl_4_5 
-		 2: def_%cl_4_6 %cl_4_5[6.1,] 
-		 3: %cl_4_6->map def_%cl_4_7 %cl_4_6[6.2,] %self[2.0,] 
+		 2: %cl_4_5->[] def_%cl_4_6 %cl_4_5[6.1,] 	 ARGS:Symbol,
+		 3: %cl_4_6->map def_%cl_4_7 %cl_4_6[6.2,] %self[2.0,] 	 ARGS:%cl_4_6,
 CLOSURE BEGIN: person[2.2,] c[] 
 BB 1
 	outgoing: 6 2 
@@ -207,14 +207,14 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_5_0 
 		 2: RECEIVEARG def_c 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: person->send def_%cl_5_3 person[] c[2.2,] 
+		 1: person->send def_%cl_5_3 person[] c[2.2,] 	 ARGS:c,
 		 2: RETURN %cl_5_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -229,8 +229,8 @@ BB 6
 	instructions:
 CLOSURE END
 		 4: (EXPORT_COLS) def_%cl_4_8 
-		 5: def_%cl_4_9 %cl_4_8[6.4,] 
-		 6: %cl_4_9->map def_%cl_4_10 %cl_4_9[6.5,] %self[2.0,] 
+		 5: %cl_4_8->[] def_%cl_4_9 %cl_4_8[6.4,] 	 ARGS:Symbol,
+		 6: %cl_4_9->map def_%cl_4_10 %cl_4_9[6.5,] %self[2.0,] 	 ARGS:%cl_4_9,
 CLOSURE BEGIN: person[2.2,] c[] 
 BB 1
 	outgoing: 6 2 
@@ -243,15 +243,15 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_6_0 
 		 2: RECEIVEARG def_c 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: person->family def_%cl_6_3 person[] 
-		 2: %cl_6_3->send def_%cl_6_4 %cl_6_3[3.1,] c[2.2,] 
+		 1: person->family def_%cl_6_3 person[] 	 ARGS:
+		 2: %cl_6_3->send def_%cl_6_4 %cl_6_3[3.1,] c[2.2,] 	 ARGS:c,
 		 3: RETURN %cl_6_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -265,8 +265,8 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 7: def_%cl_4_11 %cl_4_7[6.3,] %cl_4_10[6.6,] 
-		 8: def_%cl_4_12 csv[] %cl_4_11[6.7,] 
+		 7: %cl_4_7->+ def_%cl_4_11 %cl_4_7[6.3,] %cl_4_10[6.6,] 	 ARGS:%cl_4_10,
+		 8: csv-><< def_%cl_4_12 csv[] %cl_4_11[6.7,] 	 ARGS:%cl_4_11,
 		 9: RETURN %cl_4_12[6.8,] %self[2.0,] 
 BB 7
 	outgoing: 9 
@@ -330,26 +330,26 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Builder) def_%v_3 
-		 7: def_%v_4 %v_3[2.6,] 
+		 7: (inherit XmlMarkup) def_%v_4 %v_3[2.6,] 
 		 8: %v_4[2.7,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %v_3[2.6,] 
+		 0: %v_3->const_missing def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 BB 5
 	outgoing: 6 8 
 	datadep: 
 	instructions:
-		 0: %v_4->new def_%v_5 %v_4[4.0,2.7,] 
-		 1: COPY def_builder %v_5[5.0,] 
+		 0: %v_4->new def_%v_5 %v_4[4.0,2.7,] 	 ARGS:
+		 1: COPY TYPE_PASS def_builder %v_5[5.0,] 
 		 2: 
-		 3: %v_5->families def_%v_6 %v_5[5.0,] %self[2.0,] 
+		 3: %v_5->families def_%v_6 %v_5[5.0,] %self[2.0,] 	 ARGS:%v_5,
 CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -362,22 +362,22 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_families 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (Family) def_%cl_1_3 
-		 2: %cl_1_3->undeleted def_%cl_1_4 %cl_1_3[3.1,] 
-		 3: %cl_1_4->count def_%cl_1_5 %cl_1_4[3.2,] 
-		 4: COPY def_total %cl_1_5[3.3,] 
+		 2: %cl_1_3->undeleted def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:
+		 3: %cl_1_4->count def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:
+		 4: COPY TYPE_PASS def_total %cl_1_5[3.3,] 
 		 5: 
-		 6: def_%cl_1_7 %cl_1_5[3.3,] 
-		 7: def_%cl_1_8 %cl_1_7[3.6,] 
+		 6: %cl_1_5->/ def_%cl_1_7 %cl_1_5[3.3,] 	 ARGS:Fixnum,
+		 7: %cl_1_7->+ def_%cl_1_8 %cl_1_7[3.6,] 	 ARGS:Fixnum,
 		 8: def_%cl_1_6 %cl_1_8[3.7,] 
-		 9: %cl_1_6->each def_%cl_1_9 %cl_1_6[3.8,] %self[2.0,] 
+		 9: %cl_1_6->each def_%cl_1_9 %cl_1_6[3.8,] %self[2.0,] 	 ARGS:%cl_1_6,
 CLOSURE BEGIN: page[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -390,19 +390,19 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_2_0 
 		 2: RECEIVEARG def_page 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (Family) def_%cl_2_3 
-		 2: %cl_2_3->undeleted def_%cl_2_4 %cl_2_3[3.1,] 
-		 3: %cl_2_4->includes def_%cl_2_5 %cl_2_4[3.2,] 
-		 4: COPY def_%cl_2_6 page[2.2,] 
-		 5: %cl_2_5->paginate def_%cl_2_7 %cl_2_5[3.3,] %cl_2_6[3.4,] 
-		 6: %cl_2_7->each def_%cl_2_8 %cl_2_7[3.5,] %self[2.0,] 
+		 2: %cl_2_3->undeleted def_%cl_2_4 %cl_2_3[3.1,] 	 ARGS:
+		 3: %cl_2_4->includes def_%cl_2_5 %cl_2_4[3.2,] 	 ARGS:Symbol,
+		 4: HASH-per_page-page- def_%cl_2_6 page[2.2,] 
+		 5: %cl_2_5->paginate def_%cl_2_7 %cl_2_5[3.3,] %cl_2_6[3.4,] 	 ARGS:%cl_2_6,
+		 6: %cl_2_7->each def_%cl_2_8 %cl_2_7[3.5,] %self[2.0,] 	 ARGS:%cl_2_7,
 CLOSURE BEGIN: families[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -415,14 +415,14 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_3_0 
 		 2: RECEIVEARG def_family 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: families->family def_%cl_3_3 families[] %self[2.0,] 
+		 1: families->family def_%cl_3_3 families[] %self[2.0,] 	 ARGS:families,
 CLOSURE BEGIN: %self[2.0,] fam[] 
 BB 1
 	outgoing: 6 2 
@@ -435,16 +435,16 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_4_0 
 		 2: RECEIVEARG def_fam 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (EXPORT_COLS) def_%cl_4_3 
-		 2: def_%cl_4_4 %cl_4_3[3.1,] 
-		 3: %cl_4_4->each def_%cl_4_5 %cl_4_4[3.2,] %self[2.0,] 
+		 2: %cl_4_3->[] def_%cl_4_4 %cl_4_3[3.1,] 	 ARGS:Symbol,
+		 3: %cl_4_4->each def_%cl_4_5 %cl_4_4[3.2,] %self[2.0,] 	 ARGS:%cl_4_4,
 CLOSURE BEGIN: family[] col[] fam[2.2,] 
 BB 1
 	outgoing: 6 2 
@@ -457,15 +457,15 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_5_0 
 		 2: RECEIVEARG def_col 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: family->send def_%cl_5_3 family[] col[2.2,] 
-		 2: fam->tag! def_%cl_5_4 fam[] col[2.2,] %cl_5_3[3.1,] 
+		 1: family->send def_%cl_5_3 family[] col[2.2,] 	 ARGS:col,
+		 2: fam->tag! def_%cl_5_4 fam[] col[2.2,] %cl_5_3[3.1,] 	 ARGS:col,%cl_5_3,
 		 3: RETURN %cl_5_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -480,7 +480,7 @@ BB 6
 	instructions:
 CLOSURE END
 		 4: 
-		 5: fam->people def_%cl_4_6 fam[2.2,] %self[2.0,] 
+		 5: fam->people def_%cl_4_6 fam[2.2,] %self[2.0,] 	 ARGS:fam,
 CLOSURE BEGIN: family[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -493,16 +493,16 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_6_0 
 		 2: RECEIVEARG def_people 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: family->people def_%cl_6_3 family[] 
-		 2: %cl_6_3->sort_by def_%cl_6_4 %cl_6_3[3.1,] 
-		 3: %cl_6_4->each def_%cl_6_5 %cl_6_4[3.2,] %self[2.0,] 
+		 1: family->people def_%cl_6_3 family[] 	 ARGS:
+		 2: %cl_6_3->sort_by def_%cl_6_4 %cl_6_3[3.1,] 	 ARGS:
+		 3: %cl_6_4->each def_%cl_6_5 %cl_6_4[3.2,] %self[2.0,] 	 ARGS:%cl_6_4,
 CLOSURE BEGIN: people[2.2,] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -515,14 +515,14 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_7_0 
 		 2: RECEIVEARG def_person 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: people->person def_%cl_7_3 people[] %self[2.0,] 
+		 1: people->person def_%cl_7_3 people[] %self[2.0,] 	 ARGS:people,
 CLOSURE BEGIN: %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -535,16 +535,16 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_8_0 
 		 2: RECEIVEARG def_p 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (EXPORT_COLS) def_%cl_8_3 
-		 2: def_%cl_8_4 %cl_8_3[3.1,] 
-		 3: %cl_8_4->each def_%cl_8_5 %cl_8_4[3.2,] %self[2.0,] 
+		 2: %cl_8_3->[] def_%cl_8_4 %cl_8_3[3.1,] 	 ARGS:Symbol,
+		 3: %cl_8_4->each def_%cl_8_5 %cl_8_4[3.2,] %self[2.0,] 	 ARGS:%cl_8_4,
 CLOSURE BEGIN: person[] col[] p[2.2,] 
 BB 1
 	outgoing: 6 2 
@@ -557,16 +557,16 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_9_0 
 		 2: RECEIVEARG def_col 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: person->attributes def_%cl_9_3 person[] 
-		 2: def_%cl_9_4 %cl_9_3[3.1,] col[2.2,] 
-		 3: p->tag! def_%cl_9_5 p[] col[2.2,] %cl_9_4[3.2,] 
+		 1: person->attributes def_%cl_9_3 person[] 	 ARGS:
+		 2: %cl_9_3->[] def_%cl_9_4 %cl_9_3[3.1,] col[2.2,] 	 ARGS:col,
+		 3: p->tag! def_%cl_9_5 p[] col[2.2,] %cl_9_4[3.2,] 	 ARGS:col,%cl_9_4,
 		 4: RETURN %cl_9_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 

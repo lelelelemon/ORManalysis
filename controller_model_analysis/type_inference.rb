@@ -71,6 +71,14 @@ def type_valid(instr, v_name)
 		return c_name
 	end
 	t = known_type(v_name, instr.getBB.getCFG, c_name)
+	if t and t.type == "self_model_name"
+		#use dynamic typing
+		if instr.getINode
+			model_name = instr.getINode.cur_class.gsub("Controller","").downcase.singularize.capitalize
+			puts "Model name = #{model_name}"
+			return model_name
+		end
+	end
 	if type_not_found(t)
 		return nil
 	else
@@ -145,6 +153,18 @@ def read_util_function
 		chs = line.split(' ')
 		$util_function_list[chs[0]] = chs[1]
 	end
+	f_name = "#{$app_dir}/util_func_list.txt"
+	if File.exist?(f_name)
+		File.open(f_name, "r").each do |line|
+			line = line.gsub("\n","")
+			chs = line.split(' ')
+			if chs[1]
+				$util_function_list[chs[0]] = chs[1]
+			else
+				$util_function_list[chs[0]] = nil
+			end
+		end
+	end
 end
 def util_function(fname, instr, cfg, c_name)
 	t = $util_function_list[fname]
@@ -166,6 +186,8 @@ def util_function(fname, instr, cfg, c_name)
 		end
 	elsif t == "SELF"
 		return c_name
+	elsif t == "SELF_MODEL_CLASS"
+		return "self_model_name"
 	else
 		return t
 	end
@@ -318,6 +340,9 @@ end
 def set_initial_type(cfg, f_name, c_name)
 	add_to_cfg_varmap(cfg, c_name, "%self", nil)
 	add_to_cfg_varmap(cfg, c_name, "self", nil)
+	if c_name.include?"Controller"
+		add_to_cfg_varmap(cfg, c_name, "self_model_class", nil)
+	end
 	cfg.getBB.each do |bb|
 		#puts "\tBB#{bb.getIndex}:"
 		bb.getInstr.each do |instr|

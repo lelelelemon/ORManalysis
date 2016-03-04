@@ -9,14 +9,14 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (DocumentFolder) def_%v_3 
-		 7: %self->parent_folder_ids def_%v_4 %self[2.0,] 
-		 8: %v_3->find def_%v_5 %v_3[2.6,] %v_4[2.7,] 
-		 9: %v_5->sort_by def_%v_6 %v_5[2.8,] %self[2.0,2.7,] 
+		 7: %self->parent_folder_ids def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_3->find def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
+		 9: %v_5->sort_by def_%v_6 %v_5[2.8,] %self[2.0,2.7,] 	 ARGS:%v_5,
 CLOSURE BEGIN: %self[2.0,2.7,] f[] 
 BB 1
 	outgoing: 6 2 
@@ -29,16 +29,16 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_f 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->parent_folder_ids def_%cl_1_3 %self[2.0,] 
-		 2: f->id def_%cl_1_4 f[2.2,] 
-		 3: %cl_1_3->index def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 
+		 1: %self->parent_folder_ids def_%cl_1_3 %self[2.0,] 	 ARGS:
+		 2: f->id def_%cl_1_4 f[2.2,] 	 ARGS:
+		 3: %cl_1_3->index def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
 		 4: RETURN %cl_1_5[3.3,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 
@@ -69,15 +69,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->group_ids def_%v_3 %self[2.0,] 
-		 7: %self->parent_folders def_%v_4 %self[2.0,2.6,] 
-		 8: %v_4->flat_map def_%v_5 %v_4[2.7,] 
-		 9: def_%v_6 %v_3[2.6,] %v_5[2.8,] 
-		 10: %v_6->uniq def_%v_7 %v_6[2.9,] 
+		 6: %self->group_ids def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %self->parent_folders def_%v_4 %self[2.0,2.6,] 	 ARGS:
+		 8: %v_4->flat_map def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: %v_3->+ def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: %v_6->uniq def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: RETURN %v_7[2.10,] %self[2.0,2.6,2.7,] 
 BB 3
 	outgoing: 
@@ -95,14 +95,14 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Group) def_%v_3 
-		 7: %self->all_group_ids def_%v_4 %self[2.0,] 
-		 8: COPY def_%v_5 %v_4[2.7,] 
-		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_5[2.8,] 
+		 7: %self->all_group_ids def_%v_4 %self[2.0,] 	 ARGS:
+		 8: HASH-id- def_%v_5 %v_4[2.7,] 
+		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: RETURN %v_6[2.9,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -120,12 +120,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->group_ids def_%v_3 %self[2.0,] 
-		 7: %v_3->any? def_%v_4 %v_3[2.6,] 
+		 6: %self->group_ids def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->any? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -143,18 +143,18 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->hidden? def_%v_3 %self[2.0,] 
+		 6: %self->hidden? def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %self->parent_folders def_%v_4 %self[2.0,] 
-		 1: %v_4->any? def_%v_5 %v_4[3.0,] 
+		 0: %self->parent_folders def_%v_4 %self[2.0,] 	 ARGS:
+		 1: %v_4->any? def_%v_5 %v_4[3.0,] 	 ARGS:
 		 2: RETURN %v_5[3.1,] %self[3.0,2.0,] 
 BB 4
 	outgoing: 5 
@@ -177,15 +177,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->folders def_%v_3 %self[2.0,] 
-		 7: %v_3->count def_%v_4 %v_3[2.6,] 
-		 8: %self->documents def_%v_5 %self[2.0,2.6,] 
-		 9: %v_5->count def_%v_6 %v_5[2.8,] 
-		 10: def_%v_7 %v_4[2.7,] %v_6[2.9,] 
+		 6: %self->folders def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->count def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %self->documents def_%v_5 %self[2.0,2.6,] 	 ARGS:
+		 9: %v_5->count def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %v_4->+ def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: RETURN %v_7[2.10,] %self[2.0,2.6,2.8,] 
 BB 3
 	outgoing: 

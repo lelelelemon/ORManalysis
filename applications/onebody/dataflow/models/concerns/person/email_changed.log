@@ -9,12 +9,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 %self[2.0,] 
-		 7: RETURN %v_3[2.6,] %self[2.0,] 
+		 6: %self->[] def_%v_3 %self[2.0,] 	 ARGS:Symbol,
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
 	datadep: 
@@ -31,11 +31,11 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->dont_mark_email_changed def_%v_3 %self[2.0,] 
+		 6: %self->dont_mark_email_changed def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 9 
@@ -46,11 +46,11 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
-		 2: %self->changed def_%v_5 %self[2.0,] 
-		 3: COPY def_%v_6 
-		 4: %v_5->include? def_%v_7 %v_5[4.2,] %v_6[4.3,] 
+		 2: %self->changed def_%v_5 %self[2.0,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%v_6 
+		 4: %v_5->include? def_%v_7 %v_5[4.2,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: BRANCH %v_7[4.4,] 
 BB 6
 	outgoing: 9 
@@ -60,8 +60,8 @@ BB 6
 		 1: ATTRASSIGN %self->[] 
 		 2: 
 		 3: (Notifier) def_%v_8 
-		 4: %v_8->email_update def_%v_9 %v_8[6.3,] %self[6.1,2.0,] 
-		 5: %v_9->deliver_now def_%v_10 %v_9[6.4,] 
+		 4: %v_8->email_update def_%v_9 %v_8[6.3,] %self[6.1,2.0,] 	 ARGS:%self,
+		 5: %v_9->deliver_now def_%v_10 %v_9[6.4,] 	 ARGS:
 		 6: RETURN %v_10[6.5,] %self[6.1,2.0,] 
 BB 7
 	outgoing: 9 

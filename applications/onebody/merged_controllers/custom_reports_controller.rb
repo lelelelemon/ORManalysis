@@ -3,8 +3,6 @@ class CustomReportsController < ApplicationController
 
   def index
     redirect_to admin_reports_url
- @title = "What are you doing here? - (Report Index Page)" 
-
   end
 
   def show
@@ -13,12 +11,15 @@ class CustomReportsController < ApplicationController
       @footer = @custom_report.footer
       @report_data = @custom_report.data_set(@custom_report.category)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = @custom_report.title 
  @header.html_safe 
  @report_data.each do |param| 
  Mustache.render(@custom_report.body, param).html_safe 
  end 
  @footer.html_safe 
+
+end
 
   end
 
@@ -29,6 +30,34 @@ class CustomReportsController < ApplicationController
     else
       render text: t('not_authorized'), layout: true, status: 401
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('reports.custom_reports.new.title') 
+  form_for @custom_report do |form| 
+ error_messages_for(form) 
+ form.label :title, t('reports.custom_reports.fields.title') 
+ form.text_field :title, class: 'form-control' 
+ form.label :category, t('reports.custom_reports.fields.category') 
+ form.select :category, [['', nil], [t('reports.custom_reports.fields.category.people'), '1'], [t('reports.custom_reports.fields.category.family'), '2'], [t('reports.custom_reports.fields.category.groups'), '3']], {}, class: 'form-control' 
+ form.label :header, t('reports.custom_reports.fields.header') 
+ form.text_area :header, rows: 10, cols: 80, class: 'form-control' 
+ form.label :body, t('reports.custom_reports.fields.body') 
+ form.text_area :body, rows: 10, cols: 80, class: 'form-control' 
+ form.label :footer, t('reports.custom_reports.fields.footer') 
+ form.text_area :footer, rows: 5, cols: 80, class: 'form-control' 
+ form.label :filters, t('reports.custom_reports.fields.filters') 
+ form.text_field :filters, class: 'form-control' 
+ form.button t('save'), class: 'btn btn-success' 
+ end 
+ content_for :css do 
+ stylesheet_link_tag 'editor' 
+ end 
+ content_for :js do 
+ javascript_include_tag 'editor' 
+ end 
+ 
+
+end
+
   end
 
   def create
@@ -38,7 +67,34 @@ class CustomReportsController < ApplicationController
         redirect_to admin_reports_path,
                     notice: t('reports.custom_reports.create.notice')
       else
-        render :new
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('reports.custom_reports.new.title') 
+  form_for @custom_report do |form| 
+ error_messages_for(form) 
+ form.label :title, t('reports.custom_reports.fields.title') 
+ form.text_field :title, class: 'form-control' 
+ form.label :category, t('reports.custom_reports.fields.category') 
+ form.select :category, [['', nil], [t('reports.custom_reports.fields.category.people'), '1'], [t('reports.custom_reports.fields.category.family'), '2'], [t('reports.custom_reports.fields.category.groups'), '3']], {}, class: 'form-control' 
+ form.label :header, t('reports.custom_reports.fields.header') 
+ form.text_area :header, rows: 10, cols: 80, class: 'form-control' 
+ form.label :body, t('reports.custom_reports.fields.body') 
+ form.text_area :body, rows: 10, cols: 80, class: 'form-control' 
+ form.label :footer, t('reports.custom_reports.fields.footer') 
+ form.text_area :footer, rows: 5, cols: 80, class: 'form-control' 
+ form.label :filters, t('reports.custom_reports.fields.filters') 
+ form.text_field :filters, class: 'form-control' 
+ form.button t('save'), class: 'btn btn-success' 
+ end 
+ content_for :css do 
+ stylesheet_link_tag 'editor' 
+ end 
+ content_for :js do 
+ javascript_include_tag 'editor' 
+ end 
+ 
+
+end
+
       end
     else
       render text: t('not_authorized'), layout: true, status: 401
@@ -49,6 +105,34 @@ class CustomReportsController < ApplicationController
     unless @logged_in.can_update?(@custom_report)
       render text: t('not_authorized'), layout: true, status: 401
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('reports.custom_reports.edit.title') 
+  form_for @custom_report do |form| 
+ error_messages_for(form) 
+ form.label :title, t('reports.custom_reports.fields.title') 
+ form.text_field :title, class: 'form-control' 
+ form.label :category, t('reports.custom_reports.fields.category') 
+ form.select :category, [['', nil], [t('reports.custom_reports.fields.category.people'), '1'], [t('reports.custom_reports.fields.category.family'), '2'], [t('reports.custom_reports.fields.category.groups'), '3']], {}, class: 'form-control' 
+ form.label :header, t('reports.custom_reports.fields.header') 
+ form.text_area :header, rows: 10, cols: 80, class: 'form-control' 
+ form.label :body, t('reports.custom_reports.fields.body') 
+ form.text_area :body, rows: 10, cols: 80, class: 'form-control' 
+ form.label :footer, t('reports.custom_reports.fields.footer') 
+ form.text_area :footer, rows: 5, cols: 80, class: 'form-control' 
+ form.label :filters, t('reports.custom_reports.fields.filters') 
+ form.text_field :filters, class: 'form-control' 
+ form.button t('save'), class: 'btn btn-success' 
+ end 
+ content_for :css do 
+ stylesheet_link_tag 'editor' 
+ end 
+ content_for :js do 
+ javascript_include_tag 'editor' 
+ end 
+ 
+
+end
+
   end
 
   def update
@@ -57,7 +141,34 @@ class CustomReportsController < ApplicationController
         redirect_to admin_reports_path,
                     notice: t('reports.custom_reports.update.notice')
       else
-        render :edit
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('reports.custom_reports.edit.title') 
+  form_for @custom_report do |form| 
+ error_messages_for(form) 
+ form.label :title, t('reports.custom_reports.fields.title') 
+ form.text_field :title, class: 'form-control' 
+ form.label :category, t('reports.custom_reports.fields.category') 
+ form.select :category, [['', nil], [t('reports.custom_reports.fields.category.people'), '1'], [t('reports.custom_reports.fields.category.family'), '2'], [t('reports.custom_reports.fields.category.groups'), '3']], {}, class: 'form-control' 
+ form.label :header, t('reports.custom_reports.fields.header') 
+ form.text_area :header, rows: 10, cols: 80, class: 'form-control' 
+ form.label :body, t('reports.custom_reports.fields.body') 
+ form.text_area :body, rows: 10, cols: 80, class: 'form-control' 
+ form.label :footer, t('reports.custom_reports.fields.footer') 
+ form.text_area :footer, rows: 5, cols: 80, class: 'form-control' 
+ form.label :filters, t('reports.custom_reports.fields.filters') 
+ form.text_field :filters, class: 'form-control' 
+ form.button t('save'), class: 'btn btn-success' 
+ end 
+ content_for :css do 
+ stylesheet_link_tag 'editor' 
+ end 
+ content_for :js do 
+ javascript_include_tag 'editor' 
+ end 
+ 
+
+end
+
       end
     else
       render text: t('not_authorized'), layout: true, status: 401

@@ -168,15 +168,17 @@ class Class_class
 	#Actually the logic here is just like "findCaller" in Function_call
 	#TODO: here we use depth... to force stop searching
 	def findMethodRecursive(name, step = 0)
-		if step > 5
-			return nil
-		end
 		if @methods[name]
 			return @methods[name]
 		else
+			if step > 5
+				return nil
+			end
 			temp_class_name = @upper_class
 			@searched_class = Array.new
-			while $class_map[temp_class_name] != nil
+			@step = 0
+			while $class_map[temp_class_name] != nil and @step < 10
+				@step += 1
 				f = $class_map[temp_class_name].findMethodRecursive(name, step+1)
 				if f != nil
 					return f

@@ -8,58 +8,18 @@ class GroupsController < ApplicationController
     else
       overview_index
     end
- @title = t('groups.heading') 
- if (@unapproved_groups.any? or params[:pending_approval]) and @logged_in.admin?(:manage_groups) 
- t('groups.pending_approval.description', count: @unapproved_groups.length) 
- if @unapproved_groups.any? 
- @unapproved_groups.each do |group| 
- link_to group.name, group 
- end 
- else 
- t('none') 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ escape_javascript  @groups.each do |group| 
+ check_box_tag 'ids[]', group.id, false, style: 'float:left', data: { name: group.name } 
+ group.category 
+ group.name 
+ if group.link_code.present? 
+ icon 'fa fa-link' 
  end 
  end 
- t('groups.search.heading') 
- form_tag(groups_path, method: 'get', class: 'form-inline group-search-form') do 
- text_field_tag :name, params[:name], class: 'form-control', placeholder: t('groups.search.name_placeholder') 
- button_tag class: 'btn btn-info' do 
- icon 'fa fa-search' 
- t('groups.search.submit') 
- end 
- end 
- t('groups.browse.heading') 
- select_tag 'category', options_for_select([[t('groups.browse.select_category'), '']] + @categories), class: 'form-control' 
- link_to groups_path(name: '') do 
- icon 'fa fa-group' 
- t('groups.browse.all') 
- end 
- t('groups.create.heading') 
- t('groups.create.description') 
- link_to new_group_path, class: 'btn btn-success' do 
- icon 'fa fa-plus-circle' 
- t('groups.create.button') 
- end 
- if new_groups.any? 
- t('groups.new_list.heading') 
- t('groups.table.group_name') 
- t('groups.table.member_count') 
- new_groups.each do |group| 
- group_avatar_tag(group) 
- link_to group.name, group 
- t('new') 
- if group.private? 
- icon 'fa fa-lock' 
- t('groups.private.label') 
- end 
- if group.hidden? 
- icon 'fa fa-eye-slash' 
- t('groups.hidden.label') 
- end 
- group.memberships.count 
- end 
- end 
- t('groups.your_groups') 
- render partial: 'person_groups' 
+ 
+
+end
 
   end
 
@@ -74,15 +34,156 @@ class GroupsController < ApplicationController
       @pictures.where!('albums.is_public' => true) unless @logged_in.member_of?(@group)
       @tasks = @group.tasks.references(:task)
     else
-      render action: 'show_limited'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = @group.name 
+ t('groups.limited.intro') 
+  if @group.membership_requests.where(person_id: @logged_in.id).any? 
+ icon 'fa fa-plus' 
+ t('groups.show.controls.join_pending') 
+ else 
+ if @member_of 
+ link_to group_membership_path(@group, @logged_in), method: 'delete', data: { confirm: t('are_you_sure') }, class: 'btn btn-danger' do 
+ icon 'fa fa-times' 
+ t('groups.show.controls.leave') 
+ end 
+ else 
+ link_to group_memberships_path(@group, id: @logged_in), method: 'post', data: { confirm: must_request_group_join?(@group) ? t('groups.join.confirm') : t('are_you_sure') }, class: 'btn btn-success' do 
+ icon 'fa fa-plus' 
+ t('groups.show.controls.join') 
+ end 
+ end 
+ end 
+ 
+
+end
+
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+
   end
 
   def new
     @group = Group.new(creator_id: @logged_in.id)
     @categories = Group.categories.keys
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('groups.new.heading') 
- render partial: 'form' 
+  form_for @group, html: { multipart: true } do |form| 
+ error_messages_for(form) 
+ link_to t('groups.edit.tabs.details'), '#details', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.meets'), '#meets', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.features'), '#features', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.security'), '#security', data: { toggle: 'tab' } 
+ if @logged_in.admin?(:manage_groups) 
+ link_to t('groups.edit.tabs.advanced'), '#advanced', data: { toggle: 'tab' } 
+ end 
+  form.label :name 
+ form.text_field :name, onkeyup: 'update_address(this.value)', class: 'form-control' 
+ t('groups.edit.required_field') 
+ icon 'fa fa-star text-red' 
+ form.label :category 
+ form.select :category, group_categories, { include_blank: true }, class: 'can-create form-control' 
+ t('groups.edit.required_field') 
+ icon 'fa fa-star text-red' 
+ t('groups.edit.category.help') 
+ form.label :description 
+ form.text_area :description, rows: 3, class: 'form-control' 
+ t('groups.edit.description.help') 
+ form.label :other_notes 
+ form.text_area :other_notes, rows: 3, class: 'form-control' 
+ form.label :leader_id 
+ form.select :leader_id, @group.people.map { |m| [m.name, m.id] }, { include_blank: true }, class: 'form-control' 
+ form.label :creator 
+ form.text_field :creator, value: (@group.creator ? @group.creator.name : nil), readonly: true, name: 'creator_name', class: 'form-control' 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.label :meets 
+ form.text_field :meets, class: 'form-control' 
+ t('groups.edit.meets.help') 
+ form.label :location 
+ form.text_area :location, rows: 3, class: 'form-control' 
+ t('groups.edit.location.help') 
+ form.label :directions 
+ form.text_area :directions, rows: 3, class: 'form-control' 
+ t('groups.edit.directions.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.check_box :email, class: 'checkbox', data: { toggle: '#group_address_field' } 
+ form.label :email, class: 'inline' 
+ form.text_field :address, size: 15, class: 'form-control' 
+ t('groups.edit.address.help') 
+ form.check_box :prayer, class: 'checkbox' 
+ form.label :prayer, class: 'inline' 
+ form.check_box :pictures, class: 'checkbox' 
+ form.label :pictures, class: 'inline' 
+ form.check_box :attendance, class: 'checkbox', disabled: @group.attendance_required? 
+ form.label :attendance, class: "inline #{'disabled' if @group.attendance_required?}" 
+ if @group.attendance_required? 
+ t('groups.edit.attendance_disabled.help') 
+ end 
+ form.check_box :has_tasks, class: 'checkbox' 
+ form.label :has_tasks, class: 'inline' 
+ #.form-group 
+ #  = check_box_tag :calendar, nil, @group.gcal_private_link.present?, class: 'checkbox', data: { toggle: '#group_calendar_field' } 
+ #  = label_tag :calendar, t('groups.edit.enable_calendar'), class: 'inline' 
+ #.form-group#group_calendar_field 
+ #  = form.label :gcal_private_link 
+ #  = form.text_field :gcal_private_link, size: 50, class: 'form-control' 
+ #  %span.help-block 
+ #    = t('groups.edit.calendar.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.check_box :approval_required_to_join, class: 'checkbox', onclick: "check_mutual_exclusion()" 
+ form.label :approval_required_to_join, nil, class: 'inline' 
+ t('groups.edit.approval_required_to_join.help') 
+ form.check_box :private, class: 'checkbox', onclick: "check_mutual_exclusion()" 
+ form.label :private, nil, class: 'inline' 
+ t('groups.edit.private_group.help') 
+ form.check_box :members_send, class: 'checkbox' 
+ form.label :members_send, nil, class: 'inline' 
+ t('groups.edit.members_send.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+ if @logged_in.admin?(:manage_groups) 
+  t('groups.edit.advanced.description') 
+ form.label :membership_mode 
+ form.select :membership_mode, group_membership_modes, {}, class: 'form-control' 
+ form.label :link_code 
+ form.text_field :link_code, class: 'form-control' 
+ t('groups.edit.class_link_code.help_html', url: 'https://github.com/churchio/onebody/wiki/How-Group-Membership-Works') 
+ form.label :parents_of 
+ form.select :parents_of, [['(' + t('none') + ')', '']] + (Group.where(hidden: false).order('name').to_a - [@group]).map { |g| [g.name, g.id] }, {}, class: 'form-control' 
+ t('groups.edit.parents_of.help_html') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ t('groups.hide.heading') 
+ t('groups.hide.intro') 
+ if @group.hidden? 
+ link_to group_path(@group, 'group[hidden]' => false), data: { method: 'put', confirm: t('are_you_sure') }, class: 'btn btn-success' do 
+ icon 'fa fa-eye' 
+ t('groups.hide.unhide_button') 
+ end 
+ elsif @group.id 
+ link_to group_path(@group, 'group[hidden]' => true), data: { method: 'put', confirm: t('are_you_sure') }, class: 'btn btn-warning' do 
+ icon 'fa fa-eye-slash' 
+ t('groups.hide.button') 
+ end 
+ end 
+ t('groups.delete.heading') 
+ t('groups.delete.intro') 
+ link_to @group, data: { method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-danger' do 
+ icon 'fa fa-trash' 
+ t('groups.delete.button') 
+ end 
+ 
+ end 
+ photo_upload_for @group do 
+ avatar_tag @group, size: :large 
+ end 
+ end 
+ 
+
+end
 
   end
 
@@ -100,7 +201,124 @@ class GroupsController < ApplicationController
       redirect_to @group
     else
       @categories = Group.categories.keys
-      render action: 'new'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('groups.new.heading') 
+  form_for @group, html: { multipart: true } do |form| 
+ error_messages_for(form) 
+ link_to t('groups.edit.tabs.details'), '#details', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.meets'), '#meets', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.features'), '#features', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.security'), '#security', data: { toggle: 'tab' } 
+ if @logged_in.admin?(:manage_groups) 
+ link_to t('groups.edit.tabs.advanced'), '#advanced', data: { toggle: 'tab' } 
+ end 
+  form.label :name 
+ form.text_field :name, onkeyup: 'update_address(this.value)', class: 'form-control' 
+ t('groups.edit.required_field') 
+ icon 'fa fa-star text-red' 
+ form.label :category 
+ form.select :category, group_categories, { include_blank: true }, class: 'can-create form-control' 
+ t('groups.edit.required_field') 
+ icon 'fa fa-star text-red' 
+ t('groups.edit.category.help') 
+ form.label :description 
+ form.text_area :description, rows: 3, class: 'form-control' 
+ t('groups.edit.description.help') 
+ form.label :other_notes 
+ form.text_area :other_notes, rows: 3, class: 'form-control' 
+ form.label :leader_id 
+ form.select :leader_id, @group.people.map { |m| [m.name, m.id] }, { include_blank: true }, class: 'form-control' 
+ form.label :creator 
+ form.text_field :creator, value: (@group.creator ? @group.creator.name : nil), readonly: true, name: 'creator_name', class: 'form-control' 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.label :meets 
+ form.text_field :meets, class: 'form-control' 
+ t('groups.edit.meets.help') 
+ form.label :location 
+ form.text_area :location, rows: 3, class: 'form-control' 
+ t('groups.edit.location.help') 
+ form.label :directions 
+ form.text_area :directions, rows: 3, class: 'form-control' 
+ t('groups.edit.directions.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.check_box :email, class: 'checkbox', data: { toggle: '#group_address_field' } 
+ form.label :email, class: 'inline' 
+ form.text_field :address, size: 15, class: 'form-control' 
+ t('groups.edit.address.help') 
+ form.check_box :prayer, class: 'checkbox' 
+ form.label :prayer, class: 'inline' 
+ form.check_box :pictures, class: 'checkbox' 
+ form.label :pictures, class: 'inline' 
+ form.check_box :attendance, class: 'checkbox', disabled: @group.attendance_required? 
+ form.label :attendance, class: "inline #{'disabled' if @group.attendance_required?}" 
+ if @group.attendance_required? 
+ t('groups.edit.attendance_disabled.help') 
+ end 
+ form.check_box :has_tasks, class: 'checkbox' 
+ form.label :has_tasks, class: 'inline' 
+ #.form-group 
+ #  = check_box_tag :calendar, nil, @group.gcal_private_link.present?, class: 'checkbox', data: { toggle: '#group_calendar_field' } 
+ #  = label_tag :calendar, t('groups.edit.enable_calendar'), class: 'inline' 
+ #.form-group#group_calendar_field 
+ #  = form.label :gcal_private_link 
+ #  = form.text_field :gcal_private_link, size: 50, class: 'form-control' 
+ #  %span.help-block 
+ #    = t('groups.edit.calendar.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.check_box :approval_required_to_join, class: 'checkbox', onclick: "check_mutual_exclusion()" 
+ form.label :approval_required_to_join, nil, class: 'inline' 
+ t('groups.edit.approval_required_to_join.help') 
+ form.check_box :private, class: 'checkbox', onclick: "check_mutual_exclusion()" 
+ form.label :private, nil, class: 'inline' 
+ t('groups.edit.private_group.help') 
+ form.check_box :members_send, class: 'checkbox' 
+ form.label :members_send, nil, class: 'inline' 
+ t('groups.edit.members_send.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+ if @logged_in.admin?(:manage_groups) 
+  t('groups.edit.advanced.description') 
+ form.label :membership_mode 
+ form.select :membership_mode, group_membership_modes, {}, class: 'form-control' 
+ form.label :link_code 
+ form.text_field :link_code, class: 'form-control' 
+ t('groups.edit.class_link_code.help_html', url: 'https://github.com/churchio/onebody/wiki/How-Group-Membership-Works') 
+ form.label :parents_of 
+ form.select :parents_of, [['(' + t('none') + ')', '']] + (Group.where(hidden: false).order('name').to_a - [@group]).map { |g| [g.name, g.id] }, {}, class: 'form-control' 
+ t('groups.edit.parents_of.help_html') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ t('groups.hide.heading') 
+ t('groups.hide.intro') 
+ if @group.hidden? 
+ link_to group_path(@group, 'group[hidden]' => false), data: { method: 'put', confirm: t('are_you_sure') }, class: 'btn btn-success' do 
+ icon 'fa fa-eye' 
+ t('groups.hide.unhide_button') 
+ end 
+ elsif @group.id 
+ link_to group_path(@group, 'group[hidden]' => true), data: { method: 'put', confirm: t('are_you_sure') }, class: 'btn btn-warning' do 
+ icon 'fa fa-eye-slash' 
+ t('groups.hide.button') 
+ end 
+ end 
+ t('groups.delete.heading') 
+ t('groups.delete.intro') 
+ link_to @group, data: { method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-danger' do 
+ icon 'fa fa-trash' 
+ t('groups.delete.button') 
+ end 
+ 
+ end 
+ photo_upload_for @group do 
+ avatar_tag @group, size: :large 
+ end 
+ end 
+ 
+
+end
+
     end
   end
 
@@ -112,6 +330,125 @@ class GroupsController < ApplicationController
     else
       render text: t('not_authorized'), layout: true, status: 401
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('groups.edit.heading') 
+ content_for(:sub_title, link_to(@group.name, @group)) 
+  form_for @group, html: { multipart: true } do |form| 
+ error_messages_for(form) 
+ link_to t('groups.edit.tabs.details'), '#details', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.meets'), '#meets', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.features'), '#features', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.security'), '#security', data: { toggle: 'tab' } 
+ if @logged_in.admin?(:manage_groups) 
+ link_to t('groups.edit.tabs.advanced'), '#advanced', data: { toggle: 'tab' } 
+ end 
+  form.label :name 
+ form.text_field :name, onkeyup: 'update_address(this.value)', class: 'form-control' 
+ t('groups.edit.required_field') 
+ icon 'fa fa-star text-red' 
+ form.label :category 
+ form.select :category, group_categories, { include_blank: true }, class: 'can-create form-control' 
+ t('groups.edit.required_field') 
+ icon 'fa fa-star text-red' 
+ t('groups.edit.category.help') 
+ form.label :description 
+ form.text_area :description, rows: 3, class: 'form-control' 
+ t('groups.edit.description.help') 
+ form.label :other_notes 
+ form.text_area :other_notes, rows: 3, class: 'form-control' 
+ form.label :leader_id 
+ form.select :leader_id, @group.people.map { |m| [m.name, m.id] }, { include_blank: true }, class: 'form-control' 
+ form.label :creator 
+ form.text_field :creator, value: (@group.creator ? @group.creator.name : nil), readonly: true, name: 'creator_name', class: 'form-control' 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.label :meets 
+ form.text_field :meets, class: 'form-control' 
+ t('groups.edit.meets.help') 
+ form.label :location 
+ form.text_area :location, rows: 3, class: 'form-control' 
+ t('groups.edit.location.help') 
+ form.label :directions 
+ form.text_area :directions, rows: 3, class: 'form-control' 
+ t('groups.edit.directions.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.check_box :email, class: 'checkbox', data: { toggle: '#group_address_field' } 
+ form.label :email, class: 'inline' 
+ form.text_field :address, size: 15, class: 'form-control' 
+ t('groups.edit.address.help') 
+ form.check_box :prayer, class: 'checkbox' 
+ form.label :prayer, class: 'inline' 
+ form.check_box :pictures, class: 'checkbox' 
+ form.label :pictures, class: 'inline' 
+ form.check_box :attendance, class: 'checkbox', disabled: @group.attendance_required? 
+ form.label :attendance, class: "inline #{'disabled' if @group.attendance_required?}" 
+ if @group.attendance_required? 
+ t('groups.edit.attendance_disabled.help') 
+ end 
+ form.check_box :has_tasks, class: 'checkbox' 
+ form.label :has_tasks, class: 'inline' 
+ #.form-group 
+ #  = check_box_tag :calendar, nil, @group.gcal_private_link.present?, class: 'checkbox', data: { toggle: '#group_calendar_field' } 
+ #  = label_tag :calendar, t('groups.edit.enable_calendar'), class: 'inline' 
+ #.form-group#group_calendar_field 
+ #  = form.label :gcal_private_link 
+ #  = form.text_field :gcal_private_link, size: 50, class: 'form-control' 
+ #  %span.help-block 
+ #    = t('groups.edit.calendar.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.check_box :approval_required_to_join, class: 'checkbox', onclick: "check_mutual_exclusion()" 
+ form.label :approval_required_to_join, nil, class: 'inline' 
+ t('groups.edit.approval_required_to_join.help') 
+ form.check_box :private, class: 'checkbox', onclick: "check_mutual_exclusion()" 
+ form.label :private, nil, class: 'inline' 
+ t('groups.edit.private_group.help') 
+ form.check_box :members_send, class: 'checkbox' 
+ form.label :members_send, nil, class: 'inline' 
+ t('groups.edit.members_send.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+ if @logged_in.admin?(:manage_groups) 
+  t('groups.edit.advanced.description') 
+ form.label :membership_mode 
+ form.select :membership_mode, group_membership_modes, {}, class: 'form-control' 
+ form.label :link_code 
+ form.text_field :link_code, class: 'form-control' 
+ t('groups.edit.class_link_code.help_html', url: 'https://github.com/churchio/onebody/wiki/How-Group-Membership-Works') 
+ form.label :parents_of 
+ form.select :parents_of, [['(' + t('none') + ')', '']] + (Group.where(hidden: false).order('name').to_a - [@group]).map { |g| [g.name, g.id] }, {}, class: 'form-control' 
+ t('groups.edit.parents_of.help_html') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ t('groups.hide.heading') 
+ t('groups.hide.intro') 
+ if @group.hidden? 
+ link_to group_path(@group, 'group[hidden]' => false), data: { method: 'put', confirm: t('are_you_sure') }, class: 'btn btn-success' do 
+ icon 'fa fa-eye' 
+ t('groups.hide.unhide_button') 
+ end 
+ elsif @group.id 
+ link_to group_path(@group, 'group[hidden]' => true), data: { method: 'put', confirm: t('are_you_sure') }, class: 'btn btn-warning' do 
+ icon 'fa fa-eye-slash' 
+ t('groups.hide.button') 
+ end 
+ end 
+ t('groups.delete.heading') 
+ t('groups.delete.intro') 
+ link_to @group, data: { method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-danger' do 
+ icon 'fa fa-trash' 
+ t('groups.delete.button') 
+ end 
+ 
+ end 
+ photo_upload_for @group do 
+ avatar_tag @group, size: :large 
+ end 
+ end 
+ 
+
+end
+
   end
 
   def update
@@ -122,7 +459,125 @@ class GroupsController < ApplicationController
         flash[:notice] = t('groups.saved')
         redirect_to @group
       else
-        edit; render action: 'edit'
+        edit; ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('groups.edit.heading') 
+ content_for(:sub_title, link_to(@group.name, @group)) 
+  form_for @group, html: { multipart: true } do |form| 
+ error_messages_for(form) 
+ link_to t('groups.edit.tabs.details'), '#details', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.meets'), '#meets', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.features'), '#features', data: { toggle: 'tab' } 
+ link_to t('groups.edit.tabs.security'), '#security', data: { toggle: 'tab' } 
+ if @logged_in.admin?(:manage_groups) 
+ link_to t('groups.edit.tabs.advanced'), '#advanced', data: { toggle: 'tab' } 
+ end 
+  form.label :name 
+ form.text_field :name, onkeyup: 'update_address(this.value)', class: 'form-control' 
+ t('groups.edit.required_field') 
+ icon 'fa fa-star text-red' 
+ form.label :category 
+ form.select :category, group_categories, { include_blank: true }, class: 'can-create form-control' 
+ t('groups.edit.required_field') 
+ icon 'fa fa-star text-red' 
+ t('groups.edit.category.help') 
+ form.label :description 
+ form.text_area :description, rows: 3, class: 'form-control' 
+ t('groups.edit.description.help') 
+ form.label :other_notes 
+ form.text_area :other_notes, rows: 3, class: 'form-control' 
+ form.label :leader_id 
+ form.select :leader_id, @group.people.map { |m| [m.name, m.id] }, { include_blank: true }, class: 'form-control' 
+ form.label :creator 
+ form.text_field :creator, value: (@group.creator ? @group.creator.name : nil), readonly: true, name: 'creator_name', class: 'form-control' 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.label :meets 
+ form.text_field :meets, class: 'form-control' 
+ t('groups.edit.meets.help') 
+ form.label :location 
+ form.text_area :location, rows: 3, class: 'form-control' 
+ t('groups.edit.location.help') 
+ form.label :directions 
+ form.text_area :directions, rows: 3, class: 'form-control' 
+ t('groups.edit.directions.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.check_box :email, class: 'checkbox', data: { toggle: '#group_address_field' } 
+ form.label :email, class: 'inline' 
+ form.text_field :address, size: 15, class: 'form-control' 
+ t('groups.edit.address.help') 
+ form.check_box :prayer, class: 'checkbox' 
+ form.label :prayer, class: 'inline' 
+ form.check_box :pictures, class: 'checkbox' 
+ form.label :pictures, class: 'inline' 
+ form.check_box :attendance, class: 'checkbox', disabled: @group.attendance_required? 
+ form.label :attendance, class: "inline #{'disabled' if @group.attendance_required?}" 
+ if @group.attendance_required? 
+ t('groups.edit.attendance_disabled.help') 
+ end 
+ form.check_box :has_tasks, class: 'checkbox' 
+ form.label :has_tasks, class: 'inline' 
+ #.form-group 
+ #  = check_box_tag :calendar, nil, @group.gcal_private_link.present?, class: 'checkbox', data: { toggle: '#group_calendar_field' } 
+ #  = label_tag :calendar, t('groups.edit.enable_calendar'), class: 'inline' 
+ #.form-group#group_calendar_field 
+ #  = form.label :gcal_private_link 
+ #  = form.text_field :gcal_private_link, size: 50, class: 'form-control' 
+ #  %span.help-block 
+ #    = t('groups.edit.calendar.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+  form.check_box :approval_required_to_join, class: 'checkbox', onclick: "check_mutual_exclusion()" 
+ form.label :approval_required_to_join, nil, class: 'inline' 
+ t('groups.edit.approval_required_to_join.help') 
+ form.check_box :private, class: 'checkbox', onclick: "check_mutual_exclusion()" 
+ form.label :private, nil, class: 'inline' 
+ t('groups.edit.private_group.help') 
+ form.check_box :members_send, class: 'checkbox' 
+ form.label :members_send, nil, class: 'inline' 
+ t('groups.edit.members_send.help') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ 
+ if @logged_in.admin?(:manage_groups) 
+  t('groups.edit.advanced.description') 
+ form.label :membership_mode 
+ form.select :membership_mode, group_membership_modes, {}, class: 'form-control' 
+ form.label :link_code 
+ form.text_field :link_code, class: 'form-control' 
+ t('groups.edit.class_link_code.help_html', url: 'https://github.com/churchio/onebody/wiki/How-Group-Membership-Works') 
+ form.label :parents_of 
+ form.select :parents_of, [['(' + t('none') + ')', '']] + (Group.where(hidden: false).order('name').to_a - [@group]).map { |g| [g.name, g.id] }, {}, class: 'form-control' 
+ t('groups.edit.parents_of.help_html') 
+ form.submit t('save_changes'), class: 'btn btn-success' 
+ t('groups.hide.heading') 
+ t('groups.hide.intro') 
+ if @group.hidden? 
+ link_to group_path(@group, 'group[hidden]' => false), data: { method: 'put', confirm: t('are_you_sure') }, class: 'btn btn-success' do 
+ icon 'fa fa-eye' 
+ t('groups.hide.unhide_button') 
+ end 
+ elsif @group.id 
+ link_to group_path(@group, 'group[hidden]' => true), data: { method: 'put', confirm: t('are_you_sure') }, class: 'btn btn-warning' do 
+ icon 'fa fa-eye-slash' 
+ t('groups.hide.button') 
+ end 
+ end 
+ t('groups.delete.heading') 
+ t('groups.delete.intro') 
+ link_to @group, data: { method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-danger' do 
+ icon 'fa fa-trash' 
+ t('groups.delete.button') 
+ end 
+ 
+ end 
+ photo_upload_for @group do 
+ avatar_tag @group, size: :large 
+ end 
+ end 
+ 
+
+end
+
       end
     else
       render text: t('not_authorized'), layout: true, status: 401
@@ -161,6 +616,20 @@ class GroupsController < ApplicationController
     else
       render text: t('not_authorized'), layout: true, status: 401
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @errors.any? 
+ @errors.each do |id, errors| 
+ id 
+ id 
+ escape_javascript errors.join('; ') 
+ end 
+ escape_javascript t('groups.batch.errors') 
+ else 
+ escape_javascript t('changes_saved') 
+ end 
+
+end
+
   end
 
   private
@@ -168,8 +637,16 @@ class GroupsController < ApplicationController
   def person_index
     @person = Person.find(params[:person_id])
     respond_to do |format|
-      format.js   { render partial: 'person_groups' }
-      format.html { render action: 'index_for_person' }
+      format.js   { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+ }
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t(@person.name =~ /s$/ ? 's' : 'no_s', scope: 'groups.groups_of', name: @person.name) 
+  
+
+end
+ }
     end
   end
 
@@ -184,7 +661,10 @@ class GroupsController < ApplicationController
     @groups.where!(hidden: false) unless @logged_in.admin?(:manage_groups) and params[:include_hidden]
     @groups = @groups.page(params[:page])
     respond_to do |format|
-      format.html { render action: 'search' }
+      format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+ }
       format.js
     end
   end

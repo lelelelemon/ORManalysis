@@ -149,7 +149,8 @@ class Instruction
 		@resolved = true
 	end
 	def toString
-		s = " (#{@bb.getIndex}.#{@index}) "
+		#s = "[#{self.getBB.getCFG.getMHandler.getName}] (#{@bb.getIndex}.#{@index}) "
+		s = "(#{@bb.getIndex}.#{@index}) "
 		@deps.each do |dep|
 			s = s + "#{dep.getVname}[#{dep.getBlock}.#{dep.getInstr}] "
 		end
@@ -190,14 +191,14 @@ class Call_instr < Instruction
 	end
 	def getCallerType
 		#This is only for method without CFG, for example, scope
-		if @call_handler != nil and @call_handler.caller != nil
+		if @call_handler and @call_handler.caller
 			return @call_handler.caller.getName
 		else
 			return type_valid(self, @caller)
 		end
 	end
 	def getTableName
-		if @funcname.end_with?("_count") and testTableField(getCallerType, @func_name[0...-6].downcase.singularize)
+		if @funcname.end_with?("_count") and testTableField(getCallerType, @funcname[0...-6].downcase.singularize)
 			return @func_name[0...-6].downcase.singularize.capitalize
 		end	
 		return self.getCallerType

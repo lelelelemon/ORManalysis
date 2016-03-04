@@ -9,17 +9,17 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_label 
 		 6: RECEIVEARG def_url 
 		 7: 
-		 8: COPY def_%v_3 
-		 9: COPY def_%v_4 
-		 10: def_%v_5 %v_3[2.8,] url[2.6,] %v_4[2.9,] 
-		 11: COPY def_%v_6 %v_5[2.10,] 
-		 12: %self->link_to def_%v_7 %self[2.0,] label[2.5,] url[2.6,] %v_6[2.11,] 
+		 8: COPY TYPE_StringLiteral def_%v_3 
+		 9: COPY TYPE_StringLiteral def_%v_4 
+		 10: BUILDSTRING def_%v_5 %v_3[2.8,] url[2.6,] %v_4[2.9,] 
+		 11: HASH-onclick- def_%v_6 %v_5[2.10,] 
+		 12: %self->link_to def_%v_7 %self[2.0,] label[2.5,] url[2.6,] %v_6[2.11,] 	 ARGS:label,url,%v_6,
 		 13: RETURN %v_7[2.12,] %self[2.0,2.12,] 
 BB 3
 	outgoing: 
@@ -37,12 +37,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: GETFIELD %self->alerts def_%v_3 %self[2.0,] 
-		 7: %v_3->map def_%v_4 %v_3[2.6,] %self[2.0,] 
+		 7: %v_3->map def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
 CLOSURE BEGIN: a[] 
 BB 1
 	outgoing: 6 2 
@@ -55,16 +55,16 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_a 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%cl_1_3 
-		 2: COPY def_%cl_1_4 
-		 3: def_%cl_1_5 %cl_1_3[3.1,] a[2.2,] %cl_1_4[3.2,] 
+		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 3: BUILDSTRING def_%cl_1_5 %cl_1_3[3.1,] a[2.2,] %cl_1_4[3.2,] 
 		 4: RETURN %cl_1_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -78,9 +78,9 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END
-		 8: COPY def_%v_5 
-		 9: %v_4->join def_%v_6 %v_4[2.7,] %v_5[2.8,] 
-		 10: %v_6->html_safe def_%v_7 %v_6[2.9,] 
+		 8: COPY TYPE_StringLiteral def_%v_5 
+		 9: %v_4->join def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: %v_6->html_safe def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: RETURN %v_7[2.10,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -98,8 +98,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_count 
 		 6: def_warn_threshold 
@@ -108,7 +108,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY def_warn_threshold 
+		 0: COPY TYPE_Nil def_warn_threshold 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -119,23 +119,23 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_critical_threshold 
+		 0: COPY TYPE_Nil def_critical_threshold 
 BB 6
 	outgoing: 7 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: count->to_i def_%v_3 count[2.5,] 
-		 2: COPY def_count %v_3[6.1,] 
+		 1: count->to_i def_%v_3 count[2.5,] 	 ARGS:
+		 2: COPY TYPE_PASS def_count %v_3[6.1,] 
 		 3: 
-		 4: COPY def_%v_4 critical_threshold[5.0,4.0,] 
+		 4: COPY TYPE_PASS def_%v_4 critical_threshold[5.0,4.0,] 
 		 5: BRANCH critical_threshold[5.0,4.0,] 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: def_%v_5 count[6.2,] critical_threshold[5.0,4.0,] 
-		 1: COPY def_%v_4 %v_5[7.0,] 
+		 0: count->>= def_%v_5 count[6.2,] critical_threshold[5.0,4.0,] 	 ARGS:critical_threshold,
+		 1: COPY TYPE_PASS def_%v_4 %v_5[7.0,] 
 BB 8
 	outgoing: 9 10 
 	datadep: 
@@ -146,21 +146,21 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_6 
+		 1: COPY TYPE_StringLiteral def_%v_6 
 		 2: RETURN %self[2.0,] 
 BB 10
 	outgoing: 11 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_7 warn_threshold[3.0,2.6,] 
+		 1: COPY TYPE_PASS def_%v_7 warn_threshold[3.0,2.6,] 
 		 2: BRANCH warn_threshold[3.0,2.6,] 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: def_%v_8 count[7.0,6.2,] warn_threshold[3.0,2.6,] 
-		 1: COPY def_%v_7 %v_8[11.0,] 
+		 0: count->> def_%v_8 count[7.0,6.2,] warn_threshold[3.0,2.6,] 	 ARGS:warn_threshold,
+		 1: COPY TYPE_PASS def_%v_7 %v_8[11.0,] 
 BB 12
 	outgoing: 13 14 
 	datadep: 
@@ -171,15 +171,15 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_9 
+		 1: COPY TYPE_StringLiteral def_%v_9 
 		 2: 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY def_%v_10 
-		 2: COPY def_%v_9 %v_10[14.1,] 
+		 1: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_PASS def_%v_9 %v_10[14.1,] 
 BB 15
 	outgoing: 17 
 	datadep: 
@@ -201,15 +201,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_count 
 		 6: 
-		 7: COPY def_%v_3 
-		 8: COPY def_%v_4 
-		 9: count->sub def_%v_5 count[2.5,] %v_4[2.8,] 
-		 10: %v_5->html_safe def_%v_6 %v_5[2.9,] 
+		 7: COPY TYPE_Regexp def_%v_3 
+		 8: COPY TYPE_StringLiteral def_%v_4 
+		 9: count->sub def_%v_5 count[2.5,] %v_4[2.8,] 	 ARGS:%v_3,%v_4,
+		 10: %v_5->html_safe def_%v_6 %v_5[2.9,] 	 ARGS:
 		 11: RETURN %v_6[2.10,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -227,8 +227,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_destination 
 		 6: RECEIVEARG def_count 
@@ -238,7 +238,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY def_warn_threshold 
+		 0: COPY TYPE_Nil def_warn_threshold 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -249,7 +249,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_critical_threshold 
+		 0: COPY TYPE_Nil def_critical_threshold 
 BB 6
 	outgoing: 7 
 	datadep: 
@@ -257,13 +257,13 @@ BB 6
 		 0: def_%v_3 
 		 1: def_block %v_3[6.0,] 
 		 2: 
-		 3: COPY def_%v_4 
-		 4: %self->metric_css_class def_%v_5 %self[2.0,] count[2.6,] warn_threshold[3.0,2.7,] critical_threshold[5.0,4.0,] 
-		 5: def_%v_6 %v_4[6.3,] %v_5[6.4,] 
-		 6: COPY def_css_class %v_6[6.5,] 
+		 3: COPY TYPE_StringLiteral def_%v_4 
+		 4: %self->metric_css_class def_%v_5 %self[2.0,] count[2.6,] warn_threshold[3.0,2.7,] critical_threshold[5.0,4.0,] 	 ARGS:count,warn_threshold,critical_threshold,
+		 5: %v_4->+ def_%v_6 %v_4[6.3,] %v_5[6.4,] 	 ARGS:%v_5,
+		 6: COPY TYPE_PASS def_css_class %v_6[6.5,] 
 		 7: 
-		 8: COPY def_%v_7 destination[2.5,] %v_6[6.5,] 
-		 9: %self->content_tag def_%v_8 %self[6.4,2.0,] %v_7[6.8,] %self[6.4,2.0,] 
+		 8: HASH-href-class- def_%v_7 destination[2.5,] %v_6[6.5,] 
+		 9: %self->content_tag def_%v_8 %self[6.4,2.0,] %v_7[6.8,] %self[6.4,2.0,] 	 ARGS:Symbol,%v_7,%self,
 CLOSURE BEGIN: %self[6.4,2.0,] block[6.1,] 
 BB 1
 	outgoing: 6 2 
@@ -275,15 +275,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->capture def_%cl_1_3 %self[2.0,] block[] 
-		 2: %self->wrap_metric_count def_%cl_1_4 %self[3.1,2.0,] %cl_1_3[3.1,] 
+		 1: %self->capture def_%cl_1_3 %self[2.0,] block[] 	 ARGS:
+		 2: %self->wrap_metric_count def_%cl_1_4 %self[3.1,2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: RETURN %cl_1_4[3.2,] %self[3.1,3.2,2.0,] 
 BB 4
 	outgoing: 6 

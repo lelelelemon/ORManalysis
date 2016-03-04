@@ -4,6 +4,7 @@ $in_loop = Array.new
 $in_validation = Array.new
 $general_call_stack = Array.new
 $funccall_stack = Array.new
+$cur_class = nil
 
 def handle_single_call_node2(start_class, start_function, instr, level)
 
@@ -96,7 +97,7 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 				end
 				temp_node = $cur_node	
 				cur_cfg = trace_query_flow(caller_class, instr.getFuncname, "", "", level+1)
-				if cur_cfg != nil
+				if cur_cfg != nil and cur_cfg.getBB[0]
 					temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
 					cur_cfg.getExplicitReturn.each do |rt|
 						dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
@@ -109,10 +110,10 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 					temp_node.getInstr.setCallCFG(cur_cfg)
 				end
 			else
-				#puts "executed before: #{call.getObjName}, #{call.getFuncName}"
+				#puts "executed before: #{instr.getCaller}, #{instr.getFuncname}"
 			end
 		else
-			#puts "Callerv = nil: #{call.getObjName} . #{call.getFuncName}"
+			#puts "Callerv = nil: #{instr.getCaller} . #{instr.getFuncname}"
 		end
 end
 
@@ -258,10 +259,10 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 	fromIns = nil
 	if cfg.getBB.length == 1 and cfg.getBB[0].getInstr.length > 0
 		fromIns = cfg.getBB[0].getInstr[0]
-	else
+	elsif cfg.getBB[1]
 		fromIns = cfg.getBB[1].getInstr[0]
 	end	
-	if fromIns.getDefv != nil and fromIns.getDefv == "%self"
+	if fromIns and fromIns.getDefv != nil and fromIns.getDefv == "%self"
 	else
 		fromIns = nil
 	end
@@ -318,7 +319,8 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 end
 
 def trace_query_flow(start_class, start_function, params, returnv, level)
-	
+
+	$cur_class = start_class
 	class_handler = $class_map[start_class]
 	if class_handler != nil
 		function_handler = class_handler.findMethodRecursive(start_function)
@@ -385,6 +387,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 		#handle_single_cfg2(start_class, start_function, class_handler, function_handler, cfg, level)
 		#return cfg
 	end
+	return nil
 end
 
 $global_check = Hash.new

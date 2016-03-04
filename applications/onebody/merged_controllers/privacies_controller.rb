@@ -11,6 +11,10 @@ class PrivaciesController < ApplicationController
     unless @family.visible?
       flash[:warning] = t('privacies.family_hidden')
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+
   end
 
   def update

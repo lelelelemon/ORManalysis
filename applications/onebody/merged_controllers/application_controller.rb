@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
       redirect_to 'http://' + site.host
       return false
     elsif request.host =~ /^www\./
-      redirect_to request.url.sub(/^(https?:\/\/)www\./, '\1')
+      redirect_to request.url.sub(/^(https?:\/\/)www\./, '')
       return false
     else
       render text: t('application.no_site_configured', host: request.host), status: 404
@@ -149,14 +149,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from 'EmailConnectionError' do |e|
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
-
- icon 'fa fa-warning' 
-
-
-end
-
-
+    render 'errors/email_connection_error'
   end
 
   def me?

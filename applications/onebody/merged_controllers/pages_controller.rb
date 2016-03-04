@@ -7,6 +7,7 @@ class PagesController < ApplicationController
 
   def index
     @pages = Page.where(system: true, published: true).order(:title)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('.heading') 
  t('.intro') 
  t('.name') 
@@ -17,12 +18,19 @@ class PagesController < ApplicationController
  link_to t('.edit_button'), edit_page_path(page), class: 'btn btn-info btn-xs' 
  end 
 
+end
+
   end
 
   def show_for_public
     if @page
       if @page.published?
-        render action: 'show', layout: 'signed_out'
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = @page.name 
+ sanitize_html @page.body 
+
+end
+
       else
         render text: t('pages.not_found'), status: 404
       end
@@ -36,8 +44,11 @@ class PagesController < ApplicationController
     unless @logged_in.admin?(:edit_pages)
       redirect_to page_for_public_path(path: @page.path)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = @page.name 
  sanitize_html @page.body 
+
+end
 
   end
 
@@ -46,6 +57,27 @@ class PagesController < ApplicationController
     unless @logged_in.can_update?(@page)
       render text: t('not_authorized'), layout: true, status: 401
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('pages.edit_page') 
+  form_for @page do |form| 
+ error_messages_for(form) 
+ form.label :title, t('pages.title') 
+ form.text_field :title, class: 'form-control' 
+ form.label :body, t('pages.body') 
+ form.text_area :body, rows: 20, cols: 80, class: 'form-control editor-control' 
+ form.button t('save'), class: 'btn btn-success' 
+ link_to t('pages.view_page'), page_path(@page), class: 'btn btn-info' 
+ end 
+ content_for :css do 
+ stylesheet_link_tag 'editor' 
+ end 
+ content_for :js do 
+ javascript_include_tag 'editor' 
+ end 
+ 
+
+end
+
   end
 
   def update
@@ -55,7 +87,27 @@ class PagesController < ApplicationController
         flash[:notice] = t('pages.saved')
         redirect_to pages_path
       else
-        render action: 'edit'
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('pages.edit_page') 
+  form_for @page do |form| 
+ error_messages_for(form) 
+ form.label :title, t('pages.title') 
+ form.text_field :title, class: 'form-control' 
+ form.label :body, t('pages.body') 
+ form.text_area :body, rows: 20, cols: 80, class: 'form-control editor-control' 
+ form.button t('save'), class: 'btn btn-success' 
+ link_to t('pages.view_page'), page_path(@page), class: 'btn btn-info' 
+ end 
+ content_for :css do 
+ stylesheet_link_tag 'editor' 
+ end 
+ content_for :js do 
+ javascript_include_tag 'editor' 
+ end 
+ 
+
+end
+
       end
     else
       render text: t('not_authorized'), layout: true, status: 401

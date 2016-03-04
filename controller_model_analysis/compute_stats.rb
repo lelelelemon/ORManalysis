@@ -95,7 +95,10 @@ def traceforward_data_dep(query_node)
 	@node_list.push(query_node)
 	while @node_list.length > 0 do
 		node = @node_list.pop
-		@traversed.push(node)
+		if @traversed.include?(node)
+		else
+			@traversed.push(node)
+		end
 		node.getDataflowEdges.each do |e|
 			#e.getToNode will never be nil
 			#if e.getToNode.isTableField?
@@ -277,6 +280,14 @@ class Temp_view_stat
 	end
 end
 
+class Temp_validation_stat
+	def initialize
+		@read = 0
+		@write = 0
+	end
+	attr_accessor :read, :write
+end
+
 def compute_dataflow_stat(output_dir, start_class, start_function, build_node_list_only=false)
 
 	if $root == nil
@@ -291,7 +302,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	
 	$node_list.each do |n|
 		n.setLabel
-		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		#puts "#{n.getIndex}:#{n.getInstr.toString}"
 		#if n.getInClosure
 		#	if n.getInView and n.getClosureStack.length == 1
 		#	else
@@ -304,9 +315,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		#end
 		if n.getInstr.is_a?Call_instr
 			caller_type = type_valid(n.getInstr, n.getInstr.getCaller)
-			puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
+			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
 			if n.getInstr.getDefv != nil
-				puts "\t\treturn type: #{type_valid(n.getInstr, n.getInstr.getDefv)}"
+				#puts "\t\treturn type: #{type_valid(n.getInstr, n.getInstr.getDefv)}"
 			end
 		end
 		n.getBackwardEdges.each do |e|
@@ -321,7 +332,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		end
 	end
 
-	exit
 
 	if build_node_list_only
 				#puts "#{n.getIndex}: Forward ARRAY length: #{@forwardarray.length}  (write: #{temp_to_write}) (stat: #{@read_sink_stat.to_write_query})"
@@ -421,9 +431,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			n.getValidationStack.each do |vl|
 				if @validation_stat[vl]
 				else
-					@validation_stat[vl] = 0
+					@validation_stat[vl] = Temp_validation_stat.new
 				end
-				@validation_stat[vl] += 1
+				if n.isReadQuery?
+					@validation_stat[vl].read += 1
+				else
+					@validation_stat[vl].write += 1
+				end
 			end
 
 			if n.getInClosure
@@ -659,7 +673,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	$graph_file.puts("<cliqueStat>")
 	@validation_stat.each do |k, vd|
-		$graph_file.puts("\t<validation>#{vd}<\/validation>")
+		$graph_file.puts("\t<validation>")
+		$graph_file.puts("\t\t<read>#{vd.read}<\/read>")
+		$graph_file.puts("\t\t<write>#{vd.write}<\/write>")
+		$graph_file.puts("\t<\/validation>")
 	end
 	@clique_stat.each do |cq|
 		$graph_file.puts("\t<clique>#{cq}<\/clique>")

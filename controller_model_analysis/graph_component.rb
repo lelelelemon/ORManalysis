@@ -28,6 +28,7 @@ class INode
 		@sink_list = Array.new
 		r = Random.new
 		@rnd = r.rand(1...1024)
+		@cur_class = $cur_class #This is for dynamic typing
 		if $closure_stack.length > 0
 			@in_closure = true
 			$closure_stack.each do |cl|
@@ -43,6 +44,7 @@ class INode
 	end
 	attr_accessor :index, :Tnode, :source_list, :sink_list
 	attr_accessor :longest_control_path_nextnode, :shortest_control_path_nextnode, :path_length, :shortest_path_length
+	attr_accessor :cur_class
 	def getClosureStack
 		@closure_stack
 	end
@@ -364,7 +366,7 @@ def compute_longest_single_path
 	#		end
 	#	end
 	#end
-	while temp_node.getControlflowEdges.length > 0
+	while temp_node and temp_node.getControlflowEdges.length > 0
 		p_length += 1
 		if temp_node.isQuery?
 			query_num += 1
@@ -380,7 +382,7 @@ def compute_longest_single_path
 	min_read_query = 0
 	min_p_length = 0
 	temp_node = $node_list[0]
-	while temp_node.getControlflowEdges.length > 0
+	while temp_node and temp_node.getControlflowEdges.length > 0
 		min_p_length += 1
 		if temp_node.isQuery?
 			min_query_num += 1

@@ -48,11 +48,62 @@ class FamiliesController < ApplicationController
     else
       render text: t('families.not_found'), status: 404
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+
   end
 
   def new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('families.new.heading') 
- render partial: 'form' 
+  form_for @family, html: { multipart: true } do |form| 
+ if params[:compact] 
+ hidden_field_tag :compact, true 
+ end 
+ if params[:people] 
+ hidden_field_tag :people,  true 
+ end 
+ if params[:barcode] 
+ hidden_field_tag :barcode, true 
+ end 
+ error_messages_for(form) 
+  form.label :name 
+ form.text_field :name, onkeyup: 'set_last_name()', class: 'form-control' 
+ if @family.new_record? 
+ t('families.edit.name_example_html') 
+ elsif @family.suggested_name and @family.suggested_name != @family.name 
+ t('families.edit.name_suggestion_html', name: @family.suggested_name) 
+ link_to '#', class: 'btn btn-xs btn-warning family-name-suggestion-button', data: { name: @family.suggested_name } do 
+ icon 'fa fa-bolt' 
+ t('families.edit.name_suggestion_button') 
+ end 
+ end 
+ form.label :last_name 
+ form.text_field :last_name, class: 'form-control' 
+  form.label :home_phone 
+ form.phone_field :home_phone, class: 'form-control' 
+ form.label :address1 
+ form.text_field :address1, class: 'form-control' 
+ form.label :address2 
+ form.text_field :address2, class: 'form-control' 
+ form.label :city, t('families.edit.city_st_zip') 
+ form.text_field :city, class: 'form-control inline full-width' 
+ form.text_field :state, class: 'form-control inline full-width' 
+ form.text_field :zip, class: 'form-control inline full-width' 
+ form.label :country 
+ form.country_select :country, { include_blank: true }, class: 'form-control' 
+ 
+ 
+ submit_or_save_button 
+ t('families.edit.photo') 
+ photo_upload_for @family do 
+ family_avatar_tag @family, size: :large 
+ end 
+ end 
+ 
+
+end
 
   end
 
@@ -62,13 +113,63 @@ class FamiliesController < ApplicationController
         format.html { redirect_to @family, notice: t('families.new.created.notice') }
         format.xml  { render xml: @family, status: :created, location: @family }
       else
-        format.html { render action: "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('families.new.heading') 
+  form_for @family, html: { multipart: true } do |form| 
+ if params[:compact] 
+ hidden_field_tag :compact, true 
+ end 
+ if params[:people] 
+ hidden_field_tag :people,  true 
+ end 
+ if params[:barcode] 
+ hidden_field_tag :barcode, true 
+ end 
+ error_messages_for(form) 
+  form.label :name 
+ form.text_field :name, onkeyup: 'set_last_name()', class: 'form-control' 
+ if @family.new_record? 
+ t('families.edit.name_example_html') 
+ elsif @family.suggested_name and @family.suggested_name != @family.name 
+ t('families.edit.name_suggestion_html', name: @family.suggested_name) 
+ link_to '#', class: 'btn btn-xs btn-warning family-name-suggestion-button', data: { name: @family.suggested_name } do 
+ icon 'fa fa-bolt' 
+ t('families.edit.name_suggestion_button') 
+ end 
+ end 
+ form.label :last_name 
+ form.text_field :last_name, class: 'form-control' 
+  form.label :home_phone 
+ form.phone_field :home_phone, class: 'form-control' 
+ form.label :address1 
+ form.text_field :address1, class: 'form-control' 
+ form.label :address2 
+ form.text_field :address2, class: 'form-control' 
+ form.label :city, t('families.edit.city_st_zip') 
+ form.text_field :city, class: 'form-control inline full-width' 
+ form.text_field :state, class: 'form-control inline full-width' 
+ form.text_field :zip, class: 'form-control inline full-width' 
+ form.label :country 
+ form.country_select :country, { include_blank: true }, class: 'form-control' 
+ 
+ 
+ submit_or_save_button 
+ t('families.edit.photo') 
+ photo_upload_for @family do 
+ family_avatar_tag @family, size: :large 
+ end 
+ end 
+ 
+
+end
+ }
         format.xml  { render xml: @family.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('families.edit.heading') 
  if Setting.get(:features, :updates_must_be_approved) and not @logged_in.admin?(:edit_profiles) 
  icon 'fa fa-check-square' 
@@ -78,7 +179,53 @@ class FamiliesController < ApplicationController
  icon 'fa fa-clock-o' 
  t('people.updates.pending_callout') 
  end 
- render partial: 'form' 
+  form_for @family, html: { multipart: true } do |form| 
+ if params[:compact] 
+ hidden_field_tag :compact, true 
+ end 
+ if params[:people] 
+ hidden_field_tag :people,  true 
+ end 
+ if params[:barcode] 
+ hidden_field_tag :barcode, true 
+ end 
+ error_messages_for(form) 
+  form.label :name 
+ form.text_field :name, onkeyup: 'set_last_name()', class: 'form-control' 
+ if @family.new_record? 
+ t('families.edit.name_example_html') 
+ elsif @family.suggested_name and @family.suggested_name != @family.name 
+ t('families.edit.name_suggestion_html', name: @family.suggested_name) 
+ link_to '#', class: 'btn btn-xs btn-warning family-name-suggestion-button', data: { name: @family.suggested_name } do 
+ icon 'fa fa-bolt' 
+ t('families.edit.name_suggestion_button') 
+ end 
+ end 
+ form.label :last_name 
+ form.text_field :last_name, class: 'form-control' 
+  form.label :home_phone 
+ form.phone_field :home_phone, class: 'form-control' 
+ form.label :address1 
+ form.text_field :address1, class: 'form-control' 
+ form.label :address2 
+ form.text_field :address2, class: 'form-control' 
+ form.label :city, t('families.edit.city_st_zip') 
+ form.text_field :city, class: 'form-control inline full-width' 
+ form.text_field :state, class: 'form-control inline full-width' 
+ form.text_field :zip, class: 'form-control inline full-width' 
+ form.label :country 
+ form.country_select :country, { include_blank: true }, class: 'form-control' 
+ 
+ 
+ submit_or_save_button 
+ t('families.edit.photo') 
+ photo_upload_for @family do 
+ family_avatar_tag @family, size: :large 
+ end 
+ end 
+ 
+
+end
 
   end
 
@@ -92,7 +239,64 @@ class FamiliesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render action: 'edit' }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('families.edit.heading') 
+ if Setting.get(:features, :updates_must_be_approved) and not @logged_in.admin?(:edit_profiles) 
+ icon 'fa fa-check-square' 
+ t('people.changes_must_be_reviewed_html') 
+ end 
+ if @family.updates.pending.any? and @logged_in.can_update?(@family) 
+ icon 'fa fa-clock-o' 
+ t('people.updates.pending_callout') 
+ end 
+  form_for @family, html: { multipart: true } do |form| 
+ if params[:compact] 
+ hidden_field_tag :compact, true 
+ end 
+ if params[:people] 
+ hidden_field_tag :people,  true 
+ end 
+ if params[:barcode] 
+ hidden_field_tag :barcode, true 
+ end 
+ error_messages_for(form) 
+  form.label :name 
+ form.text_field :name, onkeyup: 'set_last_name()', class: 'form-control' 
+ if @family.new_record? 
+ t('families.edit.name_example_html') 
+ elsif @family.suggested_name and @family.suggested_name != @family.name 
+ t('families.edit.name_suggestion_html', name: @family.suggested_name) 
+ link_to '#', class: 'btn btn-xs btn-warning family-name-suggestion-button', data: { name: @family.suggested_name } do 
+ icon 'fa fa-bolt' 
+ t('families.edit.name_suggestion_button') 
+ end 
+ end 
+ form.label :last_name 
+ form.text_field :last_name, class: 'form-control' 
+  form.label :home_phone 
+ form.phone_field :home_phone, class: 'form-control' 
+ form.label :address1 
+ form.text_field :address1, class: 'form-control' 
+ form.label :address2 
+ form.text_field :address2, class: 'form-control' 
+ form.label :city, t('families.edit.city_st_zip') 
+ form.text_field :city, class: 'form-control inline full-width' 
+ form.text_field :state, class: 'form-control inline full-width' 
+ form.text_field :zip, class: 'form-control inline full-width' 
+ form.label :country 
+ form.country_select :country, { include_blank: true }, class: 'form-control' 
+ 
+ 
+ submit_or_save_button 
+ t('families.edit.photo') 
+ photo_upload_for @family do 
+ family_avatar_tag @family, size: :large 
+ end 
+ end 
+ 
+
+end
+ }
         format.xml  { render xml: @family.errors, status: :unprocessable_entity } if can_export?
         format.js do # only used by barcode entry right now
           render :update do |page|

@@ -12,6 +12,9 @@
        end
     end
 
+		def model_class
+			return Portlet.new
+		end
     def build_block
       if params[:type].blank?
         @block = model_class.new

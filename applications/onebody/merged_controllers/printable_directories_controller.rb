@@ -2,6 +2,7 @@ class PrintableDirectoriesController < ApplicationController
   before_filter :check_access
 
   def new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('printable_directories.heading') 
  form_tag printable_directory_path, method: 'post' do 
  t('printable_directories.click_to_have_custom_pdf_via_email') 
@@ -14,6 +15,8 @@ class PrintableDirectoriesController < ApplicationController
  end 
  end 
 
+end
+
   end
 
   def create
@@ -22,8 +25,11 @@ class PrintableDirectoriesController < ApplicationController
       @logged_in.id,
       params[:with_pictures].present?
     )
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('printable_directories.heading') 
  t('printable_directories.were_are_building_custom_pdf') 
+
+end
 
   end
 

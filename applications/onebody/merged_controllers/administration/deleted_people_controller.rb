@@ -24,6 +24,9 @@ class Administration::DeletedPeopleController < ApplicationController
     end
     @people = Person.includes(:family).references(:family).where(conditions).order(params[:sort]).paginate(page: params[:page], per_page: 100)
     @families = Family.undeleted.where(["(select count(id) from people where deleted = ? and family_id=families.id) = 0", false]).order('name')
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 

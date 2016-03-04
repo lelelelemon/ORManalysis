@@ -13,9 +13,34 @@ class PrayerRequestsController < ApplicationController
     else
       render text: t('not_authorized'), layout: true, status: :forbidden
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('prayer_requests.index.heading') 
+ link_to new_group_prayer_request_path(@group), class: 'btn btn-success' do 
+ icon 'fa fa-plus' 
+ t('prayer_requests.new.button') 
+ end 
+ pagination @reqs 
+ @reqs.each do |req| 
+ link_to req.created_at.to_s(:date), req 
+ t('prayer_requests.by', person: link_to(req.person.try(:name), req.person)).html_safe 
+ preserve_breaks req.request 
+ if req.answer.present? 
+ if req.answered_at 
+ t('prayer_requests.answer.on_date', date: req.answered_at.to_s(:date)) 
+ else 
+ t('prayer_requests.answer.heading') 
+ end 
+ preserve_breaks req.answer 
+ end 
+ end 
+ pagination @reqs 
+
+end
+
   end
 
   def show
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('prayer_requests.show.heading') 
  t('prayer_requests.by', person: link_to(@prayer_request.person.try(:name), @prayer_request.person)).html_safe 
  @prayer_request.request 
@@ -37,12 +62,36 @@ class PrayerRequestsController < ApplicationController
  end 
  end 
 
+end
+
   end
 
   def new
     @prayer_request.person = @logged_in
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('prayer_requests.new.heading') 
- render partial: 'form' 
+  form_for [@group, @prayer_request] do |form| 
+ error_messages_for(form) 
+ form.hidden_field :group_id 
+ t('prayer_requests.request.heading') 
+ form.label :person_id 
+ form.select :person_id, @group.people.map { |p| [p.name, p.id] }, {}, class: 'form-control' 
+ form.label :request 
+ form.text_area :request, rows: 5, class: 'form-control' 
+ t('prayer_requests.answer.heading') 
+ t('prayer_requests.answer.description') 
+ form.label :answered_at 
+ icon 'fa fa-calendar' 
+ form.date_field :answered_at, class: 'form-control' 
+ form.label :answer 
+ form.text_area :answer, rows: 5, class: 'form-control' 
+ check_box_tag :send_email 
+ t('prayer_requests.send_email') 
+ form.button t('prayer_requests.save'), class: 'btn btn-success' 
+ end 
+ 
+
+end
 
   end
 
@@ -53,13 +102,59 @@ class PrayerRequestsController < ApplicationController
       end
       redirect_to group_prayer_requests_path(@group)
     else
-      render action: 'new'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('prayer_requests.new.heading') 
+  form_for [@group, @prayer_request] do |form| 
+ error_messages_for(form) 
+ form.hidden_field :group_id 
+ t('prayer_requests.request.heading') 
+ form.label :person_id 
+ form.select :person_id, @group.people.map { |p| [p.name, p.id] }, {}, class: 'form-control' 
+ form.label :request 
+ form.text_area :request, rows: 5, class: 'form-control' 
+ t('prayer_requests.answer.heading') 
+ t('prayer_requests.answer.description') 
+ form.label :answered_at 
+ icon 'fa fa-calendar' 
+ form.date_field :answered_at, class: 'form-control' 
+ form.label :answer 
+ form.text_area :answer, rows: 5, class: 'form-control' 
+ check_box_tag :send_email 
+ t('prayer_requests.send_email') 
+ form.button t('prayer_requests.save'), class: 'btn btn-success' 
+ end 
+ 
+
+end
+
     end
   end
 
   def edit
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('prayer_requests.edit.heading') 
- render partial: 'form' 
+  form_for [@group, @prayer_request] do |form| 
+ error_messages_for(form) 
+ form.hidden_field :group_id 
+ t('prayer_requests.request.heading') 
+ form.label :person_id 
+ form.select :person_id, @group.people.map { |p| [p.name, p.id] }, {}, class: 'form-control' 
+ form.label :request 
+ form.text_area :request, rows: 5, class: 'form-control' 
+ t('prayer_requests.answer.heading') 
+ t('prayer_requests.answer.description') 
+ form.label :answered_at 
+ icon 'fa fa-calendar' 
+ form.date_field :answered_at, class: 'form-control' 
+ form.label :answer 
+ form.text_area :answer, rows: 5, class: 'form-control' 
+ check_box_tag :send_email 
+ t('prayer_requests.send_email') 
+ form.button t('prayer_requests.save'), class: 'btn btn-success' 
+ end 
+ 
+
+end
 
   end
 
@@ -70,7 +165,31 @@ class PrayerRequestsController < ApplicationController
       end
       redirect_to group_prayer_request_path(@group, @prayer_request)
     else
-      render action: 'edit'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('prayer_requests.edit.heading') 
+  form_for [@group, @prayer_request] do |form| 
+ error_messages_for(form) 
+ form.hidden_field :group_id 
+ t('prayer_requests.request.heading') 
+ form.label :person_id 
+ form.select :person_id, @group.people.map { |p| [p.name, p.id] }, {}, class: 'form-control' 
+ form.label :request 
+ form.text_area :request, rows: 5, class: 'form-control' 
+ t('prayer_requests.answer.heading') 
+ t('prayer_requests.answer.description') 
+ form.label :answered_at 
+ icon 'fa fa-calendar' 
+ form.date_field :answered_at, class: 'form-control' 
+ form.label :answer 
+ form.text_area :answer, rows: 5, class: 'form-control' 
+ check_box_tag :send_email 
+ t('prayer_requests.send_email') 
+ form.button t('prayer_requests.save'), class: 'btn btn-success' 
+ end 
+ 
+
+end
+
     end
   end
 

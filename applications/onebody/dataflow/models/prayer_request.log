@@ -9,29 +9,29 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->group def_%v_3 %self[2.0,] 
-		 7: %v_3->try def_%v_4 %v_3[2.6,] 
+		 6: %self->group def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->try def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_5 
-		 1: COPY def_%v_4 %v_5[3.0,] 
+		 0: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_PASS def_%v_4 %v_5[3.0,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY def_group_name %v_4[3.1,2.7,] 
+		 0: COPY TYPE_PASS def_group_name %v_4[3.1,2.7,] 
 		 1: 
 		 2: (I18n) def_%v_6 
-		 3: COPY def_%v_7 
-		 4: COPY def_%v_8 %v_4[3.1,2.7,] 
-		 5: %v_6->t def_%v_9 %v_6[4.2,] %v_7[4.3,] %v_8[4.4,] 
+		 3: COPY TYPE_StringLiteral def_%v_7 
+		 4: HASH-group- def_%v_8 %v_4[3.1,2.7,] 
+		 5: %v_6->t def_%v_9 %v_6[4.2,] %v_7[4.3,] %v_8[4.4,] 	 ARGS:%v_7,%v_8,
 		 6: RETURN %v_9[4.5,] %self[2.0,] 
 BB 5
 	outgoing: 
@@ -49,11 +49,11 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->request def_%v_3 %self[2.0,] 
+		 6: %self->request def_%v_3 %self[2.0,] 	 ARGS:
 		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -71,27 +71,27 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_d 
 		 6: 
-		 7: d->respond_to? def_%v_3 d[2.5,] 
+		 7: d->respond_to? def_%v_3 d[2.5,] 	 ARGS:Symbol,
 		 8: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 d[2.5,] 
+		 0: COPY TYPE_PASS def_%v_4 d[2.5,] 
 		 1: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: (Date) def_%v_5 
-		 1: d->to_s def_%v_6 d[2.5,] 
-		 2: %v_5->parse_in_locale def_%v_7 %v_5[4.0,] %v_6[4.1,] 
-		 3: COPY def_%v_4 %v_7[4.2,] 
+		 1: d->to_s def_%v_6 d[2.5,] 	 ARGS:
+		 2: %v_5->parse_in_locale def_%v_7 %v_5[4.0,] %v_6[4.1,] 	 ARGS:%v_6,
+		 3: COPY TYPE_PASS def_%v_4 %v_7[4.2,] 
 BB 5
 	outgoing: 6 
 	datadep: 
@@ -114,17 +114,17 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->person def_%v_3 %self[2.0,] 
+		 6: %self->person def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Boolean def_%v_4 
 		 1: RETURN %v_4[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -147,32 +147,32 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->streamable? def_%v_3 %self[2.0,] 
+		 6: %self->streamable? def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
 		 2: (StreamItem) def_%v_5 
-		 3: %self->name def_%v_6 %self[2.0,] 
-		 4: %self->body def_%v_7 %self[3.3,2.0,] 
-		 5: %self->person_id def_%v_8 %self[3.3,3.4,2.0,] 
-		 6: %self->group_id def_%v_9 %self[3.3,3.4,3.5,2.0,] 
-		 7: COPY def_%v_10 
-		 8: %self->id def_%v_11 %self[3.3,3.4,3.5,3.6,2.0,] 
-		 9: %self->created_at def_%v_12 %self[3.3,3.4,3.5,3.6,3.8,2.0,] 
+		 3: %self->name def_%v_6 %self[2.0,] 	 ARGS:
+		 4: %self->body def_%v_7 %self[3.3,2.0,] 	 ARGS:
+		 5: %self->person_id def_%v_8 %self[3.3,3.4,2.0,] 	 ARGS:
+		 6: %self->group_id def_%v_9 %self[3.3,3.4,3.5,2.0,] 	 ARGS:
+		 7: COPY TYPE_StringLiteral def_%v_10 
+		 8: %self->id def_%v_11 %self[3.3,3.4,3.5,3.6,2.0,] 	 ARGS:
+		 9: %self->created_at def_%v_12 %self[3.3,3.4,3.5,3.6,3.8,2.0,] 	 ARGS:
 		 10: 
-		 11: %self->group def_%v_13 %self[3.3,3.4,3.5,3.6,3.8,3.9,2.0,] 
-		 12: %v_13->! def_%v_14 %v_13[3.11,] 
-		 13: %v_14->! def_%v_15 %v_14[3.12,] 
-		 14: COPY def_%v_16 %v_6[3.3,] %v_7[3.4,] %v_8[3.5,] %v_9[3.6,] %v_10[3.7,] %v_11[3.8,] %v_12[3.9,] %v_15[3.13,] 
-		 15: %v_5->create! def_%v_17 %v_5[3.2,] %v_16[3.14,] 
+		 11: %self->group def_%v_13 %self[3.3,3.4,3.5,3.6,3.8,3.9,2.0,] 	 ARGS:
+		 12: %v_13->! def_%v_14 %v_13[3.11,] 	 ARGS:
+		 13: %v_14->! def_%v_15 %v_14[3.12,] 	 ARGS:
+		 14: HASH-title-body-person_id-group_id-streamable_type-streamable_id-created_at-shared- def_%v_16 %v_6[3.3,] %v_7[3.4,] %v_8[3.5,] %v_9[3.6,] %v_10[3.7,] %v_11[3.8,] %v_12[3.9,] %v_15[3.13,] 
+		 15: %v_5->create! def_%v_17 %v_5[3.2,] %v_16[3.14,] 	 ARGS:%v_16,
 		 16: RETURN %v_17[3.15,] %self[3.3,3.4,3.5,3.6,3.8,3.9,3.11,2.0,] 
 BB 4
 	outgoing: 6 
@@ -195,24 +195,24 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->streamable? def_%v_3 %self[2.0,] 
+		 6: %self->streamable? def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
 		 2: (StreamItem) def_%v_5 
-		 3: COPY def_%v_6 
-		 4: %self->id def_%v_7 %self[2.0,] 
-		 5: COPY def_%v_8 %v_6[3.3,] %v_7[3.4,] 
-		 6: %v_5->where def_%v_9 %v_5[3.2,] %v_8[3.5,] 
-		 7: %v_9->each def_%v_10 %v_9[3.6,] %self[3.4,2.0,] 
+		 3: COPY TYPE_StringLiteral def_%v_6 
+		 4: %self->id def_%v_7 %self[2.0,] 	 ARGS:
+		 5: HASH-streamable_type-streamable_id- def_%v_8 %v_6[3.3,] %v_7[3.4,] 
+		 6: %v_5->where def_%v_9 %v_5[3.2,] %v_8[3.5,] 	 ARGS:%v_8,
+		 7: %v_9->each def_%v_10 %v_9[3.6,] %self[3.4,2.0,] 	 ARGS:%v_9,
 CLOSURE BEGIN: %self[3.4,2.0,] stream_item[] 
 BB 1
 	outgoing: 9 2 
@@ -225,36 +225,36 @@ BB 2
 		 0: def_%self 
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_stream_item 
-		 3: COPY def_%current_scope 
-		 4: COPY def_%current_module 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->body def_%cl_1_3 %self[2.0,] 
+		 1: %self->body def_%cl_1_3 %self[2.0,] 	 ARGS:
 		 2: ATTRASSIGN stream_item->body %cl_1_3[3.1,] 
 		 3: 
-		 4: %self->answer_changed? def_%cl_1_4 %self[3.1,2.0,] 
+		 4: %self->answer_changed? def_%cl_1_4 %self[3.1,2.0,] 	 ARGS:
 		 5: BRANCH %cl_1_4[3.4,] 
 BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: %self->updated_at def_%cl_1_5 %self[2.0,] 
+		 0: %self->updated_at def_%cl_1_5 %self[2.0,] 	 ARGS:
 		 1: ATTRASSIGN stream_item->created_at %cl_1_5[4.0,] 
 		 2: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%cl_1_5 
+		 0: COPY TYPE_Nil def_%cl_1_5 
 BB 6
 	outgoing: 7 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: stream_item->save def_%cl_1_6 stream_item[4.1,3.2,2.2,] 
+		 1: stream_item->save def_%cl_1_6 stream_item[4.1,3.2,2.2,] 	 ARGS:
 		 2: RETURN %cl_1_6[6.1,] %self[2.0,] 
 BB 7
 	outgoing: 9 
@@ -290,15 +290,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (StreamItem) def_%v_3 
-		 7: COPY def_%v_4 
-		 8: %self->id def_%v_5 %self[2.0,] 
-		 9: COPY def_%v_6 %v_4[2.7,] %v_5[2.8,] 
-		 10: %v_3->destroy_all def_%v_7 %v_3[2.6,] %v_6[2.9,] 
+		 7: COPY TYPE_StringLiteral def_%v_4 
+		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
+		 9: HASH-streamable_type-streamable_id- def_%v_6 %v_4[2.7,] %v_5[2.8,] 
+		 10: %v_3->destroy_all def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: RETURN %v_7[2.10,] %self[2.0,2.8,] 
 BB 3
 	outgoing: 
@@ -316,23 +316,23 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->group def_%v_3 %self[2.0,] 
-		 7: %v_3->people def_%v_4 %v_3[2.6,] 
-		 8: %v_4->count def_%v_5 %v_4[2.7,] 
-		 9: def_%v_6 %v_5[2.8,] 
+		 6: %self->group def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->people def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: %v_4->count def_%v_5 %v_4[2.7,] 	 ARGS:
+		 9: %v_5->> def_%v_6 %v_5[2.8,] 	 ARGS:Fixnum,
 		 10: BRANCH %v_6[2.9,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: (Notifier) def_%v_7 
-		 1: %self->group def_%v_8 %self[2.0,] 
-		 2: %v_7->prayer_request def_%v_9 %v_7[3.0,] %self[3.1,2.0,] %v_8[3.1,] 
-		 3: %v_9->deliver_now def_%v_10 %v_9[3.2,] 
+		 1: %self->group def_%v_8 %self[2.0,] 	 ARGS:
+		 2: %v_7->prayer_request def_%v_9 %v_7[3.0,] %self[3.1,2.0,] %v_8[3.1,] 	 ARGS:%self,%v_8,
+		 3: %v_9->deliver_now def_%v_10 %v_9[3.2,] 	 ARGS:
 		 4: RETURN %v_10[3.3,] %self[3.1,2.0,] 
 BB 4
 	outgoing: 6 

@@ -122,9 +122,14 @@ def handle_single_dataflow_file(item, class_name)
 							if dep.length > 0
 								#find instr handler here
 								dep_str = dep.split('.')
-								dep_instr = temp_cfg.getBBByIndex(dep_str[0].to_i).getInstr[dep_str[1].to_i]
-								#puts "READ DATAFLOW: add to var table: #{v_name} (#{dep_instr.toString})"
-								$cur_cfg.addToVarDefTable(v_name, dep, dep_instr)
+								if temp_cfg.getBBByIndex(dep_str[0].to_i) == nil
+									#TODO: ignore loop dependency here....
+									#puts "LINE: #{line}"
+								else
+									dep_instr = temp_cfg.getBBByIndex(dep_str[0].to_i).getInstr[dep_str[1].to_i]
+									#puts "READ DATAFLOW: add to var table: #{v_name} (#{dep_instr.toString})"
+									$cur_cfg.addToVarDefTable(v_name, dep, dep_instr)
+								end
 							end
 						end
 					end

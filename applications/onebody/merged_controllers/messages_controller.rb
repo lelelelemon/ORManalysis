@@ -9,6 +9,30 @@ class MessagesController < ApplicationController
     else
       render text: t('not_authorized'), layout: true, status: 401
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('messages.messages_in_html', url: group_path(@group), name: @group.name) 
+ if @group.can_post?(@logged_in) 
+ link_to new_group_message_path(@group), class: 'btn btn-success' do 
+ icon 'fa fa-plus' 
+ t('messages.new.button') 
+ end 
+ end 
+ pagination @messages 
+ @messages.each do |message| 
+ link_to message.subject, message 
+ if message.attachments.any? 
+ link_to message, class: 'btn btn-xs btn-info' do 
+ icon 'fa fa-link' 
+ end 
+ end 
+ render_message_body message 
+ link_to t('messages.read_more'), message, class: 'btn btn-info btn-xs' 
+ t('messages.sent_at_html', when: message.created_at.to_s(:full), who: link_to(message.person.try(:name), message.person)) 
+ end 
+ pagination @messages 
+
+end
+
   end
 
   def new
@@ -20,6 +44,7 @@ class MessagesController < ApplicationController
       @message = Message.new(parent: @parent, group_id: @parent.group_id, subject: "Re: #{@parent.subject}")
     end
     Authority.enforce(:create, @message, current_user)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @message.to 
  @title = t('messages.private.heading') 
  content_for :sub_title, link_to(@message.to.name, @message.to) 
@@ -29,7 +54,9 @@ class MessagesController < ApplicationController
  content_for :sub_title, link_to(@message.group.name, @message.group) 
  t('messages.group.description_html', group: link_to(@message.group.name, @message.group)) 
  end 
- render partial: 'form' 
+  
+
+end
 
   end
 
@@ -45,15 +72,19 @@ class MessagesController < ApplicationController
     else
       raise t('messages.missing_param')
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @preview 
  escape_javascript t('messages.from') + ': ' + h(@preview.from) 
  escape_javascript t('messages.subject') + ': ' + h(@preview.subject) 
  escape_javascript simple_format(auto_link(h(get_email_body(@preview)))) 
  end 
 
+end
+
   end
 
   def show
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = @message.subject 
  link_to @message.person do 
  avatar_tag @message.person, class: 'fit-width' 
@@ -74,7 +105,21 @@ class MessagesController < ApplicationController
  t('messages.in_reply_to_html', message: link_to(@message.parent.try(:subject), @message.parent)) 
  end 
  render_message_body(@message) 
- render partial: 'attachments', locals: { message: @message } 
+  if message.attachments.any? 
+ t('messages.attachments') 
+ message.attachments.images.each do |attachment| 
+ link_to [message, attachment] do 
+ image_tag attachment.file.url, style: 'width: 75px', class: 'thumbnail' 
+ end 
+ end 
+ message.attachments.non_images.each do |attachment| 
+ link_to [message, attachment] do 
+ icon 'fa fa-file-o' 
+ end 
+ link_to attachment.name, [message, attachment] 
+ end 
+ end 
+ 
  if @message.children.any? 
  t('messages.replies.heading') 
  @message.children.each do |reply| 
@@ -98,6 +143,8 @@ class MessagesController < ApplicationController
  t('messages.reply_all.button') 
  end 
  end 
+
+end
 
   end
 
@@ -153,7 +200,20 @@ class MessagesController < ApplicationController
         if @message.errors[:base] and @message.errors[:base].include?('already saved')
           @message.errors[:base].delete('already saved')
         end
-        render action: 'new'
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @message.to 
+ @title = t('messages.private.heading') 
+ content_for :sub_title, link_to(@message.to.name, @message.to) 
+ t('messages.private.description_html', person: link_to(@message.to.name, @message.to)) 
+ elsif @message.group 
+ @title = t('messages.group.heading') 
+ content_for :sub_title, link_to(@message.group.name, @message.group) 
+ t('messages.group.description_html', group: link_to(@message.group.name, @message.group)) 
+ end 
+  
+
+end
+
         false
       else
         true

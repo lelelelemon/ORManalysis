@@ -15,6 +15,7 @@ class PicturesController < ApplicationController
   end
 
   def show
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = @picture.photo_file_name 
  content_for :header do 
  breadcrumbs 
@@ -53,8 +54,35 @@ class PicturesController < ApplicationController
  end 
  if Setting.get(:privacy, :allow_picture_comments) 
  t('Comments') 
- render partial: 'comments/comments', locals: {object: @picture, intro: t('pictures.comment_on_this_picture')} 
+  if object.comments.any? 
+ object.comments.each do |comment| 
+ link_to comment.person do 
+ avatar_tag comment.person 
  end 
+ link_to comment.person.name, comment.person 
+ comment.created_at.to_s(:full) 
+ if @logged_in.can_update?(comment) 
+ link_to comment_path(comment), class: 'btn btn-xs bg-gray text-red', method: 'delete', data: { confirm: t('are_you_sure') } do 
+ icon 'fa fa-trash-o' 
+ end 
+ end 
+ preserve_breaks comment.text 
+ end 
+ else 
+ t('comments.none_yet') 
+ end 
+ t('comments.add_a_comment') 
+ form_for Comment.new, html: {style: 'border:none;'} do |form| 
+ hidden_field_tag 'comment[commentable_type]', object.class 
+ hidden_field_tag 'comment[commentable_id]', object.id 
+ hidden_field_tag :return_to, request.fullpath 
+ text_area_tag 'comment[text]', '', rows: 3, cols: 40, id: 'new_comment_textarea', class: 'form-control' 
+ form.submit t('comments.save'), class: 'btn btn-success' 
+ end 
+ 
+ end 
+
+end
 
   end
 
@@ -64,6 +92,7 @@ class PicturesController < ApplicationController
       flash[:notice] = t('pictures.create_an_album.notice')
       redirect_to new_person_album_path(@logged_in)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('pictures.new.heading') 
  form_for Picture.new do |form| 
  t('pictures.new.existing_album.intro') 
@@ -76,6 +105,8 @@ class PicturesController < ApplicationController
  icon 'ion ion-images' 
  t('pictures.new.new_album.button') 
  end 
+
+end
 
   end
 
@@ -99,7 +130,22 @@ class PicturesController < ApplicationController
       respond_to do |format|
         format.html do
           flash[:error] = @uploader.errors.values.join('; ')
-          render action: "new"
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('pictures.new.heading') 
+ form_for Picture.new do |form| 
+ t('pictures.new.existing_album.intro') 
+ label_tag :album_id 
+ select_tag :album_id, options_from_collection_for_select(@albums, :id, :name, params[:album_id]), include_blank: true, class: 'form-control' 
+ picture_upload 
+ end 
+ t('pictures.new.new_album.intro') 
+ link_to new_person_album_path(@logged_in), class: 'btn btn-info' do 
+ icon 'ion ion-images' 
+ t('pictures.new.new_album.button') 
+ end 
+
+end
+
         end
         format.json { render json: { status: 'error', errors: @uploader.errors.values } }
       end

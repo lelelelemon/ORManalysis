@@ -8,6 +8,7 @@ class Administration::SettingsController < ApplicationController
       @settings[setting.section][setting['name']] = setting
     end
     @timezones = ActiveSupport::TimeZone.all.map { |z| [z.to_s, z.name] }
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('admin.settings.heading') 
  form_tag batch_administration_settings_path, method: 'put', class: 'form-horizontal' do 
  section_tab(t('admin.settings.name_heading'), :naming, :active) 
@@ -112,6 +113,8 @@ class Administration::SettingsController < ApplicationController
  setting_row('Facebook', 'App Secret') 
  button_tag t('save_changes'), class: 'btn btn-success' 
  end 
+
+end
 
   end
 
