@@ -680,7 +680,8 @@ class Closure < CFG
 		@rnd = r.rand(1...1048576)
 		@view_code = false
 		@view_closure = false
-		@var_def_table = Array.new 
+		@var_def_table = Array.new
+		@closure_def_table = Array.new 
 		@parent_instr = nil
 		super
 	end
@@ -706,9 +707,25 @@ class Closure < CFG
 		dep.setInstrHandler(handler)
 		@var_def_table.push(dep)
 	end
+	def addToClosureDefTable(vname, dep, handler)	
+		ary = dep.split('.')
+		dep = Data_dependency.new(ary[0].to_i, ary[1].to_i, vname)
+		dep.setInstrHandler(handler)
+		@closure_def_table.push(dep)
+	end
+
 	def getVarDefs(vname)
 		r = Array.new
 		@var_def_table.each do |v|
+			if v.getVname == vname
+				r.push(v)
+			end
+		end
+		return r
+	end
+	def getClosureDefs(vname)
+		r = Array.new
+		@closure_def_table.each do |v|
 			if v.getVname == vname
 				r.push(v)
 			end

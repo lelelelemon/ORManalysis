@@ -14,9 +14,9 @@ PATH_ORDER = [
   'lib/**/*.rb'
 ]
 
-
+file = File.open("../applications/browsercms/models/page.rb", "r")
 #file = File.open("../applications/boxroom/controllers/files_controller.rb", "r")
-file = File.open("../applications/publify/models/article.rb", "r")
+#file = File.open("../applications/publify/models/article.rb", "r")
 #file = File.open("../applications/lobsters/merged_controllers/stories_controller.rb", "r")
 #file = File.open("../../communityengine/app/controllers/event_sweeper.rb", "r")
 contents = file.read
