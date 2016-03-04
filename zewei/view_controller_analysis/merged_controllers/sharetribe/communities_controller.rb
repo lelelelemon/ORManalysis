@@ -9,8 +9,18 @@ class CommunitiesController < ApplicationController
   NewMarketplaceForm = Form::NewMarketplace
 
   def new
-    render_form
-  end
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ locals(local_assigns, :title) 
+ Maybe(@current_community).favicon.each do |favicon| 
+ favicon 
+ end 
+  if errors.present? 
+ errors.join('<br />').html_safe 
+ end 
+ form_action 
+
+end
+end
 
   def create
     form = NewMarketplaceForm.new(params)
@@ -44,12 +54,18 @@ class CommunitiesController < ApplicationController
   private
 
   def render_form(errors: nil)
-    render action: :new, locals: {
-             title: 'Create a new marketplace',
-             form_action: communities_path,
-             errors: errors
-           }
-  end
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ locals(local_assigns, :title) 
+ Maybe(@current_community).favicon.each do |favicon| 
+ favicon 
+ end 
+  if errors.present? 
+ errors.join('<br />').html_safe 
+ end 
+ form_action 
+
+end
+end
 
   def ensure_no_communities
     redirect_to root if communities_exist?

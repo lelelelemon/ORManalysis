@@ -2,8 +2,7 @@ require "yard"
 require "nokogiri"
 
 load "helper.rb"
-load "render.rb"
-
+	
 class Controller_Class
 	def initialize(path, base_path)
 		@path = path.dup
@@ -70,11 +69,6 @@ class Controller_Class
       if cur_ast.type.to_s == "command" and cur_ast.source.to_s.start_with?"layout"
         @layout = cur_ast.children[1].source.to_s
         @layout.gsub! /['"]/, ""
-        if not @layout.include?"layouts"
-          @layout = "layouts_" + @layout
-          @layout.gsub! "/", "_"
-        end
-
       end
 
       if cur_ast.type.to_s == "def"
@@ -190,53 +184,52 @@ class Function_Class
 	# get the mapping of render statemnets to view file content	
 	def get_render_view_mapping(view_class_hash, controller_hash)
 		render_view_mapping = Hash.new
-		get_render_statement_array.each do |(str_to_be_replaced, stmt)|
-      options_hash = parse_render_statement(stmt)
-      if options_hash != "not_valid"
-        view_name = get_view_name_from_hash(options_hash, get_controller_name)
-				next if view_name.include?("nothing")
-        
-        
-        view_class = view_class_hash[view_name]
-				if view_class == nil
-          value = get_default_view_content(view_class_hash)
-        else
+
+		get_render_statement_array.each do |r|
+			
+			view_name = get_view_name_from_render_statement(r)
+=begin
+      layout_name = get_layout_name_from_render_statement(r)
+
+      layout_content = nil
+      
+      if layout_name != "not_valid"
+        layout_content = view_class_hash[layout_name]
+      end
+
+      if layout_content == nil
+        layout_content = get_default_layout(view_class_hash, controller_hash)
+      end
+=end
+
+      if view_name != "not_valid"
+				view_class = view_class_hash[view_name]
+			
+				if view_class != nil
 					value = view_class.replace_render_statements(view_class_hash, 0)
-        end
-        puts "view_name: " + view_name
-        
-        puts self.to_s
-        layout_content = get_layout(options_hash, view_class_hash, controller_hash)
-        puts layout_content
-        if value!= nil and layout_content != nil
-          value = merge_layout_content(layout_content, value)
-        end
-	      if value != nil
-          render_view_mapping[str_to_be_replaced] = value
-        end
-          #do something the view file does not exist! It could mean we parse the file wrong. 
+          puts "view_name: " + view_name
+#          puts "layout content:"
+#          puts layout_content
+#          puts "old value: "
+#          puts value
+#          if layout_content != nil
+#            value = merge_layout_content(layout_content, value)
+#          end
+#          puts "new value:"
+#          puts value
+
+					render_view_mapping[r] = value
+				else
+					#do something the view file does not exist! It could mean we parse the file wrong. 
+				end
+#      elsif layout_content != nil
+  
+#        render_view_mapping[r] = layout_content 
       end
     end
+	
 		return render_view_mapping	
 	end
-
-  def get_layout(options_hash, view_class_hash, controller_hash)
-    layout = get_layout_name_from_hash(options_hash)
-    if layout == "not_valid"
-      puts "get default layout"
-      return get_default_layout(view_class_hash, controller_hash)
-    else
-      if layout == "false"
-        return nil
-      else 
-        if view_class_hash.has_key?(layout)
-          layout_view = view_class_hash[layout]
-          layout_content = layout_view.replace_render_statements(view_class_hash, 0)
-        end
-        return layout_content
-      end
-    end
-  end
 
   def get_default_layout(view_class_hash, controller_hash)
     parent_class = self.get_class
@@ -246,20 +239,25 @@ class Function_Class
       default_layout = parent_class.get_layout
       parent_class = controller_hash[parent_class.get_upper_class]
     end
-    puts default_layout
+
     if view_class_hash.has_key?(default_layout)
       default_layout_view = view_class_hash[default_layout]
     end
-    puts "default layout view file: "
-    puts default_layout_view
+
     layout_content = nil
     if default_layout_view != nil
       layout_content = default_layout_view.replace_render_statements(view_class_hash, 0)
     end
+
     return layout_content
   end
 
 	def replace_render_statements(view_class_hash, controller_hash)
+    ###################################################################
+    #Up to this point, we have got the default layout content, 
+    #the next step is to merge the content into the layout, 
+    #we assume that we only have default layout at this moment
+    #
 
     render_view_mapping = self.get_render_view_mapping(view_class_hash, controller_hash)
 		content = self.get_content.dup
@@ -275,33 +273,27 @@ class Function_Class
 
 		#we need to append the default view at the end of the function, this may be inaccuate because some views may already been rendered, we need to figure out a way to avoid duplicated rendering
 		if need_default_render
-      v = get_default_view_content(view_class_hash)
-		  if v != nil
-        layout_content = get_default_layout(view_class_hash, controller_hash)
-        if layout_content != nil
-          v = merge_layout_content(layout_content, v)
-        end
+			view_name = self.get_controller_name + "_" + self.get_function_name
+			view_class = view_class_hash[view_name]
+			if view_class != nil
+				v = view_class.replace_render_statements(view_class_hash, 0)
+#		    layout_content = get_default_layout(view_class_hash, controller_hash)
+#        if layout_content != nil
+#          v = merge_layout_content(layout_content, v)
+#        end
         content = content.split "\n"
-  			len = content.length
-  			content[len] = content[len-1]
-  			content[len-1] = "ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + v + "\nend\n"
-  			content = content.join("\n")
-      else
-        #Do something as the default view does not exist
-      end
-    end
+				len = content.length
+				content[len] = content[len-1]
+				content[len-1] = "ruby_code_from_view.ruby_code_from_view do |rb_from_view|\n" + v + "\nend\n"
+				content = content.join("\n")
+			else
+				#do something the view file does not exist! It could mean we parse the file wrong. 
+			end
+		end
+
 
 		return content
 	end
-
-  def get_default_view_content(view_class_hash)
-    view_name = self.get_controller_name + "_" + self.get_function_name
-    view_class = view_class_hash[view_name]
-    if view_class != nil
-      v = view_class.replace_render_statements(view_class_hash, 0)
-    end
-    return v
-  end
 
 	def get_render_views_ast(view_class_hash)
 		content = self.replace_render_statements(view_class_hash)
@@ -407,15 +399,33 @@ class View_Class
 		end
 		return res
 	end
+	
 	def get_form_for_array 
 		get_array_with_keyword @ast, "form_for"
 	end
+	
 	def get_link_to_array 
 		get_array_with_keyword @ast, "link_to"
 	end
+	
 	def get_button_to_array 
 		get_array_with_keyword @ast, "button_to"
 	end
+
+#	def get_render_statement_array
+#		res_arr = get_render_array @ast
+#    
+#    res_arr2 = []
+#    res_arr.each do |res|
+#      if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
+#        res = res[0..-2]
+#      end
+#      res_arr2.push res
+#    end
+#
+#    return res_arr2
+#	end
+
 	# This function is used to get all render statements recursively, so we can know what view files will be rendered by this controller action, further, we can get the information about what links exist in the corresponding view files
 	def get_render_statements_recursively(view_class_hash, dep)
     return [] if dep > 3
@@ -467,17 +477,15 @@ class View_Class
 	def get_render_view_mapping(view_class_hash, dep)
 		render_view_mapping = Hash.new
 
-		get_render_statement_array.each do |(str_to_be_replaced, stmt)|
-#			view_name = get_view_name_from_render_statement(r)
-      options_hash = parse_render_statement(stmt)
-			#if view_name != "not_valid"
-      if options_hash != "not_valid"
-        view_name = get_view_name_from_hash(options_hash, get_controller_name)
+		get_render_statement_array.each do |r|
+			view_name = get_view_name_from_render_statement(r)
+			
+			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
         puts "view_name: " + view_name
 				if view_class != nil
 					value = view_class.replace_render_statements(view_class_hash, dep+1)
-					render_view_mapping[str_to_be_replaced] = value
+					render_view_mapping[r] = value
 				else
 					#do something if the view file does not exisst
 				end

@@ -62,7 +62,51 @@ class ListingsController < ApplicationController
           }.data
 
           ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-   link_to(listing_path(listing.url), :class => "#{modifier_class} fluid-thumbnail-grid-image-item-link") do 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+    link_to(listing_path(listing.url), :class => "#{modifier_class} fluid-thumbnail-grid-image-item-link") do 
  modifier_class 
  with_first_listing_image(listing) do |first_image_url| 
  image_tag first_image_url, {:alt => listed_listing_title(listing), :class => "#{modifier_class} fluid-thumbnail-grid-image-image"} 
@@ -93,6 +137,40 @@ class ListingsController < ApplicationController
  link_to t("people.show.show_all_open_listings"), "#", :data => { :url => person_listings_url(@person) } 
  end 
  end 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -149,7 +227,51 @@ end
       @listing = Listing.find(params[:id])
       if @listing.visible_to?(@current_user, @current_community)
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- if listing.has_image? 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  if listing.has_image? 
  link_to(image_tag(listing.listing_images.first.image.url(:small_3x2), :alt => listed_listing_title(listing)), listing) 
  end 
  listing_path(listing) 
@@ -163,12 +285,124 @@ end
  "/ #{listing.quantity}" 
  end 
  end 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
       else
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t(".listing_not_visible") 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  t(".listing_not_visible") 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -193,7 +427,51 @@ end
 
     if @listings.size > 0
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "1" 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  "1" 
  "2" 
   if listing.has_image? 
  link_to(image_tag(listing.listing_images.first.image.url(:small_3x2), :alt => listed_listing_title(listing)), listing) 
@@ -210,12 +488,124 @@ end
  end 
  end 
  
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t(".listing_not_visible") 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  t(".listing_not_visible") 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -244,17 +634,52 @@ end
 
     delivery_opts = delivery_config(@listing.require_shipping_address, @listing.pickup_enabled, @listing.shipping_price, @listing.shipping_price_additional, @listing.currency)
 
-    render locals: {
-             form_path: form_path,
-             payment_gateway: payment_gateway,
-             # TODO I guess we should not need to know the process in order to show the listing
-             process: process,
-             delivery_opts: delivery_opts,
-             listing_unit_type: @listing.unit_type,
-             country_code: community_country_code
-           }
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :javascript do 
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  content_for :javascript do 
  end 
  content_for :extra_javascript do 
  javascript_include_tag "https://maps.google.com/maps/api/js?sensor=true" 
@@ -386,6 +811,254 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("listings.map.open_in_google_maps") 
  
  end 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
+
+end
+
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  content_for :javascript do 
+ end 
+ content_for :extra_javascript do 
+ javascript_include_tag "https://maps.google.com/maps/api/js?sensor=true" 
+ end 
+ content_for :title, raw(@listing.title) 
+ content_for :meta_author, @listing.author.name(@current_community) 
+ content_for :meta_description, StringUtils.first_words(@listing.description, 15) 
+ content_for :meta_image, @listing.listing_images.first.image.url(:medium) if !@listing.listing_images.empty? 
+ dimensions = @listing.listing_images.first.get_dimensions_for_style(:medium) if !@listing.listing_images.empty? 
+ content_for :meta_image_width, dimensions[:width].to_s if !@listing.listing_images.empty? 
+ content_for :meta_image_height, dimensions[:height].to_s if !@listing.listing_images.empty? 
+ content_for :keywords, StringUtils.keywords(@listing.title) 
+ content_for :title_header do 
+ @listing.title 
+ end 
+ @listing.title 
+ with_image_frame(@listing) do |reason, listing_images| 
+ if reason == :images_ok 
+ if @prev_image_id && @next_image_id 
+ link_to params.merge(image: @prev_image_id), class: "listing-image-navi listing-image-navi-left", id: "listing-image-navi-left" do 
+ icon_tag("directleft", ["navigate-icon-fix", "listing-image-navi-arrow"]) 
+ end 
+ link_to params.merge(image: @next_image_id), class: "listing-image-navi listing-image-navi-right", id: "listing-image-navi-right" do 
+ icon_tag("directright", ["navigate-icon-fix", "listing-image-navi-arrow"]) 
+ end 
+ end 
+ content_for :extra_javascript do 
+ end 
+ else 
+ if reason == :images_processing 
+ t("listings.show.processing_uploaded_image") 
+ else 
+ t(".no_description") 
+ end 
+ end 
+ end 
+ if @listing.description && !@listing.description.blank? 
+ text_with_line_breaks do 
+ @listing.description 
+ end 
+ end 
+ @listing.custom_field_values.each do |custom_field_value| 
+ custom_field_value.with_type do |question_type| 
+ render :partial => "listings/custom_field_partials/#{question_type}", :locals => { :custom_field_value => custom_field_value } 
+ end 
+ end 
+ if @current_community.show_listing_publishing_date? 
+ icon_tag("calendar", ["icon-part"]) 
+ t(".listing_created_at") 
+ l @listing.created_at, :format => :short_date 
+ end 
+ if !@current_community.private? 
+ facebook_like(current_user?(@listing.author)) 
+ link_to("", "https://twitter.com/share", :class => "twitter-share-button", "data" => {count: "horizontal", via: (@current_community.twitter_handle || "Sharetribe"), text: @listing.title }) 
+ content_for :extra_javascript do 
+ end 
+ end 
+ unless (@listing.closed? && !current_user?(@listing.author)) || !@current_community.listing_comments_in_use 
+ icon_tag("chat_bubble", ["icon-with_text"]) 
+ t(".comments") 
+ "(#{@listing.comments_count})" 
+  if @current_user 
+ if @current_user.is_following?(@listing || @comment.listing) 
+ link_to t(".unfollow"), unfollow_listing_path(@listing || @comment.listing), :class => "unfollow_listing", :method => :delete, :remote => :true 
+ else 
+ link_to t(".follow"), follow_listing_path(@listing || @comment.listing), :class => "follow_listing", :method => :post, :remote => :true 
+ end 
+ end 
+ 
+  comment.id.to_s 
+ small_avatar_thumb(comment.author) 
+ link_to_unless comment.author.deleted?, PersonViewUtils.person_display_name(comment.author, @current_community), comment.author 
+ time_ago(comment.created_at) 
+ if @current_user && (current_user?(comment.author) || @current_user.has_admin_rights_in?(@current_community)) 
+ link_to t('listings.comment.delete'), listing_comment_path(:listing_id => comment.listing.id, :id => comment.id), {method: :delete, confirm: t('listings.comment.are_you_sure'), :remote => :true} 
+ end 
+ text_with_line_breaks do 
+ comment.content 
+ end 
+ 
+  if @listing.closed? 
+ t(".you_cannot_send_a_new_comment_because_listing_is_closed") 
+ elsif logged_in? 
+ form_for Comment.new, :url => listing_comments_path(:listing_id => @listing.id.to_s) do |f| 
+ f.text_area :content, :class => "listing_comment_content_text_area", :placeholder => t(".ask_a_question") 
+ check_box_tag "comment[author_follow_status]", "true", :checked => true 
+ label_tag "comment_author_follow_status", t(".subscribe_to_comments"), :class => "comment_checkbox_label" 
+ f.hidden_field :listing_id, :value => @listing.id.to_s 
+ f.hidden_field :author_id, :value => @current_user.id 
+ f.hidden_field :community_id, :value => @current_community.id 
+ f.button t(".send_comment"), :id => "send_comment_button" 
+ end 
+ else 
+ t(".you_must") 
+ link_to t(".log_in"), login_path 
+ t(".to_send_a_comment") 
+ end 
+ 
+ end 
+ if @listing.price 
+ humanized_money_with_symbol(@listing.price).upcase 
+ with_quantity_and_vat_text(@current_community, @listing) do |text| 
+ text 
+ end 
+ end 
+  
+ medium_avatar_thumb(@listing.author, {:class => "listing-author-avatar-image"}) 
+ link_to @listing.author.name(@current_community), @listing.author, :id => "listing-author-link", :class => "listing-author-name-link", :title => "#{@listing.author.name(@current_community)}" 
+ if @listing.author != @current_user 
+ contact_to_listing_path(:listing_id => @listing.id.to_s) 
+ t(".contact") 
+ end 
+ if @current_community.testimonials_in_use && @listing.author.received_testimonials.size > 0 
+ icon_class("testimonial") 
+ if @listing.author.received_testimonials.size > 0 
+ @listing.author.feedback_positive_percentage.to_s + "%" 
+ t("people.show.positive") 
+ "(#{@listing.author.received_positive_testimonials.size}/#{@listing.author.received_testimonials.size})" 
+ else 
+ t(".no_reviews") 
+ end 
+ t(".feedback") 
+ end 
+ if @listing.origin_loc && @listing.origin_loc.address != "" 
+  content_for :extra_javascript do 
+ end 
+ CGI.escape(listing.location.address) 
+ icon_tag("external_link", ["icon-part"]) 
+ t("listings.map.open_in_google_maps") 
+ 
+ end 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -400,10 +1073,166 @@ end
     )
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -529,17 +1358,167 @@ end
         [@listing.category.id, nil]
       end
 
-    render locals: {
-             category_tree: category_tree,
-             categories: @current_community.top_level_categories,
-             subcategories: @current_community.subcategories,
-             shapes: get_shapes,
-             category_id: category_id,
-             subcategory_id: subcategory_id,
-             shape_id: @listing.listing_shape_id,
-             form_content: form_locals(shape)
-           }
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
+
+end
+
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -605,14 +1584,11 @@ end
         redirect_to @listing
       }
       format.js {
-        render :layout => false, locals: {payment_gateway: payment_gateway, process: process, country_code: community_country_code }
-      }
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript() 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  
  @listing.id.to_s 
- escape_javascript() 
- escape_javascript( if @listing.closed? 
+  
+  if @listing.closed? 
  t(".you_cannot_send_a_new_comment_because_listing_is_closed") 
  elsif logged_in? 
  form_for Comment.new, :url => listing_comments_path(:listing_id => @listing.id.to_s) do |f| 
@@ -629,7 +1605,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(".log_in"), login_path 
  t(".to_send_a_comment") 
  end 
-) 
+ 
+
+end
+
+      }
+    end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+   
+ @listing.id.to_s 
+  
+  if @listing.closed? 
+ t(".you_cannot_send_a_new_comment_because_listing_is_closed") 
+ elsif logged_in? 
+ form_for Comment.new, :url => listing_comments_path(:listing_id => @listing.id.to_s) do |f| 
+ f.text_area :content, :class => "listing_comment_content_text_area", :placeholder => t(".ask_a_question") 
+ check_box_tag "comment[author_follow_status]", "true", :checked => true 
+ label_tag "comment_author_follow_status", t(".subscribe_to_comments"), :class => "comment_checkbox_label" 
+ f.hidden_field :listing_id, :value => @listing.id.to_s 
+ f.hidden_field :author_id, :value => @current_user.id 
+ f.hidden_field :community_id, :value => @current_community.id 
+ f.button t(".send_comment"), :id => "send_comment_button" 
+ end 
+ else 
+ t(".you_must") 
+ link_to t(".log_in"), login_path 
+ t(".to_send_a_comment") 
+ end 
+ 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -670,14 +1751,92 @@ end
   def follow
     change_follow_status("follow")
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript( if @current_user 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+   if @current_user 
  if @current_user.is_following?(@listing || @comment.listing) 
  link_to t(".unfollow"), unfollow_listing_path(@listing || @comment.listing), :class => "unfollow_listing", :method => :delete, :remote => :true 
  else 
  link_to t(".follow"), follow_listing_path(@listing || @comment.listing), :class => "follow_listing", :method => :post, :remote => :true 
  end 
  end 
-) 
+ 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -690,7 +1849,51 @@ end
   def verification_required
 
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :title_header do 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  content_for :title_header do 
  t("listings.verification_required.verification_required") 
  end 
  if @community_customization && @community_customization.verification_to_post_listings_info_content 
@@ -698,6 +1901,40 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  t("admin.communities.edit_details.verification_to_post_listings_info_content_default", :contact_admin_link => link_to(t("admin.communities.edit_details.contact_admin_link_text"), new_user_feedback_path)).html_safe 
  end 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -766,7 +2003,51 @@ end
 
     if allow_posting
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-  valid_until_msg = t('error_messages.listings.valid_until') 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+   valid_until_msg = t('error_messages.listings.valid_until') 
  js_t ["listings.form.images.processing", "listings.form.images.this_may_take_a_while", "listings.form.images.percentage_loaded", "listings.form.images.uploading_failed", "listings.form.images.file_too_large", "listings.form.images.image_processing_failed", "listings.form.images.accepted_formats", "listings.form.images.loading_image", "listings.form.images.select_file", "listings.form.images.removing", "listings.form.images.add_more"], run_js_immediately 
  content_for :listing_js do 
  end 
@@ -790,12 +2071,124 @@ end
  end 
  end 
  
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- error_msg 
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+  error_msg 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 
@@ -922,14 +2315,14 @@ end
       }
       format.js {
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript( if @current_user 
+  if @current_user 
  if @current_user.is_following?(@listing || @comment.listing) 
  link_to t(".unfollow"), unfollow_listing_path(@listing || @comment.listing), :class => "unfollow_listing", :method => :delete, :remote => :true 
  else 
  link_to t(".follow"), follow_listing_path(@listing || @comment.listing), :class => "follow_listing", :method => :post, :remote => :true 
  end 
  end 
-) 
+ 
 
 end
 
