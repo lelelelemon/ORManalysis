@@ -362,6 +362,20 @@ def getControllerNameCap(name)
 	return controller_name
 end
 
+def sourceIgnore(instr)
+	if instr.instance_of?HashField_instr or instr.instance_of?Return_instr
+		return true
+	end
+	if instr.instance_of?Call_instr and ["before_filter","before_save","before_create"].include?instr.getFuncname
+		return true
+	end
+	return false
+end
+
+def sinkIgnore(instr)
+	
+end
+
 def isValidationFunc(name)
 	return ["before_filter","before_save","before_create","before_action"].include?name
 end

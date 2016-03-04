@@ -297,6 +297,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		if $cfg == nil
 			return
 		end
+		if $cfg.getBB[0] == nil or $cfg.getBB[0].getInstr[0] == nil
+			exit
+		end
 		$root = $cfg.getBB[0].getInstr[0].getINode	
 	end
 	
@@ -522,12 +525,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							@table_read_stat[@table_name].to_view += 1
 							@read_sink_stat.to_view += 1
 						else
-						#puts " * (To unknown sink)"
+							puts " * (To unknown sink) #{n1.getIndex}: #{n1.getInstr.toString}"
 						end
 					end
 					if n1.getInView
 						@used_in_view = true
 					end
+
 					#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 				end
 				
@@ -544,11 +548,16 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						@read_source_stat.source_total += 1
 						@only_from_user_input = false
 					elsif n1.getBackwardEdges.length == 0
-						@read_source_stat.source_total += 1
+						if sourceIgnore(n1.getInstr)
+						else
+							@read_source_stat.source_total += 1
+						end
 						if n1.getInstr.instance_of?Copy_instr and n1.getInstr.isFromConst
 							@read_source_stat.from_const += 1
 						elsif n1.getInstr.instance_of?Const_instr
-							@read_source_stat.from_util += 1 
+							@read_source_stat.from_util += 1
+						else
+							puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 						end
 					end
 				end
@@ -589,10 +598,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							elsif n1.getInstr.instance_of?Const_instr
 								@write_source_stat.from_util += 1
 							else
-								#puts " x (Some source)"
+								puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 							end
-							@write_source_stat.source_total += 1
-							@table_write_stat[@table_name].source_total += 1
+							if sourceIgnore(n1.getInstr)
+							else
+								@write_source_stat.source_total += 1
+								@table_write_stat[@table_name].source_total += 1
+							end
 						end
 						#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 					end

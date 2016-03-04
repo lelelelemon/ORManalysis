@@ -630,12 +630,12 @@ for table in table_names:
 	else:
 		print_general_stat(pref, table_stats_content, False, False)
 
-#print_fields(nonfield_prefix, field_stats_content, True)
-#print_fields(field_prefix, field_stats_content)
-#print_path(prefix3, path_stats_content+path_stats_content2)
-#
-#print_view_stat(view_stat_prefix)
-#print_clique_stat(clique_stat_prefix)
-#print_schema_stat(schema_stat_prefix, table_stats_prefix)
+print_fields(nonfield_prefix, field_stats_content, True)
+print_fields(field_prefix, field_stats_content)
+print_path(prefix3, path_stats_content+path_stats_content2)
 
-#print_chain(prefix2, [])
+print_view_stat(view_stat_prefix)
+print_clique_stat(clique_stat_prefix)
+print_schema_stat(schema_stat_prefix, table_stats_prefix)
+
+print_chain(prefix2, [])

@@ -149,8 +149,9 @@ class Instruction
 		@resolved = true
 	end
 	def toString
-		#s = "[#{self.getBB.getCFG.getMHandler.getName}] (#{@bb.getIndex}.#{@index}) "
-		s = "(#{@bb.getIndex}.#{@index}) "
+		meth = self.getBB.getCFG.getMHandler
+		s = "[#{meth.getCallerClass.getName}.#{meth.getName}] (#{@bb.getIndex}.#{@index}) "
+		#s = "(#{@bb.getIndex}.#{@index}) "
 		@deps.each do |dep|
 			s = s + "#{dep.getVname}[#{dep.getBlock}.#{dep.getInstr}] "
 		end
