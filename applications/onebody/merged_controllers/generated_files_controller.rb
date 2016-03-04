@@ -9,5 +9,12 @@ class GeneratedFilesController < ApplicationController
       end
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('generated_files.building') 
+ content_for(:js) do 
+ end 
+
+end
+
   end
 end

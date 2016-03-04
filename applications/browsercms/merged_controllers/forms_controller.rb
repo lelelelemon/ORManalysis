@@ -3,6 +3,10 @@ class FormsController < ContentBlockController
   before_filter :associate_form_fields, only: [:create, :update]
   before_filter :strip_new_entry_params, only: [:create, :update]
 
+	def model_class
+		return Form.new
+	end
+
   helper do
     # For new forms, if the user doesn't complete and save them, we need to delete them from the database.
     # The reason :new creates a form object (which is not conventional) is to allow AJAX FormField creation/association.

@@ -9,8 +9,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_site 
 		 6: RECEIVEARG def_import_id 
@@ -18,19 +18,19 @@ BB 2
 		 8: RECEIVEARG def_strategy_name 
 		 9: 
 		 10: (ActiveRecord) def_%v_3 
-		 11: def_%v_4 %v_3[2.10,] 
+		 11: (inherit Base) def_%v_4 %v_3[2.10,] 
 		 12: %v_4[2.11,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %v_3[2.10,] 
+		 0: %v_3->const_missing def_%v_4 %v_3[2.10,] 	 ARGS:Symbol,
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %v_4->connection_pool def_%v_5 %v_4[3.0,2.11,] 
-		 1: %v_5->with_connection def_%v_6 %v_5[4.0,] %self[2.0,] 
+		 0: %v_4->connection_pool def_%v_5 %v_4[3.0,2.11,] 	 ARGS:
+		 1: %v_5->with_connection def_%v_6 %v_5[4.0,] %self[2.0,] 	 ARGS:%v_5,
 CLOSURE BEGIN: site[2.5,] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -42,15 +42,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (Site) def_%cl_1_3 
-		 2: def_%cl_1_4 %cl_1_3[3.1,] site[] %self[2.0,] 
+		 2: %cl_1_3->with_current def_%cl_1_4 %cl_1_3[3.1,] site[] %self[2.0,] 	 ARGS:site,%cl_1_3,
 CLOSURE BEGIN: import_id[] data[] strategy_name[] parser[] import[] e[] 
 BB 1
 	outgoing: 15 2 
@@ -62,21 +62,21 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 13 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (Import) def_%cl_2_3 
-		 2: %cl_2_3->find def_%cl_2_4 %cl_2_3[3.1,] import_id[] 
-		 3: COPY def_import %cl_2_4[3.2,] 
+		 2: %cl_2_3->find def_%cl_2_4 %cl_2_3[3.1,] import_id[] 	 ARGS:import_id,
+		 3: COPY TYPE_PASS def_import %cl_2_4[3.2,] 
 		 4: 
 		 5: (ImportParser) def_%cl_2_5 
-		 6: COPY def_%cl_2_6 %cl_2_4[3.2,] data[] strategy_name[] 
-		 7: %cl_2_5->new def_%cl_2_7 %cl_2_5[3.5,] %cl_2_6[3.6,] 
-		 8: COPY def_parser %cl_2_7[3.7,] 
+		 6: HASH-import-data-strategy_name- def_%cl_2_6 %cl_2_4[3.2,] data[] strategy_name[] 
+		 7: %cl_2_5->new def_%cl_2_7 %cl_2_5[3.5,] %cl_2_6[3.6,] 	 ARGS:%cl_2_6,
+		 8: COPY TYPE_PASS def_parser %cl_2_7[3.7,] 
 		 9: 
 		 10: def_%cl_2_8 
 BB 4
@@ -85,8 +85,8 @@ BB 4
 	instructions:
 		 0: 
 		 1: 
-		 2: parser->parse def_%cl_2_11 parser[3.8,] 
-		 3: COPY def_%cl_2_10 %cl_2_11[4.2,] 
+		 2: parser->parse def_%cl_2_11 parser[3.8,] 	 ARGS:
+		 3: COPY TYPE_PASS def_%cl_2_10 %cl_2_11[4.2,] 
 		 4: %cl_2_8[3.10,] 
 BB 6
 	outgoing: 12 
@@ -110,16 +110,16 @@ BB 9
 	datadep: 
 	instructions:
 		 0: def_%cl_2_14 
-		 1: COPY def_e %cl_2_14[9.0,] 
+		 1: COPY TYPE_PASS def_e %cl_2_14[9.0,] 
 		 2: 
 		 3: ATTRASSIGN import->status 
 		 4: 
-		 5: e->message def_%cl_2_15 e[9.1,] 
-		 6: %cl_2_15->inspect def_%cl_2_16 %cl_2_15[9.5,] 
+		 5: e->message def_%cl_2_15 e[9.1,] 	 ARGS:
+		 6: %cl_2_15->inspect def_%cl_2_16 %cl_2_15[9.5,] 	 ARGS:
 		 7: ATTRASSIGN import->error_message %cl_2_16[9.6,] 
 		 8: 
-		 9: import->save! def_%cl_2_17 import[9.3,9.7,3.3,] 
-		 10: COPY def_%cl_2_10 %cl_2_17[9.9,] 
+		 9: import->save! def_%cl_2_17 import[9.3,9.7,3.3,] 	 ARGS:
+		 10: COPY TYPE_PASS def_%cl_2_10 %cl_2_17[9.9,] 
 		 11: %cl_2_8[3.10,] 
 BB 10
 	outgoing: 12 

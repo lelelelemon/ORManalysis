@@ -5,6 +5,7 @@ class Administration::Checkin::TimesController < ApplicationController
   def index
     @recurring_times = CheckinTime.recurring.order(:weekday, :time)
     @single_times = CheckinTime.future_singles.order(:the_datetime)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('checkin.times.heading') 
  t('checkin.times.recurring.heading') 
  link_to '#', class: 'btn btn-success btn-xs', data: { toggle: '#new_recurring_time' } do 
@@ -18,7 +19,22 @@ class Administration::Checkin::TimesController < ApplicationController
  form.button t('checkin.times.recurring.add.button'), class: 'btn btn-success' 
  end 
  if @recurring_times.any? 
- render partial: 'times', object: @recurring_times 
+  t('checkin.times.table.time') 
+ t('checkin.times.table.campus') 
+ t('checkin.times.table.groups.heading') 
+ times.each do |time| 
+ time 
+ time.campus 
+ t('checkin.times.table.groups.count', count: time.groups.count) 
+ link_to edit_administration_checkin_time_path(time), class: 'btn btn-info' do 
+ icon 'fa fa-pencil' 
+ t('checkin.times.edit.button') 
+ end 
+ link_to administration_checkin_time_path(time), data: { method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-delete' do 
+ icon 'fa fa-trash-o' 
+ end 
+ end 
+ 
  else 
  t('none') 
  end 
@@ -33,10 +49,27 @@ class Administration::Checkin::TimesController < ApplicationController
  form.button t('checkin.times.single.add.button'), class: 'btn btn-success' 
  end 
  if @single_times.any? 
- render partial: 'times', object: @single_times 
+  t('checkin.times.table.time') 
+ t('checkin.times.table.campus') 
+ t('checkin.times.table.groups.heading') 
+ times.each do |time| 
+ time 
+ time.campus 
+ t('checkin.times.table.groups.count', count: time.groups.count) 
+ link_to edit_administration_checkin_time_path(time), class: 'btn btn-info' do 
+ icon 'fa fa-pencil' 
+ t('checkin.times.edit.button') 
+ end 
+ link_to administration_checkin_time_path(time), data: { method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-delete' do 
+ icon 'fa fa-trash-o' 
+ end 
+ end 
+ 
  else 
  t('none') 
  end 
+
+end
 
   end
 
@@ -46,6 +79,7 @@ class Administration::Checkin::TimesController < ApplicationController
 
   def edit
     @time = CheckinTime.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('checkin.times.edit.heading') 
  form_for @time, url: administration_checkin_time_path(@time) do |form| 
  if @time.weekday 
@@ -61,6 +95,8 @@ class Administration::Checkin::TimesController < ApplicationController
  t('checkin.times.edit.delete.button') 
  end 
  end 
+
+end
 
   end
 

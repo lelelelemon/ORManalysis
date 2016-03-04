@@ -55,6 +55,97 @@ class Administration::AttendanceController < ApplicationController
         render text: csv_str
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @group 
+ @title = t('attendance.heading_html', group: link_to(@group.name, @group), when: @attended_at.to_s(:date)) 
+ else 
+ @title = t('attendance.heading_without_group', when: @attended_at.to_s(:date)) 
+ end 
+ content_for :header do 
+ breadcrumbs 
+ link_to prev_administration_attendance_index_path(attended_at: @attended_at) do 
+ icon 'fa fa-arrow-circle-o-left' 
+ end 
+ @title 
+ link_to next_administration_attendance_index_path(attended_at: @attended_at) do 
+ icon 'fa fa-arrow-circle-o-right' 
+ end 
+ end 
+ t('attendance.records', count: @record_count) 
+ if @records.any? 
+ pagination @records 
+ sortable_column_heading t('attendance.name'),          'attendance_records.last_name,attendance_records.first_name', %w(attended_at group_id) 
+ sortable_column_heading t('attendance.adult'),         'people.child',                                               %w(attended_at group_id) 
+ sortable_column_heading t('attendance.group'),         'groups.name',                                                %w(attended_at group_id) 
+ sortable_column_heading t('attendance.class_time'),    'attendance_records.attended_at',                             %w(attended_at group_id) 
+ sortable_column_heading t('attendance.recorded_time'), 'attendance_records.created_at',                              %w(attended_at group_id) 
+ t('attendance.can_pickup_people') 
+ t('attendance.cannot_pickup_people') 
+ @records.each do |record| 
+ record.id 
+ if record.first_name.present? 
+ if record.person 
+ link_to "#{record.first_name} #{record.last_name}", record.person 
+ else 
+ record.first_name 
+ record.last_name 
+ end 
+ elsif record.person 
+ link_to record.person.name, record.person 
+ else 
+ t('attendance.name_unknown') 
+ end 
+ if record.person && record.person.adult? 
+ t('attendance.adult') 
+ end 
+ if record.group 
+ link_to record.group.name, record.group 
+ else 
+ t('attendance.group_missing') 
+ end 
+ record.attended_at.to_s(:time) 
+ record.created_at.to_s(:time) 
+ record.all_pickup_people.join(', ') 
+ record.cannot_pick_up 
+ link_to administration_attendance_path(record), data: { remote: true, method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-delete btn-xs' do 
+ icon 'fa fa-trash-o' 
+ end 
+ if record.medical_notes.present? 
+ t('attendance.medical_notes') 
+ record.medical_notes 
+ end 
+ end 
+ pagination @records 
+ else 
+ t('attendance.no_records') 
+ end 
+ form_tag administration_attendance_index_path, method: :get do 
+ label_tag :attended_at, t('attendance.date') 
+ date_field_tag :attended_at, @attended_at.to_s(:date), class: 'form-control', onchange: 'this.form.submit()' 
+ if @groups.any? 
+ label_tag :group_id, t('attendance.group') 
+ select_tag :group_id, options_for_select(['']) + options_from_collection_for_select(@groups, :id, :name, params[:group_id].to_i), onchange: 'this.form.submit()', class: 'form-control' 
+ label_tag :person_name, t('attendance.search_person') 
+ text_field_tag :person_name, params[:person_name], class: 'form-control' 
+ if params[:person_name] 
+ link_to administration_attendance_index_path(attended_at: @attended_at, group_id: params[:group_id]), class: 'btn btn-danger' do 
+ icon 'fa fa-times-circle' 
+ end 
+ end 
+ button_tag class: 'btn btn-info' do 
+ icon 'fa fa-search' 
+ end 
+ end 
+ end 
+ if @records.any? 
+ link_to administration_attendance_index_path(format: 'csv', attended_at: @attended_at, group_id: params[:group_id], person_name: params[:person_name]), class: 'btn btn-info' do 
+ icon 'fa fa-download' 
+ t('attendance.export') 
+ end 
+ end 
+
+end
+
   end
 
   def prev
@@ -72,7 +163,10 @@ class Administration::AttendanceController < ApplicationController
   def destroy
     @record = AttendanceRecord.find(params[:id])
     @record.destroy
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @record.id 
+
+end
 
   end
 

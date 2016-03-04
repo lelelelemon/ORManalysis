@@ -9,14 +9,14 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (CheckinLabel) def_%v_3 
-		 7: %v_3->all def_%v_4 %v_3[2.6,] 
-		 8: COPY def_%v_5 
-		 9: def_%v_6 %v_4[2.7,] %v_5[2.8,] %self[2.0,] 
+		 7: %v_3->all def_%v_4 %v_3[2.6,] 	 ARGS:
+		 8: HASH- def_%v_5 
+		 9: %v_4->each_with_object def_%v_6 %v_4[2.7,] %v_5[2.8,] %self[2.0,] 	 ARGS:%v_5,%v_4,
 CLOSURE BEGIN: label[] hash[] 
 BB 1
 	outgoing: 6 2 
@@ -30,15 +30,15 @@ BB 2
 		 1: def_%cl_1_0 
 		 2: RECEIVEARG def_label 
 		 3: RECEIVEARG def_hash 
-		 4: COPY def_%current_scope 
-		 5: COPY def_%current_module 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: label->id def_%cl_1_3 label[2.2,] 
-		 2: label->xml def_%cl_1_4 label[3.1,2.2,] 
+		 1: label->id def_%cl_1_3 label[2.2,] 	 ARGS:
+		 2: label->xml def_%cl_1_4 label[3.1,2.2,] 	 ARGS:
 		 3: ATTRASSIGN hash->[] %cl_1_3[3.1,] %cl_1_4[3.2,] 
 		 4: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4

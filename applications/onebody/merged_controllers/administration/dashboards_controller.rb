@@ -18,6 +18,9 @@ class Administration::DashboardsController < ApplicationController
     @group_count  = Group.count
     @deleted_people_count = Person.deleted.count
     @alerts = []
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
 
   end
 end

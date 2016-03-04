@@ -10,6 +10,55 @@ class FriendsController < ApplicationController
     else
       render text: t('people.not_found'), layout: true, status: 404
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('friends.personal_friends', name: @person.name) 
+ if @pending.any? 
+ icon 'fa fa-clock-o' 
+ t('friends.pending_requests') 
+ t('friends.people_requested') 
+ @pending.each do |friendship_request| 
+ link_to friendship_request.from do 
+ avatar_tag(friendship_request.from) 
+ friendship_request.from.name 
+ end 
+ link_to person_friend_path(@logged_in, friendship_request, accept: true), method: 'put', class: 'btn btn-success' do 
+ icon 'fa fa-plus-circle' 
+ t('friends.accept') 
+ end 
+ link_to person_friend_path(@logged_in, friendship_request, reject: true), method: 'put', data: { confirm: t('are_you_sure') }, class: 'btn bg-gray text-red' do 
+ icon 'fa fa-minus-circle' 
+ t('friends.decline') 
+ end 
+ end 
+ end 
+ t('friends.friends') 
+ if @friendships.any? 
+ @friendships.each do |friendship| 
+ friendship.id 
+ link_to friendship.friend do 
+ avatar_tag friendship.friend 
+ end 
+ link_to friendship.friend.name, friendship.friend 
+ if me? 
+ link_to person_friend_path(@person, friendship.friend), class: 'btn bg-gray text-red pull-right', method: 'delete', data: { confirm: t('are_you_sure') } do 
+ icon 'fa fa-minus-circle' 
+ t('friends.remove_from_friends') 
+ end 
+ end 
+ end 
+ javascript_include_tag 'dragdrop.js' 
+ else 
+ t('.nobody_yet') 
+ end 
+ if me? 
+ link_to search_path, class: 'btn btn-info' do 
+ icon 'fa fa-search' 
+ t('friends.search_in_the_directory') 
+ end 
+ end 
+
+end
+
   end
 
   # friend_id = Person (other person)
@@ -21,7 +70,11 @@ class FriendsController < ApplicationController
       wants.html
       wants.js
     end
- @message 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @other_person.id 
+ escape_javascript @message 
+
+end
 
   end
 

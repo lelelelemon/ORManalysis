@@ -84,7 +84,9 @@ def resolve_upper_class
 		if $class_map.has_key?(valuec.getUpperClass)
 			valuec.setUpperClassInstance($class_map[valuec.getUpperClass])
 			temp_upper_class = valuec.getUpperClass
+			@class_traversed = Array.new
 			while $class_map[temp_upper_class] != nil
+				@class_traversed.push(temp_upper_class)
 				#puts "Set parent class: #{keyc} < #{valuec.getUpperClass}"
 				parent = $class_map[temp_upper_class]
 				valuec.mergeBeforeFilter(parent)
@@ -93,7 +95,13 @@ def resolve_upper_class
 				if valuec.include_module == nil
 					valuec.include_module = parent.include_module.dup
 				end
+				cur_class = temp_upper_class
 				temp_upper_class = $class_map[temp_upper_class].getUpperClass
+				if @class_traversed.include?(temp_upper_class)
+					$class_map[cur_class].setUpperClass(nil)
+					$class_map[cur_class].setUpperClassInstance(nil)
+					temp_upper_class = nil
+				end
 			end
 			
 			#create valid? function
@@ -340,12 +348,12 @@ if options[:inference] == true
 	$type_inference = true
 end
 
-
 if options[:dir] != nil
 	puts "dir = #{options[:dir]}"
 	if options[:template] != nil
 		read_ruby_files_with_template(options[:dir], options[:template])
 	else
+		$app_dir = options[:dir]
 		read_ruby_files(options[:dir])
 		#puts "Finish reading files"
 	
@@ -370,7 +378,6 @@ else
 	read_dataflow
 	do_type_inference
 end
-
 
 if options[:class_name] != nil
 	if options[:class_name] == "all"
@@ -448,24 +455,19 @@ if options[:run_all]
 		line = line.gsub("\n","")
 		chs = line.split(',')
 		start_function = chs[1]
-		chs[0] = chs[0].capitalize
-		if chs[0].include?("::")
-			i = chs[0].index('::')
-			chs[0][i+2] = chs[0][i+2].upcase
-		end
-		start_class = "#{chs[0]}Controller"
+		start_class = getControllerNameCap(chs[0])
 		puts "Handling #{start_class}, #{start_function}"
 		level = 0
-
-	#start print query trace
+	
+		#start print query trace
 		$output_dir = "#{$app_dir}/results/#{start_class}_#{start_function}"
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w");
 
-		$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
-		trace_flow(start_class, start_function, "", "", level)
-		$trace_output_file.close
+		#$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
+		#trace_flow(start_class, start_function, "", "", level)
+		#$trace_output_file.close
 
 		puts "Trace output finish"
 
@@ -518,8 +520,7 @@ if options[:run_all]
 				line = line.gsub("\n","")
 				chs = line.split(',')
 				next_function = chs[1]
-				chs[0] = chs[0].capitalize
-				next_class = "#{chs[0]}Controller"
+				next_class = getControllerNameCap(chs[0])
 
 				compute_dataflow_stat($output_dir, next_class, next_function, true)
 			

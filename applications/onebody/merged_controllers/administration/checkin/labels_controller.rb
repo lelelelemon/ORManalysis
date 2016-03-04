@@ -4,6 +4,7 @@ class Administration::Checkin::LabelsController < ApplicationController
 
   def index
     @labels = CheckinLabel.order(:name)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('checkin.labels.heading') 
  t('checkin.labels.table.name') 
  t('checkin.labels.table.description') 
@@ -24,19 +25,51 @@ class Administration::Checkin::LabelsController < ApplicationController
  t('checkin.labels.new.button') 
  end 
 
+end
+
   end
 
   def new
     @label = CheckinLabel.new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('checkin.labels.new.heading') 
- render partial: 'form' 
+  form_for @label, url: @label.persisted? ? administration_checkin_label_path(@label) : administration_checkin_labels_path, multipart: true do |form| 
+ error_messages_for(form) 
+ form.label :name 
+ form.text_field :name, class: 'form-control' 
+ form.label :description 
+ form.text_area :description, class: 'form-control' 
+ form.label :xml 
+ form.text_area :xml, class: 'form-control', rows: 15 
+ form.label :xml_file 
+ form.file_field :xml_file 
+ form.button t('save'), class: 'btn btn-success' 
+ end 
+ 
+
+end
 
   end
 
   def edit
     @label = CheckinLabel.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('checkin.labels.edit.heading') 
- render partial: 'form' 
+  form_for @label, url: @label.persisted? ? administration_checkin_label_path(@label) : administration_checkin_labels_path, multipart: true do |form| 
+ error_messages_for(form) 
+ form.label :name 
+ form.text_field :name, class: 'form-control' 
+ form.label :description 
+ form.text_area :description, class: 'form-control' 
+ form.label :xml 
+ form.text_area :xml, class: 'form-control', rows: 15 
+ form.label :xml_file 
+ form.file_field :xml_file 
+ form.button t('save'), class: 'btn btn-success' 
+ end 
+ 
+
+end
 
   end
 
@@ -45,7 +78,24 @@ class Administration::Checkin::LabelsController < ApplicationController
     if @label.save
       redirect_to administration_checkin_labels_path, notice: t('changes_saved')
     else
-      render action: 'new'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('checkin.labels.new.heading') 
+  form_for @label, url: @label.persisted? ? administration_checkin_label_path(@label) : administration_checkin_labels_path, multipart: true do |form| 
+ error_messages_for(form) 
+ form.label :name 
+ form.text_field :name, class: 'form-control' 
+ form.label :description 
+ form.text_area :description, class: 'form-control' 
+ form.label :xml 
+ form.text_area :xml, class: 'form-control', rows: 15 
+ form.label :xml_file 
+ form.file_field :xml_file 
+ form.button t('save'), class: 'btn btn-success' 
+ end 
+ 
+
+end
+
     end
   end
 
@@ -54,7 +104,24 @@ class Administration::Checkin::LabelsController < ApplicationController
     if @label.update_attributes(label_params)
       redirect_to administration_checkin_labels_path, notice: t('changes_saved')
     else
-      render action: 'edit'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('checkin.labels.edit.heading') 
+  form_for @label, url: @label.persisted? ? administration_checkin_label_path(@label) : administration_checkin_labels_path, multipart: true do |form| 
+ error_messages_for(form) 
+ form.label :name 
+ form.text_field :name, class: 'form-control' 
+ form.label :description 
+ form.text_area :description, class: 'form-control' 
+ form.label :xml 
+ form.text_area :xml, class: 'form-control', rows: 15 
+ form.label :xml_file 
+ form.file_field :xml_file 
+ form.button t('save'), class: 'btn btn-success' 
+ end 
+ 
+
+end
+
     end
   end
 

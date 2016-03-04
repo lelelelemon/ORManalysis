@@ -9,26 +9,26 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_site 
 		 6: RECEIVEARG def_import_id 
 		 7: 
 		 8: (ActiveRecord) def_%v_3 
-		 9: def_%v_4 %v_3[2.8,] 
+		 9: (inherit Base) def_%v_4 %v_3[2.8,] 
 		 10: %v_4[2.9,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: def_%v_4 %v_3[2.8,] 
+		 0: %v_3->const_missing def_%v_4 %v_3[2.8,] 	 ARGS:Symbol,
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: %v_4->connection_pool def_%v_5 %v_4[3.0,2.9,] 
-		 1: %v_5->with_connection def_%v_6 %v_5[4.0,] %self[2.0,] 
+		 0: %v_4->connection_pool def_%v_5 %v_4[3.0,2.9,] 	 ARGS:
+		 1: %v_5->with_connection def_%v_6 %v_5[4.0,] %self[2.0,] 	 ARGS:%v_5,
 CLOSURE BEGIN: site[2.5,] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -40,15 +40,15 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_1_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (Site) def_%cl_1_3 
-		 2: def_%cl_1_4 %cl_1_3[3.1,] site[] %self[2.0,] 
+		 2: %cl_1_3->with_current def_%cl_1_4 %cl_1_3[3.1,] site[] %self[2.0,] 	 ARGS:site,%cl_1_3,
 CLOSURE BEGIN: import_id[] site[] import[] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
@@ -60,24 +60,24 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
 		 0: 
 		 1: (Import) def_%cl_2_3 
-		 2: %cl_2_3->find def_%cl_2_4 %cl_2_3[3.1,] import_id[] 
-		 3: COPY def_import %cl_2_4[3.2,] 
+		 2: %cl_2_3->find def_%cl_2_4 %cl_2_3[3.1,] import_id[] 	 ARGS:import_id,
+		 3: COPY TYPE_PASS def_import %cl_2_4[3.2,] 
 		 4: 
 		 5: (Import) def_%cl_2_5 
-		 6: COPY def_%cl_2_6 
-		 7: site->id def_%cl_2_7 site[] 
-		 8: COPY def_%cl_2_8 
-		 9: import->id def_%cl_2_9 import[3.3,] 
-		 10: def_%cl_2_10 %cl_2_6[3.6,] %cl_2_7[3.7,] %cl_2_8[3.8,] %cl_2_9[3.9,] 
-		 11: %cl_2_5->with_advisory_lock def_%cl_2_11 %cl_2_5[3.5,] %cl_2_10[3.10,] %self[2.0,] 
+		 6: COPY TYPE_StringLiteral def_%cl_2_6 
+		 7: site->id def_%cl_2_7 site[] 	 ARGS:
+		 8: COPY TYPE_StringLiteral def_%cl_2_8 
+		 9: import->id def_%cl_2_9 import[3.3,] 	 ARGS:
+		 10: BUILDSTRING def_%cl_2_10 %cl_2_6[3.6,] %cl_2_7[3.7,] %cl_2_8[3.8,] %cl_2_9[3.9,] 
+		 11: %cl_2_5->with_advisory_lock def_%cl_2_11 %cl_2_5[3.5,] %cl_2_10[3.10,] %self[2.0,] 	 ARGS:%cl_2_10,Fixnum,%cl_2_5,
 CLOSURE BEGIN: import[3.3,3.9,] e[] 
 BB 1
 	outgoing: 15 2 
@@ -89,8 +89,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_3_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: def_%cl_3_3 
 BB 4
@@ -100,9 +100,9 @@ BB 4
 		 0: 
 		 1: 
 		 2: (ImportPreview) def_%cl_3_6 
-		 3: %cl_3_6->new def_%cl_3_7 %cl_3_6[4.2,] import[] 
-		 4: %cl_3_7->preview def_%cl_3_8 %cl_3_7[4.3,] 
-		 5: COPY def_%cl_3_5 %cl_3_8[4.4,] 
+		 3: %cl_3_6->new def_%cl_3_7 %cl_3_6[4.2,] import[] 	 ARGS:import,
+		 4: %cl_3_7->preview def_%cl_3_8 %cl_3_7[4.3,] 	 ARGS:
+		 5: COPY TYPE_PASS def_%cl_3_5 %cl_3_8[4.4,] 
 		 6: %cl_3_3[2.5,] 
 BB 6
 	outgoing: 12 
@@ -126,15 +126,15 @@ BB 9
 	datadep: 
 	instructions:
 		 0: def_%cl_3_11 
-		 1: COPY def_e %cl_3_11[9.0,] 
+		 1: COPY TYPE_PASS def_e %cl_3_11[9.0,] 
 		 2: 
 		 3: ATTRASSIGN import->status 
 		 4: 
-		 5: e->message def_%cl_3_12 e[9.1,] 
+		 5: e->message def_%cl_3_12 e[9.1,] 	 ARGS:
 		 6: ATTRASSIGN import->error_message %cl_3_12[9.5,] 
 		 7: 
-		 8: import->save! def_%cl_3_13 import[9.3,9.6,] 
-		 9: COPY def_%cl_3_5 %cl_3_13[9.8,] 
+		 8: import->save! def_%cl_3_13 import[9.3,9.6,] 	 ARGS:
+		 9: COPY TYPE_PASS def_%cl_3_5 %cl_3_13[9.8,] 
 		 10: %cl_3_3[2.5,] 
 BB 10
 	outgoing: 12 

@@ -341,6 +341,27 @@ def call_match_name(caller_name, funcname, f_handler)
 	return nil
 end
 
+def getControllerNameCap(name)
+	c = name.split("::")
+	controller_name = ""
+	if c.length == 2
+		controller_name="#{c[0].capitalize}::#{c[1].capitalize}"
+	else
+		controller_name = name
+		controller_name[0] = controller_name[0].upcase
+	end
+	@t = controller_name.split("_")
+	if @t.length > 1
+		controller_name = ""
+		@t.each do |c1|
+			c1[0] = c1[0].upcase
+			controller_name += c1
+		end
+	end
+	controller_name += "Controller"
+	return controller_name
+end
+
 def isValidationFunc(name)
 	return ["before_filter","before_save","before_create","before_action"].include?name
 end
@@ -441,7 +462,6 @@ def clear_data_structure
 
 	$cur_node = nil
 	$root = nil
-	$non_repeat_list = Array.new
 	$global_check = Hash.new
 	$node_list = Array.new
 	$cur_query_stack = Array.new

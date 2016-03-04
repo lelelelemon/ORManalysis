@@ -9,17 +9,17 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->skip_mirror def_%v_3 %self[2.0,] 
+		 6: %self->skip_mirror def_%v_3 %self[2.0,] 	 ARGS:
 		 7: BRANCH %v_3[2.6,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_4 
+		 0: COPY TYPE_Nil def_%v_4 
 		 1: RETURN %v_4[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -27,17 +27,17 @@ BB 4
 	instructions:
 		 0: 
 		 1: (Friendship) def_%v_5 
-		 2: %self->friend_id def_%v_6 %self[2.0,] 
-		 3: COPY def_%v_7 %v_6[4.2,] 
-		 4: %v_5->new def_%v_8 %v_5[4.1,] %v_7[4.3,] 
-		 5: COPY def_mirror %v_8[4.4,] 
+		 2: %self->friend_id def_%v_6 %self[2.0,] 	 ARGS:
+		 3: HASH-person_id- def_%v_7 %v_6[4.2,] 
+		 4: %v_5->new def_%v_8 %v_5[4.1,] %v_7[4.3,] 	 ARGS:%v_7,
+		 5: COPY TYPE_PASS def_mirror %v_8[4.4,] 
 		 6: 
-		 7: %self->person_id def_%v_9 %self[4.2,2.0,] 
+		 7: %self->person_id def_%v_9 %self[4.2,2.0,] 	 ARGS:
 		 8: ATTRASSIGN mirror->friend_id %v_9[4.7,] 
 		 9: 
 		 10: ATTRASSIGN mirror->skip_mirror 
 		 11: 
-		 12: mirror->save! def_%v_10 mirror[4.5,4.8,4.10,] 
+		 12: mirror->save! def_%v_10 mirror[4.5,4.8,4.10,] 	 ARGS:
 		 13: RETURN %v_10[4.12,] %self[4.2,4.7,2.0,] 
 BB 6
 	outgoing: 
@@ -55,22 +55,22 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Friendship) def_%v_3 
-		 7: COPY def_%v_4 
-		 8: %self->person def_%v_5 %self[2.0,] 
-		 9: %v_5->id def_%v_6 %v_5[2.8,] 
-		 10: %self->friend def_%v_7 %self[2.0,2.8,] 
-		 11: %v_7->id def_%v_8 %v_7[2.10,] 
-		 12: %self->friend def_%v_9 %self[2.0,2.8,2.10,] 
-		 13: %v_9->id def_%v_10 %v_9[2.12,] 
-		 14: %self->person def_%v_11 %self[2.0,2.8,2.10,2.12,] 
-		 15: %v_11->id def_%v_12 %v_11[2.14,] 
-		 16: COPY def_%v_13 %v_4[2.7,] %v_6[2.9,] %v_8[2.11,] %v_10[2.13,] %v_12[2.15,] 
-		 17: %v_3->delete_all def_%v_14 %v_3[2.6,] %v_13[2.16,] 
+		 7: COPY TYPE_StringLiteral def_%v_4 
+		 8: %self->person def_%v_5 %self[2.0,] 	 ARGS:
+		 9: %v_5->id def_%v_6 %v_5[2.8,] 	 ARGS:
+		 10: %self->friend def_%v_7 %self[2.0,2.8,] 	 ARGS:
+		 11: %v_7->id def_%v_8 %v_7[2.10,] 	 ARGS:
+		 12: %self->friend def_%v_9 %self[2.0,2.8,2.10,] 	 ARGS:
+		 13: %v_9->id def_%v_10 %v_9[2.12,] 	 ARGS:
+		 14: %self->person def_%v_11 %self[2.0,2.8,2.10,2.12,] 	 ARGS:
+		 15: %v_11->id def_%v_12 %v_11[2.14,] 	 ARGS:
+		 16: COPY TYPE_Array def_%v_13 %v_4[2.7,] %v_6[2.9,] %v_8[2.11,] %v_10[2.13,] %v_12[2.15,] 
+		 17: %v_3->delete_all def_%v_14 %v_3[2.6,] %v_13[2.16,] 	 ARGS:%v_13,
 		 18: RETURN %v_14[2.17,] %self[2.0,2.8,2.10,2.12,2.14,] 
 BB 3
 	outgoing: 

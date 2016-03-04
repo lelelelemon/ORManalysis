@@ -10,6 +10,7 @@ class Checkin::PrintersController < ApplicationController
     else
       @printer = {}
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_tag nil, method: 'put', class: 'form-inline' do 
  OneBody.current_version 
  text_field_tag :printer_name, @printer[:name], class: 'form-control' 
@@ -18,6 +19,8 @@ class Checkin::PrintersController < ApplicationController
  @printer[:id] 
  end 
  end 
+
+end
 
   end
 

@@ -22,6 +22,7 @@ class EmailsController < ApplicationController
       flash[:notice] = t('emails.mailgun.route_created')
       redirect_to admin_path
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('emails.mailgun.heading') 
  t('emails.mailgun.intro_html', url: 'https://github.com/churchio/onebody/wiki/Mailgun-Email-Setup') 
  form_tag setup_email_path, method: 'put' do 
@@ -29,6 +30,8 @@ class EmailsController < ApplicationController
  text_field_tag :api_key, '', class: 'form-control' 
  button_tag t('emails.mailgun.submit.button'), class: 'btn btn-success' 
  end 
+
+end
 
   end
 

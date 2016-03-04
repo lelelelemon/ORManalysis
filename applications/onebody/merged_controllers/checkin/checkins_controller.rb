@@ -7,12 +7,15 @@ class Checkin::CheckinsController < ApplicationController
   def show
     session[:checkin_printer_id] = params[:printer].presence if params[:printer]
     @checkin = CheckinPresenter.new(session[:checkin_campus])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('checkin.interface.heading') 
  content_for :css do 
  stylesheet_link_tag 'checkin-print', media: 'print' 
  end 
  content_for :js do 
  end 
+
+end
 
   end
 
@@ -53,12 +56,22 @@ class Checkin::CheckinsController < ApplicationController
     elsif not session[:checkin_campus]
       @campuses = CheckinTime.campuses
       if @campuses.none?
-        render action: 'run_setup'
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ t('checkin.interface.run_setup.intro') 
+ link_to t('checkin.interface.run_setup.button'), administration_checkin_times_path, class: 'btn btn-warning' 
+
+end
+
       elsif @campuses.length == 1
         session[:checkin_campus] = @campuses.first
       else
-        render action: 'campus_select'
-        return false
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @campuses.each do |campus| 
+ link_to campus, { campus: campus }, class: 'btn checkin-btn' 
+ end 
+
+end
+
       end
     end
   end

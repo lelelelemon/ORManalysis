@@ -1,0 +1,391 @@
+SET IRMethod, name = new
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Transaction) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->conversation %v_6[2.9,] 
+		 11: 
+		 12: GETFIELD %self->conversation def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: %v_7->payment def_%v_8 %v_7[2.12,] 	 ARGS:
+		 14: ATTRASSIGN %self->payment %v_8[2.13,] 
+		 15: 
+		 16: GETFIELD %self->current_community def_%v_9 %self[2.0,2.7,] 
+		 17: %v_9->payment_gateway def_%v_10 %v_9[2.16,] 	 ARGS:
+		 18: ATTRASSIGN %self->payment_gateway %v_10[2.17,] 
+		 19: 
+		 20: GETFIELD %self->payment_gateway def_%v_11 %self[2.0,2.7,2.18,] 
+		 21: GETFIELD %self->payment def_%v_12 %self[2.0,2.7,2.14,] 
+		 22: %v_12->recipient def_%v_13 %v_12[2.21,] 	 ARGS:
+		 23: %v_11->can_receive_payments? def_%v_14 %v_11[2.20,] %v_13[2.22,] 	 ARGS:%v_13,
+		 24: BRANCH %v_14[2.23,] 
+BB 3
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->payment_gateway def_%v_15 %self[2.0,2.18,] 
+		 2: GETFIELD %self->payment def_%v_16 %self[2.0,2.14,] 
+		 3: GETFIELD %self->payment def_%v_17 %self[2.0,2.14,] 
+		 4: %v_17->id def_%v_18 %v_17[3.3,] 	 ARGS:
+		 5: HASH-id- def_%v_19 %v_18[3.4,] 
+		 6: %self->done_person_message_payment_url def_%v_20 %self[2.0,2.10,2.14,2.18,] %v_19[3.5,] 	 ARGS:%v_19,
+		 7: %self->new_person_message_payment_url def_%v_21 %self[3.6,2.0,2.10,2.14,2.18,] 	 ARGS:
+		 8: (I18n) def_%v_22 
+		 9: %v_22->locale def_%v_23 %v_22[3.8,] 	 ARGS:
+		 10: GETFIELD %self->current_community def_%v_24 %self[3.6,3.7,2.0,] 
+		 11: %v_24->settings def_%v_25 %v_24[3.10,] 	 ARGS:
+		 12: COPY TYPE_StringLiteral def_%v_26 
+		 13: %v_25->[] def_%v_27 %v_25[3.11,] %v_26[3.12,] 	 ARGS:%v_26,
+		 14: HASH-return_url-cancel_url-locale-mock- def_%v_28 %v_20[3.6,] %v_21[3.7,] %v_23[3.9,] %v_27[3.13,] 
+		 15: %v_15->payment_data def_%v_29 %v_15[3.1,] %v_16[3.2,] %v_28[3.14,] 	 ARGS:%v_16,%v_28,
+		 16: ATTRASSIGN %self->payment_data %v_29[3.15,] 
+		 17: 
+BB 4
+	outgoing: 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_30 %self[2.0,2.10,2.14,2.18,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%v_31 
+		 3: %self->t def_%v_32 %self[4.1,2.0,2.10,2.14,2.18,] %v_31[4.2,] 	 ARGS:%v_31,
+		 4: ATTRASSIGN %v_30->[] %v_32[4.3,] 
+		 5: 
+		 6: GETFIELD %self->conversation def_%v_33 %self[4.1,4.3,2.0,2.10,] 
+		 7: %v_33->id def_%v_34 %v_33[4.6,] 	 ARGS:
+		 8: HASH-conversation_type-id- def_%v_35 %v_34[4.7,] 
+		 9: %self->single_conversation_path def_%v_36 %self[4.1,4.3,2.0,2.10,2.14,2.18,] %v_35[4.8,] 	 ARGS:%v_35,
+		 10: %self->redirect_to def_%v_37 %self[4.1,4.3,4.9,2.0,2.10,2.14,2.18,] %v_36[4.9,] 	 ARGS:%v_36,
+		 11: BRANCH %v_37[4.10,] 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,2.10,2.14,2.18,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_29 %v_37[4.10,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view def_%v_38 %self[3.16,2.0,2.10,2.14,2.18,] 	 ARGS:
+		 2: %v_38->ruby_code_from_view def_%v_39 %v_38[8.1,] %self[8.1,3.16,2.0,2.10,2.14,2.18,] 	 ARGS:%v_38,
+CLOSURE BEGIN: %self[8.1,3.16,2.0,2.10,2.14,2.18,] payment_receiver[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->conversation def_%cl_1_3 %self[2.0,] 
+		 2: GETFIELD %self->current_user def_%cl_1_4 %self[2.0,] 
+		 3: %cl_1_3->other_party def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
+		 4: COPY TYPE_PASS def_payment_receiver %cl_1_5[3.3,] 
+		 5: 
+		 6: COPY TYPE_StringLiteral def_%cl_1_6 
+		 7: %self->t def_%cl_1_7 %self[2.0,] %cl_1_6[3.6,] 	 ARGS:%cl_1_6,
+		 8: 
+		 9: COPY TYPE_StringLiteral def_%cl_1_8 
+		 10: %self->t def_%cl_1_9 %self[3.7,2.0,] %cl_1_8[3.9,] 	 ARGS:%cl_1_8,
+		 11: 
+		 12: GETFIELD %self->current_community def_%cl_1_10 %self[3.7,3.10,2.0,] 
+		 13: payment_receiver->name def_%cl_1_11 payment_receiver[3.4,] %cl_1_10[3.12,] 	 ARGS:%cl_1_10,
+		 14: %self->link_to def_%cl_1_12 %self[3.7,3.10,2.0,] %cl_1_11[3.13,] payment_receiver[3.4,3.13,] 	 ARGS:%cl_1_11,payment_receiver,
+		 15: BUILDSTRING def_%cl_1_13 %cl_1_12[3.14,] 
+		 16: %cl_1_13->html_safe def_%cl_1_14 %cl_1_13[3.15,] 	 ARGS:
+		 17: 
+		 18: GETFIELD %self->current_community def_%cl_1_15 %self[3.7,3.10,3.14,2.0,] 
+		 19: %cl_1_15->payment_gateway def_%cl_1_16 %cl_1_15[3.18,] 	 ARGS:
+		 20: %cl_1_16->form_template_dir def_%cl_1_17 %cl_1_16[3.19,] 	 ARGS:
+		 21: COPY TYPE_StringLiteral def_%cl_1_18 
+		 22: %cl_1_17->+ def_%cl_1_19 %cl_1_17[3.20,] %cl_1_18[3.21,] 	 ARGS:%cl_1_18,
+		 23: HASH-partial- def_%cl_1_20 %cl_1_19[3.22,] 
+		 24: %self->render def_%cl_1_21 %self[3.7,3.10,3.14,2.0,] %cl_1_20[3.23,] 	 ARGS:%cl_1_20,
+		 25: RETURN %cl_1_21[3.24,] %self[3.7,3.10,3.14,3.24,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_22 
+		 1: def_%cl_1_23 %cl_1_22[4.0,] 
+		 2: RETURN %cl_1_23[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 3: RETURN %v_39[8.2,] %self[8.1,3.16,2.0,2.10,2.14,2.18,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = choose_method
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->ruby_code_from_view def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->ruby_code_from_view def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+		 5: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = done
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Payment) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->payment %v_6[2.9,] 
+		 11: 
+		 12: GETFIELD %self->current_community def_%v_7 %self[2.0,2.7,] 
+		 13: %v_7->payment_gateway def_%v_8 %v_7[2.12,] 	 ARGS:
+		 14: ATTRASSIGN %self->payment_gateway %v_8[2.13,] 
+		 15: 
+		 16: GETFIELD %self->payment_gateway def_%v_9 %self[2.0,2.7,2.14,] 
+		 17: GETFIELD %self->payment def_%v_10 %self[2.0,2.7,2.10,] 
+		 18: %self->params def_%v_11 %self[2.0,2.7,2.10,2.14,] 	 ARGS:
+		 19: GETFIELD %self->current_community def_%v_12 %self[2.0,2.7,2.18,] 
+		 20: %v_12->settings def_%v_13 %v_12[2.19,] 	 ARGS:
+		 21: COPY TYPE_StringLiteral def_%v_14 
+		 22: %v_13->[] def_%v_15 %v_13[2.20,] %v_14[2.21,] 	 ARGS:%v_14,
+		 23: HASH-params-mock- def_%v_16 %v_11[2.18,] %v_15[2.22,] 
+		 24: %v_9->check_payment def_%v_17 %v_9[2.16,] %v_10[2.17,] %v_16[2.23,] 	 ARGS:%v_10,%v_16,
+		 25: COPY TYPE_PASS def_check %v_17[2.24,] 
+		 26: 
+		 27: %v_17->nil? def_%v_18 %v_17[2.24,] 	 ARGS:
+		 28: BRANCH %v_18[2.27,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: check->[] def_%v_19 check[2.25,] 	 ARGS:Symbol,
+		 1: %v_19->blank? def_%v_20 %v_19[3.0,] 	 ARGS:
+		 2: COPY TYPE_PASS def_%v_18 %v_20[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_18[3.2,2.27,] 
+BB 5
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_21 %self[2.0,2.10,2.14,] 	 ARGS:
+		 2: COPY TYPE_StringLiteral def_%v_22 
+		 3: %self->t def_%v_23 %self[5.1,2.0,2.10,2.14,] %v_22[5.2,] 	 ARGS:%v_22,
+		 4: ATTRASSIGN %v_21->[] %v_23[5.3,] 
+		 5: 
+BB 6
+	outgoing: 7 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: check->[] def_%v_24 check[2.25,] 	 ARGS:Symbol,
+		 2: COPY TYPE_StringLiteral def_%v_25 
+		 3: %v_24->== def_%v_26 %v_24[6.1,] %v_25[6.2,] 	 ARGS:%v_25,
+		 4: BRANCH %v_26[6.3,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->payment def_%v_27 %self[2.0,2.10,] 
+		 2: %v_27->paid! def_%v_28 %v_27[7.1,] 	 ARGS:
+		 3: 
+		 4: (MarketplaceService) def_%v_29 
+		 5: (inherit Transaction) def_%v_30 %v_29[7.4,] 
+		 6: %v_30[7.5,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %v_29->const_missing def_%v_30 %v_29[7.4,] 	 ARGS:Symbol,
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: (inherit Command) def_%v_31 %v_30[8.0,7.5,] 
+		 1: %v_31[9.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: %v_30->const_missing def_%v_31 %v_30[8.0,7.5,] 	 ARGS:Symbol,
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->payment def_%v_32 %self[2.0,2.10,] 
+		 1: %v_32->transaction def_%v_33 %v_32[11.0,] 	 ARGS:
+		 2: %v_33->id def_%v_34 %v_33[11.1,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%v_35 
+		 4: %v_31->transition_to def_%v_36 %v_31[10.0,9.0,] %v_34[11.2,] %v_35[11.3,] 	 ARGS:%v_34,%v_35,
+		 5: 
+		 6: GETFIELD %self->payment_gateway def_%v_37 %self[2.0,2.14,] 
+		 7: GETFIELD %self->payment def_%v_38 %self[2.0,2.10,] 
+		 8: %v_37->handle_paid_payment def_%v_39 %v_37[11.6,] %v_38[11.7,] 	 ARGS:%v_38,
+		 9: 
+		 10: %self->flash def_%v_40 %self[2.0,2.10,2.14,] 	 ARGS:
+		 11: check->[] def_%v_41 check[2.25,] 	 ARGS:Symbol,
+		 12: ATTRASSIGN %v_40->[] %v_41[11.11,] 
+		 13: 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_42 %self[2.0,2.10,2.14,] 	 ARGS:
+		 2: check->[] def_%v_43 check[2.25,] 	 ARGS:Symbol,
+		 3: ATTRASSIGN %v_42->[] %v_43[12.2,] 
+		 4: 
+		 5: %self->flash def_%v_44 %self[12.1,2.0,2.10,2.14,] 	 ARGS:
+		 6: check->[] def_%v_45 check[12.2,2.25,] 	 ARGS:Symbol,
+		 7: ATTRASSIGN %v_44->[] %v_45[12.6,] 
+		 8: 
+		 9: %self->flash def_%v_46 %self[12.1,12.5,2.0,2.10,2.14,] 	 ARGS:
+		 10: check->[] def_%v_47 check[12.2,12.6,2.25,] 	 ARGS:Symbol,
+		 11: ATTRASSIGN %v_46->[] %v_47[12.10,] 
+		 12: COPY TYPE_PASS def_%v_41 %v_47[12.10,] 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_23 %v_41[12.12,11.11,] 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%v_48 %self[2.0,2.10,2.14,] 	 ARGS:
+		 2: %v_48->[] def_%v_49 %v_48[14.1,] 	 ARGS:Symbol,
+		 3: HASH-id- def_%v_50 %v_49[14.2,] 
+		 4: %self->person_transaction_path def_%v_51 %self[14.1,2.0,2.10,2.14,] %v_50[14.3,] 	 ARGS:%v_50,
+		 5: %self->redirect_to def_%v_52 %self[14.1,14.4,2.0,2.10,2.14,] %v_51[14.4,] 	 ARGS:%v_51,
+		 6: RETURN %v_52[14.5,] %self[14.1,14.4,14.5,2.0,2.10,2.14,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = payment_can_be_conducted
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Transaction) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->conversation %v_6[2.9,] 
+		 11: 
+		 12: GETFIELD %self->conversation def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: GETFIELD %self->current_community def_%v_8 %self[2.0,2.7,] 
+		 14: %v_7->requires_payment? def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 ARGS:%v_8,
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_10 
+		 1: RETURN %v_10[3.0,] %self[2.0,2.10,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->current_user def_%v_11 %self[2.0,] 
+		 1: GETFIELD %self->conversation def_%v_12 %self[2.0,2.10,] 
+		 2: %self->person_message_path def_%v_13 %self[2.0,2.10,] %v_11[4.0,] %v_12[4.1,] 	 ARGS:%v_11,%v_12,
+		 3: %self->redirect_to def_%v_14 %self[4.2,2.0,2.10,] %v_13[4.2,] 	 ARGS:%v_13,
+		 4: RETURN %v_14[4.3,] %self[4.2,4.3,2.0,2.10,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

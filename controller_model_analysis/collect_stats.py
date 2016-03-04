@@ -105,7 +105,7 @@ for subdir, folders, files in os.walk(base_path):
 			roots.append(tree.getroot())
 
 
-print "Root length : %d"%len(roots)
+print "Root length:\t%d"%len(roots)
 
 table_names = ["general"]
 for root in roots:
@@ -151,17 +151,13 @@ colors = [5,2,7,9,3,4,10,12,13]
 
 # stats
 def print_general_stat(prefix, content, plot_branch, plot_read_source):
-	print "pref =:"
-	print prefix
 	data = {}
 	for g in content:
 		cond_list = prefix[:]
 		cond_list.append(g)
-		print cond_list
 		r = calculateAllActions(cond_list)
 		data[g] = getAverage(r)
 
-	print data["queryTotal"]
 	reads = {}
 	for g in read_stats_content:
 		cond_list = prefix[:]
@@ -171,7 +167,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		reads[g] = getAverage(r)
 
 	readSource = {}
-	for g in read_stats_content:
+	for g in write_stats_content:
 		cond_list = prefix[:]
 		cond_list.append("readSource")
 		cond_list.append(g)
@@ -187,6 +183,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		writes[g] = getAverage(r)
 		#print "%f, %d"%(writes[g], len(r))
 
+
 	print "queryTotal:\t%f"%data["queryTotal"]
 	print "read:\t%f"%reads["total"]
 	print "write:\t%f"%writes["total"]
@@ -194,8 +191,11 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	print "usedInView:\t%f"%data["queryUsedInView"]
 	print "onlyFromUser:\t%f"%data["queryOnlyFromUser"]
 
-	print "READsink:\t%f\t%f\t%f\t%f"%(reads["toReadQuery"], reads["toWriteQuery"], reads["toBranch"], reads["toView"])
-	print "WRITEsource:\t%f\t%f\t%f"%(writes["fromQuery"], writes["fromUserInput"], writes["fromConst"], writes["fromUtil"])
+	print "query in closure:\t%f"%data["queryInClosure"]
+	
+	print "READsink:\t%f\t:\t%f\t%f\t%f\t%f"%(reads["sinkTotal"], reads["toReadQuery"], reads["toWriteQuery"], reads["toBranch"], reads["toView"])
+	print "READsource:\t%f\t:\t%f\t%f\t%f\t%f"%(readSource["sourceTotal"], readSource["fromQuery"], readSource["fromUserInput"], readSource["fromConst"], readSource["fromUtil"])
+	print "WRITEsource:\t%f\t:\t%f\t%f\t%f\t%f"%(writes["sourceTotal"], writes["fromQuery"], writes["fromUserInput"], writes["fromConst"], writes["fromUtil"])
 	ind = np.arange(1)
 	width = 0.2
 	
@@ -384,15 +384,22 @@ def print_view_stat(prefix):
 
 #chain
 def print_chain(prefix, content):
-	data = {}
-	for g in content:
-		cond_list = prefix[:]
-		cond_list.append(g)
-		r = calculateAllActions(cond_list)
-		data[g] = getAverage(r)
-	print "chain stats:"
-	for k,v in data.items():
-		print "\t%s: %f"%(k, v)
+	data = []
+	cond_list = prefix[:]
+	cond_list.append("inputReaches")
+	data = calculateAllActions(cond_list)
+	#data = getAverage(r)
+	#print "chain stats:"
+	#for k,v in data.items():
+		#print "\t%s: %f"%(k, v)
+	#input hist
+	fig = plt.figure()
+	ax1 = fig.add_subplot(111)
+	rects = ax1.hist(data, bins=np.arange(min(data), max(data) + 5, 5))
+
+	#plt.show()
+	fig.savefig("%s/inputReachQuery.png"%(fig_path))
+
 
 #fields
 def print_fields(prefix, content, non_field=False):
@@ -445,21 +452,30 @@ def print_fields(prefix, content, non_field=False):
 	plt.close(fig)
 
 def print_clique_stat(prefix):
-	validation = []
+	validation_r = []
+	validation_w = []
 	clique = []
 	cond_list = prefix[:]
 	cond_list.append("validation")
-	r = calculateAllActions(cond_list)
-	validation = validation + r
+	r_cond_list = cond_list[:]
+	w_cond_list = cond_list[:]
+	r_cond_list.append("read")
+	w_cond_list.append("write")
+	r = calculateAllActions(r_cond_list)
+	validation_r = validation_r + r
+	w = calculateAllActions(w_cond_list)
+	validation_w = validation_w + w
 	cond_list = prefix[:]
 	cond_list.append("clique")
 	r = calculateAllActions(cond_list)
 	clique = clique + r
-	print "Average validation length:\t%f\t%d\tvalidations"%(getAverage(validation), len(validation))
+	print "Average validation length:\t%f\tRead:\t%f\tWrite:\t%f\tlen=\t%d\tvalidations"%(getAverage(validation_r)+getAverage(validation_w)+1, getAverage(validation_r), getAverage(validation_w)+1, len(validation_r))
 	print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
 
 
-def print_schema_stat(prefix):
+def print_schema_stat(prefix, table_stat_prefix):
+	table_refs_total = {}
+	table_refs_indirect = {}
 	table_list = {}
 	assoc_cnt = {}
 	tblfield_total = {}
@@ -467,6 +483,10 @@ def print_schema_stat(prefix):
 	for table in tables:
 		table_list[table] = {}
 		tblfield_total[table] = 0
+		table_refs_total[table] = 0
+		table_refs_indirect[table] = {}
+		for table1 in tables:
+			table_refs_indirect[table][table1] = 0
 
 	for table in tables:
 		for root in roots:
@@ -475,6 +495,12 @@ def print_schema_stat(prefix):
 					for child in rnode:
 					#child.tag = "User"
 						if child.tag == table:
+							#count total queries on that table:
+							cond_list = table_stat_prefix[:]
+							cond_list.append(table)
+							cond_list.append("queryTotal")
+							table_refs_total[table] = sum(calculateAllActions(cond_list))
+
 							for c in child:
 							#c.tag = "Group" or "totalFieldRef"
 								if c.tag == "totalFieldRef":
@@ -484,6 +510,8 @@ def print_schema_stat(prefix):
 										table_list[table][c.tag] = 0
 									table_list[table][c.tag] += float(c.text)
 									relation["%s->%s"%(table,c.tag)] = c.attrib["relationship"]
+									if c.tag in table_refs_indirect:
+										table_refs_indirect[c.tag][table] += 1
 
 	fieldref_sum = 0
 	for table in tables:
@@ -500,6 +528,45 @@ def print_schema_stat(prefix):
 	print "refsum:\t%d"%fieldref_sum
 	for k,v in assoc_cnt.items():
 		print "%s:\t%d"%(k,v)
+
+	fig = plt.figure()
+	ax = fig.add_subplot(111)	
+	tmp_cnt = 0
+	texts = []
+	width = 0.2
+	data1 = []
+	data2 = []
+	table_ref_temp = []	
+	for table in tables:
+		indirect_count = 0
+		indirect_table = 0
+		for k,v in table_refs_indirect[table].items():
+			if v > 0:
+				indirect_count += v
+				indirect_table += 1
+		if indirect_count > 0:
+			data1.append(indirect_count)
+			data2.append(table_refs_total[table] - indirect_count)
+			tmp_cnt += 1
+			texts.append(indirect_table)
+			table_ref_temp.append(table)
+
+	ind = np.arange(tmp_cnt)
+	rect1 = ax.bar(ind, data1, width, color=tableau_colors[colors[0]])
+	rect2 = ax.bar(ind, data2, width, bottom=data1, color=tableau_colors[colors[1]])
+
+	i = 0
+	for rect in rect2:
+		height = rect.get_height() + rect1[i].get_height()
+		ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,'%d' % texts[i], ha='center', va='bottom')
+		i += 1
+	if len(rect1) > 0:
+		ax.set_xticks(ind + width)
+		ax.set_xticklabels(table_ref_temp)
+		ax.set_xlabel("table name")
+		ax.set_ylabel("aggregate query number across all actions")
+		ax.legend((rect1[0], rect2[0]), ('indirect','direct'),prop={'size':'10'}, loc='upper right')
+		fig.savefig("%s/indirect_table_query.png"%(fig_path))
 
 #path
 def print_path(prefix, content):
@@ -563,10 +630,12 @@ for table in table_names:
 	else:
 		print_general_stat(pref, table_stats_content, False, False)
 
-print_fields(nonfield_prefix, field_stats_content, True)
-print_fields(field_prefix, field_stats_content)
-print_path(prefix3, path_stats_content+path_stats_content2)
+#print_fields(nonfield_prefix, field_stats_content, True)
+#print_fields(field_prefix, field_stats_content)
+#print_path(prefix3, path_stats_content+path_stats_content2)
+#
+#print_view_stat(view_stat_prefix)
+#print_clique_stat(clique_stat_prefix)
+#print_schema_stat(schema_stat_prefix, table_stats_prefix)
 
-print_view_stat(view_stat_prefix)
-print_clique_stat(clique_stat_prefix)
-print_schema_stat(schema_stat_prefix)
+#print_chain(prefix2, [])

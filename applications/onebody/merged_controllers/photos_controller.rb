@@ -56,6 +56,15 @@ class PhotosController < ApplicationController
     else
       render text: t('photos.unavailable'), status: 500
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ urls = @object.photo.styles.each_with_object({}) do |(k, _), h|
+      h[k] = avatar_path(@object, k)
+end
+
+raw urls.to_json 
+
+end
+
   end
 
   private

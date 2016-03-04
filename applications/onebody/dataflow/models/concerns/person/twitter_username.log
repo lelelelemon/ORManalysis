@@ -9,22 +9,22 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: %self->twitter def_%v_3 %self[2.0,] 
-		 7: %v_3->present? def_%v_4 %v_3[2.6,] 
+		 6: %self->twitter def_%v_3 %self[2.0,] 	 ARGS:
+		 7: %v_3->present? def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: BRANCH %v_4[2.7,] 
 BB 3
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY def_%v_5 
+		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: %self->twitter def_%v_6 %self[2.0,] 
-		 3: COPY def_%v_7 
-		 4: %v_6->start_with? def_%v_8 %v_6[3.2,] %v_7[3.3,] 
+		 2: %self->twitter def_%v_6 %self[2.0,] 	 ARGS:
+		 3: COPY TYPE_StringLiteral def_%v_7 
+		 4: %v_6->start_with? def_%v_8 %v_6[3.2,] %v_7[3.3,] 	 ARGS:%v_7,
 		 5: BRANCH %v_8[3.4,] 
 BB 4
 	outgoing: 9 
@@ -35,9 +35,9 @@ BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: %self->twitter def_%v_9 %self[2.0,] 
+		 0: %self->twitter def_%v_9 %self[2.0,] 	 ARGS:
 		 1: def_%v_10 
-		 2: def_%v_11 %v_9[6.0,] %v_10[6.1,] 
+		 2: %v_9->[] def_%v_11 %v_9[6.0,] %v_10[6.1,] 	 ARGS:%v_10,
 		 3: ATTRASSIGN %self->twitter %v_11[6.2,] 
 		 4: RETURN %v_11[6.2,] %self[6.0,6.3,2.0,] 
 BB 7

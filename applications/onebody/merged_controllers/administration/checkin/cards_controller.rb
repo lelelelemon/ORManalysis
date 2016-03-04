@@ -22,6 +22,33 @@ class Administration::Checkin::CardsController < ApplicationController
         render text: out
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('checkin.cards.heading') 
+ pagination @families 
+ link_to t('checkin.cards.table.id'),          administration_checkin_cards_path(sort: 'id') 
+ link_to t('checkin.cards.table.legacy_id'),   administration_checkin_cards_path(sort: 'legacy_id') 
+ link_to t('checkin.cards.table.family'),      administration_checkin_cards_path(sort: 'last_name,name') 
+ link_to t('checkin.cards.table.barcode'),     administration_checkin_cards_path(sort: 'barcode_id') 
+ link_to t('checkin.cards.table.assigned_at'), administration_checkin_cards_path(sort: 'barcode_assigned_at desc') 
+ @families.each do |family| 
+ family.id 
+ family.legacy_id 
+ link_to family.name, family 
+ family.barcode_id 
+ family.barcode_assigned_at.to_s 
+ end 
+ pagination @families 
+ if @families.any? 
+ link_to administration_checkin_cards_path(format: 'csv'), class: 'btn btn-info' do 
+ icon 'fa fa-download' 
+ t('checkin.cards.export.button') 
+ end 
+ else 
+ t('checkin.cards.none') 
+ end 
+
+end
+
   end
   
   private

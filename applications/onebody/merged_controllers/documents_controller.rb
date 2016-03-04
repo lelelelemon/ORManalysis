@@ -15,10 +15,11 @@ class DocumentsController < ApplicationController
     @documents = (@parent_folder.try(:documents) || Document.top).order(:name)
     cookies[:document_view] = params[:view] if params[:view].present?
     @view = cookies[:document_view] || 'detail'
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = @parent_folder.try(:name) || t('.heading') 
  if @parent_folder && @parent_folder.all_groups.any? 
  icon('fa fa-lock') 
- t('documents.restricted_folder.alert_html', groups: @parent_folder.all_groups.map { |g| link_to(g.name, g) }.join(', ').html_safe) 
+ t('documents.restricted_folder.alert_html',      groups: @parent_folder.all_groups.map { |g| link_to(g.name, g) }.join(', ').html_safe) 
  end 
  if @parent_folder 
  if @parent_folder.hidden? 
@@ -51,9 +52,25 @@ class DocumentsController < ApplicationController
  end 
  if @folders.any? or @documents.any? 
  if @view == 'detail' 
- render 'details' 
+  
  else 
- render 'thumbnails' 
+  @folders.each do |folder| 
+ link_to documents_path(folder_id: folder.id) do 
+ icon 'fa fa-folder-o' 
+ end 
+ link_to folder.name, documents_path(folder_id: folder.id) 
+ end 
+ @documents.each do |document| 
+ link_to document_path(document.id) do 
+ if document.preview.present? 
+ image_tag document.preview.url(:medium), class: 'img-thumbnail' 
+ else 
+ icon document_icon_class(document) 
+ end 
+ end 
+ link_to document.name, document_path(document.id) 
+ end 
+ 
  end 
  else 
  t('none') 
@@ -79,15 +96,18 @@ class DocumentsController < ApplicationController
  end 
  end 
 
+end
+
   end
 
   def show
     @document = Document.find(params[:id])
     fail ActiveRecord::RecordNotFound unless @logged_in.can_read?(@document)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = @document.name 
  if @document.parent_folder_groups.any? 
  icon('fa fa-lock') 
- t('documents.restricted_document.alert_html', groups: @document.parent_folder_groups.map { |g| link_to(g.name, g) }.join(', ').html_safe) 
+ t('documents.restricted_document.alert_html',      groups: @document.parent_folder_groups.map { |g| link_to(g.name, g) }.join(', ').html_safe) 
  end 
  if @document.hidden? 
  icon('fa fa-eye-slash') 
@@ -124,15 +144,46 @@ class DocumentsController < ApplicationController
  t('.download.button') 
  end 
 
+end
+
   end
 
   def new
     if params[:folder]
       @folder = (@parent_folder.try(:folders) || DocumentFolder).new
-      render action: 'new_folder'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('.heading') 
+  
+
+end
+
     else
       @document = (@parent_folder.try(:documents) || Document).new
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('.heading') 
+  form_for @document, multipart: true, id: 'new-document-form' do |form| 
+ error_messages_for(form) 
+ form.hidden_field :folder_id 
+ :file 
+ :name 
+ :description 
+ form.label t('documents.index.no_file') 
+ form.text_field :name, class: 'form-control' 
+ form.text_field :description, class: 'form-control' 
+ form.file_field :file, multiple: true, style: 'display:none' 
+ icon 'fa fa-upload' 
+ t('documents.new.select.button') 
+ if parent_document_folder_options.any? 
+ form.label :folder_id 
+ form.select :folder_id, parent_document_folder_options, { include_blank: true }, class: 'form-control' 
+ end 
+ form.button t('save'), class: 'btn btn-success', style: 'display:none', id: 'document-form-submit-button' 
+ end 
+ 
+
+end
+
   end
 
   def create
@@ -146,10 +197,39 @@ class DocumentsController < ApplicationController
   def edit
     if params[:folder]
       @folder = DocumentFolder.find(params[:id])
-      render action: 'edit_folder'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('.heading', folder: @folder.name) 
+  
+
+end
+
     else
       @document = Document.find(params[:id])
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('.heading', document: @document.name) 
+  form_for @document, multipart: true, id: 'new-document-form' do |form| 
+ error_messages_for(form) 
+ form.hidden_field :folder_id 
+ :file 
+ :name 
+ :description 
+ form.label t('documents.index.no_file') 
+ form.text_field :name, class: 'form-control' 
+ form.text_field :description, class: 'form-control' 
+ form.file_field :file, multiple: true, style: 'display:none' 
+ icon 'fa fa-upload' 
+ t('documents.new.select.button') 
+ if parent_document_folder_options.any? 
+ form.label :folder_id 
+ form.select :folder_id, parent_document_folder_options, { include_blank: true }, class: 'form-control' 
+ end 
+ form.button t('save'), class: 'btn btn-success', style: 'display:none', id: 'document-form-submit-button' 
+ end 
+ 
+
+end
+
   end
 
   def update
@@ -158,14 +238,42 @@ class DocumentsController < ApplicationController
       if @folder.update_attributes(folder_params)
         redirect_to documents_path(folder_id: @folder.folder_id), notice: t('documents.update_folder.notice')
       else
-        render action: 'edit_folder'
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('.heading', folder: @folder.name) 
+  
+
+end
+
       end
     else
       @document = Document.find(params[:id])
       if @document.update_attributes(document_params)
         redirect_to documents_path(folder_id: @document.folder_id), notice: t('documents.update.notice')
       else
-        render action: 'edit'
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('.heading', document: @document.name) 
+  form_for @document, multipart: true, id: 'new-document-form' do |form| 
+ error_messages_for(form) 
+ form.hidden_field :folder_id 
+ :file 
+ :name 
+ :description 
+ form.label t('documents.index.no_file') 
+ form.text_field :name, class: 'form-control' 
+ form.text_field :description, class: 'form-control' 
+ form.file_field :file, multiple: true, style: 'display:none' 
+ icon 'fa fa-upload' 
+ t('documents.new.select.button') 
+ if parent_document_folder_options.any? 
+ form.label :folder_id 
+ form.select :folder_id, parent_document_folder_options, { include_blank: true }, class: 'form-control' 
+ end 
+ form.button t('save'), class: 'btn btn-success', style: 'display:none', id: 'document-form-submit-button' 
+ end 
+ 
+
+end
+
       end
     end
   end
@@ -200,7 +308,12 @@ class DocumentsController < ApplicationController
     if @folder.save
       redirect_to documents_path(folder_id: @folder), notice: t('documents.create_folder.notice')
     else
-      render action: 'new_folder'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('.heading') 
+  
+
+end
+
     end
   end
 

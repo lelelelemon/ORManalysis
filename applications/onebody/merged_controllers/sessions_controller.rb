@@ -14,29 +14,6 @@ class SessionsController < ApplicationController
   # sign in form
   def new
     redirect_to(new_setup_path) unless Person.any?
- @title = t('session.form.header') 
- @hide_title = true 
- @body_class = 'hold-transition login-page bg-black centered-header' 
- @section_class = 'content-centered' 
- form_tag session_path do 
- hidden_field_tag :from, params[:from] 
- hidden_field_tag :for, params[:for] 
- flash_messages 
- t('session.form.header') 
- text_field_tag :email, params[:email], placeholder: t('session.form.placeholder.email'), class: 'form-control', autofocus: !@focus_password 
- password_field_tag :password, '', placeholder: t('session.form.placeholder.password'), class: 'form-control', autofocus: @focus_password 
- check_box_tag :remember_me, true, params[:remember_me] 
- label_tag :remember_me, t('session.form.remember_me') 
- if has_social_logins 
- if support_facebook_login 
- end 
- end 
- icon 'fa fa-sign-in' 
- t('session.sign_in_button') 
- link_to t('session.sign_up_button'), new_account_path, class: 'btn btn-info btn-block' 
- link_to t('session.forgot_password_button'), new_account_path(forgot: true), class: 'btn btn-warning btn-block' 
- end 
-
   end
 
   def create_from_external_provider
@@ -123,7 +100,32 @@ class SessionsController < ApplicationController
       flash.now[:error] = t('session.password_doesnt_match')
       @focus_password = true
     end
-    render action: 'new'
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('session.form.header') 
+ @hide_title = true 
+ @body_class = 'hold-transition login-page bg-black centered-header' 
+ @section_class = 'content-centered' 
+ form_tag session_path do 
+ hidden_field_tag :from, params[:from] 
+ hidden_field_tag :for, params[:for] 
+ flash_messages 
+ t('session.form.header') 
+ text_field_tag :email, params[:email], placeholder: t('session.form.placeholder.email'), class: 'form-control', autofocus: !@focus_password 
+ password_field_tag :password, '', placeholder: t('session.form.placeholder.password'), class: 'form-control', autofocus: @focus_password 
+ check_box_tag :remember_me, true, params[:remember_me] 
+ label_tag :remember_me, t('session.form.remember_me') 
+ if has_social_logins 
+ if support_facebook_login 
+ end 
+ end 
+ icon 'fa fa-sign-in' 
+ t('session.sign_in_button') 
+ link_to t('session.sign_up_button'), new_account_path, class: 'btn btn-info btn-block' 
+ link_to t('session.forgot_password_button'), new_account_path(forgot: true), class: 'btn btn-warning btn-block' 
+ end 
+
+end
+
   end
 
   def login_not_found
@@ -133,7 +135,32 @@ class SessionsController < ApplicationController
     else
       SigninFailure.create(email: params[:email], ip: request.remote_ip)
       flash.now[:error] = t('session.email_not_found')
-      render action: 'new'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('session.form.header') 
+ @hide_title = true 
+ @body_class = 'hold-transition login-page bg-black centered-header' 
+ @section_class = 'content-centered' 
+ form_tag session_path do 
+ hidden_field_tag :from, params[:from] 
+ hidden_field_tag :for, params[:for] 
+ flash_messages 
+ t('session.form.header') 
+ text_field_tag :email, params[:email], placeholder: t('session.form.placeholder.email'), class: 'form-control', autofocus: !@focus_password 
+ password_field_tag :password, '', placeholder: t('session.form.placeholder.password'), class: 'form-control', autofocus: @focus_password 
+ check_box_tag :remember_me, true, params[:remember_me] 
+ label_tag :remember_me, t('session.form.remember_me') 
+ if has_social_logins 
+ if support_facebook_login 
+ end 
+ end 
+ icon 'fa fa-sign-in' 
+ t('session.sign_in_button') 
+ link_to t('session.sign_up_button'), new_account_path, class: 'btn btn-info btn-block' 
+ link_to t('session.forgot_password_button'), new_account_path(forgot: true), class: 'btn btn-warning btn-block' 
+ end 
+
+end
+
     end
   end
 

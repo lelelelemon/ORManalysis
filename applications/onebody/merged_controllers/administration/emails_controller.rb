@@ -3,6 +3,7 @@ class Administration::EmailsController < ApplicationController
 
   def index
     @people = Person.where(email_changed: true, deleted: false).order('last_name, first_name')
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('admin.emails.changed_addresses') 
  t('admin.emails.intro_html') 
  if @people.any? 
@@ -25,6 +26,8 @@ class Administration::EmailsController < ApplicationController
  else 
  t('admin.emails.no_records') 
  end 
+
+end
 
   end
 

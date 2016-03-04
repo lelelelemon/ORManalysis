@@ -3,6 +3,7 @@ class Administration::ImportsController < ApplicationController
 
   def index
     @imports = Import.order(created_at: :desc).includes(:rows, :person).page(params[:page])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = 'Imports' 
  if @imports.any? 
  pagination @imports 
@@ -19,6 +20,9 @@ class Administration::ImportsController < ApplicationController
  t(import.status, scope: 'administration.imports.status') # notest 
  import.rows.count 
  import.rows.errored.count 
+ link_to import, class: 'btn btn-info btn-xs' do 
+ icon 'fa fa-eye' 
+ end 
  end 
  pagination @imports 
  else 
@@ -26,6 +30,8 @@ class Administration::ImportsController < ApplicationController
  link_to new_administration_import_path, class: 'btn btn-success' do 
  icon 'fa fa-upload' 
  end 
+
+end
 
   end
 
@@ -42,10 +48,128 @@ class Administration::ImportsController < ApplicationController
         render json: @import
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  status = t(@import.status, scope: 'administration.imports.status') # notest 
+ @title = t('administration.imports.status_heading', status: status) 
+ 
+ if @import.working? 
+ @import.row_progress 
+ end 
+ t('.table.filename') 
+ @import.filename 
+ if @import.person 
+ t('.table.person') 
+ link_to @import.person.name, @import.person 
+ end 
+ t('.table.created_at') 
+ @import.created_at.to_s(:full) 
+ t('.table.completed_at') 
+ if @import.completed_at 
+ @import.completed_at.to_s(:full) 
+ else 
+ t('administration.imports.status.pending') 
+ end 
+ if @import.status_at_least?(:parsed) 
+ t('.table.rows') 
+ @import.rows.count 
+ end 
+ t('.table.match_strategy') 
+ t(@import.match_strategy, scope: 'administration.imports.show.match_strategies', default: '') # notest 
+ t('.table.create_as_active') 
+ t(@import.create_as_active?.to_s, scope: 'administration.imports.show.create_as_active', default: '') # notest 
+ if @import.status_at_least?('previewed') 
+ t('.stats.heading') 
+ unless @import.complete? 
+ end 
+ t('.table.people') 
+ t('.table.families') 
+ t('.table.creates') 
+ icon 'fa fa-circle text-green' 
+ link_to @import.rows.created_person.count, created_person: true 
+ icon 'fa fa-circle text-green' 
+ link_to @import.rows.created_family.count, created_family: true 
+ t('.table.updates') 
+ icon 'fa fa-circle text-yellow' 
+ link_to @import.rows.updated_person.count, updated_person: true 
+ icon 'fa fa-circle text-yellow' 
+ link_to @import.rows.updated_family.count, updated_family: true 
+ t('.table.no_change') 
+ icon 'fa fa-circle text-gray' 
+ link_to @import.rows.unchanged_people.count, unchanged_people: true 
+ icon 'fa fa-circle text-gray' 
+ link_to @import.rows.unchanged_families.count, unchanged_families: true 
+ t('.table.errored') 
+ icon 'fa fa-circle text-red' 
+ link_to @import.rows.errored.count, errored: true 
+ end 
+ if @import.status_at_least?('previewed') 
+ pagination @rows 
+ t('.table.person_id') 
+ t('.table.person_first_name') 
+ t('.table.person_last_name') 
+ t('.table.person_matched') 
+ t('.table.person_status') 
+ t('.table.family_id') 
+ t('.table.family_name') 
+ t('.table.family_matched') 
+ t('.table.family_status') 
+ @rows.each do |row| 
+ attrs = row.import_attributes_as_hash(real_attributes: true) 
+ import_link_to(row.person) 
+ attrs['first_name'] 
+ attrs['last_name'] 
+ t(row.matched_person_by, scope: 'administration.imports.matched_by', default: '') # notest 
+ import_row_record_status(row, :person) 
+ import_link_to(row.family) 
+ attrs['family_name'] 
+ t(row.matched_family_by, scope: 'administration.imports.matched_by', default: '') # notest 
+ import_row_record_status(row, :family) 
+ if row.errored? 
+ row.import_attributes.inspect 
+ t('.errors_table.name') 
+ t('.errors_table.value') 
+ t('.errors_table.error') 
+ import_row_errors(row).each do |error| 
+ error[:name] 
+ error[:value].presence || t('.errors_table.blank_value') 
+ error[:message] 
+ end 
+ end 
+ end 
+ pagination @rows 
+ end 
+ if @import.previewed? 
+ link_to edit_administration_import_path(@import), class: 'btn btn-warning' do 
+ icon 'fa fa-arrow-left' 
+ t('.edit.button') 
+ end 
+ link_to execute_administration_import_path(@import), class: 'btn btn-danger', data: { method: 'patch', confirm: t('are_you_sure') } do 
+ icon 'fa fa-bolt' 
+ t('.execute.button') 
+ end 
+ end 
+ link_to @import, data: { method: :delete, confirm: t('are_you_sure') }, class: 'btn btn-delete pull-right' do 
+ icon 'fa fa-trash-o' 
+ t('.delete.button') 
+ end 
+
+end
+
   end
 
   def new
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('.heading') 
+ t('.people.heading') 
+ form_tag administration_imports_path, multipart: true, id: 'import-form' do 
+ hidden_field_tag :importable_type, 'Person' 
+ file_field_tag :file, accept: 'text/csv,text/comma-separated-values' 
+ icon 'fa fa-folder-open-o' 
+ t('.browse.button') 
+ button_tag t('.form.submit'), class: 'btn btn-success' 
+ end 
+
+end
 
   end
 
@@ -72,7 +196,26 @@ class Administration::ImportsController < ApplicationController
     @import = Import.find(params[:id])
     @import.update_attributes(status: 'parsed')
     @example = build_example
- render 'heading' 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  status = t(@import.status, scope: 'administration.imports.status') # notest 
+ @title = t('administration.imports.status_heading', status: status) 
+ 
+ form_for @import do |form| 
+ hidden_field_tag :status, 'matched' 
+ form.label :match_strategy, t('.form.match_strategy') 
+ form.select :match_strategy, import_match_strategies, {}, class: 'form-control' 
+ form.check_box :create_as_active 
+ form.label :create_as_active, t('.form.create_as_active') 
+ form.check_box :overwrite_changed_emails 
+ form.label :overwrite_changed_emails, t('.form.overwrite_changed_emails_html', url: administration_emails_path) 
+ t('.table.column') 
+ t('.table.attribute') 
+ t('.table.example') 
+ @import.mappings.each do |from, to| 
+ from 
+ select_tag "import[mappings][#{from}]",              import_mapping_option_tags(from, to),              include_blank: true,              class: 'form-control' 
+ @example[from] 
+ end 
  button_tag id: 'btn-preview', class: 'btn btn-success' do 
  t('.save.button') 
  icon 'fa fa-arrow-right' 
@@ -87,6 +230,9 @@ class Administration::ImportsController < ApplicationController
  icon 'fa fa-trash-o' 
  t('.delete.button') 
  end 
+ end 
+
+end
 
   end
 
@@ -100,7 +246,44 @@ class Administration::ImportsController < ApplicationController
       redirect_to administration_import_path(@import)
     else
       @example = build_example
-      render action :edit
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  status = t(@import.status, scope: 'administration.imports.status') # notest 
+ @title = t('administration.imports.status_heading', status: status) 
+ 
+ form_for @import do |form| 
+ hidden_field_tag :status, 'matched' 
+ form.label :match_strategy, t('.form.match_strategy') 
+ form.select :match_strategy, import_match_strategies, {}, class: 'form-control' 
+ form.check_box :create_as_active 
+ form.label :create_as_active, t('.form.create_as_active') 
+ form.check_box :overwrite_changed_emails 
+ form.label :overwrite_changed_emails, t('.form.overwrite_changed_emails_html', url: administration_emails_path) 
+ t('.table.column') 
+ t('.table.attribute') 
+ t('.table.example') 
+ @import.mappings.each do |from, to| 
+ from 
+ select_tag "import[mappings][#{from}]",              import_mapping_option_tags(from, to),              include_blank: true,              class: 'form-control' 
+ @example[from] 
+ end 
+ button_tag id: 'btn-preview', class: 'btn btn-success' do 
+ t('.save.button') 
+ icon 'fa fa-arrow-right' 
+ end 
+ button_tag id: 'btn-execute', class: 'btn btn-danger', data: { method: 'patch', confirm: t('are_you_sure') }, style: 'display:none' do 
+ icon 'fa fa-bolt' 
+ t('administration.imports.show.execute.button') 
+ end 
+ check_box_tag :dont_preview 
+ label_tag :dont_preview, t('.form.dont_preview') 
+ link_to @import, data: { method: :delete, confirm: t('are_you_sure') }, class: 'btn btn-delete pull-right' do 
+ icon 'fa fa-trash-o' 
+ t('.delete.button') 
+ end 
+ end 
+
+end
+
     end
   end
 

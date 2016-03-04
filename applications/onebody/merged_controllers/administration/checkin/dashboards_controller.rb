@@ -3,6 +3,7 @@ class Administration::Checkin::DashboardsController < ApplicationController
   before_filter :only_admins
 
   def show
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('checkin.heading') 
  form_tag search_path, :remote => true, :id => 'search-form' do |form| 
  hidden_field_tag :select_family, true 
@@ -45,6 +46,8 @@ class Administration::Checkin::DashboardsController < ApplicationController
  end 
  content_for :js do 
  end 
+
+end
 
   end
 

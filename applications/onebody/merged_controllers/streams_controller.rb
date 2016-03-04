@@ -34,6 +34,10 @@ class StreamsController < ApplicationController
         }
       end
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+
   end
 
   private

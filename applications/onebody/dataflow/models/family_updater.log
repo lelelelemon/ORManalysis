@@ -9,12 +9,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_p 
 		 6: 
-		 7: def_%v_3 p[2.5,] %v_0[2.1,] 
+		 7: p->params= def_%v_3 p[2.5,] %v_0[2.1,] 	 ARGS:p,
 		 8: 
 		 9: GETFIELD %self->id def_%v_4 %self[2.0,] 
 		 10: ATTRASSIGN %self->family_id %v_4[2.9,] 
@@ -37,12 +37,12 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: (Person) def_%v_3 
-		 7: %v_3->logged_in def_%v_4 %v_3[2.6,] 
+		 7: %v_3->logged_in def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: RETURN %v_4[2.7,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -60,19 +60,19 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: def_%v_4 %self[2.0,] 
-		 7: COPY def_%v_3 %v_4[2.6,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
 		 8: %v_4[2.6,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->family def_%v_5 %self[2.0,] 
-		 1: COPY def_%v_3 %v_5[3.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -84,7 +84,7 @@ BB 5
 	instructions:
 		 0: (Family) def_%v_6 
 		 1: GETFIELD %self->family_id def_%v_7 %self[2.0,] 
-		 2: %v_6->find def_%v_8 %v_6[5.0,] %v_7[5.1,] 
+		 2: %v_6->find def_%v_8 %v_6[5.0,] %v_7[5.1,] 	 ARGS:%v_7,
 		 3: ATTRASSIGN %self->family %v_8[5.2,] 
 		 4: RETURN %v_8[5.2,] %self[5.3,2.0,] 
 BB 6

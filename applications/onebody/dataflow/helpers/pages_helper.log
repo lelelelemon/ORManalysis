@@ -9,21 +9,21 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_page 
 		 6: 
-		 7: page->parent def_%v_3 page[2.5,] 
-		 8: COPY def_parent %v_3[2.7,] 
+		 7: page->parent def_%v_3 page[2.5,] 	 ARGS:
+		 8: COPY TYPE_PASS def_parent %v_3[2.7,] 
 		 9: BRANCH %v_3[2.7,] 
 BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: parent->system? def_%v_4 parent[2.8,] 
-		 1: %v_4->! def_%v_5 %v_4[3.0,] 
-		 2: COPY def_%v_3 %v_5[3.1,] 
+		 0: parent->system? def_%v_4 parent[2.8,] 	 ARGS:
+		 1: %v_4->! def_%v_5 %v_4[3.0,] 	 ARGS:
+		 2: COPY TYPE_PASS def_%v_3 %v_5[3.1,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -34,12 +34,12 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: parent->title def_%v_6 parent[2.8,] 
-		 2: %self->page_path def_%v_7 %self[2.0,] parent[5.1,2.8,] 
-		 3: %self->link_to def_%v_8 %self[5.2,2.0,] %v_6[5.1,] %v_7[5.2,] 
-		 4: COPY def_%v_9 
-		 5: %self->sanitize def_%v_10 %self[5.2,5.3,2.0,] %v_9[5.4,] 
-		 6: def_%v_11 %v_8[5.3,] %v_10[5.5,] 
+		 1: parent->title def_%v_6 parent[2.8,] 	 ARGS:
+		 2: %self->page_path def_%v_7 %self[2.0,] parent[5.1,2.8,] 	 ARGS:parent,
+		 3: %self->link_to def_%v_8 %self[5.2,2.0,] %v_6[5.1,] %v_7[5.2,] 	 ARGS:%v_6,%v_7,
+		 4: COPY TYPE_StringLiteral def_%v_9 
+		 5: %self->sanitize def_%v_10 %self[5.2,5.3,2.0,] %v_9[5.4,] 	 ARGS:%v_9,
+		 6: %v_8->+ def_%v_11 %v_8[5.3,] %v_10[5.5,] 	 ARGS:%v_10,
 		 7: RETURN %v_11[5.6,] %self[5.2,5.3,5.5,2.0,] 
 BB 6
 	outgoing: 8 
@@ -62,8 +62,8 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%v_0 
-		 2: COPY def_%current_scope 
-		 3: COPY def_%current_module 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
 		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
@@ -73,8 +73,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->logged_in def_%v_4 %self[2.0,] 
-		 1: %v_4->admin? def_%v_5 %v_4[3.0,] 
-		 2: COPY def_%v_3 %v_5[3.1,] 
+		 1: %v_4->admin? def_%v_5 %v_4[3.0,] 	 ARGS:Symbol,
+		 2: COPY TYPE_PASS def_%v_3 %v_5[3.1,] 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -86,18 +86,18 @@ BB 5
 	instructions:
 		 0: 
 		 1: (Page) def_%v_6 
-		 2: COPY def_%v_7 
-		 3: COPY def_%v_8 %v_7[5.2,] 
-		 4: %v_6->where def_%v_9 %v_6[5.1,] %v_8[5.3,] 
-		 5: %v_9->first def_%v_10 %v_9[5.4,] 
-		 6: %self->page_path def_%v_11 %self[2.0,] %v_10[5.5,] 
+		 2: COPY TYPE_StringLiteral def_%v_7 
+		 3: HASH-path- def_%v_8 %v_7[5.2,] 
+		 4: %v_6->where def_%v_9 %v_6[5.1,] %v_8[5.3,] 	 ARGS:%v_8,
+		 5: %v_9->first def_%v_10 %v_9[5.4,] 	 ARGS:
+		 6: %self->page_path def_%v_11 %self[2.0,] %v_10[5.5,] 	 ARGS:%v_10,
 		 7: RETURN %v_11[5.6,] %self[5.6,2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->root_path def_%v_12 %self[2.0,] 
+		 1: %self->root_path def_%v_12 %self[2.0,] 	 ARGS:
 		 2: RETURN %v_12[6.1,] %self[6.1,2.0,] 
 BB 8
 	outgoing: 

@@ -13,10 +13,41 @@ class VersesController < ApplicationController
       @verses = Verse.order(:book, :chapter, :verse).with_people_count.page(params[:page])
       @tags = Verse.tag_counts(order: 'name')
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('verses.heading') 
+ t('verses.intro', community: Setting.get(:name, :community)) 
+  form_tag(search_verses_path, {method: "get", id: 'search_verse_form'}) do |form| 
+ label_tag :q, t('verses.add_your_favorite_verse') 
+ text_field_tag :q, nil, placeholder: t('verses.example_verse'), class: 'form-control' 
+ button_tag value: "submit", class: 'btn btn-info' do 
+ icon 'fa fa-search' 
+ t('verses.search_verse') 
+ end 
+ end 
+ t('verses.search.error') 
+ 
+ t('tags.tags') 
+ t('verses.about_tags') 
+ tag_cloud @tags, %w(size1 size2 size3 size4) do |tag, css_class| 
+ link_to tag.name, tag, class: css_class 
+ end 
+ if @tags.empty? 
+ t('tags.no_tags_yet') 
+ end 
+ if @verses.any? 
+ render partial: @verses 
+ else 
+ t('verses.no_verses_yet') 
+ end 
+ pagination @verses 
+
+end
+
   end
 
   def show
     get_verse
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = @verse.reference 
  content_for :sub_title, "(#{@verse.translation})" 
  small_verse?(@verse) ? 'big' : '' 
@@ -25,7 +56,32 @@ class VersesController < ApplicationController
  t('verses.disclaimer') 
  end 
  t('Comments') 
- render partial: 'comments/comments', locals: {object: @verse, intro: t('verses.about_this_verse')} 
+  if object.comments.any? 
+ object.comments.each do |comment| 
+ link_to comment.person do 
+ avatar_tag comment.person 
+ end 
+ link_to comment.person.name, comment.person 
+ comment.created_at.to_s(:full) 
+ if @logged_in.can_update?(comment) 
+ link_to comment_path(comment), class: 'btn btn-xs bg-gray text-red', method: 'delete', data: { confirm: t('are_you_sure') } do 
+ icon 'fa fa-trash-o' 
+ end 
+ end 
+ preserve_breaks comment.text 
+ end 
+ else 
+ t('comments.none_yet') 
+ end 
+ t('comments.add_a_comment') 
+ form_for Comment.new, html: {style: 'border:none;'} do |form| 
+ hidden_field_tag 'comment[commentable_type]', object.class 
+ hidden_field_tag 'comment[commentable_id]', object.id 
+ hidden_field_tag :return_to, request.fullpath 
+ text_area_tag 'comment[text]', '', rows: 3, cols: 40, id: 'new_comment_textarea', class: 'form-control' 
+ form.submit t('comments.save'), class: 'btn btn-success' 
+ end 
+ 
  if @verse.people.any? 
  t('verses.people_who_like_this_verse') 
  end 
@@ -48,11 +104,30 @@ class VersesController < ApplicationController
  end 
  t('tags.tags') 
  t('verses.about_tags') 
- render partial: 'tags/tags_with_delete', locals: {object: @verse} 
+  controller ||= object.class.name.pluralize.downcase 
+ object.id 
+ if object.tags.any? 
+ object.tags.each do |tag| 
+ link_to tag.name, tag 
+ if params[:controller] == controller 
+ if controller == 'verses' 
+ url = verse_path(id: object, remove_tag: tag.name) 
+ end 
+ link_to url, title: t('delete'), class: 'delete', method: 'put', data: { remote: true, confirm: t('tags.confirm_delete') } do 
+ icon 'fa fa-times' 
+ end 
+ end 
+ end 
+ else 
+ t('tags.no_tags_yet') 
+ end 
+ 
  form_tag(@verse, method: 'put', data: { remote: true }) do 
  t('tags.add_tags') 
  text_field_tag :add_tags, nil, class: 'form-control' 
  end 
+
+end
 
   end
 
@@ -61,7 +136,19 @@ class VersesController < ApplicationController
     if @verse.invalid?
       render text: t('verses.not_found'), layout: true, status: 400
     else
-      render partial: 'search_result'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @verse.reference 
+ @verse.text 
+ form_for Verse.new do |form| 
+ hidden_field_tag :id, @verse.id 
+ button_tag value: "submit", class: 'btn btn-success' do 
+ icon 'fa fa-plus' 
+ t('verses.add_verse') 
+ end 
+ end 
+
+end
+
     end
   rescue ActiveRecord::RecordNotFound
     render text: t('verses.not_found'), layout: true, status: 404
@@ -89,8 +176,28 @@ class VersesController < ApplicationController
       format.html { redirect_to @verse }
       format.js
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @verse.id 
- escape_javascript render(partial: 'tags/tags_with_delete', locals: {object: @verse.reload}) 
+ escape_javascript  controller ||= object.class.name.pluralize.downcase 
+ object.id 
+ if object.tags.any? 
+ object.tags.each do |tag| 
+ link_to tag.name, tag 
+ if params[:controller] == controller 
+ if controller == 'verses' 
+ url = verse_path(id: object, remove_tag: tag.name) 
+ end 
+ link_to url, title: t('delete'), class: 'delete', method: 'put', data: { remote: true, confirm: t('tags.confirm_delete') } do 
+ icon 'fa fa-times' 
+ end 
+ end 
+ end 
+ else 
+ t('tags.no_tags_yet') 
+ end 
+ 
+
+end
 
   end
 
