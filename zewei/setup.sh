@@ -20,6 +20,8 @@ cp $1/zewei/haml2erb/* $2
 cp $1/zewei/view_controller_analysis/read_files.rb $2
 cp $1/zewei/view_controller_analysis/data_structure.rb $2
 cp $1/zewei/view_controller_analysis/helper.rb $2
+cp $1/zewei/view_controller_analysis/render.rb $2
+cp $1/zewei/view_controller_analysis/archive.rb $2
 cp $1/zewei/scripts/test_yard.rb $2
 
 echo "generating named_routes.txt..."

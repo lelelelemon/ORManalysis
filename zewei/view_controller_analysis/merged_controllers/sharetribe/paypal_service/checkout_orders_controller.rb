@@ -10,6 +10,24 @@ class PaypalService::CheckoutOrdersController < ApplicationController
 
 
   def success
+    return redirect_to error_not_found_path if params[:token].blank?
+
+    token = paypal_payments_service.get_request_token(@current_community.id, params[:token])
+    return redirect_to error_not_found_path if !token[:success]
+
+    transaction = transaction_service.query(token[:data][:transaction_id])
+
+    proc_status = paypal_payments_service.create(
+      @current_community.id,
+      token[:data][:token],
+      async: true)
+
+
+    if !proc_status[:success]
+      flash[:error] = t("error_messages.paypal.generic_error")
+      return redirect_to root
+    end
+
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
    if APP_CONFIG.use_kissmetrics 
  "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
@@ -32,7 +50,9 @@ class PaypalService::CheckoutOrdersController < ApplicationController
  t("paypal.chatting_with_paypal").html_safe 
 
 end
-end
+
+
+  end
 
   def success_processed
     process_token = params[:process_token]

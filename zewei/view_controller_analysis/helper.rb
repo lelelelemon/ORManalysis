@@ -477,21 +477,11 @@ def get_render_statement_array(ast=nil)
     cur_ast = ast_arr.pop
     if cur_ast.source.start_with? keyword
       #if cur_ast.parent.source.start_with?"return" 
-
-#      if cur_ast.parent.type.to_s.eql?(["arg_paran"]) and cur_ast.parent.parent.type.to_s.eql?(["fcall", "return", "command"])
-#        res = cur_ast.parent.parent.source.to_s
-#      elsif cur_ast.parent.type.to_s.eql?(["return", "fcall", "command"])
-#        res = cur_ast.parent.source.to_s
-#     	else 
-#        res = cur_ast.source.to_s
-#     	end
-      #
-
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?"escape_javascript("
         res = cur_ast.parent.parent.source.to_s
       elsif cur_ast.parent.type.to_s == "arg_paren" and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")
         res = cur_ast.parent.parent.source.to_s
-      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript")
+      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript") and ["return", "command"].include?(cur_ast.parent.type.to_s)
         res = cur_ast.parent.source.to_s
       else
         res =  cur_ast.source.to_s

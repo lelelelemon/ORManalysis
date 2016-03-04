@@ -332,6 +332,7 @@ end
  
 
 end
+ and return
       else
         invitation = Invitation.find_by_code(params[:invitation_code].upcase)
       end

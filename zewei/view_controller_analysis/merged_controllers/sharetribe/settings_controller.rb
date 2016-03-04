@@ -442,6 +442,7 @@ end
  
 
 end
+, :status => :bad_request and return
       end
       @unsubscribe_successful = true
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|

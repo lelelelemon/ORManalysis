@@ -194,7 +194,9 @@ class Function_Class
       options_hash = parse_render_statement(stmt)
       if options_hash != "not_valid"
         view_name = get_view_name_from_hash(options_hash, get_controller_name)
-				next if view_name.include?("nothing")
+				
+        # if render :nothing, then skip to the next render statement
+        next if view_name.include?("nothing")
         
         
         view_class = view_class_hash[view_name]
@@ -227,6 +229,7 @@ class Function_Class
       return get_default_layout(view_class_hash, controller_hash)
     else
       if layout == "false"
+        puts "layout is false"
         return nil
       else 
         if view_class_hash.has_key?(layout)

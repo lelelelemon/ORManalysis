@@ -89,7 +89,7 @@ def parse_assoc(ast)
   puts ast[0].type
   puts ast[0].source
   puts ast[1].source
-  label = ast[0].source.to_s if ["label", "symbol_literal"].include? ast[0].type.to_s
+  label = ast[0].source.to_s if ["label", "symbol_literal", "string_literal"].include? ast[0].type.to_s
   value = ast[1].source.to_s
 
   hash[label] = value
