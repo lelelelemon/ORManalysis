@@ -75,6 +75,7 @@ end
 def get_view_name_from_render_statement(r)
 	r = r.split("\n")[0]
 	r = r[6..-1] if r.start_with?"return"
+  r = r[17..-1] if r.start_with?"escape_javascript"
 	r.strip!
   while r[0] == '(' 
     r = r[1..-1]
@@ -676,4 +677,58 @@ def get_layout_name_from_render_statement(r)
   else
     return "not_valid"
   end
+end
+
+
+
+
+def get_render_statement_array(ast=nil)
+  keyword = "render"
+  ast = @ast if ast == nil
+  res_arr = Array.new
+  ast_arr = Array.new
+  ast_arr.push ast
+  while ast_arr.length > 0
+    cur_ast = ast_arr.pop
+    if cur_ast.source.start_with? keyword
+      #if cur_ast.parent.source.start_with?"return" 
+
+#      if cur_ast.parent.type.to_s.eql?(["arg_paran"]) and cur_ast.parent.parent.type.to_s.eql?(["fcall", "return", "command"])
+#        res = cur_ast.parent.parent.source.to_s
+#      elsif cur_ast.parent.type.to_s.eql?(["return", "fcall", "command"])
+#        res = cur_ast.parent.source.to_s
+#     	else 
+#        res = cur_ast.source.to_s
+#     	end
+      #
+      if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?"escape"
+        puts "escape: !!"
+        puts cur_ast.parent.type
+        puts cur_ast.parent.parent.source
+      end
+
+      if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?"escape_javascript("
+        res = cur_ast.parent.parent.source.to_s
+      elsif cur_ast.parent.type.to_s.eql?(["arg_paren"]) and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")
+        res = cur_ast.parent.parent.source.to_s
+      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript")
+        res = cur_ast.parent.source.to_s
+      else
+        res =  cur_ast.source.to_s
+      end
+
+      if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
+        res = res[0..-2]
+      end
+      res_arr.push res
+    else
+      cur_ast.children.each do |child|
+        ast_arr.push child
+      end
+    end
+  end
+  #puts "res_arr: #{get_controller_name}_#{get_function_name}"
+  #puts res_arr 
+
+  return res_arr
 end
