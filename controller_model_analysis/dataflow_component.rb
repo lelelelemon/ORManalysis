@@ -722,6 +722,15 @@ class Closure < CFG
 		end
 		return r
 	end
+	def getClosureDefs(vname)
+		r = Array.new
+		@closure_def_table.each do |v|
+			if v.getVname == vname
+				r.push(v)
+			end
+		end
+		return r
+	end
 	def getMHandler
 		return @parent_instr.getBB.getCFG.getMHandler
 	end
