@@ -28,21 +28,15 @@ end
 
 def isTableAttrAssign(node)
 	if node.getInstr.instance_of?AttrAssign_instr
-		if node.getInstr.getFuncname.index('!') == nil
-			_caller = nil
-			if node.getInstr.getCallHandler!= nil
-				_caller = node.getInstr.getCallHandler.caller
-			end
-			if _caller != nil and isActiveRecord(_caller.getName)
+		tbl_name = type_valid(n.getInstr, n.getInstr.getCaller)
+		field_name = n.getInstr.getFuncname
+		if tbl_name != nil
+			if testTableField(tbl_name, field_name)
 				return true
-			elsif _caller == nil
-				#puts "Attr assign UNKNOWN caller: #{node.getIndex}:#{node.getInstr.toString}  #{node.getInstr.getCallHandler == nil} "
-			else
-				#puts "Not active record: #{node.getIndex}:#{node.getInstr.toString}"
 			end
 		end
 	end
-	return false  
+	return false
 end
 
 def find_all_ancestors(nodex)
@@ -63,6 +57,33 @@ def find_all_ancestors(nodex)
 	end	
 	return @ancestors
 end
+
+#test nodey is the ancestor of nodex
+def testancestor(nodex, nodey)
+	@ancestors = Array.new
+	@temp_node_list = Array.new
+	@temp_node_list.push(nodex)
+	while @temp_node_list.length > 0
+		temp_node = @temp_node_list.shift
+		@ancestors.push(temp_node)
+		if temp_node.isReadQuery?
+			if e.getFromNode == nodey
+				return true
+			end
+		else
+			temp_node.getBackwardEdges.each do |e|
+				if e.getFromNode != nil and @ancestors.include?(e.getFromNode) == false and e.getFromNode.getIndex < nodex.getIndex
+					if e.getFromNode == nodey
+						return true
+					end
+					@temp_node_list.push(e.getFromNode)
+				end
+			end
+		end
+	end	
+	return false
+end
+
 
 class Func_dep_expression
 	def initialize
@@ -91,6 +112,27 @@ def compute_functional_dependency(file_to_write)
 	@func_dep_map = Hash.new
 	for i in 0...$node_list.length-1
 		n = $node_list[i]
+		if isTableAttrAssign(n)
+			@sources = traceback_data_dep(n)
+			@track = true
+			@sources.each do |s|
+				if s.instance_of?Dataflow_edge
+					@track = false
+				end
+			end	
+			if @track
+				file_to_write.puts("#{n.getIndex}: #{n.getInstr.toString2} (#{type_valid(n.getInstr, n.getInstr.getCaller)} . #{n.getInstr.getFuncname}"))
+				@sources.each do |s|
+					if s.isReadQuery?
+						file_to_write.puts("\t[QUERY] #{s.getIndex} : #{s.getInstr.toString2}")
+					elsif s.isTableField?
+						file_to_write.puts("\t[FIELD] #{s.getIndex} : #{s.getInstr.toString2}")
+					end
+				end	
+			end
+		end
+	end
+=begin
 		if isTableAttrAssign(n)
 			if @func_dep_map[n] == nil
 				@func_dep_map[n] = Func_dep_expression.new
@@ -134,6 +176,7 @@ def compute_functional_dependency(file_to_write)
 			end
 		end
 	end
+=end
 end
 
 #nodex is before nodey

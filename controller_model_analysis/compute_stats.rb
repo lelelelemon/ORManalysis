@@ -335,6 +335,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		end
 	end
 
+	@func_dep_file = File.open("./func_dep.log")
+	compute_functional_dependency(@func_dep_file)
+	@func_dep_file.close
 
 	if build_node_list_only
 				#puts "#{n.getIndex}: Forward ARRAY length: #{@forwardarray.length}  (write: #{temp_to_write}) (stat: #{@read_sink_stat.to_write_query})"
