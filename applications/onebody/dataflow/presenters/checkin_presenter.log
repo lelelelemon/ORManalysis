@@ -115,7 +115,7 @@ BB 5
 	instructions:
 		 0: %self->checkin_times def_%v_6 %self[2.0,] 	 ARGS:
 		 1: %v_6->flat_map def_%v_7 %v_6[5.0,] %self[5.0,2.0,] 	 ARGS:%v_6,
-CLOSURE BEGIN: t[] 
+CLOSURE BEGIN: t[5.1,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -148,7 +148,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 2: %v_7->uniq def_%v_8 %v_7[5.1,] 	 ARGS:
 		 3: ATTRASSIGN %self->group_ids %v_8[5.2,] 
 		 4: RETURN %v_8[5.2,] %self[5.0,5.3,2.0,] 
@@ -236,7 +236,7 @@ BB 6
 		 0: 
 		 1: %self->all_attendance_records def_%v_7 %self[2.0,] person[2.5,] 	 ARGS:person,
 		 2: times->map def_%v_8 times[5.2,3.0,2.6,] %self[6.1,2.0,] 	 ARGS:times,
-CLOSURE BEGIN: t[] 
+CLOSURE BEGIN: t[6.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -269,7 +269,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 3: HASH-attended_at- def_%v_9 %v_8[6.2,] 
 		 4: %v_7->where def_%v_10 %v_7[6.1,] %v_9[6.3,] 	 ARGS:%v_9,
 		 5: RETURN %v_10[6.4,] %self[6.1,2.0,] 
@@ -334,7 +334,7 @@ BB 2
 		 8: HASH-the_datetime- def_%v_4 
 		 9: %v_3->where def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: %v_5->map def_%v_6 %v_5[2.9,] %self[2.0,2.7,] 	 ARGS:%v_5,
-CLOSURE BEGIN: ct[] 
+CLOSURE BEGIN: ct[2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -368,7 +368,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 11: COPY TYPE_PASS def_times %v_6[2.10,] 
 		 12: 
 		 13: %v_6->map def_%v_7 %v_6[2.10,] 	 ARGS:
@@ -426,7 +426,7 @@ BB 2
 		 5: 
 		 6: %self->people def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->map def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
-CLOSURE BEGIN: person[] %self[2.0,2.6,] 
+CLOSURE BEGIN: person[2.7,] %self[2.0,2.6,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -463,7 +463,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -488,7 +488,7 @@ BB 2
 		 6: %self->people def_%v_3 %self[2.0,] 	 ARGS:
 		 7: HASH- def_%v_4 
 		 8: %v_3->each_with_object def_%v_5 %v_3[2.6,] %v_4[2.7,] %self[2.0,2.6,] 	 ARGS:%v_4,%v_3,
-CLOSURE BEGIN: person[] %self[2.0,2.6,] person_hash[] 
+CLOSURE BEGIN: person[] %self[2.0,2.6,] person_hash[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -512,7 +512,7 @@ BB 3
 		 2: %self->last_week_records def_%cl_1_4 %self[2.0,] person[3.1,2.2,] 	 ARGS:person,
 		 3: HASH- def_%cl_1_5 
 		 4: %cl_1_4->each_with_object def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] %self[3.2,2.0,] 	 ARGS:%cl_1_5,%cl_1_4,
-CLOSURE BEGIN: record[] %self[3.2,2.0,] time_hash[] 
+CLOSURE BEGIN: record[] %self[3.2,2.0,] time_hash[3.4,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -547,7 +547,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: record[2.2,] 
 		 5: ATTRASSIGN person_hash->[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
 		 6: RETURN %cl_1_6[3.4,] %self[3.2,2.0,] 
 BB 4
@@ -561,7 +561,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: person[2.2,] 
 		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -617,7 +617,7 @@ BB 3
 		 9: 
 		 10: %self->checkin_times def_%cl_1_7 %self[3.1,2.0,] 	 ARGS:
 		 11: %cl_1_7->each def_%cl_1_8 %cl_1_7[3.10,] %self[3.1,3.10,2.0,] 	 ARGS:%cl_1_7,
-CLOSURE BEGIN: records[3.3,] %self[3.1,3.10,2.0,] time[] record[] h[3.8,] 
+CLOSURE BEGIN: records[3.3,] %self[3.1,3.10,2.0,] time[] record[3.11,] h[3.8,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -637,7 +637,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: records->detect def_%cl_2_3 records[] %self[2.0,] 	 ARGS:records,
-CLOSURE BEGIN: a[] time[2.2,] 
+CLOSURE BEGIN: a[3.1,] time[2.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -671,7 +671,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 2: COPY TYPE_PASS def_record %cl_2_3[3.1,] 
 		 3: 
 		 4: BRANCH %cl_2_3[3.1,] 
@@ -707,7 +707,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: time[2.2,] 
 		 12: RETURN %cl_1_8[3.11,] %self[3.1,3.10,2.0,] 
 BB 4
 	outgoing: 6 
@@ -720,7 +720,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: people_hash[3.7,2.3,] records[3.3,] person[2.2,] 
 		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 

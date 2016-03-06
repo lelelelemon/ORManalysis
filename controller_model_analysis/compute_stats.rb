@@ -556,7 +556,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							@read_source_stat.from_const += 1
 						elsif n1.getInstr.instance_of?Const_instr
 							@read_source_stat.from_util += 1
-						else
+						elsif sourceIgnore(n1.getInstr) == false
 							puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 						end
 					end
@@ -597,7 +597,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								@table_write_stat[@table_name].from_const += 1
 							elsif n1.getInstr.instance_of?Const_instr
 								@write_source_stat.from_util += 1
-							else
+							elsif sourceIgnore(n1.getInstr) == false
 								puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 							end
 							if sourceIgnore(n1.getInstr)

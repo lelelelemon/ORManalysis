@@ -366,7 +366,10 @@ def sourceIgnore(instr)
 	if instr.instance_of?HashField_instr or instr.instance_of?Return_instr
 		return true
 	end
-	if instr.instance_of?Call_instr and ["before_filter","before_save","before_create"].include?instr.getFuncname
+	if instr.instance_of?Call_instr and ["before_filter","before_save","before_create","ruby_code_from_view", "transaction", "before_filter_do_block"].include?instr.getFuncname
+		return true
+	end
+	if instr.getIndex == 0 and instr.getBB.getIndex == 2
 		return true
 	end
 	return false

@@ -232,7 +232,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: all_emails->select def_%cl_1_3 all_emails[] %self[2.0,] 	 ARGS:all_emails,
-CLOSURE BEGIN: %self[2.0,] email[] allowed_emails[2.2,] 
+CLOSURE BEGIN: %self[2.0,] email[3.1,] allowed_emails[2.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -264,7 +264,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 2: COPY TYPE_PASS def_ok_emails %cl_1_3[3.1,] 
 		 3: 
 		 4: %cl_1_3->count def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:
@@ -284,7 +284,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: ok_emails->select def_%cl_1_8 ok_emails[3.2,] %self[2.0,] 	 ARGS:ok_emails,
-CLOSURE BEGIN: ok_email[] 
+CLOSURE BEGIN: ok_email[5.1,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -316,7 +316,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 2: COPY TYPE_PASS def_confirmed_ok_emails %cl_1_8[5.1,] 
 		 3: 
 		 4: %cl_1_8->count def_%cl_1_9 %cl_1_8[5.1,] 	 ARGS:
@@ -358,7 +358,7 @@ BB 12
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: allowed_emails[2.2,] critical_email_id[9.0,] ok_emails[3.2,] 
 		 10: COPY TYPE_PASS def_critical_email_ids %v_3[2.9,] 
 		 11: 
 		 12: email->id def_%v_4 email[2.7,] 	 ARGS:
@@ -386,7 +386,7 @@ BB 2
 		 5: RECEIVEARG def_all_emails 
 		 6: 
 		 7: all_emails->select def_%v_3 all_emails[2.5,] %self[2.0,] 	 ARGS:all_emails,
-CLOSURE BEGIN: email[] 
+CLOSURE BEGIN: email[2.7,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -418,7 +418,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: RETURN %v_3[2.7,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -442,7 +442,7 @@ BB 2
 		 5: RECEIVEARG def_all_emails 
 		 6: 
 		 7: all_emails->select def_%v_3 all_emails[2.5,] %self[2.0,] 	 ARGS:all_emails,
-CLOSURE BEGIN: email[] 
+CLOSURE BEGIN: email[2.7,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -474,7 +474,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: RETURN %v_3[2.7,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -498,7 +498,7 @@ BB 2
 		 5: RECEIVEARG def_all_emails 
 		 6: 
 		 7: all_emails->select def_%v_3 all_emails[2.5,] %self[2.0,] 	 ARGS:all_emails,
-CLOSURE BEGIN: email[] 
+CLOSURE BEGIN: email[2.7,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -530,7 +530,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: RETURN %v_3[2.7,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -555,7 +555,7 @@ BB 2
 		 6: 
 		 7: %self->confirmed_emails def_%v_3 %self[2.0,] all_emails[2.5,] 	 ARGS:all_emails,
 		 8: %v_3->select def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 	 ARGS:%v_3,
-CLOSURE BEGIN: email[] 
+CLOSURE BEGIN: email[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -587,7 +587,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 9: RETURN %v_4[2.8,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -682,7 +682,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: allowed_array->each def_%v_7 allowed_array[3.6,] %self[2.0,] 	 ARGS:allowed_array,
-CLOSURE BEGIN: allowed_domain_or_address[] address[2.5,] 
+CLOSURE BEGIN: allowed_domain_or_address[6.0,] address[2.5,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -736,7 +736,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: allowed[4.1,] 
 		 1: 
 BB 7
 	outgoing: 8 
@@ -749,7 +749,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: RETURN allowed[3.2,] %self[2.0,] 
+		 1: RETURN allowed[6.0,] %self[2.0,] 
 BB 10
 	outgoing: 
 	datadep: 

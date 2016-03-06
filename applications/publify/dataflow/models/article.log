@@ -408,7 +408,7 @@ BB 4
 		 0: 
 		 1: files->values def_%v_6 files[3.1,2.5,] 	 ARGS:
 		 2: %v_6->each def_%v_7 %v_6[4.1,] %self[2.0,] 	 ARGS:%v_6,
-CLOSURE BEGIN: %self[2.0,] f[] 
+CLOSURE BEGIN: %self[2.0,] f[4.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -440,7 +440,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 3: RETURN %v_7[4.2,] %self[2.0,] 
 BB 5
 	outgoing: 
@@ -662,7 +662,7 @@ BB 3
 		 2: %self->blog def_%v_6 %self[2.0,] 	 ARGS:
 		 3: %v_6->urls_to_ping_for def_%v_7 %v_6[3.2,] %self[3.2,2.0,] 	 ARGS:%self,
 		 4: %v_7->each def_%v_8 %v_7[3.3,] %self[3.2,2.0,] 	 ARGS:%v_7,
-CLOSURE BEGIN: %self[3.2,2.0,] url_to_ping[] e[] 
+CLOSURE BEGIN: %self[3.2,2.0,] url_to_ping[] e[3.4,] 
 BB 1
 	outgoing: 15 2 
 	datadep: 
@@ -746,11 +746,11 @@ BB 15
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: url_to_ping[2.2,] 
 		 5: 
 		 6: %self->html_urls_to_ping def_%v_9 %self[3.2,2.0,] 	 ARGS:
 		 7: %v_9->each def_%v_10 %v_9[3.6,] %self[3.2,3.6,2.0,] 	 ARGS:%v_9,
-CLOSURE BEGIN: %self[3.2,3.6,2.0,] url_to_ping[] e[] 
+CLOSURE BEGIN: %self[3.2,3.6,2.0,] url_to_ping[3.4,] e[3.7,3.4,] 
 BB 1
 	outgoing: 15 2 
 	datadep: 
@@ -832,7 +832,7 @@ BB 15
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: url_to_ping[2.2,] 
 		 8: RETURN %v_10[3.7,] %self[3.2,3.6,2.0,] 
 BB 4
 	outgoing: 6 
@@ -927,7 +927,7 @@ BB 2
 		 13: COPY TYPE_PASS def_result %v_9[2.12,] 
 		 14: 
 		 15: %v_9->map def_%v_10 %v_9[2.12,] %self[2.0,2.7,] 	 ARGS:%v_9,
-CLOSURE BEGIN: d[] 
+CLOSURE BEGIN: d[2.15,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -962,7 +962,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 16: %v_10->uniq def_%v_11 %v_10[2.15,] 	 ARGS:
 		 17: RETURN %v_11[2.16,] %self[2.0,2.7,] 
 BB 3
@@ -1345,7 +1345,7 @@ BB 2
 		 9: %self->html def_%v_4 %self[2.0,] 	 ARGS:
 		 10: COPY TYPE_Regexp def_%v_5 
 		 11: %v_4->gsub def_%v_6 %v_4[2.9,] %self[2.0,2.9,] 	 ARGS:%v_5,%v_4,
-CLOSURE BEGIN: tag[] urls[2.7,] 
+CLOSURE BEGIN: tag[2.11,] urls[2.7,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -1399,7 +1399,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 12: 
 		 13: urls->uniq def_%v_7 urls[2.7,] 	 ARGS:
 		 14: RETURN %v_7[2.13,] %self[2.0,2.9,] 
@@ -1923,7 +1923,7 @@ BB 2
 		 8: 
 		 9: %self->html_urls def_%v_4 %self[2.0,] 	 ARGS:
 		 10: %v_4->delete_if def_%v_5 %v_4[2.9,] %self[2.0,2.9,] 	 ARGS:%v_4,
-CLOSURE BEGIN: %self[2.0,2.9,] url[] 
+CLOSURE BEGIN: %self[2.0,2.9,] url[2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1955,10 +1955,10 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 11: %v_5->uniq def_%v_6 %v_5[2.10,] 	 ARGS:
 		 12: %v_6->each def_%v_7 %v_6[2.11,] %self[2.0,2.9,] 	 ARGS:%v_6,
-CLOSURE BEGIN: %self[2.0,2.9,] url_to_ping[] urls_to_ping[2.7,] 
+CLOSURE BEGIN: %self[2.0,2.9,] url_to_ping[2.12,] urls_to_ping[2.7,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1994,7 +1994,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 13: 
 		 14: RETURN urls_to_ping[2.7,] %self[2.0,2.9,] 
 BB 3

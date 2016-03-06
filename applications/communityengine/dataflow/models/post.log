@@ -312,7 +312,7 @@ BB 6
 		 11: %v_13->references def_%v_15 %v_13[6.9,] %v_14[6.10,] 	 ARGS:%v_14,
 		 12: %self->columns def_%v_16 %self[2.0,] 	 ARGS:
 		 13: %v_16->map def_%v_17 %v_16[6.12,] %self[6.12,2.0,] 	 ARGS:%v_16,
-CLOSURE BEGIN: %self[6.12,2.0,] column[] 
+CLOSURE BEGIN: %self[6.12,2.0,] column[6.13,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -348,7 +348,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 14: COPY TYPE_StringLiteral def_%v_18 
 		 15: %v_17->join def_%v_19 %v_17[6.13,] %v_18[6.14,] 	 ARGS:%v_18,
 		 16: %v_15->group def_%v_20 %v_15[6.11,] %v_19[6.15,] 	 ARGS:%v_19,
@@ -839,7 +839,7 @@ BB 8
 		 4: COPY TYPE_StringLiteral def_%v_6 
 		 5: email_addresses->split def_%v_7 email_addresses[3.1,2.5,] %v_6[8.4,] 	 ARGS:%v_6,
 		 6: %v_7->collect def_%v_8 %v_7[8.5,] %self[8.2,2.0,] 	 ARGS:%v_7,
-CLOSURE BEGIN: email[] 
+CLOSURE BEGIN: email[8.6,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -871,12 +871,12 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 7: %v_8->uniq def_%v_9 %v_8[8.6,] 	 ARGS:
 		 8: COPY TYPE_PASS def_emails %v_9[8.7,] 
 		 9: 
 		 10: %v_9->each def_%v_10 %v_9[8.7,] %self[8.2,2.0,] 	 ARGS:%v_9,
-CLOSURE BEGIN: email[] %self[8.2,2.0,] 
+CLOSURE BEGIN: email[8.10,8.6,] %self[8.2,2.0,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -922,7 +922,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 11: 
 		 12: email_addresses->blank? def_%v_11 email_addresses[8.5,3.1,2.5,] 	 ARGS:
 		 13: BRANCH %v_11[8.12,] 
@@ -953,7 +953,7 @@ BB 12
 		 1: COPY TYPE_StringLiteral def_%v_16 
 		 2: email_addresses->split def_%v_17 email_addresses[3.1,2.5,] %v_16[12.1,] 	 ARGS:%v_16,
 		 3: %v_17->collect def_%v_18 %v_17[12.2,] %self[8.2,2.0,] 	 ARGS:%v_17,
-CLOSURE BEGIN: email[] 
+CLOSURE BEGIN: email[12.3,8.6,8.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -985,12 +985,12 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 4: %v_18->uniq def_%v_19 %v_18[12.3,] 	 ARGS:
 		 5: COPY TYPE_PASS def_emails %v_19[12.4,] 
 		 6: 
 		 7: %v_19->each def_%v_20 %v_19[12.4,] %self[8.2,2.0,] 	 ARGS:%v_19,
-CLOSURE BEGIN: user[7.0,6.0,] email[] %self[8.2,2.0,] message[5.1,4.0,] 
+CLOSURE BEGIN: user[7.0,6.0,] email[12.7,12.3,] %self[8.2,2.0,] message[5.1,4.0,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -1041,7 +1041,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: 
 		 9: %self->increment def_%v_21 %self[8.2,2.0,] 	 ARGS:Symbol,
 		 10: %v_21->save def_%v_22 %v_21[12.9,] 	 ARGS:

@@ -607,7 +607,7 @@ BB 2
 		 13: %v_5->downcase def_%v_6 %v_5[2.12,] 	 ARGS:
 		 14: %v_6->split def_%v_7 %v_6[2.13,] 	 ARGS:
 		 15: %v_7->each def_%v_8 %v_7[2.14,] %self[2.0,2.12,] 	 ARGS:%v_7,
-CLOSURE BEGIN: q[2.7,] code[] p[2.10,] 
+CLOSURE BEGIN: q[2.7,] code[2.15,] p[2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -658,13 +658,13 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: p[3.20,] 
 		 16: 
 		 17: (Person) def_%v_9 
 		 18: COPY TYPE_StringLiteral def_%v_10 
 		 19: q->join def_%v_11 q[2.7,] %v_10[2.18,] 	 ARGS:%v_10,
 		 20: COPY TYPE_Array def_%v_12 %v_11[2.19,] 
-		 21: def_%v_13 %v_12[2.20,] p[2.10,] 
+		 21: def_%v_13 %v_12[2.20,] p[2.10,2.15,] 
 		 22: %v_9->where def_%v_14 %v_9[2.17,] %v_13[2.21,] 	 ARGS:Splat,
 		 23: COPY TYPE_PASS def_scope %v_14[2.22,] 
 		 24: 
@@ -693,7 +693,7 @@ BB 2
 		 5: RECEIVEARG def_new_people 
 		 6: 
 		 7: new_people->reject! def_%v_3 new_people[2.5,] %self[2.0,] 	 ARGS:new_people,
-CLOSURE BEGIN: p[] 
+CLOSURE BEGIN: p[2.7,] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -736,7 +736,7 @@ BB 8
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: 
 		 9: %self->people def_%v_4 %self[2.0,] 	 ARGS:
 		 10: %v_4->reload def_%v_5 %v_4[2.9,] 	 ARGS:
@@ -749,7 +749,7 @@ CLOSURE END
 		 17: %v_6->where def_%v_11 %v_6[2.12,] %v_10[2.16,] 	 ARGS:%v_10,
 		 18: %v_11->includes def_%v_12 %v_11[2.17,] 	 ARGS:Symbol,
 		 19: %v_12->each def_%v_13 %v_12[2.18,] %self[2.0,2.9,2.12,2.13,] 	 ARGS:%v_12,
-CLOSURE BEGIN: membership[] %self[2.0,2.9,2.12,2.13,] 
+CLOSURE BEGIN: membership[2.19,] %self[2.0,2.9,2.12,2.13,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -785,12 +785,12 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 20: 
 		 21: %self->people def_%v_14 %self[2.0,2.9,2.12,2.13,] 	 ARGS:
 		 22: new_people->- def_%v_15 new_people[2.5,2.7,2.14,] %v_14[2.21,] 	 ARGS:%v_14,
 		 23: %v_15->each def_%v_16 %v_15[2.22,] %self[2.0,2.9,2.12,2.13,2.21,] 	 ARGS:%v_15,
-CLOSURE BEGIN: %self[2.0,2.9,2.12,2.13,2.21,] person[] 
+CLOSURE BEGIN: %self[2.0,2.9,2.12,2.13,2.21,] person[2.23,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -825,7 +825,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 24: 
 		 25: %self->memberships def_%v_17 %self[2.0,2.9,2.12,2.13,2.21,] 	 ARGS:
 		 26: 
@@ -873,7 +873,7 @@ BB 3
 		 6: COPY TYPE_PASS def_classes %v_10[3.5,] 
 		 7: 
 		 8: %v_10->detect def_%v_11 %v_10[3.5,] %self[2.0,] 	 ARGS:%v_10,
-CLOSURE BEGIN: c[] %self[2.0,] 
+CLOSURE BEGIN: c[3.8,] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -909,7 +909,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 9: COPY TYPE_PASS def_data %v_11[3.8,] 
 		 10: BRANCH %v_11[3.8,] 
 BB 4
@@ -1173,7 +1173,7 @@ BB 2
 		 9: 
 		 10: %self->people def_%v_4 %self[2.0,] 	 ARGS:
 		 11: %v_4->each def_%v_5 %v_4[2.10,] %self[2.0,2.10,] 	 ARGS:%v_4,
-CLOSURE BEGIN: p[] records[2.8,] 
+CLOSURE BEGIN: p[2.11,] records[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1207,7 +1207,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 12: 
 		 13: (String) def_%v_6 
 		 14: date->is_a? def_%v_7 date[2.5,] %v_6[2.13,] 	 ARGS:%v_6,
@@ -1232,7 +1232,7 @@ BB 5
 		 0: 
 		 1: %self->attendance_records_for_date def_%v_10 %self[2.0,] date[3.2,2.5,] 	 ARGS:date,
 		 2: %v_10->each def_%v_11 %v_10[5.1,] %self[5.1,2.0,] 	 ARGS:%v_10,
-CLOSURE BEGIN: record[] records[2.8,] 
+CLOSURE BEGIN: record[5.2,] records[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1268,11 +1268,11 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 3: 
 		 4: records->values def_%v_12 records[2.8,] 	 ARGS:
 		 5: %v_12->sort_by def_%v_13 %v_12[5.4,] %self[5.1,2.0,] 	 ARGS:%v_12,
-CLOSURE BEGIN: r[] 
+CLOSURE BEGIN: r[5.5,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1308,7 +1308,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 6: RETURN %v_13[5.5,] %self[5.1,2.0,] 
 BB 6
 	outgoing: 
@@ -1370,7 +1370,7 @@ BB 2
 		 14: BUILDSTRING def_%v_11 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_9[2.12,] %v_10[2.13,] 
 		 15: %v_3->find_by_sql def_%v_12 %v_3[2.6,] %v_11[2.14,] 	 ARGS:%v_11,
 		 16: %v_12->map def_%v_13 %v_12[2.15,] %self[2.0,2.6,2.8,] 	 ARGS:%v_12,
-CLOSURE BEGIN: r[] 
+CLOSURE BEGIN: r[2.16,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1402,7 +1402,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 17: RETURN %v_13[2.16,] %self[2.0,2.6,2.8,] 
 BB 3
 	outgoing: 
@@ -1596,7 +1596,7 @@ BB 2
 		 8: HASH-parents_of- def_%v_5 %v_4[2.7,] 
 		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: %v_6->each def_%v_7 %v_6[2.9,] %self[2.0,2.7,] 	 ARGS:%v_6,
-CLOSURE BEGIN: g[] 
+CLOSURE BEGIN: g[2.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1628,7 +1628,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 11: RETURN %v_7[2.10,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -1774,7 +1774,7 @@ BB 2
 		 5: 
 		 6: HASH- def_%v_3 
 		 7: %v_3->tap def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
-CLOSURE BEGIN: %self[2.0,] results[] 
+CLOSURE BEGIN: %self[2.0,] results[2.7,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -1811,7 +1811,7 @@ BB 4
 		 7: BUILDSTRING def_%cl_1_12 %cl_1_7[4.2,] %cl_1_10[4.5,] %cl_1_11[4.6,] 
 		 8: %cl_1_6->find_by_sql def_%cl_1_13 %cl_1_6[4.1,] %cl_1_12[4.7,] 	 ARGS:%cl_1_12,
 		 9: %cl_1_13->map def_%cl_1_14 %cl_1_13[4.8,] %self[2.0,] 	 ARGS:%cl_1_13,
-CLOSURE BEGIN: g[] 
+CLOSURE BEGIN: g[4.9,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1845,7 +1845,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 10: COPY TYPE_PASS def_results %cl_1_14[4.9,] 
 		 11: 
 BB 5
@@ -1863,7 +1863,7 @@ BB 5
 		 8: COPY TYPE_Array def_%cl_1_22 %cl_1_21[5.7,] 
 		 9: %cl_1_15->find_by_sql def_%cl_1_23 %cl_1_15[5.1,] %cl_1_22[5.8,] 	 ARGS:%cl_1_22,
 		 10: %cl_1_23->map def_%cl_1_24 %cl_1_23[5.9,] %self[2.0,] 	 ARGS:%cl_1_23,
-CLOSURE BEGIN: g[] 
+CLOSURE BEGIN: g[5.10,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1897,7 +1897,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 11: COPY TYPE_PASS def_results %cl_1_24[5.10,] 
 		 12: COPY TYPE_PASS def_%cl_1_14 %cl_1_24[5.10,] 
 BB 6
@@ -1906,7 +1906,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: results->each def_%cl_1_25 results[5.11,4.10,] %self[2.0,] 	 ARGS:results,
-CLOSURE BEGIN: count[] cats[2.2,] cat[] 
+CLOSURE BEGIN: count[6.1,] cats[2.2,] cat[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1940,7 +1940,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: cat[2.2,] 
 		 2: RETURN %cl_1_25[6.1,] %self[2.0,] 
 BB 7
 	outgoing: 9 
@@ -1953,7 +1953,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: cats[2.2,] 
 		 8: RETURN %v_4[2.7,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -2001,7 +2001,7 @@ BB 2
 		 5: 
 		 6: (CSV) def_%v_3 
 		 7: %v_3->generate def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
-CLOSURE BEGIN: csv[] %self[2.0,] 
+CLOSURE BEGIN: csv[2.7,] %self[2.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2048,7 +2048,7 @@ BB 3
 		 1: (EXPORT_COLS) def_%cl_2_3 
 		 2: %cl_2_3->[] def_%cl_2_4 %cl_2_3[3.1,] 	 ARGS:Symbol,
 		 3: %cl_2_4->map def_%cl_2_5 %cl_2_4[3.2,] %self[2.0,] 	 ARGS:%cl_2_4,
-CLOSURE BEGIN: group[2.2,] c[] 
+CLOSURE BEGIN: group[2.2,] c[3.3,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2080,7 +2080,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 4: csv-><< def_%cl_2_6 csv[] %cl_2_5[3.3,] 	 ARGS:%cl_2_5,
 		 5: RETURN %cl_2_6[3.4,] %self[2.0,] 
 BB 4
@@ -2094,7 +2094,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 7: RETURN %cl_1_7[3.6,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2107,7 +2107,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: RETURN %v_4[2.7,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2193,7 +2193,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: groups->group def_%cl_2_3 groups[] %self[2.0,] 	 ARGS:groups,
-CLOSURE BEGIN: %self[2.0,] g[] 
+CLOSURE BEGIN: %self[2.0,] g[3.1,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2215,7 +2215,7 @@ BB 3
 		 1: (EXPORT_COLS) def_%cl_3_3 
 		 2: %cl_3_3->[] def_%cl_3_4 %cl_3_3[3.1,] 	 ARGS:Symbol,
 		 3: %cl_3_4->each def_%cl_3_5 %cl_3_4[3.2,] %self[2.0,] 	 ARGS:%cl_3_4,
-CLOSURE BEGIN: group[] col[] g[2.2,] 
+CLOSURE BEGIN: group[] col[3.3,] g[2.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2248,7 +2248,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 4: 
 		 5: g->people def_%cl_3_6 g[2.2,] %self[2.0,] 	 ARGS:g,
 CLOSURE BEGIN: group[] %self[2.0,] 
@@ -2314,7 +2314,7 @@ BB 3
 		 1: (EXPORT_COLS) def_%cl_7_3 
 		 2: %cl_7_3->[] def_%cl_7_4 %cl_7_3[3.1,] 	 ARGS:Symbol,
 		 3: %cl_7_4->each def_%cl_7_5 %cl_7_4[3.2,] %self[2.0,] 	 ARGS:%cl_7_4,
-CLOSURE BEGIN: person[] col[] p[2.2,] 
+CLOSURE BEGIN: person[] col[3.3,] p[2.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2347,7 +2347,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 4: RETURN %cl_7_5[3.3,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2360,7 +2360,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 2: RETURN %cl_6_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2373,7 +2373,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 3: RETURN %cl_5_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2386,7 +2386,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 6: RETURN %cl_3_6[3.5,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2399,7 +2399,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 2: RETURN %cl_2_3[3.1,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2412,7 +2412,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -2425,7 +2425,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 4: RETURN %v_6[5.3,] %self[2.0,] 
 BB 6
 	outgoing: 8 

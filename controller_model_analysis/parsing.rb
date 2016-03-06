@@ -369,7 +369,6 @@ if options[:dir] != nil
 		#end
 
 		read_dataflow(options[:dir])
-		exit
 		
 		do_type_inference
 	end

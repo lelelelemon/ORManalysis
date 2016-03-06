@@ -79,7 +79,7 @@ BB 2
 		 6: RECEIVEARG def_community_id 
 		 7: 
 		 8: message_models->reject def_%v_3 message_models[2.5,] %self[2.0,] 	 ARGS:message_models,
-CLOSURE BEGIN: msg[] 
+CLOSURE BEGIN: msg[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -112,9 +112,9 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 9: %v_3->map def_%v_4 %v_3[2.8,] %self[2.0,] 	 ARGS:%v_3,
-CLOSURE BEGIN: %self[2.0,] msg[] community_id[2.6,] 
+CLOSURE BEGIN: %self[2.0,] msg[2.9,2.8,] community_id[2.6,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -146,7 +146,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 10: RETURN %v_4[2.9,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -394,7 +394,7 @@ BB 7
 		 9: connection->execute def_%v_13 connection[7.1,] %v_12[7.6,] 	 ARGS:message_sql,
 		 10: HASH- def_%v_14 
 		 11: %v_13->reduce def_%v_15 %v_13[7.9,] %v_14[7.10,] %self[2.0,] 	 ARGS:%v_14,%v_13,
-CLOSURE BEGIN: memo[] conversation_id[] memo_at[] created_at[] memo_id[] id[] content[] 
+CLOSURE BEGIN: memo[] conversation_id[] memo_at[7.11,] created_at[] memo_id[] id[] content[] 
 BB 1
 	outgoing: 13 2 
 	datadep: 
@@ -482,12 +482,12 @@ BB 13
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: memo_id[3.7,] conversation_id[2.6,] memo[8.2,2.2,] created_at[2.8,] id[2.5,] content[2.7,] _[3.6,] 
 		 12: COPY TYPE_PASS def_latest_messages %v_15[7.11,] 
 		 13: 
 		 14: (HashUtils) def_%v_16 
 		 15: %v_16->map_values def_%v_17 %v_16[7.14,] %v_15[7.11,] %self[2.0,] 	 ARGS:latest_messages,%v_16,
-CLOSURE BEGIN: content[] at[] 
+CLOSURE BEGIN: content[7.11,] at[7.15,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -523,7 +523,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: content[2.4,] _[2.5,] 
 		 16: RETURN %v_17[7.15,] %self[2.0,] 
 BB 8
 	outgoing: 

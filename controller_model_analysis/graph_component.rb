@@ -254,8 +254,8 @@ def add_dataflow_edge(node)
 					edge = Dataflow_edge.new(actual_to_ins.getINode, node, dep.getVname)
 					actual_to_ins.getINode.addDataflowEdge(edge)
 				end
-	
-			elsif (from_node.isClassField?) and (dep.getVname == "%self")
+			end
+			if (from_node.isClassField?) and (dep.getVname == "%self")
 			#elsif from_node.isField? and to_ins.instance_of?AttrAssign_instr and to_ins.field == from_node.getInstr.field 
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
 			else

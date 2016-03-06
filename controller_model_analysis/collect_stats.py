@@ -34,6 +34,9 @@ TOTAL_COLOR_NUM=22
 roots = []
 app_name = sys.argv[1]
 
+stats_file_path = sys.argv[2]
+stats_file = open(stats_file_path, 'w')
+
 base_path = "../applications/%s/results"%app_name
 fig_path = "../applications/%s/figs"%app_name
 
@@ -101,11 +104,13 @@ for subdir, folders, files in os.walk(base_path):
 	for fn in files:
 		if fn.endswith("stats.xml"):
 			fname = os.path.join(subdir, fn)
+			#print fname
 			tree = ET.parse(fname)
 			roots.append(tree.getroot())
 
 
-print "Root length:\t%d"%len(roots)
+stats_file.write("<%s>\n"%app_name)
+stats_file.write("\t<RootLength>%d</RootLength>\n"%len(roots))
 
 table_names = ["general"]
 for root in roots:
@@ -184,18 +189,63 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		#print "%f, %d"%(writes[g], len(r))
 
 
-	print "queryTotal:\t%f"%data["queryTotal"]
-	print "read:\t%f"%reads["total"]
-	print "write:\t%f"%writes["total"]
-	print "branch:\t%f\t%f"%(data["branchOnQuery"], data["branchTotal"])
-	print "usedInView:\t%f"%data["queryUsedInView"]
-	print "onlyFromUser:\t%f"%data["queryOnlyFromUser"]
+	stats_file.write("\t<queryGeneral>\n")
+	stats_file.write("\t\t<readQuery>%f</readQuery>\n"%reads["total"])
+	stats_file.write("\t\t<writeQuery>%f</writeQuery>\n"%writes["total"])
+	stats_file.write("\t</queryGeneral>\n")
 
-	print "query in closure:\t%f"%data["queryInClosure"]
+	stats_file.write("\t<branch>\n")
+	stats_file.write("\t\t<onQuery>%f</onQuery>\n"%data["branchOnQuery"])
+	stats_file.write("\t\t<total>%f</total>\n"%data["branchTotal"])
+	stats_file.write("\t</branch>\n")
+
+	stats_file.write("\t<usedInView>\n")
+	stats_file.write("\t\t<queryResultUsedInView>%f</queryResultUsedInView>\n"%data["queryUsedInView"])
+	stats_file.write("\t\t<queryResultNotUsedInView>%f</queryResultNotUsedInView>\n"%(data["queryTotal"]-data["queryUsedInView"]))
+	stats_file.write("\t</usedInView>\n")
+
+	stats_file.write("\t<onlyFromUser>\n")
+	stats_file.write("\t\t<queryOnlyUseOtherSource>%f</queryOnlyUseOtherSource>\n"%data["queryOnlyFromUser"])
+	stats_file.write("\t\t<queryUseQueryResults>%f</queryUseQueryResults>\n"%(data["queryTotal"]-data["queryOnlyFromUser"]))
+	stats_file.write("\t</onlyFromUser>\n")
+
+	stats_file.write("\t<inClosure>\n")
+	stats_file.write("\t\t<queryInClosure>%f</queryInClosure>\n"%data["queryInClosure"])
+	stats_file.write("\t\t<queryNotInClosure>%f</queryNotInClosure>\n"%(data["queryTotal"]-data["queryInClosure"]))
+	stats_file.write("\t</inClosure>\n")
+
+	stats_file.write("\t<readSink>\n")
+	temp_total = 0
+	for k in read_stats_content:
+		if k != "sinkTotal" and k != "total":
+			temp_total += reads[k]
+			stats_file.write("\t\t<%s>%f</%s>\n"%(k,reads[k],k))
+	stats_file.write("\t\t<other>%f</other>\n"%(reads["sinkTotal"]-temp_total))
+	stats_file.write("\t</readSink>\n")
+
+
+	stats_file.write("\t<readSource>\n")
+	temp_total = 0
+	for k in write_stats_content:
+		if k != "sourceTotal" and k != "total":
+			temp_total += readSource[k]
+			stats_file.write("\t\t<%s>%f</%s>\n"%(k,readSource[k],k))
+	stats_file.write("\t\t<other>%f</other>\n"%(readSource["sourceTotal"]-temp_total))
+	stats_file.write("\t</readSource>\n")
+
+	stats_file.write("\t<writeSource>\n")
+	temp_total = 0
+	for k in write_stats_content:
+		if k != "sourceTotal" and k != "total":
+			temp_total += writes[k]
+			stats_file.write("\t\t<%s>%f</%s>\n"%(k,writes[k],k))
+	stats_file.write("\t\t<other>%f</other>\n"%(writes["sourceTotal"]-temp_total))
+	stats_file.write("\t</writeSource>\n")
 	
-	print "READsink:\t%f\t:\t%f\t%f\t%f\t%f"%(reads["sinkTotal"], reads["toReadQuery"], reads["toWriteQuery"], reads["toBranch"], reads["toView"])
-	print "READsource:\t%f\t:\t%f\t%f\t%f\t%f"%(readSource["sourceTotal"], readSource["fromQuery"], readSource["fromUserInput"], readSource["fromConst"], readSource["fromUtil"])
-	print "WRITEsource:\t%f\t:\t%f\t%f\t%f\t%f"%(writes["sourceTotal"], writes["fromQuery"], writes["fromUserInput"], writes["fromConst"], writes["fromUtil"])
+	
+	#print "READsink:\t%f\t:\t%f\t%f\t%f\t%f"%(reads["sinkTotal"], reads["toReadQuery"], reads["toWriteQuery"], reads["toBranch"], reads["toView"])
+	#print "READsource:\t%f\t:\t%f\t%f\t%f\t%f"%(readSource["sourceTotal"], readSource["fromQuery"], readSource["fromUserInput"], readSource["fromConst"], readSource["fromUtil"])
+	#print "WRITEsource:\t%f\t:\t%f\t%f\t%f\t%f"%(writes["sourceTotal"], writes["fromQuery"], writes["fromUserInput"], writes["fromConst"], writes["fromUtil"])
 	ind = np.arange(1)
 	width = 0.2
 	
@@ -249,7 +299,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 
 
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
-	print "%s/querystat_%s.png"%(fig_path, prefix[-1])
+	#print "%s/querystat_%s.png"%(fig_path, prefix[-1])
 	fig.savefig("%s/querystat_%s.png"%(fig_path, prefix[-1]))
 	plt.close(fig)
 	fig = plt.figure()
@@ -317,7 +367,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	ax7.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('from user input','from query','from const','from util'), prop={'size':'10'}, loc='upper right')
 
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
-	print "%s/querystat_%s2.png"%(fig_path, prefix[-1])
+	#print "%s/querystat_%s2.png"%(fig_path, prefix[-1])
 	fig.savefig("%s/querystat_%s2.png"%(fig_path, prefix[-1]))
 	plt.close(fig)
 	#plt.show()
@@ -343,16 +393,19 @@ def print_view_stat(prefix):
 				table.append(p[0])
 
 	table.sort()
-	print "Table used in view:"
-	for t in table:
-		print "%s, "%t,
-	print ""
- 	print "Table all:"
-	for t in tables:
-		print "%s, "%t,
+	#print "Table used in view:"
+	#for t in table:
+	#	print "%s, "%t,
+	#print ""
+ 	#print "Table all:"
+	#for t in tables:
+	#	print "%s, "%t,
 
-	print ""
-	print "Table Used in view:\t%d\t%d"%(len(table), len(tables))
+	#print "Table Used in view:\t%d\t%d"%(len(table), len(tables))
+	stats_file.write("\t<TableInView>\n")
+	stats_file.write("\t\t<tableUsedInView>%d</tableUsedInView>\n"%len(table))
+	stats_file.write("\t\t<tableNotUsedInView>%d</tableNotUsedInView>\n"%(len(tables)-len(table)))
+	stats_file.write("\t</TableInView>\n")
 	ind = np.arange(1)
 	width = 0.2
 	
@@ -378,7 +431,11 @@ def print_view_stat(prefix):
 	ax2.legend((rect1[0], rect2[0]), ('fields showed in view','fields not showed in view'),prop={'size':'10'}, loc='upper right')
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 
-	print "Field used in view:\t%d\t%d"%(len(field), len(tablefields))
+	#print "Field used in view:\t%d\t%d"%(len(field), len(tablefields))
+	stats_file.write("\t<FieldInView>\n")
+	stats_file.write("\t\t<fieldUsedInView>%d</fieldUsedInView>\n"%(len(field)))
+	stats_file.write("\t\t<fieldNotUsedInView>%d</fieldNotUsedInView>\n"%(len(tablefields)-len(field)))
+	stats_file.write("\t</FieldInView>\n")
 	fig.savefig("%s/view_stat.png"%(fig_path))
 
 
@@ -469,8 +526,12 @@ def print_clique_stat(prefix):
 	cond_list.append("clique")
 	r = calculateAllActions(cond_list)
 	clique = clique + r
-	print "Average validation length:\t%f\tRead:\t%f\tWrite:\t%f\tlen=\t%d\tvalidations"%(getAverage(validation_r)+getAverage(validation_w)+1, getAverage(validation_r), getAverage(validation_w)+1, len(validation_r))
-	print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
+	#print "Average validation length:\t%f\tRead:\t%f\tWrite:\t%f\tlen=\t%d\tvalidations"%(getAverage(validation_r)+getAverage(validation_w)+1, getAverage(validation_r), getAverage(validation_w)+1, len(validation_r))
+	stats_file.write("\t<transaction>\n")
+	stats_file.write("\t\t<read>%f</read>\n"%getAverage(validation_r))
+	stats_file.write("\t\t<write>%f</write>\n"%(getAverage(validation_w)+1))
+	stats_file.write("\t</transaction>\n")
+	#print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
 
 
 def print_schema_stat(prefix, table_stat_prefix):
@@ -514,20 +575,20 @@ def print_schema_stat(prefix, table_stat_prefix):
 										table_refs_indirect[c.tag][table] += 1
 
 	fieldref_sum = 0
-	for table in tables:
-		print "Table %s (total field use %d):"%(table, tblfield_total[table])
-		fieldref_sum += tblfield_total[table]
-		for k,v in table_list[table].items():
-			print "\t%s(%d) [%s]"%(k, v, relation["%s->%s"%(table, k)])
-			r = relation["%s->%s"%(table, k)]
-			if r not in assoc_cnt:
-				assoc_cnt[r] = 0
-			assoc_cnt[r] += v
-	print "----"
-	print "general:"
-	print "refsum:\t%d"%fieldref_sum
-	for k,v in assoc_cnt.items():
-		print "%s:\t%d"%(k,v)
+	#for table in tables:
+	#	print "Table %s (total field use %d):"%(table, tblfield_total[table])
+	#	fieldref_sum += tblfield_total[table]
+	#	for k,v in table_list[table].items():
+	#		print "\t%s(%d) [%s]"%(k, v, relation["%s->%s"%(table, k)])
+	#		r = relation["%s->%s"%(table, k)]
+	#		if r not in assoc_cnt:
+	#			assoc_cnt[r] = 0
+	#		assoc_cnt[r] += v
+	#print "----"
+	#print "general:"
+	#print "refsum:\t%d"%fieldref_sum
+	#for k,v in assoc_cnt.items():
+	#	print "%s:\t%d"%(k,v)
 
 	fig = plt.figure()
 	ax = fig.add_subplot(111)	
@@ -591,7 +652,13 @@ def print_path(prefix, content):
 	ind = np.arange(2)
 	width = 0.2
 
-	print "path:\t%f\t%f\t%f"%(data["shortestPath"], data["longestPath"], data["instrTotal"])
+	#print "path:\t%f\t%f\t%f"%(data["shortestPath"], data["longestPath"], data["instrTotal"])
+	stats_file.write("\t<path>\n")
+	stats_file.write("\t\t<shortest>%f</shortest>\n"%data["shortestPath"])
+	stats_file.write("\t\t<longest>%f</longest>\n"%data["longestPath"])
+	stats_file.write("\t\t<instrTotal>%f</instrTotal>\n"%data["instrTotal"])
+	stats_file.write("\t</path>\n")
+
 	ax1 = fig.add_subplot(121)
 	rect1 = ax1.bar(ind, [data["read"]["min"], data["read"]["max"]], width, color=tableau_colors[colors[0]], edgecolor='black')
 	rect2 = ax1.bar(ind, [data["write"]["min"], data["write"]["max"]], width, bottom=[data["read"]["min"], data["read"]["max"]], color=tableau_colors[colors[1]], edgecolor='black')
@@ -639,3 +706,6 @@ print_clique_stat(clique_stat_prefix)
 print_schema_stat(schema_stat_prefix, table_stats_prefix)
 
 print_chain(prefix2, [])
+
+stats_file.write("</%s>"%app_name)
+

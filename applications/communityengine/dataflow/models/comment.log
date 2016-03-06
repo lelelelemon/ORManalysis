@@ -478,7 +478,7 @@ BB 2
 		 5: 
 		 6: %self->previous_commenters_to_notify def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->each def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
-CLOSURE BEGIN: commenter[] %self[2.0,2.6,] 
+CLOSURE BEGIN: commenter[2.7,] %self[2.0,2.6,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -528,7 +528,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -553,7 +553,7 @@ BB 2
 		 6: %self->commentable def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->comments def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->map def_%v_5 %v_4[2.7,] %self[2.0,2.6,] 	 ARGS:%v_4,
-CLOSURE BEGIN: c[] %self[2.0,2.6,] 
+CLOSURE BEGIN: c[2.8,] %self[2.0,2.6,] 
 BB 1
 	outgoing: 15 2 
 	datadep: 
@@ -638,13 +638,13 @@ BB 15
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 9: %v_5->uniq def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->compact def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: COPY TYPE_PASS def_anonymous_commenters_emails %v_7[2.10,] 
 		 12: 
 		 13: %v_7->each def_%v_8 %v_7[2.10,] %self[2.0,2.6,] 	 ARGS:%v_7,
-CLOSURE BEGIN: email[] %self[2.0,2.6,] 
+CLOSURE BEGIN: email[2.13,] %self[2.0,2.6,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -678,7 +678,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 14: RETURN %v_8[2.13,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -798,7 +798,7 @@ BB 2
 		 5: RECEIVEARG def_email 
 		 6: 
 		 7: (Digest) def_%v_3 
-		 8: def_%v_4 %v_3[2.7,] 
+		 8: (inherit SHA1) def_%v_4 %v_3[2.7,] 
 		 9: %v_4[2.8,] 
 BB 3
 	outgoing: 4 
@@ -842,7 +842,7 @@ BB 2
 		 9: HASH-author_email- def_%v_5 email[2.5,] 
 		 10: %v_4->where def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: %v_6->each def_%v_7 %v_6[2.10,] %self[2.0,2.7,] 	 ARGS:%v_6,
-CLOSURE BEGIN: previous_comment[] 
+CLOSURE BEGIN: previous_comment[2.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -874,7 +874,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 12: RETURN %v_7[2.11,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 

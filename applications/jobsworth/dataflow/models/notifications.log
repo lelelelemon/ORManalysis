@@ -28,7 +28,7 @@ BB 2
 		 18: delivery->work_log def_%v_8 delivery[2.5,2.7,2.11,2.15,] 	 ARGS:
 		 19: %v_8->project_files def_%v_9 %v_8[2.18,] 	 ARGS:
 		 20: %v_9->each def_%v_10 %v_9[2.19,] %self[2.0,2.9,2.13,2.16,] 	 ARGS:%v_9,
-CLOSURE BEGIN: %self[2.0,2.9,2.13,2.16,] file[] 
+CLOSURE BEGIN: %self[2.0,2.9,2.13,2.16,] file[2.20,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -65,7 +65,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 21: 
 		 22: (WorkLog) def_%v_11 
 		 23: COPY TYPE_StringLiteral def_%v_12 
@@ -232,7 +232,7 @@ BB 2
 		 29: %v_16->event_log def_%v_17 %v_16[2.28,] 	 ARGS:
 		 30: %v_17->event_type def_%v_18 %v_17[2.29,] 	 ARGS:
 		 31: (EventLog) def_%v_21 
-		 32: def_%v_22 %v_21[2.31,] 
+		 32: (inherit TASK_COMPLETED) def_%v_22 %v_21[2.31,] 
 		 33: %v_22[2.32,] 
 BB 3
 	outgoing: 4 
@@ -250,7 +250,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: (EventLog) def_%v_24 
-		 1: def_%v_25 %v_24[5.0,] 
+		 1: (inherit TASK_MODIFIED) def_%v_25 %v_24[5.0,] 
 		 2: %v_25[5.1,] 
 BB 6
 	outgoing: 7 
@@ -268,7 +268,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: (EventLog) def_%v_27 
-		 1: def_%v_28 %v_27[8.0,] 
+		 1: (inherit TASK_COMMENT) def_%v_28 %v_27[8.0,] 
 		 2: %v_28[8.1,] 
 BB 9
 	outgoing: 10 
@@ -286,7 +286,7 @@ BB 11
 	datadep: 
 	instructions:
 		 0: (EventLog) def_%v_30 
-		 1: def_%v_31 %v_30[11.0,] 
+		 1: (inherit TASK_REVERTED) def_%v_31 %v_30[11.0,] 
 		 2: %v_31[11.1,] 
 BB 12
 	outgoing: 13 
@@ -304,7 +304,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: (EventLog) def_%v_33 
-		 1: def_%v_34 %v_33[14.0,] 
+		 1: (inherit TASK_ASSIGNED) def_%v_34 %v_33[14.0,] 
 		 2: %v_34[14.1,] 
 BB 15
 	outgoing: 16 
@@ -478,7 +478,7 @@ BB 24
 		 19: delivery->work_log def_%v_143 delivery[24.9,24.12,2.5,] 	 ARGS:
 		 20: %v_143->project_files def_%v_144 %v_143[24.19,] 	 ARGS:
 		 21: %v_144->each def_%v_145 %v_144[24.20,] %self[2.0,2.9,2.13,2.16,2.26,] 	 ARGS:%v_144,
-CLOSURE BEGIN: %self[2.0,2.9,2.13,2.16,2.26,] file[] 
+CLOSURE BEGIN: %self[2.0,2.9,2.13,2.16,2.26,] file[24.21,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -515,7 +515,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 22: 
 		 23: GETFIELD %self->recipient def_%v_146 %self[2.0,2.16,] 
 		 24: COPY TYPE_StringLiteral def_%v_147 
