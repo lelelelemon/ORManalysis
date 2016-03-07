@@ -36,11 +36,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".listing_categories") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".listing_categories") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -50,11 +54,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".listing_categories") 
- end 
+   
  content_for :javascript do 
  end 
   
@@ -140,11 +140,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".new_listing_category") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".new_listing_category") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -156,11 +160,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".new_listing_category") 
- end 
+  
   
  form_for [:admin, @category] do |form| 
   form.label :name_attributes, t(".category_title") 
@@ -256,11 +256,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".new_listing_category") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".new_listing_category") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -272,11 +276,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".new_listing_category") 
- end 
+  
   
  form_for [:admin, @category] do |form| 
   form.label :name_attributes, t(".category_title") 
@@ -364,11 +364,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_listing_category", :category => @category.display_name(I18n.locale)) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_listing_category", :category => @category.display_name(I18n.locale)) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -380,11 +384,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".edit_listing_category", :category => @category.display_name(I18n.locale)) 
- end 
+  
   
  form_for [:admin, @category] do |form| 
   form.label :name_attributes, t(".category_title") 
@@ -477,11 +477,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_listing_category", :category => @category.display_name(I18n.locale)) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_listing_category", :category => @category.display_name(I18n.locale)) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -493,11 +497,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".edit_listing_category", :category => @category.display_name(I18n.locale)) 
- end 
+  
   
  form_for [:admin, @category] do |form| 
   form.label :name_attributes, t(".category_title") 
@@ -606,11 +606,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".remove_category") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".remove_category") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -620,11 +624,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".remove_category") 
- end 
+   
   
  t('.remove_category_name', category_name: @category.display_name(I18n.locale)) 
  icon_tag("alert", ["icon-fix"]) 

@@ -155,11 +155,11 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.no_tribe.inbox") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.no_tribe.inbox") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -169,9 +169,7 @@ end
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.no_tribe.inbox") 
- end 
+   
  if inbox_rows.present? 
   
  else 
@@ -246,11 +244,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.no_tribe.inbox") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.no_tribe.inbox") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -260,9 +258,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.no_tribe.inbox") 
- end 
+   
  if inbox_rows.present? 
   
  else 

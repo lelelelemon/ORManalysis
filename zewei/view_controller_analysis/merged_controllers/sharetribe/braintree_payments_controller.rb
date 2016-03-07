@@ -47,11 +47,11 @@ class BraintreePaymentsController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t(".new_credit_card_payment") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t(".new_credit_card_payment") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -66,9 +66,7 @@ class BraintreePaymentsController < ApplicationController
  end 
  content_for :extra_javascript do 
  end 
- content_for :title_header do 
- t(".new_credit_card_payment") 
- end 
+  
  payment_receiver = @conversation.payment_receiver 
  t(".payment_receiver") 
  "#{link_to payment_receiver.name(@current_community), payment_receiver}".html_safe 

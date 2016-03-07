@@ -41,11 +41,15 @@ class InvitationsController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_details.invite_people") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_details.invite_people") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -57,11 +61,7 @@ class InvitationsController < ApplicationController
  
   content_for :extra_javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.edit_details.invite_people") 
- end 
+  
  support_link = link_to(t("homepage.invitation_form.this_article_link"), "http://support.sharetribe.com/knowledgebase/articles/675040", target: "_blank") 
  t("homepage.invitation_form.add_email_addresses_description") 
  if has_admin_rights 

@@ -44,11 +44,11 @@ class FeedbacksController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.no_tribe.feedback") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.no_tribe.feedback") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -60,9 +60,7 @@ class FeedbacksController < ApplicationController
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.no_tribe.feedback") 
- end 
+  
  form_for feedback_form, :url => user_feedbacks_path do |form| 
  unless email_present 
  form.label :email, t("layouts.application.your_email_address") 
@@ -172,11 +170,11 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.no_tribe.feedback") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.no_tribe.feedback") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -188,9 +186,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.no_tribe.feedback") 
- end 
+  
  form_for feedback_form, :url => user_feedbacks_path do |form| 
  unless email_present 
  form.label :email, t("layouts.application.your_email_address") 

@@ -81,11 +81,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ action_button_label 
+ link_to(listing[:title], listing_path(listing[:id])) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ action_button_label 
+ link_to(listing[:title], listing_path(listing[:id])) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -97,10 +99,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :extra_javascript do 
  end 
- content_for :title_header do 
- action_button_label 
- link_to(listing[:title], listing_path(listing[:id])) 
- end 
+  
  author_link = link_to(author[:display_name], person_path(id: author[:username])) 
  t("listing_conversations.preauthorize.details") 
  t("listing_conversations.preauthorize.by", listing: link_to("#{listing[:title]}", listing_path(listing[:id])), author: author_link).html_safe 
@@ -313,11 +312,17 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ link_to person_inbox_path(@current_user) do 
+ t("layouts.no_tribe.inbox") 
+ end 
+ t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ link_to person_inbox_path(@current_user) do 
+ t("layouts.no_tribe.inbox") 
+ end 
+ t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -327,12 +332,7 @@ end
  end 
  end 
  
-   content_for :title_header do 
- link_to person_inbox_path(@current_user) do 
- t("layouts.no_tribe.inbox") 
- end 
- t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
- end 
+    
  
   link_to_unless listing[:deleted], listing[:title], listing_path(id: listing[:id]) 
  if price_break_down_locals.present? 
@@ -509,11 +509,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ link_to person_inbox_path(@current_user) do 
+ t("layouts.no_tribe.inbox") 
+ end 
+ t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ link_to person_inbox_path(@current_user) do 
+ t("layouts.no_tribe.inbox") 
+ end 
+ t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -523,12 +529,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   content_for :title_header do 
- link_to person_inbox_path(@current_user) do 
- t("layouts.no_tribe.inbox") 
- end 
- t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
- end 
+    
  
   link_to_unless listing[:deleted], listing[:title], listing_path(id: listing[:id]) 
  if price_break_down_locals.present? 
@@ -894,11 +895,13 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ action_button_label 
+ link_to(listing[:title], listing_path(listing[:id])) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ action_button_label 
+ link_to(listing[:title], listing_path(listing[:id])) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -910,10 +913,7 @@ end
  
   content_for :extra_javascript do 
  end 
- content_for :title_header do 
- action_button_label 
- link_to(listing[:title], listing_path(listing[:id])) 
- end 
+  
  author_link = link_to(author[:display_name], person_path(id: author[:username])) 
  t("listing_conversations.preauthorize.details") 
  t("listing_conversations.preauthorize.by", listing: link_to("#{listing[:title]}", listing_path(listing[:id])), author: author_link).html_safe 

@@ -410,61 +410,6 @@ def get_render_array(ast)
 	return res_arr
 end
 
-def merge_layout_content(layout, content)
-  puts layout
-  layout_ast = YARD::Parser::Ruby::RubyParser.parse(layout).root
-  puts content
-  content_ast = YARD::Parser::Ruby::RubyParser.parse(content).root
-
-  content_hash = {}
-  proc_merge_layout_content(content_ast, content_hash)
-
-  content_hash.each do |key, value|
-    if layout.include?"yield(#{key})"
-      layout.gsub! "yield(#{key})", value
-      content.gsub! value, ""
-    elsif layout.include?"yield #{key}"
-      layout.gsub! "yield #{key}", value
-      content.gsub! value, ""
-    end
-  end
-
-  #handle a special case for jobsworth
-  if content_hash.has_key?":content"
-    layout.gsub! "content_for?(:content) ? yield(:content) : yield ", content_hash["content_for?(:content) ? yield(:content) : yield "]
-    content.gsub! "content_for?(:content) ? yield(:content) : yield ", ""
-  end
-
-  if layout.include?"yield\n"
-    layout.gsub! "yield\n", content
-  end
-
-  if layout.include?"yield \n"
-    layout.gsub! "yield \n", content
-  end
-
-  #handle a special case for jobsworth
-  layout.gsub! "content_for?(:content) ? yield(:content) : yield ", content
-
-  return layout
-end
-
-def proc_merge_layout_content(content_ast, content_hash)
-  if content_ast != nil and content_ast.source.to_s.start_with?"content_for"
-    key = content_ast.source.to_s
-    if content_ast.children[1] != nil
-      value = content_ast.children[1].source.to_s
-    else
-      value = ""
-    end
-    key.strip!
-    content_hash[key] = value
-  else
-    content_ast.children.each do |child|
-      proc_merge_layout_content(child, content_hash)
-    end
-  end
-end
 
 
 def get_render_statement_array(ast=nil)
@@ -476,7 +421,6 @@ def get_render_statement_array(ast=nil)
   while ast_arr.length > 0
     cur_ast = ast_arr.pop
     if cur_ast.source.start_with? keyword
-      #if cur_ast.parent.source.start_with?"return" 
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?"escape_javascript("
         res = cur_ast.parent.parent.source.to_s
       elsif cur_ast.parent.type.to_s == "arg_paren" and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")

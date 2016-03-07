@@ -665,11 +665,11 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ @listing.title 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ @listing.title 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -692,9 +692,7 @@ end
  content_for :meta_image_width, dimensions[:width].to_s if !@listing.listing_images.empty? 
  content_for :meta_image_height, dimensions[:height].to_s if !@listing.listing_images.empty? 
  content_for :keywords, StringUtils.keywords(@listing.title) 
- content_for :title_header do 
- @listing.title 
- end 
+  
  @listing.title 
  with_image_frame(@listing) do |reason, listing_images| 
  if reason == :images_ok 
@@ -879,11 +877,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ @listing.title 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ @listing.title 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -906,9 +904,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :meta_image_width, dimensions[:width].to_s if !@listing.listing_images.empty? 
  content_for :meta_image_height, dimensions[:height].to_s if !@listing.listing_images.empty? 
  content_for :keywords, StringUtils.keywords(@listing.title) 
- content_for :title_header do 
- @listing.title 
- end 
+  
  @listing.title 
  with_image_frame(@listing) do |reason, listing_images| 
  if reason == :images_ok 
@@ -1879,11 +1875,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("listings.verification_required.verification_required") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("listings.verification_required.verification_required") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -1893,9 +1889,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("listings.verification_required.verification_required") 
- end 
+   
  if @community_customization && @community_customization.verification_to_post_listings_info_content 
  @community_customization.verification_to_post_listings_info_content.html_safe 
  else 

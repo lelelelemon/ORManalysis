@@ -39,11 +39,15 @@ class Admin::CommunitiesController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.getting_started.getting_started") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.getting_started.getting_started") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -53,11 +57,7 @@ class Admin::CommunitiesController < ApplicationController
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.getting_started.getting_started") 
- end 
+   
  live_site_link = link_to t("admin.communities.getting_started.live_site_link_text"), "/" 
  logo_link = link_to t("admin.communities.getting_started.logo_link_text"), edit_look_and_feel_admin_community_path(@current_community) 
  contact_support_link = link_to t("admin.communities.getting_started.contact_support_link_text"), "mailto:#{APP_CONFIG.support_email}", "data-uv-trigger" => "contact" 
@@ -167,11 +167,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_details.community_look_and_feel") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_details.community_look_and_feel") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -183,11 +187,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.edit_details.community_look_and_feel") 
- end 
+  
   
  t(".edit_community_look_and_feel", :community_name => @community.name(I18n.locale)) 
  form_for @community, :url => edit_look_and_feel_admin_community_path(@community), :method => :put do |form| 
@@ -647,11 +647,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.social_media.social_media") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.social_media.social_media") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -663,11 +667,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.social_media.social_media") 
- end 
+  
   
  t(".social_media") 
  form_for @community, :url => social_media_admin_community_path(@community), :method => :put do |form| 
@@ -773,11 +773,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.social_media.social_media") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.social_media.social_media") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -789,11 +793,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.social_media.social_media") 
- end 
+  
   
  t(".social_media") 
  form_for @community, :url => social_media_admin_community_path(@community), :method => :put do |form| 
@@ -904,11 +904,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.analytics.analytics") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.analytics.analytics") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -918,11 +922,7 @@ end
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.analytics.analytics") 
- end 
+   
   
  t(".analytics", :community_name => @community.name(I18n.locale)) 
  form_for @community, :url => analytics_admin_community_path(@community), :method => :put do |form| 
@@ -1008,11 +1008,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.analytics.analytics") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.analytics.analytics") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -1022,11 +1026,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.analytics.analytics") 
- end 
+   
   
  t(".analytics", :community_name => @community.name(I18n.locale)) 
  form_for @community, :url => analytics_admin_community_path(@community), :method => :put do |form| 
@@ -1219,11 +1219,11 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -1233,9 +1233,7 @@ end
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- end 
+   
   
  t(".braintree_payment_gateway", :community_name => @community.name(I18n.locale)) 
  if @payment_gateway.configured? 
@@ -1365,11 +1363,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.settings.settings") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.settings.settings") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -1379,11 +1381,7 @@ end
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.settings.settings") 
- end 
+   
   
  form_for @current_community, :url => update_settings_admin_community_path(@current_community), :method => :put do |form| 
  t(".settings") 
@@ -1514,11 +1512,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.settings.settings") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.settings.settings") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -1528,11 +1530,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.settings.settings") 
- end 
+   
   
  form_for @current_community, :url => update_settings_admin_community_path(@current_community), :method => :put do |form| 
  t(".settings") 

@@ -60,11 +60,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t('.join_community', :community => @current_community.name(I18n.locale)) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t('.join_community', :community => @current_community.name(I18n.locale)) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -76,9 +76,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t('.join_community', :community => @current_community.name(I18n.locale)) 
- end 
+  
  if session[:fb_join] == "pending_analytics" 
  content_for :javascript do 
  end 
@@ -222,11 +220,11 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t('.join_community', :community => @current_community.name(I18n.locale)) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t('.join_community', :community => @current_community.name(I18n.locale)) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -238,9 +236,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t('.join_community', :community => @current_community.name(I18n.locale)) 
- end 
+  
  if session[:fb_join] == "pending_analytics" 
  content_for :javascript do 
  end 
@@ -419,11 +415,11 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t('.join_community', :community => @current_community.name(I18n.locale)) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t('.join_community', :community => @current_community.name(I18n.locale)) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -435,9 +431,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t('.join_community', :community => @current_community.name(I18n.locale)) 
- end 
+  
  if session[:fb_join] == "pending_analytics" 
  content_for :javascript do 
  end 
@@ -566,11 +560,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t(".access_denied") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t(".access_denied") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -580,9 +574,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t(".access_denied") 
- end 
+   
  t(".you_are_banned_in_this_community", :link_to_contact_page => link_to(t(".contact_page_link"), new_user_feedback_path )).html_safe 
  end 
  if params[:controller] == "homepage" && params[:action] == "index" 

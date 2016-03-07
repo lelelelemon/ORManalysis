@@ -45,11 +45,15 @@ class Admin::CommunityCustomizationsController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_details.community_details") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_details.community_details") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -61,11 +65,7 @@ class Admin::CommunityCustomizationsController < ApplicationController
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.edit_details.community_details") 
- end 
+  
   
  t("admin.communities.edit_details.edit_community", :community_name => @current_community.name(I18n.locale)) 
  form_tag update_details_admin_community_path(@current_community), method: :put, id: "edit_community" do |form| 
@@ -165,11 +165,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_details.community_details") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_details.community_details") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -181,11 +185,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.edit_details.community_details") 
- end 
+  
   
  t("admin.communities.edit_details.edit_community", :community_name => @current_community.name(I18n.locale)) 
  form_tag update_details_admin_community_path(@current_community), method: :put, id: "edit_community" do |form| 

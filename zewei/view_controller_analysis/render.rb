@@ -157,7 +157,126 @@ def get_layout_name_from_hash(options_hash)
   end
   return res
 end
+
+def get_statement_array(keyword, ast)
+  res_arr = []
+  ast_arr = [ast]
+  while ast_arr.length > 0
+    cur_ast = ast_arr.pop
+    if cur_ast.source.start_with? keyword and ["command", "fcall", "yield", "yield0"].include?(cur_ast.type.to_s)
+      res = cur_ast.source.to_s
+      res_arr.push res
+    else
+      cur_ast.children.each do |child|
+        ast_arr.push child
+      end
+    end
+  end
+  return res_arr
+end
+
+def parse_content_for_stmt(stmt)
+  ast = YARD::Parser::Ruby::RubyParser.parse(stmt).root
+  if ast.type.to_s == "list"
+    ast = ast[0]
+  end
+  
+  if ast[2] != nil and ast[2].type.to_s == "do_block"
+    value = ast[2][1].source.to_s
+    key = ast[1].source.to_s
+  else
+    value = ast[1][1].source
+    key = ast[1][0].source.to_s
+  end
+  
+  #key: the name of content_for
+  #value: the content of content_for
+  #stmt: the whole statement
+  return {key => [value, [stmt]]}
+end
+
+def get_content_hash(content_for_arr)
+  hash = {}
+  content_for_arr.each do |stmt|
+    _hash = parse_content_for_stmt(stmt)
+    _hash.each do |k, v|
+      if hash.has_key? k
+        hash[k][0] = hash[k][0] + v[0]
+        hash[k][1].push v[1]
+      else
+        hash[k] = v
+      end
+    end
+  end
+  return hash
+end
+
+def parse_yield_stmt(stmt)
+  ast = YARD::Parser::Ruby::RubyParser.parse(stmt).root
+  if ast.type.to_s == "list"
+    ast = ast[0]
+  end
+  if ast.type.to_s == "yield0"
+  elsif ast.type.to_s == "yield"
+    ast = ast[0]
+    if ["paran", "arg_paran"].include?(ast.type.to_s)
+      ast = ast[0]
+    end
+    return {ast.source => stmt}
+  end
+  return {}
+end
+
+def get_yield_hash(yield_arr)
+  hash = {}
+  yield_arr.each do |stmt|
+    hash.merge! parse_yield_stmt(stmt)
+  end
+  return hash
+end
+
+def merge_layout_content(layout, content)
+  layout_ast = YARD::Parser::Ruby::RubyParser.parse(layout).root
+  content_ast = YARD::Parser::Ruby::RubyParser.parse(content).root
+
+  content_for_arr = get_statement_array("content_for", content_ast)
+  content_hash = get_content_hash(content_for_arr)
+
+  yield_arr = get_statement_array("yield", layout_ast)
+  yield_hash = get_yield_hash(yield_arr)
+
+
+  puts "content_hash:"
+  puts content_hash
+  puts "yield_hash:"
+  puts yield_hash
+
+  yield_hash.each do |key, value|
+    if content_hash.has_key? key
+      layout.gsub!(value){content_hash[key][0]}
+      content_hash[key][1].each do |stmt|
+        content.gsub!(stmt){""}
+      end
+    end
+  end
+
+  layout.gsub!(/yield[ \t]*\n/){content}
+
+  return layout
+end
+
 =begin
+content = "render_form"
+hash = parse_render_statement(content)
+binding.pry
+
+content = File.open(ARGV[0], "r").read
+content_ast = YARD::Parser::Ruby::RubyParser.parse(content).root
+
+content_for_arr = get_statement_array("content_for", content_ast)
+content_hash = get_content_hash(content_for_arr)
+binding.pry
+
 stmt = "render(locals: { checkout_account: CheckoutAccountForm.new({ phone_number: @current_user.phone_number }),
                    form_action: person_checkout_account_path(@current_user) })"
 stmt = "render :partial => \"listings/profile_listings\", :locals => {person: @person, limit: per_page, listings: listings}"

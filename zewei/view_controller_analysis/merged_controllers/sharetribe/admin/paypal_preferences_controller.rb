@@ -84,11 +84,15 @@ class Admin::PaypalPreferencesController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.paypal_account.paypal_admin_account") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.paypal_account.paypal_admin_account") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -100,11 +104,7 @@ class Admin::PaypalPreferencesController < ApplicationController
  
   content_for :extra_javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.paypal_account.paypal_admin_account") 
- end 
+  
   
  content_for :extra_javascript do 
  end 
@@ -216,11 +216,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.paypal_account.paypal_admin_account") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.paypal_account.paypal_admin_account") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -232,11 +236,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :extra_javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.paypal_account.paypal_admin_account") 
- end 
+  
   
  content_for :extra_javascript do 
  end 

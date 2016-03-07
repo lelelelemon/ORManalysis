@@ -89,11 +89,15 @@ class Admin::CommunityTransactionsController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.transactions.transactions") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.transactions.transactions") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -103,11 +107,7 @@ class Admin::CommunityTransactionsController < ApplicationController
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.transactions.transactions") 
- end 
+   
   
  t("admin.communities.transactions.transactions", community_name: community.name(I18n.locale)) 
  if feature_enabled?(:export_transactions_as_csv) 
@@ -222,11 +222,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.transactions.transactions") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.transactions.transactions") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -236,11 +240,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.communities.transactions.transactions") 
- end 
+   
   
  t("admin.communities.transactions.transactions", community_name: community.name(I18n.locale)) 
  if feature_enabled?(:export_transactions_as_csv) 

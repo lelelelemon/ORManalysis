@@ -48,11 +48,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ @facebook_merge ? t('.connect_your_facebook_to_kassi') : t('.login_to_kassi') 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ @facebook_merge ? t('.connect_your_facebook_to_kassi') : t('.login_to_kassi') 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -64,9 +64,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- @facebook_merge ? t('.connect_your_facebook_to_kassi') : t('.login_to_kassi') 
- end 
+  
  if @facebook_merge 
  icon_tag("facebook", ["fb-icon"]) 
  t(".facebook_account", :name => @facebook_name, :email => @facebook_email ) 
@@ -311,11 +309,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("sessions.confirmation_pending.confirm_your_email") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("sessions.confirmation_pending.confirm_your_email") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -325,9 +323,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("sessions.confirmation_pending.confirm_your_email") 
- end 
+   
   content_for :javascript do 
  end 
  email_to_confirm = @current_user.latest_pending_email_address(@current_community) 

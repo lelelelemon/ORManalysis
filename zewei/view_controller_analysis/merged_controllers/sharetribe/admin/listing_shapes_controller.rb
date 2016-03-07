@@ -357,11 +357,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.listing_shapes.index.listing_shapes") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.listing_shapes.index.listing_shapes") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -371,11 +375,7 @@ end
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.listing_shapes.index.listing_shapes") 
- end 
+   
  content_for :javascript do 
  end 
   
@@ -554,11 +554,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.listing_shapes.index.listing_shapes") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.listing_shapes.index.listing_shapes") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -568,11 +572,7 @@ end
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.listing_shapes.index.listing_shapes") 
- end 
+   
  content_for :javascript do 
  end 
   

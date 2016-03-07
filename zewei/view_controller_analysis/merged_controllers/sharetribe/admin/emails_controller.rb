@@ -37,11 +37,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.emails.new.send_email_to_members") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.emails.new.send_email_to_members") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -53,11 +57,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.emails.new.send_email_to_members") 
- end 
+  
   
  t(".send_email_to_members_title") 
  form_for :email, :url => admin_community_emails_path(:community_id => @current_community.id), :html => { :id => "new_member_email" } do |form| 

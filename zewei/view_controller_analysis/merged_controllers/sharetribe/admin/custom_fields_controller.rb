@@ -42,11 +42,15 @@ class Admin::CustomFieldsController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".listing_fields") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".listing_fields") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -58,11 +62,7 @@ class Admin::CustomFieldsController < ApplicationController
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".listing_fields") 
- end 
+  
   
  t(".listing_fields") 
   icon_tag("information") 
@@ -221,11 +221,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.custom_fields.new.new_listing_field") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.custom_fields.new.new_listing_field") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -237,11 +241,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.custom_fields.new.new_listing_field") 
- end 
+  
   
  form_for @custom_field, :as => :custom_field, :url => admin_custom_fields_path(:field_type => @custom_field.type) do |form| 
   form.label :name_attributes, t("admin.custom_fields.index.field_title") 
@@ -342,11 +342,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.custom_fields.new.new_listing_field") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.custom_fields.new.new_listing_field") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -358,11 +362,7 @@ end
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.custom_fields.new.new_listing_field") 
- end 
+  
   
  form_for @custom_field, :as => :custom_field, :url => admin_custom_fields_path(:field_type => @custom_field.type) do |form| 
   form.label :name_attributes, t("admin.custom_fields.index.field_title") 
@@ -457,11 +457,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.custom_fields.edit.edit_listing_field", :field_name => @custom_field.name(I18n.locale)) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.custom_fields.edit.edit_listing_field", :field_name => @custom_field.name(I18n.locale)) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -473,11 +477,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.custom_fields.edit.edit_listing_field", :field_name => @custom_field.name(I18n.locale)) 
- end 
+  
   
  form_for @custom_field, :as => :custom_field, :url => admin_custom_field_path(@custom_field), :method => :put do |form| 
   form.label :name_attributes, t("admin.custom_fields.index.field_title") 
@@ -575,11 +575,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_price_field") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_price_field") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -589,11 +593,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".edit_price_field") 
- end 
+   
  content_for :extra_javascript do 
  end 
   
@@ -688,11 +688,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_location_field") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_location_field") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -702,11 +706,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".edit_location_field") 
- end 
+   
   
  form_for @community, :as => :community, :url => update_location_admin_custom_fields_path, :method => :put do |form| 
  form.check_box :listing_location_required 
@@ -797,11 +797,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_price_field") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_price_field") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -811,11 +815,7 @@ end
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".edit_price_field") 
- end 
+   
  content_for :extra_javascript do 
  end 
   
@@ -914,11 +914,15 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_location_field") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t(".edit_location_field") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -928,11 +932,7 @@ end
  end 
  end 
  
-  content_for :title_header do 
- t("layouts.admin.admin") 
- "-" 
- t(".edit_location_field") 
- end 
+   
   
  form_for @community, :as => :community, :url => update_location_admin_custom_fields_path, :method => :put do |form| 
  form.check_box :listing_location_required 

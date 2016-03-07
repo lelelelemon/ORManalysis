@@ -36,11 +36,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.infos.info_about_kassi") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.infos.info_about_kassi") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -52,9 +52,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
    
  content_for :title, t('layouts.infos.about') 
- content_for :title_header do 
- t("layouts.infos.info_about_kassi") 
- end 
+  
  render :layout => "layouts/mercury_editable_page", :locals => { :content_type => "about_page_content" } do 
  if @community_customization && @community_customization.about_page_content 
  content = @community_customization.about_page_content.html_safe 
@@ -143,11 +141,11 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.infos.info_about_kassi") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.infos.info_about_kassi") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -159,9 +157,7 @@ end
  
    
  content_for :title, t('layouts.infos.how_to_use') 
- content_for :title_header do 
- t("layouts.infos.info_about_kassi") 
- end 
+  
  render :layout => "layouts/mercury_editable_page", :locals => { :content_type => "how_to_use_page_content" } do 
  content = how_to_use_content.html_safe 
  content_for :meta_description, StringUtils.first_words(strip_tags(content)) 
@@ -241,11 +237,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.infos.info_about_kassi") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.infos.info_about_kassi") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -259,9 +255,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :title do 
  t('layouts.infos.terms') 
  end 
- content_for :title_header do 
- t("layouts.infos.info_about_kassi") 
- end 
+  
   content = "" 
  if @current_community.payment_gateway && @current_community.payment_gateway.has_additional_terms_of_use 
  content +=  content_for :javascript do 
@@ -361,11 +355,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.infos.info_about_kassi") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.infos.info_about_kassi") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -377,9 +371,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
    
  content_for :title, t('layouts.infos.register_details') 
- content_for :title_header do 
- t("layouts.infos.info_about_kassi") 
- end 
+  
  render :layout => "layouts/mercury_editable_page", :locals => { :content_type => "privacy_page_content" } do 
  if @community_customization && @community_customization.privacy_page_content 
  content = @community_customization.privacy_page_content.html_safe 

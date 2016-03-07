@@ -68,11 +68,17 @@ class ConversationsController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ link_to person_inbox_path(@current_user) do 
+ t("layouts.no_tribe.inbox") 
+ end 
+ t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ link_to person_inbox_path(@current_user) do 
+ t("layouts.no_tribe.inbox") 
+ end 
+ t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -82,12 +88,7 @@ class ConversationsController < ApplicationController
  end 
  end 
  
-   content_for :title_header do 
- link_to person_inbox_path(@current_user) do 
- t("layouts.no_tribe.inbox") 
- end 
- t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
- end 
+    
  
   if role == :participant 
  content_for :javascript do 
@@ -183,11 +184,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ link_to person_inbox_path(@current_user) do 
+ t("layouts.no_tribe.inbox") 
+ end 
+ t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ link_to person_inbox_path(@current_user) do 
+ t("layouts.no_tribe.inbox") 
+ end 
+ t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -197,12 +204,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   content_for :title_header do 
- link_to person_inbox_path(@current_user) do 
- t("layouts.no_tribe.inbox") 
- end 
- t("conversations.show.conversation_with", person: link_to_unless(other_party[:is_deleted], other_party[:display_name], other_party[:url])).html_safe 
- end 
+    
  
   if role == :participant 
  content_for :javascript do 

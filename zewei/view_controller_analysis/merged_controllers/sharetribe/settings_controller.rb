@@ -43,11 +43,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.no_tribe.settings") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.no_tribe.settings") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -62,9 +62,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :extra_javascript do 
  javascript_include_tag "https://maps.google.com/maps/api/js?sensor=true" 
  end 
- content_for :title_header do 
- t("layouts.no_tribe.settings") 
- end 
+  
   
  t("settings.profile.these_fields_are_shown_in_your") 
  link_to(t("settings.profile.profile_page"), @person) + "." 
@@ -264,11 +262,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.no_tribe.settings") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.no_tribe.settings") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -280,9 +278,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- t("layouts.no_tribe.settings") 
- end 
+  
   
  form_for @person do |form| 
  t(".community_updates") 

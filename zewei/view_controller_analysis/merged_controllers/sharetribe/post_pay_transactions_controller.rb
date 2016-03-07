@@ -47,11 +47,13 @@ class PostPayTransactionsController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ action_button_label(listing) 
+ link_to(listing.title, listing) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ action_button_label(listing) 
+ link_to(listing.title, listing) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -63,10 +65,7 @@ class PostPayTransactionsController < ApplicationController
  
   content_for :javascript do 
  end 
- content_for :title_header do 
- action_button_label(listing) 
- link_to(listing.title, listing) 
- end 
+  
   Maybe(listing).map do |listing| 
  price = Maybe(listing).price.or_else(nil) 
  sum = Maybe(transaction).payment.total_sum.or_else(nil) 

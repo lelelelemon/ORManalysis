@@ -96,11 +96,13 @@ class PreauthorizeTransactionsController < ApplicationController
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ action_button_label 
+ link_to(listing[:title], listing_path(listing[:id])) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ action_button_label 
+ link_to(listing[:title], listing_path(listing[:id])) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -114,10 +116,7 @@ class PreauthorizeTransactionsController < ApplicationController
  end 
  content_for :extra_javascript do 
  end 
- content_for :title_header do 
- action_button_label 
- link_to(listing[:title], listing_path(listing[:id])) 
- end 
+  
  author_link = link_to(author[:display_name], person_path(id: author[:username])) 
  t("listing_conversations.preauthorize.details") 
  t("listing_conversations.preauthorize.by", listing: link_to("#{listing[:title]}", listing_path(listing[:id])), author: author_link).html_safe 
@@ -470,11 +469,13 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ action_button_label 
+ link_to(listing[:title], listing_path(listing[:id])) 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ action_button_label 
+ link_to(listing[:title], listing_path(listing[:id])) 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
@@ -491,10 +492,7 @@ end
  end 
  content_for :javascript do 
  end 
- content_for :title_header do 
- action_button_label 
- link_to(listing[:title], listing_path(listing[:id])) 
- end 
+  
  author_link = link_to(author[:display_name], person_path(id: author[:username])) 
  t(".details") 
  t(".by", listing: link_to("#{listing[:title]}", listing_path(listing[:id])), author: author_link).html_safe 
