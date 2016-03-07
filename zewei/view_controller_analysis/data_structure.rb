@@ -161,15 +161,17 @@ class Function_Class
 		#view_name_arr contains the names of view files that will be rendered in the current controller action
 		view_name_arr = []		
 
-		render_stmt_arr.each do |stmt|
-			view_name = get_view_name_from_render_statement(stmt)
+		render_stmt_arr.each do |(str_to_be_replaced, stmt)|
+			puts stmt
+      view_name = get_view_name_from_render_statement(stmt, get_controller_name, get_function_name)
 			view_name_arr.push view_name
 		end
 
 		#the view file with the same name of the current controller action may also be rendered by default
 
 		view_name_arr.push self.get_controller_name + "_" + self.get_function_name unless view_name_arr.include?(self.get_controller_name + "_" + self.get_function_name)
-		
+    view_name_arr.push self.get_class.get_layout
+
 		view_name_arr.each do |view_name|
 			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
@@ -193,7 +195,7 @@ class Function_Class
 		get_render_statement_array.each do |(str_to_be_replaced, stmt)|
       options_hash = parse_render_statement(stmt)
       if options_hash != "not_valid"
-        view_name = get_view_name_from_hash(options_hash, get_controller_name)
+        view_name = get_view_name_from_hash(options_hash, get_controller_name, get_function_name)
 				
         # if render :nothing, then skip to the next render statement
         next if view_name.include?("nothing")
@@ -313,7 +315,7 @@ class Function_Class
 
 	def get_render_views_recursively(view_class_hash)
 		ast = self.get_render_views_ast(view_class_hash)
-		return self.get_render_statement_array(ast)
+		return get_render_statement_array(ast)
 	end
 end 
 
@@ -424,12 +426,12 @@ class View_Class
     return [] if dep > 3
 		render_arr = []
 		render_stmt_arr = []
-		get_render_statement_array.each do |stmt|
+		get_render_statement_array.each do |(str_to_be_replaced, stmt)|
 			render_stmt_arr.push stmt
-			render_arr.push get_view_name_from_render_statement(stmt)
+			render_arr.push get_view_name_from_render_statement(stmt, get_controller_name, get_view_name)
 		end
 		render_stmt_arr.each do |stmt|
-			view_name = get_view_name_from_render_statement(stmt)
+			view_name = get_view_name_from_render_statement(stmt, get_controller_name, get_view_name)
       puts "render statement: " + stmt
       puts "view_name: " + view_name
 			if view_name != "not_valid"	

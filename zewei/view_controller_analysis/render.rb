@@ -2,6 +2,7 @@ require "yard"
 require "pry"
 
 NOT_VALID = "not_valid"
+
 def parse_render_statement(stmt)
   puts "stmt: " + stmt
   ast = YARD::Parser::Ruby::RubyParser.parse(stmt).root
@@ -98,7 +99,7 @@ def parse_assoc(ast)
 end
 
 
-def get_view_name_from_hash(options_hash, controller_name)
+def get_view_name_from_hash(options_hash, controller_name, action_name)
   res = ""
   if options_hash.has_key?":partial"
     res = options_hash[":partial"]
@@ -125,13 +126,21 @@ def get_view_name_from_hash(options_hash, controller_name)
   end
 
   r = res.rindex("/")
-  if r == nil
+  if res == ""
+    res = controller_name + "_" + action_name
+  elsif r == nil
     res = controller_name + "_" + res
   else
     res = res[0..r-1] + "_" + res[r+1..-1]
   end
   
   return res 
+end
+
+def get_view_name_from_render_statement(stmt, controller_name, action_name)
+  options_hash = parse_render_statement(stmt)
+  res = get_view_name_from_hash(options_hash, controller_name, action_name)
+  return res
 end
 
 def get_layout_name_from_hash(options_hash)
@@ -303,3 +312,56 @@ stmt = "render(:edit_welcome_email, locals: {
 hash = parse_render_statement(stmt)
 binding.pry
 =end
+
+def get_render_array(ast)
+  res_arr = Array.new
+  ast_arr = Array.new
+  ast_arr.push @ast
+  while ast_arr.length > 0
+    cur_ast = ast_arr.pop
+    if cur_ast.source.start_with?"render" and (cur_ast.type.to_s == "fcall" or cur_ast.type.to_s == "command" or 
+                                               cur_ast.type.to_s == "list" or cur_ast.type.to_s == "if_mod" or cur_ast.type.to_s == "unless_mod")
+      res_arr.push cur_ast.source
+    else
+      cur_ast.children.each do |child|
+        ast_arr.push child
+      end
+    end
+  end
+  return res_arr
+end
+
+
+
+def get_render_statement_array(ast=nil)
+  keyword = "render"
+  ast = @ast if ast == nil
+  res_arr = Array.new
+  ast_arr = Array.new
+  ast_arr.push ast
+  while ast_arr.length > 0
+    cur_ast = ast_arr.pop
+    if cur_ast.source.start_with? keyword
+      if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?"escape_javascript("
+        res = cur_ast.parent.parent.source.to_s
+      elsif cur_ast.parent.type.to_s == "arg_paren" and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")
+        res = cur_ast.parent.parent.source.to_s
+      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript") and ["return", "command"].include?(cur_ast.parent.type.to_s)
+        res = cur_ast.parent.source.to_s
+      else
+        res =  cur_ast.source.to_s
+      end
+
+      if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
+        res = res[0..-2]
+      end
+      res_arr.push [res, cur_ast.source.to_s]
+    else
+      cur_ast.children.each do |child|
+        ast_arr.push child
+      end
+    end
+  end
+
+  return res_arr
+end
