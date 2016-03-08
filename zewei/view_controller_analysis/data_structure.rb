@@ -170,13 +170,13 @@ class Function_Class
 		#the view file with the same name of the current controller action may also be rendered by default
 
 		view_name_arr.push self.get_controller_name + "_" + self.get_function_name unless view_name_arr.include?(self.get_controller_name + "_" + self.get_function_name)
-    view_name_arr.push self.get_class.get_layout
+    view_name_arr.push self.get_default_layout(view_class_hash, controller_hash)
 
 		view_name_arr.each do |view_name|
 			if view_name != "not_valid"
 				view_class = view_class_hash[view_name]
 				if view_class == nil
-					res += ("view file " + view_name + " not exists!") if $log
+					res += ("view file " + view_name + " not exists!\n") if $log
 				else
 					res += (view_class.get_links_controller_view_recursively(view_class_hash, named_routes, controller_hash) + "\n")
 				end
@@ -401,6 +401,7 @@ class View_Class
 			href = "" if href == nil
 			res.push(href)
 		end
+    puts res
 		return res
 	end
 
@@ -477,7 +478,7 @@ class View_Class
       options_hash = parse_render_statement(stmt)
 			#if view_name != "not_valid"
       if options_hash != "not_valid"
-        view_name = get_view_name_from_hash(options_hash, get_controller_name)
+        view_name = get_view_name_from_hash(options_hash, get_controller_name, get_view_name)
 				view_class = view_class_hash[view_name]
         puts "view_name: " + view_name
 				if view_class != nil
@@ -580,3 +581,16 @@ class Named_Routes_Class
 		res
 	end	
 end
+
+=begin
+content = File.open(ARGV[0], "r").read
+page = Nokogiri::HTML(content)
+res = Array.new
+page.css("a").each do |a|
+
+  href = a["href"]
+  href = "" if href == nil
+  res.push(href)
+end
+binding.pry
+=end
