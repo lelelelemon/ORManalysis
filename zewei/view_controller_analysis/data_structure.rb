@@ -170,7 +170,8 @@ class Function_Class
 		#the view file with the same name of the current controller action may also be rendered by default
 
 		view_name_arr.push self.get_controller_name + "_" + self.get_function_name unless view_name_arr.include?(self.get_controller_name + "_" + self.get_function_name)
-    view_name_arr.push self.get_default_layout(view_class_hash, controller_hash)
+    default_layout_name = self.get_default_layout_name(view_class_hash, controller_hash)
+    view_name_arr.push default_layout_name if default_layout_name != nil
 
 		view_name_arr.each do |view_name|
 			if view_name != "not_valid"
@@ -241,6 +242,16 @@ class Function_Class
         return layout_content
       end
     end
+  end
+
+  def get_default_layout_name(view_class_hash, controller_hash)
+    parent_class = self.get_class
+    default_layout = parent_class.get_layout
+    while not view_class_hash.has_key?(default_layout) and parent_class != nil
+      default_layout = parent_class.get_layout
+      parent_class = controller_hash[parent_class.get_upper_class]
+    end
+    return default_layout
   end
 
   def get_default_layout(view_class_hash, controller_hash)
