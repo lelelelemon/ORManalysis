@@ -1,2722 +1,1979 @@
-#==
-# RailsCollab
-# Copyright (C) 2007 - 2011 James S Urquhart
-# Portions Copyright (C) René Scheibe
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#++
-
+# encoding: UTF-8
 class UsersController < ApplicationController
-
-  layout 'administration'
-  
-  before_filter :process_session
-  before_filter :obtain_user, :except => [:index, :create, :new]
-  after_filter :user_track, :only => [:index, :show]
+  before_filter :protected_area, :except=>[:update_seen_news, :avatar, :auto_complete_for_project_name, :auto_complete_for_user_name]
 
   def index
-    respond_to do |format|
-      format.html {
-        redirect_to companies_path
-      }
-      format.xml  {
-        if @logged_user.is_admin
-          @users = User.all
-          render :xml => @users.to_xml(:root => 'user')
-        else
-          return error_status(true, :insufficient_permissions)
-        end
-      }
-    end
+    @users = User.where("users.company_id = ?", current_user.company_id)
+                 .includes(:project_permissions => {:project => :customer})
+                 .order("users.name")
+                 .paginate(:page => params[:page], :per_page => 100)
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ @page_title = t("users.access_title", title: Setting.productName) 
+ link_to t("users.new_user"), new_user_path, :class => "pull-right" 
+ for user in @users 
+  link_to(user.name, "/users/edit/#{user.id}") 
+ t("users.email") 
+ h user.email 
+ h user.email 
+ t("users.last_login") 
+ if user.last_sign_in_at 
+ t("shared.time_ago", time: distance_of_time_in_words(user.last_sign_in_at, Time.now.utc)) 
+ else 
+ t("shared.never") 
+ end 
+ 
+  values = object.all_custom_attribute_values
+  values.each do |value|
+    if (value.value)
+
+ value.custom_attribute.display_name 
+ value.value.gsub("\n", "<br/>").html_safe 
+ end 
+ end 
+ 
+ if user.projects.size > 0 
+ t("users.projects") 
+ link_to_function t("users.n_projects", n: user.projects.size), "jQuery('#projects-#{user.dom_id}').toggle();" 
+user.dom_id
+ user.projects.collect{|project| link_to_tasks_filtered_by(project.full_name, project)}.join("<br/> ").html_safe 
+ end 
+end 
+ will_paginate @users 
+ end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
+ 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
+ else 
+ image_tag("logo.gif", :alt => "logo" ) 
+ end 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
+ end 
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
+ 
+ end 
+ 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
+ else 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
+ end 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
+ end 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
+ end 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
+ 
+
+end
+
   end
 
   def new
-    authorize! :create_user, current_user
+    @user = User.new(params[:user])
+    @user.company_id = current_user.company_id
+    @user.customer_id = current_user.customer_id if @user.customer_id.blank?
+    @user.time_zone = current_user.time_zone
+    @user.create_projects = 0
+    @user.option_tracktime = 0
+    @user.build_work_plan
 
-    @user = User.new
-    @company = @logged_user.company
-    @permissions = Person.permission_names()
-
-    @send_email = params[:new_account_notification] == 'false' ? false : true
-    @permissions = Person.permission_names()
-    @projects = @active_projects
-    
-    begin
-      if @logged_user.member_of_owner? and !params[:company_id].nil?
-        @company = Company.find(params[:company_id])
-      end
-    rescue ActiveRecord::RecordNotFound
-      error_status(true, :invalid_company)
-      redirect_back_or_default :controller => 'dashboard'
-      return
-    end
-
-    @user.company_id = @company.id
-    @user.time_zone = @company.time_zone
-    
-    respond_to do |format|
-      format.html {}
-      format.xml  { 
-        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
- else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
- end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
- end 
- end 
- 
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- end 
- end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
- end 
- 
- form_tag users_path 
-  error_messages_for :user 
- if @logged_user.is_admin 
- t('administration_options_info') 
- t('username') 
- text_field 'user', 'username', :id => 'userFormUsername' 
- if @logged_user.member_of_owner? 
- t('company') 
- select 'user', 'company_id', Company.select_list, {}, {:id => 'userFormCompany'} 
- t('options') 
- t('administrator') 
- yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'checkbox'  
- t('auto_assign_to_new_projects') 
- yesno_toggle 'user', 'auto_assign', :id => 'userFormAutoAssign', :class => 'checkbox'  
- end 
- else 
- t('username') 
- @user.username 
- end 
- t('display_name') 
- text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'medium' 
- t('email_address') 
- text_field 'user', 'email', :id => 'profileFormEmail', :class => 'long' 
- t('timezone') 
- time_zone_select 'user', 'time_zone', nil, {}, {:id => 'profileFormTimezone', :class => 'long'} 
- t('password') 
- if @user.new_record? 
- t('generate_password') 
- end 
- t('password') 
- t('repeat_password') 
- if @user.new_record? 
- t('send_account_email_notification') 
- yesno_toggle_tag 'new_account_notification', !!@send_email, :id => 'userFormEmailNotificationYes', :class => 'checkbox' 
- t('send_account_email_notication_info') 
- else 
- t('contact_info') 
- t('title') 
- text_field 'user', 'title', :id => 'userFormTitle' 
- t('office') 
- text_field 'user', 'office_number', :id => 'userFormOfficeNumber' 
- t('office') 
- text_field 'user', 'office_number_ext', :id => 'userFormOfficeNumberExt' 
- t('fax') 
- text_field 'user', 'fax_number', :id => 'userFormFaxNumber' 
- t('mobile') 
- text_field 'user', 'mobile_number', :id => 'userFormMobileNumber' 
- t('home') 
- text_field 'user', 'home_number', :id => 'userFormHomeNumber' 
- all_im_values = @user.im_info 
- if all_im_values.length > 0 
- t('instant_messengers') 
- t('service') 
- t('value') 
- t('primary_im') 
- @count = 0 
- all_im_values.each do |im_value| 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- "userFormIm#{@count}" 
- im_value.im_type.name 
- text_field_tag "user[im_values][#{im_value.im_type_id}][value]", im_value.value, :id => "userFormIm#{@count}" 
- radio_button_tag "user[default_im_value]", im_value.im_type_id, im_value.is_default, :id => 'im_default', :class => 'checkbox' 
- @count += 1 
- end 
- t('instant_messengers_info') 
- end 
- end 
- if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
- @permissions.keys.join('\',\'')
- t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
- else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
- end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
- end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
- t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
- end 
- end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
- 
- end 
- 
- t('add_user') 
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
- end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
- 
-
-end
-
-      }
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
- else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
- end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
- end 
- end 
- 
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- end 
- end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
- end 
- 
- form_tag users_path 
-  error_messages_for :user 
- if @logged_user.is_admin 
- t('administration_options_info') 
- t('username') 
- text_field 'user', 'username', :id => 'userFormUsername' 
- if @logged_user.member_of_owner? 
- t('company') 
- select 'user', 'company_id', Company.select_list, {}, {:id => 'userFormCompany'} 
- t('options') 
- t('administrator') 
- yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'checkbox'  
- t('auto_assign_to_new_projects') 
- yesno_toggle 'user', 'auto_assign', :id => 'userFormAutoAssign', :class => 'checkbox'  
- end 
- else 
- t('username') 
- @user.username 
- end 
- t('display_name') 
- text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'medium' 
- t('email_address') 
- text_field 'user', 'email', :id => 'profileFormEmail', :class => 'long' 
- t('timezone') 
- time_zone_select 'user', 'time_zone', nil, {}, {:id => 'profileFormTimezone', :class => 'long'} 
- t('password') 
- if @user.new_record? 
- t('generate_password') 
- end 
- t('password') 
- t('repeat_password') 
- if @user.new_record? 
- t('send_account_email_notification') 
- yesno_toggle_tag 'new_account_notification', !!@send_email, :id => 'userFormEmailNotificationYes', :class => 'checkbox' 
- t('send_account_email_notication_info') 
- else 
- t('contact_info') 
- t('title') 
- text_field 'user', 'title', :id => 'userFormTitle' 
- t('office') 
- text_field 'user', 'office_number', :id => 'userFormOfficeNumber' 
- t('office') 
- text_field 'user', 'office_number_ext', :id => 'userFormOfficeNumberExt' 
- t('fax') 
- text_field 'user', 'fax_number', :id => 'userFormFaxNumber' 
- t('mobile') 
- text_field 'user', 'mobile_number', :id => 'userFormMobileNumber' 
- t('home') 
- text_field 'user', 'home_number', :id => 'userFormHomeNumber' 
- all_im_values = @user.im_info 
- if all_im_values.length > 0 
- t('instant_messengers') 
- t('service') 
- t('value') 
- t('primary_im') 
- @count = 0 
- all_im_values.each do |im_value| 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- "userFormIm#{@count}" 
- im_value.im_type.name 
- text_field_tag "user[im_values][#{im_value.im_type_id}][value]", im_value.value, :id => "userFormIm#{@count}" 
- radio_button_tag "user[default_im_value]", im_value.im_type_id, im_value.is_default, :id => 'im_default', :class => 'checkbox' 
- @count += 1 
- end 
- t('instant_messengers_info') 
- end 
- end 
- if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
- @permissions.keys.join('\',\'')
- t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
- else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
- end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
- end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
- t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
- end 
- end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
- 
- end 
- 
- t('add_user') 
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
- end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
- 
-
-end
-
+    render :layout => 'basic'
   end
-  
+
   def create
-    authorize! :create_user, current_user
+    @user = User.new(params[:user])
+    @user.company_id = current_user.company_id
+    @user.email = params[:email]
 
-    @user = User.new
-    @company = @logged_user.company
-    @permissions = Person.permission_names()
+    if @user.errors.size > 0
+      flash[:error] = @user.errors.full_messages.join(". ")
+      return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ @page_title = t("users.new_user_title", title: Setting.productName) 
 
-    @send_email = params[:new_account_notification] == 'false' ? false : true
-    @permissions = Person.permission_names()
-    @projects = @active_projects
-    
-    user_attribs = params[:user]
+  @user_ids = []
+  @current_user.company.projects.each do |p|
+    @user_ids << p.users.collect{ |pu| pu.id }
+  end
 
-    # Process extra parameters
+  @user_ids = [0] if @user_ids.flatten.compact.size == 0
+  @users = User.where("id IN (?)", @user_ids.flatten.compact.uniq).order("name").collect{|u| [u.name, u.id.to_s]}
 
-    @user.username = user_attribs[:username]
-    new_account_password = nil
-
-    if user_attribs.has_key?(:generate_password)
-      @user.password = @user.password_confirmation = Base64.encode64(Digest::SHA1.digest("#{rand(1 << 64)}/#{Time.now.to_f}/#{@user.username}"))[0..7]
-    else
-      unless user_attribs[:password].blank?
-        @user.password = user_attribs[:password]
-        @user.password_confirmation = user_attribs[:password_confirmation]
-      end
-    end
-      
-    new_account_password = @user.password
-
-    if @logged_user.member_of_owner?
-      @user.company_id = user_attribs[:company_id]
-      if @user.member_of_owner?
-        @user.is_admin = user_attribs[:is_admin]
-        @user.auto_assign = user_attribs[:auto_assign]
-      end
-    else
-      @user.company_id = @company.id
-    end
-
-    # Process core parameters
-
-    @user.attributes = user_attribs
-    @user.created_by = @logged_user
-
-    # Send it off
-    saved = @user.save
-    if saved
-      # Time to update permissions
-      update_project_permissions(@user, params[:user_project], params[:project_permission])
-      # ... and send details!
-      Notifier.deliver_account_new_info(@user, new_account_password) if @send_email
-    end
-    
-    respond_to do |format|
-      if saved
-        format.html {
-          error_status(false, :success_added_user)
-          redirect_back_or_default :controller => 'administration', :action => 'people'
-        }
-        
-        format.xml  { render :xml => @user.to_xml(:root => 'user'), :status => :created, :location => @user }
-      else
-        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
+ t("users.new_user") 
+ form_tag({:action => 'create'}, :class => "form-horizontal", :multipart => true) do 
+ t("users.name") 
+ text_field 'user', 'name'  
+ t("users.email") 
+ text_field_tag 'email', '', :autocomplete => "off" 
+ t("users.username") 
+ text_field 'user', 'username', :autocomplete => "off" 
+ t("users.password") 
+ password_field 'user', 'password', :autocomplete => "off"  
+ t("users.company") 
+ hidden_field_tag("user[customer_id]", @user.customer_id, :id => "user_customer_id", :class => "auto_complete_id") 
+ text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
+ @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
+ t("users.goto_company") 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
  else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
  end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
+ multi_links(value) 
  end 
  end 
  
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- end 
- end 
- end 
+  label_tag t("users.send_welcome_email") 
+ check_box_tag :send_welcome_email, "1", params[:send_welcome_email] 
+ t('users.welcome_message_header') 
+ text_area_tag t("users.welcome_message"), "", :rows => 10, :class => "input-xxlarge", :placeholder => t("users.welcome_message_input") 
+ t('users.welcome_message_optional') 
  
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
+ t("permissions.copy_permissions") 
+ t("tasks.no_one") 
+ options_for_select @users, params[:copy_user].to_i 
+ submit_tag t("button.create"), :class => 'btn btn-primary' 
  end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
  end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
  
- form_tag users_path 
-  error_messages_for :user 
- if @logged_user.is_admin 
- t('administration_options_info') 
- t('username') 
- text_field 'user', 'username', :id => 'userFormUsername' 
- if @logged_user.member_of_owner? 
- t('company') 
- select 'user', 'company_id', Company.select_list, {}, {:id => 'userFormCompany'} 
- t('options') 
- t('administrator') 
- yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'checkbox'  
- t('auto_assign_to_new_projects') 
- yesno_toggle 'user', 'auto_assign', :id => 'userFormAutoAssign', :class => 'checkbox'  
- end 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
- t('username') 
- @user.username 
+ image_tag("logo.gif", :alt => "logo" ) 
  end 
- t('display_name') 
- text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'medium' 
- t('email_address') 
- text_field 'user', 'email', :id => 'profileFormEmail', :class => 'long' 
- t('timezone') 
- time_zone_select 'user', 'time_zone', nil, {}, {:id => 'profileFormTimezone', :class => 'long'} 
- t('password') 
- if @user.new_record? 
- t('generate_password') 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
- t('password') 
- t('repeat_password') 
- if @user.new_record? 
- t('send_account_email_notification') 
- yesno_toggle_tag 'new_account_notification', !!@send_email, :id => 'userFormEmailNotificationYes', :class => 'checkbox' 
- t('send_account_email_notication_info') 
- else 
- t('contact_info') 
- t('title') 
- text_field 'user', 'title', :id => 'userFormTitle' 
- t('office') 
- text_field 'user', 'office_number', :id => 'userFormOfficeNumber' 
- t('office') 
- text_field 'user', 'office_number_ext', :id => 'userFormOfficeNumberExt' 
- t('fax') 
- text_field 'user', 'fax_number', :id => 'userFormFaxNumber' 
- t('mobile') 
- text_field 'user', 'mobile_number', :id => 'userFormMobileNumber' 
- t('home') 
- text_field 'user', 'home_number', :id => 'userFormHomeNumber' 
- all_im_values = @user.im_info 
- if all_im_values.length > 0 
- t('instant_messengers') 
- t('service') 
- t('value') 
- t('primary_im') 
- @count = 0 
- all_im_values.each do |im_value| 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- "userFormIm#{@count}" 
- im_value.im_type.name 
- text_field_tag "user[im_values][#{im_value.im_type_id}][value]", im_value.value, :id => "userFormIm#{@count}" 
- radio_button_tag "user[default_im_value]", im_value.im_type_id, im_value.is_default, :id => 'im_default', :class => 'checkbox' 
- @count += 1 
- end 
- t('instant_messengers_info') 
- end 
- end 
- if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
- @permissions.keys.join('\',\'')
- t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
- else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
- end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
- end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
- t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
- end 
- end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
  
  end 
  
- t('add_user') 
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
  end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
  else 
- Company.owner.name 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
- product_signature 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
+ end 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
+ end 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
  
 
 end
- }
-        
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+
+    end
+
+    if @user.save
+      if params[:copy_user].to_i > 0
+        u = current_user.company.users.find(params[:copy_user])
+        u.project_permissions.each do |perm|
+          p = perm.dup
+          p.user = @user
+          p.save
+        end
       end
+
+      flash[:success] = t('flash.notice.model_created', model: User.model_name.human) +
+                        t('hint.user.add_permissions')
+
+      if params[:send_welcome_email]
+        begin
+          Signup.account_created(@user, current_user, params['welcome_message']).deliver
+        rescue
+          flash[:error] ||= ""
+          flash[:error] += ("<br/>" + t('error.user.send_creation_email')).html_safe
+        end
+      end
+
+      redirect_to edit_user_path(@user)
+    else
+      flash[:error] = @user.errors.full_messages.join(". ")
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ @page_title = t("users.new_user_title", title: Setting.productName) 
+
+  @user_ids = []
+  @current_user.company.projects.each do |p|
+    @user_ids << p.users.collect{ |pu| pu.id }
+  end
+
+  @user_ids = [0] if @user_ids.flatten.compact.size == 0
+  @users = User.where("id IN (?)", @user_ids.flatten.compact.uniq).order("name").collect{|u| [u.name, u.id.to_s]}
+
+ t("users.new_user") 
+ form_tag({:action => 'create'}, :class => "form-horizontal", :multipart => true) do 
+ t("users.name") 
+ text_field 'user', 'name'  
+ t("users.email") 
+ text_field_tag 'email', '', :autocomplete => "off" 
+ t("users.username") 
+ text_field 'user', 'username', :autocomplete => "off" 
+ t("users.password") 
+ password_field 'user', 'password', :autocomplete => "off"  
+ t("users.company") 
+ hidden_field_tag("user[customer_id]", @user.customer_id, :id => "user_customer_id", :class => "auto_complete_id") 
+ text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
+ @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
+ t("users.goto_company") 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+  label_tag t("users.send_welcome_email") 
+ check_box_tag :send_welcome_email, "1", params[:send_welcome_email] 
+ t('users.welcome_message_header') 
+ text_area_tag t("users.welcome_message"), "", :rows => 10, :class => "input-xxlarge", :placeholder => t("users.welcome_message_input") 
+ t('users.welcome_message_optional') 
+ 
+ t("permissions.copy_permissions") 
+ t("tasks.no_one") 
+ options_for_select @users, params[:copy_user].to_i 
+ submit_tag t("button.create"), :class => 'btn btn-primary' 
+ end 
+ end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
+ 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
+ else 
+ image_tag("logo.gif", :alt => "logo" ) 
+ end 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
+ end 
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
+ 
+ end 
+ 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
+ else 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
+ end 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
+ end 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
+ end 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
+ 
+
+end
+
     end
   end
 
   def edit
-    authorize! :update_profile, @user
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
+ content_for :content do 
+ yield(:navigation) 
+ @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ form_tag(user_path(@user), :method => :put, :class => "form-horizontal", :multipart => true) do 
+  t("users.name") 
+ text_field 'user', 'name'  
+ t("users.username") 
+ text_field 'user', 'username', :autocomplete => "off" 
+ t("users.password") 
+ password_field 'user', 'password', :autocomplete => "off"  
+ t("users.company") 
+ hidden_field_tag("user[customer_id]", @user.customer_id, :id => "user_customer_id", :class => "auto_complete_id") 
+ text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
+ @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
+ t("users.goto_company") 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
  else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
  end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
+ multi_links(value) 
  end 
  end 
  
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ if @user.avatar? 
+ t("users.current_avatar") 
+ tag("img", {:src => @user.avatar_url(25), :border => 0 } ) 
+ tag("img", {:src => @user.avatar_url, :border => 0 } ) 
  end 
- end 
- end 
+ t("users.new_avatar") 
+ file_field :user, :avatar 
+ t 'hint.user.avatar' 
+ t("users.language") 
+ select 'user', 'locale', I18n.available_locales 
+ t("users.location") 
+ time_zone_select 'user', 'time_zone', TZInfo::Timezone.all.sort, :model => TZInfo::Timezone 
+ t("users.receive_notifications") 
+ check_box 'user', 'receive_notifications' 
+ t("users.receive_own_notifications") 
+ check_box 'user', 'receive_own_notifications' 
+ t("users.auto_add_to_customer_tasks", customer: @user.customer.try(:name)) 
+ check_box "user", "auto_add_to_customer_tasks" 
+ t("users.active") 
+ check_box(:user, :active) 
+ t("users.private") 
+ check_box(:user, :comment_private_by_default)
+ t("users.time_format") 
+ select 'user', 'time_format', [ ['16:00', '%H:%M'], ['4:00 PM', '%I:%M%p'] ] 
+ t("users.date_format") 
+ select 'user', 'date_format', [ ['1/21/2007', '%m/%d/%Y'], ['21/1/2007', '%d/%m/%Y'], ['2007-1-21', '%Y-%m-%d'] ] 
+ t("users.track_time") 
+ check_box 'user', 'option_tracktime' 
+ t("users.show_avatars") 
+ check_box 'user', 'option_avatars' 
  
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
  end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
  end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
  
- form_tag user_path(:id => @user.id), :method => :put 
-  error_messages_for :user 
- if @logged_user.is_admin 
- t('administration_options_info') 
- t('username') 
- text_field 'user', 'username', :id => 'userFormUsername' 
- if @logged_user.member_of_owner? 
- t('company') 
- select 'user', 'company_id', Company.select_list, {}, {:id => 'userFormCompany'} 
- t('options') 
- t('administrator') 
- yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'checkbox'  
- t('auto_assign_to_new_projects') 
- yesno_toggle 'user', 'auto_assign', :id => 'userFormAutoAssign', :class => 'checkbox'  
- end 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
- t('username') 
- @user.username 
+ image_tag("logo.gif", :alt => "logo" ) 
  end 
- t('display_name') 
- text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'medium' 
- t('email_address') 
- text_field 'user', 'email', :id => 'profileFormEmail', :class => 'long' 
- t('timezone') 
- time_zone_select 'user', 'time_zone', nil, {}, {:id => 'profileFormTimezone', :class => 'long'} 
- t('password') 
- if @user.new_record? 
- t('generate_password') 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
- t('password') 
- t('repeat_password') 
- if @user.new_record? 
- t('send_account_email_notification') 
- yesno_toggle_tag 'new_account_notification', !!@send_email, :id => 'userFormEmailNotificationYes', :class => 'checkbox' 
- t('send_account_email_notication_info') 
- else 
- t('contact_info') 
- t('title') 
- text_field 'user', 'title', :id => 'userFormTitle' 
- t('office') 
- text_field 'user', 'office_number', :id => 'userFormOfficeNumber' 
- t('office') 
- text_field 'user', 'office_number_ext', :id => 'userFormOfficeNumberExt' 
- t('fax') 
- text_field 'user', 'fax_number', :id => 'userFormFaxNumber' 
- t('mobile') 
- text_field 'user', 'mobile_number', :id => 'userFormMobileNumber' 
- t('home') 
- text_field 'user', 'home_number', :id => 'userFormHomeNumber' 
- all_im_values = @user.im_info 
- if all_im_values.length > 0 
- t('instant_messengers') 
- t('service') 
- t('value') 
- t('primary_im') 
- @count = 0 
- all_im_values.each do |im_value| 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- "userFormIm#{@count}" 
- im_value.im_type.name 
- text_field_tag "user[im_values][#{im_value.im_type_id}][value]", im_value.value, :id => "userFormIm#{@count}" 
- radio_button_tag "user[default_im_value]", im_value.im_type_id, im_value.is_default, :id => 'im_default', :class => 'checkbox' 
- @count += 1 
- end 
- t('instant_messengers_info') 
- end 
- end 
- if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
- @permissions.keys.join('\',\'')
- t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
- else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
- end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
- end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
- t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
- end 
- end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
  
  end 
  
- t('edit_user') 
- form_tag( avatar_user_path(:id => @user.id), :multipart => true, :method => :put ) 
- error_messages_for :user 
- t('current_avatar') 
- if @user.has_avatar? 
- @user.avatar_url 
- h @user.display_name 
- link_to t('delete_current_avatar'), avatar_user_path(:id => @user.id), {:onclick => :avatar_confirm_delete, :method => :delete} 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
  else 
- t('avatar_not_uploaded') 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
- t('new_avatar') 
- if @user.has_avatar? 
- t('avatar_upload_info') 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
  end 
- t('update_avatar') 
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
  end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
  
 
 end
 
   end
-  
-  def update
-    authorize! :update_profile, @user
-  	
-    @projects = @active_projects
-    @permissions = Person.permission_names()
-    
-    user_params = params[:user]
 
-    # Process IM Values
-    all_im_values = user_params[:im_values] || {}
-    all_im_values.reject! do |key, value|
-      value[:value].strip.length == 0
-    end
-
-    if user_params[:default_im_value].nil?
-      default_value = '-1'
-    else
-      default_value = user_params[:default_im_value]
-    end
-
-    real_im_values = all_im_values.collect do |type_id,value|
-      real_im_value = value[:value]
-      ImValue.new(:im_type_id => type_id.to_i, :user_id => @user.id, :value => real_im_value, :is_default => (default_value == type_id))
-    end
-
-    # Process extra parameters
-
-    if @logged_user.is_admin?
-      @user.username = user_params[:username]
-
-      if @logged_user.member_of_owner?
-        @user.company_id = user_params[:company_id] unless user_params[:company_id].nil?
-        if @user.member_of_owner?
-          @user.is_admin = user_params[:is_admin]
-          @user.auto_assign = user_params[:auto_assign]
-        end
+  def access
+    if request.put?
+      if current_user.admin?
+        flash[:success] = t('flash.notice.model_updated', model: t('users.access_control'))
+        @user.set_access_control_attributes(params[:user])
+        @user.save!
       end
     end
 
-    unless user_params[:password].blank?
-      @user.password = user_params[:password]
-      @user.password_confirmation = user_params[:password_confirmation]
+    if !current_user.admin?
+      flash[:error] = t('flash.alert.access_denied_to_model', model: t('users.access_control'))
+      redirect_to edit_user_path(@user)
     end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ form_tag(access_user_path(@user), :method => :put, :class => "form-horizontal") do 
+ t("permissions.administrator") 
+ check_box 'user', 'admin' 
+ t("permissions.create_projects") 
+ check_box 'user', 'create_projects' 
+ t("permissions.read_clients") 
+ check_box(:user, :read_clients) 
+ t("permissions.create_clients")  
+ check_box(:user, :create_clients) 
+ t("permissions.edit_clients") 
+ check_box(:user, :edit_clients) 
+ t("permissions.approve_work_logs") 
+ check_box(:user, :can_approve_work_logs) 
+ t("permissions.use_resources") 
+ check_box 'user', 'use_resources' 
+label(:user, :access_level_id, t("permissions.comment_access_level")) 
+select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
+ if @user.autologin && !@user.autologin.empty? 
+ t("users.widget_key") 
+ @user.autologin 
+ end 
+ submit_tag t("button.save"), :class => 'btn btn-primary' 
+ end 
+ end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
+ 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
+ else 
+ image_tag("logo.gif", :alt => "logo" ) 
+ end 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
+ end 
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
+ 
+ end 
+ 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
+ else 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
+ end 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
+ end 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
+ end 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
+ 
 
-    # Process core parameters
+end
 
-    @user.attributes = user_params
+  end
 
-    # Send it off
-    saved = @user.save
-    if saved
-      # Re-create ImValues for user
-      ActiveRecord::Base.connection.execute("DELETE FROM user_im_values WHERE user_id = #{@user.id}")
-      real_im_values.each do |im_value|
-        im_value.save
-      end
-    end
+  def emails
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ render @user.email_addresses 
+ t("button.add") 
+ @user.id 
+ end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
+ 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
+ else 
+ image_tag("logo.gif", :alt => "logo" ) 
+ end 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
+ end 
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
+ 
+ end 
+ 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
+ else 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
+ end 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
+ end 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
+ end 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
+ 
 
-    respond_to do |format|
-      if saved
-        format.html {
-          error_status(false, :success_updated_profile)
-          redirect_back_or_default :controller => 'administration', :action => 'people'
-        }
-        
-        format.xml  { head :ok }
+end
+
+  end
+
+  def tasks
+    redirect_to [:workplan, @user]
+  end
+
+  def filters
+    @private_filters = @user.private_task_filters.order("task_filters.name")
+    @shared_filters = @user.shared_task_filters.order("task_filters.name")
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ if @shared_filters.size > 0 
+ @shared_filters.each do |tf| 
+ tf.id 
+ select_task_filter_link(tf) 
+ tf.user.name 
+ link_to_toggle_status(tf, current_user) 
+ if tf.user == current_user or current_user.admin? 
+ link_to t("button.delete"), "#", {:class => "action_filter do_delete"} 
+ end 
+ end 
+ end 
+ t("users.no_shared_filters") if @shared_filters.size == 0 
+ if @private_filters.size > 0 
+ @private_filters.each do |tf| 
+ tf.id 
+ select_task_filter_link(tf) 
+ t 'task_filters.shared' if tf.shared? 
+ link_to_toggle_status(tf, current_user) 
+ if tf.user == current_user or current_user.admin? 
+ link_to t("button.delete"), "#", {:class => "action_filter do_delete"} 
+ end 
+ end 
+ end 
+ t("users.no_filters") if @private_filters.size == 0 
+ end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
+ 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
+ else 
+ image_tag("logo.gif", :alt => "logo" ) 
+ end 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
+ end 
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
+ 
+ end 
+ 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
+ else 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
+ end 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
+ end 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
+ end 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
+ 
+
+end
+
+  end
+
+  def projects
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ @page_title = t("users.access_title", title: Setting.productName) 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.new_user"), @user, :class => "btn btn-success pull-right") 
+  t("users.project") 
+ t("permissions.read") 
+ t("permissions.comment") 
+ t("permissions.work") 
+ t("permissions.close") 
+ t("permissions.see_unwatched") 
+ t("permissions.create") 
+ t("permissions.edit") 
+ t("permissions.assign") 
+ t("permissions.milestones") 
+ t("permissions.reports") 
+ t("permissions.grant") 
+ t("permissions.all") 
+  project.dom_id 
+ if user_edit 
+ link_to project.name, "/projects/edit/#{project.id}" 
+ else 
+ link_to @user.name, "/users/edit/#{@user.id}" 
+ end 
+
+   perm = @user.project_permissions.where("project_id=?", project.id).first
+   perms = ProjectPermission.permissions
+ if current_user.admin? and perm 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :user_edit => user_edit)}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" 
+ for p in perms 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" if perm.can?(p) 
+ link_to_function image_tag("delete.png", :title => t("users.grant_access", access: p, user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_add_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" unless perm.can?(p) 
+ end 
+ end 
+ 
+ if @user.active 
+ t("users.add_project_to_user") 
+ text_field :project, :name, {:id => "user_project_name_autocomplete", :value => "" }
+ end 
+ @user.id 
+ 
+ end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
+ 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
+ else 
+ image_tag("logo.gif", :alt => "logo" ) 
+ end 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
+ end 
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
+ 
+ end 
+ 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
+ else 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
+ end 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
+ end 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
+ end 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
+ 
+
+end
+
+  end
+
+  def workplan
+    @user_recent_work_logs = @user.work_logs.order(:started_at).reverse_order.includes(:task).limit(10)
+    if request.put?
+      if @user.work_plan.update_attributes(params[:user][:work_plan_attributes])
+        flash[:success] = t('flash.notice.model_updated', model: WorkPlan.model_name.human)
       else
-        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
- else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
- end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
- end 
- end 
- 
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- end 
- end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
- end 
- 
- form_tag user_path(:id => @user.id), :method => :put 
-  error_messages_for :user 
- if @logged_user.is_admin 
- t('administration_options_info') 
- t('username') 
- text_field 'user', 'username', :id => 'userFormUsername' 
- if @logged_user.member_of_owner? 
- t('company') 
- select 'user', 'company_id', Company.select_list, {}, {:id => 'userFormCompany'} 
- t('options') 
- t('administrator') 
- yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'checkbox'  
- t('auto_assign_to_new_projects') 
- yesno_toggle 'user', 'auto_assign', :id => 'userFormAutoAssign', :class => 'checkbox'  
- end 
- else 
- t('username') 
- @user.username 
- end 
- t('display_name') 
- text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'medium' 
- t('email_address') 
- text_field 'user', 'email', :id => 'profileFormEmail', :class => 'long' 
- t('timezone') 
- time_zone_select 'user', 'time_zone', nil, {}, {:id => 'profileFormTimezone', :class => 'long'} 
- t('password') 
- if @user.new_record? 
- t('generate_password') 
- end 
- t('password') 
- t('repeat_password') 
- if @user.new_record? 
- t('send_account_email_notification') 
- yesno_toggle_tag 'new_account_notification', !!@send_email, :id => 'userFormEmailNotificationYes', :class => 'checkbox' 
- t('send_account_email_notication_info') 
- else 
- t('contact_info') 
- t('title') 
- text_field 'user', 'title', :id => 'userFormTitle' 
- t('office') 
- text_field 'user', 'office_number', :id => 'userFormOfficeNumber' 
- t('office') 
- text_field 'user', 'office_number_ext', :id => 'userFormOfficeNumberExt' 
- t('fax') 
- text_field 'user', 'fax_number', :id => 'userFormFaxNumber' 
- t('mobile') 
- text_field 'user', 'mobile_number', :id => 'userFormMobileNumber' 
- t('home') 
- text_field 'user', 'home_number', :id => 'userFormHomeNumber' 
- all_im_values = @user.im_info 
- if all_im_values.length > 0 
- t('instant_messengers') 
- t('service') 
- t('value') 
- t('primary_im') 
- @count = 0 
- all_im_values.each do |im_value| 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- "userFormIm#{@count}" 
- im_value.im_type.name 
- text_field_tag "user[im_values][#{im_value.im_type_id}][value]", im_value.value, :id => "userFormIm#{@count}" 
- radio_button_tag "user[default_im_value]", im_value.im_type_id, im_value.is_default, :id => 'im_default', :class => 'checkbox' 
- @count += 1 
- end 
- t('instant_messengers_info') 
- end 
- end 
- if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
- @permissions.keys.join('\',\'')
- t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
- else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
- end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
- end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
- t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
- end 
- end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
- 
- end 
- 
- t('edit_user') 
- form_tag( avatar_user_path(:id => @user.id), :multipart => true, :method => :put ) 
- error_messages_for :user 
- t('current_avatar') 
- if @user.has_avatar? 
- @user.avatar_url 
- h @user.display_name 
- link_to t('delete_current_avatar'), avatar_user_path(:id => @user.id), {:onclick => :avatar_confirm_delete, :method => :delete} 
- else 
- t('avatar_not_uploaded') 
- end 
- t('new_avatar') 
- if @user.has_avatar? 
- t('avatar_upload_info') 
- end 
- t('update_avatar') 
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
- end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
- 
-
-end
- }
-        
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+        flash[:error] = @user.work_plan.errors.full_messages.join(', ')
       end
     end
-  end
-
-  def current
-    @user = @logged_user
-    authorize! :update_profile, @user
-
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
- else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ @page_title = "User : #{@user.name} - #{Setting.productName}" 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
  end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
  end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
  
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
  end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.new_user"), @user, :class => "btn btn-success pull-right") 
+  t("users.recent_work") 
+ @user_recent_work_logs.each do |wl| 
+  pill_date ||= task.estimate_date 
+ time ||= :minutes_left 
+ sorting_disabled ||= false 
+ user.top_next_task == task ? 'top-next-task' : nil 
+ human_future_date(pill_date, user.tz) 
+ task.css_classes 
+ link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
+ task.name 
+ case time 
+ when :minutes_left 
+ "(" + TimeParser.format_duration(task.minutes_left) + ")" 
+ when :worked_minutes 
+ "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
+ end 
+ unless sorting_disabled 
+ link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
  end 
  
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
  end 
+ t("users.next_tasks") 
+ @user.schedule_tasks(:limit => 20, :save => false) do |task| 
+  pill_date ||= task.estimate_date 
+ time ||= :minutes_left 
+ sorting_disabled ||= false 
+ user.top_next_task == task ? 'top-next-task' : nil 
+ human_future_date(pill_date, user.tz) 
+ task.css_classes 
+ link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
+ task.name 
+ case time 
+ when :minutes_left 
+ "(" + TimeParser.format_duration(task.minutes_left) + ")" 
+ when :worked_minutes 
+ "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
  end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
+ unless sorting_disabled 
+ link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
  end 
  
- form_tag user_path(:id => @user.id), :method => :put 
-  error_messages_for :user 
- if @logged_user.is_admin 
- t('administration_options_info') 
- t('username') 
- text_field 'user', 'username', :id => 'userFormUsername' 
- if @logged_user.member_of_owner? 
- t('company') 
- select 'user', 'company_id', Company.select_list, {}, {:id => 'userFormCompany'} 
- t('options') 
- t('administrator') 
- yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'checkbox'  
- t('auto_assign_to_new_projects') 
- yesno_toggle 'user', 'auto_assign', :id => 'userFormAutoAssign', :class => 'checkbox'  
  end 
- else 
- t('username') 
- @user.username 
- end 
- t('display_name') 
- text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'medium' 
- t('email_address') 
- text_field 'user', 'email', :id => 'profileFormEmail', :class => 'long' 
- t('timezone') 
- time_zone_select 'user', 'time_zone', nil, {}, {:id => 'profileFormTimezone', :class => 'long'} 
- t('password') 
- if @user.new_record? 
- t('generate_password') 
- end 
- t('password') 
- t('repeat_password') 
- if @user.new_record? 
- t('send_account_email_notification') 
- yesno_toggle_tag 'new_account_notification', !!@send_email, :id => 'userFormEmailNotificationYes', :class => 'checkbox' 
- t('send_account_email_notication_info') 
- else 
- t('contact_info') 
- t('title') 
- text_field 'user', 'title', :id => 'userFormTitle' 
- t('office') 
- text_field 'user', 'office_number', :id => 'userFormOfficeNumber' 
- t('office') 
- text_field 'user', 'office_number_ext', :id => 'userFormOfficeNumberExt' 
- t('fax') 
- text_field 'user', 'fax_number', :id => 'userFormFaxNumber' 
- t('mobile') 
- text_field 'user', 'mobile_number', :id => 'userFormMobileNumber' 
- t('home') 
- text_field 'user', 'home_number', :id => 'userFormHomeNumber' 
- all_im_values = @user.im_info 
- if all_im_values.length > 0 
- t('instant_messengers') 
- t('service') 
- t('value') 
- t('primary_im') 
- @count = 0 
- all_im_values.each do |im_value| 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- "userFormIm#{@count}" 
- im_value.im_type.name 
- text_field_tag "user[im_values][#{im_value.im_type_id}][value]", im_value.value, :id => "userFormIm#{@count}" 
- radio_button_tag "user[default_im_value]", im_value.im_type_id, im_value.is_default, :id => 'im_default', :class => 'checkbox' 
- @count += 1 
- end 
- t('instant_messengers_info') 
- end 
- end 
- if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
- @permissions.keys.join('\',\'')
- t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
- else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
- end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
- end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
- t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
- end 
+ if @user.tasks.open_only.not_snoozed.count > 20 
+ t("tasks.more_tasks") 
  end 
  
+ form_tag(workplan_user_path(@user), :method => :put, :class => "form-horizontal") do 
+ t("users.work_plan") 
+  fields_for("user[work_plan_attributes]", @user.work_plan) do |f| 
+ t("shared.monday_short") 
+ t("shared.tuesday_short") 
+ t("shared.wednesday_short") 
+ t("shared.thursday_short") 
+ t("shared.friday_short") 
+ t("shared.saturday_short") 
+ t("shared.sunday_short") 
+ f.text_field 'monday', :class => "input-tiny" 
+ f.text_field 'tuesday', :class => "input-tiny" 
+ f.text_field 'wednesday', :class => "input-tiny"  
+ f.text_field 'thursday', :class => "input-tiny"  
+ f.text_field 'friday', :class => "input-tiny"  
+ f.text_field 'saturday', :class => "input-tiny"  
+ f.text_field 'sunday', :class => "input-tiny"  
+ end 
+ 
+ submit_tag t("button.update"), :class => 'btn btn-primary' 
+ end 
+ end 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
+ 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
- t('company_no_users') 
+ image_tag("logo.gif", :alt => "logo" ) 
  end 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
  
  end 
  
- t('edit_user') 
- form_tag( avatar_user_path(:id => @user.id), :multipart => true, :method => :put ) 
- error_messages_for :user 
- t('current_avatar') 
- if @user.has_avatar? 
- @user.avatar_url 
- h @user.display_name 
- link_to t('delete_current_avatar'), avatar_user_path(:id => @user.id), {:onclick => :avatar_confirm_delete, :method => :delete} 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
  else 
- t('avatar_not_uploaded') 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
- t('new_avatar') 
- if @user.has_avatar? 
- t('avatar_upload_info') 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
  end 
- t('update_avatar') 
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
  end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
  
 
 end
 
+  end
+
+  def update
+    @user = User.where("company_id = ?", current_user.company_id).find(params[:id])
+
+    if @user.update_attributes(params[:user].except(:admin))
+      flash[:success] = t('flash.notice.model_updated', model: User.model_name.human)
+      redirect_to edit_user_path(@user)
+    else
+      flash[:error] = @user.errors.full_messages.join(". ")
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ form_tag(user_path(@user), :method => :put, :class => "form-horizontal", :multipart => true) do 
+  t("users.name") 
+ text_field 'user', 'name'  
+ t("users.username") 
+ text_field 'user', 'username', :autocomplete => "off" 
+ t("users.password") 
+ password_field 'user', 'password', :autocomplete => "off"  
+ t("users.company") 
+ hidden_field_tag("user[customer_id]", @user.customer_id, :id => "user_customer_id", :class => "auto_complete_id") 
+ text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
+ @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
+ t("users.goto_company") 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ if @user.avatar? 
+ t("users.current_avatar") 
+ tag("img", {:src => @user.avatar_url(25), :border => 0 } ) 
+ tag("img", {:src => @user.avatar_url, :border => 0 } ) 
+ end 
+ t("users.new_avatar") 
+ file_field :user, :avatar 
+ t 'hint.user.avatar' 
+ t("users.language") 
+ select 'user', 'locale', I18n.available_locales 
+ t("users.location") 
+ time_zone_select 'user', 'time_zone', TZInfo::Timezone.all.sort, :model => TZInfo::Timezone 
+ t("users.receive_notifications") 
+ check_box 'user', 'receive_notifications' 
+ t("users.receive_own_notifications") 
+ check_box 'user', 'receive_own_notifications' 
+ t("users.auto_add_to_customer_tasks", customer: @user.customer.try(:name)) 
+ check_box "user", "auto_add_to_customer_tasks" 
+ t("users.active") 
+ check_box(:user, :active) 
+ t("users.private") 
+ check_box(:user, :comment_private_by_default)
+ t("users.time_format") 
+ select 'user', 'time_format', [ ['16:00', '%H:%M'], ['4:00 PM', '%I:%M%p'] ] 
+ t("users.date_format") 
+ select 'user', 'date_format', [ ['1/21/2007', '%m/%d/%Y'], ['21/1/2007', '%d/%m/%Y'], ['2007-1-21', '%Y-%m-%d'] ] 
+ t("users.track_time") 
+ check_box 'user', 'option_tracktime' 
+ t("users.show_avatars") 
+ check_box 'user', 'option_avatars' 
+ 
+ end 
+
+end
+
+    end
   end
 
   def destroy
-    authorize! :delete, @user
-    
-    old_name = @user.display_name
-    #@user.updated_by = @logged_user
-    @user.destroy
-    
-    respond_to do |format|
-      format.html {
-        error_status(false, :success_deleted_user, {:name => old_name})
-        redirect_back_or_default :controller => 'administration', :action => 'people'
-      }
-      
-      format.xml  { head :ok }
+    if current_user.id == params[:id].to_i
+      flash[:error] = t('error.user.delete_self')
+      redirect_to(:controller => "customers", :action => 'index')
+      return
     end
+
+    @user = User.where("company_id = ?", current_user.company_id).find(params[:id])
+    if @user.destroy
+      flash[:success] = t('flash.notice.model_deleted', model: @user.name)
+    else
+      flash[:error] = @user.errors.full_messages.join(' ')
+    end
+
+    if @user.customer
+      redirect_to edit_customer_path(@user.customer)
+    else
+      redirect_to root_path
+    end
+  end
+
+  def update_seen_news
+    if request.xhr?
+      @user = current_user
+      unless @user.nil?
+        @user.seen_news_id = params[:id]
+        @user.save
+      end
+    end
+    render :nothing => true
   end
 
   def avatar
-    authorize! :update_profile, @user
-    
-    case request.request_method_symbol
-    when :put
-      user_attribs = params[:user]
+    @user = User.find(params[:id])
+    unless @user.avatar?
+      render :nothing => true
+      return
+    end
+    if params[:large]
+      send_file @user.avatar_large_path, :filename => "avatar", :type => 'image/jpeg', :disposition => 'inline'
+    else
+      send_file @user.avatar_path, :filename => "avatar", :type => 'image/jpeg', :disposition => 'inline'
+    end
+  end
 
-      new_avatar = user_attribs[:avatar]
-      @user.errors.add(:avatar, 'Required') if new_avatar.nil?
-      @user.avatar = new_avatar
+  def auto_complete_for_project_name
+    text = params[:term]
+    if text.blank?
+      return render :nothing => true
+    end
 
-      if @user.errors.empty?
-        if @user.save
-          error_status(false, :success_updated_avatar)
-        else
-          error_status(true, :error_updating_avatar)
-        end
-        
-        redirect_to edit_user_path(:id => @user.id)
-      else
-        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
+    @projects = current_user.company.projects.where("lower(name) like ?", "%#{ text }%")
+
+    if params[:user_id]
+      user = User.find_by_id(params[:user_id])
+      @projects = @projects - user.projects if user
+    end
+
+    render :json => @projects.collect{|project| {:value => project.name, :id=> project.id} }.to_json
+  end
+
+  def project
+    @user = current_user.company.users.active.find(params[:id])
+
+    project = current_user.company.projects.find(params[:project_id])
+
+    ProjectPermission.create(:user => @user, :company => @user.company, :project => project)
+
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :content do 
+ yield(:navigation) 
+ project.dom_id 
+ if user_edit 
+ link_to project.name, "/projects/edit/#{project.id}" 
  else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ link_to @user.name, "/users/edit/#{@user.id}" 
  end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
+
+   perm = @user.project_permissions.where("project_id=?", project.id).first
+   perms = ProjectPermission.permissions
+ if current_user.admin? and perm 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :user_edit => user_edit)}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" 
+ for p in perms 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" if perm.can?(p) 
+ link_to_function image_tag("delete.png", :title => t("users.grant_access", access: p, user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_add_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" unless perm.can?(p) 
  end 
  end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
  end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+  javascript_include_tag 'application' 
+ yield :head 
+ stylesheet_link_tag 'application' 
+ auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
+ csrf_meta_tag 
+ @page_title || Setting.productName 
+ if Setting.version 
+ Setting.version 
+ end 
+ new_user_session_url 
+  image_tag('spinner.gif', :border => 0) 
  
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
- end 
- end 
- 
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+  if current_user.company.logo? 
+ image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ image_tag("logo.gif", :alt => "logo" ) 
  end 
+ if total_today > 0 
+ t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
- end 
- 
- form_tag user_path(:id => @user.id), :method => :put 
-  error_messages_for :user 
- if @logged_user.is_admin 
- t('administration_options_info') 
- t('username') 
- text_field 'user', 'username', :id => 'userFormUsername' 
- if @logged_user.member_of_owner? 
- t('company') 
- select 'user', 'company_id', Company.select_list, {}, {:id => 'userFormCompany'} 
- t('options') 
- t('administrator') 
- yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'checkbox'  
- t('auto_assign_to_new_projects') 
- yesno_toggle 'user', 'auto_assign', :id => 'userFormAutoAssign', :class => 'checkbox'  
- end 
- else 
- t('username') 
- @user.username 
- end 
- t('display_name') 
- text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'medium' 
- t('email_address') 
- text_field 'user', 'email', :id => 'profileFormEmail', :class => 'long' 
- t('timezone') 
- time_zone_select 'user', 'time_zone', nil, {}, {:id => 'profileFormTimezone', :class => 'long'} 
- t('password') 
- if @user.new_record? 
- t('generate_password') 
- end 
- t('password') 
- t('repeat_password') 
- if @user.new_record? 
- t('send_account_email_notification') 
- yesno_toggle_tag 'new_account_notification', !!@send_email, :id => 'userFormEmailNotificationYes', :class => 'checkbox' 
- t('send_account_email_notication_info') 
- else 
- t('contact_info') 
- t('title') 
- text_field 'user', 'title', :id => 'userFormTitle' 
- t('office') 
- text_field 'user', 'office_number', :id => 'userFormOfficeNumber' 
- t('office') 
- text_field 'user', 'office_number_ext', :id => 'userFormOfficeNumberExt' 
- t('fax') 
- text_field 'user', 'fax_number', :id => 'userFormFaxNumber' 
- t('mobile') 
- text_field 'user', 'mobile_number', :id => 'userFormMobileNumber' 
- t('home') 
- text_field 'user', 'home_number', :id => 'userFormHomeNumber' 
- all_im_values = @user.im_info 
- if all_im_values.length > 0 
- t('instant_messengers') 
- t('service') 
- t('value') 
- t('primary_im') 
- @count = 0 
- all_im_values.each do |im_value| 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- "userFormIm#{@count}" 
- im_value.im_type.name 
- text_field_tag "user[im_values][#{im_value.im_type_id}][value]", im_value.value, :id => "userFormIm#{@count}" 
- radio_button_tag "user[default_im_value]", im_value.im_type_id, im_value.is_default, :id => 'im_default', :class => 'checkbox' 
- @count += 1 
- end 
- t('instant_messengers_info') 
- end 
- end 
- if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
- @permissions.keys.join('\',\'')
- t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
- else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
- end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
- end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
- t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
- end 
- end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
+ if @current_sheet && @current_sheet.task 
+  start_stop_work_link(@current_sheet.task) 
+ cancel_work_link(@current_sheet.task) 
+ pause_task_link(@current_sheet.task) 
+ link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
+ percent = ((@current_sheet.task.worked_minutes + @current_sheet.duration / 60) / @current_sheet.task.duration.to_f  * 100).round unless (@current_sheet.task.duration.nil? or @current_sheet.task.duration == 0) 
+ TimeParser.format_duration(@current_sheet.duration/60) 
+ TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
+ percent.nil? ? 0 : percent 
  
  end 
  
- t('edit_user') 
- form_tag( avatar_user_path(:id => @user.id), :multipart => true, :method => :put ) 
- error_messages_for :user 
- t('current_avatar') 
- if @user.has_avatar? 
- @user.avatar_url 
- h @user.display_name 
- link_to t('delete_current_avatar'), avatar_user_path(:id => @user.id), {:onclick => :avatar_confirm_delete, :method => :delete} 
+  t('tabmenu.overview') 
+ link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
+ if current_user.admin? 
+ link_to t('tabmenu.planning'), planning_tasks_path 
+ end 
+ if current_user.can_any?(current_user.projects, 'report') 
+ billing_title = current_user.can_use_billing? ? 'billing' : 'reports'  
+ link_to t("tabmenu.#{billing_title}"), :controller => 'billing', :action => 'index' 
+ end 
+ link_to t('tabmenu.history'), :controller => 'timeline', :action => 'index' 
+ t('tabmenu.create') 
+ link_to t('tabmenu.task'), :controller => 'tasks', :action => 'new' 
+ if current_templates.size > 0 
+ t('tabmenu.from_template') 
+ current_templates.order("tasks.position_task_template").each do |task| 
+ link_to task, clone_task_path(task.task_num) 
+ end 
+ end 
+ if current_user.create_projects? 
+ link_to t('tabmenu.project'), :controller => 'projects', :action => 'new' 
+ end 
+ link_to t('tabmenu.milestone'), new_milestone_path 
+ if Setting.contact_creation_allowed && current_user.can_view_clients? 
+ link_to t('tabmenu.person'), :controller => 'users', :action => 'new' 
+ link_to t('tabmenu.company'), :controller => 'customers', :action => 'new' 
+ end 
+ if current_user.use_resources? 
+ link_to(t('tabmenu.resource'), new_resource_path) 
+ end 
+ if menu_class("activities") == "active" 
+ link_to t('tabmenu.add_new_widget'), '#', :id => "add-widget-menu-link" 
+ end 
+ menu_class("tasks") 
+ link_to t('tabmenu.tasks'), :controller => 'tasks', :action => 'index' 
+ menu_class("milestones") 
+ link_to t('tabmenu.milestones'), milestones_path 
+ if current_user.company.show_wiki? 
+ menu_class("wiki") 
+ link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
+ end 
+ link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
+ 
+ current_user.display_login 
+ if current_user.admin? 
+ link_to  t('tabmenu.my_account'), edit_user_path(current_user) 
+ link_to t('tabmenu.company_settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id 
  else 
- t('avatar_not_uploaded') 
+ link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
- t('new_avatar') 
- if @user.has_avatar? 
- t('avatar_upload_info') 
+ link_to t('tabmenu.log_out'), destroy_user_session_path 
+ 
+   flash.each do |key, val| 
+key.to_s
+ val 
  end 
- t('update_avatar') 
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
+ 
+ news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
+unless news.nil? 
+ tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") 
+ news.body 
+ link_to( "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true) 
  end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
+ 
+ content_for?(:content) ? yield(:content) : yield 
+ current_user.id 
+ current_user.dateFormat 
  
 
 end
 
+  end
+
+  def auto_complete_for_user_name
+    if (term = params[:term]).present?
+      # the next line searches for names starting with given text OR surname (space started) starting with text of the active users
+      @users = current_user.company.users.active.search_by_name(term).limit(50)
+
+      if params[:project_id]
+        project = Project.find_by_id(params[:project_id])
+        @users = @users - project.users if project
       end
-    when :delete
-      @user.avatar = nil
-      @user.save
 
-      error_status(false, :success_deleted_avatar)
-      redirect_to edit_user_path(:id => @user.id)
+      render :json=> @users.collect{|user| {:value => user.to_s, :id=> user.id} }.to_json
+    else
+      render :nothing=> true
     end
   end
 
-  def show
-    authorize! :show, @user
-    
-    respond_to do |format|
-      format.html { }
-      
-      format.xml  {
-        if @user.is_admin
-          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
- else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
- end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
- end 
- end 
- 
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- end 
- end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
- end 
- 
+private
+  def protected_area
+    @user = User.where("company_id = ?", current_user.company_id).find_by_id(params[:id]) if params[:id]
 
-  @page_actions = []
-  if can?(:update_profile, @user)
-	  @page_actions += [{:title => :edit, :url => edit_user_path(:id => @user.id)}]
-  end
-  
-  if can?(:update_permissions, @user)
-  	@page_actions << {:title => :update_permissions, :url => permissions_user_path(:id => @user.id)}
-  end
-
-
-   card.avatar_url 
- h card.display_name 
- h card.display_name 
- t('title') 
- card.title ? (h card.title) : t('not_applicable') 
- t('company') 
- link_to card.company.name, company_path(:id => card.company.id) 
- t('contact_online') 
- t('email_address') 
- h card.email 
- h card.email 
- if !card.im_values.empty? 
- card.im_values.each do |im_value| 
- next if im_value.value.blank? 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- h im_value.value 
- if im_value.is_default 
- t('primary_im') 
- end 
- end 
- end 
- if !card.office_number.nil? or !card.fax_number.nil? or !card.mobile_number.nil? or !card.home_number.nil? 
- t('contact_offline') 
- if !card.office_number.nil? and !card.office_number.empty? 
- t('office') 
- h(card.office_number) 
- end 
- if !card.fax_number.nil? and !card.fax_number.empty? 
- t('fax') 
- h(card.fax_number) 
- end 
- if !card.mobile_number.nil? and !card.mobile_number.empty? 
- t('mobile') 
- h(card.mobile_number) 
- end 
- if !card.home_number.nil? and !card.home_number.empty? 
- t('home') 
- h(card.home_number) 
- end 
- end 
-
-
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
- end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
- 
-
-end
-
-        else
-          attribs = [:id,
-                     :company_id,
-                     :avatar_file_name,
-                     :display-name,
-                     :email,
-                     :fax,
-                     :home_number,
-                     :mobile_number,
-                     :office_number,
-                     :office_number_ext,
-                     :time_zone,
-                     :title]
-          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
- else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
- end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
- end 
- end 
- 
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- end 
- end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
- end 
- 
-
-  @page_actions = []
-  if can?(:update_profile, @user)
-	  @page_actions += [{:title => :edit, :url => edit_user_path(:id => @user.id)}]
-  end
-  
-  if can?(:update_permissions, @user)
-  	@page_actions << {:title => :update_permissions, :url => permissions_user_path(:id => @user.id)}
-  end
-
-
-   card.avatar_url 
- h card.display_name 
- h card.display_name 
- t('title') 
- card.title ? (h card.title) : t('not_applicable') 
- t('company') 
- link_to card.company.name, company_path(:id => card.company.id) 
- t('contact_online') 
- t('email_address') 
- h card.email 
- h card.email 
- if !card.im_values.empty? 
- card.im_values.each do |im_value| 
- next if im_value.value.blank? 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- h im_value.value 
- if im_value.is_default 
- t('primary_im') 
- end 
- end 
- end 
- if !card.office_number.nil? or !card.fax_number.nil? or !card.mobile_number.nil? or !card.home_number.nil? 
- t('contact_offline') 
- if !card.office_number.nil? and !card.office_number.empty? 
- t('office') 
- h(card.office_number) 
- end 
- if !card.fax_number.nil? and !card.fax_number.empty? 
- t('fax') 
- h(card.fax_number) 
- end 
- if !card.mobile_number.nil? and !card.mobile_number.empty? 
- t('mobile') 
- h(card.mobile_number) 
- end 
- if !card.home_number.nil? and !card.home_number.empty? 
- t('home') 
- h(card.home_number) 
- end 
- end 
-
-
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
- end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
- 
-
-end
-
-        end  
-      }
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
- else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
- end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
- end 
- end 
- 
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- end 
- end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
- end 
- 
-
-  @page_actions = []
-  if can?(:update_profile, @user)
-	  @page_actions += [{:title => :edit, :url => edit_user_path(:id => @user.id)}]
-  end
-  
-  if can?(:update_permissions, @user)
-  	@page_actions << {:title => :update_permissions, :url => permissions_user_path(:id => @user.id)}
-  end
-
-
-   card.avatar_url 
- h card.display_name 
- h card.display_name 
- t('title') 
- card.title ? (h card.title) : t('not_applicable') 
- t('company') 
- link_to card.company.name, company_path(:id => card.company.id) 
- t('contact_online') 
- t('email_address') 
- h card.email 
- h card.email 
- if !card.im_values.empty? 
- card.im_values.each do |im_value| 
- next if im_value.value.blank? 
- im_value.im_type.icon_url 
- im_value.im_type.name 
- h im_value.value 
- if im_value.is_default 
- t('primary_im') 
- end 
- end 
- end 
- if !card.office_number.nil? or !card.fax_number.nil? or !card.mobile_number.nil? or !card.home_number.nil? 
- t('contact_offline') 
- if !card.office_number.nil? and !card.office_number.empty? 
- t('office') 
- h(card.office_number) 
- end 
- if !card.fax_number.nil? and !card.fax_number.empty? 
- t('fax') 
- h(card.fax_number) 
- end 
- if !card.mobile_number.nil? and !card.mobile_number.empty? 
- t('mobile') 
- h(card.mobile_number) 
- end 
- if !card.home_number.nil? and !card.home_number.empty? 
- t('home') 
- h(card.home_number) 
- end 
- end 
-
-
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
- end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
- 
-
-end
-
-  end
-
-  def permissions
-    authorize! :update_profile, @user
-
-    @projects = @user.company.projects
-    @permissions = Person.permission_names()
-
-    case request.request_method_symbol
-    when :put
-      update_project_permissions(@user, params[:user_project], params[:project_permission], @projects)
-      #Activity.new_log(@project, @logged_user, :edit, true)
-      error_status(false, :success_updated_permissions)
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_authenticity_token 
- "#{h(page_title)} @ #{h(Company.owner.name)}" 
- stylesheet_link_tag 'project_website' 
- additional_stylesheets.each do |ss| 
- stylesheet_link_tag ss 
- end unless additional_stylesheets.nil? 
- javascript_include_tag 'jquery.js' 
- javascript_include_tag 'jquery-ui.js' 
- javascript_include_tag 'jrails.js' 
- javascript_include_tag 'application.js' 
- link_to t('administration'), :controller => 'administration' 
-  if user.is_anonymous? 
- t('welcome_anonymous') 
- link_to(t('login'), logout_path) 
- else 
- t('welcome_back', :user => h(user.display_name)).html_safe 
- link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
- end 
- @running_times.empty? ? 'none' : 'block' 
- t('running_times', :count => @running_times.size) 
- render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- unless user.is_anonymous? 
- link_to t('account'), @logged_user 
- render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless projects.blank? 
- link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
- render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- if user.is_admin 
- link_to t('administration'), :controller => 'administration' 
- render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
- end 
- unless user.is_anonymous? 
- t('account') 
- link_to t('edit_profile'), edit_user_path(:id => user.id) 
- link_to t('update_avatar'), avatar_user_path(:id => user.id) 
- t('userbox_more') 
- link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
- link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
- end 
- unless projects.blank? 
- t('projects') 
- projects.each do |project| 
- link_to h(project.name), project_path(:id => project.id) 
- end 
- end 
- if user.is_admin 
- t('administration') 
- link_to t('company'), Company.owner 
- link_to t('members'), companies_path 
- link_to t('projects'), projects_path 
- end 
-  listed.id 
- link_to h(listed.name), listed.object_url 
- link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
- 
- 
-  unless tabs.nil? 
- current_tab = self.current_tab 
- tabs.each do |item| 
- "item_#{item[:id]}" 
- 'class="active"'.html_safe if item[:id] == current_tab 
- item[:url] 
- t(item[:id]) 
- end 
- end 
- 
-  unless crumbs.nil? 
- crumbs.each do |crumb| 
- if crumb[:url] 
- crumb[:url] 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- else 
- crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
- end 
- end 
- end 
- 
- if flash[:message] 
- flash[:error] ? 'error' : 'success' 
- flash[:error] ? 'flash_error' : 'flash_success' 
- h flash[:message] 
- end 
- h page_title 
- @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
-  page_actions.each do |action| 
- action[:url] 
- action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
- action[:title] 
- t(action[:title]) 
- end 
- 
- @permissions.keys.join('\',\'')
- unless @projects.empty? 
- form_tag permissions_user_path(:id => @user.id), :method => :put 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
- else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
- end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
- end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
- t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
- end 
- end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
- 
- t('update_permissions') 
- end 
- unless @content_for_sidebar.nil? 
- render :partial => @content_for_sidebar 
- end 
-  if not Company.owner.homepage.nil? 
- Company.owner.homepage 
- Company.owner.name 
- else 
- Company.owner.name 
- end 
- product_signature 
- 
-
-end
-
-  end
-
-  private
-  
-  def update_project_permissions(user, project_ids, project_permission, old_projects = nil)
-    project_ids ||= []
-
-    # Grab the list of project id's specified
-    project_list = Project.where(:id => project_ids & user.project_ids)
-
-    # Associate project permissions with user
-    project_list.each do |project|
-      permission_list = project_permission.nil? ? nil : project_permission[project.id.to_s]
-
-      # Find permission list
-      person = project.people.find_or_create_by_user_id user.id
-
-      # Reset and update permissions
-      person.reset_permissions
-      person.update_str permission_list unless permission_list.nil?
-      person.save
-    end
-
-    unless old_projects.nil?
-    # Delete all permissions that aren't in the project list
-      delete_list = old_projects.collect do |project|
-        project.id unless project_list.include?(project)
-      end.compact
-
-      unless delete_list.empty?
-        Person.delete_all(:user_id => user.id, :project_id => delete_list)
+    if Setting.contact_creation_allowed
+      unless current_user.admin? or current_user.edit_clients? or current_user == @user
+        flash[:error] = t('flash.alert.admin_permission_needed')
+        redirect_to edit_user_path(current_user)
+        return false
+      end
+    else
+      unless current_user == @user
+        redirect_to edit_user_path(current_user), alert: t('flash.alert.access_denied')
+        return false
       end
     end
-  end
-
-  def obtain_user
-    begin
-      @user = User.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      error_status(true, :invalid_user)
-      redirect_back_or_default :controller => 'dashboard'
-      return false
-    end
-
     true
   end
+
 end

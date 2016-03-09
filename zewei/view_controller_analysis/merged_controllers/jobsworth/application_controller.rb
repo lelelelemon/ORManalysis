@@ -1,93 +1,183 @@
-#==
-# RailsCollab
-# Copyright (C) 2007 - 2011 James S Urquhart
-# Portions Copyright (C) René Scheibe
-# 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-# 
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#++
+# encoding: UTF-8
+# The filters added to this controller will be run for all controllers in the application.
+# Likewise will all the methods added be available for all controllers.
 
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
+#TODO: Clean this mess laterz
+require 'digest/md5'
 
 class ApplicationController < ActionController::Base
-  include SslRequirement
-  include AuthenticatedSystem
+  before_filter :set_locale
+  before_filter :authenticate_user!
+  before_filter :current_sheet
+  before_filter :set_mailer_url_options
 
-  protect_from_forgery
-  clear_helpers
-  helper :navigation
+  include UrlHelper
+  include DateAndTimeHelper
 
-  before_filter :reload_owner
-  before_filter :login_required
-  before_filter :logged_user_info
-  before_filter :set_time_zone
+  helper :task_filter
+  helper :date_and_time
+  helper :todos
+  helper :tags
+  helper :time_tracking
+  helper :resources
+  helper :work_logs
 
-protected
+#  helper :all
 
-  rescue_from CanCan::AccessDenied do |exception|
-    return error_status(true, :insufficient_permissions)
-  end
+  helper_method :last_active
+  helper_method :render_to_string
+  helper_method :current_user
+  helper_method :tz
+  helper_method :current_projects
+  helper_method :current_project_ids
+  helper_method :completed_milestone_ids
+  helper_method :link_to_task
+  helper_method :current_task_filter
+  helper_method :current_templates
+  helper_method :admin?, :logged_in?, :highlight_all
 
-  def ssl_required?
-	Rails.configuration.using_ssl
-  end
-
-  def error_status(error, message, args={})
-  	flash[:error] = error
-  	flash[:message] = I18n.t(message, args)
-  end
-
-  def set_time_zone
-    Time.zone = @logged_user.time_zone if @logged_user
-  end
-  
-  def reload_owner
-    Company.owner(true)
-  end
-
-  def process_session
-    # Set active project based on parameter or session
-    @active_project = nil
-    if params[:active_project]
-      @active_project = Project.find(params[:active_project]) rescue ActiveRecord::RecordNotFound
-      return false unless verify_project
+  #  protect_from_forgery :secret => '112141be0ba20082c17b05c78c63f357'
+  def current_sheet
+    if @current_sheet.nil? and not current_user.nil?
+      @current_sheet = Sheet.where("user_id = ?", current_user.id).order('sheets.id').includes(:task).first
+      unless @current_sheet.nil?
+        if @current_sheet.task.nil?
+          @current_sheet.destroy
+          @current_sheet = nil
+        end
+      end
     end
+    @current_sheet
   end
 
-  def logged_user_info
-    unless @logged_user.nil?
-      @active_projects = @logged_user.active_projects.all
-      @running_times = @logged_user.assigned_times.running.all
-    end
+  def current_company
+    @_current_company ||= current_user.try :company
   end
 
-  def verify_project
-    if @active_project.nil? or not (can?(:show, @active_project))
-      error_status(false, :insufficient_permissions)
-      redirect_to :controller => 'dashboard'
-      return false
-    end
+  delegate :projects, :project_ids, :to => :current_user, :prefix=> :current
+  delegate :all_projects, :admin?, :tz,  :to => :current_user
 
+  # List of completed milestone ids, joined with ,
+  def completed_milestone_ids
+    unless @milestone_ids
+      @milestone_ids ||= Milestone.select("id").where("company_id = ? AND completed_at IS NOT NULL", current_user.company_id).collect{ |m| m.id }
+      @milestone_ids = [-1] if @milestone_ids.empty?
+    end
+    @milestone_ids
+  end
+
+  def highlight_safe_html( text, k, raw = false )
+    res = text.gsub(/(#{Regexp.escape(k)})/i, '{{{\1}}}')
+    res = ERB::Util.h(res).gsub("{{{", "<strong>").gsub("}}}", "</strong>").html_safe unless raw
+    res
+  end
+
+  def highlight_all( text, keys)
+    keys.each do |k|
+      text = highlight_safe_html( text, k, true)
+    end
+    ERB::Util.h(text).gsub("{{{", "<strong>").gsub("}}}", "</strong>").html_safe
+  end
+
+  def logged_in?
     true
   end
 
-  def user_track
-    unless @logged_user.nil?
-      store_location if request.method_symbol == :get and request.format == :html
-      @logged_user.update_attribute('last_visit', Time.now.utc)
+  def last_active
+    session[:last_active] ||= Time.now.utc
+  end
+
+  ###
+  # Which company does the served hostname correspond to?
+  ###
+  def company_from_subdomain
+    if @company.nil?
+      subdomain = request.subdomains.first if request.subdomains
+
+      @company = Company.where("subdomain = ?", subdomain).first
+      if Company.count == 1
+        @company ||= Company.order("id asc").first
+      end
     end
 
-    true
+    return @company
   end
+
+  def current_company
+    current_user.try :company
+  end
+
+  # Redirects to the last page this user was on, or to the root url.
+  # If the current request is using ajax, uses js to do the redirect.
+  # If the tutorial hasn't been completed, sends them back to that page
+  def redirect_from_last
+    url = root_url
+
+    if request.referer
+      url = request.referer
+    end
+
+    url = url.gsub("format=js", "")
+    redirect_using_js_if_needed(url)
+  end
+
+  private
+
+  # Returns a link to the given task.
+  # If highlight keys is given, that text will be highlighted in
+  # the link.
+  # NOTE: The method is deprecated and should be removed later.
+  def link_to_task(task, truncate = true, highlight_keys = [])
+    link = "<strong>#{task.issue_num}</strong> "
+    if task.is_a? Template
+      url = url_for(:id => task.task_num, :controller => 'task_templates', :action => 'edit')
+    else
+      url = url_for(:id => task.task_num, :controller => 'tasks', :action => 'edit')
+    end
+
+    html = {
+      :class => "tasklink #{task.css_classes}",
+    }
+
+    text = truncate ? task.name : self.class.helpers.truncate(task.name, :length => 80)
+    text = highlight_all(text, highlight_keys)
+
+    link += self.class.helpers.link_to(text, url, html)
+    return link.html_safe
+  end
+
+  # returns the current task filter (or a new, blank one
+  # if none set)
+  def current_task_filter
+    @current_task_filter ||= TaskFilter.system_filter(current_user)
+  end
+
+  # Redirects to the given url. If the current request is using ajax,
+  # javascript will be used to do the redirect.
+  def redirect_using_js_if_needed(url)
+    url = url_for(url)
+
+    if !request.xhr?
+      redirect_to url
+    else
+      render :js => "parent.document.location = '#{ url }'"
+    end
+  end
+
+  def current_templates
+    Template.where("project_id IN (?) AND company_id = ?", current_project_ids, current_user.company_id)
+  end
+
+  protected
+
+  def authorize_user_is_admin
+    unless current_user.admin?
+      redirect_to root_path, alert: t('flash.alert.admin_permission_needed')
+    end
+  end
+
+  def set_locale
+    I18n.locale = current_user.try(:locale) || 'en_US'
+  end
+
 end
