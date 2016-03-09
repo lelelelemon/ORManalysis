@@ -114,11 +114,38 @@ class Admin::CommunityTransactionsController < ApplicationController
  link_to(" " + t("admin.communities.transactions.export_all_as_csv"), {per_page: 99999, format: :csv}, {class: icon_class("download")}) 
  end 
  page_entries_info(conversations, :model => "Transaction") 
-  
+  link_to({:sort => column, :direction => direction, :page => (params[:page] || 1)}, {:class => "sort-link"}) do 
+ title 
+ if params[:sort].eql?(column) 
+ direction 
+ if direction.eql?('asc') 
+ else 
+ end 
+ end 
+ end 
+ 
  t("admin.communities.transactions.headers.status") 
  t("admin.communities.transactions.headers.sum") 
-  
-  
+  link_to({:sort => column, :direction => direction, :page => (params[:page] || 1)}, {:class => "sort-link"}) do 
+ title 
+ if params[:sort].eql?(column) 
+ direction 
+ if direction.eql?('asc') 
+ else 
+ end 
+ end 
+ end 
+ 
+  link_to({:sort => column, :direction => direction, :page => (params[:page] || 1)}, {:class => "sort-link"}) do 
+ title 
+ if params[:sort].eql?(column) 
+ direction 
+ if direction.eql?('asc') 
+ else 
+ end 
+ end 
+ end 
+ 
  t("admin.communities.transactions.headers.initiated_by") 
  t("admin.communities.transactions.headers.other_party") 
  conversations.each do |conversation| 
@@ -247,11 +274,38 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to(" " + t("admin.communities.transactions.export_all_as_csv"), {per_page: 99999, format: :csv}, {class: icon_class("download")}) 
  end 
  page_entries_info(conversations, :model => "Transaction") 
-  
+  link_to({:sort => column, :direction => direction, :page => (params[:page] || 1)}, {:class => "sort-link"}) do 
+ title 
+ if params[:sort].eql?(column) 
+ direction 
+ if direction.eql?('asc') 
+ else 
+ end 
+ end 
+ end 
+ 
  t("admin.communities.transactions.headers.status") 
  t("admin.communities.transactions.headers.sum") 
-  
-  
+  link_to({:sort => column, :direction => direction, :page => (params[:page] || 1)}, {:class => "sort-link"}) do 
+ title 
+ if params[:sort].eql?(column) 
+ direction 
+ if direction.eql?('asc') 
+ else 
+ end 
+ end 
+ end 
+ 
+  link_to({:sort => column, :direction => direction, :page => (params[:page] || 1)}, {:class => "sort-link"}) do 
+ title 
+ if params[:sort].eql?(column) 
+ direction 
+ if direction.eql?('asc') 
+ else 
+ end 
+ end 
+ end 
+ 
  t("admin.communities.transactions.headers.initiated_by") 
  t("admin.communities.transactions.headers.other_party") 
  conversations.each do |conversation| 
