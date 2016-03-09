@@ -12,6 +12,12 @@ def parse_render_statement(stmt)
     return NOT_VALID
   end
 
+  if ["if_mod", "unless_mod"].include? ast.type.to_s
+    ast = ast[1]
+  end
+  if ast.type.to_s == "binary"
+    ast = ast[0]
+  end
   hash = {}
 
 #  render(partial: "view", layout: "layout_view")
@@ -372,7 +378,7 @@ def get_render_statement_array(ast=nil)
   ast_arr.push ast
   while ast_arr.length > 0
     cur_ast = ast_arr.pop
-    if cur_ast.source.start_with? keyword
+    if cur_ast.source.start_with? keyword and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?("escape_javascript(", "raw(")
         if cur_ast.parent.parent.parent.type.to_s == "ifop"
           res = cur_ast.parent.parent.parent.source.to_s
@@ -400,3 +406,10 @@ def get_render_statement_array(ast=nil)
 
   return res_arr
 end
+
+=begin
+content = File.open(ARGV[0], "r").read
+ast = YARD::Parser::Ruby::RubyParser.parse(content).root
+res = get_render_statement_array(ast)
+binding.pry
+=end

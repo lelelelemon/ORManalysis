@@ -492,6 +492,7 @@ class View_Class
 
 		get_render_statement_array.each do |(str_to_be_replaced, stmt)|
 #			view_name = get_view_name_from_render_statement(r)
+      puts str_to_be_replaced
       options_hash = parse_render_statement(stmt)
 			#if view_name != "not_valid"
       if options_hash != "not_valid"
