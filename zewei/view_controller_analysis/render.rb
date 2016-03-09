@@ -138,7 +138,7 @@ def get_view_name_from_hash(options_hash, controller_name, action_name)
   elsif options_hash.has_key?"js:"
     res = options_hash["js:"]
   elsif options_hash.has_key?"file:"
-    res = options_hash["file"]
+    res = options_hash["file:"]
   elsif options_hash.has_key?":file"
     res = options_hash[":file"]
   elsif options_hash.has_key?"file"
@@ -306,6 +306,8 @@ def merge_layout_content(layout, content)
   end
 
   layout.gsub!(/yield[ \t]*\n/){content}
+  layout.gsub!(/yield\(:layout\)[ \t]*\n/){content}
+  layout.gsub!(/yield :layout[ \t]*\n/){content}
   layout.gsub!("::Temple::Utils.escape_html((yield))"){content}
 
   return layout
