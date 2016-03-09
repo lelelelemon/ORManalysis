@@ -477,6 +477,7 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 						end
 						#is field?
 						is_field = known_type(instr.getFuncname.gsub('!','').gsub('?',''), cfg, caller_type.type)
+						@solved = false
 						if type_not_found(is_field) == false
 							#TODO: Don't know if it is true...sometimes use boolean just as selection
 							if is_field.type == "boolean"
@@ -484,20 +485,28 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 							else
 								add_to_cfg_varmap(cfg, c_name, instr.getDefv, is_field.type)
 							end
+							@solved = true
 						else
 							#TODO: This may be a bad heuristic: if field matches a table name...
 							#In community engine, tag.taggings, but taggings is not defined as a field in Tag model??!!
 							tname = searchTableName(instr.getFuncname)
 							if tname != nil and isActiveRecord(c_name)
 								add_to_cfg_varmap(cfg, c_name, instr.getDefv, tname)
+								@solved = true
+							elsif $class_map[caller_type.type]
+								attrib_class = $class_map[caller_type.type].searchAssocForClass(instr.getFuncname)
+								if attrib_class
+									add_to_cfg_varmap(cfg, c_name, instr.getDefv, attrib_class)
+									@solved = true
+								end
 							end
 						end
 						#puts "Caller type found: #{caller_type.type}"
-						if instr.isReadQuery or ["new"].include?instr.getFuncname
+						if @solved == false and instr.isReadQuery or ["new"].include?instr.getFuncname
 							add_to_cfg_varmap(cfg, c_name, instr.getDefv, caller_type.type)	
-						elsif instr.isQuery #for write query, return boolean
+						elsif @solved == false and instr.isQuery #for write query, return boolean
 							add_to_cfg_varmap(cfg, c_name, instr.getDefv, "boolean") 
-						else
+						elsif @solved == false
 							#normal call instr
 							#caller?
 							if ($class_map[caller_type.type]!= nil)# instr.getCallHandler != nil and (instr.getCallHandler.caller != nil)

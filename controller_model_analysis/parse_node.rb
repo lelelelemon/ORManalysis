@@ -121,13 +121,19 @@ def parse_association(astnode, op)
 			attri.each do |k, v|
 				assoc.attribs[k] = v
 			end
+			$cur_class.addAssoc(op, assoc)
+			if assoc.attribs.has_key?("source")
+				if assoc.attribs.has_key?("class_name")
+				else
+					assoc.attribs["class_name"] = getModelNameCap(assoc.attribs["source"])
+				end
+			end
 			if assoc.attribs.has_key?("foreign_key")
-				assoc2 = assoc
-				assoc2.name = assoc.attribs["foreign_key"]
+				assoc2 = Assoc_attrib.new(assoc.attribs["foreign_key"])
+				assoc2.attribs = assoc.attribs
 				$cur_class.addAssoc(op, assoc2)
 			#	assoc.name = assoc.attribs["foreign_key"]
 			end
-			$cur_class.addAssoc(op, assoc)
 		end
 	end
 end
@@ -136,6 +142,12 @@ def parse_attrib(astnode)
 	case astnode.children[0].source.to_s
 		when "include"
 			$cur_class.include_module.push(get_left_most_leaf(astnode.children[1]).source.to_s)
+		when "helper"
+			if astnode.children[1].type.to_s == "list"
+				astnode.children[1].children.each do |c|
+					$cur_class.include_module.push(getHelperNameCap(get_left_most_leaf(c).source.to_s))
+				end
+			end
 		when "has_many","belongs_to","has_one","has_and_belongs_to_many","has_enumerated","attr_accessor","cattr_accessor"
 			parse_association(astnode, astnode.children[0].source.to_s)
 		when "scope"

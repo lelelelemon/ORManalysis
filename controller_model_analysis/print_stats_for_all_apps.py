@@ -31,7 +31,7 @@ tableau_colors = (
 
 TOTAL_COLOR_NUM=22
 colors = [2, 3, 5, 1, 4, 6]
-applications = ["boxroom","lobsters","publify","communityengine","jobsworth","onebody","linuxfr","railscollab","rucksack","amahiPlatform"]
+applications = ["boxroom","lobsters","publify","communityengine","jobsworth","onebody","linuxfr","railscollab", "amahiPlatform"]
 
 
 result_path = "../applications/general_stats/"
@@ -86,13 +86,13 @@ if os.path.isdir(result_path) == False:
 
 
 for app in applications:
-	#print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
-	#os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))
+	print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
+	os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))
 	fname = "%s/%s_stat.xml"%(result_path, app)
 	tree = ET.parse(fname)
 	roots[app] = tree.getroot()
 
-stats = ["queryGeneral","branch","usedInView","onlyFromUser","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction"]
+stats = ["queryGeneral","branch","usedInView","onlyFromUser","queryTrivialBranch","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction"]
 
 for s in stats:
 	print "printing %s..."%s

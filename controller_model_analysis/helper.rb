@@ -341,6 +341,20 @@ def call_match_name(caller_name, funcname, f_handler)
 	return nil
 end
 
+#TODO: Duplicate logic with getControllerNameCap and getHelperNameCap
+def getModelNameCap(name)
+	model_name = ""
+	@t = name.split("_")
+	if @t.length > 1
+		model_name = ""
+		@t.each do |c1|
+			c1[0] = c1[0].upcase
+			model_name += c1
+		end
+	end
+	return name
+end
+
 def getControllerNameCap(name)
 	c = name.split("::")
 	controller_name = ""
@@ -361,6 +375,22 @@ def getControllerNameCap(name)
 	controller_name += "Controller"
 	return controller_name
 end
+
+def getHelperNameCap(name)
+	helper_name = ""
+	@t = helper_name.split("_")
+	if @t.length > 1
+		helper_name = ""
+		@t.each do |c1|
+			c1[0] = c1[0].upcase
+			helper_name += c1
+		end
+	end
+	helper_name += "Helper"
+	return helper_name
+end
+
+
 
 def sourceIgnore(instr)
 	if instr.instance_of?HashField_instr or instr.instance_of?Return_instr

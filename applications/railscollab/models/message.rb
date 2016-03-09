@@ -35,9 +35,9 @@ class Message < ActiveRecord::Base
 
   has_and_belongs_to_many :subscribers, :class_name => 'User', :join_table => 'message_subscriptions', :foreign_key => 'message_id'
 
-  scope :is_public, where(:is_private => false)
+  scope :is_public, -> {where(:is_private => false)}
   
-  scope :important, where(:is_important => true)
+  scope :important, -> {where(:is_important => true)}
 
   before_validation :process_params, :on => :create
   after_create  :process_create

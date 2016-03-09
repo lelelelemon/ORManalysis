@@ -98,7 +98,18 @@ class INode
 		end
 		return false
 	end
+	def instr_is_readQuery
+		if @instr != nil and @instr.instance_of?Call_instr
+			return @instr.isReadQuery
+		end
+		return false
+	end
 	def isReadQuery?
+		#self.getDataflowEdges.each do |e|
+		#	if e.getToNode.instr_is_readQuery and self.getDataflowEdges.length == 1
+		#		return false
+		#	end
+		#end
 		if @instr != nil and @instr.instance_of?Call_instr
 			return @instr.isReadQuery
 		end

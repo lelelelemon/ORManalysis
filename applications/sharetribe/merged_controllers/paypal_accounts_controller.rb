@@ -27,24 +27,52 @@ class PaypalAccountsController < ApplicationController
     payment_settings = payment_settings_api.get_active(community_id: @current_community.id).maybe.get
     community_country_code = LocalizationUtils.valid_country_code(@current_community.country)
 
-    render(locals: {
-      next_action: next_action(m_account[:state].or_else("")),
-      community_ready_for_payments: community_ready_for_payments,
-      left_hand_navigation_links: settings_links_for(@current_user, @current_community),
-      order_permission_action: ask_order_permission_person_paypal_account_path(@current_user),
-      billing_agreement_action: ask_billing_agreement_person_paypal_account_path(@current_user),
-      paypal_account_email: m_account[:email].or_else(""),
-      commission_from_seller: t("paypal_accounts.commission", commission: payment_settings[:commission_from_seller]),
-      minimum_commission: Money.new(payment_settings[:minimum_transaction_fee_cents], community_currency),
-      commission_type: payment_settings[:commission_type],
-      currency: community_currency,
-      paypal_fees_url: PaypalCountryHelper.fee_link(community_country_code),
-      create_url: PaypalCountryHelper.create_paypal_account_url(community_country_code),
-      receive_funds_info_label_tr_key: PaypalCountryHelper.receive_funds_info_label_tr_key(community_country_code),
-      upgrade_url: "https://www.paypal.com/#{community_country_code}/upgrade"
-    })
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
   
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+   
  t("paypal_accounts.payout_info_title") 
  if community_ready_for_payments 
  create_paypal_link = link_to(t("paypal_accounts.create_paypal_account_link_text"),                                   create_url, target: "_blank") 
@@ -128,6 +156,206 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  t("paypal_accounts.admin_account_not_connected",        contact_admin_link: link_to(t("paypal_accounts.contact_admin_link_text"),                                    new_user_feedback_path)).html_safe 
  end 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
+
+end
+
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+   if APP_CONFIG.use_kissmetrics 
+ "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
+ if @current_user 
+ "_kmq.push(['identify', '#{@current_user.id}']);" 
+ end 
+ if @current_community 
+ "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ else 
+ "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
+ end 
+ end 
+ 
+ I18n.locale 
+ content_for :head 
+  
+ 
+  
+ if display_expiration_notice? 
+  content_for :javascript do 
+ end 
+ t("expiration.title") 
+ t("expiration.sub_title_new") 
+ external_plan_service_login_url 
+ t("expiration.link_to_external_service") 
+ t("expiration.need_more_info") 
+ t("expiration.contact_us") 
+ 
+ end 
+ content_for(:page_content) do 
+ with_big_cover_photo do 
+ yield :title_header 
+ end 
+ with_small_cover_photo do 
+ yield(:coverfade_class) 
+ yield :title_header 
+ end 
+  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
+ if flash[announcement] 
+ announcement.to_s 
+ icon_class 
+ flash[announcement] 
+ end 
+ end 
+ 
+   
+ t("paypal_accounts.payout_info_title") 
+ if community_ready_for_payments 
+ create_paypal_link = link_to(t("paypal_accounts.create_paypal_account_link_text"),                                   create_url, target: "_blank") 
+ upgrade_paypal_link = link_to(t("paypal_accounts.upgrade_paypal_account_link_text"),                                    upgrade_url, target: "_blank") 
+ paypal_redirect_link = "<a href='#' id='ask_paypal_permissions_redirect'>#{t("paypal_accounts.redirect_link_text")}</a>" 
+  t("paypal_accounts.payout_info_paypal", create_paypal_account_link: create_paypal_account_link).html_safe 
+ if commission_required 
+ t("paypal_accounts.commission_permission_needed") 
+ end 
+ unless paypal_account_linked 
+ icon_tag("alert") 
+ t(receive_funds_info_label_tr_key) 
+ t("paypal_accounts.paypal_receive_funds_info", upgrade_paypal_account_link: upgrade_paypal_account_link).html_safe 
+ end 
+ 
+ if next_action == :ask_order_permission 
+ content_for :javascript do 
+ end 
+ t("paypal_accounts.new.follow_steps") 
+ t("paypal_accounts.new.connect_paypal_account_title_with_step", current_step: 1, total_steps: 2) 
+ t("paypal_accounts.new.connect_paypal_account_instructions") 
+ t("paypal_accounts.new.connect_paypal_account") 
+ t("paypal_accounts.redirect_message", redirect_link: paypal_redirect_link).html_safe 
+ elsif next_action == :ask_billing_agreement 
+ content_for :javascript do 
+ end 
+ if commission_type != :none # only warn if the marketplace charges a commission 
+ t("paypal_accounts.new.follow_steps") 
+ end 
+  icon_tag("check", ["icon-fix"]) 
+ t("paypal_accounts.paypal_account_connected_title") 
+ t("paypal_accounts.paypal_account_connected", :email => paypal_account_email) 
+ t("paypal_accounts.change_account") 
+ paypal_redirect_link = "<a href='#' id='ask_paypal_permissions_redirect'>#{t("paypal_accounts.redirect_link_text")}</a>" 
+ t("paypal_accounts.redirect_message", redirect_link: paypal_redirect_link).html_safe 
+ 
+ t("paypal_accounts.new.paypal_account_billing_agreement_with_step", current_step: 2, total_steps: 2) 
+ paypal_info_link = "<a id='paypal_fee_info_link' href='#'>#{t("paypal_accounts.new.paypal_info_link_text")}</a>" 
+ if commission_type == :both # TODO: Tweak copy 
+  icon_tag("information") 
+ text 
+ 
+ elsif commission_type == :relative 
+  icon_tag("information") 
+ text 
+ 
+ elsif commission_type == :fixed 
+  icon_tag("information") 
+ text 
+ 
+ else # no commission fee 
+  icon_tag("information") 
+ text 
+ 
+ end 
+ t("paypal_accounts.new.billing_agreement") 
+ paypal_redirect_link = "<a href='#' id='ask_billing_agreement_redirect'>#{t("paypal_accounts.redirect_link_text")}</a>" 
+ t("paypal_accounts.redirect_message", redirect_link: paypal_redirect_link).html_safe 
+ render layout: "layouts/lightbox", locals: { id: "paypal_fee_info_content"} do 
+ t("common.paypal_fee_info.title") 
+ text_with_line_breaks_html_safe do 
+ link_to_paypal = link_to(t("common.paypal_fee_info.link_to_paypal_text"), paypal_fees_url, target: "_blank") 
+ t("common.paypal_fee_info.body_text", link_to_paypal: link_to_paypal).html_safe 
+ end 
+ end 
+ content_for :extra_javascript do 
+ end 
+ else 
+ content_for :javascript do 
+ end 
+ t("paypal_accounts.paypal_account_all_set_up") 
+ t("paypal_accounts.can_receive_payments") 
+ icon_tag("check", ["icon-fix", "paypal-success-mark"]) 
+ t("paypal_accounts.paypal_account_connected_summary", :email => paypal_account_email) 
+ icon_tag("check", ["icon-fix", "paypal-success-mark"]) 
+ t("paypal_accounts.paypal_permission_granted_summary") 
+ t("paypal_accounts.change_account") 
+ paypal_redirect_link = "<a href='#' id='ask_paypal_permissions_redirect'>#{t("paypal_accounts.redirect_link_text")}</a>" 
+ t("paypal_accounts.redirect_message", redirect_link: paypal_redirect_link).html_safe 
+ end 
+ else 
+ t("paypal_accounts.admin_account_not_connected",        contact_admin_link: link_to(t("paypal_accounts.contact_admin_link_text"),                                    new_user_feedback_path)).html_safe 
+ end 
+ end 
+ if params[:controller] == "homepage" && params[:action] == "index" 
+ params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
+ unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
+ hidden_field_tag param, value 
+ end 
+ end 
+ hidden_field_tag "view", @view_type 
+ content_for(:page_content) 
+ else 
+ content_for(:page_content) 
+ end 
+  if (APP_CONFIG.use_google_analytics) 
+ "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
+ "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ if @current_community && @current_community.google_analytics_key 
+ "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
+ "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ end 
+ end 
+ 
+ content_for(:location_search) 
+  
+ javascript_include_tag 'application' 
+ if @analytics_event 
+ end 
+ if Rails.env.test? 
+ end 
+ content_for :extra_javascript 
+  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
+ t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
+ 
 
 end
 

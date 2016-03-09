@@ -201,7 +201,19 @@ class Call_instr < Instruction
 	def getTableName
 		if @funcname.end_with?("_count") and testTableField(getCallerType, @funcname[0...-6].downcase.singularize)
 			return @func_name[0...-6].downcase.singularize.capitalize
-		end	
+		end
+
+    tbl_name = self.getCallerType
+		if isActiveRecord(tbl_name)
+			#if comment.user contains a query, table name should be User instead of caller type Comment
+			if self.isClassField and self.getDefv and $class_map[type_valid(self, self.getDefv)]
+				if testExactTableField(tbl_name, @funcname) == nil
+					if type_valid(self, self.getDefv)
+						return type_valid(self, self.getDefv)
+					end
+				end
+			end
+		end
 		return self.getCallerType
 	end
 	def getQueryType
@@ -212,7 +224,25 @@ class Call_instr < Instruction
 		if isActiveRecord(t)
 			qtype = check_method_keyword(t, @funcname)
 			
-			return qtype
+			if qtype
+				return qtype
+			else
+				#foreign key relationship: has_many, has_one,...
+				tbl_name = self.getCallerType
+				if isActiveRecord(tbl_name)
+					if self.isClassField
+						#TODO: check return type, if not know or polomorphism...
+						@relationship_name = $class_map[tbl_name].searchAssocForRelation(@funcname)
+						if ["has_one","has_many","belongs_to","has_and_belongs_to_many"].include?@relationship_name
+							@is_table_field = false
+							if testExactTableField(tbl_name, @funcname) == nil
+								return "SELECT"
+							end
+						end
+					end
+				end 
+			end
+			return nil
 		end	
 	end
 	def isQuery

@@ -538,7 +538,7 @@ def compute_chain_stats
 		end
 		if is_root
 			#puts "Root node: #{n.node.getIndex}:#{n.node.getInstr.toString}"
-			compute_single_chain_node(n.node)
+			#compute_single_chain_node(n.node)
 			
 			if n.node.getInstr.getFromUserInput
 				reaches = compute_reachability(n.node)
@@ -550,7 +550,6 @@ def compute_chain_stats
 			end
 		end 
 	end
-
 	#OK, here we compute fields being assigned but not part of schema
 	#should be in compute_stats.rb...
 	@notstored = Hash.new
@@ -618,13 +617,15 @@ def compute_chain_stats
 		end
 	end	
 	@notstored.each do |f,v|
-		$graph_file.puts("\t<nonField>")
-		$graph_file.puts("\t\t<name>#{f}<\/name>")
-		$graph_file.puts("\t\t<numUses>#{v.num_use}<\/numUses>")
-		$graph_file.puts("\t\t<numAssigns>#{v.num_assign}<\/numAssigns>")
-		$graph_file.puts("\t\t<type>#{@notstored[f].type}<\/type>")
-		$graph_file.puts("\t\t<avgSourceDist>#{@notstored[f].getAvgSource}<\/avgSourceDist>")
-		$graph_file.puts("\t<\/nonField>")
+		if v.num_assign > 0
+			$graph_file.puts("\t<nonField>")
+			$graph_file.puts("\t\t<name>#{f}<\/name>")
+			$graph_file.puts("\t\t<numUses>#{v.num_use}<\/numUses>")
+			$graph_file.puts("\t\t<numAssigns>#{v.num_assign}<\/numAssigns>")
+			$graph_file.puts("\t\t<type>#{@notstored[f].type}<\/type>")
+			$graph_file.puts("\t\t<avgSourceDist>#{@notstored[f].getAvgSource}<\/avgSourceDist>")
+			$graph_file.puts("\t<\/nonField>")
+		end
 	end
 	@stored.each do |f,v|
 		$graph_file.puts("\t<field>")

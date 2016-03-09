@@ -46,6 +46,8 @@ class Controller_Class
   def set_upper_class(upper_class = nil)
     if upper_class != nil
       @upper_class = upper_class
+		elsif @class_node == nil
+			puts "Class node nil, file = #{@path}"
     else
       if @class_node.children[1].type.to_s == "const_path_ref" or @class_node.children[1].type.to_s == "var_ref"
         @upper_class = @class_node.children[1].source.to_s

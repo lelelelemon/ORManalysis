@@ -130,6 +130,8 @@ table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryOnly
 general_stats_content = table_stats_content[:]
 general_stats_content.append("branchOnQuery")
 general_stats_content.append("branchTotal")
+general_stats_content.append("queryToTrivialBranch")
+general_stats_content.append("trivialBranch")
                                  
 read_stats_content = ["total", "sinkTotal", "toReadQuery", "toWriteQuery", "toView", "toBranch"]
                                  
@@ -152,7 +154,7 @@ prefix3 = ["singlePath"]
 path_stats_content = ["total", "read", "write"]
 path_stats_content2 = ["shortestPath", "longestPath", "instrTotal"]
 
-colors = [5,2,7,9,3,4,10,12,13]	
+colors = [5,2,7,9,3,4,10,12,13,15]	
 
 # stats
 def print_general_stat(prefix, content, plot_branch, plot_read_source):
@@ -195,24 +197,31 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t</queryGeneral>\n")
 
 	stats_file.write("\t<branch>\n")
-	stats_file.write("\t\t<onQuery>%f</onQuery>\n"%data["branchOnQuery"])
-	stats_file.write("\t\t<total>%f</total>\n"%data["branchTotal"])
+	stats_file.write("\t\t<trivialBranch>%f</trivialBranch>\n"%data["trivialBranch"])
+	stats_file.write("\t\t<onQueryOther>%f</onQueryOther>\n"%(data["branchOnQuery"]-data["trivialBranch"]))
+	stats_file.write("\t\t<notOnQuery>%f</notOnQuery>\n"%(data["branchTotal"]-data["branchOnQuery"]))
 	stats_file.write("\t</branch>\n")
 
 	stats_file.write("\t<usedInView>\n")
 	stats_file.write("\t\t<queryResultUsedInView>%f</queryResultUsedInView>\n"%data["queryUsedInView"])
-	stats_file.write("\t\t<queryResultNotUsedInView>%f</queryResultNotUsedInView>\n"%(data["queryTotal"]-data["queryUsedInView"]))
+	stats_file.write("\t\t<queryResultNotUsedInView>%f</queryResultNotUsedInView>\n"%(reads["total"]-data["queryUsedInView"]))
 	stats_file.write("\t</usedInView>\n")
 
 	stats_file.write("\t<onlyFromUser>\n")
 	stats_file.write("\t\t<queryOnlyUseOtherSource>%f</queryOnlyUseOtherSource>\n"%data["queryOnlyFromUser"])
-	stats_file.write("\t\t<queryUseQueryResults>%f</queryUseQueryResults>\n"%(data["queryTotal"]-data["queryOnlyFromUser"]))
+	stats_file.write("\t\t<queryUseQueryResults>%f</queryUseQueryResults>\n"%(reads["total"]-data["queryOnlyFromUser"]))
 	stats_file.write("\t</onlyFromUser>\n")
 
 	stats_file.write("\t<inClosure>\n")
 	stats_file.write("\t\t<queryInClosure>%f</queryInClosure>\n"%data["queryInClosure"])
 	stats_file.write("\t\t<queryNotInClosure>%f</queryNotInClosure>\n"%(data["queryTotal"]-data["queryInClosure"]))
 	stats_file.write("\t</inClosure>\n")
+
+	stats_file.write("\t<queryTrivialBranch>\n")
+	stats_file.write("\t\t<queryToTrivialBranch>%f</queryToTrivialBranch>\n"%data["queryToTrivialBranch"])
+	stats_file.write("\t\t<queryToOthers>%f</queryToOthers>\n"%(reads["total"]-data["queryToTrivialBranch"]))
+	stats_file.write("\t</queryTrivialBranch>\n")
+
 
 	stats_file.write("\t<readSink>\n")
 	temp_total = 0
@@ -322,15 +331,16 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	sum2 = sum1 + reads["toWriteQuery"]
 	sum3 = sum2 + reads["toBranch"]
 	sum4 = sum3 + reads["toView"]
-	ax5.set_ylim(0, sum4*1.4/float(reads["total"]))
-	rect1 = ax5.bar(ind, [reads["toReadQuery"]/float(reads["total"])], width, color=tableau_colors[colors[5]])
-	rect2 = ax5.bar(ind, [reads["toWriteQuery"]/float(reads["total"])], width, bottom=[sum1/float(reads["total"])], color=tableau_colors[colors[6]])
-	rect3 = ax5.bar(ind, [reads["toBranch"]/float(reads["total"])], width, bottom=[sum2/float(reads["total"])], color=tableau_colors[colors[7]])
-	rect4 = ax5.bar(ind, [reads["toView"]/float(reads["total"])], width, bottom=[sum3/float(reads["total"])], color=tableau_colors[colors[8]])
+	ax5.set_ylim(0, reads["sinkTotal"]*1.4)
+	rect1 = ax5.bar(ind, [reads["toReadQuery"]], width, color=tableau_colors[colors[5]])
+	rect2 = ax5.bar(ind, [reads["toWriteQuery"]], width, bottom=[sum1], color=tableau_colors[colors[6]])
+	rect3 = ax5.bar(ind, [reads["toBranch"]], width, bottom=[sum2], color=tableau_colors[colors[7]])
+	rect4 = ax5.bar(ind, [reads["toView"]], width, bottom=[sum3], color=tableau_colors[colors[8]])
+	rect5 = ax5.bar(ind, [reads["sinkTotal"]-sum4], width, bottom=[sum4], color=tableau_colors[colors[9]])
 	ax5.set_xticklabels((''))
 	ax5.set_xlabel("read sink")
 	ax5.set_ylabel("number of sinks")
-	ax5.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('to read query','to write query','to branch', 'to view'), prop={'size':'10'}, loc='upper right')
+	ax5.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0]), ('to read query','to write query','to branch', 'to view', 'other'), prop={'size':'10'}, loc='upper right')
 
 	if plot_read_source:
 		#2.3 bar: readSource
@@ -339,15 +349,16 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		sum2 = sum1 + readSource["fromQuery"]
 		sum3 = sum2 + readSource["fromConst"]
 		sum4 = sum3 + readSource["fromUtil"]
-		ax6.set_ylim(0, sum3*1.4/float(readSource["total"]))
-		rect1 = ax6.bar(ind, [readSource["fromUserInput"]/float(readSource["total"])], width, color=tableau_colors[colors[5]])
-		rect2 = ax6.bar(ind, [readSource["fromQuery"]/float(readSource["total"])], width, bottom=[sum1/float(readSource["total"])], color=tableau_colors[colors[6]])
-		rect3 = ax6.bar(ind, [readSource["fromConst"]/float(readSource["total"])], width, bottom=[sum2/float(readSource["total"])], color=tableau_colors[colors[7]])
-		rect4 = ax6.bar(ind, [readSource["fromUtil"]/float(readSource["total"])], width, bottom=[sum3/float(readSource["total"])], color=tableau_colors[colors[8]])
+		ax6.set_ylim(0, readSource["sourceTotal"]*1.4)
+		rect1 = ax6.bar(ind, [readSource["fromUserInput"]], width, color=tableau_colors[colors[5]])
+		rect2 = ax6.bar(ind, [readSource["fromQuery"]], width, bottom=[sum1], color=tableau_colors[colors[6]])
+		rect3 = ax6.bar(ind, [readSource["fromConst"]], width, bottom=[sum2], color=tableau_colors[colors[7]])
+		rect4 = ax6.bar(ind, [readSource["fromUtil"]], width, bottom=[sum3], color=tableau_colors[colors[8]])
+		rect5 = ax6.bar(ind, [readSource["sourceTotal"]-sum4], width, bottom=[sum4], color=tableau_colors[colors[9]])
 		ax6.set_xticklabels((''))
 		ax6.set_xlabel("read source")
 		ax6.set_ylabel("number of sources")
-		ax6.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('from user input','from query','from const','from util'), prop={'size':'10'}, loc='upper right')
+		ax6.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0]), ('from user input','from query','from const','from util','other'), prop={'size':'10'}, loc='upper right')
 
 
 	#2.4 bar: writeSource
@@ -356,15 +367,16 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	sum2 = sum1 + writes["fromQuery"]
 	sum3 = sum2 + writes["fromConst"]
 	sum4 = sum3 + writes["fromUtil"]
-	ax7.set_ylim(0, sum3*1.4/float(writes["total"]))
-	rect1 = ax7.bar(ind, [writes["fromUserInput"]/float(writes["total"])], width, color=tableau_colors[colors[5]])
-	rect2 = ax7.bar(ind, [writes["fromQuery"]/float(writes["total"])], width, bottom=[sum1/float(writes["total"])], color=tableau_colors[colors[6]])
-	rect3 = ax7.bar(ind, [writes["fromConst"]/float(writes["total"])], width, bottom=[sum2/float(writes["total"])], color=tableau_colors[colors[7]])
-	rect4 = ax7.bar(ind, [writes["fromUtil"]/float(writes["total"])], width, bottom=[sum3/float(writes["total"])], color=tableau_colors[colors[8]])
+	ax7.set_ylim(0, writes["sourceTotal"]*1.4)
+	rect1 = ax7.bar(ind, [writes["fromUserInput"]], width, color=tableau_colors[colors[5]])
+	rect2 = ax7.bar(ind, [writes["fromQuery"]], width, bottom=[sum1], color=tableau_colors[colors[6]])
+	rect3 = ax7.bar(ind, [writes["fromConst"]], width, bottom=[sum2], color=tableau_colors[colors[7]])
+	rect4 = ax7.bar(ind, [writes["fromUtil"]], width, bottom=[sum3], color=tableau_colors[colors[8]])
+	rect5 = ax7.bar(ind, [writes["sourceTotal"]-sum4], width, bottom=[sum4], color=tableau_colors[colors[9]])
 	ax7.set_xticklabels((''))
 	ax7.set_xlabel("write source")
 	ax7.set_ylabel("number of sources")
-	ax7.legend((rect1[0], rect2[0], rect3[0], rect4[0]), ('from user input','from query','from const','from util'), prop={'size':'10'}, loc='upper right')
+	ax7.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0]), ('from user input','from query','from const','from util','other'), prop={'size':'10'}, loc='upper right')
 
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 	#print "%s/querystat_%s2.png"%(fig_path, prefix[-1])
@@ -478,9 +490,9 @@ def print_fields(prefix, content, non_field=False):
 		f_name = data["name"][i]
 		if f_name not in agg_by_type[n]:
 			agg_by_type[n][f_name] = {}
-			agg_by_type[n][f_name]["numUses"] = []
+			agg_by_type[n][f_name]["numAssigns"] = []
 			agg_by_type[n][f_name]["avgSourceDist"] = []
-		agg_by_type[n][f_name]["numUses"].append(data["numUses"][i])
+		agg_by_type[n][f_name]["numAssigns"].append(data["numAssigns"][i])
 		agg_by_type[n][f_name]["avgSourceDist"].append(data["avgSourceDist"][i])
 	
 	legend = []
@@ -493,13 +505,14 @@ def print_fields(prefix, content, non_field=False):
 		plt_data.append([])
 		plt_data.append([])
 		for k1, v1 in v.items(): #k1 = class_name.field_name, v1 = {"numUses","avgS"}
-			plt_data[0].append(getAverage(v1["numUses"]))
+			plt_data[0].append(sum(v1["numAssigns"]))
 			plt_data[1].append(getAverage(v1["avgSourceDist"]))
 		l = ax.scatter(plt_data[0], plt_data[1], color=tableau_colors[i%TOTAL_COLOR_NUM], label=k)
 		#legend_name.append(k)
 		#legend.append(l[0])
 		i = i + 1
-	#ax.legend(legend, legend_name) 
+	#ax.legend(legend, legend_name)
+	ax.set_xlabel("Total: %d Actions"%len(roots)) 
 	ax.legend(bbox_to_anchor=(1.05, 1.05), prop={'size':'10'})
 	#plt.show()
 	if non_field:

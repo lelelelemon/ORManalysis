@@ -26,8 +26,8 @@ def isAttrAssign(node)
 	return false  
 end
 
-def isTableAttrAssign(node)
-	if node.getInstr.instance_of?AttrAssign_instr
+def isTableAttrAssign(n)
+	if n.getInstr.instance_of?AttrAssign_instr
 		tbl_name = type_valid(n.getInstr, n.getInstr.getCaller)
 		field_name = n.getInstr.getFuncname
 		if tbl_name != nil
@@ -84,6 +84,37 @@ def testancestor(nodex, nodey)
 	return false
 end
 
+def funcdep_traceback_data_dep(cur_node)
+	@dep_array = Array.new
+	@node_list = Array.new
+	@node_list.push(cur_node)
+	while @node_list.length > 0 do
+		node = @node_list.pop
+		node.getBackwardEdges.each do |e|
+			if e.getFromNode != nil and e.getToNode != nil
+				#TODO: Same as traceback_data_dep except for this end searching condition
+				if e.getFromNode.isReadQuery? or e.getFromNode.isTableField?
+					if @dep_array.include?(e.getFromNode)
+					else
+						@dep_array.push(e.getFromNode)
+					end
+				else
+					if e.getFromNode.getIndex < cur_node.getIndex
+						if @dep_array.include?(e.getFromNode)
+						else
+							@dep_array.push(e.getFromNode)
+							@node_list.push(e.getFromNode)
+						end
+					end
+				end
+			elsif e.getFromNode == nil and e.getToNode != nil
+				@dep_array.push(e)
+			end
+		end
+	end
+	return @dep_array
+end
+
 
 class Func_dep_expression
 	def initialize
@@ -113,22 +144,34 @@ def compute_functional_dependency(file_to_write)
 	for i in 0...$node_list.length-1
 		n = $node_list[i]
 		if isTableAttrAssign(n)
-			@sources = traceback_data_dep(n)
+			table_name = type_valid(n.getInstr, n.getInstr.getCaller)
+			field_name = n.getInstr.getFuncname
+			@sources = funcdep_traceback_data_dep(n)
 			@track = true
 			@sources.each do |s|
 				if s.instance_of?Dataflow_edge
 					@track = false
 				end
-			end	
+			end
 			if @track
-				file_to_write.puts("#{n.getIndex}: #{n.getInstr.toString2} (#{type_valid(n.getInstr, n.getInstr.getCaller)} . #{n.getInstr.getFuncname}"))
+				file_to_write.puts("\t<assignedField userInput=\"0\" name=\"#{table_name}.#{field_name}\">")
+				@func_deps = Array.new	
+				#file_to_write.puts("#{n.getIndex}: #{n.getInstr.toString2} (#{type_valid(n.getInstr, n.getInstr.getCaller)} . #{n.getInstr.getFuncname}")
 				@sources.each do |s|
 					if s.isReadQuery?
-						file_to_write.puts("\t[QUERY] #{s.getIndex} : #{s.getInstr.toString2}")
+						file_to_write.puts("\t\t<table>#{s.getInstr.getTableName}<\/table>")
+						#file_to_write.puts("\t[QUERY] #{s.getIndex} : #{s.getInstr.toString2}")
+						@func_deps.push(s)
 					elsif s.isTableField?
-						file_to_write.puts("\t[FIELD] #{s.getIndex} : #{s.getInstr.toString2}")
+						temp_table_name = type_valid(s.getInstr, s.getInstr.getCaller)
+						file_to_write.puts("\t\t<field>#{temp_table_name}.#{s.getInstr.getFuncname}<\/field>")
+						#file_to_write.puts("\t[FIELD] #{s.getIndex} : #{s.getInstr.toString2}")
+						@func_deps.push(s)
 					end
-				end	
+				end
+				file_to_write.puts("\t<\/assignedField>")	
+			else
+				file_to_write.puts("\t<assignedField userInput=\"1\" name=\"#{table_name}.#{field_name}\"><\/assignedField>")
 			end
 		end
 	end

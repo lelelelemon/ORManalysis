@@ -48,7 +48,189 @@ class PeopleController < Devise::RegistrationsController
       ))
     }.data
 
-    render locals: { listings: listings }
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ content_for :javascript do 
+ end 
+ content_for :title_header do 
+ @person.name(@current_community) + (@community_customization && @community_customization.storefront_label ? @community_customization.storefront_label : "") 
+ end 
+ huge_avatar_thumb(@person) 
+  if current_user?(@person) 
+  person_settings_path(@current_user) 
+ t("people.show.edit_profile_info") 
+ 
+ else 
+ new_person_person_message_path(@person) 
+ t("people.show.contact", :person => @person.given_name_or_username) 
+ end 
+ if @current_community.follow_in_use? && @current_user && !current_user?(@person) 
+  if @current_user.follows?(person) 
+ link_to person_follower_path(person, @current_user), :method => "delete", :remote => true, :class => "follow-button unfollow button-hoverable" do 
+ t(".unfollow") 
+ t(".following") 
+ end 
+ else 
+ link_to [ person, :followers ], :method => "post", :remote => true, :class => "follow-button" do 
+ t(".follow") 
+ end 
+ end 
+ 
+ end 
+ 
+ if @person.description && !@person.description.blank? 
+ text_with_line_breaks do 
+ @person.description 
+ end 
+ elsif current_user?(@person) 
+ person_settings_path(@person) 
+ t(".add_description") 
+ end 
+ if listings.total_entries > 0 
+ if current_user?(@person) && params[:show_closed] 
+ pluralize(listings.total_entries, t(".listing"), t(".listings")) 
+ else 
+ pluralize(listings.total_entries, t(".open_listing"), t(".open_listings")) 
+ end 
+ else 
+ if current_user?(@person) && params[:show_closed] 
+ t(".no_listings") 
+ else 
+ t(".no_open_listings") 
+ end 
+ end 
+ if current_user?(@person) 
+ if params[:show_closed] 
+ link_to t("people.profile_listings.show_only_open"), person_path(@person) 
+ else 
+ link_to t("people.profile_listings.show_also_closed"), person_path(@person, :show_closed => true) 
+ end 
+ end 
+ limit = 6 
+    link_to(listing_path(listing.url), :class => "#{modifier_class} fluid-thumbnail-grid-image-item-link") do 
+ modifier_class 
+ with_first_listing_image(listing) do |first_image_url| 
+ image_tag first_image_url, {:alt => listed_listing_title(listing), :class => "#{modifier_class} fluid-thumbnail-grid-image-image"} 
+ end 
+ modifier_class 
+ modifier_class 
+ listing.title 
+ modifier_class 
+ if listing.price 
+ humanized_money_with_symbol(listing.price).upcase 
+ price_unit = price_quantity_slash_unit(listing) 
+ if !price_unit.blank? 
+ price_text = " " + price_unit 
+ price_text 
+ price_text 
+ end 
+ else 
+ modifier_class 
+ shape_name(listing) 
+ end 
+ end 
+ 
+ 
+ if listings.total_entries > limit 
+ if current_user?(@person) && params[:show_closed] 
+ link_to t("people.show.show_all_listings"), "#", :data => { :url => person_listings_url(@person, :show_closed => true) } 
+ else 
+ link_to t("people.show.show_all_open_listings"), "#", :data => { :url => person_listings_url(@person) } 
+ end 
+ end 
+ 
+ if @current_community.follow_in_use? 
+  limit = 6 
+ followed_people = person.followed_people 
+ displayed_people = followed_people.take(limit) 
+ if followed_people.count > 0 
+ if current_user?(@person) 
+ if followed_people.count == 1 
+ t(".you_follow_singular", :count => followed_people.count) 
+ else 
+ t(".you_follow_plural", :count => followed_people.count) 
+ end 
+ else 
+ if followed_people.count == 1 
+ t(".they_follow_singular", :count => followed_people.count) 
+ else 
+ t(".they_follow_plural", :count => followed_people.count) 
+ end 
+ end 
+ else 
+ t(".no_followed_people") 
+ end 
+  link_to person, :class => "fluid-thumbnail-grid-image-item-link" do 
+ large_avatar_thumb(person, :class => "fluid-thumbnail-grid-image-image") 
+ person.name(@current_community) 
+ end 
+ if @current_user 
+ if current_user?(person) 
+  person_settings_path(@current_user) 
+ t("people.show.edit_profile_info") 
+ 
+ else 
+  if @current_user.follows?(person) 
+ link_to person_follower_path(person, @current_user), :method => "delete", :remote => true, :class => "follow-button unfollow button-hoverable" do 
+ t(".unfollow") 
+ t(".following") 
+ end 
+ else 
+ link_to [ person, :followers ], :method => "post", :remote => true, :class => "follow-button" do 
+ t(".follow") 
+ end 
+ end 
+ 
+ end 
+ end 
+ 
+ if followed_people.count > limit 
+ link_to t(".show_all_followed_people"), [ person, :followed_people ], :remote => true 
+ end 
+ 
+ end 
+ if @current_community.testimonials_in_use 
+ if @person.received_testimonials.size > 0 
+ pluralize(@person.received_testimonials.size, t(".review"), t(".reviews")) 
+ "(#{@person.feedback_positive_percentage.to_s}% #{t("people.show.positive")}, #{@person.received_positive_testimonials.size}/#{@person.received_testimonials.size})" 
+ else 
+ t(".no_reviews") 
+ end 
+ if @person.received_testimonials.size > 0 
+   
+ if received_testimonials.size > limit 
+ link_to t("people.show.show_all_reviews"), "#" 
+ end 
+ 
+ end 
+ end 
+ huge_avatar_thumb(@person) 
+  if current_user?(@person) 
+  person_settings_path(@current_user) 
+ t("people.show.edit_profile_info") 
+ 
+ else 
+ new_person_person_message_path(@person) 
+ t("people.show.contact", :person => @person.given_name_or_username) 
+ end 
+ if @current_community.follow_in_use? && @current_user && !current_user?(@person) 
+  if @current_user.follows?(person) 
+ link_to person_follower_path(person, @current_user), :method => "delete", :remote => true, :class => "follow-button unfollow button-hoverable" do 
+ t(".unfollow") 
+ t(".following") 
+ end 
+ else 
+ link_to [ person, :followers ], :method => "post", :remote => true, :class => "follow-button" do 
+ t(".follow") 
+ end 
+ end 
+ 
+ end 
+ 
+ content_for :extra_javascript do 
+ end 
+
+end
+
   end
 
   def new
@@ -404,17 +586,17 @@ end
   def activate
     change_active_status("activated")
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript( if @person.active? 
+  if @person.active? 
  link_to t(".deactivate"), deactivate_person_path(@person), :class => "deactivate_person", :method => :put, :remote => true 
  else 
  link_to t(".activate"), activate_person_path(@person), :class => "activate_person", :method => :put, :remote => true 
  end 
-) 
- escape_javascript( unless @person.active 
+ 
+  unless @person.active 
  t(".this_person_is_not_active_in_kassi") 
  t(".inactive_description") 
  end 
-) 
+ 
 
 end
 
@@ -423,17 +605,17 @@ end
   def deactivate
     change_active_status("deactivated")
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript( if @person.active? 
+  if @person.active? 
  link_to t(".deactivate"), deactivate_person_path(@person), :class => "deactivate_person", :method => :put, :remote => true 
  else 
  link_to t(".activate"), activate_person_path(@person), :class => "activate_person", :method => :put, :remote => true 
  end 
-) 
- escape_javascript( unless @person.active 
+ 
+  unless @person.active 
  t(".this_person_is_not_active_in_kassi") 
  t(".inactive_description") 
  end 
-) 
+ 
 
 end
 

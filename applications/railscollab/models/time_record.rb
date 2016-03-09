@@ -35,8 +35,8 @@ class TimeRecord < ActiveRecord::Base
   
   #has_many :tags, :as => 'rel_object', :dependent => :destroy
   
-  scope :running, where('start_date IS NOT NULL AND done_date IS NULL')
-  scope :is_public, where(:is_private => false)
+  scope :running, -> {where('start_date IS NOT NULL AND done_date IS NULL')}
+  scope :is_public, -> {where(:is_private => false)}
 
   before_validation :process_params, :on => :create
   after_create   :process_create

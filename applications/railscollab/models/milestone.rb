@@ -37,12 +37,12 @@ class Milestone < ActiveRecord::Base
 
   #has_many :tags, :as => 'rel_object', :dependent => :destroy
 
-  scope :is_public, where(:is_private => false)
-  scope :is_open, where('milestones.completed_on IS NULL').order('milestones.due_date ASC')
-  scope :late, where(['due_date < ? AND completed_on IS NULL', Date.today])
-  scope :todays, where(['completed_on IS NULL AND (due_date >= ? AND due_date < ?)', Date.today, Date.today+1])
-  scope :upcoming, where(['completed_on IS NULL AND due_date >= ?', Date.today+1])
-  scope :completed, where('completed_on IS NOT NULL')
+  scope :is_public, -> {where(:is_private => false)}
+  scope :is_open, -> {where('milestones.completed_on IS NULL').order('milestones.due_date ASC')}
+  scope :late, -> {where(['due_date < ? AND completed_on IS NULL', Date.today])}
+  scope :todays, -> {where(['completed_on IS NULL AND (due_date >= ? AND due_date < ?)', Date.today, Date.today+1])}
+  scope :upcoming, -> {where(['completed_on IS NULL AND due_date >= ?', Date.today+1])}
+  scope :completed, -> {where('completed_on IS NOT NULL')}
 
   before_validation :process_params, :on => :create
   after_create   :process_create

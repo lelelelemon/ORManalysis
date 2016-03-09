@@ -10,9 +10,9 @@ fi
 git_path=$1
 project_path=$2
 
-sudo gem install yard
-sudo gem install unicode
-sudo gem install rb-readline
+#sudo gem install yard
+#sudo gem install unicode
+#sudo gem install rb-readline
 
 cp $1/zewei/named_routes/* $2
 cp $1/zewei/extract_erb/* $2
@@ -36,7 +36,7 @@ echo "compiling extract_ruby..."
 g++ extract_ruby.cpp -o extract_ruby
 
 echo "extracting ruby code out of erb files..."
-#ruby traverse_view_dir_extract_ruby.rb extract_ruby app/views
+ruby traverse_view_dir_extract_ruby.rb extract_ruby app/views
 
 echo "Generating controllers merged with views..."
 #ruby read_files.rb -c -a > controller-log.txt

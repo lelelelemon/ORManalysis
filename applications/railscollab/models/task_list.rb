@@ -30,9 +30,9 @@ class TaskList < ActiveRecord::Base
 
   #has_many :tags, :as => 'rel_object', :dependent => :destroy
 
-  scope :is_public, where(:is_private => false)
-  scope :is_open, where('task_lists.completed_on IS NULL')
-  scope :completed, where('task_lists.completed_on IS NOT NULL')
+  scope :is_public, -> {where(:is_private => false)}
+  scope :is_open, -> {where('task_lists.completed_on IS NULL')}
+  scope :completed, -> {where('task_lists.completed_on IS NOT NULL')}
 
   before_validation :process_params, :on => :create
   after_create   :process_create

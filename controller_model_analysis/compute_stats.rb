@@ -51,6 +51,7 @@ def traceback_data_dep(cur_node, stop_at_query=false)
 	else
 		return @dep_array
 	end
+		@total = 0
 end
 
 #for a query, if it is like the form v = Vote.where(...)
@@ -226,6 +227,13 @@ class Temp_Qgeneral_stat
 		@branch_dependon_query = 0
 	end
 	attr_accessor :total, :in_closure, :in_view, :total_branch, :branch_dependon_query
+	def get_avg(v)
+		if @total > 0
+			return v.to_f / @total.to_f;
+		else
+			return 0
+		end
+	end
 end
 
 class Temp_Qsink_stat < Temp_Qgeneral_stat
@@ -238,6 +246,21 @@ class Temp_Qsink_stat < Temp_Qgeneral_stat
 		@sink_total = 0
 	end
 	attr_accessor :to_read_query, :to_write_query, :to_branch, :to_view, :sink_total
+	def get_to_read_query
+		return get_avg(to_read_query)
+	end
+	def get_to_write_query
+		return get_avg(@to_write_query)
+	end
+	def get_to_branch
+		return get_avg(@to_branch)
+	end
+	def get_to_view
+		return get_avg(@to_view)
+	end
+	def get_sink_total
+		return get_avg(@sink_total)
+	end
 end
 
 class Temp_Qsource_stat < Temp_Qgeneral_stat
@@ -250,6 +273,21 @@ class Temp_Qsource_stat < Temp_Qgeneral_stat
 		@from_user_input = 0
 	end
 	attr_accessor :from_query, :from_const, :from_user_input, :source_total, :from_util
+	def get_from_query
+		return get_avg(@from_query)
+	end
+	def get_from_user_input
+		return get_avg(@from_user_input)
+	end
+	def get_from_const
+		return get_avg(@from_const)
+	end
+	def get_from_util
+		return get_avg(@from_util)
+	end
+	def get_source_total
+		return get_avg(@source_total)
+	end
 end
 
 class Temp_singleQ_stat
@@ -318,7 +356,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		#end
 		if n.getInstr.is_a?Call_instr
 			caller_type = type_valid(n.getInstr, n.getInstr.getCaller)
-			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}" 
+			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}"
+			if n.isQuery?
+				#puts "\t * table_name = #{n.getInstr.getTableName}"
+			end 
 			if n.getInstr.getDefv != nil
 				#puts "\t\treturn type: #{type_valid(n.getInstr, n.getInstr.getDefv)}"
 			end
@@ -335,9 +376,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		end
 	end
 
-	@func_dep_file = File.open("./func_dep.log")
+	@func_dep_file = File.open("#{output_dir}/func_dep.xml", "w")
+	@func_dep_file.puts("<funcDep>")
 	compute_functional_dependency(@func_dep_file)
+	@func_dep_file.puts("<\/funcDep>")
 	@func_dep_file.close
+	@trivial_branches = Array.new
+	@query_to_trivial_branch = Array.new
 
 	if build_node_list_only
 				#puts "#{n.getIndex}: Forward ARRAY length: #{@forwardarray.length}  (write: #{temp_to_write}) (stat: #{@read_sink_stat.to_write_query})"
@@ -484,6 +529,12 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#puts "Forward length = #{traceforward_data_dep(n).length}"
 				@used_in_view = false
 				@forwardarray = traceforward_data_dep(n)
+				temp_b = test_trivial_branch(n, @forwardarray)
+				if temp_b.length > 0
+					@trivial_branches += temp_b
+					@query_to_trivial_branch.push(n)
+				end
+
 				@forwardarray.each do |n1|
 					#if n1.isTableField?
 					#	var_name = n1.getInstr.getCallHandler.getObjName
@@ -515,26 +566,28 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								@table_read_stat[@table_name].to_read_query += 1
 								#puts " * (To read query)"
 						end
-					elsif n1.isBranch?
-						@table_read_stat[@table_name].sink_total += 1
-						@read_sink_stat.sink_total += 1
-						@read_sink_stat.to_branch += 1
-						@table_read_stat[@table_name].to_branch += 1
-						#puts " * (To branch)"
 					elsif n1.getDataflowEdges.length == 0
-						@table_read_stat[@table_name].sink_total += 1
-						@read_sink_stat.sink_total += 1
-						if n1.getInView
-							@table_read_stat[@table_name].to_view += 1
-							@read_sink_stat.to_view += 1
+						if n1.isBranch?
+							@table_read_stat[@table_name].sink_total += 1
+							@read_sink_stat.sink_total += 1
+							@read_sink_stat.to_branch += 1
+							@table_read_stat[@table_name].to_branch += 1
+							#puts " * (To branch)"
+						#elsif n1.getDataflowEdges.length == 0
 						else
-							puts " * (To unknown sink) #{n1.getIndex}: #{n1.getInstr.toString}"
+							@table_read_stat[@table_name].sink_total += 1
+							@read_sink_stat.sink_total += 1
+							if n1.getInView
+								@table_read_stat[@table_name].to_view += 1
+								@read_sink_stat.to_view += 1
+							else
+								#puts " * (To unknown sink) #{n1.getIndex}: #{n1.getInstr.toString}"
+							end
+						end
+						if n1.getInView
+							@used_in_view = true
 						end
 					end
-					if n1.getInView
-						@used_in_view = true
-					end
-
 					#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 				end
 				
@@ -560,7 +613,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						elsif n1.getInstr.instance_of?Const_instr
 							@read_source_stat.from_util += 1
 						elsif sourceIgnore(n1.getInstr) == false
-							puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
+							#puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 						end
 					end
 				end
@@ -601,7 +654,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							elsif n1.getInstr.instance_of?Const_instr
 								@write_source_stat.from_util += 1
 							elsif sourceIgnore(n1.getInstr) == false
-								puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
+								#puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 							end
 							if sourceIgnore(n1.getInstr)
 							else
@@ -666,6 +719,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	helper_print_stat(@general_stat, @read_sink_stat, @read_source_stat, @write_source_stat, "STATS")
 	$graph_file.puts("\t\t<queryOnlyFromUser>#{@singleQ_stat.only_from_user_input}<\/queryOnlyFromUser>")
 	$graph_file.puts("\t\t<queryUsedInView>#{@singleQ_stat.result_used_in_view}<\/queryUsedInView>")
+	$graph_file.puts("\t\t<queryToTrivialBranch>#{@query_to_trivial_branch.length}<\/queryToTrivialBranch>")
+	$graph_file.puts("\t\t<trivialBranch>#{@trivial_branches.length}<\/trivialBranch>")
 	$graph_file.puts("\t<\/general>")
 
 	@table_general_stat.each do |k, v|
@@ -745,30 +800,30 @@ def helper_print_stat(general, readSink, readSource, write, label, print_branch=
 
 	$graph_file.puts("\t\t<readSink>")
 	$graph_file.puts("\t\t\t<total>#{readSink.total}<\/total>")
-	$graph_file.puts("\t\t\t<sinkTotal>#{readSink.sink_total}<\/sinkTotal>")
-	$graph_file.puts("\t\t\t<toReadQuery>#{readSink.to_read_query}<\/toReadQuery>")
-	$graph_file.puts("\t\t\t<toWriteQuery>#{readSink.to_write_query}<\/toWriteQuery>")
-	$graph_file.puts("\t\t\t<toView>#{readSink.to_view}<\/toView>")
-	$graph_file.puts("\t\t\t<toBranch>#{readSink.to_branch}<\/toBranch>")
+	$graph_file.puts("\t\t\t<sinkTotal>#{readSink.get_sink_total}<\/sinkTotal>")
+	$graph_file.puts("\t\t\t<toReadQuery>#{readSink.get_to_read_query}<\/toReadQuery>")
+	$graph_file.puts("\t\t\t<toWriteQuery>#{readSink.get_to_write_query}<\/toWriteQuery>")
+	$graph_file.puts("\t\t\t<toView>#{readSink.get_to_view}<\/toView>")
+	$graph_file.puts("\t\t\t<toBranch>#{readSink.get_to_branch}<\/toBranch>")
 	$graph_file.puts("\t\t<\/readSink>")
 
 	if readSource
 		$graph_file.puts("\t\t<readSource>")
 		$graph_file.puts("\t\t\t<total>#{readSource.total}<\/total>")
-		$graph_file.puts("\t\t\t<sourceTotal>#{readSource.source_total}<\/sourceTotal>")
-		$graph_file.puts("\t\t\t<fromUserInput>#{readSource.from_user_input}<\/fromUserInput>")
-		$graph_file.puts("\t\t\t<fromUtil>#{readSource.from_util}<\/fromUtil>")
-		$graph_file.puts("\t\t\t<fromQuery>#{readSource.from_query}<\/fromQuery>")
-		$graph_file.puts("\t\t\t<fromConst>#{readSource.from_const}<\/fromConst>")
+		$graph_file.puts("\t\t\t<sourceTotal>#{readSource.get_source_total}<\/sourceTotal>")
+		$graph_file.puts("\t\t\t<fromUserInput>#{readSource.get_from_user_input}<\/fromUserInput>")
+		$graph_file.puts("\t\t\t<fromUtil>#{readSource.get_from_util}<\/fromUtil>")
+		$graph_file.puts("\t\t\t<fromQuery>#{readSource.get_from_query}<\/fromQuery>")
+		$graph_file.puts("\t\t\t<fromConst>#{readSource.get_from_const}<\/fromConst>")
 		$graph_file.puts("\t\t<\/readSource>")
 	end
 
 	$graph_file.puts("\t\t<writeSource>")
 	$graph_file.puts("\t\t\t<total>#{write.total}<\/total>")
-	$graph_file.puts("\t\t\t<sourceTotal>#{write.source_total}<\/sourceTotal>")
-	$graph_file.puts("\t\t\t<fromUserInput>#{write.from_user_input}<\/fromUserInput>")
-	$graph_file.puts("\t\t\t<fromUtil>#{write.from_util}<\/fromUtil>")
-	$graph_file.puts("\t\t\t<fromQuery>#{write.from_query}<\/fromQuery>")
-	$graph_file.puts("\t\t\t<fromConst>#{write.from_const}<\/fromConst>")
+	$graph_file.puts("\t\t\t<sourceTotal>#{write.get_source_total}<\/sourceTotal>")
+	$graph_file.puts("\t\t\t<fromUserInput>#{write.get_from_user_input}<\/fromUserInput>")
+	$graph_file.puts("\t\t\t<fromUtil>#{write.get_from_util}<\/fromUtil>")
+	$graph_file.puts("\t\t\t<fromQuery>#{write.get_from_query}<\/fromQuery>")
+	$graph_file.puts("\t\t\t<fromConst>#{write.get_from_const}<\/fromConst>")
 	$graph_file.puts("\t\t<\/writeSource>")
 end

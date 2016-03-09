@@ -31,7 +31,7 @@ class Comment < ActiveRecord::Base
 	before_update :process_update_params
 	before_destroy :process_destroy
 	
-	scope :is_public, where(:is_private => false)
+	scope :is_public, -> {where(:is_private => false)}
 	 
 	def process_params
 	  self.project_id ||= self.rel_object.try(:project_id)

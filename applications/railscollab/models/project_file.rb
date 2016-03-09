@@ -31,7 +31,7 @@ class ProjectFile < ActiveRecord::Base
   has_many :comments, :as => 'rel_object', :dependent => :destroy
   #has_many :tags, :as => 'rel_object', :dependent => :destroy
   
-  scope :important, where(:is_important => true)
+  scope :important, -> {where(:is_important => true)}
 
   before_validation :process_params, :on => :create
   after_create  :process_create

@@ -74,6 +74,17 @@ def testTableField(caller_name, f_name)
 	return nil
 end
 
+def testExactTableField(caller_name, f_name)
+	if $class_map[caller_name] != nil
+		$class_map[caller_name].getTableFields.each do |f|
+			if f.field_name == f_name.delete("?")
+				return f
+			end
+		end
+	end
+	return nil
+end
+
 def read_schema(app_dir)
 	$schema_file = "#{app_dir}/schema.rb"
 	file = File.open($schema_file, "r")
@@ -136,7 +147,7 @@ def compute_schema_design_stat(file)
 					@total_field_ref[tbl_name] += 1
 					rtype = type_valid(n.getInstr, n.getInstr.getDefv)
 					if rtype != nil and rtype != tbl_name and isActiveRecord(rtype)
-						@relationship_name = $class_map[tbl_name].searchAssoc(field_name)
+						@relationship_name = $class_map[tbl_name].searchAssocForRelation(field_name)
 						#puts "FIELD REF: #{tbl_name} -> #{field_name} (#{rtype}), relationship_name = #{@relationship_name}"
 						if @relationship_name
 							@crossref_type["#{tbl_name}->#{rtype}"] = @relationship_name

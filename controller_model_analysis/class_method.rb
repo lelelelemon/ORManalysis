@@ -109,7 +109,7 @@ class Class_class
 		#end
 		@class_fields.push(assoc.name)
 	end
-	def searchAssoc(fieldname)
+	def searchAssocForRelation(fieldname)
 	#for example, if self.name == "Comment" and 
 	#class Comment
 	#  belongs_to: user
@@ -123,6 +123,21 @@ class Class_class
 		end
 		return nil
 	end
+	def searchAssocForClass(fieldname)
+	#for example, if self.name == "Comment" and 
+	#class Comment
+	#  belongs_to: user, :class_name = "User"
+	#then self.searchAssoc("user") -> "User"
+		@assocs.each do |k, v|
+			v.each do |a|
+				if a.name == fieldname
+					return a.attribs["class_name"]
+				end
+			end
+		end
+		return nil
+	end
+
 	def getTableFields
 		@table_fields
 	end
@@ -171,6 +186,10 @@ class Class_class
 		if @methods[name]
 			return @methods[name]
 		else
+			#TODO: Name change.... actually library?
+			if name == "to_json"
+				name = "as_json"
+			end
 			if step > 5
 				return nil
 			end
