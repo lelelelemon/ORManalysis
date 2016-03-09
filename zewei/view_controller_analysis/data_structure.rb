@@ -296,6 +296,7 @@ class Function_Class
 		#we need to append the default view at the end of the function, this may be inaccuate because some views may already been rendered, we need to figure out a way to avoid duplicated rendering
 		if need_default_render
       v = get_default_view_content(view_class_hash)
+
 		  if v != nil
         layout_content = get_default_layout(view_class_hash, controller_hash)
         puts self.to_s
@@ -320,6 +321,7 @@ class Function_Class
     view_name = self.get_controller_name + "_" + self.get_function_name
     view_class = view_class_hash[view_name]
     if view_class != nil
+      puts "-----------------------------current view file: " + view_name
       v = view_class.replace_render_statements(view_class_hash, 0)
     end
     return v

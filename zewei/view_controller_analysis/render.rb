@@ -227,7 +227,7 @@ def parse_content_for_stmt(stmt)
   #key: the name of content_for
   #value: the content of content_for
   #stmt: the whole statement
-  return {key => [value, [stmt]]}
+  return {key => [value, stmt]}
 end
 
 def get_content_hash(content_for_arr)
@@ -239,7 +239,7 @@ def get_content_hash(content_for_arr)
         hash[k][0] = hash[k][0] + v[0]
         hash[k][1].push v[1]
       else
-        hash[k] = v
+        hash[k] = [v[0], [v[1]]]
       end
     end
   end
@@ -378,7 +378,7 @@ def get_render_statement_array(ast=nil)
   ast_arr.push ast
   while ast_arr.length > 0
     cur_ast = ast_arr.pop
-    if cur_ast.source.start_with? keyword and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
+    if cur_ast.source.start_with? keyword #and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?("escape_javascript(", "raw(")
         if cur_ast.parent.parent.parent.type.to_s == "ifop"
           res = cur_ast.parent.parent.parent.source.to_s
