@@ -389,8 +389,11 @@ def get_render_statement_array(ast=nil)
         end
       elsif cur_ast.parent.type.to_s == "arg_paren" and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")
         res = cur_ast.parent.parent.source.to_s
-      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript") and ["return", "command"].include?(cur_ast.parent.type.to_s)
+      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript", "link_to") and ["return", "command"].include?(cur_ast.parent.type.to_s)
         res = cur_ast.parent.source.to_s
+        if cur_ast.parent.source.to_s.start_with?"link_to"
+          cur_ast = cur_ast[0]
+        end
       else
         res =  cur_ast.source.to_s
       end

@@ -39,6 +39,126 @@ class WikiPagesController < ApplicationController
       @version = @wiki_page
       @versions = @wiki_page.versions.all.reverse!
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
 
   @page_actions = []
   if can? :create_wiki_page, @active_project
@@ -52,11 +172,142 @@ class WikiPagesController < ApplicationController
  action_list actions_for_wiki_page(@wiki_page) 
  select_tag :versions, options_for_versions_select(@versions), :onchange => 'document.location.href = this.value;' 
  I18n.t('wiki_engine.last_modified_with_time', :time => format_usertime(@version.created_at, :wiki_page_updated_format)) 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
 
   @page_actions = []
   if can? :create_wiki_page, @active_project
@@ -64,6 +315,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   end
   @page_actions << {:title => :all_pages, :url => list_wiki_pages_path}
 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -71,6 +333,126 @@ end
 
   def list
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  t 'wiki_engine.title' 
  t 'wiki_engine.last_modified' 
  list.each do |wiki_page| 
@@ -80,6 +462,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   action_list actions_for_wiki_page(wiki_page) 
  
  end 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -88,6 +481,126 @@ end
   def new
     @wiki_page = wiki_pages.new(:title_from_id => params[:id])
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_for(@wiki_page, :url => wiki_pages_path) do |form| 
   content_tag :h2, h(form.object.title) unless form.object.new_record? 
   form.label :title, t('wiki_engine.title') 
@@ -106,6 +619,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  
  end 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -116,6 +640,126 @@ end
     @version = @wiki_page.versions.find_by_version(params[:version]) if params[:version]
     @version ||= @wiki_page
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
 
   @page_actions = []
   if can? :create_wiki_page, @active_project
@@ -129,6 +773,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  action_list actions_for_wiki_page(@wiki_page) 
  select_tag :versions, options_for_versions_select(@versions), :onchange => 'document.location.href = this.value;' 
  I18n.t('wiki_engine.last_modified_with_time', :time => format_usertime(@version.created_at, :wiki_page_updated_format)) 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -142,6 +797,126 @@ end
       redirect_to @wiki_page.main ? wiki_pages_path : wiki_page_path(:id => @wiki_page.slug)
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_for(@wiki_page, :url => wiki_pages_path) do |form| 
   content_tag :h2, h(form.object.title) unless form.object.new_record? 
   form.label :title, t('wiki_engine.title') 
@@ -160,6 +935,17 @@ end
  
  
  end 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -168,6 +954,126 @@ end
 
   def edit
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_for(@wiki_page, :url => wiki_page_path(:id => @wiki_page.slug)) do |form| 
   content_tag :h2, h(form.object.title) unless form.object.new_record? 
   form.label :title, t('wiki_engine.title') 
@@ -187,6 +1093,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  end 
  render @wiki_page 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -198,6 +1115,126 @@ end
       redirect_to @wiki_page.main ? wiki_pages_path : wiki_page_path(:id => @wiki_page)
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_for(@wiki_page, :url => wiki_page_path(:id => @wiki_page.slug)) do |form| 
   content_tag :h2, h(form.object.title) unless form.object.new_record? 
   form.label :title, t('wiki_engine.title') 
@@ -217,6 +1254,17 @@ end
  
  end 
  render @wiki_page 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -263,9 +1311,140 @@ end
   # that the wiki page does not exist yet and link to create it.
   def not_found
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ unless @active_project.nil? 
+ h @active_project.name 
+ h page_title 
+ h Company.owner.name 
+ else 
+ h page_title 
+ h Company.owner.name 
+ end 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'application.js' 
+ javascript_tag "var PROJECT_ID = #{@active_project.id}; var LOGGED_USER_ID=#{@logged_user.id};" 
+ unless @active_project.is_active? 
+ t('project_locked_header') 
+ if can?(:change_status, @active_project) 
+ link_to t('mark_project_as_active'), open_project_path(:id => @active_project.id), :method => :put, :confirm => t('mark_project_as_active_confirmation') 
+ end 
+ end 
+ h @active_project.name 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if Rails.configuration.search_enabled 
+ form_tag search_project_path(:id => @active_project.id) 
+
+  @search_field_default_value = t('search_box_default')
+  @last_search ||= @search_field_default_value
+  @search_field_attrs = {
+    :onfocus => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''",
+    :onblur => "if (event.target.value == '#{@search_field_default_value}') event.target.value=''"
+  }
+
+ text_field_tag 'search_id', (h @last_search), @search_field_attrs 
+ t('go') 
+ end 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ if @private_object 
+ image_path('icons/private.gif') 
+ end 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  t 'wiki_engine.not_found' 
  t 'wiki_engine.non_existing_page' 
  link_to t('wiki_engine.create_it'), new_wiki_page_path(:id => params[:id]) 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 end
