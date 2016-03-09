@@ -305,10 +305,10 @@ def merge_layout_content(layout, content)
     end
   end
 
-  layout.gsub!(/yield[ \t]*\n/){content}
-  layout.gsub!(/yield\(:layout\)[ \t]*\n/){content}
-  layout.gsub!(/yield :layout[ \t]*\n/){content}
-  layout.gsub!("::Temple::Utils.escape_html((yield))"){content}
+  layout.gsub!(/\n[ \t]*yield[ \t]*\n/){ "\n" + content}
+  layout.gsub!(/\n[ \t]*yield\(:layout\)[ \t]*\n/){"\n" + content}
+  layout.gsub!(/\n[ \t]*yield :layout[ \t]*\n/){"\n" + content}
+  layout.gsub!("::Temple::Utils.escape_html((yield))"){"\n" + content}
 
   return layout
 end
