@@ -18,6 +18,7 @@ class Controller_Class
     if @layout == nil
       set_default_layout
     end
+    puts get_layout
   end
 	def get_controller_name
 		@controller
@@ -69,8 +70,11 @@ class Controller_Class
       #handle layout
       if cur_ast.type.to_s == "command" and cur_ast.source.to_s.start_with?"layout"
         @layout = cur_ast.children[1].source.to_s
+        
         @layout.gsub! /['"]/, ""
-        if not @layout.include?"layouts"
+        if @layout.start_with?"proc"
+          @layout = nil
+        elsif not @layout.include?"layouts"
           @layout = "layouts_" + @layout
           @layout.gsub! "/", "_"
         end
@@ -199,7 +203,7 @@ class Function_Class
         view_name = get_view_name_from_hash(options_hash, get_controller_name, get_function_name)
 				
         # if render :nothing, then skip to the next render statement
-        next if view_name.include?("nothing")
+        next if view_name.include?("nothing") or view_name == "not_valid"
         
         
         view_class = view_class_hash[view_name]
@@ -294,6 +298,8 @@ class Function_Class
       v = get_default_view_content(view_class_hash)
 		  if v != nil
         layout_content = get_default_layout(view_class_hash, controller_hash)
+        puts self.to_s
+        puts layout_content
         if layout_content != nil
           v = merge_layout_content(layout_content, v)
         end

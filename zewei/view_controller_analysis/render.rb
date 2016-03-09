@@ -119,6 +119,24 @@ def get_view_name_from_hash(options_hash, controller_name, action_name)
     res = options_hash["action"]
   elsif options_hash.has_key?"action:"
     res = options_hash["action:"]
+  elsif options_hash.has_key?"xml:"
+    res = options_hash["xml:"]
+  elsif options_hash.has_key?":xml"
+    res = options_hash[":xml"]
+  elsif options_hash.has_key?"xml"
+    res = options_hash["xml"]
+  elsif options_hash.has_key?"js"
+    res = options_hash["js"]
+  elsif options_hash.has_key?":js"
+    res = options_hash[":js"]
+  elsif options_hash.has_key?"js:"
+    res = options_hash["js:"]
+  elsif options_hash.has_key?"file:"
+    res = options_hash["file"]
+  elsif options_hash.has_key?":file"
+    res = options_hash[":file"]
+  elsif options_hash.has_key?"file"
+    res = options_hash["file"]
   end
   res.gsub! /[:"']/, ""
   while res.start_with? "/"
@@ -127,7 +145,8 @@ def get_view_name_from_hash(options_hash, controller_name, action_name)
 
   r = res.rindex("/")
   if res == ""
-    res = controller_name + "_" + action_name
+#    res = controller_name + "_" + action_name
+    res = "not_valid"
   elsif r == nil
     res = controller_name + "_" + res
   else
@@ -245,7 +264,10 @@ def get_yield_hash(yield_arr)
 end
 
 def merge_layout_content(layout, content)
+  puts layout
   layout_ast = YARD::Parser::Ruby::RubyParser.parse(layout).root
+  puts "content: "
+  puts content
   content_ast = YARD::Parser::Ruby::RubyParser.parse(content).root
 
   content_for_arr = get_statement_array("content_for", content_ast)
@@ -343,7 +365,11 @@ def get_render_statement_array(ast=nil)
     cur_ast = ast_arr.pop
     if cur_ast.source.start_with? keyword
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?"escape_javascript("
-        res = cur_ast.parent.parent.source.to_s
+        if cur_ast.parent.parent.parent.type.to_s == "ifop"
+          res = cur_ast.parent.parent.parent.source.to_s
+        else
+          res = cur_ast.parent.parent.source.to_s
+        end
       elsif cur_ast.parent.type.to_s == "arg_paren" and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")
         res = cur_ast.parent.parent.source.to_s
       elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript") and ["return", "command"].include?(cur_ast.parent.type.to_s)
