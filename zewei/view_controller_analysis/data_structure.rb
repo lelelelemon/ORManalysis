@@ -71,12 +71,12 @@ class Controller_Class
       if cur_ast.type.to_s == "command" and cur_ast.source.to_s.start_with?"layout"
         @layout = cur_ast.children[1].source.to_s
         
-        @layout.gsub! /['"]/, ""
+        @layout.gsub!(/['"]/){""}
         if @layout.start_with?"proc"
           @layout = nil
         elsif not @layout.include?"layouts"
           @layout = "layouts_" + @layout
-          @layout.gsub! "/", "_"
+          @layout.gsub!("/"){"_"}
         end
 
       end
@@ -100,7 +100,7 @@ class Controller_Class
 	end
   def set_default_layout
     @layout = "layouts_" + @controller
-    @layout.gsub! "/", "_"
+    @layout.gsub!("/"){"_"}
   end
   def get_layout
     @layout
@@ -582,7 +582,7 @@ class Named_Routes_Class
 			helper = lines[i]
 
 			lines[i+1] = lines[i+1][1..lines[i+1].rindex('}')-1]
-			lines[i+1].gsub! "\"", ""
+			lines[i+1].gsub!("\""){""}
 			items = lines[i+1].split ","
 			hash = Hash.new
 			items.each do |item|

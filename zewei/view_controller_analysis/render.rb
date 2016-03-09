@@ -152,7 +152,8 @@ def get_view_name_from_hash(options_hash, controller_name, action_name)
   else
     res = res[0..r-1] + "_" + res[r+1..-1]
   end
-  
+ 
+  puts "res view: " + res
   return res 
 end
 
@@ -240,6 +241,13 @@ def get_content_hash(content_for_arr)
 end
 
 def parse_yield_stmt(stmt)
+  stmt.strip!
+  if stmt == "yield :js_templates)"
+    stmt = "yield :js_templates"
+  elsif stmt == "yield)"
+    stmt = "yield"
+  end
+  puts stmt
   ast = YARD::Parser::Ruby::RubyParser.parse(stmt).root
   if ast.type.to_s == "list"
     ast = ast[0]
@@ -292,6 +300,7 @@ def merge_layout_content(layout, content)
   end
 
   layout.gsub!(/yield[ \t]*\n/){content}
+  layout.gsub!("::Temple::Utils.escape_html((yield))"){content}
 
   return layout
 end
