@@ -25,6 +25,31 @@ class UserSessionsController < ApplicationController
 			# if the system is not initialized, start by doing that
 			redirect_to start_path
 		end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ::Temple::Utils.escape_html((@locale_direction)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((@title || "Amahi Server #{t('log_in')}")) 
+ ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
+ ::Temple::Utils.escape_html((csrf_meta_tags)) 
+ ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
+  flash.each do |name, msg|
+ 
+ ::Temple::Utils.escape_html((name)) 
+ ::Temple::Utils.escape_html((msg)) 
+ end; _slim_controls1 = form_for @user_session do |f|
+ 
+ ::Temple::Utils.escape_html((text_field_tag 'username', @login, :autofocus => true, :placeholder => t('username'))) 
+ ::Temple::Utils.escape_html((password_field_tag 'password', nil, :placeholder => t('password'))) 
+ ::Temple::Utils.escape_html((check_box_tag 'remember_me', '1', @remember_me)) 
+ ::Temple::Utils.escape_html((t 'remember_me')) 
+ ::Temple::Utils.escape_html((submit_tag t('log_in'))) 
+ end 
+ ::Temple::Utils.escape_html((_slim_controls1)) 
+ 
+
+end
+
 	end
 
 	def start
@@ -37,6 +62,33 @@ class UserSessionsController < ApplicationController
 			flash[:info] = t("amahi_initialization")
 			@title = t("amahi_initialization")
 		end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ::Temple::Utils.escape_html((@locale_direction)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((@title || "Amahi Server #{t('log_in')}")) 
+ ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
+ ::Temple::Utils.escape_html((csrf_meta_tags)) 
+ ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
+  flash.each do |name, msg|
+ 
+ ::Temple::Utils.escape_html((name)) 
+ ::Temple::Utils.escape_html((msg)) 
+ end; _slim_controls1 = form_for @user, :url => initialize_system_path(@user.login) do |f|
+ 
+ ::Temple::Utils.escape_html((t 'username')) 
+ ::Temple::Utils.escape_html((text_field_tag 'username', @user.login)) 
+ ::Temple::Utils.escape_html((t 'password')) 
+ ::Temple::Utils.escape_html((password_field_tag 'password', nil)) 
+ ::Temple::Utils.escape_html((t 'password_confirmation')) 
+ ::Temple::Utils.escape_html((password_field_tag 'password_confirmation', nil)) 
+ ::Temple::Utils.escape_html((submit_tag t('create'))) 
+ end 
+ ::Temple::Utils.escape_html((_slim_controls1)) 
+ 
+
+end
+
 	end
 
 	def create
@@ -49,7 +101,31 @@ class UserSessionsController < ApplicationController
 			redirect_to root_url
 		else
 			flash[:danger] = t 'not_a_valid_user_or_password'
-			render :action => 'new'
+			ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ::Temple::Utils.escape_html((@locale_direction)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((@title || "Amahi Server #{t('log_in')}")) 
+ ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
+ ::Temple::Utils.escape_html((csrf_meta_tags)) 
+ ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
+  flash.each do |name, msg|
+ 
+ ::Temple::Utils.escape_html((name)) 
+ ::Temple::Utils.escape_html((msg)) 
+ end; _slim_controls1 = form_for @user_session do |f|
+ 
+ ::Temple::Utils.escape_html((text_field_tag 'username', @login, :autofocus => true, :placeholder => t('username'))) 
+ ::Temple::Utils.escape_html((password_field_tag 'password', nil, :placeholder => t('password'))) 
+ ::Temple::Utils.escape_html((check_box_tag 'remember_me', '1', @remember_me)) 
+ ::Temple::Utils.escape_html((t 'remember_me')) 
+ ::Temple::Utils.escape_html((submit_tag t('log_in'))) 
+ end 
+ ::Temple::Utils.escape_html((_slim_controls1)) 
+ 
+
+end
+
 		end
 	end
 
@@ -71,7 +147,33 @@ class UserSessionsController < ApplicationController
 			flash[:danger] = t 'not_a_valid_user_or_password'
 			@user = User.new
 			sleep 1
-			render :action => 'start'
+			ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ::Temple::Utils.escape_html((@locale_direction)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((@title || "Amahi Server #{t('log_in')}")) 
+ ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
+ ::Temple::Utils.escape_html((csrf_meta_tags)) 
+ ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
+  flash.each do |name, msg|
+ 
+ ::Temple::Utils.escape_html((name)) 
+ ::Temple::Utils.escape_html((msg)) 
+ end; _slim_controls1 = form_for @user, :url => initialize_system_path(@user.login) do |f|
+ 
+ ::Temple::Utils.escape_html((t 'username')) 
+ ::Temple::Utils.escape_html((text_field_tag 'username', @user.login)) 
+ ::Temple::Utils.escape_html((t 'password')) 
+ ::Temple::Utils.escape_html((password_field_tag 'password', nil)) 
+ ::Temple::Utils.escape_html((t 'password_confirmation')) 
+ ::Temple::Utils.escape_html((password_field_tag 'password_confirmation', nil)) 
+ ::Temple::Utils.escape_html((submit_tag t('create'))) 
+ end 
+ ::Temple::Utils.escape_html((_slim_controls1)) 
+ 
+
+end
+
 			return
 		end
 
@@ -83,7 +185,33 @@ class UserSessionsController < ApplicationController
 			# not a system user. should we create one?
 			flash[:danger] = t 'not_a_valid_user_or_password'
 			@user = User.new
-			render :action => 'start'
+			ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ::Temple::Utils.escape_html((@locale_direction)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((@title || "Amahi Server #{t('log_in')}")) 
+ ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
+ ::Temple::Utils.escape_html((csrf_meta_tags)) 
+ ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
+  flash.each do |name, msg|
+ 
+ ::Temple::Utils.escape_html((name)) 
+ ::Temple::Utils.escape_html((msg)) 
+ end; _slim_controls1 = form_for @user, :url => initialize_system_path(@user.login) do |f|
+ 
+ ::Temple::Utils.escape_html((t 'username')) 
+ ::Temple::Utils.escape_html((text_field_tag 'username', @user.login)) 
+ ::Temple::Utils.escape_html((t 'password')) 
+ ::Temple::Utils.escape_html((password_field_tag 'password', nil)) 
+ ::Temple::Utils.escape_html((t 'password_confirmation')) 
+ ::Temple::Utils.escape_html((password_field_tag 'password_confirmation', nil)) 
+ ::Temple::Utils.escape_html((submit_tag t('create'))) 
+ end 
+ ::Temple::Utils.escape_html((_slim_controls1)) 
+ 
+
+end
+
 			return
 		end
 		# the user exists in the system .. does it exist in the database?
@@ -104,7 +232,33 @@ class UserSessionsController < ApplicationController
 			redirect_to root_url
 		else
 			flash[:danger] = t 'not_a_valid_user_or_password'
-			render :action => 'start'
+			ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ::Temple::Utils.escape_html((@locale_direction)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((I18n.locale)) 
+ ::Temple::Utils.escape_html((@title || "Amahi Server #{t('log_in')}")) 
+ ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
+ ::Temple::Utils.escape_html((csrf_meta_tags)) 
+ ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
+  flash.each do |name, msg|
+ 
+ ::Temple::Utils.escape_html((name)) 
+ ::Temple::Utils.escape_html((msg)) 
+ end; _slim_controls1 = form_for @user, :url => initialize_system_path(@user.login) do |f|
+ 
+ ::Temple::Utils.escape_html((t 'username')) 
+ ::Temple::Utils.escape_html((text_field_tag 'username', @user.login)) 
+ ::Temple::Utils.escape_html((t 'password')) 
+ ::Temple::Utils.escape_html((password_field_tag 'password', nil)) 
+ ::Temple::Utils.escape_html((t 'password_confirmation')) 
+ ::Temple::Utils.escape_html((password_field_tag 'password_confirmation', nil)) 
+ ::Temple::Utils.escape_html((submit_tag t('create'))) 
+ end 
+ ::Temple::Utils.escape_html((_slim_controls1)) 
+ 
+
+end
+
 		end
 	end
 

@@ -55,10 +55,50 @@ class JournalsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js
-      format.xml  { render :xml => @journals }
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- unless @user_journals.nil? 
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  unless @user_journals.nil? 
   unless @user_journals.empty? 
  t('user_journals_desc') 
  end 
@@ -73,14 +113,110 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  unless @journals.nil? 
  unless @journals.empty? 
- escape_javascript(@grouped_journals.first[0]) 
- escape_javascript render(:partial => 'list', :collection => @grouped_journals) 
+  list[0] 
+  journal.id 
+ journal.id 
+ journal_path(journal) 
+ if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+ end 
+ h(journal.content) 
+ fancy_journal_time(journal.created_at) 
+ 
+ 
  end 
  if @journals.size >= 25 
  @journals.last.id 
  else 
  end 
  end 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
+
+end
+ }
+    end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  unless @user_journals.nil? 
+  unless @user_journals.empty? 
+ t('user_journals_desc') 
+ end 
+ @user_journals.each do |ugroup| 
+ h(ugroup[0].display_name) 
+ ugroup[0].status.nil? ? '' : h(ugroup[0].status.content) 
+ ugroup[1].each do |journal| 
+ h(journal.content) 
+ end 
+ end 
+ 
+ end 
+ unless @journals.nil? 
+ unless @journals.empty? 
+  list[0] 
+  journal.id 
+ journal.id 
+ journal_path(journal) 
+ if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+ end 
+ h(journal.content) 
+ fancy_journal_time(journal.created_at) 
+ 
+ 
+ end 
+ if @journals.size >= 25 
+ @journals.last.id 
+ else 
+ end 
+ end 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
 
 end
 
@@ -130,15 +266,50 @@ end
         flash[:notice] = 'Journal was successfully created.'
         format.html { redirect_to(@journal) }
         format.js
-        format.xml  { render :xml => @journal, :status => :created, :location => @journal }
-      else
-        format.html { render :action => "new" }
-        format.js {}
-        format.xml  { render :xml => @journal.errors, :status => :unprocessable_entity }
-      end
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @grouped_journals.first[0] 
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  @grouped_journals.first[0] 
   list[0] 
   journal.id 
  journal.id 
@@ -149,6 +320,200 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  h(journal.content) 
  fancy_journal_time(journal.created_at) 
  
+ 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
+
+end
+ }
+      else
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  @grouped_journals.first[0] 
+  list[0] 
+  journal.id 
+ journal.id 
+ journal_path(journal) 
+ if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+ end 
+ h(journal.content) 
+ fancy_journal_time(journal.created_at) 
+ 
+ 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
+
+end
+ }
+        format.js {}
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  @grouped_journals.first[0] 
+  list[0] 
+  journal.id 
+ journal.id 
+ journal_path(journal) 
+ if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+ end 
+ h(journal.content) 
+ fancy_journal_time(journal.created_at) 
+ 
+ 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
+
+end
+ }
+      end
+    end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  @grouped_journals.first[0] 
+  list[0] 
+  journal.id 
+ journal.id 
+ journal_path(journal) 
+ if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+ end 
+ h(journal.content) 
+ fancy_journal_time(journal.created_at) 
+ 
+ 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
  
 
 end
@@ -186,7 +551,53 @@ end
       format.xml  { head :ok }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "journal_#{@journal.id}" 
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  "journal_#{@journal.id}" 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
 
 end
 

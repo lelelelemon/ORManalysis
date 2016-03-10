@@ -40,7 +40,31 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @users.to_xml }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t('user_list') 
+ @tabbed_navigation_items = common_tabs(nil) 
+ @user_navigation_items = user_tabs(:users) 
+ if User.can_be_created_by(@logged_user) 
+ new_user_path 
+ t('add_user') 
+ end 
+ @users.each do |user| 
+ user.id 
+ user.gravatar_url(:size => 50) 
+ h(user.display_name) 
+ if @logged_user.is_admin 
+ if user.can_be_edited_by(@logged_user) 
+ edit_user_path(user) 
+ t('edit') 
+ end 
+ if user.can_be_deleted_by(@logged_user) 
+ t('delete') 
+ end 
+ end 
+ end 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t('user_list') 
@@ -91,7 +115,34 @@ end
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @user.to_xml }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t('create_user') 
+ @tabbed_navigation_items = common_tabs(nil) 
+ @user_navigation_items = user_tabs(:users) 
+ form_tag users_path(), :method => :post do 
+  error_messages_for :user 
+ if @logged_user.is_admin 
+ t('user_administration_options') 
+ text_field 'user', 'username', :id => 'userFormUserName', :class => 'moderate' 
+ t('options') 
+ t('user_is_admin') 
+ yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'yesno' 
+ end 
+ t('display_name') 
+ text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'moderate' 
+ t('email_address') 
+ text_field 'user', 'email', :id => 'userFormEmail', :class => 'moderate' 
+ t('password') 
+ password_field 'user', 'password', :id => 'userFormPassword', :class => 'moderate' 
+ t('repeat_password') 
+ password_field 'user', 'password_confirmation', :id => 'userFormPasswordAgain', :class => 'moderate' 
+ t('timezone') 
+ time_zone_select 'user', 'time_zone', nil, {}, {:id => 'userFormTimezone', :class => 'moderate'} 
+ 
+ end 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t('create_user') 

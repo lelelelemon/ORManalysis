@@ -46,7 +46,27 @@ class NotesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.js
-      format.xml  { render :xml => @note }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ empty_note = !(object.title? or object.content? or object.show_date) 
+ hover_handle = "page_slot_handle_#{page_slot.id}" 
+ if object.title? or object.show_date 
+ hover_handle 
+ if object.title? 
+ h object.title 
+ end 
+ if object.show_date 
+ hover_handle 
+ object.created_at.strftime(@time_now.year != object.created_at.year ? t('date_format_dmy') : t('date_format_dm')) 
+ end 
+ end 
+ if empty_note 
+ hover_handle 
+ t('empty_note') 
+ else 
+ end 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  empty_note = !(object.title? or object.content? or object.show_date) 
@@ -145,10 +165,70 @@ end
         error_status(false, :success_note_created)
         format.html { redirect_to(@note) }
         format.js {}
-        format.xml  { render :xml => @note, :status => :created, :location => page_note_path(:page_id => @page.id, :id => @note.id) }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @note.errors, :status => :unprocessable_entity }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -220,7 +300,18 @@ end
 end
  }
         format.js {}
-        format.xml  { render :xml => @note.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "page_slot_#{@note.page_slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|

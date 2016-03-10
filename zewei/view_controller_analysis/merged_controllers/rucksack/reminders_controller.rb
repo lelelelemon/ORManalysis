@@ -46,7 +46,20 @@ class RemindersController < ApplicationController
 
 end
  }
-      format.xml  { render :xml => @reminders }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t('reminders') 
+ @no_page_tile = true 
+ @tabbed_navigation_items = common_tabs(:reminders) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag reminders_path(), :method => :post, :id => "add_ReminderForm" do 
+ t('add_reminder') 
+ text_field 'reminder', 'friendly_at_time', :id => 'newReminderAt', :class => 'long' 
+ t('add_reminder') 
+ end 
+  
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t('reminders') 
@@ -175,7 +188,13 @@ end
 
 end
  }
-        format.xml  { render :xml => @reminder.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ unless @grouped_reminders.nil? 
+  
+ end 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|

@@ -48,7 +48,14 @@ class EmailsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.js
-      format.xml  { render :xml => @email }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{t('email_from')}: #{@email.from}\n" 
+ "#{t('email_subject')}: #{@email.subject}\n" 
+ "#{t('email_date')}: #{@email.created_at}\n" 
+ textilize @email.body 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "#{t('email_from')}: #{@email.from}\n" 

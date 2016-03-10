@@ -54,7 +54,31 @@ class PagesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js
-      format.xml  { render :xml => @pages.to_xml(:in_list => true) }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ # Tags 
+  crumb 
+ pages_url(:tags => [crumb]) 
+ h crumb 
+ 
+  crumb 
+ pages_url(:tags => [crumb]) 
+ h crumb 
+ 
+ # Clear old results 
+ # Add new results 
+  (shared ? 'mine' : nil) 
+ page_tag_list(index_page) 
+ page_path(index_page) 
+ h index_page.title 
+ 
+  (shared ? 'mine' : nil) 
+ page_tag_list(index_page) 
+ page_path(index_page) 
+ h index_page.title 
+ 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  # Tags 
@@ -94,7 +118,10 @@ end
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @page.to_xml }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+ }
       format.rss { 
         conds = {'page_id' => @page.id}
         conds['is_private'] = false if !@logged_user.member_of_owner?
@@ -129,7 +156,20 @@ end
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @page }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t('new_page') 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag pages_path(:use_route => nil) do 
+ raw(error_messages_for :page) 
+ raw(text_field 'page', 'title', :id => 'newpage_title', :class => 'long') 
+ raw(submit_tag t('page_create')) 
+ end 
+ pages_path 
+ t('page_back') 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @page_title = t('new_page') 
@@ -245,7 +285,27 @@ end
 end
  }
         format.js { }
-        format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ escape_javascript("<h1><span hover_handle=\"page_header_handle\">#{h(@page.title)}</span></h1>").html_safe 
+  cclass = @pages.nil? ? nil : 'current' 
+ (@logged_user.home_page == @page ? 'current' : nil) 
+ @logged_user.home_page_id 
+ page_path(@logged_user.home_page) 
+ h @logged_user.home_page.title 
+ cclass 
+ pages_path 
+ t('all_pages') 
+ (@logged_user.favourite_pages.sort { |x,y| x.sidebar_order <=> y.sidebar_order }).each do |page| 
+ (page == @page ? 'current' : nil) 
+ page.id 
+ page.id 
+ page_path(page) 
+ h page.title 
+ end 
+ 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -529,7 +589,13 @@ end
     
     respond_to do |format|
       format.html { head :ok }
-      format.js { render :action => @view }
+      format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  pages_url(:tags => [show]) 
+ h show 
+ 
+
+end
+ }
       format.xml  { head :ok }
     end 
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|

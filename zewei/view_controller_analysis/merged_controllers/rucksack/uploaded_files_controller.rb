@@ -62,7 +62,21 @@ class UploadedFilesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @uploaded_file.data.url }
       format.js
-      format.xml  { render :xml => @uploaded_file }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ hhandle = "page_slot_handle_#{page_slot.id}" 
+ hhandle 
+ hhandle 
+ file_icon_for(object.object_name) 
+ hhandle 
+ object.data.url 
+ h object.object_name 
+ format_size(object.data_file_size) 
+ if object.description? 
+ h object.description 
+ end 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  hhandle = "page_slot_handle_#{page_slot.id}" 
@@ -154,15 +168,27 @@ end
 
 end
  }
-        format.xml  { render :xml => @uploaded_file, :status => :created, :location => page_uploaded_file_path(:page_id => @page.id, :id => @uploaded_file.id) }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_uploaded_file_url(@page, @uploaded_file) 
+
+end
+ }
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_uploaded_file_url(@page, @uploaded_file) 
+
+end
+ }
         format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_uploaded_file_url(@page, @uploaded_file) 
 
 end
  }
-        format.xml  { render :xml => @uploaded_file.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_uploaded_file_url(@page, @uploaded_file) 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -221,7 +247,11 @@ end
 
 end
  }
-        format.xml  { render :xml => @uploaded_file.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_uploaded_file_url(@page, @uploaded_file) 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
