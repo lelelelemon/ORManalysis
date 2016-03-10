@@ -165,7 +165,12 @@ end
 
 def get_view_name_from_render_statement(stmt, controller_name, action_name)
   options_hash = parse_render_statement(stmt)
-  res = get_view_name_from_hash(options_hash, controller_name, action_name)
+  if options_hash != NOT_VALID
+    res = get_view_name_from_hash(options_hash, controller_name, action_name)
+  else
+    res = NOT_VALID
+  end
+
   return res
 end
 
@@ -189,6 +194,18 @@ def get_layout_name_from_hash(options_hash)
     else
       res = res[0..r-1] + "_" + res[r+1..-1]
     end
+  end
+  return res
+end
+
+#this function returns the layout name if layout is inside the options hash, 
+#there is no guarantee that the layout actually exists
+def get_layout_name_from_render_statement(stmt)
+  options_hash = parse_render_statement(stmt)
+  if options_hash != NOT_VALID
+    res = get_layout_name_from_hash(options_hash)
+  else
+    res = NOT_VALID
   end
   return res
 end
@@ -389,11 +406,8 @@ def get_render_statement_array(ast=nil)
         end
       elsif cur_ast.parent.type.to_s == "arg_paren" and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")
         res = cur_ast.parent.parent.source.to_s
-      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript", "link_to") and ["return", "command"].include?(cur_ast.parent.type.to_s)
+      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript") and ["return", "command"].include?(cur_ast.parent.type.to_s)
         res = cur_ast.parent.source.to_s
-        if cur_ast.parent.source.to_s.start_with?"link_to"
-          cur_ast = cur_ast[0]
-        end
       else
         res =  cur_ast.source.to_s
       end
