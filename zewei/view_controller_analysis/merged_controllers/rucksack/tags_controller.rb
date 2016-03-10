@@ -42,7 +42,12 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @tag }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ pages_url(:tags => [show]) 
+ h show 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  pages_url(:tags => [show]) 

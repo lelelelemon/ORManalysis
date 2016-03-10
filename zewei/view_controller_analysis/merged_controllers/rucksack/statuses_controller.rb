@@ -59,13 +59,159 @@ class StatusesController < ApplicationController
         format.js {}
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  escape_javascript(@user.status.content) 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
+
+end
+ }
         format.js {}
-        format.xml  { render :xml => @status.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  escape_javascript(@user.status.content) 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript(@user.status.content) 
+ "#{site_name} - #{h(@page_title)}" 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("#{item[:id]}_hidden?") 
+ (item[:id] == @selected_navigation_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ (item[:id] == @selected_user_item ? 'active' : nil) 
+ item[:id] 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ (@selected_user_item == :my_profile ? 'active' : nil) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+  escape_javascript(@user.status.content) 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
 
 end
 

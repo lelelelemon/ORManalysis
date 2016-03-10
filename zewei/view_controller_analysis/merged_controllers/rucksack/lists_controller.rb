@@ -46,7 +46,69 @@ class ListsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.js
-      format.xml  { render :xml => @list }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ object.id 
+ object.id 
+ page_slot.id 
+ h(object.name) 
+ if object.can_be_edited_by(@logged_user) 
+ object.id 
+ object.name 
+ end 
+ object.id 
+  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
+ show.id 
+ show.id 
+ url 
+ if show.can_be_completed_by(@logged_user) 
+ unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ end 
+ (show.is_completed? ? 'checked' : nil) 
+ show.id 
+ else 
+ show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
+ end 
+ show.id 
+ (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
+ raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ 
+ if object.can_be_edited_by(@logged_user) 
+ (@new_list.nil? ? 'display:none' : nil) 
+ form_tag page_list_list_items_path(object.page, object), :method => :post do 
+ text_field 'list_item', 'content', :class => 'autofocus moderate' 
+ t('add_item') 
+ t('cancel') 
+ end 
+ (@new_list.nil? ? nil : 'display:none') 
+ page_slot.id 
+ t('add_item') 
+ end 
+ climit = show_item_count 
+ citems = object.completed_items 
+  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
+ show.id 
+ show.id 
+ url 
+ if show.can_be_completed_by(@logged_user) 
+ unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ end 
+ (show.is_completed? ? 'checked' : nil) 
+ show.id 
+ else 
+ show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
+ end 
+ show.id 
+ (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
+ raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ 
+ if climit > 0 and citems.length > climit 
+ t('list_item_show') 
+ end 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  object.id 
@@ -168,11 +230,71 @@ end
         flash[:notice] = 'List was successfully created.'
         format.html { redirect_to(@list) }
         format.js {}
-        format.xml  { render :xml => @list, :status => :created, :location => page_list_path(:page_id => @page.id, :id => @list.id) }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
         format.js {}
-        format.xml  { render :xml => @list.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -226,7 +348,15 @@ end
 end
  }
         format.js {}
-        format.xml  { render :xml => @list.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "list_header_#{@list.id}_form" 
+ "list_header_#{@list.id}_form" 
+ "list_header_#{@list.id}" 
+ escape_javascript("<h2 hover_handle=\"page_slot_handle_#{@list.page_slot.id}\">#{h(@list.name)}</h2>").html_safe 
+ "list_header_#{@list.id}" 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|

@@ -46,7 +46,53 @@ class AlbumsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.js
-      format.xml  { render :xml => @album }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ object.id 
+ object.id 
+ page_slot.id 
+ h(object.title) 
+ if object.can_be_edited_by(@logged_user) 
+ object.id 
+ object.title 
+ end 
+ object.id 
+  url = show.can_be_edited_by(@logged_user) ? "/albums/#{show.album_id}/pictures/#{show.id}" : nil 
+ show.id 
+ show.id 
+ url 
+ if show.can_be_edited_by(@logged_user) 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_picture_handle_#{show.id}", '.albumPicture' 
+ end 
+ show.picture.url 
+ show.id 
+ show.picture.url(:album) 
+ textilize show.caption, true 
+ 
+ if object.can_be_edited_by(@logged_user) 
+ object.id 
+ (@new_album.nil? ? 'display:none' : nil) 
+  if @album_picture.nil? or @album_picture.new_record? 
+ url = page_album_album_pictures_path(@page, @album || object) 
+ mth = :post 
+ action_name = t('add_picture') 
+ else 
+ url = page_album_album_picture_path(@page, @album, @album_picture) 
+ mth = :put 
+ action_name = t('update') 
+ end 
+ form_tag url, :method => mth, :multipart => true do 
+ raw(file_field 'picture', 'picture', :class => 'pictureFormTitle', :class => 'autofocus long', :size => 8) 
+ text_field 'picture', 'caption', :class => 'autofocus long', :size => 18 
+ action_name 
+ t('cancel') 
+ end 
+ 
+ (@new_album.nil? ? nil : 'display:none') 
+ t('add_picture') 
+ end 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  object.id 
@@ -169,11 +215,71 @@ end
         flash[:notice] = 'Album was successfully created.'
         format.html { redirect_to(@album) }
         format.js {}
-        format.xml  { render :xml => @album, :status => :created, :location => page_album_path(:page_id => @page.id, :id => @album.id) }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
         format.js {}
-        format.xml  { render :xml => @album.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ "page_slot_#{@slot.id}" 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -244,7 +350,14 @@ end
 end
  }
         format.js {}
-        format.xml  { render :xml => @album.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "album_header_#{@album.id}_form" 
+ "album_header_#{@album.id}_form" 
+ escape_javascript "<h2 hover_handle=\"page_slot_handle_#{@album.page_slot.id}\">#{h(@album.title)}</h2>" 
+ "album_header_#{@album.id}" 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|

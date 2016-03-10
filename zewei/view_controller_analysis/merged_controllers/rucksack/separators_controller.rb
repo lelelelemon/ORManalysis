@@ -44,7 +44,14 @@ class SeparatorsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.js
-      format.xml  { render :xml => @separator }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ hhandle = "page_slot_handle_#{page_slot.id}" 
+ hhandle 
+ hhandle 
+ h object.title 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  hhandle = "page_slot_handle_#{page_slot.id}" 
@@ -124,11 +131,68 @@ end
         flash[:notice] = 'Separator was successfully created.'
         format.html { redirect_to(@separator) }
         format.js {}
-        format.xml  { render :xml => @separator, :status => :created, :location => page_separator_path(:page_id => @page.id, :id => @separator.id) }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+
+end
+ }
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+
+end
+ }
         format.js {}
-        format.xml  { render :xml => @separator.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
+ if @insert_before 
+ @insert_element 
+ ec 
+ else 
+ @insert_element 
+ ec 
+ end 
+ "page_slot_#{@slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -193,7 +257,18 @@ end
 end
  }
         format.js {}
-        format.xml  { render :xml => @separator.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "page_slot_#{@separator.page_slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|

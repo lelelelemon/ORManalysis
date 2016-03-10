@@ -59,7 +59,21 @@ class AlbumPicturesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.js
-      format.xml  { render :xml => @album_picture }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ url = show.can_be_edited_by(@logged_user) ? "/albums/#{show.album_id}/pictures/#{show.id}" : nil 
+ show.id 
+ show.id 
+ url 
+ if show.can_be_edited_by(@logged_user) 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_picture_handle_#{show.id}", '.albumPicture' 
+ end 
+ show.picture.url 
+ show.id 
+ show.picture.url(:album) 
+ textilize show.caption, true 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  url = show.can_be_edited_by(@logged_user) ? "/albums/#{show.album_id}/pictures/#{show.id}" : nil 
@@ -138,11 +152,23 @@ end
 
 end
 }
-        format.xml  { render :xml => @album_picture, :status => :created, :location => page_album_album_picture_path(:page_id => @page.id, :album_id => @album.id, :id => @album_picture.id) }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_album_album_picture_url(@page, @album, @album_picture) 
+
+end
+ }
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_album_album_picture_url(@page, @album, @album_picture) 
+
+end
+ }
         format.js
-        format.xml  { render :xml => @album_picture.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_album_album_picture_url(@page, @album, @album_picture) 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -194,7 +220,11 @@ end
 end
  }
         format.js
-        format.xml  { render :xml => @album_picture.errors, :status => :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_album_album_picture_url(@page, @album, @album_picture) 
+
+end
+ }
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|

@@ -31,7 +31,19 @@ class SessionsController < ApplicationController
   # render new.rhtml
   def new
     @login_token = params[:token]
-    render :action => (@login_token.nil? ? 'new' : 'new_token')
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ h @page_title 
+ raw(stylesheet_link_tag 'dialog') 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ javascript_tag yield(:js_templates) 
+ h @page_title 
+ status_bar 
+ raw(yield) 
+
+end
+
   end
   
   def show
