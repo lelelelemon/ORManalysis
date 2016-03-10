@@ -3,7 +3,32 @@ class SessionsController < ApplicationController
 
   def new
     @login_token = params[:token]
-    render :action => (@login_token.nil? ? 'new' : 'new_token')
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ h page_title 
+ stylesheet_link_tag 'dialog' 
+ javascript_include_tag 'application.js' 
+ if !Company.owner.nil? and Company.owner.logo? 
+ Company.owner.logo.url 
+ end 
+ h page_title 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ form_tag session_path, :method => :post do 
+ t('username') 
+ text_field_tag 'login', @login, :size => 30, :id => 'loginUsername', :class => 'medium' 
+ t('password') 
+ password_field_tag 'password', nil, :size => 30, :id => 'loginPassword', :class => 'medium' 
+ check_box_tag 'remember_me', '1', @remember_me, :class => 'checkbox' 
+ t('remember_me') 
+ link_to t('forgot_password_q') , new_password_path 
+ t('login') 
+ end 
+
+end
+
   end
   
   def show

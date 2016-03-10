@@ -12,6 +12,12 @@ def parse_render_statement(stmt)
     return NOT_VALID
   end
 
+  if ["if_mod", "unless_mod"].include? ast.type.to_s
+    ast = ast[1]
+  end
+  if ast.type.to_s == "binary"
+    ast = ast[0]
+  end
   hash = {}
 
 #  render(partial: "view", layout: "layout_view")
@@ -132,7 +138,7 @@ def get_view_name_from_hash(options_hash, controller_name, action_name)
   elsif options_hash.has_key?"js:"
     res = options_hash["js:"]
   elsif options_hash.has_key?"file:"
-    res = options_hash["file"]
+    res = options_hash["file:"]
   elsif options_hash.has_key?":file"
     res = options_hash[":file"]
   elsif options_hash.has_key?"file"
@@ -221,7 +227,7 @@ def parse_content_for_stmt(stmt)
   #key: the name of content_for
   #value: the content of content_for
   #stmt: the whole statement
-  return {key => [value, [stmt]]}
+  return {key => [value, stmt]}
 end
 
 def get_content_hash(content_for_arr)
@@ -233,7 +239,7 @@ def get_content_hash(content_for_arr)
         hash[k][0] = hash[k][0] + v[0]
         hash[k][1].push v[1]
       else
-        hash[k] = v
+        hash[k] = [v[0], [v[1]]]
       end
     end
   end
@@ -299,8 +305,10 @@ def merge_layout_content(layout, content)
     end
   end
 
-  layout.gsub!(/yield[ \t]*\n/){content}
-  layout.gsub!("::Temple::Utils.escape_html((yield))"){content}
+  layout.gsub!(/\n[ \t]*yield[ \t]*\n/){ "\n" + content}
+  layout.gsub!(/\n[ \t]*yield\(:layout\)[ \t]*\n/){"\n" + content}
+  layout.gsub!(/\n[ \t]*yield :layout[ \t]*\n/){"\n" + content}
+  layout.gsub!("::Temple::Utils.escape_html((yield))"){"\n" + content}
 
   return layout
 end
@@ -372,7 +380,7 @@ def get_render_statement_array(ast=nil)
   ast_arr.push ast
   while ast_arr.length > 0
     cur_ast = ast_arr.pop
-    if cur_ast.source.start_with? keyword
+    if cur_ast.source.start_with? keyword #and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?("escape_javascript(", "raw(")
         if cur_ast.parent.parent.parent.type.to_s == "ifop"
           res = cur_ast.parent.parent.parent.source.to_s
@@ -381,8 +389,11 @@ def get_render_statement_array(ast=nil)
         end
       elsif cur_ast.parent.type.to_s == "arg_paren" and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")
         res = cur_ast.parent.parent.source.to_s
-      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript") and ["return", "command"].include?(cur_ast.parent.type.to_s)
+      elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript", "link_to") and ["return", "command"].include?(cur_ast.parent.type.to_s)
         res = cur_ast.parent.source.to_s
+        if cur_ast.parent.source.to_s.start_with?"link_to"
+          cur_ast = cur_ast[0]
+        end
       else
         res =  cur_ast.source.to_s
       end
@@ -400,3 +411,10 @@ def get_render_statement_array(ast=nil)
 
   return res_arr
 end
+
+=begin
+content = File.open(ARGV[0], "r").read
+ast = YARD::Parser::Ruby::RubyParser.parse(content).root
+res = get_render_statement_array(ast)
+binding.pry
+=end

@@ -52,15 +52,8 @@ end
 end
 
   def community_not_found
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- locals(local_assigns, :title) 
- Maybe(@current_community).favicon.each do |favicon| 
- favicon 
- end 
-  host 
-
-end
-end
+    render status: 404, locals: { status: 404, title: "Marketplace not found", host: request.host }
+  end
 
   private
 

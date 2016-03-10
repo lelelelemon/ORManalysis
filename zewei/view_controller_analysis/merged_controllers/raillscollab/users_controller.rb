@@ -68,10 +68,100 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html {}
       format.xml  { 
-        render :xml => @user.to_xml(:root => 'user')
-      }
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_tag users_path 
   error_messages_for :user 
  if @logged_user.is_admin 
@@ -200,6 +290,255 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  t('add_user') 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
+
+end
+
+      }
+    end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
+ form_tag users_path 
+  error_messages_for :user 
+ if @logged_user.is_admin 
+ t('administration_options_info') 
+ t('username') 
+ text_field 'user', 'username', :id => 'userFormUsername' 
+ if @logged_user.member_of_owner? 
+ t('company') 
+ select 'user', 'company_id', Company.select_list, {}, {:id => 'userFormCompany'} 
+ t('options') 
+ t('administrator') 
+ yesno_toggle 'user', 'is_admin', :id => 'userFormIsAdmin', :class => 'checkbox'  
+ t('auto_assign_to_new_projects') 
+ yesno_toggle 'user', 'auto_assign', :id => 'userFormAutoAssign', :class => 'checkbox'  
+ end 
+ else 
+ t('username') 
+ @user.username 
+ end 
+ t('display_name') 
+ text_field 'user', 'display_name', :id => 'userFormDisplayName', :class => 'medium' 
+ t('email_address') 
+ text_field 'user', 'email', :id => 'profileFormEmail', :class => 'long' 
+ t('timezone') 
+ time_zone_select 'user', 'time_zone', nil, {}, {:id => 'profileFormTimezone', :class => 'long'} 
+ t('password') 
+ if @user.new_record? 
+ t('generate_password') 
+ end 
+ t('password') 
+ t('repeat_password') 
+ if @user.new_record? 
+ t('send_account_email_notification') 
+ yesno_toggle_tag 'new_account_notification', !!@send_email, :id => 'userFormEmailNotificationYes', :class => 'checkbox' 
+ t('send_account_email_notication_info') 
+ else 
+ t('contact_info') 
+ t('title') 
+ text_field 'user', 'title', :id => 'userFormTitle' 
+ t('office') 
+ text_field 'user', 'office_number', :id => 'userFormOfficeNumber' 
+ t('office') 
+ text_field 'user', 'office_number_ext', :id => 'userFormOfficeNumberExt' 
+ t('fax') 
+ text_field 'user', 'fax_number', :id => 'userFormFaxNumber' 
+ t('mobile') 
+ text_field 'user', 'mobile_number', :id => 'userFormMobileNumber' 
+ t('home') 
+ text_field 'user', 'home_number', :id => 'userFormHomeNumber' 
+ all_im_values = @user.im_info 
+ if all_im_values.length > 0 
+ t('instant_messengers') 
+ t('service') 
+ t('value') 
+ t('primary_im') 
+ @count = 0 
+ all_im_values.each do |im_value| 
+ im_value.im_type.icon_url 
+ im_value.im_type.name 
+ "userFormIm#{@count}" 
+ im_value.im_type.name 
+ text_field_tag "user[im_values][#{im_value.im_type_id}][value]", im_value.value, :id => "userFormIm#{@count}" 
+ radio_button_tag "user[default_im_value]", im_value.im_type_id, im_value.is_default, :id => 'im_default', :class => 'checkbox' 
+ @count += 1 
+ end 
+ t('instant_messengers_info') 
+ end 
+ end 
+ if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
+ @permissions.keys.join('\',\'')
+ t('permissions') 
+  if @companies.length > 0
+ form_tag permissions_project_path(:id => @active_project.id), :method => :put 
+ @companies.each do |company| 
+ if company.users.length > 0 
+ company.logo_url 
+ h company.name 
+ if company.is_owner? 
+ h company.name 
+ company.id 
+ else 
+ check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
+ "project_company[]" 
+ h company.name 
+ end 
+ "#{@active_project.id}_#{company.id}" 
+ unless company.is_part_of(@active_project) 
+ end 
+ unless company.users.empty? 
+  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
+ if permissions_users.owner_of_owner? 
+ render_icon 'ok', 'Ok' 
+ h permissions_users.display_name 
+ "people_#{permissions_users.id}" 
+ else 
+ check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
+ "projectPermissions#{perm_id}" 
+ h permissions_users.display_name 
+ end 
+ if permissions_users.is_admin? 
+ t('administrator') 
+ end 
+ unless company.is_owner? 
+ perm_id 
+ unless permissions_users.member_of(project) 
+ end 
+ check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
+ "projectPermissions#{perm_id}All" 
+ t('all') 
+ @permissions.keys.each do |permission| 
+ check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
+ "projectPermissions#{perm_id}#{permission}" 
+ @permissions[permission] 
+ end 
+ end 
+ 
+ else 
+ t('company_no_users') 
+ end 
+ end 
+ end 
+ t('update_people') 
+ end 
+ @permissions.keys.join('\',\'')
+ 
+ end 
+ 
+ t('add_user') 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -268,6 +607,99 @@ end
         format.xml  { render :xml => @user.to_xml(:root => 'user'), :status => :created, :location => @user }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_tag users_path 
   error_messages_for :user 
  if @logged_user.is_admin 
@@ -396,6 +828,17 @@ end
  end 
  
  t('add_user') 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
  }
@@ -408,6 +851,99 @@ end
   def edit
     authorize! :update_profile, @user
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_tag user_path(:id => @user.id), :method => :put 
   error_messages_for :user 
  if @logged_user.is_admin 
@@ -551,6 +1087,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('avatar_upload_info') 
  end 
  t('update_avatar') 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -624,6 +1171,99 @@ end
         format.xml  { head :ok }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_tag user_path(:id => @user.id), :method => :put 
   error_messages_for :user 
  if @logged_user.is_admin 
@@ -767,6 +1407,17 @@ end
  t('avatar_upload_info') 
  end 
  t('update_avatar') 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
  }
@@ -781,6 +1432,99 @@ end
     authorize! :update_profile, @user
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_tag user_path(:id => @user.id), :method => :put 
   error_messages_for :user 
  if @logged_user.is_admin 
@@ -924,6 +1668,17 @@ end
  t('avatar_upload_info') 
  end 
  t('update_avatar') 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -967,6 +1722,99 @@ end
         redirect_to edit_user_path(:id => @user.id)
       else
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  form_tag user_path(:id => @user.id), :method => :put 
   error_messages_for :user 
  if @logged_user.is_admin 
@@ -1110,6 +1958,17 @@ end
  t('avatar_upload_info') 
  end 
  t('update_avatar') 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -1131,25 +1990,100 @@ end
       
       format.xml  {
         if @user.is_admin
-          render :xml => @user.to_xml
-        else
-          attribs = [:id,
-                     :company_id,
-                     :avatar_file_name,
-                     :display-name,
-                     :email,
-                     :fax,
-                     :home_number,
-                     :mobile_number,
-                     :office_number,
-                     :office_number_ext,
-                     :time_zone,
-                     :title]
-          render :xml => @user.to_xml(:only => attribs)
-        end  
-      }
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
 
   @page_actions = []
   if can?(:update_profile, @user)
@@ -1204,6 +2138,357 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
 
 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
+
+end
+
+        else
+          attribs = [:id,
+                     :company_id,
+                     :avatar_file_name,
+                     :display-name,
+                     :email,
+                     :fax,
+                     :home_number,
+                     :mobile_number,
+                     :office_number,
+                     :office_number_ext,
+                     :time_zone,
+                     :title]
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
+
+  @page_actions = []
+  if can?(:update_profile, @user)
+	  @page_actions += [{:title => :edit, :url => edit_user_path(:id => @user.id)}]
+  end
+  
+  if can?(:update_permissions, @user)
+  	@page_actions << {:title => :update_permissions, :url => permissions_user_path(:id => @user.id)}
+  end
+
+
+   card.avatar_url 
+ h card.display_name 
+ h card.display_name 
+ t('title') 
+ card.title ? (h card.title) : t('not_applicable') 
+ t('company') 
+ link_to card.company.name, company_path(:id => card.company.id) 
+ t('contact_online') 
+ t('email_address') 
+ h card.email 
+ h card.email 
+ if !card.im_values.empty? 
+ card.im_values.each do |im_value| 
+ next if im_value.value.blank? 
+ im_value.im_type.icon_url 
+ im_value.im_type.name 
+ h im_value.value 
+ if im_value.is_default 
+ t('primary_im') 
+ end 
+ end 
+ end 
+ if !card.office_number.nil? or !card.fax_number.nil? or !card.mobile_number.nil? or !card.home_number.nil? 
+ t('contact_offline') 
+ if !card.office_number.nil? and !card.office_number.empty? 
+ t('office') 
+ h(card.office_number) 
+ end 
+ if !card.fax_number.nil? and !card.fax_number.empty? 
+ t('fax') 
+ h(card.fax_number) 
+ end 
+ if !card.mobile_number.nil? and !card.mobile_number.empty? 
+ t('mobile') 
+ h(card.mobile_number) 
+ end 
+ if !card.home_number.nil? and !card.home_number.empty? 
+ t('home') 
+ h(card.home_number) 
+ end 
+ end 
+
+
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
+
+end
+
+        end  
+      }
+    end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
+
+  @page_actions = []
+  if can?(:update_profile, @user)
+	  @page_actions += [{:title => :edit, :url => edit_user_path(:id => @user.id)}]
+  end
+  
+  if can?(:update_permissions, @user)
+  	@page_actions << {:title => :update_permissions, :url => permissions_user_path(:id => @user.id)}
+  end
+
+
+   card.avatar_url 
+ h card.display_name 
+ h card.display_name 
+ t('title') 
+ card.title ? (h card.title) : t('not_applicable') 
+ t('company') 
+ link_to card.company.name, company_path(:id => card.company.id) 
+ t('contact_online') 
+ t('email_address') 
+ h card.email 
+ h card.email 
+ if !card.im_values.empty? 
+ card.im_values.each do |im_value| 
+ next if im_value.value.blank? 
+ im_value.im_type.icon_url 
+ im_value.im_type.name 
+ h im_value.value 
+ if im_value.is_default 
+ t('primary_im') 
+ end 
+ end 
+ end 
+ if !card.office_number.nil? or !card.fax_number.nil? or !card.mobile_number.nil? or !card.home_number.nil? 
+ t('contact_offline') 
+ if !card.office_number.nil? and !card.office_number.empty? 
+ t('office') 
+ h(card.office_number) 
+ end 
+ if !card.fax_number.nil? and !card.fax_number.empty? 
+ t('fax') 
+ h(card.fax_number) 
+ end 
+ if !card.mobile_number.nil? and !card.mobile_number.empty? 
+ t('mobile') 
+ h(card.mobile_number) 
+ end 
+ if !card.home_number.nil? and !card.home_number.empty? 
+ t('home') 
+ h(card.home_number) 
+ end 
+ end 
+
+
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 
@@ -1222,6 +2507,99 @@ end
       error_status(false, :success_updated_permissions)
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_authenticity_token 
+ "#{h(page_title)} @ #{h(Company.owner.name)}" 
+ stylesheet_link_tag 'project_website' 
+ additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end unless additional_stylesheets.nil? 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery-ui.js' 
+ javascript_include_tag 'jrails.js' 
+ javascript_include_tag 'application.js' 
+ link_to t('administration'), :controller => 'administration' 
+  if user.is_anonymous? 
+ t('welcome_anonymous') 
+ link_to(t('login'), logout_path) 
+ else 
+ t('welcome_back', :user => h(user.display_name)).html_safe 
+ link_to t('logout'), logout_path, :confirm => t('are_you_sure_logout') 
+ end 
+ @running_times.empty? ? 'none' : 'block' 
+ t('running_times', :count => @running_times.size) 
+ render_icon 'bullet_drop_down', '', :id => 'running_times', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ unless user.is_anonymous? 
+ link_to t('account'), @logged_user 
+ render_icon 'bullet_drop_down', '', :id => 'account_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless projects.blank? 
+ link_to t('projects'), :controller => 'dashboard', :action => 'my_projects' 
+ render_icon 'bullet_drop_down', '', :id => 'projects_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ if user.is_admin 
+ link_to t('administration'), :controller => 'administration' 
+ render_icon 'bullet_drop_down', '', :id => 'administration_more', :class => 'PopupMenuWidgetAttachTo', :title => 'Enable javascript' 
+ end 
+ unless user.is_anonymous? 
+ t('account') 
+ link_to t('edit_profile'), edit_user_path(:id => user.id) 
+ link_to t('update_avatar'), avatar_user_path(:id => user.id) 
+ t('userbox_more') 
+ link_to t('my_projects'), :controller => 'dashboard', :action => 'my_projects' 
+ link_to t('my_tasks'), :controller => 'dashboard', :action => 'my_tasks' 
+ end 
+ unless projects.blank? 
+ t('projects') 
+ projects.each do |project| 
+ link_to h(project.name), project_path(:id => project.id) 
+ end 
+ end 
+ if user.is_admin 
+ t('administration') 
+ link_to t('company'), Company.owner 
+ link_to t('members'), companies_path 
+ link_to t('projects'), projects_path 
+ end 
+  listed.id 
+ link_to h(listed.name), listed.object_url 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => listed.project_id , :id => listed.id), :class => 'blank stopTime' 
+ 
+ 
+  unless tabs.nil? 
+ current_tab = self.current_tab 
+ tabs.each do |item| 
+ "item_#{item[:id]}" 
+ 'class="active"'.html_safe if item[:id] == current_tab 
+ item[:url] 
+ t(item[:id]) 
+ end 
+ end 
+ 
+  unless crumbs.nil? 
+ crumbs.each do |crumb| 
+ if crumb[:url] 
+ crumb[:url] 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ else 
+ crumb[:title].is_a?(Symbol) ? t(crumb[:title]) : h(crumb[:title]) 
+ end 
+ end 
+ end 
+ 
+ if flash[:message] 
+ flash[:error] ? 'error' : 'success' 
+ flash[:error] ? 'flash_error' : 'flash_success' 
+ h flash[:message] 
+ end 
+ h page_title 
+ @content_for_sidebar.nil? ? '' : 'class=\'sidebar\'' 
+  page_actions.each do |action| 
+ action[:url] 
+ action[:ajax] ? 'class="ajax_action"' : 'class="action"' 
+ action[:title] 
+ t(action[:title]) 
+ end 
+ 
  @permissions.keys.join('\',\'')
  unless @projects.empty? 
  form_tag permissions_user_path(:id => @user.id), :method => :put 
@@ -1281,6 +2659,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  t('update_permissions') 
  end 
+ unless @content_for_sidebar.nil? 
+ render :partial => @content_for_sidebar 
+ end 
+  if not Company.owner.homepage.nil? 
+ Company.owner.homepage 
+ Company.owner.name 
+ else 
+ Company.owner.name 
+ end 
+ product_signature 
+ 
 
 end
 

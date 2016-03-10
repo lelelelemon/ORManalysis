@@ -1,2 +1,0 @@
-- ruby merge_controller_and_view.rb controller_folder/ view_folder/ new_controller_folder/
-- view_folder needs to contain .erb.rb files

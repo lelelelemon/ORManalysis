@@ -4,6 +4,108 @@ class StatisticsController < ApplicationController
   def tracker
     @stats = Statistics::Tracker.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
@@ -13,7 +115,85 @@ end
     @month = params[:month]
     @stats = Statistics::Prizes.new(@month)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- h1 "Statistiques d'aide au choix des primables - #{@stats.month.strftime "%m/%Y"}" 
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  h1 "Statistiques d'aide au choix des primables - #{@stats.month.strftime "%m/%Y"}" 
  link_to "Mois prcdent", month: @stats.month.prev_month.strftime("%m-%Y") 
  link_to "Mois suivant", month: @stats.month.next_month.strftime("%m-%Y") 
  list_of @stats.best_score(News, 20) do |news, score| 
@@ -52,6 +232,30 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  list_of @stats.top_commenters(Post, 5) do |user, score| 
  link_to_user_with_score(user, score) 
  end 
+ link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
@@ -60,6 +264,108 @@ end
   def users
     @stats = Statistics::Users.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
@@ -68,7 +374,85 @@ end
   def top
     @stats = Statistics::Tops.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- h1 "Top ou flop du site" 
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  h1 "Top ou flop du site" 
  list_of @stats.top_authors(News, 30, true) do |user, score| 
  link_to_user_with_score(user, score) 
  end 
@@ -81,6 +465,30 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  list_of @stats.top_authors(Diary, 15, false) do |user, score| 
  link_to_user_with_score(user, score) 
  end 
+ link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
@@ -90,7 +498,85 @@ end
     @stats = Statistics::Moderation.new
     @goals = Statistics::Goals.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- javascript_include_tag "sorttable" 
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  javascript_include_tag "sorttable" 
  h1 "Statistiques sur la modration" 
  width_stats = 400 
  if @stats.by_day.any? 
@@ -152,6 +638,30 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  else 
  end 
+ link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
@@ -160,7 +670,85 @@ end
   def redaction
     @stats = Statistics::Redaction.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- javascript_include_tag "sorttable" 
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  javascript_include_tag "sorttable" 
  h1 "Statistiques sur la rdaction" 
  width_stats = 400 
  list_of @stats.top_week(30) do |stat| 
@@ -175,6 +763,30 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  list_of @stats.top_edited(30, 30) do |stat| 
  end 
+ link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
@@ -183,6 +795,108 @@ end
   def contents
     @stats = Statistics::Contents.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
@@ -191,7 +905,85 @@ end
   def comments
     @stats = Statistics::Comments.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- h1 "Statistiques sur les commentaires" 
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  h1 "Statistiques sur les commentaires" 
  width_stats = 400 
  if @stats.comments["Total"] == 0 
  else 
@@ -225,7 +1017,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  comment.each do |type,cnt| 
  if newyear==true 
  comment.count 
- month.sub(/(\d{4})(\d{2})/, ' ') 
+ month.sub(/(\d{4})(\d{2})/, '\2 \1') 
  newyear=false 
  end 
  end 
@@ -235,6 +1027,30 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  day_name day 
  end 
  end 
+ link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
@@ -243,7 +1059,85 @@ end
   def tags
     @stats = Statistics::Tags.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- h1 "Statistiques sur les tags" 
+  @title.join(' - ').html_safe 
+ if current_stylesheet 
+ stylesheet_link_tag current_stylesheet, media: nil 
+ elsif current_account 
+ stylesheet_link_tag current_account.stylesheet_url, media: nil 
+ else 
+ stylesheet_link_tag 'application', media: nil 
+ end 
+ if @google_plus 
+ end 
+ if @author 
+ end 
+ if @dont_index 
+ end 
+ @feeds.each do |link,title| 
+ auto_discovery_link_tag :atom, link, { title: title } 
+ end 
+ 
+  ("active" if controller_name == "home") 
+ link_to "Accueil", '/', title: "Page d'accueil du site, personnalisable" 
+ ("active" if controller_name == "news" || controller_name == "sections") 
+ link_to "Dpches", '/news', title: "Actualits, vnements et autres nouveauts" 
+ ("active" if controller_name == "forums" || controller_name == "posts") 
+ link_to "Forums", '/forums', title: "Questions/rponses, petites annonces" 
+ ("active" if controller_name == "polls") 
+ link_to "Sondages", '/sondages', title: "Sondages proposes aux visiteurs du site" 
+ ("active" if controller_name == "wiki_pages" || controller_name == "wiki_versions") 
+ link_to "Wiki", '/wiki', title: "Pages wiki" 
+ ("active" if controller_name == "trackers") 
+ link_to "Suivi", '/suivi', title: "Suivi des suggestions et des bugs du site" 
+ form_tag '/recherche', method: :get do 
+ submit_tag "Rechercher", name: nil, id: "search_submit", title: "Lancer la recherche sur le site" 
+ end 
+ 
+  logo 
+ account_signed_in? ? link_to(current_account.login, current_account.user) : "Se connecter" 
+ link_to "Proposer un contenu", '/proposer-un-contenu' 
+ if account_signed_in? 
+ if current_account.has_answers? 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Vous avez reu des rponses  vos commentaires", width: "16px" 
+ end 
+ link_to "Mon tableau de bord", '/tableau-de-bord' 
+ link_to "Mes contenus taggs", '/tags' 
+ link_to "Les contenus que j'ai lus", '/readings' 
+ link_to "Modifier mes prfrences", '/compte/modifier' 
+ link_to "Changer de style", '/stylesheet/modifier' 
+ button_to "Se dconnecter", '/compte/deconnexion', method: :post, id: "logout" 
+ else 
+  @account ||= Account.new 
+ form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
+ f.label "login#{id_suffix}", "Identifiant" 
+ f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
+ f.label "password#{id_suffix}", "Mot de passe" 
+ f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
+ f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
+ f.label "remember_me#{id_suffix}", "Connexion automatique" 
+ f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+ end 
+ 
+ end 
+ if current_account 
+  link_to "Rdaction", '/redaction' 
+ link_to "Tribune de rdaction", '/redaction' 
+ list_of News.draft.sorted.limit(10) do |news| 
+ if news.node.board_status(current_account) == :new_board 
+ image_tag "/images/icones/chat.svg", alt: "Nouveaux !", title: "Il y a de l'activit sur cette dpche", width: "16px" 
+ end 
+ link_to news.title, [:redaction, news] 
+ end 
+ link_to "(...)", "/redaction#news" 
+ 
+ end 
+ yield :column 
+ 
+ [:alert, :notice].each do |type| 
+ if flash[type] 
+ end 
+ end 
+  h1 "Statistiques sur les tags" 
  width_stats = 400 
  link_to("gnral","#general") 
  link_to("par type","#type") 
@@ -276,7 +1170,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  tag.each do |type,cnt| 
  if newyear 
  tag.count 
- month.sub(/(\d{4})(\d{2})/, ' ') 
+ month.sub(/(\d{4})(\d{2})/, '\2 \1') 
  newyear = false 
  end 
  end 
@@ -288,6 +1182,30 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  else 
  end 
+ link_to "Revenir en haut de page", '#top', class: 'scroll' 
+ cache "layouts/footer", expires_in: 1.minute do 
+  @last_comments.each do |comment| 
+ link_to comment.title, path_for_content(comment.node.content) + "#comment-#{comment.id}" 
+ end 
+ @popular_tags.each do |tag| 
+ link_to tag.name, "/tags/#{tag.name}/public" 
+ end 
+ @friend_sites.each do |site| 
+ link_to site.title, site.url 
+ end 
+ link_to "Mentions lgales", '/mentions_legales' 
+ link_to "Faire un don", '/faire_un_don' 
+ link_to "Team LinuxFr.org", '/team' 
+ link_to "Informations sur le site", '/informations' 
+ link_to "Aide / Foire aux questions", '/aide' 
+ link_to "Rgles de modration", '/regles_de_moderation' 
+ link_to "Statistiques", '/statistiques' 
+ link_to "API pour les dveloppeurs", '/developpeur' 
+ link_to "Code source du site", '/code_source_du_site' 
+ link_to "Plan du site", '/plan' 
+ 
+ end 
+ javascript_include_tag "application" 
 
 end
 
