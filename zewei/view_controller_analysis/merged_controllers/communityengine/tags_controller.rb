@@ -26,25 +26,128 @@ class TagsController < BaseController
 
     @clipping_tags = popular_tags(75, 'Clipping').to_a
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title= :browse_content_by_tags.l 
- widget do  
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title= :browse_content_by_tags.l 
+ widget do 
  :what_are_tags.l 
  :tags_are_one_word_descriptors_users_assign_to_blog_posts_pictures_and_clippings_on.l+" #{configatron.community_name}." 
  :bigger_font_size_more_popular_tag.l 
  end 
- widget do  
+ widget do 
  :search.l 
  bootstrap_form_tag :url => search_tags_path, :method => 'get', :class => 'form' do 
  text_field_tag 'id', params[:id], :autocomplete => "off", :placeholder => 'search tags' 
- content_for :end_javascript do 
- tag_auto_complete_field 'id', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
- end 
+  
  submit_tag :go.l, :class => 'btn btn-primary' 
  end 
  end 
  tag_cloud @tags, %w(css1 css2 css3 css4 css5) do |tag, css_class| 
  link_to tag.name, tag_url(tag.to_param), :class => css_class 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ tag_auto_complete_field 'id', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
 
 end
 
@@ -55,7 +158,98 @@ end
     @tags = @search.result
     @tags = @tags.order('name ASC').distinct.page(params[:page]).per(100)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:tags.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:tags.l 
   widget do 
  :admin.l 
  link_to_unless_current :features.l, homepage_features_path 
@@ -96,6 +290,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to :destroy.l, tag_path(tag), data: { confirm: :are_you_sure.l }, :method => :delete, :class => 'btn btn-danger' 
  end 
  paginate @tags, :theme => 'bootstrap' 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -105,7 +313,98 @@ end
   def edit
     @tag = ActsAsTaggableOn::Tag.find_by_name(URI::decode(params[:id]))
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:editing_tag.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:editing_tag.l 
   widget do 
  :admin.l 
  link_to_unless_current :features.l, homepage_features_path 
@@ -135,6 +434,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.primary :update.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -150,7 +463,98 @@ end
         format.xml  { render :nothing => true }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:editing_tag.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:editing_tag.l 
   widget do 
  :admin.l 
  link_to_unless_current :features.l, homepage_features_path 
@@ -180,6 +584,20 @@ end
  f.primary :update.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
  }
@@ -236,7 +654,98 @@ end
       @clippings  = Clipping.recent.limit(10).tagged_with(tag_array)
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- widget do 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  widget do 
  if params[:type] 
  (params[:type].downcase.pluralize + '_tagged').l 
  else 
@@ -256,7 +765,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if @posts.any? 
- unless params[:type]     
+ unless params[:type] 
  :posts.l 
  @posts.each do |post| 
  link_to( truncate(post.display_title, :length => 75), user_post_path(post.user, post), :title => :by.l(:login => post.user.login) ) 
@@ -291,6 +800,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @pages && !params[:type].eql?('Post') 
  paginate @pages, :theme => 'bootstrap' 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 

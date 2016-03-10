@@ -55,7 +55,98 @@ class UsersController < BaseController
 
     setup_metro_areas_for_cloud
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:site_members.l :site => configatron.community_name 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:site_members.l :site => configatron.community_name 
  @section = (params[:metro_area_id] ? 'metro_area' : 'users') 
   
   link_to image_tag( user.avatar_photo_url(:medium), :class => "img-responsive" ), user_path(user) 
@@ -83,6 +174,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  paginate @users, :theme => 'bootstrap' 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -93,6 +198,111 @@ end
     @network_activity = @user.network_activity
     @recommended_posts = @user.recommended_posts
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+   render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -116,7 +326,98 @@ end
 
     update_view_count(@user) unless current_user && current_user.eql?(@user)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @meta = { :description => "#{@user.login}'s profile on #{configatron.community_name}.", :keywords => "#{@user.login}, #{@user.tags.join(", ") unless @user.tags.nil?}", :robots => configatron.robots_meta_show_content } 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @meta = { :description => "#{@user.login}'s profile on #{configatron.community_name}.", :keywords => "#{@user.login}, #{@user.tags.join(", ") unless @user.tags.nil?}", :robots => configatron.robots_meta_show_content } 
  @section = @user.eql?(current_user) ? 'my_profile' : 'users' 
  @sidebar_left = true 
  widget :id => 'friends' do 
@@ -169,7 +470,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @photo_comments.empty? 
  :photo_comments.l 
  @photo_comments.each do |comment| 
- link_to(image_tag((comment.user && comment.user.avatar_photo_url(:thumb) || configatron.photo.missing_thumb), :width => '50', :height => '50'), user_photo_path(@user, comment.commentable))             
+ link_to(image_tag((comment.user && comment.user.avatar_photo_url(:thumb) || configatron.photo.missing_thumb), :width => '50', :height => '50'), user_photo_path(@user, comment.commentable)) 
  "#{comment.username}" + " " + :says.l + ":" 
  truncate_words(comment.comment, 10).html_safe 
  link_to "&raquo; ".html_safe + :view_comment.l, user_photo_path(@user, comment.commentable) + "#comment-#{comment.id}" 
@@ -262,6 +563,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  more_comments_links(@user) 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -272,7 +587,98 @@ end
     @inviter_id   = params[:id]
     @inviter_code = params[:code]
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:sign_up.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:sign_up.l 
  widget do 
  :why_sign_up.l 
  :sign_up_reason_1.l 
@@ -301,6 +707,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.primary :sign_up.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -316,7 +736,98 @@ end
       redirect_to signup_completed_user_path(@user)
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:sign_up.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:sign_up.l 
  widget do 
  :why_sign_up.l 
  :sign_up_reason_1.l 
@@ -345,6 +856,20 @@ end
  f.primary :sign_up.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -355,7 +880,98 @@ end
     @metro_areas, @states = setup_locations_for(@user)
     @avatar     = (@user.avatar || @user.build_avatar)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- widget do 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  widget do 
  :you_are_editing_your_profile.l 
  link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) 
  end 
@@ -390,8 +1006,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  js ||= nil 
  if js 
  else 
- content_for :end_javascript do 
- end 
+  
  end 
  
  end 
@@ -420,13 +1035,25 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  :by_looking_at_the.l 
  link_to :tags_page.l, tags_path 
  end 
- content_for :end_javascript do 
- tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
- end 
+  
  f.form_group :save_group do 
  f.primary :save_changes.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
 
 end
 
@@ -459,7 +1086,98 @@ end
         end
       else
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- widget do 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  widget do 
  :you_are_editing_your_profile.l 
  link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) 
  end 
@@ -494,8 +1212,7 @@ end
  js ||= nil 
  if js 
  else 
- content_for :end_javascript do 
- end 
+  
  end 
  
  end 
@@ -524,20 +1241,123 @@ end
  :by_looking_at_the.l 
  link_to :tags_page.l, tags_path 
  end 
- content_for :end_javascript do 
- tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
- end 
+  
  f.form_group :save_group do 
  f.primary :save_changes.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
 
 end
 
       end
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- widget do 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  widget do 
  :you_are_editing_your_profile.l 
  link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) 
  end 
@@ -572,8 +1392,7 @@ end
  js ||= nil 
  if js 
  else 
- content_for :end_javascript do 
- end 
+  
  end 
  
  end 
@@ -602,13 +1421,25 @@ end
  :by_looking_at_the.l 
  link_to :tags_page.l, tags_path 
  end 
- content_for :end_javascript do 
- tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
- end 
+  
  f.form_group :save_group do 
  f.primary :save_changes.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
 
 end
 
@@ -632,7 +1463,112 @@ end
       }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @user.id.to_s 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @user.id.to_s 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -650,7 +1586,98 @@ end
   rescue ActiveRecord::RecordInvalid
     @metro_areas, @states = setup_locations_for(@user)
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- widget do 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  widget do 
  :you_are_editing_your_profile.l 
  link_to :edit_your_account_settings_instead.l, edit_account_user_path(@user) 
  end 
@@ -685,8 +1712,7 @@ end
  js ||= nil 
  if js 
  else 
- content_for :end_javascript do 
- end 
+  
  end 
  
  end 
@@ -715,13 +1741,25 @@ end
  :by_looking_at_the.l 
  link_to :tags_page.l, tags_path 
  end 
- content_for :end_javascript do 
- tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
- end 
+  
  f.form_group :save_group do 
  f.primary :save_changes.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ tag_auto_complete_field 'user_tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
 
 end
 
@@ -749,13 +1787,118 @@ end
       redirect_to crop_profile_photo_user_path(@user)
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:profile_photo.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:profile_photo.l 
  bootstrap_form_for :avatar, :url => upload_profile_photo_user_url(@user), :method => 'put', :multipart => true, :layout => :horiztonal do |f| 
  @user.vendor ? "<div class='right_corner'><div class='community_pro'></div></div>" : '' 
  image_tag( @user.avatar_photo_url(:medium), :class => "thumbnail" ) 
  f.file_field :photo, :label => :choose_a_photo_for_your_profile.l 
  f.primary :save_changes.l 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -766,7 +1909,98 @@ end
     @authorizations   = current_user.authorizations
     @is_current_user  = true
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- widget do 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  widget do 
  :you_are_editing_your_account.l 
  link_to :edit_your_user_profile.l, edit_user_path(@user) 
  end 
@@ -811,6 +2045,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to :deactivate_link.l, deactivate_user_path(@user), :method => :patch, data: { confirm: :deactivate_confirmation.l }, :class => 'btn btn-danger' 
  :deactivate_tip.l 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -828,7 +2076,98 @@ end
     else
       respond_to do |format|
         format.html {ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- widget do 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  widget do 
  :you_are_editing_your_account.l 
  link_to :edit_your_user_profile.l, edit_user_path(@user) 
  end 
@@ -873,6 +2212,20 @@ end
  link_to :deactivate_link.l, deactivate_user_path(@user), :method => :patch, data: { confirm: :deactivate_confirmation.l }, :class => 'btn btn-danger' 
  :deactivate_tip.l 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 }
@@ -934,7 +2287,98 @@ end
     @user = User.find(params[:id])
     @avatar = (@user.avatar || @user.build_avatar)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:profile_photo.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:profile_photo.l 
  widget do 
  :get_started.l + ' ' + :upload_a_profile_photo.l 
  :photo_message.l :site => configatron.community_name 
@@ -953,6 +2397,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  f.primary :upload_and_continue_to_step_two.l 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -962,7 +2420,98 @@ end
     @user = User.find(params[:id])
     @metro_areas, @states = setup_locations_for(@user)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:about_you.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:about_you.l 
  widget do 
  :get_started.l + ' ' + :tell_us_about_yourself.l 
   if @user.vendor? 
@@ -1005,8 +2554,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  js ||= nil 
  if js 
  else 
- content_for :end_javascript do 
- end 
+  
  end 
  
  :tag_yourself.l 
@@ -1019,11 +2567,23 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  configatron.meta_keywords.split(",")[0..3].join(', ') 
  end 
- content_for :end_javascript do 
- tag_auto_complete_field 'tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
- end 
+  
  submit_tag :save_and_continue_to_step_three.l, :class => 'btn btn-primary' 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ tag_auto_complete_field 'tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } 
 
 end
 
@@ -1032,7 +2592,98 @@ end
   def welcome_invite
     @user = User.find(params[:id])
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title= :get_started.l + ' ' + :invite_some_friends.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title= :get_started.l + ' ' + :invite_some_friends.l 
  @page_title= :invite_some_customers.l if @user.vendor? 
  :invite_message.l(:site=> configatron.community_name) 
  :people_who_sign_up_using_your_invitation_will_automatically_be_added_as_your_friends.l 
@@ -1045,6 +2696,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to :skip_this_and_go_to_your_profile.l, user_path(@user), :class => 'btn btn-primary' 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -1053,7 +2718,98 @@ end
   def invite
     @user = User.find(params[:id])
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:invite_your_friends_to_join.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:invite_your_friends_to_join.l 
  widget do 
  :spread_the_word.l 
  :invite_message.l(:site => configatron.community_name) 
@@ -1061,10 +2817,24 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  bootstrap_form_for :invitation, :url => user_invitations_path(:user_id => @user.id ), :layout => :horizontal do |f| 
  :add_from_my_address_book.l 
- f.text_area :email_addresses , :rows => "5", :label => :enter_e_mail_addresses.l  
+ f.text_area :email_addresses , :rows => "5", :label => :enter_e_mail_addresses.l 
  f.text_area :message, :rows => "5", :label => :write_a_message.l 
  f.primary :send_invitations.l 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -1086,7 +2856,98 @@ end
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:forgot_your_username.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:forgot_your_username.l 
   widget do 
  :help.l 
  :dont_have_an_account.l 
@@ -1103,6 +2964,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.primary :send_me_my_username.l 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -1124,7 +2999,98 @@ end
       flash[:notice] = :activation_email_not_sent_message.l
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @page_title=:resend_your_activation_e_mail.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  @page_title=:resend_your_activation_e_mail.l 
   widget do 
  :help.l 
  :dont_have_an_account.l 
@@ -1140,6 +3106,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  text_field_tag 'email', nil 
  submit_tag :resend_my_activation_e_mail.l, :class => 'btn btn-primary' 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
@@ -1174,7 +3154,98 @@ end
     respond_to do |format|
       format.js {
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- :country.l 
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  :country.l 
  select_tag(:country_id, options_from_collection_for_select(Country.find_countries_with_metros, "id", "name", selected_country), {:include_blank => true, :class => "form-control"}) 
  :state.l 
  select_tag(:state_id, options_from_collection_for_select(states, "id", "name", (selected_state rescue nil)), {:disabled => states.empty?, :class => "form-control" }) 
@@ -1185,9 +3256,22 @@ end
  js ||= nil 
  if js 
  else 
- content_for :end_javascript do 
+  
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
  end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+  
 
 end
 
@@ -1232,11 +3316,99 @@ end
     respond_to do |format|
       format.html
       format.xml {
-        render :xml => @posts.to_xml(:include => :category)
-      }
-    end
-ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- box do 
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  box do 
  bootstrap_form_tag :url => statistics_user_path(@user), :layout => :horiztonal do 
  :month.l 
  select_month(@month) 
@@ -1260,6 +3432,155 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
+
+end
+
+      }
+    end
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ home_url 
+ csrf_meta_tag 
+ page_title 
+ if @meta 
+ @meta.each do |key| 
+ key[1] 
+ key[0] 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) 
+ end 
+  stylesheet_link_tag 'community_engine' 
+ if forum_page? 
+ unless @feed_icons.blank? 
+ @feed_icons.each do |feed| 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ end 
+ end 
+ end 
+ yield :head_css 
+ 
+ unless configatron.auth_providers.facebook.key.blank? 
+  
+ end 
+  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  
+  if current_page?(site_clippings_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :clippings.l, site_clippings_path 
+ 
+  if params[:controller] == 'events' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :events.l, events_path 
+ 
+  if params[:controller] == 'forums' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :forums.l, forums_path 
+ 
+  if current_page?(popular_path) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :popular.l, popular_path 
+ 
+  if current_page?(users_path) || (params[:controller] == 'users' && !@user.nil? && @user != current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ link_to :people.l, users_path 
+ 
+ if @header_tabs.any? 
+ for tab in @header_tabs 
+ link_to tab.name, tab.url 
+ end 
+ end 
+  if logged_in? 
+ if current_user.unread_messages? 
+ if params[:controller] == 'messages' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ css_class 
+ user_messages_path(current_user) 
+ current_user.unread_message_count 
+ fa_icon "envelope inverse" 
+ end 
+ end 
+ 
+  
+ 
+ render_jumbotron 
+ container_title 
+  
+  box do 
+ bootstrap_form_tag :url => statistics_user_path(@user), :layout => :horiztonal do 
+ :month.l 
+ select_month(@month) 
+ select_year(@month, :start_year => 1.years.ago.year, :end_year => 1.years.from_now.year) 
+ submit_tag :go.l, :class => 'btn btn-primary' 
+ if current_user.admin? 
+ link_to :back_to_all_statistics.l, statistics_path 
+ :estimated_total_for_this_month.l+":" 
+ "$#{@estimated_payment}" 
+ end 
+ @posts.group_by(&:category).each do |category, posts| 
+ "#{category.name}:" if category 
+ "#{posts.size} "+:posts.l 
+ :comments.l 
+ :view.l.pluralize 
+ posts.each do |post| 
+ post.title 
+ post.comments.count 
+ post.view_count 
+ end 
+ end 
+ end 
+ end 
+  render_widgets 
+ 
+ if show_footer_content? 
+ image_tag 'spinner.gif', :plugin => 'community_engine' 
+ :loading_recent_content.l 
+ end 
+  
+ :community_tagline.l 
+  javascript_include_tag 'community_engine' 
+ tiny_mce_init_if_needed 
+ if show_footer_content? 
+ end 
+ 
+ yield :end_javascript 
 
 end
 
