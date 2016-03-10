@@ -397,7 +397,7 @@ def get_render_statement_array(ast=nil)
   ast_arr.push ast
   while ast_arr.length > 0
     cur_ast = ast_arr.pop
-    if cur_ast.source.start_with? keyword #and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
+    if cur_ast.source.start_with? keyword and cur_ast.type.to_s != "list" #and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?("escape_javascript(", "raw(")
         if cur_ast.parent.parent.parent.type.to_s == "ifop"
           res = cur_ast.parent.parent.parent.source.to_s
@@ -412,10 +412,12 @@ def get_render_statement_array(ast=nil)
         res =  cur_ast.source.to_s
       end
 
-      if res.end_with?"\ne" or res.end_with?"\te" or res.end_with?" e"
+      if res.end_with?("\ne", "\te", " e")
         res = res[0..-2]
+        res_arr.push [res, res]
+      else
+        res_arr.push [res, cur_ast.source.to_s]
       end
-      res_arr.push [res, cur_ast.source.to_s]
     else
       cur_ast.children.each do |child|
         ast_arr.push child
