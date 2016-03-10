@@ -170,7 +170,9 @@ class Function_Class
 		render_stmt_arr.each do |(str_to_be_replaced, stmt)|
 			puts stmt
       view_name = get_view_name_from_render_statement(stmt, get_controller_name, get_function_name)
-			view_name_arr.push view_name
+      layout_name = get_layout_name_from_render_statement(stmt)      
+			view_name_arr.push view_name unless view_name_arr.include?(view_name)
+      view_name_arr.push layout_name unless view_name_arr.include?(layout_name)
 		end
 
 		#the view file with the same name of the current controller action may also be rendered by default
