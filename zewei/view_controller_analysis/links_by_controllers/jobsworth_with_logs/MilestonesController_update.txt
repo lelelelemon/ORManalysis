@@ -1,0 +1,279 @@
+---controller: milestones
+---view: edit
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+#form_for(@milestone, :html => {:class => "form-horizontal"}) do 
+ t("milestones.edit") 
+ link_to_tasks_filtered_by(t("milestones.view_tasks"), @milestone, :class => "btn btn-success pull-right") 
+ render :partial => 'form' 
+ t("button.save") 
+ if current_user.can?( @milestone.project, 'milestone' ) 
+ link_to t("button.delete"), milestone_path(@milestone), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-mini btn-danger pull-right"  
+ if @milestone.closed? 
+ link_to t("milestones.reopen"), revert_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ else 
+ link_to t("milestones.complete"), complete_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ end 
+ end 
+ end
+milestones,revert
+#form_for(@milestone, :html => {:class => "form-horizontal"}) do 
+ t("milestones.edit") 
+ link_to_tasks_filtered_by(t("milestones.view_tasks"), @milestone, :class => "btn btn-success pull-right") 
+ render :partial => 'form' 
+ t("button.save") 
+ if current_user.can?( @milestone.project, 'milestone' ) 
+ link_to t("button.delete"), milestone_path(@milestone), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-mini btn-danger pull-right"  
+ if @milestone.closed? 
+ link_to t("milestones.reopen"), revert_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ else 
+ link_to t("milestones.complete"), complete_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ end 
+ end 
+ end
+milestones,complete
+#form_for(@milestone, :html => {:class => "form-horizontal"}) do 
+ t("milestones.edit") 
+ link_to_tasks_filtered_by(t("milestones.view_tasks"), @milestone, :class => "btn btn-success pull-right") 
+ render :partial => 'form' 
+ t("button.save") 
+ if current_user.can?( @milestone.project, 'milestone' ) 
+ link_to t("button.delete"), milestone_path(@milestone), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-mini btn-danger pull-right"  
+ if @milestone.closed? 
+ link_to t("milestones.reopen"), revert_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ else 
+ link_to t("milestones.complete"), complete_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ end 
+ end 
+ end
+milestones,show
+---link_to: 
+#link_to t("button.delete"), milestone_path(@milestone), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-mini btn-danger pull-right"  
+ if @milestone.closed? 
+ link_to t("milestones.reopen"), revert_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ else 
+ link_to t("milestones.complete"), complete_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ end
+milestones,revert
+#link_to t("button.delete"), milestone_path(@milestone), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-mini btn-danger pull-right"  
+ if @milestone.closed? 
+ link_to t("milestones.reopen"), revert_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ else 
+ link_to t("milestones.complete"), complete_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ end
+milestones,complete
+#link_to t("button.delete"), milestone_path(@milestone), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-mini btn-danger pull-right"  
+ if @milestone.closed? 
+ link_to t("milestones.reopen"), revert_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ else 
+ link_to t("milestones.complete"), complete_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ end
+milestones,show
+
+
+---controller: shared
+---view: score_rules_container
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: milestones
+---view: form
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+
+view file milestones_update not exists!
+---controller: layouts
+---view: application
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: layouts
+---view: basic
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: tasks
+---view: nextTasks
+---hrefs: 
+route.recognize_path '' #
+activities,index
+route.recognize_path '#' ##
+activities,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: tags
+---view: panel_list
+---hrefs: 
+route.recognize_path '/tags' #/tags
+tags,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: task_filters
+---view: list
+---hrefs: 
+#<%= filters_user_path(current_user) %>
+users,filters
+#<%= filters_user_path(current_user) %>
+users,update
+route.recognize_path '' #
+activities,index
+route.recognize_path '#filters-menu' ##filters-menu
+activities,index
+route.recognize_path '#' ##
+activities,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+link_to_unread_tasks(current_user)
+
+
+---controller: layouts
+---view: notice
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+# "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true
+users,update_seen_news
+
+
+---controller: layouts
+---view: tabmenu
+---hrefs: 
+route.recognize_path '' #
+activities,index
+route.recognize_path '#' ##
+activities,index
+route.recognize_path '#' ##
+activities,index
+route.recognize_path '#' ##
+activities,index
+route.recognize_path '#' ##
+activities,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to t('tabmenu.log_out'), destroy_user_session_path
+auth/sessions,create
+#link_to t('tabmenu.log_out'), destroy_user_session_path
+auth/sessions,destroy
+
+
+---controller: layouts
+---view: menu
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: layouts
+---view: ajax_spinner
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: layouts
+---view: flash
+---hrefs: 
+route.recognize_path '' #
+activities,index
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: layouts
+---view: menubar_search
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+
+
+---controller: layouts
+---view: sheet_info
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+#link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num))
+tasks,edit
+#link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num))
+tasks,update
+
+
+---controller: tasks
+---view: task_line
+---hrefs: 
+
+---forms: 
+
+---form_for: 
+---link_to: 
+route.recognize_path '"#"' #link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right"
+
+
+
+
+---redirect_to tags in milestones_update: 
+redirect_to :controller => 'projects', :action => 'edit', :id => @milestone.project
+projects,edit
+#edit_project_path(@milestone.project)
+projects,edit
+#edit_project_path(@milestone.project)
+projects,show
