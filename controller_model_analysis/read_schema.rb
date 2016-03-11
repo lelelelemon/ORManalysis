@@ -1,7 +1,7 @@
 require 'active_support'
 require 'active_support/inflector'
 require 'active_support/core_ext/string'
-$schema_file = "../applications/lobsters/schema.rb"
+
 def convert_tablename(name)
 	_name = Array.new
 	_word_list = Array.new

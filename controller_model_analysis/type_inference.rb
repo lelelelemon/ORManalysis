@@ -145,7 +145,6 @@ end
 
 #key:function name
 #value:return value type
-$util_function_list = Hash.new
 def read_util_function
 	f_name = "./util_func_list.txt"
 	File.open(f_name, "r").each do |line|

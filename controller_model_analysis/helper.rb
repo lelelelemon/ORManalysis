@@ -527,7 +527,6 @@ def clear_data_structure
 	$cur_position = ""
 	$path_tracker = Array.new
 	$processed_node_stack = Array.new
-	$computed_node = nil
 
 	$cur_node = nil
 	$root = nil

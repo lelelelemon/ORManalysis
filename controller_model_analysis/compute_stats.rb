@@ -2,15 +2,6 @@ $QNODECOLOR = "coral1"
 $USERINOUTCOLOR = "cyan3"
 
 
-#backward
-$query_depends_on = Array.new
-#forward
-$query_determines = Array.new
-#backward
-$query_depends_on_cflow = Array.new
-#forward
-$query_determines_cflow = Array.new
-
 def traceback_data_dep(cur_node, stop_at_query=false)
 	@dep_array = Array.new
 	@node_list = Array.new
@@ -216,8 +207,6 @@ def print_graph2(start_class, start_function)
 	#end
 end
 
-$computed_node = nil
-
 class Temp_Qgeneral_stat
 	def initialize
 		@total = 0
@@ -359,14 +348,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	
 	$node_list.each do |n|
 		n.setLabel
-		puts "#{n.getIndex}:#{n.getInstr.toString}"
-		if n.getValidationStack.length > 0
-			str = ""
-			n.getValidationStack.each do |v|
-				str += "#{v.getIndex}, "
-			end
-			puts "\t * \t validation #{str}"
-		end
+		#puts "#{n.getIndex}:#{n.getInstr.toString}"
+		#if n.getValidationStack.length > 0
+		#	str = ""
+		#	n.getValidationStack.each do |v|
+		#		str += "#{v.getIndex}, "
+		#	end
+		#	puts "\t * \t validation #{str}"
+		#end
 		#if n.getInClosure
 		#	if n.getInView and n.getClosureStack.length == 1
 		#	else
@@ -807,17 +796,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	compute_schema_design_stat($graph_file)
 	$graph_file.puts("<\/schema>")
 	
-	#if $query_depends_on.length > 0	
-	#	graph_write($graph_file, "query backward dependencies: #{($query_depends_on.inject{|sum,x| sum + x })/($query_depends_on.length)}\n")
-	#end
-	#
-	#if $query_determines.length > 0
-	#	graph_write($graph_file, "query forward dependencies: #{($query_determines.inject{|sum,x| sum + x })/$query_determines.length}\n")
-	#end
-	#
-	#if $query_determines_cflow.length + $query_depends_on_cflow.length > 0
-	#	graph_write($graph_file, "query controlflow_dep: #{($query_depends_on_cflow.inject{|sum,x| sum + x }+$query_determines_cflow.inject{|sum,x| sum + x })/($query_depends_on_cflow.length+$query_determines_cflow.length)}\n")
-	#end
 	
 	$graph_file.puts("<\/STATSHEADER>")	
 	$graph_file.close

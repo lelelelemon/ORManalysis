@@ -1,15 +1,5 @@
-
-$graph_file = nil
-
-$last_caller_string = ""
 $QUERY_COLOR = "orange"
 $FLOWEDGE_COLOR = "blue"
-
-$l_index = 0
-$blank = ""
-$in_view = false
-
-$closure_stack = Array.new
 
 def get_closure_tag
 	r = ""

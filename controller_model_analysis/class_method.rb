@@ -434,3 +434,73 @@ class Controller_class < Class_class
 	end
 end
 
+#find the proper upper class
+def resolve_upper_class
+	$class_map.each do |keyc, valuec|
+		#TODO: should change the name of "resolve_upper_class"
+		#adjustFilters remove filter name which has :on=> properties and insert into according :on=> functions
+		#valuec.adjustFilters
+		if $class_map.has_key?(valuec.getUpperClass)
+			valuec.setUpperClassInstance($class_map[valuec.getUpperClass])
+			temp_upper_class = valuec.getUpperClass
+			@class_traversed = Array.new
+			while $class_map[temp_upper_class] != nil
+				@class_traversed.push(temp_upper_class)
+				#puts "Set parent class: #{keyc} < #{valuec.getUpperClass}"
+				parent = $class_map[temp_upper_class]
+				valuec.mergeBeforeFilter(parent)
+				valuec.mergeSave(parent)
+				valuec.mergeCreate(parent)
+				valuec.mergeAssoc(parent.getAssocs)
+				valuec.mergeClassFields(parent.getClassFields)
+				if valuec.include_module == nil
+					valuec.include_module = parent.include_module.dup
+				end
+				cur_class = temp_upper_class
+				temp_upper_class = $class_map[temp_upper_class].getUpperClass
+				if @class_traversed.include?(temp_upper_class)
+					$class_map[cur_class].setUpperClass(nil)
+					$class_map[cur_class].setUpperClassInstance(nil)
+					temp_upper_class = nil
+				end
+			end
+			
+			#create valid? function
+			if valuec.getMethod("valid?") == nil
+				temp_method = Method_class.new("valid?")
+				valuec.getMethod("before_validation").getCalls.each do |c|
+					temp_method.addCall(c)
+				end
+				valuec.addMethod(temp_method)
+			end
+		end
+	end
+end
+
+def search_derived_class(class_handler)
+	derived_classes = Array.new
+	$class_map.each do |keyc, valuec|
+		if keyc != class_handler.getName and valuec.getUpperClass == class_handler.getName
+			derived_classes.push(valuec)
+		end
+	end
+	return derived_classes
+end
+
+# issuing a function call, find the caller's class
+def retrieve_func_calls
+	$class_map.each do |keyc, valuec|
+		valuec.getMethods.each do |key, value|
+			#puts "Investigating #{keyc} . #{key}"
+			value.getCalls.each do |each_call|
+				each_call.findCaller(keyc, key)
+				#if each_call.caller == nil
+				#	puts "\t\tcaller not found: #{each_call.getObjName} . #{each_call.getFuncName}"
+				#elsif each_call.caller.getMethod(each_call.getFuncName) == nil and each_call.isQuery == false and each_call.isField == false
+				#	puts "\t\t* * function not found: #{each_call.getObjName} . #{each_call.getFuncName}"
+				#end
+			end
+		end
+	end
+end
+

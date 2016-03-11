@@ -1,3 +1,4 @@
+
 class INode
 	def initialize(instr)
 		if instr != nil
@@ -186,16 +187,9 @@ class INode
 end
 
 
-$root = nil
-$cfg
-$ins_cnt = 0
-#store all instruction node
-$node_list = Array.new
-#the very source of dataflow, all nodes using user input connect to this node
 $dataflow_source = INode.new(nil)
 
 #format: from_inode_index*to_inode_index
-$dataflow_edges = Hash.new
 class Dataflow_edge
 	def initialize(fromn, ton, vname, isBranching=false)
 		@from_node = fromn
