@@ -12,7 +12,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_description 
+		 5: RECEIVECONSTARG def_description 
 		 6: description[2.5,] 
 BB 3
 	outgoing: 4 
@@ -230,7 +230,7 @@ BB 7
 	instructions:
 		 0: %v_7->autoload_paths def_%v_8 %v_7[6.0,5.1,] 	 ARGS:
 		 1: %v_8->map def_%v_9 %v_8[7.0,] %self[2.0,] 	 ARGS:%v_8,
-CLOSURE BEGIN: d[] %self[2.0,] 
+CLOSURE BEGIN: d[7.1,] %self[2.0,] p[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -262,7 +262,7 @@ BB 4
 		 3: BUILDSTRING def_%cl_1_7 d[2.2,] %cl_1_6[4.2,] 
 		 4: %cl_1_5->[] def_%cl_1_8 %cl_1_5[4.1,] %cl_1_7[4.3,] 	 ARGS:%cl_1_7,
 		 5: %cl_1_8->map def_%cl_1_9 %cl_1_8[4.4,] %self[2.0,] 	 ARGS:%cl_1_8,
-CLOSURE BEGIN: p[] 
+CLOSURE BEGIN: p[4.5,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -298,7 +298,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 6: 
 BB 5
 	outgoing: 9 
@@ -321,7 +321,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 2: %v_9->flatten def_%v_10 %v_9[7.1,] 	 ARGS:
 		 3: %v_10->compact def_%v_11 %v_10[7.2,] 	 ARGS:
 		 4: %v_11->uniq def_%v_12 %v_11[7.3,] 	 ARGS:
@@ -334,7 +334,7 @@ BB 8
 		 0: 
 		 1: GETFIELD %self->types def_%v_13 %self[7.5,2.0,] 
 		 2: %v_13->sort! def_%v_14 %v_13[8.1,] %self[7.5,2.0,] 	 ARGS:%v_13,
-CLOSURE BEGIN: a[] b[] 
+CLOSURE BEGIN: a[] b[8.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -371,11 +371,11 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: a[2.2,] 
 		 3: 
 		 4: GETFIELD %self->types def_%v_15 %self[7.5,2.0,] 
 		 5: %v_15->select! def_%v_16 %v_15[8.4,] %self[7.5,2.0,] 	 ARGS:%v_15,
-CLOSURE BEGIN: %self[7.5,2.0,] type[] 
+CLOSURE BEGIN: %self[7.5,2.0,] type[8.5,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -410,7 +410,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 6: 
 		 7: GETFIELD %self->types def_%v_17 %self[7.5,2.0,] 
 		 8: RETURN %v_17[8.7,] %self[7.5,2.0,] 
@@ -484,7 +484,7 @@ BB 5
 		 3: %v_8->content_types def_%v_9 %v_8[5.2,] 	 ARGS:
 		 4: %v_9->blacklist def_%v_10 %v_9[5.3,] 	 ARGS:
 		 5: %v_10->map def_%v_11 %v_10[5.4,] %self[2.0,] 	 ARGS:%v_10,
-CLOSURE BEGIN: underscore_name[] 
+CLOSURE BEGIN: underscore_name[5.5,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -517,7 +517,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 6: ATTRASSIGN %self->blacklist %v_11[5.5,] 
 		 7: RETURN %v_11[5.5,] %self[5.6,2.0,] 
 BB 6
@@ -656,7 +656,7 @@ BB 4
 	instructions:
 		 0: %v_4->view_paths def_%v_5 %v_4[3.0,2.7,] 	 ARGS:
 		 1: %v_5->map def_%v_6 %v_5[4.0,] %self[2.0,] 	 ARGS:%v_5,
-CLOSURE BEGIN: vp[] %self[2.0,] path[] 
+CLOSURE BEGIN: vp[] %self[2.0,] path[4.1,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -720,7 +720,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: vp[2.2,] 
 		 2: %v_6->flatten def_%v_7 %v_6[4.1,] 	 ARGS:
 		 3: %v_7->first def_%v_8 %v_7[4.2,] 	 ARGS:
 		 4: COPY TYPE_PASS def_template_file %v_8[4.3,] 
@@ -731,7 +731,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: %self->open def_%v_9 %self[2.0,] template_file[4.4,] %self[2.0,] 	 ARGS:template_file,%self,
-CLOSURE BEGIN: f[] 
+CLOSURE BEGIN: f[5.0,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -763,7 +763,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 1: RETURN %v_9[5.0,] %self[5.0,2.0,] 
 BB 6
 	outgoing: 8 
@@ -978,7 +978,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: RETURN %v_3[2.7,] %self[2.0,2.7,] 
 BB 3
 	outgoing: 
@@ -1022,7 +1022,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_args 
+		 5: RECEIVEARG def_args 
 		 6: 
 		 7: args->length def_%v_3 args[2.5,] 	 ARGS:
 		 8: %v_3->> def_%v_4 %v_3[2.7,] 	 ARGS:Fixnum,
@@ -1241,7 +1241,7 @@ BB 2
 		 10: %v_6->referer def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: COPY TYPE_Array def_%v_8 %v_4[2.7,] %v_5[2.8,] %v_7[2.10,] 
 		 12: %v_8->detect def_%v_9 %v_8[2.11,] %self[2.0,2.6,2.8,2.9,] 	 ARGS:%v_8,
-CLOSURE BEGIN: e[] 
+CLOSURE BEGIN: e[2.12,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1274,7 +1274,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 13: RETURN %v_9[2.12,] %self[2.0,2.6,2.8,2.9,] 
 BB 3
 	outgoing: 
@@ -1303,7 +1303,7 @@ BB 2
 		 10: %v_6->referer def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: COPY TYPE_Array def_%v_8 %v_4[2.7,] %v_5[2.8,] %v_7[2.10,] 
 		 12: %v_8->detect def_%v_9 %v_8[2.11,] %self[2.0,2.6,2.8,2.9,] 	 ARGS:%v_8,
-CLOSURE BEGIN: e[] 
+CLOSURE BEGIN: e[2.12,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1336,7 +1336,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 13: RETURN %v_9[2.12,] %self[2.0,2.6,2.8,2.9,] 
 BB 3
 	outgoing: 
@@ -1388,7 +1388,7 @@ BB 2
 		 9: BUILDSTRING def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: HASH- def_%v_6 
 		 11: errors->inject def_%v_7 errors[2.5,] %v_6[2.10,] %self[2.0,2.7,] 	 ARGS:%v_6,errors,
-CLOSURE BEGIN: h[] k[] v[] 
+CLOSURE BEGIN: h[] k[] v[2.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1424,7 +1424,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: h[3.1,2.2,] k[2.5,] 
 		 12: %self->store_hash_in_flash def_%v_8 %self[2.0,2.7,] %v_5[2.9,] %v_7[2.11,] 	 ARGS:%v_5,%v_7,
 		 13: RETURN %v_8[2.12,] %self[2.0,2.7,2.12,] 
 BB 3
@@ -1453,7 +1453,7 @@ BB 2
 		 9: (HashWithIndifferentAccess) def_%v_4 
 		 10: %v_4->new def_%v_5 %v_4[2.9,] 	 ARGS:
 		 11: hash->inject def_%v_6 hash[2.6,] %v_5[2.10,] %self[2.0,2.8,] 	 ARGS:%v_5,hash,
-CLOSURE BEGIN: v[] k[] p[] 
+CLOSURE BEGIN: v[2.11,] k[] p[] 
 BB 1
 	outgoing: 11 2 
 	datadep: 
@@ -1522,7 +1522,7 @@ BB 11
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: p[7.2,2.2,] k[2.5,] 
 		 12: ATTRASSIGN %v_3->[] key[2.5,] %v_6[2.11,] 
 		 13: RETURN %v_6[2.11,] %self[2.0,2.8,] 
 BB 3

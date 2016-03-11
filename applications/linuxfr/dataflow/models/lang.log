@@ -13,7 +13,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %v_3->lrange def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,Fixnum,Fixnum,
 		 9: COPY TYPE_PASS def_keys %v_5[2.8,] 
@@ -69,7 +69,7 @@ BB 6
 CLOSURE END: 
 		 3: COPY TYPE_PASS def_full %v_9[4.2,] 
 		 4: 
-		 5: def_%v_10 
+		 5: GLOBALVAR $redis def_%v_10 
 		 6: def_%v_11 %v_9[4.2,] 
 		 7: %v_10->mget def_%v_12 %v_10[4.5,] %v_11[4.6,] 	 ARGS:Splat,
 		 8: COPY TYPE_PASS def_vals %v_12[4.7,] 
@@ -98,12 +98,12 @@ BB 2
 		 5: RECEIVEARG def_key 
 		 6: RECEIVEARG def_value 
 		 7: 
-		 8: def_%v_3 
+		 8: GLOBALVAR $redis def_%v_3 
 		 9: COPY TYPE_StringLiteral def_%v_4 
 		 10: BUILDSTRING def_%v_5 %v_4[2.9,] key[2.5,] 
 		 11: %v_3->set def_%v_6 %v_3[2.8,] %v_5[2.10,] value[2.6,] 	 ARGS:%v_5,value,
 		 12: 
-		 13: def_%v_7 
+		 13: GLOBALVAR $redis def_%v_7 
 		 14: COPY TYPE_StringLiteral def_%v_8 
 		 15: %v_7->rpush def_%v_9 %v_7[2.13,] %v_8[2.14,] key[2.5,] 	 ARGS:%v_8,key,
 		 16: RETURN %v_9[2.15,] %self[2.0,] 

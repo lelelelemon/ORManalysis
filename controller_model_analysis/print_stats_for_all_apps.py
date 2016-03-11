@@ -31,8 +31,11 @@ tableau_colors = (
 
 TOTAL_COLOR_NUM=22
 colors = [2, 3, 5, 1, 4, 6]
-applications = ["boxroom","lobsters","publify","communityengine","jobsworth","onebody","linuxfr","railscollab", "amahiPlatform"]
+#applications = ["boxroom","fulcrum","kandan","linuxfr","publify", "lobsters", "railscollab","communityengine","onebody","sugar","railscollab","browsercms","brevidy","amahiPlatform","amahiPlatform_layouts","rucksack","rucksack_layouts"]
+app_string="lobsters amahiPlatform browsercms fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
 
+
+applications = app_string.split(" ")
 
 result_path = "../applications/general_stats/"
 width = 0.2
@@ -56,9 +59,10 @@ def plot_stack_plot(plt, ary_list, legends, stat_name):
 		for i in range(N):
 			bottom_data[i] += ary[i]
 	ax.legend(rects, legends, loc='upper right', prop={'size':'10'})
-	plt.xticks(ind,applications)
+	plt.xticks(ind,applications,rotation='vertical')
+	plt.tick_params(labelsize=8)
 	#plt.show()
-	fig.savefig("%s/general_%s.png"%(result_path, stat_name))
+	fig.savefig("%s/general_%s.pdf"%(result_path, stat_name))
 
 def general_plot(stat_name):
 	ary_list = []
@@ -87,12 +91,18 @@ if os.path.isdir(result_path) == False:
 
 for app in applications:
 	print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
-	os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))
+	os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
+	print "python collect_nextaction.py %s "%(app)
+	os.system("python collect_nextaction.py %s"%(app))
+	print "python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app)
+	os.system("python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app))
 	fname = "%s/%s_stat.xml"%(result_path, app)
 	tree = ET.parse(fname)
 	roots[app] = tree.getroot()
+	print ""
 
-stats = ["queryGeneral","branch","usedInView","onlyFromUser","queryTrivialBranch","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction"]
+stats = ["queryGeneral","branch","usedInView","onlyFromUser","queryTrivialBranch","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction","transactionNested"]
+#stats = ["transaction"]
 
 for s in stats:
 	print "printing %s..."%s

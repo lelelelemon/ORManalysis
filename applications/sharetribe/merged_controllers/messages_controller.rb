@@ -28,27 +28,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to single_conversation_path(:conversation_type => "received", :person_id => @current_user.id, :id => params[:message][:conversation_id]) }
-      format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t("layouts.notifications.#{flash[:message_notice]}") 
-  avatar_side = message_or_action[:sender][:id] == @current_user.id ? "left" : "right" 
- avatar_side 
- image_tag(message_or_action[:sender][:avatar], :class => "message-avatar-image") 
- avatar_side 
- avatar_side 
- link_to_unless message_or_action[:sender][:is_deleted], message_or_action[:sender][:display_name], person_path(id: message_or_action[:sender][:username]) 
- time_ago(message_or_action[:created_at]) 
- avatar_side 
- message_or_action[:type] 
- message_or_action[:mood] 
- text_with_line_breaks do 
- message_or_action[:content] 
- end 
- 
- @message.id.to_s 
- t("conversations.show.send_reply") 
-
-end
- }
+      format.js { render :layout => false, locals: { message: message } }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
    if APP_CONFIG.use_kissmetrics 

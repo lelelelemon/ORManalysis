@@ -4,7 +4,6 @@ class INode
 			instr.setINode(self)
 		end
  		@instr = instr
-		@isQuery = false
 		@children = Array.new
 		@index = $ins_cnt
 		@label = ""
@@ -93,10 +92,10 @@ class INode
 		@in_closure
 	end
 	def isQuery?
-		if @instr and @instr.instance_of?Call_instr
-			return @instr.isQuery
-		end
-		return false
+		#if @instr and @instr.is_a?Call_instr
+		return @instr.isQuery
+		#end
+		#return false
 	end
 	def instr_is_readQuery
 		if @instr != nil and @instr.instance_of?Call_instr
@@ -110,7 +109,7 @@ class INode
 		#		return false
 		#	end
 		#end
-		if @instr != nil and @instr.instance_of?Call_instr
+		if @instr != nil and @instr.is_a?Call_instr
 			return @instr.isReadQuery
 		end
 		return false
@@ -184,12 +183,6 @@ class INode
 	def getChildren
 		@children
 	end
-	def setIsQuery
-		@isQuery = true
-	end
-	def isQuery?
-		@isQuery
-	end	
 end
 
 
@@ -260,16 +253,18 @@ def add_dataflow_edge(node)
 			from_node = dep.getInstrHandler.getINode
 			if to_ins.hasClosure?
 				to_ins.getClosure.getClosureDefs(dep.getVname).each do |t|
-					actual_to_ins = t.getInstrHandler	
-					edge_name = "#{actual_to_ins.getINode.getIndex}*#{node.getIndex}"
-					edge = Dataflow_edge.new(actual_to_ins.getINode, node, dep.getVname)
-					actual_to_ins.getINode.addDataflowEdge(edge)
+					actual_to_ins = t.getInstrHandler
+					if actual_to_ins != node.getInstr	
+						edge_name = "#{actual_to_ins.getINode.getIndex}*#{node.getIndex}"
+						edge = Dataflow_edge.new(actual_to_ins.getINode, node, dep.getVname)
+						actual_to_ins.getINode.addDataflowEdge(edge)
+					end
 				end
 			end
 			if (from_node.isClassField?) and (dep.getVname == "%self")
 			#elsif from_node.isField? and to_ins.instance_of?AttrAssign_instr and to_ins.field == from_node.getInstr.field 
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
-			else
+			elsif dep.getInstrHandler != node.getInstr
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"
 				edge = Dataflow_edge.new(dep.getInstrHandler.getINode, node, dep.getVname)
 				dep.getInstrHandler.getINode.addDataflowEdge(edge)

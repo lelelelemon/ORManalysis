@@ -373,7 +373,7 @@ BB 4
 		 0: 
 		 1: ATTRASSIGN %self->user user[2.5,] 
 		 2: 
-		 3: def_%v_8 
+		 3: GLOBALVAR $redis def_%v_8 
 		 4: %self->lock_key def_%v_9 %self[4.1,2.0,] 	 ARGS:
 		 5: %v_8->del def_%v_10 %v_8[4.3,] %v_9[4.4,] 	 ARGS:%v_9,
 		 6: 
@@ -559,7 +559,7 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: def_%v_6 
+		 2: GLOBALVAR $redis def_%v_6 
 		 3: %self->lock_key def_%v_7 %self[2.0,] 	 ARGS:
 		 4: %v_6->get def_%v_8 %v_6[4.2,] %v_7[4.3,] 	 ARGS:%v_7,
 		 5: COPY TYPE_PASS def_locker_id %v_8[4.4,] 
@@ -579,12 +579,12 @@ BB 7
 	instructions:
 		 0: COPY TYPE_Nil def_%v_12 
 		 1: 
-		 2: def_%v_13 
+		 2: GLOBALVAR $redis def_%v_13 
 		 3: %self->lock_key def_%v_14 %self[2.0,] 	 ARGS:
 		 4: user->id def_%v_15 user[2.5,] 	 ARGS:
 		 5: %v_13->set def_%v_16 %v_13[7.2,] %v_14[7.3,] %v_15[7.4,] 	 ARGS:%v_14,%v_15,
 		 6: 
-		 7: def_%v_17 
+		 7: GLOBALVAR $redis def_%v_17 
 		 8: %self->lock_key def_%v_18 %self[7.3,2.0,] 	 ARGS:
 		 9: %v_17->expire def_%v_19 %v_17[7.7,] %v_18[7.8,] 	 ARGS:%v_18,Fixnum,
 		 10: 
@@ -618,7 +618,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: %self->lock_key def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_3->del def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: 
@@ -648,7 +648,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: %self->lock_key def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_3->get def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: %v_5->! def_%v_6 %v_5[2.8,] 	 ARGS:
@@ -675,7 +675,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_user_id 
 		 6: 
-		 7: def_%v_3 
+		 7: GLOBALVAR $redis def_%v_3 
 		 8: %self->lock_key def_%v_4 %self[2.0,] 	 ARGS:
 		 9: %v_3->get def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: %v_5->to_i def_%v_6 %v_5[2.9,] 	 ARGS:
@@ -701,7 +701,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: %self->lock_key def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_3->get def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: RETURN %v_5[2.8,] %self[2.0,2.7,] 
@@ -767,7 +767,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: (User) def_%v_5 
-		 1: def_%v_6 
+		 1: GLOBALVAR $redis def_%v_6 
 		 2: %self->lock_key def_%v_7 %self[2.0,] 	 ARGS:
 		 3: %v_6->get def_%v_8 %v_6[3.1,] %v_7[3.2,] 	 ARGS:%v_7,
 		 4: %v_5->find def_%v_9 %v_5[3.0,] %v_8[3.3,] 	 ARGS:%v_8,

@@ -118,16 +118,29 @@ def handle_single_dataflow_file(item, class_name)
 						dep_string = single_attr[bracket_begin+1...bracket_end-1]
 						deps = dep_string.split(',')
 						v_name = single_attr[0...bracket_begin]
-						deps.each do |dep|
-							if dep.length > 0
-								#find instr handler here
-								dep_str = dep.split('.')
-								if temp_cfg.getBBByIndex(dep_str[0].to_i) == nil
-								else
-									dep_instr = temp_cfg.getBBByIndex(dep_str[0].to_i).getInstr[dep_str[1].to_i]
-									#puts "READ DATAFLOW: add to var table: #{v_name} (#{dep_instr.toString})"
-									$cur_cfg.addToVarDefTable(v_name, dep, dep_instr)
+						if deps.length > 0
+							deps.each do |dep|
+								if dep.length > 0
+									#find instr handler here
+									dep_str = dep.split('.')
+									if temp_cfg.getBBByIndex(dep_str[0].to_i) == nil
+									else
+										dep_instr = temp_cfg.getBBByIndex(dep_str[0].to_i).getInstr[dep_str[1].to_i]
+										#puts "READ DATAFLOW: add to var table: #{v_name} (#{dep_instr.toString})"
+										$cur_cfg.addToVarDefTable(v_name, dep, dep_instr)
+									end
+								else 
 								end
+							end
+						else #dep.length == 0, empty dep, find upper closure
+							upper_cfg_index = -1
+							while $cur_cfg_stack[upper_cfg_index] and $cur_cfg_stack[upper_cfg_index].instance_of?Closure
+								$cur_cfg_stack[upper_cfg_index].getVarDefs(v_name).each do |c1|
+									if c1.getVname == v_name
+										$cur_cfg.addToVarDefTable(v_name, "#{c1.getBlock}.#{c1.getInstr}", c1.getInstrHandler)
+									end
+								end
+								upper_cfg_index -= 1
 							end
 						end
 					end
@@ -229,7 +242,7 @@ def handle_single_dataflow_file(item, class_name)
 									elsif single_attr.include?("ARGS:")
 										args = single_attr[5...-1].split(',')
 										args.each do |a|
-											cur_instr.getArgs.push(a)
+											cur_instr.args.push(a)
 										end	
 									elsif single_attr.include?('[') and single_attr.include?(']')
 										bracket_begin = single_attr.index('[')
@@ -283,6 +296,10 @@ def handle_single_dataflow_file(item, class_name)
 
 									elsif single_attr == "RETURN"
 										cur_instr = Return_instr.new
+
+									elsif single_attr == "GLOBALVAR" and attrs[index+1] != "$!"
+										cur_instr = GlobalVar_instr.new
+										cur_instr.global_var_name = attrs[index+1]
 									
 									elsif single_attr == "BRANCH"
 										cur_instr = Branch_instr.new
@@ -292,6 +309,12 @@ def handle_single_dataflow_file(item, class_name)
 
 									elsif single_attr == "RECEIVEARG"
 										cur_instr = ReceiveArg_instr.new
+
+									elsif single_attr == "RECEIVECONSTARG"
+										cur_instr = ReceiveConstArg_instr.new
+
+									elsif single_attr == "CONSTANT"
+										cur_instr = Constant_instr.new
 	
 									elsif single_attr == "ATTRASSIGN"
 										cur_instr = AttrAssign_instr.new("", "")

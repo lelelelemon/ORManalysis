@@ -93,6 +93,8 @@ def resolve_upper_class
 				valuec.mergeBeforeFilter(parent)
 				valuec.mergeSave(parent)
 				valuec.mergeCreate(parent)
+				valuec.mergeAssoc(parent.getAssocs)
+				valuec.mergeClassFields(parent.getClassFields)
 				if valuec.include_module == nil
 					valuec.include_module = parent.include_module.dup
 				end

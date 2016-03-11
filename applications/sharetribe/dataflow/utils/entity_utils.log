@@ -12,10 +12,10 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_ks 
+		 5: RECEIVEARG def_ks 
 		 6: 
 		 7: def_%v_3 %self[2.0,] 
-CLOSURE BEGIN: opts[2.7,] ks[2.5,] %self[2.0,] 
+CLOSURE BEGIN: opts[2.7,] ks[2.5,] %self[2.0,] k[] memo[] 
 BB 1
 	outgoing: 7 2 
 	datadep: 
@@ -28,7 +28,7 @@ BB 2
 		 1: def_%cl_1_0 
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
-		 4: def_opts 
+		 4: RECEIVECONSTARG def_opts 
 		 5: opts[2.4,] 
 BB 3
 	outgoing: 4 
@@ -592,7 +592,7 @@ BB 2
 		 5: RECEIVEARG def_validators 
 		 6: RECEIVEARG def_val 
 		 7: RECEIVEARG def_field 
-		 8: def_parent_field 
+		 8: RECEIVECONSTARG def_parent_field 
 		 9: parent_field[2.8,] 
 BB 3
 	outgoing: 4 
@@ -706,7 +706,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_fields 
 		 6: RECEIVEARG def_input 
-		 7: def_parent_field 
+		 7: RECEIVECONSTARG def_parent_field 
 		 8: parent_field[2.7,] 
 BB 3
 	outgoing: 4 
@@ -720,7 +720,7 @@ BB 4
 		 0: 
 		 1: COPY TYPE_Array def_%v_3 
 		 2: fields->reduce def_%v_4 fields[2.5,] %v_3[4.1,] %self[2.0,] 	 ARGS:%v_3,fields,
-CLOSURE BEGIN: spec[] input[2.6,] name[] %self[2.0,] parent_field[3.0,2.7,] errs[] errors[] nested_errors[4.2,] 
+CLOSURE BEGIN: spec[] input[2.6,] name[] %self[2.0,] parent_field[3.0,2.7,] i[] v[] errors[] errs[] errors[] nested_errors[4.2,] 
 BB 1
 	outgoing: 16 2 
 	datadep: 
@@ -963,7 +963,7 @@ BB 2
 		 7: 
 		 8: HASH- def_%v_3 
 		 9: fields->reduce def_%v_4 fields[2.5,] %v_3[2.8,] %self[2.0,] 	 ARGS:%v_3,fields,
-CLOSURE BEGIN: spec[2.9,] input[2.6,] name[] %self[2.0,] out[] 
+CLOSURE BEGIN: spec[2.9,] input[2.6,] name[] %self[2.0,] out[] v[] 
 BB 1
 	outgoing: 22 2 
 	datadep: 
@@ -1221,7 +1221,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_specs 
+		 5: RECEIVEARG def_specs 
 		 6: 
 		 7: (EntityBuilder) def_%v_3 
 		 8: %self->parse_specs def_%v_4 %self[2.0,] specs[2.5,] 	 ARGS:specs,

@@ -51,7 +51,7 @@ CLOSURE END:
 		 8: COPY TYPE_PASS def_locale_groups %v_3[2.7,] 
 		 9: 
 		 10: %v_3->map def_%v_4 %v_3[2.7,] %self[2.0,] 	 ARGS:%v_3,
-CLOSURE BEGIN: locale[] translations[2.10,2.5,2.7,] %self[2.0,] 
+CLOSURE BEGIN: locale[] translations[2.10,2.5,2.7,] %self[2.0,] memo[] tr[2.7,] m[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -76,7 +76,7 @@ BB 3
 		 1: locale->to_sym def_%cl_2_5 locale[2.4,] 	 ARGS:
 		 2: HASH- def_%cl_2_6 
 		 3: translations->inject def_%cl_2_7 translations[2.5,] %cl_2_6[3.2,] %self[2.0,] 	 ARGS:%cl_2_6,translations,
-CLOSURE BEGIN: memo[] %self[2.0,] 
+CLOSURE BEGIN: memo[] %self[2.0,] tr[3.3,] m[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -509,7 +509,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_hash 
 		 6: RECEIVEARG def_community_id 
-		 7: def_tr_key 
+		 7: RECEIVECONSTARG def_tr_key 
 		 8: tr_key[2.7,] 
 BB 3
 	outgoing: 4 

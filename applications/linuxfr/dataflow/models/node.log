@@ -13,7 +13,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %v_3->get def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: COPY TYPE_PASS def_id %v_5[2.8,] 
@@ -51,7 +51,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_3->set def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_4,%v_5,
@@ -77,7 +77,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->id def_%v_3 %self[2.0,] 	 ARGS:
-		 7: def_%v_4 
+		 7: GLOBALVAR $redis def_%v_4 
 		 8: COPY TYPE_StringLiteral def_%v_5 
 		 9: %v_4->get def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: %v_6->to_i def_%v_7 %v_6[2.9,] 	 ARGS:
@@ -169,7 +169,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_account_id 
 		 6: 
-		 7: def_%v_3 
+		 7: GLOBALVAR $redis def_%v_3 
 		 8: COPY TYPE_StringLiteral def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 10: COPY TYPE_StringLiteral def_%v_6 
@@ -251,7 +251,7 @@ BB 2
 		 12: BUILDSTRING def_%v_7 %v_3[2.8,] %v_4[2.9,] %v_5[2.10,] %v_6[2.11,] 
 		 13: COPY TYPE_PASS def_key %v_7[2.12,] 
 		 14: 
-		 15: def_%v_8 
+		 15: GLOBALVAR $redis def_%v_8 
 		 16: %v_8->getset def_%v_9 %v_8[2.15,] %v_7[2.12,] value[2.6,] 	 ARGS:key,value,
 		 17: COPY TYPE_PASS def_prev %v_9[2.16,] 
 		 18: 
@@ -287,10 +287,10 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_14 
+		 1: GLOBALVAR $redis def_%v_14 
 		 2: %v_14->expire def_%v_15 %v_14[8.1,] key[2.13,] 	 ARGS:key,Fixnum,
 		 3: 
-		 4: def_%v_16 
+		 4: GLOBALVAR $redis def_%v_16 
 		 5: COPY TYPE_StringLiteral def_%v_17 
 		 6: %self->user_id def_%v_18 %self[2.0,] 	 ARGS:
 		 7: COPY TYPE_StringLiteral def_%v_19 
@@ -422,7 +422,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_account_id 
 		 6: 
-		 7: def_%v_3 
+		 7: GLOBALVAR $redis def_%v_3 
 		 8: COPY TYPE_StringLiteral def_%v_4 
 		 9: BUILDSTRING def_%v_5 %v_4[2.8,] account_id[2.5,] 
 		 10: %v_3->keys def_%v_6 %v_3[2.7,] %v_5[2.9,] 	 ARGS:%v_5,
@@ -513,7 +513,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_account_id 
 		 6: 
-		 7: def_%v_3 
+		 7: GLOBALVAR $redis def_%v_3 
 		 8: COPY TYPE_StringLiteral def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 10: COPY TYPE_StringLiteral def_%v_6 
@@ -523,7 +523,7 @@ BB 2
 		 14: %v_9->to_i def_%v_10 %v_9[2.13,] 	 ARGS:
 		 15: %v_3->set def_%v_11 %v_3[2.7,] %v_7[2.11,] %v_10[2.14,] 	 ARGS:%v_7,%v_10,
 		 16: 
-		 17: def_%v_12 
+		 17: GLOBALVAR $redis def_%v_12 
 		 18: COPY TYPE_StringLiteral def_%v_13 
 		 19: %self->id def_%v_14 %self[2.0,2.9,] 	 ARGS:
 		 20: COPY TYPE_StringLiteral def_%v_15 
@@ -551,7 +551,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_account_id 
 		 6: 
-		 7: def_%v_3 
+		 7: GLOBALVAR $redis def_%v_3 
 		 8: COPY TYPE_StringLiteral def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 10: COPY TYPE_StringLiteral def_%v_6 
@@ -588,7 +588,7 @@ BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%v_5 
+		 0: GLOBALVAR $redis def_%v_5 
 		 1: def_%v_6 keys[2.8,] 
 		 2: %v_5->del def_%v_7 %v_5[3.0,] %v_6[3.1,] 	 ARGS:Splat,
 		 3: RETURN %v_7[3.2,] %self[2.0,] 
@@ -619,7 +619,7 @@ BB 2
 		 5: RECEIVEARG def_node_id 
 		 6: RECEIVEARG def_account_id 
 		 7: 
-		 8: def_%v_3 
+		 8: GLOBALVAR $redis def_%v_3 
 		 9: COPY TYPE_StringLiteral def_%v_4 
 		 10: COPY TYPE_StringLiteral def_%v_5 
 		 11: BUILDSTRING def_%v_6 %v_4[2.9,] node_id[2.5,] %v_5[2.10,] account_id[2.6,] 
@@ -864,7 +864,7 @@ BB 2
 		 7: 
 		 8: %self->class def_%v_3 %self[2.0,] 	 ARGS:
 		 9: %v_3->transaction def_%v_4 %v_3[2.8,] %self[2.0,2.8,] 	 ARGS:%v_3,
-CLOSURE BEGIN: list[2.5,] %self[2.0,2.8,] 
+CLOSURE BEGIN: list[2.5,] %self[2.0,2.8,] tagname[] tag[] user_id[2.6,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -959,7 +959,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_nb 
+		 5: RECEIVECONSTARG def_nb 
 		 6: nb[2.5,] 
 BB 3
 	outgoing: 4 

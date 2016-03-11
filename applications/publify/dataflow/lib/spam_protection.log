@@ -318,7 +318,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_uris 
+		 5: RECEIVECONSTARG def_uris 
 		 6: uris[2.5,] 
 BB 4
 	outgoing: 5 
@@ -332,7 +332,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: uris->each def_%v_4 uris[4.1,2.5,] %self[2.0,] 	 ARGS:uris,
-CLOSURE BEGIN: uri[] host[] %self[2.0,] domain[5.1,] 
+CLOSURE BEGIN: uri[] host[] %self[2.0,] host_parts[] domain[5.1,] 
 BB 1
 	outgoing: 23 2 
 	datadep: 
@@ -347,7 +347,7 @@ BB 2
 		 3: COPY TYPE_CurrentScope def_%current_scope 
 		 4: COPY TYPE_ScopeModule def_%current_module 
 		 5: 
-		 6: def_%cl_1_3 
+		 6: GLOBALVAR $! def_%cl_1_3 
 BB 4
 	outgoing: 6 7 
 	datadep: 
@@ -553,10 +553,10 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_rbls 
-		 6: def_subdomains 
+		 6: RECEIVEARG def_subdomains 
 		 7: 
 		 8: rbls->each def_%v_3 rbls[2.5,] %self[2.0,] 	 ARGS:rbls,
-CLOSURE BEGIN: subdomains[2.6,] %self[2.0,] 
+CLOSURE BEGIN: subdomains[2.6,] %self[2.0,] d[] rbl[2.8,] response[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -592,7 +592,7 @@ BB 2
 		 3: COPY TYPE_CurrentScope def_%current_scope 
 		 4: COPY TYPE_ScopeModule def_%current_module 
 		 5: 
-		 6: def_%cl_2_3 
+		 6: GLOBALVAR $! def_%cl_2_3 
 BB 4
 	outgoing: 6 7 10 
 	datadep: 
@@ -746,7 +746,7 @@ BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: def_%v_6 	 ARGS:Symbol,
+		 0: CONSTANT def_%v_6 	 ARGS:Symbol,
 BB 7
 	outgoing: 8 9 
 	datadep: 
@@ -791,7 +791,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_attr_names 
+		 5: RECEIVEARG def_attr_names 
 		 6: 
 		 7: COPY TYPE_StringLiteral def_%v_3 
 		 8: HASH-message- def_%v_4 %v_3[2.7,] 

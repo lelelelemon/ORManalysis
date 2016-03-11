@@ -69,7 +69,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_user 
-		 6: def_status 
+		 6: RECEIVECONSTARG def_status 
 		 7: status[2.6,] 
 BB 3
 	outgoing: 4 
@@ -232,7 +232,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_options 
+		 5: RECEIVECONSTARG def_options 
 		 6: options[2.5,] 
 BB 3
 	outgoing: 4 
@@ -844,7 +844,7 @@ BB 6
 		 1: 
 		 2: %self->due_date def_%v_9 %self[2.0,] 	 ARGS:
 		 3: %self->duration def_%v_10 %self[6.2,2.0,] 	 ARGS:
-		 4: def_%v_11 	 ARGS:Fixnum,
+		 4: CONSTANT def_%v_11 	 ARGS:Fixnum,
 		 5: %v_10->/ def_%v_12 %v_10[6.3,] %v_11[6.4,] 	 ARGS:%v_11,
 		 6: %v_12->to_i def_%v_13 %v_12[6.5,] 	 ARGS:
 		 7: %v_13->days def_%v_14 %v_13[6.6,] 	 ARGS:
@@ -2230,7 +2230,7 @@ BB 2
 		 13: params->[] def_%v_6 params[2.5,2.10,] 	 ARGS:Symbol,
 		 14: %self->set_resource_attributes def_%v_7 %self[2.0,2.8,2.11,] %v_6[2.13,] 	 ARGS:%v_6,
 		 15: 
-		 16: def_%v_8 
+		 16: GLOBALVAR $! def_%v_8 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -2893,7 +2893,7 @@ BB 2
 		 5: RECEIVEARG def_due_at 
 		 6: RECEIVEARG def_user 
 		 7: 
-		 8: def_%v_3 
+		 8: GLOBALVAR $! def_%v_3 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -2906,7 +2906,7 @@ BB 4
 		 5: 
 		 6: (DateTime) def_%v_8 
 		 7: %v_8->strptime def_%v_9 %v_8[4.6,] due_at[2.5,] %v_7[4.3,] 	 ARGS:due_at,format,
-		 8: def_%v_10 	 ARGS:
+		 8: CONSTANT def_%v_10 	 ARGS:
 		 9: %v_9->ago def_%v_11 %v_9[4.7,] %v_10[4.8,] 	 ARGS:%v_10,
 		 10: COPY TYPE_PASS def_due_date %v_11[4.9,] 
 		 11: COPY TYPE_PASS def_%v_5 %v_11[4.9,] 
@@ -4610,7 +4610,7 @@ BB 4
 		 3: COPY TYPE_PASS def_new_dependencies %v_5[4.2,] 
 		 4: 
 		 5: dependency_params->each def_%v_6 dependency_params[2.5,] %self[2.0,] 	 ARGS:dependency_params,
-CLOSURE BEGIN: d[4.5,] %self[2.0,] 
+CLOSURE BEGIN: d[4.5,] %self[2.0,] dep[] user[2.6,] new_dependencies[4.3,] t[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -4729,7 +4729,7 @@ CLOSURE END:
 		 13: %v_10->delete def_%v_11 %v_10[4.12,] removed[4.10,] 	 ARGS:removed,
 		 14: 
 		 15: new_dependencies->each def_%v_12 new_dependencies[4.3,] %self[4.7,4.12,2.0,] 	 ARGS:new_dependencies,
-CLOSURE BEGIN: %self[4.7,4.12,2.0,] t[] 
+CLOSURE BEGIN: %self[4.7,4.12,2.0,] d[4.5,] t[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 

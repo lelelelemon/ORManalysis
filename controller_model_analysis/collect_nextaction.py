@@ -144,7 +144,7 @@ for subdir, folders, files in os.walk(base_path):
 			fname = os.path.join(subdir, fn)
 			temp_l = list(find(fname, "/"))
 			cur_action_name = fname[temp_l[-2]+1:temp_l[-1]]
-			print fname
+			#print fname
 			tree = ET.parse(fname)
 			root = tree.getroot()
 			#root.tag = NEXTACTION
@@ -216,24 +216,26 @@ def getAverage(l):
 	else:
 		return float(sum(l)) / float(len(l))
 
-print "Which table has most overlap?"
-for k, v in overlap_table_name.items():
-	print "%s, %d outof %d"%(k, v, len(overlap_table_count))
+#print "Which table has most overlap?"
+#for k, v in overlap_table_name.items():
+#	print "%s, %d outof %d"%(k, v, len(overlap_table_count))
+if len(stat_list)==0:
+	sys.exit(1)
 
 printed_title = False
-for k, v in stat_list.items():
-	totalread = 0
-	#if k in total_read_num:
-	#	totalread = total_read_num[k]
-	if printed_title == False:
-		for k1, v1 in v.items():
-			print "%s\t"%(k1),
-		print ""
-		printed_title = True
-	print "%s,"%(k),
-	for k1, v1 in v.items():
-		print "\t%f"%(getAverage(v1)),
-	print ""
+#for k, v in stat_list.items():
+#	totalread = 0
+#	#if k in total_read_num:
+#	#	totalread = total_read_num[k]
+#	if printed_title == False:
+#		for k1, v1 in v.items():
+#			print "%s\t"%(k1),
+#		print ""
+#		printed_title = True
+#	print "%s,"%(k),
+#	for k1, v1 in v.items():
+#		print "\t%f"%(getAverage(v1)),
+#	print ""
 
 data_avg_list = {}
 for k, v in avg_list.items():
@@ -255,9 +257,9 @@ rect5 = ax1.bar(ind+width*2, [data_avg_list["nextReadTotal"]], width, color=tabl
 
 ax1.set_ylabel("average #queries of next action")
 ax1.set_xticklabels((''))
-ax1.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0]), ('sub','same','super','overlapOther','readQTotal'), loc='upper center', prop={'size':'10'})
+ax1.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0]), ('sub','same','distinct','overlapOther','readQTotal'), loc='upper center', prop={'size':'10'})
 #plt.show()
-fig.savefig("%s/nextaction.png"%(fig_path))
+fig.savefig("%s/nextaction.pdf"%(fig_path))
 
 
 

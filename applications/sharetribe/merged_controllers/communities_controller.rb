@@ -9,18 +9,8 @@ class CommunitiesController < ApplicationController
   NewMarketplaceForm = Form::NewMarketplace
 
   def new
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- locals(local_assigns, :title) 
- Maybe(@current_community).favicon.each do |favicon| 
- favicon 
- end 
-  if errors.present? 
- errors.join('<br />').html_safe 
- end 
- form_action 
-
-end
-end
+    render_form
+  end
 
   def create
     form = NewMarketplaceForm.new(params)

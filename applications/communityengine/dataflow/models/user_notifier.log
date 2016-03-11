@@ -116,7 +116,7 @@ BB 2
 		 8: %self->setup_email def_%v_4 %self[2.0,] %v_3[2.7,] 	 ARGS:%v_3,
 		 9: 
 		 10: GETFIELD %self->subject def_%v_5 %self[2.0,2.8,] 
-		 11: def_%v_6 	 ARGS:
+		 11: CONSTANT def_%v_6 	 ARGS:
 		 12: BUILDSTRING def_%v_7 %v_6[2.11,] 
 		 13: %v_5->+ def_%v_8 %v_5[2.10,] %v_7[2.12,] 	 ARGS:%v_7,
 		 14: ATTRASSIGN %self->subject %v_8[2.13,] 
@@ -454,7 +454,7 @@ BB 2
 		 5: RECEIVEARG def_name 
 		 6: RECEIVEARG def_email 
 		 7: RECEIVEARG def_post 
-		 8: def_message 
+		 8: RECEIVECONSTARG def_message 
 		 9: message[2.8,] 
 BB 3
 	outgoing: 4 
@@ -465,7 +465,7 @@ BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: def_current_user 
+		 0: RECEIVECONSTARG def_current_user 
 		 1: current_user[4.0,] 
 BB 5
 	outgoing: 6 

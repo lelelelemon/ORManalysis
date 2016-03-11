@@ -36,6 +36,12 @@ app_name = sys.argv[1]
 base_path = "../applications/%s/results"%app_name
 fig_path = "../applications/%s/figs/next_actions"%app_name
 
+def getAverage(l):
+	if len(l)==0:
+		return 0.0
+	else:
+		return float(sum(l)) / float(len(l))
+
 #preprocess....
 for subdir, folders, files in os.walk(base_path):
 	for fn in files:
@@ -98,7 +104,7 @@ for subdir, folders, files in os.walk(base_path):
 			fname = os.path.join(subdir, fn)
 			temp_l = list(find(fname, "/"))
 			cur_action_name = fname[temp_l[-2]+1:temp_l[-1]]
-			print fname
+			#print fname
 			tree = ET.parse(fname)
 			root = tree.getroot()
 			for c in root: #c.tag = assignedField
@@ -127,26 +133,37 @@ for subdir, folders, files in os.walk(base_path):
 						if handled == False:
 							accept_list[field_name].append(temp_node)
 			
+cases = []
+depFields = []
+depTables = []
 
+f = open(sys.argv[2], 'w') 
 for field,v in accept_list.items():		
 	i = 0
-	print "%s = {"%field
+	f.write("%s = {\n"%field)
+	cases.append(len(v))
 	for node in v:
 		i += 1
-		print "\tif action == ",
+		f.write("\tif action == ")
 		for action in node.getActions():
-			print "%s or "%action,
-		print "1"
+			f.write("%s or "%action)
+		f.write("\n")
+		depFields.append(len(node.getFields()))
+		depTables.append(len(node.getTables()))
 		if len(node.getFields())>0:
-			print "\t\t%s = f_field%d("%(field, i),
+			f.write("\t\t%s = f_field%d("%(field, i))
 			for field2 in node.getFields():
-				print "%s, "%field2,
-			print "1)"
+				f.write("%s, "%field2)
+			f.write("1)\n")
 		if len(node.getTables())>0:
-			print "\t\t%s = f_table%d("%(field, i),
+			f.write("\t\t%s = f_table%d("%(field, i))
 			for table2 in node.getTables():
-				print "%s, "%table2,
-			print "1)"
-	print "}"
-	print ""
-					
+				f.write("%s, "%table2)
+			f.write("1)\n")
+	f.write("}\n\n")
+
+
+f.write("fieldNumber:\t%d\n"%len(accept_list))
+f.write("avgCases:\t%f\n"%getAverage(cases))
+f.write("avgDependFields:\t%f\n"%getAverage(depFields))
+f.write("avgDependTables:\t%f\n"%getAverage(depTables))

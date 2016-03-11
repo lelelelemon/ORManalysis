@@ -34,7 +34,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_options 
+		 5: RECEIVECONSTARG def_options 
 		 6: options[2.5,] 
 BB 3
 	outgoing: 4 
@@ -78,7 +78,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 	 ARGS:
+		 6: CONSTANT def_%v_3 	 ARGS:
 		 7: %v_3->from_now def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: ATTRASSIGN %self->submitted_at %v_4[2.7,] 
 		 9: RETURN %v_4[2.7,] %self[2.0,2.8,] 
@@ -166,7 +166,7 @@ BB 2
 		 15: HASH-kind-username- def_%v_10 %v_9[2.14,] 
 		 16: %v_7->create def_%v_11 %v_7[2.12,] %self[2.0,2.6,2.9,2.13,] %v_10[2.15,] 	 ARGS:%self,%v_10,
 		 17: 
-		 18: def_%v_12 
+		 18: GLOBALVAR $redis def_%v_12 
 		 19: COPY TYPE_StringLiteral def_%v_13 
 		 20: %self->id def_%v_14 %self[2.0,2.6,2.9,2.13,] 	 ARGS:
 		 21: %self->title def_%v_15 %self[2.0,2.6,2.9,2.13,2.20,] 	 ARGS:
@@ -175,7 +175,7 @@ BB 2
 		 24: %v_17->to_json def_%v_18 %v_17[2.23,] 	 ARGS:
 		 25: %v_12->publish def_%v_19 %v_12[2.18,] %v_13[2.19,] %v_18[2.24,] 	 ARGS:%v_13,%v_18,
 		 26: 
-		 27: def_%v_20 
+		 27: GLOBALVAR $redis def_%v_20 
 		 28: COPY TYPE_StringLiteral def_%v_21 
 		 29: %self->id def_%v_22 %self[2.0,2.6,2.9,2.13,2.20,2.21,2.22,] 	 ARGS:
 		 30: BUILDSTRING def_%v_23 %v_21[2.28,] %v_22[2.29,] 
@@ -862,7 +862,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_attrs 
+		 5: RECEIVECONSTARG def_attrs 
 		 6: attrs[2.5,] 
 BB 3
 	outgoing: 4 
@@ -1015,14 +1015,14 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_9 
+		 1: GLOBALVAR $redis def_%v_9 
 		 2: COPY TYPE_StringLiteral def_%v_10 
 		 3: %self->id def_%v_11 %self[2.0,] 	 ARGS:
 		 4: COPY TYPE_StringLiteral def_%v_12 
 		 5: BUILDSTRING def_%v_13 %v_10[6.2,] %v_11[6.3,] %v_12[6.4,] 
 		 6: %v_9->srem def_%v_14 %v_9[6.1,] %v_13[6.5,] who[5.3,] 	 ARGS:%v_13,who,
 		 7: 
-		 8: def_%v_15 
+		 8: GLOBALVAR $redis def_%v_15 
 		 9: COPY TYPE_StringLiteral def_%v_16 
 		 10: %self->id def_%v_17 %self[6.3,2.0,] 	 ARGS:
 		 11: COPY TYPE_StringLiteral def_%v_18 
@@ -1034,7 +1034,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_21 
+		 1: GLOBALVAR $redis def_%v_21 
 		 2: COPY TYPE_StringLiteral def_%v_22 
 		 3: COPY TYPE_StringLiteral def_%v_23 
 		 4: BUILDSTRING def_%v_24 %v_22[7.2,] who[5.3,] %v_23[7.3,] 
@@ -1048,10 +1048,10 @@ BB 7
 		 12: BUILDSTRING def_%v_31 %v_26[7.7,] who[5.3,] %v_27[7.8,] %v_30[7.11,] 
 		 13: COPY TYPE_PASS def_key %v_31[7.12,] 
 		 14: 
-		 15: def_%v_32 
+		 15: GLOBALVAR $redis def_%v_32 
 		 16: %v_32->incr def_%v_33 %v_32[7.15,] %v_31[7.12,] 	 ARGS:key,
 		 17: 
-		 18: def_%v_34 
+		 18: GLOBALVAR $redis def_%v_34 
 		 19: %v_34->expire def_%v_35 %v_34[7.18,] key[7.13,] 	 ARGS:key,Fixnum,
 		 20: COPY TYPE_PASS def_%v_20 %v_35[7.19,] 
 BB 8
@@ -1059,7 +1059,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_36 
+		 1: GLOBALVAR $redis def_%v_36 
 		 2: COPY TYPE_StringLiteral def_%v_37 
 		 3: %self->id def_%v_38 %self[2.0,] 	 ARGS:
 		 4: COPY TYPE_StringLiteral def_%v_39 
@@ -1091,7 +1091,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: COPY TYPE_StringLiteral def_%v_6 
@@ -1119,7 +1119,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: COPY TYPE_StringLiteral def_%v_6 
@@ -1170,7 +1170,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 
+		 1: GLOBALVAR $redis def_%cl_1_3 
 		 2: COPY TYPE_StringLiteral def_%cl_1_4 
 		 3: %self->id def_%cl_1_5 %self[2.0,] 	 ARGS:
 		 4: COPY TYPE_StringLiteral def_%cl_1_6 
@@ -1190,7 +1190,7 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 10: 
-		 11: def_%v_7 
+		 11: GLOBALVAR $redis def_%v_7 
 		 12: COPY TYPE_StringLiteral def_%v_8 
 		 13: %self->node def_%v_9 %self[2.0,] 	 ARGS:
 		 14: %v_9->id def_%v_10 %v_9[2.13,] 	 ARGS:
@@ -1217,7 +1217,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_2_3 
+		 1: GLOBALVAR $redis def_%cl_2_3 
 		 2: %cl_2_3->del def_%cl_2_4 %cl_2_3[3.1,] key[2.2,] 	 ARGS:key,
 		 3: RETURN %cl_2_4[3.2,] %self[2.0,] 
 BB 4
@@ -1256,7 +1256,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_3->sismember def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_4,%v_5,
@@ -1281,7 +1281,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_3->sadd def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_4,%v_5,
@@ -1306,7 +1306,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_3->srem def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_4,%v_5,
@@ -2208,7 +2208,7 @@ BB 7
 	instructions:
 		 0: COPY TYPE_Nil def_%v_8 
 		 1: 
-		 2: def_%v_9 
+		 2: GLOBALVAR $redis def_%v_9 
 		 3: %self->lock_key def_%v_10 %self[2.0,] 	 ARGS:
 		 4: %v_9->get def_%v_11 %v_9[7.2,] %v_10[7.3,] 	 ARGS:%v_10,
 		 5: COPY TYPE_PASS def_locker_id %v_11[7.4,] 
@@ -2228,12 +2228,12 @@ BB 10
 	instructions:
 		 0: COPY TYPE_Nil def_%v_15 
 		 1: 
-		 2: def_%v_16 
+		 2: GLOBALVAR $redis def_%v_16 
 		 3: %self->lock_key def_%v_17 %self[2.0,] 	 ARGS:
 		 4: user->id def_%v_18 user[2.5,] 	 ARGS:
 		 5: %v_16->set def_%v_19 %v_16[10.2,] %v_17[10.3,] %v_18[10.4,] 	 ARGS:%v_17,%v_18,
 		 6: 
-		 7: def_%v_20 
+		 7: GLOBALVAR $redis def_%v_20 
 		 8: %self->lock_key def_%v_21 %self[10.3,2.0,] 	 ARGS:
 		 9: %v_20->expire def_%v_22 %v_20[10.7,] %v_21[10.8,] 	 ARGS:%v_21,Fixnum,
 		 10: 
@@ -2258,7 +2258,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: %self->lock_key def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_3->del def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: RETURN %v_5[2.8,] %self[2.0,2.7,] 
@@ -2282,7 +2282,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: %self->lock_key def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_3->get def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: %v_5->! def_%v_6 %v_5[2.8,] 	 ARGS:
@@ -2308,7 +2308,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: %self->lock_key def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_3->get def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: BRANCH %v_5[2.8,] 
@@ -2438,7 +2438,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: %self->lock_key def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_3->get def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: COPY TYPE_PASS def_locker_id %v_5[2.8,] 

@@ -39,7 +39,7 @@ BB 2
 		 5: 
 		 6: (CSV) def_%v_3 
 		 7: %v_3->generate def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
-CLOSURE BEGIN: %self[2.0,] csv[] 
+CLOSURE BEGIN: %self[2.0,] c[] csv[] page[] person[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -106,7 +106,7 @@ BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_10 	 ARGS:Symbol,
+		 0: CONSTANT def_%cl_1_10 	 ARGS:Symbol,
 BB 5
 	outgoing: 6 8 
 	datadep: 
@@ -117,9 +117,9 @@ BB 5
 		 3: 
 		 4: %cl_1_12->/ def_%cl_1_14 %cl_1_12[5.1,] 	 ARGS:Fixnum,
 		 5: %cl_1_14->+ def_%cl_1_15 %cl_1_14[5.4,] 	 ARGS:Fixnum,
-		 6: def_%cl_1_13 %cl_1_15[5.5,] 
+		 6: CONSTANT def_%cl_1_13 %cl_1_15[5.5,] 
 		 7: %cl_1_13->each def_%cl_1_16 %cl_1_13[5.6,] %self[2.0,] 	 ARGS:%cl_1_13,
-CLOSURE BEGIN: page[5.7,] %self[2.0,] 
+CLOSURE BEGIN: page[5.7,] %self[2.0,] person[] c[3.5,] csv[2.2,] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -144,7 +144,7 @@ BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_3_3 	 ARGS:Symbol,
+		 0: CONSTANT def_%cl_3_3 	 ARGS:Symbol,
 BB 5
 	outgoing: 6 8 
 	datadep: 
@@ -154,7 +154,7 @@ BB 5
 		 2: HASH-per_page-page- def_%cl_3_6 page[2.2,] 
 		 3: %cl_3_5->paginate def_%cl_3_7 %cl_3_5[5.1,] %cl_3_6[5.2,] 	 ARGS:%cl_3_6,
 		 4: %cl_3_7->each def_%cl_3_8 %cl_3_7[5.3,] %self[2.0,] 	 ARGS:%cl_3_7,
-CLOSURE BEGIN: person[5.4,] %self[2.0,] csv[] 
+CLOSURE BEGIN: person[5.4,] %self[2.0,] c[] csv[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -350,7 +350,7 @@ BB 5
 		 1: COPY TYPE_PASS def_builder %v_5[5.0,] 
 		 2: 
 		 3: %v_5->families def_%v_6 %v_5[5.0,] %self[2.0,] 	 ARGS:%v_5,
-CLOSURE BEGIN: %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] page[] families[] family[] col[] fam[] people[] person[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -376,9 +376,9 @@ BB 3
 		 5: 
 		 6: %cl_1_5->/ def_%cl_1_7 %cl_1_5[3.3,] 	 ARGS:Fixnum,
 		 7: %cl_1_7->+ def_%cl_1_8 %cl_1_7[3.6,] 	 ARGS:Fixnum,
-		 8: def_%cl_1_6 %cl_1_8[3.7,] 
+		 8: CONSTANT def_%cl_1_6 %cl_1_8[3.7,] 
 		 9: %cl_1_6->each def_%cl_1_9 %cl_1_6[3.8,] %self[2.0,] 	 ARGS:%cl_1_6,
-CLOSURE BEGIN: page[3.9,] %self[2.0,] 
+CLOSURE BEGIN: page[3.9,] %self[2.0,] families[2.2,] family[] col[] fam[] people[] person[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -403,7 +403,7 @@ BB 3
 		 4: HASH-per_page-page- def_%cl_2_6 page[2.2,] 
 		 5: %cl_2_5->paginate def_%cl_2_7 %cl_2_5[3.3,] %cl_2_6[3.4,] 	 ARGS:%cl_2_6,
 		 6: %cl_2_7->each def_%cl_2_8 %cl_2_7[3.5,] %self[2.0,] 	 ARGS:%cl_2_7,
-CLOSURE BEGIN: families[] %self[2.0,] 
+CLOSURE BEGIN: families[] %self[2.0,] family[3.6,] col[] fam[] people[] person[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -423,7 +423,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: families->family def_%cl_3_3 families[] %self[2.0,] 	 ARGS:families,
-CLOSURE BEGIN: %self[2.0,] fam[3.1,] 
+CLOSURE BEGIN: %self[2.0,] family[2.2,] col[] fam[3.1,] people[] person[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -481,7 +481,7 @@ BB 6
 CLOSURE END: 
 		 4: 
 		 5: fam->people def_%cl_4_6 fam[2.2,] %self[2.0,] 	 ARGS:fam,
-CLOSURE BEGIN: family[] %self[2.0,] 
+CLOSURE BEGIN: family[] %self[2.0,] people[3.5,] person[] col[3.3,] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -503,7 +503,7 @@ BB 3
 		 1: family->people def_%cl_6_3 family[] 	 ARGS:
 		 2: %cl_6_3->sort_by def_%cl_6_4 %cl_6_3[3.1,] 	 ARGS:
 		 3: %cl_6_4->each def_%cl_6_5 %cl_6_4[3.2,] %self[2.0,] 	 ARGS:%cl_6_4,
-CLOSURE BEGIN: people[2.2,] %self[2.0,] 
+CLOSURE BEGIN: people[2.2,] %self[2.0,] person[3.3,] col[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -523,7 +523,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: people->person def_%cl_7_3 people[] %self[2.0,] 	 ARGS:people,
-CLOSURE BEGIN: %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] person[2.2,] col[] p[3.1,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 

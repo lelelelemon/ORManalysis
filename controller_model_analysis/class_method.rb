@@ -109,6 +109,33 @@ class Class_class
 		#end
 		@class_fields.push(assoc.name)
 	end
+	def mergeAssoc(assoc_list)
+		assoc_list.each do |k, v|
+			if @assocs[k]
+			else
+				@assocs[k] = Array.new
+			end
+			v.each do |as|
+				@exist = false
+				@assocs[k].each do |as2|
+					if as2.name == as.name
+						@exist = true
+					end
+				end	
+				if @exist==false
+					@assocs[k].push(as)
+				end
+			end
+		end
+	end
+	def mergeClassFields(fields_list)
+		fields_list.each do |f|
+			if @class_fields.include?(f)
+			else
+				@class_fields.push(f)
+			end
+		end
+	end
 	def searchAssocForRelation(fieldname)
 	#for example, if self.name == "Comment" and 
 	#class Comment
@@ -206,15 +233,19 @@ class Class_class
 				end
 			end
 			@include_module.each do |inc|
-				if $class_map[inc] != nil
+				if $class_map[inc] == nil or (isActiveRecord(@name) and inc.include?("Controller"))
+				else
 					f = $class_map[inc].findMethodRecursive(name, step+1)
-					if f != nil
+					if f == nil or ()
 						return f
 					end
 				end
 			end
 			if cname = search_distinct_func_name(name)
-				return $class_map[cname].getMethod(name)
+				if isActiveRecord(@name) and cname.include?("Controller") 
+				else
+					return $class_map[cname].getMethod(name)
+				end
 			end
 			return nil
 		end

@@ -15,33 +15,7 @@ class CommentsController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to listing_path(params[:comment][:listing_id]) }
-      format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t("layouts.notifications.#{flash[:comment_notice]}") 
-  comment.id.to_s 
- small_avatar_thumb(comment.author) 
- link_to_unless comment.author.deleted?, PersonViewUtils.person_display_name(comment.author, @current_community), comment.author 
- time_ago(comment.created_at) 
- if @current_user && (current_user?(comment.author) || @current_user.has_admin_rights_in?(@current_community)) 
- link_to t('listings.comment.delete'), listing_comment_path(:listing_id => comment.listing.id, :id => comment.id), {method: :delete, confirm: t('listings.comment.are_you_sure'), :remote => :true} 
- end 
- text_with_line_breaks do 
- comment.content 
- end 
- 
- @comment.id.to_s 
- @comment.listing.comments_count 
- t("listings.comment_form.send_comment") 
-  if @current_user 
- if @current_user.is_following?(@listing || @comment.listing) 
- link_to t(".unfollow"), unfollow_listing_path(@listing || @comment.listing), :class => "unfollow_listing", :method => :delete, :remote => :true 
- else 
- link_to t(".follow"), follow_listing_path(@listing || @comment.listing), :class => "follow_listing", :method => :post, :remote => :true 
- end 
- end 
- 
-
-end
- }
+      format.js { render :layout => false }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
    if APP_CONFIG.use_kissmetrics 
@@ -156,12 +130,7 @@ end
       @comment.destroy
       respond_to do |format|
         format.html { redirect_to listing_path(params[:listing_id]) }
-        format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @comment.id.to_s 
- @comment.listing.comments_count - 1 
-
-end
- }
+        format.js { render :layout => false }
       end
     else
       flash[:error] = t("layouts.notifications.you_are_not_authorized_to_do_this")

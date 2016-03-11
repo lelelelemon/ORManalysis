@@ -51,6 +51,10 @@ class Instruction
 	def getArgs
 		@args
 	end
+	#Call_instr will rewrite this function
+	def isQuery
+		return false
+	end
 	def setDefv(d)
 		@defv = d
 	end
@@ -148,6 +152,10 @@ class Instruction
 	def setResolved
 		@resolved = true
 	end
+	def getMethodName
+		meth = self.getBB.getCFG.getMHandler
+		return meth.getName
+	end
 	def toString
 		meth = self.getBB.getCFG.getMHandler
 		s = "[#{meth.getCallerClass.getName}.#{meth.getName}] (#{@bb.getIndex}.#{@index}) "
@@ -230,7 +238,8 @@ class Call_instr < Instruction
 				#foreign key relationship: has_many, has_one,...
 				tbl_name = self.getCallerType
 				if isActiveRecord(tbl_name)
-					if self.isClassField
+					#TODO: user should not be ignored...
+					if self.isClassField and @funcname != "user"
 						#TODO: check return type, if not know or polomorphism...
 						@relationship_name = $class_map[tbl_name].searchAssocForRelation(@funcname)
 						if ["has_one","has_many","belongs_to","has_and_belongs_to_many"].include?@relationship_name
@@ -348,6 +357,24 @@ class Const_instr < Instruction
 	end
 end
 
+class Constant_instr < Instruction
+	def initialize
+		super
+	end
+end
+
+class GlobalVar_instr < Instruction
+	def initialize
+		super
+		@global_var_name = ""
+	end
+	attr_accessor :global_var_name
+	def toString
+		s = "GLOBALVAR "
+		s = s + super
+	end
+end
+
 class InheritConst_instr < Const_instr
 	def initialize(const)
 		super(const)
@@ -435,6 +462,14 @@ class ReceiveArg_instr < Instruction
 	def setDefv(d)
 		@defv = d
 		@var_name = d
+	end
+end
+
+class ReceiveConstArg_instr < ReceiveArg_instr
+	def toString
+		s = "RECEIVECONSTARG "
+		s = s + super
+		return s
 	end
 end
 

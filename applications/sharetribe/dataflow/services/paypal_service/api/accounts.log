@@ -15,7 +15,7 @@ BB 2
 		 5: RECEIVEARG def_permissions 
 		 6: RECEIVEARG def_merchant 
 		 7: RECEIVEARG def_onboarding 
-		 8: def_logger 
+		 8: RECEIVECONSTARG def_logger 
 		 9: logger[2.8,] 
 BB 3
 	outgoing: 4 5 
@@ -413,7 +413,7 @@ BB 25
 		 1: HASH-request_token-verification_code- def_%v_36 order_permission_request_token[6.0,] %v_35[25.0,] 
 		 2: %v_34->create_get_access_token def_%v_37 %v_34[24.0,23.0,] %v_36[25.1,] 	 ARGS:%v_36,
 		 3: %self->with_success_permissions def_%v_38 %self[2.0,] %v_37[25.2,] %self[2.0,] 	 ARGS:%v_37,%self,
-CLOSURE BEGIN: access_token[25.3,] %self[2.0,] 
+CLOSURE BEGIN: access_token[25.3,] %self[2.0,] personal_data[] body[25.0,8.0,] order_permission_request_token[6.0,] community_id[2.5,] person_id[5.0,4.0,] account[] 
 BB 1
 	outgoing: 10 2 
 	datadep: 
@@ -761,7 +761,7 @@ BB 12
 		 0: HASH-token- def_%v_9 billing_agreement_request_token[6.0,] 
 		 1: %v_8->create_create_billing_agreement def_%v_10 %v_8[11.0,10.0,] %v_9[12.0,] 	 ARGS:%v_9,
 		 2: %self->with_success_merchant def_%v_11 %self[2.0,] %v_10[12.1,] %self[2.0,] 	 ARGS:%v_10,%self,
-CLOSURE BEGIN: billing_agreement_request_token[6.0,] %self[2.0,] 
+CLOSURE BEGIN: billing_agreement_request_token[6.0,] %self[2.0,] express_checkout_details[] paypal_account[8.4,] billing_agreement[12.2,] community_id[2.5,] person_id[4.0,] account[] 
 BB 1
 	outgoing: 10 2 
 	datadep: 

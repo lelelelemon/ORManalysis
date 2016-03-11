@@ -122,7 +122,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_options 
+		 5: RECEIVECONSTARG def_options 
 		 6: options[2.5,] 
 BB 3
 	outgoing: 4 
@@ -222,7 +222,7 @@ BB 3
 		 0: 
 		 1: (Time) def_%v_10 
 		 2: %v_10->now def_%v_11 %v_10[3.1,] 	 ARGS:
-		 3: def_%v_12 	 ARGS:
+		 3: CONSTANT def_%v_12 	 ARGS:
 		 4: %v_11->- def_%v_13 %v_11[3.2,] %v_12[3.3,] 	 ARGS:%v_12,
 		 5: ATTRASSIGN %self->expires_at %v_13[3.4,] 
 		 6: RETURN %v_13[3.4,] %self[3.5,2.0,] 
@@ -452,7 +452,7 @@ BB 2
 		 7: %self->last_name def_%v_4 %self[2.0,2.6,] 	 ARGS:
 		 8: COPY TYPE_Array def_%v_5 %v_3[2.6,] %v_4[2.7,] 
 		 9: %v_5->reject def_%v_6 %v_5[2.8,] %self[2.0,2.6,2.7,] 	 ARGS:%v_5,
-CLOSURE BEGIN: e[] 
+CLOSURE BEGIN: e[2.9,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -484,7 +484,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 10: COPY TYPE_StringLiteral def_%v_7 
 		 11: %v_6->join def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: RETURN %v_8[2.11,] %self[2.0,2.6,2.7,] 
@@ -778,14 +778,14 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_required_permissions 
+		 5: RECEIVEARG def_required_permissions 
 		 6: 
 		 7: required_permissions->map def_%v_3 required_permissions[2.5,] 	 ARGS:
 		 8: COPY TYPE_PASS def_perms %v_3[2.7,] 
 		 9: 
 		 10: %self->permissions def_%v_4 %self[2.0,] 	 ARGS:
 		 11: %v_4->any? def_%v_5 %v_4[2.10,] %self[2.0,2.10,] 	 ARGS:%v_4,
-CLOSURE BEGIN: p[] perms[2.8,] 
+CLOSURE BEGIN: p[2.11,] perms[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -819,7 +819,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 12: RETURN %v_5[2.11,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 
@@ -1029,7 +1029,7 @@ BB 12
 		 0: 
 		 1: object->connected_pages def_%v_22 object[2.5,] 	 ARGS:
 		 2: %v_22->all? def_%v_23 %v_22[12.1,] %self[2.0,] 	 ARGS:%v_22,
-CLOSURE BEGIN: %self[2.0,] page[] 
+CLOSURE BEGIN: %self[2.0,] page[12.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1061,7 +1061,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 3: 
 BB 13
 	outgoing: 14 

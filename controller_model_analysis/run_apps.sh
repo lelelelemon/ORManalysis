@@ -1,7 +1,9 @@
 #!/bin/bash
 
-#applications="boxroom lobsters communityengine publify jobsworth amahiPlatform railscollab sharetribe onebody linuxfr rucksack sugar kandan fulcrum browsercms"
-applications="jobsworth sharetribe"
+#applications="boxroom lobsters communityengine publify jobsworth amahiPlatform railscollab sharetribe onebody linuxfr rucksack sugar kandan fulcrum tracks browsercms"
+applications="lobsters amahiPlatform browsercms fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
+
+#applications="communityengine linuxfr railscollab rucksack discourse amahiPlatform"
 
 #applications="onebody linuxfr"
 
@@ -15,7 +17,7 @@ function run_single_app () {
 	mkdir results
 	#rm -rf dataflow
 	#cd ~/ruby_source/ORM_analysis/applications/
-	#python generate_dataflow.py ${app}
+	#python generate_dataflow.py ${app} >> logs/${app}_log.log
 	cd ~/ruby_source/ORM_analysis/controller_model_analysis
 	ruby parsing.rb -a -d ../applications/${app} &> ${app}_run.log
   echo "Finish app ${app}"

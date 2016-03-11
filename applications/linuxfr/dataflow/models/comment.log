@@ -206,7 +206,7 @@ BB 6
 		 3: (PATH_SIZE) def_%v_11 
 		 4: %v_11->-@ def_%v_12 %v_11[6.3,] 	 ARGS:
 		 5: %v_12->- def_%v_13 %v_12[6.4,] 	 ARGS:Fixnum,
-		 6: def_%v_8 %v_10[6.2,] %v_13[6.5,] 
+		 6: CONSTANT def_%v_8 %v_10[6.2,] %v_13[6.5,] 
 		 7: %v_7->[] def_%v_14 %v_7[6.0,] %v_8[6.6,] 	 ARGS:%v_8,
 		 8: %v_14->to_i def_%v_15 %v_14[6.7,] 	 ARGS:
 		 9: COPY TYPE_PASS def_%v_6 %v_15[6.8,] 
@@ -874,7 +874,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: %self->created_at def_%v_8 %self[2.0,] 	 ARGS:
-		 1: def_%v_9 	 ARGS:
+		 1: CONSTANT def_%v_9 	 ARGS:
 		 2: %v_9->ago def_%v_10 %v_9[6.1,] 	 ARGS:
 		 3: %v_8->>= def_%v_11 %v_8[6.0,] %v_10[6.2,] 	 ARGS:%v_10,
 		 4: COPY TYPE_PASS def_%v_7 %v_11[6.3,] 
@@ -980,7 +980,7 @@ BB 5
 		 2: %v_8->now def_%v_9 %v_8[5.1,] 	 ARGS:
 		 3: %self->created_at def_%v_10 %self[2.0,] 	 ARGS:
 		 4: %v_9->- def_%v_11 %v_9[5.2,] %v_10[5.3,] 	 ARGS:%v_10,
-		 5: def_%v_12 	 ARGS:
+		 5: CONSTANT def_%v_12 	 ARGS:
 		 6: %v_11->< def_%v_13 %v_11[5.4,] %v_12[5.5,] 	 ARGS:%v_12,
 		 7: COPY TYPE_PASS def_%v_4 %v_13[5.6,] 
 BB 6
@@ -1070,7 +1070,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_3 
+		 1: GLOBALVAR $redis def_%cl_1_3 
 		 2: COPY TYPE_StringLiteral def_%cl_1_4 
 		 3: %self->id def_%cl_1_5 %self[2.0,] 	 ARGS:
 		 4: COPY TYPE_StringLiteral def_%cl_1_6 
@@ -1209,7 +1209,7 @@ BB 5
 		 5: BUILDSTRING def_%v_8 %v_5[5.2,] %v_6[5.3,] %v_7[5.4,] what[2.6,] 
 		 6: COPY TYPE_PASS def_key %v_8[5.5,] 
 		 7: 
-		 8: def_%v_9 
+		 8: GLOBALVAR $redis def_%v_9 
 		 9: account->id def_%v_10 account[2.5,] 	 ARGS:
 		 10: %v_9->sismember def_%v_11 %v_9[5.8,] key[5.6,] %v_10[5.9,] 	 ARGS:key,%v_10,
 		 11: BRANCH %v_11[5.10,] 
@@ -1224,11 +1224,11 @@ BB 7
 	instructions:
 		 0: COPY TYPE_Nil def_%v_12 
 		 1: 
-		 2: def_%v_13 
+		 2: GLOBALVAR $redis def_%v_13 
 		 3: account->id def_%v_14 account[2.5,] 	 ARGS:
 		 4: %v_13->sadd def_%v_15 %v_13[7.2,] key[5.6,] %v_14[7.3,] 	 ARGS:key,%v_14,
 		 5: 
-		 6: def_%v_16 
+		 6: GLOBALVAR $redis def_%v_16 
 		 7: %v_16->expire def_%v_17 %v_16[7.6,] key[5.6,] 	 ARGS:key,Fixnum,
 		 8: 
 		 9: %self->score def_%v_18 %self[2.0,] 	 ARGS:
@@ -1248,7 +1248,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_24 
+		 1: GLOBALVAR $redis def_%v_24 
 		 2: COPY TYPE_StringLiteral def_%v_25 
 		 3: %self->user_id def_%v_26 %self[2.0,] 	 ARGS:
 		 4: COPY TYPE_StringLiteral def_%v_27 
@@ -1285,7 +1285,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: COPY TYPE_StringLiteral def_%v_6 
@@ -1312,7 +1312,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: COPY TYPE_StringLiteral def_%v_6 
@@ -1400,7 +1400,7 @@ BB 3
 		 3: %v_5->today def_%v_6 %v_5[3.2,] 	 ARGS:
 		 4: COPY TYPE_PASS def_today %v_6[3.3,] 
 		 5: 
-		 6: def_%v_7 
+		 6: GLOBALVAR $redis def_%v_7 
 		 7: COPY TYPE_StringLiteral def_%v_8 
 		 8: %v_6->year def_%v_9 %v_6[3.3,] 	 ARGS:
 		 9: COPY TYPE_StringLiteral def_%v_10 
@@ -1408,7 +1408,7 @@ BB 3
 		 11: BUILDSTRING def_%v_12 %v_8[3.7,] %v_9[3.8,] %v_10[3.9,] %v_11[3.10,] 
 		 12: %v_7->incr def_%v_13 %v_7[3.6,] %v_12[3.11,] 	 ARGS:%v_12,
 		 13: 
-		 14: def_%v_14 
+		 14: GLOBALVAR $redis def_%v_14 
 		 15: COPY TYPE_StringLiteral def_%v_15 
 		 16: COPY TYPE_StringLiteral def_%v_16 
 		 17: today->strftime def_%v_17 today[3.4,] %v_16[3.16,] 	 ARGS:%v_16,
@@ -1417,7 +1417,7 @@ BB 3
 		 20: BUILDSTRING def_%v_20 %v_15[3.15,] %v_17[3.17,] %v_18[3.18,] %v_19[3.19,] 
 		 21: %v_14->incr def_%v_21 %v_14[3.14,] %v_20[3.20,] 	 ARGS:%v_20,
 		 22: 
-		 23: def_%v_22 
+		 23: GLOBALVAR $redis def_%v_22 
 		 24: COPY TYPE_StringLiteral def_%v_23 
 		 25: today->wday def_%v_24 today[3.4,3.17,] 	 ARGS:
 		 26: %v_24->- def_%v_25 %v_24[3.25,] 	 ARGS:Fixnum,

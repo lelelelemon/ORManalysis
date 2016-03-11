@@ -70,7 +70,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_h 
-		 6: def_deep 
+		 6: RECEIVECONSTARG def_deep 
 		 7: deep[2.6,] 
 BB 3
 	outgoing: 4 
@@ -542,10 +542,10 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_array_of_hashes 
-		 6: def_keys 
+		 6: RECEIVEARG def_keys 
 		 7: 
 		 8: array_of_hashes->map def_%v_3 array_of_hashes[2.5,] %self[2.0,] 	 ARGS:array_of_hashes,
-CLOSURE BEGIN: keys[2.6,] %self[2.0,] 
+CLOSURE BEGIN: keys[2.6,] %self[2.0,] h[2.8,] key[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -634,7 +634,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_h 
-		 6: def_keys 
+		 6: RECEIVEARG def_keys 
 		 7: 
 		 8: HASH- def_%v_3 
 		 9: keys->reduce def_%v_4 keys[2.6,] %v_3[2.8,] %self[2.0,] 	 ARGS:%v_3,keys,
@@ -712,7 +712,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_a 
 		 6: RECEIVEARG def_b 
-		 7: def_keys 
+		 7: RECEIVEARG def_keys 
 		 8: 
 		 9: def_%v_3 keys[2.7,] 
 		 10: a->slice def_%v_4 a[2.5,] %v_3[2.9,] 	 ARGS:Splat,
@@ -961,7 +961,7 @@ BB 2
 		 6: 
 		 7: HASH- def_%v_3 
 		 8: x->reduce def_%v_4 x[2.5,] %v_3[2.7,] %self[2.0,] 	 ARGS:%v_3,x,
-CLOSURE BEGIN: value[2.8,] %self[2.0,] acc[] 
+CLOSURE BEGIN: value[2.8,] %self[2.0,] acc[] v[] key[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1108,7 +1108,7 @@ BB 2
 		 5: RECEIVEARG def_h 
 		 6: 
 		 7: def_%v_3 %self[2.0,] 
-CLOSURE BEGIN: hash[2.7,] %self[2.0,] 
+CLOSURE BEGIN: hash[2.7,] %self[2.0,] k[] key_s[] prefix[] v[] acc[] prefixed_key[] memo[] 
 BB 1
 	outgoing: 5 2 
 	datadep: 

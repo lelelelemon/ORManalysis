@@ -36,7 +36,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 
+		 1: GLOBALVAR $! def_%v_8 
 BB 7
 	outgoing: 8 12 19 
 	datadep: 
@@ -44,7 +44,7 @@ BB 7
 		 0: 
 		 1: 
 		 2: %self->filter_by def_%v_11 %self[2.0,] 	 ARGS:
-		 3: def_%v_12 
+		 3: CONSTANT def_%v_12 
 		 4: %v_11->[] def_%v_13 %v_11[7.2,] %v_12[7.3,] 	 ARGS:%v_12,
 		 5: COPY TYPE_StringLiteral def_%v_16 
 		 6: def_%v_15 %v_16[7.5,] %v_13[7.4,] 
@@ -89,7 +89,7 @@ BB 12
 		 4: %v_25->company def_%v_26 %v_25[12.3,] 	 ARGS:
 		 5: %v_26->customers def_%v_27 %v_26[12.4,] 	 ARGS:
 		 6: %self->filter_by def_%v_28 %self[12.2,2.0,] 	 ARGS:
-		 7: def_%v_29 
+		 7: CONSTANT def_%v_29 
 		 8: %v_28->[] def_%v_30 %v_28[12.6,] %v_29[12.7,] 	 ARGS:%v_29,
 		 9: %v_27->find def_%v_31 %v_27[12.5,] %v_30[12.8,] 	 ARGS:%v_30,
 		 10: %v_31->name def_%v_32 %v_31[12.9,] 	 ARGS:
@@ -105,7 +105,7 @@ BB 13
 		 3: %v_33->find def_%v_35 %v_33[13.1,] %v_34[13.2,] 	 ARGS:%v_34,
 		 4: %v_35->projects def_%v_36 %v_35[13.3,] 	 ARGS:
 		 5: %self->filter_by def_%v_37 %self[13.2,2.0,] 	 ARGS:
-		 6: def_%v_38 
+		 6: CONSTANT def_%v_38 
 		 7: %v_37->[] def_%v_39 %v_37[13.5,] %v_38[13.6,] 	 ARGS:%v_38,
 		 8: %v_36->find def_%v_40 %v_36[13.4,] %v_39[13.7,] 	 ARGS:%v_39,
 		 9: %v_40->name def_%v_41 %v_40[13.8,] 	 ARGS:
@@ -125,7 +125,7 @@ BB 14
 		 7: %v_47->collect def_%v_48 %v_47[14.6,] 	 ARGS:
 		 8: %v_42->where def_%v_49 %v_42[14.1,] %v_43[14.2,] %v_48[14.7,] 	 ARGS:%v_43,%v_48,
 		 9: %self->filter_by def_%v_50 %self[14.4,2.0,] 	 ARGS:
-		 10: def_%v_51 
+		 10: CONSTANT def_%v_51 
 		 11: %v_50->[] def_%v_52 %v_50[14.9,] %v_51[14.10,] 	 ARGS:%v_51,
 		 12: %v_49->find def_%v_53 %v_49[14.8,] %v_52[14.11,] 	 ARGS:%v_52,
 		 13: COPY TYPE_PASS def_m %v_53[14.12,] 
@@ -304,7 +304,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 	 ARGS:
+		 1: CONSTANT def_%v_8 	 ARGS:
 		 2: %v_8->ago def_%v_9 %v_8[6.1,] 	 ARGS:
 		 3: %v_9->midnight def_%v_10 %v_9[6.2,] 	 ARGS:
 		 4: time_zone->local_to_utc def_%v_11 time_zone[2.5,] %v_10[6.3,] 	 ARGS:%v_10,
@@ -312,7 +312,7 @@ BB 6
 		 6: 
 		 7: COPY TYPE_Fixnum def_step 
 		 8: 
-		 9: def_%v_12 	 ARGS:
+		 9: CONSTANT def_%v_12 	 ARGS:
 		 10: %v_12->/ def_%v_13 %v_12[6.9,] step[6.7,] 	 ARGS:step,
 		 11: COPY TYPE_PASS def_interval %v_13[6.10,] 
 		 12: 
@@ -330,14 +330,14 @@ BB 7
 		 1: time_zone->now def_%v_15 time_zone[2.5,] 	 ARGS:
 		 2: %v_15->beginning_of_week def_%v_16 %v_15[7.1,] 	 ARGS:
 		 3: %v_16->midnight def_%v_17 %v_16[7.2,] 	 ARGS:
-		 4: def_%v_18 	 ARGS:
+		 4: CONSTANT def_%v_18 	 ARGS:
 		 5: %v_17->- def_%v_19 %v_17[7.3,] %v_18[7.4,] 	 ARGS:%v_18,
 		 6: time_zone->local_to_utc def_%v_20 time_zone[7.1,2.5,] %v_19[7.5,] 	 ARGS:%v_19,
 		 7: COPY TYPE_PASS def_start %v_20[7.6,] 
 		 8: 
 		 9: COPY TYPE_Fixnum def_step 
 		 10: 
-		 11: def_%v_21 	 ARGS:
+		 11: CONSTANT def_%v_21 	 ARGS:
 		 12: %v_21->/ def_%v_22 %v_21[7.11,] step[7.9,] 	 ARGS:step,
 		 13: COPY TYPE_PASS def_interval %v_22[7.12,] 
 		 14: 
@@ -359,14 +359,14 @@ BB 8
 		 1: time_zone->now def_%v_28 time_zone[2.5,] 	 ARGS:
 		 2: %v_28->beginning_of_month def_%v_29 %v_28[8.1,] 	 ARGS:
 		 3: %v_29->midnight def_%v_30 %v_29[8.2,] 	 ARGS:
-		 4: def_%v_31 	 ARGS:
+		 4: CONSTANT def_%v_31 	 ARGS:
 		 5: %v_30->- def_%v_32 %v_30[8.3,] %v_31[8.4,] 	 ARGS:%v_31,
 		 6: time_zone->local_to_utc def_%v_33 time_zone[8.1,2.5,] %v_32[8.5,] 	 ARGS:%v_32,
 		 7: COPY TYPE_PASS def_start %v_33[8.6,] 
 		 8: 
 		 9: COPY TYPE_Fixnum def_step 
 		 10: 
-		 11: def_%v_34 	 ARGS:
+		 11: CONSTANT def_%v_34 	 ARGS:
 		 12: %v_34->/ def_%v_35 %v_34[8.11,] step[8.9,] 	 ARGS:step,
 		 13: COPY TYPE_PASS def_interval %v_35[8.12,] 
 		 14: 
@@ -412,7 +412,7 @@ BB 3
 		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
 		 2: %self->filter_by def_%v_5 %self[2.0,] 	 ARGS:
-		 3: def_%v_6 
+		 3: CONSTANT def_%v_6 
 		 4: %v_5->[] def_%v_7 %v_5[3.2,] %v_6[3.3,] 	 ARGS:%v_6,
 		 5: COPY TYPE_StringLiteral def_%v_10 
 		 6: def_%v_9 %v_10[3.5,] %v_7[3.4,] 
@@ -461,7 +461,7 @@ BB 10
 		 3: %v_18->projects def_%v_19 %v_18[10.2,] 	 ARGS:
 		 4: COPY TYPE_StringLiteral def_%v_20 
 		 5: %self->filter_by def_%v_21 %self[10.2,2.0,] 	 ARGS:
-		 6: def_%v_22 
+		 6: CONSTANT def_%v_22 
 		 7: %v_21->[] def_%v_23 %v_21[10.5,] %v_22[10.6,] 	 ARGS:%v_22,
 		 8: %v_19->where def_%v_24 %v_19[10.3,] %v_20[10.4,] %v_23[10.7,] 	 ARGS:%v_20,%v_23,
 		 9: %v_24->collect def_%v_25 %v_24[10.8,] 	 ARGS:
@@ -479,7 +479,7 @@ BB 11
 		 0: 
 		 1: COPY TYPE_StringLiteral def_%v_31 
 		 2: %self->filter_by def_%v_32 %self[2.0,] 	 ARGS:
-		 3: def_%v_33 
+		 3: CONSTANT def_%v_33 
 		 4: %v_32->[] def_%v_34 %v_32[11.2,] %v_33[11.3,] 	 ARGS:%v_33,
 		 5: BUILDSTRING def_%v_35 %v_31[11.1,] %v_34[11.4,] 
 		 6: COPY TYPE_PASS def_%v_8 %v_35[11.5,] 
@@ -491,7 +491,7 @@ BB 12
 		 0: 
 		 1: COPY TYPE_StringLiteral def_%v_36 
 		 2: %self->filter_by def_%v_37 %self[2.0,] 	 ARGS:
-		 3: def_%v_38 
+		 3: CONSTANT def_%v_38 
 		 4: %v_37->[] def_%v_39 %v_37[12.2,] %v_38[12.3,] 	 ARGS:%v_38,
 		 5: BUILDSTRING def_%v_40 %v_36[12.1,] %v_39[12.4,] 
 		 6: COPY TYPE_PASS def_%v_8 %v_40[12.5,] 
@@ -503,7 +503,7 @@ BB 13
 		 0: 
 		 1: COPY TYPE_StringLiteral def_%v_41 
 		 2: %self->filter_by def_%v_42 %self[2.0,] 	 ARGS:
-		 3: def_%v_43 
+		 3: CONSTANT def_%v_43 
 		 4: %v_42->[] def_%v_44 %v_42[13.2,] %v_43[13.3,] 	 ARGS:%v_43,
 		 5: COPY TYPE_StringLiteral def_%v_45 
 		 6: BUILDSTRING def_%v_46 %v_41[13.1,] %v_44[13.4,] %v_45[13.5,] 
@@ -593,20 +593,20 @@ BB 2
 		 12: tz->local_to_utc def_%v_7 tz[2.8,] %v_6[2.11,] 	 ARGS:%v_6,
 		 13: COPY TYPE_PASS def_start %v_7[2.12,] 
 		 14: 
-		 15: def_%v_8 	 ARGS:
+		 15: CONSTANT def_%v_8 	 ARGS:
 		 16: start->+ def_%v_9 start[2.13,] %v_8[2.15,] 	 ARGS:%v_8,
 		 17: COPY TYPE_Array def_%v_10 start[2.13,2.16,] %v_9[2.16,] 
-		 18: def_%v_11 	 ARGS:
+		 18: CONSTANT def_%v_11 	 ARGS:
 		 19: start->- def_%v_12 start[2.13,2.16,] %v_11[2.18,] 	 ARGS:%v_11,
 		 20: COPY TYPE_Array def_%v_13 %v_12[2.19,] start[2.13,2.16,2.19,] 
-		 21: def_%v_14 	 ARGS:
+		 21: CONSTANT def_%v_14 	 ARGS:
 		 22: start->- def_%v_15 start[2.13,2.16,2.19,] %v_14[2.21,] 	 ARGS:%v_14,
-		 23: def_%v_16 	 ARGS:
+		 23: CONSTANT def_%v_16 	 ARGS:
 		 24: start->+ def_%v_17 start[2.13,2.16,2.19,2.22,] %v_16[2.23,] 	 ARGS:%v_16,
 		 25: COPY TYPE_Array def_%v_18 %v_15[2.22,] %v_17[2.24,] 
-		 26: def_%v_19 	 ARGS:
+		 26: CONSTANT def_%v_19 	 ARGS:
 		 27: start->- def_%v_20 start[2.13,2.16,2.19,2.22,2.24,] %v_19[2.26,] 	 ARGS:%v_19,
-		 28: def_%v_21 	 ARGS:
+		 28: CONSTANT def_%v_21 	 ARGS:
 		 29: start->+ def_%v_22 start[2.13,2.16,2.19,2.22,2.24,2.27,] %v_21[2.28,] 	 ARGS:%v_21,
 		 30: COPY TYPE_Array def_%v_23 %v_20[2.27,] %v_22[2.29,] 
 		 31: COPY TYPE_Array def_%v_24 %v_10[2.17,] %v_13[2.20,] %v_18[2.25,] %v_23[2.30,] 

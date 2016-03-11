@@ -341,7 +341,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_host 
+		 5: RECEIVECONSTARG def_host 
 		 6: host[2.5,] 
 BB 3
 	outgoing: 4 
@@ -679,7 +679,7 @@ BB 8
 	instructions:
 		 0: COPY TYPE_Nil def_%v_8 
 		 1: 
-		 2: def_%v_9 
+		 2: GLOBALVAR $! def_%v_9 
 BB 10
 	outgoing: 12 13 16 
 	datadep: 
@@ -695,7 +695,7 @@ BB 12
 	instructions:
 		 0: (Company) def_%v_14 
 		 1: val->length def_%v_16 val[2.5,] 	 ARGS:
-		 2: def_%v_15 %v_16[12.1,] 
+		 2: CONSTANT def_%v_15 %v_16[12.1,] 
 		 3: val->[] def_%v_17 val[12.1,2.5,] %v_15[12.2,] 	 ARGS:%v_15,
 		 4: %v_14->find def_%v_18 %v_14[12.0,] %v_17[12.3,] 	 ARGS:%v_17,
 		 5: 
@@ -1078,7 +1078,7 @@ BB 2
 		 12: HASH-include- def_%v_5 %v_4[2.11,] 
 		 13: task_lists->all def_%v_6 task_lists[2.5,] %v_5[2.12,] 	 ARGS:%v_5,
 		 14: %v_6->each def_%v_7 %v_6[2.13,] %self[2.0,] 	 ARGS:%v_6,
-CLOSURE BEGIN: list[] %self[2.0,] tasks[2.14,] lists[2.9,] 
+CLOSURE BEGIN: list[] %self[2.0,] task[] time_conds[2.6,] time[] attr[] value[] time[] sum[] times[] total_billable[] total[] tasks[2.14,] lists[2.9,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1102,7 +1102,7 @@ BB 3
 		 3: 
 		 4: list->tasks def_%cl_1_4 list[2.2,] 	 ARGS:
 		 5: %cl_1_4->each def_%cl_1_5 %cl_1_4[3.4,] %self[2.0,] 	 ARGS:%cl_1_4,
-CLOSURE BEGIN: task[] %self[2.0,] times[] time_conds[] list[3.4,2.2,] total_billable[] total[] tasks[3.2,] 
+CLOSURE BEGIN: task[] %self[2.0,] time_conds[] time[] attr[] value[] time[] sum[] times[] list[3.4,2.2,] total_billable[] total[] tasks[3.2,] 
 BB 1
 	outgoing: 11 2 
 	datadep: 
@@ -1123,7 +1123,7 @@ BB 3
 		 0: 
 		 1: task->time_records def_%cl_2_3 task[2.2,] 	 ARGS:
 		 2: %cl_2_3->select def_%cl_2_4 %cl_2_3[3.1,] %self[2.0,] 	 ARGS:%cl_2_3,
-CLOSURE BEGIN: time_conds[] %self[2.0,] 
+CLOSURE BEGIN: time_conds[] %self[2.0,] time[3.2,] attr[] value[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1503,7 +1503,7 @@ BB 5
 		 0: 
 		 1: time->[] def_%cl_1_7 time[2.2,] group_field[] 	 ARGS:group_field,
 		 2: %cl_1_7->to_s def_%cl_1_8 %cl_1_7[5.1,] 	 ARGS:
-		 3: def_%cl_1_9 
+		 3: CONSTANT def_%cl_1_9 
 		 4: %cl_1_8->[] def_%cl_1_10 %cl_1_8[5.2,] %cl_1_9[5.3,] 	 ARGS:%cl_1_9,
 		 5: COPY TYPE_PASS def_dest_str %cl_1_10[5.4,] 
 		 6: COPY TYPE_PASS def_%cl_1_6 %cl_1_10[5.4,] 

@@ -135,7 +135,7 @@ general_stats_content.append("trivialBranch")
                                  
 read_stats_content = ["total", "sinkTotal", "toReadQuery", "toWriteQuery", "toView", "toBranch"]
                                  
-write_stats_content = ["total", "sourceTotal", "fromUserInput", "fromQuery", "fromConst", "fromUtil"]
+write_stats_content = ["total", "sourceTotal", "fromUserInput", "fromQuery", "fromConst", "fromUtil", "fromGlobal"]
                                  
 view_stat_prefix = ["viewStats"] 
 clique_stat_prefix = ["cliqueStat"]
@@ -154,7 +154,7 @@ prefix3 = ["singlePath"]
 path_stats_content = ["total", "read", "write"]
 path_stats_content2 = ["shortestPath", "longestPath", "instrTotal"]
 
-colors = [5,2,7,9,3,4,10,12,13,15]	
+colors = [5,2,7,9,3,4,10,12,13,15,16]	
 
 # stats
 def print_general_stat(prefix, content, plot_branch, plot_read_source):
@@ -251,7 +251,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t\t<other>%f</other>\n"%(writes["sourceTotal"]-temp_total))
 	stats_file.write("\t</writeSource>\n")
 	
-	
+
 	#print "READsink:\t%f\t:\t%f\t%f\t%f\t%f"%(reads["sinkTotal"], reads["toReadQuery"], reads["toWriteQuery"], reads["toBranch"], reads["toView"])
 	#print "READsource:\t%f\t:\t%f\t%f\t%f\t%f"%(readSource["sourceTotal"], readSource["fromQuery"], readSource["fromUserInput"], readSource["fromConst"], readSource["fromUtil"])
 	#print "WRITEsource:\t%f\t:\t%f\t%f\t%f\t%f"%(writes["sourceTotal"], writes["fromQuery"], writes["fromUserInput"], writes["fromConst"], writes["fromUtil"])
@@ -309,7 +309,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 	#print "%s/querystat_%s.png"%(fig_path, prefix[-1])
-	fig.savefig("%s/querystat_%s.png"%(fig_path, prefix[-1]))
+	fig.savefig("%s/querystat_%s.pdf"%(fig_path, prefix[-1]))
 	plt.close(fig)
 	fig = plt.figure()
 
@@ -349,16 +349,18 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		sum2 = sum1 + readSource["fromQuery"]
 		sum3 = sum2 + readSource["fromConst"]
 		sum4 = sum3 + readSource["fromUtil"]
+		sum5 = sum4 + readSource["fromGlobal"]
 		ax6.set_ylim(0, readSource["sourceTotal"]*1.4)
 		rect1 = ax6.bar(ind, [readSource["fromUserInput"]], width, color=tableau_colors[colors[5]])
 		rect2 = ax6.bar(ind, [readSource["fromQuery"]], width, bottom=[sum1], color=tableau_colors[colors[6]])
 		rect3 = ax6.bar(ind, [readSource["fromConst"]], width, bottom=[sum2], color=tableau_colors[colors[7]])
 		rect4 = ax6.bar(ind, [readSource["fromUtil"]], width, bottom=[sum3], color=tableau_colors[colors[8]])
-		rect5 = ax6.bar(ind, [readSource["sourceTotal"]-sum4], width, bottom=[sum4], color=tableau_colors[colors[9]])
+		rect5 = ax6.bar(ind, [readSource["fromGlobal"]], width, bottom=[sum4], color=tableau_colors[colors[9]])
+		rect6 = ax6.bar(ind, [readSource["sourceTotal"]-sum5], width, bottom=[sum5], color=tableau_colors[colors[10]])
 		ax6.set_xticklabels((''))
 		ax6.set_xlabel("read source")
 		ax6.set_ylabel("number of sources")
-		ax6.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0]), ('from user input','from query','from const','from util','other'), prop={'size':'10'}, loc='upper right')
+		ax6.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0], rect6[0]), ('from user input','from query','from const','from util','from global var','other'), prop={'size':'10'}, loc='upper right')
 
 
 	#2.4 bar: writeSource
@@ -367,20 +369,22 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	sum2 = sum1 + writes["fromQuery"]
 	sum3 = sum2 + writes["fromConst"]
 	sum4 = sum3 + writes["fromUtil"]
+	sum5 = sum4 + writes["fromGlobal"]
 	ax7.set_ylim(0, writes["sourceTotal"]*1.4)
 	rect1 = ax7.bar(ind, [writes["fromUserInput"]], width, color=tableau_colors[colors[5]])
 	rect2 = ax7.bar(ind, [writes["fromQuery"]], width, bottom=[sum1], color=tableau_colors[colors[6]])
 	rect3 = ax7.bar(ind, [writes["fromConst"]], width, bottom=[sum2], color=tableau_colors[colors[7]])
 	rect4 = ax7.bar(ind, [writes["fromUtil"]], width, bottom=[sum3], color=tableau_colors[colors[8]])
-	rect5 = ax7.bar(ind, [writes["sourceTotal"]-sum4], width, bottom=[sum4], color=tableau_colors[colors[9]])
+	rect5 = ax7.bar(ind, [writes["fromGlobal"]], width, bottom=[sum4], color=tableau_colors[colors[9]])
+	rect6 = ax7.bar(ind, [writes["sourceTotal"]-sum5], width, bottom=[sum5], color=tableau_colors[colors[10]])
 	ax7.set_xticklabels((''))
 	ax7.set_xlabel("write source")
 	ax7.set_ylabel("number of sources")
-	ax7.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0]), ('from user input','from query','from const','from util','other'), prop={'size':'10'}, loc='upper right')
+	ax7.legend((rect1[0], rect2[0], rect3[0], rect4[0], rect5[0], rect6[0]), ('from user input','from query','from const','from util','from global var','other'), prop={'size':'10'}, loc='upper right')
 
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 	#print "%s/querystat_%s2.png"%(fig_path, prefix[-1])
-	fig.savefig("%s/querystat_%s2.png"%(fig_path, prefix[-1]))
+	fig.savefig("%s/querystat_%s2.pdf"%(fig_path, prefix[-1]))
 	plt.close(fig)
 	#plt.show()
 
@@ -448,7 +452,7 @@ def print_view_stat(prefix):
 	stats_file.write("\t\t<fieldUsedInView>%d</fieldUsedInView>\n"%(len(field)))
 	stats_file.write("\t\t<fieldNotUsedInView>%d</fieldNotUsedInView>\n"%(len(tablefields)-len(field)))
 	stats_file.write("\t</FieldInView>\n")
-	fig.savefig("%s/view_stat.png"%(fig_path))
+	fig.savefig("%s/view_stat.pdf"%(fig_path))
 
 
 #chain
@@ -462,12 +466,13 @@ def print_chain(prefix, content):
 	#for k,v in data.items():
 		#print "\t%s: %f"%(k, v)
 	#input hist
-	fig = plt.figure()
-	ax1 = fig.add_subplot(111)
-	rects = ax1.hist(data, bins=np.arange(min(data), max(data) + 5, 5))
+	if len(data)>0:
+		fig = plt.figure()
+		ax1 = fig.add_subplot(111)
+		rects = ax1.hist(data, bins=np.arange(min(data), max(data) + 5, 5))
 
-	#plt.show()
-	fig.savefig("%s/inputReachQuery.png"%(fig_path))
+		#plt.show()
+		fig.savefig("%s/inputReachQuery.pdf"%(fig_path))
 
 
 #fields
@@ -516,34 +521,48 @@ def print_fields(prefix, content, non_field=False):
 	ax.legend(bbox_to_anchor=(1.05, 1.05), prop={'size':'10'})
 	#plt.show()
 	if non_field:
-		fig.savefig("%s/notstored_field.png"%(fig_path))
+		fig.savefig("%s/notstored_field.pdf"%(fig_path))
 	else:
-		fig.savefig("%s/table_field.png"%(fig_path))
+		fig.savefig("%s/table_field.pdf"%(fig_path))
 	plt.close(fig)
 
 def print_clique_stat(prefix):
 	validation_r = []
 	validation_w = []
+	read_to_write = []
 	clique = []
+	depth = []
 	cond_list = prefix[:]
 	cond_list.append("validation")
 	r_cond_list = cond_list[:]
 	w_cond_list = cond_list[:]
+	read_to_write_cond_list = cond_list[:]
+	depth_cond_list = cond_list[:]
 	r_cond_list.append("read")
 	w_cond_list.append("write")
+	read_to_write_cond_list.append("readToWrite")
+	depth_cond_list.append("depth")
 	r = calculateAllActions(r_cond_list)
 	validation_r = validation_r + r
 	w = calculateAllActions(w_cond_list)
 	validation_w = validation_w + w
+	rtw = calculateAllActions(read_to_write_cond_list)
+	read_to_write = read_to_write + rtw	
+	d = calculateAllActions(depth_cond_list)
+	depth = depth + d
 	cond_list = prefix[:]
 	cond_list.append("clique")
 	r = calculateAllActions(cond_list)
 	clique = clique + r
 	#print "Average validation length:\t%f\tRead:\t%f\tWrite:\t%f\tlen=\t%d\tvalidations"%(getAverage(validation_r)+getAverage(validation_w)+1, getAverage(validation_r), getAverage(validation_w)+1, len(validation_r))
 	stats_file.write("\t<transaction>\n")
-	stats_file.write("\t\t<read>%f</read>\n"%getAverage(validation_r))
+	stats_file.write("\t\t<readToWriteInTxn>%f</readToWriteInTxn>\n"%getAverage(read_to_write))
+	stats_file.write("\t\t<read>%f</read>\n"%(getAverage(validation_r)-getAverage(read_to_write)))
 	stats_file.write("\t\t<write>%f</write>\n"%(getAverage(validation_w)+1))
 	stats_file.write("\t</transaction>\n")
+	stats_file.write("\t<transactionNested>\n")
+	stats_file.write("\t\t<nestedDepth>%f</nestedDepth>\n"%getAverage(depth))
+	stats_file.write("\t\t</transactionNested>\n")
 	#print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
 
 
@@ -640,7 +659,7 @@ def print_schema_stat(prefix, table_stat_prefix):
 		ax.set_xlabel("table name")
 		ax.set_ylabel("aggregate query number across all actions")
 		ax.legend((rect1[0], rect2[0]), ('indirect','direct'),prop={'size':'10'}, loc='upper right')
-		fig.savefig("%s/indirect_table_query.png"%(fig_path))
+		fig.savefig("%s/indirect_table_query.pdf"%(fig_path))
 
 #path
 def print_path(prefix, content):
@@ -697,7 +716,7 @@ def print_path(prefix, content):
 	
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 	#plt.show()
-	fig.savefig("%s/path.png"%(fig_path))
+	fig.savefig("%s/path.pdf"%(fig_path))
 
 
 

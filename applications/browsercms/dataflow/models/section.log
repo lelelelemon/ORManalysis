@@ -158,7 +158,7 @@ BB 2
 		 9: %v_5->fetch_nodes def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->in_order def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: %v_7->collect def_%v_8 %v_7[2.10,] %self[2.0,2.6,] 	 ARGS:%v_7,
-CLOSURE BEGIN: section_node[] 
+CLOSURE BEGIN: section_node[2.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -190,7 +190,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 12: RETURN %v_8[2.11,] %self[2.0,2.6,] 
 BB 3
 	outgoing: 
@@ -262,7 +262,7 @@ BB 2
 		 6: %self->node def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->children def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->collect def_%v_5 %v_4[2.7,] %self[2.0,2.6,] 	 ARGS:%v_4,
-CLOSURE BEGIN: section_node[] 
+CLOSURE BEGIN: section_node[2.8,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -310,7 +310,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 9: COPY TYPE_PASS def_child_pages %v_5[2.8,] 
 		 10: 
 		 11: %v_5->compact def_%v_6 %v_5[2.8,] 	 ARGS:
@@ -361,7 +361,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_options 
+		 5: RECEIVECONSTARG def_options 
 		 6: options[2.5,] 
 BB 3
 	outgoing: 4 
@@ -383,7 +383,7 @@ BB 4
 		 7: COPY TYPE_PASS def_children %v_9[4.6,] 
 		 8: 
 		 9: %v_9->select def_%v_10 %v_9[4.6,] %self[4.1,2.0,] 	 ARGS:%v_9,
-CLOSURE BEGIN: sn[] 
+CLOSURE BEGIN: sn[4.9,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -415,7 +415,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 10: COPY TYPE_PASS def_visible_children %v_10[4.9,] 
 		 11: 
 		 12: options->[] def_%v_11 options[3.1,2.5,] 	 ARGS:Symbol,
@@ -425,7 +425,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: options->[] def_%v_13 options[3.1,2.5,] 	 ARGS:Symbol,
-		 1: def_%v_12 %v_13[5.0,] 
+		 1: CONSTANT def_%v_12 %v_13[5.0,] 
 		 2: visible_children->[] def_%v_14 visible_children[4.10,] %v_12[5.1,] 	 ARGS:%v_12,
 		 3: RETURN %v_14[5.2,] %self[2.0,] 
 BB 6
@@ -455,7 +455,7 @@ BB 2
 		 5: 
 		 6: %self->sections def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->map def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 ARGS:%v_3,
-CLOSURE BEGIN: %self[2.0,2.6,] section[] 
+CLOSURE BEGIN: %self[2.0,2.6,] section[2.7,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -512,7 +512,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 8: %v_4->flatten def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: %v_5->compact def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
@@ -594,7 +594,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_options 
+		 5: RECEIVECONSTARG def_options 
 		 6: options[2.5,] 
 BB 3
 	outgoing: 4 
@@ -846,7 +846,7 @@ BB 2
 		 11: 
 		 12: COPY TYPE_StringLiteral def_%v_6 
 		 13: name_path->split def_%v_7 name_path[2.5,] %v_6[2.12,] 	 ARGS:%v_6,
-		 14: def_%v_8 
+		 14: CONSTANT def_%v_8 
 		 15: %v_7->[] def_%v_9 %v_7[2.13,] %v_8[2.14,] 	 ARGS:%v_8,
 		 16: BRANCH %v_9[2.15,] 
 BB 3
@@ -862,7 +862,7 @@ BB 4
 		 0: COPY TYPE_PASS def_path_names %v_9[3.1,2.15,] 
 		 1: 
 		 2: %v_9->each def_%v_11 %v_9[3.1,2.15,] %self[2.0,] 	 ARGS:%v_9,
-CLOSURE BEGIN: current_section[2.10,] %self[2.0,] 
+CLOSURE BEGIN: current_section[2.10,] %self[2.0,] s[] name[4.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -883,7 +883,7 @@ BB 3
 		 0: 
 		 1: current_section->sections def_%cl_1_3 current_section[] 	 ARGS:
 		 2: %cl_1_3->each def_%cl_1_4 %cl_1_3[3.1,] %self[2.0,] 	 ARGS:%cl_1_3,
-CLOSURE BEGIN: s[] name[2.2,] 
+CLOSURE BEGIN: s[3.2,] name[2.2,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -928,7 +928,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: current_section[4.0,] 
 		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -941,7 +941,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 3: 
 		 4: RETURN current_section[2.10,] %self[2.0,] 
 BB 5
@@ -999,7 +999,7 @@ BB 6
 		 0: 
 		 1: %self->sections def_%v_17 %self[2.0,] 	 ARGS:
 		 2: %v_17->each def_%v_18 %v_17[6.1,] %self[6.1,2.0,] 	 ARGS:%v_17,
-CLOSURE BEGIN: s[] node[] 
+CLOSURE BEGIN: s[] node[6.2,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -1044,7 +1044,7 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: s[2.2,] 
 		 3: 
 		 4: RETURN %self[6.1,2.0,] 
 BB 7
@@ -1210,7 +1210,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_code 
+		 5: RECEIVECONSTARG def_code 
 		 6: code[2.5,] 
 BB 3
 	outgoing: 4 

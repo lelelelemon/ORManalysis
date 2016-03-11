@@ -250,7 +250,7 @@ BB 18
 CLOSURE END: listing_model[2.7,] process[2.9,] booking[3.3,] listing_id[2.6,] author_model[2.8,] transaction_params[3.12,] gateway[2.10,] 
 		 15: COPY TYPE_PASS def_%v_12 %v_11[2.14,] 
 		 16: %v_11->on_error def_%v_13 %v_11[2.14,] %self[2.0,] 	 ARGS:%v_11,
-CLOSURE BEGIN: %self[2.0,] data[2.16,] error_msg[] 
+CLOSURE BEGIN: %self[2.0,] data[2.16,] tr_key[] error_msg[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -342,7 +342,7 @@ CLOSURE END: error_msg[2.2,]
 		 17: 
 		 18: %self->ruby_code_from_view def_%v_14 %self[2.0,] 	 ARGS:
 		 19: %v_14->ruby_code_from_view def_%v_15 %v_14[2.18,] %self[2.0,2.18,] 	 ARGS:%v_14,
-CLOSURE BEGIN: %self[2.0,2.18,] 
+CLOSURE BEGIN: %self[2.0,2.18,] announcement[] author_link[] param[] value[] 
 BB 1
 	outgoing: 39 2 
 	datadep: 
@@ -494,7 +494,7 @@ BB 15
 	instructions:
 		 0: 
 		 1: %self->content_for def_%cl_6_39 %self[2.0,] %self[2.0,] 	 ARGS:Symbol,%self,
-CLOSURE BEGIN: %self[2.0,] author_link[15.1,] 
+CLOSURE BEGIN: %self[2.0,] announcement[] author_link[15.1,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1507,7 +1507,7 @@ BB 5
 CLOSURE END: listing_id[2.7,] _[2.4,] 
 		 15: COPY TYPE_PASS def_%v_12 %v_11[2.14,] 
 		 16: def_%v_13 %self[2.0,] 
-CLOSURE BEGIN: %self[2.0,] form[2.10,2.12,] listing_model[2.14,] author_model[] process[2.12,] gateway[] listing_id[2.14,] quantity[2.16,] booking_fields[] 
+CLOSURE BEGIN: %self[2.0,] form[2.10,2.12,] booking[] b[] listing_model[2.14,] author_model[] process[2.12,] gateway[] listing_id[2.14,] quantity[2.16,] booking_fields[] 
 BB 1
 	outgoing: 10 2 
 	datadep: 
@@ -1737,7 +1737,7 @@ BB 6
 CLOSURE END: process[2.10,] _[2.4,2.7,2.8,2.9,2.11,2.12,] 
 		 21: COPY TYPE_PASS def_%v_18 %v_17[2.20,] 
 		 22: %v_17->on_error def_%v_19 %v_17[2.20,] %self[2.0,] 	 ARGS:%v_17,
-CLOSURE BEGIN: %self[2.0,] data[2.22,] error_msg[] 
+CLOSURE BEGIN: %self[2.0,] data[2.22,] tr_key[] error_msg[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -2197,7 +2197,7 @@ BB 20
 		 1: 
 		 2: %self->ruby_code_from_view def_%v_81 %self[2.0,] 	 ARGS:
 		 3: %v_81->ruby_code_from_view def_%v_82 %v_81[20.2,] %self[20.2,2.0,] 	 ARGS:%v_81,
-CLOSURE BEGIN: %self[20.2,2.0,] 
+CLOSURE BEGIN: %self[20.2,2.0,] announcement[] listing[11.17,] fields[] field[] is_author[20.0,] status[] role[6.26,] status_link[] f[] param[] value[] 
 BB 1
 	outgoing: 39 2 
 	datadep: 
@@ -2349,7 +2349,7 @@ BB 15
 	instructions:
 		 0: 
 		 1: %self->content_for def_%cl_6_39 %self[2.0,] %self[2.0,] 	 ARGS:Symbol,%self,
-CLOSURE BEGIN: %self[2.0,] listing[] fields[] is_author[] role[] 
+CLOSURE BEGIN: %self[2.0,] announcement[] listing[] fields[] field[] is_author[] status[] role[] status_link[] f[] 
 BB 1
 	outgoing: 48 2 
 	datadep: 
@@ -2963,7 +2963,7 @@ BB 39
 		 1: %self->__transaction_model def_%cl_8_93 %self[2.0,] 	 ARGS:
 		 2: %self->get_conversation_statuses def_%cl_8_94 %self[39.1,2.0,] %cl_8_93[39.1,] is_author[] 	 ARGS:%cl_8_93,is_author,
 		 3: %cl_8_94->each def_%cl_8_95 %cl_8_94[39.2,] %self[39.1,39.2,2.0,] 	 ARGS:%cl_8_94,
-CLOSURE BEGIN: status[39.3,] %self[39.1,39.2,2.0,] role[] 
+CLOSURE BEGIN: status[39.3,] %self[39.1,39.2,2.0,] role[] status_link[] 
 BB 1
 	outgoing: 15 2 
 	datadep: 
@@ -3630,7 +3630,7 @@ CLOSURE END:
 		 4: 
 		 5: %self->ruby_code_from_view def_%v_83 %self[20.2,2.0,] 	 ARGS:
 		 6: %v_83->ruby_code_from_view def_%v_84 %v_83[20.5,] %self[20.2,20.5,2.0,] 	 ARGS:%v_83,
-CLOSURE BEGIN: %self[20.2,20.5,2.0,] 
+CLOSURE BEGIN: %self[20.2,20.5,2.0,] announcement[] listing[11.17,] fields[] field[] is_author[20.0,] status[] role[6.26,] status_link[] f[] param[] value[] 
 BB 1
 	outgoing: 39 2 
 	datadep: 
@@ -3782,7 +3782,7 @@ BB 15
 	instructions:
 		 0: 
 		 1: %self->content_for def_%cl_21_39 %self[2.0,] %self[2.0,] 	 ARGS:Symbol,%self,
-CLOSURE BEGIN: %self[2.0,] listing[] fields[] is_author[] role[] 
+CLOSURE BEGIN: %self[2.0,] announcement[] listing[] fields[] field[] is_author[] status[] role[] status_link[] f[] 
 BB 1
 	outgoing: 48 2 
 	datadep: 
@@ -4396,7 +4396,7 @@ BB 39
 		 1: %self->__transaction_model def_%cl_23_93 %self[2.0,] 	 ARGS:
 		 2: %self->get_conversation_statuses def_%cl_23_94 %self[39.1,2.0,] %cl_23_93[39.1,] is_author[] 	 ARGS:%cl_23_93,is_author,
 		 3: %cl_23_94->each def_%cl_23_95 %cl_23_94[39.2,] %self[39.1,39.2,2.0,] 	 ARGS:%cl_23_94,
-CLOSURE BEGIN: status[39.3,] %self[39.1,39.2,2.0,] role[] 
+CLOSURE BEGIN: status[39.3,] %self[39.1,39.2,2.0,] role[] status_link[] 
 BB 1
 	outgoing: 15 2 
 	datadep: 
@@ -5729,7 +5729,7 @@ BB 12
 	instructions:
 CLOSURE END: 
 		 9: def_%v_5 %self[2.0,] 
-CLOSURE BEGIN: %self[2.0,] listing_id[2.9,2.5,] 
+CLOSURE BEGIN: %self[2.0,] listing_id[2.9,2.5,] listing_model[] 
 BB 1
 	outgoing: 5 2 
 	datadep: 
@@ -5916,7 +5916,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: RECEIVEARG def__ 
 		 5: RECEIVEARG def_listing_model 
-		 6: def_rest 
+		 6: RECEIVEARG def_rest 
 		 7: 
 		 8: (TransactionService) def_%cl_6_3 
 		 9: (inherit API) def_%cl_6_4 %cl_6_3[2.8,] 
@@ -5974,7 +5974,7 @@ BB 2
 		 1: def_%cl_7_0 
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
-		 4: def_* 
+		 4: RECEIVEARG def_* 
 		 5: 
 		 6: (Result) def_%cl_7_3 
 		 7: (inherit Success) def_%cl_7_4 %cl_7_3[2.6,] 
@@ -6716,7 +6716,7 @@ CLOSURE END:
 		 12: 
 		 13: %self->ruby_code_from_view def_%v_49 %self[24.0,24.5,24.8,2.0,] 	 ARGS:
 		 14: %v_49->ruby_code_from_view def_%v_50 %v_49[24.13,] %self[24.0,24.5,24.8,24.13,2.0,] 	 ARGS:%v_49,
-CLOSURE BEGIN: %self[24.0,24.5,24.8,24.13,2.0,] params[8.0,] 
+CLOSURE BEGIN: %self[24.0,24.5,24.8,24.13,2.0,] listing[10.6,] announcement[] author[10.12,] author_link[] m_price_break_down[24.11,] booking[18.2,] duration[21.0,] quantity[24.2,] localized_selector_label[16.0,] total_label[24.6,] booking_start[16.6,] booking_end[16.12,] params[8.0,] param[] value[] 
 BB 1
 	outgoing: 39 2 
 	datadep: 
@@ -6868,7 +6868,7 @@ BB 15
 	instructions:
 		 0: 
 		 1: %self->content_for def_%cl_5_39 %self[2.0,] %self[2.0,] 	 ARGS:Symbol,%self,
-CLOSURE BEGIN: %self[2.0,] author[] listing[] author_link[15.1,] m_price_break_down[] 
+CLOSURE BEGIN: %self[2.0,] listing[] announcement[] author[] author_link[15.1,] m_price_break_down[] booking[] duration[] quantity[] localized_selector_label[] total_label[] booking_start[] booking_end[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 

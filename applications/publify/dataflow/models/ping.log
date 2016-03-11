@@ -12,7 +12,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_%v_3 
+		 5: GLOBALVAR $! def_%v_3 
 BB 4
 	outgoing: 5 6 10 
 	datadep: 
@@ -91,7 +91,7 @@ BB 15
 	outgoing: 16 19 
 	datadep: 
 	instructions:
-		 0: def_%v_20 
+		 0: GLOBALVAR $! def_%v_20 
 		 1: COPY TYPE_PASS def_err %v_20[15.0,] 
 		 2: 
 		 3: (Rails) def_%v_21 
@@ -216,7 +216,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_args 
+		 5: RECEIVEARG def_args 
 		 6: 
 		 7: %self->ping def_%v_3 %self[2.0,] 	 ARGS:
 		 8: COPY TYPE_Array def_%v_4 
@@ -250,7 +250,7 @@ BB 2
 		 10: COPY TYPE_PASS def_rdfs %v_6[2.9,] 
 		 11: 
 		 12: %v_6->each def_%v_7 %v_6[2.9,] %self[2.0,2.6,] 	 ARGS:%v_6,
-CLOSURE BEGIN: rdf[] %self[2.0,2.6,] 
+CLOSURE BEGIN: rdf[] %self[2.0,2.6,] rdfs[2.10,] desc[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -481,7 +481,7 @@ BB 2
 		 22: %self->article def_%v_13 %self[2.0,2.14,] 	 ARGS:
 		 23: %v_13->html def_%v_14 %v_13[2.22,] 	 ARGS:Symbol,
 		 24: %v_14->strip_html def_%v_15 %v_14[2.23,] 	 ARGS:
-		 25: def_%v_16 
+		 25: CONSTANT def_%v_16 
 		 26: %v_15->[] def_%v_17 %v_15[2.24,] %v_16[2.25,] 	 ARGS:%v_16,
 		 27: %v_12->escape def_%v_18 %v_12[2.21,] %v_17[2.26,] 	 ARGS:%v_17,
 		 28: BUILDSTRING def_%v_19 %v_11[2.20,] %v_18[2.27,] 
@@ -729,8 +729,8 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_xml_rpc_url 
 		 6: RECEIVEARG def_name 
-		 7: def_args 
-		 8: def_%v_3 
+		 7: RECEIVEARG def_args 
+		 8: GLOBALVAR $! def_%v_3 
 BB 4
 	outgoing: 5 6 8 
 	datadep: 
@@ -781,7 +781,7 @@ BB 10
 	outgoing: 11 12 
 	datadep: 
 	instructions:
-		 0: def_%v_17 
+		 0: GLOBALVAR $! def_%v_17 
 		 1: COPY TYPE_PASS def_e %v_17[10.0,] 
 		 2: 
 		 3: %self->logger def_%v_18 %self[2.0,] 	 ARGS:

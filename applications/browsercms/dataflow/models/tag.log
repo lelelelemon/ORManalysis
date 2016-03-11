@@ -79,7 +79,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_options 
+		 5: RECEIVECONSTARG def_options 
 		 6: options[2.5,] 
 BB 3
 	outgoing: 4 
@@ -148,7 +148,7 @@ BB 11
 		 4: COPY TYPE_Nil def_max 
 		 5: 
 		 6: tags->each def_%v_13 tags[9.3,] %self[2.0,] 	 ARGS:tags,
-CLOSURE BEGIN: t[] min[11.2,] max[11.4,] 
+CLOSURE BEGIN: t[11.6,] min[11.2,] max[11.4,] 
 BB 1
 	outgoing: 16 2 
 	datadep: 
@@ -244,15 +244,15 @@ BB 16
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: min[6.1,] max[11.1,] 
 		 7: 
-		 8: max->- def_%v_14 max[11.4,] min[11.2,] 	 ARGS:min,
+		 8: max->- def_%v_14 max[11.4,11.6,] min[11.2,11.6,] 	 ARGS:min,
 		 9: %v_14->/ def_%v_15 %v_14[11.8,] sizes[7.0,6.1,] 	 ARGS:sizes,
 		 10: %v_15->+ def_%v_16 %v_15[11.9,] 	 ARGS:Fixnum,
 		 11: COPY TYPE_PASS def_divisor %v_16[11.10,] 
 		 12: 
 		 13: tags->each def_%v_17 tags[11.6,9.3,] %self[2.0,] 	 ARGS:tags,
-CLOSURE BEGIN: t[] divisor[11.11,] 
+CLOSURE BEGIN: t[11.13,11.6,] divisor[11.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -290,7 +290,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 14: 
 		 15: RETURN tags[11.6,11.13,9.3,] %self[2.0,] 
 BB 13

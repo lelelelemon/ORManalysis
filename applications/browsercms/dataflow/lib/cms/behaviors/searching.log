@@ -60,7 +60,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_options 
+		 5: RECEIVECONSTARG def_options 
 		 6: options[2.5,] 
 BB 3
 	outgoing: 4 
@@ -100,7 +100,7 @@ BB 7
 		 3: %self->extend def_%v_9 %self[7.0,4.1,2.0,] %v_8[7.2,] 	 ARGS:%v_8,
 		 4: 
 		 5: %self->lambda def_%v_10 %self[7.0,7.3,4.1,2.0,] %self[7.0,7.3,4.1,2.0,] 	 ARGS:%self,
-CLOSURE BEGIN: search_params[] %self[7.0,7.3,4.1,2.0,] conditions[] 
+CLOSURE BEGIN: search_params[] %self[7.0,7.3,4.1,2.0,] conditions[7.5,] c[] term[] 
 BB 1
 	outgoing: 12 2 
 	datadep: 
@@ -157,7 +157,7 @@ BB 8
 		 0: 
 		 1: %self->searchable_columns def_%cl_1_9 %self[2.0,] 	 ARGS:
 		 2: %cl_1_9->each def_%cl_1_10 %cl_1_9[8.1,] %self[8.1,2.0,] 	 ARGS:%cl_1_9,
-CLOSURE BEGIN: conditions[6.3,] %self[8.1,2.0,] c[] term[6.0,] 
+CLOSURE BEGIN: conditions[6.3,] %self[8.1,2.0,] c[8.2,] term[6.0,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -224,14 +224,14 @@ BB 9
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: conditions[4.6,] 
 		 3: COPY TYPE_PASS def_%cl_1_8 %cl_1_10[8.2,] 
 BB 9
 	outgoing: 10 12 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->where def_%cl_1_11 %self[2.0,] conditions[6.3,] 	 ARGS:conditions,
+		 1: %self->where def_%cl_1_11 %self[2.0,] conditions[8.2,6.3,] 	 ARGS:conditions,
 		 2: RETURN %cl_1_11[9.1,] %self[9.1,2.0,] 
 BB 10
 	outgoing: 12 
@@ -244,7 +244,7 @@ BB 12
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: search_params[2.2,] term[6.0,] 
 		 6: %self->scope def_%v_11 %self[7.0,7.3,7.5,4.1,2.0,] %v_10[7.5,] 	 ARGS:Symbol,%v_10,
 		 7: RETURN %v_11[7.6,] %self[7.0,7.3,7.5,7.6,4.1,2.0,] 
 BB 8

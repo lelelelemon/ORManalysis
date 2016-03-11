@@ -271,8 +271,9 @@ class Temp_Qsource_stat < Temp_Qgeneral_stat
 		@from_const = 0
 		@from_util = 0
 		@from_user_input = 0
+		@from_global = 0
 	end
-	attr_accessor :from_query, :from_const, :from_user_input, :source_total, :from_util
+	attr_accessor :from_query, :from_const, :from_user_input, :source_total, :from_util, :from_global
 	def get_from_query
 		return get_avg(@from_query)
 	end
@@ -284,6 +285,9 @@ class Temp_Qsource_stat < Temp_Qgeneral_stat
 	end
 	def get_from_util
 		return get_avg(@from_util)
+	end
+	def get_from_global
+		return get_avg(@from_global)
 	end
 	def get_source_total
 		return get_avg(@source_total)
@@ -322,8 +326,20 @@ class Temp_validation_stat
 	def initialize
 		@read = 0
 		@write = 0
+		@depth = 0
+		@queries = Array.new
+		@read_goes_to_write = Array.new # an array of read queries
 	end
-	attr_accessor :read, :write
+	attr_accessor :read, :write, :depth, :queries, :read_goes_to_write
+	def addQuery(qnode)
+		@queries.push(qnode)
+	end
+	def addReadGoesToWrite(qnode)
+		if @read_goes_to_write.include?(qnode)
+		else
+			@read_goes_to_write.push(qnode)
+		end
+	end
 end
 
 def compute_dataflow_stat(output_dir, start_class, start_function, build_node_list_only=false)
@@ -343,7 +359,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	
 	$node_list.each do |n|
 		n.setLabel
-		#puts "#{n.getIndex}:#{n.getInstr.toString}"
+		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		if n.getValidationStack.length > 0
+			str = ""
+			n.getValidationStack.each do |v|
+				str += "#{v.getIndex}, "
+			end
+			puts "\t * \t validation #{str}"
+		end
 		#if n.getInClosure
 		#	if n.getInView and n.getClosureStack.length == 1
 		#	else
@@ -460,6 +483,24 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	$node_list.each do |n|
 		if n.isQuery?
+			n.getValidationStack.each do |vl|
+				if @validation_stat[vl]
+				else
+					@validation_stat[vl] = Temp_validation_stat.new
+					@validation_stat[vl].depth = vl.getValidationStack.length
+				end
+				@validation_stat[vl].addQuery(n)
+				if n.isReadQuery?
+					@validation_stat[vl].read += 1
+				else
+					@validation_stat[vl].write += 1
+				end
+			end
+		end
+	end
+
+	$node_list.each do |n|
+		if n.isQuery?
 			@general_stat.total += 1
 			@table_name = n.getInstr.getTableName
 			if @table_name == nil
@@ -479,17 +520,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			end
 			@table_general_stat[@table_name].total += 1
 
-			n.getValidationStack.each do |vl|
-				if @validation_stat[vl]
-				else
-					@validation_stat[vl] = Temp_validation_stat.new
-				end
-				if n.isReadQuery?
-					@validation_stat[vl].read += 1
-				else
-					@validation_stat[vl].write += 1
-				end
-			end
 
 			if n.getInClosure
 				@general_stat.in_closure += 1
@@ -560,6 +590,12 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						if n1.isWriteQuery?
 								@read_sink_stat.to_write_query += 1
 								@table_read_stat[@table_name].to_write_query += 1
+								#in txn: read goes to write
+								n.getValidationStack.each do |vl|
+									if @validation_stat[vl].queries.include?(n1)
+										@validation_stat[vl].addReadGoesToWrite(n)
+									end
+								end
 								#puts " * (To write query)"
 						else
 								@read_sink_stat.to_read_query += 1
@@ -608,10 +644,12 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						else
 							@read_source_stat.source_total += 1
 						end
-						if n1.getInstr.instance_of?Copy_instr and n1.getInstr.isFromConst
+						if isConstSource(n1)
 							@read_source_stat.from_const += 1
-						elsif n1.getInstr.instance_of?Const_instr
+						elsif isUtilSource(n1) 
 							@read_source_stat.from_util += 1
+						elsif n1.getInstr.instance_of?GlobalVar_instr
+							@read_source_stat.from_global += 1
 						elsif sourceIgnore(n1.getInstr) == false
 							#puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 						end
@@ -647,12 +685,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								#puts " (#{n.getInstr.toString}) depend on (#{n1.getInstr.toString})"
 							end
 						elsif n1.getBackwardEdges.length == 0
-							if n1.getInstr.instance_of?Copy_instr and n1.getInstr.isFromConst
+							if isConstSource(n1)
 								#puts " x (From copy const)"
 								@write_source_stat.from_const += 1
 								@table_write_stat[@table_name].from_const += 1
-							elsif n1.getInstr.instance_of?Const_instr
+							elsif isUtilSource(n1) 
 								@write_source_stat.from_util += 1
+							elsif n1.getInstr.instance_of?GlobalVar_instr
+								@write_source_stat.from_global += 1
 							elsif sourceIgnore(n1.getInstr) == false
 								#puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 							end
@@ -746,6 +786,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		$graph_file.puts("\t<validation>")
 		$graph_file.puts("\t\t<read>#{vd.read}<\/read>")
 		$graph_file.puts("\t\t<write>#{vd.write}<\/write>")
+		$graph_file.puts("\t\t<depth>#{vd.depth}<\/depth>")
+		$graph_file.puts("\t\t<readToWrite>#{vd.read_goes_to_write.length}<\/readToWrite>")
 		$graph_file.puts("\t<\/validation>")
 	end
 	@clique_stat.each do |cq|
@@ -815,6 +857,7 @@ def helper_print_stat(general, readSink, readSource, write, label, print_branch=
 		$graph_file.puts("\t\t\t<fromUtil>#{readSource.get_from_util}<\/fromUtil>")
 		$graph_file.puts("\t\t\t<fromQuery>#{readSource.get_from_query}<\/fromQuery>")
 		$graph_file.puts("\t\t\t<fromConst>#{readSource.get_from_const}<\/fromConst>")
+		$graph_file.puts("\t\t\t<fromGlobal>#{readSource.get_from_global}<\/fromGlobal>")
 		$graph_file.puts("\t\t<\/readSource>")
 	end
 
@@ -825,5 +868,6 @@ def helper_print_stat(general, readSink, readSource, write, label, print_branch=
 	$graph_file.puts("\t\t\t<fromUtil>#{write.get_from_util}<\/fromUtil>")
 	$graph_file.puts("\t\t\t<fromQuery>#{write.get_from_query}<\/fromQuery>")
 	$graph_file.puts("\t\t\t<fromConst>#{write.get_from_const}<\/fromConst>")
+	$graph_file.puts("\t\t\t<fromGlobal>#{write.get_from_global}<\/fromGlobal>")
 	$graph_file.puts("\t\t<\/writeSource>")
 end

@@ -8,9 +8,12 @@ $cur_class = nil
 
 def handle_single_call_node2(start_class, start_function, instr, level)
 
+		if instr.isClassField or instr.isTableField or instr.instance_of?AttrAssign_instr
+			return 
+		end
+
 		caller_class = instr.getCallerType
 		if instr.isQuery
-			$cur_node.setIsQuery
 			$cur_node.setLabel
 		
 			if instr_trigger_save?(instr) or instr_trigger_create?(instr)
@@ -139,7 +142,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		$general_call_stack.pop
 	end
 
-	if instr.instance_of?ReceiveArg_instr
+	if instr.is_a?ReceiveArg_instr
 		if $general_call_stack.length > 0
 			dep = $general_call_stack[-1]
 			dep_inode = nil
@@ -147,7 +150,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 			instr.getBB.getInstr.each do |inner_i|
 				if inner_i == instr
 					break
-				elsif inner_i.instance_of?ReceiveArg_instr
+				elsif inner_i.is_a?ReceiveArg_instr
 					arg_index += 1
 				end
 			end
@@ -156,6 +159,9 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 				if d.getVname == arg_name
 					dep_inode = d.getInstrHandler.getINode
 				end
+			end
+			if dep.getInstr.hasClosure?
+				dep_inode = dep
 			end
 			if dep_inode != nil
 				edge_name = "#{dep_inode.getIndex}*#{node.getIndex}"
@@ -336,7 +342,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 			#	puts "#{$blank}======transaction end====="
 			#end
 		end
-		#puts "function #{start_class}.#{start_function} cannot be found"
+		puts "function #{start_class}.#{start_function} cannot be found"
 		return nil 
 	end
 

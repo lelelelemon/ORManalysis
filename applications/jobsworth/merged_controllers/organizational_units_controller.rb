@@ -4,12 +4,47 @@ class OrganizationalUnitsController < ApplicationController
 
   def new
     @org_unit = OrganizationalUnit.new(:customer => @customer)
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
- yield :layout 
+ t("new_title", customer: @org_unit.customer) 
+  form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.hidden_field(:customer_id) 
+ t("org_units.name") 
+ f.text_field :name 
+ t("org_units.active") 
+ f.check_box :active 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ cit_submit_tag(@org_unit) 
+ if !@org_unit.new_record? 
+ link_to(t("button.delete"),
+	  organizational_unit_path(@org_unit, :customer_id => @org_unit.customer.id),
+          :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
  yield(:side_panel) 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t("task_filters.filters") 
+  t("task_filters.filters") 
  t("task_filters.save_current") 
  filters_user_path(current_user) 
  t("task_filters.manage") 
@@ -22,28 +57,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  current_user.visible_task_filters.each do |tf| 
  select_task_filter_link(tf) 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
+  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
  t("tags.tags") 
  if current_user.admin? 
  t("button.edit") 
  end 
  tag_links 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- current_user.id 
+  current_user.id 
  current_user.id 
  t("tasks.next_tasks") 
  count = 5 if ( count.nil? || count < 5) 
  current_user.schedule_tasks(:limit => count, :save => false) do |task| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- pill_date ||= task.estimate_date 
+  pill_date ||= task.estimate_date 
  time ||= :minutes_left 
  sorting_disabled ||= false 
  user.top_next_task == task ? 'top-next-task' : nil 
@@ -60,19 +88,14 @@ end
  unless sorting_disabled 
  link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
  end 
-
-end
  
  end 
  if current_user.tasks.open_only.not_snoozed.count > count 
  t("tasks.more_tasks") 
  end 
-
-end
  
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -82,13 +105,9 @@ end
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -97,8 +116,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -106,15 +124,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -155,10 +168,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -168,17 +178,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -188,57 +192,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
  content_for?(:content) ? yield(:content) : yield 
  current_user.id 
  current_user.dateFormat 
-
-end
- 
- t("new_title", customer: @org_unit.customer) 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
- f.error_messages 
- f.hidden_field(:customer_id) 
- t("org_units.name") 
- f.text_field :name 
- t("org_units.active") 
- f.check_box :active 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- values = object.all_custom_attribute_values 
- values.each do |value| 
- prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
- ca = value.custom_attribute 
- field_id = custom_attribute_field_id 
- fields_for(prefix, value) do |f| 
- f.hidden_field(:custom_attribute_id, :index => nil) 
- label_tag field_id, value.custom_attribute.display_name 
- if ca and ca.preset? 
- options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
- options.unshift("") if ca.mandatory? 
- f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
- elsif value.custom_attribute.max_length.to_i >= 100 
- f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
- else 
- f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
- end 
- multi_links(value) 
- end 
- end 
-
-end
- 
- cit_submit_tag(@org_unit) 
- if !@org_unit.new_record? 
- link_to(t("button.delete"),
-	  organizational_unit_path(@org_unit, :customer_id => @org_unit.customer.id),
-          :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
- end 
- end 
-
-end
  
 
 end
@@ -254,12 +211,47 @@ end
         flash[:success] = t('flash.notice.model_created', model: OrganizationalUnit.model_name.human)
         format.html { send_to_customer_page }
       else
-        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
- yield :layout 
+ t("new_title", customer: @org_unit.customer) 
+  form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.hidden_field(:customer_id) 
+ t("org_units.name") 
+ f.text_field :name 
+ t("org_units.active") 
+ f.check_box :active 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ cit_submit_tag(@org_unit) 
+ if !@org_unit.new_record? 
+ link_to(t("button.delete"),
+	  organizational_unit_path(@org_unit, :customer_id => @org_unit.customer.id),
+          :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
  yield(:side_panel) 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t("task_filters.filters") 
+  t("task_filters.filters") 
  t("task_filters.save_current") 
  filters_user_path(current_user) 
  t("task_filters.manage") 
@@ -272,28 +264,21 @@ end
  current_user.visible_task_filters.each do |tf| 
  select_task_filter_link(tf) 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
+  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
  t("tags.tags") 
  if current_user.admin? 
  t("button.edit") 
  end 
  tag_links 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- current_user.id 
+  current_user.id 
  current_user.id 
  t("tasks.next_tasks") 
  count = 5 if ( count.nil? || count < 5) 
  current_user.schedule_tasks(:limit => count, :save => false) do |task| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- pill_date ||= task.estimate_date 
+  pill_date ||= task.estimate_date 
  time ||= :minutes_left 
  sorting_disabled ||= false 
  user.top_next_task == task ? 'top-next-task' : nil 
@@ -310,19 +295,14 @@ end
  unless sorting_disabled 
  link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
  end 
-
-end
  
  end 
  if current_user.tasks.open_only.not_snoozed.count > count 
  t("tasks.more_tasks") 
  end 
-
-end
  
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -332,13 +312,9 @@ end
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -347,8 +323,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -356,15 +331,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -405,10 +375,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -418,17 +385,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -438,57 +399,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
  content_for?(:content) ? yield(:content) : yield 
  current_user.id 
  current_user.dateFormat 
-
-end
- 
- t("new_title", customer: @org_unit.customer) 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
- f.error_messages 
- f.hidden_field(:customer_id) 
- t("org_units.name") 
- f.text_field :name 
- t("org_units.active") 
- f.check_box :active 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- values = object.all_custom_attribute_values 
- values.each do |value| 
- prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
- ca = value.custom_attribute 
- field_id = custom_attribute_field_id 
- fields_for(prefix, value) do |f| 
- f.hidden_field(:custom_attribute_id, :index => nil) 
- label_tag field_id, value.custom_attribute.display_name 
- if ca and ca.preset? 
- options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
- options.unshift("") if ca.mandatory? 
- f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
- elsif value.custom_attribute.max_length.to_i >= 100 
- f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
- else 
- f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
- end 
- multi_links(value) 
- end 
- end 
-
-end
- 
- cit_submit_tag(@org_unit) 
- if !@org_unit.new_record? 
- link_to(t("button.delete"),
-	  organizational_unit_path(@org_unit, :customer_id => @org_unit.customer.id),
-          :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
- end 
- end 
-
-end
  
 
 end
@@ -499,12 +413,47 @@ end
 
   def edit
     @org_unit = @customer.organizational_units.find(params[:id])
-ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
- yield :layout 
+ t("edit_title", unit: @org_unit) 
+  form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.hidden_field(:customer_id) 
+ t("org_units.name") 
+ f.text_field :name 
+ t("org_units.active") 
+ f.check_box :active 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ cit_submit_tag(@org_unit) 
+ if !@org_unit.new_record? 
+ link_to(t("button.delete"),
+	  organizational_unit_path(@org_unit, :customer_id => @org_unit.customer.id),
+          :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
  yield(:side_panel) 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t("task_filters.filters") 
+  t("task_filters.filters") 
  t("task_filters.save_current") 
  filters_user_path(current_user) 
  t("task_filters.manage") 
@@ -517,28 +466,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  current_user.visible_task_filters.each do |tf| 
  select_task_filter_link(tf) 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
+  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
  t("tags.tags") 
  if current_user.admin? 
  t("button.edit") 
  end 
  tag_links 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- current_user.id 
+  current_user.id 
  current_user.id 
  t("tasks.next_tasks") 
  count = 5 if ( count.nil? || count < 5) 
  current_user.schedule_tasks(:limit => count, :save => false) do |task| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- pill_date ||= task.estimate_date 
+  pill_date ||= task.estimate_date 
  time ||= :minutes_left 
  sorting_disabled ||= false 
  user.top_next_task == task ? 'top-next-task' : nil 
@@ -555,19 +497,14 @@ end
  unless sorting_disabled 
  link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
  end 
-
-end
  
  end 
  if current_user.tasks.open_only.not_snoozed.count > count 
  t("tasks.more_tasks") 
  end 
-
-end
  
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -577,13 +514,9 @@ end
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -592,8 +525,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -601,15 +533,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -650,10 +577,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -663,17 +587,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -683,57 +601,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
  content_for?(:content) ? yield(:content) : yield 
  current_user.id 
  current_user.dateFormat 
-
-end
- 
- t("edit_title", unit: @org_unit) 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
- f.error_messages 
- f.hidden_field(:customer_id) 
- t("org_units.name") 
- f.text_field :name 
- t("org_units.active") 
- f.check_box :active 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- values = object.all_custom_attribute_values 
- values.each do |value| 
- prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
- ca = value.custom_attribute 
- field_id = custom_attribute_field_id 
- fields_for(prefix, value) do |f| 
- f.hidden_field(:custom_attribute_id, :index => nil) 
- label_tag field_id, value.custom_attribute.display_name 
- if ca and ca.preset? 
- options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
- options.unshift("") if ca.mandatory? 
- f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
- elsif value.custom_attribute.max_length.to_i >= 100 
- f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
- else 
- f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
- end 
- multi_links(value) 
- end 
- end 
-
-end
- 
- cit_submit_tag(@org_unit) 
- if !@org_unit.new_record? 
- link_to(t("button.delete"),
-	  organizational_unit_path(@org_unit, :customer_id => @org_unit.customer.id),
-          :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
- end 
- end 
-
-end
  
 
 end
@@ -749,12 +620,47 @@ end
         @org_unit.update_attribute(:customer_id, @customer.id)
         format.html { send_to_customer_page }
       else
-        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
- yield :layout 
+ t("edit_title", unit: @org_unit) 
+  form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.hidden_field(:customer_id) 
+ t("org_units.name") 
+ f.text_field :name 
+ t("org_units.active") 
+ f.check_box :active 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ cit_submit_tag(@org_unit) 
+ if !@org_unit.new_record? 
+ link_to(t("button.delete"),
+	  organizational_unit_path(@org_unit, :customer_id => @org_unit.customer.id),
+          :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
  yield(:side_panel) 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t("task_filters.filters") 
+  t("task_filters.filters") 
  t("task_filters.save_current") 
  filters_user_path(current_user) 
  t("task_filters.manage") 
@@ -767,28 +673,21 @@ end
  current_user.visible_task_filters.each do |tf| 
  select_task_filter_link(tf) 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
+  cache(grouped_cache_key "tags/company_#{current_user.company_id}/", current_user.id) do 
  t("tags.tags") 
  if current_user.admin? 
  t("button.edit") 
  end 
  tag_links 
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- current_user.id 
+  current_user.id 
  current_user.id 
  t("tasks.next_tasks") 
  count = 5 if ( count.nil? || count < 5) 
  current_user.schedule_tasks(:limit => count, :save => false) do |task| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- pill_date ||= task.estimate_date 
+  pill_date ||= task.estimate_date 
  time ||= :minutes_left 
  sorting_disabled ||= false 
  user.top_next_task == task ? 'top-next-task' : nil 
@@ -805,19 +704,14 @@ end
  unless sorting_disabled 
  link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
  end 
-
-end
  
  end 
  if current_user.tasks.open_only.not_snoozed.count > count 
  t("tasks.more_tasks") 
  end 
-
-end
  
  end 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- javascript_include_tag 'application' 
+  javascript_include_tag 'application' 
  yield :head 
  stylesheet_link_tag 'application' 
  auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) 
@@ -827,13 +721,9 @@ end
  Setting.version 
  end 
  new_user_session_url 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- image_tag('spinner.gif', :border => 0) 
-
-end
+  image_tag('spinner.gif', :border => 0) 
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- if current_user.company.logo? 
+  if current_user.company.logo? 
  image_tag("/companies/show_logo/#{current_user.company.id}", :alt => "logo" ) 
  else 
  image_tag("logo.gif", :alt => "logo" ) 
@@ -842,8 +732,7 @@ end
  t("shared.worked_today", time: distance_of_time_in_words(total_today.minutes)) 
  end 
  if @current_sheet && @current_sheet.task 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- start_stop_work_link(@current_sheet.task) 
+  start_stop_work_link(@current_sheet.task) 
  cancel_work_link(@current_sheet.task) 
  pause_task_link(@current_sheet.task) 
  link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num)) 
@@ -851,15 +740,10 @@ end
  TimeParser.format_duration(@current_sheet.duration/60) 
  TimeParser.format_duration(@current_sheet.task.worked_minutes + @current_sheet.duration / 60) 
  percent.nil? ? 0 : percent 
-
-end
  
  end 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- t('tabmenu.overview') 
+  t('tabmenu.overview') 
  link_to t('tabmenu.dashboard'), :controller => 'activities', :action => 'index' 
  if current_user.admin? 
  link_to t('tabmenu.planning'), planning_tasks_path 
@@ -900,10 +784,7 @@ end
  link_to t('tabmenu.wiki'), :controller => 'wiki', :action => 'show', :id => nil 
  end 
  link_to t('tabmenu.projects'), :controller => 'projects', :action => 'index' 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
-
-end
+  text_field_tag("keyword", "", :class => "search_filter input-xlarge", :placeholder => t('tabmenu.search'), :id => "menubar_search", :autocomplete => "off") 
  
  current_user.display_login 
  if current_user.admin? 
@@ -913,17 +794,11 @@ end
  link_to t('tabmenu.my_account'), edit_user_path(current_user) 
  end 
  link_to t('tabmenu.log_out'), destroy_user_session_path 
-
-end
  
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- flash.each do |key, val| 
+   flash.each do |key, val| 
 key.to_s
  val 
  end 
-
-end
  
  news = NewsItem.order("id desc").where("id > ?", current_user.seen_news_id).first
 unless news.nil? 
@@ -933,57 +808,10 @@ unless news.nil?
         :onclick => "jQuery('#news').fadeOut(500)",
         :remote => true) 
  end 
-
-end
  
  content_for?(:content) ? yield(:content) : yield 
  current_user.id 
  current_user.dateFormat 
-
-end
- 
- t("edit_title", unit: @org_unit) 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- form_for(@org_unit, :html => {:class => "form-horizontal"}) do |f| 
- f.error_messages 
- f.hidden_field(:customer_id) 
- t("org_units.name") 
- f.text_field :name 
- t("org_units.active") 
- f.check_box :active 
- ruby_code_from_view.ruby_code_from_view do |rb_from_view| 
- values = object.all_custom_attribute_values 
- values.each do |value| 
- prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
- ca = value.custom_attribute 
- field_id = custom_attribute_field_id 
- fields_for(prefix, value) do |f| 
- f.hidden_field(:custom_attribute_id, :index => nil) 
- label_tag field_id, value.custom_attribute.display_name 
- if ca and ca.preset? 
- options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
- options.unshift("") if ca.mandatory? 
- f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
- elsif value.custom_attribute.max_length.to_i >= 100 
- f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
- else 
- f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
- end 
- multi_links(value) 
- end 
- end 
-
-end
- 
- cit_submit_tag(@org_unit) 
- if !@org_unit.new_record? 
- link_to(t("button.delete"),
-	  organizational_unit_path(@org_unit, :customer_id => @org_unit.customer.id),
-          :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
- end 
- end 
-
-end
  
 
 end

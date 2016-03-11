@@ -27,7 +27,7 @@ BB 2
 		 17: ATTRASSIGN %self->activity_url %v_11[2.16,] 
 		 18: 
 		 19: %self->respond_to def_%v_12 %self[2.0,2.14,2.16,2.17,] %self[2.0,2.14,2.16,2.17,] 	 ARGS:%self,
-CLOSURE BEGIN: format[2.19,] %self[2.0,2.14,2.16,2.17,] 
+CLOSURE BEGIN: format[2.19,] %self[2.0,2.14,2.16,2.17,] activity[] ical[] activity_date[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -133,7 +133,7 @@ BB 9
 CLOSURE END: 
 		 4: 
 		 5: format->ics def_%cl_1_5 format[3.1,3.3,2.2,] %self[2.0,] 	 ARGS:format,
-CLOSURE BEGIN: %self[2.0,] ical[3.5,] 
+CLOSURE BEGIN: %self[2.0,] activity[] ical[3.5,] activity_date[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -175,7 +175,7 @@ BB 5
 		 9: 
 		 10: GETFIELD %self->activity_log def_%cl_4_11 %self[2.0,] 
 		 11: %cl_4_11->each def_%cl_4_12 %cl_4_11[5.10,] %self[2.0,] 	 ARGS:%cl_4_11,
-CLOSURE BEGIN: activity[] ical[5.1,] %self[2.0,] 
+CLOSURE BEGIN: activity[] ical[5.1,] %self[2.0,] activity_date[5.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -322,7 +322,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $! def_%v_3 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -412,7 +412,7 @@ BB 14
 		 13: ATTRASSIGN %self->activity_url %v_35[14.12,] 
 		 14: 
 		 15: %self->respond_to def_%v_36 %self[14.9,14.12,14.13,4.6,2.0,] %self[14.9,14.12,14.13,4.6,2.0,] 	 ARGS:%self,
-CLOSURE BEGIN: format[14.15,] %self[14.9,14.12,14.13,4.6,2.0,] 
+CLOSURE BEGIN: format[14.15,] %self[14.9,14.12,14.13,4.6,2.0,] activity[] ical[] activity_date[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -518,7 +518,7 @@ BB 9
 CLOSURE END: 
 		 4: 
 		 5: format->ics def_%cl_1_5 format[3.1,3.3,2.2,] %self[2.0,] 	 ARGS:format,
-CLOSURE BEGIN: %self[2.0,] ical[3.5,] 
+CLOSURE BEGIN: %self[2.0,] activity[] ical[3.5,] activity_date[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -560,7 +560,7 @@ BB 5
 		 9: 
 		 10: GETFIELD %self->activity_log def_%cl_4_11 %self[2.0,] 
 		 11: %cl_4_11->each def_%cl_4_12 %cl_4_11[5.10,] %self[2.0,] 	 ARGS:%cl_4_11,
-CLOSURE BEGIN: activity[] ical[5.1,] %self[2.0,] 
+CLOSURE BEGIN: activity[] ical[5.1,] %self[2.0,] activity_date[5.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -729,7 +729,7 @@ BB 2
 		 15: ATTRASSIGN %self->milestones_url %v_9[2.14,] 
 		 16: 
 		 17: %self->respond_to def_%v_10 %self[2.0,2.9,2.14,2.15,] %self[2.0,2.9,2.14,2.15,] 	 ARGS:%self,
-CLOSURE BEGIN: format[2.17,] %self[2.0,2.9,2.14,2.15,] 
+CLOSURE BEGIN: format[2.17,] %self[2.0,2.9,2.14,2.15,] milestone[] ical[] milestone_date[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -835,7 +835,7 @@ BB 9
 CLOSURE END: 
 		 4: 
 		 5: format->ics def_%cl_1_5 format[3.1,3.3,2.2,] %self[2.0,] 	 ARGS:format,
-CLOSURE BEGIN: %self[2.0,] ical[3.5,] 
+CLOSURE BEGIN: %self[2.0,] milestone[] ical[3.5,] milestone_date[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -877,7 +877,7 @@ BB 5
 		 9: 
 		 10: GETFIELD %self->milestones def_%cl_4_11 %self[2.0,] 
 		 11: %cl_4_11->each def_%cl_4_12 %cl_4_11[5.10,] %self[2.0,] 	 ARGS:%cl_4_11,
-CLOSURE BEGIN: milestone[] ical[5.1,] %self[2.0,] 
+CLOSURE BEGIN: milestone[] ical[5.1,] %self[2.0,] milestone_date[5.11,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1014,7 +1014,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $! def_%v_3 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -1132,7 +1132,7 @@ BB 19
 		 3: ATTRASSIGN %self->milestones_url %v_36[19.2,] 
 		 4: 
 		 5: %self->respond_to def_%v_37 %self[19.2,19.3,18.2,14.5,4.6,2.0,] %self[19.2,19.3,18.2,14.5,4.6,2.0,] 	 ARGS:%self,
-CLOSURE BEGIN: format[19.5,] %self[19.2,19.3,18.2,14.5,4.6,2.0,] 
+CLOSURE BEGIN: format[19.5,] %self[19.2,19.3,18.2,14.5,4.6,2.0,] milestone[] ical[] milestone_date[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1238,7 +1238,7 @@ BB 9
 CLOSURE END: 
 		 4: 
 		 5: format->ics def_%cl_1_5 format[3.1,3.3,2.2,] %self[2.0,] 	 ARGS:format,
-CLOSURE BEGIN: %self[2.0,] ical[3.5,] 
+CLOSURE BEGIN: %self[2.0,] milestone[] ical[3.5,] milestone_date[] 
 BB 1
 	outgoing: 8 2 
 	datadep: 
@@ -1284,7 +1284,7 @@ BB 5
 		 13: 
 		 14: GETFIELD %self->milestones def_%cl_4_15 %self[2.0,] 
 		 15: %cl_4_15->each def_%cl_4_16 %cl_4_15[5.14,] %self[2.0,] 	 ARGS:%cl_4_15,
-CLOSURE BEGIN: milestone[] ical[5.1,] %self[2.0,] 
+CLOSURE BEGIN: milestone[] ical[5.1,] %self[2.0,] milestone_date[5.15,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1424,7 +1424,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_5 
+		 1: GLOBALVAR $! def_%v_5 
 BB 5
 	outgoing: 6 7 
 	datadep: 
@@ -1532,7 +1532,7 @@ BB 19
 	instructions:
 		 0: 
 		 1: %self->respond_to def_%v_34 %self[18.6,17.0,2.0,5.6,] %self[18.6,17.0,2.0,5.6,] 	 ARGS:%self,
-CLOSURE BEGIN: format[19.1,] %self[18.6,17.0,2.0,5.6,] 
+CLOSURE BEGIN: format[19.1,] %self[18.6,17.0,2.0,5.6,] csv[] time[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1660,7 +1660,7 @@ BB 6
 CLOSURE END: 
 		 6: 
 		 7: format->csv def_%cl_1_6 format[3.1,3.3,3.5,2.2,] %self[2.0,] 	 ARGS:format,
-CLOSURE BEGIN: %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] csv[] time[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1680,7 +1680,7 @@ BB 3
 		 0: 
 		 1: (CSV) def_%cl_5_3 
 		 2: %cl_5_3->generate def_%cl_5_4 %cl_5_3[3.1,] %self[2.0,] 	 ARGS:%cl_5_3,
-CLOSURE BEGIN: csv[3.2,] %self[2.0,] 
+CLOSURE BEGIN: csv[3.2,] %self[2.0,] time[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 

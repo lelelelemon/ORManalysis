@@ -36,7 +36,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_options 
+		 5: RECEIVECONSTARG def_options 
 		 6: options[2.5,] 
 BB 4
 	outgoing: 5 
@@ -54,7 +54,7 @@ BB 5
 		 3: 
 		 4: COPY TYPE_StringLiteral def_%v_6 
 		 5: %self->define_method def_%v_7 %self[5.2,2.0,] %v_6[5.4,] %self[5.2,2.0,] 	 ARGS:%v_6,%self,
-CLOSURE BEGIN: %self[5.2,2.0,] fetch_group_list[] specified[] 
+CLOSURE BEGIN: %self[5.2,2.0,] options[4.1,2.5,] fetch_group_list[] x[] specified[5.5,] 
 BB 1
 	outgoing: 13 2 
 	datadep: 
@@ -192,7 +192,7 @@ BB 18
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 3: COPY TYPE_PASS def_fetch_group_list %cl_1_4[3.2,] 
 		 4: 
 		 5: def_%cl_1_6 %self[2.0,] 
@@ -217,7 +217,7 @@ BB 6
 		 1: fetch_group_list->call def_%cl_1_8 fetch_group_list[3.3,] 	 ARGS:
 		 2: %self->Array def_%cl_1_9 %self[2.0,] %cl_1_8[6.1,] 	 ARGS:%cl_1_8,
 		 3: %cl_1_9->select def_%cl_1_10 %cl_1_9[6.2,] %self[6.2,2.0,] 	 ARGS:%cl_1_9,
-CLOSURE BEGIN: x[] 
+CLOSURE BEGIN: x[6.3,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -250,7 +250,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 4: COPY TYPE_PASS def_specified %cl_1_10[6.3,] 
 		 5: 
 		 6: %cl_1_10->empty? def_%cl_1_11 %cl_1_10[6.3,] 	 ARGS:
@@ -291,7 +291,7 @@ BB 13
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: fetch_group_list[3.3,] 
 		 6: RETURN %v_7[5.5,] %self[5.2,5.5,2.0,] 
 BB 6
 	outgoing: 8 
@@ -455,14 +455,14 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_required_permissions 
+		 5: RECEIVEARG def_required_permissions 
 		 6: 
 		 7: required_permissions->map def_%v_3 required_permissions[2.5,] 	 ARGS:
 		 8: COPY TYPE_PASS def_perms %v_3[2.7,] 
 		 9: 
 		 10: %self->permissions def_%v_4 %self[2.0,] 	 ARGS:
 		 11: %v_4->any? def_%v_5 %v_4[2.10,] %self[2.0,2.10,] 	 ARGS:%v_4,
-CLOSURE BEGIN: p[] perms[2.8,] 
+CLOSURE BEGIN: p[2.11,] perms[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -496,7 +496,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 12: RETURN %v_5[2.11,] %self[2.0,2.10,] 
 BB 3
 	outgoing: 

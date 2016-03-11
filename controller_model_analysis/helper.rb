@@ -117,13 +117,13 @@ def searchARef(node)
 end
 
 def instr_trigger_save?(instr)
-	if ["INSERT", "UPDATE"].include?instr.getQueryType
+	if ["INSERT", "UPDATE"].include?instr.getQueryType and instr.getFuncname != "update_column"
 		return true
 	end
 	return false
 end
 def instr_trigger_create?(instr)
-	if ["INSERT"].include?instr.getQueryType
+	if ["INSERT"].include?instr.getQueryType and instr.getFuncname != "update_column"
 		return true
 	else
 		return false
@@ -396,7 +396,11 @@ def sourceIgnore(instr)
 	if instr.instance_of?HashField_instr or instr.instance_of?Return_instr
 		return true
 	end
-	if instr.instance_of?Call_instr and ["before_filter","before_save","before_create","ruby_code_from_view", "transaction", "before_filter_do_block"].include?instr.getFuncname
+	func_ignore_list = ["before_filter","before_save","before_create","ruby_code_from_view", "transaction", "before_filter_do_block"]
+	if instr.instance_of?Call_instr and func_ignore_list.include?instr.getFuncname
+		return true
+	end
+	if func_ignore_list.include?instr.getMethodName
 		return true
 	end
 	if instr.getIndex == 0 and instr.getBB.getIndex == 2
@@ -407,6 +411,24 @@ end
 
 def sinkIgnore(instr)
 	
+end
+
+def isConstSource(n1)
+	if n1.getInstr.instance_of?ReceiveConstArg_instr or n1.getInstr.instance_of?AttrAssign_instr or n1.getInstr.instance_of?Constant_instr or n1.getInstr.instance_of?ReceiveArg_instr
+		return true
+	elsif n1.getInstr.instance_of?Copy_instr and n1.getInstr.isFromConst
+		return true
+	else
+		return false
+	end
+end
+
+def isUtilSource(n1)
+	if n1.getInstr.is_a?Const_instr
+		return true
+	else
+		return false
+	end
 end
 
 def isValidationFunc(name)

@@ -12,7 +12,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_nb 
+		 5: RECEIVECONSTARG def_nb 
 		 6: nb[2.5,] 
 BB 3
 	outgoing: 4 
@@ -25,7 +25,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_4 
+		 1: GLOBALVAR $redis def_%v_4 
 		 2: (LATEST_KEY) def_%v_5 
 		 3: %v_4->lrange def_%v_6 %v_4[4.1,] %v_5[4.2,] nb[3.1,2.5,] 	 ARGS:%v_5,Fixnum,nb,
 		 4: COPY TYPE_PASS def_links %v_6[4.3,] 
@@ -112,7 +112,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_encoded_link 
 		 6: 
-		 7: def_%v_3 
+		 7: GLOBALVAR $redis def_%v_3 
 		 8: COPY TYPE_StringLiteral def_%v_4 
 		 9: %self->decoded_link def_%v_5 %self[2.0,] encoded_link[2.5,] 	 ARGS:encoded_link,
 		 10: BUILDSTRING def_%v_6 %v_4[2.8,] %v_5[2.9,] 
@@ -166,7 +166,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $redis def_%v_3 
 		 7: COPY TYPE_StringLiteral def_%v_4 
 		 8: %self->link def_%v_5 %self[2.0,] 	 ARGS:
 		 9: BUILDSTRING def_%v_6 %v_4[2.7,] %v_5[2.8,] 
@@ -177,7 +177,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_8 
+		 1: GLOBALVAR $redis def_%v_8 
 		 2: COPY TYPE_StringLiteral def_%v_9 
 		 3: %self->link def_%v_10 %self[2.0,] 	 ARGS:
 		 4: BUILDSTRING def_%v_11 %v_9[3.2,] %v_10[3.3,] 
@@ -190,7 +190,7 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_13 
 		 1: 
-		 2: def_%v_14 
+		 2: GLOBALVAR $redis def_%v_14 
 		 3: COPY TYPE_StringLiteral def_%v_15 
 		 4: %self->link def_%v_16 %self[2.0,] 	 ARGS:
 		 5: BUILDSTRING def_%v_17 %v_15[4.3,] %v_16[4.4,] 
@@ -200,12 +200,12 @@ BB 4
 		 9: %v_20->to_i def_%v_21 %v_20[4.8,] 	 ARGS:
 		 10: %v_14->hsetnx def_%v_22 %v_14[4.2,] %v_17[4.5,] %v_18[4.6,] %v_21[4.9,] 	 ARGS:%v_17,%v_18,%v_21,
 		 11: 
-		 12: def_%v_23 
+		 12: GLOBALVAR $redis def_%v_23 
 		 13: (LATEST_KEY) def_%v_24 
 		 14: %self->link def_%v_25 %self[4.4,2.0,] 	 ARGS:
 		 15: %v_23->lpush def_%v_26 %v_23[4.12,] %v_24[4.13,] %v_25[4.14,] 	 ARGS:%v_24,%v_25,
 		 16: 
-		 17: def_%v_27 
+		 17: GLOBALVAR $redis def_%v_27 
 		 18: (LATEST_KEY) def_%v_28 
 		 19: (NB_IMG_IN_LATEST) def_%v_29 
 		 20: %v_29->- def_%v_30 %v_29[4.19,] 	 ARGS:Fixnum,
@@ -366,7 +366,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_type 
+		 5: RECEIVECONSTARG def_type 
 		 6: type[2.5,] 
 BB 3
 	outgoing: 4 

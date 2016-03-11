@@ -161,7 +161,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_link 
-		 6: def_checked 
+		 6: RECEIVECONSTARG def_checked 
 		 7: checked[2.6,] 
 BB 3
 	outgoing: 4 
@@ -172,7 +172,7 @@ BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: def_hint 
+		 0: RECEIVECONSTARG def_hint 
 		 1: hint[4.0,] 
 BB 5
 	outgoing: 6 
@@ -183,7 +183,7 @@ BB 6
 	outgoing: 7 8 
 	datadep: 
 	instructions:
-		 0: def_attrs 
+		 0: RECEIVECONSTARG def_attrs 
 		 1: attrs[6.0,] 
 BB 7
 	outgoing: 8 
@@ -276,7 +276,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_filename 
 		 6: RECEIVEARG def_alt 
-		 7: def_attrs 
+		 7: RECEIVECONSTARG def_attrs 
 		 8: attrs[2.7,] 
 BB 3
 	outgoing: 4 
@@ -669,7 +669,7 @@ BB 2
 		 10: %v_3->/ def_%v_4 %v_3[2.7,] 	 ARGS:Fixnum,
 		 11: COPY TYPE_PASS def_mbs %v_4[2.10,] 
 		 12: 
-		 13: def_%v_5 	 ARGS:
+		 13: CONSTANT def_%v_5 	 ARGS:
 		 14: value->< def_%v_6 value[2.5,2.7,] %v_5[2.13,] 	 ARGS:%v_5,
 		 15: BRANCH %v_6[2.14,] 
 BB 3
@@ -685,7 +685,7 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_9 
 		 1: 
-		 2: def_%v_10 	 ARGS:
+		 2: CONSTANT def_%v_10 	 ARGS:
 		 3: value->< def_%v_11 value[2.5,] %v_10[4.2,] 	 ARGS:%v_10,
 		 4: BRANCH %v_11[4.3,] 
 BB 6
@@ -725,7 +725,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_time 
 		 6: RECEIVEARG def_format 
-		 7: def_user 
+		 7: RECEIVECONSTARG def_user 
 		 8: user[2.7,] 
 BB 3
 	outgoing: 4 
@@ -778,7 +778,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_object_name 
 		 6: RECEIVEARG def_method 
-		 7: def_options 
+		 7: RECEIVECONSTARG def_options 
 		 8: options[2.7,] 
 BB 3
 	outgoing: 4 
@@ -855,7 +855,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_name 
 		 6: RECEIVEARG def_is_yes 
-		 7: def_options 
+		 7: RECEIVECONSTARG def_options 
 		 8: options[2.7,] 
 BB 3
 	outgoing: 4 
@@ -1703,7 +1703,7 @@ BB 2
 		 6: RECEIVEARG def_tableclass 
 		 7: 
 		 8: in_rows->map def_%v_3 in_rows[2.5,] %self[2.0,] 	 ARGS:in_rows,
-CLOSURE BEGIN: row[] %self[2.0,] 
+CLOSURE BEGIN: row[] %self[2.0,] column[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -1879,7 +1879,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_starting_day 
+		 5: RECEIVECONSTARG def_starting_day 
 		 6: starting_day[2.5,] 
 BB 3
 	outgoing: 4 
@@ -1899,9 +1899,9 @@ BB 4
 		 6: %v_5->+ def_%v_8 %v_5[4.3,] %v_7[4.5,] 	 ARGS:%v_7,
 		 7: COPY TYPE_PASS def_start_week %v_8[4.6,] 
 		 8: 
-		 9: def_%v_10 	 ARGS:
+		 9: CONSTANT def_%v_10 	 ARGS:
 		 10: start_week->+ def_%v_11 start_week[4.7,] %v_10[4.9,] 	 ARGS:%v_10,
-		 11: def_%v_9 start_week[4.7,4.10,] %v_11[4.10,] 
+		 11: CONSTANT def_%v_9 start_week[4.7,4.10,] %v_11[4.10,] 
 		 12: %v_9->collect def_%v_12 %v_9[4.11,] %self[2.0,] 	 ARGS:%v_9,
 CLOSURE BEGIN: day[4.12,] 
 BB 1
@@ -1962,7 +1962,7 @@ BB 2
 		 5: RECEIVEARG def_start_date 
 		 6: RECEIVEARG def_end_date 
 		 7: RECEIVEARG def_tableclass 
-		 8: def_starting_day 
+		 8: RECEIVECONSTARG def_starting_day 
 		 9: starting_day[2.8,] 
 BB 3
 	outgoing: 4 
@@ -1973,7 +1973,7 @@ BB 4
 	outgoing: 5 6 
 	datadep: 
 	instructions:
-		 0: def_merge_month 
+		 0: RECEIVECONSTARG def_merge_month 
 		 1: merge_month[4.0,] 
 BB 5
 	outgoing: 6 
@@ -2034,10 +2034,10 @@ BB 8
 		 1: 
 		 2: start_date->beginning_of_month def_%v_13 start_date[2.5,] 	 ARGS:
 		 3: start_date->end_of_month def_%v_14 start_date[8.2,2.5,] 	 ARGS:
-		 4: def_%v_12 %v_13[8.2,] %v_14[8.3,] 
+		 4: CONSTANT def_%v_12 %v_13[8.2,] %v_14[8.3,] 
 		 5: months-><< def_%v_15 months[6.12,] %v_12[8.4,] 	 ARGS:%v_12,
 		 6: 
-		 7: def_%v_16 	 ARGS:
+		 7: CONSTANT def_%v_16 	 ARGS:
 		 8: start_date->+ def_%v_17 start_date[8.2,8.3,2.5,] %v_16[8.7,] 	 ARGS:%v_16,
 		 9: COPY TYPE_PASS def_start_date %v_17[8.8,] 
 		 10: 
@@ -2049,7 +2049,7 @@ BB 10
 		 1: 
 		 2: COPY TYPE_Array def_%v_18 header[6.6,] 
 		 3: months->inject def_%v_19 months[6.12,] %v_18[10.2,] %self[2.0,] 	 ARGS:%v_18,months,
-CLOSURE BEGIN: month_dates[] starting_day[3.0,2.8,] first_day[] merge_month[5.0,4.0,] start_of_month[] missing[] %self[2.0,] week_rows[] all_rows[] 
+CLOSURE BEGIN: month_dates[] starting_day[3.0,2.8,] first_day[] merge_month[5.0,4.0,] start_of_month[] missing[] %self[2.0,] week[] cur_date[] week_rows[] all_rows[] 
 BB 1
 	outgoing: 12 2 
 	datadep: 
@@ -2093,7 +2093,7 @@ BB 4
 		 2: start_of_month->days def_%cl_2_14 start_of_month[3.10,] 	 ARGS:
 		 3: %cl_2_13->- def_%cl_2_15 %cl_2_13[4.1,] %cl_2_14[4.2,] 	 ARGS:%cl_2_14,
 		 4: month_dates->first def_%cl_2_16 month_dates[4.1,3.13,] 	 ARGS:
-		 5: def_%cl_2_12 %cl_2_15[4.3,] %cl_2_16[4.4,] 
+		 5: CONSTANT def_%cl_2_12 %cl_2_15[4.3,] %cl_2_16[4.4,] 
 		 6: %cl_2_12->to_a def_%cl_2_17 %cl_2_12[4.5,] 	 ARGS:
 		 7: def_%cl_2_11 %cl_2_17[4.6,] 
 		 8: month_dates->unshift def_%cl_2_18 month_dates[4.1,4.4,3.13,] %cl_2_11[4.7,] 	 ARGS:Splat,
@@ -2116,12 +2116,12 @@ BB 6
 	datadep: 
 	instructions:
 		 0: month_dates->last def_%cl_2_25 month_dates[3.13,] 	 ARGS:
-		 1: def_%cl_2_26 	 ARGS:
+		 1: CONSTANT def_%cl_2_26 	 ARGS:
 		 2: %cl_2_25->+ def_%cl_2_27 %cl_2_25[6.0,] %cl_2_26[6.1,] 	 ARGS:%cl_2_26,
 		 3: month_dates->last def_%cl_2_28 month_dates[6.0,3.13,] 	 ARGS:
 		 4: missing->days def_%cl_2_29 missing[4.13,] 	 ARGS:
 		 5: %cl_2_28->+ def_%cl_2_30 %cl_2_28[6.3,] %cl_2_29[6.4,] 	 ARGS:%cl_2_29,
-		 6: def_%cl_2_24 %cl_2_27[6.2,] %cl_2_30[6.5,] 
+		 6: CONSTANT def_%cl_2_24 %cl_2_27[6.2,] %cl_2_30[6.5,] 
 		 7: %cl_2_24->to_a def_%cl_2_31 %cl_2_24[6.6,] 	 ARGS:
 		 8: month_dates->concat def_%cl_2_32 month_dates[6.0,6.3,3.13,] %cl_2_31[6.7,] 	 ARGS:%cl_2_31,
 		 9: COPY TYPE_PASS def_%cl_2_23 %cl_2_32[6.8,] 
@@ -2147,7 +2147,7 @@ BB 9
 		 0: 
 		 1: month_dates->in_groups_of def_%cl_2_37 month_dates[3.13,] 	 ARGS:Fixnum,
 		 2: %cl_2_37->collect def_%cl_2_38 %cl_2_37[9.1,] %self[2.0,] 	 ARGS:%cl_2_37,
-CLOSURE BEGIN: week[9.2,] %self[2.0,] 
+CLOSURE BEGIN: week[9.2,] %self[2.0,] cur_date[] first_day[3.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2301,9 +2301,9 @@ BB 2
 		 10: %v_4->today def_%v_5 %v_4[2.9,] 	 ARGS:
 		 11: (Date) def_%v_6 
 		 12: %v_6->today def_%v_7 %v_6[2.11,] 	 ARGS:
-		 13: def_%v_8 	 ARGS:
+		 13: CONSTANT def_%v_8 	 ARGS:
 		 14: %v_7->+ def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 ARGS:%v_8,
-		 15: def_%v_3 %v_5[2.10,] %v_9[2.14,] 
+		 15: CONSTANT def_%v_3 %v_5[2.10,] %v_9[2.14,] 
 		 16: %v_3->map def_%v_10 %v_3[2.15,] %self[2.0,] 	 ARGS:%v_3,
 CLOSURE BEGIN: date[2.16,] 
 BB 1
@@ -2344,12 +2344,12 @@ BB 6
 CLOSURE END: 
 		 17: COPY TYPE_PASS def_header %v_10[2.16,] 
 		 18: 
-		 19: def_%v_11 start_date[2.5,] end_date[2.6,] 
+		 19: CONSTANT def_%v_11 start_date[2.5,] end_date[2.6,] 
 		 20: %v_11->to_a def_%v_12 %v_11[2.19,] 	 ARGS:
 		 21: %v_12->in_groups_of def_%v_13 %v_12[2.20,] 	 ARGS:Fixnum,
 		 22: COPY TYPE_Array def_%v_14 header[2.17,] 
 		 23: %v_13->inject def_%v_15 %v_13[2.21,] %v_14[2.22,] %self[2.0,] 	 ARGS:%v_14,%v_13,
-CLOSURE BEGIN: week[2.23,] %self[2.0,] rows[] 
+CLOSURE BEGIN: week[2.23,] %self[2.0,] cur_date[] rows[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2461,7 +2461,7 @@ BB 2
 		 5: RECEIVEARG def_content 
 		 6: RECEIVEARG def_items 
 		 7: RECEIVEARG def_classname 
-		 8: def_force 
+		 8: RECEIVECONSTARG def_force 
 		 9: force[2.8,] 
 BB 3
 	outgoing: 4 

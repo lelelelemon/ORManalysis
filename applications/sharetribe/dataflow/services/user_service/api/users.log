@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_user_hash 
 		 6: RECEIVEARG def_community_id 
-		 7: def_invitation_id 
+		 7: RECEIVECONSTARG def_invitation_id 
 		 8: invitation_id[2.7,] 
 BB 3
 	outgoing: 4 
@@ -108,7 +108,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_opts 
-		 6: def_community_id 
+		 6: RECEIVECONSTARG def_community_id 
 		 7: community_id[2.6,] 
 BB 3
 	outgoing: 4 
@@ -493,7 +493,7 @@ BB 6
 		 6: COPY TYPE_Regexp def_%v_8 
 		 7: COPY TYPE_StringLiteral def_%v_9 
 		 8: %v_7->gsub def_%v_10 %v_7[6.5,] %v_9[6.7,] 	 ARGS:%v_8,%v_9,
-		 9: def_%v_11 
+		 9: CONSTANT def_%v_11 
 		 10: %v_10->[] def_%v_12 %v_10[6.8,] %v_11[6.9,] 	 ARGS:%v_11,
 		 11: COPY TYPE_PASS def_base %v_12[6.10,] 
 		 12: 
@@ -572,7 +572,7 @@ BB 8
 		 17: %v_16->gsub def_%v_19 %v_16[8.14,] %v_18[8.16,] 	 ARGS:%v_17,%v_18,
 		 18: COPY TYPE_StringLiteral def_%v_20 
 		 19: %v_19->or_else def_%v_21 %v_19[8.17,] %v_20[8.18,] 	 ARGS:%v_20,
-		 20: def_%v_22 
+		 20: CONSTANT def_%v_22 
 		 21: %v_21->[] def_%v_23 %v_21[8.19,] %v_22[8.20,] 	 ARGS:%v_22,
 		 22: COPY TYPE_PASS def_base %v_23[8.21,] 
 		 23: 
@@ -635,7 +635,7 @@ BB 2
 		 5: RECEIVEARG def_base 
 		 6: RECEIVEARG def_blacklist 
 		 7: 
-		 8: def_%v_3 
+		 8: CONSTANT def_%v_3 
 		 9: COPY TYPE_StringLiteral def_%v_4 
 		 10: COPY TYPE_Array def_%v_5 base[2.5,] %v_4[2.9,] 
 		 11: %v_3->reduce def_%v_6 %v_3[2.8,] %v_5[2.10,] %self[2.0,] 	 ARGS:%v_5,%v_3,

@@ -13,7 +13,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_campus 
-		 6: def_family 
+		 6: RECEIVECONSTARG def_family 
 		 7: family[2.6,] 
 BB 3
 	outgoing: 4 
@@ -206,7 +206,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_person 
-		 6: def_times 
+		 6: RECEIVECONSTARG def_times 
 		 7: times[2.6,] 
 BB 3
 	outgoing: 4 
@@ -354,7 +354,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: ct->to_time def_%cl_1_3 ct[2.2,] 	 ARGS:
-		 2: def_%cl_1_4 	 ARGS:
+		 2: CONSTANT def_%cl_1_4 	 ARGS:
 		 3: %cl_1_3->- def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
 		 4: RETURN %cl_1_5[3.3,] %self[2.0,] 
 BB 4
@@ -393,7 +393,7 @@ BB 2
 		 2: COPY TYPE_CurrentScope def_%current_scope 
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
-		 5: def_args 
+		 5: RECEIVEARG def_args 
 		 6: 
 		 7: %self->people_as_json def_%v_3 %self[2.0,] 	 ARGS:
 		 8: %self->checkin_times def_%v_4 %self[2.0,2.7,] 	 ARGS:
@@ -488,7 +488,7 @@ BB 2
 		 6: %self->people def_%v_3 %self[2.0,] 	 ARGS:
 		 7: HASH- def_%v_4 
 		 8: %v_3->each_with_object def_%v_5 %v_3[2.6,] %v_4[2.7,] %self[2.0,2.6,] 	 ARGS:%v_4,%v_3,
-CLOSURE BEGIN: person[] %self[2.0,2.6,] person_hash[2.8,] 
+CLOSURE BEGIN: person[] %self[2.0,2.6,] record[] time_hash[] person_hash[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -586,7 +586,7 @@ BB 2
 		 6: %self->people def_%v_3 %self[2.0,] 	 ARGS:
 		 7: HASH- def_%v_4 
 		 8: %v_3->each_with_object def_%v_5 %v_3[2.6,] %v_4[2.7,] %self[2.0,2.6,] 	 ARGS:%v_4,%v_3,
-CLOSURE BEGIN: %self[2.0,2.6,] person[] people_hash[] 
+CLOSURE BEGIN: %self[2.0,2.6,] person[] people_hash[] records[] a[] time[] record[] h[2.8,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -617,7 +617,7 @@ BB 3
 		 9: 
 		 10: %self->checkin_times def_%cl_1_7 %self[3.1,2.0,] 	 ARGS:
 		 11: %cl_1_7->each def_%cl_1_8 %cl_1_7[3.10,] %self[3.1,3.10,2.0,] 	 ARGS:%cl_1_7,
-CLOSURE BEGIN: records[3.3,] %self[3.1,3.10,2.0,] time[] record[3.11,] h[3.8,] 
+CLOSURE BEGIN: records[3.3,] %self[3.1,3.10,2.0,] a[] time[] record[3.11,] h[3.8,] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -895,11 +895,11 @@ BB 5
 		 5: (Time) def_%v_11 
 		 6: %v_11->current def_%v_12 %v_11[5.5,] 	 ARGS:
 		 7: %v_12->wday def_%v_13 %v_12[5.6,] 	 ARGS:
-		 8: def_%v_14 	 ARGS:
+		 8: CONSTANT def_%v_14 	 ARGS:
 		 9: %v_14->ago def_%v_15 %v_14[5.8,] 	 ARGS:
 		 10: COPY TYPE_StringLiteral def_%v_16 
 		 11: %v_15->strftime def_%v_17 %v_15[5.9,] %v_16[5.10,] 	 ARGS:%v_16,
-		 12: def_%v_18 	 ARGS:
+		 12: CONSTANT def_%v_18 	 ARGS:
 		 13: %v_18->from_now def_%v_19 %v_18[5.12,] 	 ARGS:
 		 14: COPY TYPE_StringLiteral def_%v_20 
 		 15: %v_19->strftime def_%v_21 %v_19[5.13,] %v_20[5.14,] 	 ARGS:%v_20,

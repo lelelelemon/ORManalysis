@@ -13,7 +13,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $! def_%v_3 
 BB 4
 	outgoing: 5 6 11 
 	datadep: 
@@ -213,7 +213,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: RECEIVEARG def_person 
-		 6: def_exclude_global_admins 
+		 6: RECEIVECONSTARG def_exclude_global_admins 
 		 7: exclude_global_admins[2.6,] 
 BB 3
 	outgoing: 4 
@@ -1514,7 +1514,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: def_%v_3 
+		 6: GLOBALVAR $! def_%v_3 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -1774,7 +1774,7 @@ BB 2
 		 5: 
 		 6: HASH- def_%v_3 
 		 7: %v_3->tap def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
-CLOSURE BEGIN: %self[2.0,] results[2.7,] 
+CLOSURE BEGIN: %self[2.0,] g[] results[2.7,] count[] cats[] cat[] 
 BB 1
 	outgoing: 9 2 
 	datadep: 
@@ -2001,7 +2001,7 @@ BB 2
 		 5: 
 		 6: (CSV) def_%v_3 
 		 7: %v_3->generate def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
-CLOSURE BEGIN: csv[2.7,] %self[2.0,] 
+CLOSURE BEGIN: csv[2.7,] %self[2.0,] group[] c[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2026,7 +2026,7 @@ BB 3
 		 4: 
 		 5: (Group) def_%cl_1_6 
 		 6: %cl_1_6->find_each def_%cl_1_7 %cl_1_6[3.5,] %self[2.0,] 	 ARGS:%cl_1_6,
-CLOSURE BEGIN: %self[2.0,] csv[3.3,2.2,] 
+CLOSURE BEGIN: %self[2.0,] group[3.6,] c[] csv[3.3,2.2,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2152,7 +2152,7 @@ BB 5
 		 1: COPY TYPE_PASS def_builder %v_5[5.0,] 
 		 2: 
 		 3: %v_5->groups def_%v_6 %v_5[5.0,] %self[2.0,] 	 ARGS:%v_5,
-CLOSURE BEGIN: %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] groups[5.3,] group[] col[] g[] people[] person[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2173,7 +2173,7 @@ BB 3
 		 0: 
 		 1: (Group) def_%cl_1_3 
 		 2: %cl_1_3->find_each def_%cl_1_4 %cl_1_3[3.1,] %self[2.0,] 	 ARGS:%cl_1_3,
-CLOSURE BEGIN: groups[2.2,] %self[2.0,] 
+CLOSURE BEGIN: groups[2.2,] %self[2.0,] group[3.2,] col[] g[] people[] person[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2193,7 +2193,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: groups->group def_%cl_2_3 groups[] %self[2.0,] 	 ARGS:groups,
-CLOSURE BEGIN: %self[2.0,] g[3.1,] 
+CLOSURE BEGIN: %self[2.0,] group[2.2,] col[] g[3.1,] people[] person[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2251,7 +2251,7 @@ BB 6
 CLOSURE END: 
 		 4: 
 		 5: g->people def_%cl_3_6 g[2.2,] %self[2.0,] 	 ARGS:g,
-CLOSURE BEGIN: group[] %self[2.0,] 
+CLOSURE BEGIN: group[] %self[2.0,] people[3.5,] person[] col[3.3,] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2272,7 +2272,7 @@ BB 3
 		 0: 
 		 1: group->people def_%cl_5_3 group[] 	 ARGS:
 		 2: %cl_5_3->each def_%cl_5_4 %cl_5_3[3.1,] %self[2.0,] 	 ARGS:%cl_5_3,
-CLOSURE BEGIN: people[2.2,] %self[2.0,] 
+CLOSURE BEGIN: people[2.2,] %self[2.0,] person[3.2,] col[] p[] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -2292,7 +2292,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: people->person def_%cl_6_3 people[] %self[2.0,] 	 ARGS:people,
-CLOSURE BEGIN: %self[2.0,] 
+CLOSURE BEGIN: %self[2.0,] person[2.2,] col[] p[3.1,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 

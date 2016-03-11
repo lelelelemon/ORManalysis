@@ -290,7 +290,7 @@ BB 2
 		 5: RECEIVEARG def_error_page_path 
 		 6: RECEIVEARG def_exception 
 		 7: RECEIVEARG def_status 
-		 8: def_options 
+		 8: RECEIVECONSTARG def_options 
 		 9: options[2.8,] 
 BB 3
 	outgoing: 4 
@@ -375,7 +375,7 @@ BB 14
 		 15: COPY TYPE_StringLiteral def_%v_23 
 		 16: COPY TYPE_Array def_%v_24 %v_21[14.13,] %v_22[14.14,] %v_23[14.15,] 
 		 17: %v_24->each def_%v_25 %v_24[14.16,] %self[14.1,14.9,14.11,13.3,2.0,] 	 ARGS:%v_24,
-CLOSURE BEGIN: %self[14.1,14.9,14.11,13.3,2.0,] v[] 
+CLOSURE BEGIN: %self[14.1,14.9,14.11,13.3,2.0,] v[14.17,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -413,12 +413,12 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 18: 
 		 19: GETFIELD %self->template def_%v_26 %self[14.1,2.0,] 
 		 20: %v_26->instance_variables def_%v_27 %v_26[14.19,] 	 ARGS:
 		 21: %v_27->select def_%v_28 %v_27[14.20,] %self[14.1,14.9,14.11,13.3,2.0,] 	 ARGS:%v_27,
-CLOSURE BEGIN: v[] 
+CLOSURE BEGIN: v[14.21,14.17,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -451,9 +451,9 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 22: %v_28->each def_%v_29 %v_28[14.21,] %self[14.1,14.9,14.11,13.3,2.0,] 	 ARGS:%v_28,
-CLOSURE BEGIN: %self[14.1,14.9,14.11,13.3,2.0,] v[] 
+CLOSURE BEGIN: %self[14.1,14.9,14.11,13.3,2.0,] v[14.22,14.17,14.21,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -487,7 +487,7 @@ BB 6
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: 
 		 23: 
 		 24: %self->prepare_connectables_for_render def_%v_30 %self[14.1,14.9,14.11,13.3,2.0,] 	 ARGS:
 		 25: 
@@ -562,7 +562,7 @@ BB 6
 		 2: 
 		 3: GETFIELD %self->_connectables def_%v_11 %self[2.0,2.12,] 
 		 4: %v_11->each def_%v_12 %v_11[6.3,] %self[2.0,2.8,2.12,] 	 ARGS:%v_11,
-CLOSURE BEGIN: c[] %self[2.0,2.8,2.12,] 
+CLOSURE BEGIN: c[6.4,] %self[2.0,2.8,2.12,] 
 BB 1
 	outgoing: 25 2 
 	datadep: 
@@ -577,7 +577,7 @@ BB 2
 		 3: COPY TYPE_CurrentScope def_%current_scope 
 		 4: COPY TYPE_ScopeModule def_%current_module 
 		 5: 
-		 6: def_%cl_1_3 
+		 6: GLOBALVAR $! def_%cl_1_3 
 BB 4
 	outgoing: 6 7 
 	datadep: 
@@ -612,11 +612,11 @@ BB 9
 		 1: %self->logger def_%cl_1_9 %self[2.0,] 	 ARGS:
 		 2: COPY TYPE_StringLiteral def_%cl_1_10 
 		 3: COPY TYPE_StringLiteral def_%cl_1_11 
-		 4: def_%cl_1_12 
+		 4: GLOBALVAR $! def_%cl_1_12 
 		 5: BUILDSTRING def_%cl_1_13 %cl_1_10[9.2,] c[2.2,] %cl_1_11[9.3,] %cl_1_12[9.4,] 
 		 6: %cl_1_9->debug def_%cl_1_14 %cl_1_9[9.1,] %cl_1_13[9.5,] 	 ARGS:%cl_1_13,
 		 7: 
-		 8: def_%cl_1_15 
+		 8: GLOBALVAR $! def_%cl_1_15 
 		 9: (ActiveRecord) def_%cl_1_18 
 		 10: (inherit RecordNotFound) def_%cl_1_19 %cl_1_18[9.9,] 
 		 11: %cl_1_19[9.10,] 
@@ -667,7 +667,7 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_24 
+		 1: GLOBALVAR $! def_%cl_1_24 
 		 2: COPY TYPE_PASS def_worst_exception %cl_1_24[17.1,] 
 		 3: COPY TYPE_PASS def_%cl_1_16 %cl_1_24[17.1,] 
 		 4: 
@@ -676,7 +676,7 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_25 
+		 1: GLOBALVAR $! def_%cl_1_25 
 		 2: ATTRASSIGN c->render_exception %cl_1_25[18.1,] 
 		 3: COPY TYPE_PASS def_%cl_1_16 %cl_1_25[18.1,] 
 		 4: 
@@ -714,14 +714,14 @@ BB 25
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END
+CLOSURE END: worst_exception[17.2,] 
 		 5: 
-		 6: BRANCH worst_exception[6.1,] 
+		 6: BRANCH worst_exception[6.1,6.4,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: %self->raise def_%v_13 %self[2.0,2.8,2.12,] worst_exception[6.1,] 	 ARGS:worst_exception,
+		 0: %self->raise def_%v_13 %self[2.0,2.8,2.12,] worst_exception[6.1,6.4,] 	 ARGS:worst_exception,
 		 1: 
 BB 8
 	outgoing: 9 
