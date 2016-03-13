@@ -232,9 +232,11 @@ class Temp_Qsink_stat < Temp_Qgeneral_stat
 		@to_write_query = 0
 		@to_branch = 0
 		@to_view = 0
+		@to_validation = 0
+		@to_browser_cache = 0
 		@sink_total = 0
 	end
-	attr_accessor :to_read_query, :to_write_query, :to_branch, :to_view, :sink_total
+	attr_accessor :to_read_query, :to_write_query, :to_branch, :to_view, :to_validation, :to_browser_cache, :sink_total
 	def get_to_read_query
 		return get_avg(to_read_query)
 	end
@@ -246,6 +248,12 @@ class Temp_Qsink_stat < Temp_Qgeneral_stat
 	end
 	def get_to_view
 		return get_avg(@to_view)
+	end
+	def get_to_validation
+		return get_avg(@to_validation)
+	end
+	def get_to_browser_cache
+		return get_avg(@to_browser_cache)
 	end
 	def get_sink_total
 		return get_avg(@sink_total)
@@ -348,7 +356,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	
 	$node_list.each do |n|
 		n.setLabel
-		#puts "#{n.getIndex}:#{n.getInstr.toString}"
+		puts "#{n.getIndex}:#{n.getInstr.toString}"
 		#if n.getValidationStack.length > 0
 		#	str = ""
 		#	n.getValidationStack.each do |v|
@@ -368,7 +376,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		#end
 		if n.getInstr.is_a?Call_instr
 			caller_type = type_valid(n.getInstr, n.getInstr.getCaller)
-			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}"
+			puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}"
 			if n.isQuery?
 				#puts "\t * table_name = #{n.getInstr.getTableName}"
 			end 
@@ -376,9 +384,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#puts "\t\treturn type: #{type_valid(n.getInstr, n.getInstr.getDefv)}"
 			end
 		end
-		n.getBackwardEdges.each do |e|
+		n.getDataflowEdges.each do |e|
 			if e.getFromNode != nil
-				#puts "\t\t (#{e.getVname})<- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+				puts "\t\t (#{e.getVname})-> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
 			else
 				#puts "\t\t <- params"
 			end
@@ -592,22 +600,26 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								#puts " * (To read query)"
 						end
 					elsif n1.getDataflowEdges.length == 0
-						if n1.isBranch?
+						if sinkIgnore(n1) == false
 							@table_read_stat[@table_name].sink_total += 1
 							@read_sink_stat.sink_total += 1
+						end
+						if n1.isBranch?
 							@read_sink_stat.to_branch += 1
 							@table_read_stat[@table_name].to_branch += 1
 							#puts " * (To branch)"
 						#elsif n1.getDataflowEdges.length == 0
-						else
-							@table_read_stat[@table_name].sink_total += 1
-							@read_sink_stat.sink_total += 1
-							if n1.getInView
+						elsif isValidationSink(n1)
+							@table_read_stat[@table_name].to_validation += 1
+							@read_sink_stat.to_validation += 1
+						elsif isCacheSink(n1)
+							@table_read_stat[@table_name].to_browser_cache += 1
+							@read_sink_stat.to_browser_cache += 1
+						elsif n1.getInView
 								@table_read_stat[@table_name].to_view += 1
 								@read_sink_stat.to_view += 1
-							else
-								#puts " * (To unknown sink) #{n1.getIndex}: #{n1.getInstr.toString}"
-							end
+						elsif sinkIgnore(n1)==false
+								puts " * (To unknown sink) #{n1.getIndex}: #{n1.getInstr.toString}"
 						end
 						if n1.getInView
 							@used_in_view = true
@@ -629,7 +641,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						@read_source_stat.source_total += 1
 						@only_from_user_input = false
 					elsif n1.getBackwardEdges.length == 0
-						if sourceIgnore(n1.getInstr)
+						if sourceIgnore(n1)
 						else
 							@read_source_stat.source_total += 1
 						end
@@ -639,7 +651,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							@read_source_stat.from_util += 1
 						elsif n1.getInstr.instance_of?GlobalVar_instr
 							@read_source_stat.from_global += 1
-						elsif sourceIgnore(n1.getInstr) == false
+						elsif sourceIgnore(n1) == false
 							#puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 						end
 					end
@@ -682,10 +694,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								@write_source_stat.from_util += 1
 							elsif n1.getInstr.instance_of?GlobalVar_instr
 								@write_source_stat.from_global += 1
-							elsif sourceIgnore(n1.getInstr) == false
+							elsif sourceIgnore(n1) == false
 								#puts " x (Some source) #{n1.getIndex}:#{n1.getInstr.toString}"
 							end
-							if sourceIgnore(n1.getInstr)
+							if sourceIgnore(n1)
 							else
 								@write_source_stat.source_total += 1
 								@table_write_stat[@table_name].source_total += 1

@@ -245,13 +245,13 @@ def add_dataflow_edge(node)
 		if dep.getInstrHandler.getINode != nil
 			#XXX: If it is a field instr, then we know it is not a blackbox func call, if it is not attrassign, then it is a read only instr
 			from_node = dep.getInstrHandler.getINode
-			if to_ins.hasClosure?
-				to_ins.getClosure.getClosureDefs(dep.getVname).each do |t|
-					actual_to_ins = t.getInstrHandler
-					if actual_to_ins != node.getInstr	
-						edge_name = "#{actual_to_ins.getINode.getIndex}*#{node.getIndex}"
-						edge = Dataflow_edge.new(actual_to_ins.getINode, node, dep.getVname)
-						actual_to_ins.getINode.addDataflowEdge(edge)
+			if from_node.getInstr.hasClosure?
+				from_node.getInstr.getClosure.getClosureDefs(dep.getVname).each do |t|
+					actual_from_ins = t.getInstrHandler
+					if actual_from_ins != node.getInstr	
+						edge_name = "#{actual_from_ins.getINode.getIndex}*#{node.getIndex}"
+						edge = Dataflow_edge.new(actual_from_ins.getINode, node, dep.getVname)
+						actual_from_ins.getINode.addDataflowEdge(edge)
 					end
 				end
 			end

@@ -25,27 +25,27 @@ class Group < ActiveRecord::Base
 
   def create_admin_permissions
     Folder.find_each do |folder|
-      Permission.create! do |p|
+      p = Permission.new
         p.group = self
         p.folder = folder
         p.can_create = true
         p.can_read = true
         p.can_update = true
         p.can_delete = true
-      end
+      p.save
     end
   end
 
   def create_permissions
     Folder.find_each do |folder|
-      Permission.create! do |p|
+      p = Permission.new
         p.group = self
         p.folder = folder
         p.can_create = false
         p.can_read = folder.is_root? # New groups can read the root folder
         p.can_update = false
         p.can_delete = false
-      end
+    	p.save
     end
   end
 

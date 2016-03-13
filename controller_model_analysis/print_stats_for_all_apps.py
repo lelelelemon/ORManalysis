@@ -32,8 +32,9 @@ tableau_colors = (
 TOTAL_COLOR_NUM=22
 colors = [2, 3, 5, 1, 4, 6]
 #applications = ["boxroom","fulcrum","kandan","linuxfr","publify", "lobsters", "railscollab","communityengine","onebody","sugar","railscollab","browsercms","brevidy","amahiPlatform","amahiPlatform_layouts","rucksack","rucksack_layouts"]
-app_string="lobsters amahiPlatform browsercms fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
+#app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
 
+app_string="amahiPlatform railscollab jobsworth communityengine sharetribe linuxfr rucksack fulcrum tracks brevidy lobsters onebody sugar kandan publify boxroom"
 
 applications = app_string.split(" ")
 
@@ -92,10 +93,10 @@ if os.path.isdir(result_path) == False:
 for app in applications:
 	print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
 	os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
-	print "python collect_nextaction.py %s "%(app)
-	os.system("python collect_nextaction.py %s"%(app))
-	print "python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app)
-	os.system("python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app))
+	#print "python collect_nextaction.py %s "%(app)
+	#os.system("python collect_nextaction.py %s"%(app))
+	#print "python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app)
+	#os.system("python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app))
 	fname = "%s/%s_stat.xml"%(result_path, app)
 	tree = ET.parse(fname)
 	roots[app] = tree.getroot()

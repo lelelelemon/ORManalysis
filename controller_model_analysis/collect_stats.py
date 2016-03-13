@@ -229,7 +229,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		if k != "sinkTotal" and k != "total":
 			temp_total += reads[k]
 			stats_file.write("\t\t<%s>%f</%s>\n"%(k,reads[k],k))
-	stats_file.write("\t\t<other>%f</other>\n"%(reads["sinkTotal"]-temp_total))
+	#stats_file.write("\t\t<other>%f</other>\n"%(reads["sinkTotal"]-temp_total))
 	stats_file.write("\t</readSink>\n")
 
 
@@ -239,7 +239,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		if k != "sourceTotal" and k != "total":
 			temp_total += readSource[k]
 			stats_file.write("\t\t<%s>%f</%s>\n"%(k,readSource[k],k))
-	stats_file.write("\t\t<other>%f</other>\n"%(readSource["sourceTotal"]-temp_total))
+	#stats_file.write("\t\t<other>%f</other>\n"%(readSource["sourceTotal"]-temp_total))
 	stats_file.write("\t</readSource>\n")
 
 	stats_file.write("\t<writeSource>\n")
@@ -248,7 +248,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		if k != "sourceTotal" and k != "total":
 			temp_total += writes[k]
 			stats_file.write("\t\t<%s>%f</%s>\n"%(k,writes[k],k))
-	stats_file.write("\t\t<other>%f</other>\n"%(writes["sourceTotal"]-temp_total))
+	#stats_file.write("\t\t<other>%f</other>\n"%(writes["sourceTotal"]-temp_total))
 	stats_file.write("\t</writeSource>\n")
 	
 
@@ -561,8 +561,14 @@ def print_clique_stat(prefix):
 	stats_file.write("\t\t<write>%f</write>\n"%(getAverage(validation_w)+1))
 	stats_file.write("\t</transaction>\n")
 	stats_file.write("\t<transactionNested>\n")
-	stats_file.write("\t\t<nestedDepth>%f</nestedDepth>\n"%getAverage(depth))
-	stats_file.write("\t\t</transactionNested>\n")
+	for d in range(int(max(depth))):
+		cnt = 0
+		for dep in depth:
+			if dep == d:
+				cnt += 1
+		stats_file.write("\t\t<nested%dDepth>%d</nested%dDepth>\n"%(d, cnt, d))
+	#stats_file.write("\t\t<nestedDepth>%f</nestedDepth>\n"%getAverage(depth))
+	stats_file.write("\t</transactionNested>\n")
 	#print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
 
 

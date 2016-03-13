@@ -108,7 +108,7 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 				#puts "executed before: #{instr.getCaller}, #{instr.getFuncname}"
 			end
 		else
-			#puts "Callerv = nil: #{instr.getCaller} . #{instr.getFuncname}"
+		#	puts "Callerv = nil: #{instr.getCaller} . #{instr.getFuncname}"
 		end
 end
 
@@ -334,7 +334,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 			#	puts "#{$blank}======transaction end====="
 			#end
 		end
-		puts "function #{start_class}.#{start_function} cannot be found"
+		#puts "function #{start_class}.#{start_function} cannot be found"
 		return nil 
 	end
 

@@ -392,11 +392,12 @@ end
 
 
 
-def sourceIgnore(instr)
+def sourceIgnore(n1)
+	instr = n1.getInstr
 	if instr.instance_of?HashField_instr or instr.instance_of?Return_instr
 		return true
 	end
-	func_ignore_list = ["before_filter","before_save","before_create","ruby_code_from_view", "transaction", "before_filter_do_block"]
+	func_ignore_list = ["before_filter","before_save","before_create","ruby_code_from_view", "transaction", "before_filter_do_block","before_validation_do_block"]
 	if instr.instance_of?Call_instr and func_ignore_list.include?instr.getFuncname
 		return true
 	end
@@ -409,8 +410,45 @@ def sourceIgnore(instr)
 	return false
 end
 
-def sinkIgnore(instr)
-	
+def sinkIgnore(n1)
+	instr = n1.getInstr
+	if instr.instance_of?AttrAssign_instr #TODO: Some of the attrassign_instr is not handled, attr_assign instr in validation should go to save
+		return true
+	end
+	if isUtilSink(n1)
+		return true
+	end
+	if instr.getBB.getIndex == 2 and instr.getIndex == 0 #This is mostly passed as "self" to the first instr in funccall
+		return true
+	end
+	if instr.is_a?Call_instr and [">>","<<"].include?instr.getFuncname #TODO: I think this should be a bug a jruby? << and >> are actually array shift and saved into the original array...
+		return true
+	end
+	return false
+end
+
+def isValidationSink(n1)
+	if isValidationFunc(n1.getInstr.getMethodName)
+		return true
+	end 
+	return false
+end
+
+def isCacheSink(n1)
+	if n1.getInstr.instance_of?AttrAssign_instr and n1.getInstr.getFuncname == "[]" and n1.getInstr.getCallerType == "CACHE"
+		return true
+	end
+	return false
+end
+
+def isUtilSink(n1)
+	#Like Rails.logger
+	if n1.getInstr.instance_of?Copy_instr
+		return true
+	elsif n1.getInstr.is_a?Call_instr and ["info","raise","super"].include?n1.getInstr.getFuncname
+		return true
+	end
+	return false
 end
 
 def isConstSource(n1)
@@ -432,7 +470,7 @@ def isUtilSource(n1)
 end
 
 def isValidationFunc(name)
-	return ["before_filter","before_save","before_create","before_action"].include?name
+	return ["before_validation","before_filter","before_save","before_create","before_action","before_validation_do_block","before_filter_do_block","before_create_do_block","before_action_do_block","before_save_do_block"].include?name
 end
 
 #Graphviz doesn't recognize special characters

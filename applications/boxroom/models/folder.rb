@@ -93,14 +93,14 @@ class Folder < ActiveRecord::Base
   def create_permissions
     unless is_root?
       parent.permissions.each do |permission|
-        Permission.create! do |p|
+        p = Permission.new
           p.group = permission.group
           p.folder = self
           p.can_create = permission.can_create
           p.can_read = permission.can_read
           p.can_update = permission.can_update
           p.can_delete = permission.can_delete
-        end
+       	p.save
       end
     end
   end
