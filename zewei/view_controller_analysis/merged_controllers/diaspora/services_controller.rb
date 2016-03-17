@@ -17,7 +17,9 @@ class ServicesController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -41,6 +43,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
  content_for :page_title do 
@@ -60,6 +64,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if services_for_provider.count > 0 
  services_for_provider.each do |service| 
  raw(t("services.index.logged_in_as", nickname: content_tag(:strong, service.nickname ))) 
+ link_to t("services.index.disconnect"),                    service_path(service),                    data: { confirm: t("services.index.really_disconnect", service: t("services.provider.#{provider}")) },                    method: :delete 
  end 
  else 
  t("services.index.not_logged_in") 

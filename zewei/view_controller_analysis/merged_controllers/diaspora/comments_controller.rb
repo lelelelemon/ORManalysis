@@ -36,7 +36,9 @@ class CommentsController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -60,6 +62,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
   link_to "#", class: "back_to_stream_element_top pull-right" do 
@@ -94,7 +98,9 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -118,6 +124,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
   if @post.public? 
@@ -125,7 +133,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  @post.comments.size 
  @post.likes.size 
-  
+  person_image_link(comment.author, size: :thumb_small, class: "media-object") 
+ person_link(comment.author) 
+ timeago(comment.created_at ? comment.created_at : Time.now) 
+ if user_signed_in? && comment.author == current_user.person 
+ link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: { confirm: "#{t('are_you_sure')}" }, class: "remove") 
+ end 
+ direction_for(comment.text) 
+ comment.message.markdownified 
+ 
  
  
  yield :after_content 
@@ -146,7 +162,9 @@ end
       format.mobile { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -170,8 +188,18 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
+ person_image_link(comment.author, size: :thumb_small, class: "media-object") 
+ person_link(comment.author) 
+ timeago(comment.created_at ? comment.created_at : Time.now) 
+ if user_signed_in? && comment.author == current_user.person 
+ link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: { confirm: "#{t('are_you_sure')}" }, class: "remove") 
+ end 
+ direction_for(comment.text) 
+ comment.message.markdownified 
  
  yield :after_content 
  include_chartbeat 

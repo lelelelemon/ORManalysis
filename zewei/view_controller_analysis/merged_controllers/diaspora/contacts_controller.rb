@@ -24,7 +24,9 @@ class ContactsController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -48,6 +50,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
  content_for :page_title do 
@@ -82,7 +86,9 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -106,30 +112,25 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
  content_for :page_title do 
  t('contacts.spotlight.community_spotlight') 
  end 
   t("contacts.index.title") 
-  ("active" if params["set"] == "all") 
- contacts_path(set: "all") 
- t('contacts.index.all_contacts') 
- all_contacts_count 
- ("active" if !params["set"] && !params["a_id"] && !@spotlight) 
- contacts_path 
- t('contacts.index.my_contacts') 
- my_contacts_count 
- all_aspects.each do |aspect| 
- aspect.contacts.size 
- aspect 
- end 
- 
+  
  if AppConfig.settings.community_spotlight.enable? 
  link_to t("contacts.spotlight.community_spotlight"), community_spotlight_path, class: "btn btn-link" 
  end 
  t("invitations.new.invite_someone_to_join") 
-  
+  id 
+ path 
+ id 
+ id 
+ title 
+ 
  
  if AppConfig.settings.community_spotlight.suggest_email.present? 
  link_to t('contacts.spotlight.suggest_member'), "mailto:#{AppConfig.settings.community_spotlight.suggest_email}", :class => "btn btn-default", :id => "suggest_member" 

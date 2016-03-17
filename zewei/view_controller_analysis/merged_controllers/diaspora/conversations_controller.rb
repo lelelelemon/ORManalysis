@@ -32,7 +32,9 @@ class ConversationsController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -56,42 +58,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
  t(".inbox") 
  link_to t(".new_conversation"), new_conversation_path, class: "btn btn-default pull-right" 
  flash.each do |name, msg| 
+ name 
+ msg 
+ name 
  msg 
  end 
  if @visibilities.count > 0 
-  conversation = visibility.conversation 
- conversation_path(conversation) 
- other_participants = conversation.ordered_participants - [current_user.person] 
- if other_participants.first.present? 
- person_image_tag(other_participants.first) 
- if other_participants.count > 1 
- other_participants.count - 1 
- end 
- end 
- conversation.messages.size 
- if visibility.unread > 0 
- visibility.unread 
- end 
- direction_for(conversation.subject) 
- conversation.subject 
- timeago(conversation.updated_at) 
- if conversation.last_author.present? 
- conversation.last_author.name 
- end 
- if conversation.messages.present? 
- conversation.messages.last.text 
- end 
- if other_participants.count > 1 
- other_participants.drop(1).take(15).each do |participant| 
- person_image_tag(participant) 
- end 
- end 
- 
+  
  else 
  t(".no_messages") 
  end 
@@ -139,7 +119,9 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -163,6 +145,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
  raw @response.to_json 
@@ -201,7 +185,9 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -225,6 +211,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
  escape_javascript(render('conversations/show', :conversation => @conversation)) 
@@ -261,7 +249,9 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -285,6 +275,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
  form_for Conversation.new, html: {class: "form-horizontal form_do_not_clear"}, remote: true do |conversation| 

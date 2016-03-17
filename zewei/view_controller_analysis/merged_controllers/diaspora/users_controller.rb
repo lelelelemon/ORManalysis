@@ -13,7 +13,9 @@ class UsersController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -37,6 +39,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
      render "edit" 
@@ -59,7 +63,9 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -83,6 +89,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
   t('settings') 
@@ -198,7 +206,9 @@ end
           ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -222,6 +232,8 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
      render "edit" 
@@ -283,7 +295,9 @@ end
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -307,6 +321,8 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
  content_for :head do 

@@ -44,7 +44,9 @@ class TagsController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -68,26 +70,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
- 
- @stream.display_tag_name 
- if user_signed_in? 
- unless tag_followed? 
- t(".follow", tag: @stream.tag_name) 
- else 
- t(".stop_following", tag: @stream.tag_name) 
- end 
- end 
-   
- 
-  if @stream.stream_posts.length == 15 
- next_page_path 
- t("more") 
- elsif params[:max_time].present? || @stream.stream_posts.length > 0 
- t("stream_helper.no_more_posts") 
- else 
- t("stream_helper.no_posts_yet") 
- end 
  
  
  yield :after_content 

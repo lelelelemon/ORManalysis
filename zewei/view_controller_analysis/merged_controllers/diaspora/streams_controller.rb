@@ -60,7 +60,9 @@ class StreamsController < ApplicationController
       format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -84,23 +86,10 @@ class StreamsController < ApplicationController
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
- content_for :head do 
- if AppConfig.chat.enabled? 
- javascript_include_tag :jsxc, id: 'jsxc',      data: { endpoint: get_bosh_endpoint } 
- end 
- end 
- if current_user.getting_started? 
- t('aspects.index.welcome_to_diaspora', name: current_user.first_name) 
- t('aspects.index.introduce_yourself') 
- link_to '&times;'.html_safe, getting_started_completed_path, id: "gs-skip-x", class: "close" 
- end 
- owner_image_link 
- link_to current_user.first_name, local_or_remote_person_path(current_user.person) 
- link_to t("streams.multi.title"), stream_path, rel: "backbone", class: "hoverable" 
- link_to t("streams.activity.title"), activity_stream_path, rel: "backbone", class: "hoverable" 
- link_to t("streams.mentions.title"), mentioned_stream_path, rel: "backbone", class: "hoverable" 
  
  yield :after_content 
  include_chartbeat 
@@ -112,7 +101,9 @@ end
       format.mobile { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
+ image_path('favicon.png') 
   if @post.present? 
+ oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -136,23 +127,10 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
+ controller_name 
+ action_name 
  yield :before_content 
  
- content_for :head do 
- if AppConfig.chat.enabled? 
- javascript_include_tag :jsxc, id: 'jsxc',      data: { endpoint: get_bosh_endpoint } 
- end 
- end 
- if current_user.getting_started? 
- t('aspects.index.welcome_to_diaspora', name: current_user.first_name) 
- t('aspects.index.introduce_yourself') 
- link_to '&times;'.html_safe, getting_started_completed_path, id: "gs-skip-x", class: "close" 
- end 
- owner_image_link 
- link_to current_user.first_name, local_or_remote_person_path(current_user.person) 
- link_to t("streams.multi.title"), stream_path, rel: "backbone", class: "hoverable" 
- link_to t("streams.activity.title"), activity_stream_path, rel: "backbone", class: "hoverable" 
- link_to t("streams.mentions.title"), mentioned_stream_path, rel: "backbone", class: "hoverable" 
  
  yield :after_content 
  include_chartbeat 
