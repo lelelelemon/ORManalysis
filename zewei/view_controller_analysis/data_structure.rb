@@ -53,7 +53,7 @@ class Controller_Class
       if @class_node.children[1].type.to_s == "const_path_ref" or @class_node.children[1].type.to_s == "var_ref"
         @upper_class = @class_node.children[1].source.to_s
         @upper_class.gsub! "Controller", ""
-        @upper_class.gsub! /::/, "_"
+        @upper_class.gsub! /::/, "/"
         @upper_class.downcase!
       end
     end
@@ -101,8 +101,13 @@ class Controller_Class
 		return YARD::Parser::Ruby::RubyParser.parse(content).root
 	end
   def set_default_layout
-    @layout = "layouts_" + @controller
-    @layout.gsub!("/"){"_"}
+    if @controller.include? "/"
+      @layout = @controller.dup
+      @layout.gsub! "/", "_"
+      @layout = "layouts/" + @layout
+    else
+      @layout = "layouts_" + @controller
+    end
   end
   def get_layout
     @layout

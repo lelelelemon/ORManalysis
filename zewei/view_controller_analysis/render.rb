@@ -1,5 +1,5 @@
 require "yard"
-require "pry"
+#require "pry"
 
 NOT_VALID = "not_valid"
 
