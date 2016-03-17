@@ -327,6 +327,7 @@ def merge_layout_content(layout, content)
   layout.gsub!(/\n[ \t]*yield :layout[ \t]*\n/){"\n" + content}
   layout.gsub!("::Temple::Utils.escape_html((yield))"){"\n" + content}
 
+  layout.gsub!("content_for?(:content) ? yield(:content) : yield"){"\n" + content}
   return layout
 end
 
@@ -390,14 +391,14 @@ end
 
 
 def get_render_statement_array(ast=nil)
-  keyword = "render"
+  keyword = "render "
   ast = @ast if ast == nil
   res_arr = Array.new
   ast_arr = Array.new
   ast_arr.push ast
   while ast_arr.length > 0
     cur_ast = ast_arr.pop
-    if cur_ast.source.start_with? keyword and cur_ast.type.to_s != "list" #and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
+    if (cur_ast.source.start_with? keyword or cur_ast.source.start_with? "rneder(") and cur_ast.type.to_s != "list" #and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?("escape_javascript(", "raw(")
         if cur_ast.parent.parent.parent.type.to_s == "ifop"
           res = cur_ast.parent.parent.parent.source.to_s
