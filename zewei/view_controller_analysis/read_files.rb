@@ -33,7 +33,7 @@ end
 def load_all_views_from_path(view_path)
 	view_hash = Hash.new
 	Dir.glob(view_path + "**/*") do |item|
-		next if not item.end_with?(".erb", ".rjs")
+		next if not item.end_with?(".erb", ".rjs", "jbuilder")
 	  puts item
     view_class = View_Class.new(item, view_path)
 		key = view_class.get_controller_name + "_" + view_class.get_view_name

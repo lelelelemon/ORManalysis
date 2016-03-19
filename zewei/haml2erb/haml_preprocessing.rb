@@ -37,7 +37,9 @@ File.open(ARGV[0], "r").each_line do |line|
   elsif line.end_with?","
     print indent + content
   elsif line =~ /.*==.*\#{.*}.*/
-#  elsif line =~ /.*{.*{.*}.*}.*/
+  elsif line =~ /.*{.*{.*}.*}.*/
+    line.gsub! /{.*{.*}.*}/, ""
+    print line + "\n"
   else
     puts line
   end

@@ -25,6 +25,9 @@ for filename in files
 	if filename.to_s.end_with?(".erb")
 		new_file = filename.to_s+".rb"
 		system(File.join(base_dir, script) + " #{filename.to_s} #{new_file}")
+  elsif filename.to_s.end_with?(".rjs", ".jbuilder")
+    new_file = filename.to_s + ".rb"
+    system("cp #{filename.to_s} #{new_file}")
 	end
 end
 
@@ -40,6 +43,9 @@ def walk(start, base_dir, script)
 			if x.end_with?".erb"
 				new_x = x + ".rb"
 				system(File.join(base_dir, script) + " " + File.join(start, x) + " " + File.join(start, new_x))
+      elsif x.end_with?(".rjs", ".jbuilder")
+        new_x = x + ".rb"
+        system("cp " + File.join(start, x) + " " + File.join(start, new_x))
 			end
 		end
 	end
