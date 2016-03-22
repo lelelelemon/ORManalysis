@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
         comment.errors.add(:comment, "^You have already posted a comment " <<
           "here recently.")
 
-        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+        return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
@@ -104,7 +104,7 @@ class CommentsController < ApplicationController
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -129,13 +129,16 @@ class CommentsController < ApplicationController
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -186,7 +189,7 @@ end
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -211,13 +214,16 @@ end
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -274,7 +280,7 @@ end
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -299,13 +305,16 @@ end
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -409,7 +418,7 @@ end
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -434,13 +443,16 @@ end
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -534,7 +546,7 @@ end
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -559,13 +571,16 @@ end
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -592,7 +607,7 @@ end
       return render :text => "can't find comment", :status => 400
     end
 
-    comment.delete_for_user(@user)
+    comment.delete_for_user(@user, params[:reason])
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  comment.short_id 
@@ -619,7 +634,7 @@ end
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -644,13 +659,16 @@ end
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -702,7 +720,7 @@ end
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -727,13 +745,16 @@ end
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -794,7 +815,7 @@ end
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -819,13 +840,16 @@ end
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -931,6 +955,116 @@ end
 
     respond_to do |format|
       format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @meta_tags 
+ @meta_tags.each do |k,v| 
+ k 
+ v 
+ end 
+ end 
+ if @short_url 
+ @short_url 
+ end 
+ @title.present? ? "#{@title} | " : "" 
+
+    Rails.application.name 
+ stylesheet_link_tag "application", :media => "all" 
+ if @user 
+ javascript_include_tag "application" 
+ @user.id 
+ end 
+ csrf_meta_tags 
+ if @rss_link 
+ @rss_link[:title] 
+ @rss_link[:href] 
+ end 
+ if @comments_rss_link 
+ @comments_rss_link[:title] 
+ @comments_rss_link[:href] 
+ end 
+ sprintf("%02x%02x%02x",
+        [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) 
+ Rails.application.name 
+ @traffic.to_i 
+ links = {
+          "/" => @cur_url == "/" ? Rails.application.name : "Home",
+          "/recent" => "Recent",
+          "/comments" => "Comments"
+        } 
+ if @user 
+ links.merge!({ "/threads" => "Your Threads",
+            "/stories/new" => "Submit Story" }) 
+ end 
+ links.merge!({ "/search" => "Search" }) 
+ if @cur_url.present? && !links.keys.include?(@cur_url) &&
+        @heading.present? 
+ @cur_url 
+ @heading 
+ end 
+ links.each do |u,v| 
+ u 
+ u == @cur_url ? raw("class=\"cur_url\"") :
+              "" 
+ v 
+ end 
+ @cur_url == "/filters" ?
+          raw("class=\"cur_url\"") : "" 
+ if @user 
+ if (count = @user.unread_message_count) > 0 
+ @cur_url == "/messages" ?
+              "cur_url" : "" 
+ count 
+ count == 1 ? "" :
+              "s" 
+ else 
+ @cur_url == "/messages" ?
+              raw("class=\"cur_url\"") : "" 
+ end 
+ @cur_url == "/settings" ?
+            raw("class=\"cur_url\"") : "" 
+ @user.username 
+ @user.karma 
+ link_to "Logout", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Are you sure you want to logout?" },
+            :method => "post" 
+ else 
+ end 
+ [ :error, :success, :notice ].each do |f| 
+ if flash[f].present? 
+ f 
+ flash[f] 
+ end 
+ end 
+ coder = HTMLEntities.new 
+ Rails.application.name 
+ @title.present? ?
+      ": " + h(@title) : "" 
+ @title 
+ Rails.application.root_url 
+ @comments.each do |comment| 
+ raw coder.encode(comment.story.title, :decimal) 
+ comment.url 
+ comment.short_id_url 
+ comment.user.username 
+ comment.created_at.rfc2822 
+ comment.url 
+ raw coder.encode(comment.markeddown_comment,
+          :decimal) 
+ end 
+ if @user && !@user.is_new? &&
+        (iqc = InvitationRequest.verified_count) > 0 
+ iqc 
+ end 
+ if defined?(BbsController) 
+ end 
+
+end
+ }
+      format.rss {
+        if @user && params[:token].present?
+          @title = "Private comments feed for #{@user.username}"
+        end
+
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  coder = HTMLEntities.new 
  Rails.application.name 
  @title.present? ?
@@ -949,16 +1083,89 @@ end
  end 
 
 end
- }
-      format.rss {
-        if @user && params[:token].present?
-          @title = "Private comments feed for #{@user.username}"
-        end
 
-        render :action => "index.rss", :layout => false
       }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @meta_tags 
+ @meta_tags.each do |k,v| 
+ k 
+ v 
+ end 
+ end 
+ if @short_url 
+ @short_url 
+ end 
+ @title.present? ? "#{@title} | " : "" 
+
+    Rails.application.name 
+ stylesheet_link_tag "application", :media => "all" 
+ if @user 
+ javascript_include_tag "application" 
+ @user.id 
+ end 
+ csrf_meta_tags 
+ if @rss_link 
+ @rss_link[:title] 
+ @rss_link[:href] 
+ end 
+ if @comments_rss_link 
+ @comments_rss_link[:title] 
+ @comments_rss_link[:href] 
+ end 
+ sprintf("%02x%02x%02x",
+        [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) 
+ Rails.application.name 
+ @traffic.to_i 
+ links = {
+          "/" => @cur_url == "/" ? Rails.application.name : "Home",
+          "/recent" => "Recent",
+          "/comments" => "Comments"
+        } 
+ if @user 
+ links.merge!({ "/threads" => "Your Threads",
+            "/stories/new" => "Submit Story" }) 
+ end 
+ links.merge!({ "/search" => "Search" }) 
+ if @cur_url.present? && !links.keys.include?(@cur_url) &&
+        @heading.present? 
+ @cur_url 
+ @heading 
+ end 
+ links.each do |u,v| 
+ u 
+ u == @cur_url ? raw("class=\"cur_url\"") :
+              "" 
+ v 
+ end 
+ @cur_url == "/filters" ?
+          raw("class=\"cur_url\"") : "" 
+ if @user 
+ if (count = @user.unread_message_count) > 0 
+ @cur_url == "/messages" ?
+              "cur_url" : "" 
+ count 
+ count == 1 ? "" :
+              "s" 
+ else 
+ @cur_url == "/messages" ?
+              raw("class=\"cur_url\"") : "" 
+ end 
+ @cur_url == "/settings" ?
+            raw("class=\"cur_url\"") : "" 
+ @user.username 
+ @user.karma 
+ link_to "Logout", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Are you sure you want to logout?" },
+            :method => "post" 
+ else 
+ end 
+ [ :error, :success, :notice ].each do |f| 
+ if flash[f].present? 
+ f 
+ flash[f] 
+ end 
+ end 
  coder = HTMLEntities.new 
  Rails.application.name 
  @title.present? ?
@@ -974,6 +1181,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  comment.url 
  raw coder.encode(comment.markeddown_comment,
           :decimal) 
+ end 
+ if @user && !@user.is_new? &&
+        (iqc = InvitationRequest.verified_count) > 0 
+ iqc 
+ end 
+ if defined?(BbsController) 
  end 
 
 end
@@ -1031,6 +1244,85 @@ end
     #  end
     #end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @meta_tags 
+ @meta_tags.each do |k,v| 
+ k 
+ v 
+ end 
+ end 
+ if @short_url 
+ @short_url 
+ end 
+ @title.present? ? "#{@title} | " : "" 
+
+    Rails.application.name 
+ stylesheet_link_tag "application", :media => "all" 
+ if @user 
+ javascript_include_tag "application" 
+ @user.id 
+ end 
+ csrf_meta_tags 
+ if @rss_link 
+ @rss_link[:title] 
+ @rss_link[:href] 
+ end 
+ if @comments_rss_link 
+ @comments_rss_link[:title] 
+ @comments_rss_link[:href] 
+ end 
+ sprintf("%02x%02x%02x",
+        [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) 
+ Rails.application.name 
+ @traffic.to_i 
+ links = {
+          "/" => @cur_url == "/" ? Rails.application.name : "Home",
+          "/recent" => "Recent",
+          "/comments" => "Comments"
+        } 
+ if @user 
+ links.merge!({ "/threads" => "Your Threads",
+            "/stories/new" => "Submit Story" }) 
+ end 
+ links.merge!({ "/search" => "Search" }) 
+ if @cur_url.present? && !links.keys.include?(@cur_url) &&
+        @heading.present? 
+ @cur_url 
+ @heading 
+ end 
+ links.each do |u,v| 
+ u 
+ u == @cur_url ? raw("class=\"cur_url\"") :
+              "" 
+ v 
+ end 
+ @cur_url == "/filters" ?
+          raw("class=\"cur_url\"") : "" 
+ if @user 
+ if (count = @user.unread_message_count) > 0 
+ @cur_url == "/messages" ?
+              "cur_url" : "" 
+ count 
+ count == 1 ? "" :
+              "s" 
+ else 
+ @cur_url == "/messages" ?
+              raw("class=\"cur_url\"") : "" 
+ end 
+ @cur_url == "/settings" ?
+            raw("class=\"cur_url\"") : "" 
+ @user.username 
+ @user.karma 
+ link_to "Logout", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Are you sure you want to logout?" },
+            :method => "post" 
+ else 
+ end 
+ [ :error, :success, :notice ].each do |f| 
+ if flash[f].present? 
+ f 
+ flash[f] 
+ end 
+ end 
  @threads.each do |thread| 
  comments_by_parent = thread.group_by(&:parent_comment_id) 
  subtree = comments_by_parent[nil] 
@@ -1061,7 +1353,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -1086,13 +1378,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -1108,9 +1403,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  raw comment.markeddown_comment 
  end 
  
+ if (children = comments_by_parent[comment.id]) 
+ ancestors << subtree 
+ subtree = children 
+ else 
+ end 
  elsif (subtree = ancestors.pop) 
  end 
  end 
+ end 
+ if @user && !@user.is_new? &&
+        (iqc = InvitationRequest.verified_count) > 0 
+ iqc 
+ end 
+ if defined?(BbsController) 
  end 
 
 end
@@ -1186,7 +1492,7 @@ private
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -1211,13 +1517,16 @@ private
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 

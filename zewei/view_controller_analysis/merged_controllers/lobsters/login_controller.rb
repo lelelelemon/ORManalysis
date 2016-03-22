@@ -13,6 +13,85 @@ class LoginController < ApplicationController
     @title = "Login"
     @referer ||= request.referer
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @meta_tags 
+ @meta_tags.each do |k,v| 
+ k 
+ v 
+ end 
+ end 
+ if @short_url 
+ @short_url 
+ end 
+ @title.present? ? "#{@title} | " : "" 
+
+    Rails.application.name 
+ stylesheet_link_tag "application", :media => "all" 
+ if @user 
+ javascript_include_tag "application" 
+ @user.id 
+ end 
+ csrf_meta_tags 
+ if @rss_link 
+ @rss_link[:title] 
+ @rss_link[:href] 
+ end 
+ if @comments_rss_link 
+ @comments_rss_link[:title] 
+ @comments_rss_link[:href] 
+ end 
+ sprintf("%02x%02x%02x",
+        [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) 
+ Rails.application.name 
+ @traffic.to_i 
+ links = {
+          "/" => @cur_url == "/" ? Rails.application.name : "Home",
+          "/recent" => "Recent",
+          "/comments" => "Comments"
+        } 
+ if @user 
+ links.merge!({ "/threads" => "Your Threads",
+            "/stories/new" => "Submit Story" }) 
+ end 
+ links.merge!({ "/search" => "Search" }) 
+ if @cur_url.present? && !links.keys.include?(@cur_url) &&
+        @heading.present? 
+ @cur_url 
+ @heading 
+ end 
+ links.each do |u,v| 
+ u 
+ u == @cur_url ? raw("class=\"cur_url\"") :
+              "" 
+ v 
+ end 
+ @cur_url == "/filters" ?
+          raw("class=\"cur_url\"") : "" 
+ if @user 
+ if (count = @user.unread_message_count) > 0 
+ @cur_url == "/messages" ?
+              "cur_url" : "" 
+ count 
+ count == 1 ? "" :
+              "s" 
+ else 
+ @cur_url == "/messages" ?
+              raw("class=\"cur_url\"") : "" 
+ end 
+ @cur_url == "/settings" ?
+            raw("class=\"cur_url\"") : "" 
+ @user.username 
+ @user.karma 
+ link_to "Logout", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Are you sure you want to logout?" },
+            :method => "post" 
+ else 
+ end 
+ [ :error, :success, :notice ].each do |f| 
+ if flash[f].present? 
+ f 
+ flash[f] 
+ end 
+ end 
  form_tag login_path do 
  label_tag :email, "E-mail or Username:" 
  text_field_tag :email, "", :size => 30, :autofocus => "autofocus" 
@@ -26,6 +105,12 @@ class LoginController < ApplicationController
  if @referer.present? 
  hidden_field_tag :referer, @referer 
  end 
+ end 
+ if @user && !@user.is_new? &&
+        (iqc = InvitationRequest.verified_count) > 0 
+ iqc 
+ end 
+ if defined?(BbsController) 
  end 
 
 end
@@ -91,10 +176,95 @@ end
   def forgot_password
     @title = "Reset Password"
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @meta_tags 
+ @meta_tags.each do |k,v| 
+ k 
+ v 
+ end 
+ end 
+ if @short_url 
+ @short_url 
+ end 
+ @title.present? ? "#{@title} | " : "" 
+
+    Rails.application.name 
+ stylesheet_link_tag "application", :media => "all" 
+ if @user 
+ javascript_include_tag "application" 
+ @user.id 
+ end 
+ csrf_meta_tags 
+ if @rss_link 
+ @rss_link[:title] 
+ @rss_link[:href] 
+ end 
+ if @comments_rss_link 
+ @comments_rss_link[:title] 
+ @comments_rss_link[:href] 
+ end 
+ sprintf("%02x%02x%02x",
+        [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) 
+ Rails.application.name 
+ @traffic.to_i 
+ links = {
+          "/" => @cur_url == "/" ? Rails.application.name : "Home",
+          "/recent" => "Recent",
+          "/comments" => "Comments"
+        } 
+ if @user 
+ links.merge!({ "/threads" => "Your Threads",
+            "/stories/new" => "Submit Story" }) 
+ end 
+ links.merge!({ "/search" => "Search" }) 
+ if @cur_url.present? && !links.keys.include?(@cur_url) &&
+        @heading.present? 
+ @cur_url 
+ @heading 
+ end 
+ links.each do |u,v| 
+ u 
+ u == @cur_url ? raw("class=\"cur_url\"") :
+              "" 
+ v 
+ end 
+ @cur_url == "/filters" ?
+          raw("class=\"cur_url\"") : "" 
+ if @user 
+ if (count = @user.unread_message_count) > 0 
+ @cur_url == "/messages" ?
+              "cur_url" : "" 
+ count 
+ count == 1 ? "" :
+              "s" 
+ else 
+ @cur_url == "/messages" ?
+              raw("class=\"cur_url\"") : "" 
+ end 
+ @cur_url == "/settings" ?
+            raw("class=\"cur_url\"") : "" 
+ @user.username 
+ @user.karma 
+ link_to "Logout", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Are you sure you want to logout?" },
+            :method => "post" 
+ else 
+ end 
+ [ :error, :success, :notice ].each do |f| 
+ if flash[f].present? 
+ f 
+ flash[f] 
+ end 
+ end 
  form_tag reset_password_path do 
  label_tag :email, "E-mail or Username:" 
  text_field_tag :email, "", :size => 30 
  submit_tag "Reset Password" 
+ end 
+ if @user && !@user.is_new? &&
+        (iqc = InvitationRequest.verified_count) > 0 
+ iqc 
+ end 
+ if defined?(BbsController) 
  end 
 
 end
@@ -151,6 +321,85 @@ end
       return redirect_to forgot_password_path
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @meta_tags 
+ @meta_tags.each do |k,v| 
+ k 
+ v 
+ end 
+ end 
+ if @short_url 
+ @short_url 
+ end 
+ @title.present? ? "#{@title} | " : "" 
+
+    Rails.application.name 
+ stylesheet_link_tag "application", :media => "all" 
+ if @user 
+ javascript_include_tag "application" 
+ @user.id 
+ end 
+ csrf_meta_tags 
+ if @rss_link 
+ @rss_link[:title] 
+ @rss_link[:href] 
+ end 
+ if @comments_rss_link 
+ @comments_rss_link[:title] 
+ @comments_rss_link[:href] 
+ end 
+ sprintf("%02x%02x%02x",
+        [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) 
+ Rails.application.name 
+ @traffic.to_i 
+ links = {
+          "/" => @cur_url == "/" ? Rails.application.name : "Home",
+          "/recent" => "Recent",
+          "/comments" => "Comments"
+        } 
+ if @user 
+ links.merge!({ "/threads" => "Your Threads",
+            "/stories/new" => "Submit Story" }) 
+ end 
+ links.merge!({ "/search" => "Search" }) 
+ if @cur_url.present? && !links.keys.include?(@cur_url) &&
+        @heading.present? 
+ @cur_url 
+ @heading 
+ end 
+ links.each do |u,v| 
+ u 
+ u == @cur_url ? raw("class=\"cur_url\"") :
+              "" 
+ v 
+ end 
+ @cur_url == "/filters" ?
+          raw("class=\"cur_url\"") : "" 
+ if @user 
+ if (count = @user.unread_message_count) > 0 
+ @cur_url == "/messages" ?
+              "cur_url" : "" 
+ count 
+ count == 1 ? "" :
+              "s" 
+ else 
+ @cur_url == "/messages" ?
+              raw("class=\"cur_url\"") : "" 
+ end 
+ @cur_url == "/settings" ?
+            raw("class=\"cur_url\"") : "" 
+ @user.username 
+ @user.karma 
+ link_to "Logout", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Are you sure you want to logout?" },
+            :method => "post" 
+ else 
+ end 
+ [ :error, :success, :notice ].each do |f| 
+ if flash[f].present? 
+ f 
+ flash[f] 
+ end 
+ end 
  form_tag set_new_password_path, { :autocomplete => "off" } do 
  error_messages_for(@reset_user) 
  hidden_field_tag "token", params[:token] 
@@ -161,6 +410,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  label_tag :password_confirmation, "(Again):" 
  password_field_tag :password_confirmation, "", :size => 30 
  submit_tag "Set New Password" 
+ end 
+ if @user && !@user.is_new? &&
+        (iqc = InvitationRequest.verified_count) > 0 
+ iqc 
+ end 
+ if defined?(BbsController) 
  end 
 
 end

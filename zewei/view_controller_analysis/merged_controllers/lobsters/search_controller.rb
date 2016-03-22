@@ -24,6 +24,85 @@ class SearchController < ApplicationController
     end
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @meta_tags 
+ @meta_tags.each do |k,v| 
+ k 
+ v 
+ end 
+ end 
+ if @short_url 
+ @short_url 
+ end 
+ @title.present? ? "#{@title} | " : "" 
+
+    Rails.application.name 
+ stylesheet_link_tag "application", :media => "all" 
+ if @user 
+ javascript_include_tag "application" 
+ @user.id 
+ end 
+ csrf_meta_tags 
+ if @rss_link 
+ @rss_link[:title] 
+ @rss_link[:href] 
+ end 
+ if @comments_rss_link 
+ @comments_rss_link[:title] 
+ @comments_rss_link[:href] 
+ end 
+ sprintf("%02x%02x%02x",
+        [ 255, (@traffic * 7).floor + 50.0 ].min, 0, 0) 
+ Rails.application.name 
+ @traffic.to_i 
+ links = {
+          "/" => @cur_url == "/" ? Rails.application.name : "Home",
+          "/recent" => "Recent",
+          "/comments" => "Comments"
+        } 
+ if @user 
+ links.merge!({ "/threads" => "Your Threads",
+            "/stories/new" => "Submit Story" }) 
+ end 
+ links.merge!({ "/search" => "Search" }) 
+ if @cur_url.present? && !links.keys.include?(@cur_url) &&
+        @heading.present? 
+ @cur_url 
+ @heading 
+ end 
+ links.each do |u,v| 
+ u 
+ u == @cur_url ? raw("class=\"cur_url\"") :
+              "" 
+ v 
+ end 
+ @cur_url == "/filters" ?
+          raw("class=\"cur_url\"") : "" 
+ if @user 
+ if (count = @user.unread_message_count) > 0 
+ @cur_url == "/messages" ?
+              "cur_url" : "" 
+ count 
+ count == 1 ? "" :
+              "s" 
+ else 
+ @cur_url == "/messages" ?
+              raw("class=\"cur_url\"") : "" 
+ end 
+ @cur_url == "/settings" ?
+            raw("class=\"cur_url\"") : "" 
+ @user.username 
+ @user.karma 
+ link_to "Logout", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Are you sure you want to logout?" },
+            :method => "post" 
+ else 
+ end 
+ [ :error, :success, :notice ].each do |f| 
+ if flash[f].present? 
+ f 
+ flash[f] 
+ end 
+ end 
  form_tag "/search", :method => :get do 
  text_field_tag "q", @search.q, { :size => 40 }.
         merge(@search.q.present? ? {} : { :autofocus => "autofocus" }) 
@@ -95,7 +174,7 @@ class SearchController < ApplicationController
 
               break_long_words(ms.domain) 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  ms.user.username 
  ms.user.avatar_url(16) 
  ms.user.avatar_url(16) 
@@ -118,7 +197,7 @@ class SearchController < ApplicationController
  break_long_words(sc) 
  end 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  story.user.username 
  story.user.avatar_url(16) 
  story.user.avatar_url(16) 
@@ -179,11 +258,19 @@ class SearchController < ApplicationController
  pluralize(story.hider_count, "user") 
  end 
  end 
- if !story.is_gone? && (@user || story.comments_count > 0) 
+ if story.url.present? 
+ story.url 
+ end 
+ if !story.is_gone? 
  story.comments_path 
- story.comments_count == 0 ?
-              "discuss" : "#{story.comments_count} comment" <<
-              (story.comments_count == 1 ? "" : "s") 
+ if story.comments_count == 0 
+ if @user 
+ else 
+ end 
+ else 
+ story.comments_count 
+ story.comments_count == 1 ? "" : "s" 
+ end 
  end 
  if defined?(single_story) && single_story &&
         ((story.downvotes > 0 && @user && @user.is_moderator?) ||
@@ -220,7 +307,7 @@ class SearchController < ApplicationController
  comment.short_id 
  if defined?(was_merged) && was_merged 
  end 
- if @user && @user.show_avatars? 
+ if (@user && @user.show_avatars?) || !@user 
  comment.user.username 
  comment.user.avatar_url(16) 
  end 
@@ -245,13 +332,16 @@ class SearchController < ApplicationController
  end 
  if comment.is_gone? && comment.is_undeletable_by_user?(@user) 
  elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) 
+ if @user && @user.is_moderator? && @user.id != comment.user_id 
+ else 
+ end 
  end 
  if @user && !comment.story.is_gone? && !comment.is_gone? 
  end 
  if comment.downvotes > 0 &&
           ((comment.score <= 0 && comment.user_id == @user.try(:id)) ||
           @user.try("is_moderator?")) 
- comment.vote_summary.downcase 
+ comment.vote_summary_for_user(@user).downcase 
  elsif comment.current_vote && comment.current_vote[:vote] == -1 
  Vote::COMMENT_REASONS[comment.current_vote[:reason]].downcase 
  end 
@@ -282,6 +372,12 @@ class SearchController < ApplicationController
  end 
  end 
  end 
+ end 
+ if @user && !@user.is_new? &&
+        (iqc = InvitationRequest.verified_count) > 0 
+ iqc 
+ end 
+ if defined?(BbsController) 
  end 
 
 end
