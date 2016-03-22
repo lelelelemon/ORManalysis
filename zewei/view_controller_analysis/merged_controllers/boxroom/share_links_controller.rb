@@ -10,6 +10,36 @@ class ShareLinksController < ApplicationController
   def index
     @share_links = ShareLink.active_share_links
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
+ content_for :title 
+ else 
+ end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
  content_for :title, t(:shared_files) 
  content_for :title 
  t('activerecord.models.user_file') 
@@ -26,6 +56,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  l share_link.link_expires_at, :format => :very_short 
  link_to image_tag('delete.png', :alt => t(:delete_item)), share_link_path(share_link), :method => :delete, :data => { :confirm => t(:are_you_sure) }, :title => t(:unshare) 
  end 
+  
 
 end
 
@@ -40,6 +71,36 @@ end
   def new
     @share_link = @file.share_links.build
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
+ content_for :title 
+ else 
+ end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
  content_for :title, t(:share_file) 
  content_for :title 
  form_for [@file, @share_link], :url => { :action => 'create' } do |f| 
@@ -71,6 +132,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit t(:share) 
  link_to t(:back), @folder 
  end 
+  
 
 end
 
@@ -86,6 +148,36 @@ end
       redirect_to @folder, :notice => t(:shared_successfully)
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
+ content_for :title 
+ else 
+ end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
  content_for :title, t(:share_file) 
  content_for :title 
  form_for [@file, @share_link], :url => { :action => 'create' } do |f| 
@@ -117,6 +209,7 @@ end
  f.submit t(:share) 
  link_to t(:back), @folder 
  end 
+  
 
 end
 

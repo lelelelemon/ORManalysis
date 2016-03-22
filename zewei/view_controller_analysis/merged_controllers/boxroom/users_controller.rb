@@ -7,6 +7,36 @@ class UsersController < ApplicationController
     @users = User.where.not(:name => nil).order('name')
     @new_users = User.where(:name => nil).order('email')
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
+ content_for :title 
+ else 
+ end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
  content_for :title, t(:users) 
  content_for :title 
  image_tag('user_add.png', :alt => t(:create_a_new_user)) 
@@ -43,6 +73,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  end 
+  
 
 end
 
@@ -51,6 +82,36 @@ end
   def new
     @user = User.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
+ content_for :title 
+ else 
+ end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
  content_for :title, t(:new_user) 
  content_for :title 
   form_for @user do |f| 
@@ -82,6 +143,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
+  
 
 end
 
@@ -95,6 +157,36 @@ end
       redirect_to users_url
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
+ content_for :title 
+ else 
+ end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
  content_for :title, t(:new_user) 
  content_for :title 
   form_for @user do |f| 
@@ -126,6 +218,7 @@ end
  end 
  end 
  
+  
 
 end
 
@@ -135,6 +228,36 @@ end
   # Note: @user is set in require_existing_user
   def edit
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
+ content_for :title 
+ else 
+ end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
  content_for :title, @title 
  content_for :title 
   form_for @user do |f| 
@@ -166,6 +289,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
+  
 
 end
 
@@ -177,6 +301,36 @@ end
       redirect_to edit_user_url(@user), :notice => t(:your_changes_were_saved)
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if content_for? :title 
+ content_for :title 
+ else 
+ end 
+ stylesheet_link_tag 'application' 
+ javascript_include_tag 'application' 
+ csrf_meta_tag 
+ if flash[:notice] 
+ flash[:notice] 
+ end 
+ if flash[:alert] 
+ flash[:alert] 
+ end 
+  if signed_in? 
+ t :hello 
+ current_user.name 
+ link_to t(:settings), edit_user_path(current_user) 
+ link_to t(:sign_out), signout_path, :method => :delete 
+ end 
+ link_to image_tag('logo.png', :alt => 'Boxroom'), root_path 
+ 
+  if signed_in? 
+ link_to t(:folders), folders_path 
+ if current_user.member_of_admins? 
+ link_to t(:users), users_path 
+ link_to t(:groups), groups_path 
+ link_to t(:shared_files), share_links_path 
+ end 
+ end 
+ 
  content_for :title, @title 
  content_for :title 
   form_for @user do |f| 
@@ -208,6 +362,7 @@ end
  end 
  end 
  
+  
 
 end
 
