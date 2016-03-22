@@ -228,15 +228,17 @@ def get_statement_array(keyword, ast)
 end
 
 def parse_content_for_stmt(stmt)
+  puts stmt
   ast = YARD::Parser::Ruby::RubyParser.parse(stmt).root
+  puts ast.source.to_s
   if ast.type.to_s == "list"
     ast = ast[0]
   end
-  
+ 
   if ast[2] != nil and ast[2].type.to_s == "do_block"
     value = ast[2][1].source.to_s
     key = ast[1].source.to_s
-  else
+  elsif ast[1][1].respond_to?"source"
     value = ast[1][1].source
     key = ast[1][0].source.to_s
   end
