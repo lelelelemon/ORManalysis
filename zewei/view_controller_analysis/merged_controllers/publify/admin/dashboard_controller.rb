@@ -9,8 +9,8 @@ class Admin::DashboardController < Admin::BaseController
     today = t.strftime('%Y-%m-%d 00:00')
 
     # Since last venue
-    @newposts_count = Article.published_since(current_user.last_venue).count
-    @newcomments_count = Feedback.published_since(current_user.last_venue).count
+    @newposts_count = Article.published_since(current_user.last_sign_in_at).count
+    @newcomments_count = Feedback.published_since(current_user.last_sign_in_at).count
 
     # Today
     @statposts = Article.published.where('published_at > ?', today).count
@@ -31,11 +31,85 @@ class Admin::DashboardController < Admin::BaseController
     @publify_links = publify_dev
     publify_version
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :page_heading do 
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
  t(".welcome_back", user_name: current_user.name) 
  end 
-  t(".dashboard_explain_html", available_actions: dashboard_action_links) 
- if current_user.can_access_to_themes? 
+  
+ 
+    links = []
+    links << link_to(t('.write_a_post'), controller: 'content', action: 'new') if can? :new, 'admin/content'
+    links << link_to(t('.write_a_page'), controller: 'pages', action: 'new') if can? :new, 'admin/pages'
+    links << link_to(t('.update_your_profile_or_change_your_password'), controller: 'profiles', action: 'index')
+  
+ t(".dashboard_explain_html", available_actions: safe_join(links, ', ')) 
+ if can? :index, 'admin/themes' 
  t(".customization_explain_html", theme_link: link_to(t(".change_your_blog_presentation"), controller: 'themes'), sidebar_link: link_to(t(".enable_plugins"), controller: 'sidebar')) 
  end 
  t(".help_explain_html", doc_link: link_to(t('.read_our_documentation'), 'http://publify.co')) 
@@ -44,7 +118,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t(".articles_and_comments_count_since", articles_count: @newposts_count, comments_count: @newcomments_count) 
  t(".running_publify", version: PUBLIFY_VERSION) 
  @version_message 
- if current_user.can_access_to_articles? 
+ if can? :index, 'admin/content' 
  t(".content") 
  link_to(t(".articles_count", count: @statposts), controller: 'admin/content') 
  link_to(t(".your_articles_count", count: @statuserposts), controller: 'admin/content', "search[user_id]" => current_user.id) 
@@ -52,7 +126,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to(t(".pages_count", count: @statspages), controller: 'admin/pages') 
  link_to(t(".notes_count", count: @statuses), controller: 'admin/notes') 
  end 
-  if current_user.can_access_to_feedback? 
+ if can? :index, 'admin/feedback' 
  t(".feedback") 
  link_to(t('.comments_count', count: @statcomments), controller: 'admin/feedback') 
  link_to(t('.approved_count', count: @confirmed), controller: 'admin/feedback', only: 'ham') 
@@ -102,6 +176,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 

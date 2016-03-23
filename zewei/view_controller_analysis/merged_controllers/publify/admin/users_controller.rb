@@ -5,10 +5,78 @@ class Admin::UsersController < Admin::BaseController
   def index
     @users = User.order('login asc').page(params[:page]).per(this_blog.admin_display_elements)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :page_heading do 
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
  t(".users") 
  link_to(t(".new_user"), new_admin_user_path, id: 'dialog-link', class: 'btn btn-info pull-right') 
  end 
+  
  t(".login") 
  t(".name") 
  t(".email") 
@@ -28,6 +96,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("user.status.#{user.state}") 
  end 
  display_pagination(@users, 7) 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -38,13 +109,81 @@ end
     @user.text_filter = TextFilter.find_by_name(this_blog.text_filter)
     setup_profiles
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :page_heading do 
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
  t(".add_user") 
  end 
-  form_for([:admin, @user]) do |f| 
- if @user.errors.any? 
- pluralize(@user.errors.count, "error") 
- @user.errors.full_messages.each do |message| 
+  
+ form_for([:admin, @user]) do |f| 
+  if user.errors.any? 
+ pluralize(user.errors.count, "error") 
+ user.errors.full_messages.each do |message| 
  message 
  end 
  end 
@@ -63,7 +202,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('.user_status')
  User::STATUS.each do |state| 
  state 
- 'selected' if @user.state == state 
+ 'selected' if user.state == state 
  t("user.status.#{state}") 
  end 
  end 
@@ -74,12 +213,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.text_field :lastname, class: 'form-control' 
  t('.nickname') 
  f.text_field :nickname, class: 'form-control' 
- unless @user.login.nil? 
+ unless user.login.nil? 
  t('.display_name') 
- options_for_select(@user.display_names, @user.name) 
+ options_for_select(user.display_names, user.name) 
  end 
  t('.article_filter') 
- options_for_select text_filter_options_with_id, @user.text_filter.id 
+ options_for_select text_filter_options_with_id, user.text_filter.id 
  unless controller.controller_name == 'users'
  t('.avatar') 
  display_user_avatar(current_user, 'thumb') 
@@ -99,7 +238,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless controller.controller_name == 'users' 
  t('.twitter') 
  unless twitter_available?(this_blog, current_user) 
- t(".how_to_setup_twitter", twitter_settings_link: link_to(t(".fill_the_twitter_credentials"), controller: 'admin/settings', action: 'write'), twitter_registration_link: link_to(t(".registered_your_application"), "https://dev.twitter.com/apps/new")) 
+  t(".how_to_setup_twitter_html", twitter_settings_link: link_to(t(".fill_the_twitter_credentials"), controller: 'admin/settings', action: 'write'), twitter_registration_link: link_to(t(".registered_your_application"), "https://dev.twitter.com/apps/new")) 
+ 
  end 
  t('.twitter_account')
  f.text_field :twitter_account, {class: 'form-control', disabled: twitter_available?(this_blog, current_user)} 
@@ -108,7 +248,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('.twitter_oauth_secret')
  f.text_field :twitter_oauth_token_secret, {class: 'form-control', disabled: twitter_available?(this_blog, current_user)} 
  t('.contact_settings')
- t('.contact_explain', link: link_to(t('.author_page'), author_path(id: current_user.login))) 
+ t('.contact_explain_html', link: link_to(t('.author_page'), author_path(id: current_user.login))) 
  t('.about')
  f.text_area :description, {class: 'form-control', rows: 5} 
  t('.website')
@@ -127,8 +267,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to(t(".cancel"), {action: 'index'}) 
  t(".or") 
  submit_tag(t(".save"), class: 'btn btn-success') 
- end 
  
+ end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -138,14 +281,81 @@ end
     @user = params[:id] ? User.find_by_id(params[:id]) : current_user
     setup_profiles
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :page_heading do 
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
  t(".edit_user") 
  end 
- form_tag :action=>"update", :id => @user.id do 
-  form_for([:admin, @user]) do |f| 
- if @user.errors.any? 
- pluralize(@user.errors.count, "error") 
- @user.errors.full_messages.each do |message| 
+  
+ form_for([:admin, @user]) do |f| 
+  if user.errors.any? 
+ pluralize(user.errors.count, "error") 
+ user.errors.full_messages.each do |message| 
  message 
  end 
  end 
@@ -164,7 +374,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('.user_status')
  User::STATUS.each do |state| 
  state 
- 'selected' if @user.state == state 
+ 'selected' if user.state == state 
  t("user.status.#{state}") 
  end 
  end 
@@ -175,12 +385,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.text_field :lastname, class: 'form-control' 
  t('.nickname') 
  f.text_field :nickname, class: 'form-control' 
- unless @user.login.nil? 
+ unless user.login.nil? 
  t('.display_name') 
- options_for_select(@user.display_names, @user.name) 
+ options_for_select(user.display_names, user.name) 
  end 
  t('.article_filter') 
- options_for_select text_filter_options_with_id, @user.text_filter.id 
+ options_for_select text_filter_options_with_id, user.text_filter.id 
  unless controller.controller_name == 'users'
  t('.avatar') 
  display_user_avatar(current_user, 'thumb') 
@@ -200,7 +410,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless controller.controller_name == 'users' 
  t('.twitter') 
  unless twitter_available?(this_blog, current_user) 
- t(".how_to_setup_twitter", twitter_settings_link: link_to(t(".fill_the_twitter_credentials"), controller: 'admin/settings', action: 'write'), twitter_registration_link: link_to(t(".registered_your_application"), "https://dev.twitter.com/apps/new")) 
+  t(".how_to_setup_twitter_html", twitter_settings_link: link_to(t(".fill_the_twitter_credentials"), controller: 'admin/settings', action: 'write'), twitter_registration_link: link_to(t(".registered_your_application"), "https://dev.twitter.com/apps/new")) 
+ 
  end 
  t('.twitter_account')
  f.text_field :twitter_account, {class: 'form-control', disabled: twitter_available?(this_blog, current_user)} 
@@ -209,7 +420,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('.twitter_oauth_secret')
  f.text_field :twitter_oauth_token_secret, {class: 'form-control', disabled: twitter_available?(this_blog, current_user)} 
  t('.contact_settings')
- t('.contact_explain', link: link_to(t('.author_page'), author_path(id: current_user.login))) 
+ t('.contact_explain_html', link: link_to(t('.author_page'), author_path(id: current_user.login))) 
  t('.about')
  f.text_area :description, {class: 'form-control', rows: 5} 
  t('.website')
@@ -228,9 +439,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to(t(".cancel"), {action: 'index'}) 
  t(".or") 
  submit_tag(t(".save"), class: 'btn btn-success') 
- end 
  
  end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -243,13 +456,81 @@ end
       redirect_to admin_users_url, notice: I18n.t('admin.users.new.success')
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :page_heading do 
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
  t(".add_user") 
  end 
-  form_for([:admin, @user]) do |f| 
- if @user.errors.any? 
- pluralize(@user.errors.count, "error") 
- @user.errors.full_messages.each do |message| 
+  
+ form_for([:admin, @user]) do |f| 
+  if user.errors.any? 
+ pluralize(user.errors.count, "error") 
+ user.errors.full_messages.each do |message| 
  message 
  end 
  end 
@@ -268,7 +549,7 @@ end
  t('.user_status')
  User::STATUS.each do |state| 
  state 
- 'selected' if @user.state == state 
+ 'selected' if user.state == state 
  t("user.status.#{state}") 
  end 
  end 
@@ -279,12 +560,12 @@ end
  f.text_field :lastname, class: 'form-control' 
  t('.nickname') 
  f.text_field :nickname, class: 'form-control' 
- unless @user.login.nil? 
+ unless user.login.nil? 
  t('.display_name') 
- options_for_select(@user.display_names, @user.name) 
+ options_for_select(user.display_names, user.name) 
  end 
  t('.article_filter') 
- options_for_select text_filter_options_with_id, @user.text_filter.id 
+ options_for_select text_filter_options_with_id, user.text_filter.id 
  unless controller.controller_name == 'users'
  t('.avatar') 
  display_user_avatar(current_user, 'thumb') 
@@ -304,7 +585,8 @@ end
  unless controller.controller_name == 'users' 
  t('.twitter') 
  unless twitter_available?(this_blog, current_user) 
- t(".how_to_setup_twitter", twitter_settings_link: link_to(t(".fill_the_twitter_credentials"), controller: 'admin/settings', action: 'write'), twitter_registration_link: link_to(t(".registered_your_application"), "https://dev.twitter.com/apps/new")) 
+  t(".how_to_setup_twitter_html", twitter_settings_link: link_to(t(".fill_the_twitter_credentials"), controller: 'admin/settings', action: 'write'), twitter_registration_link: link_to(t(".registered_your_application"), "https://dev.twitter.com/apps/new")) 
+ 
  end 
  t('.twitter_account')
  f.text_field :twitter_account, {class: 'form-control', disabled: twitter_available?(this_blog, current_user)} 
@@ -313,7 +595,7 @@ end
  t('.twitter_oauth_secret')
  f.text_field :twitter_oauth_token_secret, {class: 'form-control', disabled: twitter_available?(this_blog, current_user)} 
  t('.contact_settings')
- t('.contact_explain', link: link_to(t('.author_page'), author_path(id: current_user.login))) 
+ t('.contact_explain_html', link: link_to(t('.author_page'), author_path(id: current_user.login))) 
  t('.about')
  f.text_area :description, {class: 'form-control', rows: 5} 
  t('.website')
@@ -332,8 +614,11 @@ end
  link_to(t(".cancel"), {action: 'index'}) 
  t(".or") 
  submit_tag(t(".save"), class: 'btn btn-success') 
- end 
  
+ end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -345,14 +630,81 @@ end
       redirect_to admin_users_url, notice: 'User was successfully updated.'
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :page_heading do 
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
  t(".edit_user") 
  end 
- form_tag :action=>"update", :id => @user.id do 
-  form_for([:admin, @user]) do |f| 
- if @user.errors.any? 
- pluralize(@user.errors.count, "error") 
- @user.errors.full_messages.each do |message| 
+  
+ form_for([:admin, @user]) do |f| 
+  if user.errors.any? 
+ pluralize(user.errors.count, "error") 
+ user.errors.full_messages.each do |message| 
  message 
  end 
  end 
@@ -371,7 +723,7 @@ end
  t('.user_status')
  User::STATUS.each do |state| 
  state 
- 'selected' if @user.state == state 
+ 'selected' if user.state == state 
  t("user.status.#{state}") 
  end 
  end 
@@ -382,12 +734,12 @@ end
  f.text_field :lastname, class: 'form-control' 
  t('.nickname') 
  f.text_field :nickname, class: 'form-control' 
- unless @user.login.nil? 
+ unless user.login.nil? 
  t('.display_name') 
- options_for_select(@user.display_names, @user.name) 
+ options_for_select(user.display_names, user.name) 
  end 
  t('.article_filter') 
- options_for_select text_filter_options_with_id, @user.text_filter.id 
+ options_for_select text_filter_options_with_id, user.text_filter.id 
  unless controller.controller_name == 'users'
  t('.avatar') 
  display_user_avatar(current_user, 'thumb') 
@@ -407,7 +759,8 @@ end
  unless controller.controller_name == 'users' 
  t('.twitter') 
  unless twitter_available?(this_blog, current_user) 
- t(".how_to_setup_twitter", twitter_settings_link: link_to(t(".fill_the_twitter_credentials"), controller: 'admin/settings', action: 'write'), twitter_registration_link: link_to(t(".registered_your_application"), "https://dev.twitter.com/apps/new")) 
+  t(".how_to_setup_twitter_html", twitter_settings_link: link_to(t(".fill_the_twitter_credentials"), controller: 'admin/settings', action: 'write'), twitter_registration_link: link_to(t(".registered_your_application"), "https://dev.twitter.com/apps/new")) 
+ 
  end 
  t('.twitter_account')
  f.text_field :twitter_account, {class: 'form-control', disabled: twitter_available?(this_blog, current_user)} 
@@ -416,7 +769,7 @@ end
  t('.twitter_oauth_secret')
  f.text_field :twitter_oauth_token_secret, {class: 'form-control', disabled: twitter_available?(this_blog, current_user)} 
  t('.contact_settings')
- t('.contact_explain', link: link_to(t('.author_page'), author_path(id: current_user.login))) 
+ t('.contact_explain_html', link: link_to(t('.author_page'), author_path(id: current_user.login))) 
  t('.about')
  f.text_area :description, {class: 'form-control', rows: 5} 
  t('.website')
@@ -435,9 +788,11 @@ end
  link_to(t(".cancel"), {action: 'index'}) 
  t(".or") 
  submit_tag(t(".save"), class: 'btn btn-success') 
- end 
  
  end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
