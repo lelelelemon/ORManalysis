@@ -43,12 +43,12 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY TYPE_Regexp def_%cl_1_3 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "https://" def_%cl_1_4 
 		 3: u->gsub def_%cl_1_5 u[2.2,] %cl_1_4[3.2,] 	 ARGS:%cl_1_3,%cl_1_4,
 		 4: urls2->push def_%cl_1_6 urls2[] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
 		 5: 
 		 6: COPY TYPE_Regexp def_%cl_1_7 
-		 7: COPY TYPE_StringLiteral def_%cl_1_8 
+		 7: COPY TYPE_StringLiteral "http://" def_%cl_1_8 
 		 8: u->gsub def_%cl_1_9 u[3.3,2.2,] %cl_1_8[3.7,] 	 ARGS:%cl_1_7,%cl_1_8,
 		 9: urls2->push def_%cl_1_10 urls2[3.4,] %cl_1_9[3.8,] 	 ARGS:%cl_1_9,
 		 10: RETURN %cl_1_10[3.9,] %self[2.0,] 
@@ -89,11 +89,11 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY TYPE_Regexp def_%cl_2_3 
-		 2: COPY TYPE_StringLiteral def_%cl_2_4 
+		 2: COPY TYPE_StringLiteral "" def_%cl_2_4 
 		 3: u->gsub def_%cl_2_5 u[2.2,] %cl_2_4[3.2,] 	 ARGS:%cl_2_3,%cl_2_4,
 		 4: urls2->push def_%cl_2_6 urls2[] %cl_2_5[3.3,] 	 ARGS:%cl_2_5,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_7 
+		 6: COPY TYPE_StringLiteral "/" def_%cl_2_7 
 		 7: u->+ def_%cl_2_8 u[3.3,2.2,] %cl_2_7[3.6,] 	 ARGS:%cl_2_7,
 		 8: urls2->push def_%cl_2_9 urls2[3.4,] %cl_2_8[3.7,] 	 ARGS:%cl_2_8,
 		 9: RETURN %cl_2_9[3.8,] %self[2.0,] 
@@ -181,7 +181,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY TYPE_NthRef def_%cl_5_3 
-		 2: COPY TYPE_StringLiteral def_%cl_5_4 
+		 2: COPY TYPE_StringLiteral "www." def_%cl_5_4 
 		 3: BUILDSTRING def_%cl_5_5 %cl_5_3[3.1,] %cl_5_4[3.2,] 
 		 4: RETURN %cl_5_5[3.3,] %self[2.0,] 
 BB 4
@@ -217,7 +217,7 @@ CLOSURE END:
 		 30: (Story) def_%v_13 
 		 31: HASH-url-is_expired- def_%v_14 %v_12[2.27,] 
 		 32: %v_13->where def_%v_15 %v_13[2.30,] %v_14[2.31,] 	 ARGS:%v_14,
-		 33: COPY TYPE_StringLiteral def_%v_16 
+		 33: COPY TYPE_StringLiteral "id DESC" def_%v_16 
 		 34: %v_15->order def_%v_17 %v_15[2.32,] %v_16[2.33,] 	 ARGS:%v_16,
 		 35: %v_17->first def_%v_18 %v_17[2.34,] 	 ARGS:
 		 36: COPY TYPE_PASS def_s %v_18[2.35,] 
@@ -257,7 +257,7 @@ BB 2
 		 5: 
 		 6: (Story) def_%v_3 
 		 7: %v_3->all def_%v_4 %v_3[2.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "id DESC" def_%v_5 
 		 9: %v_4->order def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: %v_6->each def_%v_7 %v_6[2.9,] %self[2.0,] 	 ARGS:%v_6,
 CLOSURE BEGIN: s[2.10,] 
@@ -315,14 +315,14 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "(CAST(upvotes AS " def_%v_3 
 		 7: %self->votes_cast_type def_%v_4 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral ") - " def_%v_5 
 		 9: BUILDSTRING def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "CAST(downvotes AS " def_%v_7 
 		 11: 
 		 12: %self->votes_cast_type def_%v_8 %self[2.0,2.7,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%v_9 
+		 13: COPY TYPE_StringLiteral "))" def_%v_9 
 		 14: BUILDSTRING def_%v_10 %v_7[2.10,] %v_8[2.12,] %v_9[2.13,] 
 		 15: %v_6-><< def_%v_11 %v_6[2.9,] %v_10[2.14,] 	 ARGS:%v_10,
 		 16: RETURN %v_11[2.15,] %self[2.0,2.7,2.12,] 
@@ -356,13 +356,13 @@ BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "signed" def_%v_8 
 		 1: RETURN %v_8[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "integer" def_%v_9 
 		 1: RETURN %v_9[4.0,] %self[2.0,] 
 BB 6
 	outgoing: 
@@ -734,7 +734,7 @@ BB 6
 CLOSURE END: base[3.3,] 
 		 11: 
 		 12: %self->comments def_%v_6 %self[2.0,2.8,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%v_7 
+		 13: COPY TYPE_StringLiteral "user_id <> ?" def_%v_7 
 		 14: %self->user_id def_%v_8 %self[2.0,2.8,2.12,] 	 ARGS:
 		 15: %v_6->where def_%v_9 %v_6[2.12,] %v_7[2.13,] %v_8[2.14,] 	 ARGS:%v_7,%v_8,
 		 16: %v_9->select def_%v_10 %v_9[2.15,] 	 ARGS:Symbol,Symbol,
@@ -834,7 +834,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_29 	 ARGS:Fixnum,
+		 1: CONSTANT def_%v_29 	 ARGS:Fixnum,
 		 2: %v_29->* def_%v_30 %v_29[8.1,] 	 ARGS:Fixnum,
 		 3: COPY TYPE_PASS def_window %v_30[8.2,] 
 		 4: 
@@ -997,9 +997,9 @@ BB 4
 	instructions:
 		 0: 
 		 1: u->username def_%cl_1_6 u[] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_7 
+		 2: COPY TYPE_StringLiteral " does not have permission to use privileged " def_%cl_1_7 
 		 3: BUILDSTRING def_%cl_1_8 %cl_1_6[4.1,] %cl_1_7[4.2,] 
-		 4: COPY TYPE_StringLiteral def_%cl_1_9 
+		 4: COPY TYPE_StringLiteral "tag " def_%cl_1_9 
 		 5: 
 		 6: t->tag def_%cl_1_10 t[2.2,] 	 ARGS:
 		 7: %cl_1_10->tag def_%cl_1_11 %cl_1_10[4.6,] 	 ARGS:
@@ -1045,7 +1045,7 @@ BB 10
 	instructions:
 		 0: 
 		 1: u->username def_%cl_1_21 u[] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_22 
+		 2: COPY TYPE_StringLiteral " cannot add inactive tag " def_%cl_1_22 
 		 3: t->tag def_%cl_1_23 t[2.2,] 	 ARGS:
 		 4: %cl_1_23->tag def_%cl_1_24 %cl_1_23[10.3,] 	 ARGS:
 		 5: BUILDSTRING def_%cl_1_25 %cl_1_21[10.1,] %cl_1_22[10.2,] %cl_1_24[10.4,] 
@@ -1135,10 +1135,10 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->errors def_%v_11 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_12 
-		 3: COPY TYPE_StringLiteral def_%v_13 
+		 2: COPY TYPE_StringLiteral "Must have at least one non-media (PDF, video) " def_%v_12 
+		 3: COPY TYPE_StringLiteral "tag.  If no tags apply to your content, it probably doesn't " def_%v_13 
 		 4: %v_12-><< def_%v_14 %v_12[5.2,] %v_13[5.3,] 	 ARGS:%v_13,
-		 5: COPY TYPE_StringLiteral def_%v_15 
+		 5: COPY TYPE_StringLiteral "belong here." def_%v_15 
 		 6: %v_14-><< def_%v_16 %v_14[5.4,] %v_15[5.5,] 	 ARGS:%v_15,
 		 7: %v_11->add def_%v_17 %v_11[5.1,] %v_16[5.6,] 	 ARGS:Symbol,%v_16,
 		 8: RETURN %v_17[5.7,] %self[5.1,2.0,] 
@@ -1168,7 +1168,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->short_id_path def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "/" def_%v_4 
 		 8: %self->title_as_url def_%v_5 %self[2.0,2.6,] 	 ARGS:
 		 9: BUILDSTRING def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,2.8,] 
@@ -1193,7 +1193,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->short_id_url def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "/" def_%v_4 
 		 8: %self->title_as_url def_%v_5 %self[2.0,2.6,] 	 ARGS:
 		 9: BUILDSTRING def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,2.8,] 
@@ -1266,7 +1266,7 @@ BB 5
 		 0: 
 		 1: %self->markeddown_description def_%v_5 %self[2.0,] 	 ARGS:
 		 2: COPY TYPE_Regexp def_%v_6 
-		 3: COPY TYPE_StringLiteral def_%v_7 
+		 3: COPY TYPE_StringLiteral "" def_%v_7 
 		 4: %v_5->gsub def_%v_8 %v_5[5.1,] %v_7[5.3,] 	 ARGS:%v_6,%v_7,
 		 5: 
 BB 6
@@ -1292,7 +1292,7 @@ BB 8
 		 1: s->to_s def_%v_11 s[7.0,] 	 ARGS:
 		 2: %v_11->[] def_%v_12 %v_11[8.1,] chars[3.0,2.5,] 	 ARGS:Fixnum,chars,
 		 3: COPY TYPE_Regexp def_%v_13 
-		 4: COPY TYPE_StringLiteral def_%v_14 
+		 4: COPY TYPE_StringLiteral "" def_%v_14 
 		 5: %v_12->gsub def_%v_15 %v_12[8.2,] %v_14[8.4,] 	 ARGS:%v_13,%v_14,
 		 6: COPY TYPE_PASS def_s %v_15[8.5,] 
 		 7: 
@@ -1348,16 +1348,16 @@ BB 4
 		 0: 
 		 1: %self->url def_%v_6 %self[2.0,] 	 ARGS:
 		 2: COPY TYPE_Regexp def_%v_7 
-		 3: COPY TYPE_StringLiteral def_%v_8 
+		 3: COPY TYPE_StringLiteral "" def_%v_8 
 		 4: %v_6->gsub def_%v_9 %v_6[4.1,] %v_8[4.3,] 	 ARGS:%v_7,%v_8,
 		 5: COPY TYPE_Regexp def_%v_10 
-		 6: COPY TYPE_StringLiteral def_%v_11 
+		 6: COPY TYPE_StringLiteral "" def_%v_11 
 		 7: %v_9->gsub def_%v_12 %v_9[4.4,] %v_11[4.6,] 	 ARGS:%v_10,%v_11,
 		 8: COPY TYPE_Regexp def_%v_13 
-		 9: COPY TYPE_StringLiteral def_%v_14 
+		 9: COPY TYPE_StringLiteral "" def_%v_14 
 		 10: %v_12->gsub def_%v_15 %v_12[4.7,] %v_14[4.9,] 	 ARGS:%v_13,%v_14,
 		 11: COPY TYPE_Regexp def_%v_16 
-		 12: COPY TYPE_StringLiteral def_%v_17 
+		 12: COPY TYPE_StringLiteral "\1" def_%v_17 
 		 13: %v_15->gsub def_%v_18 %v_15[4.10,] %v_17[4.12,] 	 ARGS:%v_16,%v_17,
 		 14: RETURN %v_18[4.13,] %self[4.1,2.0,] 
 BB 6
@@ -1380,9 +1380,9 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "/search?q=domain:" def_%v_3 
 		 7: %self->domain def_%v_4 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "&order=newest" def_%v_5 
 		 9: BUILDSTRING def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: RETURN %v_6[2.9,] %self[2.0,2.7,] 
 BB 3
@@ -1482,27 +1482,27 @@ BB 2
 		 17: 
 		 18: (Story) def_%v_11 
 		 19: %v_11->connection def_%v_12 %v_11[2.18,] 	 ARGS:
-		 20: COPY TYPE_StringLiteral def_%v_13 
+		 20: COPY TYPE_StringLiteral "UPDATE " def_%v_13 
 		 21: (Story) def_%v_14 
 		 22: %v_14->table_name def_%v_15 %v_14[2.21,] 	 ARGS:
-		 23: COPY TYPE_StringLiteral def_%v_16 
+		 23: COPY TYPE_StringLiteral " SET " def_%v_16 
 		 24: BUILDSTRING def_%v_17 %v_13[2.20,] %v_15[2.22,] %v_16[2.23,] 
-		 25: COPY TYPE_StringLiteral def_%v_18 
+		 25: COPY TYPE_StringLiteral "upvotes = COALESCE(upvotes, 0) + " def_%v_18 
 		 26: 
 		 27: upvote->to_i def_%v_19 upvote[2.5,2.9,] 	 ARGS:
-		 28: COPY TYPE_StringLiteral def_%v_20 
+		 28: COPY TYPE_StringLiteral ", " def_%v_20 
 		 29: BUILDSTRING def_%v_21 %v_18[2.25,] %v_19[2.27,] %v_20[2.28,] 
 		 30: %v_17-><< def_%v_22 %v_17[2.24,] %v_21[2.29,] 	 ARGS:%v_21,
-		 31: COPY TYPE_StringLiteral def_%v_23 
+		 31: COPY TYPE_StringLiteral "downvotes = COALESCE(downvotes, 0) + " def_%v_23 
 		 32: 
 		 33: downvote->to_i def_%v_24 downvote[2.6,2.14,] 	 ARGS:
-		 34: COPY TYPE_StringLiteral def_%v_25 
+		 34: COPY TYPE_StringLiteral ", " def_%v_25 
 		 35: BUILDSTRING def_%v_26 %v_23[2.31,] %v_24[2.33,] %v_25[2.34,] 
 		 36: %v_22-><< def_%v_27 %v_22[2.30,] %v_26[2.35,] 	 ARGS:%v_26,
-		 37: COPY TYPE_StringLiteral def_%v_28 
+		 37: COPY TYPE_StringLiteral "hotness = '" def_%v_28 
 		 38: 
 		 39: %self->calculated_hotness def_%v_29 %self[2.0,2.8,2.11,2.13,2.16,] 	 ARGS:
-		 40: COPY TYPE_StringLiteral def_%v_30 
+		 40: COPY TYPE_StringLiteral "' WHERE id = " def_%v_30 
 		 41: %self->id def_%v_31 %self[2.0,2.8,2.11,2.13,2.16,2.39,] 	 ARGS:
 		 42: %v_31->to_i def_%v_32 %v_31[2.41,] 	 ARGS:
 		 43: BUILDSTRING def_%v_33 %v_28[2.37,] %v_29[2.39,] %v_30[2.40,] %v_32[2.42,] 
@@ -1602,7 +1602,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "inactive_user" def_%v_7 
 		 2: c->push def_%v_8 c[4.2,] %v_7[5.1,] 	 ARGS:%v_7,
 		 3: 
 BB 6
@@ -1618,7 +1618,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_11 
+		 1: COPY TYPE_StringLiteral "new_user" def_%v_11 
 		 2: c->push def_%v_12 c[4.2,] %v_11[7.1,] 	 ARGS:%v_11,
 		 3: 
 BB 8
@@ -1633,7 +1633,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_14 
+		 1: COPY TYPE_StringLiteral "user_is_author" def_%v_14 
 		 2: c->push def_%v_15 c[4.2,] %v_14[9.1,] 	 ARGS:%v_14,
 		 3: 
 BB 10
@@ -1656,7 +1656,7 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "" def_%v_16 
 		 2: c->join def_%v_17 c[4.2,] %v_16[13.1,] 	 ARGS:%v_16,
 		 3: RETURN %v_17[13.2,] %self[2.0,] 
 BB 14
@@ -2078,7 +2078,7 @@ BB 8
 		 4: %v_11->merge def_%v_13 %v_11[8.2,] %v_12[8.3,] 	 ARGS:%v_12,
 		 5: COPY TYPE_PASS def_all_changes %v_13[8.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_14 
+		 7: COPY TYPE_StringLiteral "unavailable_at" def_%v_14 
 		 8: %v_13->delete def_%v_15 %v_13[8.4,] %v_14[8.7,] 	 ARGS:%v_14,
 		 9: 
 		 10: all_changes->any? def_%v_16 all_changes[8.5,] 	 ARGS:
@@ -2107,7 +2107,7 @@ BB 11
 		 10: %self->id def_%v_23 %self[11.6,2.0,] 	 ARGS:
 		 11: ATTRASSIGN m->story_id %v_23[11.10,] 
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%v_24 
+		 13: COPY TYPE_StringLiteral "is_expired" def_%v_24 
 		 14: all_changes->[] def_%v_25 all_changes[8.5,] %v_24[11.13,] 	 ARGS:%v_24,
 		 15: BRANCH %v_25[11.14,] 
 BB 13
@@ -2126,7 +2126,7 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_27 
+		 1: COPY TYPE_StringLiteral "deleted story" def_%v_27 
 		 2: ATTRASSIGN m->action %v_27[15.1,] 
 		 3: 
 BB 16
@@ -2134,7 +2134,7 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_28 
+		 1: COPY TYPE_StringLiteral "is_expired" def_%v_28 
 		 2: all_changes->[] def_%v_29 all_changes[8.5,] %v_28[16.1,] 	 ARGS:%v_28,
 		 3: BRANCH %v_29[16.2,] 
 BB 17
@@ -2154,7 +2154,7 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_32 
+		 1: COPY TYPE_StringLiteral "undeleted story" def_%v_32 
 		 2: ATTRASSIGN m->action %v_32[19.1,] 
 		 3: 
 BB 20
@@ -2183,7 +2183,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "merged_story_id" def_%cl_1_3 
 		 2: k->== def_%cl_1_4 k[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: BRANCH %cl_1_4[3.2,] 
 BB 4
@@ -2198,16 +2198,16 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_6 
+		 1: COPY TYPE_StringLiteral "merged into " def_%cl_1_6 
 		 2: %self->merged_into_story def_%cl_1_7 %self[2.0,] 	 ARGS:
 		 3: %cl_1_7->short_id def_%cl_1_8 %cl_1_7[5.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_9 
+		 4: COPY TYPE_StringLiteral " " def_%cl_1_9 
 		 5: BUILDSTRING def_%cl_1_10 %cl_1_6[5.1,] %cl_1_8[5.3,] %cl_1_9[5.4,] 
-		 6: COPY TYPE_StringLiteral def_%cl_1_11 
+		 6: COPY TYPE_StringLiteral "(" def_%cl_1_11 
 		 7: 
 		 8: %self->merged_into_story def_%cl_1_12 %self[5.2,2.0,] 	 ARGS:
 		 9: %cl_1_12->title def_%cl_1_13 %cl_1_12[5.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%cl_1_14 
+		 10: COPY TYPE_StringLiteral ")" def_%cl_1_14 
 		 11: BUILDSTRING def_%cl_1_15 %cl_1_11[5.6,] %cl_1_13[5.9,] %cl_1_14[5.10,] 
 		 12: %cl_1_10-><< def_%cl_1_16 %cl_1_10[5.5,] %cl_1_15[5.11,] 	 ARGS:%cl_1_15,
 		 13: 
@@ -2216,7 +2216,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_17 
+		 1: COPY TYPE_StringLiteral "unmerged from another story" def_%cl_1_17 
 		 2: COPY TYPE_PASS def_%cl_1_16 %cl_1_17[6.1,] 
 BB 7
 	outgoing: 12 
@@ -2228,11 +2228,11 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_18 
-		 2: COPY TYPE_StringLiteral def_%cl_1_19 
+		 1: COPY TYPE_StringLiteral "changed " def_%cl_1_18 
+		 2: COPY TYPE_StringLiteral " from " def_%cl_1_19 
 		 3: v->[] def_%cl_1_20 v[2.3,] 	 ARGS:Fixnum,
 		 4: %cl_1_20->inspect def_%cl_1_21 %cl_1_20[8.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_1_22 
+		 5: COPY TYPE_StringLiteral " to " def_%cl_1_22 
 		 6: v->[] def_%cl_1_23 v[8.3,2.3,] 	 ARGS:Fixnum,
 		 7: %cl_1_23->inspect def_%cl_1_24 %cl_1_23[8.6,] 	 ARGS:
 		 8: BUILDSTRING def_%cl_1_25 %cl_1_18[8.1,] k[2.2,] %cl_1_19[8.2,] %cl_1_21[8.4,] %cl_1_22[8.5,] %cl_1_24[8.7,] 
@@ -2249,7 +2249,7 @@ BB 12
 	datadep: 
 	instructions:
 CLOSURE END: k[2.2,] 
-		 2: COPY TYPE_StringLiteral def_%v_34 
+		 2: COPY TYPE_StringLiteral ", " def_%v_34 
 		 3: %v_33->join def_%v_35 %v_33[20.1,] %v_34[20.2,] 	 ARGS:%v_34,
 		 4: ATTRASSIGN m->action %v_35[20.3,] 
 		 5: COPY TYPE_PASS def_%v_32 %v_35[20.3,] 
@@ -2290,12 +2290,12 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "story." def_%v_3 
 		 7: %self->short_id def_%v_4 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "." def_%v_5 
 		 9: %self->created_at def_%v_6 %self[2.0,2.7,] 	 ARGS:
 		 10: %v_6->to_i def_%v_7 %v_6[2.9,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_8 
+		 11: COPY TYPE_StringLiteral "@" def_%v_8 
 		 12: (Rails) def_%v_9 
 		 13: %v_9->application def_%v_10 %v_9[2.12,] 	 ARGS:
 		 14: %v_10->domain def_%v_11 %v_10[2.13,] 	 ARGS:
@@ -2322,9 +2322,9 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Keystore) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "user:" def_%v_4 
 		 8: %self->user_id def_%v_5 %self[2.0,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral ":stories_submitted" def_%v_6 
 		 10: BUILDSTRING def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
 		 11: %v_3->increment_value_for def_%v_8 %v_3[2.6,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: RETURN %v_8[2.11,] %self[2.0,2.8,] 
@@ -2500,7 +2500,7 @@ BB 2
 		 5: 
 		 6: %self->title def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "" def_%v_5 
 		 9: %v_4->split def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: %v_6->map def_%v_7 %v_6[2.9,] %self[2.0,2.6,] 	 ARGS:%v_6,
 CLOSURE BEGIN: chr[2.10,] 
@@ -2530,7 +2530,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral " " def_%cl_1_5 
 		 2: RETURN %self[2.0,] 
 BB 5
 	outgoing: 9 
@@ -2550,7 +2550,7 @@ BB 9
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 11: COPY TYPE_StringLiteral def_%v_8 
+		 11: COPY TYPE_StringLiteral "" def_%v_8 
 		 12: %v_7->join def_%v_9 %v_7[2.10,] %v_8[2.11,] 	 ARGS:%v_8,
 		 13: ATTRASSIGN %self->title %v_9[2.12,] 
 		 14: 
@@ -2604,7 +2604,7 @@ BB 2
 		 8: %v_4->routes def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: %v_5->url_helpers def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->root_path def_%v_7 %v_6[2.9,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_8 
+		 11: COPY TYPE_StringLiteral "s/" def_%v_8 
 		 12: %self->short_id def_%v_9 %self[2.0,] 	 ARGS:
 		 13: BUILDSTRING def_%v_10 %v_8[2.11,] %v_9[2.12,] 
 		 14: %v_7->+ def_%v_11 %v_7[2.10,] %v_10[2.13,] 	 ARGS:%v_10,
@@ -2632,7 +2632,7 @@ BB 2
 		 6: (Rails) def_%v_3 
 		 7: %v_3->application def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->root_url def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "s/" def_%v_6 
 		 10: %self->short_id def_%v_7 %self[2.0,] 	 ARGS:
 		 11: BUILDSTRING def_%v_8 %v_6[2.9,] %v_7[2.10,] 
 		 12: %v_5->+ def_%v_9 %v_5[2.8,] %v_8[2.11,] 	 ARGS:%v_8,
@@ -2830,7 +2830,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral " " def_%v_6 
 		 10: %v_5->join def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: COPY TYPE_PASS def_old_tags_a %v_7[2.10,] 
 		 12: 
@@ -2904,7 +2904,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 16: COPY TYPE_StringLiteral def_%v_11 
+		 16: COPY TYPE_StringLiteral " " def_%v_11 
 		 17: %v_10->join def_%v_12 %v_10[2.15,] %v_11[2.16,] 	 ARGS:%v_11,
 		 18: COPY TYPE_PASS def_new_tags_a %v_12[2.17,] 
 		 19: 
@@ -2922,7 +2922,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_15 
+		 1: COPY TYPE_StringLiteral "tags" def_%v_15 
 		 2: COPY TYPE_Array def_%v_16 old_tags_a[2.11,] new_tags_a[2.18,] 
 		 3: HASH- def_%v_17 %v_15[4.1,] %v_16[4.2,] 
 		 4: RETURN %v_17[4.3,] %self[2.0,] 
@@ -3105,7 +3105,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: tag_name->to_s def_%cl_2_3 tag_name[2.2,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_2_4 
+		 2: COPY TYPE_StringLiteral "" def_%cl_2_4 
 		 3: %cl_2_3->!= def_%cl_2_5 %cl_2_3[3.1,] %cl_2_4[3.2,] 	 ARGS:%cl_2_4,
 		 4: BRANCH %cl_2_5[3.3,] 
 BB 4
@@ -3221,7 +3221,7 @@ BB 2
 		 6: %self->title def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->downcase def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: COPY TYPE_Regexp def_%v_5 
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "_" def_%v_6 
 		 10: %v_4->gsub def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 ARGS:%v_5,%v_6,
 		 11: COPY TYPE_PASS def_u %v_7[2.10,] 
 		 12: 
@@ -3238,8 +3238,8 @@ BB 4
 	instructions:
 		 0: 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_11 
-		 3: COPY TYPE_StringLiteral def_%v_12 
+		 2: COPY TYPE_StringLiteral "__" def_%v_11 
+		 3: COPY TYPE_StringLiteral "_" def_%v_12 
 		 4: u->gsub! def_%v_13 u[2.11,] %v_11[4.2,] %v_12[4.3,] 	 ARGS:%v_11,%v_12,
 		 5: 
 BB 6
@@ -3249,10 +3249,10 @@ BB 6
 		 0: COPY TYPE_Nil def_%v_8 
 		 1: 
 		 2: COPY TYPE_Regexp def_%v_14 
-		 3: COPY TYPE_StringLiteral def_%v_15 
+		 3: COPY TYPE_StringLiteral "" def_%v_15 
 		 4: u->gsub def_%v_16 u[2.11,] %v_15[6.3,] 	 ARGS:%v_14,%v_15,
 		 5: COPY TYPE_Regexp def_%v_17 
-		 6: COPY TYPE_StringLiteral def_%v_18 
+		 6: COPY TYPE_StringLiteral "" def_%v_18 
 		 7: %v_16->gsub def_%v_19 %v_16[6.4,] %v_18[6.6,] 	 ARGS:%v_17,%v_18,
 		 8: RETURN %v_19[6.7,] %self[2.0,] 
 BB 8
@@ -3499,7 +3499,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: m->[] def_%v_6 m[3.2,] 	 ARGS:Fixnum,
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 2: COPY TYPE_StringLiteral "&" def_%v_7 
 		 3: %v_6->split def_%v_8 %v_6[5.1,] %v_7[5.2,] 	 ARGS:%v_7,
 		 4: COPY TYPE_PASS def_params %v_8[5.3,] 
 		 5: 
@@ -3546,8 +3546,8 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_12 
-		 1: COPY TYPE_StringLiteral def_%v_13 
+		 0: COPY TYPE_StringLiteral "?" def_%v_12 
+		 1: COPY TYPE_StringLiteral "&" def_%v_13 
 		 2: params->join def_%v_14 params[5.4,] %v_13[6.1,] 	 ARGS:%v_13,
 		 3: %v_12-><< def_%v_15 %v_12[6.0,] %v_14[6.2,] 	 ARGS:%v_14,
 		 4: 
@@ -3555,7 +3555,7 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_16 
+		 0: COPY TYPE_StringLiteral "" def_%v_16 
 		 1: COPY TYPE_PASS def_%v_15 %v_16[7.0,] 
 BB 8
 	outgoing: 10 
@@ -3756,7 +3756,7 @@ BB 2
 		 14: %self->id def_%v_6 %self[2.0,] 	 ARGS:
 		 15: HASH-story_id-comment_id- def_%v_7 %v_6[2.14,] 
 		 16: %v_5->where def_%v_8 %v_5[2.13,] %v_7[2.15,] 	 ARGS:%v_7,
-		 17: COPY TYPE_StringLiteral def_%v_9 
+		 17: COPY TYPE_StringLiteral "vote != 0" def_%v_9 
 		 18: %v_8->where def_%v_10 %v_8[2.16,] %v_9[2.17,] 	 ARGS:%v_9,
 		 19: %v_10->each def_%v_11 %v_10[2.18,] %self[2.0,2.14,] 	 ARGS:%v_10,
 CLOSURE BEGIN: v[2.19,] r_counts[2.8,] user[2.5,] r_whos[2.11,] 
@@ -3886,7 +3886,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral "" def_%cl_2_3 
 		 2: k->== def_%cl_2_4 k[2.2,] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
 		 3: BRANCH %cl_2_4[3.2,] 
 BB 4
@@ -3894,7 +3894,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_5 
+		 1: COPY TYPE_StringLiteral "+" def_%cl_2_5 
 		 2: r_counts->[] def_%cl_2_6 r_counts[] k[2.2,] 	 ARGS:k,
 		 3: BUILDSTRING def_%cl_2_7 %cl_2_5[4.1,] %cl_2_6[4.2,] 
 		 4: 
@@ -3904,7 +3904,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: r_counts->[] def_%cl_2_8 r_counts[] k[2.2,] 	 ARGS:k,
-		 2: COPY TYPE_StringLiteral def_%cl_2_9 
+		 2: COPY TYPE_StringLiteral " " def_%cl_2_9 
 		 3: BUILDSTRING def_%cl_2_10 %cl_2_8[5.1,] %cl_2_9[5.2,] 
 		 4: 
 		 5: (Vote) def_%cl_2_11 
@@ -3972,18 +3972,18 @@ BB 16
 	outgoing: 18 20 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_20 
+		 0: COPY TYPE_StringLiteral " (" def_%cl_2_20 
 		 1: r_whos->[] def_%cl_2_21 r_whos[] k[2.2,] 	 ARGS:k,
-		 2: COPY TYPE_StringLiteral def_%cl_2_22 
+		 2: COPY TYPE_StringLiteral ", " def_%cl_2_22 
 		 3: %cl_2_21->join def_%cl_2_23 %cl_2_21[16.1,] %cl_2_22[16.2,] 	 ARGS:%cl_2_22,
-		 4: COPY TYPE_StringLiteral def_%cl_2_24 
+		 4: COPY TYPE_StringLiteral ")" def_%cl_2_24 
 		 5: BUILDSTRING def_%cl_2_25 %cl_2_20[16.0,] %cl_2_23[16.3,] %cl_2_24[16.4,] 
 		 6: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_26 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_26 
 		 1: COPY TYPE_PASS def_%cl_2_25 %cl_2_26[17.0,] 
 BB 18
 	outgoing: 20 22 
@@ -4008,7 +4008,7 @@ BB 22
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 24: COPY TYPE_StringLiteral def_%v_15 
+		 24: COPY TYPE_StringLiteral ", " def_%v_15 
 		 25: %v_14->join def_%v_16 %v_14[2.23,] %v_15[2.24,] 	 ARGS:%v_15,
 		 26: RETURN %v_16[2.25,] %self[2.0,2.14,] 
 BB 3
@@ -4045,7 +4045,7 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: def_%v_6 
+		 2: GLOBALVAR $! def_%v_6 
 BB 6
 	outgoing: 8 9 
 	datadep: 
@@ -4059,12 +4059,12 @@ BB 6
 		 6: ATTRASSIGN %v_10->timeout 
 		 7: 
 		 8: %self->url def_%v_11 %self[2.0,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_12 
+		 9: COPY TYPE_StringLiteral "User-agent" def_%v_12 
 		 10: 
 		 11: (Rails) def_%v_13 
 		 12: %v_13->application def_%v_14 %v_13[6.11,] 	 ARGS:
 		 13: %v_14->domain def_%v_15 %v_14[6.12,] 	 ARGS:
-		 14: COPY TYPE_StringLiteral def_%v_16 
+		 14: COPY TYPE_StringLiteral " for " def_%v_16 
 		 15: %self->fetching_ip def_%v_17 %self[6.8,2.0,] 	 ARGS:
 		 16: BUILDSTRING def_%v_18 %v_15[6.13,] %v_16[6.14,] %v_17[6.15,] 
 		 17: HASH- def_%v_19 %v_12[6.9,] %v_18[6.16,] 
@@ -4177,7 +4177,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "" def_%v_3 
 		 7: COPY TYPE_PASS def_title %v_3[2.6,] 
 		 8: 
 		 9: %self->parsed_content def_%v_4 %self[2.0,] 	 ARGS:
@@ -4197,17 +4197,17 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_7 
 		 1: 
-		 2: def_%v_8 
+		 2: GLOBALVAR $! def_%v_8 
 BB 6
 	outgoing: 8 9 
 	datadep: 
 	instructions:
 		 0: 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral "meta[property='og:title']" def_%v_11 
 		 3: doc->at_css def_%v_12 doc[2.10,] %v_11[6.2,] 	 ARGS:%v_11,
 		 4: %v_12->attributes def_%v_13 %v_12[6.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_14 
+		 5: COPY TYPE_StringLiteral "content" def_%v_14 
 		 6: %v_13->[] def_%v_15 %v_13[6.4,] %v_14[6.5,] 	 ARGS:%v_14,
 		 7: %v_15->text def_%v_16 %v_15[6.6,] 	 ARGS:
 		 8: COPY TYPE_PASS def_title %v_16[6.7,] 
@@ -4257,7 +4257,7 @@ BB 14
 	instructions:
 		 0: 
 		 1: title->to_s def_%v_21 title[6.8,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_22 
+		 2: COPY TYPE_StringLiteral "" def_%v_22 
 		 3: %v_21->== def_%v_23 %v_21[14.1,] %v_22[14.2,] 	 ARGS:%v_22,
 		 4: BRANCH %v_23[14.3,] 
 BB 15
@@ -4265,17 +4265,17 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_24 
+		 1: GLOBALVAR $! def_%v_24 
 BB 17
 	outgoing: 18 19 
 	datadep: 
 	instructions:
 		 0: 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_27 
+		 2: COPY TYPE_StringLiteral "meta[name='title']" def_%v_27 
 		 3: doc->at_css def_%v_28 doc[2.10,] %v_27[17.2,] 	 ARGS:%v_27,
 		 4: %v_28->attributes def_%v_29 %v_28[17.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_30 
+		 5: COPY TYPE_StringLiteral "content" def_%v_30 
 		 6: %v_29->[] def_%v_31 %v_29[17.4,] %v_30[17.5,] 	 ARGS:%v_30,
 		 7: %v_31->text def_%v_32 %v_31[17.6,] 	 ARGS:
 		 8: COPY TYPE_PASS def_title %v_32[17.7,] 
@@ -4335,7 +4335,7 @@ BB 26
 	instructions:
 		 0: 
 		 1: title->to_s def_%v_37 title[17.8,6.8,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_38 
+		 2: COPY TYPE_StringLiteral "" def_%v_38 
 		 3: %v_37->== def_%v_39 %v_37[26.1,] %v_38[26.2,] 	 ARGS:%v_38,
 		 4: BRANCH %v_39[26.3,] 
 BB 27
@@ -4343,7 +4343,7 @@ BB 27
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_40 
+		 1: COPY TYPE_StringLiteral "title" def_%v_40 
 		 2: doc->at_css def_%v_41 doc[2.10,] %v_40[27.1,] 	 ARGS:%v_40,
 		 3: %v_41->try def_%v_42 %v_41[27.2,] 	 ARGS:Symbol,
 		 4: %v_42->to_s def_%v_43 %v_42[27.3,] 	 ARGS:
@@ -4402,17 +4402,17 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%v_7 
+		 1: GLOBALVAR $! def_%v_7 
 BB 8
 	outgoing: 9 10 20 
 	datadep: 
 	instructions:
 		 0: 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_StringLiteral "link[rel='canonical']" def_%v_10 
 		 3: doc->at_css def_%v_11 doc[4.3,] %v_10[8.2,] 	 ARGS:%v_10,
 		 4: %v_11->attributes def_%v_12 %v_11[8.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_13 
+		 5: COPY TYPE_StringLiteral "href" def_%v_13 
 		 6: %v_12->[] def_%v_14 %v_12[8.4,] %v_13[8.5,] 	 ARGS:%v_13,
 		 7: %v_14->text def_%v_15 %v_14[8.6,] 	 ARGS:
 		 8: COPY TYPE_PASS def_cu %v_15[8.7,] 

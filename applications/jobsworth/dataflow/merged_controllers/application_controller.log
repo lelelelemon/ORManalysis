@@ -35,11 +35,11 @@ BB 5
 	instructions:
 		 0: 
 		 1: (Sheet) def_%v_8 
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "user_id = ?" def_%v_9 
 		 3: %self->current_user def_%v_10 %self[2.0,] 	 ARGS:
 		 4: %v_10->id def_%v_11 %v_10[5.3,] 	 ARGS:
 		 5: %v_8->where def_%v_12 %v_8[5.1,] %v_9[5.2,] %v_11[5.4,] 	 ARGS:%v_9,%v_11,
-		 6: COPY TYPE_StringLiteral def_%v_13 
+		 6: COPY TYPE_StringLiteral "sheets.id" def_%v_13 
 		 7: %v_12->order def_%v_14 %v_12[5.5,] %v_13[5.6,] 	 ARGS:%v_13,
 		 8: %v_14->includes def_%v_15 %v_14[5.7,] 	 ARGS:Symbol,
 		 9: %v_15->first def_%v_16 %v_15[5.8,] 	 ARGS:
@@ -200,9 +200,9 @@ BB 7
 	datadep: 
 	instructions:
 		 0: (Milestone) def_%v_8 
-		 1: COPY TYPE_StringLiteral def_%v_9 
+		 1: COPY TYPE_StringLiteral "id" def_%v_9 
 		 2: %v_8->select def_%v_10 %v_8[7.0,] %v_9[7.1,] 	 ARGS:%v_9,
-		 3: COPY TYPE_StringLiteral def_%v_11 
+		 3: COPY TYPE_StringLiteral "company_id = ? AND completed_at IS NOT NULL" def_%v_11 
 		 4: %self->current_user def_%v_12 %self[2.0,] 	 ARGS:
 		 5: %v_12->company_id def_%v_13 %v_12[7.4,] 	 ARGS:
 		 6: %v_10->where def_%v_14 %v_10[7.2,] %v_11[7.3,] %v_13[7.5,] 	 ARGS:%v_11,%v_13,
@@ -307,13 +307,13 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_3 
-		 2: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "" def_%v_3 
+		 2: COPY TYPE_StringLiteral "(" def_%v_4 
 		 3: (Regexp) def_%v_5 
 		 4: %v_5->escape def_%v_6 %v_5[4.3,] k[2.6,] 	 ARGS:k,
-		 5: COPY TYPE_StringLiteral def_%v_7 
+		 5: COPY TYPE_StringLiteral ")" def_%v_7 
 		 6: def_%v_8 %v_3[4.1,] %v_4[4.2,] %v_6[4.4,] %v_7[4.5,] 
-		 7: COPY TYPE_StringLiteral def_%v_9 
+		 7: COPY TYPE_StringLiteral "{{{\1}}}" def_%v_9 
 		 8: text->gsub def_%v_10 text[2.5,] %v_8[4.6,] %v_9[4.7,] 	 ARGS:%v_8,%v_9,
 		 9: COPY TYPE_PASS def_res %v_10[4.8,] 
 		 10: 
@@ -341,11 +341,11 @@ BB 8
 	datadep: 
 	instructions:
 		 0: %v_13->h def_%v_14 %v_13[7.0,6.1,] res[4.9,] 	 ARGS:res,
-		 1: COPY TYPE_StringLiteral def_%v_15 
-		 2: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "{{{" def_%v_15 
+		 2: COPY TYPE_StringLiteral "<strong>" def_%v_16 
 		 3: %v_14->gsub def_%v_17 %v_14[8.0,] %v_15[8.1,] %v_16[8.2,] 	 ARGS:%v_15,%v_16,
-		 4: COPY TYPE_StringLiteral def_%v_18 
-		 5: COPY TYPE_StringLiteral def_%v_19 
+		 4: COPY TYPE_StringLiteral "}}}" def_%v_18 
+		 5: COPY TYPE_StringLiteral "</strong>" def_%v_19 
 		 6: %v_17->gsub def_%v_20 %v_17[8.3,] %v_18[8.4,] %v_19[8.5,] 	 ARGS:%v_18,%v_19,
 		 7: %v_20->html_safe def_%v_21 %v_20[8.6,] 	 ARGS:
 		 8: COPY TYPE_PASS def_res %v_21[8.7,] 
@@ -427,11 +427,11 @@ BB 4
 	datadep: 
 	instructions:
 		 0: %v_5->h def_%v_6 %v_5[3.0,2.11,] text[2.5,2.8,] 	 ARGS:text,
-		 1: COPY TYPE_StringLiteral def_%v_7 
-		 2: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "{{{" def_%v_7 
+		 2: COPY TYPE_StringLiteral "<strong>" def_%v_8 
 		 3: %v_6->gsub def_%v_9 %v_6[4.0,] %v_7[4.1,] %v_8[4.2,] 	 ARGS:%v_7,%v_8,
-		 4: COPY TYPE_StringLiteral def_%v_10 
-		 5: COPY TYPE_StringLiteral def_%v_11 
+		 4: COPY TYPE_StringLiteral "}}}" def_%v_10 
+		 5: COPY TYPE_StringLiteral "</strong>" def_%v_11 
 		 6: %v_9->gsub def_%v_12 %v_9[4.3,] %v_10[4.4,] %v_11[4.5,] 	 ARGS:%v_10,%v_11,
 		 7: %v_12->html_safe def_%v_13 %v_12[4.6,] 	 ARGS:
 		 8: RETURN %v_13[4.7,] %self[2.0,] 
@@ -544,7 +544,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: (Company) def_%v_10 
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral "subdomain = ?" def_%v_11 
 		 3: %v_10->where def_%v_12 %v_10[6.1,] %v_11[6.2,] subdomain[4.3,] 	 ARGS:%v_11,subdomain,
 		 4: %v_12->first def_%v_13 %v_12[6.3,] 	 ARGS:
 		 5: ATTRASSIGN %self->company %v_13[6.4,] 
@@ -577,7 +577,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: (Company) def_%v_20 
-		 1: COPY TYPE_StringLiteral def_%v_21 
+		 1: COPY TYPE_StringLiteral "id asc" def_%v_21 
 		 2: %v_20->order def_%v_22 %v_20[10.0,] %v_21[10.1,] 	 ARGS:%v_21,
 		 3: %v_22->first def_%v_23 %v_22[10.2,] 	 ARGS:
 		 4: ATTRASSIGN %self->company %v_23[10.3,] 
@@ -677,8 +677,8 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 1: COPY TYPE_StringLiteral "format=js" def_%v_8 
+		 2: COPY TYPE_StringLiteral "" def_%v_9 
 		 3: url->gsub def_%v_10 url[3.3,2.7,] %v_8[5.1,] %v_9[5.2,] 	 ARGS:%v_8,%v_9,
 		 4: COPY TYPE_PASS def_url %v_10[5.3,] 
 		 5: 
@@ -728,9 +728,9 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "<strong>" def_%v_4 
 		 2: task->issue_num def_%v_5 task[2.5,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_6 
+		 3: COPY TYPE_StringLiteral "</strong> " def_%v_6 
 		 4: BUILDSTRING def_%v_7 %v_4[6.1,] %v_5[6.2,] %v_6[6.3,] 
 		 5: COPY TYPE_PASS def_link %v_7[6.4,] 
 		 6: 
@@ -743,8 +743,8 @@ BB 7
 	instructions:
 		 0: 
 		 1: task->task_num def_%v_10 task[2.5,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_11 
-		 3: COPY TYPE_StringLiteral def_%v_12 
+		 2: COPY TYPE_StringLiteral "task_templates" def_%v_11 
+		 3: COPY TYPE_StringLiteral "edit" def_%v_12 
 		 4: HASH-id-controller-action- def_%v_13 %v_10[7.1,] %v_11[7.2,] %v_12[7.3,] 
 		 5: %self->url_for def_%v_14 %self[2.0,] %v_13[7.4,] 	 ARGS:%v_13,
 		 6: COPY TYPE_PASS def_url %v_14[7.5,] 
@@ -755,8 +755,8 @@ BB 8
 	instructions:
 		 0: 
 		 1: task->task_num def_%v_15 task[2.5,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_16 
-		 3: COPY TYPE_StringLiteral def_%v_17 
+		 2: COPY TYPE_StringLiteral "tasks" def_%v_16 
+		 3: COPY TYPE_StringLiteral "edit" def_%v_17 
 		 4: HASH-id-controller-action- def_%v_18 %v_15[8.1,] %v_16[8.2,] %v_17[8.3,] 
 		 5: %self->url_for def_%v_19 %self[2.0,] %v_18[8.4,] 	 ARGS:%v_18,
 		 6: COPY TYPE_PASS def_url %v_19[8.5,] 
@@ -766,7 +766,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_20 
+		 1: COPY TYPE_StringLiteral "tasklink " def_%v_20 
 		 2: 
 		 3: task->css_classes def_%v_21 task[2.5,] 	 ARGS:
 		 4: BUILDSTRING def_%v_22 %v_20[9.1,] %v_21[9.3,] 
@@ -895,8 +895,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 1: COPY TYPE_StringLiteral "parent.document.location = '" def_%v_8 
+		 2: COPY TYPE_StringLiteral "'" def_%v_9 
 		 3: BUILDSTRING def_%v_10 %v_8[4.1,] url[2.5,2.8,] %v_9[4.2,] 
 		 4: HASH-js- def_%v_11 %v_10[4.3,] 
 		 5: %self->render def_%v_12 %self[2.0,] %v_11[4.4,] 	 ARGS:%v_11,
@@ -922,7 +922,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Template) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "project_id IN (?) AND company_id = ?" def_%v_4 
 		 8: %self->current_project_ids def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %self->current_user def_%v_6 %self[2.0,2.8,] 	 ARGS:
 		 10: %v_6->company_id def_%v_7 %v_6[2.9,] 	 ARGS:
@@ -963,7 +963,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->root_path def_%v_6 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 2: COPY TYPE_StringLiteral "flash.alert.admin_permission_needed" def_%v_7 
 		 3: %self->t def_%v_8 %self[4.1,2.0,] %v_7[4.2,] 	 ARGS:%v_7,
 		 4: HASH-alert- def_%v_9 %v_8[4.3,] 
 		 5: %self->redirect_to def_%v_10 %self[4.1,4.3,2.0,] %v_6[4.1,] %v_9[4.4,] 	 ARGS:%v_6,%v_9,
@@ -996,7 +996,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "en_US" def_%v_6 
 		 1: COPY TYPE_PASS def_%v_5 %v_6[3.0,] 
 BB 4
 	outgoing: 5 

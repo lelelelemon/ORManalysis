@@ -46,7 +46,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_9 
+		 1: COPY TYPE_StringLiteral "shared.duration_in_minutes_spent" def_%v_9 
 		 2: 
 BB 7
 	outgoing: 8 9 
@@ -60,14 +60,14 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_11 
+		 1: COPY TYPE_StringLiteral "shared.duration_in_hours_spent" def_%v_11 
 		 2: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_12 
+		 1: COPY TYPE_StringLiteral "shared.duration_in_hours_and_minutes_spent" def_%v_12 
 		 2: COPY TYPE_PASS def_%v_11 %v_12[9.1,] 
 BB 10
 	outgoing: 11 
@@ -91,7 +91,7 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_14 
+		 1: COPY TYPE_StringLiteral "shared.duration_in_minutes" def_%v_14 
 		 2: 
 BB 14
 	outgoing: 15 16 
@@ -105,14 +105,14 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "shared.duration_in_hours" def_%v_16 
 		 2: 
 BB 16
 	outgoing: 17 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_17 
+		 1: COPY TYPE_StringLiteral "shared.duration_in_hours_and_minutes" def_%v_17 
 		 2: COPY TYPE_PASS def_%v_16 %v_17[16.1,] 
 BB 17
 	outgoing: 18 
@@ -169,7 +169,7 @@ BB 4
 		 0: 
 		 1: 
 		 2: user->date_format def_%v_9 user[2.5,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_10 
+		 3: COPY TYPE_StringLiteral " " def_%v_10 
 		 4: user->time_format def_%v_11 user[4.2,2.5,] 	 ARGS:
 		 5: BUILDSTRING def_%v_12 %v_9[4.2,] %v_10[4.3,] %v_11[4.4,] 
 		 6: COPY TYPE_PASS def_format %v_12[4.5,] 
@@ -266,9 +266,9 @@ BB 4
 		 3: 
 		 4: input->downcase def_%v_5 input[2.5,] 	 ARGS:
 		 5: COPY TYPE_Regexp def_%v_6 
-		 6: COPY TYPE_StringLiteral def_%v_7 
+		 6: COPY TYPE_StringLiteral "\1 " def_%v_7 
 		 7: %v_5->gsub def_%v_8 %v_5[4.4,] %v_7[4.6,] 	 ARGS:%v_6,%v_7,
-		 8: COPY TYPE_StringLiteral def_%v_9 
+		 8: COPY TYPE_StringLiteral " " def_%v_9 
 		 9: %v_8->split def_%v_10 %v_8[4.7,] %v_9[4.8,] 	 ARGS:%v_9,
 		 10: %v_10->each def_%v_11 %v_10[4.9,] %self[2.0,] 	 ARGS:%v_10,
 CLOSURE BEGIN: e[] part[4.10,] total[4.2,] 
@@ -314,14 +314,14 @@ BB 6
 	instructions:
 		 0: 
 		 1: part->[] def_%cl_1_8 part[3.3,] 	 ARGS:Fixnum,
-		 2: COPY TYPE_StringLiteral def_%cl_1_11 
+		 2: COPY TYPE_StringLiteral "h" def_%cl_1_11 
 		 3: def_%cl_1_10 %cl_1_11[6.2,] %cl_1_8[6.1,] 
 		 4: BRANCH %cl_1_10[6.3,] 
 BB 7
 	outgoing: 8 10 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_13 
+		 0: COPY TYPE_StringLiteral "m" def_%cl_1_13 
 		 1: def_%cl_1_12 %cl_1_13[7.0,] %cl_1_8[6.1,] 
 		 2: BRANCH %cl_1_12[7.1,] 
 BB 8

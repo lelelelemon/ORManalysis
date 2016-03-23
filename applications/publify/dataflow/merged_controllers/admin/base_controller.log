@@ -44,7 +44,7 @@ BB 8
 	instructions:
 		 0: 
 		 1: (DateTime) def_%v_8 
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "%B %e, %Y %I:%M %p GMT%z" def_%v_9 
 		 3: %v_8->strptime def_%v_10 %v_8[8.1,] str[2.5,] %v_9[8.2,] 	 ARGS:str,%v_9,
 		 4: %v_10->utc def_%v_11 %v_10[8.3,] 	 ARGS:
 		 5: COPY TYPE_PASS def_%v_5 %v_11[8.4,] 
@@ -157,7 +157,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->this_blog def_%cl_2_3 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_2_4 
+		 2: COPY TYPE_StringLiteral "=" def_%cl_2_4 
 		 3: BUILDSTRING def_%cl_2_5 k[2.2,] %cl_2_4[3.2,] 
 		 4: %cl_2_3->send def_%cl_2_6 %cl_2_3[3.1,] %cl_2_5[3.3,] v[2.3,] 	 ARGS:%cl_2_5,v,
 		 5: RETURN %cl_2_6[3.4,] %self[3.1,2.0,] 
@@ -184,7 +184,7 @@ BB 4
 		 0: 
 		 1: %self->flash def_%cl_1_6 %self[2.0,] 	 ARGS:
 		 2: (I18n) def_%cl_1_7 
-		 3: COPY TYPE_StringLiteral def_%cl_1_8 
+		 3: COPY TYPE_StringLiteral "admin.settings.update.success" def_%cl_1_8 
 		 4: %cl_1_7->t def_%cl_1_9 %cl_1_7[4.2,] %cl_1_8[4.3,] 	 ARGS:%cl_1_8,
 		 5: ATTRASSIGN %cl_1_6->[] %cl_1_9[4.4,] 
 		 6: 
@@ -195,11 +195,11 @@ BB 5
 		 0: 
 		 1: %self->flash def_%cl_1_10 %self[2.0,] 	 ARGS:
 		 2: (I18n) def_%cl_1_11 
-		 3: COPY TYPE_StringLiteral def_%cl_1_12 
+		 3: COPY TYPE_StringLiteral "admin.settings.update.error" def_%cl_1_12 
 		 4: %self->this_blog def_%cl_1_13 %self[5.1,2.0,] 	 ARGS:
 		 5: %cl_1_13->errors def_%cl_1_14 %cl_1_13[5.4,] 	 ARGS:
 		 6: %cl_1_14->full_messages def_%cl_1_15 %cl_1_14[5.5,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_1_16 
+		 7: COPY TYPE_StringLiteral ", " def_%cl_1_16 
 		 8: %cl_1_15->join def_%cl_1_17 %cl_1_15[5.6,] %cl_1_16[5.7,] 	 ARGS:%cl_1_16,
 		 9: HASH-messages- def_%cl_1_18 %cl_1_17[5.8,] 
 		 10: %cl_1_11->t def_%cl_1_19 %cl_1_11[5.2,] %cl_1_12[5.3,] %cl_1_18[5.9,] 	 ARGS:%cl_1_12,%cl_1_18,
@@ -280,11 +280,11 @@ BB 5
 		 0: 
 		 1: %self->flash def_%v_12 %self[2.0,2.10,] 	 ARGS:
 		 2: (I18n) def_%v_13 
-		 3: COPY TYPE_StringLiteral def_%v_14 
+		 3: COPY TYPE_StringLiteral "admin.base.not_allowed" def_%v_14 
 		 4: %v_13->t def_%v_15 %v_13[5.2,] %v_14[5.3,] 	 ARGS:%v_14,
 		 5: ATTRASSIGN %v_12->[] %v_15[5.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_16 
+		 7: COPY TYPE_StringLiteral "index" def_%v_16 
 		 8: HASH-action- def_%v_17 %v_16[5.7,] 
 		 9: %self->redirect_to def_%v_18 %self[5.1,2.0,2.10,] %v_17[5.8,] 	 ARGS:%v_17,
 		 10: RETURN %v_18[5.9,] %self[5.1,5.9,2.0,2.10,] 
@@ -299,14 +299,14 @@ BB 6
 		 4: 
 		 5: %self->flash def_%v_22 %self[2.0,2.10,] 	 ARGS:
 		 6: (I18n) def_%v_23 
-		 7: COPY TYPE_StringLiteral def_%v_24 
+		 7: COPY TYPE_StringLiteral "admin.base.successfully_deleted" def_%v_24 
 		 8: %self->controller_name def_%v_25 %self[6.5,2.0,2.10,] 	 ARGS:
 		 9: %v_25->humanize def_%v_26 %v_25[6.8,] 	 ARGS:
 		 10: HASH-name- def_%v_27 %v_26[6.9,] 
 		 11: %v_23->t def_%v_28 %v_23[6.6,] %v_24[6.7,] %v_27[6.10,] 	 ARGS:%v_24,%v_27,
 		 12: ATTRASSIGN %v_22->[] %v_28[6.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%v_29 
+		 14: COPY TYPE_StringLiteral "index" def_%v_29 
 		 15: HASH-action- def_%v_30 %v_29[6.14,] 
 		 16: %self->redirect_to def_%v_31 %self[6.5,6.8,2.0,2.10,] %v_30[6.15,] 	 ARGS:%v_30,
 		 17: RETURN %v_31[6.16,] %self[6.5,6.8,6.16,2.0,2.10,] 
@@ -420,7 +420,7 @@ BB 11
 		 3: 
 		 4: %self->flash def_%v_14 %self[2.0,] 	 ARGS:
 		 5: (I18n) def_%v_15 
-		 6: COPY TYPE_StringLiteral def_%v_16 
+		 6: COPY TYPE_StringLiteral "admin.base.restart_application" def_%v_16 
 		 7: %v_15->t def_%v_17 %v_15[11.5,] %v_16[11.6,] 	 ARGS:%v_16,
 		 8: ATTRASSIGN %v_14->[] %v_17[11.7,] 
 		 9: COPY TYPE_PASS def_%v_12 %v_17[11.7,] 
@@ -449,7 +449,7 @@ BB 16
 		 0: 
 		 1: %self->flash def_%v_20 %self[2.0,] 	 ARGS:
 		 2: (I18n) def_%v_21 
-		 3: COPY TYPE_StringLiteral def_%v_22 
+		 3: COPY TYPE_StringLiteral "admin.base.cant_generate_secret" def_%v_22 
 		 4: checker->file def_%v_23 checker[7.1,] 	 ARGS:
 		 5: HASH-checker_file- def_%v_24 %v_23[16.4,] 
 		 6: %v_21->t def_%v_25 %v_21[16.2,] %v_22[16.3,] %v_24[16.5,] 	 ARGS:%v_22,%v_24,

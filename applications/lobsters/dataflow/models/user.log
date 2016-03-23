@@ -240,7 +240,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_3 
+		 1: COPY TYPE_StringLiteral "https://secure.gravatar.com/avatar/" def_%v_3 
 		 2: (Digest) def_%v_4 
 		 3: (inherit MD5) def_%v_5 %v_4[4.2,] 
 		 4: %v_5[4.3,] 
@@ -258,7 +258,7 @@ BB 6
 		 2: %v_7->downcase def_%v_8 %v_7[6.1,] 	 ARGS:
 		 3: %v_5->hexdigest def_%v_9 %v_5[5.0,4.3,] %v_8[6.2,] 	 ARGS:%v_8,
 		 4: %v_3->+ def_%v_10 %v_3[4.1,] %v_9[6.3,] 	 ARGS:%v_9,
-		 5: COPY TYPE_StringLiteral def_%v_11 
+		 5: COPY TYPE_StringLiteral "?r=pg&d=identicon&s=" def_%v_11 
 		 6: 
 		 7: BUILDSTRING def_%v_12 %v_11[6.5,] size[3.0,2.5,] 
 		 8: %v_10->+ def_%v_13 %v_10[6.4,] %v_12[6.7,] 	 ARGS:%v_12,
@@ -352,7 +352,7 @@ BB 2
 		 29: %self->id def_%v_12 %self[2.0,2.10,2.13,2.15,2.17,] 	 ARGS:
 		 30: ATTRASSIGN m->user_id %v_12[2.29,] 
 		 31: 
-		 32: COPY TYPE_StringLiteral def_%v_13 
+		 32: COPY TYPE_StringLiteral "Banned" def_%v_13 
 		 33: ATTRASSIGN m->action %v_13[2.32,] 
 		 34: 
 		 35: ATTRASSIGN m->reason reason[2.6,] 
@@ -632,9 +632,9 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Keystore) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "user:" def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral ":comments_posted" def_%v_6 
 		 10: BUILDSTRING def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
 		 11: %v_3->value_for def_%v_8 %v_3[2.6,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: %v_8->to_i def_%v_9 %v_8[2.11,] 	 ARGS:
@@ -841,7 +841,7 @@ BB 2
 		 7: (Time) def_%v_3 
 		 8: %v_3->now def_%v_4 %v_3[2.7,] 	 ARGS:
 		 9: %v_4->to_i def_%v_5 %v_4[2.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "-" def_%v_6 
 		 11: (Utils) def_%v_7 
 		 12: %v_7->random_str def_%v_8 %v_7[2.11,] 	 ARGS:Fixnum,
 		 13: BUILDSTRING def_%v_9 %v_5[2.9,] %v_6[2.10,] %v_8[2.12,] 
@@ -993,7 +993,7 @@ BB 2
 		 14: %v_10->arel_table def_%v_11 %v_10[2.13,] 	 ARGS:
 		 15: %v_11->[] def_%v_12 %v_11[2.14,] 	 ARGS:Symbol,
 		 16: %v_9->group def_%v_13 %v_9[2.12,] %v_12[2.15,] 	 ARGS:%v_12,
-		 17: COPY TYPE_StringLiteral def_%v_14 
+		 17: COPY TYPE_StringLiteral "COUNT(*) desc" def_%v_14 
 		 18: %v_13->order def_%v_15 %v_13[2.16,] %v_14[2.17,] 	 ARGS:%v_14,
 		 19: %v_15->first def_%v_16 %v_15[2.18,] 	 ARGS:
 		 20: RETURN %v_16[2.19,] %self[2.0,2.9,] 
@@ -1058,7 +1058,7 @@ BB 2
 		 6: 
 		 7: %self->comments def_%v_3 %self[2.0,] 	 ARGS:
 		 8: %v_3->group def_%v_4 %v_3[2.7,] 	 ARGS:Symbol,
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral "MAX(created_at) DESC" def_%v_5 
 		 10: %v_4->order def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: %v_6->limit def_%v_7 %v_6[2.10,] amount[2.5,] 	 ARGS:amount,
 		 12: %v_7->pluck def_%v_8 %v_7[2.11,] 	 ARGS:Symbol,
@@ -1084,9 +1084,9 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Keystore) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "user:" def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral ":stories_submitted" def_%v_6 
 		 10: BUILDSTRING def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
 		 11: %v_3->value_for def_%v_8 %v_3[2.6,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: %v_8->to_i def_%v_9 %v_8[2.11,] 	 ARGS:
@@ -1152,7 +1152,7 @@ BB 2
 		 22: %self->id def_%v_7 %self[2.0,2.7,2.9,2.11,2.13,] 	 ARGS:
 		 23: ATTRASSIGN m->user_id %v_7[2.22,] 
 		 24: 
-		 25: COPY TYPE_StringLiteral def_%v_8 
+		 25: COPY TYPE_StringLiteral "Unbanned" def_%v_8 
 		 26: ATTRASSIGN m->action %v_8[2.25,] 
 		 27: 
 		 28: m->save! def_%v_9 m[2.17,2.20,2.23,2.26,] 	 ARGS:
@@ -1227,9 +1227,9 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Keystore) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "user:" def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral ":unread_messages" def_%v_6 
 		 10: BUILDSTRING def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
 		 11: %v_3->value_for def_%v_8 %v_3[2.6,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: %v_8->to_i def_%v_9 %v_8[2.11,] 	 ARGS:
@@ -1255,9 +1255,9 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Keystore) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "user:" def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral ":unread_messages" def_%v_6 
 		 10: BUILDSTRING def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
 		 11: %self->received_messages def_%v_8 %self[2.0,2.8,] 	 ARGS:
 		 12: %v_8->unread def_%v_9 %v_8[2.11,] 	 ARGS:
@@ -1286,11 +1286,11 @@ BB 2
 		 5: 
 		 6: %self->votes def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->joins def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,Symbol,
-		 8: COPY TYPE_StringLiteral def_%v_5 
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 8: COPY TYPE_StringLiteral "comments.user_id <> votes.user_id AND " def_%v_5 
+		 9: COPY TYPE_StringLiteral "stories.user_id <> votes.user_id" def_%v_6 
 		 10: %v_5-><< def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: %v_4->where def_%v_8 %v_4[2.7,] %v_7[2.10,] 	 ARGS:%v_7,
-		 12: COPY TYPE_StringLiteral def_%v_9 
+		 12: COPY TYPE_StringLiteral "id DESC" def_%v_9 
 		 13: %v_8->order def_%v_10 %v_8[2.11,] %v_9[2.12,] 	 ARGS:%v_9,
 		 14: RETURN %v_10[2.13,] %self[2.0,2.6,] 
 BB 3

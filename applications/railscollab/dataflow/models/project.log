@@ -13,7 +13,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "completed_on" def_%v_3 
 		 7: %self->write_attribute def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,Nil,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -77,7 +77,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "completed_on" def_%v_8 
 		 2: GETFIELD %self->update_completed def_%v_9 %self[2.0,] 
 		 3: BRANCH %v_9[4.2,] 
 BB 5
@@ -242,25 +242,25 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->tasks def_%v_3 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_4 
+		 2: COPY TYPE_StringLiteral "((assigned_to_company_id = ? OR assigned_to_user_id = ?) OR (assigned_to_company_id = 0 OR assigned_to_user_id = 0)) AND tasks.completed_on " def_%v_4 
 		 3: BRANCH completed[3.0,2.6,] 
 BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "IS NOT" def_%v_5 
 		 1: 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "IS" def_%v_6 
 		 1: COPY TYPE_PASS def_%v_5 %v_6[6.0,] 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral " NULL" def_%v_7 
 		 1: BUILDSTRING def_%v_8 %v_4[4.2,] %v_5[6.1,5.0,] %v_7[7.0,] 
 		 2: user->company_id def_%v_9 user[2.5,] 	 ARGS:
 		 3: user->id def_%v_10 user[7.2,2.5,] 	 ARGS:
@@ -323,27 +323,27 @@ BB 4
 	instructions:
 		 0: 
 		 1: (Milestone) def_%v_3 
-		 2: COPY TYPE_StringLiteral def_%v_4 
+		 2: COPY TYPE_StringLiteral "project_id = " def_%v_4 
 		 3: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_6 
+		 4: COPY TYPE_StringLiteral " AND ((assigned_to_company_id = ? OR assigned_to_user_id = ?) OR (assigned_to_company_id = 0 OR assigned_to_user_id = 0)) AND completed_on " def_%v_6 
 		 5: BRANCH completed[3.0,2.6,] 
 BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "IS NOT" def_%v_7 
 		 1: 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "IS" def_%v_8 
 		 1: COPY TYPE_PASS def_%v_7 %v_8[6.0,] 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral " NULL" def_%v_9 
 		 1: BUILDSTRING def_%v_10 %v_4[4.2,] %v_5[4.3,] %v_6[4.4,] %v_7[6.1,5.0,] %v_9[7.0,] 
 		 2: user->company_id def_%v_11 user[2.5,] 	 ARGS:
 		 3: user->id def_%v_12 user[7.2,2.5,] 	 ARGS:
@@ -372,12 +372,12 @@ BB 2
 		 5: RECEIVEARG def_user 
 		 6: 
 		 7: (Person) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "project_id = " def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral " AND user_id = " def_%v_6 
 		 11: user->id def_%v_7 user[2.5,] 	 ARGS:
 		 12: BUILDSTRING def_%v_8 %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] %v_7[2.11,] 
-		 13: COPY TYPE_StringLiteral def_%v_9 
+		 13: COPY TYPE_StringLiteral "user_id" def_%v_9 
 		 14: HASH-select- def_%v_10 %v_9[2.13,] 
 		 15: %v_3->where def_%v_11 %v_3[2.7,] %v_8[2.12,] %v_10[2.14,] 	 ARGS:%v_8,%v_10,
 		 16: RETURN %v_11[2.15,] %self[2.0,2.9,] 

@@ -73,8 +73,8 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_3 
-		 2: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "https://api.mailgun.net/v2/routes" def_%v_3 
+		 2: COPY TYPE_StringLiteral "api" def_%v_4 
 		 3: GETFIELD %self->key def_%v_5 %self[2.0,] 
 		 4: HASH-username-password- def_%v_6 %v_4[6.2,] %v_5[6.3,] 
 		 5: HASH-skip-limit- def_%v_7 skip[3.0,2.5,] limit[5.0,4.0,] 
@@ -106,7 +106,7 @@ BB 2
 		 8: COPY TYPE_PASS def_routes %v_4[2.7,] 
 		 9: 
 		 10: %v_4->to_s def_%v_5 %v_4[2.7,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_6 
+		 11: COPY TYPE_StringLiteral "Forbidden" def_%v_6 
 		 12: %v_5->== def_%v_7 %v_5[2.10,] %v_6[2.11,] 	 ARGS:%v_6,
 		 13: BRANCH %v_7[2.12,] 
 BB 3
@@ -114,8 +114,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 1: COPY TYPE_StringLiteral "message" def_%v_8 
+		 2: COPY TYPE_StringLiteral "apikey" def_%v_9 
 		 3: HASH- def_%v_10 %v_8[3.1,] %v_9[3.2,] 
 		 4: RETURN %v_8[3.1,] %v_9[3.2,] %self[2.0,] 
 BB 4
@@ -139,8 +139,8 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_15 
-		 2: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "https://api.mailgun.net/v2/routes" def_%v_15 
+		 2: COPY TYPE_StringLiteral "api" def_%v_16 
 		 3: GETFIELD %self->key def_%v_17 %self[2.0,] 
 		 4: HASH-username-password- def_%v_18 %v_16[6.2,] %v_17[6.3,] 
 		 5: %self->build_data def_%v_19 %self[2.0,] 	 ARGS:
@@ -271,7 +271,7 @@ BB 2
 		 7: COPY TYPE_Array def_%v_3 
 		 8: COPY TYPE_PASS def_match %v_3[2.7,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%v_4 
+		 10: COPY TYPE_StringLiteral "items" def_%v_4 
 		 11: routes->[] def_%v_5 routes[2.5,] %v_4[2.10,] 	 ARGS:%v_4,
 		 12: %v_5->each def_%v_6 %v_5[2.11,] %self[2.0,] 	 ARGS:%v_5,
 CLOSURE BEGIN: item[2.12,] match[2.8,] 
@@ -293,9 +293,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "description" def_%cl_1_3 
 		 2: item->[] def_%cl_1_4 item[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "Catch All Route - Created By OneBody" def_%cl_1_5 
 		 4: %cl_1_4->!= def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
 		 5: BRANCH %cl_1_6[3.4,] 
 BB 4
@@ -314,13 +314,13 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_8 
+		 1: COPY TYPE_StringLiteral "expression" def_%cl_1_8 
 		 2: item->[] def_%cl_1_9 item[2.2,] %cl_1_8[6.1,] 	 ARGS:%cl_1_8,
-		 3: COPY TYPE_StringLiteral def_%cl_1_10 
+		 3: COPY TYPE_StringLiteral "match_recipient('.*@" def_%cl_1_10 
 		 4: (Site) def_%cl_1_11 
 		 5: %cl_1_11->current def_%cl_1_12 %cl_1_11[6.4,] 	 ARGS:
 		 6: %cl_1_12->email_host def_%cl_1_13 %cl_1_12[6.5,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_1_14 
+		 7: COPY TYPE_StringLiteral "')" def_%cl_1_14 
 		 8: BUILDSTRING def_%cl_1_15 %cl_1_10[6.3,] %cl_1_13[6.6,] %cl_1_14[6.7,] 
 		 9: %cl_1_9->!= def_%cl_1_16 %cl_1_9[6.2,] %cl_1_15[6.8,] 	 ARGS:%cl_1_15,
 		 10: BRANCH %cl_1_16[6.9,] 
@@ -375,22 +375,22 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 6: COPY TYPE_StringLiteral "Catch All Route - Created By OneBody" def_%v_3 
+		 7: COPY TYPE_StringLiteral "match_recipient('.*@" def_%v_4 
 		 8: 
 		 9: (Site) def_%v_5 
 		 10: %v_5->current def_%v_6 %v_5[2.9,] 	 ARGS:
 		 11: %v_6->email_host def_%v_7 %v_6[2.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_8 
+		 12: COPY TYPE_StringLiteral "')" def_%v_8 
 		 13: BUILDSTRING def_%v_9 %v_4[2.7,] %v_7[2.11,] %v_8[2.12,] 
-		 14: COPY TYPE_StringLiteral def_%v_10 
+		 14: COPY TYPE_StringLiteral "forward('http://" def_%v_10 
 		 15: 
 		 16: (Site) def_%v_11 
 		 17: %v_11->current def_%v_12 %v_11[2.16,] 	 ARGS:
 		 18: %v_12->host def_%v_13 %v_12[2.17,] 	 ARGS:
-		 19: COPY TYPE_StringLiteral def_%v_14 
+		 19: COPY TYPE_StringLiteral "/emails.mime')" def_%v_14 
 		 20: BUILDSTRING def_%v_15 %v_10[2.14,] %v_13[2.18,] %v_14[2.19,] 
-		 21: COPY TYPE_StringLiteral def_%v_16 
+		 21: COPY TYPE_StringLiteral "stop()" def_%v_16 
 		 22: COPY TYPE_Array def_%v_17 %v_15[2.20,] %v_16[2.21,] 
 		 23: HASH-priority-description-expression-action- def_%v_18 %v_3[2.6,] %v_9[2.13,] %v_17[2.22,] 
 		 24: RETURN %v_18[2.23,] %self[2.0,] 

@@ -156,6 +156,10 @@ class Instruction
 		meth = self.getBB.getCFG.getMHandler
 		return meth.getName
 	end
+	def getClassName
+		meth = self.getBB.getCFG.getMHandler
+		return meth.getCallerClass.getName
+	end
 	def toString
 		meth = self.getBB.getCFG.getMHandler
 		s = "[#{meth.getCallerClass.getName}.#{meth.getName}] (#{@bb.getIndex}.#{@index}) "
@@ -413,10 +417,14 @@ class Copy_instr < Instruction
 	def initialize
 		super
 		@type = nil
+		@const_string = nil
 	end
-	attr_accessor :type
+	attr_accessor :type, :const_string
 	def toString
 		s = "COPY "
+		if @const_string
+			s += "<#{const_string}>"
+		end
 		s = s + super
 		return s
 	end

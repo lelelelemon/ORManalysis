@@ -93,7 +93,7 @@ BB 4
 		 2: %self->comments_hash def_%v_6 %self[2.0,] 	 ARGS:
 		 3: ATTRASSIGN %self->comments %v_6[4.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_7 
+		 5: COPY TYPE_StringLiteral "SELECT content_type, COUNT(*) AS cnt FROM comments,nodes WHERE comments.node_id=nodes.id GROUP BY content_type" def_%v_7 
 		 6: %self->select_all def_%v_8 %self[4.2,4.3,2.0,] %v_7[4.5,] 	 ARGS:%v_7,
 		 7: COPY TYPE_PASS def_by_type %v_8[4.6,] 
 		 8: 
@@ -118,9 +118,9 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->comments def_%cl_1_3 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "content_type" def_%cl_1_4 
 		 3: comment->[] def_%cl_1_5 comment[2.2,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 4: COPY TYPE_StringLiteral "cnt" def_%cl_1_6 
 		 5: comment->[] def_%cl_1_7 comment[3.3,2.2,] %cl_1_6[3.4,] 	 ARGS:%cl_1_6,
 		 6: ATTRASSIGN %cl_1_3->[] %cl_1_5[3.3,] %cl_1_7[3.5,] 
 		 7: RETURN %cl_1_7[3.5,] %self[2.0,] 
@@ -138,7 +138,7 @@ BB 6
 CLOSURE END: 
 		 10: 
 		 11: GETFIELD %self->comments def_%v_10 %self[4.2,4.3,4.6,2.0,] 
-		 12: COPY TYPE_StringLiteral def_%v_11 
+		 12: COPY TYPE_StringLiteral "Total" def_%v_11 
 		 13: GETFIELD %self->comments def_%v_12 %self[4.2,4.3,4.6,2.0,] 
 		 14: %v_12->values def_%v_13 %v_12[4.13,] 	 ARGS:
 		 15: %v_13->sum def_%v_14 %v_13[4.14,] 	 ARGS:
@@ -184,7 +184,7 @@ BB 4
 		 3: ATTRASSIGN %self->comments_by_year %v_6[4.2,] 
 		 4: 
 		 5: GLOBALVAR $redis def_%v_7 
-		 6: COPY TYPE_StringLiteral def_%v_8 
+		 6: COPY TYPE_StringLiteral "stats/comments/year/*" def_%v_8 
 		 7: %v_7->keys def_%v_9 %v_7[4.5,] %v_8[4.6,] 	 ARGS:%v_8,
 		 8: %v_9->sort def_%v_10 %v_9[4.7,] 	 ARGS:
 		 9: %v_10->each def_%v_11 %v_10[4.8,] %self[4.3,2.0,] 	 ARGS:%v_10,
@@ -207,7 +207,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "/" def_%cl_1_3 
 		 2: k->split def_%cl_1_4 k[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: def_%cl_1_6 %cl_1_5[3.3,] 
@@ -296,7 +296,7 @@ BB 4
 		 3: ATTRASSIGN %self->comments_by_month %v_6[4.2,] 
 		 4: 
 		 5: GLOBALVAR $redis def_%v_7 
-		 6: COPY TYPE_StringLiteral def_%v_8 
+		 6: COPY TYPE_StringLiteral "stats/comments/month/*" def_%v_8 
 		 7: %v_7->keys def_%v_9 %v_7[4.5,] %v_8[4.6,] 	 ARGS:%v_8,
 		 8: %v_9->sort def_%v_10 %v_9[4.7,] 	 ARGS:
 		 9: %v_10->each def_%v_11 %v_10[4.8,] %self[4.3,2.0,] 	 ARGS:%v_10,
@@ -319,7 +319,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "/" def_%cl_1_3 
 		 2: k->split def_%cl_1_4 k[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: def_%cl_1_6 %cl_1_5[3.3,] 
@@ -408,7 +408,7 @@ BB 4
 		 3: ATTRASSIGN %self->comments_by_wday %v_6[4.2,] 
 		 4: 
 		 5: GLOBALVAR $redis def_%v_7 
-		 6: COPY TYPE_StringLiteral def_%v_8 
+		 6: COPY TYPE_StringLiteral "stats/comments/wday/*" def_%v_8 
 		 7: %v_7->keys def_%v_9 %v_7[4.5,] %v_8[4.6,] 	 ARGS:%v_8,
 		 8: %v_9->each def_%v_10 %v_9[4.7,] %self[4.3,2.0,] 	 ARGS:%v_9,
 CLOSURE BEGIN: %self[4.3,2.0,] k[4.8,] 
@@ -431,7 +431,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->comments_by_wday def_%cl_1_3 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "/" def_%cl_1_4 
 		 3: k->split def_%cl_1_5 k[2.2,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
 		 4: %cl_1_5->last def_%cl_1_6 %cl_1_5[3.3,] 	 ARGS:
 		 5: GLOBALVAR $redis def_%cl_1_7 

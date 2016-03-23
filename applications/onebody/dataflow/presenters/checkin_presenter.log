@@ -255,7 +255,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%cl_1_3 
 		 2: t->strftime def_%cl_1_4 t[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
@@ -744,12 +744,12 @@ BB 2
 		 5: RECEIVEARG def_record 
 		 6: 
 		 7: (GroupTime) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "left join checkin_folders on group_times.checkin_folder_id = checkin_folders.id" def_%v_4 
 		 9: %v_3->joins def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: record->group_id def_%v_6 record[2.5,] 	 ARGS:
 		 11: HASH-group_id- def_%v_7 %v_6[2.10,] 
 		 12: %v_5->where def_%v_8 %v_5[2.9,] %v_7[2.11,] 	 ARGS:%v_7,
-		 13: COPY TYPE_StringLiteral def_%v_9 
+		 13: COPY TYPE_StringLiteral "coalesce(group_times.checkin_time_id, checkin_folders.checkin_time_id) = ?" def_%v_9 
 		 14: record->checkin_time_id def_%v_10 record[2.5,2.10,] 	 ARGS:
 		 15: %v_8->where def_%v_11 %v_8[2.12,] %v_9[2.13,] %v_10[2.14,] 	 ARGS:%v_9,%v_10,
 		 16: %v_11->first def_%v_12 %v_11[2.15,] 	 ARGS:
@@ -891,17 +891,18 @@ BB 5
 		 1: GETFIELD %self->campus def_%v_7 %self[2.0,] 
 		 2: HASH-campus- def_%v_8 %v_7[5.1,] 
 		 3: %v_6->where def_%v_9 %v_6[5.0,] %v_8[5.2,] 	 ARGS:%v_8,
-		 4: COPY TYPE_StringLiteral def_%v_10 
+		 4: COPY TYPE_StringLiteral "(the_datetime is null and weekday = :today) or
+         (the_datetime between :from and :to)" def_%v_10 
 		 5: (Time) def_%v_11 
 		 6: %v_11->current def_%v_12 %v_11[5.5,] 	 ARGS:
 		 7: %v_12->wday def_%v_13 %v_12[5.6,] 	 ARGS:
 		 8: CONSTANT def_%v_14 	 ARGS:
 		 9: %v_14->ago def_%v_15 %v_14[5.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_16 
+		 10: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_16 
 		 11: %v_15->strftime def_%v_17 %v_15[5.9,] %v_16[5.10,] 	 ARGS:%v_16,
 		 12: CONSTANT def_%v_18 	 ARGS:
 		 13: %v_18->from_now def_%v_19 %v_18[5.12,] 	 ARGS:
-		 14: COPY TYPE_StringLiteral def_%v_20 
+		 14: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_20 
 		 15: %v_19->strftime def_%v_21 %v_19[5.13,] %v_20[5.14,] 	 ARGS:%v_20,
 		 16: HASH-today-from-to- def_%v_22 %v_13[5.7,] %v_17[5.11,] %v_21[5.15,] 
 		 17: %v_9->where def_%v_23 %v_9[5.3,] %v_10[5.4,] %v_22[5.16,] 	 ARGS:%v_10,%v_22,

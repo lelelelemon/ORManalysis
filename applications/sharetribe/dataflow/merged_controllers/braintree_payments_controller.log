@@ -128,7 +128,7 @@ BB 9
 	instructions:
 		 0: GETFIELD %self->conversation def_%v_18 %self[2.0,] 
 		 1: %v_18->id def_%v_19 %v_18[9.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_20 
+		 2: COPY TYPE_StringLiteral "paid" def_%v_20 
 		 3: %v_17->transition_to def_%v_21 %v_17[8.0,7.0,] %v_19[9.1,] %v_20[9.2,] 	 ARGS:%v_19,%v_20,
 		 4: 
 		 5: %self->params def_%v_22 %self[2.0,] 	 ARGS:
@@ -213,16 +213,16 @@ BB 6
 		 5: COPY TYPE_PASS def_account_community %v_19[6.4,] 
 		 6: 
 		 7: %self->flash def_%v_20 %self[2.0,2.10,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_21 
+		 8: COPY TYPE_StringLiteral "Unfortunately, we cannot proceed with the payment. Please contact the administrators." def_%v_21 
 		 9: ATTRASSIGN %v_20->[] %v_21[6.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_22 
+		 11: COPY TYPE_StringLiteral "User " def_%v_22 
 		 12: GETFIELD %self->current_user def_%v_23 %self[6.7,2.0,] 
 		 13: %v_23->id def_%v_24 %v_23[6.12,] 	 ARGS:
-		 14: COPY TYPE_StringLiteral def_%v_25 
+		 14: COPY TYPE_StringLiteral " tries to pay for user " def_%v_25 
 		 15: GETFIELD %self->braintree_payment def_%v_26 %self[6.7,2.0,] 
 		 16: %v_26->recipient_id def_%v_27 %v_26[6.15,] 	 ARGS:
-		 17: COPY TYPE_StringLiteral def_%v_28 
+		 17: COPY TYPE_StringLiteral " which has Braintree account for another community " def_%v_28 
 		 18: (I18n) def_%v_29 
 		 19: %v_29->locale def_%v_30 %v_29[6.18,] 	 ARGS:
 		 20: account_community->name def_%v_31 account_community[6.5,] %v_30[6.19,] 	 ARGS:%v_30,
@@ -233,7 +233,7 @@ BB 6
 		 25: %v_33->error def_%v_34 %v_33[6.24,] %v_32[6.21,] 	 ARGS:error_msg,
 		 26: 
 		 27: (ApplicationHelper) def_%v_35 
-		 28: COPY TYPE_StringLiteral def_%v_36 
+		 28: COPY TYPE_StringLiteral "BraintreePaymentAccountError" def_%v_36 
 		 29: %v_35->send_error_notification def_%v_37 %v_35[6.27,] error_msg[6.22,] %v_36[6.28,] 	 ARGS:error_msg,%v_36,
 		 30: 
 		 31: GETFIELD %self->current_user def_%v_38 %self[6.7,2.0,] 
@@ -309,7 +309,7 @@ BB 2
 		 6: GETFIELD %self->conversation def_%v_3 %self[2.0,] 
 		 7: %v_3->payment def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->status def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "pending" def_%v_6 
 		 10: %v_5->!= def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: BRANCH %v_7[2.10,] 
 BB 3
@@ -318,7 +318,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_8 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "Could not find pending payment. It might be the payment is paid already." def_%v_9 
 		 3: ATTRASSIGN %v_8->[] %v_9[3.2,] 
 		 4: 
 		 5: GETFIELD %self->current_user def_%v_10 %self[3.1,2.0,] 

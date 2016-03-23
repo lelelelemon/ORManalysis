@@ -41,7 +41,7 @@ BB 2
 		 7: %v_3->get def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,Symbol,
 		 8: COPY TYPE_PASS def_size %v_4[2.7,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral "all" def_%v_5 
 		 11: %v_4->== def_%v_6 %v_4[2.7,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: BRANCH %v_6[2.11,] 
 BB 3
@@ -59,7 +59,7 @@ BB 4
 		 0: 
 		 1: %self->groups def_%v_9 %self[2.0,] 	 ARGS:
 		 2: %v_9->active def_%v_10 %v_9[4.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_11 
+		 3: COPY TYPE_StringLiteral "(select count(*) from memberships where group_id=groups.id) <= " def_%v_11 
 		 4: size->to_i def_%v_12 size[2.8,] 	 ARGS:
 		 5: BUILDSTRING def_%v_13 %v_11[4.3,] %v_12[4.4,] 
 		 6: %v_10->where def_%v_14 %v_10[4.2,] %v_13[4.5,] 	 ARGS:%v_13,
@@ -98,7 +98,7 @@ BB 4
 		 0: %self->small_groups def_%v_4 %self[2.0,] 	 ARGS:
 		 1: %v_4->pluck def_%v_5 %v_4[4.0,] 	 ARGS:Symbol,
 		 2: %v_3->in_group_ids def_%v_6 %v_3[3.0,2.6,] %v_5[4.1,] 	 ARGS:%v_5,
-		 3: COPY TYPE_StringLiteral def_%v_7 
+		 3: COPY TYPE_StringLiteral "people.id != ?" def_%v_7 
 		 4: %self->id def_%v_8 %self[4.0,2.0,] 	 ARGS:
 		 5: %v_6->where def_%v_9 %v_6[4.2,] %v_7[4.3,] %v_8[4.4,] 	 ARGS:%v_7,%v_8,
 		 6: RETURN %v_9[4.5,] %self[4.0,4.4,2.0,] 

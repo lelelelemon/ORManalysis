@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_css 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "mobile" def_%v_3 
 		 8: css->== def_%v_4 css[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
 		 9: BRANCH %v_4[2.8,] 
 BB 3
@@ -28,7 +28,7 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral "contrib/" def_%v_6 
 		 3: css->starts_with? def_%v_7 css[2.5,] %v_6[4.2,] 	 ARGS:%v_6,
 		 4: BRANCH %v_7[4.3,] 
 BB 6
@@ -41,7 +41,7 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "contrib/" def_%v_9 
 		 1: css->prepend def_%v_10 css[2.5,] %v_9[7.0,] 	 ARGS:%v_9,
 		 2: COPY TYPE_PASS def_%v_8 %v_10[7.1,] 
 BB 8
@@ -51,11 +51,11 @@ BB 8
 		 0: 
 		 1: (Dir) def_%v_11 
 		 2: (BASE_DIR) def_%v_12 
-		 3: COPY TYPE_StringLiteral def_%v_13 
-		 4: COPY TYPE_StringLiteral def_%v_14 
-		 5: COPY TYPE_StringLiteral def_%v_15 
+		 3: COPY TYPE_StringLiteral "/" def_%v_13 
+		 4: COPY TYPE_StringLiteral "contrib/" def_%v_14 
+		 5: COPY TYPE_StringLiteral "" def_%v_15 
 		 6: css->sub def_%v_16 css[2.5,] %v_14[8.4,] %v_15[8.5,] 	 ARGS:%v_14,%v_15,
-		 7: COPY TYPE_StringLiteral def_%v_17 
+		 7: COPY TYPE_StringLiteral ".css.scss" def_%v_17 
 		 8: BUILDSTRING def_%v_18 %v_12[8.2,] %v_13[8.3,] %v_16[8.6,] %v_17[8.7,] 
 		 9: %v_11->[] def_%v_19 %v_11[8.1,] %v_18[8.8,] 	 ARGS:%v_18,
 		 10: %v_19->any? def_%v_20 %v_19[8.9,] 	 ARGS:
@@ -82,7 +82,7 @@ BB 2
 		 5: 
 		 6: (Dir) def_%v_3 
 		 7: (BASE_DIR) def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "/*css" def_%v_5 
 		 9: BUILDSTRING def_%v_6 %v_4[2.7,] %v_5[2.8,] 
 		 10: %v_3->[] def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: %v_7->map def_%v_8 %v_7[2.10,] %self[2.0,] 	 ARGS:%v_7,
@@ -107,18 +107,18 @@ BB 3
 		 0: 
 		 1: (File) def_%cl_1_3 
 		 2: COPY TYPE_Regexp def_%cl_1_4 
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "" def_%cl_1_5 
 		 4: scss->sub def_%cl_1_6 scss[2.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_4,%cl_1_5,
-		 5: COPY TYPE_StringLiteral def_%cl_1_7 
+		 5: COPY TYPE_StringLiteral ".css" def_%cl_1_7 
 		 6: %cl_1_3->basename def_%cl_1_8 %cl_1_3[3.1,] %cl_1_6[3.4,] %cl_1_7[3.5,] 	 ARGS:%cl_1_6,%cl_1_7,
 		 7: COPY TYPE_PASS def_css %cl_1_8[3.6,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_1_9 
+		 9: COPY TYPE_StringLiteral "contrib/" def_%cl_1_9 
 		 10: BUILDSTRING def_%cl_1_10 %cl_1_9[3.9,] %cl_1_8[3.6,] 
 		 11: COPY TYPE_PASS def_url %cl_1_10[3.10,] 
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%cl_1_11 
-		 14: COPY TYPE_StringLiteral def_%cl_1_12 
+		 13: COPY TYPE_StringLiteral "/stylesheets/contrib/" def_%cl_1_11 
+		 14: COPY TYPE_StringLiteral ".png" def_%cl_1_12 
 		 15: BUILDSTRING def_%cl_1_13 %cl_1_11[3.13,] %cl_1_8[3.6,] %cl_1_12[3.14,] 
 		 16: COPY TYPE_PASS def_png %cl_1_13[3.15,] 
 		 17: 
@@ -219,9 +219,9 @@ BB 2
 		 5: RECEIVEARG def_url 
 		 6: RECEIVEARG def_cookies 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "tmp/snapshot_" def_%v_3 
 		 9: %self->rand def_%v_4 %self[2.0,] 	 ARGS:Fixnum,
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral ".png" def_%v_5 
 		 11: BUILDSTRING def_%v_6 %v_3[2.8,] %v_4[2.9,] %v_5[2.10,] 
 		 12: COPY TYPE_PASS def_dst %v_6[2.11,] 
 		 13: 
@@ -234,7 +234,7 @@ BB 2
 		 20: (Dir) def_%v_9 
 		 21: (Rails) def_%v_10 
 		 22: %v_10->root def_%v_11 %v_10[2.21,] 	 ARGS:
-		 23: COPY TYPE_StringLiteral def_%v_12 
+		 23: COPY TYPE_StringLiteral "public" def_%v_12 
 		 24: %v_11->join def_%v_13 %v_11[2.22,] %v_12[2.23,] 	 ARGS:%v_12,
 		 25: %v_9->chdir def_%v_14 %v_9[2.20,] %v_13[2.24,] %self[2.0,2.9,] 	 ARGS:%v_13,%v_9,
 CLOSURE BEGIN: %self[2.0,2.9,] url[2.5,] dst[2.12,] key[2.15,] val[2.18,] 
@@ -274,21 +274,21 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral "phantomjs " def_%cl_2_3 
 		 2: (Rails) def_%cl_2_4 
 		 3: %cl_2_4->root def_%cl_2_5 %cl_2_4[3.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_2_6 
-		 5: COPY TYPE_StringLiteral def_%cl_2_7 
-		 6: COPY TYPE_StringLiteral def_%cl_2_8 
-		 7: COPY TYPE_StringLiteral def_%cl_2_9 
-		 8: COPY TYPE_StringLiteral def_%cl_2_10 
+		 4: COPY TYPE_StringLiteral "/lib/phantomjs/rasterize.coffee '" def_%cl_2_6 
+		 5: COPY TYPE_StringLiteral "' " def_%cl_2_7 
+		 6: COPY TYPE_StringLiteral " '" def_%cl_2_8 
+		 7: COPY TYPE_StringLiteral "' '" def_%cl_2_9 
+		 8: COPY TYPE_StringLiteral "'" def_%cl_2_10 
 		 9: BUILDSTRING def_%cl_2_11 %cl_2_3[3.1,] %cl_2_5[3.3,] %cl_2_6[3.4,] url[] %cl_2_7[3.5,] dst[] %cl_2_8[3.6,] key[] %cl_2_9[3.7,] val[] %cl_2_10[3.8,] 
-		 10: COPY TYPE_StringLiteral def_%cl_2_12 
+		 10: COPY TYPE_StringLiteral "mogrify -resize 400 -extent 400x400 " def_%cl_2_12 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_13 
+		 12: COPY TYPE_StringLiteral " 2>&1" def_%cl_2_13 
 		 13: BUILDSTRING def_%cl_2_14 %cl_2_12[3.10,] dst[] %cl_2_13[3.12,] 
 		 14: COPY TYPE_Array def_%cl_2_15 %cl_2_11[3.9,] %cl_2_14[3.13,] 
-		 15: COPY TYPE_StringLiteral def_%cl_2_16 
+		 15: COPY TYPE_StringLiteral " && " def_%cl_2_16 
 		 16: %cl_2_15->join def_%cl_2_17 %cl_2_15[3.14,] %cl_2_16[3.15,] 	 ARGS:%cl_2_16,
 		 17: COPY TYPE_PASS def_cmd %cl_2_17[3.16,] 
 		 18: 

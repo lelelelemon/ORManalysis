@@ -98,6 +98,16 @@ class INode
 		#end
 		#return false
 	end
+	def isChainedQuery?
+		if @instr.isQuery
+			self.getDataflowEdges.each do |e|
+				if e.getToNode.isReadQuery? and self.getDataflowEdges.length == 1 and e.getToNode.getInstr.getTableName == @instr.getTableName
+					return true
+				end
+			end
+		end
+		return false
+	end
 	def instr_is_readQuery
 		if @instr != nil and @instr.instance_of?Call_instr
 			return @instr.isReadQuery
@@ -355,6 +365,29 @@ def addAllControlEdges
 		end
 	end
 
+end
+
+def is_controlflow_reachable(after_node, pre_node)
+	@visited_list = Array.new
+	@visited_list.push(pre_node)
+	@queue = Array.new
+	@queue.push(pre_node)
+	while @queue.length > 0
+		temp_node = @queue.pop
+		if temp_node.getIndex <= after_node.getIndex
+			temp_node.getControlflowEdges.each do |e|
+				if e.getFromNode.getIndex == after_node.getIndex
+					return true
+				end
+				if @visited_list.include?e.getToNode
+				else
+					@visited_list.push(e.getToNode)
+					@queue.push(e.getToNode)
+				end
+			end
+		end
+	end
+	return false
 end
 
 def compute_longest_single_path

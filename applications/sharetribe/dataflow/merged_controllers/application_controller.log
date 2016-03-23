@@ -134,7 +134,7 @@ BB 2
 		 19: COPY TYPE_PASS def_community_locales %v_11[2.18,] 
 		 20: 
 		 21: m_community->default_locale def_%v_12 m_community[2.14,] 	 ARGS:
-		 22: COPY TYPE_StringLiteral def_%v_13 
+		 22: COPY TYPE_StringLiteral "en" def_%v_13 
 		 23: %v_12->or_else def_%v_14 %v_12[2.21,] %v_13[2.22,] 	 ARGS:%v_13,
 		 24: COPY TYPE_PASS def_community_default_locale %v_14[2.23,] 
 		 25: 
@@ -321,8 +321,8 @@ BB 17
 	datadep: 
 	instructions:
 		 0: (ArgumentError) def_%v_43 
-		 1: COPY TYPE_StringLiteral def_%v_44 
-		 2: COPY TYPE_StringLiteral def_%v_45 
+		 1: COPY TYPE_StringLiteral "Locale " def_%v_44 
+		 2: COPY TYPE_StringLiteral " not available. Check your community settings" def_%v_45 
 		 3: BUILDSTRING def_%v_46 %v_44[17.1,] locale[15.2,] %v_45[17.2,] 
 		 4: %v_43->new def_%v_47 %v_43[17.0,] %v_46[17.3,] 	 ARGS:%v_46,
 		 5: %self->raise def_%v_48 %self[2.0,] %v_47[17.4,] 	 ARGS:%v_47,
@@ -360,7 +360,7 @@ BB 20
 		 9: %v_58->clone def_%v_59 %v_58[20.8,] 	 ARGS:
 		 10: COPY TYPE_PASS def_new_path %v_59[20.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%v_60 
+		 12: COPY TYPE_StringLiteral "/" def_%v_60 
 		 13: %self->params def_%v_61 %self[20.1,20.4,20.7,2.0,] 	 ARGS:
 		 14: %v_61->[] def_%v_62 %v_61[20.13,] 	 ARGS:Symbol,
 		 15: BUILDSTRING def_%v_63 %v_60[20.12,] %v_62[20.14,] 
@@ -685,7 +685,7 @@ BB 2
 		 7: %v_3->protocol def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %self->request def_%v_5 %self[2.0,2.6,] 	 ARGS:
 		 9: %v_5->host_with_port def_%v_6 %v_5[2.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "/" def_%v_7 
 		 11: %self->params def_%v_8 %self[2.0,2.6,2.8,] 	 ARGS:
 		 12: %v_8->[] def_%v_9 %v_8[2.11,] 	 ARGS:Symbol,
 		 13: BUILDSTRING def_%v_10 %v_4[2.7,] %v_6[2.9,] %v_7[2.10,] %v_9[2.12,] 
@@ -1200,7 +1200,7 @@ BB 4
 	instructions:
 		 0: v->to_s def_%cl_3_4 v[2.2,] 	 ARGS:
 		 1: %cl_3_4->downcase def_%cl_3_5 %cl_3_4[4.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_3_6 
+		 2: COPY TYPE_StringLiteral "true" def_%cl_3_6 
 		 3: %cl_3_5->== def_%cl_3_7 %cl_3_5[4.1,] %cl_3_6[4.2,] 	 ARGS:%cl_3_6,
 		 4: RETURN %cl_3_7[4.3,] %self[2.0,] 
 BB 5
@@ -1412,16 +1412,16 @@ BB 2
 		 9: %v_3->escape def_%v_4 %v_3[2.8,] app_domain[2.6,] 	 ARGS:app_domain,
 		 10: COPY TYPE_PASS def_app_domain_regexp %v_4[2.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%v_5 
-		 13: COPY TYPE_StringLiteral def_%v_6 
-		 14: COPY TYPE_StringLiteral def_%v_7 
+		 12: COPY TYPE_StringLiteral "" def_%v_5 
+		 13: COPY TYPE_StringLiteral "^www\.(.+)\." def_%v_6 
+		 14: COPY TYPE_StringLiteral "$" def_%v_7 
 		 15: def_%v_8 %v_5[2.12,] %v_6[2.13,] app_domain[2.6,] %v_7[2.14,] 
 		 16: %v_8->match def_%v_9 %v_8[2.15,] host[2.5,] 	 ARGS:host,
 		 17: COPY TYPE_PASS def_ident_with_www %v_9[2.16,] 
 		 18: 
-		 19: COPY TYPE_StringLiteral def_%v_10 
-		 20: COPY TYPE_StringLiteral def_%v_11 
-		 21: COPY TYPE_StringLiteral def_%v_12 
+		 19: COPY TYPE_StringLiteral "" def_%v_10 
+		 20: COPY TYPE_StringLiteral "^(.+)\." def_%v_11 
+		 21: COPY TYPE_StringLiteral "$" def_%v_12 
 		 22: def_%v_13 %v_10[2.19,] %v_11[2.20,] app_domain[2.6,] %v_12[2.21,] 
 		 23: %v_13->match def_%v_14 %v_13[2.22,] host[2.5,] 	 ARGS:host,
 		 24: COPY TYPE_PASS def_ident_without_www %v_14[2.23,] 
@@ -1554,7 +1554,7 @@ BB 3
 		 2: %v_5->id def_%v_6 %v_5[3.1,] 	 ARGS:
 		 3: GETFIELD %self->current_community def_%v_7 %self[2.0,] 
 		 4: %v_7->id def_%v_8 %v_7[3.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_9 
+		 5: COPY TYPE_StringLiteral "accepted" def_%v_9 
 		 6: HASH-person_id-community_id-status- def_%v_10 %v_6[3.2,] %v_8[3.4,] %v_9[3.5,] 
 		 7: %v_4->where def_%v_11 %v_4[3.0,] %v_10[3.6,] 	 ARGS:%v_10,
 		 8: %v_11->first def_%v_12 %v_11[3.7,] 	 ARGS:
@@ -1827,7 +1827,7 @@ BB 9
 		 2: %self->sign_out def_%v_11 %self[2.0,] %v_10[9.1,] 	 ARGS:%v_10,
 		 3: 
 		 4: %self->flash def_%v_12 %self[9.2,2.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_13 
+		 5: COPY TYPE_StringLiteral "layouts.notifications.can_not_login_with_private_user" def_%v_13 
 		 6: %self->t def_%v_14 %self[9.2,9.4,2.0,] %v_13[9.5,] 	 ARGS:%v_13,
 		 7: ATTRASSIGN %v_12->[] %v_14[9.6,] 
 		 8: 
@@ -1891,13 +1891,13 @@ BB 7
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_8 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "layouts.notifications.you_need_to_confirm_your_account_first" def_%v_9 
 		 3: %self->t def_%v_10 %self[7.1,2.0,] %v_9[7.2,] 	 ARGS:%v_9,
 		 4: ATTRASSIGN %v_8->[] %v_10[7.3,] 
 		 5: 
 		 6: %self->params def_%v_11 %self[7.1,7.3,2.0,] 	 ARGS:
 		 7: %v_11->[] def_%v_12 %v_11[7.6,] 	 ARGS:Symbol,
-		 8: COPY TYPE_StringLiteral def_%v_13 
+		 8: COPY TYPE_StringLiteral "devise/confirmations" def_%v_13 
 		 9: %v_12->== def_%v_14 %v_12[7.7,] %v_13[7.8,] 	 ARGS:%v_13,
 		 10: BRANCH %v_14[7.9,] 
 BB 8
@@ -1910,8 +1910,8 @@ BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_16 
-		 1: COPY TYPE_StringLiteral def_%v_17 
+		 0: COPY TYPE_StringLiteral "sessions" def_%v_16 
+		 1: COPY TYPE_StringLiteral "confirmation_pending" def_%v_17 
 		 2: HASH-controller-action- def_%v_18 %v_16[9.0,] %v_17[9.1,] 
 		 3: %self->redirect_to def_%v_19 %self[2.0,] %v_18[9.2,] 	 ARGS:%v_18,
 		 4: COPY TYPE_PASS def_%v_15 %v_19[9.3,] 
@@ -1959,7 +1959,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "www." def_%v_7 
 		 1: (APP_CONFIG) def_%v_8 
 		 2: %v_8->domain def_%v_9 %v_8[4.1,] 	 ARGS:
 		 3: BUILDSTRING def_%v_10 %v_7[4.0,] %v_9[4.2,] 
@@ -2006,7 +2006,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: %v_17->default_url_options def_%v_18 %v_17[9.0,8.2,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_19 
+		 1: COPY TYPE_StringLiteral "https" def_%v_19 
 		 2: ATTRASSIGN %v_18->[] %v_19[10.1,] 
 		 3: RETURN %v_19[10.1,] %self[2.0,] 
 BB 11
@@ -2179,16 +2179,16 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->view_context def_%v_10 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral "paypal_accounts.from_your_payment_settings_link_text" def_%v_11 
 		 3: %self->t def_%v_12 %self[5.1,2.0,] %v_11[5.2,] 	 ARGS:%v_11,
 		 4: GETFIELD %self->current_user def_%v_13 %self[5.1,5.3,2.0,] 
 		 5: %self->payment_settings_path def_%v_14 %self[5.1,5.3,2.0,] %v_13[5.4,] 	 ARGS:Symbol,%v_13,
-		 6: COPY TYPE_StringLiteral def_%v_15 
+		 6: COPY TYPE_StringLiteral "_blank" def_%v_15 
 		 7: HASH-target- def_%v_16 %v_15[5.6,] 
 		 8: %v_10->link_to def_%v_17 %v_10[5.1,] %v_12[5.3,] %v_14[5.5,] %v_16[5.7,] 	 ARGS:%v_12,%v_14,%v_16,
 		 9: COPY TYPE_PASS def_settings_link %v_17[5.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_18 
+		 11: COPY TYPE_StringLiteral "paypal_accounts.missing" def_%v_18 
 		 12: HASH-settings_link- def_%v_19 %v_17[5.8,] 
 		 13: %self->t def_%v_20 %self[5.1,5.3,5.5,2.0,] %v_18[5.11,] %v_19[5.12,] 	 ARGS:%v_18,%v_19,
 		 14: COPY TYPE_PASS def_warning %v_20[5.13,] 
@@ -2267,14 +2267,14 @@ BB 2
 		 13: GETFIELD %self->current_community def_%v_6 %self[2.0,2.9,] 
 		 14: %self->Maybe def_%v_7 %self[2.0,2.9,] %v_6[2.13,] 	 ARGS:%v_6,
 		 15: %v_7->id def_%v_8 %v_7[2.14,] 	 ARGS:
-		 16: COPY TYPE_StringLiteral def_%v_9 
+		 16: COPY TYPE_StringLiteral "" def_%v_9 
 		 17: %v_8->or_else def_%v_10 %v_8[2.15,] %v_9[2.16,] 	 ARGS:%v_9,
 		 18: ATTRASSIGN payload->[] %v_10[2.17,] 
 		 19: 
 		 20: GETFIELD %self->current_user def_%v_11 %self[2.0,2.9,2.14,] 
 		 21: %self->Maybe def_%v_12 %self[2.0,2.9,2.14,] %v_11[2.20,] 	 ARGS:%v_11,
 		 22: %v_12->id def_%v_13 %v_12[2.21,] 	 ARGS:
-		 23: COPY TYPE_StringLiteral def_%v_14 
+		 23: COPY TYPE_StringLiteral "" def_%v_14 
 		 24: %v_13->or_else def_%v_15 %v_13[2.22,] %v_14[2.23,] 	 ARGS:%v_14,
 		 25: ATTRASSIGN payload->[] %v_15[2.24,] 
 		 26: 
@@ -2341,13 +2341,13 @@ BB 2
 		 6: %self->clear_user_session def_%v_3 %self[2.0,] 	 ARGS:
 		 7: 
 		 8: %self->flash def_%v_4 %self[2.0,2.6,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral "layouts.notifications.error_with_session" def_%v_5 
 		 10: %self->t def_%v_6 %self[2.0,2.6,2.8,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: ATTRASSIGN %v_4->[] %v_6[2.10,] 
 		 12: 
 		 13: (ApplicationHelper) def_%v_7 
-		 14: COPY TYPE_StringLiteral def_%v_8 
-		 15: COPY TYPE_StringLiteral def_%v_9 
+		 14: COPY TYPE_StringLiteral "ASI session was unauthorized. This may be normal, if session just expired, but if this occurs frequently something is wrong." def_%v_8 
+		 15: COPY TYPE_StringLiteral "ASI session error" def_%v_9 
 		 16: %self->params def_%v_10 %self[2.0,2.6,2.8,2.10,] 	 ARGS:
 		 17: %v_7->send_error_notification def_%v_11 %v_7[2.13,] %v_8[2.14,] %v_9[2.15,] %v_10[2.16,] 	 ARGS:%v_8,%v_9,%v_10,
 		 18: 
@@ -2412,7 +2412,7 @@ BB 2
 		 7: (EventIdHelper) def_%v_4 
 		 8: %self->params def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_4->generate_event_id def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "_" def_%v_7 
 		 11: (Time) def_%v_8 
 		 12: %v_8->now def_%v_9 %v_8[2.11,] 	 ARGS:
 		 13: %v_9->to_f def_%v_10 %v_9[2.12,] 	 ARGS:
@@ -2453,7 +2453,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: %self->flash def_%v_5 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "layouts.notifications.only_kassi_administrators_can_access_this_area" def_%v_6 
 		 2: %self->t def_%v_7 %self[4.0,2.0,] %v_6[4.1,] 	 ARGS:%v_6,
 		 3: ATTRASSIGN %v_5->[] %v_7[4.2,] 
 		 4: 
@@ -2507,7 +2507,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_8 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "layouts.notifications.only_kassi_administrators_can_access_this_area" def_%v_9 
 		 3: %self->t def_%v_10 %self[4.1,2.0,] %v_9[4.2,] 	 ARGS:%v_9,
 		 4: ATTRASSIGN %v_8->[] %v_10[4.3,] 
 		 5: 
@@ -2692,7 +2692,7 @@ BB 10
 		 5: (URLUtils) def_%v_13 
 		 6: %self->request def_%v_14 %self[10.1,10.3,2.0,] 	 ARGS:
 		 7: %v_14->fullpath def_%v_15 %v_14[10.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_16 
+		 8: COPY TYPE_StringLiteral "auth" def_%v_16 
 		 9: %v_13->remove_query_param def_%v_17 %v_13[10.5,] %v_15[10.7,] %v_16[10.8,] 	 ARGS:%v_15,%v_16,
 		 10: COPY TYPE_PASS def_path_without_auth_token %v_17[10.9,] 
 		 11: 
@@ -3116,7 +3116,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_3 
+		 0: COPY TYPE_StringLiteral "Not found" def_%v_3 
 		 1: COPY TYPE_PASS def_msg %v_3[3.0,] 
 BB 4
 	outgoing: 5 6 

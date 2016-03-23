@@ -70,25 +70,25 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral "Name:" def_%cl_2_3 
 		 2: f->label def_%cl_2_4 f[2.2,] %cl_2_3[3.1,] 	 ARGS:Symbol,%cl_2_3,
 		 3: 
 		 4: HASH-size- def_%cl_2_5 
 		 5: f->text_field def_%cl_2_6 f[3.2,2.2,] %cl_2_5[3.4,] 	 ARGS:Symbol,%cl_2_5,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_7 
+		 7: COPY TYPE_StringLiteral "E-mail Address:" def_%cl_2_7 
 		 8: f->label def_%cl_2_8 f[3.2,3.5,2.2,] %cl_2_7[3.7,] 	 ARGS:Symbol,%cl_2_7,
 		 9: 
 		 10: HASH-size- def_%cl_2_9 
 		 11: f->text_field def_%cl_2_10 f[3.2,3.5,3.8,2.2,] %cl_2_9[3.10,] 	 ARGS:Symbol,%cl_2_9,
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%cl_2_11 
+		 13: COPY TYPE_StringLiteral "URL:" def_%cl_2_11 
 		 14: f->label def_%cl_2_12 f[3.2,3.5,3.8,3.11,2.2,] %cl_2_11[3.13,] 	 ARGS:Symbol,%cl_2_11,
 		 15: 
 		 16: HASH-size- def_%cl_2_13 
 		 17: f->text_field def_%cl_2_14 f[3.2,3.5,3.8,3.11,3.14,2.2,] %cl_2_13[3.16,] 	 ARGS:Symbol,%cl_2_13,
 		 18: 
-		 19: COPY TYPE_StringLiteral def_%cl_2_15 
+		 19: COPY TYPE_StringLiteral "Request Invitation" def_%cl_2_15 
 		 20: %self->submit_tag def_%cl_2_16 %self[2.0,] %cl_2_15[3.19,] 	 ARGS:%cl_2_15,
 		 21: RETURN %cl_2_16[3.20,] %self[3.20,2.0,] 
 BB 4
@@ -123,10 +123,10 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_8 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "Public invitation requests are not allowed." def_%v_9 
 		 3: ATTRASSIGN %v_8->[] %v_9[4.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_10 
+		 5: COPY TYPE_StringLiteral "/login" def_%v_10 
 		 6: %self->redirect_to def_%v_11 %self[4.1,2.0,] %v_10[4.5,] 	 ARGS:%v_10,
 		 7: RETURN %v_11[4.6,] %self[4.1,4.6,2.0,] 
 BB 6
@@ -219,7 +219,7 @@ BB 3
 		 0: 
 		 1: 
 		 2: ir->created_at def_%cl_2_3 ir[2.2,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_2_4 
+		 3: COPY TYPE_StringLiteral "%Y-%m-%d %H:%M:%S" def_%cl_2_4 
 		 4: %cl_2_3->strftime def_%cl_2_5 %cl_2_3[3.2,] %cl_2_4[3.3,] 	 ARGS:%cl_2_4,
 		 5: 
 		 6: ir->name def_%cl_2_6 ir[3.2,2.2,] 	 ARGS:
@@ -267,13 +267,13 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral "code" def_%cl_3_3 
 		 2: ir->code def_%cl_3_4 ir[] 	 ARGS:
 		 3: %self->hidden_field_tag def_%cl_3_5 %self[2.0,] %cl_3_3[3.1,] %cl_3_4[3.2,] 	 ARGS:%cl_3_3,%cl_3_4,
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_3_6 
-		 6: COPY TYPE_StringLiteral def_%cl_3_7 
-		 7: COPY TYPE_StringLiteral def_%cl_3_8 
+		 5: COPY TYPE_StringLiteral "Send Invitation" def_%cl_3_6 
+		 6: COPY TYPE_StringLiteral "Are " def_%cl_3_7 
+		 7: COPY TYPE_StringLiteral "you sure you want to invite this person and remove this request?" def_%cl_3_8 
 		 8: %cl_3_7-><< def_%cl_3_9 %cl_3_7[3.6,] %cl_3_8[3.7,] 	 ARGS:%cl_3_8,
 		 9: HASH-confirm- def_%cl_3_10 %cl_3_9[3.8,] 
 		 10: HASH-data- def_%cl_3_11 %cl_3_10[3.9,] 
@@ -320,13 +320,13 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_3 
+		 1: COPY TYPE_StringLiteral "code" def_%cl_4_3 
 		 2: ir->code def_%cl_4_4 ir[] 	 ARGS:
 		 3: %self->hidden_field_tag def_%cl_4_5 %self[2.0,] %cl_4_3[3.1,] %cl_4_4[3.2,] 	 ARGS:%cl_4_3,%cl_4_4,
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_4_6 
-		 6: COPY TYPE_StringLiteral def_%cl_4_7 
-		 7: COPY TYPE_StringLiteral def_%cl_4_8 
+		 5: COPY TYPE_StringLiteral "Delete" def_%cl_4_6 
+		 6: COPY TYPE_StringLiteral "Are you sure " def_%cl_4_7 
+		 7: COPY TYPE_StringLiteral "you want to delete this request?" def_%cl_4_8 
 		 8: %cl_4_7-><< def_%cl_4_9 %cl_4_7[3.6,] %cl_4_8[3.7,] 	 ARGS:%cl_4_8,
 		 9: HASH-confirm- def_%cl_4_10 %cl_4_9[3.8,] 
 		 10: HASH-data- def_%cl_4_11 %cl_4_10[3.9,] 
@@ -470,10 +470,10 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_12 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_13 
+		 2: COPY TYPE_StringLiteral "Invalid or expired invitation request" def_%v_13 
 		 3: ATTRASSIGN %v_12->[] %v_13[3.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_14 
+		 5: COPY TYPE_StringLiteral "/invitations/request" def_%v_14 
 		 6: %self->redirect_to def_%v_15 %self[3.1,2.0,] %v_14[3.5,] 	 ARGS:%v_14,
 		 7: RETURN %v_15[3.6,] %self[3.1,3.6,2.0,] 
 BB 4
@@ -487,12 +487,12 @@ BB 4
 		 4: ir->save! def_%v_17 ir[4.2,2.13,] 	 ARGS:
 		 5: 
 		 6: %self->flash def_%v_18 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_19 
-		 8: COPY TYPE_StringLiteral def_%v_20 
+		 7: COPY TYPE_StringLiteral "Your invitation request has been validated and " def_%v_19 
+		 8: COPY TYPE_StringLiteral "will now be shown to other logged-in users." def_%v_20 
 		 9: %v_19-><< def_%v_21 %v_19[4.7,] %v_20[4.8,] 	 ARGS:%v_20,
 		 10: ATTRASSIGN %v_18->[] %v_21[4.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%v_22 
+		 12: COPY TYPE_StringLiteral "/invitations/request" def_%v_22 
 		 13: %self->redirect_to def_%v_23 %self[4.6,2.0,] %v_22[4.12,] 	 ARGS:%v_22,
 		 14: RETURN %v_23[4.13,] %self[4.6,4.13,2.0,] 
 BB 7
@@ -531,7 +531,7 @@ BB 2
 		 19: %v_9->[] def_%v_10 %v_9[2.18,] 	 ARGS:Symbol,
 		 20: ATTRASSIGN i->memo %v_10[2.19,] 
 		 21: 
-		 22: def_%v_11 
+		 22: GLOBALVAR $! def_%v_11 
 BB 4
 	outgoing: 5 6 
 	datadep: 
@@ -543,12 +543,12 @@ BB 4
 		 4: i->send_email def_%v_15 i[4.2,2.8,2.12,2.16,2.20,] 	 ARGS:
 		 5: 
 		 6: %self->flash def_%v_16 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_17 
+		 7: COPY TYPE_StringLiteral "Successfully e-mailed invitation to " def_%v_17 
 		 8: %self->params def_%v_18 %self[4.6,2.0,] 	 ARGS:
 		 9: %v_18->[] def_%v_19 %v_18[4.8,] 	 ARGS:Symbol,
 		 10: %v_19->to_s def_%v_20 %v_19[4.9,] 	 ARGS:
 		 11: %v_17-><< def_%v_21 %v_17[4.7,] %v_20[4.10,] 	 ARGS:%v_20,
-		 12: COPY TYPE_StringLiteral def_%v_22 
+		 12: COPY TYPE_StringLiteral "." def_%v_22 
 		 13: %v_21-><< def_%v_23 %v_21[4.11,] %v_22[4.12,] 	 ARGS:%v_22,
 		 14: ATTRASSIGN %v_16->[] %v_23[4.13,] 
 		 15: COPY TYPE_PASS def_%v_13 %v_23[4.13,] 
@@ -576,8 +576,8 @@ BB 8
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_26 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_27 
-		 3: COPY TYPE_StringLiteral def_%v_28 
+		 2: COPY TYPE_StringLiteral "Could not send invitation, verify the e-mail " def_%v_27 
+		 3: COPY TYPE_StringLiteral "address is valid." def_%v_28 
 		 4: %v_27-><< def_%v_29 %v_27[8.2,] %v_28[8.3,] 	 ARGS:%v_28,
 		 5: ATTRASSIGN %v_26->[] %v_29[8.4,] 
 		 6: COPY TYPE_PASS def_%v_13 %v_29[8.4,] 
@@ -607,7 +607,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_34 
+		 1: COPY TYPE_StringLiteral "/" def_%v_34 
 		 2: %self->redirect_to def_%v_35 %self[2.0,] %v_34[12.1,] 	 ARGS:%v_34,
 		 3: RETURN %v_35[12.2,] %self[12.2,2.0,] 
 BB 13
@@ -615,7 +615,7 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_37 
+		 1: COPY TYPE_StringLiteral "/settings" def_%v_37 
 		 2: %self->redirect_to def_%v_38 %self[2.0,] %v_37[13.1,] 	 ARGS:%v_37,
 		 3: RETURN %v_38[13.2,] %self[13.2,2.0,] 
 BB 15
@@ -668,17 +668,17 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_16 %self[3.6,2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_17 
+		 2: COPY TYPE_StringLiteral "You have been e-mailed a confirmation to " def_%v_17 
 		 3: %self->params def_%v_18 %self[4.1,3.6,2.0,] 	 ARGS:
 		 4: %v_18->[] def_%v_19 %v_18[4.3,] 	 ARGS:Symbol,
 		 5: %v_19->[] def_%v_20 %v_19[4.4,] 	 ARGS:Symbol,
 		 6: %v_20->to_s def_%v_21 %v_20[4.5,] 	 ARGS:
 		 7: %v_17-><< def_%v_22 %v_17[4.2,] %v_21[4.6,] 	 ARGS:%v_21,
-		 8: COPY TYPE_StringLiteral def_%v_23 
+		 8: COPY TYPE_StringLiteral "." def_%v_23 
 		 9: %v_22-><< def_%v_24 %v_22[4.7,] %v_23[4.8,] 	 ARGS:%v_23,
 		 10: ATTRASSIGN %v_16->[] %v_24[4.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%v_25 
+		 12: COPY TYPE_StringLiteral "/invitations/request" def_%v_25 
 		 13: %self->redirect_to def_%v_26 %self[4.1,4.3,3.6,2.0,] %v_25[4.12,] 	 ARGS:%v_25,
 		 14: RETURN %v_26[4.13,] %self[4.1,4.3,4.13,3.6,2.0,] 
 BB 5
@@ -730,25 +730,25 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral "Name:" def_%cl_2_3 
 		 2: f->label def_%cl_2_4 f[2.2,] %cl_2_3[3.1,] 	 ARGS:Symbol,%cl_2_3,
 		 3: 
 		 4: HASH-size- def_%cl_2_5 
 		 5: f->text_field def_%cl_2_6 f[3.2,2.2,] %cl_2_5[3.4,] 	 ARGS:Symbol,%cl_2_5,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_7 
+		 7: COPY TYPE_StringLiteral "E-mail Address:" def_%cl_2_7 
 		 8: f->label def_%cl_2_8 f[3.2,3.5,2.2,] %cl_2_7[3.7,] 	 ARGS:Symbol,%cl_2_7,
 		 9: 
 		 10: HASH-size- def_%cl_2_9 
 		 11: f->text_field def_%cl_2_10 f[3.2,3.5,3.8,2.2,] %cl_2_9[3.10,] 	 ARGS:Symbol,%cl_2_9,
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%cl_2_11 
+		 13: COPY TYPE_StringLiteral "URL:" def_%cl_2_11 
 		 14: f->label def_%cl_2_12 f[3.2,3.5,3.8,3.11,2.2,] %cl_2_11[3.13,] 	 ARGS:Symbol,%cl_2_11,
 		 15: 
 		 16: HASH-size- def_%cl_2_13 
 		 17: f->text_field def_%cl_2_14 f[3.2,3.5,3.8,3.11,3.14,2.2,] %cl_2_13[3.16,] 	 ARGS:Symbol,%cl_2_13,
 		 18: 
-		 19: COPY TYPE_StringLiteral def_%cl_2_15 
+		 19: COPY TYPE_StringLiteral "Request Invitation" def_%cl_2_15 
 		 20: %self->submit_tag def_%cl_2_16 %self[2.0,] %cl_2_15[3.19,] 	 ARGS:%cl_2_15,
 		 21: RETURN %cl_2_16[3.20,] %self[3.20,2.0,] 
 BB 4
@@ -783,7 +783,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_30 
+		 1: COPY TYPE_StringLiteral "/login" def_%v_30 
 		 2: %self->redirect_to def_%v_31 %self[2.0,] %v_30[7.1,] 	 ARGS:%v_30,
 		 3: RETURN %v_31[7.2,] %self[7.2,2.0,] 
 BB 8
@@ -828,10 +828,10 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_12 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_13 
+		 2: COPY TYPE_StringLiteral "Invalid or expired invitation request" def_%v_13 
 		 3: ATTRASSIGN %v_12->[] %v_13[3.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_14 
+		 5: COPY TYPE_StringLiteral "/invitations" def_%v_14 
 		 6: %self->redirect_to def_%v_15 %self[3.1,2.0,] %v_14[3.5,] 	 ARGS:%v_14,
 		 7: RETURN %v_15[3.6,] %self[3.1,3.6,2.0,] 
 BB 4
@@ -858,15 +858,15 @@ BB 4
 		 17: ir->destroy! def_%v_24 ir[4.10,2.13,] 	 ARGS:
 		 18: 
 		 19: %self->flash def_%v_25 %self[2.0,] 	 ARGS:
-		 20: COPY TYPE_StringLiteral def_%v_26 
+		 20: COPY TYPE_StringLiteral "Successfully e-mailed invitation to " def_%v_26 
 		 21: ir->name def_%v_27 ir[4.10,4.17,2.13,] 	 ARGS:
 		 22: %v_27->to_s def_%v_28 %v_27[4.21,] 	 ARGS:
 		 23: %v_26-><< def_%v_29 %v_26[4.20,] %v_28[4.22,] 	 ARGS:%v_28,
-		 24: COPY TYPE_StringLiteral def_%v_30 
+		 24: COPY TYPE_StringLiteral "." def_%v_30 
 		 25: %v_29-><< def_%v_31 %v_29[4.23,] %v_30[4.24,] 	 ARGS:%v_30,
 		 26: ATTRASSIGN %v_25->[] %v_31[4.25,] 
 		 27: 
-		 28: COPY TYPE_StringLiteral def_%v_32 
+		 28: COPY TYPE_StringLiteral "/invitations" def_%v_32 
 		 29: %self->redirect_to def_%v_33 %self[4.19,2.0,] %v_32[4.28,] 	 ARGS:%v_32,
 		 30: RETURN %v_33[4.29,] %self[4.19,4.29,2.0,] 
 BB 7
@@ -898,7 +898,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "/invitations" def_%v_6 
 		 2: %self->redirect_to def_%v_7 %self[2.0,] %v_6[3.1,] 	 ARGS:%v_6,
 		 3: RETURN %v_7[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -924,10 +924,10 @@ BB 6
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_18 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_19 
+		 2: COPY TYPE_StringLiteral "Invalid or expired invitation request" def_%v_19 
 		 3: ATTRASSIGN %v_18->[] %v_19[6.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_20 
+		 5: COPY TYPE_StringLiteral "/invitations" def_%v_20 
 		 6: %self->redirect_to def_%v_21 %self[6.1,2.0,] %v_20[6.5,] 	 ARGS:%v_20,
 		 7: RETURN %v_21[6.6,] %self[6.1,6.6,2.0,] 
 BB 7
@@ -939,15 +939,15 @@ BB 7
 		 2: ir->destroy! def_%v_23 ir[4.9,] 	 ARGS:
 		 3: 
 		 4: %self->flash def_%v_24 %self[2.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_25 
+		 5: COPY TYPE_StringLiteral "Successfully deleted invitation request from " def_%v_25 
 		 6: ir->name def_%v_26 ir[7.2,4.9,] 	 ARGS:
 		 7: %v_26->to_s def_%v_27 %v_26[7.6,] 	 ARGS:
 		 8: %v_25-><< def_%v_28 %v_25[7.5,] %v_27[7.7,] 	 ARGS:%v_27,
-		 9: COPY TYPE_StringLiteral def_%v_29 
+		 9: COPY TYPE_StringLiteral "." def_%v_29 
 		 10: %v_28-><< def_%v_30 %v_28[7.8,] %v_29[7.9,] 	 ARGS:%v_29,
 		 11: ATTRASSIGN %v_24->[] %v_30[7.10,] 
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%v_31 
+		 13: COPY TYPE_StringLiteral "/invitations" def_%v_31 
 		 14: %self->redirect_to def_%v_32 %self[7.4,2.0,] %v_31[7.13,] 	 ARGS:%v_31,
 		 15: RETURN %v_32[7.14,] %self[7.4,7.14,2.0,] 
 BB 10

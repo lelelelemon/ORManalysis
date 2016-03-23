@@ -21,7 +21,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "-" def_%v_6 
 		 2: %self->body def_%v_7 %self[3.0,2.0,] 	 ARGS:
 		 3: %v_7->to_permalink def_%v_8 %v_7[3.2,] 	 ARGS:
 		 4: CONSTANT def_%v_9 
@@ -157,7 +157,7 @@ BB 2
 		 7: 
 		 8: length->+ def_%v_3 length[2.6,] 	 ARGS:Fixnum,
 		 9: message->[] def_%v_4 message[2.5,] %v_3[2.8,] 	 ARGS:%v_3,
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral " " def_%v_5 
 		 11: %v_4->== def_%v_6 %v_4[2.9,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: BRANCH %v_6[2.11,] 
 BB 3
@@ -175,7 +175,7 @@ BB 4
 		 0: 
 		 1: CONSTANT def_%v_10 length[2.6,] 
 		 2: message->[] def_%v_11 message[2.5,] %v_10[4.1,] 	 ARGS:%v_10,
-		 3: COPY TYPE_StringLiteral def_%v_12 
+		 3: COPY TYPE_StringLiteral " " def_%v_12 
 		 4: %v_11->rindex def_%v_13 %v_11[4.2,] %v_12[4.3,] 	 ARGS:%v_12,
 		 5: %v_13->- def_%v_14 %v_13[4.4,] 	 ARGS:Fixnum,
 		 6: CONSTANT def_%v_9 %v_14[4.5,] 
@@ -205,9 +205,9 @@ BB 2
 		 7: %v_3->strip_html def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: COPY TYPE_PASS def_base_message %v_4[2.7,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral " (" def_%v_5 
 		 11: %self->short_link def_%v_6 %self[2.0,2.6,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_7 
+		 12: COPY TYPE_StringLiteral ")" def_%v_7 
 		 13: BUILDSTRING def_%v_8 base_message[2.8,] %v_5[2.10,] %v_6[2.11,] %v_7[2.12,] 
 		 14: %self->too_long? def_%v_9 %self[2.0,2.6,2.11,] %v_8[2.13,] 	 ARGS:%v_8,
 		 15: BRANCH %v_9[2.14,] 
@@ -216,10 +216,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral "... (" def_%v_10 
 		 2: %self->redirect def_%v_11 %self[2.0,] 	 ARGS:
 		 3: %v_11->to_url def_%v_12 %v_11[3.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_13 
+		 4: COPY TYPE_StringLiteral ")" def_%v_13 
 		 5: BUILDSTRING def_%v_14 %v_10[3.1,] %v_12[3.3,] %v_13[3.4,] 
 		 6: %v_14->length def_%v_15 %v_14[3.5,] 	 ARGS:
 		 7: %v_15->- def_%v_16 %v_15[3.6,] 	 ARGS:%v_15,
@@ -227,10 +227,10 @@ BB 3
 		 9: COPY TYPE_PASS def_max_length %v_17[3.8,] 
 		 10: 
 		 11: %self->truncate def_%v_18 %self[3.2,2.0,] base_message[2.8,] %v_17[3.8,] 	 ARGS:base_message,max_length,
-		 12: COPY TYPE_StringLiteral def_%v_19 
+		 12: COPY TYPE_StringLiteral "... (" def_%v_19 
 		 13: %self->redirect def_%v_20 %self[3.2,3.11,2.0,] 	 ARGS:
 		 14: %v_20->to_url def_%v_21 %v_20[3.13,] 	 ARGS:
-		 15: COPY TYPE_StringLiteral def_%v_22 
+		 15: COPY TYPE_StringLiteral ")" def_%v_22 
 		 16: BUILDSTRING def_%v_23 %v_18[3.11,] %v_19[3.12,] %v_21[3.14,] %v_22[3.15,] 
 		 17: RETURN %v_23[3.16,] %self[3.2,3.11,3.13,2.0,] 
 BB 4
@@ -238,9 +238,9 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_24 
+		 1: COPY TYPE_StringLiteral " (" def_%v_24 
 		 2: %self->short_link def_%v_25 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_26 
+		 3: COPY TYPE_StringLiteral ")" def_%v_26 
 		 4: BUILDSTRING def_%v_27 base_message[2.8,] %v_24[4.1,] %v_25[4.2,] %v_26[4.3,] 
 		 5: RETURN %v_27[4.4,] %self[4.2,2.0,] 
 BB 6
@@ -264,10 +264,10 @@ BB 2
 		 4: 
 		 5: 
 		 6: (File) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "https://twitter.com" def_%v_4 
 		 8: %self->user def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_5->twitter def_%v_6 %v_5[2.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "status" def_%v_7 
 		 11: %self->twitter_id def_%v_8 %self[2.0,2.8,] 	 ARGS:
 		 12: %v_3->join def_%v_9 %v_3[2.6,] %v_4[2.7,] %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] 	 ARGS:%v_4,%v_6,%v_7,%v_8,
 		 13: RETURN %v_9[2.12,] %self[2.0,2.8,2.11,] 
@@ -412,7 +412,7 @@ BB 15
 	datadep: 
 	instructions:
 		 0: %self->in_reply_to_status_id def_%v_19 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_20 
+		 1: COPY TYPE_StringLiteral "" def_%v_20 
 		 2: %v_19->!= def_%v_21 %v_19[15.0,] %v_20[15.1,] 	 ARGS:%v_20,
 		 3: COPY TYPE_PASS def_%v_18 %v_21[15.2,] 
 BB 16
@@ -489,7 +489,7 @@ BB 23
 		 2: 
 		 3: (Rails) def_%v_41 
 		 4: %v_41->logger def_%v_42 %v_41[23.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_43 
+		 5: COPY TYPE_StringLiteral "Error while sending to twitter: " def_%v_43 
 		 6: BUILDSTRING def_%v_44 %v_43[23.5,] e[23.1,] 
 		 7: %v_42->error def_%v_45 %v_42[23.4,] %v_44[23.6,] 	 ARGS:%v_44,
 		 8: 
@@ -615,8 +615,8 @@ BB 6
 	instructions:
 		 0: 
 		 1: %self->blog def_%v_3 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_4 
-		 3: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "/notes" def_%v_4 
+		 3: COPY TYPE_StringLiteral "show" def_%v_5 
 		 4: %self->permalink def_%v_6 %self[6.1,2.0,] 	 ARGS:
 		 5: HASH-controller-action-permalink-anchor-only_path- def_%v_7 %v_4[6.2,] %v_5[6.3,] %v_6[6.4,] anchor[3.0,2.5,] only_path[5.0,4.0,] 
 		 6: %v_3->url_for def_%v_8 %v_3[6.1,] %v_7[6.5,] 	 ARGS:%v_7,
@@ -647,11 +647,11 @@ BB 2
 		 9: 
 		 10: %self->prefix def_%v_5 %self[2.0,2.6,] 	 ARGS:
 		 11: COPY TYPE_Regexp def_%v_6 
-		 12: COPY TYPE_StringLiteral def_%v_7 
+		 12: COPY TYPE_StringLiteral "" def_%v_7 
 		 13: %v_5->sub! def_%v_8 %v_5[2.10,] %v_7[2.12,] 	 ARGS:%v_6,%v_7,
 		 14: 
 		 15: %self->prefix def_%v_9 %self[2.0,2.6,2.10,] 	 ARGS:
-		 16: COPY TYPE_StringLiteral def_%v_10 
+		 16: COPY TYPE_StringLiteral " " def_%v_10 
 		 17: BUILDSTRING def_%v_11 %v_9[2.15,] %v_10[2.16,] path[2.8,] 
 		 18: RETURN %v_11[2.17,] %self[2.0,2.6,2.10,2.15,] 
 BB 3
@@ -714,9 +714,9 @@ BB 2
 		 5: RECEIVEARG def_message 
 		 6: 
 		 7: (URI) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
-		 9: COPY TYPE_StringLiteral def_%v_5 
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 8: COPY TYPE_StringLiteral "http" def_%v_4 
+		 9: COPY TYPE_StringLiteral "https" def_%v_5 
+		 10: COPY TYPE_StringLiteral "ftp" def_%v_6 
 		 11: COPY TYPE_Array def_%v_7 %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] 
 		 12: %v_3->extract def_%v_8 %v_3[2.7,] message[2.5,] %v_7[2.11,] 	 ARGS:message,%v_7,
 		 13: COPY TYPE_PASS def_uris %v_8[2.12,] 
@@ -744,17 +744,17 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral ":" def_%cl_1_3 
 		 2: uri->split def_%cl_1_4 uri[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: %cl_1_4->[] def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:Fixnum,
-		 4: COPY TYPE_StringLiteral def_%cl_1_8 
+		 4: COPY TYPE_StringLiteral "https" def_%cl_1_8 
 		 5: def_%cl_1_7 %cl_1_8[3.4,] %cl_1_5[3.3,] 
 		 6: BRANCH %cl_1_7[3.5,] 
 BB 4
 	outgoing: 5 7 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_10 
+		 0: COPY TYPE_StringLiteral "ftp" def_%cl_1_10 
 		 1: def_%cl_1_9 %cl_1_10[4.0,] %cl_1_5[3.3,] 
 		 2: BRANCH %cl_1_9[4.1,] 
 BB 5
@@ -767,7 +767,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_11 
+		 1: COPY TYPE_StringLiteral "-" def_%cl_1_11 
 		 2: (TWITTER_HTTPS_URL_LENGTH) def_%cl_1_12 
 		 3: %cl_1_11->* def_%cl_1_13 %cl_1_11[6.1,] %cl_1_12[6.2,] 	 ARGS:%cl_1_12,
 		 4: COPY TYPE_PASS def_payload %cl_1_13[6.3,] 
@@ -778,7 +778,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_14 
+		 1: COPY TYPE_StringLiteral "-" def_%cl_1_14 
 		 2: (TWITTER_FTP_URL_LENGTH) def_%cl_1_15 
 		 3: %cl_1_14->* def_%cl_1_16 %cl_1_14[7.1,] %cl_1_15[7.2,] 	 ARGS:%cl_1_15,
 		 4: COPY TYPE_PASS def_payload %cl_1_16[7.3,] 
@@ -789,7 +789,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_17 
+		 1: COPY TYPE_StringLiteral "-" def_%cl_1_17 
 		 2: (TWITTER_HTTP_URL_LENGTH) def_%cl_1_18 
 		 3: %cl_1_17->* def_%cl_1_19 %cl_1_17[8.1,] %cl_1_18[8.2,] 	 ARGS:%cl_1_18,
 		 4: COPY TYPE_PASS def_payload %cl_1_19[8.3,] 

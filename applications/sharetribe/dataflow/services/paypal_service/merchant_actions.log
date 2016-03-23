@@ -126,8 +126,8 @@ BB 2
 		 5: RECEIVEARG def_url_str 
 		 6: 
 		 7: (URLUtils) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "useraction" def_%v_4 
+		 9: COPY TYPE_StringLiteral "commit" def_%v_5 
 		 10: %v_3->append_query_param def_%v_6 %v_3[2.7,] url_str[2.5,] %v_4[2.8,] %v_5[2.9,] 	 ARGS:url_str,%v_4,%v_5,
 		 11: RETURN %v_6[2.10,] %self[2.0,] 
 BB 3
@@ -163,7 +163,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (ArgumentError) def_%v_6 
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 2: COPY TYPE_StringLiteral "Unsupported payment action: " def_%v_7 
 		 3: BUILDSTRING def_%v_8 %v_7[3.2,] payment_action_symbol[2.5,] 
 		 4: %v_6->new def_%v_9 %v_6[3.1,] %v_8[3.3,] 	 ARGS:%v_8,
 		 5: %self->raise def_%v_10 %self[2.0,] %v_9[3.4,] 	 ARGS:%v_9,

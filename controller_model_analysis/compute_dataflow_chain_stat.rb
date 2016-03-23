@@ -81,7 +81,9 @@ def build_sketch_graph
 			if n.Tnode != nil
 				@temp_hop_record[n].push(nil)
 				temp_node = @temp_hop_record[n].shift
-				while temp_node != nil do
+				step = 0
+				while temp_node != nil and step < 10000 do
+					step += 1
 					no_changes = false
 					temp_node.getDataflowEdges.each do |e|
 						if e.getToNode.Tnode != nil and e.getToNode != n

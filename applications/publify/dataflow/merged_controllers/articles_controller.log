@@ -20,17 +20,17 @@ BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
-		 1: COPY TYPE_StringLiteral def_%v_6 
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "type in (?, ?)" def_%v_5 
+		 1: COPY TYPE_StringLiteral "Article" def_%v_6 
+		 2: COPY TYPE_StringLiteral "Note" def_%v_7 
 		 3: COPY TYPE_Array def_%v_8 %v_5[3.0,] %v_6[3.1,] %v_7[3.2,] 
 		 4: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 0: COPY TYPE_StringLiteral "type = ?" def_%v_9 
+		 1: COPY TYPE_StringLiteral "Article" def_%v_10 
 		 2: COPY TYPE_Array def_%v_11 %v_9[4.0,] %v_10[4.1,] 
 		 3: COPY TYPE_PASS def_%v_8 %v_11[4.2,] 
 BB 5
@@ -237,7 +237,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral "atom" def_%cl_3_3 
 		 2: %self->render_articles_feed def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 ARGS:%cl_3_3,
 		 3: RETURN %cl_3_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -275,7 +275,7 @@ BB 3
 		 1: HASH-only_path- def_%cl_4_3 
 		 2: %self->auto_discovery_feed def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 ARGS:%cl_4_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_4_5 
+		 4: COPY TYPE_StringLiteral "rss" def_%cl_4_5 
 		 5: %self->render_articles_feed def_%cl_4_6 %self[3.2,2.0,] %cl_4_5[3.4,] 	 ARGS:%cl_4_5,
 		 6: RETURN %cl_4_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -344,7 +344,7 @@ BB 2
 		 5: 
 		 6: %self->render def_%cl_6_3 %self[2.0,] article[2.2,] 	 ARGS:article,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_6_4 
+		 8: COPY TYPE_StringLiteral "articles/article_links" def_%cl_6_4 
 		 9: HASH-article- def_%cl_6_5 article[2.2,] 
 		 10: %self->render def_%cl_6_6 %self[2.0,2.6,] %cl_6_4[2.8,] %cl_6_5[2.9,] 	 ARGS:%cl_6_4,%cl_6_5,
 		 11: RETURN %cl_6_6[2.10,] %self[2.0,2.6,2.10,] 
@@ -355,12 +355,12 @@ BB 4
 CLOSURE END: article[2.2,] 
 		 3: 
 		 4: %self->articles def_%cl_5_5 %self[3.1,2.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_5_6 
+		 5: COPY TYPE_StringLiteral ".next_page" def_%cl_5_6 
 		 6: %self->t def_%cl_5_7 %self[3.1,3.4,2.0,] %cl_5_6[3.5,] 	 ARGS:%cl_5_6,
-		 7: COPY TYPE_StringLiteral def_%cl_5_8 
+		 7: COPY TYPE_StringLiteral " &raquo;" def_%cl_5_8 
 		 8: BUILDSTRING def_%cl_5_9 %cl_5_7[3.6,] %cl_5_8[3.7,] 
-		 9: COPY TYPE_StringLiteral def_%cl_5_10 
-		 10: COPY TYPE_StringLiteral def_%cl_5_11 
+		 9: COPY TYPE_StringLiteral "&laquo; " def_%cl_5_10 
+		 10: COPY TYPE_StringLiteral ".previous_page" def_%cl_5_11 
 		 11: %self->t def_%cl_5_12 %self[3.1,3.4,3.6,2.0,] %cl_5_11[3.10,] 	 ARGS:%cl_5_11,
 		 12: BUILDSTRING def_%cl_5_13 %cl_5_10[3.9,] %cl_5_12[3.11,] 
 		 13: HASH-next_label-previous_label- def_%cl_5_14 %cl_5_9[3.8,] %cl_5_13[3.12,] 
@@ -525,7 +525,7 @@ BB 2
 		 8: 
 		 9: article->html def_%cl_4_5 article[2.2,2.6,] 	 ARGS:Symbol,
 		 10: COPY TYPE_Regexp def_%cl_4_6 
-		 11: COPY TYPE_StringLiteral def_%cl_4_7 
+		 11: COPY TYPE_StringLiteral "" def_%cl_4_7 
 		 12: %cl_4_5->gsub def_%cl_4_8 %cl_4_5[2.9,] %cl_4_7[2.11,] 	 ARGS:%cl_4_6,%cl_4_7,
 		 13: CONSTANT def_%cl_4_9 
 		 14: %cl_4_8->slice def_%cl_4_10 %cl_4_8[2.12,] %cl_4_9[2.13,] 	 ARGS:%cl_4_9,
@@ -537,12 +537,12 @@ BB 4
 CLOSURE END: article[2.2,] 
 		 3: 
 		 4: GETFIELD %self->articles def_%cl_3_5 %self[2.0,] 
-		 5: COPY TYPE_StringLiteral def_%cl_3_6 
+		 5: COPY TYPE_StringLiteral ".next_page" def_%cl_3_6 
 		 6: %self->t def_%cl_3_7 %self[2.0,] %cl_3_6[3.5,] 	 ARGS:%cl_3_6,
-		 7: COPY TYPE_StringLiteral def_%cl_3_8 
+		 7: COPY TYPE_StringLiteral " &raquo;" def_%cl_3_8 
 		 8: BUILDSTRING def_%cl_3_9 %cl_3_7[3.6,] %cl_3_8[3.7,] 
-		 9: COPY TYPE_StringLiteral def_%cl_3_10 
-		 10: COPY TYPE_StringLiteral def_%cl_3_11 
+		 9: COPY TYPE_StringLiteral "&laquo; " def_%cl_3_10 
+		 10: COPY TYPE_StringLiteral ".previous_page" def_%cl_3_11 
 		 11: %self->t def_%cl_3_12 %self[3.6,2.0,] %cl_3_11[3.10,] 	 ARGS:%cl_3_11,
 		 12: BUILDSTRING def_%cl_3_13 %cl_3_10[3.9,] %cl_3_12[3.11,] 
 		 13: HASH-next_label-previous_label- def_%cl_3_14 %cl_3_9[3.8,] %cl_3_13[3.12,] 
@@ -593,7 +593,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "index_rss_feed" def_%cl_5_3 
 		 2: HASH-layout- def_%cl_5_4 
 		 3: %self->render def_%cl_5_5 %self[2.0,] %cl_5_3[3.1,] %cl_5_4[3.2,] 	 ARGS:%cl_5_3,%cl_5_4,
 		 4: RETURN %cl_5_5[3.3,] %self[3.3,2.0,] 
@@ -629,7 +629,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_6_3 
+		 1: COPY TYPE_StringLiteral "index_atom_feed" def_%cl_6_3 
 		 2: HASH-layout- def_%cl_6_4 
 		 3: %self->render def_%cl_6_5 %self[2.0,] %cl_6_3[3.1,] %cl_6_4[3.2,] 	 ARGS:%cl_6_3,%cl_6_4,
 		 4: RETURN %cl_6_5[3.3,] %self[3.3,2.0,] 
@@ -702,7 +702,7 @@ BB 2
 		 8: 
 		 9: article->html def_%cl_8_5 article[2.2,2.6,] 	 ARGS:Symbol,
 		 10: COPY TYPE_Regexp def_%cl_8_6 
-		 11: COPY TYPE_StringLiteral def_%cl_8_7 
+		 11: COPY TYPE_StringLiteral "" def_%cl_8_7 
 		 12: %cl_8_5->gsub def_%cl_8_8 %cl_8_5[2.9,] %cl_8_7[2.11,] 	 ARGS:%cl_8_6,%cl_8_7,
 		 13: CONSTANT def_%cl_8_9 
 		 14: %cl_8_8->slice def_%cl_8_10 %cl_8_8[2.12,] %cl_8_9[2.13,] 	 ARGS:%cl_8_9,
@@ -714,12 +714,12 @@ BB 4
 CLOSURE END: article[2.2,] 
 		 3: 
 		 4: GETFIELD %self->articles def_%cl_7_5 %self[2.0,] 
-		 5: COPY TYPE_StringLiteral def_%cl_7_6 
+		 5: COPY TYPE_StringLiteral ".next_page" def_%cl_7_6 
 		 6: %self->t def_%cl_7_7 %self[2.0,] %cl_7_6[3.5,] 	 ARGS:%cl_7_6,
-		 7: COPY TYPE_StringLiteral def_%cl_7_8 
+		 7: COPY TYPE_StringLiteral " &raquo;" def_%cl_7_8 
 		 8: BUILDSTRING def_%cl_7_9 %cl_7_7[3.6,] %cl_7_8[3.7,] 
-		 9: COPY TYPE_StringLiteral def_%cl_7_10 
-		 10: COPY TYPE_StringLiteral def_%cl_7_11 
+		 9: COPY TYPE_StringLiteral "&laquo; " def_%cl_7_10 
+		 10: COPY TYPE_StringLiteral ".previous_page" def_%cl_7_11 
 		 11: %self->t def_%cl_7_12 %self[3.6,2.0,] %cl_7_11[3.10,] 	 ARGS:%cl_7_11,
 		 12: BUILDSTRING def_%cl_7_13 %cl_7_10[3.9,] %cl_7_12[3.11,] 
 		 13: HASH-next_label-previous_label- def_%cl_7_14 %cl_7_9[3.8,] %cl_7_13[3.12,] 
@@ -931,7 +931,7 @@ BB 6
 		 1: GETFIELD %self->article def_%cl_1_7 %self[2.0,] 
 		 2: %cl_1_7->title def_%cl_1_8 %cl_1_7[6.1,] 	 ARGS:
 		 3: COPY TYPE_Regexp def_%cl_1_9 
-		 4: COPY TYPE_StringLiteral def_%cl_1_10 
+		 4: COPY TYPE_StringLiteral "-" def_%cl_1_10 
 		 5: %cl_1_8->gsub def_%cl_1_11 %cl_1_8[6.2,] %cl_1_10[6.4,] 	 ARGS:%cl_1_9,%cl_1_10,
 		 6: %self->h def_%cl_1_12 %self[2.0,] %cl_1_11[6.5,] 	 ARGS:%cl_1_11,
 		 7: 
@@ -944,7 +944,7 @@ BB 6
 		 14: CONSTANT def_%cl_1_18 
 		 15: %cl_1_17->[] def_%cl_1_19 %cl_1_17[6.13,] %cl_1_18[6.14,] 	 ARGS:%cl_1_18,
 		 16: COPY TYPE_Regexp def_%cl_1_20 
-		 17: COPY TYPE_StringLiteral def_%cl_1_21 
+		 17: COPY TYPE_StringLiteral "-" def_%cl_1_21 
 		 18: %cl_1_19->gsub def_%cl_1_22 %cl_1_19[6.15,] %cl_1_21[6.17,] 	 ARGS:%cl_1_20,%cl_1_21,
 		 19: %self->h def_%cl_1_23 %self[6.6,6.12,2.0,] %cl_1_22[6.18,] 	 ARGS:%cl_1_22,
 		 20: 
@@ -958,16 +958,16 @@ BB 6
 		 28: 
 		 29: %self->onhover_show_admin_tools def_%cl_1_30 %self[6.6,6.12,6.19,6.23,2.0,] 	 ARGS:Symbol,
 		 30: 
-		 31: COPY TYPE_StringLiteral def_%cl_1_31 
+		 31: COPY TYPE_StringLiteral ".edit" def_%cl_1_31 
 		 32: %self->t def_%cl_1_32 %self[6.6,6.12,6.19,6.23,6.29,2.0,] %cl_1_31[6.31,] 	 ARGS:%cl_1_31,
-		 33: COPY TYPE_StringLiteral def_%cl_1_33 
-		 34: COPY TYPE_StringLiteral def_%cl_1_34 
+		 33: COPY TYPE_StringLiteral "admin/content" def_%cl_1_33 
+		 34: COPY TYPE_StringLiteral "edit" def_%cl_1_34 
 		 35: GETFIELD %self->article def_%cl_1_35 %self[6.6,6.12,6.19,6.23,6.29,6.32,2.0,] 
 		 36: %cl_1_35->id def_%cl_1_36 %cl_1_35[6.35,] 	 ARGS:
 		 37: HASH-controller-action-id- def_%cl_1_37 %cl_1_33[6.33,] %cl_1_34[6.34,] %cl_1_36[6.36,] 
-		 38: COPY TYPE_StringLiteral def_%cl_1_38 
-		 39: COPY TYPE_StringLiteral def_%cl_1_39 
-		 40: COPY TYPE_StringLiteral def_%cl_1_40 
+		 38: COPY TYPE_StringLiteral "admintools" def_%cl_1_38 
+		 39: COPY TYPE_StringLiteral "display: none" def_%cl_1_39 
+		 40: COPY TYPE_StringLiteral "admin_article" def_%cl_1_40 
 		 41: HASH-class-style-id- def_%cl_1_41 %cl_1_38[6.38,] %cl_1_39[6.39,] %cl_1_40[6.40,] 
 		 42: %self->link_to def_%cl_1_42 %self[6.6,6.12,6.19,6.23,6.29,6.32,2.0,] %cl_1_32[6.32,] %cl_1_37[6.37,] %cl_1_41[6.41,] 	 ARGS:%cl_1_32,%cl_1_37,%cl_1_41,
 		 43: 
@@ -983,7 +983,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_48 
+		 1: COPY TYPE_StringLiteral ".tags" def_%cl_1_48 
 		 2: %self->t def_%cl_1_49 %self[2.0,] %cl_1_48[7.1,] 	 ARGS:%cl_1_48,
 		 3: 
 		 4: %self->article def_%cl_1_50 %self[7.2,2.0,] 	 ARGS:
@@ -1006,14 +1006,14 @@ BB 10
 	outgoing: 12 39 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_54 
+		 0: COPY TYPE_StringLiteral ".comments" def_%cl_1_54 
 		 1: %self->article def_%cl_1_55 %self[2.0,] 	 ARGS:
 		 2: %cl_1_55->published_comments def_%cl_1_56 %cl_1_55[10.1,] 	 ARGS:
 		 3: %cl_1_56->size def_%cl_1_57 %cl_1_56[10.2,] 	 ARGS:
 		 4: HASH-count- def_%cl_1_58 %cl_1_57[10.3,] 
 		 5: %self->t def_%cl_1_59 %self[10.1,2.0,] %cl_1_54[10.0,] %cl_1_58[10.4,] 	 ARGS:%cl_1_54,%cl_1_58,
 		 6: %self->article def_%cl_1_60 %self[10.1,10.5,2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_1_61 
+		 7: COPY TYPE_StringLiteral "comments" def_%cl_1_61 
 		 8: %cl_1_60->permalink_url def_%cl_1_62 %cl_1_60[10.6,] %cl_1_61[10.7,] 	 ARGS:%cl_1_61,Boolean,
 		 9: %self->link_to def_%cl_1_63 %self[10.1,10.5,10.6,2.0,] %cl_1_59[10.5,] %cl_1_62[10.8,] 	 ARGS:%cl_1_59,%cl_1_62,
 		 10: 
@@ -1034,14 +1034,14 @@ BB 13
 	outgoing: 15 39 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_66 
+		 0: COPY TYPE_StringLiteral ".trackbacks" def_%cl_1_66 
 		 1: %self->article def_%cl_1_67 %self[2.0,] 	 ARGS:
 		 2: %cl_1_67->published_trackbacks def_%cl_1_68 %cl_1_67[13.1,] 	 ARGS:
 		 3: %cl_1_68->size def_%cl_1_69 %cl_1_68[13.2,] 	 ARGS:
 		 4: HASH-count- def_%cl_1_70 %cl_1_69[13.3,] 
 		 5: %self->t def_%cl_1_71 %self[13.1,2.0,] %cl_1_66[13.0,] %cl_1_70[13.4,] 	 ARGS:%cl_1_66,%cl_1_70,
 		 6: %self->article def_%cl_1_72 %self[13.1,13.5,2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_1_73 
+		 7: COPY TYPE_StringLiteral "trackbacks" def_%cl_1_73 
 		 8: %cl_1_72->permalink_url def_%cl_1_74 %cl_1_72[13.6,] %cl_1_73[13.7,] 	 ARGS:%cl_1_73,Boolean,
 		 9: %self->link_to def_%cl_1_75 %self[13.1,13.5,13.6,2.0,] %cl_1_71[13.5,] %cl_1_74[13.8,] 	 ARGS:%cl_1_71,%cl_1_74,
 		 10: 
@@ -1077,7 +1077,7 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_82 
+		 1: COPY TYPE_StringLiteral ".comments" def_%cl_1_82 
 		 2: %self->t def_%cl_1_83 %self[2.0,] %cl_1_82[18.1,] 	 ARGS:%cl_1_82,
 		 3: 
 		 4: GETFIELD %self->article def_%cl_1_84 %self[18.2,2.0,] 
@@ -1094,7 +1094,7 @@ BB 20
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_87 
+		 1: COPY TYPE_StringLiteral ".leave_a_response" def_%cl_1_87 
 		 2: %self->t def_%cl_1_88 %self[2.0,] %cl_1_87[20.1,] 	 ARGS:%cl_1_87,
 		 3: COPY TYPE_PASS def_%cl_1_86 %cl_1_88[20.2,] 
 BB 21
@@ -1143,10 +1143,10 @@ BB 27
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_97 
+		 1: COPY TYPE_StringLiteral ".trackbacks" def_%cl_1_97 
 		 2: %self->t def_%cl_1_98 %self[2.0,] %cl_1_97[27.1,] 	 ARGS:%cl_1_97,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_99 
+		 4: COPY TYPE_StringLiteral ".use_the_following_link_to_trackback" def_%cl_1_99 
 		 5: %self->t def_%cl_1_100 %self[27.2,2.0,] %cl_1_99[27.4,] 	 ARGS:%cl_1_99,
 		 6: 
 		 7: GETFIELD %self->article def_%cl_1_101 %self[27.2,27.5,2.0,] 
@@ -1177,7 +1177,7 @@ BB 29
 		 8: %self->trackback def_%cl_1_112 %self[29.1,29.4,29.6,2.0,] 	 ARGS:
 		 9: %cl_1_112->id def_%cl_1_113 %cl_1_112[29.8,] 	 ARGS:
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_1_114 
+		 11: COPY TYPE_StringLiteral ".from" def_%cl_1_114 
 		 12: %self->t def_%cl_1_115 %self[29.1,29.4,29.6,29.8,2.0,] %cl_1_114[29.11,] 	 ARGS:%cl_1_114,
 		 13: 
 		 14: %self->trackback def_%cl_1_116 %self[29.1,29.4,29.6,29.8,29.12,2.0,] 	 ARGS:
@@ -1209,10 +1209,10 @@ BB 32
 	instructions:
 		 0: 
 		 1: GETFIELD %self->article def_%cl_1_125 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_126 
+		 2: COPY TYPE_StringLiteral "rss" def_%cl_1_126 
 		 3: %cl_1_125->feed_url def_%cl_1_127 %cl_1_125[32.1,] %cl_1_126[32.2,] 	 ARGS:%cl_1_126,
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_1_128 
+		 5: COPY TYPE_StringLiteral ".rss_feed" def_%cl_1_128 
 		 6: %self->t def_%cl_1_129 %self[2.0,] %cl_1_128[32.5,] 	 ARGS:%cl_1_128,
 		 7: 
 		 8: GETFIELD %self->article def_%cl_1_130 %self[32.6,2.0,] 
@@ -1226,7 +1226,7 @@ BB 33
 		 1: GETFIELD %self->article def_%cl_1_132 %self[2.0,] 
 		 2: %cl_1_132->trackback_url def_%cl_1_133 %cl_1_132[33.1,] 	 ARGS:
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_134 
+		 4: COPY TYPE_StringLiteral ".trackback_uri" def_%cl_1_134 
 		 5: %self->t def_%cl_1_135 %self[2.0,] %cl_1_134[33.4,] 	 ARGS:%cl_1_134,
 		 6: 
 BB 34
@@ -1247,7 +1247,7 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_138 
+		 1: COPY TYPE_StringLiteral ".comments_are_disabled" def_%cl_1_138 
 		 2: %self->t def_%cl_1_139 %self[2.0,] %cl_1_138[36.1,] 	 ARGS:%cl_1_138,
 		 3: 
 BB 37
@@ -1257,7 +1257,7 @@ BB 37
 		 0: 
 		 1: GETFIELD %self->article def_%cl_1_140 %self[2.0,] 
 		 2: %cl_1_140->comment_url def_%cl_1_141 %cl_1_140[37.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_142 
+		 3: COPY TYPE_StringLiteral "comment_form" def_%cl_1_142 
 		 4: HASH-id-remote- def_%cl_1_143 %cl_1_142[37.3,] 
 		 5: %self->form_tag def_%cl_1_144 %self[2.0,] %cl_1_141[37.2,] %cl_1_143[37.4,] %self[2.0,] 	 ARGS:%cl_1_141,%cl_1_143,%self,
 CLOSURE BEGIN: %self[2.0,] 
@@ -1278,16 +1278,16 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral ".your_name" def_%cl_2_3 
 		 2: %self->t def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_5 
-		 5: COPY TYPE_StringLiteral def_%cl_2_6 
+		 4: COPY TYPE_StringLiteral "comment" def_%cl_2_5 
+		 5: COPY TYPE_StringLiteral "author" def_%cl_2_6 
 		 6: HASH-size- def_%cl_2_7 
 		 7: %self->text_field def_%cl_2_8 %self[3.2,2.0,] %cl_2_5[3.4,] %cl_2_6[3.5,] %cl_2_7[3.6,] 	 ARGS:%cl_2_5,%cl_2_6,%cl_2_7,
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_2_9 
-		 10: COPY TYPE_StringLiteral def_%cl_2_10 
+		 9: COPY TYPE_StringLiteral "#" def_%cl_2_9 
+		 10: COPY TYPE_StringLiteral "$('.optional_field').fadeToggle();return false" def_%cl_2_10 
 		 11: HASH-onclick- def_%cl_2_11 %cl_2_10[3.10,] 
 		 12: %self->link_to def_%cl_2_12 %self[3.2,3.7,2.0,] %cl_2_9[3.9,] %cl_2_11[3.11,] %self[3.2,3.7,2.0,] 	 ARGS:%cl_2_9,%cl_2_11,%self,
 CLOSURE BEGIN: %self[3.2,3.7,2.0,] 
@@ -1308,7 +1308,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral ".leave_url_email" def_%cl_3_3 
 		 2: %self->t def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 ARGS:%cl_3_3,
 		 3: RETURN %cl_3_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -1324,25 +1324,25 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_2_13 
+		 14: COPY TYPE_StringLiteral ".your_blog" def_%cl_2_13 
 		 15: %self->t def_%cl_2_14 %self[3.2,3.7,3.12,2.0,] %cl_2_13[3.14,] 	 ARGS:%cl_2_13,
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%cl_2_15 
-		 18: COPY TYPE_StringLiteral def_%cl_2_16 
+		 17: COPY TYPE_StringLiteral "comment" def_%cl_2_15 
+		 18: COPY TYPE_StringLiteral "url" def_%cl_2_16 
 		 19: %self->text_field def_%cl_2_17 %self[3.2,3.7,3.12,3.15,2.0,] %cl_2_15[3.17,] %cl_2_16[3.18,] 	 ARGS:%cl_2_15,%cl_2_16,
 		 20: 
-		 21: COPY TYPE_StringLiteral def_%cl_2_18 
+		 21: COPY TYPE_StringLiteral ".your_email" def_%cl_2_18 
 		 22: %self->t def_%cl_2_19 %self[3.2,3.7,3.12,3.15,3.19,2.0,] %cl_2_18[3.21,] 	 ARGS:%cl_2_18,
 		 23: 
-		 24: COPY TYPE_StringLiteral def_%cl_2_20 
-		 25: COPY TYPE_StringLiteral def_%cl_2_21 
+		 24: COPY TYPE_StringLiteral "comment" def_%cl_2_20 
+		 25: COPY TYPE_StringLiteral "email" def_%cl_2_21 
 		 26: %self->text_field def_%cl_2_22 %self[3.2,3.7,3.12,3.15,3.19,3.22,2.0,] %cl_2_20[3.24,] %cl_2_21[3.25,] 	 ARGS:%cl_2_20,%cl_2_21,
 		 27: 
-		 28: COPY TYPE_StringLiteral def_%cl_2_23 
+		 28: COPY TYPE_StringLiteral ".your_message" def_%cl_2_23 
 		 29: %self->t def_%cl_2_24 %self[3.2,3.7,3.12,3.15,3.19,3.22,3.26,2.0,] %cl_2_23[3.28,] 	 ARGS:%cl_2_23,
 		 30: 
-		 31: COPY TYPE_StringLiteral def_%cl_2_25 
-		 32: COPY TYPE_StringLiteral def_%cl_2_26 
+		 31: COPY TYPE_StringLiteral "comment" def_%cl_2_25 
+		 32: COPY TYPE_StringLiteral "body" def_%cl_2_26 
 		 33: %self->text_area def_%cl_2_27 %self[3.2,3.7,3.12,3.15,3.19,3.22,3.26,3.29,2.0,] %cl_2_25[3.31,] %cl_2_26[3.32,] 	 ARGS:%cl_2_25,%cl_2_26,
 		 34: 
 		 35: %self->this_blog def_%cl_2_28 %self[3.2,3.7,3.12,3.15,3.19,3.22,3.26,3.29,3.33,2.0,] 	 ARGS:
@@ -1370,14 +1370,14 @@ BB 6
 		 2: %self->this_blog def_%cl_2_33 %self[2.0,] 	 ARGS:
 		 3: %cl_2_33->comment_text_filter def_%cl_2_34 %cl_2_33[6.2,] 	 ARGS:
 		 4: %cl_2_32->find_by_name def_%cl_2_35 %cl_2_32[6.1,] %cl_2_34[6.3,] 	 ARGS:%cl_2_34,
-		 5: COPY TYPE_StringLiteral def_%cl_2_36 
+		 5: COPY TYPE_StringLiteral ".comment_markup_help" def_%cl_2_36 
 		 6: %self->t def_%cl_2_37 %self[6.2,2.0,] %cl_2_36[6.5,] 	 ARGS:%cl_2_36,
 		 7: %self->markup_help_popup def_%cl_2_38 %self[6.2,6.6,2.0,] %cl_2_35[6.4,] %cl_2_37[6.6,] 	 ARGS:%cl_2_35,%cl_2_37,
 		 8: 
 		 9: GETFIELD %self->article def_%cl_2_39 %self[6.2,6.6,6.7,2.0,] 
 		 10: %cl_2_39->preview_comment_url def_%cl_2_40 %cl_2_39[6.9,] 	 ARGS:
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_41 
+		 12: COPY TYPE_StringLiteral ".preview_comment" def_%cl_2_41 
 		 13: %self->t def_%cl_2_42 %self[6.2,6.6,6.7,2.0,] %cl_2_41[6.12,] 	 ARGS:%cl_2_41,
 		 14: RETURN %cl_2_42[6.13,] %self[6.2,6.6,6.7,6.13,2.0,] 
 BB 7
@@ -1534,10 +1534,10 @@ BB 3
 		 2: %cl_2_3->id def_%cl_2_4 %cl_2_3[3.1,] 	 ARGS:
 		 3: 
 		 4: %self->article def_%cl_2_5 %self[3.1,2.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_2_6 
-		 6: COPY TYPE_StringLiteral def_%cl_2_7 
+		 5: COPY TYPE_StringLiteral "articles" def_%cl_2_6 
+		 6: COPY TYPE_StringLiteral "check_password" def_%cl_2_7 
 		 7: HASH-controller-action- def_%cl_2_8 %cl_2_6[3.5,] %cl_2_7[3.6,] 
-		 8: COPY TYPE_StringLiteral def_%cl_2_9 
+		 8: COPY TYPE_StringLiteral "content-" def_%cl_2_9 
 		 9: 
 		 10: %self->article def_%cl_2_10 %self[3.1,3.4,2.0,] 	 ARGS:
 		 11: %cl_2_10->id def_%cl_2_11 %cl_2_10[3.10,] 	 ARGS:
@@ -1568,11 +1568,11 @@ BB 3
 		 3: %self->article def_%cl_3_4 %self[3.1,2.0,] 	 ARGS:
 		 4: %cl_3_4->id def_%cl_3_5 %cl_3_4[3.3,] 	 ARGS:
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_3_6 
+		 6: COPY TYPE_StringLiteral ".submit" def_%cl_3_6 
 		 7: %self->t def_%cl_3_7 %self[3.1,3.3,2.0,] %cl_3_6[3.6,] 	 ARGS:%cl_3_6,
-		 8: COPY TYPE_StringLiteral def_%cl_3_8 
+		 8: COPY TYPE_StringLiteral "!" def_%cl_3_8 
 		 9: %cl_3_7->+ def_%cl_3_9 %cl_3_7[3.7,] %cl_3_8[3.8,] 	 ARGS:%cl_3_8,
-		 10: COPY TYPE_StringLiteral def_%cl_3_10 
+		 10: COPY TYPE_StringLiteral "check_password" def_%cl_3_10 
 		 11: HASH-name- def_%cl_3_11 %cl_3_10[3.10,] 
 		 12: %self->submit_tag def_%cl_3_12 %self[3.1,3.3,3.7,2.0,] %cl_3_9[3.9,] %cl_3_11[3.11,] 	 ARGS:%cl_3_9,%cl_3_11,
 		 13: RETURN %cl_3_12[3.12,] %self[3.1,3.3,3.7,3.12,2.0,] 
@@ -1667,8 +1667,8 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_17 
-		 2: COPY TYPE_StringLiteral def_%v_18 
+		 1: COPY TYPE_StringLiteral "%year%/%month%/%day%/%title%" def_%v_17 
+		 2: COPY TYPE_StringLiteral "articles/%year%/%month%/%day%/%title%" def_%v_18 
 		 3: COPY TYPE_Array def_%v_19 %v_17[8.1,] %v_18[8.2,] 
 		 4: %v_19->each def_%v_20 %v_19[8.3,] %self[5.8,2.0,] 	 ARGS:%v_19,
 CLOSURE BEGIN: factory[5.3,] from[2.9,] part[8.4,] %self[5.8,2.0,] 
@@ -1770,10 +1770,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral ".page_not_found" def_%cl_2_3 
 		 2: %self->t def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_5 
+		 4: COPY TYPE_StringLiteral ".the_page_you_are_looking_for" def_%cl_2_5 
 		 5: %self->t def_%cl_2_6 %self[3.2,2.0,] %cl_2_5[3.4,] 	 ARGS:%cl_2_5,
 		 6: RETURN %cl_2_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -1877,7 +1877,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral ".no_articles_found" def_%cl_1_5 
 		 2: %self->t def_%cl_1_6 %self[2.0,] %cl_1_5[4.1,] 	 ARGS:%cl_1_5,
 		 3: 
 BB 5
@@ -1966,7 +1966,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_24 
+		 1: COPY TYPE_StringLiteral ".posted_in" def_%cl_2_24 
 		 2: %self->t def_%cl_2_25 %self[2.0,] %cl_2_24[9.1,] 	 ARGS:%cl_2_24,
 		 3: 
 		 4: article->tags def_%cl_2_26 article[2.2,] 	 ARGS:
@@ -2005,7 +2005,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_28 
+		 6: COPY TYPE_StringLiteral ", " def_%cl_2_28 
 		 7: %cl_2_27->join def_%cl_2_29 %cl_2_27[9.5,] %cl_2_28[9.6,] 	 ARGS:%cl_2_28,
 		 8: RETURN %cl_2_29[9.7,] %self[9.2,2.0,] 
 BB 10
@@ -2025,12 +2025,12 @@ BB 6
 	instructions:
 		 0: 
 		 1: GETFIELD %self->articles def_%cl_1_9 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_10 
+		 2: COPY TYPE_StringLiteral ".next_page" def_%cl_1_10 
 		 3: %self->t def_%cl_1_11 %self[2.0,] %cl_1_10[6.2,] 	 ARGS:%cl_1_10,
-		 4: COPY TYPE_StringLiteral def_%cl_1_12 
+		 4: COPY TYPE_StringLiteral " &raquo;" def_%cl_1_12 
 		 5: BUILDSTRING def_%cl_1_13 %cl_1_11[6.3,] %cl_1_12[6.4,] 
-		 6: COPY TYPE_StringLiteral def_%cl_1_14 
-		 7: COPY TYPE_StringLiteral def_%cl_1_15 
+		 6: COPY TYPE_StringLiteral "&laquo; " def_%cl_1_14 
+		 7: COPY TYPE_StringLiteral ".previous_page" def_%cl_1_15 
 		 8: %self->t def_%cl_1_16 %self[6.3,2.0,] %cl_1_15[6.7,] 	 ARGS:%cl_1_15,
 		 9: BUILDSTRING def_%cl_1_17 %cl_1_14[6.6,] %cl_1_16[6.8,] 
 		 10: HASH-next_label-previous_label- def_%cl_1_18 %cl_1_13[6.5,] %cl_1_17[6.9,] 
@@ -2160,7 +2160,7 @@ BB 2
 		 7: %self->params def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
 		 9: %self->Array def_%v_6 %self[2.0,2.7,] %v_5[2.8,] 	 ARGS:%v_5,
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "/" def_%v_7 
 		 11: %v_6->join def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: %v_3->find_by_name def_%v_9 %v_3[2.6,] %v_8[2.11,] 	 ARGS:%v_8,
 		 13: ATTRASSIGN %self->page %v_9[2.12,] 
@@ -2220,10 +2220,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral ".page_not_found" def_%cl_1_3 
 		 2: %self->t def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_5 
+		 4: COPY TYPE_StringLiteral ".the_page_you_are_looking_for" def_%cl_1_5 
 		 5: %self->t def_%cl_1_6 %self[3.2,2.0,] %cl_1_5[3.4,] 	 ARGS:%cl_1_5,
 		 6: RETURN %cl_1_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -2338,8 +2338,8 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "setup" def_%v_6 
+		 2: COPY TYPE_StringLiteral "index" def_%v_7 
 		 3: HASH-controller-action- def_%v_8 %v_6[3.1,] %v_7[3.2,] 
 		 4: %self->redirect_to def_%v_9 %self[2.0,] %v_8[3.3,] 	 ARGS:%v_8,
 		 5: RETURN %v_9[3.4,] %self[3.4,2.0,] 
@@ -2357,8 +2357,8 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_13 
-		 2: COPY TYPE_StringLiteral def_%v_14 
+		 1: COPY TYPE_StringLiteral "accounts" def_%v_13 
+		 2: COPY TYPE_StringLiteral "signup" def_%v_14 
 		 3: HASH-controller-action- def_%v_15 %v_13[5.1,] %v_14[5.2,] 
 		 4: %self->redirect_to def_%v_16 %self[2.0,] %v_15[5.3,] 	 ARGS:%v_15,
 		 5: RETURN %v_16[5.4,] %self[5.4,2.0,] 
@@ -2419,7 +2419,7 @@ BB 4
 		 24: COPY TYPE_PASS def_groupings %v_21[4.23,] 
 		 25: 
 		 26: %v_21->map def_%v_22 %v_21[4.23,] 	 ARGS:
-		 27: COPY TYPE_StringLiteral def_%v_23 
+		 27: COPY TYPE_StringLiteral ", " def_%v_23 
 		 28: %v_22->join def_%v_24 %v_22[4.26,] %v_23[4.27,] 	 ARGS:%v_23,
 		 29: ATTRASSIGN %self->keywords %v_24[4.28,] 
 		 30: 
@@ -2464,7 +2464,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral "articles/" def_%cl_2_3 
 		 2: GETFIELD %self->article def_%cl_2_4 %self[2.0,] 
 		 3: %cl_2_4->post_type def_%cl_2_5 %cl_2_4[3.2,] 	 ARGS:
 		 4: BUILDSTRING def_%cl_2_6 %cl_2_3[3.1,] %cl_2_5[3.3,] 
@@ -2502,7 +2502,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral "atom" def_%cl_3_3 
 		 2: %self->render_feedback_feed def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 ARGS:%cl_3_3,
 		 3: RETURN %cl_3_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -2537,7 +2537,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_3 
+		 1: COPY TYPE_StringLiteral "rss" def_%cl_4_3 
 		 2: %self->render_feedback_feed def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 ARGS:%cl_4_3,
 		 3: RETURN %cl_4_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -2572,7 +2572,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "atom" def_%cl_5_3 
 		 2: %self->render_feedback_feed def_%cl_5_4 %self[2.0,] %cl_5_3[3.1,] 	 ARGS:%cl_5_3,
 		 3: RETURN %cl_5_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -2687,7 +2687,7 @@ BB 3
 	instructions:
 		 0: %self->request def_%v_6 %self[2.0,] 	 ARGS:
 		 1: %v_6->env def_%v_7 %v_6[3.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "HTTP_USER_AGENT" def_%v_8 
 		 3: %v_7->[] def_%v_9 %v_7[3.1,] %v_8[3.2,] 	 ARGS:%v_8,
 		 4: COPY TYPE_Regexp def_%v_10 
 		 5: %v_9->=~ def_%v_11 %v_9[3.3,] 	 ARGS:%v_10,
@@ -2702,8 +2702,8 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_12 
-		 2: COPY TYPE_StringLiteral def_%v_13 
+		 1: COPY TYPE_StringLiteral "index_" def_%v_12 
+		 2: COPY TYPE_StringLiteral "_feed" def_%v_13 
 		 3: BUILDSTRING def_%v_14 %v_12[5.1,] format[2.5,] %v_13[5.2,] 
 		 4: HASH-layout- def_%v_15 
 		 5: %self->render def_%v_16 %self[2.0,] %v_14[5.3,] %v_15[5.4,] 	 ARGS:%v_14,%v_15,
@@ -2713,7 +2713,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_17 
+		 1: COPY TYPE_StringLiteral "http://feeds2.feedburner.com/" def_%v_17 
 		 2: %self->this_blog def_%v_18 %self[2.0,] 	 ARGS:
 		 3: %v_18->feedburner_url def_%v_19 %v_18[6.2,] 	 ARGS:
 		 4: BUILDSTRING def_%v_20 %v_17[6.1,] %v_19[6.3,] 
@@ -2744,8 +2744,8 @@ BB 2
 		 8: %v_3->published_feedback def_%v_4 %v_3[2.7,] 	 ARGS:
 		 9: ATTRASSIGN %self->feedback %v_4[2.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_5 
-		 12: COPY TYPE_StringLiteral def_%v_6 
+		 11: COPY TYPE_StringLiteral "feedback_" def_%v_5 
+		 12: COPY TYPE_StringLiteral "_feed" def_%v_6 
 		 13: BUILDSTRING def_%v_7 %v_5[2.11,] format[2.5,] %v_6[2.12,] 
 		 14: HASH-layout- def_%v_8 
 		 15: %self->render def_%v_9 %self[2.0,2.9,] %v_7[2.13,] %v_8[2.14,] 	 ARGS:%v_7,%v_8,
@@ -2802,13 +2802,13 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_12 
+		 1: COPY TYPE_StringLiteral "http://feeds2.feedburner.com/" def_%v_12 
 		 2: %self->this_blog def_%v_13 %self[2.0,] 	 ARGS:
 		 3: %v_13->feedburner_url def_%v_14 %v_13[7.2,] 	 ARGS:
 		 4: BUILDSTRING def_%v_15 %v_12[7.1,] %v_14[7.3,] 
 		 5: ATTRASSIGN %self->auto_discovery_url_rss %v_15[7.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_16 
+		 7: COPY TYPE_StringLiteral "http://feeds2.feedburner.com/" def_%v_16 
 		 8: %self->this_blog def_%v_17 %self[7.2,7.5,2.0,] 	 ARGS:
 		 9: %v_17->feedburner_url def_%v_18 %v_17[7.8,] 	 ARGS:
 		 10: BUILDSTRING def_%v_19 %v_16[7.7,] %v_18[7.9,] 
@@ -2819,7 +2819,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_20 
+		 1: COPY TYPE_StringLiteral "index" def_%v_20 
 		 2: %self->render def_%v_21 %self[7.5,7.11,2.0,] %v_20[8.1,] 	 ARGS:%v_20,
 		 3: RETURN %v_21[8.2,] %self[8.2,7.5,7.11,2.0,] 
 BB 9
@@ -2852,11 +2852,11 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->request def_%v_5 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral "rss" def_%v_6 
 		 3: ATTRASSIGN %v_5->format %v_6[3.2,] 
 		 4: 
 		 5: COPY TYPE_Regexp def_%v_7 
-		 6: COPY TYPE_StringLiteral def_%v_8 
+		 6: COPY TYPE_StringLiteral "" def_%v_8 
 		 7: from->gsub def_%v_9 from[2.5,] %v_8[3.6,] 	 ARGS:%v_7,%v_8,
 		 8: COPY TYPE_PASS def_from %v_9[3.7,] 
 		 9: 
@@ -2874,11 +2874,11 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->request def_%v_12 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_13 
+		 2: COPY TYPE_StringLiteral "atom" def_%v_13 
 		 3: ATTRASSIGN %v_12->format %v_13[5.2,] 
 		 4: 
 		 5: COPY TYPE_Regexp def_%v_14 
-		 6: COPY TYPE_StringLiteral def_%v_15 
+		 6: COPY TYPE_StringLiteral "" def_%v_15 
 		 7: from->gsub def_%v_16 from[2.5,] %v_15[5.6,] 	 ARGS:%v_14,%v_15,
 		 8: COPY TYPE_PASS def_from %v_16[5.7,] 
 		 9: 
@@ -2919,7 +2919,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (I18n) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "errors.no_posts_found" def_%v_4 
 		 8: %v_3->t def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: ATTRASSIGN %self->message %v_5[2.8,] 
 		 10: 

@@ -16,20 +16,20 @@ BB 2
 		 6: RECEIVEARG def_community 
 		 7: 
 		 8: transaction->status def_%v_3 transaction[2.5,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "accepted" def_%v_4 
 		 10: %v_3->== def_%v_5 %v_3[2.8,] %v_4[2.9,] 	 ARGS:%v_4,
 		 11: BRANCH %v_5[2.10,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "email_when_conversation_accepted" def_%v_6 
 		 1: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "email_when_conversation_rejected" def_%v_7 
 		 1: COPY TYPE_PASS def_%v_6 %v_7[4.0,] 
 BB 5
 	outgoing: 6 
@@ -72,7 +72,7 @@ BB 3
 		 2: 
 		 3: GETFIELD %self->transaction def_%cl_1_3 %self[3.1,2.0,] 
 		 4: %cl_1_3->payment_gateway def_%cl_1_4 %cl_1_3[3.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: COPY TYPE_StringLiteral "braintree" def_%cl_1_5 
 		 6: %cl_1_4->== def_%cl_1_6 %cl_1_4[3.4,] %cl_1_5[3.5,] 	 ARGS:%cl_1_5,
 		 7: BRANCH %cl_1_6[3.6,] 
 BB 4
@@ -81,7 +81,7 @@ BB 4
 	instructions:
 		 0: GETFIELD %self->transaction def_%cl_1_7 %self[3.1,2.0,] 
 		 1: %cl_1_7->payment_process def_%cl_1_8 %cl_1_7[4.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_9 
+		 2: COPY TYPE_StringLiteral "postpay" def_%cl_1_9 
 		 3: %cl_1_8->== def_%cl_1_10 %cl_1_8[4.1,] %cl_1_9[4.2,] 	 ARGS:%cl_1_9,
 		 4: COPY TYPE_PASS def_%cl_1_6 %cl_1_10[4.3,] 
 BB 5
@@ -115,7 +115,7 @@ BB 8
 		 0: 
 		 1: recipient->confirmed_notification_emails_to def_%cl_1_18 recipient[] 	 ARGS:
 		 2: %self->community_specific_sender def_%cl_1_19 %self[6.8,3.1,2.0,] community[] 	 ARGS:community,
-		 3: COPY TYPE_StringLiteral def_%cl_1_20 
+		 3: COPY TYPE_StringLiteral "emails.conversation_status_changed.your_request_was_" def_%cl_1_20 
 		 4: 
 		 5: transaction->status def_%cl_1_21 transaction[] 	 ARGS:
 		 6: BUILDSTRING def_%cl_1_22 %cl_1_20[8.3,] %cl_1_21[8.5,] 
@@ -158,7 +158,7 @@ BB 2
 		 5: RECEIVEARG def_message 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "email_about_new_messages" def_%v_3 
 		 9: ATTRASSIGN %self->email_type %v_3[2.8,] 
 		 10: 
 		 11: message->conversation def_%v_4 message[2.5,] 	 ARGS:
@@ -195,7 +195,7 @@ BB 3
 		 1: ATTRASSIGN %self->message message[] 
 		 2: 
 		 3: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_4 
+		 4: COPY TYPE_StringLiteral "emails.new_message.you_have_a_new_message" def_%cl_1_4 
 		 5: message->sender def_%cl_1_5 message[] 	 ARGS:
 		 6: %cl_1_5->name def_%cl_1_6 %cl_1_5[3.5,] community[] 	 ARGS:community,
 		 7: HASH-sender_name- def_%cl_1_7 %cl_1_6[3.6,] 
@@ -241,7 +241,7 @@ BB 2
 		 5: RECEIVEARG def_payment 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "email_about_new_payments" def_%v_3 
 		 9: ATTRASSIGN %self->email_type %v_3[2.8,] 
 		 10: 
 		 11: ATTRASSIGN %self->payment payment[2.5,] 
@@ -278,7 +278,7 @@ BB 3
 		 0: 
 		 1: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 2: %self->community_specific_sender def_%cl_1_4 %self[2.0,] community[] 	 ARGS:community,
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "emails.new_payment.new_payment" def_%cl_1_5 
 		 4: %self->t def_%cl_1_6 %self[3.2,2.0,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
 		 5: HASH-to-from-subject- def_%cl_1_7 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_6[3.4,] 
 		 6: %self->premailer_mail def_%cl_1_8 %self[3.2,3.4,2.0,] %cl_1_7[3.5,] 	 ARGS:%cl_1_7,
@@ -318,7 +318,7 @@ BB 2
 		 5: RECEIVEARG def_payment 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "email_about_new_payments" def_%v_3 
 		 9: ATTRASSIGN %self->email_type %v_3[2.8,] 
 		 10: 
 		 11: ATTRASSIGN %self->payment payment[2.5,] 
@@ -355,7 +355,7 @@ BB 3
 		 0: 
 		 1: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 2: %self->community_specific_sender def_%cl_1_4 %self[2.0,] community[] 	 ARGS:community,
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "emails.receipt_to_payer.receipt_of_payment" def_%cl_1_5 
 		 4: %self->t def_%cl_1_6 %self[3.2,2.0,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
 		 5: HASH-to-from-subject- def_%cl_1_7 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_6[3.4,] 
 		 6: %self->premailer_mail def_%cl_1_8 %self[3.2,3.4,2.0,] %cl_1_7[3.5,] 	 ARGS:%cl_1_7,
@@ -395,7 +395,7 @@ BB 2
 		 5: RECEIVEARG def_conversation 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "email_about_completed_transactions" def_%v_3 
 		 9: ATTRASSIGN %self->email_type %v_3[2.8,] 
 		 10: 
 		 11: ATTRASSIGN %self->conversation conversation[2.5,] 
@@ -432,7 +432,7 @@ BB 3
 		 0: 
 		 1: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 2: %self->community_specific_sender def_%cl_1_4 %self[2.0,] community[] 	 ARGS:community,
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "emails.transaction_confirmed.request_marked_as_" def_%cl_1_5 
 		 4: 
 		 5: GETFIELD %self->conversation def_%cl_1_6 %self[3.2,2.0,] 
 		 6: %cl_1_6->status def_%cl_1_7 %cl_1_6[3.5,] 	 ARGS:
@@ -476,7 +476,7 @@ BB 2
 		 5: RECEIVEARG def_conversation 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "email_about_completed_transactions" def_%v_3 
 		 9: ATTRASSIGN %self->email_type %v_3[2.8,] 
 		 10: 
 		 11: ATTRASSIGN %self->conversation conversation[2.5,] 
@@ -512,8 +512,8 @@ BB 3
 		 0: 
 		 1: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 2: %self->community_specific_sender def_%cl_1_4 %self[2.0,] community[] 	 ARGS:community,
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 3: COPY TYPE_StringLiteral "person_mailer/automatic_confirmation" def_%cl_1_5 
+		 4: COPY TYPE_StringLiteral "emails.transaction_automatically_confirmed.subject" def_%cl_1_6 
 		 5: %self->t def_%cl_1_7 %self[3.2,2.0,] %cl_1_6[3.4,] 	 ARGS:%cl_1_6,
 		 6: HASH-to-from-template_path-subject- def_%cl_1_8 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_7[3.5,] 
 		 7: %self->premailer_mail def_%cl_1_9 %self[3.2,3.5,2.0,] %cl_1_8[3.6,] 	 ARGS:%cl_1_8,
@@ -553,7 +553,7 @@ BB 2
 		 5: RECEIVEARG def_transaction 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "email_about_completed_transactions" def_%v_3 
 		 9: ATTRASSIGN %self->email_type %v_3[2.8,] 
 		 10: 
 		 11: ATTRASSIGN %self->transaction transaction[2.5,] 
@@ -591,8 +591,8 @@ BB 3
 		 1: GETFIELD %self->recipient def_%cl_1_3 %self[2.0,] 
 		 2: %cl_1_3->confirmed_notification_emails_to def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:
 		 3: %self->community_specific_sender def_%cl_1_5 %self[2.0,] community[] 	 ARGS:community,
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
-		 5: COPY TYPE_StringLiteral def_%cl_1_7 
+		 4: COPY TYPE_StringLiteral "person_mailer/automatic_confirmation" def_%cl_1_6 
+		 5: COPY TYPE_StringLiteral "emails.booking_transaction_automatically_confirmed.subject" def_%cl_1_7 
 		 6: %self->t def_%cl_1_8 %self[3.3,2.0,] %cl_1_7[3.5,] 	 ARGS:%cl_1_7,
 		 7: HASH-to-from-template_path-subject- def_%cl_1_9 %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_6[3.4,] %cl_1_8[3.6,] 
 		 8: %self->mail def_%cl_1_10 %self[3.3,3.6,2.0,] %cl_1_9[3.7,] 	 ARGS:%cl_1_9,
@@ -633,7 +633,7 @@ BB 2
 		 6: RECEIVEARG def_community 
 		 7: RECEIVEARG def_to 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_3 
+		 9: COPY TYPE_StringLiteral "email_about_canceled_escrow" def_%v_3 
 		 10: ATTRASSIGN %self->email_type %v_3[2.9,] 
 		 11: 
 		 12: ATTRASSIGN %self->conversation conversation[2.5,] 
@@ -668,7 +668,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->community_specific_sender def_%cl_1_3 %self[2.0,] community[] 	 ARGS:community,
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "emails.escrow_canceled.subject" def_%cl_1_4 
 		 3: %self->t def_%cl_1_5 %self[3.1,2.0,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
 		 4: HASH-to-from-subject- def_%cl_1_6 to[] %cl_1_3[3.1,] %cl_1_5[3.3,] 
 		 5: %self->premailer_mail def_%cl_1_7 %self[3.1,3.3,2.0,] %cl_1_6[3.4,] %self[3.1,3.3,2.0,] 	 ARGS:%cl_1_6,%self,
@@ -710,7 +710,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral "escrow_canceled" def_%cl_3_3 
 		 2: %self->render def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 ARGS:%cl_3_3,
 		 3: RETURN %cl_3_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -801,7 +801,7 @@ BB 2
 		 6: RECEIVEARG def_community 
 		 7: 
 		 8: community->admin_emails def_%v_3 community[2.6,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "," def_%v_4 
 		 10: %v_3->join def_%v_5 %v_3[2.8,] %v_4[2.9,] 	 ARGS:%v_4,
 		 11: %self->escrow_canceled_to def_%v_6 %self[2.0,] conversation[2.5,] community[2.6,2.8,] %v_5[2.10,] 	 ARGS:conversation,community,%v_5,
 		 12: RETURN %v_6[2.11,] %self[2.0,2.11,] 
@@ -827,7 +827,7 @@ BB 2
 		 5: RECEIVEARG def_testimonial 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "email_about_new_received_testimonials" def_%v_3 
 		 9: ATTRASSIGN %self->email_type %v_3[2.8,] 
 		 10: 
 		 11: testimonial->receiver def_%v_4 testimonial[2.5,] 	 ARGS:
@@ -863,7 +863,7 @@ BB 3
 		 2: 
 		 3: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 4: %self->community_specific_sender def_%cl_1_4 %self[3.1,2.0,] community[] 	 ARGS:community,
-		 5: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: COPY TYPE_StringLiteral "emails.new_testimonial.has_given_you_feedback_in_kassi" def_%cl_1_5 
 		 6: testimonial->author def_%cl_1_6 testimonial[] 	 ARGS:
 		 7: %cl_1_6->name def_%cl_1_7 %cl_1_6[3.6,] community[] 	 ARGS:community,
 		 8: HASH-name- def_%cl_1_8 %cl_1_7[3.7,] 
@@ -907,7 +907,7 @@ BB 2
 		 6: RECEIVEARG def_not_really_a_recipient 
 		 7: RECEIVEARG def_community 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_3 
+		 9: COPY TYPE_StringLiteral "email_about_accept_reminders" def_%v_3 
 		 10: ATTRASSIGN %self->email_type %v_3[2.9,] 
 		 11: 
 		 12: conversation->listing def_%v_4 conversation[2.5,] 	 ARGS:
@@ -945,7 +945,7 @@ BB 3
 		 3: GETFIELD %self->recipient def_%cl_1_3 %self[2.0,] 
 		 4: %cl_1_3->confirmed_notification_emails_to def_%cl_1_4 %cl_1_3[3.3,] 	 ARGS:
 		 5: %self->community_specific_sender def_%cl_1_5 %self[3.1,2.0,] community[] 	 ARGS:community,
-		 6: COPY TYPE_StringLiteral def_%cl_1_6 
+		 6: COPY TYPE_StringLiteral "emails.accept_reminder.remember_to_accept_request" def_%cl_1_6 
 		 7: conversation->other_party def_%cl_1_7 conversation[] recipient[] 	 ARGS:recipient,
 		 8: %cl_1_7->name def_%cl_1_8 %cl_1_7[3.7,] community[] 	 ARGS:community,
 		 9: HASH-sender_name- def_%cl_1_9 %cl_1_8[3.8,] 
@@ -989,7 +989,7 @@ BB 2
 		 6: RECEIVEARG def_recipient 
 		 7: RECEIVEARG def_community 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_3 
+		 9: COPY TYPE_StringLiteral "email_about_payment_reminders" def_%v_3 
 		 10: ATTRASSIGN %self->email_type %v_3[2.9,] 
 		 11: 
 		 12: conversation->payment def_%v_4 conversation[2.5,] 	 ARGS:
@@ -1030,7 +1030,7 @@ BB 3
 		 6: 
 		 7: recipient->confirmed_notification_emails_to def_%cl_1_5 recipient[] 	 ARGS:
 		 8: %self->community_specific_sender def_%cl_1_6 %self[3.1,3.4,3.5,2.0,] community[] 	 ARGS:community,
-		 9: COPY TYPE_StringLiteral def_%cl_1_7 
+		 9: COPY TYPE_StringLiteral "emails.payment_reminder.remember_to_pay" def_%cl_1_7 
 		 10: conversation->listing def_%cl_1_8 conversation[] 	 ARGS:
 		 11: %cl_1_8->title def_%cl_1_9 %cl_1_8[3.10,] 	 ARGS:
 		 12: HASH-listing_title- def_%cl_1_10 %cl_1_9[3.11,] 
@@ -1151,7 +1151,7 @@ BB 10
 		 0: 
 		 1: recipient->confirmed_notification_emails_to def_%cl_1_11 recipient[] 	 ARGS:
 		 2: %self->community_specific_sender def_%cl_1_12 %self[8.4,3.1,3.3,2.0,] community[] 	 ARGS:community,
-		 3: COPY TYPE_StringLiteral def_%cl_1_13 
+		 3: COPY TYPE_StringLiteral "emails.payment_settings_reminder.remember_to_add_payment_details" def_%cl_1_13 
 		 4: %self->t def_%cl_1_14 %self[10.2,8.4,3.1,3.3,2.0,] %cl_1_13[10.3,] 	 ARGS:%cl_1_13,
 		 5: HASH-to-from-subject- def_%cl_1_15 %cl_1_11[10.1,] %cl_1_12[10.2,] %cl_1_14[10.4,] 
 		 6: %self->premailer_mail def_%cl_1_16 %self[10.2,10.4,8.4,3.1,3.3,2.0,] %cl_1_15[10.5,] %self[10.2,10.4,8.4,3.1,3.3,2.0,] 	 ARGS:%cl_1_15,%self,
@@ -1287,7 +1287,7 @@ BB 3
 		 2: 
 		 3: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 4: %self->community_specific_sender def_%cl_1_4 %self[3.1,2.0,] community[] 	 ARGS:community,
-		 5: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: COPY TYPE_StringLiteral "emails.braintree_account_approved.account_ready" def_%cl_1_5 
 		 6: %self->t def_%cl_1_6 %self[3.1,3.4,2.0,] %cl_1_5[3.5,] 	 ARGS:%cl_1_5,
 		 7: HASH-to-from-subject- def_%cl_1_7 %cl_1_3[3.3,] %cl_1_4[3.4,] %cl_1_6[3.6,] 
 		 8: %self->premailer_mail def_%cl_1_8 %self[3.1,3.4,3.6,2.0,] %cl_1_7[3.7,] %self[3.1,3.4,3.6,2.0,] 	 ARGS:%cl_1_7,%self,
@@ -1396,7 +1396,7 @@ BB 2
 		 7: RECEIVEARG def_community 
 		 8: RECEIVEARG def_days_to_cancel 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%v_3 
+		 10: COPY TYPE_StringLiteral "email_about_confirm_reminders" def_%v_3 
 		 11: ATTRASSIGN %self->email_type %v_3[2.10,] 
 		 12: 
 		 13: conversation->buyer def_%v_4 conversation[2.5,] 	 ARGS:
@@ -1452,13 +1452,13 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_6 
+		 0: COPY TYPE_StringLiteral "confirm_reminder_escrow" def_%cl_1_6 
 		 1: 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_7 
+		 0: COPY TYPE_StringLiteral "confirm_reminder" def_%cl_1_7 
 		 1: COPY TYPE_PASS def_%cl_1_6 %cl_1_7[7.0,] 
 BB 8
 	outgoing: 9 11 
@@ -1468,7 +1468,7 @@ BB 8
 		 1: 
 		 2: recipient->confirmed_notification_emails_to def_%cl_1_8 recipient[] 	 ARGS:
 		 3: %self->community_specific_sender def_%cl_1_9 %self[3.1,3.3,2.0,] community[] 	 ARGS:community,
-		 4: COPY TYPE_StringLiteral def_%cl_1_10 
+		 4: COPY TYPE_StringLiteral "emails.confirm_reminder.remember_to_confirm_request" def_%cl_1_10 
 		 5: %self->t def_%cl_1_11 %self[8.3,3.1,3.3,2.0,] %cl_1_10[8.4,] 	 ARGS:%cl_1_10,
 		 6: HASH-to-from-subject- def_%cl_1_12 %cl_1_8[8.2,] %cl_1_9[8.3,] %cl_1_11[8.5,] 
 		 7: %self->premailer_mail def_%cl_1_13 %self[8.3,8.5,3.1,3.3,2.0,] %cl_1_12[8.6,] %self[8.3,8.5,3.1,3.3,2.0,] 	 ARGS:%cl_1_12,%self,
@@ -1574,7 +1574,7 @@ BB 2
 		 6: RECEIVEARG def_recipient 
 		 7: RECEIVEARG def_community 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_3 
+		 9: COPY TYPE_StringLiteral "email_about_testimonial_reminders" def_%v_3 
 		 10: ATTRASSIGN %self->email_type %v_3[2.9,] 
 		 11: 
 		 12: GETFIELD %self->email_type def_%v_4 %self[2.0,2.10,] 
@@ -1611,7 +1611,7 @@ BB 3
 		 6: 
 		 7: recipient->confirmed_notification_emails_to def_%cl_1_5 recipient[] 	 ARGS:
 		 8: %self->community_specific_sender def_%cl_1_6 %self[3.1,3.5,2.0,] community[] 	 ARGS:community,
-		 9: COPY TYPE_StringLiteral def_%cl_1_7 
+		 9: COPY TYPE_StringLiteral "emails.testimonial_reminder.remember_to_give_feedback_to" def_%cl_1_7 
 		 10: GETFIELD %self->other_party def_%cl_1_8 %self[3.5,3.8,2.0,] 
 		 11: %cl_1_8->name def_%cl_1_9 %cl_1_8[3.10,] community[] 	 ARGS:community,
 		 12: HASH-name- def_%cl_1_10 %cl_1_9[3.11,] 
@@ -1654,7 +1654,7 @@ BB 2
 		 5: RECEIVEARG def_comment 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "email_about_new_comments_to_own_listing" def_%v_3 
 		 9: ATTRASSIGN %self->email_type %v_3[2.8,] 
 		 10: 
 		 11: comment->listing def_%v_4 comment[2.5,] 	 ARGS:
@@ -1691,7 +1691,7 @@ BB 3
 		 2: 
 		 3: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 4: %self->community_specific_sender def_%cl_1_4 %self[3.1,2.0,] community[] 	 ARGS:community,
-		 5: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: COPY TYPE_StringLiteral "emails.new_comment.you_have_a_new_comment" def_%cl_1_5 
 		 6: comment->author def_%cl_1_6 comment[] 	 ARGS:
 		 7: %cl_1_6->name def_%cl_1_7 %cl_1_6[3.6,] community[] 	 ARGS:community,
 		 8: HASH-author- def_%cl_1_8 %cl_1_7[3.7,] 
@@ -1764,7 +1764,7 @@ BB 3
 		 2: 
 		 3: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 4: %self->community_specific_sender def_%cl_1_4 %self[3.1,2.0,] community[] 	 ARGS:community,
-		 5: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: COPY TYPE_StringLiteral "emails.new_comment.listing_you_follow_has_a_new_comment" def_%cl_1_5 
 		 6: comment->author def_%cl_1_6 comment[] 	 ARGS:
 		 7: %cl_1_6->name def_%cl_1_7 %cl_1_6[3.6,] community[] 	 ARGS:community,
 		 8: HASH-author- def_%cl_1_8 %cl_1_7[3.7,] 
@@ -1837,7 +1837,7 @@ BB 3
 		 2: 
 		 3: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 4: %self->community_specific_sender def_%cl_1_4 %self[3.1,2.0,] community[] 	 ARGS:community,
-		 5: COPY TYPE_StringLiteral def_%cl_1_5 
+		 5: COPY TYPE_StringLiteral "emails.new_update_to_listing.listing_you_follow_has_been_updated" def_%cl_1_5 
 		 6: %self->t def_%cl_1_6 %self[3.1,3.4,2.0,] %cl_1_5[3.5,] 	 ARGS:%cl_1_5,
 		 7: HASH-to-from-subject- def_%cl_1_7 %cl_1_3[3.3,] %cl_1_4[3.4,] %cl_1_6[3.6,] 
 		 8: %self->premailer_mail def_%cl_1_8 %self[3.1,3.4,3.6,2.0,] %cl_1_7[3.7,] 	 ARGS:%cl_1_7,
@@ -1923,7 +1923,7 @@ BB 3
 		 18: 
 		 19: recipient->confirmed_notification_emails_to def_%cl_1_11 recipient[] 	 ARGS:
 		 20: %self->community_specific_sender def_%cl_1_12 %self[3.1,3.3,3.7,3.13,3.14,3.17,2.0,] community[] 	 ARGS:community,
-		 21: COPY TYPE_StringLiteral def_%cl_1_13 
+		 21: COPY TYPE_StringLiteral "emails.new_listing_by_followed_person.subject" def_%cl_1_13 
 		 22: GETFIELD %self->author_name def_%cl_1_14 %self[3.7,3.13,3.20,2.0,] 
 		 23: recipient->locale def_%cl_1_15 recipient[3.19,] 	 ARGS:
 		 24: community->full_name_with_separator def_%cl_1_16 community[] %cl_1_15[3.23,] 	 ARGS:%cl_1_15,
@@ -2007,7 +2007,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "emails.invitation_to_kassi.you_have_been_invited_to_kassi" def_%cl_1_3 
 		 2: invitation->inviter def_%cl_1_4 invitation[] 	 ARGS:
 		 3: invitation->community def_%cl_1_5 invitation[3.2,] 	 ARGS:
 		 4: %cl_1_4->name def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
@@ -2065,7 +2065,7 @@ BB 2
 		 8: RECEIVEARG def_email_content 
 		 9: RECEIVEARG def_community 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_3 
+		 11: COPY TYPE_StringLiteral "email_from_admins" def_%v_3 
 		 12: ATTRASSIGN %self->email_type %v_3[2.11,] 
 		 13: 
 		 14: GETFIELD %self->email_type def_%v_4 %self[2.0,2.12,] 
@@ -2100,12 +2100,12 @@ BB 3
 		 4: 
 		 5: recipient->confirmed_notification_emails_to def_%cl_1_3 recipient[] 	 ARGS:
 		 6: %self->community_specific_sender def_%cl_1_4 %self[3.1,3.3,2.0,] community[] 	 ARGS:community,
-		 7: COPY TYPE_StringLiteral def_%cl_1_5 
+		 7: COPY TYPE_StringLiteral """ def_%cl_1_5 
 		 8: 
 		 9: sender->name def_%cl_1_6 sender[] community[] 	 ARGS:community,
-		 10: COPY TYPE_StringLiteral def_%cl_1_7 
+		 10: COPY TYPE_StringLiteral ""<" def_%cl_1_7 
 		 11: sender->confirmed_notification_email_to def_%cl_1_8 sender[3.9,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_1_9 
+		 12: COPY TYPE_StringLiteral ">" def_%cl_1_9 
 		 13: BUILDSTRING def_%cl_1_10 %cl_1_5[3.7,] %cl_1_6[3.9,] %cl_1_7[3.10,] %cl_1_8[3.11,] %cl_1_9[3.12,] 
 		 14: HASH-to-from-subject-reply_to- def_%cl_1_11 %cl_1_3[3.5,] %cl_1_4[3.6,] email_subject[] %cl_1_10[3.13,] 
 		 15: %self->premailer_mail def_%cl_1_12 %self[3.1,3.3,3.6,2.0,] %cl_1_11[3.14,] 	 ARGS:%cl_1_11,
@@ -2145,7 +2145,7 @@ BB 2
 		 5: RECEIVEARG def_feedback 
 		 6: RECEIVEARG def_community 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "feedback.feedback_subject" def_%v_3 
 		 9: (I18n) def_%v_4 
 		 10: %v_4->locale def_%v_5 %v_4[2.9,] 	 ARGS:
 		 11: community->name def_%v_6 community[2.6,] %v_5[2.10,] 	 ARGS:%v_5,
@@ -2277,7 +2277,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: community->admin_emails def_%v_6 community[2.5,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 2: COPY TYPE_StringLiteral "," def_%v_7 
 		 3: %v_6->join def_%v_8 %v_6[5.1,] %v_7[5.2,] 	 ARGS:%v_7,
 		 4: RETURN %v_8[5.3,] %self[2.0,] 
 BB 6
@@ -2321,7 +2321,7 @@ BB 2
 		 18: %v_3->admin_emails def_%v_4 %v_3[2.17,] 	 ARGS:
 		 19: GETFIELD %self->community def_%v_5 %self[2.0,2.9,] 
 		 20: %self->community_specific_sender def_%v_6 %self[2.0,2.9,2.11,2.13,2.15,] %v_5[2.19,] 	 ARGS:%v_5,
-		 21: COPY TYPE_StringLiteral def_%v_7 
+		 21: COPY TYPE_StringLiteral "New member in " def_%v_7 
 		 22: 
 		 23: GETFIELD %self->community def_%v_8 %self[2.0,2.9,2.20,] 
 		 24: GETFIELD %self->person def_%v_9 %self[2.0,2.13,2.20,] 
@@ -2396,10 +2396,10 @@ BB 3
 		 4: 
 		 5: email->address def_%cl_1_6 email[3.3,] 	 ARGS:
 		 6: %self->community_specific_sender def_%cl_1_7 %self[2.0,] community[] 	 ARGS:community,
-		 7: COPY TYPE_StringLiteral def_%cl_1_8 
+		 7: COPY TYPE_StringLiteral "devise.mailer.confirmation_instructions.subject" def_%cl_1_8 
 		 8: %self->t def_%cl_1_9 %self[3.6,2.0,] %cl_1_8[3.7,] 	 ARGS:%cl_1_8,
-		 9: COPY TYPE_StringLiteral def_%cl_1_10 
-		 10: COPY TYPE_StringLiteral def_%cl_1_11 
+		 9: COPY TYPE_StringLiteral "devise/mailer" def_%cl_1_10 
+		 10: COPY TYPE_StringLiteral "confirmation_instructions" def_%cl_1_11 
 		 11: HASH-to-from-subject-template_path-template_name- def_%cl_1_12 %cl_1_6[3.5,] %cl_1_7[3.6,] %cl_1_9[3.8,] %cl_1_10[3.9,] %cl_1_11[3.10,] 
 		 12: %self->premailer_mail def_%cl_1_13 %self[3.6,3.8,2.0,] %cl_1_12[3.11,] 	 ARGS:%cl_1_12,
 		 13: RETURN %cl_1_13[3.12,] %self[3.6,3.8,3.12,2.0,] 
@@ -2447,7 +2447,7 @@ BB 2
 		 14: 
 		 15: GETFIELD %self->community def_%v_4 %self[2.0,2.9,] 
 		 16: %self->community_specific_sender def_%v_5 %self[2.0,2.9,2.11,2.13,] %v_4[2.15,] 	 ARGS:%v_4,
-		 17: COPY TYPE_StringLiteral def_%v_6 
+		 17: COPY TYPE_StringLiteral "devise.mailer.reset_password_instructions.subject" def_%v_6 
 		 18: %self->t def_%v_7 %self[2.0,2.9,2.11,2.13,2.16,] %v_6[2.17,] 	 ARGS:%v_6,
 		 19: HASH-to-from-subject- def_%v_8 email_address[2.6,] %v_5[2.16,] %v_7[2.18,] 
 		 20: %self->premailer_mail def_%v_9 %self[2.0,2.9,2.11,2.13,2.16,2.18,] %v_8[2.19,] %self[2.0,2.9,2.11,2.13,2.16,2.18,] 	 ARGS:%v_8,%self,
@@ -2606,7 +2606,7 @@ BB 3
 		 15: ATTRASSIGN %cl_1_7->[] %cl_1_8[3.14,] 
 		 16: 
 		 17: GETFIELD %self->url_params def_%cl_1_9 %self[3.6,2.0,] 
-		 18: COPY TYPE_StringLiteral def_%cl_1_10 
+		 18: COPY TYPE_StringLiteral "welcome_email" def_%cl_1_10 
 		 19: ATTRASSIGN %cl_1_9->[] %cl_1_10[3.18,] 
 		 20: 
 		 21: GETFIELD %self->url_params def_%cl_1_11 %self[3.6,2.0,] 
@@ -2634,7 +2634,7 @@ BB 6
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_17 
+		 0: COPY TYPE_StringLiteral "emails.welcome_email.welcome_email_subject_for_marketplace_creator" def_%cl_1_17 
 		 1: %self->t def_%cl_1_18 %self[3.1,3.3,3.6,3.24,2.0,] %cl_1_17[6.0,] 	 ARGS:%cl_1_17,
 		 2: COPY TYPE_PASS def_subject %cl_1_18[6.1,] 
 		 3: 
@@ -2643,7 +2643,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_19 
+		 1: COPY TYPE_StringLiteral "emails.welcome_email.welcome_email_subject" def_%cl_1_19 
 		 2: recipient->locale def_%cl_1_20 recipient[] 	 ARGS:
 		 3: community->full_name def_%cl_1_21 community[] %cl_1_20[7.2,] 	 ARGS:%cl_1_20,
 		 4: person->given_name_or_username def_%cl_1_22 person[] 	 ARGS:
@@ -2698,7 +2698,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral "email_blank_layout" def_%cl_3_3 
 		 2: HASH-layout- def_%cl_3_4 %cl_3_3[3.1,] 
 		 3: %self->render def_%cl_3_5 %self[2.0,] %cl_3_4[3.2,] 	 ARGS:%cl_3_4,
 		 4: RETURN %cl_3_5[3.3,] %self[3.3,2.0,] 
@@ -2767,14 +2767,14 @@ BB 2
 		 9: RECEIVEARG def_email_content 
 		 10: RECEIVEARG def_email_locale 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%v_3 
+		 12: COPY TYPE_StringLiteral "email_from_admins" def_%v_3 
 		 13: recipient->should_receive? def_%v_4 recipient[2.6,] %v_3[2.12,] 	 ARGS:%v_3,
 		 14: BRANCH %v_4[2.13,] 
 BB 3
 	outgoing: 4 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "any" def_%v_5 
 		 1: email_locale->eql? def_%v_6 email_locale[2.10,] %v_5[3.0,] 	 ARGS:%v_5,
 		 2: BRANCH %v_6[3.1,] 
 BB 4
@@ -2835,9 +2835,9 @@ BB 13
 		 1: COPY TYPE_PASS def_e %v_16[13.0,] 
 		 2: 
 		 3: (ApplicationHelper) def_%v_17 
-		 4: COPY TYPE_StringLiteral def_%v_18 
+		 4: COPY TYPE_StringLiteral "Error sending email to all the members of community " def_%v_18 
 		 5: community->full_name def_%v_19 community[2.7,] email_locale[2.10,] 	 ARGS:email_locale,
-		 6: COPY TYPE_StringLiteral def_%v_20 
+		 6: COPY TYPE_StringLiteral ": " def_%v_20 
 		 7: e->message def_%v_21 e[13.1,] 	 ARGS:
 		 8: BUILDSTRING def_%v_22 %v_18[13.4,] %v_19[13.5,] %v_20[13.6,] %v_21[13.7,] 
 		 9: e->class def_%v_23 e[13.1,13.7,] 	 ARGS:
@@ -3016,7 +3016,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_22 
+		 1: COPY TYPE_StringLiteral "feedback.anonymous_user" def_%v_22 
 		 2: %self->t def_%v_23 %self[2.0,] %v_22[4.1,] 	 ARGS:%v_22,
 		 3: BUILDSTRING def_%v_24 %v_23[4.2,] 
 		 4: COPY TYPE_PASS def_%v_5 %v_24[4.3,] 
@@ -3028,8 +3028,8 @@ BB 5
 		 0: 
 		 1: (PersonViewUtils) def_%v_12 
 		 2: %v_12->person_display_name def_%v_13 %v_12[5.1,] author[2.5,] community[2.7,] 	 ARGS:author,community,
-		 3: COPY TYPE_StringLiteral def_%v_14 
-		 4: COPY TYPE_StringLiteral def_%v_15 
+		 3: COPY TYPE_StringLiteral " (" def_%v_14 
+		 4: COPY TYPE_StringLiteral ")" def_%v_15 
 		 5: BUILDSTRING def_%v_16 %v_13[5.2,] %v_14[5.3,] email[2.6,] %v_15[5.4,] 
 		 6: COPY TYPE_PASS def_%v_5 %v_16[5.5,] 
 		 7: RETURN %v_16[5.5,] %self[2.0,] 
@@ -3038,10 +3038,10 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_17 
+		 1: COPY TYPE_StringLiteral "feedback.unlogged_user" def_%v_17 
 		 2: %self->t def_%v_18 %self[2.0,] %v_17[6.1,] 	 ARGS:%v_17,
-		 3: COPY TYPE_StringLiteral def_%v_19 
-		 4: COPY TYPE_StringLiteral def_%v_20 
+		 3: COPY TYPE_StringLiteral " (" def_%v_19 
+		 4: COPY TYPE_StringLiteral ")" def_%v_20 
 		 5: BUILDSTRING def_%v_21 %v_18[6.2,] %v_19[6.3,] email[2.6,] %v_20[6.4,] 
 		 6: COPY TYPE_PASS def_%v_5 %v_21[6.5,] 
 		 7: RETURN %v_21[6.5,] %self[6.2,2.0,] 

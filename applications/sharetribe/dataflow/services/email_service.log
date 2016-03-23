@@ -55,7 +55,7 @@ BB 2
 		 5: RECEIVEARG def_emails 
 		 6: 
 		 7: emails->collect def_%v_3 emails[2.5,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral ", " def_%v_4 
 		 9: %v_3->join def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: RETURN %v_5[2.9,] %self[2.0,] 
 BB 3
@@ -668,7 +668,7 @@ BB 3
 		 1: 
 		 2: COPY TYPE_Boolean def_allowed 
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%v_5 
+		 4: COPY TYPE_StringLiteral "," def_%v_5 
 		 5: allowed_emails->split def_%v_6 allowed_emails[2.6,] %v_5[3.4,] 	 ARGS:%v_5,
 		 6: COPY TYPE_PASS def_allowed_array %v_6[3.5,] 
 		 7: 
@@ -703,12 +703,12 @@ BB 3
 		 0: 
 		 1: allowed_domain_or_address->strip! def_%cl_1_3 allowed_domain_or_address[2.2,] 	 ARGS:
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_4 
-		 4: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "." def_%cl_1_4 
+		 4: COPY TYPE_StringLiteral "\." def_%cl_1_5 
 		 5: allowed_domain_or_address->gsub! def_%cl_1_6 allowed_domain_or_address[3.1,2.2,] %cl_1_4[3.3,] %cl_1_5[3.4,] 	 ARGS:%cl_1_4,%cl_1_5,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_1_7 
-		 8: COPY TYPE_StringLiteral def_%cl_1_8 
+		 7: COPY TYPE_StringLiteral "" def_%cl_1_7 
+		 8: COPY TYPE_StringLiteral "$" def_%cl_1_8 
 		 9: def_%cl_1_9 %cl_1_7[3.7,] allowed_domain_or_address[3.1,3.5,2.2,] %cl_1_8[3.8,] 
 		 10: address->=~ def_%cl_1_10 address[] %cl_1_9[3.9,] 	 ARGS:%cl_1_9,
 		 11: BRANCH %cl_1_10[3.10,] 

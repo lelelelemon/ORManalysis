@@ -19,7 +19,7 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 	@next_read_superset = 0
 	@next_read_same = 0
 	next_list.each do |n|
-		if n.isQuery?
+		if n.isQuery? and n.isChainedQuery? == false
 			tbl_name = n.getInstr.getTableName
 			if @tables[tbl_name] != nil
 				if @next_tables[tbl_name] == nil

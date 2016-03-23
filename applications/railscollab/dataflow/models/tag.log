@@ -91,8 +91,8 @@ BB 4
 	instructions:
 		 0: 
 		 1: host->nil? def_%v_3 host[3.0,2.5,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_4 
-		 3: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "projects" def_%v_4 
+		 3: COPY TYPE_StringLiteral "tags" def_%v_5 
 		 4: %self->tag def_%v_6 %self[2.0,] 	 ARGS:
 		 5: %self->project_id def_%v_7 %self[4.4,2.0,] 	 ARGS:
 		 6: HASH-only_path-host-controller-action-id-active_project- def_%v_8 %v_3[4.1,] host[4.1,3.0,2.5,] %v_4[4.2,] %v_5[4.3,] %v_6[4.4,] %v_7[4.5,] 
@@ -126,7 +126,7 @@ BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_3 
+		 0: COPY TYPE_StringLiteral "project_id = ? AND tag = ? AND is_private = ?" def_%v_3 
 		 1: project->id def_%v_4 project[2.6,] 	 ARGS:
 		 2: COPY TYPE_Array def_%v_5 %v_3[3.0,] %v_4[3.1,] tag_name[2.5,] 
 		 3: 
@@ -134,7 +134,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "project_id = ? AND tag = ?" def_%v_6 
 		 1: project->id def_%v_7 project[2.6,] 	 ARGS:
 		 2: COPY TYPE_Array def_%v_8 %v_6[4.0,] %v_7[4.1,] tag_name[2.5,] 
 		 3: COPY TYPE_PASS def_%v_5 %v_8[4.2,] 
@@ -203,7 +203,7 @@ BB 2
 		 5: RECEIVEARG def_object 
 		 6: 
 		 7: (Tag) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "project_id = ? AND rel_object_type = ? AND rel_object_id = ?" def_%v_4 
 		 9: object->project_id def_%v_5 object[2.5,] 	 ARGS:
 		 10: object->class def_%v_6 object[2.5,2.9,] 	 ARGS:
 		 11: %v_6->to_s def_%v_7 %v_6[2.10,] 	 ARGS:
@@ -398,7 +398,7 @@ BB 2
 		 5: RECEIVEARG def_object 
 		 6: 
 		 7: (Tag) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "rel_object_type = ? AND rel_object_id = ?" def_%v_4 
 		 9: object->class def_%v_5 object[2.5,] 	 ARGS:
 		 10: %v_5->to_s def_%v_6 %v_5[2.9,] 	 ARGS:
 		 11: object->id def_%v_7 object[2.5,2.9,] 	 ARGS:
@@ -479,7 +479,7 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_3 
+		 0: COPY TYPE_StringLiteral "project_id = ? AND is_private = ?" def_%v_3 
 		 1: project->id def_%v_4 project[2.5,] 	 ARGS:
 		 2: COPY TYPE_Array def_%v_5 %v_3[5.0,] %v_4[5.1,] 
 		 3: 
@@ -487,7 +487,7 @@ BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "project_id = ?" def_%v_6 
 		 1: project->id def_%v_7 project[2.5,] 	 ARGS:
 		 2: COPY TYPE_Array def_%v_8 %v_6[6.0,] %v_7[6.1,] 
 		 3: COPY TYPE_PASS def_%v_5 %v_8[6.2,] 
@@ -499,11 +499,11 @@ BB 7
 		 1: 
 		 2: (Tag) def_%v_9 
 		 3: %v_9->where def_%v_10 %v_9[7.2,] %v_5[6.3,5.2,] 	 ARGS:tag_conditions,
-		 4: COPY TYPE_StringLiteral def_%v_11 
+		 4: COPY TYPE_StringLiteral "tag" def_%v_11 
 		 5: %v_10->group def_%v_12 %v_10[7.3,] %v_11[7.4,] 	 ARGS:%v_11,
-		 6: COPY TYPE_StringLiteral def_%v_13 
+		 6: COPY TYPE_StringLiteral "tag ASC" def_%v_13 
 		 7: %v_12->order def_%v_14 %v_12[7.5,] %v_13[7.6,] 	 ARGS:%v_13,
-		 8: COPY TYPE_StringLiteral def_%v_15 
+		 8: COPY TYPE_StringLiteral "tag" def_%v_15 
 		 9: %v_14->select def_%v_16 %v_14[7.7,] %v_15[7.8,] 	 ARGS:%v_15,
 		 10: COPY TYPE_PASS def_tags %v_16[7.9,] 
 		 11: 
@@ -580,7 +580,7 @@ BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_3 
+		 0: COPY TYPE_StringLiteral "project_id = ? AND is_private = ? AND tag = ?" def_%v_3 
 		 1: project->id def_%v_4 project[2.6,] 	 ARGS:
 		 2: COPY TYPE_Array def_%v_5 %v_3[3.0,] %v_4[3.1,] tag_name[2.5,] 
 		 3: 
@@ -588,7 +588,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "project_id = ? AND tag = ?" def_%v_6 
 		 1: project->id def_%v_7 project[2.6,] 	 ARGS:
 		 2: COPY TYPE_Array def_%v_8 %v_6[4.0,] %v_7[4.1,] tag_name[2.5,] 
 		 3: COPY TYPE_PASS def_%v_5 %v_8[4.2,] 
@@ -600,7 +600,7 @@ BB 5
 		 1: 
 		 2: (Tag) def_%v_9 
 		 3: %v_9->where def_%v_10 %v_9[5.2,] %v_5[4.3,3.2,] 	 ARGS:tag_conditions,
-		 4: COPY TYPE_StringLiteral def_%v_11 
+		 4: COPY TYPE_StringLiteral "id" def_%v_11 
 		 5: %v_10->select def_%v_12 %v_10[5.3,] %v_11[5.4,] 	 ARGS:%v_11,
 		 6: COPY TYPE_PASS def_tags %v_12[5.5,] 
 		 7: 

@@ -371,12 +371,12 @@ BB 2
 		 5: RECEIVEARG def_person_id 
 		 6: 
 		 7: (TransactionModel) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "starter_id = ? OR listing_author_id = ?" def_%v_4 
 		 9: %v_3->where def_%v_5 %v_3[2.7,] %v_4[2.8,] person_id[2.5,] person_id[2.5,] 	 ARGS:%v_4,person_id,person_id,
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "current_state NOT IN (" def_%v_6 
 		 11: 
 		 12: (FINISHED_TX_STATES) def_%v_7 
-		 13: COPY TYPE_StringLiteral def_%v_8 
+		 13: COPY TYPE_StringLiteral ")" def_%v_8 
 		 14: BUILDSTRING def_%v_9 %v_6[2.10,] %v_7[2.12,] %v_8[2.13,] 
 		 15: %v_5->where def_%v_10 %v_5[2.9,] %v_9[2.14,] 	 ARGS:%v_9,
 		 16: %v_10->count def_%v_11 %v_10[2.15,] 	 ARGS:
@@ -972,11 +972,11 @@ BB 4
 	instructions:
 		 0: 
 		 1: (ArgumentException) def_%v_8 
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "Listing quantity (" def_%v_9 
 		 3: %self->tx_listing_quantity def_%v_10 %self[2.0,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_11 
+		 4: COPY TYPE_StringLiteral ") must be equal to booking duration in days (" def_%v_11 
 		 5: %self->booking_duration def_%v_12 %self[4.3,2.0,] tx_data[2.6,] 	 ARGS:tx_data,
-		 6: COPY TYPE_StringLiteral def_%v_13 
+		 6: COPY TYPE_StringLiteral ")" def_%v_13 
 		 7: BUILDSTRING def_%v_14 %v_9[4.2,] %v_10[4.3,] %v_11[4.4,] %v_12[4.5,] %v_13[4.6,] 
 		 8: %v_8->new def_%v_15 %v_8[4.1,] %v_14[4.7,] 	 ARGS:%v_14,
 		 9: %self->raise def_%v_16 %self[4.3,4.5,2.0,] %v_15[4.8,] 	 ARGS:%v_15,
@@ -1108,9 +1108,9 @@ BB 2
 		 7: 
 		 8: tx_model->conversation def_%v_3 tx_model[2.5,] 	 ARGS:
 		 9: %v_3->participations def_%v_4 %v_3[2.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral "person_id != '" def_%v_5 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%v_6 
+		 12: COPY TYPE_StringLiteral "'" def_%v_6 
 		 13: BUILDSTRING def_%v_7 %v_5[2.10,] person_id[2.6,] %v_6[2.12,] 
 		 14: %v_4->where def_%v_8 %v_4[2.9,] %v_7[2.13,] 	 ARGS:%v_7,
 		 15: HASH-is_read- def_%v_9 

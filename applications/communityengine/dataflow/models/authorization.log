@@ -136,9 +136,9 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_hash 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "provider" def_%v_3 
 		 8: hash->[] def_%v_4 hash[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral "uid" def_%v_5 
 		 10: hash->[] def_%v_6 hash[2.5,2.8,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: %self->find_by_provider_and_uid def_%v_7 %self[2.0,] %v_4[2.8,] %v_6[2.10,] 	 ARGS:%v_4,%v_6,
 		 12: RETURN %v_7[2.11,] %self[2.0,2.11,] 
@@ -241,7 +241,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->errors def_%v_7 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "You must have at least one authorization provider." def_%v_8 
 		 3: %v_7->add def_%v_9 %v_7[3.1,] %v_8[3.2,] 	 ARGS:Symbol,%v_8,
 		 4: 
 		 5: (ActiveRecord) def_%v_10 
@@ -284,39 +284,39 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_auth_hash 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "uid" def_%v_3 
 		 8: auth_hash->[] def_%v_4 auth_hash[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
 		 9: ATTRASSIGN %self->uid %v_4[2.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_5 
+		 11: COPY TYPE_StringLiteral "provider" def_%v_5 
 		 12: auth_hash->[] def_%v_6 auth_hash[2.5,2.8,] %v_5[2.11,] 	 ARGS:%v_5,
 		 13: ATTRASSIGN %self->provider %v_6[2.12,] 
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%v_7 
+		 15: COPY TYPE_StringLiteral "info" def_%v_7 
 		 16: auth_hash->[] def_%v_8 auth_hash[2.5,2.8,2.12,] %v_7[2.15,] 	 ARGS:%v_7,
-		 17: COPY TYPE_StringLiteral def_%v_9 
+		 17: COPY TYPE_StringLiteral "nickname" def_%v_9 
 		 18: %v_8->[] def_%v_10 %v_8[2.16,] %v_9[2.17,] 	 ARGS:%v_9,
 		 19: ATTRASSIGN %self->nickname %v_10[2.18,] 
 		 20: 
-		 21: COPY TYPE_StringLiteral def_%v_11 
+		 21: COPY TYPE_StringLiteral "info" def_%v_11 
 		 22: auth_hash->[] def_%v_12 auth_hash[2.5,2.8,2.12,2.16,] %v_11[2.21,] 	 ARGS:%v_11,
-		 23: COPY TYPE_StringLiteral def_%v_13 
+		 23: COPY TYPE_StringLiteral "email" def_%v_13 
 		 24: %v_12->[] def_%v_14 %v_12[2.22,] %v_13[2.23,] 	 ARGS:%v_13,
 		 25: ATTRASSIGN %self->email %v_14[2.24,] 
 		 26: 
-		 27: COPY TYPE_StringLiteral def_%v_15 
+		 27: COPY TYPE_StringLiteral "info" def_%v_15 
 		 28: auth_hash->[] def_%v_16 auth_hash[2.5,2.8,2.12,2.16,2.22,] %v_15[2.27,] 	 ARGS:%v_15,
-		 29: COPY TYPE_StringLiteral def_%v_17 
+		 29: COPY TYPE_StringLiteral "image" def_%v_17 
 		 30: %v_16->[] def_%v_18 %v_16[2.28,] %v_17[2.29,] 	 ARGS:%v_17,
 		 31: ATTRASSIGN %self->picture_url %v_18[2.30,] 
 		 32: 
-		 33: COPY TYPE_StringLiteral def_%v_19 
+		 33: COPY TYPE_StringLiteral "info" def_%v_19 
 		 34: auth_hash->[] def_%v_20 auth_hash[2.5,2.8,2.12,2.16,2.22,2.28,] %v_19[2.33,] 	 ARGS:%v_19,
-		 35: COPY TYPE_StringLiteral def_%v_21 
+		 35: COPY TYPE_StringLiteral "name" def_%v_21 
 		 36: %v_20->[] def_%v_22 %v_20[2.34,] %v_21[2.35,] 	 ARGS:%v_21,
 		 37: ATTRASSIGN %self->name %v_22[2.36,] 
 		 38: 
-		 39: COPY TYPE_StringLiteral def_%v_23 
+		 39: COPY TYPE_StringLiteral "credentials" def_%v_23 
 		 40: auth_hash->[] def_%v_24 auth_hash[2.5,2.8,2.12,2.16,2.22,2.28,2.34,] %v_23[2.39,] 	 ARGS:%v_23,
 		 41: BRANCH %v_24[2.40,] 
 BB 3
@@ -324,15 +324,15 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_25 
+		 1: COPY TYPE_StringLiteral "credentials" def_%v_25 
 		 2: auth_hash->[] def_%v_26 auth_hash[2.5,] %v_25[3.1,] 	 ARGS:%v_25,
-		 3: COPY TYPE_StringLiteral def_%v_27 
+		 3: COPY TYPE_StringLiteral "token" def_%v_27 
 		 4: %v_26->[] def_%v_28 %v_26[3.2,] %v_27[3.3,] 	 ARGS:%v_27,
 		 5: ATTRASSIGN %self->access_token %v_28[3.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_29 
+		 7: COPY TYPE_StringLiteral "credentials" def_%v_29 
 		 8: auth_hash->[] def_%v_30 auth_hash[3.2,2.5,] %v_29[3.7,] 	 ARGS:%v_29,
-		 9: COPY TYPE_StringLiteral def_%v_31 
+		 9: COPY TYPE_StringLiteral "secret" def_%v_31 
 		 10: %v_30->[] def_%v_32 %v_30[3.8,] %v_31[3.9,] 	 ARGS:%v_31,
 		 11: ATTRASSIGN %self->access_token_secret %v_32[3.10,] 
 		 12: RETURN %v_32[3.10,] %self[3.5,3.11,2.0,2.9,2.13,2.19,2.25,2.31,2.37,] 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #applications="boxroom lobsters communityengine publify jobsworth amahiPlatform railscollab sharetribe onebody linuxfr rucksack sugar kandan fulcrum tracks browsercms"
-applications="lobsters amahiPlatform browsercms fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
+applications="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth publify railscollab sharetribe tracks brevidy communityengine"
 
 #applications="communityengine linuxfr railscollab rucksack discourse amahiPlatform"
 
@@ -19,7 +19,7 @@ function run_single_app () {
 	#cd ~/ruby_source/ORM_analysis/applications/
 	#python generate_dataflow.py ${app} >> logs/${app}_log.log
 	cd ~/ruby_source/ORM_analysis/controller_model_analysis
-	ruby parsing.rb -a -d ../applications/${app} &> ${app}_run.log
+	ruby main.rb -a -d ../applications/${app} &> ${app}_run.log
   echo "Finish app ${app}"
 }
 

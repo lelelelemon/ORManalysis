@@ -242,13 +242,13 @@ BB 4
 	instructions:
 		 0: 
 		 1: GETFIELD %self->logger def_%v_4 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "PayPal operation " def_%v_5 
 		 3: request->[] def_%v_6 request[2.7,] 	 ARGS:Symbol,
-		 4: COPY TYPE_StringLiteral def_%v_7 
-		 5: COPY TYPE_StringLiteral def_%v_8 
-		 6: COPY TYPE_StringLiteral def_%v_9 
+		 4: COPY TYPE_StringLiteral " failed. Community: " def_%v_7 
+		 5: COPY TYPE_StringLiteral ", transaction: " def_%v_8 
+		 6: COPY TYPE_StringLiteral ", error code: " def_%v_9 
 		 7: err_response->[] def_%v_10 err_response[2.8,] 	 ARGS:Symbol,
-		 8: COPY TYPE_StringLiteral def_%v_11 
+		 8: COPY TYPE_StringLiteral ", msg: " def_%v_11 
 		 9: err_response->[] def_%v_12 err_response[4.7,2.8,] 	 ARGS:Symbol,
 		 10: BUILDSTRING def_%v_13 %v_5[4.2,] %v_6[4.3,] %v_7[4.4,] cid[2.5,] %v_8[4.5,] txid[2.6,] %v_9[4.6,] %v_10[4.7,] %v_11[4.8,] %v_12[4.9,] 
 		 11: %v_4->warn def_%v_14 %v_4[4.1,] %v_13[4.10,] 	 ARGS:%v_13,
@@ -265,10 +265,10 @@ BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_17 
+		 0: COPY TYPE_StringLiteral "Failed response from Paypal. Error code: " def_%v_17 
 		 1: 
 		 2: err_response->[] def_%v_18 err_response[2.8,] 	 ARGS:Symbol,
-		 3: COPY TYPE_StringLiteral def_%v_19 
+		 3: COPY TYPE_StringLiteral ", msg: " def_%v_19 
 		 4: err_response->[] def_%v_20 err_response[6.2,2.8,] 	 ARGS:Symbol,
 		 5: BUILDSTRING def_%v_21 %v_17[6.0,] %v_18[6.2,] %v_19[6.3,] %v_20[6.4,] 
 		 6: err_response->[] def_%v_22 err_response[6.2,6.4,2.8,] 	 ARGS:Symbol,

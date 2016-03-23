@@ -5,7 +5,7 @@ require 'faker'
 headless = Headless.new
 headless.start
 
-server_file = File.open("/home/congy/ruby_source/lobsters/server.log", "r")
+server_file = File.open("/home/congy/ruby_source/lobsters_backup/server.log", "r")
 i = 0
 email_file = File.open("user_email.txt","r")
 email_map = Hash.new

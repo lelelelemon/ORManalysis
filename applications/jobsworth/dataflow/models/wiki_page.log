@@ -142,7 +142,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->attributes def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "locked_by" def_%v_4 
 		 8: %v_3->[] def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: %v_5->nil? def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: BRANCH %v_6[2.9,] 
@@ -158,7 +158,7 @@ BB 4
 	instructions:
 		 0: (User) def_%v_8 
 		 1: %self->attributes def_%v_9 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_StringLiteral "locked_by" def_%v_10 
 		 3: %v_9->[] def_%v_11 %v_9[4.1,] %v_10[4.2,] 	 ARGS:%v_10,
 		 4: %v_8->find def_%v_12 %v_8[4.0,] %v_11[4.3,] 	 ARGS:%v_11,
 		 5: RETURN %v_12[4.4,] %self[4.1,2.0,] 
@@ -201,11 +201,11 @@ BB 5
 	datadep: 
 	instructions:
 		 0: (WikiPage) def_%v_6 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "wiki_pages.*" def_%v_7 
 		 2: %v_6->select def_%v_8 %v_6[5.0,] %v_7[5.1,] 	 ARGS:%v_7,
-		 3: COPY TYPE_StringLiteral def_%v_9 
+		 3: COPY TYPE_StringLiteral "LEFT OUTER JOIN wiki_references w_r ON wiki_pages.id = w_r.wiki_page_id" def_%v_9 
 		 4: %v_8->joins def_%v_10 %v_8[5.2,] %v_9[5.3,] 	 ARGS:%v_9,
-		 5: COPY TYPE_StringLiteral def_%v_11 
+		 5: COPY TYPE_StringLiteral "w_r.referenced_name = ? AND wiki_pages.company_id = ?" def_%v_11 
 		 6: %self->name def_%v_12 %self[2.0,] 	 ARGS:
 		 7: %self->company_id def_%v_13 %self[5.6,2.0,] 	 ARGS:
 		 8: %v_10->where def_%v_14 %v_10[5.4,] %v_11[5.5,] %v_12[5.6,] %v_13[5.7,] 	 ARGS:%v_11,%v_12,%v_13,
@@ -236,13 +236,13 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "<a href="/wiki/show/" def_%v_3 
 		 7: (URI) def_%v_4 
 		 8: %self->name def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_4->encode def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "">" def_%v_7 
 		 11: %self->name def_%v_8 %self[2.0,2.8,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_9 
+		 12: COPY TYPE_StringLiteral "</a>" def_%v_9 
 		 13: BUILDSTRING def_%v_10 %v_3[2.6,] %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] %v_9[2.12,] 
 		 14: %v_10->html_safe def_%v_11 %v_10[2.13,] 	 ARGS:
 		 15: RETURN %v_11[2.14,] %self[2.0,2.8,2.11,] 

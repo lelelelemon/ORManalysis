@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_value 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "%.0f" def_%v_3 
 		 8: value->* def_%v_4 value[2.5,] 	 ARGS:value,
 		 9: %self->nb_recently_used_accounts def_%v_5 %self[2.0,] 	 ARGS:
 		 10: %v_4->/ def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
@@ -40,7 +40,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(*) AS cnt FROM users" def_%v_3 
 		 7: %self->count def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -63,7 +63,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(*) AS cnt FROM accounts" def_%v_3 
 		 7: %self->count def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -86,7 +86,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(*) AS cnt FROM accounts WHERE current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive'" def_%v_3 
 		 7: %self->count def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -109,7 +109,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(*) AS cnt FROM accounts WHERE confirmed_at IS NULL" def_%v_3 
 		 7: %self->count def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -132,7 +132,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(*) AS cnt FROM accounts WHERE role='inactive'" def_%v_3 
 		 7: %self->count def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -155,7 +155,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT IFNULL(ROUND(AVG(TO_DAYS(CURRENT_TIMESTAMP) - TO_DAYS(current_sign_in_at)), 1), 0) AS avg, IFNULL(ROUND(SQRT(VAR_POP(TO_DAYS(CURRENT_TIMESTAMP) - TO_DAYS(current_sign_in_at))), 1), 0) AS stddev FROM accounts WHERE current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive'" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: COPY TYPE_PASS def_rows %v_4[2.7,] 
 		 9: 
@@ -181,7 +181,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(DISTINCT(accounts.user_id)) AS cnt, content_type FROM nodes JOIN accounts ON nodes.user_id = accounts.user_id WHERE current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive' GROUP BY content_type" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -204,7 +204,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(DISTINCT(accounts.user_id)) AS cnt FROM comments JOIN accounts ON comments.user_id = accounts.user_id WHERE current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive';" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -227,7 +227,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(DISTINCT(accounts.user_id)) AS cnt FROM taggings JOIN accounts ON taggings.user_id = accounts.user_id WHERE current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive';" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -251,9 +251,9 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_field 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 7: COPY TYPE_StringLiteral "SELECT COUNT(*) AS cnt FROM users JOIN accounts ON users.id = accounts.user_id WHERE " def_%v_3 
+		 8: COPY TYPE_StringLiteral " IS NOT NULL AND " def_%v_4 
+		 9: COPY TYPE_StringLiteral " != '' AND current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY)" def_%v_5 
 		 10: BUILDSTRING def_%v_6 %v_3[2.7,] field[2.5,] %v_4[2.8,] field[2.5,] %v_5[2.9,] 
 		 11: %self->count def_%v_7 %self[2.0,] %v_6[2.10,] 	 ARGS:%v_6,
 		 12: RETURN %v_7[2.11,] %self[2.0,2.11,] 
@@ -278,11 +278,11 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_field 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "SELECT COUNT(*) AS cnt FROM accounts WHERE " def_%v_3 
 		 8: (Account) def_%v_4 
 		 9: HASH- def_%v_5 field[2.5,] 
 		 10: %v_4->bitfield_sql def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
-		 11: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral " AND current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive'" def_%v_7 
 		 12: BUILDSTRING def_%v_8 %v_3[2.7,] %v_6[2.10,] %v_7[2.11,] 
 		 13: %self->count def_%v_9 %self[2.0,] %v_8[2.12,] 	 ARGS:%v_8,
 		 14: RETURN %v_9[2.13,] %self[2.0,2.13,] 
@@ -311,8 +311,8 @@ BB 2
 		 8: %v_3->bitfield_sql def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: COPY TYPE_PASS def_no_contents_sql %v_5[2.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_6 
-		 12: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral "SELECT COUNT(*) AS cnt FROM accounts WHERE " def_%v_6 
+		 12: COPY TYPE_StringLiteral " AND current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive'" def_%v_7 
 		 13: BUILDSTRING def_%v_8 %v_6[2.11,] %v_5[2.8,] %v_7[2.12,] 
 		 14: %self->count def_%v_9 %self[2.0,] %v_8[2.13,] 	 ARGS:%v_8,
 		 15: RETURN %v_9[2.14,] %self[2.0,2.14,] 
@@ -338,7 +338,7 @@ BB 2
 		 5: RECEIVEARG def_content_type 
 		 6: 
 		 7: content_type->tableize def_%v_3 content_type[2.5,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "_on_home" def_%v_4 
 		 9: BUILDSTRING def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: %v_5->to_sym def_%v_6 %v_5[2.9,] 	 ARGS:
 		 11: %self->preferences def_%v_7 %self[2.0,] %v_6[2.10,] 	 ARGS:%v_6,
@@ -397,7 +397,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT SIGN(karma) AS sign, FLOOR(LOG10(ABS(karma)+1E-99)) as k, COUNT(*) AS cnt FROM accounts WHERE karma IS NOT NULL AND current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive' GROUP BY sign,k ORDER BY sign ASC, sign*k ASC" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -420,7 +420,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT TRIM(stylesheet) AS stylesheet, COUNT(*) AS cnt FROM accounts WHERE current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive' GROUP BY stylesheet HAVING cnt > 2 ORDER BY cnt DESC" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -443,7 +443,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT YEAR(accounts.created_at) AS year, COUNT(*) AS cnt FROM accounts WHERE current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY) AND role<>'inactive' GROUP BY year ORDER BY year ASC" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -466,7 +466,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT user_id DIV 2500 AS slot, COUNT(*) AS cnt, (role='inactive') AS inactive, IFNULL(current_sign_in_at > DATE_SUB(CURDATE(),INTERVAL 90 DAY),0) AS recent FROM accounts GROUP BY slot,inactive,recent ORDER BY slot ASC, inactive ASC, recent ASC" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3

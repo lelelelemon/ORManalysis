@@ -173,7 +173,21 @@ def handle_single_dataflow_file(item, class_name)
 				$cur_bb = Basic_block.new(line.split(' ')[1].to_s)
 				$cur_cfg.addBB($cur_bb)
 			else
-				attrs = line.split(" ")
+				#attrs = line.split(" ")
+				attrs = Array.new 
+				if line.include?('"') #deal with const
+					ind = line.index('"')
+					rind = line.rindex('"')
+					part1 = line[0..ind-1].split(" ")
+					part2 = line[ind..rind]
+					part3 = line[rind+1..-1].split(" ")
+					attrs += part1
+					attrs.push(part2)
+					attrs.push(part3)
+				else
+					attrs = line.split(" ")
+				end
+
 				i = find_first_nonempty_ele(attrs)
 				if i!= -1
 					attr = attrs[i]
@@ -199,9 +213,15 @@ def handle_single_dataflow_file(item, class_name)
 							#instruction number
 							index = 0
 							cur_instr = Instruction.new
+							const_string =  nil
 							attrs.each do |single_attr|
 								if index > i
-									if single_attr.include?("->")
+									if single_attr.include?('"')
+										const_string = single_attr[1..-2]
+										if cur_instr.instance_of?Copy_instr
+											cur_instr.const_string = const_string
+										end
+									elsif single_attr.include?("->")
 										fc_array = single_attr.split("->")
 										#fc_array[0]: caller
 										#fc_array[1]: function_name
@@ -261,7 +281,7 @@ def handle_single_dataflow_file(item, class_name)
 													#if dep_instr != nil
 													#XXX:Here is some non-beautiful trick, attrassign don't use the class instance, it only assigns. So avoid defining the use of class instance
 													#if cur_instr.instance_of?AttrAssign_instr
-														#if v_name.include?('%')==true
+														#if v_name.include?('%')==true	
 															cur_instr.addDatadep(dep, v_name)
 														#end
 													#else

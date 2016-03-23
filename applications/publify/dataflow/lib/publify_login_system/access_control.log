@@ -402,13 +402,13 @@ BB 4
 	instructions:
 		 0: %v_4->root def_%v_5 %v_4[3.0,2.7,] 	 ARGS:
 		 1: %v_5->to_s def_%v_6 %v_5[4.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_7 
-		 3: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "vendor" def_%v_7 
+		 3: COPY TYPE_StringLiteral "plugins" def_%v_8 
 		 4: %v_3->join def_%v_9 %v_3[2.6,] %v_6[4.1,] %v_7[4.2,] %v_8[4.3,] 	 ARGS:%v_6,%v_7,%v_8,
 		 5: COPY TYPE_PASS def_plugins_root %v_9[4.4,] 
 		 6: 
 		 7: (Dir) def_%v_10 
-		 8: COPY TYPE_StringLiteral def_%v_11 
+		 8: COPY TYPE_StringLiteral "/publify_plugin_*" def_%v_11 
 		 9: BUILDSTRING def_%v_12 %v_9[4.4,] %v_11[4.8,] 
 		 10: %v_10->glob def_%v_13 %v_10[4.7,] %v_12[4.9,] 	 ARGS:%v_12,
 		 11: %v_13->select def_%v_14 %v_13[4.10,] %self[2.0,] 	 ARGS:%v_13,
@@ -434,11 +434,11 @@ BB 3
 		 1: (File) def_%cl_1_3 
 		 2: (File) def_%cl_1_4 
 		 3: %self->plugin_admin_controller_path def_%cl_1_5 %self[2.0,] file[2.2,] 	 ARGS:file,
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 4: COPY TYPE_StringLiteral "/publify_plugin_" def_%cl_1_6 
 		 5: BUILDSTRING def_%cl_1_7 plugins_root[] %cl_1_6[3.4,] 
 		 6: file->split def_%cl_1_8 file[2.2,] %cl_1_7[3.5,] 	 ARGS:%cl_1_7,
 		 7: %cl_1_8->second def_%cl_1_9 %cl_1_8[3.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%cl_1_10 
+		 8: COPY TYPE_StringLiteral "_controller.rb" def_%cl_1_10 
 		 9: %cl_1_9->+ def_%cl_1_11 %cl_1_9[3.7,] %cl_1_10[3.8,] 	 ARGS:%cl_1_10,
 		 10: %cl_1_4->join def_%cl_1_12 %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_11[3.9,] 	 ARGS:%cl_1_5,%cl_1_11,
 		 11: %cl_1_3->readable? def_%cl_1_13 %cl_1_3[3.1,] %cl_1_12[3.10,] 	 ARGS:%cl_1_12,
@@ -539,8 +539,8 @@ BB 2
 		 5: RECEIVEARG def_plugin 
 		 6: 
 		 7: %self->get_plugin_controller_name def_%v_3 %self[2.0,] plugin[2.5,] 	 ARGS:plugin,
-		 8: COPY TYPE_StringLiteral def_%v_4 
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "_" def_%v_4 
+		 9: COPY TYPE_StringLiteral " " def_%v_5 
 		 10: %v_3->tr def_%v_6 %v_3[2.7,] %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_4,%v_5,
 		 11: %v_6->capitalize def_%v_7 %v_6[2.10,] 	 ARGS:
 		 12: RETURN %v_7[2.11,] %self[2.0,2.7,] 
@@ -566,7 +566,7 @@ BB 2
 		 5: RECEIVEARG def_plugin 
 		 6: 
 		 7: %self->plugin_root def_%v_3 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "/publify_plugin_" def_%v_4 
 		 9: BUILDSTRING def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: plugin->split def_%v_6 plugin[2.5,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: %v_6->second def_%v_7 %v_6[2.10,] 	 ARGS:
@@ -771,8 +771,8 @@ BB 4
 	instructions:
 		 0: %v_4->root def_%v_5 %v_4[3.0,2.7,] 	 ARGS:
 		 1: %v_5->to_s def_%v_6 %v_5[4.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_7 
-		 3: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "vendor" def_%v_7 
+		 3: COPY TYPE_StringLiteral "plugins" def_%v_8 
 		 4: %v_3->join def_%v_9 %v_3[2.6,] %v_6[4.1,] %v_7[4.2,] %v_8[4.3,] 	 ARGS:%v_6,%v_7,%v_8,
 		 5: RETURN %v_9[4.4,] %self[2.0,] 
 BB 5
@@ -798,10 +798,10 @@ BB 2
 		 6: 
 		 7: (File) def_%v_3 
 		 8: BUILDSTRING def_%v_4 plugin[2.5,] 
-		 9: COPY TYPE_StringLiteral def_%v_5 
-		 10: COPY TYPE_StringLiteral def_%v_6 
-		 11: COPY TYPE_StringLiteral def_%v_7 
-		 12: COPY TYPE_StringLiteral def_%v_8 
+		 9: COPY TYPE_StringLiteral "lib" def_%v_5 
+		 10: COPY TYPE_StringLiteral "app" def_%v_6 
+		 11: COPY TYPE_StringLiteral "controllers" def_%v_7 
+		 12: COPY TYPE_StringLiteral "admin" def_%v_8 
 		 13: %v_3->join def_%v_9 %v_3[2.7,] %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] %v_7[2.11,] %v_8[2.12,] 	 ARGS:%v_4,%v_5,%v_6,%v_7,%v_8,
 		 14: RETURN %v_9[2.13,] %self[2.0,] 
 BB 3
@@ -1208,13 +1208,13 @@ BB 2
 		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->downcase def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: COPY TYPE_Regexp def_%v_6 
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "" def_%v_7 
 		 11: %v_5->gsub def_%v_8 %v_5[2.8,] %v_7[2.10,] 	 ARGS:%v_6,%v_7,
 		 12: COPY TYPE_Regexp def_%v_9 
-		 13: COPY TYPE_StringLiteral def_%v_10 
+		 13: COPY TYPE_StringLiteral "" def_%v_10 
 		 14: %v_8->gsub def_%v_11 %v_8[2.11,] %v_10[2.13,] 	 ARGS:%v_9,%v_10,
 		 15: COPY TYPE_Regexp def_%v_12 
-		 16: COPY TYPE_StringLiteral def_%v_13 
+		 16: COPY TYPE_StringLiteral "" def_%v_13 
 		 17: %v_11->gsub def_%v_14 %v_11[2.14,] %v_13[2.16,] 	 ARGS:%v_12,%v_13,
 		 18: RETURN %v_14[2.17,] %self[2.0,] 
 BB 3
@@ -1354,13 +1354,13 @@ BB 2
 		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->downcase def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: COPY TYPE_Regexp def_%v_6 
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "" def_%v_7 
 		 11: %v_5->gsub def_%v_8 %v_5[2.8,] %v_7[2.10,] 	 ARGS:%v_6,%v_7,
 		 12: COPY TYPE_Regexp def_%v_9 
-		 13: COPY TYPE_StringLiteral def_%v_10 
+		 13: COPY TYPE_StringLiteral "" def_%v_10 
 		 14: %v_8->gsub def_%v_11 %v_8[2.11,] %v_10[2.13,] 	 ARGS:%v_9,%v_10,
 		 15: COPY TYPE_Regexp def_%v_12 
-		 16: COPY TYPE_StringLiteral def_%v_13 
+		 16: COPY TYPE_StringLiteral "" def_%v_13 
 		 17: %v_11->gsub def_%v_14 %v_11[2.14,] %v_13[2.16,] 	 ARGS:%v_12,%v_13,
 		 18: RETURN %v_14[2.17,] %self[2.0,] 
 BB 3

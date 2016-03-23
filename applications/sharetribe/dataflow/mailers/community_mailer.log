@@ -148,17 +148,17 @@ BB 11
 		 0: GLOBALVAR $! def_%cl_3_14 
 		 1: COPY TYPE_PASS def_e %cl_3_14[11.0,] 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_3_15 
+		 3: COPY TYPE_StringLiteral "Error sending mail to " def_%cl_3_15 
 		 4: person->confirmed_notification_emails def_%cl_3_16 person[] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_3_17 
+		 5: COPY TYPE_StringLiteral " community updates: " def_%cl_3_17 
 		 6: e->message def_%cl_3_18 e[11.1,] 	 ARGS:
 		 7: BUILDSTRING def_%cl_3_19 %cl_3_15[11.3,] %cl_3_16[11.4,] %cl_3_17[11.5,] %cl_3_18[11.6,] 
 		 8: %self->puts def_%cl_3_20 %self[2.0,] %cl_3_19[11.7,] 	 ARGS:%cl_3_19,
 		 9: 
 		 10: (ApplicationHelper) def_%cl_3_21 
-		 11: COPY TYPE_StringLiteral def_%cl_3_22 
+		 11: COPY TYPE_StringLiteral "Error sending mail to " def_%cl_3_22 
 		 12: person->confirmed_notification_emails def_%cl_3_23 person[11.4,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_3_24 
+		 13: COPY TYPE_StringLiteral " community updates: " def_%cl_3_24 
 		 14: e->message def_%cl_3_25 e[11.1,11.6,] 	 ARGS:
 		 15: BUILDSTRING def_%cl_3_26 %cl_3_22[11.11,] %cl_3_23[11.12,] %cl_3_24[11.13,] %cl_3_25[11.14,] 
 		 16: e->class def_%cl_3_27 e[11.1,11.6,11.14,] 	 ARGS:
@@ -286,7 +286,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "timestamps.days_since" def_%cl_1_3 
 		 2: GETFIELD %self->recipient def_%cl_1_4 %self[2.0,] 
 		 3: %cl_1_4->last_community_updates_at def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:
 		 4: %self->time_difference_in_days def_%cl_1_6 %self[2.0,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
@@ -309,7 +309,7 @@ BB 3
 		 21: ATTRASSIGN %cl_1_14->[] %cl_1_16[3.20,] 
 		 22: 
 		 23: GETFIELD %self->url_params def_%cl_1_17 %self[3.4,3.6,3.10,2.0,] 
-		 24: COPY TYPE_StringLiteral def_%cl_1_18 
+		 24: COPY TYPE_StringLiteral "weeklymail" def_%cl_1_18 
 		 25: ATTRASSIGN %cl_1_17->[] %cl_1_18[3.24,] 
 		 26: 
 		 27: GETFIELD %self->url_params def_%cl_1_19 %self[3.4,3.6,3.10,2.0,] 
@@ -324,7 +324,7 @@ BB 3
 		 36: %cl_1_26->> def_%cl_1_27 %cl_1_26[3.35,] 	 ARGS:Fixnum,
 		 37: ATTRASSIGN %self->show_listing_shape_label %cl_1_27[3.36,] 
 		 38: 
-		 39: COPY TYPE_StringLiteral def_%cl_1_28 
+		 39: COPY TYPE_StringLiteral "emails.community_updates.title_link_text" def_%cl_1_28 
 		 40: GETFIELD %self->community def_%cl_1_29 %self[3.4,3.6,3.30,2.0,] 
 		 41: GETFIELD %self->recipient def_%cl_1_30 %self[3.4,3.6,3.30,2.0,] 
 		 42: %cl_1_30->locale def_%cl_1_31 %cl_1_30[3.41,] 	 ARGS:
@@ -333,7 +333,7 @@ BB 3
 		 45: %self->t def_%cl_1_34 %self[3.4,3.6,3.7,3.10,3.30,3.37,2.0,] %cl_1_28[3.39,] %cl_1_33[3.44,] 	 ARGS:%cl_1_28,%cl_1_33,
 		 46: ATTRASSIGN %self->title_link_text %cl_1_34[3.45,] 
 		 47: 
-		 48: COPY TYPE_StringLiteral def_%cl_1_35 
+		 48: COPY TYPE_StringLiteral "emails.community_updates.update_mail_title" def_%cl_1_35 
 		 49: GETFIELD %self->title_link_text def_%cl_1_36 %self[3.4,3.6,3.30,3.45,3.46,2.0,] 
 		 50: HASH-title_link- def_%cl_1_37 %cl_1_36[3.49,] 
 		 51: %self->t def_%cl_1_38 %self[3.4,3.6,3.7,3.10,3.30,3.37,3.45,3.46,2.0,] %cl_1_35[3.48,] %cl_1_37[3.50,] 	 ARGS:%cl_1_35,%cl_1_37,
@@ -341,7 +341,7 @@ BB 3
 		 53: 
 		 54: (APP_CONFIG) def_%cl_1_39 
 		 55: %cl_1_39->mail_delivery_method def_%cl_1_40 %cl_1_39[3.54,] 	 ARGS:
-		 56: COPY TYPE_StringLiteral def_%cl_1_41 
+		 56: COPY TYPE_StringLiteral "postmark" def_%cl_1_41 
 		 57: %cl_1_40->== def_%cl_1_42 %cl_1_40[3.55,] %cl_1_41[3.56,] 	 ARGS:%cl_1_41,
 		 58: BRANCH %cl_1_42[3.57,] 
 BB 4
@@ -429,7 +429,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral "email_blank_layout" def_%cl_3_3 
 		 2: HASH-layout- def_%cl_3_4 %cl_3_3[3.1,] 
 		 3: %self->render def_%cl_3_5 %self[2.0,] %cl_3_4[3.2,] 	 ARGS:%cl_3_4,
 		 4: RETURN %cl_3_5[3.3,] %self[3.3,2.0,] 
@@ -478,7 +478,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->logger def_%v_7 %self[2.0,2.9,2.11,2.13,2.15,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "Trying to send community updates to a person who is not member of the given community. Skipping." def_%v_8 
 		 3: %v_7->info def_%v_9 %v_7[4.1,] %v_8[4.2,] 	 ARGS:%v_8,
 		 4: 
 		 5: RETURN %self[4.1,2.0,2.9,2.11,2.13,2.15,] 

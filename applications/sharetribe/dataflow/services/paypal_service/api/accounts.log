@@ -347,9 +347,9 @@ BB 15
 	instructions:
 		 0: 
 		 1: GETFIELD %self->logger def_%v_9 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%v_10 
-		 3: COPY TYPE_StringLiteral def_%v_11 
-		 4: COPY TYPE_StringLiteral def_%v_12 
+		 2: COPY TYPE_StringLiteral "Failed to connect paypal account for cid: " def_%v_10 
+		 3: COPY TYPE_StringLiteral ", pid: " def_%v_11 
+		 4: COPY TYPE_StringLiteral ", onboarding_params: " def_%v_12 
 		 5: body->[] def_%v_13 body[8.0,] 	 ARGS:Symbol,
 		 6: BUILDSTRING def_%v_14 %v_10[15.2,] community_id[2.5,] %v_11[15.3,] person_id[5.0,4.0,] %v_12[15.4,] %v_13[15.5,] 
 		 7: %v_9->warn def_%v_15 %v_9[15.1,] %v_14[15.6,] 	 ARGS:%v_14,
@@ -366,7 +366,7 @@ BB 17
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_18 
+		 0: COPY TYPE_StringLiteral "Invalid onboarding parameters" def_%v_18 
 		 1: body->[] def_%v_19 body[8.0,] 	 ARGS:Symbol,
 		 2: %v_17->new def_%v_20 %v_17[16.0,15.10,] %v_18[17.0,] %v_19[17.1,] 	 ARGS:%v_18,%v_19,
 		 3: RETURN %v_20[17.2,] %self[2.0,] 
@@ -484,7 +484,7 @@ BB 3
 		 3: personal_data->[] def_%cl_2_5 personal_data[3.1,3.2,2.2,] 	 ARGS:Symbol,
 		 4: body->[] def_%cl_2_6 body[] 	 ARGS:Symbol,
 		 5: access_token->[] def_%cl_2_7 access_token[] 	 ARGS:Symbol,
-		 6: COPY TYPE_StringLiteral def_%cl_2_8 
+		 6: COPY TYPE_StringLiteral "," def_%cl_2_8 
 		 7: %cl_2_7->join def_%cl_2_9 %cl_2_7[3.5,] %cl_2_8[3.6,] 	 ARGS:%cl_2_8,
 		 8: HASH-email-payer_id-order_permission_request_token-order_permission_verification_code-order_permission_scope-active- def_%cl_2_10 %cl_2_4[3.2,] %cl_2_5[3.3,] order_permission_request_token[] %cl_2_6[3.4,] %cl_2_9[3.7,] 
 		 9: HASH-community_id-person_id-order_permission_onboarding_id-order_permission_request_token-payer_id-opts- def_%cl_2_11 community_id[] person_id[] order_permission_request_token[] %cl_2_3[3.1,] %cl_2_10[3.8,] 
@@ -1343,8 +1343,8 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->logger def_%cl_1_3 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 2: COPY TYPE_StringLiteral "PayPal operation failed: " def_%cl_1_4 
+		 3: COPY TYPE_StringLiteral ". Response: " def_%cl_1_5 
 		 4: BUILDSTRING def_%cl_1_6 %cl_1_4[3.2,] req[] %cl_1_5[3.3,] err_response[2.2,] 
 		 5: %cl_1_3->warn def_%cl_1_7 %cl_1_3[3.1,] %cl_1_6[3.4,] 	 ARGS:%cl_1_6,
 		 6: RETURN %cl_1_7[3.5,] %self[2.0,] 

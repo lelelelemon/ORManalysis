@@ -52,7 +52,7 @@ BB 5
 		 5: 
 		 6: GETFIELD %self->folders def_%v_18 %self[4.2,4.8,2.0,] 
 		 7: %v_18->restricted def_%v_19 %v_18[5.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_20 
+		 8: COPY TYPE_StringLiteral "distinct document_folders.id" def_%v_20 
 		 9: %v_19->count def_%v_21 %v_19[5.7,] %v_20[5.8,] 	 ARGS:%v_20,
 		 10: ATTRASSIGN %self->restricted_folder_count %v_21[5.9,] 
 		 11: 
@@ -154,7 +154,7 @@ BB 19
 	outgoing: 20 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_43 
+		 0: COPY TYPE_StringLiteral "detail" def_%v_43 
 		 1: COPY TYPE_PASS def_%v_42 %v_43[19.0,] 
 BB 20
 	outgoing: 21 
@@ -190,7 +190,7 @@ BB 4
 	outgoing: 5 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_5 
+		 0: COPY TYPE_StringLiteral ".heading" def_%cl_1_5 
 		 1: %self->t def_%cl_1_6 %self[2.0,] %cl_1_5[4.0,] 	 ARGS:%cl_1_5,
 		 2: COPY TYPE_PASS def_%cl_1_4 %cl_1_6[4.1,] 
 BB 5
@@ -219,10 +219,10 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_11 
+		 1: COPY TYPE_StringLiteral "fa fa-lock" def_%cl_1_11 
 		 2: %self->icon def_%cl_1_12 %self[5.0,2.0,] %cl_1_11[8.1,] 	 ARGS:%cl_1_11,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_13 
+		 4: COPY TYPE_StringLiteral "documents.restricted_folder.alert_html" def_%cl_1_13 
 		 5: GETFIELD %self->parent_folder def_%cl_1_14 %self[8.2,2.0,] 
 		 6: %cl_1_14->all_groups def_%cl_1_15 %cl_1_14[8.5,] 	 ARGS:
 		 7: %cl_1_15->map def_%cl_1_16 %cl_1_15[8.6,] %self[8.2,5.0,2.0,] 	 ARGS:%cl_1_15,
@@ -260,7 +260,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 8: COPY TYPE_StringLiteral def_%cl_1_17 
+		 8: COPY TYPE_StringLiteral ", " def_%cl_1_17 
 		 9: %cl_1_16->join def_%cl_1_18 %cl_1_16[8.7,] %cl_1_17[8.8,] 	 ARGS:%cl_1_17,
 		 10: %cl_1_18->html_safe def_%cl_1_19 %cl_1_18[8.9,] 	 ARGS:
 		 11: HASH-groups- def_%cl_1_20 %cl_1_19[8.10,] 
@@ -291,10 +291,10 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_25 
+		 1: COPY TYPE_StringLiteral "fa fa-eye-slash" def_%cl_1_25 
 		 2: %self->icon def_%cl_1_26 %self[5.0,2.0,] %cl_1_25[12.1,] 	 ARGS:%cl_1_25,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_27 
+		 4: COPY TYPE_StringLiteral "documents.hidden_folder.alert" def_%cl_1_27 
 		 5: %self->t def_%cl_1_28 %self[12.2,5.0,2.0,] %cl_1_27[12.4,] 	 ARGS:%cl_1_27,
 		 6: 
 BB 13
@@ -310,10 +310,10 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_31 
+		 1: COPY TYPE_StringLiteral "fa fa-eye-slash" def_%cl_1_31 
 		 2: %self->icon def_%cl_1_32 %self[5.0,2.0,] %cl_1_31[14.1,] 	 ARGS:%cl_1_31,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_33 
+		 4: COPY TYPE_StringLiteral "documents.hidden_folder_due_to_parent.alert" def_%cl_1_33 
 		 5: %self->t def_%cl_1_34 %self[14.2,5.0,2.0,] %cl_1_33[14.4,] 	 ARGS:%cl_1_33,
 		 6: 
 BB 15
@@ -348,7 +348,7 @@ BB 20
 	outgoing: 21 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_37 
+		 0: COPY TYPE_StringLiteral ".intro" def_%cl_1_37 
 		 1: %self->t def_%cl_1_38 %self[5.0,2.0,] %cl_1_37[20.0,] 	 ARGS:%cl_1_37,
 		 2: COPY TYPE_PASS def_%cl_1_36 %cl_1_38[20.1,] 
 BB 21
@@ -357,24 +357,24 @@ BB 21
 	instructions:
 		 0: 
 		 1: %self->params def_%cl_1_39 %self[5.0,2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_40 
+		 2: COPY TYPE_StringLiteral "detail" def_%cl_1_40 
 		 3: HASH-view- def_%cl_1_41 %cl_1_40[21.2,] 
 		 4: %cl_1_39->merge def_%cl_1_42 %cl_1_39[21.1,] %cl_1_41[21.3,] 	 ARGS:%cl_1_41,
 		 5: GETFIELD %self->view def_%cl_1_43 %self[21.1,2.0,] 
-		 6: COPY TYPE_StringLiteral def_%cl_1_44 
+		 6: COPY TYPE_StringLiteral "detail" def_%cl_1_44 
 		 7: %cl_1_43->== def_%cl_1_45 %cl_1_43[21.5,] %cl_1_44[21.6,] 	 ARGS:%cl_1_44,
 		 8: BRANCH %cl_1_45[21.7,] 
 BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_46 
+		 0: COPY TYPE_StringLiteral "btn btn-primary" def_%cl_1_46 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_47 
+		 0: COPY TYPE_StringLiteral "btn btn-default" def_%cl_1_47 
 		 1: COPY TYPE_PASS def_%cl_1_46 %cl_1_47[23.0,] 
 BB 24
 	outgoing: 25 26 47 
@@ -400,7 +400,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral "fa fa-bars" def_%cl_3_3 
 		 2: %self->icon def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 ARGS:%cl_3_3,
 		 3: RETURN %cl_3_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -417,24 +417,24 @@ BB 6
 CLOSURE END: 
 		 2: 
 		 3: %self->params def_%cl_1_50 %self[24.1,5.0,2.0,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_51 
+		 4: COPY TYPE_StringLiteral "thumbnail" def_%cl_1_51 
 		 5: HASH-view- def_%cl_1_52 %cl_1_51[24.4,] 
 		 6: %cl_1_50->merge def_%cl_1_53 %cl_1_50[24.3,] %cl_1_52[24.5,] 	 ARGS:%cl_1_52,
 		 7: GETFIELD %self->view def_%cl_1_54 %self[24.1,24.3,2.0,] 
-		 8: COPY TYPE_StringLiteral def_%cl_1_55 
+		 8: COPY TYPE_StringLiteral "thumbnail" def_%cl_1_55 
 		 9: %cl_1_54->== def_%cl_1_56 %cl_1_54[24.7,] %cl_1_55[24.8,] 	 ARGS:%cl_1_55,
 		 10: BRANCH %cl_1_56[24.9,] 
 BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_57 
+		 0: COPY TYPE_StringLiteral "btn btn-primary" def_%cl_1_57 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_58 
+		 0: COPY TYPE_StringLiteral "btn btn-default" def_%cl_1_58 
 		 1: COPY TYPE_PASS def_%cl_1_57 %cl_1_58[26.0,] 
 BB 27
 	outgoing: 28 29 47 
@@ -460,7 +460,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_3 
+		 1: COPY TYPE_StringLiteral "fa fa-th-large" def_%cl_4_3 
 		 2: %self->icon def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 ARGS:%cl_4_3,
 		 3: RETURN %cl_4_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -484,8 +484,8 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_63 
-		 2: COPY TYPE_StringLiteral def_%cl_1_64 
+		 1: COPY TYPE_StringLiteral "get" def_%cl_1_63 
+		 2: COPY TYPE_StringLiteral "document-visibility" def_%cl_1_64 
 		 3: HASH-method-id- def_%cl_1_65 %cl_1_63[28.1,] %cl_1_64[28.2,] 
 		 4: %self->form_tag def_%cl_1_66 %self[5.0,2.0,] %cl_1_65[28.3,] %self[5.0,2.0,] 	 ARGS:Nil,%cl_1_65,%self,
 CLOSURE BEGIN: %self[5.0,2.0,] 
@@ -506,7 +506,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "folder_id" def_%cl_5_3 
 		 2: %self->params def_%cl_5_4 %self[2.0,] 	 ARGS:
 		 3: %cl_5_4->[] def_%cl_5_5 %cl_5_4[3.2,] 	 ARGS:Symbol,
 		 4: %self->hidden_field_tag def_%cl_5_6 %self[3.2,2.0,] %cl_5_3[3.1,] %cl_5_5[3.3,] 	 ARGS:%cl_5_3,%cl_5_5,
@@ -520,11 +520,11 @@ BB 4
 	instructions:
 		 0: 
 		 1: GETFIELD %self->show_hidden_folders def_%cl_5_9 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_5_10 
+		 2: COPY TYPE_StringLiteral "simple" def_%cl_5_10 
 		 3: HASH-class- def_%cl_5_11 %cl_5_10[4.2,] 
 		 4: %self->check_box_tag def_%cl_5_12 %self[2.0,] %cl_5_9[4.1,] %cl_5_11[4.3,] 	 ARGS:Symbol,Boolean,%cl_5_9,%cl_5_11,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_5_13 
+		 6: COPY TYPE_StringLiteral "documents.index.hidden_folders.label" def_%cl_5_13 
 		 7: GETFIELD %self->hidden_folder_count def_%cl_5_14 %self[4.4,2.0,] 
 		 8: HASH-count- def_%cl_5_15 %cl_5_14[4.7,] 
 		 9: %self->t def_%cl_5_16 %self[4.4,2.0,] %cl_5_13[4.6,] %cl_5_15[4.8,] 	 ARGS:%cl_5_13,%cl_5_15,
@@ -549,11 +549,11 @@ BB 7
 	instructions:
 		 0: 
 		 1: GETFIELD %self->show_restricted_folders def_%cl_5_20 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_5_21 
+		 2: COPY TYPE_StringLiteral "simple" def_%cl_5_21 
 		 3: HASH-class- def_%cl_5_22 %cl_5_21[7.2,] 
 		 4: %self->check_box_tag def_%cl_5_23 %self[2.0,] %cl_5_20[7.1,] %cl_5_22[7.3,] 	 ARGS:Symbol,Boolean,%cl_5_20,%cl_5_22,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_5_24 
+		 6: COPY TYPE_StringLiteral "documents.index.restricted_folders.label" def_%cl_5_24 
 		 7: GETFIELD %self->restricted_folder_count def_%cl_5_25 %self[7.4,2.0,] 
 		 8: HASH-count- def_%cl_5_26 %cl_5_25[7.7,] 
 		 9: %self->t def_%cl_5_27 %self[7.4,2.0,] %cl_5_24[7.6,] %cl_5_26[7.8,] 	 ARGS:%cl_5_24,%cl_5_26,
@@ -613,7 +613,7 @@ BB 33
 	instructions:
 		 0: 
 		 1: GETFIELD %self->view def_%cl_1_71 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_72 
+		 2: COPY TYPE_StringLiteral "detail" def_%cl_1_72 
 		 3: %cl_1_71->== def_%cl_1_73 %cl_1_71[33.1,] %cl_1_72[33.2,] 	 ARGS:%cl_1_72,
 		 4: BRANCH %cl_1_73[33.3,] 
 BB 34
@@ -670,7 +670,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_7_3 
+		 1: COPY TYPE_StringLiteral "fa fa-folder-o" def_%cl_7_3 
 		 2: %self->icon def_%cl_7_4 %self[2.0,] %cl_7_3[3.1,] 	 ARGS:%cl_7_3,
 		 3: RETURN %cl_7_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -757,7 +757,7 @@ BB 4
 		 0: 
 		 1: document->preview def_%cl_9_5 document[] 	 ARGS:
 		 2: %cl_9_5->url def_%cl_9_6 %cl_9_5[4.1,] 	 ARGS:Symbol,
-		 3: COPY TYPE_StringLiteral def_%cl_9_7 
+		 3: COPY TYPE_StringLiteral "img-thumbnail" def_%cl_9_7 
 		 4: HASH-class- def_%cl_9_8 %cl_9_7[4.3,] 
 		 5: %self->image_tag def_%cl_9_9 %self[2.0,] %cl_9_6[4.2,] %cl_9_8[4.4,] 	 ARGS:%cl_9_6,%cl_9_8,
 		 6: 
@@ -815,7 +815,7 @@ BB 37
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_79 
+		 1: COPY TYPE_StringLiteral "none" def_%cl_1_79 
 		 2: %self->t def_%cl_1_80 %self[5.0,2.0,] %cl_1_79[37.1,] 	 ARGS:%cl_1_79,
 		 3: COPY TYPE_PASS def_%cl_1_74 %cl_1_80[37.2,] 
 BB 38
@@ -853,7 +853,7 @@ BB 42
 		 1: GETFIELD %self->parent_folder def_%cl_1_86 %self[2.0,] 
 		 2: HASH-folder- def_%cl_1_87 
 		 3: %self->edit_document_path def_%cl_1_88 %self[5.0,2.0,] %cl_1_86[42.1,] %cl_1_87[42.2,] 	 ARGS:%cl_1_86,%cl_1_87,
-		 4: COPY TYPE_StringLiteral def_%cl_1_89 
+		 4: COPY TYPE_StringLiteral "btn btn-info" def_%cl_1_89 
 		 5: HASH-class- def_%cl_1_90 %cl_1_89[42.4,] 
 		 6: %self->link_to def_%cl_1_91 %self[42.3,5.0,2.0,] %cl_1_88[42.3,] %cl_1_90[42.5,] %self[42.3,5.0,2.0,] 	 ARGS:%cl_1_88,%cl_1_90,%self,
 CLOSURE BEGIN: %self[42.3,5.0,2.0,] 
@@ -874,10 +874,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_10_3 
+		 1: COPY TYPE_StringLiteral "fa fa-pencil" def_%cl_10_3 
 		 2: %self->icon def_%cl_10_4 %self[2.0,] %cl_10_3[3.1,] 	 ARGS:%cl_10_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_10_5 
+		 4: COPY TYPE_StringLiteral ".edit_folder.button" def_%cl_10_5 
 		 5: %self->t def_%cl_10_6 %self[3.2,2.0,] %cl_10_5[3.4,] 	 ARGS:%cl_10_5,
 		 6: RETURN %cl_10_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -896,11 +896,11 @@ CLOSURE END:
 		 8: GETFIELD %self->parent_folder def_%cl_1_92 %self[42.3,42.6,2.0,] 
 		 9: HASH-folder- def_%cl_1_93 
 		 10: %self->document_path def_%cl_1_94 %self[42.3,42.6,5.0,2.0,] %cl_1_92[42.8,] %cl_1_93[42.9,] 	 ARGS:%cl_1_92,%cl_1_93,
-		 11: COPY TYPE_StringLiteral def_%cl_1_95 
-		 12: COPY TYPE_StringLiteral def_%cl_1_96 
+		 11: COPY TYPE_StringLiteral "delete" def_%cl_1_95 
+		 12: COPY TYPE_StringLiteral "documents.delete_folder.confirmation" def_%cl_1_96 
 		 13: %self->t def_%cl_1_97 %self[42.3,42.6,42.10,5.0,2.0,] %cl_1_96[42.12,] 	 ARGS:%cl_1_96,
 		 14: HASH-method-confirm- def_%cl_1_98 %cl_1_95[42.11,] %cl_1_97[42.13,] 
-		 15: COPY TYPE_StringLiteral def_%cl_1_99 
+		 15: COPY TYPE_StringLiteral "btn btn-delete" def_%cl_1_99 
 		 16: HASH-data-class- def_%cl_1_100 %cl_1_98[42.14,] %cl_1_99[42.15,] 
 		 17: %self->link_to def_%cl_1_101 %self[42.3,42.6,42.10,42.13,5.0,2.0,] %cl_1_94[42.10,] %cl_1_100[42.16,] %self[42.3,42.6,42.10,42.13,5.0,2.0,] 	 ARGS:%cl_1_94,%cl_1_100,%self,
 CLOSURE BEGIN: %self[42.3,42.6,42.10,42.13,5.0,2.0,] 
@@ -921,10 +921,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_11_3 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_11_3 
 		 2: %self->icon def_%cl_11_4 %self[2.0,] %cl_11_3[3.1,] 	 ARGS:%cl_11_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_11_5 
+		 4: COPY TYPE_StringLiteral ".delete_folder.button" def_%cl_11_5 
 		 5: %self->t def_%cl_11_6 %self[3.2,2.0,] %cl_11_5[3.4,] 	 ARGS:%cl_11_5,
 		 6: RETURN %cl_11_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -953,7 +953,7 @@ BB 44
 		 1: GETFIELD %self->parent_folder def_%cl_1_102 %self[2.0,] 
 		 2: HASH-folder-folder_id- def_%cl_1_103 %cl_1_102[44.1,] 
 		 3: %self->new_document_path def_%cl_1_104 %self[5.0,2.0,] %cl_1_103[44.2,] 	 ARGS:%cl_1_103,
-		 4: COPY TYPE_StringLiteral def_%cl_1_105 
+		 4: COPY TYPE_StringLiteral "btn btn-success" def_%cl_1_105 
 		 5: HASH-class- def_%cl_1_106 %cl_1_105[44.4,] 
 		 6: %self->link_to def_%cl_1_107 %self[44.3,5.0,2.0,] %cl_1_104[44.3,] %cl_1_106[44.5,] %self[44.3,5.0,2.0,] 	 ARGS:%cl_1_104,%cl_1_106,%self,
 CLOSURE BEGIN: %self[44.3,5.0,2.0,] 
@@ -974,10 +974,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_12_3 
+		 1: COPY TYPE_StringLiteral "fa fa-folder" def_%cl_12_3 
 		 2: %self->icon def_%cl_12_4 %self[2.0,] %cl_12_3[3.1,] 	 ARGS:%cl_12_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_12_5 
+		 4: COPY TYPE_StringLiteral ".new_folder.button" def_%cl_12_5 
 		 5: %self->t def_%cl_12_6 %self[3.2,2.0,] %cl_12_5[3.4,] 	 ARGS:%cl_12_5,
 		 6: RETURN %cl_12_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -996,7 +996,7 @@ CLOSURE END:
 		 8: GETFIELD %self->parent_folder def_%cl_1_108 %self[44.3,44.6,2.0,] 
 		 9: HASH-folder_id- def_%cl_1_109 %cl_1_108[44.8,] 
 		 10: %self->new_document_path def_%cl_1_110 %self[44.3,44.6,5.0,2.0,] %cl_1_109[44.9,] 	 ARGS:%cl_1_109,
-		 11: COPY TYPE_StringLiteral def_%cl_1_111 
+		 11: COPY TYPE_StringLiteral "btn btn-success" def_%cl_1_111 
 		 12: HASH-class- def_%cl_1_112 %cl_1_111[44.11,] 
 		 13: %self->link_to def_%cl_1_113 %self[44.3,44.6,44.10,5.0,2.0,] %cl_1_110[44.10,] %cl_1_112[44.12,] %self[44.3,44.6,44.10,5.0,2.0,] 	 ARGS:%cl_1_110,%cl_1_112,%self,
 CLOSURE BEGIN: %self[44.3,44.6,44.10,5.0,2.0,] 
@@ -1017,10 +1017,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_13_3 
+		 1: COPY TYPE_StringLiteral "fa fa-file" def_%cl_13_3 
 		 2: %self->icon def_%cl_13_4 %self[2.0,] %cl_13_3[3.1,] 	 ARGS:%cl_13_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_13_5 
+		 4: COPY TYPE_StringLiteral ".new_document.button" def_%cl_13_5 
 		 5: %self->t def_%cl_13_6 %self[3.2,2.0,] %cl_13_5[3.4,] 	 ARGS:%cl_13_5,
 		 6: RETURN %cl_13_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -1152,10 +1152,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_8 
+		 1: COPY TYPE_StringLiteral "fa fa-lock" def_%cl_1_8 
 		 2: %self->icon def_%cl_1_9 %self[3.3,2.0,] %cl_1_8[4.1,] 	 ARGS:%cl_1_8,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_10 
+		 4: COPY TYPE_StringLiteral "documents.restricted_document.alert_html" def_%cl_1_10 
 		 5: GETFIELD %self->document def_%cl_1_11 %self[4.2,2.0,] 
 		 6: %cl_1_11->parent_folder_groups def_%cl_1_12 %cl_1_11[4.5,] 	 ARGS:
 		 7: %cl_1_12->map def_%cl_1_13 %cl_1_12[4.6,] %self[4.2,3.3,2.0,] 	 ARGS:%cl_1_12,
@@ -1193,7 +1193,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 8: COPY TYPE_StringLiteral def_%cl_1_14 
+		 8: COPY TYPE_StringLiteral ", " def_%cl_1_14 
 		 9: %cl_1_13->join def_%cl_1_15 %cl_1_13[4.7,] %cl_1_14[4.8,] 	 ARGS:%cl_1_14,
 		 10: %cl_1_15->html_safe def_%cl_1_16 %cl_1_15[4.9,] 	 ARGS:
 		 11: HASH-groups- def_%cl_1_17 %cl_1_16[4.10,] 
@@ -1217,10 +1217,10 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_21 
+		 1: COPY TYPE_StringLiteral "fa fa-eye-slash" def_%cl_1_21 
 		 2: %self->icon def_%cl_1_22 %self[3.3,2.0,] %cl_1_21[7.1,] 	 ARGS:%cl_1_21,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_23 
+		 4: COPY TYPE_StringLiteral "documents.hidden_document.alert" def_%cl_1_23 
 		 5: %self->t def_%cl_1_24 %self[7.2,3.3,2.0,] %cl_1_23[7.4,] 	 ARGS:%cl_1_23,
 		 6: 
 BB 8
@@ -1270,7 +1270,7 @@ BB 4
 		 1: GETFIELD %self->document def_%cl_3_6 %self[2.0,] 
 		 2: %cl_3_6->preview def_%cl_3_7 %cl_3_6[4.1,] 	 ARGS:
 		 3: %cl_3_7->url def_%cl_3_8 %cl_3_7[4.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_3_9 
+		 4: COPY TYPE_StringLiteral "thumbnail" def_%cl_3_9 
 		 5: HASH-class- def_%cl_3_10 %cl_3_9[4.4,] 
 		 6: %self->image_tag def_%cl_3_11 %self[2.0,] %cl_3_8[4.3,] %cl_3_10[4.5,] 	 ARGS:%cl_3_8,%cl_3_10,
 		 7: 
@@ -1281,7 +1281,7 @@ BB 5
 		 0: 
 		 1: GETFIELD %self->document def_%cl_3_12 %self[2.0,] 
 		 2: %self->document_icon_class def_%cl_3_13 %self[2.0,] %cl_3_12[5.1,] 	 ARGS:%cl_3_12,
-		 3: COPY TYPE_StringLiteral def_%cl_3_14 
+		 3: COPY TYPE_StringLiteral " icon-huge" def_%cl_3_14 
 		 4: %cl_3_13->+ def_%cl_3_15 %cl_3_13[5.2,] %cl_3_14[5.3,] 	 ARGS:%cl_3_14,
 		 5: %self->icon def_%cl_3_16 %self[5.2,2.0,] %cl_3_15[5.4,] 	 ARGS:%cl_3_15,
 		 6: RETURN %cl_3_16[5.5,] %self[5.2,5.5,2.0,] 
@@ -1303,20 +1303,20 @@ BB 9
 	instructions:
 CLOSURE END: 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_1_31 
+		 9: COPY TYPE_StringLiteral ".table.filename" def_%cl_1_31 
 		 10: %self->t def_%cl_1_32 %self[9.6,9.7,3.3,2.0,] %cl_1_31[9.9,] 	 ARGS:%cl_1_31,
 		 11: 
 		 12: GETFIELD %self->document def_%cl_1_33 %self[9.6,9.7,9.10,2.0,] 
 		 13: %cl_1_33->file_file_name def_%cl_1_34 %cl_1_33[9.12,] 	 ARGS:
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%cl_1_35 
+		 15: COPY TYPE_StringLiteral ".table.content_type" def_%cl_1_35 
 		 16: %self->t def_%cl_1_36 %self[9.6,9.7,9.10,3.3,2.0,] %cl_1_35[9.15,] 	 ARGS:%cl_1_35,
 		 17: 
 		 18: GETFIELD %self->document def_%cl_1_37 %self[9.6,9.7,9.10,9.16,2.0,] 
 		 19: %cl_1_37->file def_%cl_1_38 %cl_1_37[9.18,] 	 ARGS:
 		 20: %cl_1_38->content_type def_%cl_1_39 %cl_1_38[9.19,] 	 ARGS:
 		 21: 
-		 22: COPY TYPE_StringLiteral def_%cl_1_40 
+		 22: COPY TYPE_StringLiteral ".table.size" def_%cl_1_40 
 		 23: %self->t def_%cl_1_41 %self[9.6,9.7,9.10,9.16,3.3,2.0,] %cl_1_40[9.22,] 	 ARGS:%cl_1_40,
 		 24: 
 		 25: GETFIELD %self->document def_%cl_1_42 %self[9.6,9.7,9.10,9.16,9.23,2.0,] 
@@ -1324,7 +1324,7 @@ CLOSURE END:
 		 27: %cl_1_43->size def_%cl_1_44 %cl_1_43[9.26,] 	 ARGS:
 		 28: %self->number_to_human_size def_%cl_1_45 %self[9.6,9.7,9.10,9.16,9.23,3.3,2.0,] %cl_1_44[9.27,] 	 ARGS:%cl_1_44,
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_1_46 
+		 30: COPY TYPE_StringLiteral ".table.updated_at" def_%cl_1_46 
 		 31: %self->t def_%cl_1_47 %self[9.6,9.7,9.10,9.16,9.23,9.28,3.3,2.0,] %cl_1_46[9.30,] 	 ARGS:%cl_1_46,
 		 32: 
 		 33: GETFIELD %self->document def_%cl_1_48 %self[9.6,9.7,9.10,9.16,9.23,9.28,9.31,2.0,] 
@@ -1341,7 +1341,7 @@ BB 10
 		 0: 
 		 1: GETFIELD %self->document def_%cl_1_53 %self[2.0,] 
 		 2: %self->edit_document_path def_%cl_1_54 %self[3.3,2.0,] %cl_1_53[10.1,] 	 ARGS:%cl_1_53,
-		 3: COPY TYPE_StringLiteral def_%cl_1_55 
+		 3: COPY TYPE_StringLiteral "btn btn-info" def_%cl_1_55 
 		 4: HASH-class- def_%cl_1_56 %cl_1_55[10.3,] 
 		 5: %self->link_to def_%cl_1_57 %self[10.2,3.3,2.0,] %cl_1_54[10.2,] %cl_1_56[10.4,] %self[10.2,3.3,2.0,] 	 ARGS:%cl_1_54,%cl_1_56,%self,
 CLOSURE BEGIN: %self[10.2,3.3,2.0,] 
@@ -1362,10 +1362,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_3 
+		 1: COPY TYPE_StringLiteral "fa fa-pencil" def_%cl_4_3 
 		 2: %self->icon def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 ARGS:%cl_4_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_4_5 
+		 4: COPY TYPE_StringLiteral ".edit.button" def_%cl_4_5 
 		 5: %self->t def_%cl_4_6 %self[3.2,2.0,] %cl_4_5[3.4,] 	 ARGS:%cl_4_5,
 		 6: RETURN %cl_4_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -1382,10 +1382,10 @@ BB 6
 CLOSURE END: 
 		 6: 
 		 7: GETFIELD %self->document def_%cl_1_58 %self[10.2,10.5,2.0,] 
-		 8: COPY TYPE_StringLiteral def_%cl_1_59 
+		 8: COPY TYPE_StringLiteral "are_you_sure" def_%cl_1_59 
 		 9: %self->t def_%cl_1_60 %self[10.2,10.5,3.3,2.0,] %cl_1_59[10.8,] 	 ARGS:%cl_1_59,
 		 10: HASH-method-confirm- def_%cl_1_61 %cl_1_60[10.9,] 
-		 11: COPY TYPE_StringLiteral def_%cl_1_62 
+		 11: COPY TYPE_StringLiteral "btn btn-delete" def_%cl_1_62 
 		 12: HASH-data-class- def_%cl_1_63 %cl_1_61[10.10,] %cl_1_62[10.11,] 
 		 13: %self->link_to def_%cl_1_64 %self[10.2,10.5,10.9,3.3,2.0,] %cl_1_58[10.7,] %cl_1_63[10.12,] %self[10.2,10.5,10.9,3.3,2.0,] 	 ARGS:%cl_1_58,%cl_1_63,%self,
 CLOSURE BEGIN: %self[10.2,10.5,10.9,3.3,2.0,] 
@@ -1406,10 +1406,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_5_3 
 		 2: %self->icon def_%cl_5_4 %self[2.0,] %cl_5_3[3.1,] 	 ARGS:%cl_5_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_5_5 
+		 4: COPY TYPE_StringLiteral ".delete.button" def_%cl_5_5 
 		 5: %self->t def_%cl_5_6 %self[3.2,2.0,] %cl_5_5[3.4,] 	 ARGS:%cl_5_5,
 		 6: RETURN %cl_5_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -1437,7 +1437,7 @@ BB 12
 		 0: 
 		 1: GETFIELD %self->document def_%cl_1_65 %self[2.0,] 
 		 2: %self->download_document_path def_%cl_1_66 %self[3.3,2.0,] %cl_1_65[12.1,] 	 ARGS:%cl_1_65,
-		 3: COPY TYPE_StringLiteral def_%cl_1_67 
+		 3: COPY TYPE_StringLiteral "btn btn-success" def_%cl_1_67 
 		 4: HASH-class- def_%cl_1_68 %cl_1_67[12.3,] 
 		 5: %self->link_to def_%cl_1_69 %self[12.2,3.3,2.0,] %cl_1_66[12.2,] %cl_1_68[12.4,] %self[12.2,3.3,2.0,] 	 ARGS:%cl_1_66,%cl_1_68,%self,
 CLOSURE BEGIN: %self[12.2,3.3,2.0,] 
@@ -1458,10 +1458,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_6_3 
+		 1: COPY TYPE_StringLiteral "fa fa-download" def_%cl_6_3 
 		 2: %self->icon def_%cl_6_4 %self[2.0,] %cl_6_3[3.1,] 	 ARGS:%cl_6_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_6_5 
+		 4: COPY TYPE_StringLiteral ".download.button" def_%cl_6_5 
 		 5: %self->t def_%cl_6_6 %self[3.2,2.0,] %cl_6_5[3.4,] 	 ARGS:%cl_6_5,
 		 6: RETURN %cl_6_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -1555,7 +1555,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral ".heading" def_%cl_1_3 
 		 2: %self->t def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: ATTRASSIGN %self->title %cl_1_4[3.2,] 
 		 4: RETURN %cl_1_4[3.2,] %self[3.2,3.3,2.0,] 
@@ -1619,12 +1619,12 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral ".heading" def_%cl_2_3 
 		 2: %self->t def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
 		 3: ATTRASSIGN %self->title %cl_2_4[3.2,] 
 		 4: 
 		 5: GETFIELD %self->document def_%cl_2_5 %self[3.2,2.0,] 
-		 6: COPY TYPE_StringLiteral def_%cl_2_6 
+		 6: COPY TYPE_StringLiteral "new-document-form" def_%cl_2_6 
 		 7: HASH-multipart-id- def_%cl_2_7 %cl_2_6[3.6,] 
 		 8: %self->form_for def_%cl_2_8 %self[3.2,3.3,2.0,] %cl_2_5[3.5,] %cl_2_7[3.7,] %self[3.2,3.3,2.0,] 	 ARGS:%cl_2_5,%cl_2_7,%self,
 CLOSURE BEGIN: %self[3.2,3.3,2.0,] form[3.8,] 
@@ -1653,26 +1653,26 @@ BB 3
 		 5: 
 		 6: 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_3_5 
+		 8: COPY TYPE_StringLiteral "documents.index.no_file" def_%cl_3_5 
 		 9: %self->t def_%cl_3_6 %self[3.1,2.0,] %cl_3_5[3.8,] 	 ARGS:%cl_3_5,
 		 10: form->label def_%cl_3_7 form[3.3,2.2,] %cl_3_6[3.9,] 	 ARGS:%cl_3_6,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_3_8 
+		 12: COPY TYPE_StringLiteral "form-control" def_%cl_3_8 
 		 13: HASH-class- def_%cl_3_9 %cl_3_8[3.12,] 
 		 14: form->text_field def_%cl_3_10 form[3.3,3.10,2.2,] %cl_3_9[3.13,] 	 ARGS:Symbol,%cl_3_9,
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_3_11 
+		 16: COPY TYPE_StringLiteral "form-control" def_%cl_3_11 
 		 17: HASH-class- def_%cl_3_12 %cl_3_11[3.16,] 
 		 18: form->text_field def_%cl_3_13 form[3.3,3.10,3.14,2.2,] %cl_3_12[3.17,] 	 ARGS:Symbol,%cl_3_12,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_3_14 
+		 20: COPY TYPE_StringLiteral "display:none" def_%cl_3_14 
 		 21: HASH-multiple-style- def_%cl_3_15 %cl_3_14[3.20,] 
 		 22: form->file_field def_%cl_3_16 form[3.3,3.10,3.14,3.18,2.2,] %cl_3_15[3.21,] 	 ARGS:Symbol,%cl_3_15,
 		 23: 
-		 24: COPY TYPE_StringLiteral def_%cl_3_17 
+		 24: COPY TYPE_StringLiteral "fa fa-upload" def_%cl_3_17 
 		 25: %self->icon def_%cl_3_18 %self[3.1,3.9,2.0,] %cl_3_17[3.24,] 	 ARGS:%cl_3_17,
 		 26: 
-		 27: COPY TYPE_StringLiteral def_%cl_3_19 
+		 27: COPY TYPE_StringLiteral "documents.new.select.button" def_%cl_3_19 
 		 28: %self->t def_%cl_3_20 %self[3.1,3.9,3.25,2.0,] %cl_3_19[3.27,] 	 ARGS:%cl_3_19,
 		 29: 
 		 30: %self->parent_document_folder_options def_%cl_3_21 %self[3.1,3.9,3.25,3.28,2.0,] 	 ARGS:
@@ -1687,7 +1687,7 @@ BB 4
 		 2: 
 		 3: %self->parent_document_folder_options def_%cl_3_24 %self[2.0,] 	 ARGS:
 		 4: HASH-include_blank- def_%cl_3_25 
-		 5: COPY TYPE_StringLiteral def_%cl_3_26 
+		 5: COPY TYPE_StringLiteral "form-control" def_%cl_3_26 
 		 6: HASH-class- def_%cl_3_27 %cl_3_26[4.5,] 
 		 7: form->select def_%cl_3_28 form[4.1,2.2,] %cl_3_24[4.3,] %cl_3_25[4.4,] %cl_3_27[4.6,] 	 ARGS:Symbol,%cl_3_24,%cl_3_25,%cl_3_27,
 		 8: 
@@ -1701,11 +1701,11 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_29 
+		 1: COPY TYPE_StringLiteral "save" def_%cl_3_29 
 		 2: %self->t def_%cl_3_30 %self[2.0,] %cl_3_29[6.1,] 	 ARGS:%cl_3_29,
-		 3: COPY TYPE_StringLiteral def_%cl_3_31 
-		 4: COPY TYPE_StringLiteral def_%cl_3_32 
-		 5: COPY TYPE_StringLiteral def_%cl_3_33 
+		 3: COPY TYPE_StringLiteral "btn btn-success" def_%cl_3_31 
+		 4: COPY TYPE_StringLiteral "display:none" def_%cl_3_32 
+		 5: COPY TYPE_StringLiteral "document-form-submit-button" def_%cl_3_33 
 		 6: HASH-class-style-id- def_%cl_3_34 %cl_3_31[6.3,] %cl_3_32[6.4,] %cl_3_33[6.5,] 
 		 7: form->button def_%cl_3_35 form[2.2,] %cl_3_30[6.2,] %cl_3_34[6.6,] 	 ARGS:%cl_3_30,%cl_3_34,
 		 8: RETURN %cl_3_35[6.7,] %self[6.2,2.0,] 
@@ -1827,7 +1827,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral ".heading" def_%cl_1_3 
 		 2: GETFIELD %self->folder def_%cl_1_4 %self[2.0,] 
 		 3: %cl_1_4->name def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:
 		 4: HASH-folder- def_%cl_1_6 %cl_1_5[3.3,] 
@@ -1884,7 +1884,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral ".heading" def_%cl_2_3 
 		 2: GETFIELD %self->document def_%cl_2_4 %self[2.0,] 
 		 3: %cl_2_4->name def_%cl_2_5 %cl_2_4[3.2,] 	 ARGS:
 		 4: HASH-document- def_%cl_2_6 %cl_2_5[3.3,] 
@@ -1892,7 +1892,7 @@ BB 3
 		 6: ATTRASSIGN %self->title %cl_2_7[3.5,] 
 		 7: 
 		 8: GETFIELD %self->document def_%cl_2_8 %self[3.5,2.0,] 
-		 9: COPY TYPE_StringLiteral def_%cl_2_9 
+		 9: COPY TYPE_StringLiteral "new-document-form" def_%cl_2_9 
 		 10: HASH-multipart-id- def_%cl_2_10 %cl_2_9[3.9,] 
 		 11: %self->form_for def_%cl_2_11 %self[3.5,3.6,2.0,] %cl_2_8[3.8,] %cl_2_10[3.10,] %self[3.5,3.6,2.0,] 	 ARGS:%cl_2_8,%cl_2_10,%self,
 CLOSURE BEGIN: %self[3.5,3.6,2.0,] form[3.11,] 
@@ -1921,26 +1921,26 @@ BB 3
 		 5: 
 		 6: 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_3_5 
+		 8: COPY TYPE_StringLiteral "documents.index.no_file" def_%cl_3_5 
 		 9: %self->t def_%cl_3_6 %self[3.1,2.0,] %cl_3_5[3.8,] 	 ARGS:%cl_3_5,
 		 10: form->label def_%cl_3_7 form[3.3,2.2,] %cl_3_6[3.9,] 	 ARGS:%cl_3_6,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_3_8 
+		 12: COPY TYPE_StringLiteral "form-control" def_%cl_3_8 
 		 13: HASH-class- def_%cl_3_9 %cl_3_8[3.12,] 
 		 14: form->text_field def_%cl_3_10 form[3.3,3.10,2.2,] %cl_3_9[3.13,] 	 ARGS:Symbol,%cl_3_9,
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_3_11 
+		 16: COPY TYPE_StringLiteral "form-control" def_%cl_3_11 
 		 17: HASH-class- def_%cl_3_12 %cl_3_11[3.16,] 
 		 18: form->text_field def_%cl_3_13 form[3.3,3.10,3.14,2.2,] %cl_3_12[3.17,] 	 ARGS:Symbol,%cl_3_12,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_3_14 
+		 20: COPY TYPE_StringLiteral "display:none" def_%cl_3_14 
 		 21: HASH-multiple-style- def_%cl_3_15 %cl_3_14[3.20,] 
 		 22: form->file_field def_%cl_3_16 form[3.3,3.10,3.14,3.18,2.2,] %cl_3_15[3.21,] 	 ARGS:Symbol,%cl_3_15,
 		 23: 
-		 24: COPY TYPE_StringLiteral def_%cl_3_17 
+		 24: COPY TYPE_StringLiteral "fa fa-upload" def_%cl_3_17 
 		 25: %self->icon def_%cl_3_18 %self[3.1,3.9,2.0,] %cl_3_17[3.24,] 	 ARGS:%cl_3_17,
 		 26: 
-		 27: COPY TYPE_StringLiteral def_%cl_3_19 
+		 27: COPY TYPE_StringLiteral "documents.new.select.button" def_%cl_3_19 
 		 28: %self->t def_%cl_3_20 %self[3.1,3.9,3.25,2.0,] %cl_3_19[3.27,] 	 ARGS:%cl_3_19,
 		 29: 
 		 30: %self->parent_document_folder_options def_%cl_3_21 %self[3.1,3.9,3.25,3.28,2.0,] 	 ARGS:
@@ -1955,7 +1955,7 @@ BB 4
 		 2: 
 		 3: %self->parent_document_folder_options def_%cl_3_24 %self[2.0,] 	 ARGS:
 		 4: HASH-include_blank- def_%cl_3_25 
-		 5: COPY TYPE_StringLiteral def_%cl_3_26 
+		 5: COPY TYPE_StringLiteral "form-control" def_%cl_3_26 
 		 6: HASH-class- def_%cl_3_27 %cl_3_26[4.5,] 
 		 7: form->select def_%cl_3_28 form[4.1,2.2,] %cl_3_24[4.3,] %cl_3_25[4.4,] %cl_3_27[4.6,] 	 ARGS:Symbol,%cl_3_24,%cl_3_25,%cl_3_27,
 		 8: 
@@ -1969,11 +1969,11 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_29 
+		 1: COPY TYPE_StringLiteral "save" def_%cl_3_29 
 		 2: %self->t def_%cl_3_30 %self[2.0,] %cl_3_29[6.1,] 	 ARGS:%cl_3_29,
-		 3: COPY TYPE_StringLiteral def_%cl_3_31 
-		 4: COPY TYPE_StringLiteral def_%cl_3_32 
-		 5: COPY TYPE_StringLiteral def_%cl_3_33 
+		 3: COPY TYPE_StringLiteral "btn btn-success" def_%cl_3_31 
+		 4: COPY TYPE_StringLiteral "display:none" def_%cl_3_32 
+		 5: COPY TYPE_StringLiteral "document-form-submit-button" def_%cl_3_33 
 		 6: HASH-class-style-id- def_%cl_3_34 %cl_3_31[6.3,] %cl_3_32[6.4,] %cl_3_33[6.5,] 
 		 7: form->button def_%cl_3_35 form[2.2,] %cl_3_30[6.2,] %cl_3_34[6.6,] 	 ARGS:%cl_3_30,%cl_3_34,
 		 8: RETURN %cl_3_35[6.7,] %self[6.2,2.0,] 
@@ -2050,7 +2050,7 @@ BB 4
 		 2: %v_12->folder_id def_%v_13 %v_12[4.1,] 	 ARGS:
 		 3: HASH-folder_id- def_%v_14 %v_13[4.2,] 
 		 4: %self->documents_path def_%v_15 %self[3.5,2.0,] %v_14[4.3,] 	 ARGS:%v_14,
-		 5: COPY TYPE_StringLiteral def_%v_16 
+		 5: COPY TYPE_StringLiteral "documents.update_folder.notice" def_%v_16 
 		 6: %self->t def_%v_17 %self[4.4,3.5,2.0,] %v_16[4.5,] 	 ARGS:%v_16,
 		 7: HASH-notice- def_%v_18 %v_17[4.6,] 
 		 8: %self->redirect_to def_%v_19 %self[4.4,4.6,3.5,2.0,] %v_15[4.4,] %v_18[4.7,] 	 ARGS:%v_15,%v_18,
@@ -2081,7 +2081,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral ".heading" def_%cl_1_3 
 		 2: GETFIELD %self->folder def_%cl_1_4 %self[2.0,] 
 		 3: %cl_1_4->name def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:
 		 4: HASH-folder- def_%cl_1_6 %cl_1_5[3.3,] 
@@ -2130,7 +2130,7 @@ BB 8
 		 2: %v_29->folder_id def_%v_30 %v_29[8.1,] 	 ARGS:
 		 3: HASH-folder_id- def_%v_31 %v_30[8.2,] 
 		 4: %self->documents_path def_%v_32 %self[7.5,2.0,] %v_31[8.3,] 	 ARGS:%v_31,
-		 5: COPY TYPE_StringLiteral def_%v_33 
+		 5: COPY TYPE_StringLiteral "documents.update.notice" def_%v_33 
 		 6: %self->t def_%v_34 %self[8.4,7.5,2.0,] %v_33[8.5,] 	 ARGS:%v_33,
 		 7: HASH-notice- def_%v_35 %v_34[8.6,] 
 		 8: %self->redirect_to def_%v_36 %self[8.4,8.6,7.5,2.0,] %v_32[8.4,] %v_35[8.7,] 	 ARGS:%v_32,%v_35,
@@ -2161,7 +2161,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral ".heading" def_%cl_2_3 
 		 2: GETFIELD %self->document def_%cl_2_4 %self[2.0,] 
 		 3: %cl_2_4->name def_%cl_2_5 %cl_2_4[3.2,] 	 ARGS:
 		 4: HASH-document- def_%cl_2_6 %cl_2_5[3.3,] 
@@ -2169,7 +2169,7 @@ BB 3
 		 6: ATTRASSIGN %self->title %cl_2_7[3.5,] 
 		 7: 
 		 8: GETFIELD %self->document def_%cl_2_8 %self[3.5,2.0,] 
-		 9: COPY TYPE_StringLiteral def_%cl_2_9 
+		 9: COPY TYPE_StringLiteral "new-document-form" def_%cl_2_9 
 		 10: HASH-multipart-id- def_%cl_2_10 %cl_2_9[3.9,] 
 		 11: %self->form_for def_%cl_2_11 %self[3.5,3.6,2.0,] %cl_2_8[3.8,] %cl_2_10[3.10,] %self[3.5,3.6,2.0,] 	 ARGS:%cl_2_8,%cl_2_10,%self,
 CLOSURE BEGIN: %self[3.5,3.6,2.0,] form[3.11,] 
@@ -2198,26 +2198,26 @@ BB 3
 		 5: 
 		 6: 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_3_5 
+		 8: COPY TYPE_StringLiteral "documents.index.no_file" def_%cl_3_5 
 		 9: %self->t def_%cl_3_6 %self[3.1,2.0,] %cl_3_5[3.8,] 	 ARGS:%cl_3_5,
 		 10: form->label def_%cl_3_7 form[3.3,2.2,] %cl_3_6[3.9,] 	 ARGS:%cl_3_6,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_3_8 
+		 12: COPY TYPE_StringLiteral "form-control" def_%cl_3_8 
 		 13: HASH-class- def_%cl_3_9 %cl_3_8[3.12,] 
 		 14: form->text_field def_%cl_3_10 form[3.3,3.10,2.2,] %cl_3_9[3.13,] 	 ARGS:Symbol,%cl_3_9,
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_3_11 
+		 16: COPY TYPE_StringLiteral "form-control" def_%cl_3_11 
 		 17: HASH-class- def_%cl_3_12 %cl_3_11[3.16,] 
 		 18: form->text_field def_%cl_3_13 form[3.3,3.10,3.14,2.2,] %cl_3_12[3.17,] 	 ARGS:Symbol,%cl_3_12,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_3_14 
+		 20: COPY TYPE_StringLiteral "display:none" def_%cl_3_14 
 		 21: HASH-multiple-style- def_%cl_3_15 %cl_3_14[3.20,] 
 		 22: form->file_field def_%cl_3_16 form[3.3,3.10,3.14,3.18,2.2,] %cl_3_15[3.21,] 	 ARGS:Symbol,%cl_3_15,
 		 23: 
-		 24: COPY TYPE_StringLiteral def_%cl_3_17 
+		 24: COPY TYPE_StringLiteral "fa fa-upload" def_%cl_3_17 
 		 25: %self->icon def_%cl_3_18 %self[3.1,3.9,2.0,] %cl_3_17[3.24,] 	 ARGS:%cl_3_17,
 		 26: 
-		 27: COPY TYPE_StringLiteral def_%cl_3_19 
+		 27: COPY TYPE_StringLiteral "documents.new.select.button" def_%cl_3_19 
 		 28: %self->t def_%cl_3_20 %self[3.1,3.9,3.25,2.0,] %cl_3_19[3.27,] 	 ARGS:%cl_3_19,
 		 29: 
 		 30: %self->parent_document_folder_options def_%cl_3_21 %self[3.1,3.9,3.25,3.28,2.0,] 	 ARGS:
@@ -2232,7 +2232,7 @@ BB 4
 		 2: 
 		 3: %self->parent_document_folder_options def_%cl_3_24 %self[2.0,] 	 ARGS:
 		 4: HASH-include_blank- def_%cl_3_25 
-		 5: COPY TYPE_StringLiteral def_%cl_3_26 
+		 5: COPY TYPE_StringLiteral "form-control" def_%cl_3_26 
 		 6: HASH-class- def_%cl_3_27 %cl_3_26[4.5,] 
 		 7: form->select def_%cl_3_28 form[4.1,2.2,] %cl_3_24[4.3,] %cl_3_25[4.4,] %cl_3_27[4.6,] 	 ARGS:Symbol,%cl_3_24,%cl_3_25,%cl_3_27,
 		 8: 
@@ -2246,11 +2246,11 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_29 
+		 1: COPY TYPE_StringLiteral "save" def_%cl_3_29 
 		 2: %self->t def_%cl_3_30 %self[2.0,] %cl_3_29[6.1,] 	 ARGS:%cl_3_29,
-		 3: COPY TYPE_StringLiteral def_%cl_3_31 
-		 4: COPY TYPE_StringLiteral def_%cl_3_32 
-		 5: COPY TYPE_StringLiteral def_%cl_3_33 
+		 3: COPY TYPE_StringLiteral "btn btn-success" def_%cl_3_31 
+		 4: COPY TYPE_StringLiteral "display:none" def_%cl_3_32 
+		 5: COPY TYPE_StringLiteral "document-form-submit-button" def_%cl_3_33 
 		 6: HASH-class-style-id- def_%cl_3_34 %cl_3_31[6.3,] %cl_3_32[6.4,] %cl_3_33[6.5,] 
 		 7: form->button def_%cl_3_35 form[2.2,] %cl_3_30[6.2,] %cl_3_34[6.6,] 	 ARGS:%cl_3_30,%cl_3_34,
 		 8: RETURN %cl_3_35[6.7,] %self[6.2,2.0,] 
@@ -2326,7 +2326,7 @@ BB 3
 		 11: %v_11->folder_id def_%v_12 %v_11[3.10,] 	 ARGS:
 		 12: HASH-folder_id- def_%v_13 %v_12[3.11,] 
 		 13: %self->documents_path def_%v_14 %self[3.2,3.5,2.0,] %v_13[3.12,] 	 ARGS:%v_13,
-		 14: COPY TYPE_StringLiteral def_%v_15 
+		 14: COPY TYPE_StringLiteral "documents.delete_folder.notice" def_%v_15 
 		 15: %self->t def_%v_16 %self[3.2,3.5,3.13,2.0,] %v_15[3.14,] 	 ARGS:%v_15,
 		 16: HASH-notice- def_%v_17 %v_16[3.15,] 
 		 17: %self->redirect_to def_%v_18 %self[3.2,3.5,3.13,3.15,2.0,] %v_14[3.13,] %v_17[3.16,] 	 ARGS:%v_14,%v_17,
@@ -2349,7 +2349,7 @@ BB 4
 		 11: %v_25->folder_id def_%v_26 %v_25[4.10,] 	 ARGS:
 		 12: HASH-folder_id- def_%v_27 %v_26[4.11,] 
 		 13: %self->documents_path def_%v_28 %self[4.2,4.5,2.0,] %v_27[4.12,] 	 ARGS:%v_27,
-		 14: COPY TYPE_StringLiteral def_%v_29 
+		 14: COPY TYPE_StringLiteral "documents.delete.notice" def_%v_29 
 		 15: %self->t def_%v_30 %self[4.2,4.5,4.13,2.0,] %v_29[4.14,] 	 ARGS:%v_29,
 		 16: HASH-notice- def_%v_31 %v_30[4.15,] 
 		 17: %self->redirect_to def_%v_32 %self[4.2,4.5,4.13,4.15,2.0,] %v_28[4.13,] %v_31[4.16,] 	 ARGS:%v_28,%v_31,
@@ -2424,13 +2424,13 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_19 
+		 0: COPY TYPE_StringLiteral "inline" def_%v_19 
 		 1: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_20 
+		 0: COPY TYPE_StringLiteral "attachment" def_%v_20 
 		 1: COPY TYPE_PASS def_%v_19 %v_20[9.0,] 
 BB 10
 	outgoing: 11 
@@ -2480,7 +2480,7 @@ BB 3
 		 1: GETFIELD %self->folder def_%v_8 %self[2.0,2.9,] 
 		 2: HASH-folder_id- def_%v_9 %v_8[3.1,] 
 		 3: %self->documents_path def_%v_10 %self[2.0,2.9,] %v_9[3.2,] 	 ARGS:%v_9,
-		 4: COPY TYPE_StringLiteral def_%v_11 
+		 4: COPY TYPE_StringLiteral "documents.create_folder.notice" def_%v_11 
 		 5: %self->t def_%v_12 %self[3.3,2.0,2.9,] %v_11[3.4,] 	 ARGS:%v_11,
 		 6: HASH-notice- def_%v_13 %v_12[3.5,] 
 		 7: %self->redirect_to def_%v_14 %self[3.3,3.5,2.0,2.9,] %v_10[3.3,] %v_13[3.6,] 	 ARGS:%v_10,%v_13,
@@ -2511,7 +2511,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral ".heading" def_%cl_1_3 
 		 2: %self->t def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: ATTRASSIGN %self->title %cl_1_4[3.2,] 
 		 4: RETURN %cl_1_4[3.2,] %self[3.2,3.3,2.0,] 
@@ -2644,11 +2644,11 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_11 %self[2.0,2.7,2.10,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_12 
+		 2: COPY TYPE_StringLiteral "documents.create.failure" def_%v_12 
 		 3: GETFIELD %self->errors def_%v_13 %self[3.1,2.0,2.10,] 
 		 4: %v_13->size def_%v_14 %v_13[3.3,] 	 ARGS:
 		 5: GETFIELD %self->errors def_%v_15 %self[3.1,2.0,2.10,] 
-		 6: COPY TYPE_StringLiteral def_%v_16 
+		 6: COPY TYPE_StringLiteral ", " def_%v_16 
 		 7: %v_15->join def_%v_17 %v_15[3.5,] %v_16[3.6,] 	 ARGS:%v_16,
 		 8: HASH-count-filenames- def_%v_18 %v_14[3.4,] %v_17[3.7,] 
 		 9: %self->t def_%v_19 %self[3.1,2.0,2.7,2.10,] %v_12[3.2,] %v_18[3.8,] 	 ARGS:%v_12,%v_18,
@@ -2660,7 +2660,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_20 %self[2.0,2.7,2.10,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_21 
+		 2: COPY TYPE_StringLiteral "documents.create.notice" def_%v_21 
 		 3: GETFIELD %self->successes def_%v_22 %self[4.1,2.0,2.7,] 
 		 4: %v_22->size def_%v_23 %v_22[4.3,] 	 ARGS:
 		 5: HASH-count- def_%v_24 %v_23[4.4,] 
@@ -2895,7 +2895,7 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral "not_authorized" def_%v_6 
 		 3: %self->t def_%v_7 %self[2.0,] %v_6[4.2,] 	 ARGS:%v_6,
 		 4: HASH-text-layout- def_%v_8 %v_7[4.3,] 
 		 5: %self->render def_%v_9 %self[4.3,2.0,] %v_8[4.4,] 	 ARGS:%v_8,
@@ -2954,7 +2954,7 @@ BB 6
 	instructions:
 		 0: %self->cookies def_%v_12 %self[2.0,] 	 ARGS:
 		 1: %v_12->[] def_%v_13 %v_12[6.0,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%v_14 
+		 2: COPY TYPE_StringLiteral "true" def_%v_14 
 		 3: %v_13->== def_%v_15 %v_13[6.1,] %v_14[6.2,] 	 ARGS:%v_14,
 		 4: COPY TYPE_PASS def_%v_11 %v_15[6.3,] 
 BB 7
@@ -2988,7 +2988,7 @@ BB 10
 		 0: 
 		 1: %self->cookies def_%v_22 %self[7.0,2.0,] 	 ARGS:
 		 2: %v_22->[] def_%v_23 %v_22[10.1,] 	 ARGS:Symbol,
-		 3: COPY TYPE_StringLiteral def_%v_24 
+		 3: COPY TYPE_StringLiteral "true" def_%v_24 
 		 4: %v_23->== def_%v_25 %v_23[10.2,] %v_24[10.3,] 	 ARGS:%v_24,
 		 5: ATTRASSIGN %self->show_hidden_folders %v_25[10.4,] 
 		 6: RETURN %v_25[10.4,] %self[10.1,10.5,7.0,2.0,] 

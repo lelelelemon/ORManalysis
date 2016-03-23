@@ -80,18 +80,18 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
-		 9: COPY TYPE_StringLiteral def_%v_6 
-		 10: COPY TYPE_StringLiteral def_%v_7 
-		 11: COPY TYPE_StringLiteral def_%v_8 
-		 12: COPY TYPE_StringLiteral def_%v_9 
-		 13: COPY TYPE_StringLiteral def_%v_10 
-		 14: COPY TYPE_StringLiteral def_%v_11 
-		 15: COPY TYPE_StringLiteral def_%v_12 
-		 16: COPY TYPE_StringLiteral def_%v_13 
-		 17: COPY TYPE_StringLiteral def_%v_14 
+		 6: COPY TYPE_StringLiteral "parsing" def_%v_3 
+		 7: COPY TYPE_StringLiteral "parsed" def_%v_4 
+		 8: COPY TYPE_StringLiteral "parsed" def_%v_5 
+		 9: COPY TYPE_StringLiteral "parsed" def_%v_6 
+		 10: COPY TYPE_StringLiteral "previewing" def_%v_7 
+		 11: COPY TYPE_StringLiteral "previewed" def_%v_8 
+		 12: COPY TYPE_StringLiteral "previewed" def_%v_9 
+		 13: COPY TYPE_StringLiteral "previewed" def_%v_10 
+		 14: COPY TYPE_StringLiteral "active" def_%v_11 
+		 15: COPY TYPE_StringLiteral "imported" def_%v_12 
+		 16: COPY TYPE_StringLiteral "complete" def_%v_13 
+		 17: COPY TYPE_StringLiteral "imported" def_%v_14 
 		 18: HASH- def_%v_15 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] %v_9[2.12,] %v_10[2.13,] %v_11[2.14,] %v_12[2.15,] %v_13[2.16,] %v_14[2.17,] 
 		 19: %self->status def_%v_16 %self[2.0,] 	 ARGS:
 		 20: %v_15->[] def_%v_17 %v_15[2.18,] %v_16[2.19,] 	 ARGS:%v_16,
@@ -135,11 +135,11 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
-		 9: COPY TYPE_StringLiteral def_%v_6 
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 6: COPY TYPE_StringLiteral "parsed" def_%v_3 
+		 7: COPY TYPE_StringLiteral "matched" def_%v_4 
+		 8: COPY TYPE_StringLiteral "previewed" def_%v_5 
+		 9: COPY TYPE_StringLiteral "complete" def_%v_6 
+		 10: COPY TYPE_StringLiteral "errored" def_%v_7 
 		 11: COPY TYPE_Array def_%v_8 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] 
 		 12: %self->status def_%v_9 %self[2.0,] 	 ARGS:
 		 13: %v_8->include? def_%v_10 %v_8[2.11,] %v_9[2.12,] 	 ARGS:%v_9,
@@ -164,10 +164,10 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 6: COPY TYPE_StringLiteral "pending" def_%v_3 
+		 7: COPY TYPE_StringLiteral "parsing" def_%v_4 
+		 8: COPY TYPE_StringLiteral "previewing" def_%v_5 
+		 9: COPY TYPE_StringLiteral "active" def_%v_6 
 		 10: COPY TYPE_Array def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
 		 11: %self->status def_%v_8 %self[2.0,] 	 ARGS:
 		 12: %v_7->include? def_%v_9 %v_7[2.10,] %v_8[2.11,] 	 ARGS:%v_8,
@@ -311,7 +311,8 @@ BB 4
 		 2: file->read def_%v_5 file[2.5,] 	 ARGS:
 		 3: COPY TYPE_PASS def_data %v_5[4.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_6 
+		 5: COPY TYPE_StringLiteral "
+" def_%v_6 
 		 6: %v_5->count def_%v_7 %v_5[4.2,] %v_6[4.5,] 	 ARGS:%v_6,
 		 7: %self->update_attribute def_%v_8 %self[2.0,] %v_7[4.6,] 	 ARGS:Symbol,%v_7,
 		 8: 
@@ -359,7 +360,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "unknown status" def_%v_8 
 		 1: %self->fail def_%v_9 %self[2.0,] %v_8[4.0,] 	 ARGS:%v_8,
 		 2: COPY TYPE_PASS def_%v_7 %v_9[4.1,] 
 BB 5
@@ -482,7 +483,7 @@ BB 2
 		 6: %self->rows def_%v_3 %self[2.0,] 	 ARGS:
 		 7: (ImportRow) def_%v_4 
 		 8: %v_4->statuses def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "parsed" def_%v_6 
 		 10: %v_5->[] def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: HASH-status- def_%v_8 %v_7[2.10,] 
 		 12: %v_3->update_all def_%v_9 %v_3[2.6,] %v_8[2.11,] 	 ARGS:%v_8,
@@ -589,7 +590,7 @@ BB 2
 		 6: %self->rows def_%v_3 %self[2.0,] 	 ARGS:
 		 7: (ImportRow) def_%v_4 
 		 8: %v_4->statuses def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "previewed" def_%v_6 
 		 10: %v_5->[] def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: HASH-status- def_%v_8 %v_7[2.10,] 
 		 12: %v_3->update_all def_%v_9 %v_3[2.6,] %v_8[2.11,] 	 ARGS:%v_8,

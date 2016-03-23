@@ -163,11 +163,11 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_6 
-		 3: COPY TYPE_StringLiteral def_%v_7 
-		 4: COPY TYPE_StringLiteral def_%v_8 
-		 5: COPY TYPE_StringLiteral def_%v_9 
-		 6: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_StringLiteral "free" def_%v_6 
+		 3: COPY TYPE_StringLiteral "pending" def_%v_7 
+		 4: COPY TYPE_StringLiteral "initiated" def_%v_8 
+		 5: COPY TYPE_StringLiteral "pending_ext" def_%v_9 
+		 6: COPY TYPE_StringLiteral "errored" def_%v_10 
 		 7: COPY TYPE_Array def_%v_11 %v_6[4.2,] %v_7[4.3,] %v_8[4.4,] %v_9[4.5,] %v_10[4.6,] 
 		 8: COPY TYPE_PASS def_ignored_transitions %v_11[4.7,] 
 		 9: 
@@ -454,14 +454,14 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: RECEIVEARG def_new_state 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_1_3 
+		 6: COPY TYPE_StringLiteral "paid" def_%cl_1_3 
 		 7: new_state->== def_%cl_1_4 new_state[2.4,] %cl_1_3[2.6,] 	 ARGS:%cl_1_3,
 		 8: BRANCH %cl_1_4[2.7,] 
 BB 3
 	outgoing: 5 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_5 
+		 0: COPY TYPE_StringLiteral "preauthorized" def_%cl_1_5 
 		 1: old_state->== def_%cl_1_6 old_state[] %cl_1_5[3.0,] 	 ARGS:%cl_1_5,
 		 2: RETURN %cl_1_6[3.1,] %self[2.0,] 
 BB 4
@@ -499,7 +499,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: RECEIVEARG def_new_state 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_3 
+		 6: COPY TYPE_StringLiteral "paid" def_%cl_2_3 
 		 7: new_state->== def_%cl_2_4 new_state[2.4,] %cl_2_3[2.6,] 	 ARGS:%cl_2_3,
 		 8: RETURN %cl_2_4[2.7,] %self[2.0,] 
 BB 3
@@ -517,21 +517,21 @@ CLOSURE END:
 		 15: COPY TYPE_PASS def_post_pay_accepted %v_4[2.14,] 
 		 16: 
 		 17: transition->[] def_%v_5 transition[2.5,] 	 ARGS:Symbol,
-		 18: COPY TYPE_StringLiteral def_%v_8 
+		 18: COPY TYPE_StringLiteral "preauthorized" def_%v_8 
 		 19: def_%v_7 %v_8[2.18,] %v_5[2.17,] 
 		 20: BRANCH %v_7[2.19,] 
 BB 3
 	outgoing: 4 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_10 
+		 0: COPY TYPE_StringLiteral "accepted" def_%v_10 
 		 1: def_%v_9 %v_10[3.0,] %v_5[2.17,] 
 		 2: BRANCH %v_9[3.1,] 
 BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_12 
+		 0: COPY TYPE_StringLiteral "rejected" def_%v_12 
 		 1: def_%v_11 %v_12[4.0,] %v_5[2.17,] 
 		 2: BRANCH %v_11[4.1,] 
 BB 5
@@ -550,14 +550,14 @@ BB 7
 	outgoing: 8 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_16 
+		 0: COPY TYPE_StringLiteral "canceled" def_%v_16 
 		 1: def_%v_15 %v_16[7.0,] %v_5[2.17,] 
 		 2: BRANCH %v_15[7.1,] 
 BB 8
 	outgoing: 9 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_18 
+		 0: COPY TYPE_StringLiteral "confirmed" def_%v_18 
 		 1: def_%v_17 %v_18[8.0,] %v_5[2.17,] 
 		 2: BRANCH %v_17[8.1,] 
 BB 9
@@ -565,7 +565,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_26 
+		 1: COPY TYPE_StringLiteral "Unknown transition to state: " def_%v_26 
 		 2: transition->[] def_%v_27 transition[2.5,] 	 ARGS:Symbol,
 		 3: BUILDSTRING def_%v_28 %v_26[9.1,] %v_27[9.2,] 
 		 4: %self->raise def_%v_29 %self[2.0,] %v_28[9.3,] 	 ARGS:%v_28,
@@ -680,14 +680,14 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: RECEIVEARG def_new_state 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_1_3 
+		 6: COPY TYPE_StringLiteral "paid" def_%cl_1_3 
 		 7: new_state->== def_%cl_1_4 new_state[2.4,] %cl_1_3[2.6,] 	 ARGS:%cl_1_3,
 		 8: BRANCH %cl_1_4[2.7,] 
 BB 3
 	outgoing: 5 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_5 
+		 0: COPY TYPE_StringLiteral "preauthorized" def_%cl_1_5 
 		 1: old_state->== def_%cl_1_6 old_state[] %cl_1_5[3.0,] 	 ARGS:%cl_1_5,
 		 2: RETURN %cl_1_6[3.1,] %self[2.0,] 
 BB 4
@@ -725,7 +725,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: RECEIVEARG def_new_state 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_3 
+		 6: COPY TYPE_StringLiteral "paid" def_%cl_2_3 
 		 7: new_state->== def_%cl_2_4 new_state[2.4,] %cl_2_3[2.6,] 	 ARGS:%cl_2_3,
 		 8: RETURN %cl_2_4[2.7,] %self[2.0,] 
 BB 3
@@ -742,21 +742,21 @@ BB 5
 CLOSURE END: 
 		 13: COPY TYPE_PASS def_post_pay_accepted %v_4[2.12,] 
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%v_7 
+		 15: COPY TYPE_StringLiteral "preauthorized" def_%v_7 
 		 16: def_%v_6 %v_7[2.15,] state[2.5,] 
 		 17: BRANCH %v_6[2.16,] 
 BB 3
 	outgoing: 4 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "accepted" def_%v_9 
 		 1: def_%v_8 %v_9[3.0,] state[2.5,] 
 		 2: BRANCH %v_8[3.1,] 
 BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_11 
+		 0: COPY TYPE_StringLiteral "rejected" def_%v_11 
 		 1: def_%v_10 %v_11[4.0,] state[2.5,] 
 		 2: BRANCH %v_10[4.1,] 
 BB 5
@@ -775,14 +775,14 @@ BB 7
 	outgoing: 8 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_15 
+		 0: COPY TYPE_StringLiteral "canceled" def_%v_15 
 		 1: def_%v_14 %v_15[7.0,] state[2.5,] 
 		 2: BRANCH %v_14[7.1,] 
 BB 8
 	outgoing: 9 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_17 
+		 0: COPY TYPE_StringLiteral "confirmed" def_%v_17 
 		 1: def_%v_16 %v_17[8.0,] state[2.5,] 
 		 2: BRANCH %v_16[8.1,] 
 BB 9
@@ -790,7 +790,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_36 
+		 1: COPY TYPE_StringLiteral "Unknown transition to state: " def_%v_36 
 		 2: BUILDSTRING def_%v_37 %v_36[9.1,] state[2.5,] 
 		 3: %self->raise def_%v_38 %self[2.0,] %v_37[9.2,] 	 ARGS:%v_37,
 		 4: COPY TYPE_PASS def_%v_5 %v_38[9.3,] 
@@ -800,7 +800,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_18 
+		 1: COPY TYPE_StringLiteral "conversations.message.payment_preauthorized" def_%v_18 
 		 2: %self->humanized_money_with_symbol def_%v_19 %self[2.0,] payment_sum[2.7,] 	 ARGS:payment_sum,
 		 3: HASH-sum- def_%v_20 %v_19[10.2,] 
 		 4: %self->t def_%v_21 %self[10.2,2.0,] %v_18[10.1,] %v_20[10.3,] 	 ARGS:%v_18,%v_20,
@@ -811,7 +811,7 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_22 
+		 1: COPY TYPE_StringLiteral "conversations.message.accepted_request" def_%v_22 
 		 2: %self->t def_%v_23 %self[2.0,] %v_22[11.1,] 	 ARGS:%v_22,
 		 3: COPY TYPE_PASS def_%v_5 %v_23[11.2,] 
 		 4: 
@@ -820,7 +820,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_24 
+		 1: COPY TYPE_StringLiteral "conversations.message.rejected_request" def_%v_24 
 		 2: %self->t def_%v_25 %self[2.0,] %v_24[12.1,] 	 ARGS:%v_24,
 		 3: COPY TYPE_PASS def_%v_5 %v_25[12.2,] 
 		 4: 
@@ -829,7 +829,7 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_26 
+		 1: COPY TYPE_StringLiteral "conversations.message.accepted_request" def_%v_26 
 		 2: %self->t def_%v_27 %self[2.0,] %v_26[13.1,] 	 ARGS:%v_26,
 		 3: COPY TYPE_PASS def_%v_5 %v_27[13.2,] 
 		 4: 
@@ -838,7 +838,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_28 
+		 1: COPY TYPE_StringLiteral "conversations.message.paid" def_%v_28 
 		 2: %self->humanized_money_with_symbol def_%v_29 %self[2.0,] payment_sum[2.7,] 	 ARGS:payment_sum,
 		 3: HASH-sum- def_%v_30 %v_29[14.2,] 
 		 4: %self->t def_%v_31 %self[14.2,2.0,] %v_28[14.1,] %v_30[14.3,] 	 ARGS:%v_28,%v_30,
@@ -849,7 +849,7 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_32 
+		 1: COPY TYPE_StringLiteral "conversations.message.canceled_request" def_%v_32 
 		 2: %self->t def_%v_33 %self[2.0,] %v_32[15.1,] 	 ARGS:%v_32,
 		 3: COPY TYPE_PASS def_%v_5 %v_33[15.2,] 
 		 4: 
@@ -858,7 +858,7 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_34 
+		 1: COPY TYPE_StringLiteral "conversations.message.confirmed_request" def_%v_34 
 		 2: %self->t def_%v_35 %self[2.0,] %v_34[16.1,] 	 ARGS:%v_34,
 		 3: COPY TYPE_PASS def_%v_5 %v_35[16.2,] 
 		 4: 

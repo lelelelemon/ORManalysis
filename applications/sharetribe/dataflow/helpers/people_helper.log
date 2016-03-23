@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_grade 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "feedback_average_image_" def_%v_3 
 		 8: %self->grade_number def_%v_4 %self[2.0,] grade[2.5,] 	 ARGS:grade,
 		 9: %v_4->to_s def_%v_5 %v_4[2.8,] 	 ARGS:
 		 10: BUILDSTRING def_%v_6 %v_3[2.7,] %v_5[2.9,] 
@@ -51,25 +51,25 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_3 
+		 1: COPY TYPE_StringLiteral "people." def_%v_3 
 		 2: BRANCH full_description[3.0,2.6,] 
 BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "profile_feedback" def_%v_4 
 		 1: 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "show" def_%v_5 
 		 1: COPY TYPE_PASS def_%v_4 %v_5[6.0,] 
 BB 7
 	outgoing: 8 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "." def_%v_6 
 		 1: (Testimonial) def_%v_7 
 		 2: (inherit GRADES) def_%v_8 %v_7[7.1,] 
 		 3: %v_8[7.2,] 
@@ -324,14 +324,14 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_field 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_5 
+		 7: COPY TYPE_StringLiteral "terms" def_%v_5 
 		 8: def_%v_4 %v_5[2.7,] field[2.5,] 
 		 9: BRANCH %v_4[2.8,] 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "feedback_description" def_%v_7 
 		 1: def_%v_6 %v_7[3.0,] field[2.5,] 
 		 2: BRANCH %v_6[3.1,] 
 BB 4
@@ -339,7 +339,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral "hidden_description_terms" def_%v_10 
 		 2: COPY TYPE_PASS def_%v_3 %v_10[4.1,] 
 		 3: RETURN %v_10[4.1,] %self[2.0,] 
 BB 5
@@ -347,7 +347,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "hidden_description_terms" def_%v_8 
 		 2: COPY TYPE_PASS def_%v_3 %v_8[5.1,] 
 		 3: RETURN %v_8[5.1,] %self[2.0,] 
 BB 6
@@ -355,7 +355,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_9 
+		 1: COPY TYPE_StringLiteral "hidden_description_feedback" def_%v_9 
 		 2: COPY TYPE_PASS def_%v_3 %v_9[6.1,] 
 		 3: RETURN %v_9[6.1,] %self[2.0,] 
 BB 9
@@ -402,15 +402,20 @@ BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDY1tLeY6qZtq8BqDnbArujYyjG
+wGPrkzLhyQMUX4ASW+912gf1RPRJVsuufGuhTYsP+biXxjWAI8rUX1k4YisiOK8u
+flUED8i5Zrpn7dR8NNGQc/A3LLjPzmaqW7g++5Q+iIoSCRYczsUxx6Bmo/a9YIFJ
+WWbeYnKh10eHN/JMewIDAQAB
+-----END PUBLIC KEY-----" def_%v_6 
 		 1: %v_5->new def_%v_7 %v_5[5.0,4.0,] %v_6[6.0,] 	 ARGS:%v_6,
 		 2: COPY TYPE_PASS def_tcpublickey %v_7[6.1,] 
 		 3: 
 		 4: (Base64) def_%v_8 
 		 5: %v_7->public_encrypt def_%v_9 %v_7[6.1,] email[2.5,] 	 ARGS:email,
 		 6: %v_8->encode64 def_%v_10 %v_8[6.4,] %v_9[6.5,] 	 ARGS:%v_9,
-		 7: COPY TYPE_StringLiteral def_%v_11 
-		 8: COPY TYPE_StringLiteral def_%v_12 
+		 7: COPY TYPE_StringLiteral "+/=" def_%v_11 
+		 8: COPY TYPE_StringLiteral "-_~" def_%v_12 
 		 9: %v_10->tr def_%v_13 %v_10[6.6,] %v_11[6.7,] %v_12[6.8,] 	 ARGS:%v_11,%v_12,
 		 10: COPY TYPE_PASS def_encrypted_email %v_13[6.9,] 
 		 11: RETURN %v_13[6.9,] %self[2.0,] 
@@ -435,14 +440,14 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_existing_community 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "communities.signup_form.existing_community_with_this_email" def_%v_3 
+		 8: COPY TYPE_StringLiteral "communities.signup_form.for_" def_%v_4 
 		 9: existing_community->category def_%v_5 existing_community[2.5,] 	 ARGS:
 		 10: BUILDSTRING def_%v_6 %v_4[2.8,] %v_5[2.9,] 
 		 11: %self->t def_%v_7 %self[2.0,] %v_6[2.10,] 	 ARGS:%v_6,
 		 12: %self->class def_%v_8 %self[2.0,2.11,] 	 ARGS:
 		 13: %v_8->helpers def_%v_9 %v_8[2.12,] 	 ARGS:
-		 14: COPY TYPE_StringLiteral def_%v_10 
+		 14: COPY TYPE_StringLiteral "communities.signup_form.here" def_%v_10 
 		 15: %self->t def_%v_11 %self[2.0,2.11,2.12,] %v_10[2.14,] 	 ARGS:%v_10,
 		 16: existing_community->full_url def_%v_12 existing_community[2.5,2.9,] 	 ARGS:
 		 17: %v_9->link_to def_%v_13 %v_9[2.13,] %v_11[2.15,] %v_12[2.16,] 	 ARGS:%v_11,%v_12,
@@ -479,7 +484,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "trustcard-upper" def_%v_5 
 		 2: RETURN %self[2.0,] 
 BB 4
 	outgoing: 5 6 
@@ -493,14 +498,14 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "trustcard-lower" def_%v_7 
 		 2: 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "" def_%v_8 
 		 2: COPY TYPE_PASS def_%v_7 %v_8[6.1,] 
 BB 7
 	outgoing: 9 

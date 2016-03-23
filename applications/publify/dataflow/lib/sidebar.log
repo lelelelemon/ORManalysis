@@ -64,7 +64,7 @@ BB 3
 		 0: %self->key def_%v_5 %self[2.0,] 	 ARGS:
 		 1: %v_5->humanize def_%v_6 %v_5[3.0,] 	 ARGS:
 		 2: COPY TYPE_Regexp def_%v_7 
-		 3: COPY TYPE_StringLiteral def_%v_8 
+		 3: COPY TYPE_StringLiteral "URL" def_%v_8 
 		 4: %v_6->gsub def_%v_9 %v_6[3.1,] %v_8[3.3,] 	 ARGS:%v_7,%v_8,
 		 5: RETURN %v_9[3.4,] %self[3.0,2.0,] 
 BB 4
@@ -93,7 +93,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def__sidebar 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "label" def_%v_3 
 		 8: %self->label def_%v_4 %self[2.0,] 	 ARGS:
 		 9: %self->content_tag def_%v_5 %self[2.0,2.8,] %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_3,%v_4,
 		 10: RETURN %v_5[2.9,] %self[2.0,2.8,2.9,] 
@@ -122,7 +122,7 @@ BB 2
 		 8: sidebar->config def_%v_4 sidebar[2.5,] 	 ARGS:
 		 9: %self->key def_%v_5 %self[2.0,2.7,] 	 ARGS:
 		 10: %v_4->[] def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
-		 11: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral "form-control" def_%v_7 
 		 12: HASH-class- def_%v_8 %v_7[2.11,] 
 		 13: %self->text_field_tag def_%v_9 %self[2.0,2.7,2.9,] %v_3[2.7,] %v_6[2.10,] %v_8[2.12,] 	 ARGS:%v_3,%v_6,%v_8,
 		 14: RETURN %v_9[2.13,] %self[2.0,2.7,2.9,2.13,] 
@@ -151,7 +151,7 @@ BB 2
 		 8: COPY TYPE_PASS def_html %v_3[2.7,] 
 		 9: 
 		 10: %self->input_html def_%v_4 %self[2.0,2.7,] sidebar[2.5,] 	 ARGS:sidebar,
-		 11: COPY TYPE_StringLiteral def_%v_5 
+		 11: COPY TYPE_StringLiteral "form-group" def_%v_5 
 		 12: HASH-class- def_%v_6 %v_5[2.11,] 
 		 13: %self->content_tag def_%v_7 %self[2.0,2.7,2.10,] %v_4[2.10,] %v_6[2.12,] 	 ARGS:Symbol,%v_4,%v_6,
 		 14: html-><< def_%v_8 html[2.8,] %v_7[2.13,] 	 ARGS:%v_7,
@@ -177,11 +177,11 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_sidebar 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "configure[" def_%v_3 
 		 8: sidebar->id def_%v_4 sidebar[2.5,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral "][" def_%v_5 
 		 10: %self->key def_%v_6 %self[2.0,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral "]" def_%v_7 
 		 12: BUILDSTRING def_%v_8 %v_3[2.7,] %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] %v_7[2.11,] 
 		 13: RETURN %v_8[2.12,] %self[2.0,2.10,] 
 BB 3
@@ -258,10 +258,10 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_sidebar 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
-		 9: COPY TYPE_StringLiteral def_%v_5 
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 7: COPY TYPE_StringLiteral "rows" def_%v_3 
+		 8: COPY TYPE_StringLiteral "10" def_%v_4 
+		 9: COPY TYPE_StringLiteral "class" def_%v_5 
+		 10: COPY TYPE_StringLiteral "form-control" def_%v_6 
 		 11: HASH- def_%v_7 %v_3[2.7,] %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] 
 		 12: %self->options def_%v_8 %self[2.0,] 	 ARGS:
 		 13: %v_8->stringify_keys def_%v_9 %v_8[2.12,] 	 ARGS:
@@ -327,7 +327,7 @@ BB 3
 		 8: value->== def_%cl_1_8 value[3.2,] %cl_1_7[3.7,] 	 ARGS:%cl_1_7,
 		 9: %self->options def_%cl_1_9 %self[3.1,3.4,3.6,2.0,] 	 ARGS:
 		 10: %self->radio_button_tag def_%cl_1_10 %self[3.1,3.4,3.6,3.9,2.0,] %cl_1_4[3.4,] value[3.2,3.8,] %cl_1_8[3.8,] %cl_1_9[3.9,] 	 ARGS:%cl_1_4,value,%cl_1_8,%cl_1_9,
-		 11: COPY TYPE_StringLiteral def_%cl_1_11 
+		 11: COPY TYPE_StringLiteral "label" def_%cl_1_11 
 		 12: %self->label_for def_%cl_1_12 %self[3.1,3.4,3.6,3.9,3.10,2.0,] choice[2.2,] 	 ARGS:choice,
 		 13: %self->content_tag def_%cl_1_13 %self[3.1,3.4,3.6,3.9,3.10,3.12,2.0,] %cl_1_11[3.11,] %cl_1_12[3.12,] 	 ARGS:%cl_1_11,%cl_1_12,
 		 14: %cl_1_10->+ def_%cl_1_14 %cl_1_10[3.10,] %cl_1_13[3.13,] 	 ARGS:%cl_1_13,
@@ -344,7 +344,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: choice[2.2,] 
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "<br />" def_%v_6 
 		 11: %v_5->join def_%v_7 %v_5[2.9,] %v_6[2.10,] 	 ARGS:%v_6,
 		 12: RETURN %v_7[2.11,] %self[2.0,2.7,] 
 BB 3
@@ -442,7 +442,7 @@ BB 2
 		 6: 
 		 7: %self->input_name def_%v_3 %self[2.0,] sidebar[2.5,] 	 ARGS:sidebar,
 		 8: %self->hidden_field_tag def_%v_4 %self[2.0,2.7,] %v_3[2.7,] 	 ARGS:%v_3,Fixnum,
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral "label" def_%v_5 
 		 10: 
 		 11: %self->input_name def_%v_6 %self[2.0,2.7,2.8,] sidebar[2.5,] 	 ARGS:sidebar,
 		 12: sidebar->config def_%v_7 sidebar[2.5,] 	 ARGS:
@@ -450,7 +450,7 @@ BB 2
 		 14: %v_7->[] def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 ARGS:%v_8,
 		 15: %self->options def_%v_10 %self[2.0,2.7,2.8,2.11,2.13,] 	 ARGS:
 		 16: %self->check_box_tag def_%v_11 %self[2.0,2.7,2.8,2.11,2.13,2.15,] %v_6[2.11,] %v_9[2.14,] %v_10[2.15,] 	 ARGS:%v_6,Fixnum,%v_9,%v_10,
-		 17: COPY TYPE_StringLiteral def_%v_12 
+		 17: COPY TYPE_StringLiteral " " def_%v_12 
 		 18: %self->label def_%v_13 %self[2.0,2.7,2.8,2.11,2.13,2.15,2.16,] 	 ARGS:
 		 19: BUILDSTRING def_%v_14 %v_11[2.16,] %v_12[2.17,] %v_13[2.18,] 
 		 20: %v_14->html_safe def_%v_15 %v_14[2.19,] 	 ARGS:
@@ -478,7 +478,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_value 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_5 
+		 7: COPY TYPE_StringLiteral "0" def_%v_5 
 		 8: def_%v_4 %v_5[2.7,] value[2.5,] 
 		 9: BRANCH %v_4[2.8,] 
 BB 3
@@ -818,7 +818,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "active_position is null and staged_position is null" def_%v_3 
 		 7: %self->delete_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -947,7 +947,7 @@ BB 9
 	instructions:
 CLOSURE END: 
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%v_18 
+		 15: COPY TYPE_StringLiteral "=" def_%v_18 
 		 16: BUILDSTRING def_%v_19 key[6.2,] %v_18[8.15,] 
 		 17: %self->send def_%v_20 %self[8.2,8.7,8.8,8.13,2.0,] %v_19[8.16,] %self[8.2,8.7,8.8,8.13,2.0,] 	 ARGS:Symbol,%v_19,%self,
 CLOSURE BEGIN: %self[8.2,8.7,8.8,8.13,2.0,] key[6.2,] newval[8.17,] 
@@ -1128,7 +1128,7 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "" def_%v_5 
 		 1: COPY TYPE_PASS def_%v_4 %v_5[7.0,] 
 BB 8
 	outgoing: 10 
@@ -1526,7 +1526,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->short_name def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "-" def_%v_4 
 		 8: %v_3->+ def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: %self->id def_%v_6 %self[2.0,2.6,] 	 ARGS:
 		 10: %v_6->to_s def_%v_7 %v_6[2.9,] 	 ARGS:
@@ -1716,10 +1716,10 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "/" def_%v_3 
 		 7: %self->class def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %v_4->path_name def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "/content" def_%v_6 
 		 10: BUILDSTRING def_%v_7 %v_3[2.6,] %v_5[2.8,] %v_6[2.9,] 
 		 11: RETURN %v_7[2.10,] %self[2.0,2.7,] 
 BB 3
@@ -1881,9 +1881,9 @@ BB 11
 	instructions:
 		 0: COPY TYPE_Nil def_%v_13 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_14 
+		 2: COPY TYPE_StringLiteral "Unknown admin_state: active: " def_%v_14 
 		 3: %self->active_position def_%v_15 %self[2.0,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_16 
+		 4: COPY TYPE_StringLiteral ", staged: " def_%v_16 
 		 5: %self->staged_position def_%v_17 %self[11.3,2.0,] 	 ARGS:
 		 6: BUILDSTRING def_%v_18 %v_14[11.2,] %v_15[11.3,] %v_16[11.4,] %v_17[11.5,] 
 		 7: %self->raise def_%v_19 %self[11.3,11.5,2.0,] %v_18[11.6,] 	 ARGS:%v_18,

@@ -30,11 +30,12 @@ tableau_colors = (
 )
 
 TOTAL_COLOR_NUM=22
-colors = [2, 3, 5, 1, 4, 6]
+colors = [2, 3, 5, 1, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 #applications = ["boxroom","fulcrum","kandan","linuxfr","publify", "lobsters", "railscollab","communityengine","onebody","sugar","railscollab","browsercms","brevidy","amahiPlatform","amahiPlatform_layouts","rucksack","rucksack_layouts"]
 #app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
 
-app_string="amahiPlatform railscollab jobsworth communityengine sharetribe linuxfr rucksack fulcrum tracks brevidy lobsters onebody sugar kandan publify boxroom"
+app_string="amahiPlatform railscollab jobsworth communityengine sharetribe linuxfr rucksack fulcrum tracks brevidy lobsters onebody sugar publify boxroom"
+#app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sharetribe sugar jobsworth boxroom publify railscollab tracks brevidy communityengine"
 
 applications = app_string.split(" ")
 
@@ -68,11 +69,13 @@ def plot_stack_plot(plt, ary_list, legends, stat_name):
 def general_plot(stat_name):
 	ary_list = []
 	legends = []
-	for node in roots[applications[0]]:
-		if node.tag == stat_name:
-			for c in node:
-				ary_list.append([])
-				legends.append(c.tag)
+	for app in applications:
+		for node in roots[app]:
+			if node.tag == stat_name:
+				for c in node:
+					if c.tag not in legends:
+						ary_list.append([])
+						legends.append(c.tag)
 	for app in applications:
 		for node in roots[app]:
 			if node.tag == stat_name:
@@ -80,6 +83,10 @@ def general_plot(stat_name):
 				for child in node:
 					ary_list[i].append(float(child.text))
 					i += 1
+				if len(legends) > i:
+					for j in range(len(legends)-i):
+						ary_list[i].append(0)
+						i += 1
 
 	for ary in ary_list:
 		print "list:"
@@ -91,10 +98,10 @@ if os.path.isdir(result_path) == False:
 
 
 for app in applications:
-	print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
-	os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
+	#print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
+	#os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
 	#print "python collect_nextaction.py %s "%(app)
-	#os.system("python collect_nextaction.py %s"%(app))
+	#os.system("python collect_nextaction.py %s %s/nextaction_%s_stat.xml"%(app, result_path, app))
 	#print "python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app)
 	#os.system("python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app))
 	fname = "%s/%s_stat.xml"%(result_path, app)
@@ -102,9 +109,24 @@ for app in applications:
 	roots[app] = tree.getroot()
 	print ""
 
-stats = ["queryGeneral","branch","usedInView","onlyFromUser","queryTrivialBranch","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction","transactionNested"]
-#stats = ["transaction"]
+#stats = ["queryGeneral","branch","usedInView","onlyFromUser","queryTrivialBranch","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction","transactionNested", "queryString"]
+stats = ["readSink"]
 
 for s in stats:
 	print "printing %s..."%s
 	general_plot(s)
+
+#NA stands for NextAction
+roots = {}
+app_string="lobsters amahiPlatform fulcrum onebody rucksack sharetribe jobsworth publify railscollab tracks brevidy communityengine"
+
+applications = app_string.split(" ")
+
+for app in applications:
+	fname = "%s/nextaction_%s_stat.xml"%(result_path, app)
+	tree = ET.parse(fname)
+	roots[app] = tree.getroot()
+
+#general_plot("nextAction")
+
+

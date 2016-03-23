@@ -13,9 +13,9 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 6: COPY TYPE_StringLiteral "Verse" def_%v_3 
+		 7: COPY TYPE_StringLiteral "Note" def_%v_4 
+		 8: COPY TYPE_StringLiteral "Album" def_%v_5 
 		 9: COPY TYPE_Array def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
 		 10: %self->streamable_type def_%v_7 %self[2.0,] 	 ARGS:
 		 11: %v_6->include? def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 ARGS:%v_7,
@@ -49,9 +49,9 @@ BB 2
 		 12: %v_5->where def_%v_8 %v_5[2.9,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: HASH-shared- def_%v_9 
 		 14: %v_8->where def_%v_10 %v_8[2.12,] %v_9[2.13,] 	 ARGS:%v_9,
-		 15: COPY TYPE_StringLiteral def_%v_11 
+		 15: COPY TYPE_StringLiteral "(group_id is not null or streamable_type != 'Message')" def_%v_11 
 		 16: %v_10->where def_%v_12 %v_10[2.14,] %v_11[2.15,] 	 ARGS:%v_11,
-		 17: COPY TYPE_StringLiteral def_%v_13 
+		 17: COPY TYPE_StringLiteral "(group_id in (:group_ids) or (group_id is null and person_id in (:friend_ids)) or person_id = :id or streamable_type in ('NewsItem', 'Site', 'Person') or is_public = :true)" def_%v_13 
 		 18: person->groups def_%v_14 person[2.5,] 	 ARGS:
 		 19: %v_14->active def_%v_15 %v_14[2.18,] 	 ARGS:
 		 20: %v_15->pluck def_%v_16 %v_15[2.19,] 	 ARGS:Symbol,
@@ -60,7 +60,7 @@ BB 2
 		 23: person->id def_%v_19 person[2.5,2.18,2.21,] 	 ARGS:
 		 24: HASH-group_ids-friend_ids-id-true- def_%v_20 %v_16[2.20,] %v_18[2.22,] %v_19[2.23,] 
 		 25: %v_12->where def_%v_21 %v_12[2.16,] %v_13[2.17,] %v_20[2.24,] 	 ARGS:%v_13,%v_20,
-		 26: COPY TYPE_StringLiteral def_%v_22 
+		 26: COPY TYPE_StringLiteral "streamable_type != 'Person' or person_id != :id" def_%v_22 
 		 27: person->id def_%v_23 person[2.5,2.18,2.21,2.23,] 	 ARGS:
 		 28: HASH-id- def_%v_24 %v_23[2.27,] 
 		 29: %v_21->where def_%v_25 %v_21[2.25,] %v_22[2.26,] %v_24[2.28,] 	 ARGS:%v_22,%v_24,
@@ -108,7 +108,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "Message" def_%cl_1_3 
 		 2: types-><< def_%cl_1_4 types[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: 
 		 4: (Setting) def_%cl_1_5 
@@ -118,7 +118,7 @@ BB 4
 	outgoing: 6 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_7 
+		 0: COPY TYPE_StringLiteral "NewsItem" def_%cl_1_7 
 		 1: types-><< def_%cl_1_8 types[2.2,] %cl_1_7[4.0,] 	 ARGS:%cl_1_7,
 		 2: 
 BB 5
@@ -138,7 +138,7 @@ BB 7
 	outgoing: 9 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_11 
+		 0: COPY TYPE_StringLiteral "Verse" def_%cl_1_11 
 		 1: types-><< def_%cl_1_12 types[2.2,] %cl_1_11[7.0,] 	 ARGS:%cl_1_11,
 		 2: 
 BB 8
@@ -158,7 +158,7 @@ BB 10
 	outgoing: 12 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_15 
+		 0: COPY TYPE_StringLiteral "Album" def_%cl_1_15 
 		 1: types-><< def_%cl_1_16 types[2.2,] %cl_1_15[10.0,] 	 ARGS:%cl_1_15,
 		 2: 
 BB 11
@@ -178,7 +178,7 @@ BB 13
 	outgoing: 15 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_19 
+		 0: COPY TYPE_StringLiteral "Note" def_%cl_1_19 
 		 1: types-><< def_%cl_1_20 types[2.2,] %cl_1_19[13.0,] 	 ARGS:%cl_1_19,
 		 2: 
 BB 14
@@ -191,16 +191,16 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_21 
+		 1: COPY TYPE_StringLiteral "Person" def_%cl_1_21 
 		 2: types-><< def_%cl_1_22 types[2.2,] %cl_1_21[15.1,] 	 ARGS:%cl_1_21,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_23 
+		 4: COPY TYPE_StringLiteral "PrayerRequest" def_%cl_1_23 
 		 5: types-><< def_%cl_1_24 types[15.2,2.2,] %cl_1_23[15.4,] 	 ARGS:%cl_1_23,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_1_25 
+		 7: COPY TYPE_StringLiteral "Site" def_%cl_1_25 
 		 8: types-><< def_%cl_1_26 types[15.2,15.5,2.2,] %cl_1_25[15.7,] 	 ARGS:%cl_1_25,
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_1_27 
+		 10: COPY TYPE_StringLiteral "StreamItemGroup" def_%cl_1_27 
 		 11: types-><< def_%cl_1_28 types[15.2,15.5,15.8,2.2,] %cl_1_27[15.10,] 	 ARGS:%cl_1_27,
 		 12: RETURN %cl_1_28[15.11,] %self[2.0,] 
 BB 16

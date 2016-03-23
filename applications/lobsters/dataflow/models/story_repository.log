@@ -57,7 +57,7 @@ BB 2
 		 10: %self->filter_hidden_and_tags def_%v_5 %self[2.0,2.6,2.7,] %v_4[2.7,] 	 ARGS:hottest,
 		 11: COPY TYPE_PASS def_hottest %v_5[2.10,] 
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%v_6 
+		 13: COPY TYPE_StringLiteral "hotness" def_%v_6 
 		 14: %v_5->order def_%v_7 %v_5[2.10,] %v_6[2.13,] 	 ARGS:%v_6,
 		 15: RETURN %v_7[2.14,] %self[2.0,2.6,2.7,2.10,] 
 BB 3
@@ -132,7 +132,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_17 
+		 1: COPY TYPE_StringLiteral "hotness" def_%v_17 
 		 2: hidden->order def_%v_18 hidden[6.4,3.6,2.7,] %v_17[8.1,] 	 ARGS:%v_17,
 		 3: RETURN %v_18[8.2,] %self[2.0,] 
 BB 9
@@ -159,7 +159,7 @@ BB 2
 		 7: %self->filter_hidden_and_tags def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: COPY TYPE_PASS def_newest %v_4[2.7,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral "stories.id DESC" def_%v_5 
 		 11: %v_4->order def_%v_6 %v_4[2.7,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: RETURN %v_6[2.11,] %self[2.0,2.6,2.7,] 
 BB 3
@@ -187,7 +187,7 @@ BB 2
 		 8: user->id def_%v_4 user[2.5,] 	 ARGS:
 		 9: HASH-user_id- def_%v_5 %v_4[2.8,] 
 		 10: %v_3->where def_%v_6 %v_3[2.7,] %v_5[2.9,] 	 ARGS:%v_5,
-		 11: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral "stories.id DESC" def_%v_7 
 		 12: %v_6->order def_%v_8 %v_6[2.10,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: RETURN %v_8[2.12,] %self[2.0,2.7,] 
 BB 3
@@ -220,7 +220,7 @@ BB 3
 	outgoing: 5 4 
 	datadep: 
 	instructions:
-		 0: def_%v_5 %self[2.0,] 	 ARGS:
+		 0: CONSTANT def_%v_5 %self[2.0,] 	 ARGS:
 CLOSURE BEGIN: stories[2.7,] x[] %self[2.0,] s[] story_ids[2.10,] keep_ids[3.0,] 
 BB 1
 	outgoing: 20 2 
@@ -251,7 +251,7 @@ BB 3
 		 9: %cl_1_9->ago def_%cl_1_10 %cl_1_9[3.8,] 	 ARGS:
 		 10: %cl_1_6->gt def_%cl_1_11 %cl_1_6[3.4,] %cl_1_10[3.9,] 	 ARGS:%cl_1_10,
 		 11: %cl_1_3->where def_%cl_1_12 %cl_1_3[3.1,] %cl_1_11[3.10,] 	 ARGS:%cl_1_11,
-		 12: COPY TYPE_StringLiteral def_%cl_1_13 
+		 12: COPY TYPE_StringLiteral "stories.created_at DESC" def_%cl_1_13 
 		 13: %cl_1_12->order def_%cl_1_14 %cl_1_12[3.11,] %cl_1_13[3.12,] 	 ARGS:%cl_1_13,
 		 14: %cl_1_14->reject def_%cl_1_15 %cl_1_14[3.13,] %self[2.0,] 	 ARGS:%cl_1_14,
 CLOSURE BEGIN: s[3.14,] 
@@ -417,7 +417,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "stories.created_at DESC" def_%v_7 
 		 2: stories->order def_%v_8 stories[3.0,] %v_7[5.1,] 	 ARGS:%v_7,
 		 3: RETURN %v_8[5.2,] %self[2.0,] 
 BB 6
@@ -464,7 +464,7 @@ BB 2
 		 27: tagged->where def_%v_21 tagged[2.9,] %v_20[2.26,] 	 ARGS:%v_20,
 		 28: COPY TYPE_PASS def_tagged %v_21[2.27,] 
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%v_22 
+		 30: COPY TYPE_StringLiteral "stories.created_at DESC" def_%v_22 
 		 31: %v_21->order def_%v_23 %v_21[2.27,] %v_22[2.30,] 	 ARGS:%v_22,
 		 32: RETURN %v_23[2.31,] %self[2.0,2.7,2.8,] 
 BB 3
@@ -489,13 +489,13 @@ BB 2
 		 5: RECEIVEARG def_length 
 		 6: 
 		 7: %self->base_scope def_%v_3 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "created_at >= (NOW() - INTERVAL " def_%v_4 
 		 9: 
 		 10: length->[] def_%v_5 length[2.5,] 	 ARGS:Symbol,
-		 11: COPY TYPE_StringLiteral def_%v_6 
+		 11: COPY TYPE_StringLiteral " " def_%v_6 
 		 12: length->[] def_%v_7 length[2.5,2.10,] 	 ARGS:Symbol,
 		 13: %v_7->upcase def_%v_8 %v_7[2.12,] 	 ARGS:
-		 14: COPY TYPE_StringLiteral def_%v_9 
+		 14: COPY TYPE_StringLiteral ")" def_%v_9 
 		 15: BUILDSTRING def_%v_10 %v_5[2.10,] %v_6[2.11,] %v_8[2.13,] %v_9[2.14,] 
 		 16: %v_4-><< def_%v_11 %v_4[2.8,] %v_10[2.15,] 	 ARGS:%v_10,
 		 17: %v_3->where def_%v_12 %v_3[2.7,] %v_11[2.16,] 	 ARGS:%v_11,
@@ -503,7 +503,7 @@ BB 2
 		 19: 
 		 20: (Story) def_%v_13 
 		 21: %v_13->score_sql def_%v_14 %v_13[2.20,] 	 ARGS:
-		 22: COPY TYPE_StringLiteral def_%v_15 
+		 22: COPY TYPE_StringLiteral " DESC" def_%v_15 
 		 23: BUILDSTRING def_%v_16 %v_14[2.21,] %v_15[2.22,] 
 		 24: top->order def_%v_17 top[2.18,] %v_16[2.23,] 	 ARGS:%v_16,
 		 25: RETURN %v_17[2.24,] %self[2.0,2.7,] 
@@ -696,7 +696,7 @@ BB 2
 		 6: 
 		 7: (Story) def_%v_3 
 		 8: %v_3->score_sql def_%v_4 %v_3[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral " >= -1" def_%v_5 
 		 10: BUILDSTRING def_%v_6 %v_4[2.8,] %v_5[2.9,] 
 		 11: scope->where def_%v_7 scope[2.5,] %v_6[2.10,] 	 ARGS:%v_6,
 		 12: RETURN %v_7[2.11,] %self[2.0,] 

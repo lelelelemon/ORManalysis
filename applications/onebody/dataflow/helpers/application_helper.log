@@ -53,7 +53,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_8 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_8 
 		 2: RETURN %cl_1_8[5.1,] %self[2.0,] 
 BB 6
 	outgoing: 9 
@@ -127,7 +127,7 @@ BB 7
 	instructions:
 		 0: 
 		 1: COPY TYPE_Regexp def_%v_5 
-		 2: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral "<br/>" def_%v_6 
 		 3: text->gsub def_%v_7 text[5.2,2.5,] %v_6[7.2,] 	 ARGS:%v_5,%v_6,
 		 4: %v_7->html_safe def_%v_8 %v_7[7.3,] 	 ARGS:
 		 5: RETURN %v_8[7.4,] %self[2.0,] 
@@ -153,7 +153,9 @@ BB 2
 		 5: RECEIVEARG def_text 
 		 6: 
 		 7: COPY TYPE_Regexp def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "
+
+" def_%v_4 
 		 9: text->gsub def_%v_5 text[2.5,] %v_4[2.8,] 	 ARGS:%v_3,%v_4,
 		 10: RETURN %v_5[2.9,] %self[2.0,] 
 BB 3
@@ -242,10 +244,10 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "" def_%v_7 
 		 2: url->sub def_%v_8 url[2.5,] regex[6.2,5.2,] %v_7[7.1,] 	 ARGS:regex,%v_7,
 		 3: COPY TYPE_Regexp def_%v_9 
-		 4: COPY TYPE_StringLiteral def_%v_10 
+		 4: COPY TYPE_StringLiteral "" def_%v_10 
 		 5: %v_8->sub def_%v_11 %v_8[7.2,] %v_10[7.4,] 	 ARGS:%v_9,%v_10,
 		 6: RETURN %v_11[7.5,] %self[2.0,] 
 BB 8
@@ -362,7 +364,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_3 
+		 1: COPY TYPE_StringLiteral "help/" def_%v_3 
 		 2: BUILDSTRING def_%v_4 %v_3[4.1,] name[3.0,2.5,] 
 		 3: %self->page_for_public_path def_%v_5 %self[2.0,] %v_4[4.2,] 	 ARGS:%v_4,
 		 4: RETURN %v_5[4.3,] %self[4.3,2.0,] 
@@ -513,7 +515,7 @@ BB 15
 	instructions:
 		 0: %v_16->helpers def_%v_17 %v_16[14.0,13.2,] 	 ARGS:
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_18 
+		 2: COPY TYPE_StringLiteral "(" def_%v_18 
 		 3: format->index def_%v_19 format[7.1,] %v_18[15.2,] 	 ARGS:%v_18,
 		 4: BRANCH %v_19[15.3,] 
 BB 16
@@ -603,7 +605,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_11 
+		 1: COPY TYPE_StringLiteral "tel:" def_%v_11 
 		 2: phone->digits_only def_%v_12 phone[2.5,] 	 ARGS:
 		 3: BUILDSTRING def_%v_13 %v_11[9.1,] %v_12[9.2,] 
 		 4: %self->link_to def_%v_14 %self[2.0,] label[8.2,6.3,] %v_13[9.3,] options[3.1,2.6,] 	 ARGS:label,%v_13,options,
@@ -640,7 +642,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: COPY TYPE_Regexp def_%v_6 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "" def_%v_7 
 		 2: n->sub def_%v_8 n[2.10,] %v_7[3.1,] 	 ARGS:%v_6,%v_7,
 		 3: RETURN %v_8[3.2,] %self[2.0,] 
 BB 4
@@ -788,7 +790,7 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral "callout callout-danger form-errors" def_%v_6 
 		 3: HASH-class- def_%v_7 %v_6[4.2,] 
 		 4: %self->content_tag def_%v_8 %self[2.0,] %v_7[4.3,] %self[2.0,] 	 ARGS:Symbol,%v_7,%self,
 CLOSURE BEGIN: %self[2.0,] obj[2.5,] attribute[] message[] 
@@ -809,10 +811,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "There_were_errors" def_%cl_1_3 
 		 2: %self->t def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: %self->content_tag def_%cl_1_5 %self[3.2,2.0,] %cl_1_4[3.2,] 	 ARGS:Symbol,%cl_1_4,
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 4: COPY TYPE_StringLiteral "list" def_%cl_1_6 
 		 5: HASH-class- def_%cl_1_7 %cl_1_6[3.4,] 
 		 6: %self->content_tag def_%cl_1_8 %self[3.2,3.3,2.0,] %cl_1_7[3.5,] %self[3.2,3.3,2.0,] 	 ARGS:Symbol,%cl_1_7,%self,
 CLOSURE BEGIN: %self[3.2,3.3,2.0,] obj[] attribute[] message[] 
@@ -858,7 +860,7 @@ BB 3
 		 1: obj->class def_%cl_3_3 obj[] 	 ARGS:
 		 2: %cl_3_3->name def_%cl_3_4 %cl_3_3[3.1,] 	 ARGS:
 		 3: %cl_3_4->underscore def_%cl_3_5 %cl_3_4[3.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_3_6 
+		 4: COPY TYPE_StringLiteral "_" def_%cl_3_6 
 		 5: BUILDSTRING def_%cl_3_7 %cl_3_5[3.3,] %cl_3_6[3.4,] attribute[2.2,] 
 		 6: HASH-attribute- def_%cl_3_8 %cl_3_7[3.5,] 
 		 7: HASH-data- def_%cl_3_9 %cl_3_8[3.6,] 
@@ -1091,15 +1093,15 @@ BB 2
 		 7: %self->params def_%v_3 %self[2.0,] 	 ARGS:
 		 8: %v_3->[] def_%v_4 %v_3[2.7,] 	 ARGS:Symbol,
 		 9: %v_4->to_s def_%v_5 %v_4[2.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "," def_%v_6 
 		 11: %v_5->split def_%v_7 %v_5[2.9,] %v_6[2.10,] 	 ARGS:%v_6,
 		 12: COPY TYPE_PASS def_old_params %v_7[2.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%v_8 
+		 14: COPY TYPE_StringLiteral "," def_%v_8 
 		 15: sort->split def_%v_9 sort[2.5,] %v_8[2.14,] 	 ARGS:%v_8,
 		 16: %v_9->+ def_%v_10 %v_9[2.15,] old_params[2.12,] 	 ARGS:old_params,
 		 17: %v_10->uniq def_%v_11 %v_10[2.16,] 	 ARGS:
-		 18: COPY TYPE_StringLiteral def_%v_12 
+		 18: COPY TYPE_StringLiteral "," def_%v_12 
 		 19: %v_11->join def_%v_13 %v_11[2.17,] %v_12[2.18,] 	 ARGS:%v_12,
 		 20: RETURN %v_13[2.19,] %self[2.0,2.7,] 
 BB 3
@@ -1126,22 +1128,22 @@ BB 2
 		 7: %v_3->get def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,Symbol,
 		 8: COPY TYPE_Regexp def_%v_5 
 		 9: (I18n) def_%v_6 
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "date_format.YYYY" def_%v_7 
 		 11: %v_6->t def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: %v_4->gsub def_%v_9 %v_4[2.7,] %v_5[2.8,] %v_8[2.11,] 	 ARGS:%v_5,%v_8,
 		 13: COPY TYPE_Regexp def_%v_10 
 		 14: (I18n) def_%v_11 
-		 15: COPY TYPE_StringLiteral def_%v_12 
+		 15: COPY TYPE_StringLiteral "date_format.MM" def_%v_12 
 		 16: %v_11->t def_%v_13 %v_11[2.14,] %v_12[2.15,] 	 ARGS:%v_12,
 		 17: %v_9->gsub def_%v_14 %v_9[2.12,] %v_10[2.13,] %v_13[2.16,] 	 ARGS:%v_10,%v_13,
 		 18: COPY TYPE_Regexp def_%v_15 
 		 19: (I18n) def_%v_16 
-		 20: COPY TYPE_StringLiteral def_%v_17 
+		 20: COPY TYPE_StringLiteral "date_format.DD" def_%v_17 
 		 21: %v_16->t def_%v_18 %v_16[2.19,] %v_17[2.20,] 	 ARGS:%v_17,
 		 22: %v_14->gsub def_%v_19 %v_14[2.17,] %v_15[2.18,] %v_18[2.21,] 	 ARGS:%v_15,%v_18,
 		 23: COPY TYPE_PASS def_placeholder %v_19[2.22,] 
 		 24: 
-		 25: COPY TYPE_StringLiteral def_%v_20 
+		 25: COPY TYPE_StringLiteral "%" def_%v_20 
 		 26: %v_19->include? def_%v_21 %v_19[2.22,] %v_20[2.25,] 	 ARGS:%v_20,
 		 27: BRANCH %v_21[2.26,] 
 BB 3
@@ -1207,7 +1209,7 @@ BB 2
 		 12: args->pop def_%v_5 args[2.5,2.9,] 	 ARGS:
 		 13: COPY TYPE_PASS def_js %v_5[2.12,] 
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%v_6 
+		 15: COPY TYPE_StringLiteral ";return false;" def_%v_6 
 		 16: %v_5->+ def_%v_7 %v_5[2.12,] %v_6[2.15,] 	 ARGS:%v_6,
 		 17: ATTRASSIGN options->[] %v_7[2.16,] 
 		 18: 
@@ -1253,7 +1255,7 @@ BB 4
 		 0: 
 		 1: ATTRASSIGN options->[] css_class[2.5,] 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%v_4 
+		 3: COPY TYPE_StringLiteral "" def_%v_4 
 		 4: %self->content_tag def_%v_5 %self[2.0,] %v_4[4.3,] options[4.1,3.1,2.6,] 	 ARGS:Symbol,%v_4,options,
 		 5: RETURN %v_5[4.4,] %self[4.4,2.0,] 
 BB 5
@@ -1413,8 +1415,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral " " def_%v_4 
+		 2: COPY TYPE_StringLiteral "…" def_%v_5 
 		 3: HASH-separator-omission- def_%v_6 %v_4[4.1,] %v_5[4.2,] 
 		 4: options->reverse_merge def_%v_7 options[3.1,2.6,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: %self->truncate def_%v_8 %self[2.0,] text[2.5,] %v_7[4.4,] 	 ARGS:text,%v_7,
@@ -1441,7 +1443,7 @@ BB 2
 		 5: 
 		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "administration/settings" def_%v_5 
 		 9: %v_4->== def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: BRANCH %v_6[2.9,] 
 BB 3

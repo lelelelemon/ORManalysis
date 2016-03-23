@@ -661,9 +661,9 @@ BB 2
 		 9: %v_3->find def_%v_4 %v_3[2.8,] transaction_id[2.5,] 	 ARGS:transaction_id,
 		 10: %v_4->conversation def_%v_5 %v_4[2.9,] 	 ARGS:
 		 11: %v_5->participations def_%v_6 %v_5[2.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_7 
+		 12: COPY TYPE_StringLiteral "person_id != '" def_%v_7 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%v_8 
+		 14: COPY TYPE_StringLiteral "'" def_%v_8 
 		 15: BUILDSTRING def_%v_9 %v_7[2.12,] person_id[2.6,] %v_8[2.14,] 
 		 16: %v_6->where def_%v_10 %v_6[2.11,] %v_9[2.15,] 	 ARGS:%v_9,
 		 17: HASH-is_read- def_%v_11 
@@ -695,9 +695,9 @@ BB 2
 		 9: %v_3->find def_%v_4 %v_3[2.8,] transaction_id[2.5,] 	 ARGS:transaction_id,
 		 10: %v_4->conversation def_%v_5 %v_4[2.9,] 	 ARGS:
 		 11: %v_5->participations def_%v_6 %v_5[2.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_7 
+		 12: COPY TYPE_StringLiteral "person_id = '" def_%v_7 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%v_8 
+		 14: COPY TYPE_StringLiteral "'" def_%v_8 
 		 15: BUILDSTRING def_%v_9 %v_7[2.12,] person_id[2.6,] %v_8[2.14,] 
 		 16: %v_6->where def_%v_10 %v_6[2.11,] %v_9[2.15,] 	 ARGS:%v_9,
 		 17: HASH-is_read- def_%v_11 
@@ -1085,7 +1085,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "starter_id = ? OR listings.author_id = ?" def_%cl_1_3 
 		 2: rel->where def_%cl_1_4 rel[] %cl_1_3[3.1,] person_id[2.2,] person_id[2.2,] 	 ARGS:%cl_1_3,person_id,person_id,
 		 3: COPY TYPE_Array def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: RETURN %cl_1_5[3.3,] %self[2.0,] 
@@ -1197,7 +1197,7 @@ BB 2
 		 15: %v_6->limit def_%v_7 %v_6[2.14,] limit[2.8,] 	 ARGS:limit,
 		 16: %v_7->offset def_%v_8 %v_7[2.15,] offset[2.9,] 	 ARGS:offset,
 		 17: 
-		 18: COPY TYPE_StringLiteral def_%v_9 
+		 18: COPY TYPE_StringLiteral " " def_%v_9 
 		 19: BUILDSTRING def_%v_10 sort_column[2.6,] %v_9[2.18,] sort_direction[2.7,] 
 		 20: %v_8->order def_%v_11 %v_8[2.16,] %v_10[2.19,] 	 ARGS:%v_10,
 		 21: COPY TYPE_PASS def_transactions %v_11[2.20,] 
@@ -1404,13 +1404,24 @@ BB 2
 		 7: RECEIVEARG def_limit 
 		 8: RECEIVEARG def_offset 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%v_3 
-		 11: COPY TYPE_StringLiteral def_%v_4 
+		 10: COPY TYPE_StringLiteral "
+          SELECT transactions.* FROM transactions
+
+          # Get 'last_transition_at'
+          # (this is done by joining the transitions table to itself where created_at < created_at OR sort_key < sort_key, if created_at equals)
+          LEFT JOIN conversations ON transactions.conversation_id = conversations.id
+          WHERE transactions.community_id = " def_%v_3 
+		 11: COPY TYPE_StringLiteral " AND transactions.deleted = 0
+          ORDER BY
+            GREATEST(COALESCE(transactions.last_transition_at, 0),
+              COALESCE(conversations.last_message_at, 0)) " def_%v_4 
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%v_5 
+		 13: COPY TYPE_StringLiteral "
+          LIMIT " def_%v_5 
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%v_6 
-		 16: COPY TYPE_StringLiteral def_%v_7 
+		 15: COPY TYPE_StringLiteral " OFFSET " def_%v_6 
+		 16: COPY TYPE_StringLiteral "
+        " def_%v_7 
 		 17: BUILDSTRING def_%v_8 %v_3[2.10,] community_id[2.5,] %v_4[2.11,] sort_direction[2.6,] %v_5[2.13,] limit[2.7,] %v_6[2.15,] offset[2.8,] %v_7[2.16,] 
 		 18: RETURN %v_8[2.17,] %self[2.0,] 
 BB 3

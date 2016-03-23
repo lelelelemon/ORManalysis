@@ -21,7 +21,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_4 
 		 2: date->strftime def_%v_5 date[2.5,] %v_4[3.1,] 	 ARGS:%v_4,
 		 3: ATTRASSIGN %self->[] %v_5[3.2,] 
 		 4: RETURN %v_5[3.2,] %self[3.3,2.0,] 
@@ -53,9 +53,9 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Relationship) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "person_id = ? and other_name like ?" def_%v_4 
 		 8: %self->person_id def_%v_5 %self[2.0,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "%Check-in Person%" def_%v_6 
 		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_4,%v_5,%v_6,
 		 11: %v_7->map def_%v_8 %v_7[2.10,] 	 ARGS:
 		 12: %v_8->uniq def_%v_9 %v_8[2.11,] 	 ARGS:
@@ -132,7 +132,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "" def_%v_3 
 		 7: %v_3->tap def_%v_4 %v_3[2.6,] %self[2.0,] 	 ARGS:%v_3,
 CLOSURE BEGIN: %self[2.0,] syms[2.7,] 
 BB 1
@@ -160,7 +160,7 @@ BB 4
 	outgoing: 6 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_5 
+		 0: COPY TYPE_StringLiteral "+" def_%cl_1_5 
 		 1: syms-><< def_%cl_1_6 syms[2.2,] %cl_1_5[4.0,] 	 ARGS:%cl_1_5,
 		 2: 
 BB 5
@@ -180,7 +180,7 @@ BB 7
 	outgoing: 9 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_9 
+		 0: COPY TYPE_StringLiteral "!" def_%cl_1_9 
 		 1: syms-><< def_%cl_1_10 syms[2.2,] %cl_1_9[7.0,] 	 ARGS:%cl_1_9,
 		 2: 
 BB 8
@@ -228,13 +228,13 @@ BB 2
 		 5: RECEIVEARG def_attended_at 
 		 6: 
 		 7: (Group) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "id in (select group_id from attendance_records where attended_at >= ? and attended_at <= ?)" def_%v_4 
+		 9: COPY TYPE_StringLiteral "%Y-%m-%d 0:00" def_%v_5 
 		 10: attended_at->strftime def_%v_6 attended_at[2.5,] %v_5[2.9,] 	 ARGS:%v_5,
-		 11: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral "%Y-%m-%d 23:59:59" def_%v_7 
 		 12: attended_at->strftime def_%v_8 attended_at[2.5,2.10,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: %v_3->where def_%v_9 %v_3[2.7,] %v_4[2.8,] %v_6[2.10,] %v_8[2.12,] 	 ARGS:%v_4,%v_6,%v_8,
-		 14: COPY TYPE_StringLiteral def_%v_10 
+		 14: COPY TYPE_StringLiteral "name" def_%v_10 
 		 15: %v_9->order def_%v_11 %v_9[2.13,] %v_10[2.14,] 	 ARGS:%v_10,
 		 16: RETURN %v_11[2.15,] %self[2.0,] 
 BB 3
@@ -259,10 +259,10 @@ BB 2
 		 5: RECEIVEARG def_people_ids 
 		 6: RECEIVEARG def_date 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "person_id in (?) and attended_at >= ? and attended_at <= ?" def_%v_3 
+		 9: COPY TYPE_StringLiteral "%Y-%m-%d 0:00" def_%v_4 
 		 10: date->strftime def_%v_5 date[2.6,] %v_4[2.9,] 	 ARGS:%v_4,
-		 11: COPY TYPE_StringLiteral def_%v_6 
+		 11: COPY TYPE_StringLiteral "%Y-%m-%d 23:59:59" def_%v_6 
 		 12: date->strftime def_%v_7 date[2.6,2.10,] %v_6[2.11,] 	 ARGS:%v_6,
 		 13: %self->where def_%v_8 %self[2.0,] %v_3[2.8,] people_ids[2.5,] %v_5[2.10,] %v_7[2.12,] 	 ARGS:%v_3,people_ids,%v_5,%v_7,
 		 14: RETURN %v_8[2.13,] %self[2.0,2.13,] 
@@ -360,7 +360,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: person->id def_%cl_1_7 person[] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_8 
+		 2: COPY TYPE_StringLiteral "%Y-%m-%d %H:%M:%S" def_%cl_1_8 
 		 3: attended_at->strftime def_%cl_1_9 attended_at[3.6,] %cl_1_8[4.2,] 	 ARGS:%cl_1_8,
 		 4: HASH-person_id-attended_at- def_%cl_1_10 %cl_1_7[4.1,] %cl_1_9[4.3,] 
 		 5: %self->where def_%cl_1_11 %self[2.0,] %cl_1_10[4.4,] 	 ARGS:%cl_1_10,
@@ -382,7 +382,7 @@ BB 7
 	outgoing: 8 14 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_14 
+		 0: COPY TYPE_StringLiteral "id" def_%cl_1_14 
 		 1: group_time_hash->[] def_%cl_1_15 group_time_hash[2.3,] %cl_1_14[7.0,] 	 ARGS:%cl_1_14,
 		 2: COPY TYPE_PASS def_%cl_1_13 %cl_1_15[7.1,] 
 BB 8
@@ -396,7 +396,7 @@ BB 9
 	instructions:
 		 0: 
 		 1: (GroupTime) def_%cl_1_16 
-		 2: COPY TYPE_StringLiteral def_%cl_1_17 
+		 2: COPY TYPE_StringLiteral "id" def_%cl_1_17 
 		 3: group_time_hash->[] def_%cl_1_18 group_time_hash[2.3,] %cl_1_17[9.2,] 	 ARGS:%cl_1_17,
 		 4: %cl_1_16->find def_%cl_1_19 %cl_1_16[9.1,] %cl_1_18[9.3,] 	 ARGS:%cl_1_18,
 		 5: COPY TYPE_PASS def_group_time %cl_1_19[9.4,] 

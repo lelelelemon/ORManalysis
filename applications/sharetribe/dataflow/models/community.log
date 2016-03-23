@@ -34,7 +34,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "only_public_listings" def_%cl_1_3 
 		 2: COPY TYPE_Array def_%cl_1_4 %cl_1_3[3.1,] 
 		 3: c->name def_%cl_1_5 c[2.2,] 	 ARGS:
 		 4: %cl_1_4->include? def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
@@ -124,7 +124,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: %self->community_customizations def_%cl_1_11 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_12 
+		 2: COPY TYPE_StringLiteral "name IS NOT NULL" def_%cl_1_12 
 		 3: %cl_1_11->where def_%cl_1_13 %cl_1_11[6.1,] %cl_1_12[6.2,] 	 ARGS:%cl_1_12,
 		 4: %cl_1_13->order def_%cl_1_14 %cl_1_13[6.3,] 	 ARGS:Symbol,
 		 5: %cl_1_14->last def_%cl_1_15 %cl_1_14[6.4,] 	 ARGS:
@@ -169,9 +169,9 @@ BB 4
 	instructions:
 		 0: 
 		 1: (ArgumentError) def_%v_10 
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral "Cannot find translation for marketplace name community_id: " def_%v_11 
 		 3: %self->id def_%v_12 %self[2.0,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_13 
+		 4: COPY TYPE_StringLiteral ", locale: " def_%v_13 
 		 5: BUILDSTRING def_%v_14 %v_11[4.2,] %v_12[4.3,] %v_13[4.4,] locale[2.5,] 
 		 6: %v_10->new def_%v_15 %v_10[4.1,] %v_14[4.5,] 	 ARGS:%v_14,
 		 7: %self->raise def_%v_16 %self[4.3,2.0,] %v_15[4.6,] 	 ARGS:%v_15,
@@ -221,7 +221,7 @@ BB 2
 		 5: RECEIVEARG def_locale 
 		 6: 
 		 7: %self->name def_%v_3 %self[2.0,] locale[2.5,] 	 ARGS:locale,
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral " " def_%v_4 
 		 9: %v_3->include? def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: BRANCH %v_5[2.9,] 
 BB 3
@@ -229,7 +229,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: locale->to_s def_%v_6 locale[2.5,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "fi" def_%v_7 
 		 2: %v_6->eql? def_%v_8 %v_6[3.0,] %v_7[3.1,] 	 ARGS:%v_7,
 		 3: COPY TYPE_PASS def_%v_5 %v_8[3.2,] 
 BB 4
@@ -242,7 +242,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: %self->name def_%v_9 %self[2.0,] locale[2.5,] 	 ARGS:locale,
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral " " def_%v_10 
 		 2: BUILDSTRING def_%v_11 %v_9[5.0,] %v_10[5.1,] 
 		 3: RETURN %v_11[5.2,] %self[5.0,2.0,] 
 BB 6
@@ -273,7 +273,7 @@ BB 2
 		 5: RECEIVEARG def_locale 
 		 6: 
 		 7: %self->full_name def_%v_3 %self[2.0,] locale[2.5,] 	 ARGS:locale,
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral " " def_%v_4 
 		 9: %v_3->include? def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: BRANCH %v_5[2.9,] 
 BB 3
@@ -281,7 +281,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: locale->to_s def_%v_6 locale[2.5,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "fi" def_%v_7 
 		 2: %v_6->eql? def_%v_8 %v_6[3.0,] %v_7[3.1,] 	 ARGS:%v_7,
 		 3: COPY TYPE_PASS def_%v_5 %v_8[3.2,] 
 BB 4
@@ -294,7 +294,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: %self->full_name def_%v_9 %self[2.0,] locale[2.5,] 	 ARGS:locale,
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral " " def_%v_10 
 		 2: BUILDSTRING def_%v_11 %v_9[5.0,] %v_10[5.1,] 
 		 3: RETURN %v_11[5.2,] %self[5.0,2.0,] 
 BB 6
@@ -364,7 +364,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->settings def_%v_4 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "locales" def_%v_5 
 		 2: %v_4->[] def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 ARGS:%v_5,
 		 3: %v_6->blank? def_%v_7 %v_6[3.2,] 	 ARGS:
 		 4: %v_7->! def_%v_8 %v_7[3.3,] 	 ARGS:
@@ -380,7 +380,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->settings def_%v_9 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_StringLiteral "locales" def_%v_10 
 		 3: %v_9->[] def_%v_11 %v_9[5.1,] %v_10[5.2,] 	 ARGS:%v_10,
 		 4: %v_11->first def_%v_12 %v_11[5.3,] 	 ARGS:
 		 5: RETURN %v_12[5.4,] %self[5.1,2.0,] 
@@ -419,7 +419,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->settings def_%v_4 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "locales" def_%v_5 
 		 2: %v_4->[] def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 ARGS:%v_5,
 		 3: %v_6->blank? def_%v_7 %v_6[3.2,] 	 ARGS:
 		 4: %v_7->! def_%v_8 %v_7[3.3,] 	 ARGS:
@@ -435,7 +435,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->settings def_%v_9 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_StringLiteral "locales" def_%v_10 
 		 3: %v_9->[] def_%v_11 %v_9[5.1,] %v_10[5.2,] 	 ARGS:%v_10,
 		 4: RETURN %v_11[5.3,] %self[5.1,2.0,] 
 BB 6
@@ -769,12 +769,12 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
-		 9: COPY TYPE_StringLiteral def_%v_6 
-		 10: COPY TYPE_StringLiteral def_%v_7 
-		 11: COPY TYPE_StringLiteral def_%v_8 
+		 6: COPY TYPE_StringLiteral "custom_color1" def_%v_3 
+		 7: COPY TYPE_StringLiteral "custom_color2" def_%v_4 
+		 8: COPY TYPE_StringLiteral "cover_photo_file_name" def_%v_5 
+		 9: COPY TYPE_StringLiteral "small_cover_photo_file_name" def_%v_6 
+		 10: COPY TYPE_StringLiteral "wide_logo_file_name" def_%v_7 
+		 11: COPY TYPE_StringLiteral "logo_file_name" def_%v_8 
 		 12: COPY TYPE_Array def_%v_9 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] 
 		 13: COPY TYPE_PASS def_customization_columns %v_9[2.12,] 
 		 14: 
@@ -798,7 +798,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral " IS NOT NULL" def_%cl_1_3 
 		 2: column_name->+ def_%cl_1_4 column_name[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
@@ -813,7 +813,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 16: COPY TYPE_StringLiteral def_%v_11 
+		 16: COPY TYPE_StringLiteral " OR " def_%v_11 
 		 17: %v_10->join def_%v_12 %v_10[2.15,] %v_11[2.16,] 	 ARGS:%v_11,
 		 18: COPY TYPE_PASS def_sql %v_12[2.17,] 
 		 19: 
@@ -1171,7 +1171,7 @@ BB 4
 		 0: 
 		 1: (APP_CONFIG) def_%v_4 
 		 2: %v_4->domain def_%v_5 %v_4[4.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_6 
+		 3: COPY TYPE_StringLiteral ":" def_%v_6 
 		 4: %v_5->split def_%v_7 %v_5[4.2,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: def_%v_8 %v_7[4.4,] 
 		 6: def_%v_9 %v_8[4.5,] 
@@ -1220,7 +1220,7 @@ BB 10
 	instructions:
 		 0: 
 		 1: %self->ident def_%v_16 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_17 
+		 2: COPY TYPE_StringLiteral "." def_%v_17 
 		 3: BUILDSTRING def_%v_18 %v_16[10.1,] %v_17[10.2,] default_host[4.8,] 
 		 4: COPY TYPE_PASS def_dom %v_18[10.3,] 
 		 5: 
@@ -1236,7 +1236,7 @@ BB 12
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_21 
+		 0: COPY TYPE_StringLiteral ":" def_%v_21 
 		 1: BUILDSTRING def_%v_22 %v_21[12.0,] port_string[6.0,] 
 		 2: dom->+ def_%v_23 dom[10.4,] %v_22[12.1,] 	 ARGS:%v_22,
 		 3: COPY TYPE_PASS def_dom %v_23[12.2,] 
@@ -1265,13 +1265,13 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_27 
+		 0: COPY TYPE_StringLiteral "https://" def_%v_27 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_28 
+		 0: COPY TYPE_StringLiteral "http://" def_%v_28 
 		 1: COPY TYPE_PASS def_%v_27 %v_28[17.0,] 
 BB 18
 	outgoing: 20 
@@ -1318,7 +1318,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->settings def_%v_4 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "service_name" def_%v_5 
 		 2: %v_4->[] def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 ARGS:%v_5,
 		 3: %v_6->present? def_%v_7 %v_6[3.2,] 	 ARGS:
 		 4: COPY TYPE_PASS def_%v_3 %v_7[3.3,] 
@@ -1333,7 +1333,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: %self->settings def_%v_8 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "service_name" def_%v_9 
 		 3: %v_8->[] def_%v_10 %v_8[5.1,] %v_9[5.2,] 	 ARGS:%v_9,
 		 4: RETURN %v_10[5.3,] %self[5.1,2.0,] 
 BB 6
@@ -1348,7 +1348,7 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_13 
+		 0: COPY TYPE_StringLiteral "Sharetribe" def_%v_13 
 		 1: COPY TYPE_PASS def_%v_12 %v_13[7.0,] 
 BB 8
 	outgoing: 10 
@@ -1377,7 +1377,7 @@ BB 2
 		 5: RECEIVEARG def_time 
 		 6: 
 		 7: %self->listings def_%v_3 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "created_at > ?" def_%v_4 
 		 9: %v_3->where def_%v_5 %v_3[2.7,] %v_4[2.8,] time[2.5,] 	 ARGS:%v_4,time,
 		 10: %v_5->present? def_%v_6 %v_5[2.9,] 	 ARGS:
 		 11: RETURN %v_6[2.10,] %self[2.0,2.7,] 
@@ -1407,9 +1407,9 @@ BB 2
 		 9: 
 		 10: %self->listings def_%v_4 %self[2.0,] 	 ARGS:
 		 11: %v_4->currently_open def_%v_5 %v_4[2.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_6 
+		 12: COPY TYPE_StringLiteral "updates_email_at > ? AND updates_email_at > created_at" def_%v_6 
 		 13: %v_5->where def_%v_7 %v_5[2.11,] %v_6[2.12,] latest[2.8,] 	 ARGS:%v_6,latest,
-		 14: COPY TYPE_StringLiteral def_%v_8 
+		 14: COPY TYPE_StringLiteral "updates_email_at DESC" def_%v_8 
 		 15: %v_7->order def_%v_9 %v_7[2.13,] %v_8[2.14,] 	 ARGS:%v_8,
 		 16: %v_9->to_a def_%v_10 %v_9[2.15,] 	 ARGS:
 		 17: COPY TYPE_PASS def_selected_listings %v_10[2.16,] 
@@ -1428,9 +1428,9 @@ BB 3
 		 0: 
 		 1: %self->listings def_%v_14 %self[2.0,] 	 ARGS:
 		 2: %v_14->currently_open def_%v_15 %v_14[3.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_16 
+		 3: COPY TYPE_StringLiteral "updates_email_at > ? AND updates_email_at = created_at" def_%v_16 
 		 4: %v_15->where def_%v_17 %v_15[3.2,] %v_16[3.3,] latest[2.8,] 	 ARGS:%v_16,latest,
-		 5: COPY TYPE_StringLiteral def_%v_18 
+		 5: COPY TYPE_StringLiteral "updates_email_at DESC" def_%v_18 
 		 6: %v_17->order def_%v_19 %v_17[3.4,] %v_18[3.5,] 	 ARGS:%v_18,
 		 7: %v_19->limit def_%v_20 %v_19[3.6,] additional_listings[2.21,] 	 ARGS:additional_listings,
 		 8: %v_20->to_a def_%v_21 %v_20[3.7,] 	 ARGS:
@@ -1506,16 +1506,16 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_email 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "@" def_%v_3 
+		 8: COPY TYPE_StringLiteral "@" def_%v_4 
 		 9: email->split def_%v_5 email[2.5,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: %v_5->[] def_%v_6 %v_5[2.9,] 	 ARGS:Fixnum,
 		 11: BUILDSTRING def_%v_7 %v_3[2.7,] %v_6[2.10,] 
 		 12: COPY TYPE_PASS def_email_ending %v_7[2.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%v_8 
-		 15: COPY TYPE_StringLiteral def_%v_9 
-		 16: COPY TYPE_StringLiteral def_%v_10 
+		 14: COPY TYPE_StringLiteral "allowed_emails LIKE ?" def_%v_8 
+		 15: COPY TYPE_StringLiteral "%" def_%v_9 
+		 16: COPY TYPE_StringLiteral "%" def_%v_10 
 		 17: BUILDSTRING def_%v_11 %v_9[2.15,] %v_7[2.11,] %v_10[2.16,] 
 		 18: %self->where def_%v_12 %self[2.0,] %v_8[2.14,] %v_11[2.17,] 	 ARGS:%v_8,%v_11,
 		 19: RETURN %v_12[2.18,] %self[2.0,2.18,] 
@@ -1540,8 +1540,8 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_community_category 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "company" def_%v_3 
+		 8: COPY TYPE_StringLiteral "university" def_%v_4 
 		 9: COPY TYPE_Array def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: %v_5->include? def_%v_6 %v_5[2.9,] community_category[2.5,] 	 ARGS:community_category,
 		 11: RETURN %v_6[2.10,] %self[2.0,] 
@@ -1567,9 +1567,9 @@ BB 2
 		 5: 
 		 6: (Person) def_%v_3 
 		 7: %v_3->joins def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "community_memberships.admin = '1'" def_%v_5 
 		 9: %v_4->where def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "people.id" def_%v_7 
 		 11: %v_6->group def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 ARGS:%v_7,
 		 12: RETURN %v_8[2.11,] %self[2.0,] 
 BB 3
@@ -1631,7 +1631,7 @@ BB 4
 		 0: 
 		 1: %self->community_memberships def_%v_3 %self[2.0,] 	 ARGS:
 		 2: person->id def_%v_4 person[2.5,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_5 
+		 3: COPY TYPE_StringLiteral "pending_email_confirmation" def_%v_5 
 		 4: HASH-person_id-status- def_%v_6 %v_4[4.2,] %v_5[4.3,] 
 		 5: %v_3->where def_%v_7 %v_3[4.1,] %v_6[4.4,] 	 ARGS:%v_6,
 		 6: %v_7->first def_%v_8 %v_7[4.5,] 	 ARGS:
@@ -1666,7 +1666,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_12 
+		 1: COPY TYPE_StringLiteral "accepted" def_%v_12 
 		 2: membership->update_attribute def_%v_13 membership[4.7,] %v_12[9.1,] 	 ARGS:Symbol,%v_12,
 		 3: 
 		 4: RETURN %self[2.0,] 
@@ -1938,10 +1938,10 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->available_currencies def_%v_4 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_5 
-		 3: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral " " def_%v_5 
+		 3: COPY TYPE_StringLiteral "" def_%v_6 
 		 4: %v_4->gsub def_%v_7 %v_4[3.1,] %v_5[3.2,] %v_6[3.3,] 	 ARGS:%v_5,%v_6,
-		 5: COPY TYPE_StringLiteral def_%v_8 
+		 5: COPY TYPE_StringLiteral "," def_%v_8 
 		 6: %v_7->split def_%v_9 %v_7[3.4,] %v_8[3.5,] 	 ARGS:%v_8,
 		 7: %v_9->first def_%v_10 %v_9[3.6,] 	 ARGS:
 		 8: RETURN %v_10[3.7,] %self[3.1,2.0,] 
@@ -1980,7 +1980,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral "facebook_connect_id IS NOT NULL" def_%v_6 
 		 3: %self->where def_%v_7 %self[2.0,] %v_6[4.2,] 	 ARGS:%v_6,
 		 4: COPY TYPE_PASS def_%v_5 %v_7[4.3,] 
 		 5: %v_3[2.6,] 
@@ -2062,7 +2062,7 @@ BB 3
 	instructions:
 		 0: %self->payment_gateway def_%v_5 %self[2.0,] 	 ARGS:
 		 1: %v_5->type def_%v_6 %v_5[3.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 2: COPY TYPE_StringLiteral "BraintreePaymentGateway" def_%v_7 
 		 3: %v_6->== def_%v_8 %v_6[3.1,] %v_7[3.2,] 	 ARGS:%v_7,
 		 4: RETURN %v_8[3.3,] %self[3.0,2.0,] 
 BB 4
@@ -2109,7 +2109,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "EUR" def_%v_6 
 		 1: COPY TYPE_PASS def_%v_5 %v_6[5.0,] 
 BB 6
 	outgoing: 7 
@@ -2162,7 +2162,7 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "no_form" def_%v_7 
 		 1: RETURN %v_7[6.0,] %self[2.0,] 
 BB 8
 	outgoing: 
@@ -2207,7 +2207,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "email_about_new_listings_by_followed_people" def_%v_8 
 		 2: valid_types->delete def_%v_9 valid_types[4.1,] %v_8[5.1,] 	 ARGS:%v_8,
 		 3: 
 BB 6
@@ -2428,7 +2428,7 @@ BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "locales" def_%v_5 
 		 1: (APP_CONFIG) def_%v_6 
 		 2: %v_6->default_locale def_%v_7 %v_6[3.1,] 	 ARGS:
 		 3: COPY TYPE_Array def_%v_8 %v_7[3.2,] 

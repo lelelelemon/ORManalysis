@@ -135,9 +135,9 @@ BB 6
 	datadep: 
 	instructions:
 		 0: (ArgumentError) def_%v_7 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "Email " def_%v_8 
 		 2: opts->[] def_%v_9 opts[2.5,] 	 ARGS:Symbol,
-		 3: COPY TYPE_StringLiteral def_%v_10 
+		 3: COPY TYPE_StringLiteral " is already in use." def_%v_10 
 		 4: BUILDSTRING def_%v_11 %v_8[6.1,] %v_9[6.2,] %v_10[6.3,] 
 		 5: %v_7->new def_%v_12 %v_7[6.0,] %v_11[6.4,] 	 ARGS:%v_11,
 		 6: %self->raise def_%v_13 %self[2.0,] %v_12[6.5,] 	 ARGS:%v_12,
@@ -259,8 +259,8 @@ BB 5
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_10 
-		 1: COPY TYPE_StringLiteral def_%v_11 
+		 0: COPY TYPE_StringLiteral "Person with id '" def_%v_10 
+		 1: COPY TYPE_StringLiteral "' not found" def_%v_11 
 		 2: BUILDSTRING def_%v_12 %v_10[5.0,] id[2.5,] %v_11[5.1,] 
 		 3: %v_9->new def_%v_13 %v_9[4.0,3.2,] %v_12[5.2,] 	 ARGS:%v_12,
 		 4: RETURN %v_13[5.3,] %self[2.0,] 
@@ -269,7 +269,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_14 
+		 1: COPY TYPE_StringLiteral "" def_%v_14 
 		 2: HASH-given_name-family_name-phone_number-description-facebook_id-encrypted_password-deleted- def_%v_15 %v_14[6.1,] 
 		 3: person->update_attributes def_%v_16 person[2.11,] %v_15[6.2,] 	 ARGS:%v_15,
 		 4: 
@@ -294,7 +294,7 @@ BB 6
 		 23: %v_27->destroy_all def_%v_28 %v_27[6.22,] 	 ARGS:
 		 24: 
 		 25: person->community_memberships def_%v_29 person[6.3,6.5,6.8,6.11,6.14,6.17,6.19,6.22,2.11,] 	 ARGS:
-		 26: COPY TYPE_StringLiteral def_%v_30 
+		 26: COPY TYPE_StringLiteral "deleted_user" def_%v_30 
 		 27: HASH-status- def_%v_31 %v_30[6.26,] 
 		 28: %v_29->update_all def_%v_32 %v_29[6.25,] %v_31[6.27,] 	 ARGS:%v_31,
 		 29: 
@@ -491,7 +491,7 @@ BB 6
 		 4: %v_3->+ def_%v_6 %v_3[6.1,] %v_5[6.3,] 	 ARGS:%v_5,
 		 5: %v_6->to_url def_%v_7 %v_6[6.4,] 	 ARGS:
 		 6: COPY TYPE_Regexp def_%v_8 
-		 7: COPY TYPE_StringLiteral def_%v_9 
+		 7: COPY TYPE_StringLiteral "" def_%v_9 
 		 8: %v_7->gsub def_%v_10 %v_7[6.5,] %v_9[6.7,] 	 ARGS:%v_8,%v_9,
 		 9: CONSTANT def_%v_11 
 		 10: %v_10->[] def_%v_12 %v_10[6.8,] %v_11[6.9,] 	 ARGS:%v_11,
@@ -556,21 +556,21 @@ BB 8
 		 1: %self->Maybe def_%v_3 %self[2.0,] username[2.5,] 	 ARGS:username,
 		 2: %self->Maybe def_%v_4 %self[8.1,2.0,] given_name[4.0,] 	 ARGS:given_name,
 		 3: %v_4->strip def_%v_5 %v_4[8.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_6 
+		 4: COPY TYPE_StringLiteral "" def_%v_6 
 		 5: %v_5->or_else def_%v_7 %v_5[8.3,] %v_6[8.4,] 	 ARGS:%v_6,
 		 6: %self->Maybe def_%v_8 %self[8.1,8.2,2.0,] family_name[6.0,] 	 ARGS:family_name,
 		 7: %v_8->strip def_%v_9 %v_8[8.6,] 	 ARGS:
 		 8: %v_9->[] def_%v_10 %v_9[8.7,] 	 ARGS:Fixnum,
-		 9: COPY TYPE_StringLiteral def_%v_11 
+		 9: COPY TYPE_StringLiteral "" def_%v_11 
 		 10: %v_10->or_else def_%v_12 %v_10[8.8,] %v_11[8.9,] 	 ARGS:%v_11,
 		 11: %v_7->+ def_%v_13 %v_7[8.5,] %v_12[8.10,] 	 ARGS:%v_12,
 		 12: %v_3->or_else def_%v_14 %v_3[8.1,] %v_13[8.11,] 	 ARGS:%v_13,
 		 13: %self->Maybe def_%v_15 %self[8.1,8.2,8.6,2.0,] %v_14[8.12,] 	 ARGS:%v_14,
 		 14: %v_15->to_url def_%v_16 %v_15[8.13,] 	 ARGS:
 		 15: COPY TYPE_Regexp def_%v_17 
-		 16: COPY TYPE_StringLiteral def_%v_18 
+		 16: COPY TYPE_StringLiteral "" def_%v_18 
 		 17: %v_16->gsub def_%v_19 %v_16[8.14,] %v_18[8.16,] 	 ARGS:%v_17,%v_18,
-		 18: COPY TYPE_StringLiteral def_%v_20 
+		 18: COPY TYPE_StringLiteral "fb_name_missing" def_%v_20 
 		 19: %v_19->or_else def_%v_21 %v_19[8.17,] %v_20[8.18,] 	 ARGS:%v_20,
 		 20: CONSTANT def_%v_22 
 		 21: %v_21->[] def_%v_23 %v_21[8.19,] %v_22[8.20,] 	 ARGS:%v_22,
@@ -601,8 +601,8 @@ BB 2
 		 5: RECEIVEARG def_base 
 		 6: 
 		 7: (Person) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "username LIKE :prefix" def_%v_4 
+		 9: COPY TYPE_StringLiteral "%" def_%v_5 
 		 10: BUILDSTRING def_%v_6 base[2.5,] %v_5[2.9,] 
 		 11: HASH-prefix- def_%v_7 %v_6[2.10,] 
 		 12: %v_3->where def_%v_8 %v_3[2.7,] %v_4[2.8,] %v_7[2.11,] 	 ARGS:%v_4,%v_7,
@@ -636,7 +636,7 @@ BB 2
 		 6: RECEIVEARG def_blacklist 
 		 7: 
 		 8: CONSTANT def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "" def_%v_4 
 		 10: COPY TYPE_Array def_%v_5 base[2.5,] %v_4[2.9,] 
 		 11: %v_3->reduce def_%v_6 %v_3[2.8,] %v_5[2.10,] %self[2.0,] 	 ARGS:%v_5,%v_3,
 CLOSURE BEGIN: base_name[] postfix[] blacklist[2.6,] next_postfix[2.11,] 

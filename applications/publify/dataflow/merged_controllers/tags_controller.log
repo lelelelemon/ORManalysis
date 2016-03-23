@@ -24,15 +24,15 @@ BB 2
 		 14: %v_8->capitalize def_%v_9 %v_8[2.13,] 	 ARGS:
 		 15: ATTRASSIGN %self->page_title %v_9[2.14,] 
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%v_10 
+		 17: COPY TYPE_StringLiteral "" def_%v_10 
 		 18: ATTRASSIGN %self->keywords %v_10[2.17,] 
 		 19: 
 		 20: %self->class def_%v_11 %self[2.0,2.7,2.11,2.13,2.15,2.18,] 	 ARGS:
 		 21: %v_11->to_s def_%v_12 %v_11[2.20,] 	 ARGS:
 		 22: COPY TYPE_Regexp def_%v_13 
-		 23: COPY TYPE_StringLiteral def_%v_14 
+		 23: COPY TYPE_StringLiteral "" def_%v_14 
 		 24: %v_12->sub def_%v_15 %v_12[2.21,] %v_14[2.23,] 	 ARGS:%v_13,%v_14,
-		 25: COPY TYPE_StringLiteral def_%v_16 
+		 25: COPY TYPE_StringLiteral " for " def_%v_16 
 		 26: %self->this_blog def_%v_17 %self[2.0,2.7,2.11,2.13,2.15,2.18,2.20,] 	 ARGS:
 		 27: %v_17->blog_name def_%v_18 %v_17[2.26,] 	 ARGS:
 		 28: BUILDSTRING def_%v_19 %v_15[2.24,] %v_16[2.25,] %v_18[2.27,] 
@@ -68,7 +68,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_6 
+		 1: COPY TYPE_StringLiteral ".there_is_no_tags" def_%cl_1_6 
 		 2: %self->t def_%cl_1_7 %self[2.0,] %cl_1_6[4.1,] 	 ARGS:%cl_1_6,
 		 3: 
 BB 5
@@ -142,12 +142,12 @@ BB 6
 	instructions:
 		 0: 
 		 1: GETFIELD %self->tags def_%cl_1_11 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_12 
+		 2: COPY TYPE_StringLiteral ".next_page" def_%cl_1_12 
 		 3: %self->t def_%cl_1_13 %self[2.0,] %cl_1_12[6.2,] 	 ARGS:%cl_1_12,
-		 4: COPY TYPE_StringLiteral def_%cl_1_14 
+		 4: COPY TYPE_StringLiteral " &raquo;" def_%cl_1_14 
 		 5: BUILDSTRING def_%cl_1_15 %cl_1_13[6.3,] %cl_1_14[6.4,] 
-		 6: COPY TYPE_StringLiteral def_%cl_1_16 
-		 7: COPY TYPE_StringLiteral def_%cl_1_17 
+		 6: COPY TYPE_StringLiteral "&laquo; " def_%cl_1_16 
+		 7: COPY TYPE_StringLiteral ".previous_page" def_%cl_1_17 
 		 8: %self->t def_%cl_1_18 %self[6.3,2.0,] %cl_1_17[6.7,] 	 ARGS:%cl_1_17,
 		 9: BUILDSTRING def_%cl_1_19 %cl_1_16[6.6,] %cl_1_18[6.8,] 
 		 10: HASH-right-left- def_%cl_1_20 %cl_1_15[6.5,] %cl_1_19[6.9,] 
@@ -221,7 +221,7 @@ BB 4
 		 11: %v_17->to_s def_%v_18 %v_17[4.10,] 	 ARGS:
 		 12: ATTRASSIGN %self->description %v_18[4.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%v_19 
+		 14: COPY TYPE_StringLiteral "" def_%v_19 
 		 15: ATTRASSIGN %self->keywords %v_19[4.14,] 
 		 16: 
 		 17: GETFIELD %self->grouping def_%v_20 %self[4.1,4.4,4.5,2.0,2.10,] 
@@ -354,10 +354,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral ".page_not_found" def_%cl_3_3 
 		 2: %self->t def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 ARGS:%cl_3_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_3_5 
+		 4: COPY TYPE_StringLiteral ".the_page_you_are_looking_for" def_%cl_3_5 
 		 5: %self->t def_%cl_3_6 %self[3.2,2.0,] %cl_3_5[3.4,] 	 ARGS:%cl_3_5,
 		 6: RETURN %cl_3_6[3.5,] %self[3.2,3.5,2.0,] 
 BB 4
@@ -426,7 +426,7 @@ BB 3
 		 4: %cl_4_3->[] def_%cl_4_6 %cl_4_3[3.1,] %cl_4_5[3.3,] 	 ARGS:Fixnum,%cl_4_5,
 		 5: ATTRASSIGN %self->articles %cl_4_6[3.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_4_7 
+		 7: COPY TYPE_StringLiteral "articles/index_atom_feed" def_%cl_4_7 
 		 8: HASH-layout- def_%cl_4_8 
 		 9: %self->render def_%cl_4_9 %self[3.2,3.5,2.0,] %cl_4_7[3.7,] %cl_4_8[3.8,] 	 ARGS:%cl_4_7,%cl_4_8,
 		 10: RETURN %cl_4_9[3.9,] %self[3.2,3.5,3.9,2.0,] 
@@ -468,7 +468,7 @@ BB 3
 		 4: %cl_5_3->[] def_%cl_5_6 %cl_5_3[3.1,] %cl_5_5[3.3,] 	 ARGS:Fixnum,%cl_5_5,
 		 5: ATTRASSIGN %self->articles %cl_5_6[3.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_5_7 
+		 7: COPY TYPE_StringLiteral "articles/index_rss_feed" def_%cl_5_7 
 		 8: HASH-layout- def_%cl_5_8 
 		 9: %self->render def_%cl_5_9 %self[3.2,3.5,2.0,] %cl_5_7[3.7,] %cl_5_8[3.8,] 	 ARGS:%cl_5_7,%cl_5_8,
 		 10: RETURN %cl_5_9[3.9,] %self[3.2,3.5,3.9,2.0,] 
@@ -538,7 +538,7 @@ BB 2
 		 5: 
 		 6: %self->render def_%cl_7_3 %self[2.0,] article[2.2,] 	 ARGS:article,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_7_4 
+		 8: COPY TYPE_StringLiteral "articles/article_links" def_%cl_7_4 
 		 9: HASH-article- def_%cl_7_5 article[2.2,] 
 		 10: %self->render def_%cl_7_6 %self[2.0,2.6,] %cl_7_4[2.8,] %cl_7_5[2.9,] 	 ARGS:%cl_7_4,%cl_7_5,
 		 11: RETURN %cl_7_6[2.10,] %self[2.0,2.6,2.10,] 
@@ -549,12 +549,12 @@ BB 4
 CLOSURE END: article[2.2,] 
 		 3: 
 		 4: %self->articles def_%cl_6_5 %self[3.1,2.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_6_6 
+		 5: COPY TYPE_StringLiteral ".next_page" def_%cl_6_6 
 		 6: %self->t def_%cl_6_7 %self[3.1,3.4,2.0,] %cl_6_6[3.5,] 	 ARGS:%cl_6_6,
-		 7: COPY TYPE_StringLiteral def_%cl_6_8 
+		 7: COPY TYPE_StringLiteral " &raquo;" def_%cl_6_8 
 		 8: BUILDSTRING def_%cl_6_9 %cl_6_7[3.6,] %cl_6_8[3.7,] 
-		 9: COPY TYPE_StringLiteral def_%cl_6_10 
-		 10: COPY TYPE_StringLiteral def_%cl_6_11 
+		 9: COPY TYPE_StringLiteral "&laquo; " def_%cl_6_10 
+		 10: COPY TYPE_StringLiteral ".previous_page" def_%cl_6_11 
 		 11: %self->t def_%cl_6_12 %self[3.1,3.4,3.6,2.0,] %cl_6_11[3.10,] 	 ARGS:%cl_6_11,
 		 12: BUILDSTRING def_%cl_6_13 %cl_6_10[3.9,] %cl_6_12[3.11,] 
 		 13: HASH-next_label-previous_label- def_%cl_6_14 %cl_6_9[3.8,] %cl_6_13[3.12,] 
@@ -594,7 +594,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_value 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "tags/" def_%v_3 
 		 8: BUILDSTRING def_%v_4 %v_3[2.7,] value[2.5,] 
 		 9: %self->template_exists? def_%v_5 %self[2.0,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: BRANCH %v_5[2.9,] 

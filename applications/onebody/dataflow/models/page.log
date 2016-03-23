@@ -22,7 +22,7 @@ BB 3
 		 0: 
 		 1: %self->parent def_%v_4 %self[2.0,] 	 ARGS:
 		 2: %v_4->path def_%v_5 %v_4[3.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_6 
+		 3: COPY TYPE_StringLiteral "/" def_%v_6 
 		 4: %v_5->+ def_%v_7 %v_5[3.2,] %v_6[3.3,] 	 ARGS:%v_6,
 		 5: %self->slug def_%v_8 %self[3.1,2.0,] 	 ARGS:
 		 6: %v_7->+ def_%v_9 %v_7[3.4,] %v_8[3.5,] 	 ARGS:%v_8,
@@ -79,7 +79,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->path def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "home" def_%v_4 
 		 8: %v_3->== def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
 BB 3
@@ -112,7 +112,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: COPY TYPE_Regexp def_%v_5 
-		 2: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral "[[\2|\3]]" def_%v_6 
 		 3: cooked->gsub! def_%v_7 cooked[2.8,] %v_6[3.2,] 	 ARGS:%v_5,%v_6,
 		 4: 
 		 5: COPY TYPE_Regexp def_%v_8 
@@ -169,7 +169,7 @@ BB 9
 	outgoing: 10 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_15 
+		 0: COPY TYPE_StringLiteral "???" def_%cl_1_15 
 		 1: COPY TYPE_PASS def_%cl_1_5 %cl_1_15[9.0,] 
 		 2: 
 		 3: %cl_1_3[2.5,] 
@@ -299,7 +299,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->errors def_%v_4 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "Cannot delete system pages." def_%v_5 
 		 3: %v_4->add def_%v_6 %v_4[3.1,] %v_5[3.2,] 	 ARGS:Symbol,%v_5,
 		 4: 
 		 5: RETURN %self[3.1,2.0,] 
@@ -517,16 +517,16 @@ BB 2
 		 8: COPY TYPE_PASS def_path %v_3[2.7,] 
 		 9: 
 		 10: COPY TYPE_Regexp def_%v_4 
-		 11: COPY TYPE_StringLiteral def_%v_5 
+		 11: COPY TYPE_StringLiteral "" def_%v_5 
 		 12: %v_3->sub def_%v_6 %v_3[2.7,] %v_5[2.11,] 	 ARGS:%v_4,%v_5,
 		 13: COPY TYPE_Regexp def_%v_7 
-		 14: COPY TYPE_StringLiteral def_%v_8 
+		 14: COPY TYPE_StringLiteral "" def_%v_8 
 		 15: %v_6->sub def_%v_9 %v_6[2.12,] %v_8[2.14,] 	 ARGS:%v_7,%v_8,
 		 16: COPY TYPE_Regexp def_%v_10 
-		 17: COPY TYPE_StringLiteral def_%v_11 
+		 17: COPY TYPE_StringLiteral "/" def_%v_11 
 		 18: %v_9->gsub def_%v_12 %v_9[2.15,] %v_11[2.17,] 	 ARGS:%v_10,%v_11,
 		 19: COPY TYPE_Regexp def_%v_13 
-		 20: COPY TYPE_StringLiteral def_%v_14 
+		 20: COPY TYPE_StringLiteral "" def_%v_14 
 		 21: %v_12->gsub def_%v_15 %v_12[2.18,] %v_14[2.20,] 	 ARGS:%v_13,%v_14,
 		 22: %v_15->downcase def_%v_16 %v_15[2.21,] 	 ARGS:
 		 23: RETURN %v_16[2.22,] %self[2.0,2.7,] 
@@ -558,7 +558,7 @@ BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "home" def_%v_5 
 		 1: RETURN %v_5[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -586,11 +586,11 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->connection def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "select path, id from pages where path != '' and site_id = " def_%v_4 
 		 8: (Site) def_%v_5 
 		 9: %v_5->current def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->id def_%v_7 %v_6[2.9,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_8 
+		 11: COPY TYPE_StringLiteral " order by path" def_%v_8 
 		 12: BUILDSTRING def_%v_9 %v_4[2.7,] %v_7[2.10,] %v_8[2.11,] 
 		 13: %v_3->select_all def_%v_10 %v_3[2.6,] %v_9[2.12,] 	 ARGS:%v_9,
 		 14: %v_10->map def_%v_11 %v_10[2.13,] %self[2.0,2.6,] 	 ARGS:%v_10,
@@ -613,9 +613,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "path" def_%cl_1_3 
 		 2: r->[] def_%cl_1_4 r[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "id" def_%cl_1_5 
 		 4: r->[] def_%cl_1_6 r[3.2,2.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
 		 5: %cl_1_6->to_i def_%cl_1_7 %cl_1_6[3.4,] 	 ARGS:
 		 6: COPY TYPE_Array def_%cl_1_8 %cl_1_4[3.2,] %cl_1_7[3.5,] 
