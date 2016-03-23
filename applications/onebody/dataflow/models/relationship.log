@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->name def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "other" def_%v_4 
 		 8: %v_3->== def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: BRANCH %v_5[2.8,] 
 BB 3
@@ -29,7 +29,7 @@ BB 4
 	instructions:
 		 0: (I18n) def_%v_7 
 		 1: %self->name def_%v_8 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "relationships.names" def_%v_9 
 		 3: HASH-scope- def_%v_10 %v_9[4.2,] 
 		 4: %v_7->t def_%v_11 %v_7[4.0,] %v_8[4.1,] %v_10[4.3,] 	 ARGS:%v_8,%v_10,
 		 5: RETURN %v_11[4.4,] %self[4.1,2.0,] 
@@ -144,11 +144,11 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->connection def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "select distinct other_name from relationships where other_name is not null and other_name != '' and site_id=" def_%v_4 
 		 8: (Site) def_%v_5 
 		 9: %v_5->current def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->id def_%v_7 %v_6[2.9,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_8 
+		 11: COPY TYPE_StringLiteral " order by other_name" def_%v_8 
 		 12: BUILDSTRING def_%v_9 %v_4[2.7,] %v_7[2.10,] %v_8[2.11,] 
 		 13: %v_3->select_values def_%v_10 %v_3[2.6,] %v_9[2.12,] 	 ARGS:%v_9,
 		 14: RETURN %v_10[2.13,] %self[2.0,2.6,] 

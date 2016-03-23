@@ -115,11 +115,11 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->start_time def_%v_4 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "%B %d" def_%v_5 
 		 3: %v_4->strftime def_%v_6 %v_4[3.1,] %v_5[3.2,] 	 ARGS:%v_5,
-		 4: COPY TYPE_StringLiteral def_%v_7 
+		 4: COPY TYPE_StringLiteral " to " def_%v_7 
 		 5: %self->end_time def_%v_8 %self[3.1,2.0,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%v_9 
+		 6: COPY TYPE_StringLiteral "%B %d %Y" def_%v_9 
 		 7: %v_8->strftime def_%v_10 %v_8[3.5,] %v_9[3.6,] 	 ARGS:%v_9,
 		 8: BUILDSTRING def_%v_11 %v_6[3.3,] %v_7[3.4,] %v_10[3.7,] 
 		 9: COPY TYPE_PASS def_string %v_11[3.8,] 
@@ -130,15 +130,15 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->start_time def_%v_12 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_13 
+		 2: COPY TYPE_StringLiteral "%B %d, %Y" def_%v_13 
 		 3: %v_12->strftime def_%v_14 %v_12[4.1,] %v_13[4.2,] 	 ARGS:%v_13,
-		 4: COPY TYPE_StringLiteral def_%v_15 
+		 4: COPY TYPE_StringLiteral ", " def_%v_15 
 		 5: %self->start_time def_%v_16 %self[4.1,2.0,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%v_17 
+		 6: COPY TYPE_StringLiteral "%I:%M %p" def_%v_17 
 		 7: %v_16->strftime def_%v_18 %v_16[4.5,] %v_17[4.6,] 	 ARGS:%v_17,
-		 8: COPY TYPE_StringLiteral def_%v_19 
+		 8: COPY TYPE_StringLiteral " - " def_%v_19 
 		 9: %self->end_time def_%v_20 %self[4.1,4.5,2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_21 
+		 10: COPY TYPE_StringLiteral "%I:%M %p" def_%v_21 
 		 11: %v_20->strftime def_%v_22 %v_20[4.9,] %v_21[4.10,] 	 ARGS:%v_21,
 		 12: BUILDSTRING def_%v_23 %v_14[4.3,] %v_15[4.4,] %v_18[4.7,] %v_19[4.8,] %v_22[4.11,] 
 		 13: COPY TYPE_PASS def_string %v_23[4.12,] 
@@ -225,8 +225,8 @@ BB 8
 	datadep: 
 	instructions:
 		 0: %self->errors def_%v_9 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_10 
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 1: COPY TYPE_StringLiteral "start_time" def_%v_10 
+		 2: COPY TYPE_StringLiteral " must be before end time" def_%v_11 
 		 3: %v_9->add def_%v_12 %v_9[8.0,] %v_10[8.1,] %v_11[8.2,] 	 ARGS:%v_10,%v_11,
 		 4: RETURN %v_12[8.3,] %self[8.0,2.0,] 
 BB 10

@@ -120,7 +120,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "plugins/textfilters/" def_%v_6 
 		 2: (Regexp) def_%v_7 
 		 3: %v_7->last_match def_%v_8 %v_7[3.2,] 	 ARGS:
 		 4: %v_8->[] def_%v_9 %v_8[3.3,] 	 ARGS:Fixnum,
@@ -132,7 +132,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_12 
+		 1: COPY TYPE_StringLiteral "I don't know who I am: " def_%v_12 
 		 2: BUILDSTRING def_%v_13 %v_12[4.1,] %self[2.0,] 
 		 3: %self->raise def_%v_14 %self[2.0,] %v_13[4.2,] 	 ARGS:%v_13,
 		 4: RETURN %v_14[4.3,] %self[4.3,2.0,] 
@@ -203,7 +203,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "" def_%v_3 
 		 7: RETURN %v_3[2.6,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -447,7 +447,7 @@ BB 3
 		 6: COPY TYPE_PASS def_key %cl_1_6[3.4,] 
 		 7: COPY TYPE_PASS def_value %cl_1_7[3.5,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_1_8 
+		 9: COPY TYPE_StringLiteral """ def_%cl_1_8 
 		 10: %cl_1_7->delete def_%cl_1_9 %cl_1_7[3.5,] %cl_1_8[3.9,] 	 ARGS:%cl_1_8,
 		 11: ATTRASSIGN attributes->[] key[3.6,] %cl_1_9[3.10,] 
 		 12: RETURN %cl_1_9[3.10,] %self[2.0,] 
@@ -493,7 +493,7 @@ BB 3
 		 6: COPY TYPE_PASS def_key %cl_2_6[3.4,] 
 		 7: COPY TYPE_PASS def_value %cl_2_7[3.5,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_2_8 
+		 9: COPY TYPE_StringLiteral "'" def_%cl_2_8 
 		 10: %cl_2_7->delete def_%cl_2_9 %cl_2_7[3.5,] %cl_2_8[3.9,] 	 ARGS:%cl_2_8,
 		 11: ATTRASSIGN attributes->[] key[3.6,] %cl_2_9[3.10,] 
 		 12: RETURN %cl_2_9[3.10,] %self[2.0,] 
@@ -535,19 +535,19 @@ BB 2
 		 7: RECEIVEARG def_text 
 		 8: RECEIVEARG def_params 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%v_3 
-		 11: COPY TYPE_StringLiteral def_%v_4 
+		 10: COPY TYPE_StringLiteral "" def_%v_3 
+		 11: COPY TYPE_StringLiteral "<publify:" def_%v_4 
 		 12: %self->short_name def_%v_5 %self[2.0,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%v_6 
+		 13: COPY TYPE_StringLiteral "(?:[ \t][^>]*)?\/>" def_%v_6 
 		 14: def_%v_7 %v_3[2.10,] %v_4[2.11,] %v_5[2.12,] %v_6[2.13,] 
 		 15: COPY TYPE_PASS def_regex1 %v_7[2.14,] 
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%v_8 
-		 18: COPY TYPE_StringLiteral def_%v_9 
+		 17: COPY TYPE_StringLiteral "" def_%v_8 
+		 18: COPY TYPE_StringLiteral "<publify:" def_%v_9 
 		 19: %self->short_name def_%v_10 %self[2.0,2.12,] 	 ARGS:
-		 20: COPY TYPE_StringLiteral def_%v_11 
+		 20: COPY TYPE_StringLiteral "([ \t][^>]*)?>(.*?)<\/publify:" def_%v_11 
 		 21: %self->short_name def_%v_12 %self[2.0,2.12,2.19,] 	 ARGS:
-		 22: COPY TYPE_StringLiteral def_%v_13 
+		 22: COPY TYPE_StringLiteral ">" def_%v_13 
 		 23: def_%v_14 %v_8[2.17,] %v_9[2.18,] %v_10[2.19,] %v_11[2.20,] %v_12[2.21,] %v_13[2.22,] 
 		 24: COPY TYPE_PASS def_regex2 %v_14[2.23,] 
 		 25: 
@@ -660,7 +660,7 @@ BB 2
 		 9: 
 		 10: (TextFilter) def_%v_3 
 		 11: %v_3->available_filter_types def_%v_4 %v_3[2.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_5 
+		 12: COPY TYPE_StringLiteral "macropost" def_%v_5 
 		 13: %v_4->[] def_%v_6 %v_4[2.11,] %v_5[2.12,] 	 ARGS:%v_5,
 		 14: COPY TYPE_PASS def_macros %v_6[2.13,] 
 		 15: 
@@ -726,7 +726,7 @@ BB 2
 		 9: 
 		 10: (TextFilter) def_%v_3 
 		 11: %v_3->available_filter_types def_%v_4 %v_3[2.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_5 
+		 12: COPY TYPE_StringLiteral "macropre" def_%v_5 
 		 13: %v_4->[] def_%v_6 %v_4[2.11,] %v_5[2.12,] 	 ARGS:%v_5,
 		 14: COPY TYPE_PASS def_macros %v_6[2.13,] 
 		 15: 

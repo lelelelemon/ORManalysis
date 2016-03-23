@@ -47,8 +47,9 @@ class Function_call
 		@super_fname = ""
 		self.caller = nil
 		@complete_string = nil
+		@query_string = nil
 	end
-	attr_accessor :caller, :complete_string
+	attr_accessor :caller, :complete_string, :query_string
 	def addOn(on_meth)
 		@on.push(on_meth)
 	end

@@ -26,8 +26,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "created_at DESC" def_%v_4 
+		 2: COPY TYPE_StringLiteral "clippings.id != ?" def_%v_5 
 		 3: clipping->id def_%v_6 clipping[2.5,] 	 ARGS:
 		 4: COPY TYPE_Array def_%v_7 %v_5[4.2,] %v_6[4.3,] 
 		 5: HASH-limit-order-conditions- def_%v_8 %v_4[4.1,] %v_7[4.4,] 
@@ -109,14 +109,14 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "created_at > '" def_%v_4 
 		 2: CONSTANT def_%v_5 	 ARGS:
 		 3: %v_5->ago def_%v_6 %v_5[4.2,] 	 ARGS:
 		 4: %v_6->iso8601 def_%v_7 %v_6[4.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_8 
+		 5: COPY TYPE_StringLiteral "'" def_%v_8 
 		 6: BUILDSTRING def_%v_9 %v_4[4.1,] %v_7[4.4,] %v_8[4.5,] 
 		 7: %self->where def_%v_10 %self[2.0,] %v_9[4.6,] 	 ARGS:%v_9,
-		 8: COPY TYPE_StringLiteral def_%v_11 
+		 8: COPY TYPE_StringLiteral "created_at DESC" def_%v_11 
 		 9: %v_10->order def_%v_12 %v_10[4.7,] %v_11[4.8,] 	 ARGS:%v_11,
 		 10: options->[] def_%v_13 options[3.1,2.5,] 	 ARGS:Symbol,
 		 11: %v_12->limit def_%v_14 %v_12[4.9,] %v_13[4.10,] 	 ARGS:%v_13,
@@ -143,9 +143,9 @@ BB 2
 		 5: 
 		 6: %self->user def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->clippings def_%v_4 %v_3[2.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "created_at DESC" def_%v_5 
 		 9: %v_4->order def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "created_at < ?" def_%v_7 
 		 11: %self->created_at def_%v_8 %self[2.0,2.6,] 	 ARGS:
 		 12: %v_6->where def_%v_9 %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] 	 ARGS:%v_7,%v_8,
 		 13: %v_9->first def_%v_10 %v_9[2.12,] 	 ARGS:
@@ -172,10 +172,10 @@ BB 2
 		 5: 
 		 6: %self->user def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->clippings def_%v_4 %v_3[2.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "created_at > ?" def_%v_5 
 		 9: %self->created_at def_%v_6 %self[2.0,2.6,] 	 ARGS:
 		 10: %v_4->where def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_5,%v_6,
-		 11: COPY TYPE_StringLiteral def_%v_8 
+		 11: COPY TYPE_StringLiteral "created_at ASC" def_%v_8 
 		 12: %v_7->order def_%v_9 %v_7[2.10,] %v_8[2.11,] 	 ARGS:%v_8,
 		 13: %v_9->first def_%v_10 %v_9[2.12,] 	 ARGS:
 		 14: RETURN %v_10[2.13,] %self[2.0,2.6,2.9,] 
@@ -226,7 +226,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_3 
+		 0: COPY TYPE_StringLiteral "" def_%v_3 
 		 1: COPY TYPE_PASS def_size %v_3[3.0,] 
 BB 4
 	outgoing: 5 6 

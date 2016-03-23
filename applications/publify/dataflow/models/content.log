@@ -201,12 +201,12 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def__limit 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "published_at < ?" def_%v_3 
 		 8: (Time) def_%v_4 
 		 9: %v_4->now def_%v_5 %v_4[2.8,] 	 ARGS:
 		 10: %self->where def_%v_6 %self[2.0,] %v_3[2.7,] %v_5[2.9,] 	 ARGS:%v_3,%v_5,
 		 11: %v_6->limit def_%v_7 %v_6[2.10,] 	 ARGS:Fixnum,
-		 12: COPY TYPE_StringLiteral def_%v_8 
+		 12: COPY TYPE_StringLiteral "created_at DESC" def_%v_8 
 		 13: %v_7->order def_%v_9 %v_7[2.11,] %v_8[2.12,] 	 ARGS:%v_8,
 		 14: RETURN %v_9[2.13,] %self[2.0,2.10,] 
 BB 3
@@ -350,7 +350,7 @@ BB 18
 		 0: 
 		 1: params->[] def_%v_27 params[3.1,2.5,] 	 ARGS:Symbol,
 		 2: %v_27->to_s def_%v_28 %v_27[18.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_29 
+		 3: COPY TYPE_StringLiteral "1" def_%v_29 
 		 4: %v_28->== def_%v_30 %v_28[18.2,] %v_29[18.3,] 	 ARGS:%v_29,
 		 5: BRANCH %v_30[18.4,] 
 BB 19
@@ -372,7 +372,7 @@ BB 21
 		 0: 
 		 1: params->[] def_%v_32 params[3.1,2.5,] 	 ARGS:Symbol,
 		 2: %v_32->to_s def_%v_33 %v_32[21.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_34 
+		 3: COPY TYPE_StringLiteral "0" def_%v_34 
 		 4: %v_33->== def_%v_35 %v_33[21.2,] %v_34[21.3,] 	 ARGS:%v_34,
 		 5: BRANCH %v_35[21.4,] 
 BB 22
@@ -566,7 +566,7 @@ BB 4
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "" def_%v_6 
 		 1: RETURN %v_6[4.0,] %self[2.0,] 
 BB 6
 	outgoing: 7 
@@ -601,22 +601,22 @@ BB 10
 		 3: %v_13->rss_description_text def_%v_14 %v_13[10.2,] 	 ARGS:
 		 4: COPY TYPE_PASS def_rss_desc %v_14[10.3,] 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_15 
+		 6: COPY TYPE_StringLiteral "%author%" def_%v_15 
 		 7: %self->user def_%v_16 %self[10.2,2.0,] 	 ARGS:
 		 8: %v_16->name def_%v_17 %v_16[10.7,] 	 ARGS:
 		 9: rss_desc->gsub! def_%v_18 rss_desc[10.4,] %v_15[10.6,] %v_17[10.8,] 	 ARGS:%v_15,%v_17,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_19 
+		 11: COPY TYPE_StringLiteral "%blog_url%" def_%v_19 
 		 12: %self->blog def_%v_20 %self[10.2,10.7,2.0,] 	 ARGS:
 		 13: %v_20->base_url def_%v_21 %v_20[10.12,] 	 ARGS:
 		 14: rss_desc->gsub! def_%v_22 rss_desc[10.4,10.9,] %v_19[10.11,] %v_21[10.13,] 	 ARGS:%v_19,%v_21,
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%v_23 
+		 16: COPY TYPE_StringLiteral "%blog_name%" def_%v_23 
 		 17: %self->blog def_%v_24 %self[10.2,10.7,10.12,2.0,] 	 ARGS:
 		 18: %v_24->blog_name def_%v_25 %v_24[10.17,] 	 ARGS:
 		 19: rss_desc->gsub! def_%v_26 rss_desc[10.4,10.9,10.14,] %v_23[10.16,] %v_25[10.18,] 	 ARGS:%v_23,%v_25,
 		 20: 
-		 21: COPY TYPE_StringLiteral def_%v_27 
+		 21: COPY TYPE_StringLiteral "%permalink_url%" def_%v_27 
 		 22: %self->permalink_url def_%v_28 %self[10.2,10.7,10.12,10.17,2.0,] 	 ARGS:
 		 23: rss_desc->gsub! def_%v_29 rss_desc[10.4,10.9,10.14,10.19,] %v_27[10.21,] %v_28[10.22,] 	 ARGS:%v_27,%v_28,
 		 24: 
@@ -625,7 +625,7 @@ BB 11
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_12 
+		 0: COPY TYPE_StringLiteral "" def_%v_12 
 		 1: RETURN %v_12[11.0,] %self[2.0,] 
 BB 13
 	outgoing: 
@@ -764,7 +764,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: (TextFilter) def_%v_6 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "none" def_%v_7 
 		 2: %v_6->find_by_name def_%v_8 %v_6[3.0,] %v_7[3.1,] 	 ARGS:%v_7,
 		 3: RETURN %v_8[3.2,] %self[2.0,] 
 BB 4

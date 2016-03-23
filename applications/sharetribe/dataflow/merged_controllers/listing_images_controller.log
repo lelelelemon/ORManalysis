@@ -77,13 +77,13 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->logger def_%v_10 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral "No image URL provided" def_%v_11 
 		 3: %self->params def_%v_12 %self[3.1,2.0,] 	 ARGS:
 		 4: %v_10->info def_%v_13 %v_10[3.1,] %v_11[3.2,] %v_12[3.3,] 	 ARGS:%v_11,Symbol,%v_12,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_14 
+		 6: COPY TYPE_StringLiteral "No image URL provided" def_%v_14 
 		 7: HASH-errors- def_%v_15 %v_14[3.6,] 
-		 8: COPY TYPE_StringLiteral def_%v_16 
+		 8: COPY TYPE_StringLiteral "text/plain" def_%v_16 
 		 9: HASH-json-status-content_type- def_%v_17 %v_15[3.7,] %v_16[3.8,] 
 		 10: %self->render def_%v_18 %self[3.1,3.3,2.0,] %v_17[3.9,] 	 ARGS:%v_17,
 		 11: 
@@ -223,7 +223,7 @@ BB 6
 		 0: %v_5->escape def_%v_6 %v_5[5.0,4.0,] filename[2.6,] 	 ARGS:filename,
 		 1: COPY TYPE_PASS def_escaped_filename %v_6[6.0,] 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%v_7 
+		 3: COPY TYPE_StringLiteral "${filename}" def_%v_7 
 		 4: path->sub def_%v_8 path[2.5,] %v_7[6.3,] %v_6[6.0,] 	 ARGS:%v_7,escaped_filename,
 		 5: RETURN %v_8[6.4,] %self[2.0,] 
 BB 7
@@ -317,7 +317,7 @@ BB 7
 	instructions:
 		 0: 
 		 1: %self->logger def_%v_10 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral "Asynchronously downloading image" def_%v_11 
 		 3: listing_image->id def_%v_12 listing_image[5.0,2.10,] 	 ARGS:
 		 4: HASH-listing_image_id-url-params- def_%v_13 %v_12[7.3,] url[2.6,] params[2.5,] 
 		 5: %v_10->info def_%v_14 %v_10[7.1,] %v_11[7.2,] %v_13[7.4,] 	 ARGS:%v_11,Symbol,%v_13,
@@ -346,7 +346,7 @@ BB 10
 	instructions:
 		 0: 
 		 1: %self->logger def_%v_22 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_23 
+		 2: COPY TYPE_StringLiteral "Listing image is already downloaded" def_%v_23 
 		 3: listing_image->id def_%v_24 listing_image[5.0,2.10,] 	 ARGS:
 		 4: HASH-listing_image_id-params- def_%v_25 %v_24[10.3,] params[2.5,] 
 		 5: %v_22->info def_%v_26 %v_22[10.1,] %v_23[10.2,] %v_25[10.4,] 	 ARGS:%v_23,Symbol,%v_25,
@@ -359,7 +359,7 @@ BB 11
 		 1: (ListingImageJSAdapter) def_%v_27 
 		 2: %v_27->new def_%v_28 %v_27[11.1,] listing_image[5.0,2.10,] 	 ARGS:listing_image,
 		 3: %v_28->to_json def_%v_29 %v_28[11.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_30 
+		 4: COPY TYPE_StringLiteral "text/plain" def_%v_30 
 		 5: HASH-json-status-content_type- def_%v_31 %v_29[11.3,] %v_30[11.4,] 
 		 6: %self->render def_%v_32 %self[2.0,] %v_31[11.5,] 	 ARGS:%v_31,
 		 7: RETURN %v_32[11.6,] %self[11.6,2.0,] 
@@ -369,7 +369,7 @@ BB 12
 	instructions:
 		 0: 
 		 1: %self->logger def_%v_33 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_34 
+		 2: COPY TYPE_StringLiteral "Saving listing image failed" def_%v_34 
 		 3: listing_image->errors def_%v_35 listing_image[5.0,2.10,] 	 ARGS:
 		 4: %v_35->messages def_%v_36 %v_35[12.3,] 	 ARGS:
 		 5: HASH-params-errors- def_%v_37 params[2.5,] %v_36[12.4,] 
@@ -378,7 +378,7 @@ BB 12
 		 8: listing_image->errors def_%v_39 listing_image[12.3,5.0,2.10,] 	 ARGS:
 		 9: %v_39->full_messages def_%v_40 %v_39[12.8,] 	 ARGS:
 		 10: HASH-errors- def_%v_41 %v_40[12.9,] 
-		 11: COPY TYPE_StringLiteral def_%v_42 
+		 11: COPY TYPE_StringLiteral "text/plain" def_%v_42 
 		 12: HASH-json-status-content_type- def_%v_43 %v_41[12.10,] %v_42[12.11,] 
 		 13: %self->render def_%v_44 %self[12.1,2.0,] %v_43[12.12,] 	 ARGS:%v_43,
 		 14: RETURN %v_44[12.13,] %self[12.1,12.13,2.0,] 

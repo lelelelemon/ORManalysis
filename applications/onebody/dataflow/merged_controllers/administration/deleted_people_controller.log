@@ -16,7 +16,7 @@ BB 2
 		 6: %self->params def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 		 8: %v_4->to_s def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "," def_%v_6 
 		 10: %v_5->split def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: %v_7->all? def_%v_8 %v_7[2.10,] %self[2.0,2.6,] 	 ARGS:%v_7,
 CLOSURE BEGIN: col[2.11,] 
@@ -66,7 +66,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: %self->params def_%v_10 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral "people.updated_at desc" def_%v_11 
 		 3: ATTRASSIGN %v_10->[] %v_11[4.2,] 
 		 4: COPY TYPE_PASS def_%v_9 %v_11[4.2,] 
 BB 5
@@ -110,10 +110,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
-		 2: COPY TYPE_StringLiteral def_%cl_2_4 
-		 3: COPY TYPE_StringLiteral def_%cl_2_5 
-		 4: COPY TYPE_StringLiteral def_%cl_2_6 
+		 1: COPY TYPE_StringLiteral "id" def_%cl_2_3 
+		 2: COPY TYPE_StringLiteral "legacy_id" def_%cl_2_4 
+		 3: COPY TYPE_StringLiteral "last_name" def_%cl_2_5 
+		 4: COPY TYPE_StringLiteral "first_name" def_%cl_2_6 
 		 5: COPY TYPE_Array def_%cl_2_7 %cl_2_3[3.1,] %cl_2_4[3.2,] %cl_2_5[3.3,] %cl_2_6[3.4,] 
 		 6: %cl_2_7->include? def_%cl_2_8 %cl_2_7[3.5,] k[2.2,] 	 ARGS:k,
 		 7: %cl_2_8->! def_%cl_2_9 %cl_2_8[3.6,] 	 ARGS:
@@ -160,10 +160,10 @@ BB 8
 		 13: 
 		 14: (Family) def_%v_34 
 		 15: %v_34->undeleted def_%v_35 %v_34[8.14,] 	 ARGS:
-		 16: COPY TYPE_StringLiteral def_%v_36 
+		 16: COPY TYPE_StringLiteral "(select count(id) from people where deleted = ? and family_id=families.id) = 0" def_%v_36 
 		 17: COPY TYPE_Array def_%v_37 %v_36[8.16,] 
 		 18: %v_35->where def_%v_38 %v_35[8.15,] %v_37[8.17,] 	 ARGS:%v_37,
-		 19: COPY TYPE_StringLiteral def_%v_39 
+		 19: COPY TYPE_StringLiteral "name" def_%v_39 
 		 20: %v_38->order def_%v_40 %v_38[8.18,] %v_39[8.19,] 	 ARGS:%v_39,
 		 21: ATTRASSIGN %self->families %v_40[8.20,] 
 		 22: 
@@ -309,7 +309,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_17 
+		 1: COPY TYPE_StringLiteral "people.not_deleted" def_%cl_1_17 
 		 2: %self->t def_%cl_1_18 %self[2.0,] %cl_1_17[14.1,] 	 ARGS:%cl_1_17,
 		 3: HASH-text-layout-status- def_%cl_1_19 %cl_1_18[14.2,] 
 		 4: %self->render def_%cl_1_20 %self[14.2,2.0,] %cl_1_19[14.3,] 	 ARGS:%cl_1_19,
@@ -435,7 +435,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "only_admins" def_%v_6 
 		 2: %self->t def_%v_7 %self[2.0,] %v_6[4.1,] 	 ARGS:%v_6,
 		 3: HASH-text-layout-status- def_%v_8 %v_7[4.2,] 
 		 4: %self->render def_%v_9 %self[4.2,2.0,] %v_8[4.3,] 	 ARGS:%v_8,

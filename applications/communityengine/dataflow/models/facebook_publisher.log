@@ -14,10 +14,10 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_user 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "I joined " def_%v_3 
 		 8: %self->configatron def_%v_4 %self[2.0,] 	 ARGS:
 		 9: %v_4->community_name def_%v_5 %v_4[2.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "." def_%v_6 
 		 11: BUILDSTRING def_%v_7 %v_3[2.7,] %v_5[2.9,] %v_6[2.10,] 
 		 12: COPY TYPE_PASS def_text %v_7[2.11,] 
 		 13: 
@@ -29,12 +29,12 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral " There are " def_%v_10 
 		 2: user->friends_ids def_%v_11 user[2.5,] 	 ARGS:
 		 3: %v_11->size def_%v_12 %v_11[3.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_13 
+		 4: COPY TYPE_StringLiteral "friends" def_%v_13 
 		 5: %self->pluralize def_%v_14 %self[2.0,] %v_12[3.3,] %v_13[3.4,] 	 ARGS:%v_12,%v_13,
-		 6: COPY TYPE_StringLiteral def_%v_15 
+		 6: COPY TYPE_StringLiteral " in my network." def_%v_15 
 		 7: BUILDSTRING def_%v_16 %v_10[3.1,] %v_14[3.5,] %v_15[3.6,] 
 		 8: text->+ def_%v_17 text[2.12,] %v_16[3.7,] 	 ARGS:%v_16,
 		 9: COPY TYPE_PASS def_text %v_17[3.8,] 
@@ -44,7 +44,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_18 
+		 1: COPY TYPE_StringLiteral " Want to join me?" def_%v_18 
 		 2: text->+ def_%v_19 text[2.12,] %v_18[4.1,] 	 ARGS:%v_18,
 		 3: COPY TYPE_PASS def_text %v_19[4.2,] 
 		 4: COPY TYPE_PASS def_%v_17 %v_19[4.2,] 
@@ -84,8 +84,8 @@ BB 2
 		 5: RECEIVEARG def_comment 
 		 6: RECEIVEARG def_url 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "feed" def_%v_3 
+		 9: COPY TYPE_StringLiteral "I left a comment on " def_%v_4 
 		 10: 
 		 11: %self->configatron def_%v_5 %self[2.0,] 	 ARGS:
 		 12: %v_5->community_name def_%v_6 %v_5[2.11,] 	 ARGS:
@@ -114,7 +114,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_post 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "feed" def_%v_3 
 		 8: post->title def_%v_4 post[2.5,] 	 ARGS:
 		 9: post->post def_%v_5 post[2.5,2.8,] 	 ARGS:
 		 10: %self->strip_tags def_%v_6 %self[2.0,] %v_5[2.9,] 	 ARGS:%v_5,

@@ -93,7 +93,7 @@ BB 4
 		 2: %self->contents_hash def_%v_6 %self[2.0,] 	 ARGS:
 		 3: ATTRASSIGN %self->contents %v_6[4.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_7 
+		 5: COPY TYPE_StringLiteral "SELECT content_type, COUNT(*) AS cnt FROM nodes WHERE public=1 GROUP BY content_type;" def_%v_7 
 		 6: %self->select_all def_%v_8 %self[4.2,4.3,2.0,] %v_7[4.5,] 	 ARGS:%v_7,
 		 7: COPY TYPE_PASS def_by_type %v_8[4.6,] 
 		 8: 
@@ -118,9 +118,9 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->contents def_%cl_1_3 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "content_type" def_%cl_1_4 
 		 3: content->[] def_%cl_1_5 content[2.2,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 4: COPY TYPE_StringLiteral "cnt" def_%cl_1_6 
 		 5: content->[] def_%cl_1_7 content[3.3,2.2,] %cl_1_6[3.4,] 	 ARGS:%cl_1_6,
 		 6: ATTRASSIGN %cl_1_3->[] %cl_1_5[3.3,] %cl_1_7[3.5,] 
 		 7: RETURN %cl_1_7[3.5,] %self[2.0,] 
@@ -138,7 +138,7 @@ BB 6
 CLOSURE END: 
 		 10: 
 		 11: GETFIELD %self->contents def_%v_10 %self[4.2,4.3,4.6,2.0,] 
-		 12: COPY TYPE_StringLiteral def_%v_11 
+		 12: COPY TYPE_StringLiteral "Total" def_%v_11 
 		 13: GETFIELD %self->contents def_%v_12 %self[4.2,4.3,4.6,2.0,] 
 		 14: %v_12->values def_%v_13 %v_12[4.13,] 	 ARGS:
 		 15: %v_13->sum def_%v_14 %v_13[4.14,] 	 ARGS:
@@ -180,14 +180,14 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_5 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_6 
-		 3: COPY TYPE_StringLiteral def_%v_7 
-		 4: COPY TYPE_StringLiteral def_%v_8 
-		 5: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "candidate" def_%v_6 
+		 3: COPY TYPE_StringLiteral "draft" def_%v_7 
+		 4: COPY TYPE_StringLiteral "published" def_%v_8 
+		 5: COPY TYPE_StringLiteral "refused" def_%v_9 
 		 6: HASH- def_%v_10 %v_6[4.2,] %v_7[4.3,] %v_8[4.4,] %v_9[4.5,] 
 		 7: ATTRASSIGN %self->news %v_10[4.6,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_11 
+		 9: COPY TYPE_StringLiteral "SELECT state, COUNT(*) AS cnt FROM news GROUP BY state;" def_%v_11 
 		 10: %self->select_all def_%v_12 %self[4.7,2.0,] %v_11[4.9,] 	 ARGS:%v_11,
 		 11: COPY TYPE_PASS def_by_state %v_12[4.10,] 
 		 12: 
@@ -212,9 +212,9 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->news def_%cl_1_3 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "state" def_%cl_1_4 
 		 3: state->[] def_%cl_1_5 state[2.2,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 4: COPY TYPE_StringLiteral "cnt" def_%cl_1_6 
 		 5: state->[] def_%cl_1_7 state[3.3,2.2,] %cl_1_6[3.4,] 	 ARGS:%cl_1_6,
 		 6: ATTRASSIGN %cl_1_3->[] %cl_1_5[3.3,] %cl_1_7[3.5,] 
 		 7: RETURN %cl_1_7[3.5,] %self[2.0,] 
@@ -253,7 +253,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(DISTINCT(author_name)) AS cnt FROM news WHERE state='published'" def_%v_3 
 		 7: %self->count def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -276,7 +276,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT COUNT(DISTINCT(user_id)) AS cnt FROM nodes, news WHERE nodes.content_id=news.id AND content_type='News' AND news.state='published'" def_%v_3 
 		 7: %self->count def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -316,7 +316,7 @@ BB 4
 		 2: HASH- def_%v_6 
 		 3: ATTRASSIGN %self->contents_by_year %v_6[4.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_7 
+		 5: COPY TYPE_StringLiteral "SELECT YEAR(created_at) AS year, content_type, COUNT(*) AS cnt FROM nodes WHERE public=1 GROUP BY year, content_type ORDER BY year, content_type" def_%v_7 
 		 6: %self->select_all def_%v_8 %self[4.3,2.0,] %v_7[4.5,] 	 ARGS:%v_7,
 		 7: COPY TYPE_PASS def_entries %v_8[4.6,] 
 		 8: 
@@ -341,7 +341,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->contents_by_year def_%cl_1_3 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_5 
+		 2: COPY TYPE_StringLiteral "year" def_%cl_1_5 
 		 3: entry->[] def_%cl_1_6 entry[2.2,] %cl_1_5[3.2,] 	 ARGS:%cl_1_5,
 		 4: %cl_1_3->[] def_%cl_1_4 %cl_1_3[3.1,] %cl_1_6[3.3,] 	 ARGS:%cl_1_6,
 		 5: BRANCH %cl_1_4[3.4,] 
@@ -358,12 +358,12 @@ BB 5
 	instructions:
 		 0: 
 		 1: GETFIELD %self->contents_by_year def_%cl_1_8 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_9 
+		 2: COPY TYPE_StringLiteral "year" def_%cl_1_9 
 		 3: entry->[] def_%cl_1_10 entry[2.2,] %cl_1_9[5.2,] 	 ARGS:%cl_1_9,
 		 4: %cl_1_8->[] def_%cl_1_11 %cl_1_8[5.1,] %cl_1_10[5.3,] 	 ARGS:%cl_1_10,
-		 5: COPY TYPE_StringLiteral def_%cl_1_12 
+		 5: COPY TYPE_StringLiteral "content_type" def_%cl_1_12 
 		 6: entry->[] def_%cl_1_13 entry[5.3,2.2,] %cl_1_12[5.5,] 	 ARGS:%cl_1_12,
-		 7: COPY TYPE_StringLiteral def_%cl_1_14 
+		 7: COPY TYPE_StringLiteral "cnt" def_%cl_1_14 
 		 8: entry->[] def_%cl_1_15 entry[5.3,5.6,2.2,] %cl_1_14[5.7,] 	 ARGS:%cl_1_14,
 		 9: ATTRASSIGN %cl_1_11->[] %cl_1_13[5.6,] %cl_1_15[5.8,] 
 		 10: RETURN %cl_1_15[5.8,] %self[2.0,] 
@@ -419,7 +419,7 @@ BB 4
 		 2: HASH- def_%v_6 
 		 3: ATTRASSIGN %self->contents_by_month %v_6[4.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_7 
+		 5: COPY TYPE_StringLiteral "SELECT CONCAT(SUBSTRING(created_at+0,1,6)) AS month, content_type, COUNT(*) AS cnt FROM nodes WHERE created_at > DATE_SUB(DATE_SUB(CURDATE(),INTERVAL 1 YEAR), INTERVAL DAY(CURDATE())-1 DAY) AND public=1 GROUP BY month, content_type ORDER BY month ASC, content_type" def_%v_7 
 		 6: %self->select_all def_%v_8 %self[4.3,2.0,] %v_7[4.5,] 	 ARGS:%v_7,
 		 7: COPY TYPE_PASS def_entries %v_8[4.6,] 
 		 8: 
@@ -444,7 +444,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->contents_by_month def_%cl_1_3 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_5 
+		 2: COPY TYPE_StringLiteral "month" def_%cl_1_5 
 		 3: entry->[] def_%cl_1_6 entry[2.2,] %cl_1_5[3.2,] 	 ARGS:%cl_1_5,
 		 4: %cl_1_3->[] def_%cl_1_4 %cl_1_3[3.1,] %cl_1_6[3.3,] 	 ARGS:%cl_1_6,
 		 5: BRANCH %cl_1_4[3.4,] 
@@ -461,12 +461,12 @@ BB 5
 	instructions:
 		 0: 
 		 1: GETFIELD %self->contents_by_month def_%cl_1_8 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_9 
+		 2: COPY TYPE_StringLiteral "month" def_%cl_1_9 
 		 3: entry->[] def_%cl_1_10 entry[2.2,] %cl_1_9[5.2,] 	 ARGS:%cl_1_9,
 		 4: %cl_1_8->[] def_%cl_1_11 %cl_1_8[5.1,] %cl_1_10[5.3,] 	 ARGS:%cl_1_10,
-		 5: COPY TYPE_StringLiteral def_%cl_1_12 
+		 5: COPY TYPE_StringLiteral "content_type" def_%cl_1_12 
 		 6: entry->[] def_%cl_1_13 entry[5.3,2.2,] %cl_1_12[5.5,] 	 ARGS:%cl_1_12,
-		 7: COPY TYPE_StringLiteral def_%cl_1_14 
+		 7: COPY TYPE_StringLiteral "cnt" def_%cl_1_14 
 		 8: entry->[] def_%cl_1_15 entry[5.3,5.6,2.2,] %cl_1_14[5.7,] 	 ARGS:%cl_1_14,
 		 9: ATTRASSIGN %cl_1_11->[] %cl_1_13[5.6,] %cl_1_15[5.8,] 
 		 10: RETURN %cl_1_15[5.8,] %self[2.0,] 
@@ -505,7 +505,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT DAYNAME(CONVERT_TZ(created_at,'+00:00','Europe/Paris')) AS d, WEEKDAY(CONVERT_TZ(created_at,'+00:00','Europe/Paris')) AS day, COUNT(*) AS cnt FROM nodes WHERE public=1 GROUP BY d ORDER BY day ASC" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -528,7 +528,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "SELECT YEAR(created_at) AS year,ROUND(AVG(LENGTH(body)+LENGTH(second_part))) AS cnt FROM news WHERE state='published' GROUP BY year ORDER BY year" def_%v_3 
 		 7: %self->select_all def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -568,7 +568,7 @@ BB 4
 		 2: HASH- def_%v_6 
 		 3: ATTRASSIGN %self->contents_by_license %v_6[4.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_7 
+		 5: COPY TYPE_StringLiteral "SELECT YEAR(created_at) AS year, content_type, ROUND(AVG(100*cc_licensed)) AS pct FROM nodes WHERE (content_type='News' OR content_type='Diary') AND public=1 GROUP BY year, content_type HAVING year>=2010 ORDER BY year, content_type;" def_%v_7 
 		 6: %self->select_all def_%v_8 %self[4.3,2.0,] %v_7[4.5,] 	 ARGS:%v_7,
 		 7: COPY TYPE_PASS def_entries %v_8[4.6,] 
 		 8: 
@@ -593,7 +593,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: GETFIELD %self->contents_by_license def_%cl_1_3 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_5 
+		 2: COPY TYPE_StringLiteral "year" def_%cl_1_5 
 		 3: entry->[] def_%cl_1_6 entry[2.2,] %cl_1_5[3.2,] 	 ARGS:%cl_1_5,
 		 4: %cl_1_3->[] def_%cl_1_4 %cl_1_3[3.1,] %cl_1_6[3.3,] 	 ARGS:%cl_1_6,
 		 5: BRANCH %cl_1_4[3.4,] 
@@ -610,12 +610,12 @@ BB 5
 	instructions:
 		 0: 
 		 1: GETFIELD %self->contents_by_license def_%cl_1_8 %self[2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_1_9 
+		 2: COPY TYPE_StringLiteral "year" def_%cl_1_9 
 		 3: entry->[] def_%cl_1_10 entry[2.2,] %cl_1_9[5.2,] 	 ARGS:%cl_1_9,
 		 4: %cl_1_8->[] def_%cl_1_11 %cl_1_8[5.1,] %cl_1_10[5.3,] 	 ARGS:%cl_1_10,
-		 5: COPY TYPE_StringLiteral def_%cl_1_12 
+		 5: COPY TYPE_StringLiteral "content_type" def_%cl_1_12 
 		 6: entry->[] def_%cl_1_13 entry[5.3,2.2,] %cl_1_12[5.5,] 	 ARGS:%cl_1_12,
-		 7: COPY TYPE_StringLiteral def_%cl_1_14 
+		 7: COPY TYPE_StringLiteral "pct" def_%cl_1_14 
 		 8: entry->[] def_%cl_1_15 entry[5.3,5.6,2.2,] %cl_1_14[5.7,] 	 ARGS:%cl_1_14,
 		 9: ATTRASSIGN %cl_1_11->[] %cl_1_13[5.6,] %cl_1_15[5.8,] 
 		 10: RETURN %cl_1_15[5.8,] %self[2.0,] 

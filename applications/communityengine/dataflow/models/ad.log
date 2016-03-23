@@ -38,7 +38,10 @@ BB 6
 	instructions:
 		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "location = ?
+        AND published = ?
+        AND (time_constrained = ? OR (start_date > ? AND end_date < ?))
+        AND (audience IN (?) )" def_%v_5 
 		 3: location->to_s def_%v_6 location[2.5,] 	 ARGS:
 		 4: (Time) def_%v_7 
 		 5: %v_7->now def_%v_8 %v_7[6.4,] 	 ARGS:
@@ -98,7 +101,7 @@ BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_17 
+		 0: COPY TYPE_StringLiteral "" def_%v_17 
 		 1: RETURN %v_17[9.0,] %self[2.0,] 
 BB 11
 	outgoing: 
@@ -121,20 +124,20 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_logged_in 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "all" def_%v_3 
+		 8: COPY TYPE_StringLiteral "logged_" def_%v_4 
 		 9: BRANCH logged_in[2.5,] 
 BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "in" def_%v_5 
 		 1: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "out" def_%v_6 
 		 1: COPY TYPE_PASS def_%v_5 %v_6[4.0,] 
 BB 5
 	outgoing: 6 

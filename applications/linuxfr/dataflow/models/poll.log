@@ -200,7 +200,8 @@ BB 4
 		 4: %self->explanations def_%v_7 %self[4.1,4.2,4.3,2.0,] 	 ARGS:
 		 5: %self->answers def_%v_8 %self[4.1,4.2,4.3,4.4,2.0,] 	 ARGS:
 		 6: %v_8->pluck def_%v_9 %v_8[4.5,] 	 ARGS:Symbol,
-		 7: COPY TYPE_StringLiteral def_%v_10 
+		 7: COPY TYPE_StringLiteral "
+" def_%v_10 
 		 8: %v_9->join def_%v_11 %v_9[4.6,] %v_10[4.7,] 	 ARGS:%v_10,
 		 9: %self->tag_names def_%v_12 %self[4.1,4.2,4.3,4.4,4.5,2.0,] 	 ARGS:
 		 10: HASH-id-created_at-title-explanations-answers-tags- def_%v_13 %v_4[4.1,] %v_5[4.2,] %v_6[4.3,] %v_7[4.4,] %v_11[4.8,] %v_12[4.9,] 
@@ -323,8 +324,8 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_account 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "published" def_%v_3 
+		 8: COPY TYPE_StringLiteral "archived" def_%v_4 
 		 9: COPY TYPE_Array def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: %self->state def_%v_6 %self[2.0,] 	 ARGS:
 		 11: %v_5->include? def_%v_7 %v_5[2.9,] %v_6[2.10,] 	 ARGS:%v_6,
@@ -489,9 +490,9 @@ BB 2
 		 5: RECEIVEARG def_ip 
 		 6: 
 		 7: GLOBALVAR $redis def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "polls/" def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "/" def_%v_6 
 		 11: BUILDSTRING def_%v_7 %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] ip[2.5,] 
 		 12: %v_3->exists def_%v_8 %v_3[2.7,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: RETURN %v_8[2.12,] %self[2.0,2.9,] 
@@ -517,16 +518,16 @@ BB 2
 		 5: RECEIVEARG def_ip 
 		 6: 
 		 7: GLOBALVAR $redis def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "polls/" def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "/" def_%v_6 
 		 11: BUILDSTRING def_%v_7 %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] ip[2.5,] 
 		 12: %v_3->set def_%v_8 %v_3[2.7,] %v_7[2.11,] 	 ARGS:%v_7,Fixnum,
 		 13: 
 		 14: GLOBALVAR $redis def_%v_9 
-		 15: COPY TYPE_StringLiteral def_%v_10 
+		 15: COPY TYPE_StringLiteral "polls/" def_%v_10 
 		 16: %self->id def_%v_11 %self[2.0,2.9,] 	 ARGS:
-		 17: COPY TYPE_StringLiteral def_%v_12 
+		 17: COPY TYPE_StringLiteral "/" def_%v_12 
 		 18: BUILDSTRING def_%v_13 %v_10[2.15,] %v_11[2.16,] %v_12[2.17,] ip[2.5,] 
 		 19: %v_9->expire def_%v_14 %v_9[2.14,] %v_13[2.18,] 	 ARGS:%v_13,Fixnum,
 		 20: RETURN %v_14[2.19,] %self[2.0,2.9,2.16,] 

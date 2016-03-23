@@ -16,7 +16,7 @@ BB 2
 		 6: %self->current_templates def_%v_3 %self[2.0,] 	 ARGS:
 		 7: ATTRASSIGN %self->task_templates %v_3[2.6,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "admin" def_%v_4 
 		 10: HASH-layout- def_%v_5 %v_4[2.9,] 
 		 11: %self->render def_%v_6 %self[2.0,2.6,2.7,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: RETURN %v_6[2.11,] %self[2.0,2.6,2.7,2.11,] 
@@ -55,7 +55,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_9 %self[2.0,2.10,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_StringLiteral "flash.error.not_exists_or_no_permission" def_%v_10 
 		 3: (Template) def_%v_11 
 		 4: %v_11->model_name def_%v_12 %v_11[3.3,] 	 ARGS:
 		 5: %v_12->human def_%v_13 %v_12[3.4,] 	 ARGS:
@@ -99,8 +99,8 @@ BB 9
 	instructions:
 		 0: GETFIELD %self->task def_%v_23 %self[2.0,2.10,] 
 		 1: %self->link_to_task def_%v_24 %self[2.0,2.10,] %v_23[9.0,] 	 ARGS:%v_23,
-		 2: COPY TYPE_StringLiteral def_%v_25 
-		 3: COPY TYPE_StringLiteral def_%v_26 
+		 2: COPY TYPE_StringLiteral " - " def_%v_25 
+		 3: COPY TYPE_StringLiteral "flash.notice.model_updated" def_%v_26 
 		 4: (Template) def_%v_27 
 		 5: %v_27->model_name def_%v_28 %v_27[9.4,] 	 ARGS:
 		 6: %v_28->human def_%v_29 %v_28[9.5,] 	 ARGS:
@@ -115,7 +115,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_34 
+		 1: COPY TYPE_StringLiteral "edit" def_%v_34 
 		 2: GETFIELD %self->task def_%v_35 %self[2.0,2.10,] 
 		 3: %v_35->task_num def_%v_36 %v_35[10.2,] 	 ARGS:
 		 4: HASH-action-id- def_%v_37 %v_34[10.1,] %v_36[10.3,] 
@@ -186,7 +186,7 @@ CLOSURE END:
 		 11: %v_5->destroy def_%v_6 %v_5[2.10,] 	 ARGS:
 		 12: 
 		 13: %self->flash def_%v_7 %self[2.0,2.6,2.8,] 	 ARGS:
-		 14: COPY TYPE_StringLiteral def_%v_8 
+		 14: COPY TYPE_StringLiteral "flash.notice.model_deleted" def_%v_8 
 		 15: (Template) def_%v_9 
 		 16: %v_9->model_name def_%v_10 %v_9[2.15,] 	 ARGS:
 		 17: %v_10->human def_%v_11 %v_10[2.16,] 	 ARGS:

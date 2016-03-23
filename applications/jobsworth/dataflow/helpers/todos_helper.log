@@ -14,9 +14,9 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_todo 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "/todos/toggle_done/" def_%v_3 
 		 8: todo->id def_%v_4 todo[2.5,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral "?task_id=" def_%v_5 
 		 10: GETFIELD %self->task def_%v_6 %self[2.0,] 
 		 11: %v_6->id def_%v_7 %v_6[2.10,] 	 ARGS:
 		 12: BUILDSTRING def_%v_8 %v_3[2.7,] %v_4[2.8,] %v_5[2.9,] %v_7[2.11,] 
@@ -25,11 +25,11 @@ BB 2
 		 15: todo->id def_%v_9 todo[2.5,2.8,] 	 ARGS:
 		 16: COPY TYPE_PASS def_id %v_9[2.15,] 
 		 17: 
-		 18: COPY TYPE_StringLiteral def_%v_10 
-		 19: COPY TYPE_StringLiteral def_%v_11 
+		 18: COPY TYPE_StringLiteral "todo" def_%v_10 
+		 19: COPY TYPE_StringLiteral "done" def_%v_11 
 		 20: todo->done? def_%v_12 todo[2.5,2.8,2.15,] 	 ARGS:
-		 21: COPY TYPE_StringLiteral def_%v_13 
-		 22: COPY TYPE_StringLiteral def_%v_14 
+		 21: COPY TYPE_StringLiteral "button checkbox" def_%v_13 
+		 22: COPY TYPE_StringLiteral "button_" def_%v_14 
 		 23: 
 		 24: BUILDSTRING def_%v_15 %v_14[2.22,] id[2.16,] 
 		 25: HASH-checked-class-id- def_%v_16 %v_12[2.20,] %v_13[2.21,] %v_15[2.24,] 
@@ -56,7 +56,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_todo 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "tasks.actions.open" def_%v_3 
 		 8: todo->name def_%v_4 todo[2.5,] 	 ARGS:
 		 9: %self->h def_%v_5 %self[2.0,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: HASH-task- def_%v_6 %v_5[2.9,] 
@@ -70,7 +70,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_9 
+		 1: COPY TYPE_StringLiteral "tasks.actions.close" def_%v_9 
 		 2: todo->name def_%v_10 todo[2.5,] 	 ARGS:
 		 3: %self->h def_%v_11 %self[2.0,] %v_10[3.2,] 	 ARGS:%v_10,
 		 4: HASH-task- def_%v_12 %v_11[3.3,] 
@@ -87,11 +87,11 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_14 
-		 2: COPY TYPE_StringLiteral def_%v_15 
+		 1: COPY TYPE_StringLiteral "todo" def_%v_14 
+		 2: COPY TYPE_StringLiteral "done" def_%v_15 
 		 3: todo->done? def_%v_16 todo[2.5,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_17 
-		 5: COPY TYPE_StringLiteral def_%v_18 
+		 4: COPY TYPE_StringLiteral "button checkbox" def_%v_17 
+		 5: COPY TYPE_StringLiteral "tooltip" def_%v_18 
 		 6: HASH-title-checked-class-rel- def_%v_19 title[3.6,2.12,] %v_16[5.3,] %v_17[5.4,] %v_18[5.5,] 
 		 7: %self->check_box def_%v_20 %self[2.0,] %v_14[5.1,] %v_15[5.2,] %v_19[5.6,] 	 ARGS:%v_14,%v_15,%v_19,
 		 8: RETURN %v_20[5.7,] %self[5.7,2.0,] 

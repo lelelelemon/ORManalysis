@@ -219,6 +219,25 @@ def get_mvc_name2(filename)
 	return n
 end
 
+def search_query_string(astnode)
+	if astnode.type.to_s == "string_content"
+		return astnode.source
+	else
+		str = nil
+		astnode.children.each do |c|
+			s = search_query_string(c)
+			if s
+				if str
+					str += " ; #{s}"
+				else
+					str = s
+				end
+			end
+		end
+		return str
+	end
+end
+
 def dataflow_filename_match(dataflow_file_name)
 	$class_map.each do |k, v|
 		if v.filename != nil and v.filename.tr('/','').gsub('.rb','') == dataflow_file_name.tr('/','').gsub('dataflow','').gsub('.log','')
@@ -261,15 +280,23 @@ def get_class_node(astnode)
 	end
 end
 
+def get_class_name_from_class_node(node)
+	if node.children[0].type.to_s == "const_path_ref" or node.children[0].type.to_s == "const_ref"
+		return node.children[0].source.to_s
+	else
+		return get_left_most_leaf(node).source.to_s
+	end
+end
+
 def recursive_get_class_stack(astnode, class_stack, filename)
 	if astnode.is_a?YARD::Parser::Ruby::AstNode
 		if astnode.type.to_s == "class" or astnode.type.to_s == "module"
 			class_stack.push(astnode)
 			@class_name = ""
 			for i in 0...class_stack.length-1
-				@class_name += "#{get_left_most_leaf(class_stack[i]).source.to_s}::"
+				@class_name += "#{get_class_name_from_class_node(class_stack[i])}::"
 			end
-			@class_name += "#{get_left_most_leaf(class_stack[-1]).source.to_s}"
+			@class_name += "#{get_class_name_from_class_node(class_stack[-1])}"
 			astnode.children.each do |child|
 				@has_subclass = false
 				if child.type.to_s == "list"
@@ -281,10 +308,9 @@ def recursive_get_class_stack(astnode, class_stack, filename)
 				end
 				if @has_subclass
 					recursive_get_class_stack(child, class_stack, filename)
-				else
-					read_each_class(@class_name, astnode, filename)
 				end
 			end
+			read_each_class(@class_name, astnode, filename)
 			class_stack.pop
 		else
 			astnode.each do |child|
@@ -451,8 +477,17 @@ def isUtilSink(n1)
 	return false
 end
 
+def isSelectCondition(n1)
+	if n1.getDataflowEdges.length == 1
+		if n1.getDataflowEdges[0].getToNode.getInstr.instance_of?HashField_instr
+			return true
+		end
+	end
+	return false
+end
+
 def isConstSource(n1)
-	if n1.getInstr.instance_of?ReceiveConstArg_instr or n1.getInstr.instance_of?AttrAssign_instr or n1.getInstr.instance_of?Constant_instr or n1.getInstr.instance_of?ReceiveArg_instr
+	if n1.getInstr.instance_of?ReceiveConstArg_instr or n1.getInstr.instance_of?AttrAssign_instr or n1.getInstr.instance_of?Constant_instr 
 		return true
 	elsif n1.getInstr.instance_of?Copy_instr and n1.getInstr.isFromConst
 		return true

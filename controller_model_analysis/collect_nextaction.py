@@ -247,9 +247,22 @@ printed_title = False
 #	print ""
 
 data_avg_list = {}
+stats_file_path = sys.argv[2]
+stats_file = open(stats_file_path, 'w')
+stats_file.write("<NA>\n")
+stats_file.write("\t<nextAction>\n")
 for k, v in avg_list.items():
 	print "%s:\t%f"%(k, getAverage(v))
+#	stats_file.write("\t\t<%s>%f</%s>\n"%(k, getAverage(v), k))
 	data_avg_list[k] = getAverage(v)
+
+stats_file.write("\t\t<subset>%f</subset>\n"%(data_avg_list["nextReadSub"]))
+stats_file.write("\t\t<same>%f</same>\n"%(data_avg_list["nextReadSame"]))
+stats_file.write("\t\t<distinct>%f</distinct>\n"%(data_avg_list["nextReadSuper"]))
+stats_file.write("\t\t<sameTableOther>%f</sameTableOther>\n"%(data_avg_list["nextReadOverlap"]-data_avg_list["nextReadSub"]-data_avg_list["nextReadSuper"]-data_avg_list["nextReadSame"]))
+stats_file.write("\t\t<differentTable>%f</differentTable>\n"%(data_avg_list["nextReadTotal"]-data_avg_list["nextReadOverlap"]))
+stats_file.write("\t</nextAction>\n")
+stats_file.write("</NA>\n")
 
 ind = np.arange(1)
 width = 0.2

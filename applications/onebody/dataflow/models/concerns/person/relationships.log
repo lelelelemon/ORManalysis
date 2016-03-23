@@ -76,9 +76,9 @@ BB 3
 		 0: 
 		 1: relationship->related def_%cl_2_3 relationship[2.2,] 	 ARGS:
 		 2: %cl_2_3->legacy_id def_%cl_2_4 %cl_2_3[3.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_2_5 
+		 3: COPY TYPE_StringLiteral "[" def_%cl_2_5 
 		 4: relationship->name_or_other def_%cl_2_6 relationship[3.1,2.2,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_2_7 
+		 5: COPY TYPE_StringLiteral "]" def_%cl_2_7 
 		 6: BUILDSTRING def_%cl_2_8 %cl_2_4[3.2,] %cl_2_5[3.3,] %cl_2_6[3.4,] %cl_2_7[3.5,] 
 		 7: RETURN %cl_2_8[3.6,] %self[2.0,] 
 BB 4
@@ -108,7 +108,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_11 
+		 0: COPY TYPE_StringLiteral "," def_%v_11 
 		 1: rels->join def_%v_12 rels[2.12,] %v_11[4.0,] 	 ARGS:%v_11,
 		 2: %v_10->hexdigest def_%v_13 %v_10[3.0,2.15,] %v_12[4.1,] 	 ARGS:%v_12,
 		 3: ATTRASSIGN %self->relationships_hash %v_13[4.2,] 
@@ -243,8 +243,8 @@ BB 3
 		 0: 
 		 1: (I18n) def_%cl_1_3 
 		 2: name->downcase def_%cl_1_4 name[2.3,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 3: COPY TYPE_StringLiteral "relationships.names" def_%cl_1_5 
+		 4: COPY TYPE_StringLiteral "" def_%cl_1_6 
 		 5: HASH-scope-default- def_%cl_1_7 %cl_1_5[3.3,] %cl_1_6[3.4,] 
 		 6: %cl_1_3->t def_%cl_1_8 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_7[3.5,] 	 ARGS:%cl_1_4,%cl_1_7,
 		 7: %cl_1_8->present? def_%cl_1_9 %cl_1_8[3.6,] 	 ARGS:
@@ -266,7 +266,7 @@ BB 5
 		 0: 
 		 1: COPY TYPE_PASS def_other_name name[2.3,] 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_11 
+		 3: COPY TYPE_StringLiteral "other" def_%cl_1_11 
 		 4: COPY TYPE_PASS def_name %cl_1_11[5.3,] 
 		 5: COPY TYPE_PASS def_%cl_1_10 %cl_1_11[5.3,] 
 BB 6

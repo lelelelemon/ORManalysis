@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: GLOBALVAR $redis def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "nodes/ppp" def_%v_4 
 		 8: %v_3->get def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: COPY TYPE_PASS def_id %v_5[2.8,] 
 		 10: 
@@ -52,7 +52,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: GLOBALVAR $redis def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "nodes/ppp" def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_3->set def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_4,%v_5,
 		 10: RETURN %v_6[2.9,] %self[2.0,2.8,] 
@@ -78,7 +78,7 @@ BB 2
 		 5: 
 		 6: %self->id def_%v_3 %self[2.0,] 	 ARGS:
 		 7: GLOBALVAR $redis def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "nodes/ppp" def_%v_5 
 		 9: %v_4->get def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_5,
 		 10: %v_6->to_i def_%v_7 %v_6[2.9,] 	 ARGS:
 		 11: %v_3->== def_%v_8 %v_3[2.6,] %v_7[2.10,] 	 ARGS:%v_7,
@@ -108,8 +108,8 @@ BB 2
 		 8: %v_4->interest_coefficient def_%v_5 %v_4[2.7,] 	 ARGS:
 		 9: COPY TYPE_PASS def_coeff %v_5[2.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_6 
-		 12: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral "UPDATE nodes SET interest=(score * " def_%v_6 
+		 12: COPY TYPE_StringLiteral " + UNIX_TIMESTAMP(created_at) / 1000) WHERE id=" def_%v_7 
 		 13: %self->id def_%v_8 %self[2.0,2.6,] 	 ARGS:
 		 14: BUILDSTRING def_%v_9 %v_6[2.11,] coeff[2.9,] %v_7[2.12,] %v_8[2.13,] 
 		 15: COPY TYPE_PASS def_stmt %v_9[2.14,] 
@@ -170,9 +170,9 @@ BB 2
 		 5: RECEIVEARG def_account_id 
 		 6: 
 		 7: GLOBALVAR $redis def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "nodes/" def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "/votes/" def_%v_6 
 		 11: BUILDSTRING def_%v_7 %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] account_id[2.5,] 
 		 12: %v_3->exists def_%v_8 %v_3[2.7,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: RETURN %v_8[2.12,] %self[2.0,2.9,] 
@@ -244,9 +244,9 @@ BB 2
 		 5: RECEIVEARG def_account 
 		 6: RECEIVEARG def_value 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
+		 8: COPY TYPE_StringLiteral "nodes/" def_%v_3 
 		 9: %self->id def_%v_4 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral "/votes/" def_%v_5 
 		 11: account->id def_%v_6 account[2.5,] 	 ARGS:
 		 12: BUILDSTRING def_%v_7 %v_3[2.8,] %v_4[2.9,] %v_5[2.10,] %v_6[2.11,] 
 		 13: COPY TYPE_PASS def_key %v_7[2.12,] 
@@ -291,9 +291,9 @@ BB 8
 		 2: %v_14->expire def_%v_15 %v_14[8.1,] key[2.13,] 	 ARGS:key,Fixnum,
 		 3: 
 		 4: GLOBALVAR $redis def_%v_16 
-		 5: COPY TYPE_StringLiteral def_%v_17 
+		 5: COPY TYPE_StringLiteral "users/" def_%v_17 
 		 6: %self->user_id def_%v_18 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_19 
+		 7: COPY TYPE_StringLiteral "/diff_karma" def_%v_19 
 		 8: BUILDSTRING def_%v_20 %v_17[8.5,] %v_18[8.6,] %v_19[8.7,] 
 		 9: %v_16->incrby def_%v_21 %v_16[8.4,] %v_20[8.8,] value[6.1,2.6,] 	 ARGS:%v_20,value,
 		 10: 
@@ -326,7 +326,7 @@ BB 11
 		 6: %self->compute_interest def_%v_31 %self[11.2,2.0,] 	 ARGS:
 		 7: 
 		 8: %self->content_type def_%v_32 %self[11.2,11.6,2.0,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_33 
+		 9: COPY TYPE_StringLiteral "News" def_%v_33 
 		 10: %v_32->== def_%v_34 %v_32[11.8,] %v_33[11.9,] 	 ARGS:%v_33,
 		 11: BRANCH %v_34[11.10,] 
 BB 12
@@ -423,7 +423,7 @@ BB 2
 		 5: RECEIVEARG def_account_id 
 		 6: 
 		 7: GLOBALVAR $redis def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "readings/*/" def_%v_4 
 		 9: BUILDSTRING def_%v_5 %v_4[2.8,] account_id[2.5,] 
 		 10: %v_3->keys def_%v_6 %v_3[2.7,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: RETURN %v_6[2.10,] %self[2.0,] 
@@ -514,9 +514,9 @@ BB 2
 		 5: RECEIVEARG def_account_id 
 		 6: 
 		 7: GLOBALVAR $redis def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "readings/" def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "/" def_%v_6 
 		 11: BUILDSTRING def_%v_7 %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] account_id[2.5,] 
 		 12: (Time) def_%v_8 
 		 13: %v_8->now def_%v_9 %v_8[2.12,] 	 ARGS:
@@ -524,9 +524,9 @@ BB 2
 		 15: %v_3->set def_%v_11 %v_3[2.7,] %v_7[2.11,] %v_10[2.14,] 	 ARGS:%v_7,%v_10,
 		 16: 
 		 17: GLOBALVAR $redis def_%v_12 
-		 18: COPY TYPE_StringLiteral def_%v_13 
+		 18: COPY TYPE_StringLiteral "readings/" def_%v_13 
 		 19: %self->id def_%v_14 %self[2.0,2.9,] 	 ARGS:
-		 20: COPY TYPE_StringLiteral def_%v_15 
+		 20: COPY TYPE_StringLiteral "/" def_%v_15 
 		 21: BUILDSTRING def_%v_16 %v_13[2.18,] %v_14[2.19,] %v_15[2.20,] account_id[2.5,] 
 		 22: %v_12->expire def_%v_17 %v_12[2.17,] %v_16[2.21,] 	 ARGS:%v_16,Fixnum,
 		 23: RETURN %v_17[2.22,] %self[2.0,2.9,2.19,] 
@@ -552,9 +552,9 @@ BB 2
 		 5: RECEIVEARG def_account_id 
 		 6: 
 		 7: GLOBALVAR $redis def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "readings/" def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "/" def_%v_6 
 		 11: BUILDSTRING def_%v_7 %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] account_id[2.5,] 
 		 12: %v_3->del def_%v_8 %v_3[2.7,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: RETURN %v_8[2.12,] %self[2.0,2.9,] 
@@ -620,8 +620,8 @@ BB 2
 		 6: RECEIVEARG def_account_id 
 		 7: 
 		 8: GLOBALVAR $redis def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral "readings/" def_%v_4 
+		 10: COPY TYPE_StringLiteral "/" def_%v_5 
 		 11: BUILDSTRING def_%v_6 %v_4[2.9,] node_id[2.5,] %v_5[2.10,] account_id[2.6,] 
 		 12: %v_3->get def_%v_7 %v_3[2.8,] %v_6[2.11,] 	 ARGS:%v_6,
 		 13: COPY TYPE_PASS def_time %v_7[2.12,] 
@@ -721,7 +721,7 @@ BB 11
 	instructions:
 		 0: 
 		 1: %self->comments def_%v_19 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_20 
+		 2: COPY TYPE_StringLiteral "created_at > ?" def_%v_20 
 		 3: %v_19->where def_%v_21 %v_19[11.1,] %v_20[11.2,] r[10.1,6.4,] 	 ARGS:%v_20,r,
 		 4: %v_21->count def_%v_22 %v_21[11.3,] 	 ARGS:
 		 5: COPY TYPE_PASS def_%v_10 %v_22[11.4,] 
@@ -977,13 +977,13 @@ BB 4
 		 4: HASH-public- def_%v_6 
 		 5: %v_5->where def_%v_7 %v_5[4.3,] %v_6[4.4,] 	 ARGS:%v_6,
 		 6: %v_7->joins def_%v_8 %v_7[4.5,] 	 ARGS:Symbol,
-		 7: COPY TYPE_StringLiteral def_%v_9 
+		 7: COPY TYPE_StringLiteral "taggings.node_id" def_%v_9 
 		 8: %self->id def_%v_10 %self[2.0,] 	 ARGS:
 		 9: HASH- def_%v_11 %v_9[4.7,] %v_10[4.8,] 
 		 10: %v_8->where def_%v_12 %v_8[4.6,] %v_11[4.9,] 	 ARGS:%v_11,
-		 11: COPY TYPE_StringLiteral def_%v_13 
+		 11: COPY TYPE_StringLiteral "tags.id" def_%v_13 
 		 12: %v_12->group def_%v_14 %v_12[4.10,] %v_13[4.11,] 	 ARGS:%v_13,
-		 13: COPY TYPE_StringLiteral def_%v_15 
+		 13: COPY TYPE_StringLiteral "COUNT(tags.id) DESC" def_%v_15 
 		 14: %v_14->order def_%v_16 %v_14[4.12,] %v_15[4.13,] 	 ARGS:%v_15,
 		 15: %v_16->limit def_%v_17 %v_16[4.14,] nb[3.0,2.5,] 	 ARGS:nb,
 		 16: RETURN %v_17[4.15,] %self[4.8,2.0,] 

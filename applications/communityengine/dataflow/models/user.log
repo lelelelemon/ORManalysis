@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_string 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "LOWER(email) = ? OR LOWER(login) = ?" def_%v_3 
 		 8: string->downcase def_%v_4 string[2.5,] 	 ARGS:
 		 9: string->downcase def_%v_5 string[2.5,2.8,] 	 ARGS:
 		 10: %self->where def_%v_6 %self[2.0,] %v_3[2.7,] %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_3,%v_4,%v_5,
@@ -41,7 +41,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_search 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "country_id" def_%v_3 
 		 8: search->[] def_%v_4 search[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
 		 9: %v_4->blank? def_%v_5 %v_4[2.8,] 	 ARGS:
 		 10: %v_5->! def_%v_6 %v_5[2.9,] 	 ARGS:
@@ -51,7 +51,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: (Country) def_%v_7 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "country_id" def_%v_8 
 		 2: search->[] def_%v_9 search[2.5,] %v_8[3.1,] 	 ARGS:%v_8,
 		 3: %v_7->find def_%v_10 %v_7[3.0,] %v_9[3.2,] 	 ARGS:%v_9,
 		 4: COPY TYPE_PASS def_country %v_10[3.3,] 
@@ -66,7 +66,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_11 
+		 1: COPY TYPE_StringLiteral "state_id" def_%v_11 
 		 2: search->[] def_%v_12 search[2.5,] %v_11[5.1,] 	 ARGS:%v_11,
 		 3: %v_12->blank? def_%v_13 %v_12[5.2,] 	 ARGS:
 		 4: %v_13->! def_%v_14 %v_13[5.3,] 	 ARGS:
@@ -76,7 +76,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: (State) def_%v_15 
-		 1: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "state_id" def_%v_16 
 		 2: search->[] def_%v_17 search[2.5,] %v_16[6.1,] 	 ARGS:%v_16,
 		 3: %v_15->find def_%v_18 %v_15[6.0,] %v_17[6.2,] 	 ARGS:%v_17,
 		 4: COPY TYPE_PASS def_state %v_18[6.3,] 
@@ -91,7 +91,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_19 
+		 1: COPY TYPE_StringLiteral "metro_area_id" def_%v_19 
 		 2: search->[] def_%v_20 search[2.5,] %v_19[8.1,] 	 ARGS:%v_19,
 		 3: %v_20->blank? def_%v_21 %v_20[8.2,] 	 ARGS:
 		 4: %v_21->! def_%v_22 %v_21[8.3,] 	 ARGS:
@@ -101,7 +101,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: (MetroArea) def_%v_23 
-		 1: COPY TYPE_StringLiteral def_%v_24 
+		 1: COPY TYPE_StringLiteral "metro_area_id" def_%v_24 
 		 2: search->[] def_%v_25 search[2.5,] %v_24[9.1,] 	 ARGS:%v_24,
 		 3: %v_23->find def_%v_26 %v_23[9.0,] %v_25[9.2,] 	 ARGS:%v_25,
 		 4: COPY TYPE_PASS def_metro_area %v_26[9.3,] 
@@ -170,7 +170,7 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_36 
+		 0: COPY TYPE_StringLiteral "country_id" def_%v_36 
 		 1: metro_area->country def_%v_37 metro_area[9.4,] 	 ARGS:
 		 2: %v_37->id def_%v_38 %v_37[19.1,] 	 ARGS:
 		 3: ATTRASSIGN search->[] %v_36[19.0,] %v_38[19.2,] 
@@ -191,7 +191,7 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_40 
+		 0: COPY TYPE_StringLiteral "state_id" def_%v_40 
 		 1: metro_area->state def_%v_41 metro_area[9.4,] 	 ARGS:
 		 2: %v_41->id def_%v_42 %v_41[22.1,] 	 ARGS:
 		 3: ATTRASSIGN search->[] %v_40[22.0,] %v_42[22.2,] 
@@ -282,7 +282,7 @@ BB 31
 	datadep: 
 	instructions:
 		 0: state->metro_areas def_%v_47 state[6.4,17.1,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_48 
+		 1: COPY TYPE_StringLiteral "name" def_%v_48 
 		 2: %v_47->order def_%v_49 %v_47[31.0,] %v_48[31.1,] 	 ARGS:%v_48,
 		 3: 
 BB 32
@@ -353,7 +353,7 @@ BB 2
 		 8: %v_3->merge def_%v_4 %v_3[2.7,] params[2.5,] 	 ARGS:params,
 		 9: COPY TYPE_PASS def_search %v_4[2.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_5 
+		 11: COPY TYPE_StringLiteral "metro_area_id" def_%v_5 
 		 12: params->[] def_%v_6 params[2.5,] 	 ARGS:Symbol,
 		 13: BRANCH %v_6[2.12,] 
 BB 3
@@ -367,7 +367,7 @@ BB 4
 	instructions:
 		 0: ATTRASSIGN search->[] %v_5[2.11,] %v_6[3.0,2.12,] 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 2: COPY TYPE_StringLiteral "state_id" def_%v_7 
 		 3: params->[] def_%v_8 params[2.5,] 	 ARGS:Symbol,
 		 4: BRANCH %v_8[4.3,] 
 BB 5
@@ -381,7 +381,7 @@ BB 6
 	instructions:
 		 0: ATTRASSIGN search->[] %v_7[4.2,] %v_8[5.0,4.3,] 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_9 
+		 2: COPY TYPE_StringLiteral "country_id" def_%v_9 
 		 3: params->[] def_%v_10 params[2.5,] 	 ARGS:Symbol,
 		 4: BRANCH %v_10[6.3,] 
 BB 7
@@ -425,21 +425,21 @@ BB 2
 		 12: %v_5->active def_%v_6 %v_5[2.11,] 	 ARGS:
 		 13: COPY TYPE_PASS def_users %v_6[2.12,] 
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%v_7 
+		 15: COPY TYPE_StringLiteral "country_id" def_%v_7 
 		 16: search->[] def_%v_8 search[2.5,] %v_7[2.15,] 	 ARGS:%v_7,
 		 17: BRANCH %v_8[2.16,] 
 BB 3
 	outgoing: 4 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "metro_area_id" def_%v_9 
 		 1: search->[] def_%v_10 search[2.5,] %v_9[3.0,] 	 ARGS:%v_9,
 		 2: BRANCH %v_10[3.1,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_11 
+		 0: COPY TYPE_StringLiteral "state_id" def_%v_11 
 		 1: search->[] def_%v_12 search[2.5,] %v_11[4.0,] 	 ARGS:%v_11,
 		 2: COPY TYPE_PASS def_%v_10 %v_12[4.1,] 
 BB 5
@@ -459,7 +459,7 @@ BB 7
 	instructions:
 		 0: 
 		 1: user->[] def_%v_14 user[2.9,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%v_15 
+		 2: COPY TYPE_StringLiteral "country_id" def_%v_15 
 		 3: search->[] def_%v_16 search[2.5,] %v_15[7.2,] 	 ARGS:%v_15,
 		 4: %v_14->eq def_%v_17 %v_14[7.1,] %v_16[7.3,] 	 ARGS:%v_16,
 		 5: users->where def_%v_18 users[2.13,] %v_17[7.4,] 	 ARGS:%v_17,
@@ -475,14 +475,14 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_19 
+		 1: COPY TYPE_StringLiteral "state_id" def_%v_19 
 		 2: search->[] def_%v_20 search[2.5,] %v_19[9.1,] 	 ARGS:%v_19,
 		 3: BRANCH %v_20[9.2,] 
 BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_21 
+		 0: COPY TYPE_StringLiteral "metro_area_id" def_%v_21 
 		 1: search->[] def_%v_22 search[2.5,] %v_21[10.0,] 	 ARGS:%v_21,
 		 2: %v_22->! def_%v_23 %v_22[10.1,] 	 ARGS:
 		 3: COPY TYPE_PASS def_%v_20 %v_23[10.2,] 
@@ -497,7 +497,7 @@ BB 12
 	instructions:
 		 0: 
 		 1: user->[] def_%v_24 user[2.9,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%v_25 
+		 2: COPY TYPE_StringLiteral "state_id" def_%v_25 
 		 3: search->[] def_%v_26 search[2.5,] %v_25[12.2,] 	 ARGS:%v_25,
 		 4: %v_24->eq def_%v_27 %v_24[12.1,] %v_26[12.3,] 	 ARGS:%v_26,
 		 5: users->where def_%v_28 users[7.6,2.13,] %v_27[12.4,] 	 ARGS:%v_27,
@@ -513,7 +513,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_29 
+		 1: COPY TYPE_StringLiteral "metro_area_id" def_%v_29 
 		 2: search->[] def_%v_30 search[2.5,] %v_29[14.1,] 	 ARGS:%v_29,
 		 3: BRANCH %v_30[14.2,] 
 BB 15
@@ -522,7 +522,7 @@ BB 15
 	instructions:
 		 0: 
 		 1: user->[] def_%v_31 user[2.9,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%v_32 
+		 2: COPY TYPE_StringLiteral "metro_area_id" def_%v_32 
 		 3: search->[] def_%v_33 search[2.5,] %v_32[15.2,] 	 ARGS:%v_32,
 		 4: %v_31->eq def_%v_34 %v_31[15.1,] %v_33[15.3,] 	 ARGS:%v_33,
 		 5: users->where def_%v_35 users[12.6,7.6,2.13,] %v_34[15.4,] 	 ARGS:%v_34,
@@ -538,7 +538,7 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_36 
+		 1: COPY TYPE_StringLiteral "login" def_%v_36 
 		 2: search->[] def_%v_37 search[2.5,] %v_36[17.1,] 	 ARGS:%v_36,
 		 3: BRANCH %v_37[17.2,] 
 BB 18
@@ -547,10 +547,10 @@ BB 18
 	instructions:
 		 0: 
 		 1: user->[] def_%v_38 user[2.9,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%v_39 
-		 3: COPY TYPE_StringLiteral def_%v_40 
+		 2: COPY TYPE_StringLiteral "%" def_%v_39 
+		 3: COPY TYPE_StringLiteral "login" def_%v_40 
 		 4: search->[] def_%v_41 search[2.5,] %v_40[18.3,] 	 ARGS:%v_40,
-		 5: COPY TYPE_StringLiteral def_%v_42 
+		 5: COPY TYPE_StringLiteral "%" def_%v_42 
 		 6: BUILDSTRING def_%v_43 %v_39[18.2,] %v_41[18.4,] %v_42[18.5,] 
 		 7: %v_38->matches def_%v_44 %v_38[18.1,] %v_43[18.6,] 	 ARGS:%v_43,
 		 8: users->where def_%v_45 users[15.6,12.6,7.6,2.13,] %v_44[18.7,] 	 ARGS:%v_44,
@@ -566,7 +566,7 @@ BB 20
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_46 
+		 1: COPY TYPE_StringLiteral "vendor" def_%v_46 
 		 2: search->[] def_%v_47 search[2.5,] %v_46[20.1,] 	 ARGS:%v_46,
 		 3: BRANCH %v_47[20.2,] 
 BB 21
@@ -589,7 +589,7 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_51 
+		 1: COPY TYPE_StringLiteral "description" def_%v_51 
 		 2: search->[] def_%v_52 search[2.5,] %v_51[23.1,] 	 ARGS:%v_51,
 		 3: BRANCH %v_52[23.2,] 
 BB 24
@@ -598,10 +598,10 @@ BB 24
 	instructions:
 		 0: 
 		 1: user->[] def_%v_53 user[2.9,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%v_54 
-		 3: COPY TYPE_StringLiteral def_%v_55 
+		 2: COPY TYPE_StringLiteral "%" def_%v_54 
+		 3: COPY TYPE_StringLiteral "description" def_%v_55 
 		 4: search->[] def_%v_56 search[2.5,] %v_55[24.3,] 	 ARGS:%v_55,
-		 5: COPY TYPE_StringLiteral def_%v_57 
+		 5: COPY TYPE_StringLiteral "%" def_%v_57 
 		 6: BUILDSTRING def_%v_58 %v_54[24.2,] %v_56[24.4,] %v_57[24.5,] 
 		 7: %v_53->matches def_%v_59 %v_53[24.1,] %v_58[24.6,] 	 ARGS:%v_58,
 		 8: users->where def_%v_60 users[21.4,18.9,15.6,12.6,7.6,2.13,] %v_59[24.7,] 	 ARGS:%v_59,
@@ -658,9 +658,9 @@ BB 4
 		 6: (Activity) def_%v_8 
 		 7: options->[] def_%v_9 options[4.4,3.1,2.5,] 	 ARGS:Symbol,
 		 8: %v_8->since def_%v_10 %v_8[4.6,] %v_9[4.7,] 	 ARGS:%v_9,
-		 9: COPY TYPE_StringLiteral def_%v_11 
+		 9: COPY TYPE_StringLiteral "activities.user_id, count(*) as count" def_%v_11 
 		 10: %v_10->select def_%v_12 %v_10[4.8,] %v_11[4.9,] 	 ARGS:%v_11,
-		 11: COPY TYPE_StringLiteral def_%v_13 
+		 11: COPY TYPE_StringLiteral "activities.user_id" def_%v_13 
 		 12: %v_12->group def_%v_14 %v_12[4.10,] %v_13[4.11,] 	 ARGS:%v_13,
 		 13: 
 		 14: options->[] def_%v_15 options[4.4,4.7,3.1,2.5,] 	 ARGS:Symbol,
@@ -669,24 +669,24 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_16 
+		 0: COPY TYPE_StringLiteral " users.avatar_id IS NOT NULL AND " def_%v_16 
 		 1: 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_17 
+		 0: COPY TYPE_StringLiteral "" def_%v_17 
 		 1: COPY TYPE_PASS def_%v_16 %v_17[6.0,] 
 BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_18 
+		 0: COPY TYPE_StringLiteral " users.activated_at IS NOT NULL" def_%v_18 
 		 1: BUILDSTRING def_%v_19 %v_16[6.1,5.0,] %v_18[7.0,] 
 		 2: %v_14->where def_%v_20 %v_14[4.12,] %v_19[7.1,] 	 ARGS:%v_19,
-		 3: COPY TYPE_StringLiteral def_%v_21 
+		 3: COPY TYPE_StringLiteral "count DESC" def_%v_21 
 		 4: %v_20->order def_%v_22 %v_20[7.2,] %v_21[7.3,] 	 ARGS:%v_21,
-		 5: COPY TYPE_StringLiteral def_%v_23 
+		 5: COPY TYPE_StringLiteral "LEFT JOIN users ON users.id = activities.user_id" def_%v_23 
 		 6: %v_22->joins def_%v_24 %v_22[7.4,] %v_23[7.5,] 	 ARGS:%v_23,
 		 7: options->[] def_%v_25 options[3.1,2.5,] 	 ARGS:Symbol,
 		 8: %v_24->limit def_%v_26 %v_24[7.6,] %v_25[7.7,] 	 ARGS:%v_25,
@@ -823,11 +823,11 @@ BB 4
 		 3: 
 		 4: (Activity) def_%v_6 
 		 5: %v_6->recent def_%v_7 %v_6[4.4,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%v_8 
+		 6: COPY TYPE_StringLiteral "LEFT JOIN users ON users.id = activities.user_id" def_%v_8 
 		 7: %v_7->joins def_%v_9 %v_7[4.5,] %v_8[4.6,] 	 ARGS:%v_8,
-		 8: COPY TYPE_StringLiteral def_%v_10 
+		 8: COPY TYPE_StringLiteral "users.activated_at IS NOT NULL" def_%v_10 
 		 9: %v_9->where def_%v_11 %v_9[4.7,] %v_10[4.8,] 	 ARGS:%v_10,
-		 10: COPY TYPE_StringLiteral def_%v_12 
+		 10: COPY TYPE_StringLiteral "activities.*" def_%v_12 
 		 11: %v_11->select def_%v_13 %v_11[4.9,] %v_12[4.10,] 	 ARGS:%v_12,
 		 12: options->[] def_%v_14 options[4.2,3.1,2.5,] 	 ARGS:Symbol,
 		 13: %v_13->page def_%v_15 %v_13[4.11,] %v_14[4.12,] 	 ARGS:%v_14,
@@ -855,7 +855,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (User) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "sb_last_seen_at > ?" def_%v_4 
 		 8: (Time) def_%v_5 
 		 9: %v_5->now def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->utc def_%v_7 %v_6[2.9,] 	 ARGS:
@@ -977,7 +977,7 @@ BB 2
 		 5: RECEIVEARG def_forum 
 		 6: 
 		 7: %self->moderatorships def_%v_3 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "forum_id = ?" def_%v_4 
 		 9: (Forum) def_%v_5 
 		 10: forum->is_a? def_%v_6 forum[2.5,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: BRANCH %v_6[2.10,] 
@@ -1057,7 +1057,7 @@ BB 3
 		 3: COPY TYPE_PASS def_ma %v_5[3.2,] 
 		 4: 
 		 5: (User) def_%v_6 
-		 6: COPY TYPE_StringLiteral def_%v_7 
+		 6: COPY TYPE_StringLiteral "metro_area_id = ?" def_%v_7 
 		 7: %v_5->id def_%v_8 %v_5[3.2,] 	 ARGS:
 		 8: %v_6->where def_%v_9 %v_6[3.5,] %v_7[3.6,] %v_8[3.7,] 	 ARGS:%v_7,%v_8,
 		 9: %v_9->count def_%v_10 %v_9[3.8,] 	 ARGS:
@@ -1091,7 +1091,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->posts def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "published_at > ?" def_%v_4 
 		 8: (DateTime) def_%v_5 
 		 9: %v_5->now def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->to_time def_%v_7 %v_6[2.9,] 	 ARGS:
@@ -1119,7 +1119,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->posts def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "published_at > ? and published_at < ?" def_%v_4 
 		 8: (DateTime) def_%v_5 
 		 9: %v_5->now def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->to_time def_%v_7 %v_6[2.9,] 	 ARGS:
@@ -1475,9 +1475,9 @@ BB 4
 	datadep: 
 	instructions:
 		 0: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "--" def_%v_6 
 		 2: %self->email def_%v_7 %self[4.0,2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_8 
+		 3: COPY TYPE_StringLiteral "--" def_%v_8 
 		 4: %self->password_salt def_%v_9 %self[4.0,4.2,2.0,] 	 ARGS:
 		 5: BUILDSTRING def_%v_10 %v_5[4.0,] %v_6[4.1,] %v_7[4.2,] %v_8[4.3,] %v_9[4.4,] 
 		 6: %v_4->hexdigest def_%v_11 %v_4[3.0,2.7,] %v_10[4.5,] 	 ARGS:%v_10,
@@ -1520,7 +1520,7 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "" def_%v_6 
 		 1: RETURN %v_6[5.0,] %self[2.0,] 
 BB 6
 	outgoing: 7 
@@ -1571,7 +1571,7 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral " , " def_%v_7 
 		 1: %self->country def_%v_8 %self[2.0,] 	 ARGS:
 		 2: %v_8->name def_%v_9 %v_8[6.1,] 	 ARGS:
 		 3: BUILDSTRING def_%v_10 %v_7[6.0,] %v_9[6.2,] 
@@ -1637,23 +1637,23 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_len 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 7: COPY TYPE_StringLiteral "a" def_%v_4 
+		 8: COPY TYPE_StringLiteral "z" def_%v_5 
 		 9: CONSTANT def_%v_3 %v_4[2.7,] %v_5[2.8,] 
 		 10: %v_3->to_a def_%v_6 %v_3[2.9,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_8 
-		 12: COPY TYPE_StringLiteral def_%v_9 
+		 11: COPY TYPE_StringLiteral "A" def_%v_8 
+		 12: COPY TYPE_StringLiteral "Z" def_%v_9 
 		 13: CONSTANT def_%v_7 %v_8[2.11,] %v_9[2.12,] 
 		 14: %v_7->to_a def_%v_10 %v_7[2.13,] 	 ARGS:
 		 15: %v_6->+ def_%v_11 %v_6[2.10,] %v_10[2.14,] 	 ARGS:%v_10,
-		 16: COPY TYPE_StringLiteral def_%v_13 
-		 17: COPY TYPE_StringLiteral def_%v_14 
+		 16: COPY TYPE_StringLiteral "0" def_%v_13 
+		 17: COPY TYPE_StringLiteral "9" def_%v_14 
 		 18: CONSTANT def_%v_12 %v_13[2.16,] %v_14[2.17,] 
 		 19: %v_12->to_a def_%v_15 %v_12[2.18,] 	 ARGS:
 		 20: %v_11->+ def_%v_16 %v_11[2.15,] %v_15[2.19,] 	 ARGS:%v_15,
 		 21: COPY TYPE_PASS def_chars %v_16[2.20,] 
 		 22: 
-		 23: COPY TYPE_StringLiteral def_%v_17 
+		 23: COPY TYPE_StringLiteral "" def_%v_17 
 		 24: COPY TYPE_PASS def_new_password %v_17[2.23,] 
 		 25: 
 		 26: len->upto def_%v_18 len[2.5,] %self[2.0,] 	 ARGS:len,len,
@@ -1797,7 +1797,7 @@ BB 2
 		 5: RECEIVEARG def_friend 
 		 6: 
 		 7: (Friendship) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "user_id = ? AND friend_id = ?" def_%v_4 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 10: friend->id def_%v_6 friend[2.5,] 	 ARGS:
 		 11: %v_3->where def_%v_7 %v_3[2.7,] %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] 	 ARGS:%v_4,%v_5,%v_6,
@@ -1928,7 +1928,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->friendships_initiated_by_me def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "created_at > ?" def_%v_4 
 		 8: (Time) def_%v_5 
 		 9: %v_5->now def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %v_6->beginning_of_day def_%v_7 %v_6[2.9,] 	 ARGS:
@@ -2080,11 +2080,11 @@ BB 6
 		 4: (Activity) def_%v_8 
 		 5: %v_8->recent def_%v_9 %v_8[6.4,] 	 ARGS:
 		 6: %v_9->since def_%v_10 %v_9[6.5,] since[5.2,4.0,] 	 ARGS:since,
-		 7: COPY TYPE_StringLiteral def_%v_11 
+		 7: COPY TYPE_StringLiteral "comments.recipient_id = ? AND activities.user_id != ?" def_%v_11 
 		 8: %self->id def_%v_12 %self[2.0,] 	 ARGS:
 		 9: %self->id def_%v_13 %self[6.8,2.0,] 	 ARGS:
 		 10: %v_10->where def_%v_14 %v_10[6.6,] %v_11[6.7,] %v_12[6.8,] %v_13[6.9,] 	 ARGS:%v_11,%v_12,%v_13,
-		 11: COPY TYPE_StringLiteral def_%v_15 
+		 11: COPY TYPE_StringLiteral "LEFT JOIN comments ON comments.id = activities.item_id AND activities.item_type = 'Comment'" def_%v_15 
 		 12: %v_14->joins def_%v_16 %v_14[6.10,] %v_15[6.11,] 	 ARGS:%v_15,
 		 13: page->[] def_%v_17 page[6.2,3.1,2.5,] 	 ARGS:Symbol,
 		 14: %v_16->page def_%v_18 %v_16[6.12,] %v_17[6.13,] 	 ARGS:%v_17,
@@ -2215,13 +2215,13 @@ BB 6
 		 4: %v_10->map def_%v_11 %v_10[6.3,] 	 ARGS:
 		 5: HASH-any- def_%v_12 
 		 6: %v_9->tagged_with def_%v_13 %v_9[6.2,] %v_11[6.4,] %v_12[6.5,] 	 ARGS:%v_11,%v_12,
-		 7: COPY TYPE_StringLiteral def_%v_14 
+		 7: COPY TYPE_StringLiteral "posts.user_id != ? AND published_at > ?" def_%v_14 
 		 8: %self->id def_%v_15 %self[6.3,2.0,] 	 ARGS:
 		 9: COPY TYPE_Array def_%v_16 %v_14[6.7,] %v_15[6.8,] since[3.2,2.5,] 
 		 10: %v_13->where def_%v_17 %v_13[6.6,] %v_16[6.9,] 	 ARGS:%v_16,
 		 11: COPY TYPE_PASS def_rec_posts %v_17[6.10,] 
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%v_18 
+		 13: COPY TYPE_StringLiteral "published_at DESC" def_%v_18 
 		 14: %v_17->order def_%v_19 %v_17[6.10,] %v_18[6.13,] 	 ARGS:%v_18,
 		 15: %v_19->limit def_%v_20 %v_19[6.14,] 	 ARGS:Fixnum,
 		 16: COPY TYPE_PASS def_rec_posts %v_20[6.15,] 
@@ -2448,10 +2448,10 @@ BB 2
 		 4: 
 		 5: 
 		 6: (User) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "id = ?" def_%v_4 
 		 8: %self->id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 	 ARGS:%v_4,%v_5,
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "sb_last_seen_at = ?" def_%v_7 
 		 11: (Time) def_%v_8 
 		 12: %v_8->now def_%v_9 %v_8[2.11,] 	 ARGS:
 		 13: %v_9->utc def_%v_10 %v_9[2.12,] 	 ARGS:
@@ -2519,7 +2519,7 @@ BB 2
 		 5: 
 		 6: %self->message_threads_as_recipient def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->includes def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "messages.recipient_id = ? AND messages.recipient_deleted = ? AND read_at IS NULL" def_%v_5 
 		 9: %self->id def_%v_6 %self[2.0,2.6,] 	 ARGS:
 		 10: %v_4->where def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_5,%v_6,Boolean,
 		 11: %v_7->references def_%v_8 %v_7[2.10,] 	 ARGS:Symbol,
@@ -2604,8 +2604,8 @@ BB 6
 	datadep: 
 	instructions:
 		 0: %self->errors def_%v_13 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_14 
-		 2: COPY TYPE_StringLiteral def_%v_15 
+		 1: COPY TYPE_StringLiteral "must be before " def_%v_14 
+		 2: COPY TYPE_StringLiteral "%Y-%m-%d" def_%v_15 
 		 3: date->strftime def_%v_16 date[2.10,] %v_15[6.2,] 	 ARGS:%v_15,
 		 4: BUILDSTRING def_%v_17 %v_14[6.1,] %v_16[6.3,] 
 		 5: %v_13->add def_%v_18 %v_13[6.0,] %v_17[6.4,] 	 ARGS:Symbol,%v_17,

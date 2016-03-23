@@ -25,7 +25,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "-" def_%v_6 
 		 2: month->split def_%v_7 month[2.5,] %v_6[3.1,] 	 ARGS:%v_6,
 		 3: %v_7->map def_%v_8 %v_7[3.2,] 	 ARGS:
 		 4: def_%v_9 %v_8[3.3,] 
@@ -151,9 +151,9 @@ BB 2
 		 14: %v_6->where def_%v_9 %v_6[2.11,] %v_8[2.13,] 	 ARGS:%v_8,
 		 15: HASH-public- def_%v_10 
 		 16: %v_9->where def_%v_11 %v_9[2.14,] %v_10[2.15,] 	 ARGS:%v_10,
-		 17: COPY TYPE_StringLiteral def_%v_12 
+		 17: COPY TYPE_StringLiteral "user_id IS NOT NULL" def_%v_12 
 		 18: %v_11->where def_%v_13 %v_11[2.16,] %v_12[2.17,] 	 ARGS:%v_12,
-		 19: COPY TYPE_StringLiteral def_%v_14 
+		 19: COPY TYPE_StringLiteral "score DESC" def_%v_14 
 		 20: %v_13->order def_%v_15 %v_13[2.18,] %v_14[2.19,] 	 ARGS:%v_14,
 		 21: %v_15->limit def_%v_16 %v_15[2.20,] nb[2.6,] 	 ARGS:nb,
 		 22: %v_16->map def_%v_17 %v_16[2.21,] %self[2.0,2.12,] 	 ARGS:%v_16,
@@ -217,9 +217,9 @@ BB 2
 		 7: 
 		 8: (Node) def_%v_3 
 		 9: %v_3->joins def_%v_4 %v_3[2.8,] 	 ARGS:Symbol,
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral "comments.node_id" def_%v_5 
 		 11: %v_4->group def_%v_6 %v_4[2.9,] %v_5[2.10,] 	 ARGS:%v_5,
-		 12: COPY TYPE_StringLiteral def_%v_7 
+		 12: COPY TYPE_StringLiteral "SUM(comments.score) AS sum_score, nodes.content_type, nodes.content_id, nodes.user_id" def_%v_7 
 		 13: %v_6->select def_%v_8 %v_6[2.11,] %v_7[2.12,] 	 ARGS:%v_7,
 		 14: type->to_s def_%v_9 type[2.5,] 	 ARGS:
 		 15: HASH-content_type- def_%v_10 %v_9[2.14,] 
@@ -229,9 +229,9 @@ BB 2
 		 19: %v_11->where def_%v_14 %v_11[2.16,] %v_13[2.18,] 	 ARGS:%v_13,
 		 20: HASH-public- def_%v_15 
 		 21: %v_14->where def_%v_16 %v_14[2.19,] %v_15[2.20,] 	 ARGS:%v_15,
-		 22: COPY TYPE_StringLiteral def_%v_17 
+		 22: COPY TYPE_StringLiteral "nodes.user_id IS NOT NULL" def_%v_17 
 		 23: %v_16->where def_%v_18 %v_16[2.21,] %v_17[2.22,] 	 ARGS:%v_17,
-		 24: COPY TYPE_StringLiteral def_%v_19 
+		 24: COPY TYPE_StringLiteral "sum_score DESC" def_%v_19 
 		 25: %v_18->order def_%v_20 %v_18[2.23,] %v_19[2.24,] 	 ARGS:%v_19,
 		 26: %v_20->limit def_%v_21 %v_20[2.25,] nb[2.6,] 	 ARGS:nb,
 		 27: %v_21->map def_%v_22 %v_21[2.26,] %self[2.0,2.17,] 	 ARGS:%v_21,
@@ -294,22 +294,22 @@ BB 2
 		 6: RECEIVEARG def_nb 
 		 7: 
 		 8: (News) def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "LENGTH(body) + LENGTH(second_part) AS total, news.*" def_%v_4 
 		 10: %v_3->select def_%v_5 %v_3[2.8,] %v_4[2.9,] 	 ARGS:%v_4,
-		 11: COPY TYPE_StringLiteral def_%v_6 
+		 11: COPY TYPE_StringLiteral "JOIN nodes ON nodes.content_id = news.id" def_%v_6 
 		 12: %v_5->joins def_%v_7 %v_5[2.10,] %v_6[2.11,] 	 ARGS:%v_6,
-		 13: COPY TYPE_StringLiteral def_%v_8 
+		 13: COPY TYPE_StringLiteral "nodes.content_type = 'News'" def_%v_8 
 		 14: %v_7->where def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 ARGS:%v_8,
-		 15: COPY TYPE_StringLiteral def_%v_10 
+		 15: COPY TYPE_StringLiteral "nodes.created_at" def_%v_10 
 		 16: %self->current_month def_%v_11 %self[2.0,] 	 ARGS:
 		 17: HASH- def_%v_12 %v_10[2.15,] %v_11[2.16,] 
 		 18: %v_9->where def_%v_13 %v_9[2.14,] %v_12[2.17,] 	 ARGS:%v_12,
-		 19: COPY TYPE_StringLiteral def_%v_14 
+		 19: COPY TYPE_StringLiteral "nodes.public" def_%v_14 
 		 20: HASH- def_%v_15 %v_14[2.19,] 
 		 21: %v_13->where def_%v_16 %v_13[2.18,] %v_15[2.20,] 	 ARGS:%v_15,
-		 22: COPY TYPE_StringLiteral def_%v_17 
+		 22: COPY TYPE_StringLiteral "nodes.user_id IS NOT NULL" def_%v_17 
 		 23: %v_16->where def_%v_18 %v_16[2.21,] %v_17[2.22,] 	 ARGS:%v_17,
-		 24: COPY TYPE_StringLiteral def_%v_19 
+		 24: COPY TYPE_StringLiteral "total DESC" def_%v_19 
 		 25: %v_18->order def_%v_20 %v_18[2.23,] %v_19[2.24,] 	 ARGS:%v_19,
 		 26: %v_20->limit def_%v_21 %v_20[2.25,] nb[2.6,] 	 ARGS:nb,
 		 27: %v_21->map def_%v_22 %v_21[2.26,] %self[2.0,2.16,] 	 ARGS:%v_21,
@@ -379,13 +379,13 @@ BB 2
 		 14: %v_6->where def_%v_9 %v_6[2.11,] %v_8[2.13,] 	 ARGS:%v_8,
 		 15: HASH-public- def_%v_10 
 		 16: %v_9->where def_%v_11 %v_9[2.14,] %v_10[2.15,] 	 ARGS:%v_10,
-		 17: COPY TYPE_StringLiteral def_%v_12 
+		 17: COPY TYPE_StringLiteral "user_id IS NOT NULL" def_%v_12 
 		 18: %v_11->where def_%v_13 %v_11[2.16,] %v_12[2.17,] 	 ARGS:%v_12,
-		 19: COPY TYPE_StringLiteral def_%v_14 
+		 19: COPY TYPE_StringLiteral "user_id" def_%v_14 
 		 20: %v_13->group def_%v_15 %v_13[2.18,] %v_14[2.19,] 	 ARGS:%v_14,
-		 21: COPY TYPE_StringLiteral def_%v_16 
+		 21: COPY TYPE_StringLiteral "COUNT(*) AS score, user_id" def_%v_16 
 		 22: %v_15->select def_%v_17 %v_15[2.20,] %v_16[2.21,] 	 ARGS:%v_16,
-		 23: COPY TYPE_StringLiteral def_%v_18 
+		 23: COPY TYPE_StringLiteral "score DESC" def_%v_18 
 		 24: %v_17->order def_%v_19 %v_17[2.22,] %v_18[2.23,] 	 ARGS:%v_18,
 		 25: %v_19->limit def_%v_20 %v_19[2.24,] nb[2.6,] 	 ARGS:nb,
 		 26: %v_20->map def_%v_21 %v_20[2.25,] %self[2.0,2.12,] 	 ARGS:%v_20,
@@ -452,21 +452,21 @@ BB 2
 		 10: HASH-content_type- def_%v_5 %v_4[2.9,] 
 		 11: %v_3->where def_%v_6 %v_3[2.8,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: %v_6->joins def_%v_7 %v_6[2.11,] 	 ARGS:Symbol,
-		 13: COPY TYPE_StringLiteral def_%v_8 
+		 13: COPY TYPE_StringLiteral "comments.created_at" def_%v_8 
 		 14: %self->current_month def_%v_9 %self[2.0,] 	 ARGS:
 		 15: HASH- def_%v_10 %v_8[2.13,] %v_9[2.14,] 
 		 16: %v_7->where def_%v_11 %v_7[2.12,] %v_10[2.15,] 	 ARGS:%v_10,
-		 17: COPY TYPE_StringLiteral def_%v_12 
-		 18: COPY TYPE_StringLiteral def_%v_13 
+		 17: COPY TYPE_StringLiteral "comments.state" def_%v_12 
+		 18: COPY TYPE_StringLiteral "published" def_%v_13 
 		 19: HASH- def_%v_14 %v_12[2.17,] %v_13[2.18,] 
 		 20: %v_11->where def_%v_15 %v_11[2.16,] %v_14[2.19,] 	 ARGS:%v_14,
-		 21: COPY TYPE_StringLiteral def_%v_16 
+		 21: COPY TYPE_StringLiteral "comments.user_id IS NOT NULL" def_%v_16 
 		 22: %v_15->where def_%v_17 %v_15[2.20,] %v_16[2.21,] 	 ARGS:%v_16,
-		 23: COPY TYPE_StringLiteral def_%v_18 
+		 23: COPY TYPE_StringLiteral "comments.user_id" def_%v_18 
 		 24: %v_17->group def_%v_19 %v_17[2.22,] %v_18[2.23,] 	 ARGS:%v_18,
-		 25: COPY TYPE_StringLiteral def_%v_20 
+		 25: COPY TYPE_StringLiteral "COUNT(*) AS score, comments.user_id" def_%v_20 
 		 26: %v_19->select def_%v_21 %v_19[2.24,] %v_20[2.25,] 	 ARGS:%v_20,
-		 27: COPY TYPE_StringLiteral def_%v_22 
+		 27: COPY TYPE_StringLiteral "score DESC" def_%v_22 
 		 28: %v_21->order def_%v_23 %v_21[2.26,] %v_22[2.27,] 	 ARGS:%v_22,
 		 29: %v_23->limit def_%v_24 %v_23[2.28,] nb[2.6,] 	 ARGS:nb,
 		 30: %v_24->map def_%v_25 %v_24[2.29,] %self[2.0,2.14,] 	 ARGS:%v_24,

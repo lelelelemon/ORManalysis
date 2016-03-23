@@ -157,22 +157,22 @@ BB 3
 	instructions:
 		 0: 
 		 1: (BTLog) def_%cl_1_3 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "Sending sale transaction from " def_%cl_1_4 
 		 3: GETFIELD %self->payer def_%cl_1_5 %self[2.0,] 
 		 4: %cl_1_5->id def_%cl_1_6 %cl_1_5[3.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_1_7 
+		 5: COPY TYPE_StringLiteral " to " def_%cl_1_7 
 		 6: GETFIELD %self->recipient def_%cl_1_8 %self[2.0,] 
 		 7: %cl_1_8->id def_%cl_1_9 %cl_1_8[3.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%cl_1_10 
+		 8: COPY TYPE_StringLiteral ". Amount: " def_%cl_1_10 
 		 9: GETFIELD %self->amount def_%cl_1_11 %self[2.0,] 
-		 10: COPY TYPE_StringLiteral def_%cl_1_12 
+		 10: COPY TYPE_StringLiteral ", fee: " def_%cl_1_12 
 		 11: GETFIELD %self->service_fee def_%cl_1_13 %self[2.0,] 
 		 12: BUILDSTRING def_%cl_1_14 %cl_1_4[3.2,] %cl_1_6[3.4,] %cl_1_7[3.5,] %cl_1_9[3.7,] %cl_1_10[3.8,] %cl_1_11[3.9,] %cl_1_12[3.10,] %cl_1_13[3.11,] 
 		 13: %cl_1_3->warn def_%cl_1_15 %cl_1_3[3.1,] %cl_1_14[3.12,] 	 ARGS:%cl_1_14,
 		 14: 
 		 15: (BraintreeApi) def_%cl_1_16 
 		 16: GETFIELD %self->community def_%cl_1_17 %self[2.0,] 
-		 17: COPY TYPE_StringLiteral def_%cl_1_18 
+		 17: COPY TYPE_StringLiteral "sale" def_%cl_1_18 
 		 18: GETFIELD %self->amount def_%cl_1_19 %self[2.0,] 
 		 19: %cl_1_19->to_s def_%cl_1_20 %cl_1_19[3.18,] 	 ARGS:
 		 20: GETFIELD %self->recipient def_%cl_1_21 %self[2.0,] 
@@ -293,16 +293,16 @@ BB 3
 		 3: COPY TYPE_PASS def_transaction_id %v_5[3.2,] 
 		 4: 
 		 5: (BTLog) def_%v_6 
-		 6: COPY TYPE_StringLiteral def_%v_7 
-		 7: COPY TYPE_StringLiteral def_%v_8 
+		 6: COPY TYPE_StringLiteral "Successful sale transaction " def_%v_7 
+		 7: COPY TYPE_StringLiteral " from " def_%v_8 
 		 8: GETFIELD %self->payer def_%v_9 %self[2.0,] 
 		 9: %v_9->id def_%v_10 %v_9[3.8,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_11 
+		 10: COPY TYPE_StringLiteral " to " def_%v_11 
 		 11: GETFIELD %self->recipient def_%v_12 %self[2.0,] 
 		 12: %v_12->id def_%v_13 %v_12[3.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%v_14 
+		 13: COPY TYPE_StringLiteral ". Amount: " def_%v_14 
 		 14: GETFIELD %self->amount def_%v_15 %self[2.0,] 
-		 15: COPY TYPE_StringLiteral def_%v_16 
+		 15: COPY TYPE_StringLiteral ", fee: " def_%v_16 
 		 16: GETFIELD %self->service_fee def_%v_17 %self[2.0,] 
 		 17: BUILDSTRING def_%v_18 %v_7[3.6,] transaction_id[3.3,] %v_8[3.7,] %v_10[3.9,] %v_11[3.10,] %v_13[3.12,] %v_14[3.13,] %v_15[3.14,] %v_16[3.15,] %v_17[3.16,] 
 		 18: %v_6->warn def_%v_19 %v_6[3.5,] %v_18[3.17,] 	 ARGS:%v_18,
@@ -313,17 +313,17 @@ BB 4
 	instructions:
 		 0: 
 		 1: (BTLog) def_%v_20 
-		 2: COPY TYPE_StringLiteral def_%v_21 
+		 2: COPY TYPE_StringLiteral "Unsuccessful sale transaction from " def_%v_21 
 		 3: GETFIELD %self->payer def_%v_22 %self[2.0,] 
 		 4: %v_22->id def_%v_23 %v_22[4.3,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_24 
+		 5: COPY TYPE_StringLiteral " to " def_%v_24 
 		 6: GETFIELD %self->recipient def_%v_25 %self[2.0,] 
 		 7: %v_25->id def_%v_26 %v_25[4.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_27 
+		 8: COPY TYPE_StringLiteral ". Amount: " def_%v_27 
 		 9: GETFIELD %self->amount def_%v_28 %self[2.0,] 
-		 10: COPY TYPE_StringLiteral def_%v_29 
+		 10: COPY TYPE_StringLiteral ", fee: " def_%v_29 
 		 11: GETFIELD %self->service_fee def_%v_30 %self[2.0,] 
-		 12: COPY TYPE_StringLiteral def_%v_31 
+		 12: COPY TYPE_StringLiteral ": " def_%v_31 
 		 13: result->message def_%v_32 result[2.5,] 	 ARGS:
 		 14: BUILDSTRING def_%v_33 %v_21[4.2,] %v_23[4.4,] %v_24[4.5,] %v_26[4.7,] %v_27[4.8,] %v_28[4.9,] %v_29[4.10,] %v_30[4.11,] %v_31[4.12,] %v_32[4.13,] 
 		 15: %v_20->error def_%v_34 %v_20[4.1,] %v_33[4.14,] 	 ARGS:%v_33,
@@ -386,7 +386,7 @@ BB 8
 		 1: COPY TYPE_PASS def_e %v_11[8.0,] 
 		 2: 
 		 3: (BTLog) def_%v_12 
-		 4: COPY TYPE_StringLiteral def_%v_13 
+		 4: COPY TYPE_StringLiteral "Expection " def_%v_13 
 		 5: BUILDSTRING def_%v_14 %v_13[8.4,] %v_11[8.0,] 
 		 6: %v_12->error def_%v_15 %v_12[8.3,] %v_14[8.5,] 	 ARGS:%v_14,
 		 7: 

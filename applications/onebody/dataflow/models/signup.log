@@ -46,7 +46,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "@" def_%cl_1_3 
 		 2: BUILDSTRING def_%cl_1_4 %cl_1_3[3.1,] field[2.2,] 
 		 3: params->[] def_%cl_1_5 params[] field[2.2,] 	 ARGS:field,
 		 4: %self->instance_variable_set def_%cl_1_6 %self[2.0,] %cl_1_4[3.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_4,%cl_1_5,
@@ -246,15 +246,15 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_auth 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "info" def_%v_3 
 		 8: auth->[] def_%v_4 auth[2.5,] %v_3[2.7,] 	 ARGS:%v_3,
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral "first_name" def_%v_5 
 		 10: %v_4->[] def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: COPY TYPE_PASS def_first_name %v_6[2.10,] 
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%v_7 
+		 13: COPY TYPE_StringLiteral "info" def_%v_7 
 		 14: auth->[] def_%v_8 auth[2.5,2.8,] %v_7[2.13,] 	 ARGS:%v_7,
-		 15: COPY TYPE_StringLiteral def_%v_9 
+		 15: COPY TYPE_StringLiteral "last_name" def_%v_9 
 		 16: %v_8->[] def_%v_10 %v_8[2.14,] %v_9[2.15,] 	 ARGS:%v_9,
 		 17: COPY TYPE_PASS def_last_name %v_10[2.16,] 
 		 18: 
@@ -267,7 +267,7 @@ BB 3
 	instructions:
 		 0: (Family) def_%v_13 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_14 
+		 2: COPY TYPE_StringLiteral " " def_%v_14 
 		 3: BUILDSTRING def_%v_15 first_name[2.11,] %v_14[3.2,] last_name[2.17,] 
 		 4: HASH-name-last_name- def_%v_16 %v_15[3.3,] last_name[2.17,] 
 		 5: %v_13->create def_%v_17 %v_13[3.0,] %v_16[3.4,] 	 ARGS:%v_16,
@@ -300,13 +300,13 @@ BB 8
 	datadep: 
 	instructions:
 		 0: (Person) def_%v_23 
-		 1: COPY TYPE_StringLiteral def_%v_24 
+		 1: COPY TYPE_StringLiteral "provider" def_%v_24 
 		 2: auth->[] def_%v_25 auth[2.5,] %v_24[8.1,] 	 ARGS:%v_24,
-		 3: COPY TYPE_StringLiteral def_%v_26 
+		 3: COPY TYPE_StringLiteral "uid" def_%v_26 
 		 4: auth->[] def_%v_27 auth[8.2,2.5,] %v_26[8.3,] 	 ARGS:%v_26,
-		 5: COPY TYPE_StringLiteral def_%v_28 
+		 5: COPY TYPE_StringLiteral "info" def_%v_28 
 		 6: auth->[] def_%v_29 auth[8.2,8.4,2.5,] %v_28[8.5,] 	 ARGS:%v_28,
-		 7: COPY TYPE_StringLiteral def_%v_30 
+		 7: COPY TYPE_StringLiteral "email" def_%v_30 
 		 8: %v_29->[] def_%v_31 %v_29[8.6,] %v_30[8.7,] 	 ARGS:%v_30,
 		 9: HASH-provider-uid-first_name-last_name-email-family-status- def_%v_32 %v_25[8.2,] %v_27[8.4,] first_name[2.11,] last_name[2.17,] %v_31[8.8,] family[3.6,] 
 		 10: %v_23->create def_%v_33 %v_23[8.0,] %v_32[8.9,] 	 ARGS:%v_32,
@@ -317,9 +317,9 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_34 
+		 1: COPY TYPE_StringLiteral "provider" def_%v_34 
 		 2: auth->[] def_%v_35 auth[2.5,] %v_34[9.1,] 	 ARGS:%v_34,
-		 3: COPY TYPE_StringLiteral def_%v_38 
+		 3: COPY TYPE_StringLiteral "facebook" def_%v_38 
 		 4: def_%v_37 %v_38[9.3,] %v_35[9.2,] 
 		 5: BRANCH %v_37[9.4,] 
 BB 10
@@ -333,9 +333,9 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_39 
+		 1: COPY TYPE_StringLiteral "info" def_%v_39 
 		 2: auth->[] def_%v_40 auth[2.5,] %v_39[11.1,] 	 ARGS:%v_39,
-		 3: COPY TYPE_StringLiteral def_%v_41 
+		 3: COPY TYPE_StringLiteral "urls" def_%v_41 
 		 4: %v_40->[] def_%v_42 %v_40[11.2,] %v_41[11.3,] 	 ARGS:%v_41,
 		 5: %v_42->[] def_%v_43 %v_42[11.4,] 	 ARGS:Symbol,
 		 6: ATTRASSIGN person->facebook_url %v_43[11.5,] 
@@ -713,7 +713,7 @@ BB 5
 		 0: (Family) def_%v_6 
 		 1: 
 		 2: %self->first_name def_%v_7 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_8 
+		 3: COPY TYPE_StringLiteral " " def_%v_8 
 		 4: %self->last_name def_%v_9 %self[5.2,2.0,] 	 ARGS:
 		 5: BUILDSTRING def_%v_10 %v_7[5.2,] %v_8[5.3,] %v_9[5.4,] 
 		 6: %self->last_name def_%v_11 %self[5.2,5.4,2.0,] 	 ARGS:

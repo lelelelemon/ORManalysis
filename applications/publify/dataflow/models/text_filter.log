@@ -175,15 +175,15 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_11 
+		 1: COPY TYPE_StringLiteral "macropre" def_%v_11 
 		 2: COPY TYPE_Array def_%v_12 
-		 3: COPY TYPE_StringLiteral def_%v_13 
+		 3: COPY TYPE_StringLiteral "macropost" def_%v_13 
 		 4: COPY TYPE_Array def_%v_14 
-		 5: COPY TYPE_StringLiteral def_%v_15 
+		 5: COPY TYPE_StringLiteral "markup" def_%v_15 
 		 6: COPY TYPE_Array def_%v_16 
-		 7: COPY TYPE_StringLiteral def_%v_17 
+		 7: COPY TYPE_StringLiteral "postprocess" def_%v_17 
 		 8: COPY TYPE_Array def_%v_18 
-		 9: COPY TYPE_StringLiteral def_%v_19 
+		 9: COPY TYPE_StringLiteral "other" def_%v_19 
 		 10: COPY TYPE_Array def_%v_20 
 		 11: HASH- def_%v_21 %v_11[8.1,] %v_12[8.2,] %v_13[8.3,] %v_14[8.4,] %v_15[8.5,] %v_16[8.6,] %v_17[8.7,] %v_18[8.8,] %v_19[8.9,] %v_20[8.10,] 
 		 12: COPY TYPE_PASS def_types %v_21[8.11,] 
@@ -399,8 +399,8 @@ BB 16
 		 1: COPY TYPE_PASS def_err %cl_1_15[16.0,] 
 		 2: 
 		 3: %self->logger def_%cl_1_16 %self[2.0,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_17 
-		 5: COPY TYPE_StringLiteral def_%cl_1_18 
+		 4: COPY TYPE_StringLiteral "Filter " def_%cl_1_17 
+		 5: COPY TYPE_StringLiteral " failed: " def_%cl_1_18 
 		 6: BUILDSTRING def_%cl_1_19 %cl_1_17[16.4,] filter[2.2,] %cl_1_18[16.5,] err[16.1,] 
 		 7: %cl_1_16->error def_%cl_1_20 %cl_1_16[16.3,] %cl_1_19[16.6,] 	 ARGS:%cl_1_19,
 		 8: COPY TYPE_PASS def_%cl_1_7 %cl_1_20[16.7,] 
@@ -531,7 +531,7 @@ BB 2
 		 18: filter_map->[] def_%v_9 filter_map[2.8,] %v_8[2.17,] 	 ARGS:%v_8,
 		 19: help->push def_%v_10 help[2.15,] %v_9[2.18,] 	 ARGS:%v_9,
 		 20: 
-		 21: COPY TYPE_StringLiteral def_%v_11 
+		 21: COPY TYPE_StringLiteral "macropre" def_%v_11 
 		 22: filter_types->[] def_%v_12 filter_types[2.12,] %v_11[2.21,] 	 ARGS:%v_11,
 		 23: %v_12->sort_by def_%v_13 %v_12[2.22,] 	 ARGS:
 		 24: %v_13->each def_%v_14 %v_13[2.23,] %self[2.0,2.17,] 	 ARGS:%v_13,
@@ -569,7 +569,7 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 25: 
-		 26: COPY TYPE_StringLiteral def_%v_15 
+		 26: COPY TYPE_StringLiteral "macropost" def_%v_15 
 		 27: filter_types->[] def_%v_16 filter_types[2.12,2.22,] %v_15[2.26,] 	 ARGS:%v_15,
 		 28: %v_16->sort_by def_%v_17 %v_16[2.27,] 	 ARGS:
 		 29: %v_17->each def_%v_18 %v_17[2.28,] %self[2.0,2.17,] 	 ARGS:%v_17,
@@ -672,20 +672,22 @@ BB 4
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_5 
+		 0: COPY TYPE_StringLiteral "" def_%cl_4_5 
 		 1: RETURN %cl_4_5[4.0,] %self[2.0,] 
 BB 5
 	outgoing: 7 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_6 
+		 0: COPY TYPE_StringLiteral "<h3>" def_%cl_4_6 
 		 1: f->display_name def_%cl_4_7 f[2.2,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_4_8 
+		 2: COPY TYPE_StringLiteral "</h3>
+" def_%cl_4_8 
 		 3: (BlueCloth) def_%cl_4_9 
 		 4: f->help_text def_%cl_4_10 f[5.1,2.2,] 	 ARGS:
 		 5: %cl_4_9->new def_%cl_4_11 %cl_4_9[5.3,] %cl_4_10[5.4,] 	 ARGS:%cl_4_10,
 		 6: %cl_4_11->to_html def_%cl_4_12 %cl_4_11[5.5,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_4_13 
+		 7: COPY TYPE_StringLiteral "
+" def_%cl_4_13 
 		 8: BUILDSTRING def_%cl_4_14 %cl_4_6[5.0,] %cl_4_7[5.1,] %cl_4_8[5.2,] %cl_4_12[5.6,] %cl_4_13[5.7,] 
 		 9: RETURN %cl_4_14[5.8,] %self[2.0,] 
 BB 7
@@ -702,7 +704,8 @@ BB 9
 CLOSURE END: 
 		 35: COPY TYPE_PASS def_help_text %v_21[2.34,] 
 		 36: 
-		 37: COPY TYPE_StringLiteral def_%v_22 
+		 37: COPY TYPE_StringLiteral "
+" def_%v_22 
 		 38: %v_21->join def_%v_23 %v_21[2.34,] %v_22[2.37,] 	 ARGS:%v_22,
 		 39: RETURN %v_23[2.38,] %self[2.0,2.17,2.31,] 
 BB 3
@@ -799,7 +802,7 @@ BB 4
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_5 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_5 
 		 1: RETURN %cl_2_5[4.0,] %self[2.0,] 
 BB 5
 	outgoing: 7 9 
@@ -809,7 +812,8 @@ BB 5
 		 1: f->help_text def_%cl_2_7 f[2.2,] 	 ARGS:
 		 2: %cl_2_6->new def_%cl_2_8 %cl_2_6[5.0,] %cl_2_7[5.1,] 	 ARGS:%cl_2_7,
 		 3: %cl_2_8->to_html def_%cl_2_9 %cl_2_8[5.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_2_10 
+		 4: COPY TYPE_StringLiteral "
+" def_%cl_2_10 
 		 5: BUILDSTRING def_%cl_2_11 %cl_2_9[5.3,] %cl_2_10[5.4,] 
 		 6: RETURN %cl_2_11[5.5,] %self[2.0,] 
 BB 7
@@ -824,7 +828,8 @@ BB 9
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 19: COPY TYPE_StringLiteral def_%v_11 
+		 19: COPY TYPE_StringLiteral "
+" def_%v_11 
 		 20: %v_10->join def_%v_12 %v_10[2.18,] %v_11[2.19,] 	 ARGS:%v_11,
 		 21: COPY TYPE_PASS def_help_text %v_12[2.20,] 
 		 22: 

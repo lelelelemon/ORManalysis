@@ -218,7 +218,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "You cannot move a folder to its own sub-folder." def_%v_5 
 		 2: %self->raise def_%v_6 %self[2.0,] %v_5[5.1,] 	 ARGS:%v_5,
 		 3: RETURN %v_6[5.2,] %self[5.2,2.0,] 
 BB 6
@@ -272,9 +272,9 @@ BB 3
 	instructions:
 		 0: 
 		 1: permission->attributes def_%cl_1_3 permission[2.2,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 2: COPY TYPE_StringLiteral "id" def_%cl_1_4 
+		 3: COPY TYPE_StringLiteral "folder_id" def_%cl_1_5 
+		 4: COPY TYPE_StringLiteral "group_id" def_%cl_1_6 
 		 5: %cl_1_3->except def_%cl_1_7 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_6[3.4,] 	 ARGS:%cl_1_4,%cl_1_5,%cl_1_6,
 		 6: COPY TYPE_PASS def_attributes %cl_1_7[3.5,] 
 		 7: 
@@ -527,7 +527,7 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "Root folder" def_%v_6 
 		 1: %self->find_by_name_and_parent_id def_%v_7 %self[2.0,] %v_6[5.0,] 	 ARGS:%v_6,Nil,
 		 2: ATTRASSIGN %self->root_folder %v_7[5.1,] 
 		 3: RETURN %v_7[5.1,] %self[5.1,5.2,2.0,] 
@@ -564,7 +564,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: %self->name def_%v_5 %self[2.0,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "Root folder" def_%v_6 
 		 2: %v_5->!= def_%v_7 %v_5[3.0,] %v_6[3.1,] 	 ARGS:%v_6,
 		 3: COPY TYPE_PASS def_%v_4 %v_7[3.2,] 
 BB 4
@@ -576,7 +576,7 @@ BB 5
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "Folders must have a parent." def_%v_8 
 		 1: %self->raise def_%v_9 %self[2.0,] %v_8[5.0,] 	 ARGS:%v_8,
 		 2: RETURN %v_9[5.1,] %self[5.1,2.0,] 
 BB 6
@@ -701,7 +701,7 @@ BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "Can't delete Root folder" def_%v_4 
 		 1: %self->raise def_%v_5 %self[2.0,] %v_4[3.0,] 	 ARGS:%v_4,
 		 2: RETURN %v_5[3.1,] %self[3.1,2.0,] 
 BB 4

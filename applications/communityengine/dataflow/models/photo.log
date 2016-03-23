@@ -40,7 +40,7 @@ BB 6
 	instructions:
 		 0: CONSTANT def_%v_8 	 ARGS:
 		 1: %v_8->downcase def_%v_9 %v_8[6.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_StringLiteral ": " def_%v_10 
 		 3: (I18n) def_%v_11 
 		 4: %self->created_at def_%v_12 %self[2.0,] 	 ARGS:
 		 5: HASH-format- def_%v_13 
@@ -67,18 +67,18 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "<a href='" def_%v_3 
 		 7: %self->link_for_rss def_%v_4 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "' title='" def_%v_5 
 		 9: %self->name def_%v_6 %self[2.0,2.7,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "'><img src='" def_%v_7 
 		 11: %self->photo def_%v_8 %self[2.0,2.7,2.9,] 	 ARGS:
 		 12: %v_8->url def_%v_9 %v_8[2.11,] 	 ARGS:Symbol,
-		 13: COPY TYPE_StringLiteral def_%v_10 
+		 13: COPY TYPE_StringLiteral "' alt='" def_%v_10 
 		 14: %self->name def_%v_11 %self[2.0,2.7,2.9,2.11,] 	 ARGS:
-		 15: COPY TYPE_StringLiteral def_%v_12 
+		 15: COPY TYPE_StringLiteral "' /><br />" def_%v_12 
 		 16: %self->description def_%v_13 %self[2.0,2.7,2.9,2.11,2.14,] 	 ARGS:
-		 17: COPY TYPE_StringLiteral def_%v_14 
+		 17: COPY TYPE_StringLiteral "</a>" def_%v_14 
 		 18: BUILDSTRING def_%v_15 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] %v_9[2.12,] %v_10[2.13,] %v_11[2.14,] %v_12[2.15,] %v_13[2.16,] %v_14[2.17,] 
 		 19: RETURN %v_15[2.18,] %self[2.0,2.7,2.9,2.11,2.14,2.16,] 
 BB 3
@@ -125,7 +125,7 @@ BB 2
 		 5: 
 		 6: %self->user def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->photos def_%v_4 %v_3[2.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "created_at < ?" def_%v_5 
 		 9: %self->created_at def_%v_6 %self[2.0,2.6,] 	 ARGS:
 		 10: %v_4->where def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_5,%v_6,
 		 11: %v_7->first def_%v_8 %v_7[2.10,] 	 ARGS:
@@ -152,7 +152,7 @@ BB 2
 		 5: 
 		 6: %self->user def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->photos def_%v_4 %v_3[2.6,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_5 
+		 8: COPY TYPE_StringLiteral "created_at > ?" def_%v_5 
 		 9: %self->created_at def_%v_6 %self[2.0,2.6,] 	 ARGS:
 		 10: %v_4->where def_%v_7 %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_5,%v_6,
 		 11: %v_7->last def_%v_8 %v_7[2.10,] 	 ARGS:
@@ -187,7 +187,7 @@ BB 3
 		 1: 
 		 2: %self->user def_%v_5 %self[2.0,] 	 ARGS:
 		 3: %v_5->photos def_%v_6 %v_5[3.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_7 
+		 4: COPY TYPE_StringLiteral "created_at < ? and album_id = ?" def_%v_7 
 		 5: %self->created_at def_%v_8 %self[3.2,2.0,] 	 ARGS:
 		 6: %self->album def_%v_9 %self[3.2,3.5,2.0,] 	 ARGS:
 		 7: %v_9->id def_%v_10 %v_9[3.6,] 	 ARGS:
@@ -229,7 +229,7 @@ BB 3
 		 1: 
 		 2: %self->user def_%v_5 %self[2.0,] 	 ARGS:
 		 3: %v_5->photos def_%v_6 %v_5[3.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_7 
+		 4: COPY TYPE_StringLiteral "created_at > ? and album_id = ?" def_%v_7 
 		 5: %self->created_at def_%v_8 %self[3.2,2.0,] 	 ARGS:
 		 6: %self->album_id def_%v_9 %self[3.2,3.5,2.0,] 	 ARGS:
 		 7: %v_6->where def_%v_10 %v_6[3.3,] %v_7[3.4,] %v_8[3.5,] %v_9[3.6,] 	 ARGS:%v_7,%v_8,%v_9,
@@ -309,8 +309,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "created_at DESC" def_%v_4 
+		 2: COPY TYPE_StringLiteral "photos.id != ?" def_%v_5 
 		 3: photo->id def_%v_6 photo[2.5,] 	 ARGS:
 		 4: COPY TYPE_Array def_%v_7 %v_5[4.2,] %v_6[4.3,] 
 		 5: HASH-limit-order-conditions- def_%v_8 %v_4[4.1,] %v_7[4.4,] 

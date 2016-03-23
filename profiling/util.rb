@@ -12,7 +12,11 @@ class Fast_random
   end
 	#[lower, upper)
 	def next_bound(lower, upper)
-		return lower + @seed_base[self.next.modulo(@seed_base.length)].modulo(upper-lower)
+		if lower == upper
+			return lower
+		else
+			return lower + @seed_base[self.next.modulo(@seed_base.length)].modulo(upper-lower)
+		end
 	end
 	def getRandomString(len, min=4)
 		actual_len = self.next_bound(min, len.to_i)
@@ -40,3 +44,7 @@ end
 $prng = Random.new
 #$fast_random = Fast_random.new(prng.rand(126498))
 
+
+def random_shuffle_array(ary)
+	new_ary = Array.new
+end

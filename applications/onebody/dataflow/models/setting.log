@@ -16,16 +16,16 @@ BB 2
 		 6: %self->read_attribute def_%v_3 %self[2.0,] 	 ARGS:Symbol,
 		 7: COPY TYPE_PASS def_v %v_3[2.6,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "format" def_%v_4 
 		 10: %self->[] def_%v_5 %self[2.0,2.6,] %v_4[2.9,] 	 ARGS:%v_4,
-		 11: COPY TYPE_StringLiteral def_%v_8 
+		 11: COPY TYPE_StringLiteral "boolean" def_%v_8 
 		 12: def_%v_7 %v_8[2.11,] %v_5[2.10,] 
 		 13: BRANCH %v_7[2.12,] 
 BB 3
 	outgoing: 4 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_10 
+		 0: COPY TYPE_StringLiteral "list" def_%v_10 
 		 1: def_%v_9 %v_10[3.0,] %v_5[2.10,] 
 		 2: BRANCH %v_9[3.1,] 
 BB 4
@@ -40,11 +40,11 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_11 
-		 2: COPY TYPE_StringLiteral def_%v_12 
-		 3: COPY TYPE_StringLiteral def_%v_13 
-		 4: COPY TYPE_StringLiteral def_%v_14 
-		 5: COPY TYPE_StringLiteral def_%v_15 
+		 1: COPY TYPE_StringLiteral "" def_%v_11 
+		 2: COPY TYPE_StringLiteral "0" def_%v_12 
+		 3: COPY TYPE_StringLiteral "f" def_%v_13 
+		 4: COPY TYPE_StringLiteral "false" def_%v_14 
+		 5: COPY TYPE_StringLiteral "no" def_%v_15 
 		 6: COPY TYPE_Array def_%v_16 %v_11[5.1,] %v_12[5.2,] %v_13[5.3,] %v_14[5.4,] %v_15[5.5,] 
 		 7: v->to_s def_%v_17 v[2.7,] 	 ARGS:
 		 8: %v_16->include? def_%v_18 %v_16[5.6,] %v_17[5.7,] 	 ARGS:%v_17,
@@ -241,7 +241,7 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_40 
+		 1: COPY TYPE_StringLiteral "features" def_%v_40 
 		 2: section->== def_%v_41 section[8.7,] %v_40[17.1,] 	 ARGS:%v_40,
 		 3: BRANCH %v_41[17.2,] 
 BB 18
@@ -250,7 +250,7 @@ BB 18
 	instructions:
 		 0: (Site) def_%v_42 
 		 1: %v_42->current def_%v_43 %v_42[18.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_44 
+		 2: COPY TYPE_StringLiteral "_enabled?" def_%v_44 
 		 3: BUILDSTRING def_%v_45 name[8.8,] %v_44[18.2,] 
 		 4: %v_43->respond_to? def_%v_46 %v_43[18.1,] %v_45[18.3,] 	 ARGS:%v_45,
 		 5: COPY TYPE_PASS def_%v_41 %v_46[18.4,] 
@@ -265,7 +265,7 @@ BB 20
 	instructions:
 		 0: (Site) def_%v_47 
 		 1: %v_47->current def_%v_48 %v_47[20.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_49 
+		 2: COPY TYPE_StringLiteral "_enabled?" def_%v_49 
 		 3: BUILDSTRING def_%v_50 name[8.8,] %v_49[20.2,] 
 		 4: %v_48->send def_%v_51 %v_48[20.1,] %v_50[20.3,] 	 ARGS:%v_50,
 		 5: %v_51->! def_%v_52 %v_51[20.4,] 	 ARGS:
@@ -321,9 +321,9 @@ BB 29
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_62 
-		 2: COPY TYPE_StringLiteral def_%v_63 
-		 3: COPY TYPE_StringLiteral def_%v_64 
+		 1: COPY TYPE_StringLiteral "Site.current is not set so Setting.get(:" def_%v_62 
+		 2: COPY TYPE_StringLiteral ", :" def_%v_63 
+		 3: COPY TYPE_StringLiteral ") failed." def_%v_64 
 		 4: BUILDSTRING def_%v_65 %v_62[29.1,] section[8.7,] %v_63[29.2,] name[8.8,] %v_64[29.3,] 
 		 5: %self->raise def_%v_66 %self[2.0,] %v_65[29.4,] 	 ARGS:%v_65,
 		 6: COPY TYPE_PASS def_%v_61 %v_66[29.5,] 
@@ -386,7 +386,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "." def_%cl_1_3 
 		 2: s->split def_%cl_1_4 s[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: %cl_1_4->map def_%cl_1_5 %cl_1_4[3.2,] %self[2.0,] 	 ARGS:%cl_1_4,
 CLOSURE BEGIN: p[3.3,] 
@@ -409,8 +409,8 @@ BB 3
 	instructions:
 		 0: 
 		 1: p->underscore def_%cl_2_3 p[2.2,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_2_4 
-		 3: COPY TYPE_StringLiteral def_%cl_2_5 
+		 2: COPY TYPE_StringLiteral " " def_%cl_2_4 
+		 3: COPY TYPE_StringLiteral "_" def_%cl_2_5 
 		 4: %cl_2_3->gsub def_%cl_2_6 %cl_2_3[3.1,] %cl_2_4[3.2,] %cl_2_5[3.3,] 	 ARGS:%cl_2_4,%cl_2_5,
 		 5: RETURN %cl_2_6[3.4,] %self[2.0,] 
 BB 4
@@ -595,9 +595,9 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_20 
-		 2: COPY TYPE_StringLiteral def_%v_21 
-		 3: COPY TYPE_StringLiteral def_%v_22 
+		 1: COPY TYPE_StringLiteral "No setting found for " def_%v_20 
+		 2: COPY TYPE_StringLiteral "/" def_%v_21 
+		 3: COPY TYPE_StringLiteral "." def_%v_22 
 		 4: BUILDSTRING def_%v_23 %v_20[9.1,] section[5.10,2.6,] %v_21[9.2,] name[5.13,2.7,] %v_22[9.3,] 
 		 5: %self->raise def_%v_24 %self[2.0,] %v_23[9.4,] 	 ARGS:%v_23,
 		 6: COPY TYPE_PASS def_%v_19 %v_24[9.5,] 
@@ -695,7 +695,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: (SETTINGS) def_%v_6 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "timestamp" def_%v_7 
 		 2: %v_6->[] def_%v_8 %v_6[3.0,] %v_7[3.1,] 	 ARGS:%v_7,
 		 3: (Site) def_%v_9 
 		 4: %v_9->current def_%v_10 %v_9[3.3,] 	 ARGS:
@@ -816,14 +816,14 @@ BB 6
 		 2: setting->read_attribute def_%cl_1_6 setting[2.2,] 	 ARGS:Symbol,
 		 3: %cl_1_6->downcase def_%cl_1_7 %cl_1_6[6.2,] 	 ARGS:
 		 4: COPY TYPE_Regexp def_%cl_1_8 
-		 5: COPY TYPE_StringLiteral def_%cl_1_9 
+		 5: COPY TYPE_StringLiteral "_" def_%cl_1_9 
 		 6: %cl_1_7->gsub def_%cl_1_10 %cl_1_7[6.3,] %cl_1_9[6.5,] 	 ARGS:%cl_1_8,%cl_1_9,
 		 7: COPY TYPE_PASS def_section %cl_1_10[6.6,] 
 		 8: 
 		 9: setting->read_attribute def_%cl_1_11 setting[6.2,2.2,] 	 ARGS:Symbol,
 		 10: %cl_1_11->downcase def_%cl_1_12 %cl_1_11[6.9,] 	 ARGS:
 		 11: COPY TYPE_Regexp def_%cl_1_13 
-		 12: COPY TYPE_StringLiteral def_%cl_1_14 
+		 12: COPY TYPE_StringLiteral "_" def_%cl_1_14 
 		 13: %cl_1_12->gsub def_%cl_1_15 %cl_1_12[6.10,] %cl_1_14[6.12,] 	 ARGS:%cl_1_13,%cl_1_14,
 		 14: COPY TYPE_PASS def_name %cl_1_15[6.13,] 
 		 15: 
@@ -895,7 +895,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: (SETTINGS) def_%v_15 
-		 1: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "timestamp" def_%v_16 
 		 2: (Time) def_%v_17 
 		 3: %v_17->now def_%v_18 %v_17[14.2,] 	 ARGS:
 		 4: ATTRASSIGN %v_15->[] %v_16[14.1,] %v_18[14.3,] 
@@ -981,7 +981,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral "global" def_%cl_2_3 
 		 2: setting->[] def_%cl_2_4 setting[2.3,] %cl_2_3[3.1,] 	 ARGS:%cl_2_3,
 		 3: %cl_2_4->! def_%cl_2_5 %cl_2_4[3.2,] 	 ARGS:
 		 4: %cl_2_5->! def_%cl_2_6 %cl_2_5[3.3,] 	 ARGS:
@@ -1079,9 +1079,9 @@ BB 3
 		 0: 
 		 1: (Rails) def_%cl_1_3 
 		 2: %cl_1_3->logger def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "Reloading settings for site " def_%cl_1_5 
 		 4: site->id def_%cl_1_6 site[2.2,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_1_7 
+		 5: COPY TYPE_StringLiteral "..." def_%cl_1_7 
 		 6: BUILDSTRING def_%cl_1_8 %cl_1_5[3.3,] %cl_1_6[3.4,] %cl_1_7[3.5,] 
 		 7: %cl_1_4->info def_%cl_1_9 %cl_1_4[3.2,] %cl_1_8[3.6,] 	 ARGS:%cl_1_8,
 		 8: 
@@ -1102,7 +1102,7 @@ CLOSURE END:
 		 13: 
 		 14: (Rails) def_%v_8 
 		 15: %v_8->logger def_%v_9 %v_8[2.14,] 	 ARGS:
-		 16: COPY TYPE_StringLiteral def_%v_10 
+		 16: COPY TYPE_StringLiteral "Reloading global settings..." def_%v_10 
 		 17: %v_9->info def_%v_11 %v_9[2.15,] %v_10[2.16,] 	 ARGS:%v_10,
 		 18: 
 		 19: (Setting) def_%v_12 
@@ -1387,7 +1387,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral "site_id" def_%cl_1_5 
 		 2: site->id def_%cl_1_6 site[] 	 ARGS:
 		 3: ATTRASSIGN setting->[] %cl_1_5[5.1,] %cl_1_6[5.2,] 
 		 4: 

@@ -28,8 +28,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "[" def_%v_4 
+		 2: COPY TYPE_StringLiteral "]" def_%v_5 
 		 3: BUILDSTRING def_%v_6 object[2.5,] %v_4[4.1,] method[2.6,] %v_5[4.2,] 
 		 4: options->delete def_%v_7 options[3.1,2.8,] 	 ARGS:Symbol,
 		 5: BRANCH %v_7[4.4,] 
@@ -37,7 +37,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "@" def_%v_8 
 		 1: BUILDSTRING def_%v_9 %v_8[5.0,] object[2.5,] 
 		 2: %self->instance_variable_get def_%v_10 %self[2.0,] %v_9[5.1,] 	 ARGS:%v_9,
 		 3: COPY TYPE_PASS def_%v_7 %v_10[5.2,] 
@@ -48,7 +48,7 @@ BB 6
 		 0: %v_7->try def_%v_11 %v_7[5.3,4.4,] method[2.6,] 	 ARGS:method,
 		 1: HASH-selected- def_%v_12 %v_11[6.0,] 
 		 2: %self->assign_select_grouped_options def_%v_13 %self[2.0,] project[2.7,] %v_12[6.1,] 	 ARGS:project,%v_12,
-		 3: COPY TYPE_StringLiteral def_%v_14 
+		 3: COPY TYPE_StringLiteral "_" def_%v_14 
 		 4: BUILDSTRING def_%v_15 object[2.5,] %v_14[6.3,] method[2.6,] 
 		 5: HASH-id- def_%v_16 %v_15[6.4,] 
 		 6: %v_16->merge def_%v_17 %v_16[6.5,] options[3.1,2.8,] 	 ARGS:options,
@@ -100,8 +100,8 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "[" def_%v_4 
+		 2: COPY TYPE_StringLiteral "]" def_%v_5 
 		 3: BUILDSTRING def_%v_6 object[2.5,] %v_4[6.1,] method[2.6,] %v_5[6.2,] 
 		 4: options->delete def_%v_7 options[5.1,4.0,] 	 ARGS:Symbol,
 		 5: BRANCH %v_7[6.4,] 
@@ -109,7 +109,7 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "@" def_%v_8 
 		 1: BUILDSTRING def_%v_9 %v_8[7.0,] object[2.5,] 
 		 2: %self->instance_variable_get def_%v_10 %self[2.0,] %v_9[7.1,] 	 ARGS:%v_9,
 		 3: COPY TYPE_PASS def_%v_7 %v_10[7.2,] 
@@ -120,7 +120,7 @@ BB 8
 		 0: %v_7->try def_%v_11 %v_7[7.3,6.4,] method[2.6,] 	 ARGS:method,
 		 1: HASH-selected- def_%v_12 %v_11[8.0,] 
 		 2: %self->task_select_grouped_options def_%v_13 %self[2.0,] collection[2.7,] filter[3.0,2.8,] %v_12[8.1,] 	 ARGS:collection,filter,%v_12,
-		 3: COPY TYPE_StringLiteral def_%v_14 
+		 3: COPY TYPE_StringLiteral "_" def_%v_14 
 		 4: BUILDSTRING def_%v_15 object[2.5,] %v_14[8.3,] method[2.6,] 
 		 5: HASH-id- def_%v_16 %v_15[8.4,] 
 		 6: %v_16->merge def_%v_17 %v_16[8.5,] options[5.1,4.0,] 	 ARGS:options,
@@ -178,9 +178,9 @@ BB 7
 	instructions:
 		 0: COPY TYPE_PASS def_file_ids %v_4[6.1,5.0,] 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_6 
+		 2: COPY TYPE_StringLiteral "project_id" def_%v_6 
 		 3: project->id def_%v_7 project[2.5,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_8 
+		 4: COPY TYPE_StringLiteral "is_visible" def_%v_8 
 		 5: HASH- def_%v_9 %v_6[7.2,] %v_7[7.3,] %v_8[7.4,] 
 		 6: COPY TYPE_PASS def_conds %v_9[7.5,] 
 		 7: 
@@ -197,7 +197,7 @@ BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_13 
+		 0: COPY TYPE_StringLiteral "is_private" def_%v_13 
 		 1: ATTRASSIGN conds->[] %v_13[9.0,] 
 		 2: COPY TYPE_Boolean def_%v_12 
 BB 10
@@ -205,12 +205,12 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_14 
+		 1: COPY TYPE_StringLiteral "-- None --" def_%v_14 
 		 2: COPY TYPE_Array def_%v_15 %v_14[10.1,] 
 		 3: COPY TYPE_Array def_%v_16 %v_15[10.2,] 
 		 4: (ProjectFile) def_%v_17 
 		 5: %v_17->where def_%v_18 %v_17[10.4,] conds[9.1,7.6,] 	 ARGS:conds,
-		 6: COPY TYPE_StringLiteral def_%v_19 
+		 6: COPY TYPE_StringLiteral "id, filename" def_%v_19 
 		 7: %v_18->select def_%v_20 %v_18[10.5,] %v_19[10.6,] 	 ARGS:%v_19,
 		 8: %v_20->collect def_%v_21 %v_20[10.7,] %self[2.0,] 	 ARGS:%v_20,
 CLOSURE BEGIN: file[10.8,] file_ids[7.0,] 
@@ -287,7 +287,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_project 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "project_id" def_%v_3 
 		 8: project->id def_%v_4 project[2.5,] 	 ARGS:
 		 9: HASH- def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: COPY TYPE_PASS def_conds %v_5[2.9,] 
@@ -305,7 +305,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "is_private" def_%v_9 
 		 1: ATTRASSIGN conds->[] %v_9[4.0,] 
 		 2: COPY TYPE_Boolean def_%v_8 
 BB 5
@@ -313,12 +313,12 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral "-- None --" def_%v_10 
 		 2: COPY TYPE_Array def_%v_11 %v_10[5.1,] 
 		 3: COPY TYPE_Array def_%v_12 %v_11[5.2,] 
 		 4: (Milestone) def_%v_13 
 		 5: %v_13->where def_%v_14 %v_13[5.4,] conds[4.1,2.10,] 	 ARGS:conds,
-		 6: COPY TYPE_StringLiteral def_%v_15 
+		 6: COPY TYPE_StringLiteral "id, name" def_%v_15 
 		 7: %v_14->select def_%v_16 %v_14[5.5,] %v_15[5.6,] 	 ARGS:%v_15,
 		 8: %v_16->collect def_%v_17 %v_16[5.7,] %self[2.0,] 	 ARGS:%v_16,
 CLOSURE BEGIN: milestone[5.8,] 
@@ -379,7 +379,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_project 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "project_id" def_%v_3 
 		 8: project->id def_%v_4 project[2.5,] 	 ARGS:
 		 9: HASH- def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: COPY TYPE_PASS def_conds %v_5[2.9,] 
@@ -397,7 +397,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "is_private" def_%v_9 
 		 1: ATTRASSIGN conds->[] %v_9[4.0,] 
 		 2: COPY TYPE_Boolean def_%v_8 
 BB 5
@@ -407,7 +407,7 @@ BB 5
 		 0: 
 		 1: (Message) def_%v_10 
 		 2: %v_10->where def_%v_11 %v_10[5.1,] conds[4.1,2.10,] 	 ARGS:conds,
-		 3: COPY TYPE_StringLiteral def_%v_12 
+		 3: COPY TYPE_StringLiteral "id, title" def_%v_12 
 		 4: %v_11->select def_%v_13 %v_11[5.2,] %v_12[5.3,] 	 ARGS:%v_12,
 		 5: %v_13->collect def_%v_14 %v_13[5.4,] %self[2.0,] 	 ARGS:%v_13,
 CLOSURE BEGIN: message[5.5,] 
@@ -527,7 +527,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: (I18n) def_%v_13 
-		 1: COPY TYPE_StringLiteral def_%v_14 
+		 1: COPY TYPE_StringLiteral "anyone" def_%v_14 
 		 2: %v_13->t def_%v_15 %v_13[12.0,] %v_14[12.1,] 	 ARGS:%v_14,
 		 3: HASH-value- def_%v_16 
 		 4: %self->content_tag def_%v_17 %self[2.0,] %v_15[12.2,] %v_16[12.3,] 	 ARGS:Symbol,%v_15,%v_16,
@@ -536,7 +536,7 @@ BB 13
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_18 
+		 0: COPY TYPE_StringLiteral "" def_%v_18 
 		 1: COPY TYPE_PASS def_%v_17 %v_18[13.0,] 
 BB 14
 	outgoing: 15 
@@ -631,9 +631,9 @@ BB 13
 		 0: 
 		 1: company->name def_%cl_1_12 company[2.2,] 	 ARGS:
 		 2: (I18n) def_%cl_1_13 
-		 3: COPY TYPE_StringLiteral def_%cl_1_14 
+		 3: COPY TYPE_StringLiteral "anyone" def_%cl_1_14 
 		 4: %cl_1_13->t def_%cl_1_15 %cl_1_13[13.2,] %cl_1_14[13.3,] 	 ARGS:%cl_1_14,
-		 5: COPY TYPE_StringLiteral def_%cl_1_16 
+		 5: COPY TYPE_StringLiteral "c" def_%cl_1_16 
 		 6: company->id def_%cl_1_17 company[13.1,2.2,] 	 ARGS:
 		 7: BUILDSTRING def_%cl_1_18 %cl_1_16[13.5,] %cl_1_17[13.6,] 
 		 8: COPY TYPE_Array def_%cl_1_19 %cl_1_15[13.4,] %cl_1_18[13.7,] 
@@ -851,7 +851,7 @@ BB 9
 CLOSURE END: task_list[2.2,] 
 		 5: 
 		 6: (I18n) def_%v_6 
-		 7: COPY TYPE_StringLiteral def_%v_7 
+		 7: COPY TYPE_StringLiteral "none" def_%v_7 
 		 8: %v_6->t def_%v_8 %v_6[6.6,] %v_7[6.7,] 	 ARGS:%v_7,
 		 9: HASH-value- def_%v_9 
 		 10: %self->content_tag def_%v_10 %self[2.0,] %v_8[6.8,] %v_9[6.9,] 	 ARGS:Symbol,%v_8,%v_9,
@@ -880,7 +880,7 @@ BB 2
 		 5: RECEIVEARG def_object 
 		 6: 
 		 7: object->object_url def_%v_3 object[2.5,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "/comments" def_%v_4 
 		 9: BUILDSTRING def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: RETURN %v_5[2.9,] %self[2.0,] 
 BB 3

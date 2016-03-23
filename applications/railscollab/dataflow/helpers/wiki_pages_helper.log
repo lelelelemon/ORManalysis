@@ -44,9 +44,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral """ def_%cl_1_3 
 		 2: COPY TYPE_NthRef def_%cl_1_4 
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "":" def_%cl_1_5 
 		 4: COPY TYPE_NthRef def_%cl_1_6 
 		 5: %self->wiki_title_to_id def_%cl_1_7 %self[2.0,] %cl_1_6[3.4,] 	 ARGS:%cl_1_6,
 		 6: HASH-id- def_%cl_1_8 %cl_1_7[3.5,] 
@@ -86,10 +86,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_3 
+		 1: COPY TYPE_StringLiteral """ def_%cl_2_3 
 		 2: COPY TYPE_NthRef def_%cl_2_4 
 		 3: %self->wiki_id_to_title def_%cl_2_5 %self[2.0,] %cl_2_4[3.2,] 	 ARGS:%cl_2_4,
-		 4: COPY TYPE_StringLiteral def_%cl_2_6 
+		 4: COPY TYPE_StringLiteral "":" def_%cl_2_6 
 		 5: COPY TYPE_NthRef def_%cl_2_7 
 		 6: HASH-id- def_%cl_2_8 %cl_2_7[3.5,] 
 		 7: %self->wiki_page_path def_%cl_2_9 %self[3.3,2.0,] %cl_2_8[3.6,] 	 ARGS:%cl_2_8,
@@ -128,9 +128,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral """ def_%cl_3_3 
 		 2: COPY TYPE_NthRef def_%cl_3_4 
-		 3: COPY TYPE_StringLiteral def_%cl_3_5 
+		 3: COPY TYPE_StringLiteral "":" def_%cl_3_5 
 		 4: COPY TYPE_NthRef def_%cl_3_6 
 		 5: %self->wiki_title_to_id def_%cl_3_7 %self[2.0,] %cl_3_6[3.4,] 	 ARGS:%cl_3_6,
 		 6: HASH-id- def_%cl_3_8 %cl_3_7[3.5,] 
@@ -158,7 +158,7 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "" def_%v_4 
 		 1: RETURN %v_4[4.0,] %self[2.0,] 
 BB 6
 	outgoing: 
@@ -181,7 +181,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_wiki_pages 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "widget" def_%v_3 
 		 8: HASH-wiki_pages- def_%v_4 wiki_pages[2.5,] 
 		 9: HASH-partial-locals- def_%v_5 %v_3[2.7,] %v_4[2.8,] 
 		 10: %self->render def_%v_6 %self[2.0,] %v_5[2.9,] 	 ARGS:%v_5,
@@ -206,7 +206,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "" def_%v_3 
 		 7: RETURN %v_3[2.6,] %self[2.0,] 
 BB 3
 	outgoing: 
@@ -229,7 +229,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_version 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "wiki_engine.current_version" def_%v_3 
 		 8: version->user_name def_%v_4 version[2.5,] 	 ARGS:
 		 9: %v_4->blank? def_%v_5 %v_4[2.8,] 	 ARGS:
 		 10: BRANCH %v_5[2.9,] 
@@ -243,7 +243,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "_edited_by" def_%v_7 
 		 1: COPY TYPE_PASS def_%v_6 %v_7[4.0,] 
 BB 5
 	outgoing: 6 
@@ -299,7 +299,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "wiki_engine.version" def_%cl_1_3 
 		 2: version->user_name def_%cl_1_4 version[2.2,] 	 ARGS:
 		 3: %cl_1_4->blank? def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:
 		 4: BRANCH %cl_1_5[3.3,] 
@@ -313,7 +313,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_7 
+		 0: COPY TYPE_StringLiteral "_edited_by" def_%cl_1_7 
 		 1: COPY TYPE_PASS def_%cl_1_6 %cl_1_7[5.0,] 
 BB 6
 	outgoing: 7 9 
@@ -420,49 +420,49 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->action_name def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_6 
+		 7: COPY TYPE_StringLiteral "index" def_%v_6 
 		 8: def_%v_5 %v_6[2.7,] %v_3[2.6,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 4 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "new" def_%v_8 
 		 1: def_%v_7 %v_8[3.0,] %v_3[2.6,] 
 		 2: BRANCH %v_7[3.1,] 
 BB 4
 	outgoing: 5 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_10 
+		 0: COPY TYPE_StringLiteral "create" def_%v_10 
 		 1: def_%v_9 %v_10[4.0,] %v_3[2.6,] 
 		 2: BRANCH %v_9[4.1,] 
 BB 5
 	outgoing: 6 13 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_12 
+		 0: COPY TYPE_StringLiteral "edit" def_%v_12 
 		 1: def_%v_11 %v_12[5.0,] %v_3[2.6,] 
 		 2: BRANCH %v_11[5.1,] 
 BB 6
 	outgoing: 7 14 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_14 
+		 0: COPY TYPE_StringLiteral "update" def_%v_14 
 		 1: def_%v_13 %v_14[6.0,] %v_3[2.6,] 
 		 2: BRANCH %v_13[6.1,] 
 BB 7
 	outgoing: 8 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_16 
+		 0: COPY TYPE_StringLiteral "show" def_%v_16 
 		 1: def_%v_15 %v_16[7.0,] %v_3[2.6,] 
 		 2: BRANCH %v_15[7.1,] 
 BB 8
 	outgoing: 9 19 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_18 
+		 0: COPY TYPE_StringLiteral "list" def_%v_18 
 		 1: def_%v_17 %v_18[8.0,] %v_3[2.6,] 
 		 2: BRANCH %v_17[8.1,] 
 BB 9
@@ -566,7 +566,7 @@ BB 2
 		 7: COPY TYPE_PASS def_crumbs %v_3[2.6,] 
 		 8: 
 		 9: %self->action_name def_%v_4 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral "index" def_%v_5 
 		 11: %v_4->== def_%v_6 %v_4[2.9,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: BRANCH %v_6[2.11,] 
 BB 3
@@ -609,7 +609,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "project/wiki" def_%v_3 
 		 7: COPY TYPE_Array def_%v_4 %v_3[2.6,] 
 		 8: RETURN %v_4[2.7,] %self[2.0,] 
 BB 3

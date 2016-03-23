@@ -20,7 +20,7 @@ BB 2
 		 10: COPY TYPE_PASS def_person_id %v_4[2.9,] 
 		 11: 
 		 12: (BTLog) def_%v_5 
-		 13: COPY TYPE_StringLiteral def_%v_6 
+		 13: COPY TYPE_StringLiteral "Approved submerchant account for person " def_%v_6 
 		 14: BUILDSTRING def_%v_7 %v_6[2.13,] %v_4[2.9,] 
 		 15: %v_5->warn def_%v_8 %v_5[2.12,] %v_7[2.14,] 	 ARGS:%v_7,
 		 16: 
@@ -28,7 +28,7 @@ BB 2
 		 18: %v_9->find_by_person_id def_%v_10 %v_9[2.17,] person_id[2.10,] 	 ARGS:person_id,
 		 19: COPY TYPE_PASS def_braintree_account %v_10[2.18,] 
 		 20: 
-		 21: COPY TYPE_StringLiteral def_%v_11 
+		 21: COPY TYPE_StringLiteral "active" def_%v_11 
 		 22: HASH-status- def_%v_12 %v_11[2.21,] 
 		 23: %v_10->update_attributes def_%v_13 %v_10[2.18,] %v_12[2.22,] 	 ARGS:%v_12,
 		 24: 
@@ -67,7 +67,7 @@ BB 2
 		 10: COPY TYPE_PASS def_person_id %v_4[2.9,] 
 		 11: 
 		 12: (BTLog) def_%v_5 
-		 13: COPY TYPE_StringLiteral def_%v_6 
+		 13: COPY TYPE_StringLiteral "Declined submerchant account for person " def_%v_6 
 		 14: BUILDSTRING def_%v_7 %v_6[2.13,] %v_4[2.9,] 
 		 15: %v_5->warn def_%v_8 %v_5[2.12,] %v_7[2.14,] 	 ARGS:%v_7,
 		 16: 
@@ -75,7 +75,7 @@ BB 2
 		 18: %v_9->find_by_person_id def_%v_10 %v_9[2.17,] person_id[2.10,] 	 ARGS:person_id,
 		 19: COPY TYPE_PASS def_braintree_account %v_10[2.18,] 
 		 20: 
-		 21: COPY TYPE_StringLiteral def_%v_11 
+		 21: COPY TYPE_StringLiteral "suspended" def_%v_11 
 		 22: HASH-status- def_%v_12 %v_11[2.21,] 
 		 23: %v_10->update_attributes def_%v_13 %v_10[2.18,] %v_12[2.22,] 	 ARGS:%v_12,
 		 24: RETURN %v_13[2.23,] %self[2.0,] 
@@ -105,9 +105,9 @@ BB 2
 		 9: COPY TYPE_PASS def_transaction %v_3[2.8,] 
 		 10: 
 		 11: (BTLog) def_%v_4 
-		 12: COPY TYPE_StringLiteral def_%v_5 
+		 12: COPY TYPE_StringLiteral "Transaction " def_%v_5 
 		 13: %v_3->id def_%v_6 %v_3[2.8,] 	 ARGS:
-		 14: COPY TYPE_StringLiteral def_%v_7 
+		 14: COPY TYPE_StringLiteral " disbursed" def_%v_7 
 		 15: BUILDSTRING def_%v_8 %v_5[2.12,] %v_6[2.13,] %v_7[2.14,] 
 		 16: %v_4->warn def_%v_9 %v_4[2.11,] %v_8[2.15,] 	 ARGS:%v_8,
 		 17: 
@@ -190,7 +190,7 @@ BB 10
 		 1: COPY TYPE_PASS def_bt_e %v_15[10.0,] 
 		 2: 
 		 3: (BTLog) def_%v_16 
-		 4: COPY TYPE_StringLiteral def_%v_17 
+		 4: COPY TYPE_StringLiteral "Error while parsing challenge: " def_%v_17 
 		 5: %v_15->inspect def_%v_18 %v_15[10.0,] 	 ARGS:
 		 6: BUILDSTRING def_%v_19 %v_17[10.4,] %v_18[10.5,] 
 		 7: %v_16->error def_%v_20 %v_16[10.3,] %v_19[10.6,] 	 ARGS:%v_19,
@@ -309,7 +309,7 @@ BB 10
 		 1: COPY TYPE_PASS def_bt_e %v_17[10.0,] 
 		 2: 
 		 3: (BTLog) def_%v_18 
-		 4: COPY TYPE_StringLiteral def_%v_19 
+		 4: COPY TYPE_StringLiteral "Error while parsing webhook notification: " def_%v_19 
 		 5: %v_17->inspect def_%v_20 %v_17[10.0,] 	 ARGS:
 		 6: BUILDSTRING def_%v_21 %v_19[10.4,] %v_20[10.5,] 
 		 7: %v_18->error def_%v_22 %v_18[10.3,] %v_21[10.6,] 	 ARGS:%v_21,
@@ -375,8 +375,8 @@ BB 19
 	instructions:
 		 0: 
 		 1: (BTLog) def_%v_35 
-		 2: COPY TYPE_StringLiteral def_%v_36 
-		 3: COPY TYPE_StringLiteral def_%v_37 
+		 2: COPY TYPE_StringLiteral "Received unimplemented webhook notification " def_%v_36 
+		 3: COPY TYPE_StringLiteral ": " def_%v_37 
 		 4: parsed_response->inspect def_%v_38 parsed_response[4.9,] 	 ARGS:
 		 5: BUILDSTRING def_%v_39 %v_36[19.2,] kind[17.3,] %v_37[19.3,] %v_38[19.4,] 
 		 6: %v_35->warn def_%v_40 %v_35[19.1,] %v_39[19.5,] 	 ARGS:%v_39,

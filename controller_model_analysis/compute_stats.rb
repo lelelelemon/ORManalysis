@@ -20,7 +20,8 @@ def traceback_data_dep(cur_node, stop_at_query=false)
 					end	
 				else
 					#if cur_node.getCallStack.include?(e.getToNode) and e.getVname == "returnv"
-					if e.getFromNode.getIndex < cur_node.getIndex
+					if e.getFromNode.getInstr.instance_of?Return_instr and e.getFromNode.getInstr.getClassName == cur_node.getInstr.getClassName and e.getFromNode.getInstr.getMethodName == cur_node.getInstr.getMethodName
+					elsif e.getFromNode.getIndex < cur_node.getIndex
 					#else
 						#test is both nodes are in the same basic block, prevent from tracing too far
 						#if e.getFromNode.getInstr.getBB == node.getInstr.getBB
@@ -269,8 +270,10 @@ class Temp_Qsource_stat < Temp_Qgeneral_stat
 		@from_util = 0
 		@from_user_input = 0
 		@from_global = 0
+		@from_query_string = 0
+		@from_select_condition = 0
 	end
-	attr_accessor :from_query, :from_const, :from_user_input, :source_total, :from_util, :from_global
+	attr_accessor :from_query, :from_const, :from_user_input, :source_total, :from_util, :from_global, :from_query_string, :from_select_condition
 	def get_from_query
 		return get_avg(@from_query)
 	end
@@ -285,6 +288,12 @@ class Temp_Qsource_stat < Temp_Qgeneral_stat
 	end
 	def get_from_global
 		return get_avg(@from_global)
+	end
+	def get_from_query_string
+		return get_avg(@from_query_string)
+	end
+	def get_from_select_condition
+		return get_avg(@from_select_condition)
 	end
 	def get_source_total
 		return get_avg(@source_total)
@@ -326,15 +335,25 @@ class Temp_validation_stat
 		@depth = 0
 		@queries = Array.new
 		@read_goes_to_write = Array.new # an array of read queries
+		@read_goes_to_branch_on_write = Array.new #branch instrs, that are on the dataflow to the write queries
 	end
-	attr_accessor :read, :write, :depth, :queries, :read_goes_to_write
+	attr_accessor :read, :write, :depth, :queries, :read_goes_to_write, :read_goes_to_branch_on_write
 	def addQuery(qnode)
-		@queries.push(qnode)
+		if @queries.include?(qnode)
+		else
+			@queries.push(qnode)
+		end
 	end
 	def addReadGoesToWrite(qnode)
 		if @read_goes_to_write.include?(qnode)
 		else
 			@read_goes_to_write.push(qnode)
+		end
+	end
+	def addReadGoesToBranchOnWrite(qnode)
+		if @read_goes_to_branch_on_write.include?(qnode)
+		else
+			@read_goes_to_branch_on_write.push(qnode)
 		end
 	end
 end
@@ -356,7 +375,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	
 	$node_list.each do |n|
 		n.setLabel
-		puts "#{n.getIndex}:#{n.getInstr.toString}"
+		#puts "#{n.getIndex}:#{n.getInstr.toString}"
 		#if n.getValidationStack.length > 0
 		#	str = ""
 		#	n.getValidationStack.each do |v|
@@ -376,7 +395,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		#end
 		if n.getInstr.is_a?Call_instr
 			caller_type = type_valid(n.getInstr, n.getInstr.getCaller)
-			puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}"
+			#puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField}"
 			if n.isQuery?
 				#puts "\t * table_name = #{n.getInstr.getTableName}"
 			end 
@@ -384,9 +403,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#puts "\t\treturn type: #{type_valid(n.getInstr, n.getInstr.getDefv)}"
 			end
 		end
-		n.getDataflowEdges.each do |e|
+		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
-				puts "\t\t (#{e.getVname})-> #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
+				#puts "\t\t <- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
 			else
 				#puts "\t\t <- params"
 			end
@@ -414,7 +433,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	graph_fname = "#{output_dir}/sketch_graph.log"
 	$graph_file = File.open(graph_fname, "w")
 
-	build_sketch_graph
+	#build_sketch_graph
 	cliques = getCliqueList(10)
 	i = 0
 	cliques.each do |c|
@@ -487,6 +506,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					@validation_stat[vl].depth = vl.getValidationStack.length
 				end
 				@validation_stat[vl].addQuery(n)
+				@validation_stat[vl].addQuery(vl)
 				if n.isReadQuery?
 					@validation_stat[vl].read += 1
 				else
@@ -535,6 +555,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				end
 			end
 			if n.isReadQuery?
+				check_scope_query_string(n)
 				@read_sink_stat.total += 1
 				@read_source_stat.total += 1
 				@table_read_stat[@table_name].total += 1
@@ -584,6 +605,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					if n1.isQuery?
 						@table_read_stat[@table_name].sink_total += 1
 						@read_sink_stat.sink_total += 1
+						#puts "QUERY: #{n.getIndex}: #{n.getInstr.toString}"
 						if n1.isWriteQuery?
 								@read_sink_stat.to_write_query += 1
 								@table_read_stat[@table_name].to_write_query += 1
@@ -604,10 +626,24 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							@table_read_stat[@table_name].sink_total += 1
 							@read_sink_stat.sink_total += 1
 						end
-						if n1.isBranch?
+						if n1.getInView
+								@table_read_stat[@table_name].to_view += 1
+								@read_sink_stat.to_view += 1
+						elsif n1.isBranch?
 							@read_sink_stat.to_branch += 1
 							@table_read_stat[@table_name].to_branch += 1
-							#puts " * (To branch)"
+							n.getValidationStack.each do |vl|
+								@validation_stat[vl].queries.each do |w|
+									if w.isWriteQuery?
+										#puts "\tREachable? (#{w.getIndex}) <- (#{n1.getIndex}) #{is_controlflow_reachable(w, n1)}"
+										if is_controlflow_reachable(w, n1)
+											@validation_stat[vl].addReadGoesToBranchOnWrite(n)
+											#puts "\t\t* branch affect write #{w.getIndex}"
+										end
+									end
+								end
+							end
+							#puts " * (To branch) #{n1.getIndex}:#{n1.getInstr.toString}"
 						#elsif n1.getDataflowEdges.length == 0
 						elsif isValidationSink(n1)
 							@table_read_stat[@table_name].to_validation += 1
@@ -615,11 +651,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						elsif isCacheSink(n1)
 							@table_read_stat[@table_name].to_browser_cache += 1
 							@read_sink_stat.to_browser_cache += 1
-						elsif n1.getInView
-								@table_read_stat[@table_name].to_view += 1
-								@read_sink_stat.to_view += 1
 						elsif sinkIgnore(n1)==false
-								puts " * (To unknown sink) #{n1.getIndex}: #{n1.getInstr.toString}"
+								#puts " * (To unknown sink) #{n1.getIndex}: #{n1.getInstr.toString}"
 						end
 						if n1.getInView
 							@used_in_view = true
@@ -646,7 +679,15 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							@read_source_stat.source_total += 1
 						end
 						if isConstSource(n1)
-							@read_source_stat.from_const += 1
+							#Test query string
+							is_query_string = check_query_string(n, n1)
+							if is_query_string
+								@read_source_stat.from_query_string += 1
+							elsif isSelectCondition(n1)
+								@read_source_stat.from_select_condition += 1
+							else
+								@read_source_stat.from_const += 1
+							end
 						elsif isUtilSource(n1) 
 							@read_source_stat.from_util += 1
 						elsif n1.getInstr.instance_of?GlobalVar_instr
@@ -686,8 +727,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								#puts " (#{n.getInstr.toString}) depend on (#{n1.getInstr.toString})"
 							end
 						elsif n1.getBackwardEdges.length == 0
-							if isConstSource(n1)
-								#puts " x (From copy const)"
+							if isSelectCondition(n1)
+								@write_source_stat.from_select_condition += 1
+								@table_write_stat[@table_name].from_select_condition += 1
+							elsif isConstSource(n1)
+								puts " x (#{n.getIndex} From copy const #{n1.getIndex}: #{n1.getInstr.toString})"
 								@write_source_stat.from_const += 1
 								@table_write_stat[@table_name].from_const += 1
 							elsif isUtilSource(n1) 
@@ -789,6 +833,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		$graph_file.puts("\t\t<write>#{vd.write}<\/write>")
 		$graph_file.puts("\t\t<depth>#{vd.depth}<\/depth>")
 		$graph_file.puts("\t\t<readToWrite>#{vd.read_goes_to_write.length}<\/readToWrite>")
+		$graph_file.puts("\t\t<readToBranchOnWrite>#{vd.read_goes_to_branch_on_write.length}<\/readToBranchOnWrite>")
 		$graph_file.puts("\t<\/validation>")
 	end
 	@clique_stat.each do |cq|
@@ -807,7 +852,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$graph_file.puts("<schema>")
 	compute_schema_design_stat($graph_file)
 	$graph_file.puts("<\/schema>")
-	
+
+	$graph_file.puts("<queryString>")
+	printQueryStringFreq
+	$graph_file.puts("<\/queryString>")	
 	
 	$graph_file.puts("<\/STATSHEADER>")	
 	$graph_file.close
@@ -846,6 +894,8 @@ def helper_print_stat(general, readSink, readSource, write, label, print_branch=
 		$graph_file.puts("\t\t\t<fromUserInput>#{readSource.get_from_user_input}<\/fromUserInput>")
 		$graph_file.puts("\t\t\t<fromUtil>#{readSource.get_from_util}<\/fromUtil>")
 		$graph_file.puts("\t\t\t<fromQuery>#{readSource.get_from_query}<\/fromQuery>")
+		$graph_file.puts("\t\t\t<fromQueryString>#{readSource.get_from_query_string}</fromQueryString>")
+		$graph_file.puts("\t\t\t<selectCondition>#{readSource.get_from_select_condition}</selectCondition>")
 		$graph_file.puts("\t\t\t<fromConst>#{readSource.get_from_const}<\/fromConst>")
 		$graph_file.puts("\t\t\t<fromGlobal>#{readSource.get_from_global}<\/fromGlobal>")
 		$graph_file.puts("\t\t<\/readSource>")
@@ -857,6 +907,7 @@ def helper_print_stat(general, readSink, readSource, write, label, print_branch=
 	$graph_file.puts("\t\t\t<fromUserInput>#{write.get_from_user_input}<\/fromUserInput>")
 	$graph_file.puts("\t\t\t<fromUtil>#{write.get_from_util}<\/fromUtil>")
 	$graph_file.puts("\t\t\t<fromQuery>#{write.get_from_query}<\/fromQuery>")
+	$graph_file.puts("\t\t\t<selectCondition>#{write.get_from_select_condition}</selectCondition>")
 	$graph_file.puts("\t\t\t<fromConst>#{write.get_from_const}<\/fromConst>")
 	$graph_file.puts("\t\t\t<fromGlobal>#{write.get_from_global}<\/fromGlobal>")
 	$graph_file.puts("\t\t<\/writeSource>")

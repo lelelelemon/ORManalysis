@@ -135,7 +135,7 @@ general_stats_content.append("trivialBranch")
                                  
 read_stats_content = ["total", "sinkTotal", "toReadQuery", "toWriteQuery", "toView", "toBranch"]
                                  
-write_stats_content = ["total", "sourceTotal", "fromUserInput", "fromQuery", "fromConst", "fromUtil", "fromGlobal"]
+write_stats_content = ["total", "sourceTotal", "fromUserInput", "fromQuery", "fromConst", "fromQueryString", "selectCondition", "fromUtil", "fromGlobal"]
                                  
 view_stat_prefix = ["viewStats"] 
 clique_stat_prefix = ["cliqueStat"]
@@ -530,6 +530,8 @@ def print_clique_stat(prefix):
 	validation_r = []
 	validation_w = []
 	read_to_write = []
+	read_to_branch_on_write = []
+
 	clique = []
 	depth = []
 	cond_list = prefix[:]
@@ -537,27 +539,66 @@ def print_clique_stat(prefix):
 	r_cond_list = cond_list[:]
 	w_cond_list = cond_list[:]
 	read_to_write_cond_list = cond_list[:]
+	read_to_branch_on_write_cond_list = cond_list[:]
 	depth_cond_list = cond_list[:]
+
 	r_cond_list.append("read")
 	w_cond_list.append("write")
 	read_to_write_cond_list.append("readToWrite")
+	read_to_branch_on_write_cond_list.append("readToBranchOnWrite")
 	depth_cond_list.append("depth")
+
 	r = calculateAllActions(r_cond_list)
 	validation_r = validation_r + r
+
 	w = calculateAllActions(w_cond_list)
 	validation_w = validation_w + w
+
 	rtw = calculateAllActions(read_to_write_cond_list)
 	read_to_write = read_to_write + rtw	
+ 
+	rtwob = calculateAllActions(read_to_branch_on_write_cond_list)
+	read_to_branch_on_write = read_to_branch_on_write + rtwob
+
 	d = calculateAllActions(depth_cond_list)
 	depth = depth + d
 	cond_list = prefix[:]
 	cond_list.append("clique")
 	r = calculateAllActions(cond_list)
 	clique = clique + r
+
+	rtw_ratio = []
+	i=0
+	for r in read_to_write:
+		if validation_r[i] > 0:
+			rtw_ratio.append(float(read_to_write[i])/float(validation_r[i]))
+		#else:
+		#	rtw_ratio.append(1)
+		i += 1
+	rtb_ratio = []
+	i=0
+	for r in read_to_branch_on_write:
+		if validation_r[i] > 0:
+			rtb_ratio.append(float(read_to_branch_on_write[i])/float(validation_r[i]))
+		#else:
+		#	rtb_ratio.append(1)
+		i += 1
+	other_ratio = []
+	i=0
+	for r in read_to_write:
+		if validation_r[i] > 0:
+			other_ratio.append(float(validation_r[i]-read_to_write[i]-read_to_branch_on_write[i])/float(validation_r[i]))
+		#else:
+		#	rtb_ratio.append(1)
+		i += 1
+	print "readToWrite: mean\t%f\tvariance\t%f"%(np.mean(rtw_ratio),np.var(rtw_ratio))
+	print "readToBranchOnWrite: mean\t%f\tvariance\t%f"%(np.mean(rtb_ratio),np.var(rtb_ratio))
+	print "other: mean\t%f\tvariance\t%f"%(np.mean(other_ratio),np.var(other_ratio))
 	#print "Average validation length:\t%f\tRead:\t%f\tWrite:\t%f\tlen=\t%d\tvalidations"%(getAverage(validation_r)+getAverage(validation_w)+1, getAverage(validation_r), getAverage(validation_w)+1, len(validation_r))
 	stats_file.write("\t<transaction>\n")
 	stats_file.write("\t\t<readToWriteInTxn>%f</readToWriteInTxn>\n"%getAverage(read_to_write))
-	stats_file.write("\t\t<read>%f</read>\n"%(getAverage(validation_r)-getAverage(read_to_write)))
+	stats_file.write("\t\t<readToBranchOnWrite>%f</readToBranchOnWrite>\n"%getAverage(read_to_branch_on_write))
+	stats_file.write("\t\t<read>%f</read>\n"%(getAverage(validation_r)-getAverage(read_to_write)-getAverage(read_to_branch_on_write)))
 	stats_file.write("\t\t<write>%f</write>\n"%(getAverage(validation_w)+1))
 	stats_file.write("\t</transaction>\n")
 	stats_file.write("\t<transactionNested>\n")
@@ -570,6 +611,20 @@ def print_clique_stat(prefix):
 	#stats_file.write("\t\t<nestedDepth>%f</nestedDepth>\n"%getAverage(depth))
 	stats_file.write("\t</transactionNested>\n")
 	#print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
+
+query_keyword = {}
+def print_query_string(prefix):
+	for root in roots:
+		for child in root:
+			if child.tag == "queryString":
+				for c in child:
+					if c.tag not in query_keyword:
+						query_keyword[c.tag] = 0
+					query_keyword[c.tag] += 1
+	stats_file.write("\t<queryString>\n")
+	for q,f in query_keyword.items():
+		stats_file.write("\t\t<%s>%d</%s>\n"%(q,f,q))
+	stats_file.write("\t</queryString>\n")
 
 
 def print_schema_stat(prefix, table_stat_prefix):
@@ -743,6 +798,7 @@ print_view_stat(view_stat_prefix)
 print_clique_stat(clique_stat_prefix)
 print_schema_stat(schema_stat_prefix, table_stats_prefix)
 
+print_query_string("")
 print_chain(prefix2, [])
 
 stats_file.write("</%s>"%app_name)

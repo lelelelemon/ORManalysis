@@ -23,7 +23,7 @@ BB 3
 	instructions:
 		 0: %self->flash def_%v_6 %self[2.0,] 	 ARGS:
 		 1: %v_6->now def_%v_7 %v_6[3.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "settings.profile.image_is_processing" def_%v_8 
 		 3: %self->t def_%v_9 %self[3.0,2.0,] %v_8[3.2,] 	 ARGS:%v_8,
 		 4: ATTRASSIGN %v_7->[] %v_9[3.3,] 
 		 5: 
@@ -37,7 +37,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral "profile" def_%v_10 
 		 2: ATTRASSIGN %self->selected_left_navi_link %v_10[5.1,] 
 		 3: 
 		 4: %self->add_location_to_person def_%v_11 %self[5.2,2.0,] 	 ARGS:
@@ -71,10 +71,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral "_kms('//i.kissmetrics.com/i.js');_kms('" def_%cl_1_5 
 		 2: (APP_CONFIG) def_%cl_1_6 
 		 3: %cl_1_6->kissmetrics_url def_%cl_1_7 %cl_1_6[4.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_8 
+		 4: COPY TYPE_StringLiteral "');" def_%cl_1_8 
 		 5: BUILDSTRING def_%cl_1_9 %cl_1_5[4.1,] %cl_1_7[4.3,] %cl_1_8[4.4,] 
 		 6: 
 		 7: 
@@ -84,10 +84,10 @@ BB 5
 	outgoing: 7 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_11 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['identify', '" def_%cl_1_11 
 		 1: GETFIELD %self->current_user def_%cl_1_12 %self[2.0,] 
 		 2: %cl_1_12->id def_%cl_1_13 %cl_1_12[5.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_14 
+		 3: COPY TYPE_StringLiteral "']);" def_%cl_1_14 
 		 4: BUILDSTRING def_%cl_1_15 %cl_1_11[5.0,] %cl_1_13[5.2,] %cl_1_14[5.3,] 
 		 5: 
 BB 6
@@ -107,10 +107,10 @@ BB 8
 	outgoing: 10 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_17 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : '" def_%cl_1_17 
 		 1: GETFIELD %self->current_community def_%cl_1_18 %self[2.0,] 
 		 2: %cl_1_18->ident def_%cl_1_19 %cl_1_18[8.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_20 
+		 3: COPY TYPE_StringLiteral "'}]);" def_%cl_1_20 
 		 4: BUILDSTRING def_%cl_1_21 %cl_1_17[8.0,] %cl_1_19[8.2,] %cl_1_20[8.3,] 
 		 5: 
 BB 9
@@ -118,7 +118,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_22 
+		 1: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" def_%cl_1_22 
 		 2: COPY TYPE_PASS def_%cl_1_21 %cl_1_22[9.1,] 
 BB 10
 	outgoing: 12 
@@ -168,21 +168,21 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_28 
+		 3: COPY TYPE_StringLiteral "expiration.title" def_%cl_1_28 
 		 4: %self->t def_%cl_1_29 %self[13.1,2.0,] %cl_1_28[13.3,] 	 ARGS:%cl_1_28,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_1_30 
+		 6: COPY TYPE_StringLiteral "expiration.sub_title_new" def_%cl_1_30 
 		 7: %self->t def_%cl_1_31 %self[13.1,13.4,2.0,] %cl_1_30[13.6,] 	 ARGS:%cl_1_30,
 		 8: 
 		 9: %self->external_plan_service_login_url def_%cl_1_32 %self[13.1,13.4,13.7,2.0,] 	 ARGS:
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_1_33 
+		 11: COPY TYPE_StringLiteral "expiration.link_to_external_service" def_%cl_1_33 
 		 12: %self->t def_%cl_1_34 %self[13.1,13.4,13.7,13.9,2.0,] %cl_1_33[13.11,] 	 ARGS:%cl_1_33,
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_1_35 
+		 14: COPY TYPE_StringLiteral "expiration.need_more_info" def_%cl_1_35 
 		 15: %self->t def_%cl_1_36 %self[13.1,13.4,13.7,13.9,13.12,2.0,] %cl_1_35[13.14,] 	 ARGS:%cl_1_35,
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%cl_1_37 
+		 17: COPY TYPE_StringLiteral "expiration.contact_us" def_%cl_1_37 
 		 18: %self->t def_%cl_1_38 %self[13.1,13.4,13.7,13.9,13.12,13.15,2.0,] %cl_1_37[13.17,] 	 ARGS:%cl_1_37,
 		 19: 
 BB 14
@@ -233,7 +233,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_3 
+		 1: COPY TYPE_StringLiteral "layouts.no_tribe.settings" def_%cl_4_3 
 		 2: %self->t def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 ARGS:%cl_4_3,
 		 3: RETURN %cl_4_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -270,7 +270,7 @@ BB 3
 		 0: 
 		 1: def_%cl_5_3 %cl_5_0[2.1,] 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_5_4 
+		 3: COPY TYPE_StringLiteral "layouts.no_tribe.settings" def_%cl_5_4 
 		 4: %self->t def_%cl_5_5 %self[2.0,] %cl_5_4[3.3,] 	 ARGS:%cl_5_4,
 		 5: RETURN %cl_5_5[3.4,] %self[3.4,2.0,] 
 BB 4
@@ -286,9 +286,9 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_3_5 
-		 6: COPY TYPE_StringLiteral def_%cl_3_6 
-		 7: COPY TYPE_StringLiteral def_%cl_3_7 
+		 5: COPY TYPE_StringLiteral "ss-check" def_%cl_3_5 
+		 6: COPY TYPE_StringLiteral "ss-info" def_%cl_3_6 
+		 7: COPY TYPE_StringLiteral "ss-alert" def_%cl_3_7 
 		 8: HASH-notice-warning-error- def_%cl_3_8 %cl_3_5[3.5,] %cl_3_6[3.6,] %cl_3_7[3.7,] 
 		 9: %cl_3_8->each def_%cl_3_9 %cl_3_8[3.8,] %self[3.1,3.3,2.0,] 	 ARGS:%cl_3_8,
 CLOSURE BEGIN: %self[3.1,3.3,2.0,] announcement[] 
@@ -388,7 +388,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_3 
+		 1: COPY TYPE_StringLiteral "https://maps.google.com/maps/api/js?sensor=true" def_%cl_8_3 
 		 2: %self->javascript_include_tag def_%cl_8_4 %self[2.0,] %cl_8_3[3.1,] 	 ARGS:%cl_8_3,
 		 3: RETURN %cl_8_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -404,14 +404,14 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%cl_3_12 
+		 15: COPY TYPE_StringLiteral "settings.profile.these_fields_are_shown_in_your" def_%cl_3_12 
 		 16: %self->t def_%cl_3_13 %self[3.1,3.3,3.11,3.13,2.0,] %cl_3_12[3.15,] 	 ARGS:%cl_3_12,
 		 17: 
-		 18: COPY TYPE_StringLiteral def_%cl_3_14 
+		 18: COPY TYPE_StringLiteral "settings.profile.profile_page" def_%cl_3_14 
 		 19: %self->t def_%cl_3_15 %self[3.1,3.3,3.11,3.13,3.16,2.0,] %cl_3_14[3.18,] 	 ARGS:%cl_3_14,
 		 20: GETFIELD %self->person def_%cl_3_16 %self[3.1,3.3,3.11,3.13,3.16,3.19,2.0,] 
 		 21: %self->link_to def_%cl_3_17 %self[3.1,3.3,3.11,3.13,3.16,3.19,2.0,] %cl_3_15[3.19,] %cl_3_16[3.20,] 	 ARGS:%cl_3_15,%cl_3_16,
-		 22: COPY TYPE_StringLiteral def_%cl_3_18 
+		 22: COPY TYPE_StringLiteral "." def_%cl_3_18 
 		 23: %cl_3_17->+ def_%cl_3_19 %cl_3_17[3.21,] %cl_3_18[3.22,] 	 ARGS:%cl_3_18,
 		 24: 
 		 25: GETFIELD %self->person def_%cl_3_20 %self[3.1,3.3,3.11,3.13,3.16,3.19,3.21,2.0,] 
@@ -449,23 +449,23 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_6 
+		 1: COPY TYPE_StringLiteral "settings.profile.given_name" def_%cl_9_6 
 		 2: %self->t def_%cl_9_7 %self[2.0,] %cl_9_6[5.1,] 	 ARGS:%cl_9_6,
 		 3: form->label def_%cl_9_8 form[2.2,] %cl_9_7[5.2,] 	 ARGS:Symbol,%cl_9_7,
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_9_9 
-		 6: COPY TYPE_StringLiteral def_%cl_9_10 
+		 5: COPY TYPE_StringLiteral "text_field" def_%cl_9_9 
+		 6: COPY TYPE_StringLiteral "30" def_%cl_9_10 
 		 7: HASH-class-maxlength- def_%cl_9_11 %cl_9_9[5.5,] %cl_9_10[5.6,] 
 		 8: form->text_field def_%cl_9_12 form[5.3,2.2,] %cl_9_11[5.7,] 	 ARGS:Symbol,%cl_9_11,
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_9_13 
+		 10: COPY TYPE_StringLiteral "settings.profile.family_name" def_%cl_9_13 
 		 11: %self->t def_%cl_9_14 %self[5.2,2.0,] %cl_9_13[5.10,] 	 ARGS:%cl_9_13,
-		 12: COPY TYPE_StringLiteral def_%cl_9_15 
+		 12: COPY TYPE_StringLiteral "inline" def_%cl_9_15 
 		 13: HASH-class- def_%cl_9_16 %cl_9_15[5.12,] 
 		 14: form->label def_%cl_9_17 form[5.3,5.8,2.2,] %cl_9_14[5.11,] %cl_9_16[5.13,] 	 ARGS:Symbol,%cl_9_14,%cl_9_16,
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_9_18 
-		 17: COPY TYPE_StringLiteral def_%cl_9_19 
+		 16: COPY TYPE_StringLiteral "first_name_with_initial" def_%cl_9_18 
+		 17: COPY TYPE_StringLiteral "first_name_only" def_%cl_9_19 
 		 18: COPY TYPE_Array def_%cl_9_20 %cl_9_18[5.16,] %cl_9_19[5.17,] 
 		 19: GETFIELD %self->current_community def_%cl_9_21 %self[5.2,5.11,2.0,] 
 		 20: %cl_9_21->name_display_type def_%cl_9_22 %cl_9_21[5.19,] 	 ARGS:
@@ -476,7 +476,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_24 
+		 1: COPY TYPE_StringLiteral "settings.profile." def_%cl_9_24 
 		 2: GETFIELD %self->current_community def_%cl_9_25 %self[2.0,] 
 		 3: %cl_9_25->name_display_type def_%cl_9_26 %cl_9_25[6.2,] 	 ARGS:
 		 4: BUILDSTRING def_%cl_9_27 %cl_9_24[6.1,] %cl_9_26[6.3,] 
@@ -492,8 +492,8 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_29 
-		 2: COPY TYPE_StringLiteral def_%cl_9_30 
+		 1: COPY TYPE_StringLiteral "text_field" def_%cl_9_29 
+		 2: COPY TYPE_StringLiteral "30" def_%cl_9_30 
 		 3: HASH-class-maxlength- def_%cl_9_31 %cl_9_29[8.1,] %cl_9_30[8.2,] 
 		 4: form->text_field def_%cl_9_32 form[2.2,] %cl_9_31[8.3,] 	 ARGS:Symbol,%cl_9_31,
 		 5: COPY TYPE_PASS def_%cl_9_5 %cl_9_32[8.4,] 
@@ -502,21 +502,21 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_33 
+		 1: COPY TYPE_StringLiteral "settings.profile.street_address" def_%cl_9_33 
 		 2: %self->t def_%cl_9_34 %self[2.0,] %cl_9_33[9.1,] 	 ARGS:%cl_9_33,
-		 3: COPY TYPE_StringLiteral def_%cl_9_35 
+		 3: COPY TYPE_StringLiteral "inline" def_%cl_9_35 
 		 4: HASH-class- def_%cl_9_36 %cl_9_35[9.3,] 
 		 5: form->label def_%cl_9_37 form[2.2,] %cl_9_34[9.2,] %cl_9_36[9.4,] 	 ARGS:Symbol,%cl_9_34,%cl_9_36,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_9_38 
+		 7: COPY TYPE_StringLiteral "settings.profile.default_in_listing" def_%cl_9_38 
 		 8: %self->t def_%cl_9_39 %self[9.2,2.0,] %cl_9_38[9.7,] 	 ARGS:%cl_9_38,
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_9_40 
-		 11: COPY TYPE_StringLiteral def_%cl_9_41 
+		 10: COPY TYPE_StringLiteral "text_field" def_%cl_9_40 
+		 11: COPY TYPE_StringLiteral "timed_input(this)" def_%cl_9_41 
 		 12: HASH-class-onkeyup- def_%cl_9_42 %cl_9_40[9.10,] %cl_9_41[9.11,] 
 		 13: form->text_field def_%cl_9_43 form[9.5,2.2,] %cl_9_42[9.12,] 	 ARGS:Symbol,%cl_9_42,
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%cl_9_44 
+		 15: COPY TYPE_StringLiteral "settings.profile.location_description" def_%cl_9_44 
 		 16: %self->t def_%cl_9_45 %self[9.2,9.8,2.0,] %cl_9_44[9.15,] 	 ARGS:%cl_9_44,
 		 17: 
 		 18: %self->content_for def_%cl_9_46 %self[9.2,9.8,9.16,2.0,] %self[9.2,9.8,9.16,2.0,] 	 ARGS:Symbol,%self,
@@ -540,35 +540,35 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_9_47 
+		 20: COPY TYPE_StringLiteral "settings.profile.phone_number" def_%cl_9_47 
 		 21: %self->t def_%cl_9_48 %self[9.2,9.8,9.16,9.18,2.0,] %cl_9_47[9.20,] 	 ARGS:%cl_9_47,
-		 22: COPY TYPE_StringLiteral def_%cl_9_49 
+		 22: COPY TYPE_StringLiteral "inline" def_%cl_9_49 
 		 23: HASH-class- def_%cl_9_50 %cl_9_49[9.22,] 
 		 24: form->label def_%cl_9_51 form[9.5,9.13,2.2,] %cl_9_48[9.21,] %cl_9_50[9.23,] 	 ARGS:Symbol,%cl_9_48,%cl_9_50,
 		 25: 
-		 26: COPY TYPE_StringLiteral def_%cl_9_52 
+		 26: COPY TYPE_StringLiteral "settings.profile.invisible" def_%cl_9_52 
 		 27: %self->t def_%cl_9_53 %self[9.2,9.8,9.16,9.18,9.21,2.0,] %cl_9_52[9.26,] 	 ARGS:%cl_9_52,
 		 28: 
-		 29: COPY TYPE_StringLiteral def_%cl_9_54 
-		 30: COPY TYPE_StringLiteral def_%cl_9_55 
+		 29: COPY TYPE_StringLiteral "text_field" def_%cl_9_54 
+		 30: COPY TYPE_StringLiteral "25" def_%cl_9_55 
 		 31: HASH-class-maxlength- def_%cl_9_56 %cl_9_54[9.29,] %cl_9_55[9.30,] 
 		 32: form->text_field def_%cl_9_57 form[9.5,9.13,9.24,2.2,] %cl_9_56[9.31,] 	 ARGS:Symbol,%cl_9_56,
 		 33: 
-		 34: COPY TYPE_StringLiteral def_%cl_9_58 
+		 34: COPY TYPE_StringLiteral "settings.profile.profile_picture" def_%cl_9_58 
 		 35: %self->t def_%cl_9_59 %self[9.2,9.8,9.16,9.18,9.21,9.27,2.0,] %cl_9_58[9.34,] 	 ARGS:%cl_9_58,
 		 36: form->label def_%cl_9_60 form[9.5,9.13,9.24,9.32,2.2,] %cl_9_59[9.35,] 	 ARGS:Symbol,%cl_9_59,
 		 37: 
-		 38: COPY TYPE_StringLiteral def_%cl_9_61 
+		 38: COPY TYPE_StringLiteral "avatar_file" def_%cl_9_61 
 		 39: HASH-size-id- def_%cl_9_62 %cl_9_61[9.38,] 
 		 40: form->file_field def_%cl_9_63 form[9.5,9.13,9.24,9.32,9.36,2.2,] %cl_9_62[9.39,] 	 ARGS:Symbol,%cl_9_62,
 		 41: 
-		 42: COPY TYPE_StringLiteral def_%cl_9_64 
+		 42: COPY TYPE_StringLiteral "settings.profile.about_you" def_%cl_9_64 
 		 43: %self->t def_%cl_9_65 %self[9.2,9.8,9.16,9.18,9.21,9.27,9.35,2.0,] %cl_9_64[9.42,] 	 ARGS:%cl_9_64,
-		 44: COPY TYPE_StringLiteral def_%cl_9_66 
+		 44: COPY TYPE_StringLiteral "input" def_%cl_9_66 
 		 45: HASH-class- def_%cl_9_67 %cl_9_66[9.44,] 
 		 46: form->label def_%cl_9_68 form[9.5,9.13,9.24,9.32,9.36,9.40,2.2,] %cl_9_65[9.43,] %cl_9_67[9.45,] 	 ARGS:Symbol,%cl_9_65,%cl_9_67,
 		 47: 
-		 48: COPY TYPE_StringLiteral def_%cl_9_69 
+		 48: COPY TYPE_StringLiteral "update_profile_description_text_area" def_%cl_9_69 
 		 49: HASH-class- def_%cl_9_70 %cl_9_69[9.48,] 
 		 50: form->text_area def_%cl_9_71 form[9.5,9.13,9.24,9.32,9.36,9.40,9.46,2.2,] %cl_9_70[9.49,] 	 ARGS:Symbol,%cl_9_70,
 		 51: 
@@ -616,7 +616,7 @@ BB 3
 		 22: HASH-value- def_%cl_11_21 %cl_11_20[3.21,] 
 		 23: loc->hidden_field def_%cl_11_22 loc[3.5,3.11,3.17,2.2,] %cl_11_21[3.22,] 	 ARGS:Symbol,%cl_11_21,
 		 24: 
-		 25: COPY TYPE_StringLiteral def_%cl_11_23 
+		 25: COPY TYPE_StringLiteral "person" def_%cl_11_23 
 		 26: HASH-value- def_%cl_11_24 %cl_11_23[3.25,] 
 		 27: loc->hidden_field def_%cl_11_25 loc[3.5,3.11,3.17,3.23,2.2,] %cl_11_24[3.26,] 	 ARGS:Symbol,%cl_11_24,
 		 28: RETURN %cl_11_25[3.27,] %self[2.0,] 
@@ -633,9 +633,9 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 53: 
-		 54: COPY TYPE_StringLiteral def_%cl_9_73 
+		 54: COPY TYPE_StringLiteral "settings.save_information" def_%cl_9_73 
 		 55: %self->t def_%cl_9_74 %self[9.2,9.8,9.16,9.18,9.21,9.27,9.35,9.43,2.0,] %cl_9_73[9.54,] 	 ARGS:%cl_9_73,
-		 56: COPY TYPE_StringLiteral def_%cl_9_75 
+		 56: COPY TYPE_StringLiteral "send_button" def_%cl_9_75 
 		 57: HASH-class- def_%cl_9_76 %cl_9_75[9.56,] 
 		 58: form->button def_%cl_9_77 form[9.5,9.13,9.24,9.32,9.36,9.40,9.46,9.50,9.52,2.2,] %cl_9_74[9.55,] %cl_9_76[9.57,] 	 ARGS:%cl_9_74,%cl_9_76,
 		 59: RETURN %cl_9_77[9.58,] %self[9.2,9.8,9.16,9.18,9.21,9.27,9.35,9.43,9.55,2.0,] 
@@ -667,7 +667,7 @@ CLOSURE END:
 		 2: 
 		 3: %self->params def_%cl_1_40 %self[15.1,2.0,] 	 ARGS:
 		 4: %cl_1_40->[] def_%cl_1_41 %cl_1_40[15.3,] 	 ARGS:Symbol,
-		 5: COPY TYPE_StringLiteral def_%cl_1_42 
+		 5: COPY TYPE_StringLiteral "homepage" def_%cl_1_42 
 		 6: %cl_1_41->== def_%cl_1_43 %cl_1_41[15.4,] %cl_1_42[15.5,] 	 ARGS:%cl_1_42,
 		 7: BRANCH %cl_1_43[15.6,] 
 BB 16
@@ -676,7 +676,7 @@ BB 16
 	instructions:
 		 0: %self->params def_%cl_1_44 %self[2.0,] 	 ARGS:
 		 1: %cl_1_44->[] def_%cl_1_45 %cl_1_44[16.0,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%cl_1_46 
+		 2: COPY TYPE_StringLiteral "index" def_%cl_1_46 
 		 3: %cl_1_45->== def_%cl_1_47 %cl_1_45[16.1,] %cl_1_46[16.2,] 	 ARGS:%cl_1_46,
 		 4: COPY TYPE_PASS def_%cl_1_43 %cl_1_47[16.3,] 
 BB 17
@@ -690,11 +690,11 @@ BB 18
 	instructions:
 		 0: 
 		 1: %self->params def_%cl_1_48 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_49 
-		 3: COPY TYPE_StringLiteral def_%cl_1_50 
-		 4: COPY TYPE_StringLiteral def_%cl_1_51 
-		 5: COPY TYPE_StringLiteral def_%cl_1_52 
-		 6: COPY TYPE_StringLiteral def_%cl_1_53 
+		 2: COPY TYPE_StringLiteral "action" def_%cl_1_49 
+		 3: COPY TYPE_StringLiteral "controller" def_%cl_1_50 
+		 4: COPY TYPE_StringLiteral "q" def_%cl_1_51 
+		 5: COPY TYPE_StringLiteral "view" def_%cl_1_52 
+		 6: COPY TYPE_StringLiteral "utf8" def_%cl_1_53 
 		 7: %cl_1_48->except def_%cl_1_54 %cl_1_48[18.1,] %cl_1_49[18.2,] %cl_1_50[18.3,] %cl_1_51[18.4,] %cl_1_52[18.5,] %cl_1_53[18.6,] 	 ARGS:%cl_1_49,%cl_1_50,%cl_1_51,%cl_1_52,%cl_1_53,
 		 8: %cl_1_54->each def_%cl_1_55 %cl_1_54[18.7,] %self[18.1,2.0,] 	 ARGS:%cl_1_54,
 CLOSURE BEGIN: param[] %self[18.1,2.0,] value[18.8,] 
@@ -782,7 +782,7 @@ BB 15
 	instructions:
 CLOSURE END: param[2.2,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_1_56 
+		 10: COPY TYPE_StringLiteral "view" def_%cl_1_56 
 		 11: GETFIELD %self->view_type def_%cl_1_57 %self[18.1,2.0,] 
 		 12: %self->hidden_field_tag def_%cl_1_58 %self[18.1,2.0,] %cl_1_56[18.10,] %cl_1_57[18.11,] 	 ARGS:%cl_1_56,%cl_1_57,
 		 13: 
@@ -808,19 +808,19 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_63 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['_setAccount', '" def_%cl_1_63 
 		 2: (APP_CONFIG) def_%cl_1_64 
 		 3: %cl_1_64->google_analytics_key def_%cl_1_65 %cl_1_64[21.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_66 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_1_66 
 		 5: BUILDSTRING def_%cl_1_67 %cl_1_63[21.1,] %cl_1_65[21.3,] %cl_1_66[21.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_1_68 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['_setDomainName', '." def_%cl_1_68 
 		 8: (PublicSuffix) def_%cl_1_69 
 		 9: %self->request def_%cl_1_70 %self[2.0,] 	 ARGS:
 		 10: %cl_1_70->host def_%cl_1_71 %cl_1_70[21.9,] 	 ARGS:
 		 11: %cl_1_69->parse def_%cl_1_72 %cl_1_69[21.8,] %cl_1_71[21.10,] 	 ARGS:%cl_1_71,
 		 12: %cl_1_72->domain def_%cl_1_73 %cl_1_72[21.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_1_74 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_1_74 
 		 14: BUILDSTRING def_%cl_1_75 %cl_1_68[21.7,] %cl_1_73[21.12,] %cl_1_74[21.13,] 
 		 15: 
 		 16: GETFIELD %self->current_community def_%cl_1_76 %self[21.9,2.0,] 
@@ -842,36 +842,36 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_79 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['b._setAccount', '" def_%cl_1_79 
 		 2: GETFIELD %self->current_community def_%cl_1_80 %self[2.0,] 
 		 3: %cl_1_80->google_analytics_key def_%cl_1_81 %cl_1_80[24.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_82 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_1_82 
 		 5: BUILDSTRING def_%cl_1_83 %cl_1_79[24.1,] %cl_1_81[24.3,] %cl_1_82[24.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_1_84 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['b._setDomainName', '." def_%cl_1_84 
 		 8: (PublicSuffix) def_%cl_1_85 
 		 9: %self->request def_%cl_1_86 %self[2.0,] 	 ARGS:
 		 10: %cl_1_86->host def_%cl_1_87 %cl_1_86[24.9,] 	 ARGS:
 		 11: %cl_1_85->parse def_%cl_1_88 %cl_1_85[24.8,] %cl_1_87[24.10,] 	 ARGS:%cl_1_87,
 		 12: %cl_1_88->domain def_%cl_1_89 %cl_1_88[24.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_1_90 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_1_90 
 		 14: BUILDSTRING def_%cl_1_91 %cl_1_84[24.7,] %cl_1_89[24.12,] %cl_1_90[24.13,] 
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_1_92 
+		 16: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_1_92 
 		 17: GETFIELD %self->current_community def_%cl_1_93 %self[24.9,2.0,] 
 		 18: (I18n) def_%cl_1_94 
 		 19: %cl_1_94->locale def_%cl_1_95 %cl_1_94[24.18,] 	 ARGS:
 		 20: %cl_1_93->name def_%cl_1_96 %cl_1_93[24.17,] %cl_1_95[24.19,] 	 ARGS:%cl_1_95,
 		 21: %self->Maybe def_%cl_1_97 %self[24.9,2.0,] %cl_1_96[24.20,] 	 ARGS:%cl_1_96,
-		 22: COPY TYPE_StringLiteral def_%cl_1_98 
-		 23: COPY TYPE_StringLiteral def_%cl_1_99 
+		 22: COPY TYPE_StringLiteral "'" def_%cl_1_98 
+		 23: COPY TYPE_StringLiteral "" def_%cl_1_99 
 		 24: %cl_1_97->gsub def_%cl_1_100 %cl_1_97[24.21,] %cl_1_98[24.22,] %cl_1_99[24.23,] 	 ARGS:%cl_1_98,%cl_1_99,
-		 25: COPY TYPE_StringLiteral def_%cl_1_101 
+		 25: COPY TYPE_StringLiteral "" def_%cl_1_101 
 		 26: %cl_1_100->or_else def_%cl_1_102 %cl_1_100[24.24,] %cl_1_101[24.25,] 	 ARGS:%cl_1_101,
-		 27: COPY TYPE_StringLiteral def_%cl_1_103 
+		 27: COPY TYPE_StringLiteral "']);" def_%cl_1_103 
 		 28: BUILDSTRING def_%cl_1_104 %cl_1_92[24.16,] %cl_1_102[24.26,] %cl_1_103[24.27,] 
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_1_105 
+		 30: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_1_105 
 		 31: GETFIELD %self->current_community def_%cl_1_106 %self[24.9,24.21,2.0,] 
 		 32: %cl_1_106->domain def_%cl_1_107 %cl_1_106[24.31,] 	 ARGS:
 		 33: BRANCH %cl_1_107[24.32,] 
@@ -886,7 +886,7 @@ BB 26
 	outgoing: 28 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_110 
+		 0: COPY TYPE_StringLiteral "']);" def_%cl_1_110 
 		 1: BUILDSTRING def_%cl_1_111 %cl_1_105[24.30,] %cl_1_107[25.2,24.32,] %cl_1_110[26.0,] 
 		 2: 
 BB 27
@@ -911,7 +911,7 @@ BB 30
 		 0: 
 		 1: %self->content_for def_%cl_1_112 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_113 
+		 3: COPY TYPE_StringLiteral "application" def_%cl_1_113 
 		 4: %self->javascript_include_tag def_%cl_1_114 %self[30.1,2.0,] %cl_1_113[30.3,] 	 ARGS:%cl_1_113,
 		 5: 
 		 6: 
@@ -955,10 +955,10 @@ BB 36
 		 0: 
 		 1: %self->content_for def_%cl_1_121 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_122 
+		 3: COPY TYPE_StringLiteral "error_pages.no_javascript.javascript_is_disabled_in_your_browser" def_%cl_1_122 
 		 4: %self->t def_%cl_1_123 %self[36.1,2.0,] %cl_1_122[36.3,] 	 ARGS:%cl_1_122,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_1_124 
+		 6: COPY TYPE_StringLiteral "error_pages.no_javascript.kassi_does_not_currently_work_without_javascript" def_%cl_1_124 
 		 7: %self->t def_%cl_1_125 %self[36.1,36.4,2.0,] %cl_1_124[36.6,] 	 ARGS:%cl_1_124,
 		 8: RETURN %cl_1_125[36.7,] %self[36.1,36.4,36.7,2.0,] 
 BB 37
@@ -994,7 +994,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "account" def_%v_3 
 		 7: ATTRASSIGN %self->selected_left_navi_link %v_3[2.6,] 
 		 8: 
 		 9: GETFIELD %self->person def_%v_4 %self[2.0,] 
@@ -1086,7 +1086,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "notifications" def_%v_3 
 		 7: ATTRASSIGN %self->selected_left_navi_link %v_3[2.6,] 
 		 8: 
 		 9: %self->ruby_code_from_view def_%v_4 %self[2.0,2.7,] 	 ARGS:
@@ -1118,10 +1118,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral "_kms('//i.kissmetrics.com/i.js');_kms('" def_%cl_1_5 
 		 2: (APP_CONFIG) def_%cl_1_6 
 		 3: %cl_1_6->kissmetrics_url def_%cl_1_7 %cl_1_6[4.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_8 
+		 4: COPY TYPE_StringLiteral "');" def_%cl_1_8 
 		 5: BUILDSTRING def_%cl_1_9 %cl_1_5[4.1,] %cl_1_7[4.3,] %cl_1_8[4.4,] 
 		 6: 
 		 7: 
@@ -1131,10 +1131,10 @@ BB 5
 	outgoing: 7 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_11 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['identify', '" def_%cl_1_11 
 		 1: GETFIELD %self->current_user def_%cl_1_12 %self[2.0,] 
 		 2: %cl_1_12->id def_%cl_1_13 %cl_1_12[5.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_14 
+		 3: COPY TYPE_StringLiteral "']);" def_%cl_1_14 
 		 4: BUILDSTRING def_%cl_1_15 %cl_1_11[5.0,] %cl_1_13[5.2,] %cl_1_14[5.3,] 
 		 5: 
 BB 6
@@ -1154,10 +1154,10 @@ BB 8
 	outgoing: 10 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_17 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : '" def_%cl_1_17 
 		 1: GETFIELD %self->current_community def_%cl_1_18 %self[2.0,] 
 		 2: %cl_1_18->ident def_%cl_1_19 %cl_1_18[8.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_20 
+		 3: COPY TYPE_StringLiteral "'}]);" def_%cl_1_20 
 		 4: BUILDSTRING def_%cl_1_21 %cl_1_17[8.0,] %cl_1_19[8.2,] %cl_1_20[8.3,] 
 		 5: 
 BB 9
@@ -1165,7 +1165,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_22 
+		 1: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" def_%cl_1_22 
 		 2: COPY TYPE_PASS def_%cl_1_21 %cl_1_22[9.1,] 
 BB 10
 	outgoing: 12 
@@ -1215,21 +1215,21 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_28 
+		 3: COPY TYPE_StringLiteral "expiration.title" def_%cl_1_28 
 		 4: %self->t def_%cl_1_29 %self[13.1,2.0,] %cl_1_28[13.3,] 	 ARGS:%cl_1_28,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_1_30 
+		 6: COPY TYPE_StringLiteral "expiration.sub_title_new" def_%cl_1_30 
 		 7: %self->t def_%cl_1_31 %self[13.1,13.4,2.0,] %cl_1_30[13.6,] 	 ARGS:%cl_1_30,
 		 8: 
 		 9: %self->external_plan_service_login_url def_%cl_1_32 %self[13.1,13.4,13.7,2.0,] 	 ARGS:
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_1_33 
+		 11: COPY TYPE_StringLiteral "expiration.link_to_external_service" def_%cl_1_33 
 		 12: %self->t def_%cl_1_34 %self[13.1,13.4,13.7,13.9,2.0,] %cl_1_33[13.11,] 	 ARGS:%cl_1_33,
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_1_35 
+		 14: COPY TYPE_StringLiteral "expiration.need_more_info" def_%cl_1_35 
 		 15: %self->t def_%cl_1_36 %self[13.1,13.4,13.7,13.9,13.12,2.0,] %cl_1_35[13.14,] 	 ARGS:%cl_1_35,
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%cl_1_37 
+		 17: COPY TYPE_StringLiteral "expiration.contact_us" def_%cl_1_37 
 		 18: %self->t def_%cl_1_38 %self[13.1,13.4,13.7,13.9,13.12,13.15,2.0,] %cl_1_37[13.17,] 	 ARGS:%cl_1_37,
 		 19: 
 BB 14
@@ -1280,7 +1280,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_3 
+		 1: COPY TYPE_StringLiteral "layouts.no_tribe.settings" def_%cl_4_3 
 		 2: %self->t def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 ARGS:%cl_4_3,
 		 3: RETURN %cl_4_4[3.2,] %self[3.2,2.0,] 
 BB 4
@@ -1317,7 +1317,7 @@ BB 3
 		 0: 
 		 1: def_%cl_5_3 %cl_5_0[2.1,] 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_5_4 
+		 3: COPY TYPE_StringLiteral "layouts.no_tribe.settings" def_%cl_5_4 
 		 4: %self->t def_%cl_5_5 %self[2.0,] %cl_5_4[3.3,] 	 ARGS:%cl_5_4,
 		 5: RETURN %cl_5_5[3.4,] %self[3.4,2.0,] 
 BB 4
@@ -1333,9 +1333,9 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_3_5 
-		 6: COPY TYPE_StringLiteral def_%cl_3_6 
-		 7: COPY TYPE_StringLiteral def_%cl_3_7 
+		 5: COPY TYPE_StringLiteral "ss-check" def_%cl_3_5 
+		 6: COPY TYPE_StringLiteral "ss-info" def_%cl_3_6 
+		 7: COPY TYPE_StringLiteral "ss-alert" def_%cl_3_7 
 		 8: HASH-notice-warning-error- def_%cl_3_8 %cl_3_5[3.5,] %cl_3_6[3.6,] %cl_3_7[3.7,] 
 		 9: %cl_3_8->each def_%cl_3_9 %cl_3_8[3.8,] %self[3.1,3.3,2.0,] 	 ARGS:%cl_3_8,
 CLOSURE BEGIN: %self[3.1,3.3,2.0,] announcement[] 
@@ -1437,10 +1437,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_3 
+		 1: COPY TYPE_StringLiteral ".community_updates" def_%cl_8_3 
 		 2: %self->t def_%cl_8_4 %self[2.0,] %cl_8_3[3.1,] 	 ARGS:%cl_8_3,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_8_5 
+		 4: COPY TYPE_StringLiteral "person[min_days_between_community_updates]" def_%cl_8_5 
 		 5: %self->options def_%cl_8_6 %self[3.2,2.0,] 	 ARGS:
 		 6: %cl_8_6->[] def_%cl_8_7 %cl_8_6[3.5,] 	 ARGS:Fixnum,
 		 7: GETFIELD %self->person def_%cl_8_8 %self[3.2,3.5,2.0,] 
@@ -1455,24 +1455,24 @@ BB 3
 		 16: 
 		 17: %self->options def_%cl_8_17 %self[3.2,3.5,3.9,3.12,3.15,2.0,] 	 ARGS:
 		 18: %cl_8_17->[] def_%cl_8_18 %cl_8_17[3.17,] 	 ARGS:Fixnum,
-		 19: COPY TYPE_StringLiteral def_%cl_8_19 
+		 19: COPY TYPE_StringLiteral "settings.notifications." def_%cl_8_19 
 		 20: %self->options def_%cl_8_20 %self[3.2,3.5,3.9,3.12,3.15,3.17,2.0,] 	 ARGS:
 		 21: %cl_8_20->[] def_%cl_8_21 %cl_8_20[3.20,] 	 ARGS:Fixnum,
 		 22: BUILDSTRING def_%cl_8_22 %cl_8_19[3.19,] %cl_8_21[3.21,] 
 		 23: %self->t def_%cl_8_23 %self[3.2,3.5,3.9,3.12,3.15,3.17,3.20,2.0,] %cl_8_22[3.22,] 	 ARGS:%cl_8_22,
 		 24: %cl_8_23->html_safe def_%cl_8_24 %cl_8_23[3.23,] 	 ARGS:
-		 25: COPY TYPE_StringLiteral def_%cl_8_25 
+		 25: COPY TYPE_StringLiteral "radio" def_%cl_8_25 
 		 26: HASH-class- def_%cl_8_26 %cl_8_25[3.25,] 
 		 27: %self->label_tag def_%cl_8_27 %self[3.2,3.5,3.9,3.12,3.15,3.17,3.20,3.23,2.0,] %cl_8_18[3.18,] %cl_8_24[3.24,] %cl_8_26[3.26,] 	 ARGS:%cl_8_18,%cl_8_24,%cl_8_26,
 		 28: 
-		 29: COPY TYPE_StringLiteral def_%cl_8_28 
+		 29: COPY TYPE_StringLiteral ".newsletters" def_%cl_8_28 
 		 30: %self->t def_%cl_8_29 %self[3.2,3.5,3.9,3.12,3.15,3.17,3.20,3.23,3.27,2.0,] %cl_8_28[3.29,] 	 ARGS:%cl_8_28,
 		 31: 
-		 32: COPY TYPE_StringLiteral def_%cl_8_30 
+		 32: COPY TYPE_StringLiteral "person[preferences][" def_%cl_8_30 
 		 33: %self->notification_type def_%cl_8_31 %self[3.2,3.5,3.9,3.12,3.15,3.17,3.20,3.23,3.27,3.30,2.0,] 	 ARGS:
-		 34: COPY TYPE_StringLiteral def_%cl_8_32 
+		 34: COPY TYPE_StringLiteral "]" def_%cl_8_32 
 		 35: BUILDSTRING def_%cl_8_33 %cl_8_30[3.32,] %cl_8_31[3.33,] %cl_8_32[3.34,] 
-		 36: COPY TYPE_StringLiteral def_%cl_8_34 
+		 36: COPY TYPE_StringLiteral "true" def_%cl_8_34 
 		 37: GETFIELD %self->person def_%cl_8_35 %self[3.2,3.5,3.9,3.12,3.15,3.17,3.20,3.23,3.27,3.30,3.33,2.0,] 
 		 38: %cl_8_35->preferences def_%cl_8_36 %cl_8_35[3.37,] 	 ARGS:
 		 39: %self->notification_type def_%cl_8_37 %self[3.2,3.5,3.9,3.12,3.15,3.17,3.20,3.23,3.27,3.30,3.33,2.0,] 	 ARGS:
@@ -1498,20 +1498,20 @@ BB 6
 		 2: %self->check_box_tag def_%cl_8_42 %self[6.0,2.0,] %cl_8_33[3.35,] %cl_8_34[3.36,] %cl_8_39[5.0,4.0,] %cl_8_41[6.1,] 	 ARGS:%cl_8_33,%cl_8_34,%cl_8_39,%cl_8_41,
 		 3: 
 		 4: %self->notification_type def_%cl_8_43 %self[6.0,6.2,2.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_8_44 
+		 5: COPY TYPE_StringLiteral "settings.notifications." def_%cl_8_44 
 		 6: %self->notification_type def_%cl_8_45 %self[6.0,6.2,6.4,2.0,] 	 ARGS:
 		 7: BUILDSTRING def_%cl_8_46 %cl_8_44[6.5,] %cl_8_45[6.6,] 
 		 8: %self->t def_%cl_8_47 %self[6.0,6.2,6.4,6.6,2.0,] %cl_8_46[6.7,] 	 ARGS:%cl_8_46,
 		 9: %self->label_tag def_%cl_8_48 %self[6.0,6.2,6.4,6.6,6.8,2.0,] %cl_8_43[6.4,] %cl_8_47[6.8,] 	 ARGS:%cl_8_43,%cl_8_47,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_8_49 
+		 11: COPY TYPE_StringLiteral ".i_want_to_get_email_notification_when" def_%cl_8_49 
 		 12: %self->t def_%cl_8_50 %self[6.0,6.2,6.4,6.6,6.8,6.9,2.0,] %cl_8_49[6.11,] 	 ARGS:%cl_8_49,
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_8_51 
+		 14: COPY TYPE_StringLiteral "person[preferences][" def_%cl_8_51 
 		 15: %self->notification_type def_%cl_8_52 %self[6.0,6.2,6.4,6.6,6.8,6.9,6.12,2.0,] 	 ARGS:
-		 16: COPY TYPE_StringLiteral def_%cl_8_53 
+		 16: COPY TYPE_StringLiteral "]" def_%cl_8_53 
 		 17: BUILDSTRING def_%cl_8_54 %cl_8_51[6.14,] %cl_8_52[6.15,] %cl_8_53[6.16,] 
-		 18: COPY TYPE_StringLiteral def_%cl_8_55 
+		 18: COPY TYPE_StringLiteral "true" def_%cl_8_55 
 		 19: GETFIELD %self->person def_%cl_8_56 %self[6.0,6.2,6.4,6.6,6.8,6.9,6.12,6.15,2.0,] 
 		 20: %cl_8_56->preferences def_%cl_8_57 %cl_8_56[6.19,] 	 ARGS:
 		 21: %self->notification_type def_%cl_8_58 %self[6.0,6.2,6.4,6.6,6.8,6.9,6.12,6.15,2.0,] 	 ARGS:
@@ -1537,20 +1537,20 @@ BB 9
 		 2: %self->check_box_tag def_%cl_8_63 %self[9.0,2.0,] %cl_8_54[6.17,] %cl_8_55[6.18,] %cl_8_60[8.0,7.0,] %cl_8_62[9.1,] 	 ARGS:%cl_8_54,%cl_8_55,%cl_8_60,%cl_8_62,
 		 3: 
 		 4: %self->notification_type def_%cl_8_64 %self[9.0,9.2,2.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_8_65 
+		 5: COPY TYPE_StringLiteral "settings.notifications." def_%cl_8_65 
 		 6: %self->notification_type def_%cl_8_66 %self[9.0,9.2,9.4,2.0,] 	 ARGS:
 		 7: BUILDSTRING def_%cl_8_67 %cl_8_65[9.5,] %cl_8_66[9.6,] 
 		 8: %self->t def_%cl_8_68 %self[9.0,9.2,9.4,9.6,2.0,] %cl_8_67[9.7,] 	 ARGS:%cl_8_67,
 		 9: %self->label_tag def_%cl_8_69 %self[9.0,9.2,9.4,9.6,9.8,2.0,] %cl_8_64[9.4,] %cl_8_68[9.8,] 	 ARGS:%cl_8_64,%cl_8_68,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_8_70 
-		 12: COPY TYPE_StringLiteral def_%cl_8_71 
+		 11: COPY TYPE_StringLiteral "preferences[temp]" def_%cl_8_70 
+		 12: COPY TYPE_StringLiteral "temp" def_%cl_8_71 
 		 13: HASH-value- def_%cl_8_72 %cl_8_71[9.12,] 
 		 14: form->hidden_field def_%cl_8_73 form[2.2,] %cl_8_70[9.11,] %cl_8_72[9.13,] 	 ARGS:%cl_8_70,%cl_8_72,
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_8_74 
+		 16: COPY TYPE_StringLiteral "settings.save_information" def_%cl_8_74 
 		 17: %self->t def_%cl_8_75 %self[9.0,9.2,9.4,9.6,9.8,9.9,2.0,] %cl_8_74[9.16,] 	 ARGS:%cl_8_74,
-		 18: COPY TYPE_StringLiteral def_%cl_8_76 
+		 18: COPY TYPE_StringLiteral "send_button_notifications" def_%cl_8_76 
 		 19: HASH-class- def_%cl_8_77 %cl_8_76[9.18,] 
 		 20: form->button def_%cl_8_78 form[9.14,2.2,] %cl_8_75[9.17,] %cl_8_77[9.19,] 	 ARGS:%cl_8_75,%cl_8_77,
 		 21: RETURN %cl_8_78[9.20,] %self[9.0,9.2,9.4,9.6,9.8,9.9,9.17,2.0,] 
@@ -1582,7 +1582,7 @@ CLOSURE END:
 		 2: 
 		 3: %self->params def_%cl_1_40 %self[15.1,2.0,] 	 ARGS:
 		 4: %cl_1_40->[] def_%cl_1_41 %cl_1_40[15.3,] 	 ARGS:Symbol,
-		 5: COPY TYPE_StringLiteral def_%cl_1_42 
+		 5: COPY TYPE_StringLiteral "homepage" def_%cl_1_42 
 		 6: %cl_1_41->== def_%cl_1_43 %cl_1_41[15.4,] %cl_1_42[15.5,] 	 ARGS:%cl_1_42,
 		 7: BRANCH %cl_1_43[15.6,] 
 BB 16
@@ -1591,7 +1591,7 @@ BB 16
 	instructions:
 		 0: %self->params def_%cl_1_44 %self[2.0,] 	 ARGS:
 		 1: %cl_1_44->[] def_%cl_1_45 %cl_1_44[16.0,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%cl_1_46 
+		 2: COPY TYPE_StringLiteral "index" def_%cl_1_46 
 		 3: %cl_1_45->== def_%cl_1_47 %cl_1_45[16.1,] %cl_1_46[16.2,] 	 ARGS:%cl_1_46,
 		 4: COPY TYPE_PASS def_%cl_1_43 %cl_1_47[16.3,] 
 BB 17
@@ -1605,11 +1605,11 @@ BB 18
 	instructions:
 		 0: 
 		 1: %self->params def_%cl_1_48 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_49 
-		 3: COPY TYPE_StringLiteral def_%cl_1_50 
-		 4: COPY TYPE_StringLiteral def_%cl_1_51 
-		 5: COPY TYPE_StringLiteral def_%cl_1_52 
-		 6: COPY TYPE_StringLiteral def_%cl_1_53 
+		 2: COPY TYPE_StringLiteral "action" def_%cl_1_49 
+		 3: COPY TYPE_StringLiteral "controller" def_%cl_1_50 
+		 4: COPY TYPE_StringLiteral "q" def_%cl_1_51 
+		 5: COPY TYPE_StringLiteral "view" def_%cl_1_52 
+		 6: COPY TYPE_StringLiteral "utf8" def_%cl_1_53 
 		 7: %cl_1_48->except def_%cl_1_54 %cl_1_48[18.1,] %cl_1_49[18.2,] %cl_1_50[18.3,] %cl_1_51[18.4,] %cl_1_52[18.5,] %cl_1_53[18.6,] 	 ARGS:%cl_1_49,%cl_1_50,%cl_1_51,%cl_1_52,%cl_1_53,
 		 8: %cl_1_54->each def_%cl_1_55 %cl_1_54[18.7,] %self[18.1,2.0,] 	 ARGS:%cl_1_54,
 CLOSURE BEGIN: param[] %self[18.1,2.0,] value[18.8,] 
@@ -1697,7 +1697,7 @@ BB 15
 	instructions:
 CLOSURE END: param[2.2,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_1_56 
+		 10: COPY TYPE_StringLiteral "view" def_%cl_1_56 
 		 11: GETFIELD %self->view_type def_%cl_1_57 %self[18.1,2.0,] 
 		 12: %self->hidden_field_tag def_%cl_1_58 %self[18.1,2.0,] %cl_1_56[18.10,] %cl_1_57[18.11,] 	 ARGS:%cl_1_56,%cl_1_57,
 		 13: 
@@ -1723,19 +1723,19 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_63 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['_setAccount', '" def_%cl_1_63 
 		 2: (APP_CONFIG) def_%cl_1_64 
 		 3: %cl_1_64->google_analytics_key def_%cl_1_65 %cl_1_64[21.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_66 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_1_66 
 		 5: BUILDSTRING def_%cl_1_67 %cl_1_63[21.1,] %cl_1_65[21.3,] %cl_1_66[21.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_1_68 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['_setDomainName', '." def_%cl_1_68 
 		 8: (PublicSuffix) def_%cl_1_69 
 		 9: %self->request def_%cl_1_70 %self[2.0,] 	 ARGS:
 		 10: %cl_1_70->host def_%cl_1_71 %cl_1_70[21.9,] 	 ARGS:
 		 11: %cl_1_69->parse def_%cl_1_72 %cl_1_69[21.8,] %cl_1_71[21.10,] 	 ARGS:%cl_1_71,
 		 12: %cl_1_72->domain def_%cl_1_73 %cl_1_72[21.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_1_74 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_1_74 
 		 14: BUILDSTRING def_%cl_1_75 %cl_1_68[21.7,] %cl_1_73[21.12,] %cl_1_74[21.13,] 
 		 15: 
 		 16: GETFIELD %self->current_community def_%cl_1_76 %self[21.9,2.0,] 
@@ -1757,36 +1757,36 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_79 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['b._setAccount', '" def_%cl_1_79 
 		 2: GETFIELD %self->current_community def_%cl_1_80 %self[2.0,] 
 		 3: %cl_1_80->google_analytics_key def_%cl_1_81 %cl_1_80[24.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_82 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_1_82 
 		 5: BUILDSTRING def_%cl_1_83 %cl_1_79[24.1,] %cl_1_81[24.3,] %cl_1_82[24.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_1_84 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['b._setDomainName', '." def_%cl_1_84 
 		 8: (PublicSuffix) def_%cl_1_85 
 		 9: %self->request def_%cl_1_86 %self[2.0,] 	 ARGS:
 		 10: %cl_1_86->host def_%cl_1_87 %cl_1_86[24.9,] 	 ARGS:
 		 11: %cl_1_85->parse def_%cl_1_88 %cl_1_85[24.8,] %cl_1_87[24.10,] 	 ARGS:%cl_1_87,
 		 12: %cl_1_88->domain def_%cl_1_89 %cl_1_88[24.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_1_90 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_1_90 
 		 14: BUILDSTRING def_%cl_1_91 %cl_1_84[24.7,] %cl_1_89[24.12,] %cl_1_90[24.13,] 
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_1_92 
+		 16: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_1_92 
 		 17: GETFIELD %self->current_community def_%cl_1_93 %self[24.9,2.0,] 
 		 18: (I18n) def_%cl_1_94 
 		 19: %cl_1_94->locale def_%cl_1_95 %cl_1_94[24.18,] 	 ARGS:
 		 20: %cl_1_93->name def_%cl_1_96 %cl_1_93[24.17,] %cl_1_95[24.19,] 	 ARGS:%cl_1_95,
 		 21: %self->Maybe def_%cl_1_97 %self[24.9,2.0,] %cl_1_96[24.20,] 	 ARGS:%cl_1_96,
-		 22: COPY TYPE_StringLiteral def_%cl_1_98 
-		 23: COPY TYPE_StringLiteral def_%cl_1_99 
+		 22: COPY TYPE_StringLiteral "'" def_%cl_1_98 
+		 23: COPY TYPE_StringLiteral "" def_%cl_1_99 
 		 24: %cl_1_97->gsub def_%cl_1_100 %cl_1_97[24.21,] %cl_1_98[24.22,] %cl_1_99[24.23,] 	 ARGS:%cl_1_98,%cl_1_99,
-		 25: COPY TYPE_StringLiteral def_%cl_1_101 
+		 25: COPY TYPE_StringLiteral "" def_%cl_1_101 
 		 26: %cl_1_100->or_else def_%cl_1_102 %cl_1_100[24.24,] %cl_1_101[24.25,] 	 ARGS:%cl_1_101,
-		 27: COPY TYPE_StringLiteral def_%cl_1_103 
+		 27: COPY TYPE_StringLiteral "']);" def_%cl_1_103 
 		 28: BUILDSTRING def_%cl_1_104 %cl_1_92[24.16,] %cl_1_102[24.26,] %cl_1_103[24.27,] 
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_1_105 
+		 30: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_1_105 
 		 31: GETFIELD %self->current_community def_%cl_1_106 %self[24.9,24.21,2.0,] 
 		 32: %cl_1_106->domain def_%cl_1_107 %cl_1_106[24.31,] 	 ARGS:
 		 33: BRANCH %cl_1_107[24.32,] 
@@ -1801,7 +1801,7 @@ BB 26
 	outgoing: 28 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_110 
+		 0: COPY TYPE_StringLiteral "']);" def_%cl_1_110 
 		 1: BUILDSTRING def_%cl_1_111 %cl_1_105[24.30,] %cl_1_107[25.2,24.32,] %cl_1_110[26.0,] 
 		 2: 
 BB 27
@@ -1826,7 +1826,7 @@ BB 30
 		 0: 
 		 1: %self->content_for def_%cl_1_112 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_113 
+		 3: COPY TYPE_StringLiteral "application" def_%cl_1_113 
 		 4: %self->javascript_include_tag def_%cl_1_114 %self[30.1,2.0,] %cl_1_113[30.3,] 	 ARGS:%cl_1_113,
 		 5: 
 		 6: 
@@ -1870,10 +1870,10 @@ BB 36
 		 0: 
 		 1: %self->content_for def_%cl_1_121 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_122 
+		 3: COPY TYPE_StringLiteral "error_pages.no_javascript.javascript_is_disabled_in_your_browser" def_%cl_1_122 
 		 4: %self->t def_%cl_1_123 %self[36.1,2.0,] %cl_1_122[36.3,] 	 ARGS:%cl_1_122,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_1_124 
+		 6: COPY TYPE_StringLiteral "error_pages.no_javascript.kassi_does_not_currently_work_without_javascript" def_%cl_1_124 
 		 7: %self->t def_%cl_1_125 %self[36.1,36.4,2.0,] %cl_1_124[36.6,] 	 ARGS:%cl_1_124,
 		 8: RETURN %cl_1_125[36.7,] %self[36.1,36.4,36.7,2.0,] 
 BB 37
@@ -1909,7 +1909,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "payments" def_%v_3 
 		 7: ATTRASSIGN %self->selected_left_navi_link %v_3[2.6,] 
 		 8: RETURN %v_3[2.6,] %self[2.0,2.7,] 
 BB 3
@@ -1975,7 +1975,7 @@ BB 7
 		 0: 
 		 1: %self->params def_%v_16 %self[2.0,2.10,] 	 ARGS:
 		 2: %v_16->[] def_%v_17 %v_16[7.1,] 	 ARGS:Symbol,
-		 3: COPY TYPE_StringLiteral def_%v_18 
+		 3: COPY TYPE_StringLiteral "community_updates" def_%v_18 
 		 4: %v_17->== def_%v_19 %v_17[7.2,] %v_18[7.3,] 	 ARGS:%v_18,
 		 5: BRANCH %v_19[7.4,] 
 BB 8
@@ -2095,10 +2095,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral "_kms('//i.kissmetrics.com/i.js');_kms('" def_%cl_1_5 
 		 2: (APP_CONFIG) def_%cl_1_6 
 		 3: %cl_1_6->kissmetrics_url def_%cl_1_7 %cl_1_6[4.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_8 
+		 4: COPY TYPE_StringLiteral "');" def_%cl_1_8 
 		 5: BUILDSTRING def_%cl_1_9 %cl_1_5[4.1,] %cl_1_7[4.3,] %cl_1_8[4.4,] 
 		 6: 
 		 7: 
@@ -2108,10 +2108,10 @@ BB 5
 	outgoing: 7 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_11 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['identify', '" def_%cl_1_11 
 		 1: GETFIELD %self->current_user def_%cl_1_12 %self[2.0,] 
 		 2: %cl_1_12->id def_%cl_1_13 %cl_1_12[5.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_14 
+		 3: COPY TYPE_StringLiteral "']);" def_%cl_1_14 
 		 4: BUILDSTRING def_%cl_1_15 %cl_1_11[5.0,] %cl_1_13[5.2,] %cl_1_14[5.3,] 
 		 5: 
 BB 6
@@ -2131,10 +2131,10 @@ BB 8
 	outgoing: 10 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_17 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : '" def_%cl_1_17 
 		 1: GETFIELD %self->current_community def_%cl_1_18 %self[2.0,] 
 		 2: %cl_1_18->ident def_%cl_1_19 %cl_1_18[8.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_20 
+		 3: COPY TYPE_StringLiteral "'}]);" def_%cl_1_20 
 		 4: BUILDSTRING def_%cl_1_21 %cl_1_17[8.0,] %cl_1_19[8.2,] %cl_1_20[8.3,] 
 		 5: 
 BB 9
@@ -2142,7 +2142,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_22 
+		 1: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" def_%cl_1_22 
 		 2: COPY TYPE_PASS def_%cl_1_21 %cl_1_22[9.1,] 
 BB 10
 	outgoing: 12 
@@ -2192,21 +2192,21 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_28 
+		 3: COPY TYPE_StringLiteral "expiration.title" def_%cl_1_28 
 		 4: %self->t def_%cl_1_29 %self[13.1,2.0,] %cl_1_28[13.3,] 	 ARGS:%cl_1_28,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_1_30 
+		 6: COPY TYPE_StringLiteral "expiration.sub_title_new" def_%cl_1_30 
 		 7: %self->t def_%cl_1_31 %self[13.1,13.4,2.0,] %cl_1_30[13.6,] 	 ARGS:%cl_1_30,
 		 8: 
 		 9: %self->external_plan_service_login_url def_%cl_1_32 %self[13.1,13.4,13.7,2.0,] 	 ARGS:
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_1_33 
+		 11: COPY TYPE_StringLiteral "expiration.link_to_external_service" def_%cl_1_33 
 		 12: %self->t def_%cl_1_34 %self[13.1,13.4,13.7,13.9,2.0,] %cl_1_33[13.11,] 	 ARGS:%cl_1_33,
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_1_35 
+		 14: COPY TYPE_StringLiteral "expiration.need_more_info" def_%cl_1_35 
 		 15: %self->t def_%cl_1_36 %self[13.1,13.4,13.7,13.9,13.12,2.0,] %cl_1_35[13.14,] 	 ARGS:%cl_1_35,
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%cl_1_37 
+		 17: COPY TYPE_StringLiteral "expiration.contact_us" def_%cl_1_37 
 		 18: %self->t def_%cl_1_38 %self[13.1,13.4,13.7,13.9,13.12,13.15,2.0,] %cl_1_37[13.17,] 	 ARGS:%cl_1_37,
 		 19: 
 BB 14
@@ -2308,9 +2308,9 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_3_5 
-		 6: COPY TYPE_StringLiteral def_%cl_3_6 
-		 7: COPY TYPE_StringLiteral def_%cl_3_7 
+		 5: COPY TYPE_StringLiteral "ss-check" def_%cl_3_5 
+		 6: COPY TYPE_StringLiteral "ss-info" def_%cl_3_6 
+		 7: COPY TYPE_StringLiteral "ss-alert" def_%cl_3_7 
 		 8: HASH-notice-warning-error- def_%cl_3_8 %cl_3_5[3.5,] %cl_3_6[3.6,] %cl_3_7[3.7,] 
 		 9: %cl_3_8->each def_%cl_3_9 %cl_3_8[3.8,] %self[3.1,3.3,2.0,] 	 ARGS:%cl_3_8,
 CLOSURE BEGIN: %self[3.1,3.3,2.0,] announcement[] 
@@ -2377,18 +2377,18 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_11 
+		 0: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_succesful" def_%cl_3_11 
 		 1: %self->t def_%cl_3_12 %self[2.0,] %cl_3_11[4.0,] 	 ARGS:%cl_3_11,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_3_13 
-		 4: COPY TYPE_StringLiteral def_%cl_3_14 
+		 3: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_info_text" def_%cl_3_13 
+		 4: COPY TYPE_StringLiteral "settings.notifications.settings_link" def_%cl_3_14 
 		 5: %self->t def_%cl_3_15 %self[4.1,2.0,] %cl_3_14[4.4,] 	 ARGS:%cl_3_14,
 		 6: GETFIELD %self->person_to_unsubscribe def_%cl_3_16 %self[4.1,4.5,2.0,] 
 		 7: %cl_3_16->id def_%cl_3_17 %cl_3_16[4.6,] 	 ARGS:
 		 8: HASH-person_id- def_%cl_3_18 %cl_3_17[4.7,] 
 		 9: %self->notifications_person_settings_path def_%cl_3_19 %self[4.1,4.5,2.0,] %cl_3_18[4.8,] 	 ARGS:%cl_3_18,
 		 10: %self->link_to def_%cl_3_20 %self[4.1,4.5,4.9,2.0,] %cl_3_15[4.5,] %cl_3_19[4.9,] 	 ARGS:%cl_3_15,%cl_3_19,
-		 11: COPY TYPE_StringLiteral def_%cl_3_21 
+		 11: COPY TYPE_StringLiteral "settings.notifications.homepage_link" def_%cl_3_21 
 		 12: %self->t def_%cl_3_22 %self[4.1,4.5,4.9,4.10,2.0,] %cl_3_21[4.11,] 	 ARGS:%cl_3_21,
 		 13: %self->root_path def_%cl_3_23 %self[4.1,4.5,4.9,4.10,4.12,2.0,] 	 ARGS:
 		 14: %self->link_to def_%cl_3_24 %self[4.1,4.5,4.9,4.10,4.12,4.13,2.0,] %cl_3_22[4.12,] %cl_3_23[4.13,] 	 ARGS:%cl_3_22,%cl_3_23,
@@ -2401,10 +2401,10 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_28 
+		 1: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_unsuccesful" def_%cl_3_28 
 		 2: %self->t def_%cl_3_29 %self[2.0,] %cl_3_28[5.1,] 	 ARGS:%cl_3_28,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_3_30 
+		 4: COPY TYPE_StringLiteral "settings.notifications.unsuccessful_unsubscribe_info_text" def_%cl_3_30 
 		 5: %self->t def_%cl_3_31 %self[5.2,2.0,] %cl_3_30[5.4,] 	 ARGS:%cl_3_30,
 		 6: RETURN %cl_3_31[5.5,] %self[5.2,5.5,2.0,] 
 BB 6
@@ -2427,7 +2427,7 @@ CLOSURE END:
 		 2: 
 		 3: %self->params def_%cl_1_40 %self[15.1,2.0,] 	 ARGS:
 		 4: %cl_1_40->[] def_%cl_1_41 %cl_1_40[15.3,] 	 ARGS:Symbol,
-		 5: COPY TYPE_StringLiteral def_%cl_1_42 
+		 5: COPY TYPE_StringLiteral "homepage" def_%cl_1_42 
 		 6: %cl_1_41->== def_%cl_1_43 %cl_1_41[15.4,] %cl_1_42[15.5,] 	 ARGS:%cl_1_42,
 		 7: BRANCH %cl_1_43[15.6,] 
 BB 16
@@ -2436,7 +2436,7 @@ BB 16
 	instructions:
 		 0: %self->params def_%cl_1_44 %self[2.0,] 	 ARGS:
 		 1: %cl_1_44->[] def_%cl_1_45 %cl_1_44[16.0,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%cl_1_46 
+		 2: COPY TYPE_StringLiteral "index" def_%cl_1_46 
 		 3: %cl_1_45->== def_%cl_1_47 %cl_1_45[16.1,] %cl_1_46[16.2,] 	 ARGS:%cl_1_46,
 		 4: COPY TYPE_PASS def_%cl_1_43 %cl_1_47[16.3,] 
 BB 17
@@ -2450,11 +2450,11 @@ BB 18
 	instructions:
 		 0: 
 		 1: %self->params def_%cl_1_48 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_49 
-		 3: COPY TYPE_StringLiteral def_%cl_1_50 
-		 4: COPY TYPE_StringLiteral def_%cl_1_51 
-		 5: COPY TYPE_StringLiteral def_%cl_1_52 
-		 6: COPY TYPE_StringLiteral def_%cl_1_53 
+		 2: COPY TYPE_StringLiteral "action" def_%cl_1_49 
+		 3: COPY TYPE_StringLiteral "controller" def_%cl_1_50 
+		 4: COPY TYPE_StringLiteral "q" def_%cl_1_51 
+		 5: COPY TYPE_StringLiteral "view" def_%cl_1_52 
+		 6: COPY TYPE_StringLiteral "utf8" def_%cl_1_53 
 		 7: %cl_1_48->except def_%cl_1_54 %cl_1_48[18.1,] %cl_1_49[18.2,] %cl_1_50[18.3,] %cl_1_51[18.4,] %cl_1_52[18.5,] %cl_1_53[18.6,] 	 ARGS:%cl_1_49,%cl_1_50,%cl_1_51,%cl_1_52,%cl_1_53,
 		 8: %cl_1_54->each def_%cl_1_55 %cl_1_54[18.7,] %self[18.1,2.0,] 	 ARGS:%cl_1_54,
 CLOSURE BEGIN: param[] %self[18.1,2.0,] value[18.8,] 
@@ -2542,7 +2542,7 @@ BB 15
 	instructions:
 CLOSURE END: param[2.2,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_1_56 
+		 10: COPY TYPE_StringLiteral "view" def_%cl_1_56 
 		 11: GETFIELD %self->view_type def_%cl_1_57 %self[18.1,2.0,] 
 		 12: %self->hidden_field_tag def_%cl_1_58 %self[18.1,2.0,] %cl_1_56[18.10,] %cl_1_57[18.11,] 	 ARGS:%cl_1_56,%cl_1_57,
 		 13: 
@@ -2568,19 +2568,19 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_63 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['_setAccount', '" def_%cl_1_63 
 		 2: (APP_CONFIG) def_%cl_1_64 
 		 3: %cl_1_64->google_analytics_key def_%cl_1_65 %cl_1_64[21.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_66 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_1_66 
 		 5: BUILDSTRING def_%cl_1_67 %cl_1_63[21.1,] %cl_1_65[21.3,] %cl_1_66[21.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_1_68 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['_setDomainName', '." def_%cl_1_68 
 		 8: (PublicSuffix) def_%cl_1_69 
 		 9: %self->request def_%cl_1_70 %self[2.0,] 	 ARGS:
 		 10: %cl_1_70->host def_%cl_1_71 %cl_1_70[21.9,] 	 ARGS:
 		 11: %cl_1_69->parse def_%cl_1_72 %cl_1_69[21.8,] %cl_1_71[21.10,] 	 ARGS:%cl_1_71,
 		 12: %cl_1_72->domain def_%cl_1_73 %cl_1_72[21.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_1_74 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_1_74 
 		 14: BUILDSTRING def_%cl_1_75 %cl_1_68[21.7,] %cl_1_73[21.12,] %cl_1_74[21.13,] 
 		 15: 
 		 16: GETFIELD %self->current_community def_%cl_1_76 %self[21.9,2.0,] 
@@ -2602,36 +2602,36 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_79 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['b._setAccount', '" def_%cl_1_79 
 		 2: GETFIELD %self->current_community def_%cl_1_80 %self[2.0,] 
 		 3: %cl_1_80->google_analytics_key def_%cl_1_81 %cl_1_80[24.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_1_82 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_1_82 
 		 5: BUILDSTRING def_%cl_1_83 %cl_1_79[24.1,] %cl_1_81[24.3,] %cl_1_82[24.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_1_84 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['b._setDomainName', '." def_%cl_1_84 
 		 8: (PublicSuffix) def_%cl_1_85 
 		 9: %self->request def_%cl_1_86 %self[2.0,] 	 ARGS:
 		 10: %cl_1_86->host def_%cl_1_87 %cl_1_86[24.9,] 	 ARGS:
 		 11: %cl_1_85->parse def_%cl_1_88 %cl_1_85[24.8,] %cl_1_87[24.10,] 	 ARGS:%cl_1_87,
 		 12: %cl_1_88->domain def_%cl_1_89 %cl_1_88[24.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_1_90 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_1_90 
 		 14: BUILDSTRING def_%cl_1_91 %cl_1_84[24.7,] %cl_1_89[24.12,] %cl_1_90[24.13,] 
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_1_92 
+		 16: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_1_92 
 		 17: GETFIELD %self->current_community def_%cl_1_93 %self[24.9,2.0,] 
 		 18: (I18n) def_%cl_1_94 
 		 19: %cl_1_94->locale def_%cl_1_95 %cl_1_94[24.18,] 	 ARGS:
 		 20: %cl_1_93->name def_%cl_1_96 %cl_1_93[24.17,] %cl_1_95[24.19,] 	 ARGS:%cl_1_95,
 		 21: %self->Maybe def_%cl_1_97 %self[24.9,2.0,] %cl_1_96[24.20,] 	 ARGS:%cl_1_96,
-		 22: COPY TYPE_StringLiteral def_%cl_1_98 
-		 23: COPY TYPE_StringLiteral def_%cl_1_99 
+		 22: COPY TYPE_StringLiteral "'" def_%cl_1_98 
+		 23: COPY TYPE_StringLiteral "" def_%cl_1_99 
 		 24: %cl_1_97->gsub def_%cl_1_100 %cl_1_97[24.21,] %cl_1_98[24.22,] %cl_1_99[24.23,] 	 ARGS:%cl_1_98,%cl_1_99,
-		 25: COPY TYPE_StringLiteral def_%cl_1_101 
+		 25: COPY TYPE_StringLiteral "" def_%cl_1_101 
 		 26: %cl_1_100->or_else def_%cl_1_102 %cl_1_100[24.24,] %cl_1_101[24.25,] 	 ARGS:%cl_1_101,
-		 27: COPY TYPE_StringLiteral def_%cl_1_103 
+		 27: COPY TYPE_StringLiteral "']);" def_%cl_1_103 
 		 28: BUILDSTRING def_%cl_1_104 %cl_1_92[24.16,] %cl_1_102[24.26,] %cl_1_103[24.27,] 
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_1_105 
+		 30: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_1_105 
 		 31: GETFIELD %self->current_community def_%cl_1_106 %self[24.9,24.21,2.0,] 
 		 32: %cl_1_106->domain def_%cl_1_107 %cl_1_106[24.31,] 	 ARGS:
 		 33: BRANCH %cl_1_107[24.32,] 
@@ -2646,7 +2646,7 @@ BB 26
 	outgoing: 28 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_110 
+		 0: COPY TYPE_StringLiteral "']);" def_%cl_1_110 
 		 1: BUILDSTRING def_%cl_1_111 %cl_1_105[24.30,] %cl_1_107[25.2,24.32,] %cl_1_110[26.0,] 
 		 2: 
 BB 27
@@ -2671,7 +2671,7 @@ BB 30
 		 0: 
 		 1: %self->content_for def_%cl_1_112 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_113 
+		 3: COPY TYPE_StringLiteral "application" def_%cl_1_113 
 		 4: %self->javascript_include_tag def_%cl_1_114 %self[30.1,2.0,] %cl_1_113[30.3,] 	 ARGS:%cl_1_113,
 		 5: 
 		 6: 
@@ -2715,10 +2715,10 @@ BB 36
 		 0: 
 		 1: %self->content_for def_%cl_1_121 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_1_122 
+		 3: COPY TYPE_StringLiteral "error_pages.no_javascript.javascript_is_disabled_in_your_browser" def_%cl_1_122 
 		 4: %self->t def_%cl_1_123 %self[36.1,2.0,] %cl_1_122[36.3,] 	 ARGS:%cl_1_122,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_1_124 
+		 6: COPY TYPE_StringLiteral "error_pages.no_javascript.kassi_does_not_currently_work_without_javascript" def_%cl_1_124 
 		 7: %self->t def_%cl_1_125 %self[36.1,36.4,2.0,] %cl_1_124[36.6,] 	 ARGS:%cl_1_124,
 		 8: RETURN %cl_1_125[36.7,] %self[36.1,36.4,36.7,2.0,] 
 BB 37
@@ -2775,10 +2775,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_5 
+		 1: COPY TYPE_StringLiteral "_kms('//i.kissmetrics.com/i.js');_kms('" def_%cl_8_5 
 		 2: (APP_CONFIG) def_%cl_8_6 
 		 3: %cl_8_6->kissmetrics_url def_%cl_8_7 %cl_8_6[4.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_8_8 
+		 4: COPY TYPE_StringLiteral "');" def_%cl_8_8 
 		 5: BUILDSTRING def_%cl_8_9 %cl_8_5[4.1,] %cl_8_7[4.3,] %cl_8_8[4.4,] 
 		 6: 
 		 7: 
@@ -2788,10 +2788,10 @@ BB 5
 	outgoing: 7 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_8_11 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['identify', '" def_%cl_8_11 
 		 1: GETFIELD %self->current_user def_%cl_8_12 %self[2.0,] 
 		 2: %cl_8_12->id def_%cl_8_13 %cl_8_12[5.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_8_14 
+		 3: COPY TYPE_StringLiteral "']);" def_%cl_8_14 
 		 4: BUILDSTRING def_%cl_8_15 %cl_8_11[5.0,] %cl_8_13[5.2,] %cl_8_14[5.3,] 
 		 5: 
 BB 6
@@ -2811,10 +2811,10 @@ BB 8
 	outgoing: 10 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_8_17 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : '" def_%cl_8_17 
 		 1: GETFIELD %self->current_community def_%cl_8_18 %self[2.0,] 
 		 2: %cl_8_18->ident def_%cl_8_19 %cl_8_18[8.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_8_20 
+		 3: COPY TYPE_StringLiteral "'}]);" def_%cl_8_20 
 		 4: BUILDSTRING def_%cl_8_21 %cl_8_17[8.0,] %cl_8_19[8.2,] %cl_8_20[8.3,] 
 		 5: 
 BB 9
@@ -2822,7 +2822,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_22 
+		 1: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" def_%cl_8_22 
 		 2: COPY TYPE_PASS def_%cl_8_21 %cl_8_22[9.1,] 
 BB 10
 	outgoing: 12 
@@ -2872,21 +2872,21 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_8_28 
+		 3: COPY TYPE_StringLiteral "expiration.title" def_%cl_8_28 
 		 4: %self->t def_%cl_8_29 %self[13.1,2.0,] %cl_8_28[13.3,] 	 ARGS:%cl_8_28,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_8_30 
+		 6: COPY TYPE_StringLiteral "expiration.sub_title_new" def_%cl_8_30 
 		 7: %self->t def_%cl_8_31 %self[13.1,13.4,2.0,] %cl_8_30[13.6,] 	 ARGS:%cl_8_30,
 		 8: 
 		 9: %self->external_plan_service_login_url def_%cl_8_32 %self[13.1,13.4,13.7,2.0,] 	 ARGS:
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_8_33 
+		 11: COPY TYPE_StringLiteral "expiration.link_to_external_service" def_%cl_8_33 
 		 12: %self->t def_%cl_8_34 %self[13.1,13.4,13.7,13.9,2.0,] %cl_8_33[13.11,] 	 ARGS:%cl_8_33,
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_8_35 
+		 14: COPY TYPE_StringLiteral "expiration.need_more_info" def_%cl_8_35 
 		 15: %self->t def_%cl_8_36 %self[13.1,13.4,13.7,13.9,13.12,2.0,] %cl_8_35[13.14,] 	 ARGS:%cl_8_35,
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%cl_8_37 
+		 17: COPY TYPE_StringLiteral "expiration.contact_us" def_%cl_8_37 
 		 18: %self->t def_%cl_8_38 %self[13.1,13.4,13.7,13.9,13.12,13.15,2.0,] %cl_8_37[13.17,] 	 ARGS:%cl_8_37,
 		 19: 
 BB 14
@@ -2988,9 +2988,9 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_10_5 
-		 6: COPY TYPE_StringLiteral def_%cl_10_6 
-		 7: COPY TYPE_StringLiteral def_%cl_10_7 
+		 5: COPY TYPE_StringLiteral "ss-check" def_%cl_10_5 
+		 6: COPY TYPE_StringLiteral "ss-info" def_%cl_10_6 
+		 7: COPY TYPE_StringLiteral "ss-alert" def_%cl_10_7 
 		 8: HASH-notice-warning-error- def_%cl_10_8 %cl_10_5[3.5,] %cl_10_6[3.6,] %cl_10_7[3.7,] 
 		 9: %cl_10_8->each def_%cl_10_9 %cl_10_8[3.8,] %self[3.1,3.3,2.0,] 	 ARGS:%cl_10_8,
 CLOSURE BEGIN: %self[3.1,3.3,2.0,] announcement[] 
@@ -3057,18 +3057,18 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_10_11 
+		 0: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_succesful" def_%cl_10_11 
 		 1: %self->t def_%cl_10_12 %self[2.0,] %cl_10_11[4.0,] 	 ARGS:%cl_10_11,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_10_13 
-		 4: COPY TYPE_StringLiteral def_%cl_10_14 
+		 3: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_info_text" def_%cl_10_13 
+		 4: COPY TYPE_StringLiteral "settings.notifications.settings_link" def_%cl_10_14 
 		 5: %self->t def_%cl_10_15 %self[4.1,2.0,] %cl_10_14[4.4,] 	 ARGS:%cl_10_14,
 		 6: GETFIELD %self->person_to_unsubscribe def_%cl_10_16 %self[4.1,4.5,2.0,] 
 		 7: %cl_10_16->id def_%cl_10_17 %cl_10_16[4.6,] 	 ARGS:
 		 8: HASH-person_id- def_%cl_10_18 %cl_10_17[4.7,] 
 		 9: %self->notifications_person_settings_path def_%cl_10_19 %self[4.1,4.5,2.0,] %cl_10_18[4.8,] 	 ARGS:%cl_10_18,
 		 10: %self->link_to def_%cl_10_20 %self[4.1,4.5,4.9,2.0,] %cl_10_15[4.5,] %cl_10_19[4.9,] 	 ARGS:%cl_10_15,%cl_10_19,
-		 11: COPY TYPE_StringLiteral def_%cl_10_21 
+		 11: COPY TYPE_StringLiteral "settings.notifications.homepage_link" def_%cl_10_21 
 		 12: %self->t def_%cl_10_22 %self[4.1,4.5,4.9,4.10,2.0,] %cl_10_21[4.11,] 	 ARGS:%cl_10_21,
 		 13: %self->root_path def_%cl_10_23 %self[4.1,4.5,4.9,4.10,4.12,2.0,] 	 ARGS:
 		 14: %self->link_to def_%cl_10_24 %self[4.1,4.5,4.9,4.10,4.12,4.13,2.0,] %cl_10_22[4.12,] %cl_10_23[4.13,] 	 ARGS:%cl_10_22,%cl_10_23,
@@ -3081,10 +3081,10 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_10_28 
+		 1: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_unsuccesful" def_%cl_10_28 
 		 2: %self->t def_%cl_10_29 %self[2.0,] %cl_10_28[5.1,] 	 ARGS:%cl_10_28,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_10_30 
+		 4: COPY TYPE_StringLiteral "settings.notifications.unsuccessful_unsubscribe_info_text" def_%cl_10_30 
 		 5: %self->t def_%cl_10_31 %self[5.2,2.0,] %cl_10_30[5.4,] 	 ARGS:%cl_10_30,
 		 6: RETURN %cl_10_31[5.5,] %self[5.2,5.5,2.0,] 
 BB 6
@@ -3107,7 +3107,7 @@ CLOSURE END:
 		 2: 
 		 3: %self->params def_%cl_8_40 %self[15.1,2.0,] 	 ARGS:
 		 4: %cl_8_40->[] def_%cl_8_41 %cl_8_40[15.3,] 	 ARGS:Symbol,
-		 5: COPY TYPE_StringLiteral def_%cl_8_42 
+		 5: COPY TYPE_StringLiteral "homepage" def_%cl_8_42 
 		 6: %cl_8_41->== def_%cl_8_43 %cl_8_41[15.4,] %cl_8_42[15.5,] 	 ARGS:%cl_8_42,
 		 7: BRANCH %cl_8_43[15.6,] 
 BB 16
@@ -3116,7 +3116,7 @@ BB 16
 	instructions:
 		 0: %self->params def_%cl_8_44 %self[2.0,] 	 ARGS:
 		 1: %cl_8_44->[] def_%cl_8_45 %cl_8_44[16.0,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%cl_8_46 
+		 2: COPY TYPE_StringLiteral "index" def_%cl_8_46 
 		 3: %cl_8_45->== def_%cl_8_47 %cl_8_45[16.1,] %cl_8_46[16.2,] 	 ARGS:%cl_8_46,
 		 4: COPY TYPE_PASS def_%cl_8_43 %cl_8_47[16.3,] 
 BB 17
@@ -3130,11 +3130,11 @@ BB 18
 	instructions:
 		 0: 
 		 1: %self->params def_%cl_8_48 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_8_49 
-		 3: COPY TYPE_StringLiteral def_%cl_8_50 
-		 4: COPY TYPE_StringLiteral def_%cl_8_51 
-		 5: COPY TYPE_StringLiteral def_%cl_8_52 
-		 6: COPY TYPE_StringLiteral def_%cl_8_53 
+		 2: COPY TYPE_StringLiteral "action" def_%cl_8_49 
+		 3: COPY TYPE_StringLiteral "controller" def_%cl_8_50 
+		 4: COPY TYPE_StringLiteral "q" def_%cl_8_51 
+		 5: COPY TYPE_StringLiteral "view" def_%cl_8_52 
+		 6: COPY TYPE_StringLiteral "utf8" def_%cl_8_53 
 		 7: %cl_8_48->except def_%cl_8_54 %cl_8_48[18.1,] %cl_8_49[18.2,] %cl_8_50[18.3,] %cl_8_51[18.4,] %cl_8_52[18.5,] %cl_8_53[18.6,] 	 ARGS:%cl_8_49,%cl_8_50,%cl_8_51,%cl_8_52,%cl_8_53,
 		 8: %cl_8_54->each def_%cl_8_55 %cl_8_54[18.7,] %self[18.1,2.0,] 	 ARGS:%cl_8_54,
 CLOSURE BEGIN: param[] %self[18.1,2.0,] value[18.8,] 
@@ -3222,7 +3222,7 @@ BB 15
 	instructions:
 CLOSURE END: param[2.2,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_8_56 
+		 10: COPY TYPE_StringLiteral "view" def_%cl_8_56 
 		 11: GETFIELD %self->view_type def_%cl_8_57 %self[18.1,2.0,] 
 		 12: %self->hidden_field_tag def_%cl_8_58 %self[18.1,2.0,] %cl_8_56[18.10,] %cl_8_57[18.11,] 	 ARGS:%cl_8_56,%cl_8_57,
 		 13: 
@@ -3248,19 +3248,19 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_63 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['_setAccount', '" def_%cl_8_63 
 		 2: (APP_CONFIG) def_%cl_8_64 
 		 3: %cl_8_64->google_analytics_key def_%cl_8_65 %cl_8_64[21.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_8_66 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_8_66 
 		 5: BUILDSTRING def_%cl_8_67 %cl_8_63[21.1,] %cl_8_65[21.3,] %cl_8_66[21.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_8_68 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['_setDomainName', '." def_%cl_8_68 
 		 8: (PublicSuffix) def_%cl_8_69 
 		 9: %self->request def_%cl_8_70 %self[2.0,] 	 ARGS:
 		 10: %cl_8_70->host def_%cl_8_71 %cl_8_70[21.9,] 	 ARGS:
 		 11: %cl_8_69->parse def_%cl_8_72 %cl_8_69[21.8,] %cl_8_71[21.10,] 	 ARGS:%cl_8_71,
 		 12: %cl_8_72->domain def_%cl_8_73 %cl_8_72[21.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_8_74 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_8_74 
 		 14: BUILDSTRING def_%cl_8_75 %cl_8_68[21.7,] %cl_8_73[21.12,] %cl_8_74[21.13,] 
 		 15: 
 		 16: GETFIELD %self->current_community def_%cl_8_76 %self[21.9,2.0,] 
@@ -3282,36 +3282,36 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_79 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['b._setAccount', '" def_%cl_8_79 
 		 2: GETFIELD %self->current_community def_%cl_8_80 %self[2.0,] 
 		 3: %cl_8_80->google_analytics_key def_%cl_8_81 %cl_8_80[24.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_8_82 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_8_82 
 		 5: BUILDSTRING def_%cl_8_83 %cl_8_79[24.1,] %cl_8_81[24.3,] %cl_8_82[24.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_8_84 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['b._setDomainName', '." def_%cl_8_84 
 		 8: (PublicSuffix) def_%cl_8_85 
 		 9: %self->request def_%cl_8_86 %self[2.0,] 	 ARGS:
 		 10: %cl_8_86->host def_%cl_8_87 %cl_8_86[24.9,] 	 ARGS:
 		 11: %cl_8_85->parse def_%cl_8_88 %cl_8_85[24.8,] %cl_8_87[24.10,] 	 ARGS:%cl_8_87,
 		 12: %cl_8_88->domain def_%cl_8_89 %cl_8_88[24.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_8_90 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_8_90 
 		 14: BUILDSTRING def_%cl_8_91 %cl_8_84[24.7,] %cl_8_89[24.12,] %cl_8_90[24.13,] 
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_8_92 
+		 16: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_8_92 
 		 17: GETFIELD %self->current_community def_%cl_8_93 %self[24.9,2.0,] 
 		 18: (I18n) def_%cl_8_94 
 		 19: %cl_8_94->locale def_%cl_8_95 %cl_8_94[24.18,] 	 ARGS:
 		 20: %cl_8_93->name def_%cl_8_96 %cl_8_93[24.17,] %cl_8_95[24.19,] 	 ARGS:%cl_8_95,
 		 21: %self->Maybe def_%cl_8_97 %self[24.9,2.0,] %cl_8_96[24.20,] 	 ARGS:%cl_8_96,
-		 22: COPY TYPE_StringLiteral def_%cl_8_98 
-		 23: COPY TYPE_StringLiteral def_%cl_8_99 
+		 22: COPY TYPE_StringLiteral "'" def_%cl_8_98 
+		 23: COPY TYPE_StringLiteral "" def_%cl_8_99 
 		 24: %cl_8_97->gsub def_%cl_8_100 %cl_8_97[24.21,] %cl_8_98[24.22,] %cl_8_99[24.23,] 	 ARGS:%cl_8_98,%cl_8_99,
-		 25: COPY TYPE_StringLiteral def_%cl_8_101 
+		 25: COPY TYPE_StringLiteral "" def_%cl_8_101 
 		 26: %cl_8_100->or_else def_%cl_8_102 %cl_8_100[24.24,] %cl_8_101[24.25,] 	 ARGS:%cl_8_101,
-		 27: COPY TYPE_StringLiteral def_%cl_8_103 
+		 27: COPY TYPE_StringLiteral "']);" def_%cl_8_103 
 		 28: BUILDSTRING def_%cl_8_104 %cl_8_92[24.16,] %cl_8_102[24.26,] %cl_8_103[24.27,] 
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_8_105 
+		 30: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_8_105 
 		 31: GETFIELD %self->current_community def_%cl_8_106 %self[24.9,24.21,2.0,] 
 		 32: %cl_8_106->domain def_%cl_8_107 %cl_8_106[24.31,] 	 ARGS:
 		 33: BRANCH %cl_8_107[24.32,] 
@@ -3326,7 +3326,7 @@ BB 26
 	outgoing: 28 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_8_110 
+		 0: COPY TYPE_StringLiteral "']);" def_%cl_8_110 
 		 1: BUILDSTRING def_%cl_8_111 %cl_8_105[24.30,] %cl_8_107[25.2,24.32,] %cl_8_110[26.0,] 
 		 2: 
 BB 27
@@ -3351,7 +3351,7 @@ BB 30
 		 0: 
 		 1: %self->content_for def_%cl_8_112 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_8_113 
+		 3: COPY TYPE_StringLiteral "application" def_%cl_8_113 
 		 4: %self->javascript_include_tag def_%cl_8_114 %self[30.1,2.0,] %cl_8_113[30.3,] 	 ARGS:%cl_8_113,
 		 5: 
 		 6: 
@@ -3395,10 +3395,10 @@ BB 36
 		 0: 
 		 1: %self->content_for def_%cl_8_121 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_8_122 
+		 3: COPY TYPE_StringLiteral "error_pages.no_javascript.javascript_is_disabled_in_your_browser" def_%cl_8_122 
 		 4: %self->t def_%cl_8_123 %self[36.1,2.0,] %cl_8_122[36.3,] 	 ARGS:%cl_8_122,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_8_124 
+		 6: COPY TYPE_StringLiteral "error_pages.no_javascript.kassi_does_not_currently_work_without_javascript" def_%cl_8_124 
 		 7: %self->t def_%cl_8_125 %self[36.1,36.4,2.0,] %cl_8_124[36.6,] 	 ARGS:%cl_8_124,
 		 8: RETURN %cl_8_125[36.7,] %self[36.1,36.4,36.7,2.0,] 
 BB 37
@@ -3450,10 +3450,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_15_5 
+		 1: COPY TYPE_StringLiteral "_kms('//i.kissmetrics.com/i.js');_kms('" def_%cl_15_5 
 		 2: (APP_CONFIG) def_%cl_15_6 
 		 3: %cl_15_6->kissmetrics_url def_%cl_15_7 %cl_15_6[4.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_15_8 
+		 4: COPY TYPE_StringLiteral "');" def_%cl_15_8 
 		 5: BUILDSTRING def_%cl_15_9 %cl_15_5[4.1,] %cl_15_7[4.3,] %cl_15_8[4.4,] 
 		 6: 
 		 7: 
@@ -3463,10 +3463,10 @@ BB 5
 	outgoing: 7 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_15_11 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['identify', '" def_%cl_15_11 
 		 1: GETFIELD %self->current_user def_%cl_15_12 %self[2.0,] 
 		 2: %cl_15_12->id def_%cl_15_13 %cl_15_12[5.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_15_14 
+		 3: COPY TYPE_StringLiteral "']);" def_%cl_15_14 
 		 4: BUILDSTRING def_%cl_15_15 %cl_15_11[5.0,] %cl_15_13[5.2,] %cl_15_14[5.3,] 
 		 5: 
 BB 6
@@ -3486,10 +3486,10 @@ BB 8
 	outgoing: 10 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_15_17 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : '" def_%cl_15_17 
 		 1: GETFIELD %self->current_community def_%cl_15_18 %self[2.0,] 
 		 2: %cl_15_18->ident def_%cl_15_19 %cl_15_18[8.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_15_20 
+		 3: COPY TYPE_StringLiteral "'}]);" def_%cl_15_20 
 		 4: BUILDSTRING def_%cl_15_21 %cl_15_17[8.0,] %cl_15_19[8.2,] %cl_15_20[8.3,] 
 		 5: 
 BB 9
@@ -3497,7 +3497,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_15_22 
+		 1: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" def_%cl_15_22 
 		 2: COPY TYPE_PASS def_%cl_15_21 %cl_15_22[9.1,] 
 BB 10
 	outgoing: 12 
@@ -3547,21 +3547,21 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_15_28 
+		 3: COPY TYPE_StringLiteral "expiration.title" def_%cl_15_28 
 		 4: %self->t def_%cl_15_29 %self[13.1,2.0,] %cl_15_28[13.3,] 	 ARGS:%cl_15_28,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_15_30 
+		 6: COPY TYPE_StringLiteral "expiration.sub_title_new" def_%cl_15_30 
 		 7: %self->t def_%cl_15_31 %self[13.1,13.4,2.0,] %cl_15_30[13.6,] 	 ARGS:%cl_15_30,
 		 8: 
 		 9: %self->external_plan_service_login_url def_%cl_15_32 %self[13.1,13.4,13.7,2.0,] 	 ARGS:
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_15_33 
+		 11: COPY TYPE_StringLiteral "expiration.link_to_external_service" def_%cl_15_33 
 		 12: %self->t def_%cl_15_34 %self[13.1,13.4,13.7,13.9,2.0,] %cl_15_33[13.11,] 	 ARGS:%cl_15_33,
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_15_35 
+		 14: COPY TYPE_StringLiteral "expiration.need_more_info" def_%cl_15_35 
 		 15: %self->t def_%cl_15_36 %self[13.1,13.4,13.7,13.9,13.12,2.0,] %cl_15_35[13.14,] 	 ARGS:%cl_15_35,
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%cl_15_37 
+		 17: COPY TYPE_StringLiteral "expiration.contact_us" def_%cl_15_37 
 		 18: %self->t def_%cl_15_38 %self[13.1,13.4,13.7,13.9,13.12,13.15,2.0,] %cl_15_37[13.17,] 	 ARGS:%cl_15_37,
 		 19: 
 BB 14
@@ -3663,9 +3663,9 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_17_5 
-		 6: COPY TYPE_StringLiteral def_%cl_17_6 
-		 7: COPY TYPE_StringLiteral def_%cl_17_7 
+		 5: COPY TYPE_StringLiteral "ss-check" def_%cl_17_5 
+		 6: COPY TYPE_StringLiteral "ss-info" def_%cl_17_6 
+		 7: COPY TYPE_StringLiteral "ss-alert" def_%cl_17_7 
 		 8: HASH-notice-warning-error- def_%cl_17_8 %cl_17_5[3.5,] %cl_17_6[3.6,] %cl_17_7[3.7,] 
 		 9: %cl_17_8->each def_%cl_17_9 %cl_17_8[3.8,] %self[3.1,3.3,2.0,] 	 ARGS:%cl_17_8,
 CLOSURE BEGIN: %self[3.1,3.3,2.0,] announcement[] 
@@ -3732,18 +3732,18 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_17_11 
+		 0: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_succesful" def_%cl_17_11 
 		 1: %self->t def_%cl_17_12 %self[2.0,] %cl_17_11[4.0,] 	 ARGS:%cl_17_11,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_17_13 
-		 4: COPY TYPE_StringLiteral def_%cl_17_14 
+		 3: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_info_text" def_%cl_17_13 
+		 4: COPY TYPE_StringLiteral "settings.notifications.settings_link" def_%cl_17_14 
 		 5: %self->t def_%cl_17_15 %self[4.1,2.0,] %cl_17_14[4.4,] 	 ARGS:%cl_17_14,
 		 6: GETFIELD %self->person_to_unsubscribe def_%cl_17_16 %self[4.1,4.5,2.0,] 
 		 7: %cl_17_16->id def_%cl_17_17 %cl_17_16[4.6,] 	 ARGS:
 		 8: HASH-person_id- def_%cl_17_18 %cl_17_17[4.7,] 
 		 9: %self->notifications_person_settings_path def_%cl_17_19 %self[4.1,4.5,2.0,] %cl_17_18[4.8,] 	 ARGS:%cl_17_18,
 		 10: %self->link_to def_%cl_17_20 %self[4.1,4.5,4.9,2.0,] %cl_17_15[4.5,] %cl_17_19[4.9,] 	 ARGS:%cl_17_15,%cl_17_19,
-		 11: COPY TYPE_StringLiteral def_%cl_17_21 
+		 11: COPY TYPE_StringLiteral "settings.notifications.homepage_link" def_%cl_17_21 
 		 12: %self->t def_%cl_17_22 %self[4.1,4.5,4.9,4.10,2.0,] %cl_17_21[4.11,] 	 ARGS:%cl_17_21,
 		 13: %self->root_path def_%cl_17_23 %self[4.1,4.5,4.9,4.10,4.12,2.0,] 	 ARGS:
 		 14: %self->link_to def_%cl_17_24 %self[4.1,4.5,4.9,4.10,4.12,4.13,2.0,] %cl_17_22[4.12,] %cl_17_23[4.13,] 	 ARGS:%cl_17_22,%cl_17_23,
@@ -3756,10 +3756,10 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_17_28 
+		 1: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_unsuccesful" def_%cl_17_28 
 		 2: %self->t def_%cl_17_29 %self[2.0,] %cl_17_28[5.1,] 	 ARGS:%cl_17_28,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_17_30 
+		 4: COPY TYPE_StringLiteral "settings.notifications.unsuccessful_unsubscribe_info_text" def_%cl_17_30 
 		 5: %self->t def_%cl_17_31 %self[5.2,2.0,] %cl_17_30[5.4,] 	 ARGS:%cl_17_30,
 		 6: RETURN %cl_17_31[5.5,] %self[5.2,5.5,2.0,] 
 BB 6
@@ -3782,7 +3782,7 @@ CLOSURE END:
 		 2: 
 		 3: %self->params def_%cl_15_40 %self[15.1,2.0,] 	 ARGS:
 		 4: %cl_15_40->[] def_%cl_15_41 %cl_15_40[15.3,] 	 ARGS:Symbol,
-		 5: COPY TYPE_StringLiteral def_%cl_15_42 
+		 5: COPY TYPE_StringLiteral "homepage" def_%cl_15_42 
 		 6: %cl_15_41->== def_%cl_15_43 %cl_15_41[15.4,] %cl_15_42[15.5,] 	 ARGS:%cl_15_42,
 		 7: BRANCH %cl_15_43[15.6,] 
 BB 16
@@ -3791,7 +3791,7 @@ BB 16
 	instructions:
 		 0: %self->params def_%cl_15_44 %self[2.0,] 	 ARGS:
 		 1: %cl_15_44->[] def_%cl_15_45 %cl_15_44[16.0,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%cl_15_46 
+		 2: COPY TYPE_StringLiteral "index" def_%cl_15_46 
 		 3: %cl_15_45->== def_%cl_15_47 %cl_15_45[16.1,] %cl_15_46[16.2,] 	 ARGS:%cl_15_46,
 		 4: COPY TYPE_PASS def_%cl_15_43 %cl_15_47[16.3,] 
 BB 17
@@ -3805,11 +3805,11 @@ BB 18
 	instructions:
 		 0: 
 		 1: %self->params def_%cl_15_48 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_15_49 
-		 3: COPY TYPE_StringLiteral def_%cl_15_50 
-		 4: COPY TYPE_StringLiteral def_%cl_15_51 
-		 5: COPY TYPE_StringLiteral def_%cl_15_52 
-		 6: COPY TYPE_StringLiteral def_%cl_15_53 
+		 2: COPY TYPE_StringLiteral "action" def_%cl_15_49 
+		 3: COPY TYPE_StringLiteral "controller" def_%cl_15_50 
+		 4: COPY TYPE_StringLiteral "q" def_%cl_15_51 
+		 5: COPY TYPE_StringLiteral "view" def_%cl_15_52 
+		 6: COPY TYPE_StringLiteral "utf8" def_%cl_15_53 
 		 7: %cl_15_48->except def_%cl_15_54 %cl_15_48[18.1,] %cl_15_49[18.2,] %cl_15_50[18.3,] %cl_15_51[18.4,] %cl_15_52[18.5,] %cl_15_53[18.6,] 	 ARGS:%cl_15_49,%cl_15_50,%cl_15_51,%cl_15_52,%cl_15_53,
 		 8: %cl_15_54->each def_%cl_15_55 %cl_15_54[18.7,] %self[18.1,2.0,] 	 ARGS:%cl_15_54,
 CLOSURE BEGIN: param[] %self[18.1,2.0,] value[18.8,] 
@@ -3897,7 +3897,7 @@ BB 15
 	instructions:
 CLOSURE END: param[2.2,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_15_56 
+		 10: COPY TYPE_StringLiteral "view" def_%cl_15_56 
 		 11: GETFIELD %self->view_type def_%cl_15_57 %self[18.1,2.0,] 
 		 12: %self->hidden_field_tag def_%cl_15_58 %self[18.1,2.0,] %cl_15_56[18.10,] %cl_15_57[18.11,] 	 ARGS:%cl_15_56,%cl_15_57,
 		 13: 
@@ -3923,19 +3923,19 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_15_63 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['_setAccount', '" def_%cl_15_63 
 		 2: (APP_CONFIG) def_%cl_15_64 
 		 3: %cl_15_64->google_analytics_key def_%cl_15_65 %cl_15_64[21.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_15_66 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_15_66 
 		 5: BUILDSTRING def_%cl_15_67 %cl_15_63[21.1,] %cl_15_65[21.3,] %cl_15_66[21.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_15_68 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['_setDomainName', '." def_%cl_15_68 
 		 8: (PublicSuffix) def_%cl_15_69 
 		 9: %self->request def_%cl_15_70 %self[2.0,] 	 ARGS:
 		 10: %cl_15_70->host def_%cl_15_71 %cl_15_70[21.9,] 	 ARGS:
 		 11: %cl_15_69->parse def_%cl_15_72 %cl_15_69[21.8,] %cl_15_71[21.10,] 	 ARGS:%cl_15_71,
 		 12: %cl_15_72->domain def_%cl_15_73 %cl_15_72[21.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_15_74 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_15_74 
 		 14: BUILDSTRING def_%cl_15_75 %cl_15_68[21.7,] %cl_15_73[21.12,] %cl_15_74[21.13,] 
 		 15: 
 		 16: GETFIELD %self->current_community def_%cl_15_76 %self[21.9,2.0,] 
@@ -3957,36 +3957,36 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_15_79 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['b._setAccount', '" def_%cl_15_79 
 		 2: GETFIELD %self->current_community def_%cl_15_80 %self[2.0,] 
 		 3: %cl_15_80->google_analytics_key def_%cl_15_81 %cl_15_80[24.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_15_82 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_15_82 
 		 5: BUILDSTRING def_%cl_15_83 %cl_15_79[24.1,] %cl_15_81[24.3,] %cl_15_82[24.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_15_84 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['b._setDomainName', '." def_%cl_15_84 
 		 8: (PublicSuffix) def_%cl_15_85 
 		 9: %self->request def_%cl_15_86 %self[2.0,] 	 ARGS:
 		 10: %cl_15_86->host def_%cl_15_87 %cl_15_86[24.9,] 	 ARGS:
 		 11: %cl_15_85->parse def_%cl_15_88 %cl_15_85[24.8,] %cl_15_87[24.10,] 	 ARGS:%cl_15_87,
 		 12: %cl_15_88->domain def_%cl_15_89 %cl_15_88[24.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_15_90 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_15_90 
 		 14: BUILDSTRING def_%cl_15_91 %cl_15_84[24.7,] %cl_15_89[24.12,] %cl_15_90[24.13,] 
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_15_92 
+		 16: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_15_92 
 		 17: GETFIELD %self->current_community def_%cl_15_93 %self[24.9,2.0,] 
 		 18: (I18n) def_%cl_15_94 
 		 19: %cl_15_94->locale def_%cl_15_95 %cl_15_94[24.18,] 	 ARGS:
 		 20: %cl_15_93->name def_%cl_15_96 %cl_15_93[24.17,] %cl_15_95[24.19,] 	 ARGS:%cl_15_95,
 		 21: %self->Maybe def_%cl_15_97 %self[24.9,2.0,] %cl_15_96[24.20,] 	 ARGS:%cl_15_96,
-		 22: COPY TYPE_StringLiteral def_%cl_15_98 
-		 23: COPY TYPE_StringLiteral def_%cl_15_99 
+		 22: COPY TYPE_StringLiteral "'" def_%cl_15_98 
+		 23: COPY TYPE_StringLiteral "" def_%cl_15_99 
 		 24: %cl_15_97->gsub def_%cl_15_100 %cl_15_97[24.21,] %cl_15_98[24.22,] %cl_15_99[24.23,] 	 ARGS:%cl_15_98,%cl_15_99,
-		 25: COPY TYPE_StringLiteral def_%cl_15_101 
+		 25: COPY TYPE_StringLiteral "" def_%cl_15_101 
 		 26: %cl_15_100->or_else def_%cl_15_102 %cl_15_100[24.24,] %cl_15_101[24.25,] 	 ARGS:%cl_15_101,
-		 27: COPY TYPE_StringLiteral def_%cl_15_103 
+		 27: COPY TYPE_StringLiteral "']);" def_%cl_15_103 
 		 28: BUILDSTRING def_%cl_15_104 %cl_15_92[24.16,] %cl_15_102[24.26,] %cl_15_103[24.27,] 
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_15_105 
+		 30: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_15_105 
 		 31: GETFIELD %self->current_community def_%cl_15_106 %self[24.9,24.21,2.0,] 
 		 32: %cl_15_106->domain def_%cl_15_107 %cl_15_106[24.31,] 	 ARGS:
 		 33: BRANCH %cl_15_107[24.32,] 
@@ -4001,7 +4001,7 @@ BB 26
 	outgoing: 28 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_15_110 
+		 0: COPY TYPE_StringLiteral "']);" def_%cl_15_110 
 		 1: BUILDSTRING def_%cl_15_111 %cl_15_105[24.30,] %cl_15_107[25.2,24.32,] %cl_15_110[26.0,] 
 		 2: 
 BB 27
@@ -4026,7 +4026,7 @@ BB 30
 		 0: 
 		 1: %self->content_for def_%cl_15_112 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_15_113 
+		 3: COPY TYPE_StringLiteral "application" def_%cl_15_113 
 		 4: %self->javascript_include_tag def_%cl_15_114 %self[30.1,2.0,] %cl_15_113[30.3,] 	 ARGS:%cl_15_113,
 		 5: 
 		 6: 
@@ -4070,10 +4070,10 @@ BB 36
 		 0: 
 		 1: %self->content_for def_%cl_15_121 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_15_122 
+		 3: COPY TYPE_StringLiteral "error_pages.no_javascript.javascript_is_disabled_in_your_browser" def_%cl_15_122 
 		 4: %self->t def_%cl_15_123 %self[36.1,2.0,] %cl_15_122[36.3,] 	 ARGS:%cl_15_122,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_15_124 
+		 6: COPY TYPE_StringLiteral "error_pages.no_javascript.kassi_does_not_currently_work_without_javascript" def_%cl_15_124 
 		 7: %self->t def_%cl_15_125 %self[36.1,36.4,2.0,] %cl_15_124[36.6,] 	 ARGS:%cl_15_124,
 		 8: RETURN %cl_15_125[36.7,] %self[36.1,36.4,36.7,2.0,] 
 BB 37
@@ -4123,10 +4123,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_22_5 
+		 1: COPY TYPE_StringLiteral "_kms('//i.kissmetrics.com/i.js');_kms('" def_%cl_22_5 
 		 2: (APP_CONFIG) def_%cl_22_6 
 		 3: %cl_22_6->kissmetrics_url def_%cl_22_7 %cl_22_6[4.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_22_8 
+		 4: COPY TYPE_StringLiteral "');" def_%cl_22_8 
 		 5: BUILDSTRING def_%cl_22_9 %cl_22_5[4.1,] %cl_22_7[4.3,] %cl_22_8[4.4,] 
 		 6: 
 		 7: 
@@ -4136,10 +4136,10 @@ BB 5
 	outgoing: 7 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_22_11 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['identify', '" def_%cl_22_11 
 		 1: GETFIELD %self->current_user def_%cl_22_12 %self[2.0,] 
 		 2: %cl_22_12->id def_%cl_22_13 %cl_22_12[5.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_22_14 
+		 3: COPY TYPE_StringLiteral "']);" def_%cl_22_14 
 		 4: BUILDSTRING def_%cl_22_15 %cl_22_11[5.0,] %cl_22_13[5.2,] %cl_22_14[5.3,] 
 		 5: 
 BB 6
@@ -4159,10 +4159,10 @@ BB 8
 	outgoing: 10 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_22_17 
+		 0: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : '" def_%cl_22_17 
 		 1: GETFIELD %self->current_community def_%cl_22_18 %self[2.0,] 
 		 2: %cl_22_18->ident def_%cl_22_19 %cl_22_18[8.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_22_20 
+		 3: COPY TYPE_StringLiteral "'}]);" def_%cl_22_20 
 		 4: BUILDSTRING def_%cl_22_21 %cl_22_17[8.0,] %cl_22_19[8.2,] %cl_22_20[8.3,] 
 		 5: 
 BB 9
@@ -4170,7 +4170,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_22_22 
+		 1: COPY TYPE_StringLiteral "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" def_%cl_22_22 
 		 2: COPY TYPE_PASS def_%cl_22_21 %cl_22_22[9.1,] 
 BB 10
 	outgoing: 12 
@@ -4220,21 +4220,21 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_22_28 
+		 3: COPY TYPE_StringLiteral "expiration.title" def_%cl_22_28 
 		 4: %self->t def_%cl_22_29 %self[13.1,2.0,] %cl_22_28[13.3,] 	 ARGS:%cl_22_28,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_22_30 
+		 6: COPY TYPE_StringLiteral "expiration.sub_title_new" def_%cl_22_30 
 		 7: %self->t def_%cl_22_31 %self[13.1,13.4,2.0,] %cl_22_30[13.6,] 	 ARGS:%cl_22_30,
 		 8: 
 		 9: %self->external_plan_service_login_url def_%cl_22_32 %self[13.1,13.4,13.7,2.0,] 	 ARGS:
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_22_33 
+		 11: COPY TYPE_StringLiteral "expiration.link_to_external_service" def_%cl_22_33 
 		 12: %self->t def_%cl_22_34 %self[13.1,13.4,13.7,13.9,2.0,] %cl_22_33[13.11,] 	 ARGS:%cl_22_33,
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_22_35 
+		 14: COPY TYPE_StringLiteral "expiration.need_more_info" def_%cl_22_35 
 		 15: %self->t def_%cl_22_36 %self[13.1,13.4,13.7,13.9,13.12,2.0,] %cl_22_35[13.14,] 	 ARGS:%cl_22_35,
 		 16: 
-		 17: COPY TYPE_StringLiteral def_%cl_22_37 
+		 17: COPY TYPE_StringLiteral "expiration.contact_us" def_%cl_22_37 
 		 18: %self->t def_%cl_22_38 %self[13.1,13.4,13.7,13.9,13.12,13.15,2.0,] %cl_22_37[13.17,] 	 ARGS:%cl_22_37,
 		 19: 
 BB 14
@@ -4336,9 +4336,9 @@ BB 6
 	instructions:
 CLOSURE END: 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%cl_24_5 
-		 6: COPY TYPE_StringLiteral def_%cl_24_6 
-		 7: COPY TYPE_StringLiteral def_%cl_24_7 
+		 5: COPY TYPE_StringLiteral "ss-check" def_%cl_24_5 
+		 6: COPY TYPE_StringLiteral "ss-info" def_%cl_24_6 
+		 7: COPY TYPE_StringLiteral "ss-alert" def_%cl_24_7 
 		 8: HASH-notice-warning-error- def_%cl_24_8 %cl_24_5[3.5,] %cl_24_6[3.6,] %cl_24_7[3.7,] 
 		 9: %cl_24_8->each def_%cl_24_9 %cl_24_8[3.8,] %self[3.1,3.3,2.0,] 	 ARGS:%cl_24_8,
 CLOSURE BEGIN: %self[3.1,3.3,2.0,] announcement[] 
@@ -4405,18 +4405,18 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_24_11 
+		 0: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_succesful" def_%cl_24_11 
 		 1: %self->t def_%cl_24_12 %self[2.0,] %cl_24_11[4.0,] 	 ARGS:%cl_24_11,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_24_13 
-		 4: COPY TYPE_StringLiteral def_%cl_24_14 
+		 3: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_info_text" def_%cl_24_13 
+		 4: COPY TYPE_StringLiteral "settings.notifications.settings_link" def_%cl_24_14 
 		 5: %self->t def_%cl_24_15 %self[4.1,2.0,] %cl_24_14[4.4,] 	 ARGS:%cl_24_14,
 		 6: GETFIELD %self->person_to_unsubscribe def_%cl_24_16 %self[4.1,4.5,2.0,] 
 		 7: %cl_24_16->id def_%cl_24_17 %cl_24_16[4.6,] 	 ARGS:
 		 8: HASH-person_id- def_%cl_24_18 %cl_24_17[4.7,] 
 		 9: %self->notifications_person_settings_path def_%cl_24_19 %self[4.1,4.5,2.0,] %cl_24_18[4.8,] 	 ARGS:%cl_24_18,
 		 10: %self->link_to def_%cl_24_20 %self[4.1,4.5,4.9,2.0,] %cl_24_15[4.5,] %cl_24_19[4.9,] 	 ARGS:%cl_24_15,%cl_24_19,
-		 11: COPY TYPE_StringLiteral def_%cl_24_21 
+		 11: COPY TYPE_StringLiteral "settings.notifications.homepage_link" def_%cl_24_21 
 		 12: %self->t def_%cl_24_22 %self[4.1,4.5,4.9,4.10,2.0,] %cl_24_21[4.11,] 	 ARGS:%cl_24_21,
 		 13: %self->root_path def_%cl_24_23 %self[4.1,4.5,4.9,4.10,4.12,2.0,] 	 ARGS:
 		 14: %self->link_to def_%cl_24_24 %self[4.1,4.5,4.9,4.10,4.12,4.13,2.0,] %cl_24_22[4.12,] %cl_24_23[4.13,] 	 ARGS:%cl_24_22,%cl_24_23,
@@ -4429,10 +4429,10 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_24_28 
+		 1: COPY TYPE_StringLiteral "settings.notifications.unsubscribe_unsuccesful" def_%cl_24_28 
 		 2: %self->t def_%cl_24_29 %self[2.0,] %cl_24_28[5.1,] 	 ARGS:%cl_24_28,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_24_30 
+		 4: COPY TYPE_StringLiteral "settings.notifications.unsuccessful_unsubscribe_info_text" def_%cl_24_30 
 		 5: %self->t def_%cl_24_31 %self[5.2,2.0,] %cl_24_30[5.4,] 	 ARGS:%cl_24_30,
 		 6: RETURN %cl_24_31[5.5,] %self[5.2,5.5,2.0,] 
 BB 6
@@ -4455,7 +4455,7 @@ CLOSURE END:
 		 2: 
 		 3: %self->params def_%cl_22_40 %self[15.1,2.0,] 	 ARGS:
 		 4: %cl_22_40->[] def_%cl_22_41 %cl_22_40[15.3,] 	 ARGS:Symbol,
-		 5: COPY TYPE_StringLiteral def_%cl_22_42 
+		 5: COPY TYPE_StringLiteral "homepage" def_%cl_22_42 
 		 6: %cl_22_41->== def_%cl_22_43 %cl_22_41[15.4,] %cl_22_42[15.5,] 	 ARGS:%cl_22_42,
 		 7: BRANCH %cl_22_43[15.6,] 
 BB 16
@@ -4464,7 +4464,7 @@ BB 16
 	instructions:
 		 0: %self->params def_%cl_22_44 %self[2.0,] 	 ARGS:
 		 1: %cl_22_44->[] def_%cl_22_45 %cl_22_44[16.0,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%cl_22_46 
+		 2: COPY TYPE_StringLiteral "index" def_%cl_22_46 
 		 3: %cl_22_45->== def_%cl_22_47 %cl_22_45[16.1,] %cl_22_46[16.2,] 	 ARGS:%cl_22_46,
 		 4: COPY TYPE_PASS def_%cl_22_43 %cl_22_47[16.3,] 
 BB 17
@@ -4478,11 +4478,11 @@ BB 18
 	instructions:
 		 0: 
 		 1: %self->params def_%cl_22_48 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_22_49 
-		 3: COPY TYPE_StringLiteral def_%cl_22_50 
-		 4: COPY TYPE_StringLiteral def_%cl_22_51 
-		 5: COPY TYPE_StringLiteral def_%cl_22_52 
-		 6: COPY TYPE_StringLiteral def_%cl_22_53 
+		 2: COPY TYPE_StringLiteral "action" def_%cl_22_49 
+		 3: COPY TYPE_StringLiteral "controller" def_%cl_22_50 
+		 4: COPY TYPE_StringLiteral "q" def_%cl_22_51 
+		 5: COPY TYPE_StringLiteral "view" def_%cl_22_52 
+		 6: COPY TYPE_StringLiteral "utf8" def_%cl_22_53 
 		 7: %cl_22_48->except def_%cl_22_54 %cl_22_48[18.1,] %cl_22_49[18.2,] %cl_22_50[18.3,] %cl_22_51[18.4,] %cl_22_52[18.5,] %cl_22_53[18.6,] 	 ARGS:%cl_22_49,%cl_22_50,%cl_22_51,%cl_22_52,%cl_22_53,
 		 8: %cl_22_54->each def_%cl_22_55 %cl_22_54[18.7,] %self[18.1,2.0,] 	 ARGS:%cl_22_54,
 CLOSURE BEGIN: param[] %self[18.1,2.0,] value[18.8,] 
@@ -4570,7 +4570,7 @@ BB 15
 	instructions:
 CLOSURE END: param[2.2,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_22_56 
+		 10: COPY TYPE_StringLiteral "view" def_%cl_22_56 
 		 11: GETFIELD %self->view_type def_%cl_22_57 %self[18.1,2.0,] 
 		 12: %self->hidden_field_tag def_%cl_22_58 %self[18.1,2.0,] %cl_22_56[18.10,] %cl_22_57[18.11,] 	 ARGS:%cl_22_56,%cl_22_57,
 		 13: 
@@ -4596,19 +4596,19 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_22_63 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['_setAccount', '" def_%cl_22_63 
 		 2: (APP_CONFIG) def_%cl_22_64 
 		 3: %cl_22_64->google_analytics_key def_%cl_22_65 %cl_22_64[21.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_22_66 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_22_66 
 		 5: BUILDSTRING def_%cl_22_67 %cl_22_63[21.1,] %cl_22_65[21.3,] %cl_22_66[21.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_22_68 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['_setDomainName', '." def_%cl_22_68 
 		 8: (PublicSuffix) def_%cl_22_69 
 		 9: %self->request def_%cl_22_70 %self[2.0,] 	 ARGS:
 		 10: %cl_22_70->host def_%cl_22_71 %cl_22_70[21.9,] 	 ARGS:
 		 11: %cl_22_69->parse def_%cl_22_72 %cl_22_69[21.8,] %cl_22_71[21.10,] 	 ARGS:%cl_22_71,
 		 12: %cl_22_72->domain def_%cl_22_73 %cl_22_72[21.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_22_74 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_22_74 
 		 14: BUILDSTRING def_%cl_22_75 %cl_22_68[21.7,] %cl_22_73[21.12,] %cl_22_74[21.13,] 
 		 15: 
 		 16: GETFIELD %self->current_community def_%cl_22_76 %self[21.9,2.0,] 
@@ -4630,36 +4630,36 @@ BB 24
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_22_79 
+		 1: COPY TYPE_StringLiteral "_gaq.push(['b._setAccount', '" def_%cl_22_79 
 		 2: GETFIELD %self->current_community def_%cl_22_80 %self[2.0,] 
 		 3: %cl_22_80->google_analytics_key def_%cl_22_81 %cl_22_80[24.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_22_82 
+		 4: COPY TYPE_StringLiteral "']);" def_%cl_22_82 
 		 5: BUILDSTRING def_%cl_22_83 %cl_22_79[24.1,] %cl_22_81[24.3,] %cl_22_82[24.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_22_84 
+		 7: COPY TYPE_StringLiteral "_gaq.push(['b._setDomainName', '." def_%cl_22_84 
 		 8: (PublicSuffix) def_%cl_22_85 
 		 9: %self->request def_%cl_22_86 %self[2.0,] 	 ARGS:
 		 10: %cl_22_86->host def_%cl_22_87 %cl_22_86[24.9,] 	 ARGS:
 		 11: %cl_22_85->parse def_%cl_22_88 %cl_22_85[24.8,] %cl_22_87[24.10,] 	 ARGS:%cl_22_87,
 		 12: %cl_22_88->domain def_%cl_22_89 %cl_22_88[24.11,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%cl_22_90 
+		 13: COPY TYPE_StringLiteral "']);" def_%cl_22_90 
 		 14: BUILDSTRING def_%cl_22_91 %cl_22_84[24.7,] %cl_22_89[24.12,] %cl_22_90[24.13,] 
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%cl_22_92 
+		 16: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_22_92 
 		 17: GETFIELD %self->current_community def_%cl_22_93 %self[24.9,2.0,] 
 		 18: (I18n) def_%cl_22_94 
 		 19: %cl_22_94->locale def_%cl_22_95 %cl_22_94[24.18,] 	 ARGS:
 		 20: %cl_22_93->name def_%cl_22_96 %cl_22_93[24.17,] %cl_22_95[24.19,] 	 ARGS:%cl_22_95,
 		 21: %self->Maybe def_%cl_22_97 %self[24.9,2.0,] %cl_22_96[24.20,] 	 ARGS:%cl_22_96,
-		 22: COPY TYPE_StringLiteral def_%cl_22_98 
-		 23: COPY TYPE_StringLiteral def_%cl_22_99 
+		 22: COPY TYPE_StringLiteral "'" def_%cl_22_98 
+		 23: COPY TYPE_StringLiteral "" def_%cl_22_99 
 		 24: %cl_22_97->gsub def_%cl_22_100 %cl_22_97[24.21,] %cl_22_98[24.22,] %cl_22_99[24.23,] 	 ARGS:%cl_22_98,%cl_22_99,
-		 25: COPY TYPE_StringLiteral def_%cl_22_101 
+		 25: COPY TYPE_StringLiteral "" def_%cl_22_101 
 		 26: %cl_22_100->or_else def_%cl_22_102 %cl_22_100[24.24,] %cl_22_101[24.25,] 	 ARGS:%cl_22_101,
-		 27: COPY TYPE_StringLiteral def_%cl_22_103 
+		 27: COPY TYPE_StringLiteral "']);" def_%cl_22_103 
 		 28: BUILDSTRING def_%cl_22_104 %cl_22_92[24.16,] %cl_22_102[24.26,] %cl_22_103[24.27,] 
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_22_105 
+		 30: COPY TYPE_StringLiteral "_gaq.push(['b._addIgnoredOrganic', '" def_%cl_22_105 
 		 31: GETFIELD %self->current_community def_%cl_22_106 %self[24.9,24.21,2.0,] 
 		 32: %cl_22_106->domain def_%cl_22_107 %cl_22_106[24.31,] 	 ARGS:
 		 33: BRANCH %cl_22_107[24.32,] 
@@ -4674,7 +4674,7 @@ BB 26
 	outgoing: 28 37 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_22_110 
+		 0: COPY TYPE_StringLiteral "']);" def_%cl_22_110 
 		 1: BUILDSTRING def_%cl_22_111 %cl_22_105[24.30,] %cl_22_107[25.2,24.32,] %cl_22_110[26.0,] 
 		 2: 
 BB 27
@@ -4699,7 +4699,7 @@ BB 30
 		 0: 
 		 1: %self->content_for def_%cl_22_112 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_22_113 
+		 3: COPY TYPE_StringLiteral "application" def_%cl_22_113 
 		 4: %self->javascript_include_tag def_%cl_22_114 %self[30.1,2.0,] %cl_22_113[30.3,] 	 ARGS:%cl_22_113,
 		 5: 
 		 6: 
@@ -4743,10 +4743,10 @@ BB 36
 		 0: 
 		 1: %self->content_for def_%cl_22_121 %self[2.0,] 	 ARGS:Symbol,
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_22_122 
+		 3: COPY TYPE_StringLiteral "error_pages.no_javascript.javascript_is_disabled_in_your_browser" def_%cl_22_122 
 		 4: %self->t def_%cl_22_123 %self[36.1,2.0,] %cl_22_122[36.3,] 	 ARGS:%cl_22_122,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_22_124 
+		 6: COPY TYPE_StringLiteral "error_pages.no_javascript.kassi_does_not_currently_work_without_javascript" def_%cl_22_124 
 		 7: %self->t def_%cl_22_125 %self[36.1,36.4,2.0,] %cl_22_124[36.6,] 	 ARGS:%cl_22_124,
 		 8: RETURN %cl_22_125[36.7,] %self[36.1,36.4,36.7,2.0,] 
 BB 37
@@ -4799,7 +4799,7 @@ BB 4
 		 1: GETFIELD %self->person def_%v_6 %self[2.0,] 
 		 2: GETFIELD %self->person def_%v_7 %self[2.0,] 
 		 3: %v_7->street_address def_%v_8 %v_7[4.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_9 
+		 4: COPY TYPE_StringLiteral "person" def_%v_9 
 		 5: HASH-address-location_type- def_%v_10 %v_8[4.3,] %v_9[4.4,] 
 		 6: %v_6->build_location def_%v_11 %v_6[4.1,] %v_10[4.5,] 	 ARGS:%v_10,
 		 7: 

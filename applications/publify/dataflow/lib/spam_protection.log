@@ -166,7 +166,7 @@ BB 9
 	instructions:
 		 0: 
 		 1: %self->logger def_%v_9 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_10 
+		 2: COPY TYPE_StringLiteral "[SP] Hit: " def_%v_10 
 		 3: BUILDSTRING def_%v_11 %v_10[9.2,] reason[7.3,] 
 		 4: %v_9->info def_%v_12 %v_9[9.1,] %v_11[9.3,] 	 ARGS:%v_11,
 		 5: 
@@ -198,15 +198,15 @@ BB 2
 		 5: RECEIVEARG def_ip_address 
 		 6: 
 		 7: %self->logger def_%v_3 %self[2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "[SP] Scanning IP " def_%v_4 
 		 9: BUILDSTRING def_%v_5 %v_4[2.8,] ip_address[2.5,] 
 		 10: %v_3->info def_%v_6 %v_3[2.7,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: 
 		 12: (IP_RBLS) def_%v_7 
-		 13: COPY TYPE_StringLiteral def_%v_8 
+		 13: COPY TYPE_StringLiteral "." def_%v_8 
 		 14: ip_address->split def_%v_9 ip_address[2.5,] %v_8[2.13,] 	 ARGS:%v_8,
 		 15: %v_9->reverse def_%v_10 %v_9[2.14,] 	 ARGS:
-		 16: COPY TYPE_StringLiteral def_%v_11 
+		 16: COPY TYPE_StringLiteral "." def_%v_11 
 		 17: %v_10->join def_%v_12 %v_10[2.15,] %v_11[2.16,] 	 ARGS:%v_11,
 		 18: %self->query_rbls def_%v_13 %self[2.0,2.7,] %v_7[2.12,] %v_12[2.17,] 	 ARGS:%v_7,%v_12,
 		 19: RETURN %v_13[2.18,] %self[2.0,2.7,2.18,] 
@@ -288,9 +288,9 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral "Hard URL Limit hit: " def_%v_10 
 		 2: uris->size def_%v_11 uris[2.5,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_12 
+		 3: COPY TYPE_StringLiteral " > " def_%v_12 
 		 4: BUILDSTRING def_%v_13 %v_10[6.1,] %v_11[6.2,] %v_12[6.3,] limit[2.9,] 
 		 5: %self->throw def_%v_14 %self[2.0,] %v_13[6.4,] 	 ARGS:Symbol,%v_13,
 		 6: RETURN %v_14[6.5,] %self[6.5,2.0,] 
@@ -430,7 +430,7 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_18 
+		 1: COPY TYPE_StringLiteral "." def_%cl_1_18 
 		 2: host->split def_%cl_1_19 host[12.0,] %cl_1_18[17.1,] 	 ARGS:%cl_1_18,
 		 3: %cl_1_19->reverse def_%cl_1_20 %cl_1_19[17.2,] 	 ARGS:
 		 4: COPY TYPE_PASS def_host_parts %cl_1_20[17.3,] 
@@ -493,20 +493,20 @@ BB 6
 CLOSURE END: 
 		 1: 
 		 2: %self->logger def_%cl_1_27 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_28 
-		 4: COPY TYPE_StringLiteral def_%cl_1_29 
+		 3: COPY TYPE_StringLiteral "[SP] Scanning domain " def_%cl_1_28 
+		 4: COPY TYPE_StringLiteral "." def_%cl_1_29 
 		 5: domain->join def_%cl_1_30 domain[17.7,] %cl_1_29[20.4,] 	 ARGS:%cl_1_29,
 		 6: BUILDSTRING def_%cl_1_31 %cl_1_28[20.3,] %cl_1_30[20.5,] 
 		 7: %cl_1_27->info def_%cl_1_32 %cl_1_27[20.2,] %cl_1_31[20.6,] 	 ARGS:%cl_1_31,
 		 8: 
 		 9: (HOST_RBLS) def_%cl_1_33 
-		 10: COPY TYPE_StringLiteral def_%cl_1_34 
+		 10: COPY TYPE_StringLiteral "." def_%cl_1_34 
 		 11: domain->join def_%cl_1_35 domain[20.5,17.7,] %cl_1_34[20.10,] 	 ARGS:%cl_1_34,
 		 12: %self->query_rbls def_%cl_1_36 %self[20.2,2.0,] %cl_1_33[20.9,] host[12.0,] %cl_1_35[20.11,] 	 ARGS:%cl_1_33,host,%cl_1_35,
 		 13: 
 		 14: %self->logger def_%cl_1_37 %self[20.2,20.12,2.0,] 	 ARGS:
-		 15: COPY TYPE_StringLiteral def_%cl_1_38 
-		 16: COPY TYPE_StringLiteral def_%cl_1_39 
+		 15: COPY TYPE_StringLiteral "[SP] Finished domain scan " def_%cl_1_38 
+		 16: COPY TYPE_StringLiteral "." def_%cl_1_39 
 		 17: domain->join def_%cl_1_40 domain[20.5,20.11,17.7,] %cl_1_39[20.16,] 	 ARGS:%cl_1_39,
 		 18: BUILDSTRING def_%cl_1_41 %cl_1_38[20.15,] %cl_1_40[20.17,] 
 		 19: %cl_1_37->info def_%cl_1_42 %cl_1_37[20.14,] %cl_1_41[20.18,] 	 ARGS:%cl_1_41,
@@ -601,7 +601,7 @@ BB 4
 		 1: 
 		 2: (IPSocket) def_%cl_2_6 
 		 3: COPY TYPE_Array def_%cl_2_7 d[2.2,] rbl[] 
-		 4: COPY TYPE_StringLiteral def_%cl_2_8 
+		 4: COPY TYPE_StringLiteral "." def_%cl_2_8 
 		 5: %cl_2_7->join def_%cl_2_9 %cl_2_7[4.3,] %cl_2_8[4.4,] 	 ARGS:%cl_2_8,
 		 6: %cl_2_6->getaddress def_%cl_2_10 %cl_2_6[4.2,] %cl_2_9[4.5,] 	 ARGS:%cl_2_9,
 		 7: COPY TYPE_PASS def_response %cl_2_10[4.6,] 
@@ -615,8 +615,8 @@ BB 6
 	instructions:
 		 0: 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%cl_2_13 
-		 3: COPY TYPE_StringLiteral def_%cl_2_14 
+		 2: COPY TYPE_StringLiteral " positively resolved subdomain " def_%cl_2_13 
+		 3: COPY TYPE_StringLiteral " => " def_%cl_2_14 
 		 4: BUILDSTRING def_%cl_2_15 rbl[] %cl_2_13[6.2,] d[2.2,] %cl_2_14[6.3,] response[4.7,] 
 		 5: %self->throw def_%cl_2_16 %self[2.0,] %cl_2_15[6.4,] 	 ARGS:Symbol,%cl_2_15,
 		 6: 
@@ -793,7 +793,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_attr_names 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "blocked by SpamProtection" def_%v_3 
 		 8: HASH-message- def_%v_4 %v_3[2.7,] 
 		 9: COPY TYPE_PASS def_configuration %v_4[2.8,] 
 		 10: 

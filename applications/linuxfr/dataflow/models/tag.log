@@ -14,12 +14,16 @@ BB 2
 		 4: 
 		 5: 
 		 6: (Tag) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "        SELECT t.name, COUNT(tg.id) AS cnt
+          FROM tags t JOIN taggings tg ON t.id = tg.tag_id
+         WHERE tg.node_id IN (SELECT DISTINCT node_id FROM taggings WHERE tag_id = " def_%v_4 
 		 8: 
 		 9: %self->id def_%v_5 %self[2.0,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral ") AND t.id != " def_%v_6 
 		 11: %self->id def_%v_7 %self[2.0,2.9,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_8 
+		 12: COPY TYPE_StringLiteral "
+      GROUP BY tg.tag_id ORDER BY cnt DESC LIMIT 10
+" def_%v_8 
 		 13: BUILDSTRING def_%v_9 %v_4[2.7,] %v_5[2.9,] %v_6[2.10,] %v_7[2.11,] %v_8[2.12,] 
 		 14: %v_3->find_by_sql def_%v_10 %v_3[2.6,] %v_9[2.13,] 	 ARGS:%v_9,
 		 15: RETURN %v_10[2.14,] %self[2.0,2.9,2.11,] 

@@ -60,7 +60,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "emails.new_message.you_have_a_new_message" def_%cl_1_3 
 		 2: HASH-sender_name- def_%cl_1_4 sender_name[] 
 		 3: %self->t def_%cl_1_5 %self[2.0,] %cl_1_3[3.1,] %cl_1_4[3.2,] 	 ARGS:%cl_1_3,%cl_1_4,
 		 4: %self->mail_params def_%cl_1_6 %self[3.3,2.0,] recipient[] community[] %cl_1_5[3.3,] 	 ARGS:recipient,community,%cl_1_5,
@@ -334,7 +334,7 @@ CLOSURE END:
 		 19: 
 		 20: GETFIELD %self->recipient def_%cl_1_24 %self[11.3,2.0,] 
 		 21: GETFIELD %self->community def_%cl_1_25 %self[11.3,2.0,] 
-		 22: COPY TYPE_StringLiteral def_%cl_1_26 
+		 22: COPY TYPE_StringLiteral "emails.transaction_preauthorized.subject" def_%cl_1_26 
 		 23: transaction->starter def_%cl_1_27 transaction[] 	 ARGS:
 		 24: GETFIELD %self->community def_%cl_1_28 %self[11.3,2.0,] 
 		 25: %cl_1_27->name def_%cl_1_29 %cl_1_27[11.23,] %cl_1_28[11.24,] 	 ARGS:%cl_1_28,
@@ -486,7 +486,7 @@ BB 3
 		 0: 
 		 1: GETFIELD %self->recipient def_%cl_1_3 %self[2.0,] 
 		 2: GETFIELD %self->community def_%cl_1_4 %self[2.0,] 
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "emails.transaction_preauthorized_reminder.subject" def_%cl_1_5 
 		 4: transaction->starter def_%cl_1_6 transaction[] 	 ARGS:
 		 5: GETFIELD %self->community def_%cl_1_7 %self[2.0,] 
 		 6: %cl_1_6->name def_%cl_1_8 %cl_1_6[3.4,] %cl_1_7[3.5,] 	 ARGS:%cl_1_7,
@@ -536,7 +536,7 @@ BB 2
 		 9: COPY TYPE_PASS def_recipient %v_3[2.8,] 
 		 10: 
 		 11: payment->recipient def_%v_4 payment[2.5,2.8,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%v_5 
+		 12: COPY TYPE_StringLiteral "email_about_new_payments" def_%v_5 
 		 13: %self->prepare_template def_%v_6 %self[2.0,] community[2.6,] %v_4[2.11,] %v_5[2.12,] 	 ARGS:community,%v_4,%v_5,
 		 14: 
 		 15: recipient->locale def_%v_7 recipient[2.9,] 	 ARGS:
@@ -673,7 +673,7 @@ BB 6
 		 2: payment->recipient def_%cl_1_16 payment[] 	 ARGS:
 		 3: %cl_1_16->confirmed_notification_emails_to def_%cl_1_17 %cl_1_16[6.2,] 	 ARGS:
 		 4: %self->community_specific_sender def_%cl_1_18 %self[2.0,] community[] 	 ARGS:community,
-		 5: COPY TYPE_StringLiteral def_%cl_1_19 
+		 5: COPY TYPE_StringLiteral "emails.new_payment.new_payment" def_%cl_1_19 
 		 6: %self->t def_%cl_1_20 %self[6.4,2.0,] %cl_1_19[6.5,] 	 ARGS:%cl_1_19,
 		 7: HASH-to-from-subject- def_%cl_1_21 %cl_1_17[6.3,] %cl_1_18[6.4,] %cl_1_20[6.6,] 
 		 8: %self->premailer_mail def_%cl_1_22 %self[6.4,6.6,2.0,] %cl_1_21[6.7,] %self[6.4,6.6,2.0,] 	 ARGS:%cl_1_21,%self,
@@ -715,7 +715,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "braintree_payment_receipt_to_seller" def_%cl_5_3 
 		 2: payment->recipient def_%cl_5_4 payment[] 	 ARGS:
 		 3: GETFIELD %self->url_params def_%cl_5_5 %self[2.0,] 
 		 4: payment->transaction def_%cl_5_6 payment[3.2,] 	 ARGS:
@@ -726,7 +726,7 @@ BB 3
 		 9: %self->person_transaction_url def_%cl_5_11 %self[2.0,] %cl_5_4[3.2,] %cl_5_10[3.8,] 	 ARGS:%cl_5_4,%cl_5_10,
 		 10: payment->transaction def_%cl_5_12 payment[3.2,3.4,] 	 ARGS:
 		 11: %cl_5_12->listing_title def_%cl_5_13 %cl_5_12[3.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_5_14 
+		 12: COPY TYPE_StringLiteral "emails.new_payment.price_per_unit_type" def_%cl_5_14 
 		 13: HASH-unit_type- def_%cl_5_15 unit_type[] 
 		 14: %self->t def_%cl_5_16 %self[3.9,2.0,] %cl_5_14[3.12,] %cl_5_15[3.13,] 	 ARGS:%cl_5_14,%cl_5_15,
 		 15: payment->transaction def_%cl_5_17 payment[3.2,3.4,3.10,] 	 ARGS:
@@ -813,7 +813,7 @@ BB 2
 		 8: payment->payer def_%v_3 payment[2.5,] 	 ARGS:
 		 9: COPY TYPE_PASS def_recipient %v_3[2.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_4 
+		 11: COPY TYPE_StringLiteral "email_about_new_payments" def_%v_4 
 		 12: %self->prepare_template def_%v_5 %self[2.0,] community[2.6,] %v_3[2.8,] %v_4[2.11,] 	 ARGS:community,recipient,%v_4,
 		 13: 
 		 14: recipient->locale def_%v_6 recipient[2.9,] 	 ARGS:
@@ -942,7 +942,7 @@ BB 6
 		 2: payment->payer def_%cl_1_14 payment[] 	 ARGS:
 		 3: %cl_1_14->confirmed_notification_emails_to def_%cl_1_15 %cl_1_14[6.2,] 	 ARGS:
 		 4: %self->community_specific_sender def_%cl_1_16 %self[2.0,] community[] 	 ARGS:community,
-		 5: COPY TYPE_StringLiteral def_%cl_1_17 
+		 5: COPY TYPE_StringLiteral "emails.receipt_to_payer.receipt_of_payment" def_%cl_1_17 
 		 6: %self->t def_%cl_1_18 %self[6.4,2.0,] %cl_1_17[6.5,] 	 ARGS:%cl_1_17,
 		 7: HASH-to-from-subject- def_%cl_1_19 %cl_1_15[6.3,] %cl_1_16[6.4,] %cl_1_18[6.6,] 
 		 8: %self->premailer_mail def_%cl_1_20 %self[6.4,6.6,2.0,] %cl_1_19[6.7,] %self[6.4,6.6,2.0,] 	 ARGS:%cl_1_19,%self,
@@ -984,7 +984,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "payment_receipt_to_buyer" def_%cl_5_3 
 		 2: payment->payer def_%cl_5_4 payment[] 	 ARGS:
 		 3: GETFIELD %self->url_params def_%cl_5_5 %self[2.0,] 
 		 4: payment->transaction def_%cl_5_6 payment[3.2,] 	 ARGS:
@@ -995,7 +995,7 @@ BB 3
 		 9: %self->person_transaction_url def_%cl_5_11 %self[2.0,] %cl_5_4[3.2,] %cl_5_10[3.8,] 	 ARGS:%cl_5_4,%cl_5_10,
 		 10: payment->transaction def_%cl_5_12 payment[3.2,3.4,] 	 ARGS:
 		 11: %cl_5_12->listing_title def_%cl_5_13 %cl_5_12[3.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_5_14 
+		 12: COPY TYPE_StringLiteral "emails.new_payment.price_per_unit_type" def_%cl_5_14 
 		 13: HASH-unit_type- def_%cl_5_15 unit_type[] 
 		 14: %self->t def_%cl_5_16 %self[3.9,2.0,] %cl_5_14[3.12,] %cl_5_15[3.13,] 	 ARGS:%cl_5_14,%cl_5_15,
 		 15: payment->transaction def_%cl_5_17 payment[3.2,3.4,3.10,] 	 ARGS:
@@ -1175,7 +1175,7 @@ BB 14
 		 12: transaction->[] def_%v_25 transaction[14.1,14.4,2.5,] 	 ARGS:Symbol,
 		 13: COPY TYPE_PASS def_gateway_fee %v_25[14.12,] 
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%v_26 
+		 15: COPY TYPE_StringLiteral "email_about_new_payments" def_%v_26 
 		 16: %self->prepare_template def_%v_27 %self[14.5,2.0,] community[13.3,7.0,6.0,] seller_model[9.3,3.0,2.6,] %v_26[14.15,] 	 ARGS:community,seller_model,%v_26,
 		 17: 
 		 18: seller_model->locale def_%v_28 seller_model[9.3,3.0,2.6,] 	 ARGS:
@@ -1359,7 +1359,7 @@ CLOSURE END:
 		 16: 
 		 17: seller_model->confirmed_notification_emails_to def_%cl_1_13 seller_model[] 	 ARGS:
 		 18: %self->community_specific_sender def_%cl_1_14 %self[3.5,3.11,2.0,] community[] 	 ARGS:community,
-		 19: COPY TYPE_StringLiteral def_%cl_1_15 
+		 19: COPY TYPE_StringLiteral "emails.new_payment.new_payment" def_%cl_1_15 
 		 20: %self->t def_%cl_1_16 %self[3.5,3.11,3.18,2.0,] %cl_1_15[3.19,] 	 ARGS:%cl_1_15,
 		 21: HASH-to-from-subject- def_%cl_1_17 %cl_1_13[3.17,] %cl_1_14[3.18,] %cl_1_16[3.20,] 
 		 22: %self->premailer_mail def_%cl_1_18 %self[3.5,3.11,3.18,3.20,2.0,] %cl_1_17[3.21,] %self[3.5,3.11,3.18,3.20,2.0,] 	 ARGS:%cl_1_17,%self,
@@ -1401,14 +1401,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_7_3 
+		 1: COPY TYPE_StringLiteral "paypal_payment_receipt_to_seller" def_%cl_7_3 
 		 2: GETFIELD %self->url_params def_%cl_7_4 %self[2.0,] 
 		 3: transaction->[] def_%cl_7_5 transaction[] 	 ARGS:Symbol,
 		 4: HASH-id- def_%cl_7_6 %cl_7_5[3.3,] 
 		 5: %cl_7_4->merge def_%cl_7_7 %cl_7_4[3.2,] %cl_7_6[3.4,] 	 ARGS:%cl_7_6,
 		 6: %self->person_transaction_url def_%cl_7_8 %self[2.0,] seller_model[] %cl_7_7[3.5,] 	 ARGS:seller_model,%cl_7_7,
 		 7: transaction->[] def_%cl_7_9 transaction[3.3,] 	 ARGS:Symbol,
-		 8: COPY TYPE_StringLiteral def_%cl_7_10 
+		 8: COPY TYPE_StringLiteral "emails.new_payment.price_per_unit_type" def_%cl_7_10 
 		 9: HASH-unit_type- def_%cl_7_11 unit_type[] 
 		 10: %self->t def_%cl_7_12 %self[3.6,2.0,] %cl_7_10[3.8,] %cl_7_11[3.9,] 	 ARGS:%cl_7_10,%cl_7_11,
 		 11: transaction->[] def_%cl_7_13 transaction[3.3,3.7,] 	 ARGS:Symbol,
@@ -1594,7 +1594,7 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_18 
+		 1: COPY TYPE_StringLiteral "email_about_new_payments" def_%v_18 
 		 2: %self->prepare_template def_%v_19 %self[2.0,] community[13.3,7.0,6.0,] buyer_model[11.3,5.0,4.0,] %v_18[14.1,] 	 ARGS:community,buyer_model,%v_18,
 		 3: 
 		 4: buyer_model->locale def_%v_20 buyer_model[11.3,5.0,4.0,] 	 ARGS:
@@ -1774,7 +1774,7 @@ CLOSURE END:
 		 12: 
 		 13: buyer_model->confirmed_notification_emails_to def_%cl_1_11 buyer_model[] 	 ARGS:
 		 14: %self->community_specific_sender def_%cl_1_12 %self[3.1,3.7,2.0,] community[] 	 ARGS:community,
-		 15: COPY TYPE_StringLiteral def_%cl_1_13 
+		 15: COPY TYPE_StringLiteral "emails.receipt_to_payer.receipt_of_payment" def_%cl_1_13 
 		 16: %self->t def_%cl_1_14 %self[3.1,3.7,3.14,2.0,] %cl_1_13[3.15,] 	 ARGS:%cl_1_13,
 		 17: HASH-to-from-subject- def_%cl_1_15 %cl_1_11[3.13,] %cl_1_12[3.14,] %cl_1_14[3.16,] 
 		 18: %self->premailer_mail def_%cl_1_16 %self[3.1,3.7,3.14,3.16,2.0,] %cl_1_15[3.17,] %self[3.1,3.7,3.14,3.16,2.0,] 	 ARGS:%cl_1_15,%self,
@@ -1816,14 +1816,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_7_3 
+		 1: COPY TYPE_StringLiteral "payment_receipt_to_buyer" def_%cl_7_3 
 		 2: GETFIELD %self->url_params def_%cl_7_4 %self[2.0,] 
 		 3: transaction->[] def_%cl_7_5 transaction[] 	 ARGS:Symbol,
 		 4: HASH-id- def_%cl_7_6 %cl_7_5[3.3,] 
 		 5: %cl_7_4->merge def_%cl_7_7 %cl_7_4[3.2,] %cl_7_6[3.4,] 	 ARGS:%cl_7_6,
 		 6: %self->person_transaction_url def_%cl_7_8 %self[2.0,] buyer_model[] %cl_7_7[3.5,] 	 ARGS:buyer_model,%cl_7_7,
 		 7: transaction->[] def_%cl_7_9 transaction[3.3,] 	 ARGS:Symbol,
-		 8: COPY TYPE_StringLiteral def_%cl_7_10 
+		 8: COPY TYPE_StringLiteral "emails.receipt_to_payer.price_per_unit_type" def_%cl_7_10 
 		 9: HASH-unit_type- def_%cl_7_11 unit_type[] 
 		 10: %self->t def_%cl_7_12 %self[3.6,2.0,] %cl_7_10[3.8,] %cl_7_11[3.9,] 	 ARGS:%cl_7_10,%cl_7_11,
 		 11: transaction->[] def_%cl_7_13 transaction[3.3,3.7,] 	 ARGS:Symbol,
@@ -2024,7 +2024,7 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_3 
+		 0: COPY TYPE_StringLiteral "email" def_%v_3 
 		 1: COPY TYPE_PASS def_ref %v_3[3.0,] 
 BB 4
 	outgoing: 5 

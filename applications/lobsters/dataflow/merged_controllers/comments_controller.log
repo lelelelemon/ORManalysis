@@ -39,7 +39,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_12 
+		 1: COPY TYPE_StringLiteral "can't find story" def_%v_12 
 		 2: HASH-text-status- def_%v_13 %v_12[5.1,] 
 		 3: %self->render def_%v_14 %self[2.0,] %v_13[5.2,] 	 ARGS:%v_13,
 		 4: RETURN %v_14[5.3,] %self[5.3,2.0,] 
@@ -130,7 +130,7 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_43 
+		 1: COPY TYPE_StringLiteral "invalid parent comment" def_%v_43 
 		 2: HASH-error-status- def_%v_44 %v_43[15.1,] 
 		 3: HASH-json- def_%v_45 %v_44[15.2,] 
 		 4: %self->render def_%v_46 %self[2.0,] %v_45[15.3,] 	 ARGS:%v_45,
@@ -178,7 +178,7 @@ BB 21
 		 2: %v_58->now def_%v_59 %v_58[21.1,] 	 ARGS:
 		 3: pc->created_at def_%v_60 pc[19.9,13.8,] 	 ARGS:
 		 4: %v_59->- def_%v_61 %v_59[21.2,] %v_60[21.3,] 	 ARGS:%v_60,
-		 5: def_%v_62 	 ARGS:
+		 5: CONSTANT def_%v_62 	 ARGS:
 		 6: %v_61->< def_%v_63 %v_61[21.4,] %v_62[21.5,] 	 ARGS:%v_62,
 		 7: BRANCH %v_63[21.6,] 
 BB 22
@@ -187,8 +187,8 @@ BB 22
 	instructions:
 		 0: 
 		 1: comment->errors def_%v_64 comment[14.1,10.3,6.4,6.9,6.12,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_65 
-		 3: COPY TYPE_StringLiteral def_%v_66 
+		 2: COPY TYPE_StringLiteral "^You have already posted a comment " def_%v_65 
+		 3: COPY TYPE_StringLiteral "here recently." def_%v_66 
 		 4: %v_65-><< def_%v_67 %v_65[22.2,] %v_66[22.3,] 	 ARGS:%v_66,
 		 5: %v_64->add def_%v_68 %v_64[22.1,] %v_67[22.4,] 	 ARGS:Symbol,%v_67,
 		 6: 
@@ -231,7 +231,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral "edit_comment_" def_%cl_1_5 
 		 2: 
 		 3: comment->short_id def_%cl_1_6 comment[] 	 ARGS:
 		 4: BUILDSTRING def_%cl_1_7 %cl_1_5[6.1,] %cl_1_6[6.3,] 
@@ -277,7 +277,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_6 
+		 1: COPY TYPE_StringLiteral "story_id" def_%cl_2_6 
 		 2: comment->story def_%cl_2_7 comment[] 	 ARGS:
 		 3: %cl_2_7->short_id def_%cl_2_8 %cl_2_7[6.2,] 	 ARGS:
 		 4: %self->hidden_field_tag def_%cl_2_9 %self[2.0,] %cl_2_6[6.1,] %cl_2_8[6.3,] 	 ARGS:%cl_2_6,%cl_2_8,
@@ -289,7 +289,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_11 
+		 1: COPY TYPE_StringLiteral "parent_comment_short_id" def_%cl_2_11 
 		 2: comment->parent_comment def_%cl_2_12 comment[] 	 ARGS:
 		 3: %cl_2_12->short_id def_%cl_2_13 %cl_2_12[7.2,] 	 ARGS:
 		 4: %self->hidden_field_tag def_%cl_2_14 %self[2.0,] %cl_2_11[7.1,] %cl_2_13[7.3,] 	 ARGS:%cl_2_11,%cl_2_13,
@@ -304,10 +304,10 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_15 
+		 1: COPY TYPE_StringLiteral "comment" def_%cl_2_15 
 		 2: comment->comment def_%cl_2_16 comment[] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_2_17 
-		 4: COPY TYPE_StringLiteral def_%cl_2_18 
+		 3: COPY TYPE_StringLiteral "width: 100%;" def_%cl_2_17 
+		 4: COPY TYPE_StringLiteral "off" def_%cl_2_18 
 		 5: 
 		 6: GETFIELD %self->user def_%cl_2_19 %self[2.0,] 
 		 7: %cl_2_19->! def_%cl_2_20 %cl_2_19[9.6,] 	 ARGS:
@@ -318,13 +318,13 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_22 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_22 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_23 
+		 0: COPY TYPE_StringLiteral "You must be logged in to leave a comment." def_%cl_2_23 
 		 1: COPY TYPE_PASS def_%cl_2_22 %cl_2_23[11.0,] 
 BB 12
 	outgoing: 13 14 37 
@@ -358,29 +358,29 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_29 
+		 0: COPY TYPE_StringLiteral "Post" def_%cl_2_29 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_30 
+		 0: COPY TYPE_StringLiteral "Update" def_%cl_2_30 
 		 1: COPY TYPE_PASS def_%cl_2_29 %cl_2_30[17.0,] 
 BB 18
 	outgoing: 19 20 37 
 	datadep: 
 	instructions:
 		 0: BUILDSTRING def_%cl_2_31 %cl_2_29[17.1,16.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_2_32 
-		 2: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "comment-post" def_%cl_2_32 
+		 2: COPY TYPE_StringLiteral "button" def_%cl_2_33 
 		 3: 
 		 4: GETFIELD %self->user def_%cl_2_34 %self[2.0,] 
 		 5: %cl_2_34->! def_%cl_2_35 %cl_2_34[18.4,] 	 ARGS:
 		 6: HASH-class-type-disabled- def_%cl_2_36 %cl_2_32[18.1,] %cl_2_33[18.2,] %cl_2_35[18.5,] 
 		 7: %self->button_tag def_%cl_2_37 %self[2.0,] %cl_2_31[18.0,] %cl_2_36[18.6,] 	 ARGS:%cl_2_31,%cl_2_36,
-		 8: COPY TYPE_StringLiteral def_%cl_2_38 
-		 9: COPY TYPE_StringLiteral def_%cl_2_39 
-		 10: COPY TYPE_StringLiteral def_%cl_2_40 
+		 8: COPY TYPE_StringLiteral "Preview" def_%cl_2_38 
+		 9: COPY TYPE_StringLiteral "comment-preview" def_%cl_2_39 
+		 10: COPY TYPE_StringLiteral "button" def_%cl_2_40 
 		 11: 
 		 12: GETFIELD %self->user def_%cl_2_41 %self[18.7,2.0,] 
 		 13: %cl_2_41->! def_%cl_2_42 %cl_2_41[18.12,] 	 ARGS:
@@ -404,9 +404,9 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_47 
-		 2: COPY TYPE_StringLiteral def_%cl_2_48 
-		 3: COPY TYPE_StringLiteral def_%cl_2_49 
+		 1: COPY TYPE_StringLiteral "Cancel" def_%cl_2_47 
+		 2: COPY TYPE_StringLiteral "comment-cancel" def_%cl_2_48 
+		 3: COPY TYPE_StringLiteral "button" def_%cl_2_49 
 		 4: HASH-class-type- def_%cl_2_50 %cl_2_48[21.2,] %cl_2_49[21.3,] 
 		 5: %self->button_tag def_%cl_2_51 %self[2.0,] %cl_2_47[21.1,] %cl_2_50[21.4,] 	 ARGS:%cl_2_47,%cl_2_50,
 		 6: 
@@ -440,11 +440,11 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_56 
+		 1: COPY TYPE_StringLiteral "hat_id" def_%cl_2_56 
 		 2: GETFIELD %self->user def_%cl_2_57 %self[2.0,] 
 		 3: %cl_2_57->hats def_%cl_2_58 %cl_2_57[26.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_2_59 
-		 5: COPY TYPE_StringLiteral def_%cl_2_60 
+		 4: COPY TYPE_StringLiteral "id" def_%cl_2_59 
+		 5: COPY TYPE_StringLiteral "hat" def_%cl_2_60 
 		 6: comment->hat_id def_%cl_2_61 comment[] 	 ARGS:
 		 7: %self->options_from_collection_for_select def_%cl_2_62 %self[2.0,] %cl_2_58[26.3,] %cl_2_59[26.4,] %cl_2_60[26.5,] %cl_2_61[26.6,] 	 ARGS:%cl_2_58,%cl_2_59,%cl_2_60,%cl_2_61,
 		 8: HASH-include_blank- def_%cl_2_63 
@@ -570,13 +570,13 @@ BB 14
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_22 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_1_22 
 		 1: 
 BB 15
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_23 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_1_23 
 		 1: COPY TYPE_PASS def_%cl_1_22 %cl_1_23[15.0,] 
 BB 16
 	outgoing: 18 
@@ -587,7 +587,7 @@ BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_24 
 		 1: COPY TYPE_PASS def_%cl_1_22 %cl_1_24[17.0,] 
 BB 18
 	outgoing: 19 20 119 
@@ -600,13 +600,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_26 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_1_26 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_27 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_27 
 		 1: COPY TYPE_PASS def_%cl_1_26 %cl_1_27[20.0,] 
 BB 21
 	outgoing: 22 23 119 
@@ -620,13 +620,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_30 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_1_30 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_31 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_31 
 		 1: COPY TYPE_PASS def_%cl_1_30 %cl_1_31[23.0,] 
 BB 24
 	outgoing: 25 26 119 
@@ -640,13 +640,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_34 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_1_34 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_35 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_35 
 		 1: COPY TYPE_PASS def_%cl_1_34 %cl_1_35[26.0,] 
 BB 27
 	outgoing: 28 29 119 
@@ -660,13 +660,13 @@ BB 28
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_38 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_1_38 
 		 1: 
 BB 29
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_39 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_39 
 		 1: COPY TYPE_PASS def_%cl_1_38 %cl_1_39[29.0,] 
 BB 30
 	outgoing: 31 32 119 
@@ -680,13 +680,13 @@ BB 31
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_42 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_1_42 
 		 1: 
 BB 32
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_43 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_43 
 		 1: COPY TYPE_PASS def_%cl_1_42 %cl_1_43[32.0,] 
 BB 33
 	outgoing: 34 43 119 
@@ -715,9 +715,9 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_48 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_48 
 		 2: %self->login_path def_%cl_1_49 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_50 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_1_50 
 		 4: HASH-class- def_%cl_1_51 %cl_1_50[36.3,] 
 		 5: %self->link_to def_%cl_1_52 %self[36.2,2.0,] %cl_1_48[36.1,] %cl_1_49[36.2,] %cl_1_51[36.4,] 	 ARGS:%cl_1_48,%cl_1_49,%cl_1_51,
 		 6: COPY TYPE_PASS def_%cl_1_47 %cl_1_52[36.5,] 
@@ -1102,7 +1102,7 @@ BB 94
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_1_120 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_1_121 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_1_121 
 		 2: %cl_1_120->try def_%cl_1_122 %cl_1_120[94.0,] %cl_1_121[94.1,] 	 ARGS:%cl_1_121,
 		 3: COPY TYPE_PASS def_%cl_1_115 %cl_1_122[94.2,] 
 BB 95
@@ -1375,13 +1375,13 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_11 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_3_11 
 		 1: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_12 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_3_12 
 		 1: COPY TYPE_PASS def_%cl_3_11 %cl_3_12[9.0,] 
 BB 10
 	outgoing: 12 
@@ -1392,7 +1392,7 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_13 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_13 
 		 1: COPY TYPE_PASS def_%cl_3_11 %cl_3_13[11.0,] 
 BB 12
 	outgoing: 13 14 111 
@@ -1405,13 +1405,13 @@ BB 13
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_15 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_3_15 
 		 1: 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_16 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_16 
 		 1: COPY TYPE_PASS def_%cl_3_15 %cl_3_16[14.0,] 
 BB 15
 	outgoing: 16 17 111 
@@ -1425,13 +1425,13 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_19 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_3_19 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_20 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_20 
 		 1: COPY TYPE_PASS def_%cl_3_19 %cl_3_20[17.0,] 
 BB 18
 	outgoing: 19 20 111 
@@ -1445,13 +1445,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_23 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_3_23 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_24 
 		 1: COPY TYPE_PASS def_%cl_3_23 %cl_3_24[20.0,] 
 BB 21
 	outgoing: 22 23 111 
@@ -1465,13 +1465,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_27 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_3_27 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_28 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_28 
 		 1: COPY TYPE_PASS def_%cl_3_27 %cl_3_28[23.0,] 
 BB 24
 	outgoing: 25 26 111 
@@ -1485,13 +1485,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_31 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_3_31 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_32 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_32 
 		 1: COPY TYPE_PASS def_%cl_3_31 %cl_3_32[26.0,] 
 BB 27
 	outgoing: 28 37 111 
@@ -1520,9 +1520,9 @@ BB 30
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_37 
+		 1: COPY TYPE_StringLiteral "" def_%cl_3_37 
 		 2: %self->login_path def_%cl_3_38 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_3_39 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_3_39 
 		 4: HASH-class- def_%cl_3_40 %cl_3_39[30.3,] 
 		 5: %self->link_to def_%cl_3_41 %self[30.2,2.0,] %cl_3_37[30.1,] %cl_3_38[30.2,] %cl_3_40[30.4,] 	 ARGS:%cl_3_37,%cl_3_38,%cl_3_40,
 		 6: COPY TYPE_PASS def_%cl_3_36 %cl_3_41[30.5,] 
@@ -1907,7 +1907,7 @@ BB 88
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_3_109 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_3_110 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_3_110 
 		 2: %cl_3_109->try def_%cl_3_111 %cl_3_109[88.0,] %cl_3_110[88.1,] 	 ARGS:%cl_3_110,
 		 3: COPY TYPE_PASS def_%cl_3_104 %cl_3_111[88.2,] 
 BB 89
@@ -2118,7 +2118,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_8 
 		 2: HASH-text-status- def_%v_9 %v_8[5.1,] 
 		 3: %self->render def_%v_10 %self[2.0,] %v_9[5.2,] 	 ARGS:%v_9,
 		 4: RETURN %v_10[5.3,] %self[5.3,2.0,] 
@@ -2185,13 +2185,13 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_11 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_1_11 
 		 1: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_12 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_1_12 
 		 1: COPY TYPE_PASS def_%cl_1_11 %cl_1_12[9.0,] 
 BB 10
 	outgoing: 12 
@@ -2202,7 +2202,7 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_13 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_13 
 		 1: COPY TYPE_PASS def_%cl_1_11 %cl_1_13[11.0,] 
 BB 12
 	outgoing: 13 14 111 
@@ -2215,13 +2215,13 @@ BB 13
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_15 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_1_15 
 		 1: 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_16 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_16 
 		 1: COPY TYPE_PASS def_%cl_1_15 %cl_1_16[14.0,] 
 BB 15
 	outgoing: 16 17 111 
@@ -2235,13 +2235,13 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_19 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_1_19 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_20 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_20 
 		 1: COPY TYPE_PASS def_%cl_1_19 %cl_1_20[17.0,] 
 BB 18
 	outgoing: 19 20 111 
@@ -2255,13 +2255,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_23 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_1_23 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_24 
 		 1: COPY TYPE_PASS def_%cl_1_23 %cl_1_24[20.0,] 
 BB 21
 	outgoing: 22 23 111 
@@ -2275,13 +2275,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_27 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_1_27 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_28 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_28 
 		 1: COPY TYPE_PASS def_%cl_1_27 %cl_1_28[23.0,] 
 BB 24
 	outgoing: 25 26 111 
@@ -2295,13 +2295,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_31 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_1_31 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_32 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_32 
 		 1: COPY TYPE_PASS def_%cl_1_31 %cl_1_32[26.0,] 
 BB 27
 	outgoing: 28 37 111 
@@ -2330,9 +2330,9 @@ BB 30
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_37 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_37 
 		 2: %self->login_path def_%cl_1_38 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_39 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_1_39 
 		 4: HASH-class- def_%cl_1_40 %cl_1_39[30.3,] 
 		 5: %self->link_to def_%cl_1_41 %self[30.2,2.0,] %cl_1_37[30.1,] %cl_1_38[30.2,] %cl_1_40[30.4,] 	 ARGS:%cl_1_37,%cl_1_38,%cl_1_40,
 		 6: COPY TYPE_PASS def_%cl_1_36 %cl_1_41[30.5,] 
@@ -2717,7 +2717,7 @@ BB 88
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_1_109 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_1_110 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_1_110 
 		 2: %cl_1_109->try def_%cl_1_111 %cl_1_109[88.0,] %cl_1_110[88.1,] 	 ARGS:%cl_1_110,
 		 3: COPY TYPE_PASS def_%cl_1_104 %cl_1_111[88.2,] 
 BB 89
@@ -2904,7 +2904,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_6 
 		 2: HASH-text-status- def_%v_7 %v_6[3.1,] 
 		 3: %self->render def_%v_8 %self[2.0,] %v_7[3.2,] 	 ARGS:%v_7,
 		 4: RETURN %v_8[3.3,] %self[3.3,2.0,] 
@@ -2954,7 +2954,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_7 
 		 2: HASH-text-status- def_%v_8 %v_7[4.1,] 
 		 3: %self->render def_%v_9 %self[2.0,] %v_8[4.2,] 	 ARGS:%v_8,
 		 4: RETURN %v_9[4.3,] %self[4.3,2.0,] 
@@ -3000,7 +3000,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_8 
 		 2: HASH-text-status- def_%v_9 %v_8[5.1,] 
 		 3: %self->render def_%v_10 %self[2.0,] %v_9[5.2,] 	 ARGS:%v_9,
 		 4: RETURN %v_10[5.3,] %self[5.3,2.0,] 
@@ -3049,7 +3049,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral "edit_comment_" def_%cl_1_5 
 		 2: 
 		 3: comment->short_id def_%cl_1_6 comment[] 	 ARGS:
 		 4: BUILDSTRING def_%cl_1_7 %cl_1_5[6.1,] %cl_1_6[6.3,] 
@@ -3095,7 +3095,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_6 
+		 1: COPY TYPE_StringLiteral "story_id" def_%cl_2_6 
 		 2: comment->story def_%cl_2_7 comment[] 	 ARGS:
 		 3: %cl_2_7->short_id def_%cl_2_8 %cl_2_7[6.2,] 	 ARGS:
 		 4: %self->hidden_field_tag def_%cl_2_9 %self[2.0,] %cl_2_6[6.1,] %cl_2_8[6.3,] 	 ARGS:%cl_2_6,%cl_2_8,
@@ -3107,7 +3107,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_11 
+		 1: COPY TYPE_StringLiteral "parent_comment_short_id" def_%cl_2_11 
 		 2: comment->parent_comment def_%cl_2_12 comment[] 	 ARGS:
 		 3: %cl_2_12->short_id def_%cl_2_13 %cl_2_12[7.2,] 	 ARGS:
 		 4: %self->hidden_field_tag def_%cl_2_14 %self[2.0,] %cl_2_11[7.1,] %cl_2_13[7.3,] 	 ARGS:%cl_2_11,%cl_2_13,
@@ -3122,10 +3122,10 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_15 
+		 1: COPY TYPE_StringLiteral "comment" def_%cl_2_15 
 		 2: comment->comment def_%cl_2_16 comment[] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_2_17 
-		 4: COPY TYPE_StringLiteral def_%cl_2_18 
+		 3: COPY TYPE_StringLiteral "width: 100%;" def_%cl_2_17 
+		 4: COPY TYPE_StringLiteral "off" def_%cl_2_18 
 		 5: 
 		 6: GETFIELD %self->user def_%cl_2_19 %self[2.0,] 
 		 7: %cl_2_19->! def_%cl_2_20 %cl_2_19[9.6,] 	 ARGS:
@@ -3136,13 +3136,13 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_22 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_22 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_23 
+		 0: COPY TYPE_StringLiteral "You must be logged in to leave a comment." def_%cl_2_23 
 		 1: COPY TYPE_PASS def_%cl_2_22 %cl_2_23[11.0,] 
 BB 12
 	outgoing: 13 14 37 
@@ -3176,29 +3176,29 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_29 
+		 0: COPY TYPE_StringLiteral "Post" def_%cl_2_29 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_30 
+		 0: COPY TYPE_StringLiteral "Update" def_%cl_2_30 
 		 1: COPY TYPE_PASS def_%cl_2_29 %cl_2_30[17.0,] 
 BB 18
 	outgoing: 19 20 37 
 	datadep: 
 	instructions:
 		 0: BUILDSTRING def_%cl_2_31 %cl_2_29[17.1,16.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_2_32 
-		 2: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "comment-post" def_%cl_2_32 
+		 2: COPY TYPE_StringLiteral "button" def_%cl_2_33 
 		 3: 
 		 4: GETFIELD %self->user def_%cl_2_34 %self[2.0,] 
 		 5: %cl_2_34->! def_%cl_2_35 %cl_2_34[18.4,] 	 ARGS:
 		 6: HASH-class-type-disabled- def_%cl_2_36 %cl_2_32[18.1,] %cl_2_33[18.2,] %cl_2_35[18.5,] 
 		 7: %self->button_tag def_%cl_2_37 %self[2.0,] %cl_2_31[18.0,] %cl_2_36[18.6,] 	 ARGS:%cl_2_31,%cl_2_36,
-		 8: COPY TYPE_StringLiteral def_%cl_2_38 
-		 9: COPY TYPE_StringLiteral def_%cl_2_39 
-		 10: COPY TYPE_StringLiteral def_%cl_2_40 
+		 8: COPY TYPE_StringLiteral "Preview" def_%cl_2_38 
+		 9: COPY TYPE_StringLiteral "comment-preview" def_%cl_2_39 
+		 10: COPY TYPE_StringLiteral "button" def_%cl_2_40 
 		 11: 
 		 12: GETFIELD %self->user def_%cl_2_41 %self[18.7,2.0,] 
 		 13: %cl_2_41->! def_%cl_2_42 %cl_2_41[18.12,] 	 ARGS:
@@ -3222,9 +3222,9 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_47 
-		 2: COPY TYPE_StringLiteral def_%cl_2_48 
-		 3: COPY TYPE_StringLiteral def_%cl_2_49 
+		 1: COPY TYPE_StringLiteral "Cancel" def_%cl_2_47 
+		 2: COPY TYPE_StringLiteral "comment-cancel" def_%cl_2_48 
+		 3: COPY TYPE_StringLiteral "button" def_%cl_2_49 
 		 4: HASH-class-type- def_%cl_2_50 %cl_2_48[21.2,] %cl_2_49[21.3,] 
 		 5: %self->button_tag def_%cl_2_51 %self[2.0,] %cl_2_47[21.1,] %cl_2_50[21.4,] 	 ARGS:%cl_2_47,%cl_2_50,
 		 6: 
@@ -3258,11 +3258,11 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_56 
+		 1: COPY TYPE_StringLiteral "hat_id" def_%cl_2_56 
 		 2: GETFIELD %self->user def_%cl_2_57 %self[2.0,] 
 		 3: %cl_2_57->hats def_%cl_2_58 %cl_2_57[26.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_2_59 
-		 5: COPY TYPE_StringLiteral def_%cl_2_60 
+		 4: COPY TYPE_StringLiteral "id" def_%cl_2_59 
+		 5: COPY TYPE_StringLiteral "hat" def_%cl_2_60 
 		 6: comment->hat_id def_%cl_2_61 comment[] 	 ARGS:
 		 7: %self->options_from_collection_for_select def_%cl_2_62 %self[2.0,] %cl_2_58[26.3,] %cl_2_59[26.4,] %cl_2_60[26.5,] %cl_2_61[26.6,] 	 ARGS:%cl_2_58,%cl_2_59,%cl_2_60,%cl_2_61,
 		 8: HASH-include_blank- def_%cl_2_63 
@@ -3388,13 +3388,13 @@ BB 14
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_22 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_1_22 
 		 1: 
 BB 15
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_23 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_1_23 
 		 1: COPY TYPE_PASS def_%cl_1_22 %cl_1_23[15.0,] 
 BB 16
 	outgoing: 18 
@@ -3405,7 +3405,7 @@ BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_24 
 		 1: COPY TYPE_PASS def_%cl_1_22 %cl_1_24[17.0,] 
 BB 18
 	outgoing: 19 20 119 
@@ -3418,13 +3418,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_26 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_1_26 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_27 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_27 
 		 1: COPY TYPE_PASS def_%cl_1_26 %cl_1_27[20.0,] 
 BB 21
 	outgoing: 22 23 119 
@@ -3438,13 +3438,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_30 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_1_30 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_31 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_31 
 		 1: COPY TYPE_PASS def_%cl_1_30 %cl_1_31[23.0,] 
 BB 24
 	outgoing: 25 26 119 
@@ -3458,13 +3458,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_34 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_1_34 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_35 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_35 
 		 1: COPY TYPE_PASS def_%cl_1_34 %cl_1_35[26.0,] 
 BB 27
 	outgoing: 28 29 119 
@@ -3478,13 +3478,13 @@ BB 28
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_38 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_1_38 
 		 1: 
 BB 29
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_39 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_39 
 		 1: COPY TYPE_PASS def_%cl_1_38 %cl_1_39[29.0,] 
 BB 30
 	outgoing: 31 32 119 
@@ -3498,13 +3498,13 @@ BB 31
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_42 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_1_42 
 		 1: 
 BB 32
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_43 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_43 
 		 1: COPY TYPE_PASS def_%cl_1_42 %cl_1_43[32.0,] 
 BB 33
 	outgoing: 34 43 119 
@@ -3533,9 +3533,9 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_48 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_48 
 		 2: %self->login_path def_%cl_1_49 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_50 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_1_50 
 		 4: HASH-class- def_%cl_1_51 %cl_1_50[36.3,] 
 		 5: %self->link_to def_%cl_1_52 %self[36.2,2.0,] %cl_1_48[36.1,] %cl_1_49[36.2,] %cl_1_51[36.4,] 	 ARGS:%cl_1_48,%cl_1_49,%cl_1_51,
 		 6: COPY TYPE_PASS def_%cl_1_47 %cl_1_52[36.5,] 
@@ -3920,7 +3920,7 @@ BB 94
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_1_120 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_1_121 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_1_121 
 		 2: %cl_1_120->try def_%cl_1_122 %cl_1_120[94.0,] %cl_1_121[94.1,] 	 ARGS:%cl_1_121,
 		 3: COPY TYPE_PASS def_%cl_1_115 %cl_1_122[94.2,] 
 BB 95
@@ -4112,7 +4112,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_6 
 		 2: HASH-text-status- def_%v_7 %v_6[3.1,] 
 		 3: %self->render def_%v_8 %self[2.0,] %v_7[3.2,] 	 ARGS:%v_7,
 		 4: RETURN %v_8[3.3,] %self[3.3,2.0,] 
@@ -4170,7 +4170,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral "edit_comment_" def_%cl_1_5 
 		 2: 
 		 3: comment->short_id def_%cl_1_6 comment[] 	 ARGS:
 		 4: BUILDSTRING def_%cl_1_7 %cl_1_5[6.1,] %cl_1_6[6.3,] 
@@ -4216,7 +4216,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_6 
+		 1: COPY TYPE_StringLiteral "story_id" def_%cl_2_6 
 		 2: comment->story def_%cl_2_7 comment[] 	 ARGS:
 		 3: %cl_2_7->short_id def_%cl_2_8 %cl_2_7[6.2,] 	 ARGS:
 		 4: %self->hidden_field_tag def_%cl_2_9 %self[2.0,] %cl_2_6[6.1,] %cl_2_8[6.3,] 	 ARGS:%cl_2_6,%cl_2_8,
@@ -4228,7 +4228,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_11 
+		 1: COPY TYPE_StringLiteral "parent_comment_short_id" def_%cl_2_11 
 		 2: comment->parent_comment def_%cl_2_12 comment[] 	 ARGS:
 		 3: %cl_2_12->short_id def_%cl_2_13 %cl_2_12[7.2,] 	 ARGS:
 		 4: %self->hidden_field_tag def_%cl_2_14 %self[2.0,] %cl_2_11[7.1,] %cl_2_13[7.3,] 	 ARGS:%cl_2_11,%cl_2_13,
@@ -4243,10 +4243,10 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_15 
+		 1: COPY TYPE_StringLiteral "comment" def_%cl_2_15 
 		 2: comment->comment def_%cl_2_16 comment[] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_2_17 
-		 4: COPY TYPE_StringLiteral def_%cl_2_18 
+		 3: COPY TYPE_StringLiteral "width: 100%;" def_%cl_2_17 
+		 4: COPY TYPE_StringLiteral "off" def_%cl_2_18 
 		 5: 
 		 6: GETFIELD %self->user def_%cl_2_19 %self[2.0,] 
 		 7: %cl_2_19->! def_%cl_2_20 %cl_2_19[9.6,] 	 ARGS:
@@ -4257,13 +4257,13 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_22 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_22 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_23 
+		 0: COPY TYPE_StringLiteral "You must be logged in to leave a comment." def_%cl_2_23 
 		 1: COPY TYPE_PASS def_%cl_2_22 %cl_2_23[11.0,] 
 BB 12
 	outgoing: 13 14 37 
@@ -4297,29 +4297,29 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_29 
+		 0: COPY TYPE_StringLiteral "Post" def_%cl_2_29 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_30 
+		 0: COPY TYPE_StringLiteral "Update" def_%cl_2_30 
 		 1: COPY TYPE_PASS def_%cl_2_29 %cl_2_30[17.0,] 
 BB 18
 	outgoing: 19 20 37 
 	datadep: 
 	instructions:
 		 0: BUILDSTRING def_%cl_2_31 %cl_2_29[17.1,16.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_2_32 
-		 2: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "comment-post" def_%cl_2_32 
+		 2: COPY TYPE_StringLiteral "button" def_%cl_2_33 
 		 3: 
 		 4: GETFIELD %self->user def_%cl_2_34 %self[2.0,] 
 		 5: %cl_2_34->! def_%cl_2_35 %cl_2_34[18.4,] 	 ARGS:
 		 6: HASH-class-type-disabled- def_%cl_2_36 %cl_2_32[18.1,] %cl_2_33[18.2,] %cl_2_35[18.5,] 
 		 7: %self->button_tag def_%cl_2_37 %self[2.0,] %cl_2_31[18.0,] %cl_2_36[18.6,] 	 ARGS:%cl_2_31,%cl_2_36,
-		 8: COPY TYPE_StringLiteral def_%cl_2_38 
-		 9: COPY TYPE_StringLiteral def_%cl_2_39 
-		 10: COPY TYPE_StringLiteral def_%cl_2_40 
+		 8: COPY TYPE_StringLiteral "Preview" def_%cl_2_38 
+		 9: COPY TYPE_StringLiteral "comment-preview" def_%cl_2_39 
+		 10: COPY TYPE_StringLiteral "button" def_%cl_2_40 
 		 11: 
 		 12: GETFIELD %self->user def_%cl_2_41 %self[18.7,2.0,] 
 		 13: %cl_2_41->! def_%cl_2_42 %cl_2_41[18.12,] 	 ARGS:
@@ -4343,9 +4343,9 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_47 
-		 2: COPY TYPE_StringLiteral def_%cl_2_48 
-		 3: COPY TYPE_StringLiteral def_%cl_2_49 
+		 1: COPY TYPE_StringLiteral "Cancel" def_%cl_2_47 
+		 2: COPY TYPE_StringLiteral "comment-cancel" def_%cl_2_48 
+		 3: COPY TYPE_StringLiteral "button" def_%cl_2_49 
 		 4: HASH-class-type- def_%cl_2_50 %cl_2_48[21.2,] %cl_2_49[21.3,] 
 		 5: %self->button_tag def_%cl_2_51 %self[2.0,] %cl_2_47[21.1,] %cl_2_50[21.4,] 	 ARGS:%cl_2_47,%cl_2_50,
 		 6: 
@@ -4379,11 +4379,11 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_56 
+		 1: COPY TYPE_StringLiteral "hat_id" def_%cl_2_56 
 		 2: GETFIELD %self->user def_%cl_2_57 %self[2.0,] 
 		 3: %cl_2_57->hats def_%cl_2_58 %cl_2_57[26.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_2_59 
-		 5: COPY TYPE_StringLiteral def_%cl_2_60 
+		 4: COPY TYPE_StringLiteral "id" def_%cl_2_59 
+		 5: COPY TYPE_StringLiteral "hat" def_%cl_2_60 
 		 6: comment->hat_id def_%cl_2_61 comment[] 	 ARGS:
 		 7: %self->options_from_collection_for_select def_%cl_2_62 %self[2.0,] %cl_2_58[26.3,] %cl_2_59[26.4,] %cl_2_60[26.5,] %cl_2_61[26.6,] 	 ARGS:%cl_2_58,%cl_2_59,%cl_2_60,%cl_2_61,
 		 8: HASH-include_blank- def_%cl_2_63 
@@ -4509,13 +4509,13 @@ BB 14
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_22 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_1_22 
 		 1: 
 BB 15
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_23 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_1_23 
 		 1: COPY TYPE_PASS def_%cl_1_22 %cl_1_23[15.0,] 
 BB 16
 	outgoing: 18 
@@ -4526,7 +4526,7 @@ BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_24 
 		 1: COPY TYPE_PASS def_%cl_1_22 %cl_1_24[17.0,] 
 BB 18
 	outgoing: 19 20 119 
@@ -4539,13 +4539,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_26 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_1_26 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_27 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_27 
 		 1: COPY TYPE_PASS def_%cl_1_26 %cl_1_27[20.0,] 
 BB 21
 	outgoing: 22 23 119 
@@ -4559,13 +4559,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_30 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_1_30 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_31 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_31 
 		 1: COPY TYPE_PASS def_%cl_1_30 %cl_1_31[23.0,] 
 BB 24
 	outgoing: 25 26 119 
@@ -4579,13 +4579,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_34 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_1_34 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_35 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_35 
 		 1: COPY TYPE_PASS def_%cl_1_34 %cl_1_35[26.0,] 
 BB 27
 	outgoing: 28 29 119 
@@ -4599,13 +4599,13 @@ BB 28
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_38 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_1_38 
 		 1: 
 BB 29
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_39 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_39 
 		 1: COPY TYPE_PASS def_%cl_1_38 %cl_1_39[29.0,] 
 BB 30
 	outgoing: 31 32 119 
@@ -4619,13 +4619,13 @@ BB 31
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_42 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_1_42 
 		 1: 
 BB 32
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_43 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_43 
 		 1: COPY TYPE_PASS def_%cl_1_42 %cl_1_43[32.0,] 
 BB 33
 	outgoing: 34 43 119 
@@ -4654,9 +4654,9 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_48 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_48 
 		 2: %self->login_path def_%cl_1_49 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_50 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_1_50 
 		 4: HASH-class- def_%cl_1_51 %cl_1_50[36.3,] 
 		 5: %self->link_to def_%cl_1_52 %self[36.2,2.0,] %cl_1_48[36.1,] %cl_1_49[36.2,] %cl_1_51[36.4,] 	 ARGS:%cl_1_48,%cl_1_49,%cl_1_51,
 		 6: COPY TYPE_PASS def_%cl_1_47 %cl_1_52[36.5,] 
@@ -5041,7 +5041,7 @@ BB 94
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_1_120 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_1_121 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_1_121 
 		 2: %cl_1_120->try def_%cl_1_122 %cl_1_120[94.0,] %cl_1_121[94.1,] 	 ARGS:%cl_1_121,
 		 3: COPY TYPE_PASS def_%cl_1_115 %cl_1_122[94.2,] 
 BB 95
@@ -5245,7 +5245,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_8 
 		 2: HASH-text-status- def_%v_9 %v_8[5.1,] 
 		 3: %self->render def_%v_10 %self[2.0,] %v_9[5.2,] 	 ARGS:%v_9,
 		 4: RETURN %v_10[5.3,] %self[5.3,2.0,] 
@@ -5315,13 +5315,13 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_11 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_1_11 
 		 1: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_12 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_1_12 
 		 1: COPY TYPE_PASS def_%cl_1_11 %cl_1_12[9.0,] 
 BB 10
 	outgoing: 12 
@@ -5332,7 +5332,7 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_13 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_13 
 		 1: COPY TYPE_PASS def_%cl_1_11 %cl_1_13[11.0,] 
 BB 12
 	outgoing: 13 14 111 
@@ -5345,13 +5345,13 @@ BB 13
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_15 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_1_15 
 		 1: 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_16 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_16 
 		 1: COPY TYPE_PASS def_%cl_1_15 %cl_1_16[14.0,] 
 BB 15
 	outgoing: 16 17 111 
@@ -5365,13 +5365,13 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_19 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_1_19 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_20 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_20 
 		 1: COPY TYPE_PASS def_%cl_1_19 %cl_1_20[17.0,] 
 BB 18
 	outgoing: 19 20 111 
@@ -5385,13 +5385,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_23 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_1_23 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_24 
 		 1: COPY TYPE_PASS def_%cl_1_23 %cl_1_24[20.0,] 
 BB 21
 	outgoing: 22 23 111 
@@ -5405,13 +5405,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_27 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_1_27 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_28 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_28 
 		 1: COPY TYPE_PASS def_%cl_1_27 %cl_1_28[23.0,] 
 BB 24
 	outgoing: 25 26 111 
@@ -5425,13 +5425,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_31 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_1_31 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_32 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_32 
 		 1: COPY TYPE_PASS def_%cl_1_31 %cl_1_32[26.0,] 
 BB 27
 	outgoing: 28 37 111 
@@ -5460,9 +5460,9 @@ BB 30
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_37 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_37 
 		 2: %self->login_path def_%cl_1_38 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_39 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_1_39 
 		 4: HASH-class- def_%cl_1_40 %cl_1_39[30.3,] 
 		 5: %self->link_to def_%cl_1_41 %self[30.2,2.0,] %cl_1_37[30.1,] %cl_1_38[30.2,] %cl_1_40[30.4,] 	 ARGS:%cl_1_37,%cl_1_38,%cl_1_40,
 		 6: COPY TYPE_PASS def_%cl_1_36 %cl_1_41[30.5,] 
@@ -5847,7 +5847,7 @@ BB 88
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_1_109 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_1_110 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_1_110 
 		 2: %cl_1_109->try def_%cl_1_111 %cl_1_109[88.0,] %cl_1_110[88.1,] 	 ARGS:%cl_1_110,
 		 3: COPY TYPE_PASS def_%cl_1_104 %cl_1_111[88.2,] 
 BB 89
@@ -6046,7 +6046,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_8 
 		 2: HASH-text-status- def_%v_9 %v_8[5.1,] 
 		 3: %self->render def_%v_10 %self[2.0,] %v_9[5.2,] 	 ARGS:%v_9,
 		 4: RETURN %v_10[5.3,] %self[5.3,2.0,] 
@@ -6116,13 +6116,13 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_11 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_1_11 
 		 1: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_12 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_1_12 
 		 1: COPY TYPE_PASS def_%cl_1_11 %cl_1_12[9.0,] 
 BB 10
 	outgoing: 12 
@@ -6133,7 +6133,7 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_13 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_13 
 		 1: COPY TYPE_PASS def_%cl_1_11 %cl_1_13[11.0,] 
 BB 12
 	outgoing: 13 14 111 
@@ -6146,13 +6146,13 @@ BB 13
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_15 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_1_15 
 		 1: 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_16 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_16 
 		 1: COPY TYPE_PASS def_%cl_1_15 %cl_1_16[14.0,] 
 BB 15
 	outgoing: 16 17 111 
@@ -6166,13 +6166,13 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_19 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_1_19 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_20 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_20 
 		 1: COPY TYPE_PASS def_%cl_1_19 %cl_1_20[17.0,] 
 BB 18
 	outgoing: 19 20 111 
@@ -6186,13 +6186,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_23 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_1_23 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_24 
 		 1: COPY TYPE_PASS def_%cl_1_23 %cl_1_24[20.0,] 
 BB 21
 	outgoing: 22 23 111 
@@ -6206,13 +6206,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_27 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_1_27 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_28 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_28 
 		 1: COPY TYPE_PASS def_%cl_1_27 %cl_1_28[23.0,] 
 BB 24
 	outgoing: 25 26 111 
@@ -6226,13 +6226,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_31 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_1_31 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_32 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_32 
 		 1: COPY TYPE_PASS def_%cl_1_31 %cl_1_32[26.0,] 
 BB 27
 	outgoing: 28 37 111 
@@ -6261,9 +6261,9 @@ BB 30
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_37 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_37 
 		 2: %self->login_path def_%cl_1_38 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_39 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_1_39 
 		 4: HASH-class- def_%cl_1_40 %cl_1_39[30.3,] 
 		 5: %self->link_to def_%cl_1_41 %self[30.2,2.0,] %cl_1_37[30.1,] %cl_1_38[30.2,] %cl_1_40[30.4,] 	 ARGS:%cl_1_37,%cl_1_38,%cl_1_40,
 		 6: COPY TYPE_PASS def_%cl_1_36 %cl_1_41[30.5,] 
@@ -6648,7 +6648,7 @@ BB 88
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_1_109 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_1_110 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_1_110 
 		 2: %cl_1_109->try def_%cl_1_111 %cl_1_109[88.0,] %cl_1_110[88.1,] 	 ARGS:%cl_1_110,
 		 3: COPY TYPE_PASS def_%cl_1_104 %cl_1_111[88.2,] 
 BB 89
@@ -6847,7 +6847,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_8 
 		 2: HASH-text-status- def_%v_9 %v_8[5.1,] 
 		 3: %self->render def_%v_10 %self[2.0,] %v_9[5.2,] 	 ARGS:%v_9,
 		 4: RETURN %v_10[5.3,] %self[5.3,2.0,] 
@@ -6990,13 +6990,13 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_11 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_1_11 
 		 1: 
 BB 9
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_12 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_1_12 
 		 1: COPY TYPE_PASS def_%cl_1_11 %cl_1_12[9.0,] 
 BB 10
 	outgoing: 12 
@@ -7007,7 +7007,7 @@ BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_13 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_13 
 		 1: COPY TYPE_PASS def_%cl_1_11 %cl_1_13[11.0,] 
 BB 12
 	outgoing: 13 14 111 
@@ -7020,13 +7020,13 @@ BB 13
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_15 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_1_15 
 		 1: 
 BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_16 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_16 
 		 1: COPY TYPE_PASS def_%cl_1_15 %cl_1_16[14.0,] 
 BB 15
 	outgoing: 16 17 111 
@@ -7040,13 +7040,13 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_19 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_1_19 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_20 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_20 
 		 1: COPY TYPE_PASS def_%cl_1_19 %cl_1_20[17.0,] 
 BB 18
 	outgoing: 19 20 111 
@@ -7060,13 +7060,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_23 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_1_23 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_24 
 		 1: COPY TYPE_PASS def_%cl_1_23 %cl_1_24[20.0,] 
 BB 21
 	outgoing: 22 23 111 
@@ -7080,13 +7080,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_27 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_1_27 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_28 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_28 
 		 1: COPY TYPE_PASS def_%cl_1_27 %cl_1_28[23.0,] 
 BB 24
 	outgoing: 25 26 111 
@@ -7100,13 +7100,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_31 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_1_31 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_32 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_32 
 		 1: COPY TYPE_PASS def_%cl_1_31 %cl_1_32[26.0,] 
 BB 27
 	outgoing: 28 37 111 
@@ -7135,9 +7135,9 @@ BB 30
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_37 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_37 
 		 2: %self->login_path def_%cl_1_38 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_39 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_1_39 
 		 4: HASH-class- def_%cl_1_40 %cl_1_39[30.3,] 
 		 5: %self->link_to def_%cl_1_41 %self[30.2,2.0,] %cl_1_37[30.1,] %cl_1_38[30.2,] %cl_1_40[30.4,] 	 ARGS:%cl_1_37,%cl_1_38,%cl_1_40,
 		 6: COPY TYPE_PASS def_%cl_1_36 %cl_1_41[30.5,] 
@@ -7522,7 +7522,7 @@ BB 88
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_1_109 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_1_110 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_1_110 
 		 2: %cl_1_109->try def_%cl_1_111 %cl_1_109[88.0,] %cl_1_110[88.1,] 	 ARGS:%cl_1_110,
 		 3: COPY TYPE_PASS def_%cl_1_104 %cl_1_111[88.2,] 
 BB 89
@@ -7719,7 +7719,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_6 
 		 2: HASH-text-status- def_%v_7 %v_6[3.1,] 
 		 3: %self->render def_%v_8 %self[2.0,] %v_7[3.2,] 	 ARGS:%v_7,
 		 4: RETURN %v_8[3.3,] %self[3.3,2.0,] 
@@ -7736,7 +7736,7 @@ BB 4
 		 6: %v_13->id def_%v_14 %v_13[4.5,] 	 ARGS:
 		 7: %v_10->vote_thusly_on_story_or_comment_for_user_because def_%v_15 %v_10[4.2,] %v_11[4.3,] %v_12[4.4,] %v_14[4.6,] 	 ARGS:Fixnum,%v_11,%v_12,%v_14,Nil,
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_16 
+		 9: COPY TYPE_StringLiteral "ok" def_%v_16 
 		 10: HASH-text- def_%v_17 %v_16[4.9,] 
 		 11: %self->render def_%v_18 %self[2.0,] %v_17[4.10,] 	 ARGS:%v_17,
 		 12: RETURN %v_18[4.11,] %self[4.11,2.0,] 
@@ -7770,7 +7770,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_6 
 		 2: HASH-text-status- def_%v_7 %v_6[3.1,] 
 		 3: %self->render def_%v_8 %self[2.0,] %v_7[3.2,] 	 ARGS:%v_7,
 		 4: RETURN %v_8[3.3,] %self[3.3,2.0,] 
@@ -7789,7 +7789,7 @@ BB 4
 		 8: %v_15->[] def_%v_16 %v_15[4.7,] 	 ARGS:Symbol,
 		 9: %v_10->vote_thusly_on_story_or_comment_for_user_because def_%v_17 %v_10[4.2,] %v_11[4.3,] %v_12[4.4,] %v_14[4.6,] %v_16[4.8,] 	 ARGS:Fixnum,%v_11,%v_12,%v_14,%v_16,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_18 
+		 11: COPY TYPE_StringLiteral "ok" def_%v_18 
 		 12: HASH-text- def_%v_19 %v_18[4.11,] 
 		 13: %self->render def_%v_20 %self[4.7,2.0,] %v_19[4.12,] 	 ARGS:%v_19,
 		 14: RETURN %v_20[4.13,] %self[4.7,4.13,2.0,] 
@@ -7823,7 +7823,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral "can't find comment" def_%v_6 
 		 2: HASH-text-status- def_%v_7 %v_6[3.1,] 
 		 3: %self->render def_%v_8 %self[2.0,] %v_7[3.2,] 	 ARGS:%v_7,
 		 4: RETURN %v_8[3.3,] %self[3.3,2.0,] 
@@ -7855,7 +7855,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "invalid reason" def_%v_16 
 		 2: HASH-text-status- def_%v_17 %v_16[8.1,] 
 		 3: %self->render def_%v_18 %self[2.0,] %v_17[8.2,] 	 ARGS:%v_17,
 		 4: RETURN %v_18[8.3,] %self[8.3,2.0,] 
@@ -7874,7 +7874,7 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_23 
+		 1: COPY TYPE_StringLiteral "not permitted to downvote" def_%v_23 
 		 2: HASH-text-status- def_%v_24 %v_23[11.1,] 
 		 3: %self->render def_%v_25 %self[2.0,] %v_24[11.2,] 	 ARGS:%v_24,
 		 4: RETURN %v_25[11.3,] %self[11.3,2.0,] 
@@ -7893,7 +7893,7 @@ BB 12
 		 8: %v_32->[] def_%v_33 %v_32[12.7,] 	 ARGS:Symbol,
 		 9: %v_27->vote_thusly_on_story_or_comment_for_user_because def_%v_34 %v_27[12.2,] %v_28[12.3,] %v_29[12.4,] %v_31[12.6,] %v_33[12.8,] 	 ARGS:Fixnum,%v_28,%v_29,%v_31,%v_33,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_35 
+		 11: COPY TYPE_StringLiteral "ok" def_%v_35 
 		 12: HASH-text- def_%v_36 %v_35[12.11,] 
 		 13: %self->render def_%v_37 %self[12.7,2.0,] %v_36[12.12,] 	 ARGS:%v_36,
 		 14: RETURN %v_37[12.13,] %self[12.7,12.13,2.0,] 
@@ -7935,8 +7935,8 @@ BB 5
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "RSS 2.0 - Newest Comments" def_%v_6 
+		 1: COPY TYPE_StringLiteral "/comments.rss" def_%v_7 
 		 2: 
 		 3: GETFIELD %self->user def_%v_8 %self[2.0,] 
 		 4: BRANCH %v_8[5.3,] 
@@ -7944,7 +7944,7 @@ BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "?token=" def_%v_9 
 		 1: GETFIELD %self->user def_%v_10 %self[2.0,] 
 		 2: %v_10->rss_token def_%v_11 %v_10[6.1,] 	 ARGS:
 		 3: BUILDSTRING def_%v_12 %v_9[6.0,] %v_11[6.2,] 
@@ -7953,7 +7953,7 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_13 
+		 0: COPY TYPE_StringLiteral "" def_%v_13 
 		 1: COPY TYPE_PASS def_%v_12 %v_13[7.0,] 
 BB 8
 	outgoing: 9 
@@ -7968,11 +7968,11 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "Newest Comments" def_%v_16 
 		 2: ATTRASSIGN %self->title %v_16[9.1,] 
 		 3: ATTRASSIGN %self->heading %v_16[9.1,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_17 
+		 5: COPY TYPE_StringLiteral "/comments" def_%v_17 
 		 6: ATTRASSIGN %self->cur_url %v_17[9.5,] 
 		 7: 
 		 8: ATTRASSIGN %self->page 
@@ -8005,7 +8005,7 @@ BB 12
 		 1: (Comment) def_%v_25 
 		 2: HASH-is_deleted-is_moderated- def_%v_26 
 		 3: %v_25->where def_%v_27 %v_25[12.1,] %v_26[12.2,] 	 ARGS:%v_26,
-		 4: COPY TYPE_StringLiteral def_%v_28 
+		 4: COPY TYPE_StringLiteral "created_at DESC" def_%v_28 
 		 5: %v_27->order def_%v_29 %v_27[12.3,] %v_28[12.4,] 	 ARGS:%v_28,
 		 6: 
 		 7: GETFIELD %self->page def_%v_30 %self[10.4,9.8,2.0,] 
@@ -8026,8 +8026,8 @@ BB 13
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->comments def_%v_39 %self[12.15,2.0,] 
-		 1: COPY TYPE_StringLiteral def_%v_40 
-		 2: COPY TYPE_StringLiteral def_%v_41 
+		 1: COPY TYPE_StringLiteral "story_id NOT IN (SELECT story_id FROM " def_%v_40 
+		 2: COPY TYPE_StringLiteral "hidden_stories WHERE user_id = ?)" def_%v_41 
 		 3: %v_40-><< def_%v_42 %v_40[13.1,] %v_41[13.2,] 	 ARGS:%v_41,
 		 4: GETFIELD %self->user def_%v_43 %self[2.0,] 
 		 5: %v_43->id def_%v_44 %v_43[13.4,] 	 ARGS:
@@ -8218,7 +8218,7 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_5_10 
+		 0: COPY TYPE_StringLiteral ": " def_%cl_5_10 
 		 1: GETFIELD %self->title def_%cl_5_11 %self[2.0,] 
 		 2: %self->h def_%cl_5_12 %self[2.0,] %cl_5_11[4.1,] 	 ARGS:%cl_5_11,
 		 3: %cl_5_10->+ def_%cl_5_13 %cl_5_10[4.0,] %cl_5_12[4.2,] 	 ARGS:%cl_5_12,
@@ -8227,7 +8227,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_5_14 
+		 0: COPY TYPE_StringLiteral "" def_%cl_5_14 
 		 1: COPY TYPE_PASS def_%cl_5_13 %cl_5_14[5.0,] 
 BB 6
 	outgoing: 7 9 
@@ -8355,7 +8355,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_7_7 
+		 1: COPY TYPE_StringLiteral "Private comments feed for " def_%cl_7_7 
 		 2: GETFIELD %self->user def_%cl_7_8 %self[2.0,] 
 		 3: %cl_7_8->username def_%cl_7_9 %cl_7_8[6.2,] 	 ARGS:
 		 4: BUILDSTRING def_%cl_7_10 %cl_7_7[6.1,] %cl_7_9[6.3,] 
@@ -8371,7 +8371,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_7_11 
+		 1: COPY TYPE_StringLiteral "index.rss" def_%cl_7_11 
 		 2: HASH-action-layout- def_%cl_7_12 %cl_7_11[8.1,] 
 		 3: %self->render def_%cl_7_13 %self[6.5,2.0,] %cl_7_12[8.2,] 	 ARGS:%cl_7_12,
 		 4: RETURN %cl_7_13[8.3,] %self[8.3,6.5,2.0,] 
@@ -8437,7 +8437,7 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_8_10 
+		 0: COPY TYPE_StringLiteral ": " def_%cl_8_10 
 		 1: GETFIELD %self->title def_%cl_8_11 %self[2.0,] 
 		 2: %self->h def_%cl_8_12 %self[2.0,] %cl_8_11[4.1,] 	 ARGS:%cl_8_11,
 		 3: %cl_8_10->+ def_%cl_8_13 %cl_8_10[4.0,] %cl_8_12[4.2,] 	 ARGS:%cl_8_12,
@@ -8446,7 +8446,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_8_14 
+		 0: COPY TYPE_StringLiteral "" def_%cl_8_14 
 		 1: COPY TYPE_PASS def_%cl_8_13 %cl_8_14[5.0,] 
 BB 6
 	outgoing: 7 9 
@@ -8562,14 +8562,14 @@ BB 3
 		 6: %v_9->first! def_%v_10 %v_9[3.5,] 	 ARGS:
 		 7: ATTRASSIGN %self->showing_user %v_10[3.6,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_11 
+		 9: COPY TYPE_StringLiteral "Threads for " def_%v_11 
 		 10: GETFIELD %self->showing_user def_%v_12 %self[3.2,3.7,2.0,] 
 		 11: %v_12->username def_%v_13 %v_12[3.10,] 	 ARGS:
 		 12: BUILDSTRING def_%v_14 %v_11[3.9,] %v_13[3.11,] 
 		 13: ATTRASSIGN %self->title %v_14[3.12,] 
 		 14: ATTRASSIGN %self->heading %v_14[3.12,] 
 		 15: 
-		 16: COPY TYPE_StringLiteral def_%v_15 
+		 16: COPY TYPE_StringLiteral "/threads/" def_%v_15 
 		 17: GETFIELD %self->showing_user def_%v_16 %self[3.2,3.7,2.0,] 
 		 18: %v_16->username def_%v_17 %v_16[3.17,] 	 ARGS:
 		 19: BUILDSTRING def_%v_18 %v_15[3.16,] %v_17[3.18,] 
@@ -8588,7 +8588,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_21 
+		 1: COPY TYPE_StringLiteral "/login" def_%v_21 
 		 2: %self->redirect_to def_%v_22 %self[2.0,] %v_21[5.1,] 	 ARGS:%v_21,
 		 3: RETURN %v_22[5.2,] %self[5.2,2.0,] 
 BB 6
@@ -8599,11 +8599,11 @@ BB 6
 		 1: GETFIELD %self->user def_%v_24 %self[2.0,] 
 		 2: ATTRASSIGN %self->showing_user %v_24[6.1,] 
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%v_25 
+		 4: COPY TYPE_StringLiteral "Your Threads" def_%v_25 
 		 5: ATTRASSIGN %self->title %v_25[6.4,] 
 		 6: ATTRASSIGN %self->heading %v_25[6.4,] 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_26 
+		 8: COPY TYPE_StringLiteral "/threads" def_%v_26 
 		 9: ATTRASSIGN %self->cur_url %v_26[6.8,] 
 		 10: COPY TYPE_PASS def_%v_23 %v_26[6.8,] 
 		 11: COPY TYPE_PASS def_%v_18 %v_23[6.10,] 
@@ -8857,13 +8857,13 @@ BB 11
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_16 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_3_16 
 		 1: 
 BB 12
 	outgoing: 13 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_17 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_3_17 
 		 1: COPY TYPE_PASS def_%cl_3_16 %cl_3_17[12.0,] 
 BB 13
 	outgoing: 15 
@@ -8874,7 +8874,7 @@ BB 14
 	outgoing: 15 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_18 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_18 
 		 1: COPY TYPE_PASS def_%cl_3_16 %cl_3_18[14.0,] 
 BB 15
 	outgoing: 16 17 122 
@@ -8887,13 +8887,13 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_20 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_3_20 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_21 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_21 
 		 1: COPY TYPE_PASS def_%cl_3_20 %cl_3_21[17.0,] 
 BB 18
 	outgoing: 19 20 122 
@@ -8907,13 +8907,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_24 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_3_24 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_25 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_25 
 		 1: COPY TYPE_PASS def_%cl_3_24 %cl_3_25[20.0,] 
 BB 21
 	outgoing: 22 23 122 
@@ -8927,13 +8927,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_28 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_3_28 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_29 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_29 
 		 1: COPY TYPE_PASS def_%cl_3_28 %cl_3_29[23.0,] 
 BB 24
 	outgoing: 25 26 122 
@@ -8947,13 +8947,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_32 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_3_32 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_33 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_33 
 		 1: COPY TYPE_PASS def_%cl_3_32 %cl_3_33[26.0,] 
 BB 27
 	outgoing: 28 29 122 
@@ -8967,13 +8967,13 @@ BB 28
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_36 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_3_36 
 		 1: 
 BB 29
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_37 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_37 
 		 1: COPY TYPE_PASS def_%cl_3_36 %cl_3_37[29.0,] 
 BB 30
 	outgoing: 31 40 122 
@@ -9002,9 +9002,9 @@ BB 33
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_42 
+		 1: COPY TYPE_StringLiteral "" def_%cl_3_42 
 		 2: %self->login_path def_%cl_3_43 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_3_44 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_3_44 
 		 4: HASH-class- def_%cl_3_45 %cl_3_44[33.3,] 
 		 5: %self->link_to def_%cl_3_46 %self[33.2,2.0,] %cl_3_42[33.1,] %cl_3_43[33.2,] %cl_3_45[33.4,] 	 ARGS:%cl_3_42,%cl_3_43,%cl_3_45,
 		 6: COPY TYPE_PASS def_%cl_3_41 %cl_3_46[33.5,] 
@@ -9389,7 +9389,7 @@ BB 91
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_3_114 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_3_115 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_3_115 
 		 2: %cl_3_114->try def_%cl_3_116 %cl_3_114[91.0,] %cl_3_115[91.1,] 	 ARGS:%cl_3_115,
 		 3: COPY TYPE_PASS def_%cl_3_109 %cl_3_116[91.2,] 
 BB 92
@@ -9657,7 +9657,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_5 
+		 1: COPY TYPE_StringLiteral "edit_comment_" def_%cl_1_5 
 		 2: 
 		 3: comment->short_id def_%cl_1_6 comment[] 	 ARGS:
 		 4: BUILDSTRING def_%cl_1_7 %cl_1_5[6.1,] %cl_1_6[6.3,] 
@@ -9703,7 +9703,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_6 
+		 1: COPY TYPE_StringLiteral "story_id" def_%cl_2_6 
 		 2: comment->story def_%cl_2_7 comment[] 	 ARGS:
 		 3: %cl_2_7->short_id def_%cl_2_8 %cl_2_7[6.2,] 	 ARGS:
 		 4: %self->hidden_field_tag def_%cl_2_9 %self[2.0,] %cl_2_6[6.1,] %cl_2_8[6.3,] 	 ARGS:%cl_2_6,%cl_2_8,
@@ -9715,7 +9715,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_11 
+		 1: COPY TYPE_StringLiteral "parent_comment_short_id" def_%cl_2_11 
 		 2: comment->parent_comment def_%cl_2_12 comment[] 	 ARGS:
 		 3: %cl_2_12->short_id def_%cl_2_13 %cl_2_12[7.2,] 	 ARGS:
 		 4: %self->hidden_field_tag def_%cl_2_14 %self[2.0,] %cl_2_11[7.1,] %cl_2_13[7.3,] 	 ARGS:%cl_2_11,%cl_2_13,
@@ -9730,10 +9730,10 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_15 
+		 1: COPY TYPE_StringLiteral "comment" def_%cl_2_15 
 		 2: comment->comment def_%cl_2_16 comment[] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_2_17 
-		 4: COPY TYPE_StringLiteral def_%cl_2_18 
+		 3: COPY TYPE_StringLiteral "width: 100%;" def_%cl_2_17 
+		 4: COPY TYPE_StringLiteral "off" def_%cl_2_18 
 		 5: 
 		 6: GETFIELD %self->user def_%cl_2_19 %self[2.0,] 
 		 7: %cl_2_19->! def_%cl_2_20 %cl_2_19[9.6,] 	 ARGS:
@@ -9744,13 +9744,13 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_22 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_22 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_23 
+		 0: COPY TYPE_StringLiteral "You must be logged in to leave a comment." def_%cl_2_23 
 		 1: COPY TYPE_PASS def_%cl_2_22 %cl_2_23[11.0,] 
 BB 12
 	outgoing: 13 14 37 
@@ -9784,29 +9784,29 @@ BB 16
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_29 
+		 0: COPY TYPE_StringLiteral "Post" def_%cl_2_29 
 		 1: 
 BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_30 
+		 0: COPY TYPE_StringLiteral "Update" def_%cl_2_30 
 		 1: COPY TYPE_PASS def_%cl_2_29 %cl_2_30[17.0,] 
 BB 18
 	outgoing: 19 20 37 
 	datadep: 
 	instructions:
 		 0: BUILDSTRING def_%cl_2_31 %cl_2_29[17.1,16.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_2_32 
-		 2: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "comment-post" def_%cl_2_32 
+		 2: COPY TYPE_StringLiteral "button" def_%cl_2_33 
 		 3: 
 		 4: GETFIELD %self->user def_%cl_2_34 %self[2.0,] 
 		 5: %cl_2_34->! def_%cl_2_35 %cl_2_34[18.4,] 	 ARGS:
 		 6: HASH-class-type-disabled- def_%cl_2_36 %cl_2_32[18.1,] %cl_2_33[18.2,] %cl_2_35[18.5,] 
 		 7: %self->button_tag def_%cl_2_37 %self[2.0,] %cl_2_31[18.0,] %cl_2_36[18.6,] 	 ARGS:%cl_2_31,%cl_2_36,
-		 8: COPY TYPE_StringLiteral def_%cl_2_38 
-		 9: COPY TYPE_StringLiteral def_%cl_2_39 
-		 10: COPY TYPE_StringLiteral def_%cl_2_40 
+		 8: COPY TYPE_StringLiteral "Preview" def_%cl_2_38 
+		 9: COPY TYPE_StringLiteral "comment-preview" def_%cl_2_39 
+		 10: COPY TYPE_StringLiteral "button" def_%cl_2_40 
 		 11: 
 		 12: GETFIELD %self->user def_%cl_2_41 %self[18.7,2.0,] 
 		 13: %cl_2_41->! def_%cl_2_42 %cl_2_41[18.12,] 	 ARGS:
@@ -9830,9 +9830,9 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_47 
-		 2: COPY TYPE_StringLiteral def_%cl_2_48 
-		 3: COPY TYPE_StringLiteral def_%cl_2_49 
+		 1: COPY TYPE_StringLiteral "Cancel" def_%cl_2_47 
+		 2: COPY TYPE_StringLiteral "comment-cancel" def_%cl_2_48 
+		 3: COPY TYPE_StringLiteral "button" def_%cl_2_49 
 		 4: HASH-class-type- def_%cl_2_50 %cl_2_48[21.2,] %cl_2_49[21.3,] 
 		 5: %self->button_tag def_%cl_2_51 %self[2.0,] %cl_2_47[21.1,] %cl_2_50[21.4,] 	 ARGS:%cl_2_47,%cl_2_50,
 		 6: 
@@ -9866,11 +9866,11 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_56 
+		 1: COPY TYPE_StringLiteral "hat_id" def_%cl_2_56 
 		 2: GETFIELD %self->user def_%cl_2_57 %self[2.0,] 
 		 3: %cl_2_57->hats def_%cl_2_58 %cl_2_57[26.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_2_59 
-		 5: COPY TYPE_StringLiteral def_%cl_2_60 
+		 4: COPY TYPE_StringLiteral "id" def_%cl_2_59 
+		 5: COPY TYPE_StringLiteral "hat" def_%cl_2_60 
 		 6: comment->hat_id def_%cl_2_61 comment[] 	 ARGS:
 		 7: %self->options_from_collection_for_select def_%cl_2_62 %self[2.0,] %cl_2_58[26.3,] %cl_2_59[26.4,] %cl_2_60[26.5,] %cl_2_61[26.6,] 	 ARGS:%cl_2_58,%cl_2_59,%cl_2_60,%cl_2_61,
 		 8: HASH-include_blank- def_%cl_2_63 
@@ -9996,13 +9996,13 @@ BB 14
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_22 
+		 0: COPY TYPE_StringLiteral "upvoted" def_%cl_1_22 
 		 1: 
 BB 15
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_23 
+		 0: COPY TYPE_StringLiteral "downvoted" def_%cl_1_23 
 		 1: COPY TYPE_PASS def_%cl_1_22 %cl_1_23[15.0,] 
 BB 16
 	outgoing: 18 
@@ -10013,7 +10013,7 @@ BB 17
 	outgoing: 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_24 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_24 
 		 1: COPY TYPE_PASS def_%cl_1_22 %cl_1_24[17.0,] 
 BB 18
 	outgoing: 19 20 119 
@@ -10026,13 +10026,13 @@ BB 19
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_26 
+		 0: COPY TYPE_StringLiteral "highlighted" def_%cl_1_26 
 		 1: 
 BB 20
 	outgoing: 21 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_27 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_27 
 		 1: COPY TYPE_PASS def_%cl_1_26 %cl_1_27[20.0,] 
 BB 21
 	outgoing: 22 23 119 
@@ -10046,13 +10046,13 @@ BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_30 
+		 0: COPY TYPE_StringLiteral "negative" def_%cl_1_30 
 		 1: 
 BB 23
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_31 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_31 
 		 1: COPY TYPE_PASS def_%cl_1_30 %cl_1_31[23.0,] 
 BB 24
 	outgoing: 25 26 119 
@@ -10066,13 +10066,13 @@ BB 25
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_34 
+		 0: COPY TYPE_StringLiteral "negative_1" def_%cl_1_34 
 		 1: 
 BB 26
 	outgoing: 27 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_35 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_35 
 		 1: COPY TYPE_PASS def_%cl_1_34 %cl_1_35[26.0,] 
 BB 27
 	outgoing: 28 29 119 
@@ -10086,13 +10086,13 @@ BB 28
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_38 
+		 0: COPY TYPE_StringLiteral "negative_3" def_%cl_1_38 
 		 1: 
 BB 29
 	outgoing: 30 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_39 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_39 
 		 1: COPY TYPE_PASS def_%cl_1_38 %cl_1_39[29.0,] 
 BB 30
 	outgoing: 31 32 119 
@@ -10106,13 +10106,13 @@ BB 31
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_42 
+		 0: COPY TYPE_StringLiteral "negative_5" def_%cl_1_42 
 		 1: 
 BB 32
 	outgoing: 33 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_43 
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_43 
 		 1: COPY TYPE_PASS def_%cl_1_42 %cl_1_43[32.0,] 
 BB 33
 	outgoing: 34 43 119 
@@ -10141,9 +10141,9 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_48 
+		 1: COPY TYPE_StringLiteral "" def_%cl_1_48 
 		 2: %self->login_path def_%cl_1_49 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_50 
+		 3: COPY TYPE_StringLiteral "upvoter" def_%cl_1_50 
 		 4: HASH-class- def_%cl_1_51 %cl_1_50[36.3,] 
 		 5: %self->link_to def_%cl_1_52 %self[36.2,2.0,] %cl_1_48[36.1,] %cl_1_49[36.2,] %cl_1_51[36.4,] 	 ARGS:%cl_1_48,%cl_1_49,%cl_1_51,
 		 6: COPY TYPE_PASS def_%cl_1_47 %cl_1_52[36.5,] 
@@ -10528,7 +10528,7 @@ BB 94
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->user def_%cl_1_120 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%cl_1_121 
+		 1: COPY TYPE_StringLiteral "is_moderator?" def_%cl_1_121 
 		 2: %cl_1_120->try def_%cl_1_122 %cl_1_120[94.0,] %cl_1_121[94.1,] 	 ARGS:%cl_1_121,
 		 3: COPY TYPE_PASS def_%cl_1_115 %cl_1_122[94.2,] 
 BB 95

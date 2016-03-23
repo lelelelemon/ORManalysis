@@ -13,7 +13,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "Picture " def_%v_3 
 		 7: %self->id def_%v_4 %self[2.0,] 	 ARGS:
 		 8: %self->album def_%v_5 %self[2.0,2.7,] 	 ARGS:
 		 9: BRANCH %v_5[2.8,] 
@@ -21,7 +21,7 @@ BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral " in Album " def_%v_6 
 		 1: %self->album def_%v_7 %self[2.0,] 	 ARGS:
 		 2: %v_7->name def_%v_8 %v_7[3.1,] 	 ARGS:
 		 3: %v_6->+ def_%v_9 %v_6[3.0,] %v_8[3.2,] 	 ARGS:%v_8,
@@ -68,7 +68,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (ErrorRotatingPhoto) def_%v_6 
-		 2: COPY TYPE_StringLiteral def_%v_7 
+		 2: COPY TYPE_StringLiteral "Invalid degree value." def_%v_7 
 		 3: %v_6->new def_%v_8 %v_6[3.1,] %v_7[3.2,] 	 ARGS:%v_7,
 		 4: %self->raise def_%v_9 %self[2.0,] %v_8[3.3,] 	 ARGS:%v_8,
 		 5: 
@@ -83,7 +83,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: (Tempfile) def_%v_10 
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral "photo" def_%v_11 
 		 3: (File) def_%v_12 
 		 4: %self->photo def_%v_13 %self[2.0,] 	 ARGS:
 		 5: %v_13->path def_%v_14 %v_13[5.4,] 	 ARGS:
@@ -169,7 +169,7 @@ BB 2
 		 6: %self->album def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->pictures def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->order def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "id > ?" def_%v_6 
 		 10: %self->id def_%v_7 %self[2.0,2.6,] 	 ARGS:
 		 11: %v_5->where def_%v_8 %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] 	 ARGS:%v_6,%v_7,
 		 12: %v_8->first def_%v_9 %v_8[2.11,] 	 ARGS:
@@ -211,7 +211,7 @@ BB 2
 		 6: %self->album def_%v_3 %self[2.0,] 	 ARGS:
 		 7: %v_3->pictures def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->order def_%v_5 %v_4[2.7,] 	 ARGS:Symbol,
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "id < ?" def_%v_6 
 		 10: %self->id def_%v_7 %self[2.0,2.6,] 	 ARGS:
 		 11: %v_5->where def_%v_8 %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] 	 ARGS:%v_6,%v_7,
 		 12: %v_8->last def_%v_9 %v_8[2.11,] 	 ARGS:
@@ -262,7 +262,7 @@ BB 3
 		 1: (File) def_%v_5 
 		 2: %v_5->extname def_%v_6 %v_5[3.1,] filename[2.8,] 	 ARGS:filename,
 		 3: COPY TYPE_Regexp def_%v_7 
-		 4: COPY TYPE_StringLiteral def_%v_8 
+		 4: COPY TYPE_StringLiteral "" def_%v_8 
 		 5: %v_6->sub def_%v_9 %v_6[3.2,] %v_8[3.4,] 	 ARGS:%v_7,%v_8,
 		 6: RETURN %v_9[3.5,] %self[2.0,] 
 BB 4
@@ -326,7 +326,7 @@ BB 7
 		 3: %self->person_id def_%v_10 %self[2.0,] 	 ARGS:
 		 4: HASH-person_id- def_%v_11 %v_10[7.3,] 
 		 5: %v_9->where def_%v_12 %v_9[7.2,] %v_11[7.4,] 	 ARGS:%v_11,
-		 6: COPY TYPE_StringLiteral def_%v_13 
+		 6: COPY TYPE_StringLiteral "id" def_%v_13 
 		 7: %v_12->order def_%v_14 %v_12[7.5,] %v_13[7.6,] 	 ARGS:%v_13,
 		 8: %v_14->last def_%v_15 %v_14[7.7,] 	 ARGS:
 		 9: COPY TYPE_PASS def_last_stream_item %v_15[7.8,] 
@@ -355,7 +355,7 @@ BB 12
 	instructions:
 		 0: 
 		 1: last_stream_item->context def_%v_19 last_stream_item[7.9,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_20 
+		 2: COPY TYPE_StringLiteral "picture_ids" def_%v_20 
 		 3: %v_19->[] def_%v_21 %v_19[12.1,] %v_20[12.2,] 	 ARGS:%v_20,
 		 4: %self->id def_%v_22 %self[2.0,] 	 ARGS:
 		 5: %self->photo def_%v_23 %self[12.4,2.0,] 	 ARGS:
@@ -377,7 +377,7 @@ BB 13
 		 1: (StreamItem) def_%v_30 
 		 2: %self->album def_%v_31 %self[2.0,] 	 ARGS:
 		 3: %v_31->name def_%v_32 %v_31[13.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%v_33 
+		 4: COPY TYPE_StringLiteral "picture_ids" def_%v_33 
 		 5: %self->id def_%v_34 %self[13.2,2.0,] 	 ARGS:
 		 6: %self->photo def_%v_35 %self[13.2,13.5,2.0,] 	 ARGS:
 		 7: %v_35->fingerprint def_%v_36 %v_35[13.6,] 	 ARGS:
@@ -387,7 +387,7 @@ BB 13
 		 11: HASH- def_%v_40 %v_33[13.4,] %v_39[13.10,] 
 		 12: %self->person_id def_%v_41 %self[13.2,13.5,13.6,13.8,2.0,] 	 ARGS:
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%v_42 
+		 14: COPY TYPE_StringLiteral "Group" def_%v_42 
 		 15: %self->album def_%v_43 %self[13.2,13.5,13.6,13.8,13.12,2.0,] 	 ARGS:
 		 16: %v_43->owner_type def_%v_44 %v_43[13.15,] 	 ARGS:
 		 17: %v_42->=== def_%v_45 %v_42[13.14,] %v_44[13.16,] 	 ARGS:%v_44,
@@ -408,7 +408,7 @@ BB 16
 	outgoing: 17 18 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_48 
+		 0: COPY TYPE_StringLiteral "Album" def_%v_48 
 		 1: %self->album_id def_%v_49 %self[2.0,] 	 ARGS:
 		 2: %self->created_at def_%v_50 %self[16.1,2.0,] 	 ARGS:
 		 3: 
@@ -454,7 +454,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (StreamItem) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "Album" def_%v_4 
 		 8: %self->album_id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: HASH-streamable_type-streamable_id- def_%v_6 %v_4[2.7,] %v_5[2.8,] 
 		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
@@ -479,7 +479,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: stream_item->context def_%cl_1_3 stream_item[2.2,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "picture_ids" def_%cl_1_4 
 		 3: %cl_1_3->[] def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
 		 4: %cl_1_5->each def_%cl_1_6 %cl_1_5[3.3,] %self[2.0,] 	 ARGS:%cl_1_5,
 CLOSURE BEGIN: pic[3.4,] %self[2.0,] 
@@ -576,7 +576,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (StreamItem) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "Album" def_%v_4 
 		 8: %self->album_id def_%v_5 %self[2.0,] 	 ARGS:
 		 9: HASH-streamable_type-streamable_id- def_%v_6 %v_4[2.7,] %v_5[2.8,] 
 		 10: %v_3->where def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 ARGS:%v_6,
@@ -601,7 +601,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: stream_item->context def_%cl_1_3 stream_item[2.2,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "picture_ids" def_%cl_1_4 
 		 3: %cl_1_3->[] def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
 		 4: %cl_1_5->reject! def_%cl_1_6 %cl_1_5[3.3,] %self[2.0,] 	 ARGS:%cl_1_5,
 CLOSURE BEGIN: %self[2.0,] pic[3.4,] 
@@ -653,7 +653,7 @@ BB 8
 CLOSURE END: 
 		 5: 
 		 6: stream_item->context def_%cl_1_7 stream_item[3.1,2.2,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_1_8 
+		 7: COPY TYPE_StringLiteral "picture_ids" def_%cl_1_8 
 		 8: %cl_1_7->[] def_%cl_1_9 %cl_1_7[3.6,] %cl_1_8[3.7,] 	 ARGS:%cl_1_8,
 		 9: %cl_1_9->any? def_%cl_1_10 %cl_1_9[3.8,] 	 ARGS:
 		 10: BRANCH %cl_1_10[3.9,] 
@@ -720,10 +720,10 @@ BB 2
 		 14: %v_6->env def_%v_7 %v_6[2.13,] 	 ARGS:
 		 15: %v_4->sub def_%v_8 %v_4[2.11,] %v_5[2.12,] %v_7[2.14,] 	 ARGS:%v_5,%v_7,
 		 16: COPY TYPE_Regexp def_%v_9 
-		 17: COPY TYPE_StringLiteral def_%v_10 
+		 17: COPY TYPE_StringLiteral "pictures" def_%v_10 
 		 18: %v_8->sub def_%v_11 %v_8[2.15,] %v_10[2.17,] 	 ARGS:%v_9,%v_10,
 		 19: COPY TYPE_Regexp def_%v_12 
-		 20: COPY TYPE_StringLiteral def_%v_13 
+		 20: COPY TYPE_StringLiteral "photos" def_%v_13 
 		 21: %v_11->sub def_%v_14 %v_11[2.18,] %v_13[2.20,] 	 ARGS:%v_12,%v_13,
 		 22: COPY TYPE_Regexp def_%v_15 
 		 23: id->to_s def_%v_16 id[2.5,] 	 ARGS:

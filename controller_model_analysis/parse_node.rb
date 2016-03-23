@@ -134,6 +134,18 @@ def parse_association(astnode, op)
 				$cur_class.addAssoc(op, assoc2)
 			#	assoc.name = assoc.attribs["foreign_key"]
 			end
+			if assoc.attribs.has_key?("touch")
+				call = Function_call.new(assoc.name,"update_column")
+				$cur_class.getMethod("before_save").addCall(call)	
+			end
+			if assoc.attribs.has_key?("autosave")
+				call = Function_call.new(assoc.name,"save")
+				$cur_class.getMethod("before_save").addCall(call)	
+			end
+			if assoc.attribs.has_key?("validate")
+				call = Function_call.new(assoc.name, "where")
+				$cur_class.getMethod("before_save").addCall(call)
+			end
 		end
 	end
 end
@@ -259,6 +271,7 @@ def parse_method_call(astnode, method)
 		if fcall != nil and check_method_keyword(fcall.getObjName, node2.source) then
 			fcall.setTableName(searchSelf(fcall.getObjName, $cur_class.getName))
 			fcall.setIsQuery
+			fcall.query_string = search_query_string(astnode)
 			fcall.setQueryType(check_method_keyword(fcall.getObjName, node2.source))
 			fcall.complete_string = astnode.source.gsub('\n',' ')
 

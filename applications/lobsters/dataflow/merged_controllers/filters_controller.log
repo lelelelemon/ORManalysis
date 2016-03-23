@@ -13,10 +13,10 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "/filters" def_%v_3 
 		 7: ATTRASSIGN %self->cur_url %v_3[2.6,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "Tag Filters" def_%v_4 
 		 10: ATTRASSIGN %self->title %v_4[2.9,] 
 		 11: 
 		 12: (Tag) def_%v_5 
@@ -92,7 +92,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_6 
+		 1: COPY TYPE_StringLiteral "/filters" def_%cl_1_6 
 		 2: HASH-method- def_%cl_1_7 
 		 3: %self->form_tag def_%cl_1_8 %self[2.0,] %cl_1_6[6.1,] %cl_1_7[6.2,] %self[2.0,] 	 ARGS:%cl_1_6,%cl_1_7,%self,
 CLOSURE BEGIN: %self[2.0,] tag[] 
@@ -134,7 +134,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_3_3 
+		 1: COPY TYPE_StringLiteral "tags[]" def_%cl_3_3 
 		 2: tag->tag def_%cl_3_4 tag[2.2,] 	 ARGS:
 		 3: GETFIELD %self->filtered_tags def_%cl_3_5 %self[2.0,] 
 		 4: %cl_3_5->include? def_%cl_3_6 %cl_3_5[3.3,] tag[3.2,2.2,] 	 ARGS:tag,
@@ -163,13 +163,13 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_18 
+		 0: COPY TYPE_StringLiteral "+" def_%cl_3_18 
 		 1: 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_19 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_19 
 		 1: COPY TYPE_PASS def_%cl_3_18 %cl_3_19[6.0,] 
 BB 7
 	outgoing: 9 10 
@@ -203,7 +203,7 @@ BB 12
 	instructions:
 CLOSURE END: 
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_5 
+		 4: COPY TYPE_StringLiteral "Save Filters" def_%cl_2_5 
 		 5: %self->submit_tag def_%cl_2_6 %self[2.0,] %cl_2_5[3.4,] 	 ARGS:%cl_2_5,
 		 6: RETURN %cl_2_6[3.5,] %self[3.5,2.0,] 
 BB 4
@@ -336,7 +336,7 @@ BB 7
 		 2: %v_16->permanent def_%v_17 %v_16[7.1,] 	 ARGS:
 		 3: (TAG_FILTER_COOKIE) def_%v_18 
 		 4: new_tags->map def_%v_19 new_tags[5.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_20 
+		 5: COPY TYPE_StringLiteral "," def_%v_20 
 		 6: %v_19->join def_%v_21 %v_19[7.4,] %v_20[7.5,] 	 ARGS:%v_20,
 		 7: ATTRASSIGN %v_17->[] %v_18[7.3,] %v_21[7.6,] 
 		 8: COPY TYPE_PASS def_%v_15 %v_21[7.6,] 
@@ -346,7 +346,7 @@ BB 8
 	instructions:
 		 0: 
 		 1: %self->flash def_%v_22 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_23 
+		 2: COPY TYPE_StringLiteral "Your filters have been updated." def_%v_23 
 		 3: ATTRASSIGN %v_22->[] %v_23[8.2,] 
 		 4: 
 		 5: %self->filters_path def_%v_24 %self[8.1,2.0,] 	 ARGS:

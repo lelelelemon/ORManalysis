@@ -121,9 +121,9 @@ BB 6
 	instructions:
 		 0: 
 		 1: scope->active def_%v_7 scope[3.2,2.6,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "left join document_folder_groups dfg on dfg.document_folder_id = document_folders.id" def_%v_8 
 		 3: %v_7->joins def_%v_9 %v_7[6.1,] %v_8[6.2,] 	 ARGS:%v_8,
-		 4: COPY TYPE_StringLiteral def_%v_10 
+		 4: COPY TYPE_StringLiteral "dfg.group_id is null or dfg.group_id in (?)" def_%v_10 
 		 5: user->group_ids def_%v_11 user[2.5,] 	 ARGS:
 		 6: %v_9->where def_%v_12 %v_9[6.3,] %v_10[6.4,] %v_11[6.5,] 	 ARGS:%v_10,%v_11,
 		 7: RETURN %v_12[6.6,] %self[2.0,] 

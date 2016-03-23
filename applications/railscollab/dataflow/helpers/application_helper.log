@@ -39,7 +39,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (I18n) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "product_signature" def_%v_4 
 		 8: %v_3->t def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: %v_5->html_safe def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: RETURN %v_6[2.9,] %self[2.0,] 
@@ -85,10 +85,10 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
-		 4: COPY TYPE_StringLiteral def_%cl_1_6 
+		 1: COPY TYPE_StringLiteral "<a href="" def_%cl_1_3 
+		 2: COPY TYPE_StringLiteral "page=" def_%cl_1_4 
+		 3: COPY TYPE_StringLiteral "">" def_%cl_1_5 
+		 4: COPY TYPE_StringLiteral "</a>" def_%cl_1_6 
 		 5: BUILDSTRING def_%cl_1_7 %cl_1_3[3.1,] url[] %cl_1_4[3.2,] id[2.2,] %cl_1_5[3.3,] id[2.2,] %cl_1_6[3.4,] 
 		 6: RETURN %cl_1_7[3.5,] %self[2.0,] 
 BB 4
@@ -103,16 +103,16 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral " | " def_%v_4 
 		 10: %v_3->join def_%v_5 %v_3[2.8,] %v_4[2.9,] 	 ARGS:%v_4,
 		 11: COPY TYPE_PASS def_values %v_5[2.10,] 
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%v_6 
+		 13: COPY TYPE_StringLiteral "<div class="advancedPagination"><span>" def_%v_6 
 		 14: (I18n) def_%v_7 
-		 15: COPY TYPE_StringLiteral def_%v_8 
+		 15: COPY TYPE_StringLiteral "page" def_%v_8 
 		 16: %v_7->t def_%v_9 %v_7[2.14,] %v_8[2.15,] 	 ARGS:%v_8,
-		 17: COPY TYPE_StringLiteral def_%v_10 
-		 18: COPY TYPE_StringLiteral def_%v_11 
+		 17: COPY TYPE_StringLiteral ": </span><span>(" def_%v_10 
+		 18: COPY TYPE_StringLiteral ")</span></div>" def_%v_11 
 		 19: BUILDSTRING def_%v_12 %v_6[2.13,] %v_9[2.16,] %v_10[2.17,] values[2.11,] %v_11[2.18,] 
 		 20: %v_12->html_safe def_%v_13 %v_12[2.19,] 	 ARGS:
 		 21: RETURN %v_13[2.20,] %self[2.0,] 
@@ -137,8 +137,8 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_filename 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "/assets/icons/" def_%v_3 
+		 8: COPY TYPE_StringLiteral ".gif" def_%v_4 
 		 9: BUILDSTRING def_%v_5 %v_3[2.7,] filename[2.5,] %v_4[2.8,] 
 		 10: RETURN %v_5[2.9,] %self[2.0,] 
 BB 3
@@ -201,13 +201,13 @@ BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "/assets/icons/checked.gif" def_%v_4 
 		 1: 
 BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "/assets/icons/not-checked.gif" def_%v_5 
 		 1: COPY TYPE_PASS def_%v_4 %v_5[10.0,] 
 BB 11
 	outgoing: 12 13 
@@ -228,18 +228,18 @@ BB 13
 	instructions:
 		 0: COPY TYPE_PASS def_method %v_6[12.0,11.2,] 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_7 
-		 3: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "<img src='" def_%v_7 
+		 3: COPY TYPE_StringLiteral "' alt='' />" def_%v_8 
 		 4: BUILDSTRING def_%v_9 %v_7[13.2,] icon_url[11.0,] %v_8[13.3,] 
 		 5: %v_9->html_safe def_%v_10 %v_9[13.4,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%v_11 
+		 6: COPY TYPE_StringLiteral "checkboxLink" def_%v_11 
 		 7: hint->nil? def_%v_12 hint[5.0,4.0,] 	 ARGS:
 		 8: BRANCH %v_12[13.7,] 
 BB 14
 	outgoing: 16 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_13 
+		 0: COPY TYPE_StringLiteral "" def_%v_13 
 		 1: 
 BB 15
 	outgoing: 16 
@@ -310,9 +310,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "='" def_%cl_1_3 
 		 2: attrs->[] def_%cl_1_4 attrs[] a[2.2,] 	 ARGS:a,
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "'" def_%cl_1_5 
 		 4: BUILDSTRING def_%cl_1_6 a[2.2,] %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] 
 		 5: RETURN %cl_1_6[3.4,] %self[2.0,] 
 BB 4
@@ -327,14 +327,14 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 3: COPY TYPE_StringLiteral def_%v_6 
+		 3: COPY TYPE_StringLiteral " " def_%v_6 
 		 4: %v_5->join def_%v_7 %v_5[4.2,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: COPY TYPE_PASS def_attr_values %v_7[4.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_8 
-		 8: COPY TYPE_StringLiteral def_%v_9 
-		 9: COPY TYPE_StringLiteral def_%v_10 
-		 10: COPY TYPE_StringLiteral def_%v_11 
+		 7: COPY TYPE_StringLiteral "<img src='/assets/icons/" def_%v_8 
+		 8: COPY TYPE_StringLiteral ".gif' alt='" def_%v_9 
+		 9: COPY TYPE_StringLiteral "' " def_%v_10 
+		 10: COPY TYPE_StringLiteral "/>" def_%v_11 
 		 11: BUILDSTRING def_%v_12 %v_8[4.7,] filename[2.5,] %v_9[4.8,] alt[2.6,] %v_10[4.9,] %v_7[4.4,] %v_11[4.10,] 
 		 12: %v_12->html_safe def_%v_13 %v_12[4.11,] 	 ARGS:
 		 13: RETURN %v_13[4.12,] %self[2.0,] 
@@ -358,8 +358,8 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 6: COPY TYPE_StringLiteral "spinner.gif" def_%v_3 
+		 7: COPY TYPE_StringLiteral "loadingSpinner" def_%v_4 
 		 8: HASH-class- def_%v_5 %v_4[2.7,] 
 		 9: %self->image_tag def_%v_6 %self[2.0,] %v_3[2.6,] %v_5[2.8,] 	 ARGS:%v_3,%v_5,
 		 10: RETURN %v_6[2.9,] %self[2.0,2.9,] 
@@ -556,7 +556,7 @@ BB 27
 	instructions:
 CLOSURE END: action[2.2,] 
 		 8: %v_3->compact def_%v_4 %v_3[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_5 
+		 9: COPY TYPE_StringLiteral " | " def_%v_5 
 		 10: %v_4->join def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 ARGS:%v_5,
 		 11: %v_6->html_safe def_%v_7 %v_6[2.10,] 	 ARGS:
 		 12: RETURN %v_7[2.11,] %self[2.0,] 
@@ -591,7 +591,7 @@ BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "--" def_%v_6 
 		 1: RETURN %v_6[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -638,7 +638,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 3: COPY TYPE_StringLiteral def_%v_9 
+		 3: COPY TYPE_StringLiteral ", " def_%v_9 
 		 4: %v_8->join def_%v_10 %v_8[4.2,] %v_9[4.3,] 	 ARGS:%v_9,
 		 5: %v_10->html_safe def_%v_11 %v_10[4.4,] 	 ARGS:
 		 6: RETURN %v_11[4.5,] %self[2.0,] 
@@ -676,7 +676,7 @@ BB 3
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "B" def_%v_7 
 		 1: BUILDSTRING def_%v_8 value[2.5,] %v_7[3.0,] 
 		 2: RETURN %v_8[3.1,] %self[2.0,] 
 BB 4
@@ -692,7 +692,7 @@ BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_12 
+		 0: COPY TYPE_StringLiteral "KB" def_%v_12 
 		 1: BUILDSTRING def_%v_13 kbs[2.8,] %v_12[6.0,] 
 		 2: RETURN %v_13[6.1,] %self[2.0,] 
 BB 7
@@ -701,7 +701,7 @@ BB 7
 	instructions:
 		 0: COPY TYPE_Nil def_%v_14 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_15 
+		 2: COPY TYPE_StringLiteral "MB" def_%v_15 
 		 3: BUILDSTRING def_%v_16 mbs[2.11,] %v_15[7.2,] 
 		 4: RETURN %v_16[7.3,] %self[2.0,] 
 BB 9
@@ -744,7 +744,7 @@ BB 5
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "" def_%v_5 
 		 1: RETURN %v_5[5.0,] %self[2.0,] 
 BB 6
 	outgoing: 8 
@@ -791,45 +791,45 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "true" def_%v_4 
 		 2: options->[] def_%v_5 options[3.1,2.7,] 	 ARGS:Symbol,
-		 3: COPY TYPE_StringLiteral def_%v_6 
+		 3: COPY TYPE_StringLiteral "Yes" def_%v_6 
 		 4: BUILDSTRING def_%v_7 %v_5[4.2,] %v_6[4.3,] 
 		 5: HASH-id- def_%v_8 %v_7[4.4,] 
 		 6: options->merge def_%v_9 options[4.2,3.1,2.7,] %v_8[4.5,] 	 ARGS:%v_8,
 		 7: %self->radio_button def_%v_10 %self[2.0,] object_name[2.5,] method[2.6,] %v_4[4.1,] %v_9[4.6,] 	 ARGS:object_name,method,%v_4,%v_9,
-		 8: COPY TYPE_StringLiteral def_%v_11 
+		 8: COPY TYPE_StringLiteral " <label for="" def_%v_11 
 		 9: 
 		 10: options->[] def_%v_12 options[4.2,4.6,3.1,2.7,] 	 ARGS:Symbol,
-		 11: COPY TYPE_StringLiteral def_%v_13 
+		 11: COPY TYPE_StringLiteral "Yes" class="" def_%v_13 
 		 12: options->[] def_%v_14 options[4.2,4.6,4.10,3.1,2.7,] 	 ARGS:Symbol,
-		 13: COPY TYPE_StringLiteral def_%v_15 
+		 13: COPY TYPE_StringLiteral "">" def_%v_15 
 		 14: (I18n) def_%v_16 
-		 15: COPY TYPE_StringLiteral def_%v_17 
+		 15: COPY TYPE_StringLiteral "yesno_yes" def_%v_17 
 		 16: %v_16->t def_%v_18 %v_16[4.14,] %v_17[4.15,] 	 ARGS:%v_17,
-		 17: COPY TYPE_StringLiteral def_%v_19 
+		 17: COPY TYPE_StringLiteral "</label> " def_%v_19 
 		 18: BUILDSTRING def_%v_20 %v_11[4.8,] %v_12[4.10,] %v_13[4.11,] %v_14[4.12,] %v_15[4.13,] %v_18[4.16,] %v_19[4.17,] 
 		 19: %v_20->html_safe def_%v_21 %v_20[4.18,] 	 ARGS:
 		 20: %v_10->+ def_%v_22 %v_10[4.7,] %v_21[4.19,] 	 ARGS:%v_21,
-		 21: COPY TYPE_StringLiteral def_%v_23 
+		 21: COPY TYPE_StringLiteral "false" def_%v_23 
 		 22: 
 		 23: options->[] def_%v_24 options[4.2,4.6,4.10,4.12,3.1,2.7,] 	 ARGS:Symbol,
-		 24: COPY TYPE_StringLiteral def_%v_25 
+		 24: COPY TYPE_StringLiteral "No" def_%v_25 
 		 25: BUILDSTRING def_%v_26 %v_24[4.23,] %v_25[4.24,] 
 		 26: HASH-id- def_%v_27 %v_26[4.25,] 
 		 27: options->merge def_%v_28 options[4.2,4.6,4.10,4.12,4.23,3.1,2.7,] %v_27[4.26,] 	 ARGS:%v_27,
 		 28: %self->radio_button def_%v_29 %self[4.7,2.0,] object_name[2.5,] method[2.6,] %v_23[4.21,] %v_28[4.27,] 	 ARGS:object_name,method,%v_23,%v_28,
 		 29: %v_22->+ def_%v_30 %v_22[4.20,] %v_29[4.28,] 	 ARGS:%v_29,
-		 30: COPY TYPE_StringLiteral def_%v_31 
+		 30: COPY TYPE_StringLiteral " <label for="" def_%v_31 
 		 31: 
 		 32: options->[] def_%v_32 options[4.2,4.6,4.10,4.12,4.23,4.27,3.1,2.7,] 	 ARGS:Symbol,
-		 33: COPY TYPE_StringLiteral def_%v_33 
+		 33: COPY TYPE_StringLiteral "No" class="" def_%v_33 
 		 34: options->[] def_%v_34 options[4.2,4.6,4.10,4.12,4.23,4.27,4.32,3.1,2.7,] 	 ARGS:Symbol,
-		 35: COPY TYPE_StringLiteral def_%v_35 
+		 35: COPY TYPE_StringLiteral "">" def_%v_35 
 		 36: (I18n) def_%v_36 
-		 37: COPY TYPE_StringLiteral def_%v_37 
+		 37: COPY TYPE_StringLiteral "yesno_no" def_%v_37 
 		 38: %v_36->t def_%v_38 %v_36[4.36,] %v_37[4.37,] 	 ARGS:%v_37,
-		 39: COPY TYPE_StringLiteral def_%v_39 
+		 39: COPY TYPE_StringLiteral "</label>" def_%v_39 
 		 40: BUILDSTRING def_%v_40 %v_31[4.30,] %v_32[4.32,] %v_33[4.33,] %v_34[4.34,] %v_35[4.35,] %v_38[4.38,] %v_39[4.39,] 
 		 41: %v_40->html_safe def_%v_41 %v_40[4.40,] 	 ARGS:
 		 42: %v_30->+ def_%v_42 %v_30[4.29,] %v_41[4.41,] 	 ARGS:%v_41,
@@ -868,46 +868,46 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "1" def_%v_4 
 		 2: options->[] def_%v_5 options[3.1,2.7,] 	 ARGS:Symbol,
-		 3: COPY TYPE_StringLiteral def_%v_6 
+		 3: COPY TYPE_StringLiteral "Yes" def_%v_6 
 		 4: BUILDSTRING def_%v_7 %v_5[4.2,] %v_6[4.3,] 
 		 5: HASH-id- def_%v_8 %v_7[4.4,] 
 		 6: options->merge def_%v_9 options[4.2,3.1,2.7,] %v_8[4.5,] 	 ARGS:%v_8,
 		 7: %self->radio_button_tag def_%v_10 %self[2.0,] name[2.5,] %v_4[4.1,] is_yes[2.6,] %v_9[4.6,] 	 ARGS:name,%v_4,is_yes,%v_9,
-		 8: COPY TYPE_StringLiteral def_%v_11 
+		 8: COPY TYPE_StringLiteral " <label for="" def_%v_11 
 		 9: 
 		 10: options->[] def_%v_12 options[4.2,4.6,3.1,2.7,] 	 ARGS:Symbol,
-		 11: COPY TYPE_StringLiteral def_%v_13 
+		 11: COPY TYPE_StringLiteral "Yes" class="" def_%v_13 
 		 12: options->[] def_%v_14 options[4.2,4.6,4.10,3.1,2.7,] 	 ARGS:Symbol,
-		 13: COPY TYPE_StringLiteral def_%v_15 
+		 13: COPY TYPE_StringLiteral "">" def_%v_15 
 		 14: (I18n) def_%v_16 
-		 15: COPY TYPE_StringLiteral def_%v_17 
+		 15: COPY TYPE_StringLiteral "yesno_yes" def_%v_17 
 		 16: %v_16->t def_%v_18 %v_16[4.14,] %v_17[4.15,] 	 ARGS:%v_17,
-		 17: COPY TYPE_StringLiteral def_%v_19 
+		 17: COPY TYPE_StringLiteral "</label> " def_%v_19 
 		 18: BUILDSTRING def_%v_20 %v_11[4.8,] %v_12[4.10,] %v_13[4.11,] %v_14[4.12,] %v_15[4.13,] %v_18[4.16,] %v_19[4.17,] 
 		 19: %v_20->html_safe def_%v_21 %v_20[4.18,] 	 ARGS:
 		 20: %v_10->+ def_%v_22 %v_10[4.7,] %v_21[4.19,] 	 ARGS:%v_21,
-		 21: COPY TYPE_StringLiteral def_%v_23 
+		 21: COPY TYPE_StringLiteral "0" def_%v_23 
 		 22: 
 		 23: is_yes->! def_%v_24 is_yes[2.6,] 	 ARGS:
 		 24: options->[] def_%v_25 options[4.2,4.6,4.10,4.12,3.1,2.7,] 	 ARGS:Symbol,
-		 25: COPY TYPE_StringLiteral def_%v_26 
+		 25: COPY TYPE_StringLiteral "No" def_%v_26 
 		 26: BUILDSTRING def_%v_27 %v_25[4.24,] %v_26[4.25,] 
 		 27: HASH-id- def_%v_28 %v_27[4.26,] 
 		 28: options->merge def_%v_29 options[4.2,4.6,4.10,4.12,4.24,3.1,2.7,] %v_28[4.27,] 	 ARGS:%v_28,
 		 29: %self->radio_button_tag def_%v_30 %self[4.7,2.0,] name[2.5,] %v_23[4.21,] %v_24[4.23,] %v_29[4.28,] 	 ARGS:name,%v_23,%v_24,%v_29,
 		 30: %v_22->+ def_%v_31 %v_22[4.20,] %v_30[4.29,] 	 ARGS:%v_30,
-		 31: COPY TYPE_StringLiteral def_%v_32 
+		 31: COPY TYPE_StringLiteral " <label for="" def_%v_32 
 		 32: 
 		 33: options->[] def_%v_33 options[4.2,4.6,4.10,4.12,4.24,4.28,3.1,2.7,] 	 ARGS:Symbol,
-		 34: COPY TYPE_StringLiteral def_%v_34 
+		 34: COPY TYPE_StringLiteral "No" class="" def_%v_34 
 		 35: options->[] def_%v_35 options[4.2,4.6,4.10,4.12,4.24,4.28,4.33,3.1,2.7,] 	 ARGS:Symbol,
-		 36: COPY TYPE_StringLiteral def_%v_36 
+		 36: COPY TYPE_StringLiteral "">" def_%v_36 
 		 37: (I18n) def_%v_37 
-		 38: COPY TYPE_StringLiteral def_%v_38 
+		 38: COPY TYPE_StringLiteral "yesno_no" def_%v_38 
 		 39: %v_37->t def_%v_39 %v_37[4.37,] %v_38[4.38,] 	 ARGS:%v_38,
-		 40: COPY TYPE_StringLiteral def_%v_40 
+		 40: COPY TYPE_StringLiteral "</label>" def_%v_40 
 		 41: BUILDSTRING def_%v_41 %v_32[4.31,] %v_33[4.33,] %v_34[4.34,] %v_35[4.35,] %v_36[4.36,] %v_39[4.39,] %v_40[4.40,] 
 		 42: %v_41->html_safe def_%v_42 %v_41[4.41,] 	 ARGS:
 		 43: %v_31->+ def_%v_43 %v_31[4.30,] %v_42[4.42,] 	 ARGS:%v_42,
@@ -937,7 +937,7 @@ BB 2
 		 8: COPY TYPE_PASS def_profile_updateable %v_3[2.7,] 
 		 9: 
 		 10: (I18n) def_%v_4 
-		 11: COPY TYPE_StringLiteral def_%v_5 
+		 11: COPY TYPE_StringLiteral "edit" def_%v_5 
 		 12: %v_4->t def_%v_6 %v_4[2.10,] %v_5[2.11,] 	 ARGS:%v_5,
 		 13: user->id def_%v_7 user[2.5,] 	 ARGS:
 		 14: HASH-id- def_%v_8 %v_7[2.13,] 
@@ -955,18 +955,18 @@ BB 3
 	instructions:
 		 0: 
 		 1: (I18n) def_%v_14 
-		 2: COPY TYPE_StringLiteral def_%v_15 
+		 2: COPY TYPE_StringLiteral "delete" def_%v_15 
 		 3: %v_14->t def_%v_16 %v_14[3.1,] %v_15[3.2,] 	 ARGS:%v_15,
 		 4: user->id def_%v_17 user[2.5,] 	 ARGS:
 		 5: HASH-id- def_%v_18 %v_17[3.4,] 
 		 6: %self->user_path def_%v_19 %self[2.0,] %v_18[3.5,] 	 ARGS:%v_18,
 		 7: %self->can? def_%v_20 %self[3.6,2.0,] user[3.4,2.5,] 	 ARGS:Symbol,user,
 		 8: (I18n) def_%v_21 
-		 9: COPY TYPE_StringLiteral def_%v_22 
+		 9: COPY TYPE_StringLiteral "confirm_user_delete" def_%v_22 
 		 10: %v_21->t def_%v_23 %v_21[3.8,] %v_22[3.9,] 	 ARGS:%v_22,
 		 11: HASH-name-url-cond-method-confirm- def_%v_24 %v_16[3.3,] %v_19[3.6,] %v_20[3.7,] %v_23[3.10,] 
 		 12: (I18n) def_%v_25 
-		 13: COPY TYPE_StringLiteral def_%v_26 
+		 13: COPY TYPE_StringLiteral "permissions" def_%v_26 
 		 14: %v_25->t def_%v_27 %v_25[3.12,] %v_26[3.13,] 	 ARGS:%v_26,
 		 15: user->id def_%v_28 user[3.4,2.5,] 	 ARGS:
 		 16: HASH-id- def_%v_29 %v_28[3.15,] 
@@ -983,7 +983,7 @@ BB 4
 	instructions:
 		 0: 
 		 1: (I18n) def_%v_35 
-		 2: COPY TYPE_StringLiteral def_%v_36 
+		 2: COPY TYPE_StringLiteral "remove" def_%v_36 
 		 3: %v_35->t def_%v_37 %v_35[4.1,] %v_36[4.2,] 	 ARGS:%v_36,
 		 4: GETFIELD %self->active_project def_%v_38 %self[2.0,] 
 		 5: %v_38->id def_%v_39 %v_38[4.4,] 	 ARGS:
@@ -992,7 +992,7 @@ BB 4
 		 8: %self->users_project_path def_%v_42 %self[2.0,] %v_41[4.7,] 	 ARGS:%v_41,
 		 9: %self->can? def_%v_43 %self[4.8,2.0,] user[4.6,2.5,] 	 ARGS:Symbol,user,
 		 10: (I18n) def_%v_44 
-		 11: COPY TYPE_StringLiteral def_%v_45 
+		 11: COPY TYPE_StringLiteral "confirm_user_remove" def_%v_45 
 		 12: %v_44->t def_%v_46 %v_44[4.10,] %v_45[4.11,] 	 ARGS:%v_45,
 		 13: HASH-name-url-cond-method-confirm- def_%v_47 %v_37[4.3,] %v_42[4.8,] %v_43[4.9,] %v_46[4.12,] 
 		 14: actions-><< def_%v_48 actions[2.18,] %v_47[4.13,] 	 ARGS:%v_47,
@@ -1025,7 +1025,7 @@ BB 2
 		 5: RECEIVEARG def_project 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "edit" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: project->id def_%v_6 project[2.5,] 	 ARGS:
 		 11: HASH-id- def_%v_7 %v_6[2.10,] 
@@ -1033,14 +1033,14 @@ BB 2
 		 13: %self->can? def_%v_9 %self[2.0,2.12,] project[2.5,2.10,] 	 ARGS:Symbol,project,
 		 14: HASH-name-url-cond- def_%v_10 %v_5[2.9,] %v_8[2.12,] %v_9[2.13,] 
 		 15: (I18n) def_%v_11 
-		 16: COPY TYPE_StringLiteral def_%v_12 
+		 16: COPY TYPE_StringLiteral "delete" def_%v_12 
 		 17: %v_11->t def_%v_13 %v_11[2.15,] %v_12[2.16,] 	 ARGS:%v_12,
 		 18: project->id def_%v_14 project[2.5,2.10,] 	 ARGS:
 		 19: HASH-id- def_%v_15 %v_14[2.18,] 
 		 20: %self->project_path def_%v_16 %self[2.0,2.12,2.13,] %v_15[2.19,] 	 ARGS:%v_15,
 		 21: %self->can? def_%v_17 %self[2.0,2.12,2.13,2.20,] project[2.5,2.10,2.18,] 	 ARGS:Symbol,project,
 		 22: (I18n) def_%v_18 
-		 23: COPY TYPE_StringLiteral def_%v_19 
+		 23: COPY TYPE_StringLiteral "project_confirm_delete" def_%v_19 
 		 24: %v_18->t def_%v_20 %v_18[2.22,] %v_19[2.23,] 	 ARGS:%v_19,
 		 25: HASH-name-url-cond-method-confirm- def_%v_21 %v_13[2.17,] %v_16[2.20,] %v_17[2.21,] %v_20[2.24,] 
 		 26: COPY TYPE_Array def_%v_22 %v_10[2.14,] %v_21[2.25,] 
@@ -1067,7 +1067,7 @@ BB 2
 		 5: RECEIVEARG def_milestone 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "edit" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: milestone->id def_%v_6 milestone[2.5,] 	 ARGS:
 		 11: HASH-id- def_%v_7 %v_6[2.10,] 
@@ -1075,15 +1075,15 @@ BB 2
 		 13: %self->can? def_%v_9 %self[2.0,2.12,] milestone[2.5,2.10,] 	 ARGS:Symbol,milestone,
 		 14: HASH-name-url-cond- def_%v_10 %v_5[2.9,] %v_8[2.12,] %v_9[2.13,] 
 		 15: (I18n) def_%v_11 
-		 16: COPY TYPE_StringLiteral def_%v_12 
+		 16: COPY TYPE_StringLiteral "delete" def_%v_12 
 		 17: %v_11->t def_%v_13 %v_11[2.15,] %v_12[2.16,] 	 ARGS:%v_12,
 		 18: milestone->id def_%v_14 milestone[2.5,2.10,] 	 ARGS:
 		 19: HASH-id- def_%v_15 %v_14[2.18,] 
 		 20: %self->milestone_path def_%v_16 %self[2.0,2.12,2.13,] %v_15[2.19,] 	 ARGS:%v_15,
 		 21: %self->can? def_%v_17 %self[2.0,2.12,2.13,2.20,] milestone[2.5,2.10,2.18,] 	 ARGS:Symbol,milestone,
-		 22: COPY TYPE_StringLiteral def_%v_18 
+		 22: COPY TYPE_StringLiteral "oaction" def_%v_18 
 		 23: (I18n) def_%v_19 
-		 24: COPY TYPE_StringLiteral def_%v_20 
+		 24: COPY TYPE_StringLiteral "milestone_confirm_delete" def_%v_20 
 		 25: %v_19->t def_%v_21 %v_19[2.23,] %v_20[2.24,] 	 ARGS:%v_20,
 		 26: HASH-name-url-cond-class-method-confirm- def_%v_22 %v_13[2.17,] %v_16[2.20,] %v_17[2.21,] %v_18[2.22,] %v_21[2.25,] 
 		 27: COPY TYPE_Array def_%v_23 %v_10[2.14,] %v_22[2.26,] 
@@ -1110,7 +1110,7 @@ BB 2
 		 5: RECEIVEARG def_task_list 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "edit" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: task_list->id def_%v_6 task_list[2.5,] 	 ARGS:
 		 11: HASH-id- def_%v_7 %v_6[2.10,] 
@@ -1118,24 +1118,24 @@ BB 2
 		 13: %self->can? def_%v_9 %self[2.0,2.12,] task_list[2.5,2.10,] 	 ARGS:Symbol,task_list,
 		 14: HASH-name-url-cond- def_%v_10 %v_5[2.9,] %v_8[2.12,] %v_9[2.13,] 
 		 15: (I18n) def_%v_11 
-		 16: COPY TYPE_StringLiteral def_%v_12 
+		 16: COPY TYPE_StringLiteral "delete" def_%v_12 
 		 17: %v_11->t def_%v_13 %v_11[2.15,] %v_12[2.16,] 	 ARGS:%v_12,
 		 18: task_list->id def_%v_14 task_list[2.5,2.10,] 	 ARGS:
 		 19: HASH-id- def_%v_15 %v_14[2.18,] 
 		 20: %self->task_list_path def_%v_16 %self[2.0,2.12,2.13,] %v_15[2.19,] 	 ARGS:%v_15,
 		 21: %self->can? def_%v_17 %self[2.0,2.12,2.13,2.20,] task_list[2.5,2.10,2.18,] 	 ARGS:Symbol,task_list,
-		 22: COPY TYPE_StringLiteral def_%v_18 
+		 22: COPY TYPE_StringLiteral "oaction" def_%v_18 
 		 23: (I18n) def_%v_19 
-		 24: COPY TYPE_StringLiteral def_%v_20 
+		 24: COPY TYPE_StringLiteral "task_list_confirm_delete" def_%v_20 
 		 25: %v_19->t def_%v_21 %v_19[2.23,] %v_20[2.24,] 	 ARGS:%v_20,
 		 26: HASH-name-url-cond-class-method-confirm- def_%v_22 %v_13[2.17,] %v_16[2.20,] %v_17[2.21,] %v_18[2.22,] %v_21[2.25,] 
 		 27: (I18n) def_%v_23 
-		 28: COPY TYPE_StringLiteral def_%v_24 
+		 28: COPY TYPE_StringLiteral "reorder_tasks" def_%v_24 
 		 29: %v_23->t def_%v_25 %v_23[2.27,] %v_24[2.28,] 	 ARGS:%v_24,
 		 30: task_list->id def_%v_26 task_list[2.5,2.10,2.18,] 	 ARGS:
 		 31: HASH-id- def_%v_27 %v_26[2.30,] 
 		 32: %self->reorder_task_list_path def_%v_28 %self[2.0,2.12,2.13,2.20,2.21,] %v_27[2.31,] 	 ARGS:%v_27,
-		 33: COPY TYPE_StringLiteral def_%v_29 
+		 33: COPY TYPE_StringLiteral "doSortTaskList" def_%v_29 
 		 34: %self->can? def_%v_30 %self[2.0,2.12,2.13,2.20,2.21,2.32,] task_list[2.5,2.10,2.18,2.30,] 	 ARGS:Symbol,task_list,
 		 35: HASH-name-url-class-cond- def_%v_31 %v_25[2.29,] %v_28[2.32,] %v_29[2.33,] %v_30[2.34,] 
 		 36: COPY TYPE_Array def_%v_32 %v_10[2.14,] %v_22[2.26,] %v_31[2.35,] 
@@ -1162,7 +1162,7 @@ BB 2
 		 5: RECEIVEARG def_message 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "edit" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: message->id def_%v_6 message[2.5,] 	 ARGS:
 		 11: HASH-id- def_%v_7 %v_6[2.10,] 
@@ -1170,14 +1170,14 @@ BB 2
 		 13: %self->can? def_%v_9 %self[2.0,2.12,] message[2.5,2.10,] 	 ARGS:Symbol,message,
 		 14: HASH-name-url-cond- def_%v_10 %v_5[2.9,] %v_8[2.12,] %v_9[2.13,] 
 		 15: (I18n) def_%v_11 
-		 16: COPY TYPE_StringLiteral def_%v_12 
+		 16: COPY TYPE_StringLiteral "delete" def_%v_12 
 		 17: %v_11->t def_%v_13 %v_11[2.15,] %v_12[2.16,] 	 ARGS:%v_12,
 		 18: message->id def_%v_14 message[2.5,2.10,] 	 ARGS:
 		 19: HASH-id- def_%v_15 %v_14[2.18,] 
 		 20: %self->message_path def_%v_16 %self[2.0,2.12,2.13,] %v_15[2.19,] 	 ARGS:%v_15,
 		 21: %self->can? def_%v_17 %self[2.0,2.12,2.13,2.20,] message[2.5,2.10,2.18,] 	 ARGS:Symbol,message,
 		 22: (I18n) def_%v_18 
-		 23: COPY TYPE_StringLiteral def_%v_19 
+		 23: COPY TYPE_StringLiteral "message_confirm_delete" def_%v_19 
 		 24: %v_18->t def_%v_20 %v_18[2.22,] %v_19[2.23,] 	 ARGS:%v_19,
 		 25: HASH-name-url-cond-method-confirm- def_%v_21 %v_13[2.17,] %v_16[2.20,] %v_17[2.21,] %v_20[2.24,] 
 		 26: COPY TYPE_Array def_%v_22 %v_10[2.14,] %v_21[2.25,] 
@@ -1204,9 +1204,9 @@ BB 2
 		 5: RECEIVEARG def_company 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "add_user" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
-		 10: COPY TYPE_StringLiteral def_%v_6 
+		 10: COPY TYPE_StringLiteral "/users/new?company_id=" def_%v_6 
 		 11: 
 		 12: company->id def_%v_7 company[2.5,] 	 ARGS:
 		 13: BUILDSTRING def_%v_8 %v_6[2.10,] %v_7[2.12,] 
@@ -1226,7 +1226,7 @@ BB 4
 	instructions:
 		 0: HASH-name-url-cond- def_%v_13 %v_5[2.9,] %v_8[2.13,] %v_10[3.2,2.15,] 
 		 1: (I18n) def_%v_14 
-		 2: COPY TYPE_StringLiteral def_%v_15 
+		 2: COPY TYPE_StringLiteral "edit" def_%v_15 
 		 3: %v_14->t def_%v_16 %v_14[4.1,] %v_15[4.2,] 	 ARGS:%v_15,
 		 4: company->id def_%v_17 company[2.5,] 	 ARGS:
 		 5: HASH-id- def_%v_18 %v_17[4.4,] 
@@ -1245,7 +1245,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: (I18n) def_%v_25 
-		 2: COPY TYPE_StringLiteral def_%v_26 
+		 2: COPY TYPE_StringLiteral "permissions" def_%v_26 
 		 3: %v_25->t def_%v_27 %v_25[5.1,] %v_26[5.2,] 	 ARGS:%v_26,
 		 4: company->id def_%v_28 company[2.5,] 	 ARGS:
 		 5: HASH-id- def_%v_29 %v_28[5.4,] 
@@ -1260,7 +1260,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: (I18n) def_%v_34 
-		 2: COPY TYPE_StringLiteral def_%v_35 
+		 2: COPY TYPE_StringLiteral "remove" def_%v_35 
 		 3: %v_34->t def_%v_36 %v_34[6.1,] %v_35[6.2,] 	 ARGS:%v_35,
 		 4: GETFIELD %self->active_project def_%v_37 %self[2.0,] 
 		 5: %v_37->id def_%v_38 %v_37[6.4,] 	 ARGS:
@@ -1269,7 +1269,7 @@ BB 6
 		 8: %self->companies_project_path def_%v_41 %self[2.0,] %v_40[6.7,] 	 ARGS:%v_40,
 		 9: %self->can? def_%v_42 %self[6.8,2.0,] company[6.6,2.5,] 	 ARGS:Symbol,company,
 		 10: (I18n) def_%v_43 
-		 11: COPY TYPE_StringLiteral def_%v_44 
+		 11: COPY TYPE_StringLiteral "confirm_client_remove" def_%v_44 
 		 12: %v_43->t def_%v_45 %v_43[6.10,] %v_44[6.11,] 	 ARGS:%v_44,
 		 13: HASH-name-url-cond-method-confirm- def_%v_46 %v_36[6.3,] %v_41[6.8,] %v_42[6.9,] %v_45[6.12,] 
 		 14: actions-><< def_%v_47 actions[4.10,] %v_46[6.13,] 	 ARGS:%v_46,
@@ -1302,7 +1302,7 @@ BB 2
 		 5: RECEIVEARG def_comment 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "edit" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: comment->id def_%v_6 comment[2.5,] 	 ARGS:
 		 11: HASH-id- def_%v_7 %v_6[2.10,] 
@@ -1310,14 +1310,14 @@ BB 2
 		 13: %self->can? def_%v_9 %self[2.0,2.12,] comment[2.5,2.10,] 	 ARGS:Symbol,comment,
 		 14: HASH-name-url-cond- def_%v_10 %v_5[2.9,] %v_8[2.12,] %v_9[2.13,] 
 		 15: (I18n) def_%v_11 
-		 16: COPY TYPE_StringLiteral def_%v_12 
+		 16: COPY TYPE_StringLiteral "delete" def_%v_12 
 		 17: %v_11->t def_%v_13 %v_11[2.15,] %v_12[2.16,] 	 ARGS:%v_12,
 		 18: comment->id def_%v_14 comment[2.5,2.10,] 	 ARGS:
 		 19: HASH-id- def_%v_15 %v_14[2.18,] 
 		 20: %self->comment_path def_%v_16 %self[2.0,2.12,2.13,] %v_15[2.19,] 	 ARGS:%v_15,
 		 21: %self->can? def_%v_17 %self[2.0,2.12,2.13,2.20,] comment[2.5,2.10,2.18,] 	 ARGS:Symbol,comment,
 		 22: (I18n) def_%v_18 
-		 23: COPY TYPE_StringLiteral def_%v_19 
+		 23: COPY TYPE_StringLiteral "comment_delete_confirm" def_%v_19 
 		 24: %v_18->t def_%v_20 %v_18[2.22,] %v_19[2.23,] 	 ARGS:%v_19,
 		 25: HASH-name-url-cond-method-confirm- def_%v_21 %v_13[2.17,] %v_16[2.20,] %v_17[2.21,] %v_20[2.24,] 
 		 26: COPY TYPE_Array def_%v_22 %v_10[2.14,] %v_21[2.25,] 
@@ -1345,7 +1345,7 @@ BB 2
 		 6: RECEIVEARG def_last_revision 
 		 7: 
 		 8: (I18n) def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "details_size" def_%v_4 
 		 10: last_revision->filesize def_%v_5 last_revision[2.6,] 	 ARGS:
 		 11: %self->format_size def_%v_6 %self[2.0,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: HASH-size- def_%v_7 %v_6[2.11,] 
@@ -1356,7 +1356,7 @@ BB 2
 		 17: %self->can? def_%v_12 %self[2.0,2.11,2.16,] file[2.5,2.14,] 	 ARGS:Symbol,file,
 		 18: HASH-name-url-cond- def_%v_13 %v_8[2.13,] %v_11[2.16,] %v_12[2.17,] 
 		 19: (I18n) def_%v_14 
-		 20: COPY TYPE_StringLiteral def_%v_15 
+		 20: COPY TYPE_StringLiteral "edit" def_%v_15 
 		 21: %v_14->t def_%v_16 %v_14[2.19,] %v_15[2.20,] 	 ARGS:%v_15,
 		 22: file->id def_%v_17 file[2.5,2.14,] 	 ARGS:
 		 23: HASH-id- def_%v_18 %v_17[2.22,] 
@@ -1364,14 +1364,14 @@ BB 2
 		 25: %self->can? def_%v_20 %self[2.0,2.11,2.16,2.17,2.24,] file[2.5,2.14,2.22,] 	 ARGS:Symbol,file,
 		 26: HASH-name-url-cond- def_%v_21 %v_16[2.21,] %v_19[2.24,] %v_20[2.25,] 
 		 27: (I18n) def_%v_22 
-		 28: COPY TYPE_StringLiteral def_%v_23 
+		 28: COPY TYPE_StringLiteral "delete" def_%v_23 
 		 29: %v_22->t def_%v_24 %v_22[2.27,] %v_23[2.28,] 	 ARGS:%v_23,
 		 30: file->id def_%v_25 file[2.5,2.14,2.22,] 	 ARGS:
 		 31: HASH-id- def_%v_26 %v_25[2.30,] 
 		 32: %self->file_path def_%v_27 %self[2.0,2.11,2.16,2.17,2.24,2.25,] %v_26[2.31,] 	 ARGS:%v_26,
 		 33: %self->can? def_%v_28 %self[2.0,2.11,2.16,2.17,2.24,2.25,2.32,] file[2.5,2.14,2.22,2.30,] 	 ARGS:Symbol,file,
 		 34: (I18n) def_%v_29 
-		 35: COPY TYPE_StringLiteral def_%v_30 
+		 35: COPY TYPE_StringLiteral "file_delete_confirmation" def_%v_30 
 		 36: %v_29->t def_%v_31 %v_29[2.34,] %v_30[2.35,] 	 ARGS:%v_30,
 		 37: HASH-name-url-cond-method-confirm- def_%v_32 %v_24[2.29,] %v_27[2.32,] %v_28[2.33,] %v_31[2.36,] 
 		 38: COPY TYPE_Array def_%v_33 %v_13[2.18,] %v_21[2.26,] %v_32[2.37,] 
@@ -1399,7 +1399,7 @@ BB 2
 		 6: RECEIVEARG def_revision 
 		 7: 
 		 8: (I18n) def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "download_size" def_%v_4 
 		 10: revision->filesize def_%v_5 revision[2.6,] 	 ARGS:
 		 11: %self->format_size def_%v_6 %self[2.0,] %v_5[2.10,] 	 ARGS:%v_5,
 		 12: HASH-size- def_%v_7 %v_6[2.11,] 
@@ -1411,7 +1411,7 @@ BB 2
 		 18: %self->can? def_%v_13 %self[2.0,2.11,2.17,] file[2.5,2.14,] 	 ARGS:Symbol,file,
 		 19: HASH-name-url-cond- def_%v_14 %v_8[2.13,] %v_12[2.17,] %v_13[2.18,] 
 		 20: (I18n) def_%v_15 
-		 21: COPY TYPE_StringLiteral def_%v_16 
+		 21: COPY TYPE_StringLiteral "edit" def_%v_16 
 		 22: %v_15->t def_%v_17 %v_15[2.20,] %v_16[2.21,] 	 ARGS:%v_16,
 		 23: file->id def_%v_18 file[2.5,2.14,] 	 ARGS:
 		 24: revision->revision_number def_%v_19 revision[2.6,2.10,2.15,] 	 ARGS:
@@ -1444,14 +1444,14 @@ BB 2
 		 6: RECEIVEARG def_object 
 		 7: 
 		 8: (I18n) def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "details" def_%v_4 
 		 10: %v_3->t def_%v_5 %v_3[2.8,] %v_4[2.9,] 	 ARGS:%v_4,
 		 11: attached_file->id def_%v_6 attached_file[2.5,] 	 ARGS:
 		 12: HASH-id- def_%v_7 %v_6[2.11,] 
 		 13: %self->file_path def_%v_8 %self[2.0,] %v_7[2.12,] 	 ARGS:%v_7,
 		 14: HASH-name-url-cond- def_%v_9 %v_5[2.10,] %v_8[2.13,] 
 		 15: (I18n) def_%v_10 
-		 16: COPY TYPE_StringLiteral def_%v_11 
+		 16: COPY TYPE_StringLiteral "detatch" def_%v_11 
 		 17: %v_10->t def_%v_12 %v_10[2.15,] %v_11[2.16,] 	 ARGS:%v_11,
 		 18: attached_file->id def_%v_13 attached_file[2.5,2.11,] 	 ARGS:
 		 19: object->class def_%v_14 object[2.6,] 	 ARGS:
@@ -1461,7 +1461,7 @@ BB 2
 		 23: %self->detatch_file_path def_%v_18 %self[2.0,2.13,] %v_17[2.22,] 	 ARGS:%v_17,
 		 24: %self->can? def_%v_19 %self[2.0,2.13,2.23,] object[2.6,2.19,2.21,] 	 ARGS:Symbol,object,
 		 25: (I18n) def_%v_20 
-		 26: COPY TYPE_StringLiteral def_%v_21 
+		 26: COPY TYPE_StringLiteral "detatch_file_confirm" def_%v_21 
 		 27: %v_20->t def_%v_22 %v_20[2.25,] %v_21[2.26,] 	 ARGS:%v_21,
 		 28: HASH-name-url-cond-method-confirm- def_%v_23 %v_12[2.17,] %v_18[2.23,] %v_19[2.24,] %v_22[2.27,] 
 		 29: COPY TYPE_Array def_%v_24 %v_9[2.14,] %v_23[2.28,] 
@@ -1488,14 +1488,14 @@ BB 2
 		 5: RECEIVEARG def_time 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "details" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: time->id def_%v_6 time[2.5,] 	 ARGS:
 		 11: HASH-id- def_%v_7 %v_6[2.10,] 
 		 12: %self->time_path def_%v_8 %self[2.0,] %v_7[2.11,] 	 ARGS:%v_7,
 		 13: HASH-name-url-cond- def_%v_9 %v_5[2.9,] %v_8[2.12,] 
 		 14: (I18n) def_%v_10 
-		 15: COPY TYPE_StringLiteral def_%v_11 
+		 15: COPY TYPE_StringLiteral "edit" def_%v_11 
 		 16: %v_10->t def_%v_12 %v_10[2.14,] %v_11[2.15,] 	 ARGS:%v_11,
 		 17: time->id def_%v_13 time[2.5,2.10,] 	 ARGS:
 		 18: HASH-id- def_%v_14 %v_13[2.17,] 
@@ -1503,14 +1503,14 @@ BB 2
 		 20: %self->can? def_%v_16 %self[2.0,2.12,2.19,] time[2.5,2.10,2.17,] 	 ARGS:Symbol,time,
 		 21: HASH-name-url-cond- def_%v_17 %v_12[2.16,] %v_15[2.19,] %v_16[2.20,] 
 		 22: (I18n) def_%v_18 
-		 23: COPY TYPE_StringLiteral def_%v_19 
+		 23: COPY TYPE_StringLiteral "delete" def_%v_19 
 		 24: %v_18->t def_%v_20 %v_18[2.22,] %v_19[2.23,] 	 ARGS:%v_19,
 		 25: time->id def_%v_21 time[2.5,2.10,2.17,] 	 ARGS:
 		 26: HASH-id- def_%v_22 %v_21[2.25,] 
 		 27: %self->time_path def_%v_23 %self[2.0,2.12,2.19,2.20,] %v_22[2.26,] 	 ARGS:%v_22,
 		 28: %self->can? def_%v_24 %self[2.0,2.12,2.19,2.20,2.27,] time[2.5,2.10,2.17,2.25,] 	 ARGS:Symbol,time,
 		 29: (I18n) def_%v_25 
-		 30: COPY TYPE_StringLiteral def_%v_26 
+		 30: COPY TYPE_StringLiteral "time_confirm_delete" def_%v_26 
 		 31: %v_25->t def_%v_27 %v_25[2.29,] %v_26[2.30,] 	 ARGS:%v_26,
 		 32: HASH-name-url-cond-method-confirm- def_%v_28 %v_20[2.24,] %v_23[2.27,] %v_24[2.28,] %v_27[2.31,] 
 		 33: COPY TYPE_Array def_%v_29 %v_9[2.13,] %v_17[2.21,] %v_28[2.32,] 
@@ -1537,7 +1537,7 @@ BB 2
 		 5: RECEIVEARG def_time 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "edit" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: time->id def_%v_6 time[2.5,] 	 ARGS:
 		 11: HASH-id- def_%v_7 %v_6[2.10,] 
@@ -1545,14 +1545,14 @@ BB 2
 		 13: %self->can? def_%v_9 %self[2.0,2.12,] time[2.5,2.10,] 	 ARGS:Symbol,time,
 		 14: HASH-name-url-cond- def_%v_10 %v_5[2.9,] %v_8[2.12,] %v_9[2.13,] 
 		 15: (I18n) def_%v_11 
-		 16: COPY TYPE_StringLiteral def_%v_12 
+		 16: COPY TYPE_StringLiteral "delete" def_%v_12 
 		 17: %v_11->t def_%v_13 %v_11[2.15,] %v_12[2.16,] 	 ARGS:%v_12,
 		 18: time->id def_%v_14 time[2.5,2.10,] 	 ARGS:
 		 19: HASH-id- def_%v_15 %v_14[2.18,] 
 		 20: %self->time_path def_%v_16 %self[2.0,2.12,2.13,] %v_15[2.19,] 	 ARGS:%v_15,
 		 21: %self->can? def_%v_17 %self[2.0,2.12,2.13,2.20,] time[2.5,2.10,2.18,] 	 ARGS:Symbol,time,
 		 22: (I18n) def_%v_18 
-		 23: COPY TYPE_StringLiteral def_%v_19 
+		 23: COPY TYPE_StringLiteral "time_confirm_delete" def_%v_19 
 		 24: %v_18->t def_%v_20 %v_18[2.22,] %v_19[2.23,] 	 ARGS:%v_19,
 		 25: HASH-name-url-cond-method-confirm- def_%v_21 %v_13[2.17,] %v_16[2.20,] %v_17[2.21,] %v_20[2.24,] 
 		 26: COPY TYPE_Array def_%v_22 %v_10[2.14,] %v_21[2.25,] 
@@ -1579,24 +1579,24 @@ BB 2
 		 5: RECEIVEARG def_page 
 		 6: 
 		 7: (I18n) def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "edit" def_%v_4 
 		 9: %v_3->t def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_4,
-		 10: COPY TYPE_StringLiteral def_%v_6 
-		 11: COPY TYPE_StringLiteral def_%v_7 
+		 10: COPY TYPE_StringLiteral "wiki_pages" def_%v_6 
+		 11: COPY TYPE_StringLiteral "edit" def_%v_7 
 		 12: page->slug def_%v_8 page[2.5,] 	 ARGS:
 		 13: HASH-controller-action-id- def_%v_9 %v_6[2.10,] %v_7[2.11,] %v_8[2.12,] 
 		 14: %self->can? def_%v_10 %self[2.0,] page[2.5,2.12,] 	 ARGS:Symbol,page,
 		 15: HASH-name-url-cond- def_%v_11 %v_5[2.9,] %v_9[2.13,] %v_10[2.14,] 
 		 16: (I18n) def_%v_12 
-		 17: COPY TYPE_StringLiteral def_%v_13 
+		 17: COPY TYPE_StringLiteral "delete" def_%v_13 
 		 18: %v_12->t def_%v_14 %v_12[2.16,] %v_13[2.17,] 	 ARGS:%v_13,
-		 19: COPY TYPE_StringLiteral def_%v_15 
-		 20: COPY TYPE_StringLiteral def_%v_16 
+		 19: COPY TYPE_StringLiteral "wiki_pages" def_%v_15 
+		 20: COPY TYPE_StringLiteral "destroy" def_%v_16 
 		 21: page->slug def_%v_17 page[2.5,2.12,] 	 ARGS:
 		 22: HASH-controller-action-id- def_%v_18 %v_15[2.19,] %v_16[2.20,] %v_17[2.21,] 
 		 23: %self->can? def_%v_19 %self[2.0,2.14,] page[2.5,2.12,2.21,] 	 ARGS:Symbol,page,
 		 24: (I18n) def_%v_20 
-		 25: COPY TYPE_StringLiteral def_%v_21 
+		 25: COPY TYPE_StringLiteral "wiki_page_confirm_delete" def_%v_21 
 		 26: %v_20->t def_%v_22 %v_20[2.24,] %v_21[2.25,] 	 ARGS:%v_21,
 		 27: HASH-name-url-cond-method-confirm- def_%v_23 %v_14[2.18,] %v_18[2.22,] %v_19[2.23,] %v_22[2.26,] 
 		 28: COPY TYPE_Array def_%v_24 %v_11[2.15,] %v_23[2.27,] 
@@ -1774,9 +1774,9 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_9 
+		 1: COPY TYPE_StringLiteral "<td>" def_%cl_2_9 
 		 2: column->[] def_%cl_2_10 column[2.2,] 	 ARGS:Fixnum,
-		 3: COPY TYPE_StringLiteral def_%cl_2_11 
+		 3: COPY TYPE_StringLiteral "</td>" def_%cl_2_11 
 		 4: BUILDSTRING def_%cl_2_12 %cl_2_9[8.1,] %cl_2_10[8.2,] %cl_2_11[8.3,] 
 		 5: COPY TYPE_PASS def_%cl_2_4 %cl_2_12[8.4,] 
 		 6: RETURN %cl_2_12[8.4,] %self[2.0,] 
@@ -1785,9 +1785,9 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_13 
+		 1: COPY TYPE_StringLiteral "<td class="blank">" def_%cl_2_13 
 		 2: column->[] def_%cl_2_14 column[2.2,] 	 ARGS:Fixnum,
-		 3: COPY TYPE_StringLiteral def_%cl_2_15 
+		 3: COPY TYPE_StringLiteral "</td>" def_%cl_2_15 
 		 4: BUILDSTRING def_%cl_2_16 %cl_2_13[9.1,] %cl_2_14[9.2,] %cl_2_15[9.3,] 
 		 5: COPY TYPE_PASS def_%cl_2_4 %cl_2_16[9.4,] 
 		 6: RETURN %cl_2_16[9.4,] %self[2.0,] 
@@ -1796,9 +1796,9 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_17 
+		 1: COPY TYPE_StringLiteral "<th>" def_%cl_2_17 
 		 2: column->[] def_%cl_2_18 column[2.2,] 	 ARGS:Fixnum,
-		 3: COPY TYPE_StringLiteral def_%cl_2_19 
+		 3: COPY TYPE_StringLiteral "</th>" def_%cl_2_19 
 		 4: BUILDSTRING def_%cl_2_20 %cl_2_17[10.1,] %cl_2_18[10.2,] %cl_2_19[10.3,] 
 		 5: COPY TYPE_PASS def_%cl_2_4 %cl_2_20[10.4,] 
 		 6: RETURN %cl_2_20[10.4,] %self[2.0,] 
@@ -1807,11 +1807,11 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_21 
+		 1: COPY TYPE_StringLiteral "<th class="month" rowspan="" def_%cl_2_21 
 		 2: column->[] def_%cl_2_22 column[2.2,] 	 ARGS:Fixnum,
-		 3: COPY TYPE_StringLiteral def_%cl_2_23 
+		 3: COPY TYPE_StringLiteral "">" def_%cl_2_23 
 		 4: column->[] def_%cl_2_24 column[11.2,2.2,] 	 ARGS:Fixnum,
-		 5: COPY TYPE_StringLiteral def_%cl_2_25 
+		 5: COPY TYPE_StringLiteral "</th>" def_%cl_2_25 
 		 6: BUILDSTRING def_%cl_2_26 %cl_2_21[11.1,] %cl_2_22[11.2,] %cl_2_23[11.3,] %cl_2_24[11.4,] %cl_2_25[11.5,] 
 		 7: COPY TYPE_PASS def_%cl_2_4 %cl_2_26[11.6,] 
 		 8: RETURN %cl_2_26[11.6,] %self[2.0,] 
@@ -1834,9 +1834,9 @@ BB 16
 CLOSURE END: 
 		 2: COPY TYPE_PASS def_columns %cl_1_3[3.1,] 
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_1_4 
+		 4: COPY TYPE_StringLiteral "<tr>" def_%cl_1_4 
 		 5: %cl_1_3->join def_%cl_1_5 %cl_1_3[3.1,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%cl_1_6 
+		 6: COPY TYPE_StringLiteral "</tr>" def_%cl_1_6 
 		 7: BUILDSTRING def_%cl_1_7 %cl_1_4[3.4,] %cl_1_5[3.5,] %cl_1_6[3.6,] 
 		 8: RETURN %cl_1_7[3.7,] %self[2.0,] 
 BB 4
@@ -1853,10 +1853,10 @@ BB 6
 CLOSURE END: row[2.2,] 
 		 9: COPY TYPE_PASS def_rows %v_3[2.8,] 
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%v_4 
-		 12: COPY TYPE_StringLiteral def_%v_5 
+		 11: COPY TYPE_StringLiteral "<table class="" def_%v_4 
+		 12: COPY TYPE_StringLiteral ""><tbody>" def_%v_5 
 		 13: %v_3->join def_%v_6 %v_3[2.8,] 	 ARGS:
-		 14: COPY TYPE_StringLiteral def_%v_7 
+		 14: COPY TYPE_StringLiteral "</tbody></table>" def_%v_7 
 		 15: BUILDSTRING def_%v_8 %v_4[2.11,] tableclass[2.6,] %v_5[2.12,] %v_6[2.13,] %v_7[2.14,] 
 		 16: %v_8->html_safe def_%v_9 %v_8[2.15,] 	 ARGS:
 		 17: RETURN %v_9[2.16,] %self[2.0,] 
@@ -1923,7 +1923,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (I18n) def_%cl_1_3 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "%A" def_%cl_1_4 
 		 3: HASH-format- def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: %cl_1_3->l def_%cl_1_6 %cl_1_3[3.1,] day[2.2,] %cl_1_5[3.3,] 	 ARGS:day,%cl_1_5,
 		 5: RETURN %cl_1_6[3.4,] %self[2.0,] 
@@ -1985,7 +1985,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_3 
+		 1: COPY TYPE_StringLiteral "" def_%v_3 
 		 2: COPY TYPE_Array def_%v_4 %v_3[6.1,] 
 		 3: %self->calendar_wdays def_%v_5 %self[2.0,] starting_day[3.0,2.8,] 	 ARGS:starting_day,
 		 4: def_%v_6 %v_4[6.2,] %v_5[6.3,] 
@@ -2245,7 +2245,7 @@ CLOSURE END:
 		 3: COPY TYPE_PASS def_week_rows %cl_2_38[9.2,] 
 		 4: 
 		 5: (I18n) def_%cl_2_39 
-		 6: COPY TYPE_StringLiteral def_%cl_2_40 
+		 6: COPY TYPE_StringLiteral "%B" def_%cl_2_40 
 		 7: HASH-format- def_%cl_2_41 %cl_2_40[9.6,] 
 		 8: %cl_2_39->l def_%cl_2_42 %cl_2_39[9.5,] first_day[3.2,] %cl_2_41[9.7,] 	 ARGS:first_day,%cl_2_41,
 		 9: week_rows->size def_%cl_2_43 week_rows[9.3,] 	 ARGS:
@@ -2325,7 +2325,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (I18n) def_%cl_1_3 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "%A" def_%cl_1_4 
 		 3: HASH-format- def_%cl_1_5 %cl_1_4[3.2,] 
 		 4: %cl_1_3->l def_%cl_1_6 %cl_1_3[3.1,] date[2.2,] %cl_1_5[3.3,] 	 ARGS:date,%cl_1_5,
 		 5: COPY TYPE_Array def_%cl_1_7 %cl_1_6[3.4,] 
@@ -2395,7 +2395,7 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_3_4 
+		 0: COPY TYPE_StringLiteral "" def_%cl_3_4 
 		 1: 
 BB 5
 	outgoing: 6 7 
@@ -2504,7 +2504,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "" def_%v_7 
 		 2: 
 BB 11
 	outgoing: 12 
@@ -2531,11 +2531,11 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "<li><a href="" def_%cl_1_3 
 		 2: item->object_url def_%cl_1_4 item[2.2,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral "">" def_%cl_1_5 
 		 4: item->object_name def_%cl_1_6 item[3.2,2.2,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_1_7 
+		 5: COPY TYPE_StringLiteral "</a></li>" def_%cl_1_7 
 		 6: BUILDSTRING def_%cl_1_8 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] %cl_1_6[3.4,] %cl_1_7[3.5,] 
 		 7: RETURN %cl_1_8[3.6,] %self[2.0,] 
 BB 4
@@ -2553,8 +2553,8 @@ CLOSURE END:
 		 2: %v_8->join def_%v_9 %v_8[11.1,] 	 ARGS:
 		 3: COPY TYPE_PASS def_mitems %v_9[11.2,] 
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_10 
-		 6: COPY TYPE_StringLiteral def_%v_11 
+		 5: COPY TYPE_StringLiteral "<ul>" def_%v_10 
+		 6: COPY TYPE_StringLiteral "</ul>" def_%v_11 
 		 7: BUILDSTRING def_%v_12 %v_10[11.5,] %v_9[11.2,] %v_11[11.6,] 
 		 8: COPY TYPE_PASS def_%v_7 %v_12[11.7,] 
 BB 12
@@ -2563,10 +2563,10 @@ BB 12
 	instructions:
 		 0: COPY TYPE_PASS def_list %v_7[11.8,10.1,] 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_13 
-		 3: COPY TYPE_StringLiteral def_%v_14 
-		 4: COPY TYPE_StringLiteral def_%v_15 
-		 5: COPY TYPE_StringLiteral def_%v_16 
+		 2: COPY TYPE_StringLiteral "<div class="" def_%v_13 
+		 3: COPY TYPE_StringLiteral "">" def_%v_14 
+		 4: COPY TYPE_StringLiteral " " def_%v_15 
+		 5: COPY TYPE_StringLiteral "</div>" def_%v_16 
 		 6: BUILDSTRING def_%v_17 %v_13[12.2,] classname[2.7,] %v_14[12.3,] content[2.5,] %v_15[12.4,] %v_7[11.8,10.1,] %v_16[12.5,] 
 		 7: %v_17->html_safe def_%v_18 %v_17[12.6,] 	 ARGS:
 		 8: RETURN %v_18[12.7,] %self[2.0,] 
@@ -2597,7 +2597,7 @@ BB 3
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "" def_%v_4 
 		 1: RETURN %v_4[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 7 
@@ -2610,7 +2610,7 @@ BB 4
 		 4: %v_6->new def_%v_8 %v_6[4.2,] text[2.5,] %v_7[4.3,] 	 ARGS:text,%v_7,
 		 5: COPY TYPE_PASS def_textilized %v_8[4.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_9 
+		 7: COPY TYPE_StringLiteral "hard_breaks=" def_%v_9 
 		 8: %v_8->respond_to? def_%v_10 %v_8[4.4,] %v_9[4.7,] 	 ARGS:%v_9,
 		 9: BRANCH %v_10[4.8,] 
 BB 6

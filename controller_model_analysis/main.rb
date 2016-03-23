@@ -9,6 +9,7 @@ load 'global_variables.rb'
 #Helpers:
 load 'helper.rb'
 load 'check_is_query.rb'
+load 'check_query_string.rb'
 load 'check_validation.rb'
 load 'util.rb'
 
@@ -190,9 +191,9 @@ if options[:dir] != nil
 		#	v.getMethods.each do |k1, v1|
 		#		puts "#{k} . #{k1}:"
 		#		#if v1.getCFG == nil
-		#			v1.getCalls.each do |c|
-		#				puts "\t#{c.getObjName} . #{c.getFuncName}"
-		#			end
+		#			#v1.getCalls.each do |c|
+		#			#	puts "\t#{c.getObjName} . #{c.getFuncName}"
+		#			#end
 		#		#end
 		#	end
 		#end

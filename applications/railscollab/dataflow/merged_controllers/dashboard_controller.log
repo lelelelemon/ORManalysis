@@ -13,10 +13,10 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "user" def_%v_3 
 		 7: GETFIELD %self->logged_user def_%v_4 %self[2.0,] 
 		 8: %v_4->id def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "_dblog" def_%v_6 
 		 10: BUILDSTRING def_%v_7 %v_3[2.6,] %v_5[2.8,] %v_6[2.9,] 
 		 11: (Time) def_%v_8 
 		 12: %v_8->now def_%v_9 %v_8[2.11,] 	 ARGS:
@@ -114,7 +114,7 @@ BB 7
 		 1: 
 		 2: (Activity) def_%cl_1_12 
 		 3: %cl_1_12->where def_%cl_1_13 %cl_1_12[7.2,] %cl_1_10[6.1,5.0,] 	 ARGS:activity_conditions,
-		 4: COPY TYPE_StringLiteral def_%cl_1_14 
+		 4: COPY TYPE_StringLiteral "created_on DESC, id DESC" def_%cl_1_14 
 		 5: %cl_1_13->order def_%cl_1_15 %cl_1_13[7.3,] %cl_1_14[7.4,] 	 ARGS:%cl_1_14,
 		 6: (Rails) def_%cl_1_16 
 		 7: %cl_1_16->configuration def_%cl_1_17 %cl_1_16[7.6,] 	 ARGS:
@@ -204,7 +204,7 @@ BB 3
 		 3: COPY TYPE_PASS def_date %cl_3_4[3.2,] 
 		 4: 
 		 5: %cl_3_4->month def_%cl_3_5 %cl_3_4[3.2,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%cl_3_6 
+		 6: COPY TYPE_StringLiteral "-" def_%cl_3_6 
 		 7: date->day def_%cl_3_7 date[3.3,] 	 ARGS:
 		 8: BUILDSTRING def_%cl_3_8 %cl_3_5[3.5,] %cl_3_6[3.6,] %cl_3_7[3.7,] 
 		 9: RETURN %cl_3_8[3.8,] %self[2.0,] 
@@ -229,7 +229,7 @@ CLOSURE END: obj[2.2,]
 		 59: GETFIELD %self->active_projects def_%v_43 %self[2.0,2.19,] 
 		 60: ATTRASSIGN %self->my_projects %v_43[2.59,] 
 		 61: 
-		 62: COPY TYPE_StringLiteral def_%v_44 
+		 62: COPY TYPE_StringLiteral "index_sidebar" def_%v_44 
 		 63: ATTRASSIGN %self->content_for_sidebar %v_44[2.62,] 
 		 64: 
 		 65: %self->ruby_code_from_view def_%v_45 %self[2.0,2.19,2.24,2.35,2.49,2.53,2.57,2.60,2.63,] 	 ARGS:
@@ -257,14 +257,14 @@ BB 3
 		 2: 
 		 3: %self->page_title def_%cl_4_4 %self[3.1,2.0,] 	 ARGS:
 		 4: %self->h def_%cl_4_5 %self[3.1,3.3,2.0,] %cl_4_4[3.3,] 	 ARGS:%cl_4_4,
-		 5: COPY TYPE_StringLiteral def_%cl_4_6 
+		 5: COPY TYPE_StringLiteral " @ " def_%cl_4_6 
 		 6: (Company) def_%cl_4_7 
 		 7: %cl_4_7->owner def_%cl_4_8 %cl_4_7[3.6,] 	 ARGS:
 		 8: %cl_4_8->name def_%cl_4_9 %cl_4_8[3.7,] 	 ARGS:
 		 9: %self->h def_%cl_4_10 %self[3.1,3.3,3.4,2.0,] %cl_4_9[3.8,] 	 ARGS:%cl_4_9,
 		 10: BUILDSTRING def_%cl_4_11 %cl_4_5[3.4,] %cl_4_6[3.5,] %cl_4_10[3.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_4_12 
+		 12: COPY TYPE_StringLiteral "company_website" def_%cl_4_12 
 		 13: %self->stylesheet_link_tag def_%cl_4_13 %self[3.1,3.3,3.4,3.9,2.0,] %cl_4_12[3.12,] 	 ARGS:%cl_4_12,
 		 14: 
 		 15: %self->additional_stylesheets def_%cl_4_14 %self[3.1,3.3,3.4,3.9,3.13,2.0,] 	 ARGS:
@@ -321,18 +321,18 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_19 
+		 1: COPY TYPE_StringLiteral "application.js" def_%cl_4_19 
 		 2: %self->javascript_include_tag def_%cl_4_20 %self[2.0,] %cl_4_19[6.1,] 	 ARGS:%cl_4_19,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_4_21 
+		 4: COPY TYPE_StringLiteral "var LOGGED_USER_ID=" def_%cl_4_21 
 		 5: GETFIELD %self->logged_user def_%cl_4_22 %self[6.2,2.0,] 
 		 6: %cl_4_22->id def_%cl_4_23 %cl_4_22[6.5,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_4_24 
+		 7: COPY TYPE_StringLiteral ";" def_%cl_4_24 
 		 8: BUILDSTRING def_%cl_4_25 %cl_4_21[6.4,] %cl_4_23[6.6,] %cl_4_24[6.7,] 
 		 9: %self->javascript_tag def_%cl_4_26 %self[6.2,2.0,] %cl_4_25[6.8,] 	 ARGS:%cl_4_25,
 		 10: 
 		 11: %self->site_name def_%cl_4_27 %self[6.2,6.9,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_4_28 
+		 12: COPY TYPE_StringLiteral "dashboard" def_%cl_4_28 
 		 13: HASH-controller- def_%cl_4_29 %cl_4_28[6.12,] 
 		 14: %self->link_to def_%cl_4_30 %self[6.2,6.9,6.11,2.0,] %cl_4_27[6.11,] %cl_4_29[6.13,] 	 ARGS:%cl_4_27,%cl_4_29,
 		 15: 
@@ -344,10 +344,10 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_33 
+		 1: COPY TYPE_StringLiteral "welcome_anonymous" def_%cl_4_33 
 		 2: %self->t def_%cl_4_34 %self[2.0,] %cl_4_33[7.1,] 	 ARGS:%cl_4_33,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_4_35 
+		 4: COPY TYPE_StringLiteral "login" def_%cl_4_35 
 		 5: %self->t def_%cl_4_36 %self[7.2,2.0,] %cl_4_35[7.4,] 	 ARGS:%cl_4_35,
 		 6: %self->logout_path def_%cl_4_37 %self[7.2,7.5,2.0,] 	 ARGS:
 		 7: %self->link_to def_%cl_4_38 %self[7.2,7.5,7.6,2.0,] %cl_4_36[7.5,] %cl_4_37[7.6,] 	 ARGS:%cl_4_36,%cl_4_37,
@@ -357,7 +357,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_39 
+		 1: COPY TYPE_StringLiteral "welcome_back" def_%cl_4_39 
 		 2: %self->user def_%cl_4_40 %self[2.0,] 	 ARGS:
 		 3: %cl_4_40->display_name def_%cl_4_41 %cl_4_40[8.2,] 	 ARGS:
 		 4: %self->h def_%cl_4_42 %self[8.2,2.0,] %cl_4_41[8.3,] 	 ARGS:%cl_4_41,
@@ -365,10 +365,10 @@ BB 8
 		 6: %self->t def_%cl_4_44 %self[8.2,8.4,2.0,] %cl_4_39[8.1,] %cl_4_43[8.5,] 	 ARGS:%cl_4_39,%cl_4_43,
 		 7: %cl_4_44->html_safe def_%cl_4_45 %cl_4_44[8.6,] 	 ARGS:
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_4_46 
+		 9: COPY TYPE_StringLiteral "logout" def_%cl_4_46 
 		 10: %self->t def_%cl_4_47 %self[8.2,8.4,8.6,2.0,] %cl_4_46[8.9,] 	 ARGS:%cl_4_46,
 		 11: %self->logout_path def_%cl_4_48 %self[8.2,8.4,8.6,8.10,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_4_49 
+		 12: COPY TYPE_StringLiteral "are_you_sure_logout" def_%cl_4_49 
 		 13: %self->t def_%cl_4_50 %self[8.2,8.4,8.6,8.10,8.11,2.0,] %cl_4_49[8.12,] 	 ARGS:%cl_4_49,
 		 14: HASH-confirm- def_%cl_4_51 %cl_4_50[8.13,] 
 		 15: %self->link_to def_%cl_4_52 %self[8.2,8.4,8.6,8.10,8.11,8.13,2.0,] %cl_4_47[8.10,] %cl_4_48[8.11,] %cl_4_51[8.14,] 	 ARGS:%cl_4_47,%cl_4_48,%cl_4_51,
@@ -385,30 +385,30 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_55 
+		 0: COPY TYPE_StringLiteral "none" def_%cl_4_55 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_56 
+		 0: COPY TYPE_StringLiteral "block" def_%cl_4_56 
 		 1: COPY TYPE_PASS def_%cl_4_55 %cl_4_56[11.0,] 
 BB 12
 	outgoing: 13 14 90 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_57 
+		 1: COPY TYPE_StringLiteral "running_times" def_%cl_4_57 
 		 2: GETFIELD %self->running_times def_%cl_4_58 %self[2.0,] 
 		 3: %cl_4_58->size def_%cl_4_59 %cl_4_58[12.2,] 	 ARGS:
 		 4: HASH-count- def_%cl_4_60 %cl_4_59[12.3,] 
 		 5: %self->t def_%cl_4_61 %self[2.0,] %cl_4_57[12.1,] %cl_4_60[12.4,] 	 ARGS:%cl_4_57,%cl_4_60,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_4_62 
-		 8: COPY TYPE_StringLiteral def_%cl_4_63 
-		 9: COPY TYPE_StringLiteral def_%cl_4_64 
-		 10: COPY TYPE_StringLiteral def_%cl_4_65 
-		 11: COPY TYPE_StringLiteral def_%cl_4_66 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_4_62 
+		 8: COPY TYPE_StringLiteral "" def_%cl_4_63 
+		 9: COPY TYPE_StringLiteral "running_times" def_%cl_4_64 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_4_65 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_4_66 
 		 12: HASH-id-class-title- def_%cl_4_67 %cl_4_64[12.9,] %cl_4_65[12.10,] %cl_4_66[12.11,] 
 		 13: %self->render_icon def_%cl_4_68 %self[12.5,2.0,] %cl_4_62[12.7,] %cl_4_63[12.8,] %cl_4_67[12.12,] 	 ARGS:%cl_4_62,%cl_4_63,%cl_4_67,
 		 14: 
@@ -426,16 +426,16 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_72 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_4_72 
 		 2: %self->t def_%cl_4_73 %self[2.0,] %cl_4_72[14.1,] 	 ARGS:%cl_4_72,
 		 3: GETFIELD %self->logged_user def_%cl_4_74 %self[14.2,2.0,] 
 		 4: %self->link_to def_%cl_4_75 %self[14.2,2.0,] %cl_4_73[14.2,] %cl_4_74[14.3,] 	 ARGS:%cl_4_73,%cl_4_74,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_4_76 
-		 7: COPY TYPE_StringLiteral def_%cl_4_77 
-		 8: COPY TYPE_StringLiteral def_%cl_4_78 
-		 9: COPY TYPE_StringLiteral def_%cl_4_79 
-		 10: COPY TYPE_StringLiteral def_%cl_4_80 
+		 6: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_4_76 
+		 7: COPY TYPE_StringLiteral "" def_%cl_4_77 
+		 8: COPY TYPE_StringLiteral "account_more" def_%cl_4_78 
+		 9: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_4_79 
+		 10: COPY TYPE_StringLiteral "Enable javascript" def_%cl_4_80 
 		 11: HASH-id-class-title- def_%cl_4_81 %cl_4_78[14.8,] %cl_4_79[14.9,] %cl_4_80[14.10,] 
 		 12: %self->render_icon def_%cl_4_82 %self[14.2,14.4,2.0,] %cl_4_76[14.6,] %cl_4_77[14.7,] %cl_4_81[14.11,] 	 ARGS:%cl_4_76,%cl_4_77,%cl_4_81,
 		 13: COPY TYPE_PASS def_%cl_4_71 %cl_4_82[14.12,] 
@@ -458,18 +458,18 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_86 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_4_86 
 		 2: %self->t def_%cl_4_87 %self[2.0,] %cl_4_86[17.1,] 	 ARGS:%cl_4_86,
-		 3: COPY TYPE_StringLiteral def_%cl_4_88 
-		 4: COPY TYPE_StringLiteral def_%cl_4_89 
+		 3: COPY TYPE_StringLiteral "dashboard" def_%cl_4_88 
+		 4: COPY TYPE_StringLiteral "my_projects" def_%cl_4_89 
 		 5: HASH-controller-action- def_%cl_4_90 %cl_4_88[17.3,] %cl_4_89[17.4,] 
 		 6: %self->link_to def_%cl_4_91 %self[17.2,2.0,] %cl_4_87[17.2,] %cl_4_90[17.5,] 	 ARGS:%cl_4_87,%cl_4_90,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_4_92 
-		 9: COPY TYPE_StringLiteral def_%cl_4_93 
-		 10: COPY TYPE_StringLiteral def_%cl_4_94 
-		 11: COPY TYPE_StringLiteral def_%cl_4_95 
-		 12: COPY TYPE_StringLiteral def_%cl_4_96 
+		 8: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_4_92 
+		 9: COPY TYPE_StringLiteral "" def_%cl_4_93 
+		 10: COPY TYPE_StringLiteral "projects_more" def_%cl_4_94 
+		 11: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_4_95 
+		 12: COPY TYPE_StringLiteral "Enable javascript" def_%cl_4_96 
 		 13: HASH-id-class-title- def_%cl_4_97 %cl_4_94[17.10,] %cl_4_95[17.11,] %cl_4_96[17.12,] 
 		 14: %self->render_icon def_%cl_4_98 %self[17.2,17.6,2.0,] %cl_4_92[17.8,] %cl_4_93[17.9,] %cl_4_97[17.13,] 	 ARGS:%cl_4_92,%cl_4_93,%cl_4_97,
 		 15: COPY TYPE_PASS def_%cl_4_85 %cl_4_98[17.14,] 
@@ -486,17 +486,17 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_101 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_4_101 
 		 2: %self->t def_%cl_4_102 %self[2.0,] %cl_4_101[19.1,] 	 ARGS:%cl_4_101,
-		 3: COPY TYPE_StringLiteral def_%cl_4_103 
+		 3: COPY TYPE_StringLiteral "administration" def_%cl_4_103 
 		 4: HASH-controller- def_%cl_4_104 %cl_4_103[19.3,] 
 		 5: %self->link_to def_%cl_4_105 %self[19.2,2.0,] %cl_4_102[19.2,] %cl_4_104[19.4,] 	 ARGS:%cl_4_102,%cl_4_104,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_4_106 
-		 8: COPY TYPE_StringLiteral def_%cl_4_107 
-		 9: COPY TYPE_StringLiteral def_%cl_4_108 
-		 10: COPY TYPE_StringLiteral def_%cl_4_109 
-		 11: COPY TYPE_StringLiteral def_%cl_4_110 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_4_106 
+		 8: COPY TYPE_StringLiteral "" def_%cl_4_107 
+		 9: COPY TYPE_StringLiteral "administration_more" def_%cl_4_108 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_4_109 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_4_110 
 		 12: HASH-id-class-title- def_%cl_4_111 %cl_4_108[19.9,] %cl_4_109[19.10,] %cl_4_110[19.11,] 
 		 13: %self->render_icon def_%cl_4_112 %self[19.2,19.5,2.0,] %cl_4_106[19.7,] %cl_4_107[19.8,] %cl_4_111[19.12,] 	 ARGS:%cl_4_106,%cl_4_107,%cl_4_111,
 		 14: 
@@ -524,10 +524,10 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_116 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_4_116 
 		 2: %self->t def_%cl_4_117 %self[2.0,] %cl_4_116[23.1,] 	 ARGS:%cl_4_116,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_4_118 
+		 4: COPY TYPE_StringLiteral "edit_profile" def_%cl_4_118 
 		 5: %self->t def_%cl_4_119 %self[23.2,2.0,] %cl_4_118[23.4,] 	 ARGS:%cl_4_118,
 		 6: %self->user def_%cl_4_120 %self[23.2,23.5,2.0,] 	 ARGS:
 		 7: %cl_4_120->id def_%cl_4_121 %cl_4_120[23.6,] 	 ARGS:
@@ -535,7 +535,7 @@ BB 23
 		 9: %self->edit_user_path def_%cl_4_123 %self[23.2,23.5,23.6,2.0,] %cl_4_122[23.8,] 	 ARGS:%cl_4_122,
 		 10: %self->link_to def_%cl_4_124 %self[23.2,23.5,23.6,23.9,2.0,] %cl_4_119[23.5,] %cl_4_123[23.9,] 	 ARGS:%cl_4_119,%cl_4_123,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_4_125 
+		 12: COPY TYPE_StringLiteral "update_avatar" def_%cl_4_125 
 		 13: %self->t def_%cl_4_126 %self[23.2,23.5,23.6,23.9,23.10,2.0,] %cl_4_125[23.12,] 	 ARGS:%cl_4_125,
 		 14: %self->user def_%cl_4_127 %self[23.2,23.5,23.6,23.9,23.10,23.13,2.0,] 	 ARGS:
 		 15: %cl_4_127->id def_%cl_4_128 %cl_4_127[23.14,] 	 ARGS:
@@ -543,20 +543,20 @@ BB 23
 		 17: %self->avatar_user_path def_%cl_4_130 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,2.0,] %cl_4_129[23.16,] 	 ARGS:%cl_4_129,
 		 18: %self->link_to def_%cl_4_131 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,2.0,] %cl_4_126[23.13,] %cl_4_130[23.17,] 	 ARGS:%cl_4_126,%cl_4_130,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_4_132 
+		 20: COPY TYPE_StringLiteral "userbox_more" def_%cl_4_132 
 		 21: %self->t def_%cl_4_133 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,2.0,] %cl_4_132[23.20,] 	 ARGS:%cl_4_132,
 		 22: 
-		 23: COPY TYPE_StringLiteral def_%cl_4_134 
+		 23: COPY TYPE_StringLiteral "my_projects" def_%cl_4_134 
 		 24: %self->t def_%cl_4_135 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,2.0,] %cl_4_134[23.23,] 	 ARGS:%cl_4_134,
-		 25: COPY TYPE_StringLiteral def_%cl_4_136 
-		 26: COPY TYPE_StringLiteral def_%cl_4_137 
+		 25: COPY TYPE_StringLiteral "dashboard" def_%cl_4_136 
+		 26: COPY TYPE_StringLiteral "my_projects" def_%cl_4_137 
 		 27: HASH-controller-action- def_%cl_4_138 %cl_4_136[23.25,] %cl_4_137[23.26,] 
 		 28: %self->link_to def_%cl_4_139 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,2.0,] %cl_4_135[23.24,] %cl_4_138[23.27,] 	 ARGS:%cl_4_135,%cl_4_138,
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_4_140 
+		 30: COPY TYPE_StringLiteral "my_tasks" def_%cl_4_140 
 		 31: %self->t def_%cl_4_141 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,2.0,] %cl_4_140[23.30,] 	 ARGS:%cl_4_140,
-		 32: COPY TYPE_StringLiteral def_%cl_4_142 
-		 33: COPY TYPE_StringLiteral def_%cl_4_143 
+		 32: COPY TYPE_StringLiteral "dashboard" def_%cl_4_142 
+		 33: COPY TYPE_StringLiteral "my_tasks" def_%cl_4_143 
 		 34: HASH-controller-action- def_%cl_4_144 %cl_4_142[23.32,] %cl_4_143[23.33,] 
 		 35: %self->link_to def_%cl_4_145 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,23.31,2.0,] %cl_4_141[23.31,] %cl_4_144[23.34,] 	 ARGS:%cl_4_141,%cl_4_144,
 		 36: COPY TYPE_PASS def_%cl_4_115 %cl_4_145[23.35,] 
@@ -579,7 +579,7 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_149 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_4_149 
 		 2: %self->t def_%cl_4_150 %self[2.0,] %cl_4_149[26.1,] 	 ARGS:%cl_4_149,
 		 3: 
 		 4: %self->projects def_%cl_4_151 %self[26.2,2.0,] 	 ARGS:
@@ -636,21 +636,21 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_155 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_4_155 
 		 2: %self->t def_%cl_4_156 %self[2.0,] %cl_4_155[28.1,] 	 ARGS:%cl_4_155,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_4_157 
+		 4: COPY TYPE_StringLiteral "company" def_%cl_4_157 
 		 5: %self->t def_%cl_4_158 %self[28.2,2.0,] %cl_4_157[28.4,] 	 ARGS:%cl_4_157,
 		 6: (Company) def_%cl_4_159 
 		 7: %cl_4_159->owner def_%cl_4_160 %cl_4_159[28.6,] 	 ARGS:
 		 8: %self->link_to def_%cl_4_161 %self[28.2,28.5,2.0,] %cl_4_158[28.5,] %cl_4_160[28.7,] 	 ARGS:%cl_4_158,%cl_4_160,
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_4_162 
+		 10: COPY TYPE_StringLiteral "members" def_%cl_4_162 
 		 11: %self->t def_%cl_4_163 %self[28.2,28.5,28.8,2.0,] %cl_4_162[28.10,] 	 ARGS:%cl_4_162,
 		 12: %self->companies_path def_%cl_4_164 %self[28.2,28.5,28.8,28.11,2.0,] 	 ARGS:
 		 13: %self->link_to def_%cl_4_165 %self[28.2,28.5,28.8,28.11,28.12,2.0,] %cl_4_163[28.11,] %cl_4_164[28.12,] 	 ARGS:%cl_4_163,%cl_4_164,
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%cl_4_166 
+		 15: COPY TYPE_StringLiteral "projects" def_%cl_4_166 
 		 16: %self->t def_%cl_4_167 %self[28.2,28.5,28.8,28.11,28.12,28.13,2.0,] %cl_4_166[28.15,] 	 ARGS:%cl_4_166,
 		 17: %self->projects_path def_%cl_4_168 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,2.0,] 	 ARGS:
 		 18: %self->link_to def_%cl_4_169 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,28.17,2.0,] %cl_4_167[28.16,] %cl_4_168[28.17,] 	 ARGS:%cl_4_167,%cl_4_168,
@@ -675,8 +675,8 @@ BB 30
 		 8: %cl_4_175->object_url def_%cl_4_176 %cl_4_175[30.7,] 	 ARGS:
 		 9: %self->link_to def_%cl_4_177 %self[30.1,30.4,30.6,30.7,2.0,] %cl_4_174[30.6,] %cl_4_176[30.8,] 	 ARGS:%cl_4_174,%cl_4_176,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_4_178 
-		 12: COPY TYPE_StringLiteral def_%cl_4_179 
+		 11: COPY TYPE_StringLiteral "stop" def_%cl_4_178 
+		 12: COPY TYPE_StringLiteral "stop_time" def_%cl_4_179 
 		 13: %self->t def_%cl_4_180 %self[30.1,30.4,30.6,30.7,30.9,2.0,] %cl_4_179[30.12,] 	 ARGS:%cl_4_179,
 		 14: %self->render_icon def_%cl_4_181 %self[30.1,30.4,30.6,30.7,30.9,30.13,2.0,] %cl_4_178[30.11,] %cl_4_180[30.13,] 	 ARGS:%cl_4_178,%cl_4_180,
 		 15: %self->listed def_%cl_4_182 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,2.0,] 	 ARGS:
@@ -685,7 +685,7 @@ BB 30
 		 18: %cl_4_184->id def_%cl_4_185 %cl_4_184[30.17,] 	 ARGS:
 		 19: HASH-active_project-id- def_%cl_4_186 %cl_4_183[30.16,] %cl_4_185[30.18,] 
 		 20: %self->stop_time_path def_%cl_4_187 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,2.0,] %cl_4_186[30.19,] 	 ARGS:%cl_4_186,
-		 21: COPY TYPE_StringLiteral def_%cl_4_188 
+		 21: COPY TYPE_StringLiteral "blank stopTime" def_%cl_4_188 
 		 22: HASH-class- def_%cl_4_189 %cl_4_188[30.21,] 
 		 23: %self->link_to def_%cl_4_190 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,30.20,2.0,] %cl_4_181[30.14,] %cl_4_187[30.20,] %cl_4_189[30.22,] 	 ARGS:%cl_4_181,%cl_4_187,%cl_4_189,
 		 24: 
@@ -727,7 +727,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_7_3 
+		 1: COPY TYPE_StringLiteral "item_" def_%cl_7_3 
 		 2: item->[] def_%cl_7_4 item[2.2,] 	 ARGS:Symbol,
 		 3: BUILDSTRING def_%cl_7_5 %cl_7_3[3.1,] %cl_7_4[3.2,] 
 		 4: 
@@ -738,7 +738,7 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_8 
+		 0: COPY TYPE_StringLiteral "class="active"" def_%cl_7_8 
 		 1: %cl_7_8->html_safe def_%cl_7_9 %cl_7_8[4.0,] 	 ARGS:
 		 2: 
 BB 5
@@ -896,12 +896,12 @@ BB 37
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_205 
-		 2: COPY TYPE_StringLiteral def_%cl_4_206 
+		 1: COPY TYPE_StringLiteral "dashboard" def_%cl_4_205 
+		 2: COPY TYPE_StringLiteral "search" def_%cl_4_206 
 		 3: HASH-controller-action- def_%cl_4_207 %cl_4_205[37.1,] %cl_4_206[37.2,] 
 		 4: %self->form_tag def_%cl_4_208 %self[2.0,] %cl_4_207[37.3,] 	 ARGS:%cl_4_207,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_4_209 
+		 6: COPY TYPE_StringLiteral "search_box_default" def_%cl_4_209 
 		 7: %self->t def_%cl_4_210 %self[37.4,2.0,] %cl_4_209[37.6,] 	 ARGS:%cl_4_209,
 		 8: ATTRASSIGN %self->search_field_default_value %cl_4_210[37.7,] 
 		 9: 
@@ -931,26 +931,26 @@ BB 41
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_215 
+		 1: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_4_215 
 		 2: 
 		 3: GETFIELD %self->search_field_default_value def_%cl_4_216 %self[37.8,2.0,] 
-		 4: COPY TYPE_StringLiteral def_%cl_4_217 
+		 4: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_4_217 
 		 5: BUILDSTRING def_%cl_4_218 %cl_4_215[41.1,] %cl_4_216[41.3,] %cl_4_217[41.4,] 
-		 6: COPY TYPE_StringLiteral def_%cl_4_219 
+		 6: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_4_219 
 		 7: 
 		 8: GETFIELD %self->search_field_default_value def_%cl_4_220 %self[37.8,2.0,] 
-		 9: COPY TYPE_StringLiteral def_%cl_4_221 
+		 9: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_4_221 
 		 10: BUILDSTRING def_%cl_4_222 %cl_4_219[41.6,] %cl_4_220[41.8,] %cl_4_221[41.9,] 
 		 11: HASH-onfocus-onblur- def_%cl_4_223 %cl_4_218[41.5,] %cl_4_222[41.10,] 
 		 12: ATTRASSIGN %self->search_field_attrs %cl_4_223[41.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_4_224 
+		 14: COPY TYPE_StringLiteral "search_id" def_%cl_4_224 
 		 15: GETFIELD %self->last_search def_%cl_4_225 %self[40.1,2.0,] 
 		 16: %self->h def_%cl_4_226 %self[41.12,40.1,37.8,2.0,] %cl_4_225[41.15,] 	 ARGS:%cl_4_225,
 		 17: GETFIELD %self->search_field_attrs def_%cl_4_227 %self[41.12,41.16,2.0,] 
 		 18: %self->text_field_tag def_%cl_4_228 %self[41.12,41.16,40.1,37.8,2.0,] %cl_4_224[41.14,] %cl_4_226[41.16,] %cl_4_227[41.17,] 	 ARGS:%cl_4_224,%cl_4_226,%cl_4_227,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_4_229 
+		 20: COPY TYPE_StringLiteral "go" def_%cl_4_229 
 		 21: %self->t def_%cl_4_230 %self[41.12,41.16,41.18,40.1,37.8,2.0,] %cl_4_229[41.20,] 	 ARGS:%cl_4_229,
 		 22: 
 BB 42
@@ -978,13 +978,13 @@ BB 45
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_235 
+		 0: COPY TYPE_StringLiteral "error" def_%cl_4_235 
 		 1: 
 BB 46
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_236 
+		 0: COPY TYPE_StringLiteral "success" def_%cl_4_236 
 		 1: COPY TYPE_PASS def_%cl_4_235 %cl_4_236[46.0,] 
 BB 47
 	outgoing: 48 49 90 
@@ -998,13 +998,13 @@ BB 48
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_239 
+		 0: COPY TYPE_StringLiteral "flash_error" def_%cl_4_239 
 		 1: 
 BB 49
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_240 
+		 0: COPY TYPE_StringLiteral "flash_success" def_%cl_4_240 
 		 1: COPY TYPE_PASS def_%cl_4_239 %cl_4_240[49.0,] 
 BB 50
 	outgoing: 52 90 
@@ -1035,13 +1035,13 @@ BB 53
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_248 
+		 0: COPY TYPE_StringLiteral "" def_%cl_4_248 
 		 1: 
 BB 54
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_249 
+		 0: COPY TYPE_StringLiteral "class='sidebar'" def_%cl_4_249 
 		 1: COPY TYPE_PASS def_%cl_4_248 %cl_4_249[54.0,] 
 BB 55
 	outgoing: 56 57 90 
@@ -1077,13 +1077,13 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_9_5 
+		 0: COPY TYPE_StringLiteral "class="ajax_action"" def_%cl_9_5 
 		 1: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_9_6 
+		 0: COPY TYPE_StringLiteral "class="action"" def_%cl_9_6 
 		 1: COPY TYPE_PASS def_%cl_9_5 %cl_9_6[5.0,] 
 BB 6
 	outgoing: 7 9 
@@ -1153,22 +1153,22 @@ BB 61
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_263 
+		 1: COPY TYPE_StringLiteral "welcome_to_new_account" def_%cl_4_263 
 		 2: %self->t def_%cl_4_264 %self[56.4,41.12,40.1,37.8,2.0,] %cl_4_263[61.1,] 	 ARGS:%cl_4_263,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_4_265 
+		 4: COPY TYPE_StringLiteral "welcome_to_new_account_info" def_%cl_4_265 
 		 5: GETFIELD %self->logged_user def_%cl_4_266 %self[61.2,2.0,] 
 		 6: %cl_4_266->display_name def_%cl_4_267 %cl_4_266[61.5,] 	 ARGS:
 		 7: %self->h def_%cl_4_268 %self[61.2,56.4,41.12,40.1,37.8,2.0,] %cl_4_267[61.6,] 	 ARGS:%cl_4_267,
-		 8: COPY TYPE_StringLiteral def_%cl_4_269 
+		 8: COPY TYPE_StringLiteral "<a href="" def_%cl_4_269 
 		 9: (Rails) def_%cl_4_270 
 		 10: %cl_4_270->configuration def_%cl_4_271 %cl_4_270[61.9,] 	 ARGS:
 		 11: %cl_4_271->site_url def_%cl_4_272 %cl_4_271[61.10,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_4_273 
+		 12: COPY TYPE_StringLiteral "">" def_%cl_4_273 
 		 13: (Rails) def_%cl_4_274 
 		 14: %cl_4_274->configuration def_%cl_4_275 %cl_4_274[61.13,] 	 ARGS:
 		 15: %cl_4_275->site_url def_%cl_4_276 %cl_4_275[61.14,] 	 ARGS:
-		 16: COPY TYPE_StringLiteral def_%cl_4_277 
+		 16: COPY TYPE_StringLiteral "</a>" def_%cl_4_277 
 		 17: BUILDSTRING def_%cl_4_278 %cl_4_269[61.8,] %cl_4_272[61.11,] %cl_4_273[61.12,] %cl_4_276[61.15,] %cl_4_277[61.16,] 
 		 18: HASH-user-url- def_%cl_4_279 %cl_4_268[61.7,] %cl_4_278[61.17,] 
 		 19: %self->t def_%cl_4_280 %self[61.2,61.7,56.4,41.12,40.1,37.8,2.0,] %cl_4_265[61.4,] %cl_4_279[61.18,] 	 ARGS:%cl_4_265,%cl_4_279,
@@ -1202,9 +1202,9 @@ BB 4
 	outgoing: 6 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_10_4 
+		 0: COPY TYPE_StringLiteral "<del>" def_%cl_10_4 
 		 1: step->[] def_%cl_10_5 step[2.2,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%cl_10_6 
+		 2: COPY TYPE_StringLiteral "</del>" def_%cl_10_6 
 		 3: BUILDSTRING def_%cl_10_7 %cl_10_4[4.0,] %cl_10_5[4.1,] %cl_10_6[4.2,] 
 		 4: 
 BB 5
@@ -1226,9 +1226,9 @@ BB 7
 	outgoing: 9 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_10_12 
+		 0: COPY TYPE_StringLiteral "<del>" def_%cl_10_12 
 		 1: step->[] def_%cl_10_13 step[2.2,] 	 ARGS:Symbol,
-		 2: COPY TYPE_StringLiteral def_%cl_10_14 
+		 2: COPY TYPE_StringLiteral "</del>" def_%cl_10_14 
 		 3: BUILDSTRING def_%cl_10_15 %cl_10_12[7.0,] %cl_10_13[7.1,] %cl_10_14[7.2,] 
 		 4: 
 BB 8
@@ -1265,13 +1265,13 @@ BB 62
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_287 
+		 1: COPY TYPE_StringLiteral "hide_welcome_info" def_%cl_4_287 
 		 2: %self->t def_%cl_4_288 %self[56.4,41.12,40.1,37.8,2.0,] %cl_4_287[62.1,] 	 ARGS:%cl_4_287,
 		 3: %cl_4_288->html_safe def_%cl_4_289 %cl_4_288[62.2,] 	 ARGS:
 		 4: (Company) def_%cl_4_290 
 		 5: %cl_4_290->owner def_%cl_4_291 %cl_4_290[62.4,] 	 ARGS:
 		 6: %self->hide_welcome_info_company_path def_%cl_4_292 %self[62.2,56.4,41.12,40.1,37.8,2.0,] %cl_4_291[62.5,] 	 ARGS:%cl_4_291,
-		 7: COPY TYPE_StringLiteral def_%cl_4_293 
+		 7: COPY TYPE_StringLiteral "put" def_%cl_4_293 
 		 8: HASH-method- def_%cl_4_294 %cl_4_293[62.7,] 
 		 9: %self->link_to def_%cl_4_295 %self[62.2,62.6,56.4,41.12,40.1,37.8,2.0,] %cl_4_289[62.3,] %cl_4_292[62.6,] %cl_4_294[62.8,] 	 ARGS:%cl_4_289,%cl_4_292,%cl_4_294,
 		 10: 
@@ -1317,7 +1317,7 @@ BB 69
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_302 
+		 1: COPY TYPE_StringLiteral "milestones_summary" def_%cl_4_302 
 		 2: GETFIELD %self->late_milestones def_%cl_4_303 %self[2.0,] 
 		 3: %cl_4_303->empty? def_%cl_4_304 %cl_4_303[69.2,] 	 ARGS:
 		 4: %cl_4_304->! def_%cl_4_305 %cl_4_304[69.3,] 	 ARGS:
@@ -1326,7 +1326,7 @@ BB 70
 	outgoing: 72 90 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_306 
+		 0: COPY TYPE_StringLiteral "late" def_%cl_4_306 
 		 1: %self->t def_%cl_4_307 %self[56.4,41.12,40.1,37.8,2.0,] %cl_4_306[70.0,] 	 ARGS:%cl_4_306,
 		 2: 
 BB 71
@@ -1347,7 +1347,7 @@ BB 73
 	outgoing: 75 90 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_4_311 
+		 0: COPY TYPE_StringLiteral "upcoming" def_%cl_4_311 
 		 1: %self->t def_%cl_4_312 %self[56.4,41.12,40.1,37.8,2.0,] %cl_4_311[73.0,] 	 ARGS:%cl_4_311,
 		 2: 
 BB 74
@@ -1374,7 +1374,7 @@ BB 76
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_321 
+		 1: COPY TYPE_StringLiteral "late_milestones" def_%cl_4_321 
 		 2: %self->t def_%cl_4_322 %self[56.4,41.12,40.1,37.8,2.0,] %cl_4_321[76.1,] 	 ARGS:%cl_4_321,
 		 3: 
 		 4: GETFIELD %self->late_milestones def_%cl_4_323 %self[76.2,2.0,] 
@@ -1421,7 +1421,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_11_9 
+		 1: COPY TYPE_StringLiteral "milestone_in" def_%cl_11_9 
 		 2: milestone->name def_%cl_11_10 milestone[2.2,] 	 ARGS:
 		 3: %self->h def_%cl_11_11 %self[2.0,] %cl_11_10[6.2,] 	 ARGS:%cl_11_10,
 		 4: milestone->id def_%cl_11_12 milestone[6.2,2.2,] 	 ARGS:
@@ -1441,7 +1441,7 @@ BB 6
 		 18: %self->t def_%cl_11_26 %self[6.3,6.7,6.8,6.11,6.15,6.16,2.0,] %cl_11_9[6.1,] %cl_11_25[6.17,] 	 ARGS:%cl_11_9,%cl_11_25,
 		 19: %cl_11_26->html_safe def_%cl_11_27 %cl_11_26[6.18,] 	 ARGS:
 		 20: 
-		 21: COPY TYPE_StringLiteral def_%cl_11_28 
+		 21: COPY TYPE_StringLiteral "milestone_days_late" def_%cl_11_28 
 		 22: milestone->days_late def_%cl_11_29 milestone[6.2,6.4,6.5,6.9,6.12,2.2,] 	 ARGS:
 		 23: HASH-days- def_%cl_11_30 %cl_11_29[6.22,] 
 		 24: %self->t def_%cl_11_31 %self[6.3,6.7,6.8,6.11,6.15,6.16,6.18,2.0,] %cl_11_28[6.21,] %cl_11_30[6.23,] 	 ARGS:%cl_11_28,%cl_11_30,
@@ -1483,7 +1483,7 @@ BB 80
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_328 
+		 1: COPY TYPE_StringLiteral "due_in_next_n_days" def_%cl_4_328 
 		 2: HASH-num- def_%cl_4_329 
 		 3: %self->t def_%cl_4_330 %self[56.4,41.12,40.1,37.8,2.0,] %cl_4_328[80.1,] %cl_4_329[80.2,] 	 ARGS:%cl_4_328,%cl_4_329,
 		 4: 
@@ -1496,7 +1496,7 @@ BB 80
 		 11: 
 		 12: CONSTANT def_%cl_4_334 	 ARGS:
 		 13: now->+ def_%cl_4_335 now[80.7,] %cl_4_334[80.12,] 	 ARGS:%cl_4_334,
-		 14: COPY TYPE_StringLiteral def_%cl_4_336 
+		 14: COPY TYPE_StringLiteral "dayCal" def_%cl_4_336 
 		 15: %self->days_calendar def_%cl_4_337 %self[80.3,56.4,41.12,40.1,37.8,2.0,] now[80.7,80.13,] %cl_4_335[80.13,] %cl_4_336[80.14,] %self[80.3,56.4,41.12,40.1,37.8,2.0,] 	 ARGS:now,%cl_4_335,%cl_4_336,%self,
 CLOSURE BEGIN: date[80.15,] now[80.7,80.13,] %self[80.3,56.4,41.12,40.1,37.8,2.0,] prev_month[80.10,] 
 BB 1
@@ -1524,15 +1524,15 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_12_4 
+		 1: COPY TYPE_StringLiteral "today" def_%cl_12_4 
 		 2: %self->t def_%cl_12_5 %self[2.0,] %cl_12_4[4.1,] 	 ARGS:%cl_12_4,
 		 3: GETFIELD %self->calendar_milestones def_%cl_12_6 %self[4.2,2.0,] 
 		 4: date->month def_%cl_12_7 date[2.2,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_12_8 
+		 5: COPY TYPE_StringLiteral "-" def_%cl_12_8 
 		 6: date->day def_%cl_12_9 date[4.4,2.2,] 	 ARGS:
 		 7: BUILDSTRING def_%cl_12_10 %cl_12_7[4.4,] %cl_12_8[4.5,] %cl_12_9[4.6,] 
 		 8: %cl_12_6->[] def_%cl_12_11 %cl_12_6[4.3,] %cl_12_10[4.7,] 	 ARGS:%cl_12_10,
-		 9: COPY TYPE_StringLiteral def_%cl_12_12 
+		 9: COPY TYPE_StringLiteral "today" def_%cl_12_12 
 		 10: %self->calendar_block def_%cl_12_13 %self[4.2,2.0,] %cl_12_5[4.2,] %cl_12_11[4.8,] %cl_12_12[4.9,] 	 ARGS:%cl_12_5,%cl_12_11,%cl_12_12,Boolean,
 		 11: 
 BB 5
@@ -1551,16 +1551,16 @@ BB 6
 		 1: date->month def_%cl_12_16 date[2.2,] 	 ARGS:
 		 2: COPY TYPE_PASS def_prev_month %cl_12_16[6.1,] 
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_12_17 
+		 4: COPY TYPE_StringLiteral "%b %d" def_%cl_12_17 
 		 5: HASH-format- def_%cl_12_18 %cl_12_17[6.4,] 
 		 6: %self->l def_%cl_12_19 %self[2.0,] date[6.1,2.2,] %cl_12_18[6.5,] 	 ARGS:date,%cl_12_18,
 		 7: GETFIELD %self->calendar_milestones def_%cl_12_20 %self[6.6,2.0,] 
 		 8: date->month def_%cl_12_21 date[6.1,2.2,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%cl_12_22 
+		 9: COPY TYPE_StringLiteral "-" def_%cl_12_22 
 		 10: date->day def_%cl_12_23 date[6.1,6.8,2.2,] 	 ARGS:
 		 11: BUILDSTRING def_%cl_12_24 %cl_12_21[6.8,] %cl_12_22[6.9,] %cl_12_23[6.10,] 
 		 12: %cl_12_20->[] def_%cl_12_25 %cl_12_20[6.7,] %cl_12_24[6.11,] 	 ARGS:%cl_12_24,
-		 13: COPY TYPE_StringLiteral def_%cl_12_26 
+		 13: COPY TYPE_StringLiteral "day" def_%cl_12_26 
 		 14: %self->calendar_block def_%cl_12_27 %self[6.6,2.0,] %cl_12_19[6.6,] %cl_12_25[6.12,] %cl_12_26[6.13,] 	 ARGS:%cl_12_19,%cl_12_25,%cl_12_26,
 		 15: 
 BB 7
@@ -1571,11 +1571,11 @@ BB 7
 		 1: date->day def_%cl_12_28 date[2.2,] 	 ARGS:
 		 2: GETFIELD %self->calendar_milestones def_%cl_12_29 %self[2.0,] 
 		 3: date->month def_%cl_12_30 date[7.1,2.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_12_31 
+		 4: COPY TYPE_StringLiteral "-" def_%cl_12_31 
 		 5: date->day def_%cl_12_32 date[7.1,7.3,2.2,] 	 ARGS:
 		 6: BUILDSTRING def_%cl_12_33 %cl_12_30[7.3,] %cl_12_31[7.4,] %cl_12_32[7.5,] 
 		 7: %cl_12_29->[] def_%cl_12_34 %cl_12_29[7.2,] %cl_12_33[7.6,] 	 ARGS:%cl_12_33,
-		 8: COPY TYPE_StringLiteral def_%cl_12_35 
+		 8: COPY TYPE_StringLiteral "day" def_%cl_12_35 
 		 9: %self->calendar_block def_%cl_12_36 %self[2.0,] %cl_12_28[7.1,] %cl_12_34[7.7,] %cl_12_35[7.8,] 	 ARGS:%cl_12_28,%cl_12_34,%cl_12_35,
 		 10: COPY TYPE_PASS def_%cl_12_27 %cl_12_36[7.9,] 
 BB 8
@@ -1616,10 +1616,10 @@ BB 83
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_4_338 
+		 1: COPY TYPE_StringLiteral "user" def_%cl_4_338 
 		 2: GETFIELD %self->logged_user def_%cl_4_339 %self[2.0,] 
 		 3: %cl_4_339->id def_%cl_4_340 %cl_4_339[83.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_4_341 
+		 4: COPY TYPE_StringLiteral "_dblog" def_%cl_4_341 
 		 5: BUILDSTRING def_%cl_4_342 %cl_4_338[83.1,] %cl_4_340[83.3,] %cl_4_341[83.4,] 
 		 6: %self->cache def_%cl_4_343 %self[56.4,41.12,40.1,37.8,2.0,] %cl_4_342[83.5,] %self[56.4,41.12,40.1,37.8,2.0,] 	 ARGS:%cl_4_342,%self,
 CLOSURE BEGIN: %self[56.4,41.12,40.1,37.8,2.0,] 
@@ -1649,10 +1649,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_13_6 
+		 1: COPY TYPE_StringLiteral "details" def_%cl_13_6 
 		 2: %self->t def_%cl_13_7 %self[2.0,] %cl_13_6[4.1,] 	 ARGS:%cl_13_6,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_13_8 
+		 4: COPY TYPE_StringLiteral "project" def_%cl_13_8 
 		 5: %self->t def_%cl_13_9 %self[4.2,2.0,] %cl_13_8[4.4,] 	 ARGS:%cl_13_8,
 		 6: 
 		 7: %self->application_logs def_%cl_13_10 %self[4.2,4.5,2.0,] 	 ARGS:
@@ -1696,7 +1696,7 @@ BB 10
 		 1: %self->application_logs def_%cl_13_16 %self[2.0,] 	 ARGS:
 		 2: %cl_13_16->rel_object_type def_%cl_13_17 %cl_13_16[10.1,] 	 ARGS:
 		 3: %cl_13_17->downcase def_%cl_13_18 %cl_13_17[10.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_13_19 
+		 4: COPY TYPE_StringLiteral "s.gif" def_%cl_13_19 
 		 5: BUILDSTRING def_%cl_13_20 %cl_13_18[10.3,] %cl_13_19[10.4,] 
 		 6: 
 		 7: %self->application_logs def_%cl_13_21 %self[10.1,2.0,] 	 ARGS:
@@ -1705,8 +1705,8 @@ BB 10
 		 10: %self->application_logs def_%cl_13_23 %self[10.1,10.7,2.0,] 	 ARGS:
 		 11: %cl_13_23->rel_object_type def_%cl_13_24 %cl_13_23[10.10,] 	 ARGS:
 		 12: 
-		 13: COPY TYPE_StringLiteral def_%cl_13_25 
-		 14: COPY TYPE_StringLiteral def_%cl_13_26 
+		 13: COPY TYPE_StringLiteral "Comment" def_%cl_13_25 
+		 14: COPY TYPE_StringLiteral "Message" def_%cl_13_26 
 		 15: COPY TYPE_Array def_%cl_13_27 %cl_13_25[10.13,] %cl_13_26[10.14,] 
 		 16: %self->application_logs def_%cl_13_28 %self[10.1,10.7,10.10,2.0,] 	 ARGS:
 		 17: %cl_13_28->rel_object_type def_%cl_13_29 %cl_13_28[10.16,] 	 ARGS:
@@ -1779,7 +1779,7 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_13_54 
+		 1: COPY TYPE_StringLiteral "action_today_with_time" def_%cl_13_54 
 		 2: %self->application_logs def_%cl_13_55 %self[2.0,] 	 ARGS:
 		 3: %cl_13_55->created_on def_%cl_13_56 %cl_13_55[18.2,] 	 ARGS:
 		 4: %self->format_usertime def_%cl_13_57 %self[18.2,2.0,] %cl_13_56[18.3,] 	 ARGS:%cl_13_56,Symbol,
@@ -1799,7 +1799,7 @@ BB 20
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_13_62 
+		 1: COPY TYPE_StringLiteral "action_yesterday" def_%cl_13_62 
 		 2: %self->t def_%cl_13_63 %self[2.0,] %cl_13_62[20.1,] 	 ARGS:%cl_13_62,
 		 3: 
 BB 21
@@ -1913,7 +1913,7 @@ BB 34
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_13_98 
+		 1: COPY TYPE_StringLiteral "action_today_with_time" def_%cl_13_98 
 		 2: %self->application_logs def_%cl_13_99 %self[2.0,] 	 ARGS:
 		 3: %cl_13_99->created_on def_%cl_13_100 %cl_13_99[34.2,] 	 ARGS:
 		 4: %self->format_usertime def_%cl_13_101 %self[34.2,2.0,] %cl_13_100[34.3,] 	 ARGS:%cl_13_100,Symbol,
@@ -1934,7 +1934,7 @@ BB 36
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_13_107 
+		 1: COPY TYPE_StringLiteral "action_yesterday" def_%cl_13_107 
 		 2: %self->t def_%cl_13_108 %self[2.0,] %cl_13_107[36.1,] 	 ARGS:%cl_13_107,
 		 3: 
 BB 37
@@ -1966,7 +1966,7 @@ BB 40
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_13_116 
+		 1: COPY TYPE_StringLiteral "action_by" def_%cl_13_116 
 		 2: %self->application_logs def_%cl_13_117 %self[2.0,] 	 ARGS:
 		 3: %cl_13_117->created_by def_%cl_13_118 %cl_13_117[40.2,] 	 ARGS:
 		 4: %cl_13_118->display_name def_%cl_13_119 %cl_13_118[40.3,] 	 ARGS:
@@ -2001,7 +2001,7 @@ BB 44
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_13_130 
+		 1: COPY TYPE_StringLiteral "no_recent_activities" def_%cl_13_130 
 		 2: %self->t def_%cl_13_131 %self[2.0,] %cl_13_130[44.1,] 	 ARGS:%cl_13_130,
 		 3: RETURN %cl_13_131[44.2,] %self[44.2,2.0,] 
 BB 46
@@ -2112,7 +2112,7 @@ BB 2
 		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 ARGS:Symbol,
 		 8: COPY TYPE_PASS def_sort_type %v_4[2.7,] 
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%v_5 
+		 10: COPY TYPE_StringLiteral "name" def_%v_5 
 		 11: COPY TYPE_Array def_%v_6 %v_5[2.10,] 
 		 12: %self->params def_%v_7 %self[2.0,2.6,] 	 ARGS:
 		 13: %v_7->[] def_%v_8 %v_7[2.12,] 	 ARGS:Symbol,
@@ -2128,7 +2128,7 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_11 
+		 0: COPY TYPE_StringLiteral "priority" def_%v_11 
 		 1: COPY TYPE_PASS def_sort_type %v_11[4.0,] 
 		 2: COPY TYPE_PASS def_%v_10 %v_11[4.0,] 
 BB 5
@@ -2190,7 +2190,7 @@ CLOSURE END:
 		 6: %v_14->finished_projects def_%v_15 %v_14[5.5,] 	 ARGS:
 		 7: ATTRASSIGN %self->finished_projects %v_15[5.6,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_16 
+		 9: COPY TYPE_StringLiteral "my_projects_sidebar" def_%v_16 
 		 10: ATTRASSIGN %self->content_for_sidebar %v_16[5.9,] 
 		 11: 
 		 12: %self->ruby_code_from_view def_%v_17 %self[5.3,5.7,5.10,2.0,] 	 ARGS:
@@ -2218,14 +2218,14 @@ BB 3
 		 2: 
 		 3: %self->page_title def_%cl_2_4 %self[3.1,2.0,] 	 ARGS:
 		 4: %self->h def_%cl_2_5 %self[3.1,3.3,2.0,] %cl_2_4[3.3,] 	 ARGS:%cl_2_4,
-		 5: COPY TYPE_StringLiteral def_%cl_2_6 
+		 5: COPY TYPE_StringLiteral " @ " def_%cl_2_6 
 		 6: (Company) def_%cl_2_7 
 		 7: %cl_2_7->owner def_%cl_2_8 %cl_2_7[3.6,] 	 ARGS:
 		 8: %cl_2_8->name def_%cl_2_9 %cl_2_8[3.7,] 	 ARGS:
 		 9: %self->h def_%cl_2_10 %self[3.1,3.3,3.4,2.0,] %cl_2_9[3.8,] 	 ARGS:%cl_2_9,
 		 10: BUILDSTRING def_%cl_2_11 %cl_2_5[3.4,] %cl_2_6[3.5,] %cl_2_10[3.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_12 
+		 12: COPY TYPE_StringLiteral "company_website" def_%cl_2_12 
 		 13: %self->stylesheet_link_tag def_%cl_2_13 %self[3.1,3.3,3.4,3.9,2.0,] %cl_2_12[3.12,] 	 ARGS:%cl_2_12,
 		 14: 
 		 15: %self->additional_stylesheets def_%cl_2_14 %self[3.1,3.3,3.4,3.9,3.13,2.0,] 	 ARGS:
@@ -2282,18 +2282,18 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_19 
+		 1: COPY TYPE_StringLiteral "application.js" def_%cl_2_19 
 		 2: %self->javascript_include_tag def_%cl_2_20 %self[2.0,] %cl_2_19[6.1,] 	 ARGS:%cl_2_19,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_21 
+		 4: COPY TYPE_StringLiteral "var LOGGED_USER_ID=" def_%cl_2_21 
 		 5: GETFIELD %self->logged_user def_%cl_2_22 %self[6.2,2.0,] 
 		 6: %cl_2_22->id def_%cl_2_23 %cl_2_22[6.5,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_2_24 
+		 7: COPY TYPE_StringLiteral ";" def_%cl_2_24 
 		 8: BUILDSTRING def_%cl_2_25 %cl_2_21[6.4,] %cl_2_23[6.6,] %cl_2_24[6.7,] 
 		 9: %self->javascript_tag def_%cl_2_26 %self[6.2,2.0,] %cl_2_25[6.8,] 	 ARGS:%cl_2_25,
 		 10: 
 		 11: %self->site_name def_%cl_2_27 %self[6.2,6.9,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_2_28 
+		 12: COPY TYPE_StringLiteral "dashboard" def_%cl_2_28 
 		 13: HASH-controller- def_%cl_2_29 %cl_2_28[6.12,] 
 		 14: %self->link_to def_%cl_2_30 %self[6.2,6.9,6.11,2.0,] %cl_2_27[6.11,] %cl_2_29[6.13,] 	 ARGS:%cl_2_27,%cl_2_29,
 		 15: 
@@ -2305,10 +2305,10 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "welcome_anonymous" def_%cl_2_33 
 		 2: %self->t def_%cl_2_34 %self[2.0,] %cl_2_33[7.1,] 	 ARGS:%cl_2_33,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_35 
+		 4: COPY TYPE_StringLiteral "login" def_%cl_2_35 
 		 5: %self->t def_%cl_2_36 %self[7.2,2.0,] %cl_2_35[7.4,] 	 ARGS:%cl_2_35,
 		 6: %self->logout_path def_%cl_2_37 %self[7.2,7.5,2.0,] 	 ARGS:
 		 7: %self->link_to def_%cl_2_38 %self[7.2,7.5,7.6,2.0,] %cl_2_36[7.5,] %cl_2_37[7.6,] 	 ARGS:%cl_2_36,%cl_2_37,
@@ -2318,7 +2318,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_39 
+		 1: COPY TYPE_StringLiteral "welcome_back" def_%cl_2_39 
 		 2: %self->user def_%cl_2_40 %self[2.0,] 	 ARGS:
 		 3: %cl_2_40->display_name def_%cl_2_41 %cl_2_40[8.2,] 	 ARGS:
 		 4: %self->h def_%cl_2_42 %self[8.2,2.0,] %cl_2_41[8.3,] 	 ARGS:%cl_2_41,
@@ -2326,10 +2326,10 @@ BB 8
 		 6: %self->t def_%cl_2_44 %self[8.2,8.4,2.0,] %cl_2_39[8.1,] %cl_2_43[8.5,] 	 ARGS:%cl_2_39,%cl_2_43,
 		 7: %cl_2_44->html_safe def_%cl_2_45 %cl_2_44[8.6,] 	 ARGS:
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_2_46 
+		 9: COPY TYPE_StringLiteral "logout" def_%cl_2_46 
 		 10: %self->t def_%cl_2_47 %self[8.2,8.4,8.6,2.0,] %cl_2_46[8.9,] 	 ARGS:%cl_2_46,
 		 11: %self->logout_path def_%cl_2_48 %self[8.2,8.4,8.6,8.10,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_2_49 
+		 12: COPY TYPE_StringLiteral "are_you_sure_logout" def_%cl_2_49 
 		 13: %self->t def_%cl_2_50 %self[8.2,8.4,8.6,8.10,8.11,2.0,] %cl_2_49[8.12,] 	 ARGS:%cl_2_49,
 		 14: HASH-confirm- def_%cl_2_51 %cl_2_50[8.13,] 
 		 15: %self->link_to def_%cl_2_52 %self[8.2,8.4,8.6,8.10,8.11,8.13,2.0,] %cl_2_47[8.10,] %cl_2_48[8.11,] %cl_2_51[8.14,] 	 ARGS:%cl_2_47,%cl_2_48,%cl_2_51,
@@ -2346,30 +2346,30 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_55 
+		 0: COPY TYPE_StringLiteral "none" def_%cl_2_55 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_56 
+		 0: COPY TYPE_StringLiteral "block" def_%cl_2_56 
 		 1: COPY TYPE_PASS def_%cl_2_55 %cl_2_56[11.0,] 
 BB 12
 	outgoing: 13 14 68 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_57 
+		 1: COPY TYPE_StringLiteral "running_times" def_%cl_2_57 
 		 2: GETFIELD %self->running_times def_%cl_2_58 %self[2.0,] 
 		 3: %cl_2_58->size def_%cl_2_59 %cl_2_58[12.2,] 	 ARGS:
 		 4: HASH-count- def_%cl_2_60 %cl_2_59[12.3,] 
 		 5: %self->t def_%cl_2_61 %self[2.0,] %cl_2_57[12.1,] %cl_2_60[12.4,] 	 ARGS:%cl_2_57,%cl_2_60,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_62 
-		 8: COPY TYPE_StringLiteral def_%cl_2_63 
-		 9: COPY TYPE_StringLiteral def_%cl_2_64 
-		 10: COPY TYPE_StringLiteral def_%cl_2_65 
-		 11: COPY TYPE_StringLiteral def_%cl_2_66 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_62 
+		 8: COPY TYPE_StringLiteral "" def_%cl_2_63 
+		 9: COPY TYPE_StringLiteral "running_times" def_%cl_2_64 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_65 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_66 
 		 12: HASH-id-class-title- def_%cl_2_67 %cl_2_64[12.9,] %cl_2_65[12.10,] %cl_2_66[12.11,] 
 		 13: %self->render_icon def_%cl_2_68 %self[12.5,2.0,] %cl_2_62[12.7,] %cl_2_63[12.8,] %cl_2_67[12.12,] 	 ARGS:%cl_2_62,%cl_2_63,%cl_2_67,
 		 14: 
@@ -2387,16 +2387,16 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_72 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_2_72 
 		 2: %self->t def_%cl_2_73 %self[2.0,] %cl_2_72[14.1,] 	 ARGS:%cl_2_72,
 		 3: GETFIELD %self->logged_user def_%cl_2_74 %self[14.2,2.0,] 
 		 4: %self->link_to def_%cl_2_75 %self[14.2,2.0,] %cl_2_73[14.2,] %cl_2_74[14.3,] 	 ARGS:%cl_2_73,%cl_2_74,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_76 
-		 7: COPY TYPE_StringLiteral def_%cl_2_77 
-		 8: COPY TYPE_StringLiteral def_%cl_2_78 
-		 9: COPY TYPE_StringLiteral def_%cl_2_79 
-		 10: COPY TYPE_StringLiteral def_%cl_2_80 
+		 6: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_76 
+		 7: COPY TYPE_StringLiteral "" def_%cl_2_77 
+		 8: COPY TYPE_StringLiteral "account_more" def_%cl_2_78 
+		 9: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_79 
+		 10: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_80 
 		 11: HASH-id-class-title- def_%cl_2_81 %cl_2_78[14.8,] %cl_2_79[14.9,] %cl_2_80[14.10,] 
 		 12: %self->render_icon def_%cl_2_82 %self[14.2,14.4,2.0,] %cl_2_76[14.6,] %cl_2_77[14.7,] %cl_2_81[14.11,] 	 ARGS:%cl_2_76,%cl_2_77,%cl_2_81,
 		 13: COPY TYPE_PASS def_%cl_2_71 %cl_2_82[14.12,] 
@@ -2419,18 +2419,18 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_86 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_2_86 
 		 2: %self->t def_%cl_2_87 %self[2.0,] %cl_2_86[17.1,] 	 ARGS:%cl_2_86,
-		 3: COPY TYPE_StringLiteral def_%cl_2_88 
-		 4: COPY TYPE_StringLiteral def_%cl_2_89 
+		 3: COPY TYPE_StringLiteral "dashboard" def_%cl_2_88 
+		 4: COPY TYPE_StringLiteral "my_projects" def_%cl_2_89 
 		 5: HASH-controller-action- def_%cl_2_90 %cl_2_88[17.3,] %cl_2_89[17.4,] 
 		 6: %self->link_to def_%cl_2_91 %self[17.2,2.0,] %cl_2_87[17.2,] %cl_2_90[17.5,] 	 ARGS:%cl_2_87,%cl_2_90,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_2_92 
-		 9: COPY TYPE_StringLiteral def_%cl_2_93 
-		 10: COPY TYPE_StringLiteral def_%cl_2_94 
-		 11: COPY TYPE_StringLiteral def_%cl_2_95 
-		 12: COPY TYPE_StringLiteral def_%cl_2_96 
+		 8: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_92 
+		 9: COPY TYPE_StringLiteral "" def_%cl_2_93 
+		 10: COPY TYPE_StringLiteral "projects_more" def_%cl_2_94 
+		 11: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_95 
+		 12: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_96 
 		 13: HASH-id-class-title- def_%cl_2_97 %cl_2_94[17.10,] %cl_2_95[17.11,] %cl_2_96[17.12,] 
 		 14: %self->render_icon def_%cl_2_98 %self[17.2,17.6,2.0,] %cl_2_92[17.8,] %cl_2_93[17.9,] %cl_2_97[17.13,] 	 ARGS:%cl_2_92,%cl_2_93,%cl_2_97,
 		 15: COPY TYPE_PASS def_%cl_2_85 %cl_2_98[17.14,] 
@@ -2447,17 +2447,17 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_101 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_2_101 
 		 2: %self->t def_%cl_2_102 %self[2.0,] %cl_2_101[19.1,] 	 ARGS:%cl_2_101,
-		 3: COPY TYPE_StringLiteral def_%cl_2_103 
+		 3: COPY TYPE_StringLiteral "administration" def_%cl_2_103 
 		 4: HASH-controller- def_%cl_2_104 %cl_2_103[19.3,] 
 		 5: %self->link_to def_%cl_2_105 %self[19.2,2.0,] %cl_2_102[19.2,] %cl_2_104[19.4,] 	 ARGS:%cl_2_102,%cl_2_104,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_106 
-		 8: COPY TYPE_StringLiteral def_%cl_2_107 
-		 9: COPY TYPE_StringLiteral def_%cl_2_108 
-		 10: COPY TYPE_StringLiteral def_%cl_2_109 
-		 11: COPY TYPE_StringLiteral def_%cl_2_110 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_106 
+		 8: COPY TYPE_StringLiteral "" def_%cl_2_107 
+		 9: COPY TYPE_StringLiteral "administration_more" def_%cl_2_108 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_109 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_110 
 		 12: HASH-id-class-title- def_%cl_2_111 %cl_2_108[19.9,] %cl_2_109[19.10,] %cl_2_110[19.11,] 
 		 13: %self->render_icon def_%cl_2_112 %self[19.2,19.5,2.0,] %cl_2_106[19.7,] %cl_2_107[19.8,] %cl_2_111[19.12,] 	 ARGS:%cl_2_106,%cl_2_107,%cl_2_111,
 		 14: 
@@ -2485,10 +2485,10 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_116 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_2_116 
 		 2: %self->t def_%cl_2_117 %self[2.0,] %cl_2_116[23.1,] 	 ARGS:%cl_2_116,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_118 
+		 4: COPY TYPE_StringLiteral "edit_profile" def_%cl_2_118 
 		 5: %self->t def_%cl_2_119 %self[23.2,2.0,] %cl_2_118[23.4,] 	 ARGS:%cl_2_118,
 		 6: %self->user def_%cl_2_120 %self[23.2,23.5,2.0,] 	 ARGS:
 		 7: %cl_2_120->id def_%cl_2_121 %cl_2_120[23.6,] 	 ARGS:
@@ -2496,7 +2496,7 @@ BB 23
 		 9: %self->edit_user_path def_%cl_2_123 %self[23.2,23.5,23.6,2.0,] %cl_2_122[23.8,] 	 ARGS:%cl_2_122,
 		 10: %self->link_to def_%cl_2_124 %self[23.2,23.5,23.6,23.9,2.0,] %cl_2_119[23.5,] %cl_2_123[23.9,] 	 ARGS:%cl_2_119,%cl_2_123,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_125 
+		 12: COPY TYPE_StringLiteral "update_avatar" def_%cl_2_125 
 		 13: %self->t def_%cl_2_126 %self[23.2,23.5,23.6,23.9,23.10,2.0,] %cl_2_125[23.12,] 	 ARGS:%cl_2_125,
 		 14: %self->user def_%cl_2_127 %self[23.2,23.5,23.6,23.9,23.10,23.13,2.0,] 	 ARGS:
 		 15: %cl_2_127->id def_%cl_2_128 %cl_2_127[23.14,] 	 ARGS:
@@ -2504,20 +2504,20 @@ BB 23
 		 17: %self->avatar_user_path def_%cl_2_130 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,2.0,] %cl_2_129[23.16,] 	 ARGS:%cl_2_129,
 		 18: %self->link_to def_%cl_2_131 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,2.0,] %cl_2_126[23.13,] %cl_2_130[23.17,] 	 ARGS:%cl_2_126,%cl_2_130,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_2_132 
+		 20: COPY TYPE_StringLiteral "userbox_more" def_%cl_2_132 
 		 21: %self->t def_%cl_2_133 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,2.0,] %cl_2_132[23.20,] 	 ARGS:%cl_2_132,
 		 22: 
-		 23: COPY TYPE_StringLiteral def_%cl_2_134 
+		 23: COPY TYPE_StringLiteral "my_projects" def_%cl_2_134 
 		 24: %self->t def_%cl_2_135 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,2.0,] %cl_2_134[23.23,] 	 ARGS:%cl_2_134,
-		 25: COPY TYPE_StringLiteral def_%cl_2_136 
-		 26: COPY TYPE_StringLiteral def_%cl_2_137 
+		 25: COPY TYPE_StringLiteral "dashboard" def_%cl_2_136 
+		 26: COPY TYPE_StringLiteral "my_projects" def_%cl_2_137 
 		 27: HASH-controller-action- def_%cl_2_138 %cl_2_136[23.25,] %cl_2_137[23.26,] 
 		 28: %self->link_to def_%cl_2_139 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,2.0,] %cl_2_135[23.24,] %cl_2_138[23.27,] 	 ARGS:%cl_2_135,%cl_2_138,
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_2_140 
+		 30: COPY TYPE_StringLiteral "my_tasks" def_%cl_2_140 
 		 31: %self->t def_%cl_2_141 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,2.0,] %cl_2_140[23.30,] 	 ARGS:%cl_2_140,
-		 32: COPY TYPE_StringLiteral def_%cl_2_142 
-		 33: COPY TYPE_StringLiteral def_%cl_2_143 
+		 32: COPY TYPE_StringLiteral "dashboard" def_%cl_2_142 
+		 33: COPY TYPE_StringLiteral "my_tasks" def_%cl_2_143 
 		 34: HASH-controller-action- def_%cl_2_144 %cl_2_142[23.32,] %cl_2_143[23.33,] 
 		 35: %self->link_to def_%cl_2_145 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,23.31,2.0,] %cl_2_141[23.31,] %cl_2_144[23.34,] 	 ARGS:%cl_2_141,%cl_2_144,
 		 36: COPY TYPE_PASS def_%cl_2_115 %cl_2_145[23.35,] 
@@ -2540,7 +2540,7 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_149 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_2_149 
 		 2: %self->t def_%cl_2_150 %self[2.0,] %cl_2_149[26.1,] 	 ARGS:%cl_2_149,
 		 3: 
 		 4: %self->projects def_%cl_2_151 %self[26.2,2.0,] 	 ARGS:
@@ -2597,21 +2597,21 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_155 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_2_155 
 		 2: %self->t def_%cl_2_156 %self[2.0,] %cl_2_155[28.1,] 	 ARGS:%cl_2_155,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_157 
+		 4: COPY TYPE_StringLiteral "company" def_%cl_2_157 
 		 5: %self->t def_%cl_2_158 %self[28.2,2.0,] %cl_2_157[28.4,] 	 ARGS:%cl_2_157,
 		 6: (Company) def_%cl_2_159 
 		 7: %cl_2_159->owner def_%cl_2_160 %cl_2_159[28.6,] 	 ARGS:
 		 8: %self->link_to def_%cl_2_161 %self[28.2,28.5,2.0,] %cl_2_158[28.5,] %cl_2_160[28.7,] 	 ARGS:%cl_2_158,%cl_2_160,
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_2_162 
+		 10: COPY TYPE_StringLiteral "members" def_%cl_2_162 
 		 11: %self->t def_%cl_2_163 %self[28.2,28.5,28.8,2.0,] %cl_2_162[28.10,] 	 ARGS:%cl_2_162,
 		 12: %self->companies_path def_%cl_2_164 %self[28.2,28.5,28.8,28.11,2.0,] 	 ARGS:
 		 13: %self->link_to def_%cl_2_165 %self[28.2,28.5,28.8,28.11,28.12,2.0,] %cl_2_163[28.11,] %cl_2_164[28.12,] 	 ARGS:%cl_2_163,%cl_2_164,
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%cl_2_166 
+		 15: COPY TYPE_StringLiteral "projects" def_%cl_2_166 
 		 16: %self->t def_%cl_2_167 %self[28.2,28.5,28.8,28.11,28.12,28.13,2.0,] %cl_2_166[28.15,] 	 ARGS:%cl_2_166,
 		 17: %self->projects_path def_%cl_2_168 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,2.0,] 	 ARGS:
 		 18: %self->link_to def_%cl_2_169 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,28.17,2.0,] %cl_2_167[28.16,] %cl_2_168[28.17,] 	 ARGS:%cl_2_167,%cl_2_168,
@@ -2636,8 +2636,8 @@ BB 30
 		 8: %cl_2_175->object_url def_%cl_2_176 %cl_2_175[30.7,] 	 ARGS:
 		 9: %self->link_to def_%cl_2_177 %self[30.1,30.4,30.6,30.7,2.0,] %cl_2_174[30.6,] %cl_2_176[30.8,] 	 ARGS:%cl_2_174,%cl_2_176,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_2_178 
-		 12: COPY TYPE_StringLiteral def_%cl_2_179 
+		 11: COPY TYPE_StringLiteral "stop" def_%cl_2_178 
+		 12: COPY TYPE_StringLiteral "stop_time" def_%cl_2_179 
 		 13: %self->t def_%cl_2_180 %self[30.1,30.4,30.6,30.7,30.9,2.0,] %cl_2_179[30.12,] 	 ARGS:%cl_2_179,
 		 14: %self->render_icon def_%cl_2_181 %self[30.1,30.4,30.6,30.7,30.9,30.13,2.0,] %cl_2_178[30.11,] %cl_2_180[30.13,] 	 ARGS:%cl_2_178,%cl_2_180,
 		 15: %self->listed def_%cl_2_182 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,2.0,] 	 ARGS:
@@ -2646,7 +2646,7 @@ BB 30
 		 18: %cl_2_184->id def_%cl_2_185 %cl_2_184[30.17,] 	 ARGS:
 		 19: HASH-active_project-id- def_%cl_2_186 %cl_2_183[30.16,] %cl_2_185[30.18,] 
 		 20: %self->stop_time_path def_%cl_2_187 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,2.0,] %cl_2_186[30.19,] 	 ARGS:%cl_2_186,
-		 21: COPY TYPE_StringLiteral def_%cl_2_188 
+		 21: COPY TYPE_StringLiteral "blank stopTime" def_%cl_2_188 
 		 22: HASH-class- def_%cl_2_189 %cl_2_188[30.21,] 
 		 23: %self->link_to def_%cl_2_190 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,30.20,2.0,] %cl_2_181[30.14,] %cl_2_187[30.20,] %cl_2_189[30.22,] 	 ARGS:%cl_2_181,%cl_2_187,%cl_2_189,
 		 24: 
@@ -2688,7 +2688,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "item_" def_%cl_5_3 
 		 2: item->[] def_%cl_5_4 item[2.2,] 	 ARGS:Symbol,
 		 3: BUILDSTRING def_%cl_5_5 %cl_5_3[3.1,] %cl_5_4[3.2,] 
 		 4: 
@@ -2699,7 +2699,7 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_5_8 
+		 0: COPY TYPE_StringLiteral "class="active"" def_%cl_5_8 
 		 1: %cl_5_8->html_safe def_%cl_5_9 %cl_5_8[4.0,] 	 ARGS:
 		 2: 
 BB 5
@@ -2857,12 +2857,12 @@ BB 37
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_205 
-		 2: COPY TYPE_StringLiteral def_%cl_2_206 
+		 1: COPY TYPE_StringLiteral "dashboard" def_%cl_2_205 
+		 2: COPY TYPE_StringLiteral "search" def_%cl_2_206 
 		 3: HASH-controller-action- def_%cl_2_207 %cl_2_205[37.1,] %cl_2_206[37.2,] 
 		 4: %self->form_tag def_%cl_2_208 %self[2.0,] %cl_2_207[37.3,] 	 ARGS:%cl_2_207,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_209 
+		 6: COPY TYPE_StringLiteral "search_box_default" def_%cl_2_209 
 		 7: %self->t def_%cl_2_210 %self[37.4,2.0,] %cl_2_209[37.6,] 	 ARGS:%cl_2_209,
 		 8: ATTRASSIGN %self->search_field_default_value %cl_2_210[37.7,] 
 		 9: 
@@ -2892,26 +2892,26 @@ BB 41
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_215 
+		 1: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_2_215 
 		 2: 
 		 3: GETFIELD %self->search_field_default_value def_%cl_2_216 %self[37.8,2.0,] 
-		 4: COPY TYPE_StringLiteral def_%cl_2_217 
+		 4: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_2_217 
 		 5: BUILDSTRING def_%cl_2_218 %cl_2_215[41.1,] %cl_2_216[41.3,] %cl_2_217[41.4,] 
-		 6: COPY TYPE_StringLiteral def_%cl_2_219 
+		 6: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_2_219 
 		 7: 
 		 8: GETFIELD %self->search_field_default_value def_%cl_2_220 %self[37.8,2.0,] 
-		 9: COPY TYPE_StringLiteral def_%cl_2_221 
+		 9: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_2_221 
 		 10: BUILDSTRING def_%cl_2_222 %cl_2_219[41.6,] %cl_2_220[41.8,] %cl_2_221[41.9,] 
 		 11: HASH-onfocus-onblur- def_%cl_2_223 %cl_2_218[41.5,] %cl_2_222[41.10,] 
 		 12: ATTRASSIGN %self->search_field_attrs %cl_2_223[41.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_2_224 
+		 14: COPY TYPE_StringLiteral "search_id" def_%cl_2_224 
 		 15: GETFIELD %self->last_search def_%cl_2_225 %self[40.1,2.0,] 
 		 16: %self->h def_%cl_2_226 %self[41.12,40.1,37.8,2.0,] %cl_2_225[41.15,] 	 ARGS:%cl_2_225,
 		 17: GETFIELD %self->search_field_attrs def_%cl_2_227 %self[41.12,41.16,2.0,] 
 		 18: %self->text_field_tag def_%cl_2_228 %self[41.12,41.16,40.1,37.8,2.0,] %cl_2_224[41.14,] %cl_2_226[41.16,] %cl_2_227[41.17,] 	 ARGS:%cl_2_224,%cl_2_226,%cl_2_227,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_2_229 
+		 20: COPY TYPE_StringLiteral "go" def_%cl_2_229 
 		 21: %self->t def_%cl_2_230 %self[41.12,41.16,41.18,40.1,37.8,2.0,] %cl_2_229[41.20,] 	 ARGS:%cl_2_229,
 		 22: 
 BB 42
@@ -2939,13 +2939,13 @@ BB 45
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_235 
+		 0: COPY TYPE_StringLiteral "error" def_%cl_2_235 
 		 1: 
 BB 46
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_236 
+		 0: COPY TYPE_StringLiteral "success" def_%cl_2_236 
 		 1: COPY TYPE_PASS def_%cl_2_235 %cl_2_236[46.0,] 
 BB 47
 	outgoing: 48 49 68 
@@ -2959,13 +2959,13 @@ BB 48
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_239 
+		 0: COPY TYPE_StringLiteral "flash_error" def_%cl_2_239 
 		 1: 
 BB 49
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_240 
+		 0: COPY TYPE_StringLiteral "flash_success" def_%cl_2_240 
 		 1: COPY TYPE_PASS def_%cl_2_239 %cl_2_240[49.0,] 
 BB 50
 	outgoing: 52 68 
@@ -2996,13 +2996,13 @@ BB 53
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_248 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_248 
 		 1: 
 BB 54
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_249 
+		 0: COPY TYPE_StringLiteral "class='sidebar'" def_%cl_2_249 
 		 1: COPY TYPE_PASS def_%cl_2_248 %cl_2_249[54.0,] 
 BB 55
 	outgoing: 56 57 68 
@@ -3038,13 +3038,13 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_5 
+		 0: COPY TYPE_StringLiteral "class="ajax_action"" def_%cl_7_5 
 		 1: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_6 
+		 0: COPY TYPE_StringLiteral "class="action"" def_%cl_7_6 
 		 1: COPY TYPE_PASS def_%cl_7_5 %cl_7_6[5.0,] 
 BB 6
 	outgoing: 7 9 
@@ -3096,9 +3096,9 @@ BB 58
 	instructions:
 		 0: 
 		 1: GETFIELD %self->page_actions def_%cl_2_259 %self[55.5,2.0,] 
-		 2: COPY TYPE_StringLiteral def_%cl_2_260 
+		 2: COPY TYPE_StringLiteral "/dashboard/my_projects?orderBy=name" def_%cl_2_260 
 		 3: HASH-title-url- def_%cl_2_261 %cl_2_260[58.2,] 
-		 4: COPY TYPE_StringLiteral def_%cl_2_262 
+		 4: COPY TYPE_StringLiteral "/dashboard/my_projects?orderBy=priority" def_%cl_2_262 
 		 5: HASH-title-url- def_%cl_2_263 %cl_2_262[58.4,] 
 		 6: COPY TYPE_Array def_%cl_2_264 %cl_2_261[58.3,] %cl_2_263[58.5,] 
 		 7: %cl_2_259->+ def_%cl_2_265 %cl_2_259[58.1,] %cl_2_264[58.6,] 	 ARGS:%cl_2_264,
@@ -3186,7 +3186,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_21 
+		 1: COPY TYPE_StringLiteral "companies_involved_in" def_%cl_8_21 
 		 2: %self->t def_%cl_8_22 %self[2.0,] %cl_8_21[9.1,] 	 ARGS:%cl_8_21,
 		 3: 
 		 4: project->companies def_%cl_8_23 project[2.2,] 	 ARGS:
@@ -3229,7 +3229,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 6: COPY TYPE_StringLiteral def_%cl_8_25 
+		 6: COPY TYPE_StringLiteral ", " def_%cl_8_25 
 		 7: %cl_8_24->join def_%cl_8_26 %cl_8_24[9.5,] %cl_8_25[9.6,] 	 ARGS:%cl_8_25,
 		 8: %cl_8_26->html_safe def_%cl_8_27 %cl_8_26[9.7,] 	 ARGS:
 		 9: 
@@ -3252,12 +3252,12 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_31 
+		 1: COPY TYPE_StringLiteral "started_on" def_%cl_8_31 
 		 2: %self->t def_%cl_8_32 %self[2.0,] %cl_8_31[12.1,] 	 ARGS:%cl_8_31,
 		 3: 
 		 4: project->created_on def_%cl_8_33 project[2.2,] 	 ARGS:
 		 5: %self->format_usertime def_%cl_8_34 %self[12.2,2.0,] %cl_8_33[12.4,] 	 ARGS:%cl_8_33,Symbol,
-		 6: COPY TYPE_StringLiteral def_%cl_8_35 
+		 6: COPY TYPE_StringLiteral " | " def_%cl_8_35 
 		 7: BUILDSTRING def_%cl_8_36 %cl_8_34[12.5,] %cl_8_35[12.6,] 
 		 8: 
 		 9: project->created_by def_%cl_8_37 project[12.4,2.2,] 	 ARGS:
@@ -3274,7 +3274,7 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_45 
+		 1: COPY TYPE_StringLiteral "started_on" def_%cl_8_45 
 		 2: %self->t def_%cl_8_46 %self[2.0,] %cl_8_45[13.1,] 	 ARGS:%cl_8_45,
 		 3: 
 		 4: project->created_on def_%cl_8_47 project[2.2,] 	 ARGS:
@@ -3303,7 +3303,7 @@ BB 60
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_271 
+		 1: COPY TYPE_StringLiteral "no_active_projects" def_%cl_2_271 
 		 2: %self->t def_%cl_2_272 %self[58.8,55.5,41.12,40.1,37.8,2.0,] %cl_2_271[60.1,] 	 ARGS:%cl_2_271,
 		 3: COPY TYPE_PASS def_%cl_2_270 %cl_2_272[60.2,] 
 BB 61
@@ -3529,7 +3529,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "my_tasks_sidebar" def_%v_8 
 		 2: ATTRASSIGN %self->content_for_sidebar %v_8[6.1,] 
 		 3: 
 		 4: %self->ruby_code_from_view def_%v_9 %self[6.2,5.0,2.0,2.6,2.10,] 	 ARGS:
@@ -3557,14 +3557,14 @@ BB 3
 		 2: 
 		 3: %self->page_title def_%cl_2_4 %self[3.1,2.0,] 	 ARGS:
 		 4: %self->h def_%cl_2_5 %self[3.1,3.3,2.0,] %cl_2_4[3.3,] 	 ARGS:%cl_2_4,
-		 5: COPY TYPE_StringLiteral def_%cl_2_6 
+		 5: COPY TYPE_StringLiteral " @ " def_%cl_2_6 
 		 6: (Company) def_%cl_2_7 
 		 7: %cl_2_7->owner def_%cl_2_8 %cl_2_7[3.6,] 	 ARGS:
 		 8: %cl_2_8->name def_%cl_2_9 %cl_2_8[3.7,] 	 ARGS:
 		 9: %self->h def_%cl_2_10 %self[3.1,3.3,3.4,2.0,] %cl_2_9[3.8,] 	 ARGS:%cl_2_9,
 		 10: BUILDSTRING def_%cl_2_11 %cl_2_5[3.4,] %cl_2_6[3.5,] %cl_2_10[3.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_12 
+		 12: COPY TYPE_StringLiteral "company_website" def_%cl_2_12 
 		 13: %self->stylesheet_link_tag def_%cl_2_13 %self[3.1,3.3,3.4,3.9,2.0,] %cl_2_12[3.12,] 	 ARGS:%cl_2_12,
 		 14: 
 		 15: %self->additional_stylesheets def_%cl_2_14 %self[3.1,3.3,3.4,3.9,3.13,2.0,] 	 ARGS:
@@ -3621,18 +3621,18 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_19 
+		 1: COPY TYPE_StringLiteral "application.js" def_%cl_2_19 
 		 2: %self->javascript_include_tag def_%cl_2_20 %self[2.0,] %cl_2_19[6.1,] 	 ARGS:%cl_2_19,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_21 
+		 4: COPY TYPE_StringLiteral "var LOGGED_USER_ID=" def_%cl_2_21 
 		 5: GETFIELD %self->logged_user def_%cl_2_22 %self[6.2,2.0,] 
 		 6: %cl_2_22->id def_%cl_2_23 %cl_2_22[6.5,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_2_24 
+		 7: COPY TYPE_StringLiteral ";" def_%cl_2_24 
 		 8: BUILDSTRING def_%cl_2_25 %cl_2_21[6.4,] %cl_2_23[6.6,] %cl_2_24[6.7,] 
 		 9: %self->javascript_tag def_%cl_2_26 %self[6.2,2.0,] %cl_2_25[6.8,] 	 ARGS:%cl_2_25,
 		 10: 
 		 11: %self->site_name def_%cl_2_27 %self[6.2,6.9,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_2_28 
+		 12: COPY TYPE_StringLiteral "dashboard" def_%cl_2_28 
 		 13: HASH-controller- def_%cl_2_29 %cl_2_28[6.12,] 
 		 14: %self->link_to def_%cl_2_30 %self[6.2,6.9,6.11,2.0,] %cl_2_27[6.11,] %cl_2_29[6.13,] 	 ARGS:%cl_2_27,%cl_2_29,
 		 15: 
@@ -3644,10 +3644,10 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "welcome_anonymous" def_%cl_2_33 
 		 2: %self->t def_%cl_2_34 %self[2.0,] %cl_2_33[7.1,] 	 ARGS:%cl_2_33,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_35 
+		 4: COPY TYPE_StringLiteral "login" def_%cl_2_35 
 		 5: %self->t def_%cl_2_36 %self[7.2,2.0,] %cl_2_35[7.4,] 	 ARGS:%cl_2_35,
 		 6: %self->logout_path def_%cl_2_37 %self[7.2,7.5,2.0,] 	 ARGS:
 		 7: %self->link_to def_%cl_2_38 %self[7.2,7.5,7.6,2.0,] %cl_2_36[7.5,] %cl_2_37[7.6,] 	 ARGS:%cl_2_36,%cl_2_37,
@@ -3657,7 +3657,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_39 
+		 1: COPY TYPE_StringLiteral "welcome_back" def_%cl_2_39 
 		 2: %self->user def_%cl_2_40 %self[2.0,] 	 ARGS:
 		 3: %cl_2_40->display_name def_%cl_2_41 %cl_2_40[8.2,] 	 ARGS:
 		 4: %self->h def_%cl_2_42 %self[8.2,2.0,] %cl_2_41[8.3,] 	 ARGS:%cl_2_41,
@@ -3665,10 +3665,10 @@ BB 8
 		 6: %self->t def_%cl_2_44 %self[8.2,8.4,2.0,] %cl_2_39[8.1,] %cl_2_43[8.5,] 	 ARGS:%cl_2_39,%cl_2_43,
 		 7: %cl_2_44->html_safe def_%cl_2_45 %cl_2_44[8.6,] 	 ARGS:
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_2_46 
+		 9: COPY TYPE_StringLiteral "logout" def_%cl_2_46 
 		 10: %self->t def_%cl_2_47 %self[8.2,8.4,8.6,2.0,] %cl_2_46[8.9,] 	 ARGS:%cl_2_46,
 		 11: %self->logout_path def_%cl_2_48 %self[8.2,8.4,8.6,8.10,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_2_49 
+		 12: COPY TYPE_StringLiteral "are_you_sure_logout" def_%cl_2_49 
 		 13: %self->t def_%cl_2_50 %self[8.2,8.4,8.6,8.10,8.11,2.0,] %cl_2_49[8.12,] 	 ARGS:%cl_2_49,
 		 14: HASH-confirm- def_%cl_2_51 %cl_2_50[8.13,] 
 		 15: %self->link_to def_%cl_2_52 %self[8.2,8.4,8.6,8.10,8.11,8.13,2.0,] %cl_2_47[8.10,] %cl_2_48[8.11,] %cl_2_51[8.14,] 	 ARGS:%cl_2_47,%cl_2_48,%cl_2_51,
@@ -3685,30 +3685,30 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_55 
+		 0: COPY TYPE_StringLiteral "none" def_%cl_2_55 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_56 
+		 0: COPY TYPE_StringLiteral "block" def_%cl_2_56 
 		 1: COPY TYPE_PASS def_%cl_2_55 %cl_2_56[11.0,] 
 BB 12
 	outgoing: 13 14 68 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_57 
+		 1: COPY TYPE_StringLiteral "running_times" def_%cl_2_57 
 		 2: GETFIELD %self->running_times def_%cl_2_58 %self[2.0,] 
 		 3: %cl_2_58->size def_%cl_2_59 %cl_2_58[12.2,] 	 ARGS:
 		 4: HASH-count- def_%cl_2_60 %cl_2_59[12.3,] 
 		 5: %self->t def_%cl_2_61 %self[2.0,] %cl_2_57[12.1,] %cl_2_60[12.4,] 	 ARGS:%cl_2_57,%cl_2_60,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_62 
-		 8: COPY TYPE_StringLiteral def_%cl_2_63 
-		 9: COPY TYPE_StringLiteral def_%cl_2_64 
-		 10: COPY TYPE_StringLiteral def_%cl_2_65 
-		 11: COPY TYPE_StringLiteral def_%cl_2_66 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_62 
+		 8: COPY TYPE_StringLiteral "" def_%cl_2_63 
+		 9: COPY TYPE_StringLiteral "running_times" def_%cl_2_64 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_65 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_66 
 		 12: HASH-id-class-title- def_%cl_2_67 %cl_2_64[12.9,] %cl_2_65[12.10,] %cl_2_66[12.11,] 
 		 13: %self->render_icon def_%cl_2_68 %self[12.5,2.0,] %cl_2_62[12.7,] %cl_2_63[12.8,] %cl_2_67[12.12,] 	 ARGS:%cl_2_62,%cl_2_63,%cl_2_67,
 		 14: 
@@ -3726,16 +3726,16 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_72 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_2_72 
 		 2: %self->t def_%cl_2_73 %self[2.0,] %cl_2_72[14.1,] 	 ARGS:%cl_2_72,
 		 3: GETFIELD %self->logged_user def_%cl_2_74 %self[14.2,2.0,] 
 		 4: %self->link_to def_%cl_2_75 %self[14.2,2.0,] %cl_2_73[14.2,] %cl_2_74[14.3,] 	 ARGS:%cl_2_73,%cl_2_74,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_76 
-		 7: COPY TYPE_StringLiteral def_%cl_2_77 
-		 8: COPY TYPE_StringLiteral def_%cl_2_78 
-		 9: COPY TYPE_StringLiteral def_%cl_2_79 
-		 10: COPY TYPE_StringLiteral def_%cl_2_80 
+		 6: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_76 
+		 7: COPY TYPE_StringLiteral "" def_%cl_2_77 
+		 8: COPY TYPE_StringLiteral "account_more" def_%cl_2_78 
+		 9: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_79 
+		 10: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_80 
 		 11: HASH-id-class-title- def_%cl_2_81 %cl_2_78[14.8,] %cl_2_79[14.9,] %cl_2_80[14.10,] 
 		 12: %self->render_icon def_%cl_2_82 %self[14.2,14.4,2.0,] %cl_2_76[14.6,] %cl_2_77[14.7,] %cl_2_81[14.11,] 	 ARGS:%cl_2_76,%cl_2_77,%cl_2_81,
 		 13: COPY TYPE_PASS def_%cl_2_71 %cl_2_82[14.12,] 
@@ -3758,18 +3758,18 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_86 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_2_86 
 		 2: %self->t def_%cl_2_87 %self[2.0,] %cl_2_86[17.1,] 	 ARGS:%cl_2_86,
-		 3: COPY TYPE_StringLiteral def_%cl_2_88 
-		 4: COPY TYPE_StringLiteral def_%cl_2_89 
+		 3: COPY TYPE_StringLiteral "dashboard" def_%cl_2_88 
+		 4: COPY TYPE_StringLiteral "my_projects" def_%cl_2_89 
 		 5: HASH-controller-action- def_%cl_2_90 %cl_2_88[17.3,] %cl_2_89[17.4,] 
 		 6: %self->link_to def_%cl_2_91 %self[17.2,2.0,] %cl_2_87[17.2,] %cl_2_90[17.5,] 	 ARGS:%cl_2_87,%cl_2_90,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_2_92 
-		 9: COPY TYPE_StringLiteral def_%cl_2_93 
-		 10: COPY TYPE_StringLiteral def_%cl_2_94 
-		 11: COPY TYPE_StringLiteral def_%cl_2_95 
-		 12: COPY TYPE_StringLiteral def_%cl_2_96 
+		 8: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_92 
+		 9: COPY TYPE_StringLiteral "" def_%cl_2_93 
+		 10: COPY TYPE_StringLiteral "projects_more" def_%cl_2_94 
+		 11: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_95 
+		 12: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_96 
 		 13: HASH-id-class-title- def_%cl_2_97 %cl_2_94[17.10,] %cl_2_95[17.11,] %cl_2_96[17.12,] 
 		 14: %self->render_icon def_%cl_2_98 %self[17.2,17.6,2.0,] %cl_2_92[17.8,] %cl_2_93[17.9,] %cl_2_97[17.13,] 	 ARGS:%cl_2_92,%cl_2_93,%cl_2_97,
 		 15: COPY TYPE_PASS def_%cl_2_85 %cl_2_98[17.14,] 
@@ -3786,17 +3786,17 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_101 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_2_101 
 		 2: %self->t def_%cl_2_102 %self[2.0,] %cl_2_101[19.1,] 	 ARGS:%cl_2_101,
-		 3: COPY TYPE_StringLiteral def_%cl_2_103 
+		 3: COPY TYPE_StringLiteral "administration" def_%cl_2_103 
 		 4: HASH-controller- def_%cl_2_104 %cl_2_103[19.3,] 
 		 5: %self->link_to def_%cl_2_105 %self[19.2,2.0,] %cl_2_102[19.2,] %cl_2_104[19.4,] 	 ARGS:%cl_2_102,%cl_2_104,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_106 
-		 8: COPY TYPE_StringLiteral def_%cl_2_107 
-		 9: COPY TYPE_StringLiteral def_%cl_2_108 
-		 10: COPY TYPE_StringLiteral def_%cl_2_109 
-		 11: COPY TYPE_StringLiteral def_%cl_2_110 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_106 
+		 8: COPY TYPE_StringLiteral "" def_%cl_2_107 
+		 9: COPY TYPE_StringLiteral "administration_more" def_%cl_2_108 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_109 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_110 
 		 12: HASH-id-class-title- def_%cl_2_111 %cl_2_108[19.9,] %cl_2_109[19.10,] %cl_2_110[19.11,] 
 		 13: %self->render_icon def_%cl_2_112 %self[19.2,19.5,2.0,] %cl_2_106[19.7,] %cl_2_107[19.8,] %cl_2_111[19.12,] 	 ARGS:%cl_2_106,%cl_2_107,%cl_2_111,
 		 14: 
@@ -3824,10 +3824,10 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_116 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_2_116 
 		 2: %self->t def_%cl_2_117 %self[2.0,] %cl_2_116[23.1,] 	 ARGS:%cl_2_116,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_118 
+		 4: COPY TYPE_StringLiteral "edit_profile" def_%cl_2_118 
 		 5: %self->t def_%cl_2_119 %self[23.2,2.0,] %cl_2_118[23.4,] 	 ARGS:%cl_2_118,
 		 6: %self->user def_%cl_2_120 %self[23.2,23.5,2.0,] 	 ARGS:
 		 7: %cl_2_120->id def_%cl_2_121 %cl_2_120[23.6,] 	 ARGS:
@@ -3835,7 +3835,7 @@ BB 23
 		 9: %self->edit_user_path def_%cl_2_123 %self[23.2,23.5,23.6,2.0,] %cl_2_122[23.8,] 	 ARGS:%cl_2_122,
 		 10: %self->link_to def_%cl_2_124 %self[23.2,23.5,23.6,23.9,2.0,] %cl_2_119[23.5,] %cl_2_123[23.9,] 	 ARGS:%cl_2_119,%cl_2_123,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_125 
+		 12: COPY TYPE_StringLiteral "update_avatar" def_%cl_2_125 
 		 13: %self->t def_%cl_2_126 %self[23.2,23.5,23.6,23.9,23.10,2.0,] %cl_2_125[23.12,] 	 ARGS:%cl_2_125,
 		 14: %self->user def_%cl_2_127 %self[23.2,23.5,23.6,23.9,23.10,23.13,2.0,] 	 ARGS:
 		 15: %cl_2_127->id def_%cl_2_128 %cl_2_127[23.14,] 	 ARGS:
@@ -3843,20 +3843,20 @@ BB 23
 		 17: %self->avatar_user_path def_%cl_2_130 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,2.0,] %cl_2_129[23.16,] 	 ARGS:%cl_2_129,
 		 18: %self->link_to def_%cl_2_131 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,2.0,] %cl_2_126[23.13,] %cl_2_130[23.17,] 	 ARGS:%cl_2_126,%cl_2_130,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_2_132 
+		 20: COPY TYPE_StringLiteral "userbox_more" def_%cl_2_132 
 		 21: %self->t def_%cl_2_133 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,2.0,] %cl_2_132[23.20,] 	 ARGS:%cl_2_132,
 		 22: 
-		 23: COPY TYPE_StringLiteral def_%cl_2_134 
+		 23: COPY TYPE_StringLiteral "my_projects" def_%cl_2_134 
 		 24: %self->t def_%cl_2_135 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,2.0,] %cl_2_134[23.23,] 	 ARGS:%cl_2_134,
-		 25: COPY TYPE_StringLiteral def_%cl_2_136 
-		 26: COPY TYPE_StringLiteral def_%cl_2_137 
+		 25: COPY TYPE_StringLiteral "dashboard" def_%cl_2_136 
+		 26: COPY TYPE_StringLiteral "my_projects" def_%cl_2_137 
 		 27: HASH-controller-action- def_%cl_2_138 %cl_2_136[23.25,] %cl_2_137[23.26,] 
 		 28: %self->link_to def_%cl_2_139 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,2.0,] %cl_2_135[23.24,] %cl_2_138[23.27,] 	 ARGS:%cl_2_135,%cl_2_138,
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_2_140 
+		 30: COPY TYPE_StringLiteral "my_tasks" def_%cl_2_140 
 		 31: %self->t def_%cl_2_141 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,2.0,] %cl_2_140[23.30,] 	 ARGS:%cl_2_140,
-		 32: COPY TYPE_StringLiteral def_%cl_2_142 
-		 33: COPY TYPE_StringLiteral def_%cl_2_143 
+		 32: COPY TYPE_StringLiteral "dashboard" def_%cl_2_142 
+		 33: COPY TYPE_StringLiteral "my_tasks" def_%cl_2_143 
 		 34: HASH-controller-action- def_%cl_2_144 %cl_2_142[23.32,] %cl_2_143[23.33,] 
 		 35: %self->link_to def_%cl_2_145 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,23.31,2.0,] %cl_2_141[23.31,] %cl_2_144[23.34,] 	 ARGS:%cl_2_141,%cl_2_144,
 		 36: COPY TYPE_PASS def_%cl_2_115 %cl_2_145[23.35,] 
@@ -3879,7 +3879,7 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_149 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_2_149 
 		 2: %self->t def_%cl_2_150 %self[2.0,] %cl_2_149[26.1,] 	 ARGS:%cl_2_149,
 		 3: 
 		 4: %self->projects def_%cl_2_151 %self[26.2,2.0,] 	 ARGS:
@@ -3936,21 +3936,21 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_155 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_2_155 
 		 2: %self->t def_%cl_2_156 %self[2.0,] %cl_2_155[28.1,] 	 ARGS:%cl_2_155,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_157 
+		 4: COPY TYPE_StringLiteral "company" def_%cl_2_157 
 		 5: %self->t def_%cl_2_158 %self[28.2,2.0,] %cl_2_157[28.4,] 	 ARGS:%cl_2_157,
 		 6: (Company) def_%cl_2_159 
 		 7: %cl_2_159->owner def_%cl_2_160 %cl_2_159[28.6,] 	 ARGS:
 		 8: %self->link_to def_%cl_2_161 %self[28.2,28.5,2.0,] %cl_2_158[28.5,] %cl_2_160[28.7,] 	 ARGS:%cl_2_158,%cl_2_160,
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_2_162 
+		 10: COPY TYPE_StringLiteral "members" def_%cl_2_162 
 		 11: %self->t def_%cl_2_163 %self[28.2,28.5,28.8,2.0,] %cl_2_162[28.10,] 	 ARGS:%cl_2_162,
 		 12: %self->companies_path def_%cl_2_164 %self[28.2,28.5,28.8,28.11,2.0,] 	 ARGS:
 		 13: %self->link_to def_%cl_2_165 %self[28.2,28.5,28.8,28.11,28.12,2.0,] %cl_2_163[28.11,] %cl_2_164[28.12,] 	 ARGS:%cl_2_163,%cl_2_164,
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%cl_2_166 
+		 15: COPY TYPE_StringLiteral "projects" def_%cl_2_166 
 		 16: %self->t def_%cl_2_167 %self[28.2,28.5,28.8,28.11,28.12,28.13,2.0,] %cl_2_166[28.15,] 	 ARGS:%cl_2_166,
 		 17: %self->projects_path def_%cl_2_168 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,2.0,] 	 ARGS:
 		 18: %self->link_to def_%cl_2_169 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,28.17,2.0,] %cl_2_167[28.16,] %cl_2_168[28.17,] 	 ARGS:%cl_2_167,%cl_2_168,
@@ -3975,8 +3975,8 @@ BB 30
 		 8: %cl_2_175->object_url def_%cl_2_176 %cl_2_175[30.7,] 	 ARGS:
 		 9: %self->link_to def_%cl_2_177 %self[30.1,30.4,30.6,30.7,2.0,] %cl_2_174[30.6,] %cl_2_176[30.8,] 	 ARGS:%cl_2_174,%cl_2_176,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_2_178 
-		 12: COPY TYPE_StringLiteral def_%cl_2_179 
+		 11: COPY TYPE_StringLiteral "stop" def_%cl_2_178 
+		 12: COPY TYPE_StringLiteral "stop_time" def_%cl_2_179 
 		 13: %self->t def_%cl_2_180 %self[30.1,30.4,30.6,30.7,30.9,2.0,] %cl_2_179[30.12,] 	 ARGS:%cl_2_179,
 		 14: %self->render_icon def_%cl_2_181 %self[30.1,30.4,30.6,30.7,30.9,30.13,2.0,] %cl_2_178[30.11,] %cl_2_180[30.13,] 	 ARGS:%cl_2_178,%cl_2_180,
 		 15: %self->listed def_%cl_2_182 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,2.0,] 	 ARGS:
@@ -3985,7 +3985,7 @@ BB 30
 		 18: %cl_2_184->id def_%cl_2_185 %cl_2_184[30.17,] 	 ARGS:
 		 19: HASH-active_project-id- def_%cl_2_186 %cl_2_183[30.16,] %cl_2_185[30.18,] 
 		 20: %self->stop_time_path def_%cl_2_187 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,2.0,] %cl_2_186[30.19,] 	 ARGS:%cl_2_186,
-		 21: COPY TYPE_StringLiteral def_%cl_2_188 
+		 21: COPY TYPE_StringLiteral "blank stopTime" def_%cl_2_188 
 		 22: HASH-class- def_%cl_2_189 %cl_2_188[30.21,] 
 		 23: %self->link_to def_%cl_2_190 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,30.20,2.0,] %cl_2_181[30.14,] %cl_2_187[30.20,] %cl_2_189[30.22,] 	 ARGS:%cl_2_181,%cl_2_187,%cl_2_189,
 		 24: 
@@ -4027,7 +4027,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "item_" def_%cl_5_3 
 		 2: item->[] def_%cl_5_4 item[2.2,] 	 ARGS:Symbol,
 		 3: BUILDSTRING def_%cl_5_5 %cl_5_3[3.1,] %cl_5_4[3.2,] 
 		 4: 
@@ -4038,7 +4038,7 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_5_8 
+		 0: COPY TYPE_StringLiteral "class="active"" def_%cl_5_8 
 		 1: %cl_5_8->html_safe def_%cl_5_9 %cl_5_8[4.0,] 	 ARGS:
 		 2: 
 BB 5
@@ -4196,12 +4196,12 @@ BB 37
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_205 
-		 2: COPY TYPE_StringLiteral def_%cl_2_206 
+		 1: COPY TYPE_StringLiteral "dashboard" def_%cl_2_205 
+		 2: COPY TYPE_StringLiteral "search" def_%cl_2_206 
 		 3: HASH-controller-action- def_%cl_2_207 %cl_2_205[37.1,] %cl_2_206[37.2,] 
 		 4: %self->form_tag def_%cl_2_208 %self[2.0,] %cl_2_207[37.3,] 	 ARGS:%cl_2_207,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_209 
+		 6: COPY TYPE_StringLiteral "search_box_default" def_%cl_2_209 
 		 7: %self->t def_%cl_2_210 %self[37.4,2.0,] %cl_2_209[37.6,] 	 ARGS:%cl_2_209,
 		 8: ATTRASSIGN %self->search_field_default_value %cl_2_210[37.7,] 
 		 9: 
@@ -4231,26 +4231,26 @@ BB 41
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_215 
+		 1: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_2_215 
 		 2: 
 		 3: GETFIELD %self->search_field_default_value def_%cl_2_216 %self[37.8,2.0,] 
-		 4: COPY TYPE_StringLiteral def_%cl_2_217 
+		 4: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_2_217 
 		 5: BUILDSTRING def_%cl_2_218 %cl_2_215[41.1,] %cl_2_216[41.3,] %cl_2_217[41.4,] 
-		 6: COPY TYPE_StringLiteral def_%cl_2_219 
+		 6: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_2_219 
 		 7: 
 		 8: GETFIELD %self->search_field_default_value def_%cl_2_220 %self[37.8,2.0,] 
-		 9: COPY TYPE_StringLiteral def_%cl_2_221 
+		 9: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_2_221 
 		 10: BUILDSTRING def_%cl_2_222 %cl_2_219[41.6,] %cl_2_220[41.8,] %cl_2_221[41.9,] 
 		 11: HASH-onfocus-onblur- def_%cl_2_223 %cl_2_218[41.5,] %cl_2_222[41.10,] 
 		 12: ATTRASSIGN %self->search_field_attrs %cl_2_223[41.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_2_224 
+		 14: COPY TYPE_StringLiteral "search_id" def_%cl_2_224 
 		 15: GETFIELD %self->last_search def_%cl_2_225 %self[40.1,2.0,] 
 		 16: %self->h def_%cl_2_226 %self[41.12,40.1,37.8,2.0,] %cl_2_225[41.15,] 	 ARGS:%cl_2_225,
 		 17: GETFIELD %self->search_field_attrs def_%cl_2_227 %self[41.12,41.16,2.0,] 
 		 18: %self->text_field_tag def_%cl_2_228 %self[41.12,41.16,40.1,37.8,2.0,] %cl_2_224[41.14,] %cl_2_226[41.16,] %cl_2_227[41.17,] 	 ARGS:%cl_2_224,%cl_2_226,%cl_2_227,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_2_229 
+		 20: COPY TYPE_StringLiteral "go" def_%cl_2_229 
 		 21: %self->t def_%cl_2_230 %self[41.12,41.16,41.18,40.1,37.8,2.0,] %cl_2_229[41.20,] 	 ARGS:%cl_2_229,
 		 22: 
 BB 42
@@ -4278,13 +4278,13 @@ BB 45
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_235 
+		 0: COPY TYPE_StringLiteral "error" def_%cl_2_235 
 		 1: 
 BB 46
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_236 
+		 0: COPY TYPE_StringLiteral "success" def_%cl_2_236 
 		 1: COPY TYPE_PASS def_%cl_2_235 %cl_2_236[46.0,] 
 BB 47
 	outgoing: 48 49 68 
@@ -4298,13 +4298,13 @@ BB 48
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_239 
+		 0: COPY TYPE_StringLiteral "flash_error" def_%cl_2_239 
 		 1: 
 BB 49
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_240 
+		 0: COPY TYPE_StringLiteral "flash_success" def_%cl_2_240 
 		 1: COPY TYPE_PASS def_%cl_2_239 %cl_2_240[49.0,] 
 BB 50
 	outgoing: 52 68 
@@ -4335,13 +4335,13 @@ BB 53
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_248 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_248 
 		 1: 
 BB 54
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_249 
+		 0: COPY TYPE_StringLiteral "class='sidebar'" def_%cl_2_249 
 		 1: COPY TYPE_PASS def_%cl_2_248 %cl_2_249[54.0,] 
 BB 55
 	outgoing: 56 57 68 
@@ -4377,13 +4377,13 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_5 
+		 0: COPY TYPE_StringLiteral "class="ajax_action"" def_%cl_7_5 
 		 1: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_6 
+		 0: COPY TYPE_StringLiteral "class="action"" def_%cl_7_6 
 		 1: COPY TYPE_PASS def_%cl_7_5 %cl_7_6[5.0,] 
 BB 6
 	outgoing: 7 9 
@@ -4476,7 +4476,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_18 
+		 1: COPY TYPE_StringLiteral "milestones" def_%cl_8_18 
 		 2: %self->t def_%cl_8_19 %self[2.0,] %cl_8_18[7.1,] 	 ARGS:%cl_8_18,
 		 3: project->[] def_%cl_8_20 project[2.2,] 	 ARGS:Symbol,
 		 4: HASH-active_project- def_%cl_8_21 %cl_8_20[7.3,] 
@@ -4529,7 +4529,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_15 
+		 1: COPY TYPE_StringLiteral "anyone" def_%cl_9_15 
 		 2: %self->t def_%cl_9_16 %self[2.0,] %cl_9_15[5.1,] 	 ARGS:%cl_9_15,
 		 3: COPY TYPE_PASS def_%cl_9_14 %cl_9_16[5.2,] 
 BB 6
@@ -4552,7 +4552,7 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_25 
+		 1: COPY TYPE_StringLiteral "milestone_days_left" def_%cl_9_25 
 		 2: milestone->days_left def_%cl_9_26 milestone[2.2,] 	 ARGS:
 		 3: HASH-days- def_%cl_9_27 %cl_9_26[7.2,] 
 		 4: %self->t def_%cl_9_28 %self[2.0,] %cl_9_25[7.1,] %cl_9_27[7.3,] 	 ARGS:%cl_9_25,%cl_9_27,
@@ -4569,7 +4569,7 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_30 
+		 1: COPY TYPE_StringLiteral "milestone_days_late" def_%cl_9_30 
 		 2: milestone->days_late def_%cl_9_31 milestone[2.2,] 	 ARGS:
 		 3: HASH-days- def_%cl_9_32 %cl_9_31[9.2,] 
 		 4: %self->t def_%cl_9_33 %self[2.0,] %cl_9_30[9.1,] %cl_9_32[9.3,] 	 ARGS:%cl_9_30,%cl_9_32,
@@ -4586,7 +4586,7 @@ BB 11
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_35 
+		 1: COPY TYPE_StringLiteral "today" def_%cl_9_35 
 		 2: %self->t def_%cl_9_36 %self[2.0,] %cl_9_35[11.1,] 	 ARGS:%cl_9_35,
 		 3: 
 BB 12
@@ -4641,7 +4641,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_29 
+		 1: COPY TYPE_StringLiteral "tasks" def_%cl_8_29 
 		 2: %self->t def_%cl_8_30 %self[2.0,] %cl_8_29[10.1,] 	 ARGS:%cl_8_29,
 		 3: project->[] def_%cl_8_31 project[2.2,] 	 ARGS:Symbol,
 		 4: HASH-active_project- def_%cl_8_32 %cl_8_31[10.3,] 
@@ -4687,7 +4687,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_10_5 
+		 1: COPY TYPE_StringLiteral "" def_%cl_10_5 
 		 2: task->task_list_id def_%cl_10_6 task[2.2,] 	 ARGS:
 		 3: task->id def_%cl_10_7 task[6.2,2.2,] 	 ARGS:
 		 4: project->[] def_%cl_10_8 project[] 	 ARGS:Symbol,
@@ -4713,7 +4713,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_10_18 
+		 1: COPY TYPE_StringLiteral "anyone" def_%cl_10_18 
 		 2: %self->t def_%cl_10_19 %self[2.0,] %cl_10_18[8.1,] 	 ARGS:%cl_10_18,
 		 3: COPY TYPE_PASS def_%cl_10_17 %cl_10_19[8.2,] 
 BB 9
@@ -4733,7 +4733,7 @@ BB 10
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_10_25 
+		 1: COPY TYPE_StringLiteral "tasks_in_list" def_%cl_10_25 
 		 2: task->task_list def_%cl_10_26 task[2.2,] 	 ARGS:
 		 3: %cl_10_26->name def_%cl_10_27 %cl_10_26[10.2,] 	 ARGS:
 		 4: %self->h def_%cl_10_28 %self[2.0,] %cl_10_27[10.3,] 	 ARGS:%cl_10_27,
@@ -4801,7 +4801,7 @@ BB 57
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_257 
+		 1: COPY TYPE_StringLiteral "no_active_projects" def_%cl_2_257 
 		 2: %self->t def_%cl_2_258 %self[41.12,40.1,37.8,2.0,] %cl_2_257[57.1,] 	 ARGS:%cl_2_257,
 		 3: COPY TYPE_PASS def_%cl_2_256 %cl_2_258[57.2,] 
 BB 58
@@ -4817,7 +4817,7 @@ BB 59
 	outgoing: 61 68 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_261 
+		 0: COPY TYPE_StringLiteral "no_tasks_assigned_to_you" def_%cl_2_261 
 		 1: %self->t def_%cl_2_262 %self[41.12,40.1,37.8,2.0,] %cl_2_261[59.0,] 	 ARGS:%cl_2_261,
 		 2: 
 BB 60
@@ -5047,7 +5047,7 @@ BB 3
 		 3: COPY TYPE_PASS def_date %cl_1_4[3.2,] 
 		 4: 
 		 5: %cl_1_4->month def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%cl_1_6 
+		 6: COPY TYPE_StringLiteral "-" def_%cl_1_6 
 		 7: date->day def_%cl_1_7 date[3.3,] 	 ARGS:
 		 8: BUILDSTRING def_%cl_1_8 %cl_1_5[3.5,] %cl_1_6[3.6,] %cl_1_7[3.7,] 
 		 9: RETURN %cl_1_8[3.8,] %self[2.0,] 
@@ -5090,14 +5090,14 @@ BB 3
 		 2: 
 		 3: %self->page_title def_%cl_2_4 %self[3.1,2.0,] 	 ARGS:
 		 4: %self->h def_%cl_2_5 %self[3.1,3.3,2.0,] %cl_2_4[3.3,] 	 ARGS:%cl_2_4,
-		 5: COPY TYPE_StringLiteral def_%cl_2_6 
+		 5: COPY TYPE_StringLiteral " @ " def_%cl_2_6 
 		 6: (Company) def_%cl_2_7 
 		 7: %cl_2_7->owner def_%cl_2_8 %cl_2_7[3.6,] 	 ARGS:
 		 8: %cl_2_8->name def_%cl_2_9 %cl_2_8[3.7,] 	 ARGS:
 		 9: %self->h def_%cl_2_10 %self[3.1,3.3,3.4,2.0,] %cl_2_9[3.8,] 	 ARGS:%cl_2_9,
 		 10: BUILDSTRING def_%cl_2_11 %cl_2_5[3.4,] %cl_2_6[3.5,] %cl_2_10[3.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_12 
+		 12: COPY TYPE_StringLiteral "company_website" def_%cl_2_12 
 		 13: %self->stylesheet_link_tag def_%cl_2_13 %self[3.1,3.3,3.4,3.9,2.0,] %cl_2_12[3.12,] 	 ARGS:%cl_2_12,
 		 14: 
 		 15: %self->additional_stylesheets def_%cl_2_14 %self[3.1,3.3,3.4,3.9,3.13,2.0,] 	 ARGS:
@@ -5154,18 +5154,18 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_19 
+		 1: COPY TYPE_StringLiteral "application.js" def_%cl_2_19 
 		 2: %self->javascript_include_tag def_%cl_2_20 %self[2.0,] %cl_2_19[6.1,] 	 ARGS:%cl_2_19,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_21 
+		 4: COPY TYPE_StringLiteral "var LOGGED_USER_ID=" def_%cl_2_21 
 		 5: GETFIELD %self->logged_user def_%cl_2_22 %self[6.2,2.0,] 
 		 6: %cl_2_22->id def_%cl_2_23 %cl_2_22[6.5,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_2_24 
+		 7: COPY TYPE_StringLiteral ";" def_%cl_2_24 
 		 8: BUILDSTRING def_%cl_2_25 %cl_2_21[6.4,] %cl_2_23[6.6,] %cl_2_24[6.7,] 
 		 9: %self->javascript_tag def_%cl_2_26 %self[6.2,2.0,] %cl_2_25[6.8,] 	 ARGS:%cl_2_25,
 		 10: 
 		 11: %self->site_name def_%cl_2_27 %self[6.2,6.9,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_2_28 
+		 12: COPY TYPE_StringLiteral "dashboard" def_%cl_2_28 
 		 13: HASH-controller- def_%cl_2_29 %cl_2_28[6.12,] 
 		 14: %self->link_to def_%cl_2_30 %self[6.2,6.9,6.11,2.0,] %cl_2_27[6.11,] %cl_2_29[6.13,] 	 ARGS:%cl_2_27,%cl_2_29,
 		 15: 
@@ -5177,10 +5177,10 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "welcome_anonymous" def_%cl_2_33 
 		 2: %self->t def_%cl_2_34 %self[2.0,] %cl_2_33[7.1,] 	 ARGS:%cl_2_33,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_35 
+		 4: COPY TYPE_StringLiteral "login" def_%cl_2_35 
 		 5: %self->t def_%cl_2_36 %self[7.2,2.0,] %cl_2_35[7.4,] 	 ARGS:%cl_2_35,
 		 6: %self->logout_path def_%cl_2_37 %self[7.2,7.5,2.0,] 	 ARGS:
 		 7: %self->link_to def_%cl_2_38 %self[7.2,7.5,7.6,2.0,] %cl_2_36[7.5,] %cl_2_37[7.6,] 	 ARGS:%cl_2_36,%cl_2_37,
@@ -5190,7 +5190,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_39 
+		 1: COPY TYPE_StringLiteral "welcome_back" def_%cl_2_39 
 		 2: %self->user def_%cl_2_40 %self[2.0,] 	 ARGS:
 		 3: %cl_2_40->display_name def_%cl_2_41 %cl_2_40[8.2,] 	 ARGS:
 		 4: %self->h def_%cl_2_42 %self[8.2,2.0,] %cl_2_41[8.3,] 	 ARGS:%cl_2_41,
@@ -5198,10 +5198,10 @@ BB 8
 		 6: %self->t def_%cl_2_44 %self[8.2,8.4,2.0,] %cl_2_39[8.1,] %cl_2_43[8.5,] 	 ARGS:%cl_2_39,%cl_2_43,
 		 7: %cl_2_44->html_safe def_%cl_2_45 %cl_2_44[8.6,] 	 ARGS:
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_2_46 
+		 9: COPY TYPE_StringLiteral "logout" def_%cl_2_46 
 		 10: %self->t def_%cl_2_47 %self[8.2,8.4,8.6,2.0,] %cl_2_46[8.9,] 	 ARGS:%cl_2_46,
 		 11: %self->logout_path def_%cl_2_48 %self[8.2,8.4,8.6,8.10,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_2_49 
+		 12: COPY TYPE_StringLiteral "are_you_sure_logout" def_%cl_2_49 
 		 13: %self->t def_%cl_2_50 %self[8.2,8.4,8.6,8.10,8.11,2.0,] %cl_2_49[8.12,] 	 ARGS:%cl_2_49,
 		 14: HASH-confirm- def_%cl_2_51 %cl_2_50[8.13,] 
 		 15: %self->link_to def_%cl_2_52 %self[8.2,8.4,8.6,8.10,8.11,8.13,2.0,] %cl_2_47[8.10,] %cl_2_48[8.11,] %cl_2_51[8.14,] 	 ARGS:%cl_2_47,%cl_2_48,%cl_2_51,
@@ -5218,30 +5218,30 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_55 
+		 0: COPY TYPE_StringLiteral "none" def_%cl_2_55 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_56 
+		 0: COPY TYPE_StringLiteral "block" def_%cl_2_56 
 		 1: COPY TYPE_PASS def_%cl_2_55 %cl_2_56[11.0,] 
 BB 12
 	outgoing: 13 14 68 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_57 
+		 1: COPY TYPE_StringLiteral "running_times" def_%cl_2_57 
 		 2: GETFIELD %self->running_times def_%cl_2_58 %self[2.0,] 
 		 3: %cl_2_58->size def_%cl_2_59 %cl_2_58[12.2,] 	 ARGS:
 		 4: HASH-count- def_%cl_2_60 %cl_2_59[12.3,] 
 		 5: %self->t def_%cl_2_61 %self[2.0,] %cl_2_57[12.1,] %cl_2_60[12.4,] 	 ARGS:%cl_2_57,%cl_2_60,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_62 
-		 8: COPY TYPE_StringLiteral def_%cl_2_63 
-		 9: COPY TYPE_StringLiteral def_%cl_2_64 
-		 10: COPY TYPE_StringLiteral def_%cl_2_65 
-		 11: COPY TYPE_StringLiteral def_%cl_2_66 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_62 
+		 8: COPY TYPE_StringLiteral "" def_%cl_2_63 
+		 9: COPY TYPE_StringLiteral "running_times" def_%cl_2_64 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_65 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_66 
 		 12: HASH-id-class-title- def_%cl_2_67 %cl_2_64[12.9,] %cl_2_65[12.10,] %cl_2_66[12.11,] 
 		 13: %self->render_icon def_%cl_2_68 %self[12.5,2.0,] %cl_2_62[12.7,] %cl_2_63[12.8,] %cl_2_67[12.12,] 	 ARGS:%cl_2_62,%cl_2_63,%cl_2_67,
 		 14: 
@@ -5259,16 +5259,16 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_72 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_2_72 
 		 2: %self->t def_%cl_2_73 %self[2.0,] %cl_2_72[14.1,] 	 ARGS:%cl_2_72,
 		 3: GETFIELD %self->logged_user def_%cl_2_74 %self[14.2,2.0,] 
 		 4: %self->link_to def_%cl_2_75 %self[14.2,2.0,] %cl_2_73[14.2,] %cl_2_74[14.3,] 	 ARGS:%cl_2_73,%cl_2_74,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_76 
-		 7: COPY TYPE_StringLiteral def_%cl_2_77 
-		 8: COPY TYPE_StringLiteral def_%cl_2_78 
-		 9: COPY TYPE_StringLiteral def_%cl_2_79 
-		 10: COPY TYPE_StringLiteral def_%cl_2_80 
+		 6: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_76 
+		 7: COPY TYPE_StringLiteral "" def_%cl_2_77 
+		 8: COPY TYPE_StringLiteral "account_more" def_%cl_2_78 
+		 9: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_79 
+		 10: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_80 
 		 11: HASH-id-class-title- def_%cl_2_81 %cl_2_78[14.8,] %cl_2_79[14.9,] %cl_2_80[14.10,] 
 		 12: %self->render_icon def_%cl_2_82 %self[14.2,14.4,2.0,] %cl_2_76[14.6,] %cl_2_77[14.7,] %cl_2_81[14.11,] 	 ARGS:%cl_2_76,%cl_2_77,%cl_2_81,
 		 13: COPY TYPE_PASS def_%cl_2_71 %cl_2_82[14.12,] 
@@ -5291,18 +5291,18 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_86 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_2_86 
 		 2: %self->t def_%cl_2_87 %self[2.0,] %cl_2_86[17.1,] 	 ARGS:%cl_2_86,
-		 3: COPY TYPE_StringLiteral def_%cl_2_88 
-		 4: COPY TYPE_StringLiteral def_%cl_2_89 
+		 3: COPY TYPE_StringLiteral "dashboard" def_%cl_2_88 
+		 4: COPY TYPE_StringLiteral "my_projects" def_%cl_2_89 
 		 5: HASH-controller-action- def_%cl_2_90 %cl_2_88[17.3,] %cl_2_89[17.4,] 
 		 6: %self->link_to def_%cl_2_91 %self[17.2,2.0,] %cl_2_87[17.2,] %cl_2_90[17.5,] 	 ARGS:%cl_2_87,%cl_2_90,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_2_92 
-		 9: COPY TYPE_StringLiteral def_%cl_2_93 
-		 10: COPY TYPE_StringLiteral def_%cl_2_94 
-		 11: COPY TYPE_StringLiteral def_%cl_2_95 
-		 12: COPY TYPE_StringLiteral def_%cl_2_96 
+		 8: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_92 
+		 9: COPY TYPE_StringLiteral "" def_%cl_2_93 
+		 10: COPY TYPE_StringLiteral "projects_more" def_%cl_2_94 
+		 11: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_95 
+		 12: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_96 
 		 13: HASH-id-class-title- def_%cl_2_97 %cl_2_94[17.10,] %cl_2_95[17.11,] %cl_2_96[17.12,] 
 		 14: %self->render_icon def_%cl_2_98 %self[17.2,17.6,2.0,] %cl_2_92[17.8,] %cl_2_93[17.9,] %cl_2_97[17.13,] 	 ARGS:%cl_2_92,%cl_2_93,%cl_2_97,
 		 15: COPY TYPE_PASS def_%cl_2_85 %cl_2_98[17.14,] 
@@ -5319,17 +5319,17 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_101 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_2_101 
 		 2: %self->t def_%cl_2_102 %self[2.0,] %cl_2_101[19.1,] 	 ARGS:%cl_2_101,
-		 3: COPY TYPE_StringLiteral def_%cl_2_103 
+		 3: COPY TYPE_StringLiteral "administration" def_%cl_2_103 
 		 4: HASH-controller- def_%cl_2_104 %cl_2_103[19.3,] 
 		 5: %self->link_to def_%cl_2_105 %self[19.2,2.0,] %cl_2_102[19.2,] %cl_2_104[19.4,] 	 ARGS:%cl_2_102,%cl_2_104,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_106 
-		 8: COPY TYPE_StringLiteral def_%cl_2_107 
-		 9: COPY TYPE_StringLiteral def_%cl_2_108 
-		 10: COPY TYPE_StringLiteral def_%cl_2_109 
-		 11: COPY TYPE_StringLiteral def_%cl_2_110 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_106 
+		 8: COPY TYPE_StringLiteral "" def_%cl_2_107 
+		 9: COPY TYPE_StringLiteral "administration_more" def_%cl_2_108 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_109 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_110 
 		 12: HASH-id-class-title- def_%cl_2_111 %cl_2_108[19.9,] %cl_2_109[19.10,] %cl_2_110[19.11,] 
 		 13: %self->render_icon def_%cl_2_112 %self[19.2,19.5,2.0,] %cl_2_106[19.7,] %cl_2_107[19.8,] %cl_2_111[19.12,] 	 ARGS:%cl_2_106,%cl_2_107,%cl_2_111,
 		 14: 
@@ -5357,10 +5357,10 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_116 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_2_116 
 		 2: %self->t def_%cl_2_117 %self[2.0,] %cl_2_116[23.1,] 	 ARGS:%cl_2_116,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_118 
+		 4: COPY TYPE_StringLiteral "edit_profile" def_%cl_2_118 
 		 5: %self->t def_%cl_2_119 %self[23.2,2.0,] %cl_2_118[23.4,] 	 ARGS:%cl_2_118,
 		 6: %self->user def_%cl_2_120 %self[23.2,23.5,2.0,] 	 ARGS:
 		 7: %cl_2_120->id def_%cl_2_121 %cl_2_120[23.6,] 	 ARGS:
@@ -5368,7 +5368,7 @@ BB 23
 		 9: %self->edit_user_path def_%cl_2_123 %self[23.2,23.5,23.6,2.0,] %cl_2_122[23.8,] 	 ARGS:%cl_2_122,
 		 10: %self->link_to def_%cl_2_124 %self[23.2,23.5,23.6,23.9,2.0,] %cl_2_119[23.5,] %cl_2_123[23.9,] 	 ARGS:%cl_2_119,%cl_2_123,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_125 
+		 12: COPY TYPE_StringLiteral "update_avatar" def_%cl_2_125 
 		 13: %self->t def_%cl_2_126 %self[23.2,23.5,23.6,23.9,23.10,2.0,] %cl_2_125[23.12,] 	 ARGS:%cl_2_125,
 		 14: %self->user def_%cl_2_127 %self[23.2,23.5,23.6,23.9,23.10,23.13,2.0,] 	 ARGS:
 		 15: %cl_2_127->id def_%cl_2_128 %cl_2_127[23.14,] 	 ARGS:
@@ -5376,20 +5376,20 @@ BB 23
 		 17: %self->avatar_user_path def_%cl_2_130 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,2.0,] %cl_2_129[23.16,] 	 ARGS:%cl_2_129,
 		 18: %self->link_to def_%cl_2_131 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,2.0,] %cl_2_126[23.13,] %cl_2_130[23.17,] 	 ARGS:%cl_2_126,%cl_2_130,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_2_132 
+		 20: COPY TYPE_StringLiteral "userbox_more" def_%cl_2_132 
 		 21: %self->t def_%cl_2_133 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,2.0,] %cl_2_132[23.20,] 	 ARGS:%cl_2_132,
 		 22: 
-		 23: COPY TYPE_StringLiteral def_%cl_2_134 
+		 23: COPY TYPE_StringLiteral "my_projects" def_%cl_2_134 
 		 24: %self->t def_%cl_2_135 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,2.0,] %cl_2_134[23.23,] 	 ARGS:%cl_2_134,
-		 25: COPY TYPE_StringLiteral def_%cl_2_136 
-		 26: COPY TYPE_StringLiteral def_%cl_2_137 
+		 25: COPY TYPE_StringLiteral "dashboard" def_%cl_2_136 
+		 26: COPY TYPE_StringLiteral "my_projects" def_%cl_2_137 
 		 27: HASH-controller-action- def_%cl_2_138 %cl_2_136[23.25,] %cl_2_137[23.26,] 
 		 28: %self->link_to def_%cl_2_139 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,2.0,] %cl_2_135[23.24,] %cl_2_138[23.27,] 	 ARGS:%cl_2_135,%cl_2_138,
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_2_140 
+		 30: COPY TYPE_StringLiteral "my_tasks" def_%cl_2_140 
 		 31: %self->t def_%cl_2_141 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,2.0,] %cl_2_140[23.30,] 	 ARGS:%cl_2_140,
-		 32: COPY TYPE_StringLiteral def_%cl_2_142 
-		 33: COPY TYPE_StringLiteral def_%cl_2_143 
+		 32: COPY TYPE_StringLiteral "dashboard" def_%cl_2_142 
+		 33: COPY TYPE_StringLiteral "my_tasks" def_%cl_2_143 
 		 34: HASH-controller-action- def_%cl_2_144 %cl_2_142[23.32,] %cl_2_143[23.33,] 
 		 35: %self->link_to def_%cl_2_145 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,23.31,2.0,] %cl_2_141[23.31,] %cl_2_144[23.34,] 	 ARGS:%cl_2_141,%cl_2_144,
 		 36: COPY TYPE_PASS def_%cl_2_115 %cl_2_145[23.35,] 
@@ -5412,7 +5412,7 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_149 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_2_149 
 		 2: %self->t def_%cl_2_150 %self[2.0,] %cl_2_149[26.1,] 	 ARGS:%cl_2_149,
 		 3: 
 		 4: %self->projects def_%cl_2_151 %self[26.2,2.0,] 	 ARGS:
@@ -5469,21 +5469,21 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_155 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_2_155 
 		 2: %self->t def_%cl_2_156 %self[2.0,] %cl_2_155[28.1,] 	 ARGS:%cl_2_155,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_157 
+		 4: COPY TYPE_StringLiteral "company" def_%cl_2_157 
 		 5: %self->t def_%cl_2_158 %self[28.2,2.0,] %cl_2_157[28.4,] 	 ARGS:%cl_2_157,
 		 6: (Company) def_%cl_2_159 
 		 7: %cl_2_159->owner def_%cl_2_160 %cl_2_159[28.6,] 	 ARGS:
 		 8: %self->link_to def_%cl_2_161 %self[28.2,28.5,2.0,] %cl_2_158[28.5,] %cl_2_160[28.7,] 	 ARGS:%cl_2_158,%cl_2_160,
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_2_162 
+		 10: COPY TYPE_StringLiteral "members" def_%cl_2_162 
 		 11: %self->t def_%cl_2_163 %self[28.2,28.5,28.8,2.0,] %cl_2_162[28.10,] 	 ARGS:%cl_2_162,
 		 12: %self->companies_path def_%cl_2_164 %self[28.2,28.5,28.8,28.11,2.0,] 	 ARGS:
 		 13: %self->link_to def_%cl_2_165 %self[28.2,28.5,28.8,28.11,28.12,2.0,] %cl_2_163[28.11,] %cl_2_164[28.12,] 	 ARGS:%cl_2_163,%cl_2_164,
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%cl_2_166 
+		 15: COPY TYPE_StringLiteral "projects" def_%cl_2_166 
 		 16: %self->t def_%cl_2_167 %self[28.2,28.5,28.8,28.11,28.12,28.13,2.0,] %cl_2_166[28.15,] 	 ARGS:%cl_2_166,
 		 17: %self->projects_path def_%cl_2_168 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,2.0,] 	 ARGS:
 		 18: %self->link_to def_%cl_2_169 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,28.17,2.0,] %cl_2_167[28.16,] %cl_2_168[28.17,] 	 ARGS:%cl_2_167,%cl_2_168,
@@ -5508,8 +5508,8 @@ BB 30
 		 8: %cl_2_175->object_url def_%cl_2_176 %cl_2_175[30.7,] 	 ARGS:
 		 9: %self->link_to def_%cl_2_177 %self[30.1,30.4,30.6,30.7,2.0,] %cl_2_174[30.6,] %cl_2_176[30.8,] 	 ARGS:%cl_2_174,%cl_2_176,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_2_178 
-		 12: COPY TYPE_StringLiteral def_%cl_2_179 
+		 11: COPY TYPE_StringLiteral "stop" def_%cl_2_178 
+		 12: COPY TYPE_StringLiteral "stop_time" def_%cl_2_179 
 		 13: %self->t def_%cl_2_180 %self[30.1,30.4,30.6,30.7,30.9,2.0,] %cl_2_179[30.12,] 	 ARGS:%cl_2_179,
 		 14: %self->render_icon def_%cl_2_181 %self[30.1,30.4,30.6,30.7,30.9,30.13,2.0,] %cl_2_178[30.11,] %cl_2_180[30.13,] 	 ARGS:%cl_2_178,%cl_2_180,
 		 15: %self->listed def_%cl_2_182 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,2.0,] 	 ARGS:
@@ -5518,7 +5518,7 @@ BB 30
 		 18: %cl_2_184->id def_%cl_2_185 %cl_2_184[30.17,] 	 ARGS:
 		 19: HASH-active_project-id- def_%cl_2_186 %cl_2_183[30.16,] %cl_2_185[30.18,] 
 		 20: %self->stop_time_path def_%cl_2_187 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,2.0,] %cl_2_186[30.19,] 	 ARGS:%cl_2_186,
-		 21: COPY TYPE_StringLiteral def_%cl_2_188 
+		 21: COPY TYPE_StringLiteral "blank stopTime" def_%cl_2_188 
 		 22: HASH-class- def_%cl_2_189 %cl_2_188[30.21,] 
 		 23: %self->link_to def_%cl_2_190 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,30.20,2.0,] %cl_2_181[30.14,] %cl_2_187[30.20,] %cl_2_189[30.22,] 	 ARGS:%cl_2_181,%cl_2_187,%cl_2_189,
 		 24: 
@@ -5560,7 +5560,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "item_" def_%cl_5_3 
 		 2: item->[] def_%cl_5_4 item[2.2,] 	 ARGS:Symbol,
 		 3: BUILDSTRING def_%cl_5_5 %cl_5_3[3.1,] %cl_5_4[3.2,] 
 		 4: 
@@ -5571,7 +5571,7 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_5_8 
+		 0: COPY TYPE_StringLiteral "class="active"" def_%cl_5_8 
 		 1: %cl_5_8->html_safe def_%cl_5_9 %cl_5_8[4.0,] 	 ARGS:
 		 2: 
 BB 5
@@ -5729,12 +5729,12 @@ BB 37
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_205 
-		 2: COPY TYPE_StringLiteral def_%cl_2_206 
+		 1: COPY TYPE_StringLiteral "dashboard" def_%cl_2_205 
+		 2: COPY TYPE_StringLiteral "search" def_%cl_2_206 
 		 3: HASH-controller-action- def_%cl_2_207 %cl_2_205[37.1,] %cl_2_206[37.2,] 
 		 4: %self->form_tag def_%cl_2_208 %self[2.0,] %cl_2_207[37.3,] 	 ARGS:%cl_2_207,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_209 
+		 6: COPY TYPE_StringLiteral "search_box_default" def_%cl_2_209 
 		 7: %self->t def_%cl_2_210 %self[37.4,2.0,] %cl_2_209[37.6,] 	 ARGS:%cl_2_209,
 		 8: ATTRASSIGN %self->search_field_default_value %cl_2_210[37.7,] 
 		 9: 
@@ -5764,26 +5764,26 @@ BB 41
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_215 
+		 1: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_2_215 
 		 2: 
 		 3: GETFIELD %self->search_field_default_value def_%cl_2_216 %self[37.8,2.0,] 
-		 4: COPY TYPE_StringLiteral def_%cl_2_217 
+		 4: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_2_217 
 		 5: BUILDSTRING def_%cl_2_218 %cl_2_215[41.1,] %cl_2_216[41.3,] %cl_2_217[41.4,] 
-		 6: COPY TYPE_StringLiteral def_%cl_2_219 
+		 6: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_2_219 
 		 7: 
 		 8: GETFIELD %self->search_field_default_value def_%cl_2_220 %self[37.8,2.0,] 
-		 9: COPY TYPE_StringLiteral def_%cl_2_221 
+		 9: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_2_221 
 		 10: BUILDSTRING def_%cl_2_222 %cl_2_219[41.6,] %cl_2_220[41.8,] %cl_2_221[41.9,] 
 		 11: HASH-onfocus-onblur- def_%cl_2_223 %cl_2_218[41.5,] %cl_2_222[41.10,] 
 		 12: ATTRASSIGN %self->search_field_attrs %cl_2_223[41.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_2_224 
+		 14: COPY TYPE_StringLiteral "search_id" def_%cl_2_224 
 		 15: GETFIELD %self->last_search def_%cl_2_225 %self[40.1,2.0,] 
 		 16: %self->h def_%cl_2_226 %self[41.12,40.1,37.8,2.0,] %cl_2_225[41.15,] 	 ARGS:%cl_2_225,
 		 17: GETFIELD %self->search_field_attrs def_%cl_2_227 %self[41.12,41.16,2.0,] 
 		 18: %self->text_field_tag def_%cl_2_228 %self[41.12,41.16,40.1,37.8,2.0,] %cl_2_224[41.14,] %cl_2_226[41.16,] %cl_2_227[41.17,] 	 ARGS:%cl_2_224,%cl_2_226,%cl_2_227,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_2_229 
+		 20: COPY TYPE_StringLiteral "go" def_%cl_2_229 
 		 21: %self->t def_%cl_2_230 %self[41.12,41.16,41.18,40.1,37.8,2.0,] %cl_2_229[41.20,] 	 ARGS:%cl_2_229,
 		 22: 
 BB 42
@@ -5811,13 +5811,13 @@ BB 45
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_235 
+		 0: COPY TYPE_StringLiteral "error" def_%cl_2_235 
 		 1: 
 BB 46
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_236 
+		 0: COPY TYPE_StringLiteral "success" def_%cl_2_236 
 		 1: COPY TYPE_PASS def_%cl_2_235 %cl_2_236[46.0,] 
 BB 47
 	outgoing: 48 49 68 
@@ -5831,13 +5831,13 @@ BB 48
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_239 
+		 0: COPY TYPE_StringLiteral "flash_error" def_%cl_2_239 
 		 1: 
 BB 49
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_240 
+		 0: COPY TYPE_StringLiteral "flash_success" def_%cl_2_240 
 		 1: COPY TYPE_PASS def_%cl_2_239 %cl_2_240[49.0,] 
 BB 50
 	outgoing: 52 68 
@@ -5868,13 +5868,13 @@ BB 53
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_248 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_248 
 		 1: 
 BB 54
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_249 
+		 0: COPY TYPE_StringLiteral "class='sidebar'" def_%cl_2_249 
 		 1: COPY TYPE_PASS def_%cl_2_248 %cl_2_249[54.0,] 
 BB 55
 	outgoing: 56 60 68 
@@ -5910,13 +5910,13 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_5 
+		 0: COPY TYPE_StringLiteral "class="ajax_action"" def_%cl_7_5 
 		 1: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_6 
+		 0: COPY TYPE_StringLiteral "class="action"" def_%cl_7_6 
 		 1: COPY TYPE_PASS def_%cl_7_5 %cl_7_6[5.0,] 
 BB 6
 	outgoing: 7 9 
@@ -5950,7 +5950,7 @@ BB 56
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_255 
+		 1: COPY TYPE_StringLiteral "late_milestones" def_%cl_2_255 
 		 2: %self->t def_%cl_2_256 %self[41.12,40.1,37.8,2.0,] %cl_2_255[56.1,] 	 ARGS:%cl_2_255,
 		 3: 
 		 4: GETFIELD %self->late_milestones def_%cl_2_257 %self[56.2,2.0,] 
@@ -5983,12 +5983,12 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_3 
+		 1: COPY TYPE_StringLiteral "milestone_days_late" def_%cl_8_3 
 		 2: milestone->days_late def_%cl_8_4 milestone[2.2,] 	 ARGS:
 		 3: HASH-days- def_%cl_8_5 %cl_8_4[3.2,] 
 		 4: %self->t def_%cl_8_6 %self[2.0,] %cl_8_3[3.1,] %cl_8_5[3.3,] 	 ARGS:%cl_8_3,%cl_8_5,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_8_7 
+		 6: COPY TYPE_StringLiteral "milestone_in" def_%cl_8_7 
 		 7: milestone->name def_%cl_8_8 milestone[3.2,2.2,] 	 ARGS:
 		 8: %self->h def_%cl_8_9 %self[3.4,2.0,] %cl_8_8[3.7,] 	 ARGS:%cl_8_8,
 		 9: milestone->id def_%cl_8_10 milestone[3.2,3.7,2.2,] 	 ARGS:
@@ -6065,7 +6065,7 @@ BB 61
 		 4: 
 		 5: GETFIELD %self->date_start def_%cl_2_264 %self[2.0,] 
 		 6: GETFIELD %self->date_end def_%cl_2_265 %self[2.0,] 
-		 7: COPY TYPE_StringLiteral def_%cl_2_266 
+		 7: COPY TYPE_StringLiteral "monthsCal" def_%cl_2_266 
 		 8: (Rails) def_%cl_2_267 
 		 9: %cl_2_267->configuration def_%cl_2_268 %cl_2_267[61.8,] 	 ARGS:
 		 10: %cl_2_268->first_day_of_week def_%cl_2_269 %cl_2_268[61.9,] 	 ARGS:
@@ -6097,15 +6097,15 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_9_4 
+		 1: COPY TYPE_StringLiteral "today" def_%cl_9_4 
 		 2: %self->t def_%cl_9_5 %self[2.0,] %cl_9_4[4.1,] 	 ARGS:%cl_9_4,
 		 3: GETFIELD %self->milestones def_%cl_9_6 %self[4.2,2.0,] 
 		 4: date->month def_%cl_9_7 date[2.2,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%cl_9_8 
+		 5: COPY TYPE_StringLiteral "-" def_%cl_9_8 
 		 6: date->day def_%cl_9_9 date[4.4,2.2,] 	 ARGS:
 		 7: BUILDSTRING def_%cl_9_10 %cl_9_7[4.4,] %cl_9_8[4.5,] %cl_9_9[4.6,] 
 		 8: %cl_9_6->[] def_%cl_9_11 %cl_9_6[4.3,] %cl_9_10[4.7,] 	 ARGS:%cl_9_10,
-		 9: COPY TYPE_StringLiteral def_%cl_9_12 
+		 9: COPY TYPE_StringLiteral "today" def_%cl_9_12 
 		 10: %self->calendar_block def_%cl_9_13 %self[4.2,2.0,] %cl_9_5[4.2,] %cl_9_11[4.8,] %cl_9_12[4.9,] 	 ARGS:%cl_9_5,%cl_9_11,%cl_9_12,Boolean,
 		 11: 
 BB 5
@@ -6116,11 +6116,11 @@ BB 5
 		 1: date->day def_%cl_9_14 date[2.2,] 	 ARGS:
 		 2: GETFIELD %self->milestones def_%cl_9_15 %self[2.0,] 
 		 3: date->month def_%cl_9_16 date[5.1,2.2,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_9_17 
+		 4: COPY TYPE_StringLiteral "-" def_%cl_9_17 
 		 5: date->day def_%cl_9_18 date[5.1,5.3,2.2,] 	 ARGS:
 		 6: BUILDSTRING def_%cl_9_19 %cl_9_16[5.3,] %cl_9_17[5.4,] %cl_9_18[5.5,] 
 		 7: %cl_9_15->[] def_%cl_9_20 %cl_9_15[5.2,] %cl_9_19[5.6,] 	 ARGS:%cl_9_19,
-		 8: COPY TYPE_StringLiteral def_%cl_9_21 
+		 8: COPY TYPE_StringLiteral "day" def_%cl_9_21 
 		 9: %self->calendar_block def_%cl_9_22 %self[2.0,] %cl_9_14[5.1,] %cl_9_20[5.7,] %cl_9_21[5.8,] 	 ARGS:%cl_9_14,%cl_9_20,%cl_9_21,
 		 10: RETURN %cl_9_22[5.9,] %self[5.9,2.0,] 
 BB 6
@@ -6245,7 +6245,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (I18n) def_%v_7 
-		 2: COPY TYPE_StringLiteral def_%v_8 
+		 2: COPY TYPE_StringLiteral "search_box_default" def_%v_8 
 		 3: %v_7->t def_%v_9 %v_7[3.1,] %v_8[3.2,] 	 ARGS:%v_8,
 		 4: ATTRASSIGN %self->last_search %v_9[3.3,] 
 		 5: 
@@ -6363,7 +6363,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_44 
+		 1: COPY TYPE_StringLiteral "projects/search_sidebar" def_%v_44 
 		 2: ATTRASSIGN %self->content_for_sidebar %v_44[8.1,] 
 		 3: 
 		 4: %self->ruby_code_from_view def_%v_45 %self[8.2,7.12,7.13,7.16,7.19,7.26,3.4,3.7,3.10,2.0,2.8,4.2,] 	 ARGS:
@@ -6391,14 +6391,14 @@ BB 3
 		 2: 
 		 3: %self->page_title def_%cl_2_4 %self[3.1,2.0,] 	 ARGS:
 		 4: %self->h def_%cl_2_5 %self[3.1,3.3,2.0,] %cl_2_4[3.3,] 	 ARGS:%cl_2_4,
-		 5: COPY TYPE_StringLiteral def_%cl_2_6 
+		 5: COPY TYPE_StringLiteral " @ " def_%cl_2_6 
 		 6: (Company) def_%cl_2_7 
 		 7: %cl_2_7->owner def_%cl_2_8 %cl_2_7[3.6,] 	 ARGS:
 		 8: %cl_2_8->name def_%cl_2_9 %cl_2_8[3.7,] 	 ARGS:
 		 9: %self->h def_%cl_2_10 %self[3.1,3.3,3.4,2.0,] %cl_2_9[3.8,] 	 ARGS:%cl_2_9,
 		 10: BUILDSTRING def_%cl_2_11 %cl_2_5[3.4,] %cl_2_6[3.5,] %cl_2_10[3.9,] 
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_12 
+		 12: COPY TYPE_StringLiteral "company_website" def_%cl_2_12 
 		 13: %self->stylesheet_link_tag def_%cl_2_13 %self[3.1,3.3,3.4,3.9,2.0,] %cl_2_12[3.12,] 	 ARGS:%cl_2_12,
 		 14: 
 		 15: %self->additional_stylesheets def_%cl_2_14 %self[3.1,3.3,3.4,3.9,3.13,2.0,] 	 ARGS:
@@ -6455,18 +6455,18 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_19 
+		 1: COPY TYPE_StringLiteral "application.js" def_%cl_2_19 
 		 2: %self->javascript_include_tag def_%cl_2_20 %self[2.0,] %cl_2_19[6.1,] 	 ARGS:%cl_2_19,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_21 
+		 4: COPY TYPE_StringLiteral "var LOGGED_USER_ID=" def_%cl_2_21 
 		 5: GETFIELD %self->logged_user def_%cl_2_22 %self[6.2,2.0,] 
 		 6: %cl_2_22->id def_%cl_2_23 %cl_2_22[6.5,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%cl_2_24 
+		 7: COPY TYPE_StringLiteral ";" def_%cl_2_24 
 		 8: BUILDSTRING def_%cl_2_25 %cl_2_21[6.4,] %cl_2_23[6.6,] %cl_2_24[6.7,] 
 		 9: %self->javascript_tag def_%cl_2_26 %self[6.2,2.0,] %cl_2_25[6.8,] 	 ARGS:%cl_2_25,
 		 10: 
 		 11: %self->site_name def_%cl_2_27 %self[6.2,6.9,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_2_28 
+		 12: COPY TYPE_StringLiteral "dashboard" def_%cl_2_28 
 		 13: HASH-controller- def_%cl_2_29 %cl_2_28[6.12,] 
 		 14: %self->link_to def_%cl_2_30 %self[6.2,6.9,6.11,2.0,] %cl_2_27[6.11,] %cl_2_29[6.13,] 	 ARGS:%cl_2_27,%cl_2_29,
 		 15: 
@@ -6478,10 +6478,10 @@ BB 7
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "welcome_anonymous" def_%cl_2_33 
 		 2: %self->t def_%cl_2_34 %self[2.0,] %cl_2_33[7.1,] 	 ARGS:%cl_2_33,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_35 
+		 4: COPY TYPE_StringLiteral "login" def_%cl_2_35 
 		 5: %self->t def_%cl_2_36 %self[7.2,2.0,] %cl_2_35[7.4,] 	 ARGS:%cl_2_35,
 		 6: %self->logout_path def_%cl_2_37 %self[7.2,7.5,2.0,] 	 ARGS:
 		 7: %self->link_to def_%cl_2_38 %self[7.2,7.5,7.6,2.0,] %cl_2_36[7.5,] %cl_2_37[7.6,] 	 ARGS:%cl_2_36,%cl_2_37,
@@ -6491,7 +6491,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_39 
+		 1: COPY TYPE_StringLiteral "welcome_back" def_%cl_2_39 
 		 2: %self->user def_%cl_2_40 %self[2.0,] 	 ARGS:
 		 3: %cl_2_40->display_name def_%cl_2_41 %cl_2_40[8.2,] 	 ARGS:
 		 4: %self->h def_%cl_2_42 %self[8.2,2.0,] %cl_2_41[8.3,] 	 ARGS:%cl_2_41,
@@ -6499,10 +6499,10 @@ BB 8
 		 6: %self->t def_%cl_2_44 %self[8.2,8.4,2.0,] %cl_2_39[8.1,] %cl_2_43[8.5,] 	 ARGS:%cl_2_39,%cl_2_43,
 		 7: %cl_2_44->html_safe def_%cl_2_45 %cl_2_44[8.6,] 	 ARGS:
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%cl_2_46 
+		 9: COPY TYPE_StringLiteral "logout" def_%cl_2_46 
 		 10: %self->t def_%cl_2_47 %self[8.2,8.4,8.6,2.0,] %cl_2_46[8.9,] 	 ARGS:%cl_2_46,
 		 11: %self->logout_path def_%cl_2_48 %self[8.2,8.4,8.6,8.10,2.0,] 	 ARGS:
-		 12: COPY TYPE_StringLiteral def_%cl_2_49 
+		 12: COPY TYPE_StringLiteral "are_you_sure_logout" def_%cl_2_49 
 		 13: %self->t def_%cl_2_50 %self[8.2,8.4,8.6,8.10,8.11,2.0,] %cl_2_49[8.12,] 	 ARGS:%cl_2_49,
 		 14: HASH-confirm- def_%cl_2_51 %cl_2_50[8.13,] 
 		 15: %self->link_to def_%cl_2_52 %self[8.2,8.4,8.6,8.10,8.11,8.13,2.0,] %cl_2_47[8.10,] %cl_2_48[8.11,] %cl_2_51[8.14,] 	 ARGS:%cl_2_47,%cl_2_48,%cl_2_51,
@@ -6519,30 +6519,30 @@ BB 10
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_55 
+		 0: COPY TYPE_StringLiteral "none" def_%cl_2_55 
 		 1: 
 BB 11
 	outgoing: 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_56 
+		 0: COPY TYPE_StringLiteral "block" def_%cl_2_56 
 		 1: COPY TYPE_PASS def_%cl_2_55 %cl_2_56[11.0,] 
 BB 12
 	outgoing: 13 14 71 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_57 
+		 1: COPY TYPE_StringLiteral "running_times" def_%cl_2_57 
 		 2: GETFIELD %self->running_times def_%cl_2_58 %self[2.0,] 
 		 3: %cl_2_58->size def_%cl_2_59 %cl_2_58[12.2,] 	 ARGS:
 		 4: HASH-count- def_%cl_2_60 %cl_2_59[12.3,] 
 		 5: %self->t def_%cl_2_61 %self[2.0,] %cl_2_57[12.1,] %cl_2_60[12.4,] 	 ARGS:%cl_2_57,%cl_2_60,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_62 
-		 8: COPY TYPE_StringLiteral def_%cl_2_63 
-		 9: COPY TYPE_StringLiteral def_%cl_2_64 
-		 10: COPY TYPE_StringLiteral def_%cl_2_65 
-		 11: COPY TYPE_StringLiteral def_%cl_2_66 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_62 
+		 8: COPY TYPE_StringLiteral "" def_%cl_2_63 
+		 9: COPY TYPE_StringLiteral "running_times" def_%cl_2_64 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_65 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_66 
 		 12: HASH-id-class-title- def_%cl_2_67 %cl_2_64[12.9,] %cl_2_65[12.10,] %cl_2_66[12.11,] 
 		 13: %self->render_icon def_%cl_2_68 %self[12.5,2.0,] %cl_2_62[12.7,] %cl_2_63[12.8,] %cl_2_67[12.12,] 	 ARGS:%cl_2_62,%cl_2_63,%cl_2_67,
 		 14: 
@@ -6560,16 +6560,16 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_72 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_2_72 
 		 2: %self->t def_%cl_2_73 %self[2.0,] %cl_2_72[14.1,] 	 ARGS:%cl_2_72,
 		 3: GETFIELD %self->logged_user def_%cl_2_74 %self[14.2,2.0,] 
 		 4: %self->link_to def_%cl_2_75 %self[14.2,2.0,] %cl_2_73[14.2,] %cl_2_74[14.3,] 	 ARGS:%cl_2_73,%cl_2_74,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_76 
-		 7: COPY TYPE_StringLiteral def_%cl_2_77 
-		 8: COPY TYPE_StringLiteral def_%cl_2_78 
-		 9: COPY TYPE_StringLiteral def_%cl_2_79 
-		 10: COPY TYPE_StringLiteral def_%cl_2_80 
+		 6: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_76 
+		 7: COPY TYPE_StringLiteral "" def_%cl_2_77 
+		 8: COPY TYPE_StringLiteral "account_more" def_%cl_2_78 
+		 9: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_79 
+		 10: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_80 
 		 11: HASH-id-class-title- def_%cl_2_81 %cl_2_78[14.8,] %cl_2_79[14.9,] %cl_2_80[14.10,] 
 		 12: %self->render_icon def_%cl_2_82 %self[14.2,14.4,2.0,] %cl_2_76[14.6,] %cl_2_77[14.7,] %cl_2_81[14.11,] 	 ARGS:%cl_2_76,%cl_2_77,%cl_2_81,
 		 13: COPY TYPE_PASS def_%cl_2_71 %cl_2_82[14.12,] 
@@ -6592,18 +6592,18 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_86 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_2_86 
 		 2: %self->t def_%cl_2_87 %self[2.0,] %cl_2_86[17.1,] 	 ARGS:%cl_2_86,
-		 3: COPY TYPE_StringLiteral def_%cl_2_88 
-		 4: COPY TYPE_StringLiteral def_%cl_2_89 
+		 3: COPY TYPE_StringLiteral "dashboard" def_%cl_2_88 
+		 4: COPY TYPE_StringLiteral "my_projects" def_%cl_2_89 
 		 5: HASH-controller-action- def_%cl_2_90 %cl_2_88[17.3,] %cl_2_89[17.4,] 
 		 6: %self->link_to def_%cl_2_91 %self[17.2,2.0,] %cl_2_87[17.2,] %cl_2_90[17.5,] 	 ARGS:%cl_2_87,%cl_2_90,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_2_92 
-		 9: COPY TYPE_StringLiteral def_%cl_2_93 
-		 10: COPY TYPE_StringLiteral def_%cl_2_94 
-		 11: COPY TYPE_StringLiteral def_%cl_2_95 
-		 12: COPY TYPE_StringLiteral def_%cl_2_96 
+		 8: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_92 
+		 9: COPY TYPE_StringLiteral "" def_%cl_2_93 
+		 10: COPY TYPE_StringLiteral "projects_more" def_%cl_2_94 
+		 11: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_95 
+		 12: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_96 
 		 13: HASH-id-class-title- def_%cl_2_97 %cl_2_94[17.10,] %cl_2_95[17.11,] %cl_2_96[17.12,] 
 		 14: %self->render_icon def_%cl_2_98 %self[17.2,17.6,2.0,] %cl_2_92[17.8,] %cl_2_93[17.9,] %cl_2_97[17.13,] 	 ARGS:%cl_2_92,%cl_2_93,%cl_2_97,
 		 15: COPY TYPE_PASS def_%cl_2_85 %cl_2_98[17.14,] 
@@ -6620,17 +6620,17 @@ BB 19
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_101 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_2_101 
 		 2: %self->t def_%cl_2_102 %self[2.0,] %cl_2_101[19.1,] 	 ARGS:%cl_2_101,
-		 3: COPY TYPE_StringLiteral def_%cl_2_103 
+		 3: COPY TYPE_StringLiteral "administration" def_%cl_2_103 
 		 4: HASH-controller- def_%cl_2_104 %cl_2_103[19.3,] 
 		 5: %self->link_to def_%cl_2_105 %self[19.2,2.0,] %cl_2_102[19.2,] %cl_2_104[19.4,] 	 ARGS:%cl_2_102,%cl_2_104,
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_106 
-		 8: COPY TYPE_StringLiteral def_%cl_2_107 
-		 9: COPY TYPE_StringLiteral def_%cl_2_108 
-		 10: COPY TYPE_StringLiteral def_%cl_2_109 
-		 11: COPY TYPE_StringLiteral def_%cl_2_110 
+		 7: COPY TYPE_StringLiteral "bullet_drop_down" def_%cl_2_106 
+		 8: COPY TYPE_StringLiteral "" def_%cl_2_107 
+		 9: COPY TYPE_StringLiteral "administration_more" def_%cl_2_108 
+		 10: COPY TYPE_StringLiteral "PopupMenuWidgetAttachTo" def_%cl_2_109 
+		 11: COPY TYPE_StringLiteral "Enable javascript" def_%cl_2_110 
 		 12: HASH-id-class-title- def_%cl_2_111 %cl_2_108[19.9,] %cl_2_109[19.10,] %cl_2_110[19.11,] 
 		 13: %self->render_icon def_%cl_2_112 %self[19.2,19.5,2.0,] %cl_2_106[19.7,] %cl_2_107[19.8,] %cl_2_111[19.12,] 	 ARGS:%cl_2_106,%cl_2_107,%cl_2_111,
 		 14: 
@@ -6658,10 +6658,10 @@ BB 23
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_116 
+		 1: COPY TYPE_StringLiteral "account" def_%cl_2_116 
 		 2: %self->t def_%cl_2_117 %self[2.0,] %cl_2_116[23.1,] 	 ARGS:%cl_2_116,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_118 
+		 4: COPY TYPE_StringLiteral "edit_profile" def_%cl_2_118 
 		 5: %self->t def_%cl_2_119 %self[23.2,2.0,] %cl_2_118[23.4,] 	 ARGS:%cl_2_118,
 		 6: %self->user def_%cl_2_120 %self[23.2,23.5,2.0,] 	 ARGS:
 		 7: %cl_2_120->id def_%cl_2_121 %cl_2_120[23.6,] 	 ARGS:
@@ -6669,7 +6669,7 @@ BB 23
 		 9: %self->edit_user_path def_%cl_2_123 %self[23.2,23.5,23.6,2.0,] %cl_2_122[23.8,] 	 ARGS:%cl_2_122,
 		 10: %self->link_to def_%cl_2_124 %self[23.2,23.5,23.6,23.9,2.0,] %cl_2_119[23.5,] %cl_2_123[23.9,] 	 ARGS:%cl_2_119,%cl_2_123,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_125 
+		 12: COPY TYPE_StringLiteral "update_avatar" def_%cl_2_125 
 		 13: %self->t def_%cl_2_126 %self[23.2,23.5,23.6,23.9,23.10,2.0,] %cl_2_125[23.12,] 	 ARGS:%cl_2_125,
 		 14: %self->user def_%cl_2_127 %self[23.2,23.5,23.6,23.9,23.10,23.13,2.0,] 	 ARGS:
 		 15: %cl_2_127->id def_%cl_2_128 %cl_2_127[23.14,] 	 ARGS:
@@ -6677,20 +6677,20 @@ BB 23
 		 17: %self->avatar_user_path def_%cl_2_130 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,2.0,] %cl_2_129[23.16,] 	 ARGS:%cl_2_129,
 		 18: %self->link_to def_%cl_2_131 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,2.0,] %cl_2_126[23.13,] %cl_2_130[23.17,] 	 ARGS:%cl_2_126,%cl_2_130,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_2_132 
+		 20: COPY TYPE_StringLiteral "userbox_more" def_%cl_2_132 
 		 21: %self->t def_%cl_2_133 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,2.0,] %cl_2_132[23.20,] 	 ARGS:%cl_2_132,
 		 22: 
-		 23: COPY TYPE_StringLiteral def_%cl_2_134 
+		 23: COPY TYPE_StringLiteral "my_projects" def_%cl_2_134 
 		 24: %self->t def_%cl_2_135 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,2.0,] %cl_2_134[23.23,] 	 ARGS:%cl_2_134,
-		 25: COPY TYPE_StringLiteral def_%cl_2_136 
-		 26: COPY TYPE_StringLiteral def_%cl_2_137 
+		 25: COPY TYPE_StringLiteral "dashboard" def_%cl_2_136 
+		 26: COPY TYPE_StringLiteral "my_projects" def_%cl_2_137 
 		 27: HASH-controller-action- def_%cl_2_138 %cl_2_136[23.25,] %cl_2_137[23.26,] 
 		 28: %self->link_to def_%cl_2_139 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,2.0,] %cl_2_135[23.24,] %cl_2_138[23.27,] 	 ARGS:%cl_2_135,%cl_2_138,
 		 29: 
-		 30: COPY TYPE_StringLiteral def_%cl_2_140 
+		 30: COPY TYPE_StringLiteral "my_tasks" def_%cl_2_140 
 		 31: %self->t def_%cl_2_141 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,2.0,] %cl_2_140[23.30,] 	 ARGS:%cl_2_140,
-		 32: COPY TYPE_StringLiteral def_%cl_2_142 
-		 33: COPY TYPE_StringLiteral def_%cl_2_143 
+		 32: COPY TYPE_StringLiteral "dashboard" def_%cl_2_142 
+		 33: COPY TYPE_StringLiteral "my_tasks" def_%cl_2_143 
 		 34: HASH-controller-action- def_%cl_2_144 %cl_2_142[23.32,] %cl_2_143[23.33,] 
 		 35: %self->link_to def_%cl_2_145 %self[23.2,23.5,23.6,23.9,23.10,23.13,23.14,23.17,23.18,23.21,23.24,23.28,23.31,2.0,] %cl_2_141[23.31,] %cl_2_144[23.34,] 	 ARGS:%cl_2_141,%cl_2_144,
 		 36: COPY TYPE_PASS def_%cl_2_115 %cl_2_145[23.35,] 
@@ -6713,7 +6713,7 @@ BB 26
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_149 
+		 1: COPY TYPE_StringLiteral "projects" def_%cl_2_149 
 		 2: %self->t def_%cl_2_150 %self[2.0,] %cl_2_149[26.1,] 	 ARGS:%cl_2_149,
 		 3: 
 		 4: %self->projects def_%cl_2_151 %self[26.2,2.0,] 	 ARGS:
@@ -6770,21 +6770,21 @@ BB 28
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_155 
+		 1: COPY TYPE_StringLiteral "administration" def_%cl_2_155 
 		 2: %self->t def_%cl_2_156 %self[2.0,] %cl_2_155[28.1,] 	 ARGS:%cl_2_155,
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_157 
+		 4: COPY TYPE_StringLiteral "company" def_%cl_2_157 
 		 5: %self->t def_%cl_2_158 %self[28.2,2.0,] %cl_2_157[28.4,] 	 ARGS:%cl_2_157,
 		 6: (Company) def_%cl_2_159 
 		 7: %cl_2_159->owner def_%cl_2_160 %cl_2_159[28.6,] 	 ARGS:
 		 8: %self->link_to def_%cl_2_161 %self[28.2,28.5,2.0,] %cl_2_158[28.5,] %cl_2_160[28.7,] 	 ARGS:%cl_2_158,%cl_2_160,
 		 9: 
-		 10: COPY TYPE_StringLiteral def_%cl_2_162 
+		 10: COPY TYPE_StringLiteral "members" def_%cl_2_162 
 		 11: %self->t def_%cl_2_163 %self[28.2,28.5,28.8,2.0,] %cl_2_162[28.10,] 	 ARGS:%cl_2_162,
 		 12: %self->companies_path def_%cl_2_164 %self[28.2,28.5,28.8,28.11,2.0,] 	 ARGS:
 		 13: %self->link_to def_%cl_2_165 %self[28.2,28.5,28.8,28.11,28.12,2.0,] %cl_2_163[28.11,] %cl_2_164[28.12,] 	 ARGS:%cl_2_163,%cl_2_164,
 		 14: 
-		 15: COPY TYPE_StringLiteral def_%cl_2_166 
+		 15: COPY TYPE_StringLiteral "projects" def_%cl_2_166 
 		 16: %self->t def_%cl_2_167 %self[28.2,28.5,28.8,28.11,28.12,28.13,2.0,] %cl_2_166[28.15,] 	 ARGS:%cl_2_166,
 		 17: %self->projects_path def_%cl_2_168 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,2.0,] 	 ARGS:
 		 18: %self->link_to def_%cl_2_169 %self[28.2,28.5,28.8,28.11,28.12,28.13,28.16,28.17,2.0,] %cl_2_167[28.16,] %cl_2_168[28.17,] 	 ARGS:%cl_2_167,%cl_2_168,
@@ -6809,8 +6809,8 @@ BB 30
 		 8: %cl_2_175->object_url def_%cl_2_176 %cl_2_175[30.7,] 	 ARGS:
 		 9: %self->link_to def_%cl_2_177 %self[30.1,30.4,30.6,30.7,2.0,] %cl_2_174[30.6,] %cl_2_176[30.8,] 	 ARGS:%cl_2_174,%cl_2_176,
 		 10: 
-		 11: COPY TYPE_StringLiteral def_%cl_2_178 
-		 12: COPY TYPE_StringLiteral def_%cl_2_179 
+		 11: COPY TYPE_StringLiteral "stop" def_%cl_2_178 
+		 12: COPY TYPE_StringLiteral "stop_time" def_%cl_2_179 
 		 13: %self->t def_%cl_2_180 %self[30.1,30.4,30.6,30.7,30.9,2.0,] %cl_2_179[30.12,] 	 ARGS:%cl_2_179,
 		 14: %self->render_icon def_%cl_2_181 %self[30.1,30.4,30.6,30.7,30.9,30.13,2.0,] %cl_2_178[30.11,] %cl_2_180[30.13,] 	 ARGS:%cl_2_178,%cl_2_180,
 		 15: %self->listed def_%cl_2_182 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,2.0,] 	 ARGS:
@@ -6819,7 +6819,7 @@ BB 30
 		 18: %cl_2_184->id def_%cl_2_185 %cl_2_184[30.17,] 	 ARGS:
 		 19: HASH-active_project-id- def_%cl_2_186 %cl_2_183[30.16,] %cl_2_185[30.18,] 
 		 20: %self->stop_time_path def_%cl_2_187 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,2.0,] %cl_2_186[30.19,] 	 ARGS:%cl_2_186,
-		 21: COPY TYPE_StringLiteral def_%cl_2_188 
+		 21: COPY TYPE_StringLiteral "blank stopTime" def_%cl_2_188 
 		 22: HASH-class- def_%cl_2_189 %cl_2_188[30.21,] 
 		 23: %self->link_to def_%cl_2_190 %self[30.1,30.4,30.6,30.7,30.9,30.13,30.14,30.15,30.17,30.20,2.0,] %cl_2_181[30.14,] %cl_2_187[30.20,] %cl_2_189[30.22,] 	 ARGS:%cl_2_181,%cl_2_187,%cl_2_189,
 		 24: 
@@ -6861,7 +6861,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_5_3 
+		 1: COPY TYPE_StringLiteral "item_" def_%cl_5_3 
 		 2: item->[] def_%cl_5_4 item[2.2,] 	 ARGS:Symbol,
 		 3: BUILDSTRING def_%cl_5_5 %cl_5_3[3.1,] %cl_5_4[3.2,] 
 		 4: 
@@ -6872,7 +6872,7 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_5_8 
+		 0: COPY TYPE_StringLiteral "class="active"" def_%cl_5_8 
 		 1: %cl_5_8->html_safe def_%cl_5_9 %cl_5_8[4.0,] 	 ARGS:
 		 2: 
 BB 5
@@ -7030,12 +7030,12 @@ BB 37
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_205 
-		 2: COPY TYPE_StringLiteral def_%cl_2_206 
+		 1: COPY TYPE_StringLiteral "dashboard" def_%cl_2_205 
+		 2: COPY TYPE_StringLiteral "search" def_%cl_2_206 
 		 3: HASH-controller-action- def_%cl_2_207 %cl_2_205[37.1,] %cl_2_206[37.2,] 
 		 4: %self->form_tag def_%cl_2_208 %self[2.0,] %cl_2_207[37.3,] 	 ARGS:%cl_2_207,
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%cl_2_209 
+		 6: COPY TYPE_StringLiteral "search_box_default" def_%cl_2_209 
 		 7: %self->t def_%cl_2_210 %self[37.4,2.0,] %cl_2_209[37.6,] 	 ARGS:%cl_2_209,
 		 8: ATTRASSIGN %self->search_field_default_value %cl_2_210[37.7,] 
 		 9: 
@@ -7065,26 +7065,26 @@ BB 41
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_215 
+		 1: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_2_215 
 		 2: 
 		 3: GETFIELD %self->search_field_default_value def_%cl_2_216 %self[37.8,2.0,] 
-		 4: COPY TYPE_StringLiteral def_%cl_2_217 
+		 4: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_2_217 
 		 5: BUILDSTRING def_%cl_2_218 %cl_2_215[41.1,] %cl_2_216[41.3,] %cl_2_217[41.4,] 
-		 6: COPY TYPE_StringLiteral def_%cl_2_219 
+		 6: COPY TYPE_StringLiteral "if (event.target.value == '" def_%cl_2_219 
 		 7: 
 		 8: GETFIELD %self->search_field_default_value def_%cl_2_220 %self[37.8,2.0,] 
-		 9: COPY TYPE_StringLiteral def_%cl_2_221 
+		 9: COPY TYPE_StringLiteral "') event.target.value=''" def_%cl_2_221 
 		 10: BUILDSTRING def_%cl_2_222 %cl_2_219[41.6,] %cl_2_220[41.8,] %cl_2_221[41.9,] 
 		 11: HASH-onfocus-onblur- def_%cl_2_223 %cl_2_218[41.5,] %cl_2_222[41.10,] 
 		 12: ATTRASSIGN %self->search_field_attrs %cl_2_223[41.11,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_2_224 
+		 14: COPY TYPE_StringLiteral "search_id" def_%cl_2_224 
 		 15: GETFIELD %self->last_search def_%cl_2_225 %self[40.1,2.0,] 
 		 16: %self->h def_%cl_2_226 %self[41.12,40.1,37.8,2.0,] %cl_2_225[41.15,] 	 ARGS:%cl_2_225,
 		 17: GETFIELD %self->search_field_attrs def_%cl_2_227 %self[41.12,41.16,2.0,] 
 		 18: %self->text_field_tag def_%cl_2_228 %self[41.12,41.16,40.1,37.8,2.0,] %cl_2_224[41.14,] %cl_2_226[41.16,] %cl_2_227[41.17,] 	 ARGS:%cl_2_224,%cl_2_226,%cl_2_227,
 		 19: 
-		 20: COPY TYPE_StringLiteral def_%cl_2_229 
+		 20: COPY TYPE_StringLiteral "go" def_%cl_2_229 
 		 21: %self->t def_%cl_2_230 %self[41.12,41.16,41.18,40.1,37.8,2.0,] %cl_2_229[41.20,] 	 ARGS:%cl_2_229,
 		 22: 
 BB 42
@@ -7112,13 +7112,13 @@ BB 45
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_235 
+		 0: COPY TYPE_StringLiteral "error" def_%cl_2_235 
 		 1: 
 BB 46
 	outgoing: 47 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_236 
+		 0: COPY TYPE_StringLiteral "success" def_%cl_2_236 
 		 1: COPY TYPE_PASS def_%cl_2_235 %cl_2_236[46.0,] 
 BB 47
 	outgoing: 48 49 71 
@@ -7132,13 +7132,13 @@ BB 48
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_239 
+		 0: COPY TYPE_StringLiteral "flash_error" def_%cl_2_239 
 		 1: 
 BB 49
 	outgoing: 50 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_240 
+		 0: COPY TYPE_StringLiteral "flash_success" def_%cl_2_240 
 		 1: COPY TYPE_PASS def_%cl_2_239 %cl_2_240[49.0,] 
 BB 50
 	outgoing: 52 71 
@@ -7169,13 +7169,13 @@ BB 53
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_248 
+		 0: COPY TYPE_StringLiteral "" def_%cl_2_248 
 		 1: 
 BB 54
 	outgoing: 55 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_249 
+		 0: COPY TYPE_StringLiteral "class='sidebar'" def_%cl_2_249 
 		 1: COPY TYPE_PASS def_%cl_2_248 %cl_2_249[54.0,] 
 BB 55
 	outgoing: 56 60 71 
@@ -7211,13 +7211,13 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_5 
+		 0: COPY TYPE_StringLiteral "class="ajax_action"" def_%cl_7_5 
 		 1: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_7_6 
+		 0: COPY TYPE_StringLiteral "class="action"" def_%cl_7_6 
 		 1: COPY TYPE_PASS def_%cl_7_5 %cl_7_6[5.0,] 
 BB 6
 	outgoing: 7 9 
@@ -7242,15 +7242,15 @@ BB 9
 	instructions:
 CLOSURE END: 
 		 3: 
-		 4: COPY TYPE_StringLiteral def_%cl_2_252 
+		 4: COPY TYPE_StringLiteral "search" def_%cl_2_252 
 		 5: HASH-action- def_%cl_2_253 %cl_2_252[55.4,] 
 		 6: %self->form_tag def_%cl_2_254 %self[55.1,41.12,40.1,37.8,2.0,] %cl_2_253[55.5,] 	 ARGS:%cl_2_253,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_2_255 
+		 8: COPY TYPE_StringLiteral "search_id" def_%cl_2_255 
 		 9: GETFIELD %self->last_search def_%cl_2_256 %self[55.1,55.6,40.1,2.0,] 
 		 10: %self->text_field_tag def_%cl_2_257 %self[55.1,55.6,41.12,40.1,37.8,2.0,] %cl_2_255[55.8,] %cl_2_256[55.9,] 	 ARGS:%cl_2_255,%cl_2_256,
 		 11: 
-		 12: COPY TYPE_StringLiteral def_%cl_2_258 
+		 12: COPY TYPE_StringLiteral "search" def_%cl_2_258 
 		 13: %self->t def_%cl_2_259 %self[55.1,55.6,55.10,41.12,40.1,37.8,2.0,] %cl_2_258[55.12,] 	 ARGS:%cl_2_258,
 		 14: 
 		 15: GETFIELD %self->search_results def_%cl_2_260 %self[55.1,55.6,55.10,55.13,2.0,] 
@@ -7262,7 +7262,7 @@ BB 56
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_263 
+		 1: COPY TYPE_StringLiteral "search_displaying_results_for" def_%cl_2_263 
 		 2: GETFIELD %self->start_search_results def_%cl_2_264 %self[2.0,] 
 		 3: GETFIELD %self->start_search_results def_%cl_2_265 %self[2.0,] 
 		 4: GETFIELD %self->search_results def_%cl_2_266 %self[2.0,] 
@@ -7295,7 +7295,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_8_3 
+		 1: COPY TYPE_StringLiteral "search_dashboard" def_%cl_8_3 
 		 2: obj->class def_%cl_8_4 obj[2.2,] 	 ARGS:
 		 3: %cl_8_4->to_s def_%cl_8_5 %cl_8_4[3.2,] 	 ARGS:
 		 4: %self->t def_%cl_8_6 %self[2.0,] %cl_8_5[3.3,] 	 ARGS:%cl_8_5,
@@ -7337,11 +7337,11 @@ BB 58
 	outgoing: 59 71 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_280 
+		 0: COPY TYPE_StringLiteral "/dashboard/search?search_id=" def_%cl_2_280 
 		 1: (CGI) def_%cl_2_281 
 		 2: GETFIELD %self->last_search def_%cl_2_282 %self[40.1,2.0,] 
 		 3: %cl_2_281->escape def_%cl_2_283 %cl_2_281[58.1,] %cl_2_282[58.2,] 	 ARGS:%cl_2_282,
-		 4: COPY TYPE_StringLiteral def_%cl_2_284 
+		 4: COPY TYPE_StringLiteral "&" def_%cl_2_284 
 		 5: BUILDSTRING def_%cl_2_285 %cl_2_280[58.0,] %cl_2_283[58.3,] %cl_2_284[58.4,] 
 		 6: GETFIELD %self->pagination def_%cl_2_286 %self[2.0,] 
 		 7: %self->pagination_links def_%cl_2_287 %self[41.12,40.1,37.8,2.0,] %cl_2_285[58.5,] %cl_2_286[58.6,] 	 ARGS:%cl_2_285,%cl_2_286,
@@ -7365,7 +7365,7 @@ BB 61
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_291 
+		 1: COPY TYPE_StringLiteral "search_no_matching_objects" def_%cl_2_291 
 		 2: GETFIELD %self->current_search def_%cl_2_292 %self[2.0,] 
 		 3: %self->h def_%cl_2_293 %self[41.12,40.1,37.8,2.0,] %cl_2_292[61.2,] 	 ARGS:%cl_2_292,
 		 4: HASH-search- def_%cl_2_294 %cl_2_293[61.3,] 

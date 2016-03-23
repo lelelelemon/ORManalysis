@@ -35,35 +35,35 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->action_name def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_6 
+		 7: COPY TYPE_StringLiteral "new" def_%v_6 
 		 8: def_%v_5 %v_6[2.7,] %v_3[2.6,] 
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 4 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "create" def_%v_8 
 		 1: def_%v_7 %v_8[3.0,] %v_3[2.6,] 
 		 2: BRANCH %v_7[3.1,] 
 BB 4
 	outgoing: 5 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_10 
+		 0: COPY TYPE_StringLiteral "edit" def_%v_10 
 		 1: def_%v_9 %v_10[4.0,] %v_3[2.6,] 
 		 2: BRANCH %v_9[4.1,] 
 BB 5
 	outgoing: 6 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_12 
+		 0: COPY TYPE_StringLiteral "update" def_%v_12 
 		 1: def_%v_11 %v_12[5.0,] %v_3[2.6,] 
 		 2: BRANCH %v_11[5.1,] 
 BB 6
 	outgoing: 7 12 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_14 
+		 0: COPY TYPE_StringLiteral "show" def_%v_14 
 		 1: def_%v_13 %v_14[6.0,] %v_3[2.6,] 
 		 2: BRANCH %v_13[6.1,] 
 BB 7
@@ -153,7 +153,7 @@ BB 3
 		 0: 
 		 1: GETFIELD %self->logged_user def_%v_9 %self[2.0,] 
 		 2: %v_9->display_name def_%v_10 %v_9[3.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_11 
+		 3: COPY TYPE_StringLiteral "/dashboard/my_tasks" def_%v_11 
 		 4: HASH-title-url- def_%v_12 %v_10[3.2,] %v_11[3.3,] 
 		 5: crumbs-><< def_%v_13 crumbs[2.7,] %v_12[3.4,] 	 ARGS:%v_12,
 		 6: 
@@ -198,16 +198,16 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->action_name def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "show" def_%v_4 
 		 8: %v_3->== def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: BRANCH %v_5[2.8,] 
 BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
-		 1: COPY TYPE_StringLiteral def_%v_7 
-		 2: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "project/task_list" def_%v_6 
+		 1: COPY TYPE_StringLiteral "project/task" def_%v_7 
+		 2: COPY TYPE_StringLiteral "project/comments" def_%v_8 
 		 3: COPY TYPE_Array def_%v_9 %v_6[3.0,] %v_7[3.1,] %v_8[3.2,] 
 		 4: RETURN %v_6[3.0,] %v_7[3.1,] %v_8[3.2,] %self[2.0,] 
 BB 4

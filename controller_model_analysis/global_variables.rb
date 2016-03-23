@@ -6,6 +6,8 @@ $table_names = Array.new
 $key_words = Hash.new
 #key: utility function (String); value: function return value type (String) 
 $util_function_list = Hash.new
+#key: query word; value: count
+$query_word_count = Hash.new
 #==============================
 
 #==============================Directories=================

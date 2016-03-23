@@ -31,7 +31,7 @@ BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "" def_%v_4 
 		 1: COPY TYPE_PASS def_%v_3 %v_4[5.0,] 
 BB 6
 	outgoing: 7 
@@ -46,7 +46,7 @@ BB 6
 		 6: COPY TYPE_PASS def_asterisks %v_8[6.5,] 
 		 7: 
 		 8: CONSTANT def_%v_9 %v_8[6.5,] 
-		 9: COPY TYPE_StringLiteral def_%v_10 
+		 9: COPY TYPE_StringLiteral "" def_%v_10 
 		 10: %v_9->inject def_%v_11 %v_9[6.8,] %v_10[6.9,] %self[2.0,] 	 ARGS:%v_10,%v_9,
 CLOSURE BEGIN: a[] 
 BB 1
@@ -68,7 +68,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "*" def_%cl_1_3 
 		 2: a->+ def_%cl_1_4 a[2.2,] %cl_1_3[3.1,] 	 ARGS:%cl_1_3,
 		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
@@ -124,16 +124,16 @@ BB 5
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "" def_%v_4 
 		 1: RETURN %v_4[5.0,] %self[2.0,] 
 BB 6
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral " " def_%v_5 
 		 1: str->split def_%v_6 str[2.5,] %v_5[6.0,] 	 ARGS:%v_5,
 		 2: %v_6->take def_%v_7 %v_6[6.1,] word_count[3.0,2.6,] 	 ARGS:word_count,
-		 3: COPY TYPE_StringLiteral def_%v_8 
+		 3: COPY TYPE_StringLiteral " " def_%v_8 
 		 4: %v_7->join def_%v_9 %v_7[6.2,] %v_8[6.3,] 	 ARGS:%v_8,
 		 5: RETURN %v_9[6.4,] %self[2.0,] 
 BB 8
@@ -168,7 +168,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_3 
+		 1: COPY TYPE_StringLiteral " " def_%v_3 
 		 2: str->split def_%v_4 str[2.5,] %v_3[4.1,] 	 ARGS:%v_3,
 		 3: %v_4->select def_%v_5 %v_4[4.2,] %self[2.0,] 	 ARGS:%v_4,
 CLOSURE BEGIN: %self[2.0,] word[4.3,] min_letter_count[3.0,2.6,] 
@@ -206,7 +206,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 4: COPY TYPE_StringLiteral def_%v_6 
+		 4: COPY TYPE_StringLiteral " " def_%v_6 
 		 5: %v_5->join def_%v_7 %v_5[4.3,] %v_6[4.4,] 	 ARGS:%v_6,
 		 6: RETURN %v_7[4.5,] %self[2.0,] 
 BB 5
@@ -231,7 +231,7 @@ BB 2
 		 5: RECEIVEARG def_str 
 		 6: 
 		 7: COPY TYPE_Regexp def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "" def_%v_4 
 		 9: str->gsub def_%v_5 str[2.5,] %v_4[2.8,] 	 ARGS:%v_3,%v_4,
 		 10: RETURN %v_5[2.9,] %self[2.0,] 
 BB 3
@@ -255,8 +255,8 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_str 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "&nbsp;" def_%v_3 
+		 8: COPY TYPE_StringLiteral "" def_%v_4 
 		 9: str->gsub def_%v_5 str[2.5,] %v_3[2.7,] %v_4[2.8,] 	 ARGS:%v_3,%v_4,
 		 10: RETURN %v_5[2.9,] %self[2.0,] 
 BB 3
@@ -307,9 +307,9 @@ BB 6
 		 3: %self->first_words def_%v_5 %self[6.1,6.2,2.0,] %v_4[6.2,] word_count[3.0,2.6,] 	 ARGS:%v_4,word_count,
 		 4: %self->strip_punctuation def_%v_6 %self[6.1,6.2,6.3,2.0,] %v_5[6.3,] 	 ARGS:%v_5,
 		 5: %v_6->downcase def_%v_7 %v_6[6.4,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%v_8 
+		 6: COPY TYPE_StringLiteral " " def_%v_8 
 		 7: %v_7->split def_%v_9 %v_7[6.5,] %v_8[6.6,] 	 ARGS:%v_8,
-		 8: COPY TYPE_StringLiteral def_%v_10 
+		 8: COPY TYPE_StringLiteral ", " def_%v_10 
 		 9: %v_9->join def_%v_11 %v_9[6.7,] %v_10[6.8,] 	 ARGS:%v_10,
 		 10: RETURN %v_11[6.9,] %self[6.1,6.2,6.3,6.4,2.0,] 
 BB 7

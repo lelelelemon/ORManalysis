@@ -13,10 +13,10 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "" def_%v_3 
 		 7: COPY TYPE_PASS def_sql_filter %v_3[2.6,] 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_4 
+		 9: COPY TYPE_StringLiteral "" def_%v_4 
 		 10: COPY TYPE_PASS def_date_filter %v_4[2.9,] 
 		 11: 
 		 12: (Tag) def_%v_5 
@@ -26,20 +26,20 @@ BB 2
 		 16: ATTRASSIGN %self->tags %v_8[2.15,] 
 		 17: 
 		 18: (User) def_%v_9 
-		 19: COPY TYPE_StringLiteral def_%v_10 
+		 19: COPY TYPE_StringLiteral "name" def_%v_10 
 		 20: %v_9->order def_%v_11 %v_9[2.18,] %v_10[2.19,] 	 ARGS:%v_10,
-		 21: COPY TYPE_StringLiteral def_%v_12 
+		 21: COPY TYPE_StringLiteral "users.company_id = ?" def_%v_12 
 		 22: %self->current_user def_%v_13 %self[2.0,2.13,2.16,] 	 ARGS:
 		 23: %v_13->company_id def_%v_14 %v_13[2.22,] 	 ARGS:
 		 24: %v_11->where def_%v_15 %v_11[2.20,] %v_12[2.21,] %v_14[2.23,] 	 ARGS:%v_12,%v_14,
-		 25: COPY TYPE_StringLiteral def_%v_16 
+		 25: COPY TYPE_StringLiteral "INNER JOIN project_permissions ON project_permissions.user_id = users.id" def_%v_16 
 		 26: %v_15->joins def_%v_17 %v_15[2.24,] %v_16[2.25,] 	 ARGS:%v_16,
 		 27: ATTRASSIGN %self->users %v_17[2.26,] 
 		 28: 
 		 29: %self->current_user def_%v_18 %self[2.0,2.13,2.16,2.22,2.27,] 	 ARGS:
 		 30: %v_18->company def_%v_19 %v_18[2.29,] 	 ARGS:
 		 31: %v_19->custom_attributes def_%v_20 %v_19[2.30,] 	 ARGS:
-		 32: COPY TYPE_StringLiteral def_%v_21 
+		 32: COPY TYPE_StringLiteral "WorkLog" def_%v_21 
 		 33: %v_20->by_type def_%v_22 %v_20[2.31,] %v_21[2.32,] 	 ARGS:%v_21,
 		 34: ATTRASSIGN %self->custom_attributes %v_22[2.33,] 
 		 35: 
@@ -59,7 +59,7 @@ BB 3
 		 5: %self->params def_%v_27 %self[3.3,2.0,2.16,2.27,2.34,] 	 ARGS:
 		 6: %v_27->[] def_%v_28 %v_27[3.5,] 	 ARGS:Symbol,
 		 7: %v_28->[] def_%v_29 %v_28[3.6,] 	 ARGS:Symbol,
-		 8: COPY TYPE_StringLiteral def_%v_30 
+		 8: COPY TYPE_StringLiteral "1" def_%v_30 
 		 9: %v_29->== def_%v_31 %v_29[3.7,] %v_30[3.8,] 	 ARGS:%v_30,
 		 10: BRANCH %v_31[3.9,] 
 BB 4
@@ -149,7 +149,7 @@ BB 12
 	datadep: 
 	instructions:
 		 0: %self->flash def_%v_59 %self[6.3,6.7,6.11,6.15,6.19,6.23,2.0,2.16,2.27,2.34,4.8,3.3,] 	 ARGS:
-		 1: COPY TYPE_StringLiteral def_%v_60 
+		 1: COPY TYPE_StringLiteral "flash.alert.empty_report" def_%v_60 
 		 2: %self->t def_%v_61 %self[12.0,6.3,6.7,6.11,6.15,6.19,6.23,2.0,2.16,2.27,2.34,4.8,3.3,] %v_60[12.1,] 	 ARGS:%v_60,
 		 3: ATTRASSIGN %v_59->[] %v_61[12.2,] 
 		 4: 
@@ -173,7 +173,7 @@ BB 16
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_62 
+		 1: COPY TYPE_StringLiteral "basic" def_%v_62 
 		 2: HASH-layout- def_%v_63 %v_62[16.1,] 
 		 3: %self->render def_%v_64 %self[6.3,6.7,6.11,6.15,6.19,6.23,2.0,2.16,2.27,2.34,4.8,3.3,] %v_63[16.2,] 	 ARGS:%v_63,
 		 4: RETURN %v_64[16.3,] %self[16.3,6.3,6.7,6.11,6.15,6.19,6.23,2.0,2.16,2.27,2.34,4.8,3.3,] 
@@ -198,7 +198,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: (GeneratedReport) def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "user_id = ? AND company_id = ?" def_%v_4 
 		 8: %self->current_user def_%v_5 %self[2.0,] 	 ARGS:
 		 9: %v_5->id def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: %self->current_user def_%v_7 %self[2.0,2.8,] 	 ARGS:
@@ -218,7 +218,7 @@ BB 3
 	instructions:
 		 0: GETFIELD %self->report def_%v_14 %self[2.0,2.16,] 
 		 1: %v_14->report def_%v_15 %v_14[3.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_16 
+		 2: COPY TYPE_StringLiteral "text/csv; charset=utf-8; header=present" def_%v_16 
 		 3: GETFIELD %self->report def_%v_17 %self[2.0,2.16,] 
 		 4: %v_17->filename def_%v_18 %v_17[3.3,] 	 ARGS:
 		 5: HASH-type-filename- def_%v_19 %v_16[3.2,] %v_18[3.4,] 

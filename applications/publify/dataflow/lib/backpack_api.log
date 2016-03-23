@@ -65,7 +65,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: GETFIELD %self->username def_%v_5 %self[2.0,] 
-		 1: COPY TYPE_StringLiteral def_%v_6 
+		 1: COPY TYPE_StringLiteral ".backpackit.com" def_%v_6 
 		 2: BUILDSTRING def_%v_7 %v_5[6.0,] %v_6[6.1,] 
 		 3: BRANCH use_ssl[3.0,2.5,] 
 BB 7
@@ -192,24 +192,24 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "token" def_%v_4 
 		 2: GETFIELD %self->token def_%v_5 %self[2.0,] 
 		 3: HASH- def_%v_6 %v_4[6.1,] %v_5[6.2,] 
 		 4: %v_6->merge def_%v_7 %v_6[6.3,] parameters[3.1,2.6,] 	 ARGS:parameters,
 		 5: COPY TYPE_PASS def_parameters %v_7[6.4,] 
 		 6: 
 		 7: GETFIELD %self->connection def_%v_8 %self[2.0,] 
-		 8: COPY TYPE_StringLiteral def_%v_9 
+		 8: COPY TYPE_StringLiteral "/ws/" def_%v_9 
 		 9: BUILDSTRING def_%v_10 %v_9[6.8,] path[2.5,] 
 		 10: %v_7->to_yaml def_%v_11 %v_7[6.4,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_12 
-		 12: COPY TYPE_StringLiteral def_%v_13 
+		 11: COPY TYPE_StringLiteral "X-POST_DATA_FORMAT" def_%v_12 
+		 12: COPY TYPE_StringLiteral "yaml" def_%v_13 
 		 13: HASH- def_%v_14 %v_12[6.11,] %v_13[6.12,] 
 		 14: %v_8->post def_%v_15 %v_8[6.7,] %v_10[6.9,] %v_11[6.10,] %v_14[6.13,] 	 ARGS:%v_10,%v_11,%v_14,
 		 15: COPY TYPE_PASS def_response %v_15[6.14,] 
 		 16: 
 		 17: %v_15->code def_%v_16 %v_15[6.14,] 	 ARGS:
-		 18: COPY TYPE_StringLiteral def_%v_17 
+		 18: COPY TYPE_StringLiteral "200" def_%v_17 
 		 19: %v_16->== def_%v_18 %v_16[6.17,] %v_17[6.18,] 	 ARGS:%v_17,
 		 20: BRANCH %v_18[6.19,] 
 BB 7
@@ -222,7 +222,7 @@ BB 7
 		 3: %v_19->xml_in def_%v_21 %v_19[7.1,] %v_20[7.2,] 	 ARGS:%v_20,
 		 4: COPY TYPE_PASS def_result %v_21[7.3,] 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_22 
+		 6: COPY TYPE_StringLiteral "success" def_%v_22 
 		 7: %v_21->delete def_%v_23 %v_21[7.3,] %v_22[7.6,] 	 ARGS:%v_22,
 		 8: 
 		 9: result->empty? def_%v_24 result[7.4,] 	 ARGS:
@@ -249,7 +249,7 @@ BB 11
 	instructions:
 		 0: 
 		 1: response->code def_%v_26 response[6.15,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_27 
+		 2: COPY TYPE_StringLiteral "302" def_%v_27 
 		 3: %v_26->== def_%v_28 %v_26[11.1,] %v_27[11.2,] 	 ARGS:%v_27,
 		 4: BRANCH %v_28[11.3,] 
 BB 12
@@ -277,9 +277,9 @@ BB 15
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_32 
+		 1: COPY TYPE_StringLiteral "Error occured (" def_%v_32 
 		 2: response->code def_%v_33 response[6.15,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_34 
+		 3: COPY TYPE_StringLiteral "): " def_%v_34 
 		 4: response->body def_%v_35 response[15.2,6.15,] 	 ARGS:
 		 5: BUILDSTRING def_%v_36 %v_32[15.1,] %v_33[15.2,] %v_34[15.3,] %v_35[15.4,] 
 		 6: %self->raise def_%v_37 %self[2.0,] %v_36[15.5,] 	 ARGS:%v_36,
@@ -321,8 +321,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/items/list" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.5,] %v_5[4.2,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -359,11 +359,11 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/items/add" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
-		 5: COPY TYPE_StringLiteral def_%v_8 
+		 4: COPY TYPE_StringLiteral "item" def_%v_7 
+		 5: COPY TYPE_StringLiteral "content" def_%v_8 
 		 6: HASH- def_%v_9 %v_8[4.5,] content[2.5,] 
 		 7: HASH- def_%v_10 %v_7[4.4,] %v_9[4.6,] 
 		 8: %self->request def_%v_11 %self[2.0,] %v_6[4.3,] %v_10[4.7,] 	 ARGS:%v_6,%v_10,
@@ -402,11 +402,11 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/items/update/" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.7,] %v_5[4.2,] item_id[2.5,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
-		 5: COPY TYPE_StringLiteral def_%v_8 
+		 4: COPY TYPE_StringLiteral "item" def_%v_7 
+		 5: COPY TYPE_StringLiteral "content" def_%v_8 
 		 6: HASH- def_%v_9 %v_8[4.5,] content[2.6,] 
 		 7: HASH- def_%v_10 %v_7[4.4,] %v_9[4.6,] 
 		 8: %self->request def_%v_11 %self[2.0,] %v_6[4.3,] %v_10[4.7,] 	 ARGS:%v_6,%v_10,
@@ -444,8 +444,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/items/destroy/" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] item_id[2.5,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -482,8 +482,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/items/toggle/" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] item_id[2.5,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -521,11 +521,11 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/items/move/" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.7,] %v_5[4.2,] item_id[2.5,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
-		 5: COPY TYPE_StringLiteral def_%v_8 
+		 4: COPY TYPE_StringLiteral "direction" def_%v_7 
+		 5: COPY TYPE_StringLiteral "move_" def_%v_8 
 		 6: BUILDSTRING def_%v_9 %v_8[4.5,] direction[2.6,] 
 		 7: HASH- def_%v_10 %v_7[4.4,] %v_9[4.6,] 
 		 8: %self->request def_%v_11 %self[2.0,] %v_6[4.3,] %v_10[4.7,] 	 ARGS:%v_6,%v_10,
@@ -562,8 +562,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/notes/list" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.5,] %v_5[4.2,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -601,12 +601,12 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/notes/create" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.7,] %v_5[4.2,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
-		 5: COPY TYPE_StringLiteral def_%v_8 
-		 6: COPY TYPE_StringLiteral def_%v_9 
+		 4: COPY TYPE_StringLiteral "note" def_%v_7 
+		 5: COPY TYPE_StringLiteral "title" def_%v_8 
+		 6: COPY TYPE_StringLiteral "body" def_%v_9 
 		 7: HASH- def_%v_10 %v_8[4.5,] title[2.5,] %v_9[4.6,] body[2.6,] 
 		 8: HASH- def_%v_11 %v_7[4.4,] %v_10[4.7,] 
 		 9: %self->request def_%v_12 %self[2.0,] %v_6[4.3,] %v_11[4.8,] 	 ARGS:%v_6,%v_11,
@@ -646,12 +646,12 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/notes/update/" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.8,] %v_5[4.2,] note_id[2.5,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
-		 5: COPY TYPE_StringLiteral def_%v_8 
-		 6: COPY TYPE_StringLiteral def_%v_9 
+		 4: COPY TYPE_StringLiteral "note" def_%v_7 
+		 5: COPY TYPE_StringLiteral "title" def_%v_8 
+		 6: COPY TYPE_StringLiteral "body" def_%v_9 
 		 7: HASH- def_%v_10 %v_8[4.5,] title[2.6,] %v_9[4.6,] body[2.7,] 
 		 8: HASH- def_%v_11 %v_7[4.4,] %v_10[4.7,] 
 		 9: %self->request def_%v_12 %self[2.0,] %v_6[4.3,] %v_11[4.8,] 	 ARGS:%v_6,%v_11,
@@ -689,8 +689,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/notes/destroy/" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] note_id[2.5,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -726,8 +726,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/emails/list" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.5,] %v_5[4.2,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -764,8 +764,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/emails/show/" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] email_id[2.5,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -802,8 +802,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/emails/destroy/" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] email_id[2.5,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -828,7 +828,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_tag_id 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "tags/select/" def_%v_3 
 		 8: BUILDSTRING def_%v_4 %v_3[2.7,] tag_id[2.5,] 
 		 9: %self->request def_%v_5 %self[2.0,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: RETURN %v_5[2.9,] %self[2.0,2.9,] 
@@ -865,10 +865,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/tags/tag" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
+		 4: COPY TYPE_StringLiteral "tags" def_%v_7 
 		 5: HASH- def_%v_8 %v_7[4.4,] tags[2.5,] 
 		 6: %self->request def_%v_9 %self[2.0,] %v_6[4.3,] %v_8[4.5,] 	 ARGS:%v_6,%v_8,
 		 7: RETURN %v_9[4.6,] %self[4.6,2.0,] 
@@ -892,7 +892,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "pages/all" def_%v_3 
 		 7: %self->request def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -917,10 +917,10 @@ BB 2
 		 5: RECEIVEARG def_title 
 		 6: RECEIVEARG def_body 
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%v_3 
-		 9: COPY TYPE_StringLiteral def_%v_4 
-		 10: COPY TYPE_StringLiteral def_%v_5 
-		 11: COPY TYPE_StringLiteral def_%v_6 
+		 8: COPY TYPE_StringLiteral "pages/new" def_%v_3 
+		 9: COPY TYPE_StringLiteral "page" def_%v_4 
+		 10: COPY TYPE_StringLiteral "title" def_%v_5 
+		 11: COPY TYPE_StringLiteral "description" def_%v_6 
 		 12: HASH- def_%v_7 %v_5[2.10,] title[2.5,] %v_6[2.11,] body[2.6,] 
 		 13: HASH- def_%v_8 %v_4[2.9,] %v_7[2.12,] 
 		 14: %self->request def_%v_9 %self[2.0,] %v_3[2.8,] %v_8[2.13,] 	 ARGS:%v_3,%v_8,
@@ -957,7 +957,7 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
 		 2: BUILDSTRING def_%v_5 %v_4[4.1,] page_id[3.1,2.5,] 
 		 3: %self->request def_%v_6 %self[2.0,] %v_5[4.2,] 	 ARGS:%v_5,
 		 4: RETURN %v_6[4.3,] %self[4.3,2.0,] 
@@ -993,8 +993,8 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/destroy" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.5,] %v_5[4.2,] 
 		 4: %self->request def_%v_7 %self[2.0,] %v_6[4.3,] 	 ARGS:%v_6,
 		 5: RETURN %v_7[4.4,] %self[4.4,2.0,] 
@@ -1031,11 +1031,11 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/update_title" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
-		 5: COPY TYPE_StringLiteral def_%v_8 
+		 4: COPY TYPE_StringLiteral "page" def_%v_7 
+		 5: COPY TYPE_StringLiteral "title" def_%v_8 
 		 6: HASH- def_%v_9 %v_8[4.5,] title[2.5,] 
 		 7: HASH- def_%v_10 %v_7[4.4,] %v_9[4.6,] 
 		 8: %self->request def_%v_11 %self[2.0,] %v_6[4.3,] %v_10[4.7,] 	 ARGS:%v_6,%v_10,
@@ -1073,11 +1073,11 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/update_body" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
-		 5: COPY TYPE_StringLiteral def_%v_8 
+		 4: COPY TYPE_StringLiteral "page" def_%v_7 
+		 5: COPY TYPE_StringLiteral "description" def_%v_8 
 		 6: HASH- def_%v_9 %v_8[4.5,] body[2.5,] 
 		 7: HASH- def_%v_10 %v_7[4.4,] %v_9[4.6,] 
 		 8: %self->request def_%v_11 %self[2.0,] %v_6[4.3,] %v_10[4.7,] 	 ARGS:%v_6,%v_10,
@@ -1115,10 +1115,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/link" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
+		 4: COPY TYPE_StringLiteral "linked_page_id" def_%v_7 
 		 5: HASH- def_%v_8 %v_7[4.4,] linked_page_id[2.5,] 
 		 6: %self->request def_%v_9 %self[2.0,] %v_6[4.3,] %v_8[4.5,] 	 ARGS:%v_6,%v_8,
 		 7: RETURN %v_9[4.6,] %self[4.6,2.0,] 
@@ -1155,10 +1155,10 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_4 
+		 2: COPY TYPE_StringLiteral "/unlink" def_%v_5 
 		 3: BUILDSTRING def_%v_6 %v_4[4.1,] page_id[3.1,2.6,] %v_5[4.2,] 
-		 4: COPY TYPE_StringLiteral def_%v_7 
+		 4: COPY TYPE_StringLiteral "linked_page_id" def_%v_7 
 		 5: HASH- def_%v_8 %v_7[4.4,] linked_page_id[2.5,] 
 		 6: %self->request def_%v_9 %self[2.0,] %v_6[4.3,] %v_8[4.5,] 	 ARGS:%v_6,%v_8,
 		 7: RETURN %v_9[4.6,] %self[4.6,2.0,] 
@@ -1206,7 +1206,7 @@ BB 6
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
+		 1: COPY TYPE_StringLiteral "email_addresses" def_%v_4 
 		 2: HASH- def_%v_5 %v_4[6.1,] email_addresses[2.5,] 
 		 3: COPY TYPE_PASS def_parameters %v_5[6.2,] 
 		 4: 
@@ -1222,20 +1222,20 @@ BB 8
 	outgoing: 9 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
-		 1: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "page" def_%v_8 
+		 1: COPY TYPE_StringLiteral "public" def_%v_9 
 		 2: BRANCH public_page[3.0,2.6,] 
 BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_10 
+		 0: COPY TYPE_StringLiteral "1" def_%v_10 
 		 1: 
 BB 10
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_11 
+		 0: COPY TYPE_StringLiteral "0" def_%v_11 
 		 1: COPY TYPE_PASS def_%v_10 %v_11[10.0,] 
 BB 11
 	outgoing: 12 
@@ -1251,8 +1251,8 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_15 
-		 2: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "page/" def_%v_15 
+		 2: COPY TYPE_StringLiteral "/share" def_%v_16 
 		 3: BUILDSTRING def_%v_17 %v_15[12.1,] page_id[5.1,4.0,] %v_16[12.2,] 
 		 4: %self->request def_%v_18 %self[2.0,] %v_17[12.3,] parameters[11.3,6.3,] 	 ARGS:%v_17,parameters,
 		 5: RETURN %v_18[12.4,] %self[12.4,2.0,] 
@@ -1276,7 +1276,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "reminders" def_%v_3 
 		 7: %self->request def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -1305,17 +1305,17 @@ BB 3
 	outgoing: 4 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_3 
+		 0: COPY TYPE_StringLiteral "" def_%v_3 
 		 1: COPY TYPE_PASS def_remind_at %v_3[3.0,] 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_4 
-		 2: COPY TYPE_StringLiteral def_%v_5 
-		 3: COPY TYPE_StringLiteral def_%v_6 
-		 4: COPY TYPE_StringLiteral def_%v_7 
+		 1: COPY TYPE_StringLiteral "reminders/create" def_%v_4 
+		 2: COPY TYPE_StringLiteral "reminder" def_%v_5 
+		 3: COPY TYPE_StringLiteral "content" def_%v_6 
+		 4: COPY TYPE_StringLiteral "remind_at" def_%v_7 
 		 5: HASH- def_%v_8 %v_6[4.3,] content[2.5,] %v_7[4.4,] remind_at[3.1,2.6,] 
 		 6: HASH- def_%v_9 %v_5[4.2,] %v_8[4.5,] 
 		 7: %self->request def_%v_10 %self[2.0,] %v_4[4.1,] %v_9[4.6,] 	 ARGS:%v_4,%v_9,
@@ -1343,11 +1343,11 @@ BB 2
 		 6: RECEIVEARG def_content 
 		 7: RECEIVEARG def_remind_at 
 		 8: 
-		 9: COPY TYPE_StringLiteral def_%v_3 
+		 9: COPY TYPE_StringLiteral "reminders/update/" def_%v_3 
 		 10: BUILDSTRING def_%v_4 %v_3[2.9,] reminder_id[2.5,] 
-		 11: COPY TYPE_StringLiteral def_%v_5 
-		 12: COPY TYPE_StringLiteral def_%v_6 
-		 13: COPY TYPE_StringLiteral def_%v_7 
+		 11: COPY TYPE_StringLiteral "reminder" def_%v_5 
+		 12: COPY TYPE_StringLiteral "content" def_%v_6 
+		 13: COPY TYPE_StringLiteral "remind_at" def_%v_7 
 		 14: HASH- def_%v_8 %v_6[2.12,] content[2.6,] %v_7[2.13,] remind_at[2.7,] 
 		 15: HASH- def_%v_9 %v_5[2.11,] %v_8[2.14,] 
 		 16: %self->request def_%v_10 %self[2.0,] %v_4[2.10,] %v_9[2.15,] 	 ARGS:%v_4,%v_9,
@@ -1373,7 +1373,7 @@ BB 2
 		 4: 
 		 5: RECEIVEARG def_reminder_id 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%v_3 
+		 7: COPY TYPE_StringLiteral "reminders/destroy/" def_%v_3 
 		 8: BUILDSTRING def_%v_4 %v_3[2.7,] reminder_id[2.5,] 
 		 9: %self->request def_%v_5 %self[2.0,] %v_4[2.8,] 	 ARGS:%v_4,
 		 10: RETURN %v_5[2.9,] %self[2.0,2.9,] 

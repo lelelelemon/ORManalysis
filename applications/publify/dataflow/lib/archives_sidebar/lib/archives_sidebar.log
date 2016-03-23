@@ -70,14 +70,14 @@ BB 12
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_15 
+		 1: COPY TYPE_StringLiteral "strftime('%Y', published_at) as year, strftime('%m', published_at) as month" def_%v_15 
 		 2: 
 BB 13
 	outgoing: 14 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_16 
+		 1: COPY TYPE_StringLiteral "extract(year from published_at) as year,extract(month from published_at) as month" def_%v_16 
 		 2: COPY TYPE_PASS def_%v_15 %v_16[13.1,] 
 BB 14
 	outgoing: 15 16 
@@ -110,7 +110,7 @@ BB 18
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_20 
+		 1: COPY TYPE_StringLiteral "extract(year from published_at) as year,extract(month from published_at) as month" def_%v_20 
 		 2: COPY TYPE_PASS def_%v_8 %v_20[18.1,] 
 		 3: 
 		 4: %v_6[5.0,] 
@@ -164,8 +164,8 @@ BB 2
 		 10: COPY TYPE_PASS def_date_func %v_4[2.9,] 
 		 11: 
 		 12: (Content) def_%v_5 
-		 13: COPY TYPE_StringLiteral def_%v_6 
-		 14: COPY TYPE_StringLiteral def_%v_7 
+		 13: COPY TYPE_StringLiteral "select count(*) as count, " def_%v_6 
+		 14: COPY TYPE_StringLiteral " from contents where type='Article' and published = ? and published_at < ? group by year,month order by year desc,month desc limit ? " def_%v_7 
 		 15: BUILDSTRING def_%v_8 %v_6[2.13,] %v_4[2.9,] %v_7[2.14,] 
 		 16: (Time) def_%v_9 
 		 17: %v_9->now def_%v_10 %v_9[2.16,] 	 ARGS:
@@ -206,7 +206,7 @@ BB 3
 		 9: (I18n) def_%cl_1_7 
 		 10: (Date) def_%cl_1_8 
 		 11: %cl_1_8->new def_%cl_1_9 %cl_1_8[3.10,] %cl_1_6[3.6,] month[3.3,] 	 ARGS:year,month,
-		 12: COPY TYPE_StringLiteral def_%cl_1_10 
+		 12: COPY TYPE_StringLiteral "%B %Y" def_%cl_1_10 
 		 13: HASH-format- def_%cl_1_11 %cl_1_10[3.12,] 
 		 14: %cl_1_7->l def_%cl_1_12 %cl_1_7[3.9,] %cl_1_9[3.11,] %cl_1_11[3.13,] 	 ARGS:%cl_1_9,%cl_1_11,
 		 15: entry->count def_%cl_1_13 entry[3.1,3.5,2.2,] 	 ARGS:

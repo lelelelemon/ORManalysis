@@ -30,10 +30,10 @@ BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
-		 1: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "Transaction type '" def_%v_6 
+		 1: COPY TYPE_StringLiteral "' not available. Available types are: " def_%v_7 
 		 2: %self->available_types def_%v_8 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_9 
+		 3: COPY TYPE_StringLiteral ", " def_%v_9 
 		 4: %v_8->join def_%v_10 %v_8[4.2,] %v_9[4.3,] 	 ARGS:%v_9,
 		 5: BUILDSTRING def_%v_11 %v_6[4.0,] transaction_type_class_name[2.6,] %v_7[4.1,] %v_10[4.4,] 
 		 6: %self->throw def_%v_12 %self[4.2,2.0,] %v_11[4.5,] 	 ARGS:%v_11,
@@ -57,10 +57,10 @@ BB 7
 	outgoing: 8 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_17 
-		 1: COPY TYPE_StringLiteral def_%v_18 
+		 0: COPY TYPE_StringLiteral "Transaction process '" def_%v_17 
+		 1: COPY TYPE_StringLiteral "' not available. Available processes are: " def_%v_18 
 		 2: (TRANSACTION_PROCESSES) def_%v_19 
-		 3: COPY TYPE_StringLiteral def_%v_20 
+		 3: COPY TYPE_StringLiteral ", " def_%v_20 
 		 4: %v_19->join def_%v_21 %v_19[7.2,] %v_20[7.3,] 	 ARGS:%v_20,
 		 5: BUILDSTRING def_%v_22 %v_17[7.0,] process[2.7,] %v_18[7.1,] %v_21[7.4,] 
 		 6: %self->throw def_%v_23 %self[2.0,] %v_22[7.5,] 	 ARGS:%v_22,
@@ -70,7 +70,7 @@ BB 8
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_24 
+		 1: COPY TYPE_StringLiteral "Request" def_%v_24 
 		 2: transaction_type_class_name->!= def_%v_25 transaction_type_class_name[2.6,] %v_24[8.1,] 	 ARGS:%v_24,
 		 3: COPY TYPE_PASS def_author_is_seller %v_25[8.2,] 
 		 4: 
@@ -376,7 +376,7 @@ BB 18
 	datadep: 
 	instructions:
 		 0: (ArgumentError) def_%v_67 
-		 1: COPY TYPE_StringLiteral def_%v_68 
+		 1: COPY TYPE_StringLiteral "Could not create new shape: " def_%v_68 
 		 2: BUILDSTRING def_%v_69 %v_68[18.1,] shape_opts[16.11,] 
 		 3: %v_67->new def_%v_70 %v_67[18.0,] %v_69[18.2,] 	 ARGS:%v_69,
 		 4: %self->raise def_%v_71 %self[2.0,] %v_70[18.3,] 	 ARGS:%v_70,

@@ -15,7 +15,7 @@ PATH_ORDER = [
 ]
 
 #file = File.open("../applications/railscollab/models/milestone.rb", "r")
-file = File.open("../applications/boxroom/models/permission.rb", "r")
+file = File.open("../applications/publify/merged_controllers/admin/content_controller.rb", "r")
 #file = File.open("../applications/publify/models/article.rb", "r")
 #file = File.open("../applications/lobsters/merged_controllers/stories_controller.rb", "r")
 #file = File.open("../../communityengine/app/controllers/event_sweeper.rb", "r")

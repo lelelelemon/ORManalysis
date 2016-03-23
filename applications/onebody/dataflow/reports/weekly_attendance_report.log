@@ -63,19 +63,19 @@ BB 3
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "title_for_group" def_%v_5 
 		 1: 
 BB 4
 	outgoing: 5 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "title" def_%v_6 
 		 1: COPY TYPE_PASS def_%v_5 %v_6[4.0,] 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "reports.reports.weekly_attendance" def_%v_7 
 		 1: GETFIELD %self->group def_%v_8 %self[2.0,] 
 		 2: %v_8->try def_%v_9 %v_8[5.1,] 	 ARGS:Symbol,
 		 3: HASH-scope-group- def_%v_10 %v_7[5.0,] %v_9[5.2,] 
@@ -111,7 +111,7 @@ BB 3
 		 1: GETFIELD %self->group def_%v_6 %self[2.0,] 
 		 2: %v_6->attendance_records def_%v_7 %v_6[3.1,] 	 ARGS:
 		 3: %v_7->select def_%v_8 %v_7[3.2,] 	 ARGS:Symbol,Symbol,Symbol,
-		 4: COPY TYPE_StringLiteral def_%v_9 
+		 4: COPY TYPE_StringLiteral "attended_at between :fromdate and :thrudate" def_%v_9 
 		 5: %v_8->where def_%v_10 %v_8[3.3,] %v_9[3.4,] 	 ARGS:%v_9,
 		 6: %v_10->order def_%v_11 %v_10[3.5,] 	 ARGS:Symbol,Symbol,
 		 7: %v_11->to_sql def_%v_12 %v_11[3.6,] 	 ARGS:
@@ -174,7 +174,7 @@ BB 3
 	instructions:
 		 0: 
 		 1: (I18n) def_%cl_1_3 
-		 2: COPY TYPE_StringLiteral def_%cl_1_4 
+		 2: COPY TYPE_StringLiteral "reports.reports.weekly_attendance.attended.yes" def_%cl_1_4 
 		 3: %cl_1_3->t def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
 		 4: p-><< def_%cl_1_6 p[2.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
 		 5: RETURN %cl_1_6[3.4,] %self[2.0,] 
@@ -267,7 +267,7 @@ BB 5
 		 2: person->first_name def_%cl_2_8 person[5.1,2.2,] 	 ARGS:
 		 3: person->last_name def_%cl_2_9 person[5.1,5.2,2.2,] 	 ARGS:
 		 4: (I18n) def_%cl_2_10 
-		 5: COPY TYPE_StringLiteral def_%cl_2_11 
+		 5: COPY TYPE_StringLiteral "reports.reports.weekly_attendance.attended.no" def_%cl_2_11 
 		 6: %cl_2_10->t def_%cl_2_12 %cl_2_10[5.4,] %cl_2_11[5.5,] 	 ARGS:%cl_2_11,
 		 7: COPY TYPE_Array def_%cl_2_13 %cl_2_7[5.1,] %cl_2_8[5.2,] %cl_2_9[5.3,] %cl_2_12[5.6,] 
 		 8: rows-><< def_%cl_2_14 rows[] %cl_2_13[5.7,] 	 ARGS:%cl_2_13,
@@ -445,7 +445,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "select null from attendance_records where 1=0" def_%v_3 
 		 7: RETURN %v_3[2.6,] %self[2.0,] 
 BB 3
 	outgoing: 

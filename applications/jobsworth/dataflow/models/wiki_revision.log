@@ -94,7 +94,7 @@ BB 6
 	instructions:
 		 0: 
 		 1: name->downcase def_%cl_1_11 name[4.2,3.7,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%cl_1_12 
+		 2: COPY TYPE_StringLiteral "://" def_%cl_1_12 
 		 3: %cl_1_11->include? def_%cl_1_13 %cl_1_11[6.1,] %cl_1_12[6.2,] 	 ARGS:%cl_1_12,
 		 4: BRANCH %cl_1_13[6.3,] 
 BB 7
@@ -109,7 +109,7 @@ BB 8
 	instructions:
 		 0: 
 		 1: (WikiReference) def_%cl_1_15 
-		 2: COPY TYPE_StringLiteral def_%cl_1_16 
+		 2: COPY TYPE_StringLiteral "wiki_page_id = ? AND referenced_name = ?" def_%cl_1_16 
 		 3: %self->wiki_page def_%cl_1_17 %self[2.0,] 	 ARGS:
 		 4: %cl_1_17->id def_%cl_1_18 %cl_1_17[8.3,] 	 ARGS:
 		 5: %cl_1_15->where def_%cl_1_19 %cl_1_15[8.1,] %cl_1_16[8.2,] %cl_1_18[8.4,] name[4.2,3.7,] 	 ARGS:%cl_1_16,%cl_1_18,name,
@@ -198,7 +198,7 @@ BB 3
 		 7: COPY TYPE_PASS def_name %cl_2_5[3.5,] 
 		 8: 
 		 9: %cl_2_5->downcase def_%cl_2_6 %cl_2_5[3.5,] 	 ARGS:
-		 10: COPY TYPE_StringLiteral def_%cl_2_7 
+		 10: COPY TYPE_StringLiteral "://" def_%cl_2_7 
 		 11: %cl_2_6->include? def_%cl_2_8 %cl_2_6[3.9,] %cl_2_7[3.10,] 	 ARGS:%cl_2_7,
 		 12: BRANCH %cl_2_8[3.11,] 
 BB 4
@@ -213,7 +213,7 @@ BB 5
 	instructions:
 		 0: 
 		 1: (WikiReference) def_%cl_2_10 
-		 2: COPY TYPE_StringLiteral def_%cl_2_11 
+		 2: COPY TYPE_StringLiteral "wiki_page_id = ? AND referenced_name = ?" def_%cl_2_11 
 		 3: %self->wiki_page def_%cl_2_12 %self[2.0,] 	 ARGS:
 		 4: %cl_2_12->id def_%cl_2_13 %cl_2_12[5.3,] 	 ARGS:
 		 5: %cl_2_10->where def_%cl_2_14 %cl_2_10[5.1,] %cl_2_11[5.2,] %cl_2_13[5.4,] name[3.7,] 	 ARGS:%cl_2_11,%cl_2_13,name,
@@ -298,7 +298,7 @@ BB 3
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_5 
+		 0: COPY TYPE_StringLiteral "" def_%v_5 
 		 1: RETURN %v_5[3.0,] %self[2.0,] 
 BB 4
 	outgoing: 6 
@@ -338,10 +338,10 @@ BB 3
 		 5: %cl_1_4->[] def_%cl_1_5 %cl_1_4[3.2,] 	 ARGS:Fixnum,
 		 6: pres-><< def_%cl_1_6 pres[] %cl_1_5[3.5,] 	 ARGS:%cl_1_5,
 		 7: 
-		 8: COPY TYPE_StringLiteral def_%cl_1_7 
+		 8: COPY TYPE_StringLiteral "%%pre_" def_%cl_1_7 
 		 9: pres->size def_%cl_1_8 pres[3.6,] 	 ARGS:
 		 10: %cl_1_8->- def_%cl_1_9 %cl_1_8[3.9,] 	 ARGS:Fixnum,
-		 11: COPY TYPE_StringLiteral def_%cl_1_10 
+		 11: COPY TYPE_StringLiteral "%%" def_%cl_1_10 
 		 12: BUILDSTRING def_%cl_1_11 %cl_1_7[3.8,] %cl_1_9[3.10,] %cl_1_10[3.11,] 
 		 13: RETURN %cl_1_11[3.12,] %self[2.0,] 
 BB 4
@@ -423,7 +423,7 @@ BB 7
 		 1: name->strip! def_%cl_2_11 name[5.2,4.3,] 	 ARGS:
 		 2: 
 		 3: name->downcase def_%cl_2_12 name[7.1,5.2,4.3,] 	 ARGS:
-		 4: COPY TYPE_StringLiteral def_%cl_2_13 
+		 4: COPY TYPE_StringLiteral "://" def_%cl_2_13 
 		 5: %cl_2_12->include? def_%cl_2_14 %cl_2_12[7.3,] %cl_2_13[7.4,] 	 ARGS:%cl_2_13,
 		 6: BRANCH %cl_2_14[7.5,] 
 BB 8
@@ -433,7 +433,7 @@ BB 8
 		 0: 
 		 1: COPY TYPE_PASS def_url name[5.2,4.3,] 
 		 2: 
-		 3: COPY TYPE_StringLiteral def_%cl_2_15 
+		 3: COPY TYPE_StringLiteral "external" def_%cl_2_15 
 		 4: COPY TYPE_PASS def_url_class %cl_2_15[8.3,] 
 		 5: 
 BB 9
@@ -441,17 +441,17 @@ BB 9
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_16 
+		 1: COPY TYPE_StringLiteral "/wiki/show/" def_%cl_2_16 
 		 2: (URI) def_%cl_2_17 
 		 3: %cl_2_17->encode def_%cl_2_18 %cl_2_17[9.2,] name[5.2,4.3,] 	 ARGS:name,
 		 4: BUILDSTRING def_%cl_2_19 %cl_2_16[9.1,] %cl_2_18[9.3,] 
 		 5: COPY TYPE_PASS def_url %cl_2_19[9.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_20 
+		 7: COPY TYPE_StringLiteral "internal" def_%cl_2_20 
 		 8: COPY TYPE_PASS def_url_class %cl_2_20[9.7,] 
 		 9: 
 		 10: (WikiPage) def_%cl_2_21 
-		 11: COPY TYPE_StringLiteral def_%cl_2_22 
+		 11: COPY TYPE_StringLiteral "company_id = ? and name = ?" def_%cl_2_22 
 		 12: %self->wiki_page def_%cl_2_23 %self[2.0,] 	 ARGS:
 		 13: %cl_2_23->company_id def_%cl_2_24 %cl_2_23[9.12,] 	 ARGS:
 		 14: %cl_2_21->where def_%cl_2_25 %cl_2_21[9.10,] %cl_2_22[9.11,] %cl_2_24[9.13,] name[5.2,4.3,] 	 ARGS:%cl_2_22,%cl_2_24,name,
@@ -467,7 +467,7 @@ BB 11
 	outgoing: 12 19 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_28 
+		 0: COPY TYPE_StringLiteral "_missing" def_%cl_2_28 
 		 1: url_class-><< def_%cl_2_29 url_class[9.8,] %cl_2_28[11.0,] 	 ARGS:%cl_2_28,
 		 2: COPY TYPE_PASS def_%cl_2_27 %cl_2_29[11.1,] 
 BB 12
@@ -480,10 +480,10 @@ BB 13
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_30 
-		 2: COPY TYPE_StringLiteral def_%cl_2_31 
-		 3: COPY TYPE_StringLiteral def_%cl_2_32 
-		 4: COPY TYPE_StringLiteral def_%cl_2_33 
+		 1: COPY TYPE_StringLiteral "<a href="" def_%cl_2_30 
+		 2: COPY TYPE_StringLiteral "" class="" def_%cl_2_31 
+		 3: COPY TYPE_StringLiteral "">" def_%cl_2_32 
+		 4: COPY TYPE_StringLiteral "</a>" def_%cl_2_33 
 		 5: BUILDSTRING def_%cl_2_34 %cl_2_30[13.1,] url[8.1,9.5,] %cl_2_31[13.2,] url_class[8.4,9.8,] %cl_2_32[13.3,] text[5.5,4.2,] %cl_2_33[13.4,] 
 		 6: 
 BB 14
@@ -491,17 +491,17 @@ BB 14
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_35 
+		 1: COPY TYPE_StringLiteral "/wiki/show/" def_%cl_2_35 
 		 2: (URI) def_%cl_2_36 
 		 3: %cl_2_36->encode def_%cl_2_37 %cl_2_36[14.2,] m[2.2,] 	 ARGS:m,
 		 4: BUILDSTRING def_%cl_2_38 %cl_2_35[14.1,] %cl_2_37[14.3,] 
 		 5: COPY TYPE_PASS def_url %cl_2_38[14.4,] 
 		 6: 
-		 7: COPY TYPE_StringLiteral def_%cl_2_39 
+		 7: COPY TYPE_StringLiteral "internal" def_%cl_2_39 
 		 8: COPY TYPE_PASS def_url_class %cl_2_39[14.7,] 
 		 9: 
 		 10: (WikiPage) def_%cl_2_40 
-		 11: COPY TYPE_StringLiteral def_%cl_2_41 
+		 11: COPY TYPE_StringLiteral "company_id = ? and name = ?" def_%cl_2_41 
 		 12: %self->wiki_page def_%cl_2_42 %self[2.0,] 	 ARGS:
 		 13: %cl_2_42->company_id def_%cl_2_43 %cl_2_42[14.12,] 	 ARGS:
 		 14: %cl_2_40->where def_%cl_2_44 %cl_2_40[14.10,] %cl_2_41[14.11,] %cl_2_43[14.13,] m[2.2,] 	 ARGS:%cl_2_41,%cl_2_43,m,
@@ -517,7 +517,7 @@ BB 16
 	outgoing: 17 19 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_47 
+		 0: COPY TYPE_StringLiteral "_missing" def_%cl_2_47 
 		 1: url_class-><< def_%cl_2_48 url_class[14.8,] %cl_2_47[16.0,] 	 ARGS:%cl_2_47,
 		 2: COPY TYPE_PASS def_%cl_2_46 %cl_2_48[16.1,] 
 BB 17
@@ -525,10 +525,10 @@ BB 17
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_2_49 
-		 2: COPY TYPE_StringLiteral def_%cl_2_50 
-		 3: COPY TYPE_StringLiteral def_%cl_2_51 
-		 4: COPY TYPE_StringLiteral def_%cl_2_52 
+		 1: COPY TYPE_StringLiteral "<a href="" def_%cl_2_49 
+		 2: COPY TYPE_StringLiteral "" class="" def_%cl_2_50 
+		 3: COPY TYPE_StringLiteral "">" def_%cl_2_51 
+		 4: COPY TYPE_StringLiteral "</a>" def_%cl_2_52 
 		 5: BUILDSTRING def_%cl_2_53 %cl_2_49[17.1,] url[14.5,] %cl_2_50[17.2,] url_class[14.8,] %cl_2_51[17.3,] m[2.2,] %cl_2_52[17.4,] 
 		 6: RETURN %cl_2_53[17.5,] %self[2.0,] 
 BB 18
@@ -584,9 +584,9 @@ BB 3
 		 11: COPY TYPE_PASS def_num %cl_3_9[3.7,] 
 		 12: COPY TYPE_PASS def_after %cl_3_10[3.8,] 
 		 13: 
-		 14: COPY TYPE_StringLiteral def_%cl_3_11 
-		 15: COPY TYPE_StringLiteral def_%cl_3_12 
-		 16: COPY TYPE_StringLiteral def_%cl_3_13 
+		 14: COPY TYPE_StringLiteral "<a href="/tasks/view/" def_%cl_3_11 
+		 15: COPY TYPE_StringLiteral "">#" def_%cl_3_12 
+		 16: COPY TYPE_StringLiteral "</a>" def_%cl_3_13 
 		 17: BUILDSTRING def_%cl_3_14 %cl_3_8[3.6,] %cl_3_11[3.14,] %cl_3_9[3.7,] %cl_3_12[3.15,] %cl_3_9[3.7,] %cl_3_13[3.16,] %cl_3_10[3.8,] 
 		 18: RETURN %cl_3_14[3.17,] %self[2.0,] 
 BB 4
@@ -618,9 +618,9 @@ BB 7
 		 0: 
 		 1: 
 		 2: %self->body def_%v_20 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_21 
-		 4: COPY TYPE_StringLiteral def_%v_22 
-		 5: COPY TYPE_StringLiteral def_%v_23 
+		 3: COPY TYPE_StringLiteral "" def_%v_21 
+		 4: COPY TYPE_StringLiteral "%%pre_" def_%v_22 
+		 5: COPY TYPE_StringLiteral "%%" def_%v_23 
 		 6: def_%v_24 %v_21[7.3,] %v_22[7.4,] i[4.17,] %v_23[7.5,] 
 		 7: %v_20->gsub! def_%v_25 %v_20[7.2,] %v_24[7.6,] %self[7.2,2.0,] 	 ARGS:%v_24,%v_20,
 CLOSURE BEGIN: pres[4.3,] i[4.17,] 

@@ -59,7 +59,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "=" def_%cl_1_3 
 		 2: BUILDSTRING def_%cl_1_4 key[2.2,] %cl_1_3[3.1,] 
 		 3: %self->respond_to? def_%cl_1_5 %self[2.0,] %cl_1_4[3.2,] 	 ARGS:%cl_1_4,
 		 4: BRANCH %cl_1_5[3.3,] 
@@ -67,7 +67,7 @@ BB 4
 	outgoing: 6 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_1_6 
+		 0: COPY TYPE_StringLiteral "=" def_%cl_1_6 
 		 1: BUILDSTRING def_%cl_1_7 key[2.2,] %cl_1_6[4.0,] 
 		 2: %self->send def_%cl_1_8 %self[2.0,] %cl_1_7[4.1,] val[2.3,] 	 ARGS:%cl_1_7,val,
 		 3: 
@@ -549,10 +549,10 @@ BB 3
 	instructions:
 		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "coalesce(people.business_name, '') != ''" def_%v_5 
 		 3: %self->where! def_%v_6 %self[2.0,] %v_5[3.2,] 	 ARGS:%v_5,
 		 4: 
-		 5: COPY TYPE_StringLiteral def_%v_7 
+		 5: COPY TYPE_StringLiteral "people.business_name" def_%v_7 
 		 6: %self->order! def_%v_8 %self[3.3,2.0,] %v_7[3.5,] 	 ARGS:%v_7,
 		 7: RETURN %v_8[3.6,] %self[3.3,3.6,2.0,] 
 BB 4
@@ -588,7 +588,7 @@ BB 3
 	instructions:
 		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "coalesce(people.testimony, '') != ''" def_%v_5 
 		 3: %self->where! def_%v_6 %self[2.0,] %v_5[3.2,] 	 ARGS:%v_5,
 		 4: RETURN %v_6[3.3,] %self[3.3,2.0,] 
 BB 4
@@ -616,7 +616,7 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
+		 6: COPY TYPE_StringLiteral "LOWER(people.last_name), LOWER(people.first_name)" def_%v_3 
 		 7: %self->order! def_%v_4 %self[2.0,] %v_3[2.6,] 	 ARGS:%v_3,
 		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
 BB 3
@@ -652,7 +652,7 @@ BB 4
 	instructions:
 		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "(people.child = ? or coalesce(people.parental_consent, '') != '')" def_%v_5 
 		 3: %self->where! def_%v_6 %self[2.0,] %v_5[4.2,] 	 ARGS:%v_5,Boolean,
 		 4: RETURN %v_6[4.3,] %self[4.3,2.0,] 
 BB 6
@@ -727,18 +727,21 @@ BB 3
 	instructions:
 		 0: COPY TYPE_Nil def_%v_4 
 		 1: 
-		 2: COPY TYPE_StringLiteral def_%v_5 
+		 2: COPY TYPE_StringLiteral "(concat(people.first_name, ' ', people.last_name) " def_%v_5 
 		 3: 
 		 4: %self->like def_%v_6 %self[2.0,] 	 ARGS:
-		 5: COPY TYPE_StringLiteral def_%v_7 
+		 5: COPY TYPE_StringLiteral " :full_name
+       or (families.name " def_%v_7 
 		 6: 
 		 7: %self->like def_%v_8 %self[3.4,2.0,] 	 ARGS:
-		 8: COPY TYPE_StringLiteral def_%v_9 
+		 8: COPY TYPE_StringLiteral " :full_name)
+       or (people.first_name " def_%v_9 
 		 9: 
 		 10: %self->like def_%v_10 %self[3.4,3.7,2.0,] 	 ARGS:
-		 11: COPY TYPE_StringLiteral def_%v_11 
+		 11: COPY TYPE_StringLiteral " :first_name and people.last_name " def_%v_11 
 		 12: %self->like def_%v_12 %self[3.4,3.7,3.10,2.0,] 	 ARGS:
-		 13: COPY TYPE_StringLiteral def_%v_13 
+		 13: COPY TYPE_StringLiteral " :last_name))
+      " def_%v_13 
 		 14: BUILDSTRING def_%v_14 %v_5[3.2,] %v_6[3.4,] %v_7[3.5,] %v_8[3.7,] %v_9[3.8,] %v_10[3.10,] %v_11[3.11,] %v_12[3.12,] %v_13[3.13,] 
 		 15: %self->name def_%v_15 %self[3.4,3.7,3.10,3.12,2.0,] 	 ARGS:
 		 16: %self->like_match def_%v_16 %self[3.4,3.7,3.10,3.12,3.15,2.0,] %v_15[3.15,] 	 ARGS:%v_15,
@@ -779,7 +782,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->group_select_option def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "0" def_%v_4 
 		 8: %v_3->== def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: BRANCH %v_5[2.8,] 
 BB 3
@@ -794,7 +797,7 @@ BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_8 
+		 0: COPY TYPE_StringLiteral "groups.category != ? OR groups.category IS NULL" def_%v_8 
 		 1: %self->group_category def_%v_9 %self[2.0,] 	 ARGS:
 		 2: %self->where! def_%v_10 %self[4.1,2.0,] %v_8[4.0,] %v_9[4.1,] 	 ARGS:%v_8,%v_9,
 		 3: 
@@ -814,7 +817,7 @@ BB 7
 	instructions:
 		 0: 
 		 1: %self->group_select_option def_%v_11 %self[2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_12 
+		 2: COPY TYPE_StringLiteral "1" def_%v_12 
 		 3: %v_11->== def_%v_13 %v_11[7.1,] %v_12[7.2,] 	 ARGS:%v_12,
 		 4: BRANCH %v_13[7.3,] 
 BB 8
@@ -829,7 +832,7 @@ BB 9
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_16 
+		 0: COPY TYPE_StringLiteral "groups.category = ?" def_%v_16 
 		 1: %self->group_category def_%v_17 %self[2.0,] 	 ARGS:
 		 2: %self->where! def_%v_18 %self[9.1,2.0,] %v_16[9.0,] %v_17[9.1,] 	 ARGS:%v_16,%v_17,
 		 3: 
@@ -932,7 +935,7 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "extract( month from people.birthday) = ?" def_%v_9 
 		 1: %self->birthday def_%v_10 %self[3.1,2.0,] 	 ARGS:
 		 2: %v_10->[] def_%v_11 %v_10[5.1,] 	 ARGS:Symbol,
 		 3: %self->where! def_%v_12 %self[5.1,3.1,2.0,] %v_9[5.0,] %v_11[5.2,] 	 ARGS:%v_9,%v_11,
@@ -955,7 +958,7 @@ BB 8
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_16 
+		 0: COPY TYPE_StringLiteral "extract( day from people.birthday)   = ?" def_%v_16 
 		 1: %self->birthday def_%v_17 %self[3.1,2.0,] 	 ARGS:
 		 2: %v_17->[] def_%v_18 %v_17[8.1,] 	 ARGS:Symbol,
 		 3: %self->where! def_%v_19 %self[8.1,3.1,2.0,] %v_16[8.0,] %v_18[8.2,] 	 ARGS:%v_16,%v_18,
@@ -1007,7 +1010,7 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "extract(month from people.anniversary) = ?" def_%v_9 
 		 1: %self->anniversary def_%v_10 %self[3.1,2.0,] 	 ARGS:
 		 2: %v_10->[] def_%v_11 %v_10[5.1,] 	 ARGS:Symbol,
 		 3: %self->where! def_%v_12 %self[5.1,3.1,2.0,] %v_9[5.0,] %v_11[5.2,] 	 ARGS:%v_9,%v_11,
@@ -1030,7 +1033,7 @@ BB 8
 	outgoing: 11 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_16 
+		 0: COPY TYPE_StringLiteral "extract(day from people.anniversary)   = ?" def_%v_16 
 		 1: %self->anniversary def_%v_17 %self[3.1,2.0,] 	 ARGS:
 		 2: %v_17->[] def_%v_18 %v_17[8.1,] 	 ARGS:Symbol,
 		 3: %self->where! def_%v_19 %self[8.1,3.1,2.0,] %v_16[8.0,] %v_18[8.2,] 	 ARGS:%v_16,%v_18,
@@ -1082,9 +1085,9 @@ BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "families.city  " def_%v_9 
 		 1: %self->like def_%v_10 %self[3.1,2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_11 
+		 2: COPY TYPE_StringLiteral " ?" def_%v_11 
 		 3: BUILDSTRING def_%v_12 %v_9[5.0,] %v_10[5.1,] %v_11[5.2,] 
 		 4: %self->address def_%v_13 %self[5.1,3.1,2.0,] 	 ARGS:
 		 5: %v_13->[] def_%v_14 %v_13[5.4,] 	 ARGS:Symbol,
@@ -1109,9 +1112,9 @@ BB 8
 	outgoing: 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_20 
+		 0: COPY TYPE_StringLiteral "families.state " def_%v_20 
 		 1: %self->like def_%v_21 %self[3.1,2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_22 
+		 2: COPY TYPE_StringLiteral " ?" def_%v_22 
 		 3: BUILDSTRING def_%v_23 %v_20[8.0,] %v_21[8.1,] %v_22[8.2,] 
 		 4: %self->address def_%v_24 %self[8.1,3.1,2.0,] 	 ARGS:
 		 5: %v_24->[] def_%v_25 %v_24[8.4,] 	 ARGS:Symbol,
@@ -1136,9 +1139,9 @@ BB 11
 	outgoing: 14 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_31 
+		 0: COPY TYPE_StringLiteral "families.zip   " def_%v_31 
 		 1: %self->like def_%v_32 %self[3.1,2.0,] 	 ARGS:
-		 2: COPY TYPE_StringLiteral def_%v_33 
+		 2: COPY TYPE_StringLiteral " ?" def_%v_33 
 		 3: BUILDSTRING def_%v_34 %v_31[11.0,] %v_32[11.1,] %v_33[11.2,] 
 		 4: %self->address def_%v_35 %self[11.1,3.1,2.0,] 	 ARGS:
 		 5: %v_35->[] def_%v_36 %v_35[11.4,] 	 ARGS:Symbol,
@@ -1192,7 +1195,9 @@ BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "people.mobile_phone = :phone or
+            people.work_phone   = :phone or
+            families.home_phone = :phone" def_%v_9 
 		 1: %self->phone def_%v_10 %self[2.0,] 	 ARGS:
 		 2: %v_10->digits_only def_%v_11 %v_10[6.1,] 	 ARGS:
 		 3: HASH-phone- def_%v_12 %v_11[6.2,] 
@@ -1245,7 +1250,8 @@ BB 6
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_9 
+		 0: COPY TYPE_StringLiteral "people.email = :email or
+            people.alternate_email = :email" def_%v_9 
 		 1: %self->email def_%v_10 %self[2.0,] 	 ARGS:
 		 2: HASH-email- def_%v_11 %v_10[6.1,] 
 		 3: %self->where! def_%v_12 %self[6.1,2.0,] %v_9[6.0,] %v_11[6.2,] 	 ARGS:%v_9,%v_11,
@@ -1275,10 +1281,10 @@ BB 2
 		 3: COPY TYPE_ScopeModule def_%current_module 
 		 4: 
 		 5: 
-		 6: COPY TYPE_StringLiteral def_%v_3 
-		 7: COPY TYPE_StringLiteral def_%v_4 
-		 8: COPY TYPE_StringLiteral def_%v_5 
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 6: COPY TYPE_StringLiteral "member" def_%v_3 
+		 7: COPY TYPE_StringLiteral "staff" def_%v_4 
+		 8: COPY TYPE_StringLiteral "deacon" def_%v_5 
+		 9: COPY TYPE_StringLiteral "elder" def_%v_6 
 		 10: COPY TYPE_Array def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
 		 11: %self->type def_%v_8 %self[2.0,] 	 ARGS:
 		 12: %v_7->include? def_%v_9 %v_7[2.10,] %v_8[2.11,] 	 ARGS:%v_8,
@@ -1288,9 +1294,9 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_10 
+		 1: COPY TYPE_StringLiteral "people." def_%v_10 
 		 2: %self->type def_%v_11 %self[2.0,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%v_12 
+		 3: COPY TYPE_StringLiteral " = ?" def_%v_12 
 		 4: BUILDSTRING def_%v_13 %v_10[3.1,] %v_11[3.2,] %v_12[3.3,] 
 		 5: %self->where! def_%v_14 %self[3.2,2.0,] %v_13[3.4,] 	 ARGS:%v_13,Boolean,
 		 6: RETURN %v_14[3.5,] %self[3.2,3.5,2.0,] 
@@ -1307,7 +1313,7 @@ BB 5
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_17 
+		 1: COPY TYPE_StringLiteral "people.custom_type = ?" def_%v_17 
 		 2: %self->type def_%v_18 %self[2.0,] 	 ARGS:
 		 3: %self->where! def_%v_19 %self[5.2,2.0,] %v_17[5.1,] %v_18[5.2,] 	 ARGS:%v_17,%v_18,
 		 4: 
@@ -1347,7 +1353,7 @@ BB 3
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "families.barcode_id = :id or families.alternate_barcode_id = :id" def_%v_4 
 		 1: %self->family_barcode_id def_%v_5 %self[2.0,] 	 ARGS:
 		 2: HASH-id- def_%v_6 %v_5[3.1,] 
 		 3: %self->where! def_%v_7 %self[3.1,2.0,] %v_4[3.0,] %v_6[3.2,] 	 ARGS:%v_4,%v_6,
@@ -1437,7 +1443,7 @@ BB 2
 		 6: GETFIELD %self->scope def_%v_3 %self[2.0,] 
 		 7: %v_3->connection def_%v_4 %v_3[2.6,] 	 ARGS:
 		 8: %v_4->adapter_name def_%v_5 %v_4[2.7,] 	 ARGS:
-		 9: COPY TYPE_StringLiteral def_%v_6 
+		 9: COPY TYPE_StringLiteral "PostgreSQL" def_%v_6 
 		 10: %v_5->== def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 ARGS:%v_6,
 		 11: BRANCH %v_7[2.10,] 
 BB 3
@@ -1445,14 +1451,14 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_8 
+		 1: COPY TYPE_StringLiteral "ilike" def_%v_8 
 		 2: RETURN %self[2.0,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_9 
+		 1: COPY TYPE_StringLiteral "like" def_%v_9 
 		 2: RETURN %v_9[4.1,] %self[2.0,] 
 BB 6
 	outgoing: 
@@ -1509,7 +1515,7 @@ BB 3
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%cl_1_3 
+		 1: COPY TYPE_StringLiteral "\" def_%cl_1_3 
 		 2: %cl_1_3->+ def_%cl_1_4 %cl_1_3[3.1,] x[2.2,] 	 ARGS:x,
 		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
 BB 4
@@ -1551,7 +1557,7 @@ BB 4
 	outgoing: 6 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_5 
+		 0: COPY TYPE_StringLiteral "%" def_%cl_2_5 
 		 1: s->insert def_%cl_2_6 s[2.2,] %cl_2_5[4.0,] 	 ARGS:Fixnum,%cl_2_5,
 		 2: 
 BB 5
@@ -1571,7 +1577,7 @@ BB 7
 	outgoing: 9 10 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%cl_2_9 
+		 0: COPY TYPE_StringLiteral "%" def_%cl_2_9 
 		 1: s-><< def_%cl_2_10 s[2.2,] %cl_2_9[7.0,] 	 ARGS:%cl_2_9,
 		 2: 
 BB 8

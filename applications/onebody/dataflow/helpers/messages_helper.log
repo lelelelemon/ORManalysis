@@ -37,10 +37,10 @@ BB 3
 		 0: 
 		 1: p->content_type def_%cl_1_3 p[2.2,] 	 ARGS:
 		 2: %cl_1_3->downcase def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_1_5 
+		 3: COPY TYPE_StringLiteral ";" def_%cl_1_5 
 		 4: %cl_1_4->split def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 	 ARGS:%cl_1_5,
 		 5: %cl_1_6->first def_%cl_1_7 %cl_1_6[3.4,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%cl_1_8 
+		 6: COPY TYPE_StringLiteral "multipart/alternative" def_%cl_1_8 
 		 7: %cl_1_7->== def_%cl_1_9 %cl_1_7[3.5,] %cl_1_8[3.6,] 	 ARGS:%cl_1_8,
 		 8: RETURN %cl_1_9[3.7,] %self[2.0,] 
 BB 4
@@ -84,10 +84,10 @@ BB 3
 		 0: 
 		 1: p->content_type def_%cl_2_3 p[2.2,] 	 ARGS:
 		 2: %cl_2_3->downcase def_%cl_2_4 %cl_2_3[3.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_2_5 
+		 3: COPY TYPE_StringLiteral ";" def_%cl_2_5 
 		 4: %cl_2_4->split def_%cl_2_6 %cl_2_4[3.2,] %cl_2_5[3.3,] 	 ARGS:%cl_2_5,
 		 5: %cl_2_6->first def_%cl_2_7 %cl_2_6[3.4,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%cl_2_8 
+		 6: COPY TYPE_StringLiteral "text/plain" def_%cl_2_8 
 		 7: %cl_2_7->== def_%cl_2_9 %cl_2_7[3.5,] %cl_2_8[3.6,] 	 ARGS:%cl_2_8,
 		 8: RETURN %cl_2_9[3.7,] %self[2.0,] 
 BB 4
@@ -144,10 +144,10 @@ BB 3
 		 0: 
 		 1: p->content_type def_%cl_3_3 p[2.2,] 	 ARGS:
 		 2: %cl_3_3->downcase def_%cl_3_4 %cl_3_3[3.1,] 	 ARGS:
-		 3: COPY TYPE_StringLiteral def_%cl_3_5 
+		 3: COPY TYPE_StringLiteral ";" def_%cl_3_5 
 		 4: %cl_3_4->split def_%cl_3_6 %cl_3_4[3.2,] %cl_3_5[3.3,] 	 ARGS:%cl_3_5,
 		 5: %cl_3_6->first def_%cl_3_7 %cl_3_6[3.4,] 	 ARGS:
-		 6: COPY TYPE_StringLiteral def_%cl_3_8 
+		 6: COPY TYPE_StringLiteral "text/plain" def_%cl_3_8 
 		 7: %cl_3_7->== def_%cl_3_9 %cl_3_7[3.5,] %cl_3_8[3.6,] 	 ARGS:%cl_3_8,
 		 8: RETURN %cl_3_9[3.7,] %self[2.0,] 
 BB 4
@@ -289,24 +289,24 @@ BB 2
 		 12: COPY TYPE_PASS def_html %v_7[2.11,] 
 		 13: 
 		 14: COPY TYPE_Regexp def_%v_8 
-		 15: COPY TYPE_StringLiteral def_%v_9 
+		 15: COPY TYPE_StringLiteral "" def_%v_9 
 		 16: %v_7->gsub! def_%v_10 %v_7[2.11,] %v_9[2.15,] 	 ARGS:%v_8,%v_9,
 		 17: 
 		 18: COPY TYPE_Regexp def_%v_11 
-		 19: COPY TYPE_StringLiteral def_%v_12 
+		 19: COPY TYPE_StringLiteral "<div class="quoted-content"><div style="display:none;">\1</div><a href="#" onclick="$(this).hide().prev().show();return false;">" def_%v_12 
 		 20: (I18n) def_%v_13 
-		 21: COPY TYPE_StringLiteral def_%v_14 
+		 21: COPY TYPE_StringLiteral "messages.show_quoted_content" def_%v_14 
 		 22: %v_13->t def_%v_15 %v_13[2.20,] %v_14[2.21,] 	 ARGS:%v_14,
-		 23: COPY TYPE_StringLiteral def_%v_16 
+		 23: COPY TYPE_StringLiteral "</a></div>" def_%v_16 
 		 24: BUILDSTRING def_%v_17 %v_12[2.19,] %v_15[2.22,] %v_16[2.23,] 
 		 25: html->gsub! def_%v_18 html[2.12,] %v_11[2.18,] %v_17[2.24,] 	 ARGS:%v_11,%v_17,
 		 26: 
 		 27: COPY TYPE_Regexp def_%v_19 
-		 28: COPY TYPE_StringLiteral def_%v_20 
+		 28: COPY TYPE_StringLiteral "<br/>" def_%v_20 
 		 29: html->gsub! def_%v_21 html[2.12,2.25,] %v_20[2.28,] 	 ARGS:%v_19,%v_20,
 		 30: 
 		 31: COPY TYPE_Regexp def_%v_22 
-		 32: COPY TYPE_StringLiteral def_%v_23 
+		 32: COPY TYPE_StringLiteral "<br/><br/>" def_%v_23 
 		 33: html->gsub! def_%v_24 html[2.12,2.25,2.29,] %v_23[2.32,] 	 ARGS:%v_22,%v_23,
 		 34: 
 		 35: html->html_safe def_%v_25 html[2.12,2.25,2.29,2.33,] 	 ARGS:
@@ -342,11 +342,11 @@ BB 2
 		 14: COPY TYPE_PASS def_body %v_7[2.13,] 
 		 15: 
 		 16: COPY TYPE_Regexp def_%v_8 
-		 17: COPY TYPE_StringLiteral def_%v_9 
+		 17: COPY TYPE_StringLiteral "<div class="quoted-content"><div style="display:none;">\0</div><a href="#" onclick="$(this).hide().prev().show();return false;">" def_%v_9 
 		 18: (I18n) def_%v_10 
-		 19: COPY TYPE_StringLiteral def_%v_11 
+		 19: COPY TYPE_StringLiteral "messages.show_quoted_content" def_%v_11 
 		 20: %v_10->t def_%v_12 %v_10[2.18,] %v_11[2.19,] 	 ARGS:%v_11,
-		 21: COPY TYPE_StringLiteral def_%v_13 
+		 21: COPY TYPE_StringLiteral "</a></div>" def_%v_13 
 		 22: BUILDSTRING def_%v_14 %v_9[2.17,] %v_12[2.20,] %v_13[2.21,] 
 		 23: body->gsub! def_%v_15 body[2.9,2.14,] %v_8[2.16,] %v_14[2.22,] 	 ARGS:%v_8,%v_14,
 		 24: 
@@ -374,7 +374,7 @@ BB 2
 		 5: RECEIVEARG def_message_body 
 		 6: 
 		 7: COPY TYPE_Regexp def_%v_3 
-		 8: COPY TYPE_StringLiteral def_%v_4 
+		 8: COPY TYPE_StringLiteral "" def_%v_4 
 		 9: message_body->gsub def_%v_5 message_body[2.5,] %v_4[2.8,] 	 ARGS:%v_3,%v_4,
 		 10: RETURN %v_5[2.9,] %self[2.0,] 
 BB 3

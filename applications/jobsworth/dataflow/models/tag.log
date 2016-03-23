@@ -14,7 +14,7 @@ BB 2
 		 4: 
 		 5: 
 		 6: %self->tasks def_%v_3 %self[2.0,] 	 ARGS:
-		 7: COPY TYPE_StringLiteral def_%v_4 
+		 7: COPY TYPE_StringLiteral "tasks.completed_at IS NULL" def_%v_4 
 		 8: %v_3->where def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 ARGS:%v_4,
 		 9: %v_5->count def_%v_6 %v_5[2.8,] 	 ARGS:
 		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
@@ -166,27 +166,35 @@ BB 4
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral def_%v_3 
+		 1: COPY TYPE_StringLiteral "          select tag_id, count(task_tags.task_id)
+          from task_tags
+          left join
+          tasks on task_tags.task_id = tasks.id
+          left join
+          task_users on task_tags.task_id = task_users.task_id
+          " def_%v_3 
 		 2: 
 		 3: BRANCH task_conditions[3.0,2.6,] 
 BB 5
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_4 
+		 0: COPY TYPE_StringLiteral "where " def_%v_4 
 		 1: BUILDSTRING def_%v_5 %v_4[5.0,] task_conditions[3.0,2.6,] 
 		 2: 
 BB 6
 	outgoing: 7 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_6 
+		 0: COPY TYPE_StringLiteral "" def_%v_6 
 		 1: COPY TYPE_PASS def_%v_5 %v_6[6.0,] 
 BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_StringLiteral def_%v_7 
+		 0: COPY TYPE_StringLiteral "
+          group by tag_id
+" def_%v_7 
 		 1: BUILDSTRING def_%v_8 %v_3[4.1,] %v_5[6.1,5.1,] %v_7[7.0,] 
 		 2: COPY TYPE_PASS def_sql %v_8[7.1,] 
 		 3: 
