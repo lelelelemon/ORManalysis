@@ -23,7 +23,7 @@ class Fast_random
 		str = ""
 		for i in 0..actual_len
 			#[A-Z][a-z][0-9][_]
-			temp = next_bound(0,26+26+10+10)
+			temp = next_bound(0,72)
 			if temp<26
 				str += (temp + 'A'.ord).chr
 			elsif temp<52
