@@ -1,0 +1,59 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf110
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww18220\viewh11500\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Started GET "/admin" for 127.0.0.1 at 2016-03-25 13:18:51 -0700\
+Processing by Admin::DashboardController#show as HTML\
+  Post Load (0.7ms)  SELECT  posts.*, max(comments.created_at), comments.post_id FROM "posts" INNER JOIN comments ON comments.post_id = posts.id GROUP BY comments.post_id, posts.id, posts.title, posts.slug, posts.body, posts.body_html, posts.active, posts.approved_comments_count, posts.cached_tag_list, posts.published_at, posts.created_at, posts.updated_at, posts.edited_at  ORDER BY max(comments.created_at) desc LIMIT 5\
+   (0.2ms)  SELECT COUNT(*) FROM "posts"\
+   (0.1ms)  SELECT COUNT(*) FROM "comments"\
+   (0.2ms)  SELECT COUNT(*) FROM "tags"\
+  Post Load (0.3ms)  SELECT  "posts".* FROM "posts" WHERE (published_at < '2016-03-25 20:18:51.701157')  ORDER BY published_at DESC LIMIT 8\
+  Rendered admin/dashboard/show.html.erb within layouts/admin (17.0ms)\
+Completed 200 OK in 151ms (Views: 130.8ms | ActiveRecord: 1.7ms)\
+\
+Started POST "/admin/posts" for 127.0.0.1 at 2016-03-25 13:19:52 -0700\
+Processing by Admin::PostsController#create as HTML\
+  Parameters: \{"utf8"=>"
+\f1 \uc0\u10003 
+\f0 ", "authenticity_token"=>"qVK+zKOKq1TYlTJxdFNU1pJ3XQs4kxix3rTZRWQOPU8rDtCAdklGOb48YY/MYH90OC/KA1421xtTKzmZmVnm/w==", "post"=>\{"title"=>"new post", "body"=>"I don't know what to write so let's just leave as it is.", "tag_list"=>"ruby", "published_at_natural"=>"now", "slug"=>""\}, "button"=>""\}\
+   (0.5ms)  begin transaction\
+  SQL (1.3ms)  INSERT INTO "posts" ("slug", "title", "body", "edited_at", "published_at", "cached_tag_list", "body_html", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["slug", "new-post"], ["title", "new post"], ["body", "I don't know what to write so let's just leave as it is."], ["edited_at", "2016-03-25 20:19:52.527607"], ["published_at", "2016-03-25 20:19:52.528049"], ["cached_tag_list", "ruby"], ["body_html", "<p>I don&#8217;t know what to write so let&#8217;s just leave as it is.</p>"], ["created_at", "2016-03-25 20:19:52.539929"], ["updated_at", "2016-03-25 20:19:52.539929"]]\
+  Tag Load (0.3ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ?  [["taggable_id", 1]]\
+  Tagging Load (0.2ms)  SELECT "taggings".* FROM "taggings" WHERE "taggings"."taggable_id" = ?  [["taggable_id", 1]]\
+  Tag Load (0.2ms)  SELECT  "tags".* FROM "tags" WHERE (name LIKE 'ruby')  ORDER BY "tags"."id" ASC LIMIT 1\
+  Tag Exists (0.1ms)  SELECT  1 AS one FROM "tags" WHERE "tags"."name" = 'ruby' LIMIT 1\
+  SQL (0.2ms)  INSERT INTO "tags" ("name") VALUES (?)  [["name", "ruby"]]\
+  SQL (0.2ms)  INSERT INTO "taggings" ("taggable_id", "tag_id", "created_at") VALUES (?, ?, ?)  [["taggable_id", 1], ["tag_id", 1], ["created_at", "2016-03-25 20:19:52.592722"]]\
+  SQL (0.4ms)  UPDATE "tags" SET "taggings_count" = COALESCE("taggings_count", 0) + 1 WHERE "tags"."id" = ?  [["id", 1]]\
+   (1.5ms)  commit transaction\
+Redirected to http://localhost:3000/admin/posts/1\
+Completed 302 Found in 82ms (ActiveRecord: 4.8ms)\
+\
+\
+Started POST "/admin/pages" for 127.0.0.1 at 2016-03-25 13:22:03 -0700\
+Processing by Admin::PagesController#create as HTML\
+  Parameters: \{"utf8"=>"
+\f1 \uc0\u10003 
+\f0 ", "authenticity_token"=>"+dRdXBimvy+4RrgWu6de5yZJXtpkvFm3yoeTdF3hyeV7iDMQzWVSQt7v6+gDlHVFjBHJ0gIZlh1HGHOooLYSVQ==", "page"=>\{"title"=>"new page title", "slug"=>"", "body"=>"What should I put on a new page???"\}, "button"=>""\}\
+   (0.3ms)  begin transaction\
+  SQL (1.2ms)  INSERT INTO "pages" ("slug", "title", "body", "body_html", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["slug", "new-page-title"], ["title", "new page title"], ["body", "What should I put on a new page???"], ["body_html", "<p>What should I put on a new page???</p>"], ["created_at", "2016-03-25 20:22:03.996722"], ["updated_at", "2016-03-25 20:22:03.996722"]]\
+   (2.3ms)  commit transaction\
+Redirected to http://localhost:3000/admin/pages/1\
+Completed 302 Found in 15ms (ActiveRecord: 3.7ms)\
+\
+\
+Started GET "/pages/new-page-title" for 127.0.0.1 at 2016-03-25 13:23:15 -0700\
+Processing by PagesController#show as HTML\
+  Parameters: \{"id"=>"new-page-title"\}\
+  Page Load (0.7ms)  SELECT  "pages".* FROM "pages" WHERE "pages"."slug" = ? LIMIT 1  [["slug", "new-page-title"]]\
+  Rendered pages/_page.html.erb (0.7ms)\
+  Rendered pages/show.html.erb within layouts/application (5.3ms)\
+  Page Load (0.2ms)  SELECT "pages".* FROM "pages"  ORDER BY title\
+  Post Load (0.2ms)  SELECT "posts".* FROM "posts" WHERE ("posts"."published_at" IS NOT NULL)\
+  Tag Load (0.1ms)  SELECT "tags".* FROM "tags" WHERE "tags"."name" = 'ruby'\
+  CACHE (0.0ms)  SELECT "posts".* FROM "posts" WHERE ("posts"."published_at" IS NOT NULL)\
+  CACHE (0.0ms)  SELECT "tags".* FROM "tags" WHERE "tags"."name" = 'ruby'\
+Completed 200 OK in 46ms (Views: 39.4ms | ActiveRecord: 1.3ms)}

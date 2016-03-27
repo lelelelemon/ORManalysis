@@ -1,0 +1,153 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf110
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww15800\viewh9760\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Started POST "/setup" for 127.0.0.1 at 2016-03-01 23:29:21 -0800\
+Processing by SetupsController#create as HTML\
+  Parameters: \{"utf8"=>"
+\f1 \uc0\u10003 
+\f0 ", "authenticity_token"=>"w+WWKeRcHNSC2u4QynJ7XBjRpjeeRdwakM/Gca44BMNG6mPWQBM0YYdxaboyR7Bj4nq2TGLq0op+Yehoc0aHZg==", "domain_name"=>"stackoverflow.com", "person"=>\{"first_name"=>"admin", "last_name"=>"admin", "email"=>"admin@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"\}, "button"=>""\}\
+  Site Load (6.2ms)  SELECT  `sites`.* FROM `sites` WHERE `sites`.`id` = 1  ORDER BY `sites`.`id` ASC LIMIT 1\
+   (0.3ms)  SELECT COUNT(*) FROM `people` WHERE `people`.`site_id` = 1\
+   (1.8ms)  BEGIN\
+  Site Exists (0.5ms)  SELECT  1 AS one FROM `sites` WHERE (`sites`.`name` = BINARY 'Default' AND `sites`.`id` != 1) LIMIT 1\
+  Site Exists (0.3ms)  SELECT  1 AS one FROM `sites` WHERE (`sites`.`host` = BINARY 'stackoverflow.com' AND `sites`.`id` != 1) LIMIT 1\
+  SQL (0.8ms)  UPDATE `sites` SET `host` = 'stackoverflow.com', `updated_at` = '2016-03-02 07:29:21' WHERE `sites`.`id` = 1\
+  Setting Load (0.3ms)  SELECT  `settings`.* FROM `settings` WHERE `settings`.`site_id` = 1 AND `settings`.`section` = 'URL' AND `settings`.`name` = 'Site'  ORDER BY `settings`.`id` ASC LIMIT 1\
+  SQL (0.2ms)  UPDATE `settings` SET `value` = 'http://stackoverflow.com/', `updated_at` = '2016-03-02 07:29:21' WHERE `settings`.`id` = 45\
+  Setting Load (0.4ms)  SELECT `settings`.* FROM `settings`\
+  SQL (0.2ms)  INSERT INTO `families` (`site_id`, `name`, `last_name`, `country`, `updated_at`) VALUES (1, 'admin admin', 'admin', 'US', '2016-03-02 07:29:21')\
+  Site Load (0.3ms)  SELECT  `sites`.* FROM `sites` WHERE `sites`.`id` = 1 LIMIT 1\
+[ActiveJob] Enqueued GeocoderJob (Job ID: c165651c-2430-4580-9a44-48519e16b7ef) to SuckerPunch(geocode) with arguments: gid://one-body/Site/1, "Family", 1\
+  Site Load (0.5ms)  SELECT  `sites`.* FROM `sites` WHERE `sites`.`id` = 1 LIMIT 1\
+[ActiveJob] [GeocoderJob] [c165651c-2430-4580-9a44-48519e16b7ef] Performing GeocoderJob from SuckerPunch(geocode) with arguments: gid://one-body/Site/1, "Family", 1\
+  SQL (0.7ms)  INSERT INTO `admins` (`site_id`, `super_admin`, `flags`, `created_at`, `updated_at`) VALUES (1, 1, '--- \{\}\\n', '2016-03-02 07:29:21', '2016-03-02 07:29:21')\
+[ActiveJob] [GeocoderJob] [c165651c-2430-4580-9a44-48519e16b7ef]    (6.9ms)  SELECT GET_LOCK('geocode', 0) AS t8e98b22ddb66c9f9780c37492d50d37f\
+[ActiveJob] [GeocoderJob] [c165651c-2430-4580-9a44-48519e16b7ef]   Family Load (0.2ms)  SELECT  `families`.* FROM `families` WHERE `families`.`site_id` = 1 AND `families`.`id` = 1 LIMIT 1\
+[ActiveJob] [GeocoderJob] [c165651c-2430-4580-9a44-48519e16b7ef]    (0.2ms)  SELECT RELEASE_LOCK('geocode') AS t74450da9a1cbbdc0ba215bed09fcb6c0\
+[ActiveJob] [GeocoderJob] [c165651c-2430-4580-9a44-48519e16b7ef] Performed GeocoderJob from SuckerPunch(geocode) in 24.75ms\
+Actor crashed!\
+Setting Load (8.7ms)  SELECT  `settings`.* FROM `settings` WHERE `settings`.`section` = 'Contact' AND `settings`.`name` = 'Bug Notification Email' AND `settings`.`site_id` IS NULL  ORDER BY `settings`.`id` ASC LIMIT 1\
+  Setting Load (0.3ms)  SELECT `settings`.* FROM `settings`\
+  Setting Load (0.3ms)  SELECT  `settings`.* FROM `settings` WHERE `settings`.`site_id` = 1 AND `settings`.`section` = 'Contact' AND `settings`.`name` = 'Tech Support Email'  ORDER BY `settings`.`id` ASC LIMIT 1\
+  CACHE (0.0ms)  SELECT `settings`.* FROM `settings`\
+  StreamItem Load (0.2ms)  SELECT  `stream_items`.* FROM `stream_items` WHERE `stream_items`.`site_id` = 1 AND `stream_items`.`streamable_id` = 1 AND `stream_items`.`streamable_type` = 'Site' LIMIT 1\
+   (1.7ms)  COMMIT\
+\
+\
+\
+\
+Started GET "/stream" for 127.0.0.1 at 2016-03-01 23:29:22 -0800\
+Processing by StreamsController#show as HTML\
+  Site Load (0.3ms)  SELECT  `sites`.* FROM `sites` WHERE `sites`.`id` = 1  ORDER BY `sites`.`id` ASC LIMIT 1\
+  Person Load (0.3ms)  SELECT  `people`.* FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`id` = 1  ORDER BY `people`.`id` ASC LIMIT 1\
+   (0.3ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0\
+  Family Load (0.3ms)  SELECT  `families`.* FROM `families` WHERE `families`.`site_id` = 1 AND `families`.`id` = 1 LIMIT 1\
+   (1.2ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`family_id` = 1 AND `people`.`deleted` = 0 AND (`people`.`id` != 1)  ORDER BY `people`.`position` ASC\
+   (0.5ms)  SELECT `people`.`id` FROM `people` INNER JOIN `friendships` ON `people`.`id` = `friendships`.`friend_id` WHERE `people`.`site_id` = 1 AND `friendships`.`site_id` = 1 AND `friendships`.`person_id` = 1  ORDER BY people.last_name, people.first_name\
+   (0.4ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0 AND ((select count(*) from memberships where group_id=groups.id) <= 75)\
+   (0.2ms)  SELECT `people`.`id`, group_id FROM `people` INNER JOIN `memberships` ON `memberships`.`person_id` = `people`.`id` AND `memberships`.`site_id` = 1 WHERE `people`.`site_id` = 1 AND (memberships.group_id in (NULL)) AND (people.id != 1)\
+   (0.2ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND 1=0\
+   (0.4ms)  SELECT COUNT(*) FROM `stream_items` WHERE `stream_items`.`site_id` = 1 AND `stream_items`.`streamable_type` IN ('Message', 'NewsItem', 'Verse', 'Album', 'Note', 'Person', 'PrayerRequest', 'Site', 'StreamItemGroup') AND `stream_items`.`shared` = 1 AND ((group_id is not null or streamable_type != 'Message')) AND ((group_id in (NULL) or (group_id is null and person_id in (NULL)) or person_id = 1 or streamable_type in ('NewsItem', 'Site', 'Person') or is_public = 1)) AND (streamable_type != 'Person' or person_id != 1) AND `stream_items`.`stream_item_group_id` IS NULL\
+  StreamItem Load (0.4ms)  SELECT  `stream_items`.* FROM `stream_items` WHERE `stream_items`.`site_id` = 1 AND `stream_items`.`streamable_type` IN ('Message', 'NewsItem', 'Verse', 'Album', 'Note', 'Person', 'PrayerRequest', 'Site', 'StreamItemGroup') AND `stream_items`.`shared` = 1 AND ((group_id is not null or streamable_type != 'Message')) AND ((group_id in (NULL) or (group_id is null and person_id in (NULL)) or person_id = 1 or streamable_type in ('NewsItem', 'Site', 'Person') or is_public = 1)) AND (streamable_type != 'Person' or person_id != 1) AND `stream_items`.`stream_item_group_id` IS NULL  ORDER BY `stream_items`.`created_at` DESC LIMIT 1 OFFSET 0\
+  CACHE (0.0ms)  SELECT COUNT(*) FROM `stream_items` WHERE `stream_items`.`site_id` = 1 AND `stream_items`.`streamable_type` IN ('Message', 'NewsItem', 'Verse', 'Album', 'Note', 'Person', 'PrayerRequest', 'Site', 'StreamItemGroup') AND `stream_items`.`shared` = 1 AND ((group_id is not null or streamable_type != 'Message')) AND ((group_id in (NULL) or (group_id is null and person_id in (NULL)) or person_id = 1 or streamable_type in ('NewsItem', 'Site', 'Person') or is_public = 1)) AND (streamable_type != 'Person' or person_id != 1) AND `stream_items`.`stream_item_group_id` IS NULL  [["site_id", 1], ["shared", true]]\
+  FriendshipRequest Exists (0.2ms)  SELECT  1 AS one FROM `friendship_requests` WHERE `friendship_requests`.`site_id` = 1 AND `friendship_requests`.`person_id` = 1 AND `friendship_requests`.`rejected` = 0 LIMIT 1\
+   (0.3ms)  SELECT COUNT(*) FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0\
+  CACHE (0.0ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`family_id` = 1 AND `people`.`deleted` = 0 AND (`people`.`id` != 1)  ORDER BY `people`.`position` ASC  [["site_id", 1], ["family_id", 1], ["deleted", false], ["id", 1]]\
+  CACHE (0.0ms)  SELECT `people`.`id` FROM `people` INNER JOIN `friendships` ON `people`.`id` = `friendships`.`friend_id` WHERE `people`.`site_id` = 1 AND `friendships`.`site_id` = 1 AND `friendships`.`person_id` = 1  ORDER BY people.last_name, people.first_name  [["site_id", 1], ["site_id", 1], ["person_id", 1]]\
+  CACHE (0.0ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0 AND ((select count(*) from memberships where group_id=groups.id) <= 75)  [["site_id", 1], ["site_id", 1], ["person_id", 1], ["hidden", false]]\
+  CACHE (0.0ms)  SELECT `people`.`id`, group_id FROM `people` INNER JOIN `memberships` ON `memberships`.`person_id` = `people`.`id` AND `memberships`.`site_id` = 1 WHERE `people`.`site_id` = 1 AND (memberships.group_id in (NULL)) AND (people.id != 1)  [["site_id", 1], ["site_id", 1]]\
+   (0.2ms)  SELECT COUNT(*) FROM `people` WHERE `people`.`site_id` = 1 AND 1=0\
+   (0.3ms)  SELECT COUNT(*) FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`deleted` = 0 AND `people`.`status` IN (1, 2) AND (child = 0 or coalesce(parental_consent, '') != '')\
+  Rendered streams/show.html.haml within layouts/default (43.4ms)\
+  Rendered layouts/_favicons.haml (0.4ms)\
+  Rendered layouts/_navbar_right.haml (23.9ms)\
+  CACHE (0.0ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0  [["site_id", 1], ["site_id", 1], ["person_id", 1], ["hidden", false]]\
+  CACHE (0.0ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`family_id` = 1 AND `people`.`deleted` = 0 AND (`people`.`id` != 1)  ORDER BY `people`.`position` ASC  [["site_id", 1], ["family_id", 1], ["deleted", false], ["id", 1]]\
+  CACHE (0.1ms)  SELECT `people`.`id` FROM `people` INNER JOIN `friendships` ON `people`.`id` = `friendships`.`friend_id` WHERE `people`.`site_id` = 1 AND `friendships`.`site_id` = 1 AND `friendships`.`person_id` = 1  ORDER BY people.last_name, people.first_name  [["site_id", 1], ["site_id", 1], ["person_id", 1]]\
+  CACHE (0.0ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0 AND ((select count(*) from memberships where group_id=groups.id) <= 75)  [["site_id", 1], ["site_id", 1], ["person_id", 1], ["hidden", false]]\
+  CACHE (0.0ms)  SELECT `people`.`id`, group_id FROM `people` INNER JOIN `memberships` ON `memberships`.`person_id` = `people`.`id` AND `memberships`.`site_id` = 1 WHERE `people`.`site_id` = 1 AND (memberships.group_id in (NULL)) AND (people.id != 1)  [["site_id", 1], ["site_id", 1]]\
+  CACHE (0.0ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND 1=0  [["site_id", 1]]\
+   (0.9ms)  SELECT COUNT(distinct stream_items.id) FROM `stream_items` LEFT OUTER JOIN `people` ON `people`.`id` = `stream_items`.`person_id` AND `people`.`site_id` = 1 LEFT OUTER JOIN `groups` ON `groups`.`id` = `stream_items`.`group_id` AND `groups`.`site_id` = 1 WHERE `stream_items`.`site_id` = 1 AND `stream_items`.`streamable_type` IN ('Message', 'NewsItem', 'Verse', 'Album', 'Note', 'Person', 'PrayerRequest', 'Site', 'StreamItemGroup') AND `stream_items`.`shared` = 1 AND ((group_id is not null or streamable_type != 'Message')) AND ((group_id in (NULL) or (group_id is null and person_id in (NULL)) or person_id = 1 or streamable_type in ('NewsItem', 'Site', 'Person') or is_public = 1)) AND (streamable_type != 'Person' or person_id != 1) AND `stream_items`.`stream_item_group_id` IS NULL AND (stream_items.created_at > '2016-03-02 07:29:22.473151')\
+  Admin Load (0.3ms)  SELECT  `admins`.* FROM `admins` WHERE `admins`.`site_id` = 1 AND `admins`.`id` = 1 LIMIT 1\
+   (0.3ms)  SELECT COUNT(*) FROM `groups` WHERE `groups`.`site_id` = 1 AND (id > 0)\
+  Rendered layouts/_sidebar_right.haml (9.6ms)\
+  Rendered layouts/_footer_links.haml (0.6ms)\
+\
+\
+\
+Started GET "/groups" for 127.0.0.1 at 2016-03-01 23:30:30 -0800\
+Processing by GroupsController#index as HTML\
+  Site Load (0.4ms)  SELECT  `sites`.* FROM `sites` WHERE `sites`.`id` = 1  ORDER BY `sites`.`id` ASC LIMIT 1\
+  Person Load (1.0ms)  SELECT  `people`.* FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`id` = 1  ORDER BY `people`.`id` ASC LIMIT 1\
+  Admin Load (1.0ms)  SELECT  `admins`.* FROM `admins` WHERE `admins`.`site_id` = 1 AND `admins`.`id` = 1 LIMIT 1\
+  Group Load (0.5ms)  select category, count(*) as group_count from groups where category is not null and category != '' and category != 'Subscription' and site_id = 1 group by category\
+   (0.4ms)  SELECT MAX(`groups`.`id`) FROM `groups` WHERE `groups`.`site_id` = 1\
+   (0.1ms)  BEGIN\
+   (0.4ms)  SELECT COUNT(*) FROM `people` WHERE `people`.`family_id` = 1 AND (position = 1)\
+  Family Load (0.5ms)  SELECT  `families`.* FROM `families` WHERE `families`.`site_id` = 1 AND `families`.`id` = 1 LIMIT 1\
+   (0.1ms)  COMMIT\
+   (0.3ms)  SELECT COUNT(*) FROM `groups` WHERE `groups`.`site_id` = 1 AND `groups`.`approved` = 0\
+   (0.4ms)  SELECT COUNT(*) FROM `groups` WHERE `groups`.`site_id` = 1 AND (id > 0)\
+   (0.1ms)  SELECT COUNT(*) FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0\
+  Group Exists (0.3ms)  SELECT  1 AS one FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 LIMIT 1\
+  Rendered groups/_person_groups.haml (14.5ms)\
+  Rendered groups/index.html.haml within layouts/default (34.7ms)\
+  Rendered layouts/_favicons.haml (0.4ms)\
+  Rendered layouts/_navbar_right.haml (1.8ms)\
+   (0.1ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0\
+   (0.1ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`family_id` = 1 AND `people`.`deleted` = 0 AND (`people`.`id` != 1)  ORDER BY `people`.`position` ASC\
+   (0.2ms)  SELECT `people`.`id` FROM `people` INNER JOIN `friendships` ON `people`.`id` = `friendships`.`friend_id` WHERE `people`.`site_id` = 1 AND `friendships`.`site_id` = 1 AND `friendships`.`person_id` = 1  ORDER BY people.last_name, people.first_name\
+   (0.1ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0 AND ((select count(*) from memberships where group_id=groups.id) <= 75)\
+   (0.1ms)  SELECT `people`.`id`, group_id FROM `people` INNER JOIN `memberships` ON `memberships`.`person_id` = `people`.`id` AND `memberships`.`site_id` = 1 WHERE `people`.`site_id` = 1 AND (memberships.group_id in (NULL)) AND (people.id != 1)\
+   (0.0ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND 1=0\
+   (0.7ms)  SELECT COUNT(distinct stream_items.id) FROM `stream_items` LEFT OUTER JOIN `people` ON `people`.`id` = `stream_items`.`person_id` AND `people`.`site_id` = 1 LEFT OUTER JOIN `groups` ON `groups`.`id` = `stream_items`.`group_id` AND `groups`.`site_id` = 1 WHERE `stream_items`.`site_id` = 1 AND `stream_items`.`streamable_type` IN ('Message', 'NewsItem', 'Verse', 'Album', 'Note', 'Person', 'PrayerRequest', 'Site', 'StreamItemGroup') AND `stream_items`.`shared` = 1 AND ((group_id is not null or streamable_type != 'Message')) AND ((group_id in (NULL) or (group_id is null and person_id in (NULL)) or person_id = 1 or streamable_type in ('NewsItem', 'Site', 'Person') or is_public = 1)) AND (streamable_type != 'Person' or person_id != 1) AND `stream_items`.`stream_item_group_id` IS NULL AND (stream_items.created_at > '2016-03-02 07:30:30.684376')\
+  CACHE (0.0ms)  SELECT COUNT(*) FROM `groups` WHERE `groups`.`site_id` = 1 AND (id > 0)  [["site_id", 1]]\
+  Rendered layouts/_sidebar_right.haml (2.6ms)\
+  Rendered layouts/_footer_links.haml (0.6ms)\
+Completed 200 OK in 367ms (Views: 322.7ms | ActiveRecord: 7.6ms)\
+\
+\
+\
+\
+Started GET "/groups/new" for 127.0.0.1 at 2016-03-01 23:31:02 -0800\
+Processing by GroupsController#new as HTML\
+  Site Load (0.3ms)  SELECT  `sites`.* FROM `sites` WHERE `sites`.`id` = 1  ORDER BY `sites`.`id` ASC LIMIT 1\
+  Person Load (0.2ms)  SELECT  `people`.* FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`id` = 1  ORDER BY `people`.`id` ASC LIMIT 1\
+  Admin Load (0.2ms)  SELECT  `admins`.* FROM `admins` WHERE `admins`.`site_id` = 1 AND `admins`.`id` = 1 LIMIT 1\
+  Group Load (0.2ms)  select category, count(*) as group_count from groups where category is not null and category != '' and category != 'Subscription' and site_id = 1 group by category\
+  CACHE (0.0ms)  select category, count(*) as group_count from groups where category is not null and category != '' and category != 'Subscription' and site_id = 1 group by category\
+  Person Load (0.5ms)  SELECT  `people`.* FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`id` = 1 LIMIT 1\
+  Rendered groups/_form_details.haml (31.8ms)\
+  Rendered groups/_form_meets.haml (4.5ms)\
+  Rendered groups/_form_features.haml (22.2ms)\
+  Rendered groups/_form_security.haml (4.5ms)\
+   (0.3ms)  SELECT COUNT(*) FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`deleted` = 0 AND `people`.`child` = 0\
+  Group Load (0.5ms)  SELECT `groups`.* FROM `groups` WHERE `groups`.`site_id` = 1 AND `groups`.`hidden` = 0  ORDER BY name\
+  Rendered groups/_form_advanced.haml (11.9ms)\
+  Rendered photos/_upload.haml (13.6ms)\
+  Rendered groups/_form.haml (124.6ms)\
+  Rendered groups/new.html.haml within layouts/default (128.9ms)\
+  Rendered layouts/_favicons.haml (0.4ms)\
+  Rendered layouts/_navbar_right.haml (2.3ms)\
+   (0.2ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0\
+  Family Load (0.1ms)  SELECT  `families`.* FROM `families` WHERE `families`.`site_id` = 1 AND `families`.`id` = 1 LIMIT 1\
+   (1.5ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND `people`.`family_id` = 1 AND `people`.`deleted` = 0 AND (`people`.`id` != 1)  ORDER BY `people`.`position` ASC\
+   (2.4ms)  SELECT `people`.`id` FROM `people` INNER JOIN `friendships` ON `people`.`id` = `friendships`.`friend_id` WHERE `people`.`site_id` = 1 AND `friendships`.`site_id` = 1 AND `friendships`.`person_id` = 1  ORDER BY people.last_name, people.first_name\
+   (0.5ms)  SELECT `groups`.`id` FROM `groups` INNER JOIN `memberships` ON `groups`.`id` = `memberships`.`group_id` WHERE `groups`.`site_id` = 1 AND `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `groups`.`hidden` = 0 AND ((select count(*) from memberships where group_id=groups.id) <= 75)\
+   (1.6ms)  SELECT `people`.`id`, group_id FROM `people` INNER JOIN `memberships` ON `memberships`.`person_id` = `people`.`id` AND `memberships`.`site_id` = 1 WHERE `people`.`site_id` = 1 AND (memberships.group_id in (NULL)) AND (people.id != 1)\
+   (0.2ms)  SELECT `people`.`id` FROM `people` WHERE `people`.`site_id` = 1 AND 1=0\
+   (0.9ms)  SELECT COUNT(distinct stream_items.id) FROM `stream_items` LEFT OUTER JOIN `people` ON `people`.`id` = `stream_items`.`person_id` AND `people`.`site_id` = 1 LEFT OUTER JOIN `groups` ON `groups`.`id` = `stream_items`.`group_id` AND `groups`.`site_id` = 1 WHERE `stream_items`.`site_id` = 1 AND `stream_items`.`streamable_type` IN ('Message', 'NewsItem', 'Verse', 'Album', 'Note', 'Person', 'PrayerRequest', 'Site', 'StreamItemGroup') AND `stream_items`.`shared` = 1 AND ((group_id is not null or streamable_type != 'Message')) AND ((group_id in (NULL) or (group_id is null and person_id in (NULL)) or person_id = 1 or streamable_type in ('NewsItem', 'Site', 'Person') or is_public = 1)) AND (streamable_type != 'Person' or person_id != 1) AND `stream_items`.`stream_item_group_id` IS NULL AND (stream_items.created_at > '2016-03-02 07:31:02.926198')\
+   (0.6ms)  SELECT COUNT(*) FROM `memberships` WHERE `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `memberships`.`group_id` IS NULL\
+  CACHE (0.0ms)  SELECT COUNT(*) FROM `memberships` WHERE `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `memberships`.`group_id` IS NULL  [["site_id", 1], ["person_id", 1]]\
+   (0.1ms)  SELECT COUNT(*) FROM `groups` WHERE `groups`.`site_id` = 1 AND (id > 0)\
+  CACHE (0.0ms)  SELECT COUNT(*) FROM `memberships` WHERE `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `memberships`.`group_id` IS NULL  [["site_id", 1], ["person_id", 1]]\
+  CACHE (0.0ms)  SELECT COUNT(*) FROM `memberships` WHERE `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `memberships`.`group_id` IS NULL  [["site_id", 1], ["person_id", 1]]\
+  CACHE (0.0ms)  SELECT COUNT(*) FROM `memberships` WHERE `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `memberships`.`group_id` IS NULL  [["site_id", 1], ["person_id", 1]]\
+  CACHE (0.0ms)  SELECT COUNT(*) FROM `memberships` WHERE `memberships`.`site_id` = 1 AND `memberships`.`person_id` = 1 AND `memberships`.`group_id` IS NULL  [["site_id", 1], ["person_id", 1]]\
+  Rendered layouts/_sidebar_right.haml (2.8ms)\
+  Rendered layouts/_footer_links.haml (0.6ms)\
+Completed 200 OK in 439ms (Views: 355.5ms | ActiveRecord: 12.6ms)\
+}

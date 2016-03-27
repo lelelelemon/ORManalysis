@@ -1,0 +1,555 @@
+Started POST "/users" for 127.0.0.1 at 2015-12-28 22:11:43 -0800
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"9JokUZaRTIq9/XjoZqZCtFFPWruoehOJMdg7Y0fq9x0=", "user"=>{"login"=>"admin1", "email"=>"admin@example.com", "birthday(1i)"=>"1990", "birthday(2i)"=>"12", "birthday(3i)"=>"28", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "inviter_id"=>"", "inviter_code"=>"", "commit"=>"Sign Up!"}
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+   (0.2ms)  begin transaction
+  User Exists (0.2ms)  SELECT 1 AS one FROM "users" WHERE ("users"."id" IS NOT NULL) AND "users"."login_slug" = 'admin1' LIMIT 1
+  User Exists (0.1ms)  SELECT 1 AS one FROM "users" WHERE "users"."email" = 'admin@example.com' LIMIT 1
+  User Exists (0.1ms)  SELECT 1 AS one FROM "users" WHERE LOWER("users"."login") = LOWER('admin1') LIMIT 1
+  User Exists (0.1ms)  SELECT 1 AS one FROM "users" WHERE "users"."persistence_token" = 'e9379ce52b242b7ec73678d772761dc8dd6b9a2388ade404aabea2780523ead57277460b85ca86e0dc3c107a03b29d128f2f0f1a440e7a5e71c4a6ee5bb0409c' LIMIT 1
+  User Exists (0.1ms)  SELECT 1 AS one FROM "users" WHERE "users"."single_access_token" = 'q9o4RbDzLHJiFeiY4ZN' LIMIT 1
+  User Exists (0.1ms)  SELECT 1 AS one FROM "users" WHERE "users"."login" = 'admin1' LIMIT 1
+Binary data inserted for `string` type on column `crypted_password`
+  SQL (1.2ms)  INSERT INTO "users" ("activation_code", "birthday", "created_at", "crypted_password", "description", "email", "login", "login_slug", "password_salt", "perishable_token", "persistence_token", "role_id", "single_access_token", "stylesheet", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["activation_code", "dbc8f977e546eb07aa8c0ec1b20d49dda59b4ef3"], ["birthday", Fri, 28 Dec 1990], ["created_at", Tue, 29 Dec 2015 06:11:43 UTC +00:00], ["crypted_password", "$2a$10$imktXspPtkkoxWnj7xkSMuaBTV/jhHv9AdQgmuYSs7pz0ndHpIzLe"], ["description", ""], ["email", "admin@example.com"], ["login", "admin1"], ["login_slug", "admin1"], ["password_salt", "i6L299WbiX2n8r2JeGq7"], ["perishable_token", "mXcTp7GliwKyxdv0jrHZ"], ["persistence_token", "e9379ce52b242b7ec73678d772761dc8dd6b9a2388ade404aabea2780523ead57277460b85ca86e0dc3c107a03b29d128f2f0f1a440e7a5e71c4a6ee5bb0409c"], ["role_id", 3], ["single_access_token", "q9o4RbDzLHJiFeiY4ZN"], ["stylesheet", ""], ["updated_at", Tue, 29 Dec 2015 06:11:43 UTC +00:00]]
+Binary data inserted for `string` type on column `crypted_password`
+  SQL (1.0ms)  UPDATE "users" SET "email" = ?, "login" = ?, "password_salt" = ?, "crypted_password" = ?, "persistence_token" = ?, "birthday" = ?, "role_id" = ?, "login_slug" = ?, "single_access_token" = ?, "perishable_token" = ?, "description" = ?, "stylesheet" = ?, "created_at" = ?, "updated_at" = ?, "activation_code" = ?, "id" = ?, "last_login_at" = ? WHERE "users"."id" = 1  [["email", "admin@example.com"], ["login", "admin1"], ["password_salt", "i6L299WbiX2n8r2JeGq7"], ["crypted_password", "$2a$10$imktXspPtkkoxWnj7xkSMuaBTV/jhHv9AdQgmuYSs7pz0ndHpIzLe"], ["persistence_token", "e9379ce52b242b7ec73678d772761dc8dd6b9a2388ade404aabea2780523ead57277460b85ca86e0dc3c107a03b29d128f2f0f1a440e7a5e71c4a6ee5bb0409c"], ["birthday", Fri, 28 Dec 1990], ["role_id", 3], ["login_slug", "admin1"], ["single_access_token", "q9o4RbDzLHJiFeiY4ZN"], ["perishable_token", "YPKzVIoMSwBtrwuhu1U"], ["description", ""], ["stylesheet", ""], ["created_at", Tue, 29 Dec 2015 06:11:43 UTC +00:00], ["updated_at", Tue, 29 Dec 2015 06:11:43 UTC +00:00], ["activation_code", "dbc8f977e546eb07aa8c0ec1b20d49dda59b4ef3"], ["id", 1], ["last_login_at", Tue, 29 Dec 2015 06:11:43 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.2ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+  Rendered /home/basevm/communityengine/app/views/user_notifier/signup_notification.text.erb (0.8ms)
+
+Sent mail to admin@example.com (7.0ms)
+Date: Mon, 28 Dec 2015 22:11:43 -0800
+From: The Test Application Team <support@community.com>
+To: admin@example.com
+Message-ID: <5682241faabfc_e293fcf88aa38f819b@ubuntu.mail>
+Subject: [Test Application] Please activate your new Test Application account
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Welcome to Test Application, admin1!
+Your account has been created, but you still need to activate it before you can log in.
+Here's the skinny:
+
+  Your username: admin1
+
+Use this link to activate your account:
+
+  http://example.com/users/dbc8f977e546eb07aa8c0ec1b20d49dda59b4ef3/activate
+
+Can't click the link? Just copy and paste it into your address bar.
+
+Questions? Easy: support@community.com.
+
+Hope to see you hanging out on Test Application really soon!
+The Test Application team
+   (4.1ms)  commit transaction
+Redirected to http://localhost:3000/users/admin1/signup_completed
+Completed 302 Found in 555ms (ActiveRecord: 7.6ms)
+
+
+Started GET "/users/admin1/signup_completed" for 127.0.0.1 at 2015-12-28 22:11:43 -0800
+Processing by UsersController#signup_completed as HTML
+  Parameters: {"id"=>"admin1"}
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  User Load (0.4ms)  SELECT "users".* FROM "users" WHERE "users"."login_slug" = 'admin1' ORDER BY "users"."id" ASC LIMIT 1
+  Rendered /home/basevm/communityengine/app/views/users/signup_completed.html.haml within layouts/application (2.4ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.4ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.1ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (1.0ms)
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (11.5ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.1ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.8ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (0.9ms)
+Completed 200 OK in 31ms (Views: 27.8ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/footer_content" for 127.0.0.1 at 2015-12-28 22:11:44 -0800
+Processing by BaseController#footer_content as */*
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  ActsAsTaggableOn::Tag Load (11.6ms)  SELECT "tags".id, "tags".name, COUNT("tags".id) AS count FROM "tags" INNER JOIN "taggings" ON "taggings"."tag_id" = "tags"."id" GROUP BY "tags".id, "tags".name HAVING COUNT("taggings".id) >= 0 ORDER BY count DESC LIMIT 30
+  Activity Load (4.6ms)  SELECT activities.* FROM "activities" LEFT JOIN users ON users.id = activities.user_id WHERE (users.activated_at IS NOT NULL) ORDER BY activities.created_at DESC LIMIT 10 OFFSET 0
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_content.html.haml (6.7ms)
+Completed 200 OK in 29ms (Views: 6.2ms | ActiveRecord: 16.2ms)
+
+
+Started GET "/account/edit" for 127.0.0.1 at 2015-12-28 23:42:16 -0800
+Processing by UsersController#edit_account as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  User Load (31.3ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.4ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 07:42:16 UTC +00:00], ["perishable_token", "pvlH7EjDzHce6xC8CcH0"], ["updated_at", Tue, 29 Dec 2015 07:42:16 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (2.7ms)  commit transaction
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.6ms)
+  Authorization Load (0.1ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ?  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/users/_omniauth_connect.html.haml (2.3ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/users/edit_account.html.haml within layouts/application (16.7ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.4ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.0ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.4ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.3ms)
+   (0.1ms)  SELECT COUNT(DISTINCT "message_threads"."id") FROM "message_threads" LEFT OUTER JOIN "messages" ON "messages"."id" = "message_threads"."message_id" WHERE "message_threads"."recipient_id" = ? AND (messages.recipient_id = 1 AND messages.recipient_deleted = 'f' AND read_at IS NULL)  [["recipient_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (2.2ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (1.7ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (14.3ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.1ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.5ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.1ms)
+Completed 200 OK in 99ms (Views: 44.9ms | ActiveRecord: 35.0ms)
+
+Started GET "/users/1" for 127.0.0.1 at 2015-12-29 00:48:42 -0800
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  User Load (0.8ms)  SELECT "users".* FROM "users" WHERE (users.activated_at IS NOT NULL) AND "users"."login_slug" = '1' ORDER BY "users"."id" ASC LIMIT 1
+  User Load (0.4ms)  SELECT "users".* FROM "users" WHERE (users.activated_at IS NOT NULL) AND "users"."id" = ? LIMIT 1  [["id", "1"]]
+  User Load (0.3ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.1ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:48:42 UTC +00:00], ["perishable_token", "hD6kC8MJaMqLfSatiLc"], ["updated_at", Tue, 29 Dec 2015 08:48:42 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (6.1ms)  commit transaction
+   (1.2ms)  SELECT COUNT(*) FROM "friendships" WHERE "friendships"."user_id" = ? AND (friendship_status_id = 2)  [["user_id", 1]]
+  Friendship Load (0.1ms)  SELECT "friendships".* FROM "friendships" WHERE "friendships"."user_id" = ? AND (friendship_status_id = 2) LIMIT 5  [["user_id", 1]]
+   (0.1ms)  SELECT COUNT(*) FROM "friendships" WHERE "friendships"."user_id" = ? AND (initiator = 'f' AND friendship_status_id = 1)  [["user_id", 1]]
+  CACHE (0.0ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.2ms)
+   (0.2ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "photos" WHERE "photos"."user_id" = ? LIMIT 5) subquery_for_count  [["user_id", 1]]
+   (0.2ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "posts" WHERE "posts"."published_as" = 'live' AND "posts"."user_id" = ? LIMIT 2) subquery_for_count  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (1.8ms)
+  Authorization Load (0.1ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'facebook' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  Authorization Load (0.1ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'twitter' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_profile_user_info_sidebar.html.haml (11.7ms)
+   (0.1ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "comments" WHERE (user_id = 1 and role = 'comments') LIMIT 5) subquery_for_count
+   (0.1ms)  SELECT COUNT(*) FROM "comments" WHERE (recipient_id = 1 AND commentable_type = 'Photo')
+  CACHE (0.0ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "photos" WHERE "photos"."user_id" = ? LIMIT 5) subquery_for_count  [["user_id", 1]]
+  CACHE (0.0ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "posts" WHERE "posts"."published_as" = 'live' AND "posts"."user_id" = ? LIMIT 2) subquery_for_count  [["user_id", 1]]
+   (0.1ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "clippings" WHERE "clippings"."user_id" = ? LIMIT 5) subquery_for_count  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/comments/_comment_form.html.haml (4.5ms)
+  Comment Load (0.3ms)  SELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = ? AND "comments"."commentable_type" = ? AND (role != 'pending') ORDER BY created_at DESC LIMIT 10  [["commentable_id", 1], ["commentable_type", "User"]]
+  User Load (0.1ms)  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  CACHE (0.0ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'facebook' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  CACHE (0.0ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'twitter' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  CACHE (0.0ms)  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  CACHE (0.0ms)  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered /home/basevm/communityengine/app/views/comments/_comment.html.haml (12.7ms)
+  Rendered /home/basevm/communityengine/app/views/users/show.html.haml within layouts/application (63.8ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.4ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.1ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.2ms)
+   (0.1ms)  SELECT COUNT(DISTINCT "message_threads"."id") FROM "message_threads" LEFT OUTER JOIN "messages" ON "messages"."id" = "message_threads"."message_id" WHERE "message_threads"."recipient_id" = ? AND (messages.recipient_id = 1 AND messages.recipient_deleted = 'f' AND read_at IS NULL)  [["recipient_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (2.1ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (1.8ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (14.5ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.1ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.6ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.0ms)
+Completed 200 OK in 136ms (Views: 90.2ms | ActiveRecord: 11.6ms)
+
+
+
+Started GET "/advertise" for 127.0.0.1 at 2015-12-28 23:42:58 -0800
+Processing by BaseController#advertise as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  Rendered /home/basevm/communityengine/app/views/base/advertise.html.haml within layouts/application (1.9ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.6ms)
+   (0.3ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.8ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.3ms)
+  User Load (0.4ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.2ms)  begin transaction
+  SQL (0.4ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 07:42:58 UTC +00:00], ["perishable_token", "QCanQAoVIqUUguyk779"], ["updated_at", Tue, 29 Dec 2015 07:42:58 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (3.1ms)  commit transaction
+   (0.1ms)  SELECT COUNT(DISTINCT "message_threads"."id") FROM "message_threads" LEFT OUTER JOIN "messages" ON "messages"."id" = "message_threads"."message_id" WHERE "message_threads"."recipient_id" = ? AND (messages.recipient_id = 1 AND messages.recipient_deleted = 'f' AND read_at IS NULL)  [["recipient_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (17.4ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (1.8ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (29.4ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.1ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.6ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.0ms)
+Completed 200 OK in 53ms (Views: 46.1ms | ActiveRecord: 4.7ms)
+
+
+Started GET "/events" for 127.0.0.1 at 2015-12-28 23:48:14 -0800
+Processing by EventsController#index as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_subscribe.html.haml (15.8ms)
+  Event Load (0.5ms)  SELECT "events".* FROM "events" WHERE (end_time > '2015-12-29 07:48:14.837244') ORDER BY start_time ASC LIMIT 25 OFFSET 0
+  Rendered /home/basevm/communityengine/app/views/events/_event.html.haml (0.0ms)
+   (0.1ms)  SELECT COUNT(*) FROM "events" WHERE (end_time > '2015-12-29 07:48:14.837244')
+  Rendered /home/basevm/communityengine/app/views/events/index.html.haml within layouts/application (29.9ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.8ms)
+   (0.2ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.4ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.4ms)
+
+
+Started GET "/clippings" for 127.0.0.1 at 2015-12-28 23:49:33 -0800
+Processing by ClippingsController#site_index as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  Clipping Load (0.4ms)  SELECT "clippings".* FROM "clippings" WHERE (created_at > '2015-12-01 07:49:33.383292') ORDER BY clippings.favorited_count DESC LIMIT 25 OFFSET 0
+   (0.1ms)  SELECT COUNT(*) FROM "clippings" WHERE (created_at > '2015-12-01 07:49:33.383292')
+  Rendered /home/basevm/communityengine/app/views/shared/_box.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/site_index.html.haml within layouts/application (8.9ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.4ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (0.9ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (11.5ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.2ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.7ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (0.9ms)
+Completed 200 OK in 37ms (Views: 34.0ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/account/edit" for 127.0.0.1 at 2015-12-29 00:26:11 -0800
+Processing by UsersController#edit_account as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  User Load (0.3ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.4ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:26:11 UTC +00:00], ["perishable_token", "h6pxzXp911l6bGI3UXRK"], ["updated_at", Tue, 29 Dec 2015 08:26:11 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (4.8ms)  commit transaction
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.2ms)
+  Authorization Load (0.2ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ?  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/users/_omniauth_connect.html.haml (8.7ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/users/edit_account.html.haml within layouts/application (27.0ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.5ms)
+   (0.2ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.3ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.4ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.2ms)
+   (0.2ms)  SELECT COUNT(DISTINCT "message_threads"."id") FROM "message_threads" LEFT OUTER JOIN "messages" ON "messages"."id" = "message_threads"."message_id" WHERE "message_threads"."recipient_id" = ? AND (messages.recipient_id = 1 AND messages.recipient_deleted = 'f' AND read_at IS NULL)  [["recipient_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (2.8ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (1.8ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (14.3ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.2ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.7ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.0ms)
+Completed 200 OK in 85ms (Views: 55.5ms | ActiveRecord: 6.5ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.5ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.5ms)
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (0.5ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (14.9ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.2ms)
+  Page Load (1.5ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (3.8ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.1ms)
+Completed 200 OK in 70ms (Views: 61.4ms | ActiveRecord: 2.8ms)
+
+Started GET "/footer_content" for 127.0.0.1 at 2015-12-29 00:26:11 -0800
+Processing by BaseController#footer_content as */*
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  ActsAsTaggableOn::Tag Load (1.6ms)  SELECT "tags".id, "tags".name, COUNT("tags".id) AS count FROM "tags" INNER JOIN "taggings" ON "taggings"."tag_id" = "tags"."id" GROUP BY "tags".id, "tags".name HAVING COUNT("taggings".id) >= 0 ORDER BY count DESC LIMIT 30
+  Activity Load (0.2ms)  SELECT activities.* FROM "activities" LEFT JOIN users ON users.id = activities.user_id WHERE (users.activated_at IS NOT NULL) ORDER BY activities.created_at DESC LIMIT 10 OFFSET 0
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  User Load (0.3ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:26:11 UTC +00:00], ["perishable_token", "zpPUixGt0JkcETVQsqCN"], ["updated_at", Tue, 29 Dec 2015 08:26:11 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (4.5ms)  commit transaction
+  Rendered /home/basevm/communityengine/app/views/activities/_activity.html.haml (18.6ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_content.html.haml (28.6ms)
+Completed 200 OK in 43ms (Views: 31.2ms | ActiveRecord: 7.3ms)
+
+Started GET "/forums" for 127.0.0.1 at 2015-12-29 00:27:41 -0800
+Processing by ForumsController#index as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+   (0.2ms)  SELECT COUNT(*) FROM "topics"
+   (0.1ms)  SELECT COUNT(*) FROM "sb_posts"
+   (0.1ms)  SELECT COUNT(*) FROM "users" WHERE (sb_posts_count>0)
+  Forum Load (0.1ms)  SELECT "forums".* FROM "forums" ORDER BY position
+   (0.1ms)  SELECT COUNT(*) FROM "users" WHERE (sb_last_seen_at > '2015-12-29 08:22:41.163429')
+  CACHE (0.0ms)  SELECT COUNT(*) FROM "users" WHERE (sb_last_seen_at > '2015-12-29 08:22:41.163429')
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE (sb_last_seen_at > '2015-12-29 08:22:41.163429')
+  Rendered /home/basevm/communityengine/app/views/forums/index.html.haml within layouts/application (27.6ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.5ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.0ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (11.6ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.0ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.1ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.9ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.4ms)
+Completed 200 OK in 57ms (Views: 52.4ms | ActiveRecord: 1.6ms)
+
+Started POST "/sessions" for 127.0.0.1 at 2015-12-29 00:27:47 -0800
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"rldyA4bwRjF7/yQQDUVyKsypaDuu5lyvC/ocZ3CcoMY=", "email"=>"admin@example.com", "password"=>"[FILTERED]", "check_box"=>"1", "commit"=>"Log in"}
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  User Load (0.4ms)  SELECT "users".* FROM "users" WHERE (LOWER(email) = 'admin@example.com' OR LOWER(login) = 'admin@example.com') ORDER BY "users"."id" ASC LIMIT 1
+  SQL (3.2ms)  UPDATE "users" SET sb_last_seen_at = '2015-12-29 08:27:47.681023' WHERE (id = 1)
+   (0.1ms)  begin transaction
+  SQL (0.4ms)  UPDATE "users" SET "login_count" = ?, "last_login_at" = ?, "current_login_at" = ?, "last_request_at" = ?, "sb_last_seen_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["login_count", 4], ["last_login_at", Tue, 29 Dec 2015 08:23:46 UTC +00:00], ["current_login_at", Tue, 29 Dec 2015 08:27:47 UTC +00:00], ["last_request_at", Tue, 29 Dec 2015 08:27:47 UTC +00:00], ["sb_last_seen_at", Tue, 29 Dec 2015 08:27:47 UTC +00:00], ["perishable_token", "qwd0ZARSwKQTp7rUeGf1"], ["updated_at", Tue, 29 Dec 2015 08:27:47 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (2.5ms)  commit transaction
+  User Load (0.3ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.0ms)  begin transaction
+  SQL (0.2ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:27:47 UTC +00:00], ["perishable_token", "hUkKZKcdKd7mwwLPIuBj"], ["updated_at", Tue, 29 Dec 2015 08:27:47 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (3.2ms)  commit transaction
+Redirected to http://localhost:3000/forums
+Completed 302 Found in 103ms (ActiveRecord: 10.4ms)
+
+Started GET "/forums" for 127.0.0.1 at 2015-12-29 00:27:47 -0800
+Processing by ForumsController#index as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+   (0.1ms)  SELECT COUNT(*) FROM "topics"
+   (0.0ms)  SELECT COUNT(*) FROM "sb_posts"
+   (0.1ms)  SELECT COUNT(*) FROM "users" WHERE (sb_posts_count>0)
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:27:47 UTC +00:00], ["perishable_token", "sIn8hty8LdRvkgvq3DQL"], ["updated_at", Tue, 29 Dec 2015 08:27:47 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (3.2ms)  commit transaction
+  Forum Load (0.1ms)  SELECT "forums".* FROM "forums" ORDER BY position
+   (0.1ms)  SELECT COUNT(*) FROM "users" WHERE (sb_last_seen_at > '2015-12-29 08:22:47.741185')
+  CACHE (0.0ms)  SELECT COUNT(*) FROM "users" WHERE (sb_last_seen_at > '2015-12-29 08:22:47.741185')
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE (sb_last_seen_at > '2015-12-29 08:22:47.741185')
+  Rendered /home/basevm/communityengine/app/views/forums/index.html.haml within layouts/application (18.4ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.4ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (0.9ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.4ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.3ms)
+   (0.1ms)  SELECT COUNT(DISTINCT "message_threads"."id") FROM "message_threads" LEFT OUTER JOIN "messages" ON "messages"."id" = "message_threads"."message_id" WHERE "message_threads"."recipient_id" = ? AND (messages.recipient_id = 1 AND messages.recipient_deleted = 'f' AND read_at IS NULL)  [["recipient_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (2.8ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (1.8ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (14.3ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.0ms)
+  Page Load (0.1ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.6ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.9ms)
+Completed 200 OK in 48ms (Views: 41.3ms | ActiveRecord: 4.8ms)
+
+
+Started GET "/events" for 127.0.0.1 at 2015-12-29 00:28:08 -0800
+Processing by EventsController#index as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  User Load (0.6ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.4ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:28:08 UTC +00:00], ["perishable_token", "X9v7j0TSkoE9rPvRFsOz"], ["updated_at", Tue, 29 Dec 2015 08:28:08 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (3.1ms)  commit transaction
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.7ms)
+  Rendered /home/basevm/communityengine/app/views/events/_subscribe.html.haml (6.1ms)
+  Event Load (0.2ms)  SELECT "events".* FROM "events" WHERE (end_time > '2015-12-29 08:28:08.785660') ORDER BY start_time ASC LIMIT 25 OFFSET 0
+  Rendered /home/basevm/communityengine/app/views/events/_event.html.haml (0.0ms)
+   (0.1ms)  SELECT COUNT(*) FROM "events" WHERE (end_time > '2015-12-29 08:28:08.785660')
+  Rendered /home/basevm/communityengine/app/views/events/index.html.haml within layouts/application (15.0ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.4ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.1ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.1ms)
+   (0.1ms)  SELECT COUNT(DISTINCT "message_threads"."id") FROM "message_threads" LEFT OUTER JOIN "messages" ON "messages"."id" = "message_threads"."message_id" WHERE "message_threads"."recipient_id" = ? AND (messages.recipient_id = 1 AND messages.recipient_deleted = 'f' AND read_at IS NULL)  [["recipient_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (2.3ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (1.8ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (15.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.0ms)
+  Page Load (0.1ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.6ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.0ms)
+Completed 200 OK in 63ms (Views: 41.7ms | ActiveRecord: 5.1ms)
+
+
+tarted GET "/tags" for 127.0.0.1 at 2015-12-29 00:28:43 -0800
+Processing by TagsController#index as HTML
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  ActsAsTaggableOn::Tag Load (0.3ms)  SELECT "tags".id, "tags".name, COUNT("tags".id) AS count FROM "tags" INNER JOIN "taggings" ON "taggings"."tag_id" = "tags"."id" GROUP BY "tags".id, "tags".name HAVING COUNT("taggings".id) >= 0 ORDER BY count DESC LIMIT 100
+  ActsAsTaggableOn::Tag Load (0.2ms)  SELECT "tags".id, "tags".name, COUNT("tags".id) AS count FROM "tags" INNER JOIN "taggings" ON "taggings"."tag_id" = "tags"."id" WHERE (taggings.taggable_type = 'User') GROUP BY "tags".id, "tags".name HAVING COUNT("taggings".id) >= 0 ORDER BY count DESC LIMIT 75
+  ActsAsTaggableOn::Tag Load (0.2ms)  SELECT "tags".id, "tags".name, COUNT("tags".id) AS count FROM "tags" INNER JOIN "taggings" ON "taggings"."tag_id" = "tags"."id" WHERE (taggings.taggable_type = 'Post') GROUP BY "tags".id, "tags".name HAVING COUNT("taggings".id) >= 0 ORDER BY count DESC LIMIT 75
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".id, "tags".name, COUNT("tags".id) AS count FROM "tags" INNER JOIN "taggings" ON "taggings"."tag_id" = "tags"."id" WHERE (taggings.taggable_type = 'Photo') GROUP BY "tags".id, "tags".name HAVING COUNT("taggings".id) >= 0 ORDER BY count DESC LIMIT 75
+  ActsAsTaggableOn::Tag Load (0.5ms)  SELECT "tags".id, "tags".name, COUNT("tags".id) AS count FROM "tags" INNER JOIN "taggings" ON "taggings"."tag_id" = "tags"."id" WHERE (taggings.taggable_type = 'Clipping') GROUP BY "tags".id, "tags".name HAVING COUNT("taggings".id) >= 0 ORDER BY count DESC LIMIT 75
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.0ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_tag_auto_complete.html.haml (1.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/tags/index.html.haml within layouts/application (7.9ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.4ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.1ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.0ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.3ms)
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.0ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:28:43 UTC +00:00], ["perishable_token", "MwJWYO0ilYUJN2BnavO"], ["updated_at", Tue, 29 Dec 2015 08:28:43 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (4.1ms)  commit transaction
+   (0.2ms)  SELECT COUNT(DISTINCT "message_threads"."id") FROM "message_threads" LEFT OUTER JOIN "messages" ON "messages"."id" = "message_threads"."message_id" WHERE "message_threads"."recipient_id" = ? AND (messages.recipient_id = 1 AND messages.recipient_deleted = 'f' AND read_at IS NULL)  [["recipient_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (17.4ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (2.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (30.6ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.2ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.9ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.0ms)
+Completed 200 OK in 65ms (Views: 51.4ms | ActiveRecord: 6.3ms)
+
+Started GET "/users/admin1" for 127.0.0.1 at 2015-12-29 00:29:28 -0800
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"admin1"}
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  User Load (0.5ms)  SELECT "users".* FROM "users" WHERE (users.activated_at IS NOT NULL) AND "users"."login_slug" = 'admin1' ORDER BY "users"."id" ASC LIMIT 1
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:29:28 UTC +00:00], ["perishable_token", "eZtHX7WzXgLGPV6IYtDG"], ["updated_at", Tue, 29 Dec 2015 08:29:28 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (3.1ms)  commit transaction
+   (0.1ms)  SELECT COUNT(*) FROM "friendships" WHERE "friendships"."user_id" = ? AND (friendship_status_id = 2)  [["user_id", 1]]
+  Friendship Load (0.2ms)  SELECT "friendships".* FROM "friendships" WHERE "friendships"."user_id" = ? AND (friendship_status_id = 2) LIMIT 5  [["user_id", 1]]
+   (0.1ms)  SELECT COUNT(*) FROM "friendships" WHERE "friendships"."user_id" = ? AND (initiator = 'f' AND friendship_status_id = 1)  [["user_id", 1]]
+  CACHE (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.3ms)
+   (0.9ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "photos" WHERE "photos"."user_id" = ? LIMIT 5) subquery_for_count  [["user_id", 1]]
+   (0.2ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "posts" WHERE "posts"."published_as" = 'live' AND "posts"."user_id" = ? LIMIT 2) subquery_for_count  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.1ms)
+  Authorization Load (0.1ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'facebook' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  Authorization Load (0.2ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'twitter' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/shared/_widget.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/users/_profile_user_info_sidebar.html.haml (15.8ms)
+   (0.2ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "comments" WHERE (user_id = 1 and role = 'comments') LIMIT 5) subquery_for_count
+   (0.1ms)  SELECT COUNT(*) FROM "comments" WHERE (recipient_id = 1 AND commentable_type = 'Photo')
+  CACHE (0.0ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "photos" WHERE "photos"."user_id" = ? LIMIT 5) subquery_for_count  [["user_id", 1]]
+  CACHE (0.0ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "posts" WHERE "posts"."published_as" = 'live' AND "posts"."user_id" = ? LIMIT 2) subquery_for_count  [["user_id", 1]]
+   (0.1ms)  SELECT COUNT(count_column) FROM (SELECT 1 AS count_column FROM "clippings" WHERE "clippings"."user_id" = ? LIMIT 5) subquery_for_count  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/comments/_comment_form.html.haml (20.2ms)
+  Comment Load (0.4ms)  SELECT "comments".* FROM "comments" WHERE "comments"."commentable_id" = ? AND "comments"."commentable_type" = ? AND (role != 'pending') ORDER BY created_at DESC LIMIT 10  [["commentable_id", 1], ["commentable_type", "User"]]
+  Rendered /home/basevm/communityengine/app/views/comments/_comment.html.haml (0.0ms)
+  Rendered /home/basevm/communityengine/app/views/users/show.html.haml within layouts/application (74.4ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_scripts_and_styles.html.haml (1.8ms)
+   (0.1ms)  SELECT COUNT(*) FROM "categories"
+  Rendered /home/basevm/communityengine/app/views/categories/_menu_item.html.haml (1.0ms)
+  Rendered /home/basevm/communityengine/app/views/clippings/_menu_item.html.haml (0.3ms)
+  Rendered /home/basevm/communityengine/app/views/events/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/forums/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/posts/_menu_item.html.haml (0.2ms)
+  Rendered /home/basevm/communityengine/app/views/users/_menu_item.html.haml (0.4ms)
+   (0.1ms)  SELECT COUNT(DISTINCT "message_threads"."id") FROM "message_threads" LEFT OUTER JOIN "messages" ON "messages"."id" = "message_threads"."message_id" WHERE "message_threads"."recipient_id" = ? AND (messages.recipient_id = 1 AND messages.recipient_deleted = 'f' AND read_at IS NULL)  [["recipient_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/messages/_menu_item.html.haml (2.7ms)
+  Rendered /home/basevm/communityengine/app/views/sessions/_menu_item.html.haml (2.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_header.html.haml (15.7ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_messages.html.haml (0.1ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_sidebar.html.haml (0.1ms)
+  Page Load (0.1ms)  SELECT "pages".* FROM "pages" WHERE "pages"."published_as" = 'live'
+  Rendered /home/basevm/communityengine/app/views/shared/_footer_links.html.haml (1.7ms)
+  Rendered /home/basevm/communityengine/app/views/shared/_end_javascript.html.haml (1.3ms)
+Completed 200 OK in 143ms (Views: 103.4ms | ActiveRecord: 8.3ms)
+
+Started POST "/users/admin1/comments" for 127.0.0.1 at 2015-12-29 00:30:18 -0800
+Processing by CommentsController#create as JS
+  Parameters: {"utf8"=>"✓", "comment"=>{"comment"=>"<p>I have no comment...</p>"}, "commit"=>"Add Comment", "commentable_type"=>"users", "commentable_id"=>"admin1"}
+[I18n] loading locale: en from config
+[I18n] Locale set to en
+  User Load (0.4ms)  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+   (0.1ms)  begin transaction
+  SQL (0.3ms)  UPDATE "users" SET "last_request_at" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["last_request_at", Tue, 29 Dec 2015 08:30:18 UTC +00:00], ["perishable_token", "bFy3HleLQNkmHJ7ig3Y0"], ["updated_at", Tue, 29 Dec 2015 08:30:18 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (2.7ms)  commit transaction
+  User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."login_slug" = 'admin1' ORDER BY "users"."id" ASC LIMIT 1
+   (0.1ms)  begin transaction
+  User Load (0.1ms)  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+Binary data inserted for `string` type on column `author_ip`
+  SQL (1.6ms)  INSERT INTO "comments" ("author_ip", "comment", "commentable_id", "commentable_type", "created_at", "recipient_id", "role", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["author_ip", "127.0.0.1"], ["comment", "<p>I have no comment...</p>"], ["commentable_id", 1], ["commentable_type", "User"], ["created_at", Tue, 29 Dec 2015 08:30:19 UTC +00:00], ["recipient_id", 1], ["role", "published"], ["updated_at", Tue, 29 Dec 2015 08:30:19 UTC +00:00], ["user_id", 1]]
+  User Load (0.1ms)  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  SQL (0.2ms)  SELECT DISTINCT "users"."id" FROM "users" LEFT OUTER JOIN "comments" ON "comments"."user_id" = "users"."id" WHERE "users"."notify_comments" = 't' AND (users.id NOT IN (1,1)) AND "comments"."commentable_id" = 1 AND "comments"."commentable_type" = 'User' AND "comments"."notify_by_email" = 't' AND (comments.created_at > '2015-12-15 08:30:19.007131') LIMIT 20
+  SQL (0.3ms)  INSERT INTO "activities" ("action", "created_at", "item_id", "item_type", "user_id") VALUES (?, ?, ?, ?, ?)  [["action", "comment"], ["created_at", Tue, 29 Dec 2015 08:30:19 UTC +00:00], ["item_id", 1], ["item_type", "Comment"], ["user_id", 1]]
+  User Load (0.1ms)  SELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+   (0.1ms)  SELECT COUNT(*) FROM "activities" WHERE (user_id = 1)
+  SQL (0.2ms)  UPDATE "users" SET "activities_count" = ?, "perishable_token" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["activities_count", 2], ["perishable_token", "tY3YRHtx5IojntXlQO"], ["updated_at", Tue, 29 Dec 2015 08:30:19 UTC +00:00]]
+  ActsAsTaggableOn::Tag Load (0.1ms)  SELECT "tags".* FROM "tags" INNER JOIN "taggings" ON "tags"."id" = "taggings"."tag_id" WHERE "taggings"."taggable_id" = ? AND "taggings"."taggable_type" = ? AND (taggings.context = ('tags'))  [["taggable_id", 1], ["taggable_type", "User"]]
+   (2.9ms)  commit transaction
+  Authorization Load (0.1ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'facebook' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  CACHE (0.0ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'facebook' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  Authorization Load (0.1ms)  SELECT "authorizations".* FROM "authorizations" WHERE "authorizations"."user_id" = ? AND "authorizations"."provider" = 'twitter' ORDER BY "authorizations"."id" ASC LIMIT 1  [["user_id", 1]]
+  Rendered /home/basevm/communityengine/app/views/comments/_comment.html.haml (9.5ms)
+  Rendered /home/basevm/communityengine/app/views/comments/create.js.erb (13.0ms)
+Completed 200 OK in 64ms (Views: 16.4ms | ActiveRecord: 9.6ms)
+
