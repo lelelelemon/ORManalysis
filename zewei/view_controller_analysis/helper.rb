@@ -24,7 +24,7 @@ def get_filename_from_path(filename)
 	return n
 end
 
-def get_nested_path(filepath, basepath)
+def get_nested_path_with_base(filepath, basepath)
 	i = filepath.rindex(basepath)
 	j = filepath.rindex('/')
 	if i == nil or j == nil

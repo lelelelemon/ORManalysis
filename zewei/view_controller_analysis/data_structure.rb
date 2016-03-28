@@ -220,6 +220,7 @@ class Function_Class
           value = get_default_view_content(view_class_hash)
         else
 					value = view_class.replace_render_statements(view_class_hash, 0)
+          puts "RENDER: #{view_name}"
         end
         puts "view_name: " + view_name
         
@@ -249,6 +250,7 @@ class Function_Class
         return nil
       else 
         if view_class_hash.has_key?(layout)
+          puts "RENDER: #{layout}"
           layout_view = view_class_hash[layout]
           layout_content = layout_view.replace_render_statements(view_class_hash, 0)
         end
@@ -278,6 +280,7 @@ class Function_Class
     puts default_layout
     if view_class_hash.has_key?(default_layout)
       default_layout_view = view_class_hash[default_layout]
+      puts "RENDER: #{default_layout}"
     end
     puts "default layout view file: "
     puts default_layout_view
@@ -289,6 +292,8 @@ class Function_Class
   end
 
 	def replace_render_statements(view_class_hash, controller_hash)
+
+    puts "START: #{self.to_s}"
 
     render_view_mapping = self.get_render_view_mapping(view_class_hash, controller_hash)
 		content = self.get_content.dup
@@ -331,6 +336,7 @@ class Function_Class
     view_class = view_class_hash[view_name]
     if view_class != nil
       puts "-----------------------------current view file: " + view_name
+      puts "RENDER: #{view_name}"
       v = view_class.replace_render_statements(view_class_hash, 0)
     end
     return v
@@ -513,7 +519,8 @@ class View_Class
 				if view_class != nil
 					value = view_class.replace_render_statements(view_class_hash, dep+1)
 					render_view_mapping[str_to_be_replaced] = value
-				else
+			    puts "RENDER: #{view_name}"
+        else
 					#do something if the view file does not exisst
 				end
 			end
@@ -563,6 +570,51 @@ class View_Class
 	end
 end 
 
+class Helper_Class
+  def initialize(path)
+    @path = path.dup
+    @content = read_content(@path)		
+    @ast = parse_content(@content)
+  end
+  def get_content
+    @content
+  end
+  def get_ast
+    @ast
+  end
+  def parse_content(content)
+    return YARD::Parser::Ruby::RubyParser.parse(content).root
+  end
+  def get_render_view_mapping(view_class_hash, dep)
+    render_view_mapping = Hash.new
+    get_render_statement_array.each do |(str_to_be_replaced, stmt)|
+      puts "render statement: #{stmt}"
+      options_hash = parse_render_statement(stmt)
+      if options_hash != "not_valid"
+        view_name = get_view_name_from_hash_without_default(options_hash)
+        view_class = view_class_hash[view_name]
+        if view_class != nil
+          value = view_class.replace_render_statements(view_class_hash, dep+1)
+          render_view_mapping[str_to_be_replaced] = value
+          puts "RENDER: #{view_name}"
+        else
+        end
+      end
+    end
+    return render_view_mapping	
+  end
+  #replace the render statements inside the ruby code of current view file
+  def replace_render_statements(view_class_hash, dep)
+    return self.get_rb_content if dep > 3
+    render_view_mapping = self.get_render_view_mapping(view_class_hash, dep)
+    content = self.get_content.dup 
+    render_view_mapping.each do |k, v|
+      puts k
+      content = content.gsub(k){v}
+    end
+    return content
+  end
+end
 
 class Named_Routes_Class
 	def initialize(path)

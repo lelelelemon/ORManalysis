@@ -44,6 +44,18 @@ def load_all_views_from_path(view_path)
 	return view_hash
 end
 
+def load_all_helpers_from_path(helper_path)
+  helper_hash = {}
+  Dir.glob(helper_path + "**/*") do |item|
+    next if not item.end_with?(".rb")
+    puts item
+
+    helper_class = Helper_Class.new(item)
+    helper_hash[item] = helper_class
+  end
+  return helper_hash
+end
+
 def print_view_hash(view_hash)
 	view_hash.each do |view_name, view_class|
 		puts "view name of view hash: " + view_name
@@ -72,6 +84,22 @@ def controller_print_all_controllers_render_replaced(controller_path, view_path,
 
 		File.write(controller_file_path, res)
 	end
+end
+
+def helper_print_all_helpers_render_replaced(helper_path, view_path, new_helper_path)
+  helper_hash = load_all_helpers_from_path(helper_path)
+  view_hash = load_all_views_from_path(view_path)
+
+  helper_hash.each do |item_path, helper_class|
+    nested_path = get_nested_path_with_base(item_path, helper_path)
+    filename = get_filename_from_path(item_path)
+    if not File.directory?(new_helper_path + nested_path)
+      FileUtils.mkdir_p new_helper_path + nested_path
+    end 
+    helper_file_path = new_helper_path + nested_path + filename
+    res = helper_class.replace_render_statements(view_hash, 0)
+    File.write(helper_file_path, res)
+  end
 end
 
 def load_named_routes_from_path(named_routes_path)
@@ -307,6 +335,8 @@ end
 
 $controller_path = "./app/controllers/"
 $new_controller_path = "./app/new_controllers/"
+$helper_path = "./app/helpers/"
+$new_helper_path = "./app/new_helpers/"
 $view_path = "./app/views/"
 $new_view_path = "./app/new_views/"
 $output_path = "./output/"
@@ -334,6 +364,9 @@ opt_parser = OptionParser.new do |opt|
 	opt.on("-a", "--all", "apply the current operation on all controller actions or view files") do 
 		options[:all] = true
 	end
+  opt.on("-h", "--helper", "work on helper ruby files") do
+    options[:helper] = true
+  end
 end
 
 opt_parser.parse!
@@ -390,5 +423,7 @@ elsif options[:controller] and options[:all]
 	controller_print_all_controllers_render_replaced($controller_path, $view_path, $new_controller_path)
 elsif options[:controller]
 	controller_print_links_controller_view_recursively($view_path, $controller_path, $new_view_path)
+elsif options[:helper]
+  helper_print_all_helpers_render_replaced($helper_path, $view_path, $new_helper_path)
 end
 

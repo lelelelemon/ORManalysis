@@ -163,6 +163,63 @@ def get_view_name_from_hash(options_hash, controller_name, action_name)
   return res 
 end
 
+
+def get_view_name_from_hash_without_default(options_hash)
+  res = ""
+  if options_hash.has_key?":partial"
+    res = options_hash[":partial"]
+  elsif options_hash.has_key?"partial"
+    res = options_hash["partial"]
+  elsif options_hash.has_key?"partial:"
+    res = options_hash["partial:"]
+  elsif options_hash.has_key?":template"
+    res = options_hash[":template"]
+  elsif options_hash.has_key?"template"
+    res = options_hash["template"]
+  elsif options_hash.has_key?"template:"
+    res = options_hash["template:"]
+  elsif options_hash.has_key?":action"
+    res = options_hash[":action"]
+  elsif options_hash.has_key?"action"
+    res = options_hash["action"]
+  elsif options_hash.has_key?"action:"
+    res = options_hash["action:"]
+  elsif options_hash.has_key?"xml:"
+    res = options_hash["xml:"]
+  elsif options_hash.has_key?":xml"
+    res = options_hash[":xml"]
+  elsif options_hash.has_key?"xml"
+    res = options_hash["xml"]
+  elsif options_hash.has_key?"js"
+    res = options_hash["js"]
+  elsif options_hash.has_key?":js"
+    res = options_hash[":js"]
+  elsif options_hash.has_key?"js:"
+    res = options_hash["js:"]
+  elsif options_hash.has_key?"file:"
+    res = options_hash["file:"]
+  elsif options_hash.has_key?":file"
+    res = options_hash[":file"]
+  elsif options_hash.has_key?"file"
+    res = options_hash["file"]
+  end
+  res.gsub! /[:"']/, ""
+  while res.start_with? "/"
+    res = res[1..-1]
+  end
+  r = res.rindex("/")
+  if res == ""
+    res = "not_valid"
+  elsif r == nil
+    res = "not_valid"
+  else
+    res = res[0..r-1] + "_" + res[r+1..-1]
+  end
+  puts "res view: " + res
+  return res 
+end
+
+
 def get_view_name_from_render_statement(stmt, controller_name, action_name)
   options_hash = parse_render_statement(stmt)
   if options_hash != NOT_VALID
