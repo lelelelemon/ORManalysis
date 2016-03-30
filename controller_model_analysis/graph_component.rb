@@ -41,12 +41,35 @@ class INode
 		$in_validation.each do |v|
 			@validation_stack.push(v)
 		end
+
+		#add defSelf:
+		$in_validation.each do |v|
+			if instr and instr.getDefv and instr.getDefv.include?("self")
+				if type_valid(instr, instr.getDefv) == v.getInstr.getCallerType	
+					$def_self_nodes[v].push(self)
+				end
+			elsif instr and instr.instance_of?AttrAssign_instr
+				if instr.getCallerType == v.getInstr.getCallerType
+					$def_self_nodes[v].push(self)
+				end
+			end
+		end
 	end
 	attr_accessor :index, :Tnode, :source_list, :sink_list
 	attr_accessor :longest_control_path_nextnode, :shortest_control_path_nextnode, :path_length, :shortest_path_length
 	attr_accessor :cur_class
 	def getClosureStack
 		@closure_stack
+	end
+	def getNonViewClosureStack
+		@new_stack = Array.new
+		@closure_stack.each do |c|
+			if c.getInstr.is_a?Call_instr and ["ruby_code_from_view"].include?c.getInstr.getFuncname			 
+			else
+				@new_stack.push(c)
+			end 
+		end	
+		return @new_stack
 	end
 	def getCallStack
 		@call_stack
@@ -266,7 +289,7 @@ def add_dataflow_edge(node)
 				end
 			end
 			if (from_node.isClassField?) and (dep.getVname == "%self")
-			#elsif from_node.isField? and to_ins.instance_of?AttrAssign_instr and to_ins.field == from_node.getInstr.field 
+			elsif to_ins.is_a?Call_instr and to_ins.isClassField and from_node.getInstr.instance_of?AttrAssign_instr and to_ins.getCallerType == from_node.getInstr.getCallerType and to_ins.getFuncname != from_node.getInstr.getFuncname
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
 			elsif dep.getInstrHandler != node.getInstr
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"

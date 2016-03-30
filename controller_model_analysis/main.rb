@@ -21,9 +21,10 @@ load 'parse_node.rb'
 load 'func_call.rb'
 load 'class_method.rb'
 
-#Data structure for dataflow:
+#Data structure for dataflow and stats collection:
 load 'dataflow_component.rb'
 load 'graph_component.rb'
+load 'stats_component.rb'
 load 'type_inference.rb'
 
 #Read files:
@@ -185,11 +186,11 @@ if options[:dir] != nil
 	else
 		$app_dir = options[:dir]
 		read_ruby_files(options[:dir])
-		#puts "Finish reading files"
+		puts "Finish reading files"
 	
 		#$class_map.each do |k, v|
 		#	v.getMethods.each do |k1, v1|
-		#		puts "#{k} . #{k1}:"
+		#		puts "#{k} . #{k1}:   #{v.filename}"
 		#		#if v1.getCFG == nil
 		#			#v1.getCalls.each do |c|
 		#			#	puts "\t#{c.getObjName} . #{c.getFuncName}"
@@ -249,6 +250,8 @@ if options[:trace_flow] or options[:random_path] or options[:stats] or options[:
 	start_function = options[:trace][1]
 	level = 0
 
+	$temp_file = File.open("#{$output_dir}/trace.log","w")
+	puts "temp file name: #{$output_dir}/trace.log"
 	if options[:trace_flow] or options[:random_path]
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w");
@@ -284,6 +287,8 @@ if options[:run_all]
 		chs = line.split(',')
 		start_function = chs[1]
 		start_class = getControllerNameCap(chs[0])
+		puts "\n\n================================="
+		puts "================================="
 		puts "Handling #{start_class}, #{start_function}"
 		level = 0
 	
@@ -292,12 +297,12 @@ if options[:run_all]
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w");
+		$temp_file = File.open("#{$output_dir}/trace.log","w")
 
 		#$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
 		#trace_flow(start_class, start_function, "", "", level)
 		#$trace_output_file.close
 
-		puts "Trace output finish"
 
 	#start compute stat
 		$cur_node = nil
@@ -309,7 +314,6 @@ if options[:run_all]
 		$query_edges = Array.new
 
 		compute_dataflow_stat($output_dir, start_class, start_function)
-		puts "\t..Finish computing stats"
 	#start print overlap between current and next controller actions
 		next_file = nil
 		if start_class.include?("::")
@@ -403,7 +407,7 @@ if options[:consequent] != nil
 		next_class = "#{chs[0]}Controller"
 		compute_dataflow_stat($output_dir, next_class, next_function, true)
 	
-		puts "Compare with: #{next_class}.#{next_function}"
+		#puts "Compare with: #{next_class}.#{next_function}"
 		compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list)
 	end
 end
@@ -416,13 +420,14 @@ if options[:print_validation] == true
 		start_function = chs[1]
 		chs[0] = chs[0].capitalize
 		start_class = "#{chs[0]}Controller"
+		puts "\n\n================================="
+		puts "================================="
 		puts "Handling #{start_class}, #{start_function}"
 		level = 0
 
 		$output_dir = "#{$app_dir}/results/#{start_class}_#{start_function}"
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/validation.log"
-		puts "Graph_name = #{graph_fname}"
 		$graph_file = File.open(graph_fname, "w");
 		clear_data_structure
 
@@ -470,7 +475,7 @@ if options[:print_all] == true
 				f2.puts("#{t}.#{f.field_name}")
 			end
 		else
-			puts "Table #{t} doesn't have a class!"
+			#puts "Table #{t} doesn't have a class!"
 		end
 	end
 =begin

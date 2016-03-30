@@ -39,10 +39,10 @@ class Content < ActiveRecord::Base
 
   def author=(user)
     if user.respond_to?(:login)
-      self[:author] = user.login
+      self.author = user.login
       self.user = user
     elsif user.is_a?(String)
-      self[:author] = user
+      self.author = user
     end
   end
 
@@ -61,10 +61,15 @@ class Content < ActiveRecord::Base
   def shorten_url
     return unless published
 
-    if redirect.present?
-      return if redirect.to_path == permalink_url
-      redirect.to_path = permalink_url
-      redirect.save
+		r = redirect
+		if r.present?
+			return if r.to_path == permalink_url
+			r.to_path = permalink_url
+			r.save
+    #if redirect.present?
+    #  return if redirect.to_path == permalink_url
+    #  redirect.to_path = permalink_url
+    #  redirect.save
     else
       r = Redirect.new
       r.from_path = r.shorten
@@ -101,7 +106,7 @@ class Content < ActiveRecord::Base
   end
 
   def whiteboard
-    self[:whiteboard] ||= {}
+    self.whiteboard ||= {}
   end
 
   def withdraw!
@@ -114,7 +119,7 @@ class Content < ActiveRecord::Base
   end
 
   def published_at
-    self[:published_at] || self[:created_at]
+    self.published_at || self.created_at
   end
 
   def get_rss_description

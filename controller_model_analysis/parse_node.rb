@@ -218,7 +218,8 @@ def parse_attrib(astnode)
 
 	if astnode.children[0].source.to_s.include?"validates"
 		parse_keyword(astnode, $cur_class.getMethod("before_validation"))
-		if ["validates_uniqueness_of", "validates_presence_of"].include?astnode.children[0].source.to_s
+		#if ["validates_uniqueness_of", "validates_presence_of"].include?astnode.children[0].source.to_s
+		if ["validates_uniqueness_of","validates_associated"].include?astnode.children[0].source.to_s
 			field = get_left_most_leaf(astnode.children[1]).source.to_s
 			if $cur_class.getMethod("before_validation").hasCall?(field, "where") == false
 				fcall = Function_call.new(field, "where")
@@ -228,6 +229,9 @@ def parse_attrib(astnode)
 				fcall.setQueryType("SELECT")
 				$cur_class.getMethod("before_validation").addCall(fcall)
 			end
+		elsif astnode.children[0].source.to_s == "validate"
+			fcall = Function_call.new("self", get_left_most_leaf(astnode.children[1]).source.to_s)
+			$cur_class.getMethod("before_validation").addCall(fcall)
 		end
 	end
 end

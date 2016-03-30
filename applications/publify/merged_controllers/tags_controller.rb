@@ -43,8 +43,8 @@ end
       format.html do
         if @articles.empty?
           ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t(".page_not_found") 
- t(".the_page_you_are_looking_for") 
+ t("errors.page_not_found") 
+ t("errors.the_page_you_are_looking_for") 
 
 end
 
@@ -55,20 +55,56 @@ end
 
       format.atom do
         @articles = @articles[0, this_blog.limit_rss_display]
-        render 'articles/index_atom_feed', layout: false
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  for article in articles 
+ render article 
+  if article.tags.any? 
+ t(".tags") 
+ tag_links article 
+ end 
+ link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
+ link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ 
+ end 
+ paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
+ 
+
+end
+
       end
 
       format.rss do
         @articles = @articles[0, this_blog.limit_rss_display]
-        render 'articles/index_rss_feed', layout: false
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  for article in articles 
+ render article 
+  if article.tags.any? 
+ t(".tags") 
+ tag_links article 
+ end 
+ link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
+ link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ 
+ end 
+ paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
+ 
+
+end
+
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
  render article 
- render 'articles/article_links', article: article 
+  if article.tags.any? 
+ t(".tags") 
+ tag_links article 
  end 
- paginate articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
+ link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
+ link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ 
+ end 
+ paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
  
 
 end

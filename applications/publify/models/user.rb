@@ -140,7 +140,7 @@ class User < ActiveRecord::Base
     if cleartext
       @password.to_s
     else
-      @password || self[:password]
+      @password || self.password
     end
   end
 
@@ -205,7 +205,7 @@ class User < ActiveRecord::Base
   # password
   def crypt_password
     EmailNotify.send_user_create_notification self
-    self[:password] = password_hash(password(true))
+    self.password = password_hash(password(true))
     @password = nil
   end
 
@@ -217,7 +217,7 @@ class User < ActiveRecord::Base
   def crypt_unless_empty
     if password(true).empty?
       user = self.class.find(id)
-      self[:password] = user.password
+      self.password = user.password
     else
       crypt_password
     end

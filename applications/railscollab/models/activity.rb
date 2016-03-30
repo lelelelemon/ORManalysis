@@ -56,39 +56,39 @@ class Activity < ActiveRecord::Base
     really_silent = Rails.configuration.log_really_silent && action == :delete
     unless really_silent
       # Lets go...
-      @log = Activity.new()
+      local_log = Activity.new()
 
-      @log.action = action
+      local_log.action = action
       if action == :delete
-        @log.rel_object_id = nil
-        @log.rel_object_type = obj.class.to_s
+        local_log.rel_object_id = nil
+        local_log.rel_object_type = obj.class.to_s
       else
-        @log.rel_object = obj
+        local_log.rel_object = obj
       end
-      @log.object_name = obj.object_name
+      local_log.object_name = obj.object_name
 
-      @log.project = nil
+      local_log.project = nil
       if real_project.nil?
         if obj.is_a?(Project)
           if action == :delete
-            @log.project_id = 0
+            local_log.project_id = 0
           else
-            @log.project = obj
+            local_log.project = obj
           end
         elsif obj.respond_to? :project
-          @log.project = obj.project
+          local_log.project = obj.project
         end
       else
-        @log.project = real_project
+        local_log.project = real_project
       end
 
-      @log.created_by = user
+      local_log.created_by = user
       unless user.nil?
         user.last_activity = Time.now.utc
         user.save
       end
-      @log.is_private = private
-      @log.save
+      local_log.is_private = private
+      local_log.save
     else
       # Destroy all occurrences of this object from the log
       # (assuming no audit trail is required here)

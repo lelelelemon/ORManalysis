@@ -3,13 +3,11 @@ module TransactionService::Gateway
   # Wrap response to signal that the gateway adapter has synchronously
   # completed its work. Process can directly continue with next
   # actions and state transitions.
-  SyncCompletion = Struct.new(:success, :response, :sync) do
     def initialize(result)
       self.success = result.success
       self.response = result
       self.sync = true
     end
-  end
 
   # Wrap response to signal that the gateway adapter operation is
   # asynchronous and completion will be later signaled via a

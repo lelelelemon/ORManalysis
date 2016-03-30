@@ -46,7 +46,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
- yield 
+ content_for :title, t(:upload_file) 
+ content_for :title 
+ form_for [@target_folder, @file], :url => { :action => 'create' } do |f| 
+ hidden_field_tag :target_folder_id, @target_folder.id 
+ file_field_tag :attachment, :multiple => true, :name => 'user_file[attachment]' 
+ link_to t(:back), @target_folder 
+ end 
+ image_tag 'spinner.gif', :class => 'spinner' 
+ image_tag 'failed.png', :class => 'failed', :style => 'display:none;' 
+ image_tag 'tick.png', :class => 'tick', :style => 'display:none;' 
+ t(:exists_already) 
   
 
 end
@@ -92,7 +102,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
- yield 
+ content_for :title, t(:rename_file) 
+ content_for :title 
+ form_for @file, :url => { :action => 'update' } do |f| 
+ f.error_messages 
+ f.label :name 
+ f.text_field :attachment_file_name 
+ f.submit t(:save) 
+ link_to t(:back), @folder 
+ end 
   
 
 end
@@ -135,7 +153,15 @@ end
  end 
  end 
  
- yield 
+ content_for :title, t(:rename_file) 
+ content_for :title 
+ form_for @file, :url => { :action => 'update' } do |f| 
+ f.error_messages 
+ f.label :name 
+ f.text_field :attachment_file_name 
+ f.submit t(:save) 
+ link_to t(:back), @folder 
+ end 
   
 
 end

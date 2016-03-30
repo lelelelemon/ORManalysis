@@ -165,6 +165,15 @@ def read_util_function
 		end
 	end
 end
+def read_repeatable_function
+	f_name = "#{$app_dir}/repeatable_func_list.txt"
+	if File.exist?(f_name)
+		File.open(f_name, "r").each do |line|
+			line = line.gsub("\n","")
+			$repeatable_list.push(line)
+		end
+	end
+end
 def util_function(fname, instr, cfg, c_name)
 	t = $util_function_list[fname]
   if t == nil
@@ -194,6 +203,7 @@ end
 
 def do_type_inference
 	read_util_function
+	read_repeatable_function
 
 	#Fill in the empty CFG
 	#Do it here so that we can still look at the type inference
@@ -202,8 +212,10 @@ def do_type_inference
 			cfg = value.getCFG
 			#Before filter should not be included here, since some has "on" property, so not all the functions defined in before filter will be executed all the time
 			if cfg == nil and key != "before_filter"
+				#puts "No CFG found! #{keyc}.#{key}"
 				cfg = CFG.new
 				value.setCFG(cfg)
+				value.normal_function = false #for those func that manually added CFG: like scope, do_validation_block
 				bb = Basic_block.new(1)
 				def_self = Instruction.new
 				def_self.setDefv("%self")
@@ -489,7 +501,7 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 							#TODO: This may be a bad heuristic: if field matches a table name...
 							#In community engine, tag.taggings, but taggings is not defined as a field in Tag model??!!
 							tname = searchTableName(instr.getFuncname)
-							if tname != nil and isActiveRecord(c_name)
+							if tname != nil and (isActiveRecord(c_name) or c_name.include?("Controller"))
 								add_to_cfg_varmap(cfg, c_name, instr.getDefv, tname)
 								@solved = true
 							elsif $class_map[caller_type.type]

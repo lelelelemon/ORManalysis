@@ -4,7 +4,68 @@ class Post < ActiveRecord::Base
 
   acts_as_moderated_commentable
 
-  acts_as_taggable
+  acts_as_taggable #resolved
+		##################################
+		#### acts_as_taggable begin ######
+
+		has_many :taggings, :dependent => :destroy, :foreign_key => 'taggable_id' # :as => :taggable, #:include => :tag, 
+    has_many :tags, :through => :taggings
+
+    before_save :save_cached_tag_list
+    after_save :save_tags
+
+		def tag_list
+      return @tag_list if @tag_list
+
+      if self.class.caching_tag_list? and !(cached_value = send(self.class.cached_tag_list_column_name)).nil?
+        @tag_list = TagList.from(cached_value)
+      else
+        @tag_list = TagList.new(*tags.map(&:name))
+      end
+    end
+
+    def tag_list=(value)
+      @tag_list = TagList.from(value)
+    end
+
+    def save_cached_tag_list
+      if self.class.caching_tag_list?
+        self[self.class.cached_tag_list_column_name] = tag_list.to_s
+      end
+    end
+
+    def save_tags
+      return unless @tag_list
+
+      new_tag_names = @tag_list - tags.map(&:name)
+      old_taggings = taggings.reject { |tagging| @tag_list.include?(tagging.tag.name) }
+
+      self.class.transaction do
+        old_taggings.each {|tag| taggings.destroy(tag)}
+
+        new_tag_names.each do |new_tag_name|
+          tags << Tag.find_or_create_with_like_by_name(new_tag_name)
+        end
+      end
+
+      true
+		end
+		
+    # Calculate the tag counts for the tags used by this model.
+    #
+    # The possible options are the same as the tag_counts class method, excluding :conditions.
+    def tag_counts(options = {})
+			Tag.find(:all, find_options_for_tag_counts(options))
+    end
+
+    def reload_with_tag_list(*args) #:nodoc:
+      @tag_list = nil
+      reload_without_tag_list(*args)
+    end
+
+		##################################
+		#### acts_as_taggable end ######
+
   acts_as_activity :user, :if => Proc.new{|r| r.is_live?}
   acts_as_publishable :live, :draft
 

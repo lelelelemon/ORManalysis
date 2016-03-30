@@ -7,8 +7,10 @@ class Method_class
 		@calls = Array.new
 		@cfg = nil
 		@caller_class = nil
+		@normal_function = true
 		#only for before_xxx calls
 	end
+	attr_accessor :normal_function
 	def getVars
 		@variables
 	end

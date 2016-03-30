@@ -1,7 +1,6 @@
 # encoding: UTF-8
 module NodeHelper
 
-  ContentPresenter = Struct.new(:record, :title, :meta, :tags, :notice, :image, :body, :actions, :css_class, :hidden) do
     def to_hash
       attrs = members.map(&:to_sym)
       Hash[*attrs.zip(values).flatten(1)]
@@ -17,7 +16,6 @@ module NodeHelper
     ensure
       @collection = false
     end
-  end
 
   def article_for(record)
     cp = ContentPresenter.new

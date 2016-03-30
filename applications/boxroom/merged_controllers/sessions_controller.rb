@@ -33,7 +33,18 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
- yield 
+ content_for :title, t(:sign_in) 
+ content_for :title 
+ form_tag(sessions_path) do 
+ label_tag :username, t(:username) 
+ text_field_tag :username, nil, :class => 'text_input' 
+ label_tag :password, t(:password) 
+ password_field_tag :password, nil, :class => 'text_input' 
+ check_box_tag :remember_me, 'true' 
+ label_tag :remember_me, t(:remember_me) 
+ submit_tag t(:sign_in) 
+ link_to t(:reset_password), new_reset_password_path 
+ end 
   
 
 end

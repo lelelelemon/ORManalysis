@@ -193,15 +193,78 @@ BB 21
 	datadep: 
 	instructions:
 		 0: 
-		 1: def_%cl_1_51 %cl_1_0[2.1,] 
-		 2: RETURN %cl_1_51[21.1,] %self[2.0,] 
+		 1: %self->t def_%cl_1_51 %self[2.0,] 	 ARGS:Symbol,
+		 2: %self->content_for def_%cl_1_52 %self[21.1,2.0,] %cl_1_51[21.1,] 	 ARGS:Symbol,%cl_1_51,
+		 3: 
+		 4: %self->content_for def_%cl_1_53 %self[21.1,21.2,2.0,] 	 ARGS:Symbol,
+		 5: 
+		 6: %self->sessions_path def_%cl_1_54 %self[21.1,21.2,21.4,2.0,] 	 ARGS:
+		 7: %self->form_tag def_%cl_1_55 %self[21.1,21.2,21.4,21.6,2.0,] %cl_1_54[21.6,] %self[21.1,21.2,21.4,21.6,2.0,] 	 ARGS:%cl_1_54,%self,
+CLOSURE BEGIN: %self[21.1,21.2,21.4,21.6,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->t def_%cl_2_3 %self[2.0,] 	 ARGS:Symbol,
+		 2: %self->label_tag def_%cl_2_4 %self[3.1,2.0,] %cl_2_3[3.1,] 	 ARGS:Symbol,%cl_2_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "text_input" def_%cl_2_5 
+		 5: HASH-class- def_%cl_2_6 %cl_2_5[3.4,] 
+		 6: %self->text_field_tag def_%cl_2_7 %self[3.1,3.2,2.0,] %cl_2_6[3.5,] 	 ARGS:Symbol,Nil,%cl_2_6,
+		 7: 
+		 8: %self->t def_%cl_2_8 %self[3.1,3.2,3.6,2.0,] 	 ARGS:Symbol,
+		 9: %self->label_tag def_%cl_2_9 %self[3.1,3.2,3.6,3.8,2.0,] %cl_2_8[3.8,] 	 ARGS:Symbol,%cl_2_8,
+		 10: 
+		 11: COPY TYPE_StringLiteral "text_input" def_%cl_2_10 
+		 12: HASH-class- def_%cl_2_11 %cl_2_10[3.11,] 
+		 13: %self->password_field_tag def_%cl_2_12 %self[3.1,3.2,3.6,3.8,3.9,2.0,] %cl_2_11[3.12,] 	 ARGS:Symbol,Nil,%cl_2_11,
+		 14: 
+		 15: COPY TYPE_StringLiteral "true" def_%cl_2_13 
+		 16: %self->check_box_tag def_%cl_2_14 %self[3.1,3.2,3.6,3.8,3.9,3.13,2.0,] %cl_2_13[3.15,] 	 ARGS:Symbol,%cl_2_13,
+		 17: 
+		 18: %self->t def_%cl_2_15 %self[3.1,3.2,3.6,3.8,3.9,3.13,3.16,2.0,] 	 ARGS:Symbol,
+		 19: %self->label_tag def_%cl_2_16 %self[3.1,3.2,3.6,3.8,3.9,3.13,3.16,3.18,2.0,] %cl_2_15[3.18,] 	 ARGS:Symbol,%cl_2_15,
+		 20: 
+		 21: %self->t def_%cl_2_17 %self[3.1,3.2,3.6,3.8,3.9,3.13,3.16,3.18,3.19,2.0,] 	 ARGS:Symbol,
+		 22: %self->submit_tag def_%cl_2_18 %self[3.1,3.2,3.6,3.8,3.9,3.13,3.16,3.18,3.19,3.21,2.0,] %cl_2_17[3.21,] 	 ARGS:%cl_2_17,
+		 23: 
+		 24: %self->t def_%cl_2_19 %self[3.1,3.2,3.6,3.8,3.9,3.13,3.16,3.18,3.19,3.21,3.22,2.0,] 	 ARGS:Symbol,
+		 25: %self->new_reset_password_path def_%cl_2_20 %self[3.1,3.2,3.6,3.8,3.9,3.13,3.16,3.18,3.19,3.21,3.22,3.24,2.0,] 	 ARGS:
+		 26: %self->link_to def_%cl_2_21 %self[3.1,3.2,3.6,3.8,3.9,3.13,3.16,3.18,3.19,3.21,3.22,3.24,3.25,2.0,] %cl_2_19[3.24,] %cl_2_20[3.25,] 	 ARGS:%cl_2_19,%cl_2_20,
+		 27: RETURN %cl_2_21[3.26,] %self[3.1,3.2,3.6,3.8,3.9,3.13,3.16,3.18,3.19,3.21,3.22,3.24,3.25,3.26,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_22 
+		 1: def_%cl_2_23 %cl_2_22[4.0,] 
+		 2: RETURN %cl_2_23[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: RETURN %cl_1_55[21.7,] %self[21.1,21.2,21.4,21.6,21.7,2.0,] 
 BB 22
 	outgoing: 24 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_52 
-		 1: def_%cl_1_53 %cl_1_52[22.0,] 
-		 2: RETURN %cl_1_53[22.1,] %self[2.0,] 
+		 0: def_%cl_1_56 
+		 1: def_%cl_1_57 %cl_1_56[22.0,] 
+		 2: RETURN %cl_1_57[22.1,] %self[2.0,] 
 BB 24
 	outgoing: 
 	datadep: 

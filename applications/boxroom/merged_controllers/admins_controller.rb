@@ -35,7 +35,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
- yield 
+ content_for :title, t(:create_admin) 
+ content_for :title 
+ t :no_administrator_yet 
+ form_for @user, :url => { :action => 'create' } do |f| 
+ f.error_messages 
+ f.label :name, t(:username) 
+ f.text_field :name, { :class => 'text_input' } 
+ f.label :email 
+ f.text_field :email, { :class => 'text_input' } 
+ label_tag :password 
+ f.password_field :password, { :class => 'text_input' } 
+ label_tag :confirm_password 
+ f.password_field :password_confirmation, { :class => 'text_input' } 
+ f.submit t(:create_admin_account) 
+ end 
   
 
 end
@@ -81,7 +95,21 @@ end
  end 
  end 
  
- yield 
+ content_for :title, t(:create_admin) 
+ content_for :title 
+ t :no_administrator_yet 
+ form_for @user, :url => { :action => 'create' } do |f| 
+ f.error_messages 
+ f.label :name, t(:username) 
+ f.text_field :name, { :class => 'text_input' } 
+ f.label :email 
+ f.text_field :email, { :class => 'text_input' } 
+ label_tag :password 
+ f.password_field :password, { :class => 'text_input' } 
+ label_tag :confirm_password 
+ f.password_field :password_confirmation, { :class => 'text_input' } 
+ f.submit t(:create_admin_account) 
+ end 
   
 
 end

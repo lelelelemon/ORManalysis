@@ -1,6 +1,9 @@
 $cur_class_stack = Array.new
 
 def traverse_ast(astnode, level)
+	#if level > 1 and astnode.type.to_s == "class" or astnode.type.to_s == "module"
+	#	return 
+	#end
 	@blank = ""
 	for i in (0...level)
 		@blank = @blank + "   "

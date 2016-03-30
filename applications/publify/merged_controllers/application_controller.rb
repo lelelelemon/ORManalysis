@@ -2,14 +2,12 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  include ::LoginSystem
   protect_from_forgery with: :exception, only: [:edit, :update, :delete]
 
-  before_action :reset_local_cache, :fire_triggers, :load_lang, :set_paths
-  after_action :reset_local_cache
+  before_action :fire_triggers, :load_lang, :set_paths
 
   class << self
-    unless self.respond_to? :template_root
+    unless respond_to? :template_root
       def template_root
         ActionController::Base.view_paths.last
       end
@@ -18,10 +16,13 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def login_required
+    authenticate_user! && authorize!(params[:action], params[:controller])
+  end
+
   def set_paths
     prepend_view_path "#{::Rails.root}/themes/#{this_blog.theme}/views"
     Dir.glob(File.join(::Rails.root.to_s, 'lib', '*_sidebar/app/views')).select do |file|
-      puts File.join(::Rails.root.to_s, 'lib', '*_sidebar/app/views')
       append_view_path file
     end
   end
@@ -44,11 +45,6 @@ class ApplicationController < ActionController::Base
     elsif I18n.available_locales.include?(this_blog.lang.sub('_', '-').to_sym)
       I18n.locale = this_blog.lang.sub('_', '-')
     end
-  end
-
-  def reset_local_cache
-    session session: new unless session
-    @current_user = nil
   end
 
   def add_to_cookies(name, value, path = nil, _expires = nil)

@@ -11,14 +11,14 @@ class ArticlesController < ContentController
   helper :'admin/base'
 
   def index
-    conditions = (this_blog.statuses_in_timeline) ? ['type in (?, ?)', 'Article', 'Note'] : ['type = ?', 'Article']
+    conditions = this_blog.statuses_in_timeline ? ['type in (?, ?)', 'Article', 'Note'] : ['type = ?', 'Article']
 
     limit = this_blog.per_page(params[:format])
-    if params[:year].blank?
-      @articles = this_blog.contents.published.where(conditions).page(params[:page]).per(limit)
-    else
-      @articles = this_blog.contents.published_at(params.values_at(:year, :month, :day)).where(conditions).page(params[:page]).per(limit)
-    end
+    @articles = if params[:year].blank?
+                  this_blog.contents.published.where(conditions).page(params[:page]).per(limit)
+                else
+                  this_blog.contents.published_at(params.values_at(:year, :month, :day)).where(conditions).page(params[:page]).per(limit)
+                end
 
     @page_title = this_blog.home_title_template
     @description = this_blog.home_desc_template
@@ -47,9 +47,15 @@ class ArticlesController < ContentController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
  render article 
- render 'articles/article_links', article: article 
+  if article.tags.any? 
+ t(".tags") 
+ tag_links article 
  end 
- paginate articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
+ link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
+ link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ 
+ end 
+ paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
  
 
 end
@@ -71,8 +77,24 @@ end
 
 end
  }
-      format.rss { render 'index_rss_feed', layout: false }
-      format.atom { render 'index_atom_feed', layout: false }
+      format.rss { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ for article in @articles 
+ link_to_permalink article,article.title 
+ article.html(:body).gsub(/<\/?[^>]*>/, "").slice(0..300) 
+ end 
+ paginate @articles, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
+
+end
+ }
+      format.atom { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ for article in @articles 
+ link_to_permalink article,article.title 
+ article.html(:body).gsub(/<\/?[^>]*>/, "").slice(0..300) 
+ end 
+ paginate @articles, :next_label => "#{t(".next_page")} &raquo;", :previous_label => "&laquo; #{t('.previous_page')}" 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  for article in @articles 
@@ -138,15 +160,7 @@ h (html(@article).strip_html[0..255]).gsub(/-+/, '-')
  t(".use_the_following_link_to_trackback")
  @article.trackback_url 
  unless @article.published_trackbacks.blank? 
-  trackback.id 
- onhover_show_admin_tools(:trackback, trackback.id) 
- trackback.id 
- t(".from")
- trackback.blog_name 
- trackback.url 
-h trackback.title 
- trackback.excerpt 
- 
+ render(partial: "trackback", collection: @article.published_trackbacks) 
  end 
  end 
  @article.feed_url('rss') 
@@ -228,8 +242,8 @@ end
     return redirect_to r.full_to_path, status: 301 if r # Let redirection made outside of the blog on purpose (deal with it, Brakeman!)
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t(".page_not_found") 
- t(".the_page_you_are_looking_for") 
+ t("errors.page_not_found") 
+ t("errors.the_page_you_are_looking_for") 
 
 end
 
@@ -261,7 +275,7 @@ for article in @articles
  end 
  end 
  end 
- paginate @articles, next_label: "#{t(".next_page")} &raquo;", previous_label: "&laquo; #{t('.previous_page')}" 
+ paginate @articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
 
 end
 
@@ -287,8 +301,8 @@ end
       @keywords = this_blog.meta_keywords
     else
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t(".page_not_found") 
- t(".the_page_you_are_looking_for") 
+ t("errors.page_not_found") 
+ t("errors.the_page_you_are_looking_for") 
 
 end
 
@@ -311,7 +325,7 @@ end
     if !this_blog.configured?
       redirect_to controller: 'setup', action: 'index'
     elsif User.count == 0
-      redirect_to controller: 'accounts', action: 'signup'
+      redirect_to new_user_registration_path
     else
       return true
     end
@@ -357,7 +371,22 @@ end
       @auto_discovery_url_rss = "http://feeds2.feedburner.com/#{this_blog.feedburner_url}"
       @auto_discovery_url_atom = "http://feeds2.feedburner.com/#{this_blog.feedburner_url}"
     end
-    render 'index'
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  for article in articles 
+ render article 
+  if article.tags.any? 
+ t(".tags") 
+ tag_links article 
+ end 
+ link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
+ link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ 
+ end 
+ paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
+ 
+
+end
+
   end
 
   def extract_feed_format(from)

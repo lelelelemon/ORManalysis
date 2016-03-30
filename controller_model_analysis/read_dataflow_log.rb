@@ -20,7 +20,8 @@ def read_dataflow(application_dir=nil)
 	root, files, dirs = os_walk($dataflow_dir)
 	for filename in files
 		if filename.to_s.end_with?(".log") and filename.to_s.include?("schema.log") == false
-			class_name = dataflow_filename_match(filename.to_s) 
+			class_name = dataflow_filename_match(filename.to_s)
+			#puts "Dataflow file: #{filename} matches class name #{class_name}" 
 			if class_name != nil
 				handle_single_dataflow_file(filename.to_s, class_name)
 				$class_map[class_name].getMethods.each do |key, meth|
@@ -59,7 +60,8 @@ def read_dataflow(application_dir=nil)
 	#end
 end
 
-def find_method(class_name, method_name)
+def find_method(dataflow_file_name, method_name)
+	class_name = dataflow_filename_match_function(dataflow_file_name, method_name)
 	return $class_map[class_name].getMethod(method_name)
 end
 
@@ -72,9 +74,9 @@ def handle_single_dataflow_file(item, class_name)
 				func_name = line[i+3...line.length-1]
 				$cur_cfg = CFG.new
 				#$cfg_map[func_name] = $cur_cfg
-				m = find_method(class_name, func_name)
+				m = find_method(item, func_name)
 				if m == nil
-					#puts "Function not found: #{class_name} . #{func_name}"
+					puts "METHOD NOT FOUND: #{item}, #{func_name}"
 					#exit
 				else
 						m.setCFG($cur_cfg)
@@ -225,7 +227,7 @@ def handle_single_dataflow_file(item, class_name)
 										fc_array = single_attr.split("->")
 										#fc_array[0]: caller
 										#fc_array[1]: function_name
-										if cur_instr.instance_of?AttrAssign_instr
+										if cur_instr.instance_of?AttrAssign_instr or (fc_array[0] == "%self" and fc_array[1].end_with?'=')
 											cur_instr = AttrAssign_instr.new(fc_array[0], fc_array[1])
 										elsif cur_instr.instance_of?GetField_instr
 											cur_instr = GetField_instr.new(fc_array[0], fc_array[1])
