@@ -40,6 +40,29 @@ File.open(ARGV[0], "r").each_line do |line|
   elsif line =~ /.*{.*{.*}.*}.*/
     line.gsub! /{.*{.*}.*}/, ""
     print line + "\n"
+  elsif line =~ /.*\|\| [^ ]* \? [^ ]* : "".*/
+    line.gsub! /\|\| [^ ]* \? [^ ]* : ""/, ""
+    puts line
+  elsif line =~ /.*{class: [^ ]* \? [^ ]* : [^ ]*}.*/
+    line.gsub! /{class: [^ ]* \? [^ ]* : [^ ]*}/, "{class: \"\"}"
+    puts line
+  elsif line.include?"font{body_font}" or line.include?"font{big_quotation_mark_font}" or line.include?"font{quote_font}"
+    line.gsub! "font{body_font}", "font"
+    line.gsub! "font{big_quotation_mark_font}", "font"
+    line.gsub! "font{quote_font}", "font"
+    puts line
+  elsif line =~ /.*, :class => \(.* \? .* : [^ ]*\).*/
+    line.gsub! /, :class => \(.* \? .* : [^ ]*\)/, ""
+    puts line
+  elsif line =~ /.*{:class => \(.* \? .* : [^ ]*\)}.*/
+    line.gsub! /{:class => \(.* \? .* : [^ ]*\)}/, ""
+    puts line
+  elsif line =~ /.*{:class => .* \? .* : [^ ]*}.*/
+    line.gsub! /{:class => .* \? .* : [^ ]*}/, ""
+    puts line
+  elsif line =~ /.*\|\| [^ ]*.*/
+    line.gsub! /\|\| [^ ]*/, ""
+    puts line
   else
     puts line
   end
