@@ -39,8 +39,8 @@ File.open(ARGV[0], "r").each_line do |line|
   elsif line.end_with?","
     print indent + content
   elsif line =~ /.*==.*\#{.*}.*/
-  elsif line =~ /.*{.*{.*}.*}.*/
-    line.gsub! /{.*{.*}.*}/, ""
+  elsif line =~ /.*{[^}]*{.*}[^{]*}.*/
+    line.gsub! /{[^}]*{.*}[^{]*}/, "{}"
     print line + "\n"
   elsif line =~ /.*\|\| [^ ]* \? [^ ]* : "".*/
     line.gsub! /\|\| [^ ]* \? [^ ]* : ""/, ""
@@ -61,6 +61,12 @@ File.open(ARGV[0], "r").each_line do |line|
     puts line
   elsif line =~ /.*{:class => .* \? .* : [^ ]*}.*/
     line.gsub! /{:class => .* \? .* : [^ ]*}/, ""
+    puts line
+  elsif line =~ /.*\|\| [^\(\)]*\).*/
+    line.gsub! /\|\| [^\(\)]*\)/, ")"
+    puts line
+  elsif line =~ /.*\|\| [^{}]*}.*/
+    line.gsub! /\|\| [^{}]*}/, "}"
     puts line
   elsif line =~ /.*\|\| [^ ]*,.*/
     line.gsub! /\|\| [^ ]*,/, ","
