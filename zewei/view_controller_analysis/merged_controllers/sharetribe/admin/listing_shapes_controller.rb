@@ -12,88 +12,14 @@ class Admin::ListingShapesController < ApplicationController
     category_count = @current_community.categories.count
     template_label_key_list = ListingShapeTemplates.new(process_summary).label_key_list
 
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-   if APP_CONFIG.use_kissmetrics 
- "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
- if @current_user 
- "_kmq.push(['identify', '#{@current_user.id}']);" 
- end 
- if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
- else 
- "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
- end 
- end 
- 
- I18n.locale 
- content_for :head 
-  
- 
-  
- if display_expiration_notice? 
-  content_for :javascript do 
- end 
- t("expiration.title") 
- t("expiration.sub_title_new") 
- external_plan_service_login_url 
- t("expiration.link_to_external_service") 
- t("expiration.need_more_info") 
- t("expiration.contact_us") 
- 
- end 
- content_for(:page_content) do 
- with_big_cover_photo do 
- yield :title_header 
- end 
- with_small_cover_photo do 
- yield(:coverfade_class) 
- yield :title_header 
- end 
-  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
- if flash[announcement] 
- announcement.to_s 
- icon_class 
- flash[announcement] 
- end 
- end 
- 
-  end 
- if params[:controller] == "homepage" && params[:action] == "index" 
- params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
- unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
- hidden_field_tag param, value 
- end 
- end 
- hidden_field_tag "view", @view_type 
- content_for(:page_content) 
- else 
- content_for(:page_content) 
- end 
-  if (APP_CONFIG.use_google_analytics) 
- "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
- "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
- if @current_community && @current_community.google_analytics_key 
- "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
- "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
- end 
- end 
- 
- content_for(:location_search) 
-  
- javascript_include_tag 'application' 
- if @analytics_event 
- end 
- if Rails.env.test? 
- end 
- content_for :extra_javascript 
-  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
- t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
- 
-
-end
-
+    render("index",
+           locals: {
+             selected_left_navi_link: LISTING_SHAPES_NAVI_LINK,
+             templates: template_label_key_list,
+             display_knowledge_base_articles: APP_CONFIG.display_knowledge_base_articles,
+             knowledge_base_url: APP_CONFIG.knowledge_base_url,
+             category_count: category_count,
+             listing_shapes: all_shapes(community_id: @current_community.id, include_categories: true)})
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
    if APP_CONFIG.use_kissmetrics 
  "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
@@ -101,17 +27,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -125,21 +146,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.listing_shapes.index.listing_shapes") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.listing_shapes.index.listing_shapes") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  end 
+  
+ content_for :javascript do 
+ end 
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
+ t(".listing_shapes") 
+ t(".description") 
+ if display_knowledge_base_articles 
+ link_to t(".read_more_about_order_types"), "#{knowledge_base_url}/articles/614718" 
+ end 
+ t(".header.listing_shape_name") 
+ t(".header.listing_shape_categories") 
+ sort_disabled_class = listing_shapes.size == 1 ? "disabled" : "" 
+ listing_shapes.map do |shape| 
+ t(shape[:name_tr_key]) 
+ if shape[:category_ids].size == 0 
+ t("admin.listing_shapes.index.no_categories") 
+ elsif shape[:category_ids].size == category_count 
+ t("admin.listing_shapes.index.all_categories") 
+ else 
+ t("admin.listing_shapes.index.category_count", :category_count => "#{shape[:category_ids].size}/#{category_count}") 
+ end 
+ link_to edit_admin_listing_shape_path(shape[:name]) do 
+ icon_tag("edit", ["icon-fix"]) 
+ end 
+ link_to '#', :class => "js-listing-shape-action-up admin-sort-button #{sort_disabled_class}", :tabindex => "-1" do 
+ icon_tag("directup", ["icon-fix"]) 
+ end 
+ link_to '#', :class => "js-listing-shape-action-down admin-sort-button #{sort_disabled_class}", :tabindex => "-1" do 
+ icon_tag("directdown", ["icon-fix"]) 
+ end 
+ end 
+ icon_class("loading") 
+ t("admin.listing_shapes.index.order.saving_order") 
+ icon_class("check") 
+ t("admin.listing_shapes.index.order.save_order_successful") 
+ t("admin.listing_shapes.index.order.save_order_error") 
+ form_tag new_admin_listing_shape_path, method: :get do 
+ t("admin.listing_shapes.index.add_new_shape") 
+ select_tag :template, options_for_select([[t("admin.listing_shapes.index.select_template"), nil]].concat(templates.map { |(label_tr_key, template_name)| [t(label_tr_key), template_name]})), onChange: "form.submit();" 
+ end 
+ end 
  if params[:controller] == "homepage" && params[:action] == "index" 
  params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
  unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
@@ -158,7 +270,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -326,183 +438,7 @@ end
 
   def render_new_form(form, process_summary, available_locs)
     locals = common_locals(form, 0, process_summary, available_locs)
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-   if APP_CONFIG.use_kissmetrics 
- "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
- if @current_user 
- "_kmq.push(['identify', '#{@current_user.id}']);" 
- end 
- if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
- else 
- "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
- end 
- end 
- 
- I18n.locale 
- content_for :head 
-  
- 
-  
- if display_expiration_notice? 
-  content_for :javascript do 
- end 
- t("expiration.title") 
- t("expiration.sub_title_new") 
- external_plan_service_login_url 
- t("expiration.link_to_external_service") 
- t("expiration.need_more_info") 
- t("expiration.contact_us") 
- 
- end 
- content_for(:page_content) do 
- with_big_cover_photo do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.listing_shapes.index.listing_shapes") 
- end 
- with_small_cover_photo do 
- yield(:coverfade_class) 
- t("layouts.admin.admin") 
- "-" 
- t("admin.listing_shapes.index.listing_shapes") 
- end 
-  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
- if flash[announcement] 
- announcement.to_s 
- icon_class 
- flash[announcement] 
- end 
- end 
- 
-   
- content_for :javascript do 
- end 
-  
- t(".create_listing_shape") 
- form_tag(admin_listing_shapes_path, method: :post, id: "listing_shape_form") do 
-  label_tag("", t("admin.listing_shapes.listing_shape_name"), class: "input") 
- translation_label_class = locale_name_mapping.size > 1 ? "col-2" : "hidden" 
- shape[:name].map do |(loc, translation)| 
- translation_label_class 
- label_tag "name[#{loc}]", locale_name_mapping[loc], class: "listing-shape-locale-label" 
- text_field_tag("name[#{loc}]", translation, class: "required", placeholder: t("admin.listing_shapes.listing_shape_name_placeholder")) 
- end 
- label_tag("", t("admin.listing_shapes.action_button_label"), class: "input") 
- shape[:action_button_label].map do |loc, translation| 
- translation_label_class 
- label_tag "action_button_label[#{loc}]", locale_name_mapping[loc], class: "listing-shape-locale-label" 
- text_field_tag("action_button_label[#{loc}]", translation, class: "required", placeholder: t("admin.listing_shapes.action_button_placeholder")) 
- end 
- if count > 0 
- icon_tag("alert", ["icon-fix"]) 
- t("admin.listing_shapes.open_listings_warning", count: count) 
- link_to close_listings_admin_listing_shape_path, class: "listing-shape-delete-button", confirm: t("admin.listing_shapes.confirm_close_listings_action", count: count) do 
- t("admin.listing_shapes.close_listings_action", count: count) 
- end 
- end 
- label_tag("", t("admin.listing_shapes.pricing_and_checkout_title"), class: "input") 
- check_box_tag(:price_enabled, "true", shape[:price_enabled], class: "checkbox-row-checkbox js-price-enabled") 
- label_tag(:price_enabled, t("admin.listing_shapes.price_label"), class: "checkbox-row-label js-price-enabled-label") 
- unless uneditable_fields[:online_payments] 
- check_box_tag(:online_payments, "true", shape[:online_payments], class: "checkbox-row-checkbox js-online-payments") 
- label_tag(:online_payments, t("admin.listing_shapes.online_payments_label"), class: "checkbox-row-label js-online-payments-label") 
- end 
- unless uneditable_fields[:shipping_enabled] 
- check_box_tag(:shipping_enabled, "true", shape[:shipping_enabled], class: "checkbox-row-checkbox js-shipping-enabled") 
- label_tag(:shipping_enabled, t("admin.listing_shapes.shipping_label"), class: "checkbox-row-label js-shipping-enabled-label") 
- end 
- label_tag("units_title", t("admin.listing_shapes.units_title"), class: "input") 
-  icon_tag("information") 
- text 
- 
- shape[:predefined_units].map do |unit| 
- check_box_tag("units[#{unit[:type]}]", "true", unit[:enabled], class: "js-unit-checkbox checkbox-row-checkbox") 
- label_tag("units[#{unit[:type]}]", unit[:label], class: "checkbox-row-label js-unit-label") 
- end 
- shape[:custom_units].each_with_index do |unit, index| 
- index 
- hidden_field_tag("custom_units[existing][#{index}]", unit[:value]) 
- label_tag("custom_units[existing][#{index}]", "#{t('admin.listing_shapes.custom_unit_form.per')} #{unit[:name][I18n.locale.to_s]}", class: "js-unit-label checkbox-row-label") 
- link_to_function(t("admin.listing_shapes.delete_custom_unit"), "", class: "js-remove-custom-unit", data: {customUnitIndex: index}) 
- end 
- t("admin.listing_shapes.add_custom_unit") 
- icon_tag("cross", ["listing-shape-close-custom-unit-form", "js-listing-shape-close-custom-unit-form"]) 
- label_tag("custom_units_title", t("admin.listing_shapes.custom_unit_form.title"), class: "input") 
- label_tag("", t("admin.listing_shapes.custom_unit_form.label_heading"), class: "input") 
- @current_community.locales.each do |locale| 
- input_id = "custom_units[new][${uniqueId}][name][#{locale}]" 
- translation_label_class 
- input_id 
- t("admin.communities.available_languages.#{locale}") 
- t('admin.listing_shapes.custom_unit_form.per') 
- input_id 
- input_id 
- t('admin.listing_shapes.custom_unit_form.label_placeholder') 
- :text 
- end 
- label_tag("", t("admin.listing_shapes.custom_unit_form.selector_label_heading"), class: "input") 
- @current_community.locales.each do |locale| 
- input_id = "custom_units[new][${uniqueId}][selector][#{locale}]" 
- translation_label_class 
- input_id 
- t("admin.communities.available_languages.#{locale}") 
- input_id 
- input_id 
- t('admin.listing_shapes.custom_unit_form.selector_placeholder') 
- :text 
- end 
- label_tag("", t("admin.listing_shapes.custom_unit_form.unit_type.heading"), class: "input") 
- quantity_radio_id = "custom_units_${uniqueId}_type_quantity" 
- quantity_radio_id 
- :radio 
- quantity_radio_id 
- t("admin.listing_shapes.custom_unit_form.unit_type.quantity_label") 
- time_radio_id = "custom_units_${uniqueId}_type_time" 
- time_radio_id 
- :radio 
- time_radio_id 
- t("admin.listing_shapes.custom_unit_form.unit_type.time_label") 
- hidden_field_tag("author_is_seller", shape[:author_is_seller]) 
- 
- end 
- end 
- if params[:controller] == "homepage" && params[:action] == "index" 
- params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
- unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
- hidden_field_tag param, value 
- end 
- end 
- hidden_field_tag "view", @view_type 
- content_for(:page_content) 
- else 
- content_for(:page_content) 
- end 
-  if (APP_CONFIG.use_google_analytics) 
- "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
- "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
- if @current_community && @current_community.google_analytics_key 
- "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
- "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
- end 
- end 
- 
- content_for(:location_search) 
-  
- javascript_include_tag 'application' 
- if @analytics_event 
- end 
- if Rails.env.test? 
- end 
- content_for :extra_javascript 
-  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
- t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
- 
-
-end
-
+    render("new", locals: locals)
   end
 
   def render_edit_form(url_name, form, process_summary, available_locs)
@@ -523,183 +459,7 @@ end
       cant_delete: cant_delete,
       cant_delete_reason: cant_delete_reason
     )
-    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-   if APP_CONFIG.use_kissmetrics 
- "_kms('//i.kissmetrics.com/i.js');_kms('#{APP_CONFIG.kissmetrics_url}');" 
- if @current_user 
- "_kmq.push(['identify', '#{@current_user.id}']);" 
- end 
- if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
- else 
- "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
- end 
- end 
- 
- I18n.locale 
- content_for :head 
-  
- 
-  
- if display_expiration_notice? 
-  content_for :javascript do 
- end 
- t("expiration.title") 
- t("expiration.sub_title_new") 
- external_plan_service_login_url 
- t("expiration.link_to_external_service") 
- t("expiration.need_more_info") 
- t("expiration.contact_us") 
- 
- end 
- content_for(:page_content) do 
- with_big_cover_photo do 
- t("layouts.admin.admin") 
- "-" 
- t("admin.listing_shapes.index.listing_shapes") 
- end 
- with_small_cover_photo do 
- yield(:coverfade_class) 
- t("layouts.admin.admin") 
- "-" 
- t("admin.listing_shapes.index.listing_shapes") 
- end 
-  { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
- if flash[announcement] 
- announcement.to_s 
- icon_class 
- flash[announcement] 
- end 
- end 
- 
-   
- content_for :javascript do 
- end 
-  
- t(".edit_listing_shape", shape: name) 
- form_tag(admin_listing_shape_path(url_name), method: :put, id: "listing_shape_form") do 
-  label_tag("", t("admin.listing_shapes.listing_shape_name"), class: "input") 
- translation_label_class = locale_name_mapping.size > 1 ? "col-2" : "hidden" 
- shape[:name].map do |(loc, translation)| 
- translation_label_class 
- label_tag "name[#{loc}]", locale_name_mapping[loc], class: "listing-shape-locale-label" 
- text_field_tag("name[#{loc}]", translation, class: "required", placeholder: t("admin.listing_shapes.listing_shape_name_placeholder")) 
- end 
- label_tag("", t("admin.listing_shapes.action_button_label"), class: "input") 
- shape[:action_button_label].map do |loc, translation| 
- translation_label_class 
- label_tag "action_button_label[#{loc}]", locale_name_mapping[loc], class: "listing-shape-locale-label" 
- text_field_tag("action_button_label[#{loc}]", translation, class: "required", placeholder: t("admin.listing_shapes.action_button_placeholder")) 
- end 
- if count > 0 
- icon_tag("alert", ["icon-fix"]) 
- t("admin.listing_shapes.open_listings_warning", count: count) 
- link_to close_listings_admin_listing_shape_path, class: "listing-shape-delete-button", confirm: t("admin.listing_shapes.confirm_close_listings_action", count: count) do 
- t("admin.listing_shapes.close_listings_action", count: count) 
- end 
- end 
- label_tag("", t("admin.listing_shapes.pricing_and_checkout_title"), class: "input") 
- check_box_tag(:price_enabled, "true", shape[:price_enabled], class: "checkbox-row-checkbox js-price-enabled") 
- label_tag(:price_enabled, t("admin.listing_shapes.price_label"), class: "checkbox-row-label js-price-enabled-label") 
- unless uneditable_fields[:online_payments] 
- check_box_tag(:online_payments, "true", shape[:online_payments], class: "checkbox-row-checkbox js-online-payments") 
- label_tag(:online_payments, t("admin.listing_shapes.online_payments_label"), class: "checkbox-row-label js-online-payments-label") 
- end 
- unless uneditable_fields[:shipping_enabled] 
- check_box_tag(:shipping_enabled, "true", shape[:shipping_enabled], class: "checkbox-row-checkbox js-shipping-enabled") 
- label_tag(:shipping_enabled, t("admin.listing_shapes.shipping_label"), class: "checkbox-row-label js-shipping-enabled-label") 
- end 
- label_tag("units_title", t("admin.listing_shapes.units_title"), class: "input") 
-  icon_tag("information") 
- text 
- 
- shape[:predefined_units].map do |unit| 
- check_box_tag("units[#{unit[:type]}]", "true", unit[:enabled], class: "js-unit-checkbox checkbox-row-checkbox") 
- label_tag("units[#{unit[:type]}]", unit[:label], class: "checkbox-row-label js-unit-label") 
- end 
- shape[:custom_units].each_with_index do |unit, index| 
- index 
- hidden_field_tag("custom_units[existing][#{index}]", unit[:value]) 
- label_tag("custom_units[existing][#{index}]", "#{t('admin.listing_shapes.custom_unit_form.per')} #{unit[:name][I18n.locale.to_s]}", class: "js-unit-label checkbox-row-label") 
- link_to_function(t("admin.listing_shapes.delete_custom_unit"), "", class: "js-remove-custom-unit", data: {customUnitIndex: index}) 
- end 
- t("admin.listing_shapes.add_custom_unit") 
- icon_tag("cross", ["listing-shape-close-custom-unit-form", "js-listing-shape-close-custom-unit-form"]) 
- label_tag("custom_units_title", t("admin.listing_shapes.custom_unit_form.title"), class: "input") 
- label_tag("", t("admin.listing_shapes.custom_unit_form.label_heading"), class: "input") 
- @current_community.locales.each do |locale| 
- input_id = "custom_units[new][${uniqueId}][name][#{locale}]" 
- translation_label_class 
- input_id 
- t("admin.communities.available_languages.#{locale}") 
- t('admin.listing_shapes.custom_unit_form.per') 
- input_id 
- input_id 
- t('admin.listing_shapes.custom_unit_form.label_placeholder') 
- :text 
- end 
- label_tag("", t("admin.listing_shapes.custom_unit_form.selector_label_heading"), class: "input") 
- @current_community.locales.each do |locale| 
- input_id = "custom_units[new][${uniqueId}][selector][#{locale}]" 
- translation_label_class 
- input_id 
- t("admin.communities.available_languages.#{locale}") 
- input_id 
- input_id 
- t('admin.listing_shapes.custom_unit_form.selector_placeholder') 
- :text 
- end 
- label_tag("", t("admin.listing_shapes.custom_unit_form.unit_type.heading"), class: "input") 
- quantity_radio_id = "custom_units_${uniqueId}_type_quantity" 
- quantity_radio_id 
- :radio 
- quantity_radio_id 
- t("admin.listing_shapes.custom_unit_form.unit_type.quantity_label") 
- time_radio_id = "custom_units_${uniqueId}_type_time" 
- time_radio_id 
- :radio 
- time_radio_id 
- t("admin.listing_shapes.custom_unit_form.unit_type.time_label") 
- hidden_field_tag("author_is_seller", shape[:author_is_seller]) 
- 
- end 
- end 
- if params[:controller] == "homepage" && params[:action] == "index" 
- params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
- unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
- hidden_field_tag param, value 
- end 
- end 
- hidden_field_tag "view", @view_type 
- content_for(:page_content) 
- else 
- content_for(:page_content) 
- end 
-  if (APP_CONFIG.use_google_analytics) 
- "_gaq.push(['_setAccount', '#{APP_CONFIG.google_analytics_key}']);" 
- "_gaq.push(['_setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
- if @current_community && @current_community.google_analytics_key 
- "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
- "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
- end 
- end 
- 
- content_for(:location_search) 
-  
- javascript_include_tag 'application' 
- if @analytics_event 
- end 
- if Rails.env.test? 
- end 
- content_for :extra_javascript 
-  t('error_pages.no_javascript.javascript_is_disabled_in_your_browser') 
- t('error_pages.no_javascript.kassi_does_not_currently_work_without_javascript') 
- 
-
-end
-
+    render("edit", locals: locals)
   end
 
   def common_locals(form, count, process_summary, available_locs)

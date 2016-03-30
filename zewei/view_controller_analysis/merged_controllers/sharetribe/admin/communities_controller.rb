@@ -22,17 +22,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -58,16 +153,63 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  content_for :javascript do 
+ content_for :javascript do 
  end 
   
-  
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
  t(".edit_community_look_and_feel", :community_name => @community.name(I18n.locale)) 
  form_for @community, :url => edit_look_and_feel_admin_community_path(@community), :method => :put do |form| 
  form.label :wide_logo, t(".community_logo"), :class => "input" 
@@ -151,7 +293,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -181,17 +323,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -205,21 +442,114 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_text_instructions.edit_text_instructions") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.edit_text_instructions.edit_text_instructions") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  end 
+ content_for :javascript do 
+ end 
+  
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
+ t(".edit_text_instructions", :community_name => @community.name(I18n.locale)) 
+ icon_tag("edit", ["icon-part"]) 
+ t("admin.communities.edit_details.edit_info") 
+ if @current_community.private? 
+ t("admin.communities.edit_details.private_community_homepage_content") 
+  icon_tag("information") 
+ text 
+ 
+ if @community_customization && @community_customization.private_community_homepage_content 
+ @community_customization.private_community_homepage_content.html_safe 
+ end 
+ end 
+ if @current_community.require_verification_to_post_listings? 
+ t("admin.communities.edit_details.verification_to_post_listings_info_content") 
+  icon_tag("information") 
+ text 
+ 
+ if @community_customization && @community_customization.verification_to_post_listings_info_content 
+ @community_customization.verification_to_post_listings_info_content.html_safe 
+ else 
+ t("admin.communities.edit_details.verification_to_post_listings_info_content_default", :contact_admin_link => link_to(t("admin.communities.edit_details.contact_admin_link_text"), new_user_feedback_path)).html_safe 
+ end 
+ end 
+ t("admin.communities.edit_details.edit_signup_info") 
+  icon_tag("information") 
+ text 
+ 
+ if @community_customization && @community_customization.signup_info_content 
+ @community_customization.signup_info_content.html_safe 
+ else 
+ end 
+  render :layout => "layouts/lightbox", locals: {id: field, field: field} do 
+ unless field.eql?("terms") 
+ t("people.help_texts.#{field}_title") 
+ end 
+ render :partial => "people/help_texts/#{field}" 
+ end 
+ 
+ end 
  if params[:controller] == "homepage" && params[:action] == "index" 
  params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
  unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
@@ -238,7 +568,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -280,17 +610,112 @@ end
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -304,21 +729,157 @@ end
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.left_hand_navigation.emails_title") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.left_hand_navigation.emails_title") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  end 
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
+ content_for :extra_javascript do 
+ end 
+  
+ contact_support_link = link_to t("admin.communities.outgoing_email.contact_support_link_text"), "mailto:#{support_email}", "data-uv-trigger" => "contact" 
+ t("admin.communities.outgoing_email.title") 
+ t("admin.communities.outgoing_email.info") 
+ link_to(t("admin.communities.outgoing_email.read_more"), "#{knowledge_base_url}/articles/686493") 
+ content_for(:sender_address_preview) do 
+ if sender_address[:type] == :default 
+ t("admin.communities.outgoing_email.sender_address_default", sender_address: sender_address[:display_format]) 
+ else 
+ t("admin.communities.outgoing_email.sender_address", sender_address: sender_address[:display_format]) 
+ end 
+ end 
+ content_for(:resend_link) do 
+ link_to(t("admin.communities.outgoing_email.resend_link"), nil, class: "js-sender-address-resend-verification") 
+ end 
+ if user_defined_address.nil? 
+ content_for(:sender_address_preview) 
+ elsif [:none, :requested, :expired].include?(user_defined_address[:verification_status]) 
+ image_tag("ajax-loader-grey.gif", class: "sender-address-status-loading-spinner") 
+ content_for(:sender_address_preview) 
+ t("admin.communities.outgoing_email.sender_address", sender_address: user_defined_address[:display_format]) 
+ content_for(:verification_status) do 
+ t("admin.communities.outgoing_email.status_verified") 
+ t("admin.communities.outgoing_email.status_resent", email: user_defined_address[:email], resend_link: content_for(:resend_link)).html_safe 
+ content_for(:time_ago_placeholder) do 
+ end 
+ t("admin.communities.outgoing_email.status_requested", email: user_defined_address[:email], resend_link: content_for(:resend_link), time_ago: content_for(:time_ago_placeholder)).html_safe 
+ t("admin.communities.outgoing_email.status_error") 
+ t("admin.communities.outgoing_email.status_expired", email: user_defined_address[:email], resend_link: content_for(:resend_link)).html_safe 
+ end 
+ t("admin.communities.outgoing_email.status", status: content_for(:verification_status)).html_safe 
+ t("admin.communities.outgoing_email.verification_sent_from", verification_sender_name: "Amazon Web Services") 
+ t("admin.communities.outgoing_email.follow_the_instructions") 
+ t("admin.communities.outgoing_email.need_to_change", contact_support_link: contact_support_link).html_safe 
+ else 
+ content_for(:sender_address_preview) 
+ content_for(:status_verified) do 
+ t("admin.communities.outgoing_email.status_verified"); 
+ end 
+ t("admin.communities.outgoing_email.status", status: content_for(:status_verified)).html_safe 
+ t("admin.communities.outgoing_email.need_to_change", contact_support_link: contact_support_link).html_safe 
+ end 
+ if user_defined_address.nil? 
+ t("admin.communities.outgoing_email.set_sender_address") 
+ unless can_set_sender_address 
+ icon_tag("alert", ["icon-fix"]) 
+ t("admin.communities.outgoing_email.only_white_label_offer", upgrade_pro_plan_link: link_to(t("admin.communities.outgoing_email.upgrade_pro_plan_link"), admin_plan_path)).html_safe 
+ end 
+ disabled_attr = can_set_sender_address ? nil : :disabled 
+ disabled_class = can_set_sender_address ? "" : "sender-address-disabled" 
+ form_tag(post_sender_address_url, method: :post, class: "js-sender-email-form") do 
+ t("admin.communities.outgoing_email.sender_name_label") 
+ disabled_class 
+ disabled_attr 
+ t("admin.communities.outgoing_email.sender_name_placeholder") 
+ :text 
+ t("admin.communities.outgoing_email.sender_email_label") 
+ disabled_class 
+ disabled_attr 
+ t("admin.communities.outgoing_email.sender_email_placeholder") 
+ :text 
+ t("admin.communities.outgoing_email.this_is_how_it_will_look") 
+ disabled_class 
+ disabled_attr 
+ t("admin.communities.outgoing_email.send_verification_button") 
+ end 
+ end 
+ t(".welcome_email_content", :community_name => @community.name(I18n.locale)) 
+ t(".welcome_email_content_description", :send_test_message_link => t(".send_test_message")) 
+ icon_tag("edit", ["icon-part"]) 
+ t(".edit_message") 
+ test_welcome_email_admin_community_path(@community) 
+ icon_tag("mail", ["icon-part"]) 
+ t(".send_test_message") 
+ t("emails.common.hey", :name => @recipient.given_name_or_username) 
+ if @community_customization && @community_customization.welcome_email_content 
+ @community_customization.welcome_email_content.html_safe 
+ else 
+  t("emails.welcome_email.welcome_to_marketplace") 
+ t("emails.welcome_email.love_marketplace_crew").html_safe 
+ 
+ end 
+ end 
  if params[:controller] == "homepage" && params[:action] == "index" 
  params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
  unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
@@ -337,7 +898,7 @@ end
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -362,17 +923,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -386,21 +1042,157 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.left_hand_navigation.emails_title") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.left_hand_navigation.emails_title") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  end 
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
+ content_for :extra_javascript do 
+ end 
+  
+ contact_support_link = link_to t("admin.communities.outgoing_email.contact_support_link_text"), "mailto:#{support_email}", "data-uv-trigger" => "contact" 
+ t("admin.communities.outgoing_email.title") 
+ t("admin.communities.outgoing_email.info") 
+ link_to(t("admin.communities.outgoing_email.read_more"), "#{knowledge_base_url}/articles/686493") 
+ content_for(:sender_address_preview) do 
+ if sender_address[:type] == :default 
+ t("admin.communities.outgoing_email.sender_address_default", sender_address: sender_address[:display_format]) 
+ else 
+ t("admin.communities.outgoing_email.sender_address", sender_address: sender_address[:display_format]) 
+ end 
+ end 
+ content_for(:resend_link) do 
+ link_to(t("admin.communities.outgoing_email.resend_link"), nil, class: "js-sender-address-resend-verification") 
+ end 
+ if user_defined_address.nil? 
+ content_for(:sender_address_preview) 
+ elsif [:none, :requested, :expired].include?(user_defined_address[:verification_status]) 
+ image_tag("ajax-loader-grey.gif", class: "sender-address-status-loading-spinner") 
+ content_for(:sender_address_preview) 
+ t("admin.communities.outgoing_email.sender_address", sender_address: user_defined_address[:display_format]) 
+ content_for(:verification_status) do 
+ t("admin.communities.outgoing_email.status_verified") 
+ t("admin.communities.outgoing_email.status_resent", email: user_defined_address[:email], resend_link: content_for(:resend_link)).html_safe 
+ content_for(:time_ago_placeholder) do 
+ end 
+ t("admin.communities.outgoing_email.status_requested", email: user_defined_address[:email], resend_link: content_for(:resend_link), time_ago: content_for(:time_ago_placeholder)).html_safe 
+ t("admin.communities.outgoing_email.status_error") 
+ t("admin.communities.outgoing_email.status_expired", email: user_defined_address[:email], resend_link: content_for(:resend_link)).html_safe 
+ end 
+ t("admin.communities.outgoing_email.status", status: content_for(:verification_status)).html_safe 
+ t("admin.communities.outgoing_email.verification_sent_from", verification_sender_name: "Amazon Web Services") 
+ t("admin.communities.outgoing_email.follow_the_instructions") 
+ t("admin.communities.outgoing_email.need_to_change", contact_support_link: contact_support_link).html_safe 
+ else 
+ content_for(:sender_address_preview) 
+ content_for(:status_verified) do 
+ t("admin.communities.outgoing_email.status_verified"); 
+ end 
+ t("admin.communities.outgoing_email.status", status: content_for(:status_verified)).html_safe 
+ t("admin.communities.outgoing_email.need_to_change", contact_support_link: contact_support_link).html_safe 
+ end 
+ if user_defined_address.nil? 
+ t("admin.communities.outgoing_email.set_sender_address") 
+ unless can_set_sender_address 
+ icon_tag("alert", ["icon-fix"]) 
+ t("admin.communities.outgoing_email.only_white_label_offer", upgrade_pro_plan_link: link_to(t("admin.communities.outgoing_email.upgrade_pro_plan_link"), admin_plan_path)).html_safe 
+ end 
+ disabled_attr = can_set_sender_address ? nil : :disabled 
+ disabled_class = can_set_sender_address ? "" : "sender-address-disabled" 
+ form_tag(post_sender_address_url, method: :post, class: "js-sender-email-form") do 
+ t("admin.communities.outgoing_email.sender_name_label") 
+ disabled_class 
+ disabled_attr 
+ t("admin.communities.outgoing_email.sender_name_placeholder") 
+ :text 
+ t("admin.communities.outgoing_email.sender_email_label") 
+ disabled_class 
+ disabled_attr 
+ t("admin.communities.outgoing_email.sender_email_placeholder") 
+ :text 
+ t("admin.communities.outgoing_email.this_is_how_it_will_look") 
+ disabled_class 
+ disabled_attr 
+ t("admin.communities.outgoing_email.send_verification_button") 
+ end 
+ end 
+ t(".welcome_email_content", :community_name => @community.name(I18n.locale)) 
+ t(".welcome_email_content_description", :send_test_message_link => t(".send_test_message")) 
+ icon_tag("edit", ["icon-part"]) 
+ t(".edit_message") 
+ test_welcome_email_admin_community_path(@community) 
+ icon_tag("mail", ["icon-part"]) 
+ t(".send_test_message") 
+ t("emails.common.hey", :name => @recipient.given_name_or_username) 
+ if @community_customization && @community_customization.welcome_email_content 
+ @community_customization.welcome_email_content.html_safe 
+ else 
+  t("emails.welcome_email.welcome_to_marketplace") 
+ t("emails.welcome_email.love_marketplace_crew").html_safe 
+ 
+ end 
+ end 
  if params[:controller] == "homepage" && params[:action] == "index" 
  params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
  unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
@@ -419,7 +1211,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -502,17 +1294,112 @@ end
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -538,16 +1425,63 @@ end
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  content_for :javascript do 
+ content_for :javascript do 
  end 
   
-  
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
  t(".social_media") 
  form_for @community, :url => social_media_admin_community_path(@community), :method => :put do |form| 
  t(".twitter_handle") 
@@ -603,7 +1537,7 @@ end
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -628,17 +1562,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -664,16 +1693,63 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  content_for :javascript do 
+ content_for :javascript do 
  end 
   
-  
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
  t(".social_media") 
  form_for @community, :url => social_media_admin_community_path(@community), :method => :put do |form| 
  t(".twitter_handle") 
@@ -729,7 +1805,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -759,17 +1835,112 @@ end
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -795,14 +1966,61 @@ end
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-   
   
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
  t(".analytics", :community_name => @community.name(I18n.locale)) 
  form_for @community, :url => analytics_admin_community_path(@community), :method => :put do |form| 
  t(".google_analytics_key") 
@@ -838,7 +2056,7 @@ end
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -863,17 +2081,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -899,14 +2212,61 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-   
   
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
  t(".analytics", :community_name => @community.name(I18n.locale)) 
  form_for @community, :url => analytics_admin_community_path(@community), :method => :put do |form| 
  t(".google_analytics_key") 
@@ -942,7 +2302,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -972,17 +2332,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -996,21 +2451,136 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.menu_links.menu_links") 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ t("layouts.admin.admin") 
+ "-" 
+ t("admin.communities.menu_links.menu_links") 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  end 
+ content_for :javascript do 
+ end 
+  
+ show_locales = available_locales.size > 1 
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
+ t(".menu_links", :community_name => @community.name(I18n.locale)) 
+ form_for @community, :url => menu_links_admin_community_path(@community), :method => :put, html: {id: "menu-links-form"} do |form| 
+ if show_locales 
+ label_tag do 
+ t("admin.communities.menu_links.language") 
+ end 
+ end 
+ label_tag do 
+ t("admin.communities.menu_links.title") 
+ end 
+ label_tag do 
+ t("admin.communities.menu_links.url") 
+ end 
+  available_locales.each do |locale_name, locale_value| 
+ if show_locales 
+ locale_name 
+ end 
+ t("admin.communities.menu_links.title") 
+ text_field_tag "menu_links[menu_link_attributes][#{menu_link_id}][translation_attributes][#{locale_value}][title]", menu_link.title(locale_value), :class => "required", :placeholder => t("admin.communities.menu_links.title_placeholder", :locale => locale_value), id: "menu-link-title-#{menu_link_id}-#{locale_value}" 
+ t("admin.communities.menu_links.url") 
+ text_field_tag "menu_links[menu_link_attributes][#{menu_link_id}][translation_attributes][#{locale_value}][url]", menu_link.url(locale_value), :class => "required url", :placeholder => t("admin.communities.menu_links.url_placeholder", :locale => locale_value), id: "menu-link-url-#{menu_link_id}-#{locale_value}" 
+ end 
+ link_class = "menu-link-#{(show_locales ? "with" : "without")}-locale-remove" 
+ link_to "#", :class => "menu-link-remove #{link_class}", :tabindex => "-1", :id => "menu-link-remove-#{menu_link_id}" do 
+ icon_tag("cross", ["icon-fix"]) 
+ end 
+ link_to '#', :class => "menu-link-action-up admin-sort-button", :tabindex => "-1" do 
+ icon_tag("directup", ["icon-fix"]) 
+ end 
+ link_to '#', :class => "menu-link-action-down admin-sort-button", :tabindex => "-1" do 
+ icon_tag("directdown", ["icon-fix"]) 
+ end 
+ 
+ @community.menu_links.each do |menu_link| 
+  available_locales.each do |locale_name, locale_value| 
+ if show_locales 
+ locale_name 
+ end 
+ t("admin.communities.menu_links.title") 
+ text_field_tag "menu_links[menu_link_attributes][#{menu_link_id}][translation_attributes][#{locale_value}][title]", menu_link.title(locale_value), :class => "required", :placeholder => t("admin.communities.menu_links.title_placeholder", :locale => locale_value), id: "menu-link-title-#{menu_link_id}-#{locale_value}" 
+ t("admin.communities.menu_links.url") 
+ text_field_tag "menu_links[menu_link_attributes][#{menu_link_id}][translation_attributes][#{locale_value}][url]", menu_link.url(locale_value), :class => "required url", :placeholder => t("admin.communities.menu_links.url_placeholder", :locale => locale_value), id: "menu-link-url-#{menu_link_id}-#{locale_value}" 
+ end 
+ link_class = "menu-link-#{(show_locales ? "with" : "without")}-locale-remove" 
+ link_to "#", :class => "menu-link-remove #{link_class}", :tabindex => "-1", :id => "menu-link-remove-#{menu_link_id}" do 
+ icon_tag("cross", ["icon-fix"]) 
+ end 
+ link_to '#', :class => "menu-link-action-up admin-sort-button", :tabindex => "-1" do 
+ icon_tag("directup", ["icon-fix"]) 
+ end 
+ link_to '#', :class => "menu-link-action-down admin-sort-button", :tabindex => "-1" do 
+ icon_tag("directdown", ["icon-fix"]) 
+ end 
+ 
+ end 
+ t("admin.communities.menu_links.empty") 
+ link_to t("admin.communities.menu_links.add_menu_link"), "#", :id => "menu-links-add" 
+ form.button t("admin.communities.menu_links.save") 
+ end 
+ end 
  if params[:controller] == "homepage" && params[:action] == "index" 
  params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
  unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
@@ -1029,7 +2599,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -1074,17 +2644,112 @@ end
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -1106,14 +2771,61 @@ end
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-   
   
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
  t(".braintree_payment_gateway", :community_name => @community.name(I18n.locale)) 
  if @payment_gateway.configured? 
  hook_url = "#{request.protocol}webhooks.#{APP_CONFIG.domain}/webhooks/braintree?community_id=#{@current_community.id}" 
@@ -1159,7 +2871,7 @@ end
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -1218,17 +2930,112 @@ end
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -1254,14 +3061,61 @@ end
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-   
   
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
  form_for @current_community, :url => update_settings_admin_community_path(@current_community), :method => :put do |form| 
  t(".settings") 
  Maybe(@current_community).payment_gateway.each do 
@@ -1342,7 +3196,7 @@ end
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -1367,17 +3221,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -1403,14 +3352,61 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-   
   
+  grouped_links = links.group_by {|l| l[:topic]} 
+  APP_CONFIG.uservoice_widget_url 
+ @current_user.confirmed_notification_email_to 
+ @current_user.full_name 
+ @current_user.id 
+ @current_user.created_at.to_time.to_i
+ @current_community.id 
+ @current_community.full_url 
+ @current_community.created_at.to_time.to_i 
+ @current_plan[:plan_level] 
+ ( @current_community.created_at < 10.days.ago ? "UserVoice.push(['autoprompt', {}]);".html_safe : "//no autoprompt yet for this site") 
+ 
+ sel_link = (local_assigns.has_key? :selected_left_navi_link) ? selected_left_navi_link : @selected_left_navi_link 
+ t("admin.left_hand_navigation.general") 
+ grouped_links[:general].each do |link| 
+ link[:data_uv_trigger] 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.users_and_transactions") 
+ grouped_links[:manage].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ t("admin.left_hand_navigation.configure") 
+ grouped_links[:configure].each do |link| 
+ link[:path] 
+ link[:id] 
+ link[:text] 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ links.each do |link| 
+ if link[:name].eql?(sel_link) 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ end 
+ links.each do |link| 
+ link[:icon_class] 
+ link[:text] 
+ end 
+ 
  form_for @current_community, :url => update_settings_admin_community_path(@current_community), :method => :put do |form| 
  t(".settings") 
  Maybe(@current_community).payment_gateway.each do 
@@ -1491,7 +3487,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  

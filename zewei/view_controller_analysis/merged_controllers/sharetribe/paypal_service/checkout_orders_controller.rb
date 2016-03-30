@@ -35,13 +35,12 @@ class PaypalService::CheckoutOrdersController < ApplicationController
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  

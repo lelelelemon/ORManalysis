@@ -80,12 +80,14 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  icon_tag("facebook", ["fb-icon"]) 
  button_text 
  
+ t(".OR") 
+ t(".signup_with_email") 
  end 
  form_for @person, :url => APP_CONFIG.login_domain.to_s + people_path do |form| 
  if @current_community.join_with_invite_only? 
  label_tag :invitation_code, t('.invitation_code'), :class => "inline" 
  link_to(t('common.what_is_this'), "#", :tabindex => "-1", :id => "help_invitation_code_link", :class => "label-info") 
- text_field_tag "invitation_code", nil, :class => :text_field, :maxlength => "20", :value => (params[:code] || "") 
+ text_field_tag "invitation_code", nil, :class => :text_field, :maxlength => "20", :value => (params[:code] ) 
  elsif params[:code] 
  hidden_field_tag "invitation_code", params[:code] 
  end 
@@ -404,17 +406,8 @@ end
   def activate
     change_active_status("activated")
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-  if @person.active? 
- link_to t(".deactivate"), deactivate_person_path(@person), :class => "deactivate_person", :method => :put, :remote => true 
- else 
- link_to t(".activate"), activate_person_path(@person), :class => "activate_person", :method => :put, :remote => true 
- end 
- 
-  unless @person.active 
- t(".this_person_is_not_active_in_kassi") 
- t(".inactive_description") 
- end 
- 
+ escape_javascript(render(:partial => 'people/edit_links')) 
+ escape_javascript(render(:partial => 'people/inactive_notification')) 
 
 end
 
@@ -423,17 +416,8 @@ end
   def deactivate
     change_active_status("deactivated")
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-  if @person.active? 
- link_to t(".deactivate"), deactivate_person_path(@person), :class => "deactivate_person", :method => :put, :remote => true 
- else 
- link_to t(".activate"), activate_person_path(@person), :class => "activate_person", :method => :put, :remote => true 
- end 
- 
-  unless @person.active 
- t(".this_person_is_not_active_in_kassi") 
- t(".inactive_description") 
- end 
- 
+ escape_javascript(render(:partial => 'people/edit_links')) 
+ escape_javascript(render(:partial => 'people/inactive_notification')) 
 
 end
 

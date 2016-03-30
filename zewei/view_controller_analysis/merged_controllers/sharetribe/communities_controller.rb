@@ -49,13 +49,14 @@ class CommunitiesController < ApplicationController
  Maybe(@current_community).favicon.each do |favicon| 
  favicon 
  end 
-  if errors.present? 
+ if errors.present? 
  errors.join('<br />').html_safe 
  end 
  form_action 
 
 end
-end
+
+  end
 
   def ensure_no_communities
     redirect_to root if communities_exist?

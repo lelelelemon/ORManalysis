@@ -295,6 +295,9 @@ def parse_content_for_stmt(stmt)
   if ast[2] != nil and ast[2].type.to_s == "do_block"
     value = ast[2][1].source.to_s
     key = ast[1].source.to_s
+  elsif ast[1].type.to_s == "arg_paren"
+    key = ast[1][0].source.to_s
+    value = ""
   elsif ast[1][1].respond_to?"source"
     value = ast[1][1].source
     key = ast[1][0].source.to_s

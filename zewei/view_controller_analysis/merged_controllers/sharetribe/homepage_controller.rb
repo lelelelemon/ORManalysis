@@ -70,17 +70,112 @@ class HomepageController < ApplicationController
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -102,22 +197,17 @@ class HomepageController < ApplicationController
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  frontpage_fragment_cache("grid_item", listing) do 
+ frontpage_fragment_cache("grid_item", listing) do 
   link_to(listing_path(listing.url), :class => "#{modifier_class} fluid-thumbnail-grid-image-item-link") do 
- modifier_class 
  with_first_listing_image(listing) do |first_image_url| 
- image_tag first_image_url, {:alt => listed_listing_title(listing), :class => "#{modifier_class} fluid-thumbnail-grid-image-image"} 
+ image_tag first_image_url, {} 
  end 
- modifier_class 
- modifier_class 
  listing.title 
- modifier_class 
  if listing.price 
  humanized_money_with_symbol(listing.price).upcase 
  price_unit = price_quantity_slash_unit(listing) 
@@ -127,11 +217,16 @@ class HomepageController < ApplicationController
  price_text 
  end 
  else 
- modifier_class 
  shape_name(listing) 
  end 
  end 
  
+ link_to(person_path(id: listing.author.username)) do 
+ image_tag(listing.author.avatar.thumb, :class => "home-fluid-thumbnail-grid-author-avatar-image") 
+ end 
+ link_to(person_path(id: listing.author.username), :class => "home-fluid-thumbnail-grid-author-name") do 
+ PersonViewUtils::person_entity_display_name(listing.author, @current_community.name_display_type) 
+ end 
  end 
  end 
  if params[:controller] == "homepage" && params[:action] == "index" 
@@ -152,7 +247,7 @@ class HomepageController < ApplicationController
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -178,17 +273,112 @@ end
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -210,13 +400,12 @@ end
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  frontpage_fragment_cache("list_item", listing) do 
+ frontpage_fragment_cache("list_item", listing) do 
  if listing.listing_images.size > 0 
  link_to listing_path(listing.url), :class => "home-list-image-container-desktop" do 
  image_tag listing.listing_images.first[:small_3x2], {:alt => listed_listing_title(listing), :class => "home-list-image"} 
@@ -242,7 +431,6 @@ end
  else 
  shape_name(listing) 
  end 
- (listing.listing_images.size > 0 ? "home-list-details-with-image" : "") 
  link_to listing_path(listing.url) do 
  listing.title 
  if @current_community.show_category_in_listing_list 
@@ -251,7 +439,6 @@ end
  shape_name(listing) 
  end 
  end 
- (listing.listing_images.size > 0 ? "home-list-author-with-listing-image" : "home-list-author-without-listing-image") 
  link_to(person_path(id: listing.author.username), :class => "home-fluid-thumbnail-grid-author-avatar-image") do 
  image_tag(listing.author.avatar.thumb) 
  end 
@@ -264,7 +451,6 @@ end
  pluralize(listing.author.num_of_reviews, t(".review"), t(".reviews")) 
  end 
  end 
- (listing.listing_images.size > 0 ? "home-list-price-mobile-with-listing-image" : "home-list-price-mobile-without-listing-image") 
  if listing.price 
  humanized_money_with_symbol(listing.price).upcase 
  price_text = nil 
@@ -300,7 +486,7 @@ end
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  
@@ -351,17 +537,112 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_kmq.push(['identify', '#{@current_user.id}']);" 
  end 
  if @current_community 
- "_kmq.push(['set', {'SiteName' : '#{@current_community.ident}'}]);" 
+ "_kmq.push(['set', {}]);" 
  else 
  "_kmq.push(['set', {'SiteName' : 'dashboard'}]);" 
  end 
  end 
  
- I18n.locale 
  content_for :head 
   
  
+  link_to t("homepage.index.post_new_listing"), new_listing_path, :class => "new-listing-link", :id => "new-listing-link" 
+ Maybe(@current_user).each do |user| 
+ conversations = @current_community.conversations.for_person(user) 
+ unread_count = MarketplaceService::Inbox::Query.notification_count(user.id, @current_community.id) 
+  image_tag user.image.url(:thumb), alt: '', class: 'header-user-avatar' 
+ user.name(@current_community) 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ 
+  link_to person_inbox_path(@current_user) do 
+ icon_tag("mail", ["icon-with-text"]) 
+ t("layouts.conversations.messages") 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ link_to person_path(user) do 
+ icon_tag("user", ["icon-with-text"]) 
+ t("header.profile") 
+ end 
+ link_to person_settings_path(user) do 
+ icon_tag("settings", ["icon-with-text"]) 
+ t("layouts.logged_in.settings") 
+ end 
+ link_to logout_path do 
+ icon_tag("logout", ["icon-with-text"]) 
+ t("layouts.logged_in.logout") 
+ end 
+ 
+  link_to person_inbox_path(user), title: t("layouts.conversations.messages"), :id => "inbox-link", :class => "header-text-link header-hover header-inbox-link" do 
+ icon_tag("mail", ["header-inbox"]) 
+ if unread_count > 0 
+ get_badge_class(unread_count) 
+ unread_count 
+ end 
+ end 
+ 
+ end 
+ with_available_locales do |locales| 
+ get_full_locale_name(I18n.locale).to_s 
+ icon_tag("dropdown", ["icon-dropdown"]) 
   
+ end 
+ unless @current_user 
+ link_to sign_up_path, class: "header-text-link header-hover" do 
+ t("header.signup") 
+ end 
+ link_to login_path, class: "header-text-link header-hover", id: "header-login-link" do 
+ t("header.login") 
+ end 
+ end 
+ icon_tag("rows", ["header-menu-icon"]) 
+ t("header.menu") 
+  link_to "/" do 
+ icon_tag("home", ["icon-with-text"]) 
+ t("header.home") 
+ end 
+ link_to new_listing_path, :class => "hidden-tablet" do 
+ icon_tag("new_listing", ["icon-with-text"]) 
+ t("homepage.index.post_new_listing") 
+ end 
+ link_to about_infos_path do 
+ icon_tag("information", ["icon-with-text"]) 
+ t("header.about") 
+ end 
+ link_to new_user_feedback_path do 
+ icon_tag("feedback", ["icon-with-text"]) 
+ t("header.contact_us") 
+ end 
+ with_invite_link do 
+ link_to new_invitation_path do 
+ icon_tag("invite", ["icon-with-text"]) 
+ t("header.invite") 
+ end 
+ end 
+ Maybe(@current_community).menu_links.each do |menu_links| 
+ menu_links.each do |menu_link| 
+ link_to menu_link.url(I18n.locale), :target => "_blank" do 
+ icon_tag("redirect", ["icon-with-text"]) 
+ menu_link.title(I18n.locale) 
+ end 
+ end 
+ end 
+ if @current_user && @current_community && @current_user.has_admin_rights_in?(@current_community) 
+ link_to edit_details_admin_community_path(@current_community) do 
+ icon_tag("admin", ["icon-with-text"]) 
+ t("layouts.logged_in.admin") 
+ end 
+ end 
+ with_available_locales do |locales| 
+ t("layouts.global-header.select_language") 
+  
+ end 
+ 
+ link_to @homepage_path, :class => "header-logo", :id => "header-logo" do 
+ end 
+ 
  if display_expiration_notice? 
   content_for :javascript do 
  end 
@@ -375,21 +656,350 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  content_for(:page_content) do 
  with_big_cover_photo do 
- yield :title_header 
+ with_big_cover_photo do 
+ community_slogan.html_safe 
+ community_description.html_safe 
+ if @current_community.private? 
+ sign_up_path 
+ t("layouts.application.connect") 
+ else 
+ if(feature_enabled?(:location_search)) 
+  content_for(:location_search) do 
+ if feature_enabled?(:location_search) 
+ end 
+ end 
+ content_for :extra_javascript do 
+ end 
+ text_field_tag "q", params[:q], :placeholder => (@community_customization && @community_customization.search_placeholder) || t("homepage.index.what_do_you_need") 
+ hidden_field_tag 'lc', params[:lc] 
+ icon_tag("globelocation", ["icon-part"]) 
+ 
+ else 
+  text_field_tag "q", params[:q], :placeholder => (@community_customization && @community_customization.search_placeholder) || t("homepage.index.what_do_you_need") 
+ icon_tag("search", ["icon-part"]) 
+ 
+ end 
+ end 
+ end 
+ with_small_cover_photo do 
+ if(feature_enabled?(:location_search)) 
+  content_for(:location_search) do 
+ if feature_enabled?(:location_search) 
+ end 
+ end 
+ content_for :extra_javascript do 
+ end 
+ text_field_tag "q", params[:q], :placeholder => (@community_customization && @community_customization.search_placeholder) || t("homepage.index.what_do_you_need") 
+ hidden_field_tag 'lc', params[:lc] 
+ icon_tag("globelocation", ["icon-part"]) 
+ 
+ else 
+  text_field_tag "q", params[:q], :placeholder => (@community_customization && @community_customization.search_placeholder) || t("homepage.index.what_do_you_need") 
+ icon_tag("search", ["icon-part"]) 
+ 
+ end 
+ end 
  end 
  with_small_cover_photo do 
  yield(:coverfade_class) 
- yield :title_header 
+ with_big_cover_photo do 
+ community_slogan.html_safe 
+ community_description.html_safe 
+ if @current_community.private? 
+ sign_up_path 
+ t("layouts.application.connect") 
+ else 
+ if(feature_enabled?(:location_search)) 
+  content_for(:location_search) do 
+ if feature_enabled?(:location_search) 
+ end 
+ end 
+ content_for :extra_javascript do 
+ end 
+ text_field_tag "q", params[:q], :placeholder => (@community_customization && @community_customization.search_placeholder) || t("homepage.index.what_do_you_need") 
+ hidden_field_tag 'lc', params[:lc] 
+ icon_tag("globelocation", ["icon-part"]) 
+ 
+ else 
+  text_field_tag "q", params[:q], :placeholder => (@community_customization && @community_customization.search_placeholder) || t("homepage.index.what_do_you_need") 
+ icon_tag("search", ["icon-part"]) 
+ 
+ end 
+ end 
+ end 
+ with_small_cover_photo do 
+ if(feature_enabled?(:location_search)) 
+  content_for(:location_search) do 
+ if feature_enabled?(:location_search) 
+ end 
+ end 
+ content_for :extra_javascript do 
+ end 
+ text_field_tag "q", params[:q], :placeholder => (@community_customization && @community_customization.search_placeholder) || t("homepage.index.what_do_you_need") 
+ hidden_field_tag 'lc', params[:lc] 
+ icon_tag("globelocation", ["icon-part"]) 
+ 
+ else 
+  text_field_tag "q", params[:q], :placeholder => (@community_customization && @community_customization.search_placeholder) || t("homepage.index.what_do_you_need") 
+ icon_tag("search", ["icon-part"]) 
+ 
+ end 
+ end 
  end 
   { :notice => "ss-check", :warning => "ss-info", :error => "ss-alert" }.each do |announcement, icon_class| 
  if flash[announcement] 
- announcement.to_s 
  icon_class 
  flash[announcement] 
  end 
  end 
  
-  end 
+ content_for :javascript do 
+ end 
+ content_for :coverfade_class do 
+ "without-text" 
+ end 
+  
+ if @current_community.private? && show_big_cover_photo? 
+ if @community_customization && @community_customization.private_community_homepage_content 
+ @community_customization.private_community_homepage_content.html_safe 
+ else 
+ t(".this_is_private_community") 
+ end 
+ else 
+ if listing_shape_menu_enabled || @category_menu_enabled 
+ t(".filter") 
+ end 
+ listing_shape_menu_enabled 
+ ["grid", "list", "map"].each do |view_type| 
+ selected_class = @view_type == view_type ? "selected" : "" 
+ link_to params.merge(view: view_type), :class => "home-toolbar-button-group-button #{selected_class}", :title => t("homepage.filters.#{view_type}_button") do 
+ icon_tag(view_type, ["icon-fix", "home-button-group-icon"]) 
+ t("homepage.filters.#{view_type}_button") 
+ end 
+ end 
+ if listing_shape_menu_enabled || @category_menu_enabled 
+ if listing_shape_menu_enabled 
+ if selected_shape 
+ t(selected_shape[:name_tr_key]) 
+ else 
+ t("homepage.filters.all_listing_types") 
+ end 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ link_to t("homepage.filters.all_listing_types"), params.merge({transaction_type: "all"}) 
+ shapes.each do |shape| 
+ link_to params.merge({transaction_type: shape[:name]}), class:  "toggle-menu-subitem" do 
+ t(shape[:name_tr_key]) 
+ end 
+ end 
+ end 
+ if @show_categories 
+ if @selected_category 
+ @selected_category.display_name(I18n.locale) 
+ else 
+ t("homepage.filters.all_categories") 
+ end 
+ icon_tag("dropdown", ["icon-dropdown"]) 
+ link_to t("homepage.filters.all_categories"), params.merge({category: "all"}) 
+ @main_categories.each do |category| 
+ link_to category.display_name(I18n.locale), params.merge({category: category}) 
+ if category.children 
+ category.children.each do |child| 
+ is_selected = @selected_category == child 
+ link_to child.display_name(I18n.locale), params.merge({category: child}), :class => "toggle-menu-subitem" 
+ end 
+ end 
+ end 
+ end 
+ # Filters will be relocated to #desktop-filters when in desktop 
+  if show_price_filter || show_custom_fields 
+ if show_price_filter 
+  t("listings.form.price.price") 
+ id = ["range-slider", "price"].join("-") 
+ id 
+ min = MoneyUtil.to_units(MoneyUtil.to_money(@current_community.price_filter_min, @current_community.default_currency)) 
+ max = MoneyUtil.to_units(MoneyUtil.to_money(@current_community.price_filter_max, @current_community.default_currency)) 
+ range = [min, max] 
+ start = [params["price_min"] , params["price_max"] || max] 
+ labels = ["#price-filter-min-value", "#price-filter-max-value"] 
+ fields = ["#price_min", "#price_max"] 
+ content_for :extra_javascript do 
+ end 
+ t("homepage.custom_filters.min") 
+ params["price_min"] 
+ t("homepage.custom_filters.max") 
+ params["price_max"] 
+ 
+ end 
+ if show_custom_fields 
+  @current_community.custom_fields.sort.each do |field| 
+ field.with_type do |type| 
+ if [:dropdown, :checkbox].include?(type) 
+ field.name(I18n.locale) 
+ make_scrollable = field.options.size > 10 
+ field.options.sort.each do |option| 
+ check_box_tag param_name, "#{option.id}", params[param_name] 
+ option.title(I18n.locale) 
+ end 
+ end 
+ end 
+ field.with(:numeric) do 
+ field.name(I18n.locale) 
+ id = ["range-slider", field.id].join("-") 
+ id 
+ range = [field.min, field.max] 
+ start = [params["nf_min_" + field.id.to_s] , params["nf_max_" + field.id.to_s] || field.max] 
+ labels = ["#custom-filter-min-value-#{id}", "#custom-filter-max-value-#{id}"] 
+ fields = ["#nf_min_#{id}", "#nf_max_#{id}"] 
+ content_for :extra_javascript do 
+ end 
+ t(".min") 
+ t(".max") 
+ end 
+ end 
+ 
+ end 
+ t("homepage.custom_filters.update_view") 
+ end 
+ 
+ end 
+ if @category_menu_enabled 
+ if @show_categories 
+ link_to t("homepage.filters.all_categories"), params.merge({category: "all"}), :class => "home-categories-main #{if @selected_category.nil? then 'selected' end}" 
+ @main_categories.each do |category| 
+ show_subcategories = show_subcategory_list(category, Maybe(@selected_category).id.to_i.or_else(nil)) 
+ link_to category.display_name(I18n.locale), params.merge({category: category}), :class => "home-categories-main #{if show_subcategories then 'selected' end} #{if category.has_subcategories? then 'has-subcategories' end}", :data => {category: category.id} 
+ if category.children 
+ if show_subcategories 
+ category.children.each do |child| 
+ is_selected = @selected_category == child 
+ link_to child.display_name(I18n.locale), params.merge({category: child}), :class => "home-categories-sub #{if is_selected then 'selected' end}", :data => {:"sub-category" =>child.id} 
+ end 
+ end 
+ end 
+ end 
+ end 
+ # Filters will be relocated here when in desktop 
+ end 
+ main_container_class = if @category_menu_enabled then "col-9" else "col-12" end 
+ main_container_class 
+ if @listings.total_entries > 0 
+ if @view_type.eql?("map") 
+  content_for :extra_javascript do 
+ javascript_include_tag "https://maps.google.com/maps/api/js?sensor=true" 
+ javascript_include_tag 'markerclusterer.js' 
+ end 
+ community_location_lat = @current_community.location ? @current_community.location.latitude : nil 
+ community_location_lon = @current_community.location ? @current_community.location.longitude : nil 
+ content_for :extra_javascript do 
+ end 
+ 
+ else 
+ if @view_type.eql?("grid") 
+  frontpage_fragment_cache("grid_item", listing) do 
+  link_to(listing_path(listing.url), :class => "#{modifier_class} fluid-thumbnail-grid-image-item-link") do 
+ with_first_listing_image(listing) do |first_image_url| 
+ image_tag first_image_url, {} 
+ end 
+ listing.title 
+ if listing.price 
+ humanized_money_with_symbol(listing.price).upcase 
+ price_unit = price_quantity_slash_unit(listing) 
+ if !price_unit.blank? 
+ price_text = " " + price_unit 
+ price_text 
+ price_text 
+ end 
+ else 
+ shape_name(listing) 
+ end 
+ end 
+ 
+ link_to(person_path(id: listing.author.username)) do 
+ image_tag(listing.author.avatar.thumb, :class => "home-fluid-thumbnail-grid-author-avatar-image") 
+ end 
+ link_to(person_path(id: listing.author.username), :class => "home-fluid-thumbnail-grid-author-name") do 
+ PersonViewUtils::person_entity_display_name(listing.author, @current_community.name_display_type) 
+ end 
+ end 
+ 
+ else 
+  frontpage_fragment_cache("list_item", listing) do 
+ if listing.listing_images.size > 0 
+ link_to listing_path(listing.url), :class => "home-list-image-container-desktop" do 
+ image_tag listing.listing_images.first[:small_3x2], {:alt => listed_listing_title(listing), :class => "home-list-image"} 
+ end 
+ end 
+ if listing.listing_images.size > 0 
+ link_to listing_path(listing.url), :class => "home-list-image-container-mobile" do 
+ image_tag listing.listing_images.first[:thumb], {:alt => listed_listing_title(listing), :class => "home-list-image"} 
+ end 
+ end 
+ if listing.price 
+ humanized_money_with_symbol(listing.price).upcase 
+ price_text = nil 
+ if listing.quantity.present? 
+ price_text = t("listings.form.price.per") + " " + listing.quantity 
+ elsif listing.unit_type 
+ price_text = price_quantity_per_unit(listing) 
+ end 
+ if price_text.present? 
+ price_text 
+ price_text 
+ end 
+ else 
+ shape_name(listing) 
+ end 
+ link_to listing_path(listing.url) do 
+ listing.title 
+ if @current_community.show_category_in_listing_list 
+ root_path(:transaction_type => shape_name_map[listing.listing_shape_id], :view => :list) 
+ icon_tag(listing.icon_name, ["icon-fix"]) 
+ shape_name(listing) 
+ end 
+ end 
+ link_to(person_path(id: listing.author.username), :class => "home-fluid-thumbnail-grid-author-avatar-image") do 
+ image_tag(listing.author.avatar.thumb) 
+ end 
+ link_to(person_path(id: listing.author.username), :class => "home-list-author-name") do 
+ PersonViewUtils::person_entity_display_name(listing.author, @current_community.name_display_type) 
+ end 
+ if testimonials_in_use 
+ if listing.author.num_of_reviews > 0 
+ icon_tag("testimonial") 
+ pluralize(listing.author.num_of_reviews, t(".review"), t(".reviews")) 
+ end 
+ end 
+ if listing.price 
+ humanized_money_with_symbol(listing.price).upcase 
+ price_text = nil 
+ if listing.quantity.present? 
+ price_text = t("listings.form.price.per") + " " + listing.quantity 
+ elsif listing.unit_type 
+ price_text = price_quantity_per_unit(listing) 
+ end 
+ if price_text.present? 
+ price_text 
+ price_text 
+ end 
+ else 
+ shape_name(listing) 
+ end 
+ end 
+ 
+ end 
+ will_paginate(@listings) 
+ item_container = if @view_type.eql?("grid") then '.home-fluid-thumbnail-grid' else '.home-listings' end 
+ pageless(@listings.total_pages, item_container, request.fullpath, t('.loading_more_content')) 
+ end 
+ else 
+ if params[:q] || params[:category] || params[:share_type] # Some filter in use 
+ t(".no_listings_with_your_search_criteria") 
+ else 
+ t(".no_listings_notification", :add_listing_link => link_to(t(".add_listing_link_text"), new_listing_path)).html_safe 
+ end 
+ end 
+ end 
+ end 
  if params[:controller] == "homepage" && params[:action] == "index" 
  params.except("action", "controller", "q", "view", "utf8").each do |param, value| 
  unless param.match(/^filter_option/) || param.match(/^checkbox_filter_option/) || param.match(/^nf_/) || param.match(/^price_/) 
@@ -408,7 +1018,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "_gaq.push(['b._setAccount', '#{@current_community.google_analytics_key}']);" 
  "_gaq.push(['b._setDomainName', '.#{PublicSuffix.parse(request.host).domain}']);" 
  "_gaq.push(['b._addIgnoredOrganic', '#{Maybe(@current_community.name(I18n.locale)).gsub("'","").or_else("")}']);" 
- "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain || @current_community.ident}']);" 
+ "_gaq.push(['b._addIgnoredOrganic', '#{@current_community.domain}']);" 
  end 
  end 
  

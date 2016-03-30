@@ -12,7 +12,7 @@ class ErrorsController < ActionController::Base
  Maybe(@current_community).favicon.each do |favicon| 
  favicon 
  end 
-  t('error_pages.error_500.temporary_unavailable') 
+ t('error_pages.error_500.temporary_unavailable') 
  t('error_pages.error_500.unable_to_process') 
  t('error_pages.error_500.we_hate_this') 
  if error_id.present? 
@@ -30,12 +30,13 @@ end
  Maybe(@current_community).favicon.each do |favicon| 
  favicon 
  end 
-  t('error_pages.error_404.page_can_not_be_found') 
+ t('error_pages.error_404.page_can_not_be_found') 
  t('error_pages.error_404.page_you_requested_can_not_be_found') 
  t('error_pages.back_to_kassi_front_page') 
 
 end
-end
+
+  end
 
   def gone
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -43,13 +44,14 @@ end
  Maybe(@current_community).favicon.each do |favicon| 
  favicon 
  end 
-  t('error_pages.error_410.page_removed') 
+ t('error_pages.error_410.page_removed') 
  t('error_pages.error_410.page_you_requested_has_been_removed') 
  t('error_pages.error_410.page_removed_reason') 
  t('error_pages.back_to_kassi_front_page') 
 
 end
-end
+
+  end
 
   def community_not_found
     render status: 404, locals: { status: 404, title: "Marketplace not found", host: request.host }
