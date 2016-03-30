@@ -29,7 +29,9 @@ File.open(ARGV[0], "r").each_line do |line|
 #  while line.start_with?" " or line.start_with?"\t" or line.start_with?"\n"
 #    line = line[1..-1]
 #  end
-  if content.start_with?"-#"
+  if line.to_s.strip.length == 0
+
+  elsif content.start_with?"-#"
     is_comment = true
   elsif content.end_with?", |"
     content = content[0..-3]
@@ -60,8 +62,8 @@ File.open(ARGV[0], "r").each_line do |line|
   elsif line =~ /.*{:class => .* \? .* : [^ ]*}.*/
     line.gsub! /{:class => .* \? .* : [^ ]*}/, ""
     puts line
-  elsif line =~ /.*\|\| [^ ]*.*/
-    line.gsub! /\|\| [^ ]*/, ""
+  elsif line =~ /.*\|\| [^ ]*,.*/
+    line.gsub! /\|\| [^ ]*,/, ","
     puts line
   else
     puts line
