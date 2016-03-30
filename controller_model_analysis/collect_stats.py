@@ -42,6 +42,9 @@ fig_path = "../applications/%s/figs"%app_name
 
 if os.path.isdir(fig_path) == False:
 	os.system("mkdir %s"%fig_path)
+else:
+	os.system("rm -rf %s"%fig_path)
+	os.system("mkdir %s"%fig_path)
 
 tablename_file = "../applications/%s/table_name.txt"%app_name
 tablefield_file = "../applications/%s/tablefields.txt"%app_name
@@ -104,7 +107,7 @@ for subdir, folders, files in os.walk(base_path):
 	for fn in files:
 		if fn.endswith("stats.xml"):
 			fname = os.path.join(subdir, fn)
-			#print fname
+			print fname
 			tree = ET.parse(fname)
 			roots.append(tree.getroot())
 
@@ -112,23 +115,25 @@ for subdir, folders, files in os.walk(base_path):
 stats_file.write("<%s>\n"%app_name)
 stats_file.write("\t<RootLength>%d</RootLength>\n"%len(roots))
 
-table_names = ["general"]
+#table_names = ["general"]
+table_names = []
 for root in roots:
 	if root[0].tag == "stat":
 		c = root[0]
-		#for child in c:
-			#if child.tag not in table_names:
-				#table_names.append(child.tag)
-				#print "Table: %s"%child.tag
+		for child in c:
+			if child.tag not in table_names and child.tag != "general":
+				table_names.append(child.tag)
+				print "Table: %s"%child.tag
 
 
 prefix1 = ["stat"]
 general_stats_prefix = prefix1[:]
 table_stats_prefix = prefix1[:]  
 general_stats_prefix.append("general")
-table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryOnlyFromUser", "queryUsedInView"]
+table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryUseSQLString", "queryOnlyFromUser", "queryUsedInView"]
 general_stats_content = table_stats_content[:]
 general_stats_content.append("branchOnQuery")
+general_stats_content.append("branchInView")
 general_stats_content.append("branchTotal")
 general_stats_content.append("queryToTrivialBranch")
 general_stats_content.append("trivialBranch")
@@ -156,6 +161,20 @@ path_stats_content2 = ["shortestPath", "longestPath", "instrTotal"]
 
 colors = [5,2,7,9,3,4,10,12,13,15,16]	
 
+def print_table_query_stat(prefix):
+	data = {}
+	stats_file.write("\t<tableStat>\n")
+
+	for table in table_names:
+		cond_list = table_stats_prefix[:]
+		cond_list.append(table)
+		cond_list.append("queryTotal")
+		print cond_list
+		r = calculateAllActions(cond_list)
+		stats_file.write("\t\t<%s>%f</%s>\n"%(table, sum(r), table))	
+	
+	stats_file.write("\t</tableStat>\n")
+
 # stats
 def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	data = {}
@@ -166,28 +185,46 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		data[g] = getAverage(r)
 
 	reads = {}
+	read_sum = 0
 	for g in read_stats_content:
 		cond_list = prefix[:]
 		cond_list.append("readSink")
 		cond_list.append(g)
 		r = calculateAllActions(cond_list)
-		reads[g] = getAverage(r)
+		if g == "total":
+			reads[g] = getAverage(r)
+			read_sum = sum(r)
+		else:
+			reads[g] = float(sum(r))/float(read_sum)
+		#reads[g] = getAverage(r)
 
 	readSource = {}
+	read_sum = 0
 	for g in write_stats_content:
 		cond_list = prefix[:]
 		cond_list.append("readSource")
 		cond_list.append(g)
 		r = calculateAllActions(cond_list)
-		readSource[g] = getAverage(r)
+		if g == "total":
+			readSource[g] = getAverage(r)
+			read_sum = sum(r)
+		else:
+			readSource[g] = float(sum(r))/float(read_sum)
+		#readSource[g] = getAverage(r)
 
 	writes = {}
+	write_sum = 0
 	for g in write_stats_content:
 		cond_list = prefix[:]
 		cond_list.append("writeSource")
 		cond_list.append(g)
 		r = calculateAllActions(cond_list)
-		writes[g] = getAverage(r)
+		if g == "total":
+			writes[g] = getAverage(r)
+			write_sum = sum(r)
+		else:
+			writes[g] = float(sum(r))/float(write_sum)
+		#writes[g] = getAverage(r)
 		#print "%f, %d"%(writes[g], len(r))
 
 
@@ -202,10 +239,20 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t\t<notOnQuery>%f</notOnQuery>\n"%(data["branchTotal"]-data["branchOnQuery"]))
 	stats_file.write("\t</branch>\n")
 
+	stats_file.write("\t<branchInView>\n")
+	stats_file.write("\t\t<branchInView>%f</branchInView>\n"%(data["branchInView"]))
+	stats_file.write("\t\t<branchNotInView>%f</branchNotInView>\n"%(data["branchTotal"]-data["branchInView"]))
+	stats_file.write("\t</branchInView>\n")
+
 	stats_file.write("\t<usedInView>\n")
 	stats_file.write("\t\t<queryResultUsedInView>%f</queryResultUsedInView>\n"%data["queryUsedInView"])
 	stats_file.write("\t\t<queryResultNotUsedInView>%f</queryResultNotUsedInView>\n"%(reads["total"]-data["queryUsedInView"]))
 	stats_file.write("\t</usedInView>\n")
+
+	stats_file.write("\t<usedSQLString>\n")
+	stats_file.write("\t\t<queryUseSQLString>%f</queryUseSQLString>\n"%data["queryUseSQLString"])
+	stats_file.write("\t\t<queryNotUseSQLString>%f</queryNotUseSQLString>\n"%(reads["total"]+writes["total"]-data["queryUseSQLString"]))
+	stats_file.write("\t</usedSQLString>\n")
 
 	stats_file.write("\t<onlyFromUser>\n")
 	stats_file.write("\t\t<queryOnlyUseOtherSource>%f</queryOnlyUseOtherSource>\n"%data["queryOnlyFromUser"])
@@ -409,13 +456,13 @@ def print_view_stat(prefix):
 				table.append(p[0])
 
 	table.sort()
-	#print "Table used in view:"
-	#for t in table:
-	#	print "%s, "%t,
-	#print ""
- 	#print "Table all:"
-	#for t in tables:
-	#	print "%s, "%t,
+	print "Table used in view:"
+	for t in table:
+		print "%s, "%t,
+	print ""
+ 	print "Table all:"
+	for t in tables:
+		print "%s, "%t,
 
 	#print "Table Used in view:\t%d\t%d"%(len(table), len(tables))
 	stats_file.write("\t<TableInView>\n")
@@ -562,6 +609,9 @@ def print_clique_stat(prefix):
 
 	d = calculateAllActions(depth_cond_list)
 	depth = depth + d
+	print "depth:"
+	print depth
+
 	cond_list = prefix[:]
 	cond_list.append("clique")
 	r = calculateAllActions(cond_list)
@@ -602,12 +652,15 @@ def print_clique_stat(prefix):
 	stats_file.write("\t\t<write>%f</write>\n"%(getAverage(validation_w)+1))
 	stats_file.write("\t</transaction>\n")
 	stats_file.write("\t<transactionNested>\n")
-	for d in range(int(max(depth))):
-		cnt = 0
-		for dep in depth:
-			if dep == d:
-				cnt += 1
-		stats_file.write("\t\t<nested%dDepth>%d</nested%dDepth>\n"%(d, cnt, d))
+	if len(depth) > 0:
+		for d in range(int(max(depth)+1)):
+			cnt = 0
+			for dep in depth:
+				if int(dep) == d:
+					cnt += 1
+			stats_file.write("\t\t<nested%dDepth>%d</nested%dDepth>\n"%(d, cnt, d))
+	else:
+		stats_file.write("\t\t<nested0dDepth>1</nested0Depth>\n")
 	#stats_file.write("\t\t<nestedDepth>%f</nestedDepth>\n"%getAverage(depth))
 	stats_file.write("\t</transactionNested>\n")
 	#print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
@@ -625,6 +678,21 @@ def print_query_string(prefix):
 	for q,f in query_keyword.items():
 		stats_file.write("\t\t<%s>%d</%s>\n"%(q,f,q))
 	stats_file.write("\t</queryString>\n")
+
+const_keyword = {}
+def print_const_stat(prefix):
+	for root in roots:
+		for child in root:
+			if child.tag == "constStats":
+				for c in child:
+					if c.tag not in const_keyword:
+						const_keyword[c.tag] = 0
+					const_keyword[c.tag] += 1
+	stats_file.write("\t<constStat>\n")
+	for q,f in const_keyword.items():
+		stats_file.write("\t\t<%s>%d</%s>\n"%(q,f,q))
+	stats_file.write("\t</constStat>\n")
+
 
 
 def print_schema_stat(prefix, table_stat_prefix):
@@ -716,7 +784,7 @@ def print_schema_stat(prefix, table_stat_prefix):
 		i += 1
 	if len(rect1) > 0:
 		ax.set_xticks(ind + width)
-		ax.set_xticklabels(table_ref_temp)
+		ax.set_xticklabels(table_ref_temp,rotation='vertical')
 		ax.set_xlabel("table name")
 		ax.set_ylabel("aggregate query number across all actions")
 		ax.legend((rect1[0], rect2[0]), ('indirect','direct'),prop={'size':'10'}, loc='upper right')
@@ -782,14 +850,17 @@ def print_path(prefix, content):
 
 
 #print_general_stat(general_stats_prefix, general_stats_content, True)
-for table in table_names:
-	pref = table_stats_prefix[:]
-	pref.append(table)
-	if table == "general":
-		print_general_stat(pref, general_stats_content, True, True)
-	else:
-		print_general_stat(pref, table_stats_content, False, False)
+#for table in table_names:
+#	pref = table_stats_prefix[:]
+#	pref.append(table)
+#	if table == "general":
+pref = table_stats_prefix[:]
+pref.append("general")
+print_general_stat(pref, general_stats_content, True, True)
+#	else:
+#		print_general_stat(pref, table_stats_content, False, False)
 
+print_table_query_stat(pref)
 print_fields(nonfield_prefix, field_stats_content, True)
 print_fields(field_prefix, field_stats_content)
 print_path(prefix3, path_stats_content+path_stats_content2)
@@ -799,6 +870,7 @@ print_clique_stat(clique_stat_prefix)
 print_schema_stat(schema_stat_prefix, table_stats_prefix)
 
 print_query_string("")
+print_const_stat("")
 print_chain(prefix2, [])
 
 stats_file.write("</%s>"%app_name)

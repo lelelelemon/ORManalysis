@@ -303,12 +303,11 @@ BB 2
       GROUP BY tags.id, tags.name, tags.display_name
       ORDER BY article_counter DESC
       LIMIT ? OFFSET ?
-      " def_%v_21 
+      }, true, 1000, 0" def_%v_21 
 		 27: BUILDSTRING def_%v_22 %v_3[2.6,] %v_5[2.9,] %v_6[2.10,] %v_8[2.12,] %v_9[2.13,] %v_11[2.15,] %v_12[2.16,] %v_20[2.25,] %v_21[2.26,] 
-		 28: COPY TYPE_Array def_%v_23 %v_22[2.27,] 
-		 29: %self->find_by_sql def_%v_24 %self[2.0,] %v_23[2.28,] 	 ARGS:%v_23,
-		 30: %v_24->each def_%v_25 %v_24[2.29,] %self[2.0,2.29,] 	 ARGS:%v_24,
-CLOSURE BEGIN: item[2.30,] 
+		 28: %self->find_by_sql def_%v_23 %self[2.0,] %v_22[2.27,] 	 ARGS:%v_22,
+		 29: %v_23->each def_%v_24 %v_23[2.28,] %self[2.0,2.28,] 	 ARGS:%v_23,
+CLOSURE BEGIN: item[2.29,] 
 BB 1
 	outgoing: 6 2 
 	datadep: 
@@ -343,7 +342,7 @@ BB 6
 	datadep: 
 	instructions:
 CLOSURE END: 
-		 31: RETURN %v_25[2.30,] %self[2.0,2.29,] 
+		 30: RETURN %v_24[2.29,] %self[2.0,2.28,] 
 BB 3
 	outgoing: 
 	datadep: 

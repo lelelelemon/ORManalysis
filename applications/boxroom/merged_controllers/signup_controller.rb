@@ -35,7 +35,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
- yield 
+ content_for :title, t(:sign_up) 
+ content_for :title 
+ form_for @user, :url => { :action => 'update' } do |f| 
+ f.error_messages 
+ f.label :name 
+ f.text_field :name, { :class => 'text_input' } 
+ f.label :email 
+ f.text_field :email, { :class => 'text_input' } 
+ f.label :password 
+ f.password_field :password, { :class => 'text_input' } 
+ label_tag t(:confirm_password) 
+ f.password_field :password_confirmation, { :class => 'text_input' } 
+ f.submit t(:sign_up) 
+ link_to t(:back), new_session_path 
+ end 
   
 
 end
@@ -78,7 +92,21 @@ end
  end 
  end 
  
- yield 
+ content_for :title, t(:sign_up) 
+ content_for :title 
+ form_for @user, :url => { :action => 'update' } do |f| 
+ f.error_messages 
+ f.label :name 
+ f.text_field :name, { :class => 'text_input' } 
+ f.label :email 
+ f.text_field :email, { :class => 'text_input' } 
+ f.label :password 
+ f.password_field :password, { :class => 'text_input' } 
+ label_tag t(:confirm_password) 
+ f.password_field :password_confirmation, { :class => 'text_input' } 
+ f.submit t(:sign_up) 
+ link_to t(:back), new_session_path 
+ end 
   
 
 end

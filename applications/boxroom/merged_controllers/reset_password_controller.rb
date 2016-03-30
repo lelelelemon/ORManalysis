@@ -34,7 +34,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
- yield 
+ content_for :title, t(:reset_password) 
+ content_for :title 
+  
+ form_tag(reset_password_index_path) do 
+ label_tag :email, t(:email) 
+ text_field_tag :email, nil, :class => 'text_input' 
+ submit_tag t(:send_email) 
+ link_to t(:back), new_session_path 
+ end 
   
 
 end
@@ -85,7 +93,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
- yield 
+ content_for :title, t(:reset_password) 
+ content_for :title 
+ form_for @user, :url => { :action => 'update' } do |f| 
+ f.error_messages 
+ label_tag :password, t(:password) 
+ f.password_field :password, { :class => 'text_input' } 
+ label_tag :confirm_password, t(:confirm_password) 
+ f.password_field :password_confirmation, { :class => 'text_input' } 
+ f.submit t(:reset_password) 
+ link_to t(:back), new_session_path 
+ end 
   
 
 end
@@ -128,7 +146,17 @@ end
  end 
  end 
  
- yield 
+ content_for :title, t(:reset_password) 
+ content_for :title 
+ form_for @user, :url => { :action => 'update' } do |f| 
+ f.error_messages 
+ label_tag :password, t(:password) 
+ f.password_field :password, { :class => 'text_input' } 
+ label_tag :confirm_password, t(:confirm_password) 
+ f.password_field :password_confirmation, { :class => 'text_input' } 
+ f.submit t(:reset_password) 
+ link_to t(:back), new_session_path 
+ end 
   
 
 end

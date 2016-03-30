@@ -33,11 +33,10 @@ end
     @note = Note.published.find_by_permalink(CGI.escape(params[:permalink]))
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t(".page_not_found") 
- t(".the_page_you_are_looking_for") 
+ t("errors.page_not_found") 
+ t("errors.the_page_you_are_looking_for") 
 
 end
- @note
 
     if @note.in_reply_to_message.present?
       @reply = JSON.parse(@note.in_reply_to_message)
@@ -52,7 +51,6 @@ end
  link_to note.redirect.from_url, note.redirect.from_url 
  author_link note 
  unless note.twitter_id.blank? 
-  " | #{link_to(t(".view_on_twitter"), note.twitter_url, {class: 'u-syndication', rel: 'syndication'})}" 
  end 
  
 
@@ -66,7 +64,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to note.redirect.from_url, note.redirect.from_url 
  author_link note 
  unless note.twitter_id.blank? 
-  " | #{link_to(t(".view_on_twitter"), note.twitter_url, {class: 'u-syndication', rel: 'syndication'})}" 
  end 
  
 

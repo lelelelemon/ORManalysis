@@ -1,5 +1,7 @@
 require 'base64'
 
+module Admin; end
+
 class Admin::ContentController < Admin::BaseController
   layout :get_layout
 
@@ -17,40 +19,80 @@ class Admin::ContentController < Admin::BaseController
       @article = Article.new(params[:article])
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- content_for :page_heading do 
- t('.manage_articles') 
- link_to(t('.new_article'), {controller: 'content', action: 'new'}, id: 'dialog-link', class: 'btn btn-info pull-right') 
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
  end 
- form_tag({action: 'index'}, {method: :get, name: 'article', remote: true, class: 'form-inline spinnable', :"data-update-success" => 'articleList'}) do 
- if params[:search] and params[:search]['state'] 
- params[:search]['state'] 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
  end 
- link_to(t('.all_articles'), {action: 'index'}, {class: 'label label-default'}) 
- link_to(t('.published'), {action: 'index', search: {state: 'published'}}, {class: 'label label-success'}) 
- link_to(t('.withdrawn'), {action: 'index', search: {state: 'withdrawn'}}, {class: 'label label-danger'}) 
- link_to(t('.drafts'), {action: 'index', search: {state: 'drafts'}}, {class: 'label label-info'}) 
- link_to(t('.publication_pending'), {action: 'index', search: {state: 'pending'}}, {class: 'label label-warning'}) 
- select_tag('search[user_id]', options_from_collection_for_select(User.all, 'id', 'name'), {prompt: t('.select_an_author'), class: 'form-control'}) 
- select_tag('search[published_at]', options_for_select(Article.find_by_published_at), {prompt: t('.publication_date'), class: 'form-control'}) 
- submit_tag(t('.search'), {class: 'btn btn-success'}) 
- image_tag('spinner.gif') 
-  if @articles.empty? 
- t('.no_articles') 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
  end 
- for article in @articles 
- if article.published 
- link_to_permalink(article, article.title, nil, 'published')
- else 
- link_to(article.title, {controller: '/articles', action: "preview", id: article.id}, {class: 'unpublished', target: '_new'}) 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
  end 
- show_actions article 
- author_link(article)
- l(article.published_at) 
- (article.allow_comments?) ? link_to("#{article.comments.ham.size.to_s} <i class='glyphicon glyphicon-comment'></i>".html_safe, controller: '/admin/feedback', id: article.id, action: 'article') : '-' 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
  end 
- display_pagination(@articles, 5, 'first', 'last')
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
  
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
  end 
+ end 
+ 
+ if content_for?(:page_heading) 
+ yield :page_heading 
+ end 
+ raw escape_javascript(render(partial: "article_list", locals: { articles: @articles })) 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -60,6 +102,76 @@ end
     @article = Article::Factory.new(this_blog, current_user).default
     load_resources
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
+ yield :page_heading 
+ end 
  form_tag({action: 'create'}, id: 'article_form', multipart: true, class: 'autosave') do 
   hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
@@ -128,6 +240,9 @@ t('.tags_explaination')
  submit_tag(t('.publish'), class: 'btn btn-success') 
  
  end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -140,6 +255,76 @@ end
     @article.keywords = Tag.collection_to_string @article.tags
     load_resources
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
+ yield :page_heading 
+ end 
  form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
   hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
@@ -208,6 +393,9 @@ t('.tags_explaination')
  submit_tag(t('.publish'), class: 'btn btn-success') 
  
  end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -226,6 +414,76 @@ end
       @article.keywords = Tag.collection_to_string @article.tags
       load_resources
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
+ yield :page_heading 
+ end 
  form_tag({action: 'create'}, id: 'article_form', multipart: true, class: 'autosave') do 
   hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
@@ -294,6 +552,9 @@ t('.tags_explaination')
  submit_tag(t('.publish'), class: 'btn btn-success') 
  
  end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -321,6 +582,76 @@ end
       @article.keywords = Tag.collection_to_string @article.tags
       load_resources
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
+ yield :page_heading 
+ end 
  form_tag({action: 'update', id: @article.id}, method: :put, multipart: true, id: "article_form", class: 'autosave') do 
   hidden_field_tag 'user_textfilter', current_user.text_filter_name 
  hidden_field_tag('article[id]', @article.id) if @article.present? 
@@ -389,6 +720,9 @@ t('.tags_explaination')
  submit_tag(t('.publish'), class: 'btn btn-success') 
  
  end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 
@@ -435,11 +769,84 @@ end
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ this_blog.blog_name 
+ controller.controller_name 
+ javascript_include_tag 'publify_admin', async: true 
+ stylesheet_link_tag 'publify_admin' 
+ csrf_meta_tags 
+  link_to content_tag(:span, '', class: 'glyphicon glyphicon-home'), {controller: 'admin/dashboard'}, {class: "navbar-brand"} 
+ if can? :index, 'admin/content' 
+ t('.articles') 
+ menu_item(t('.all_articles'), admin_content_index_path) 
+ menu_item(t('.new_article'),  new_admin_content_path) 
+ menu_item(t('.feedback'),     admin_feedback_index_path) 
+ menu_item(t('.tags'),         admin_tags_path) 
+ menu_item(t('.article_types'),admin_post_types_path) 
+ menu_item(t('.redirects'),    admin_redirects_path) 
+ end 
+ if can? :index, 'admin/notes' 
+ menu_item(t('.notes'), admin_notes_path) 
+ end 
+ if can? :index, 'admin/pages' 
+ t('.pages') 
+ menu_item(t('.all_pages'), admin_pages_path) 
+ menu_item(t('.new_page'),  new_admin_page_path) 
+ end 
+ if can? :index, 'admin/resources' 
+ menu_item(t('.media_library'), admin_resources_path) 
+ end 
+ if can? :index, 'admin/themes' 
+ t('.design') 
+ menu_item(t('.choose_theme'),      admin_themes_path) 
+ menu_item(t('.customize_sidebar'), admin_sidebar_index_path) 
+ end 
+ if can? :index, 'admin/settings' 
+ t('.settings') 
+ menu_item(t('.general_settings'), admin_settings_path) 
+ menu_item(t('.write'),            write_admin_settings_path) 
+ menu_item(t('.display'),          display_admin_settings_path) 
+ menu_item(t('.feedback'),         feedback_admin_settings_path) 
+ menu_item(t('.cache'),            admin_cache_path) 
+ menu_item(t('.manage_users'),     admin_users_path) 
+ end 
+ if can? :index, 'admin/seo' 
+ t('.seo') 
+ menu_item(t('.global_seo_settings'), admin_seo_path(section: 'general')) 
+ menu_item(t('.permalinks'),          admin_seo_path(section: 'permalinks')) 
+ menu_item(t('.titles'),              admin_seo_path(section: 'titles')) 
+ end 
+ t(".logged_in_as", login: current_user.display_name) 
+ link_to t(".profile"), { :controller => 'admin/profiles', :action => 'index'}  
+ link_to t(".documentation"), "https://github.com/fdv/publify/wiki" 
+ link_to t(".report_a_bug"), "https://github.com/fdv/publify/issues" 
+ link_to t(".in_page_plugins"), "https://github.com/fdv/publify/wiki/In-Page-Plugins" 
+ link_to t(".sidebar_plugins"), "https://github.com/fdv/publify/wiki/Sidebar-plugins" 
+ link_to t(".logout_html"), destroy_user_session_path, method: :delete 
+ t(".new")
+ link_to(t(".new_article"), {controller: 'content', action: 'new'}) 
+ link_to(t(".new_page"), {controller: 'pages', actions: 'new'}) 
+ link_to(t(".new_media"), {controller: 'resources', action: 'index'}) 
+ link_to(t(".new_note"), {controller: 'notes'}) 
+ 
+  if flash 
+ flash.each do |alert_level, message| 
+ flash[:error] ? 'danger' : 'success'
+ alert_level.to_s.downcase 
+ message 
+ end 
+ end 
+ 
+ if content_for?(:page_heading) 
+ yield :page_heading 
+ end 
  hidden_field_tag('article[id]', @article.id) 
  link_to('Preview', {:controller => '/articles', :action => 'preview', :id => @article.id}, {:target => 'new', :class => 'btn btn-default'}); 
  if @article.state.to_s.downcase == "draft" 
  Time.now() 
  end 
+ link_to(this_blog.blog_name, this_blog.base_url) 
+ t(".powered_by")
+h PUBLIFY_VERSION 
 
 end
 

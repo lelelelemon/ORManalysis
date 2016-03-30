@@ -93,7 +93,7 @@ class Article < Content
   end
 
   def post_type
-    post_type = self[:post_type]
+    post_type = self.post_type
     post_type = 'read' if post_type.blank?
     post_type
   end
@@ -304,8 +304,8 @@ class Article < Content
   protected
 
   def set_published_at
-    if published && self[:published_at].nil?
-      self[:published_at] = created_at || Time.now
+    if published && self.published_at.nil?
+      self.published_at = created_at || Time.now
     end
   end
 

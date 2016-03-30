@@ -19,7 +19,7 @@ def is_ast_node(node)
 end
 
 def is_transaction_function(fname)
-	if ["transaction_begin","transaction_end"].include?(fname)
+	if fname and (fname.include?(".transaction_begin") or fname.include?(".transaction_end"))
 		return true
 	else
 		return false
@@ -28,6 +28,8 @@ end
 
 def is_repeatable_function(fname)
 	if is_transaction_function(fname)
+		return true
+	elsif $repeatable_list.include?(fname)
 		return true
 	else
 		return false
@@ -247,6 +249,44 @@ def dataflow_filename_match(dataflow_file_name)
 	return nil
 end
 
+def dataflow_filename_match_function(dataflow_file_name, funcname)
+	match_list = Array.new
+	$class_map.each do |k, v|
+		if v.filename != nil and v.filename.tr('/','').gsub('.rb','') == dataflow_file_name.tr('/','').gsub('dataflow','').gsub('.log','')
+			match_list.push(k)
+		end
+	end
+	if match_list.length == 1
+		return match_list[0]
+	elsif match_list.length > 1
+		match_list.each do |m|
+			if $class_map[m].getMethod(funcname)
+				return m
+			end
+		end
+	end
+	return match_list[0]
+end
+
+def is_sub_or_upper_class(base, upper)
+	if base==upper
+		return true
+	end
+	temp_class_name = base
+	while $class_map[temp_class_name] != nil
+		if $class_map[temp_class_name].getUpperClass == upper
+			return true
+		end
+		temp_class_name = $class_map[temp_class_name].getUpperClass
+	end
+	$class_map[base].include_module.each do |inc|
+		if inc == upper
+			return true
+		end
+	end	
+	return false
+end
+
 def remove_module_info(name)
 	i = name.rindex(':')
 	n = name[i+1..name.length-1]
@@ -288,6 +328,21 @@ def get_class_name_from_class_node(node)
 	end
 end
 
+def class_includes_functions(astnode)
+	if astnode.class.to_s == "YARD::Parser::Ruby::MethodDefinitionNode"
+		return true
+	elsif astnode.type.to_s == "class" or astnode.type.to_s == "module"
+	else
+		r = false
+		astnode.children.each do |child|
+			if class_includes_functions(child)
+				r = true
+			end
+		end
+		return r
+	end 
+end
+
 def recursive_get_class_stack(astnode, class_stack, filename)
 	if astnode.is_a?YARD::Parser::Ruby::AstNode
 		if astnode.type.to_s == "class" or astnode.type.to_s == "module"
@@ -297,6 +352,8 @@ def recursive_get_class_stack(astnode, class_stack, filename)
 				@class_name += "#{get_class_name_from_class_node(class_stack[i])}::"
 			end
 			@class_name += "#{get_class_name_from_class_node(class_stack[-1])}"
+			@include_function = false
+			@has_sub = false
 			astnode.children.each do |child|
 				@has_subclass = false
 				if child.type.to_s == "list"
@@ -306,11 +363,20 @@ def recursive_get_class_stack(astnode, class_stack, filename)
 						end
 					end
 				end
+				if class_includes_functions(child)
+					@include_function = true
+				end
 				if @has_subclass
+					@has_sub = true
+					#read_each_class(@class_name, astnode, filename)
 					recursive_get_class_stack(child, class_stack, filename)
 				end
 			end
-			read_each_class(@class_name, astnode, filename)
+			if (@has_sub and @include_function) or @has_sub == false
+				read_each_class(@class_name, astnode, filename)
+			else
+				#puts "#{@class_name} is not read!!! #{@has_sub} #{@include_function}"
+			end
 			class_stack.pop
 		else
 			astnode.each do |child|
@@ -377,6 +443,8 @@ def getModelNameCap(name)
 			c1[0] = c1[0].upcase
 			model_name += c1
 		end
+	else
+		name = name.capitalize
 	end
 	return name
 end
@@ -496,8 +564,18 @@ def isConstSource(n1)
 	end
 end
 
+def analyzeConstSource(n1, const_stat)
+	if n1.getInstr.instance_of?ReceiveConstArg_instr
+		const_stat.add_receive_arg
+	elsif n1.getInstr.instance_of?Copy_instr and n1.getInstr.isFromConst
+		const_stat.add_copy_const(n1.getInstr.type)
+	elsif n1.getInstr.instance_of?AttrAssign_instr
+		const_stat.add_attr_assign
+	end
+end
+
 def isUtilSource(n1)
-	if n1.getInstr.is_a?Const_instr
+	if n1.getInstr.is_a?Const_instr and $class_map[n1.getInstr.getConst] == nil
 		return true
 	else
 		return false

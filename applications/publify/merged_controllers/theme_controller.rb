@@ -30,10 +30,10 @@ end
 
   def render_theme_item(type, file, mime = nil)
     mime ||= mime_for(file)
-    if file.split(%r{[\/]}).include?('..')
+    if file.split(%r{[\\/]}).include?('..')
       return (ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t(".page_not_found") 
- t(".the_page_you_are_looking_for") 
+ t("errors.page_not_found") 
+ t("errors.the_page_you_are_looking_for") 
 
 end
 )

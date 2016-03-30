@@ -6,7 +6,8 @@
 #temp_node.getDataflowEdges.each do |e|
 #		if @processed.include?(e.getToNode) == false
 #			if e.getToNode.getInstr.instance_of?Return_instr
-#				e.getToNode.getDataflowEdges.each do |e1|
+# 			tonode = e.getToNode.getDataflowEdges[0].getToNode
+#				toNode.getDataflowEdges.each do |e1|
 #					if @processed.include?e1.getToNode == false and e1.getToNode.getIndex > starting_node.getIndex
 #						@temp_node_list.push(e1.getToNode)
 #					end

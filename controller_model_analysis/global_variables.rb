@@ -20,6 +20,7 @@ $log_files = "" #deprecated
 $output_dir = "."
 $trace_output_file = ""
 $graph_file = nil
+$temp_file = nil
 #==============================
 
 #=============================Variables used for reading app file and constructing classes/functions, etc=============
@@ -39,6 +40,8 @@ $cur_class = nil
 $ignore_method_list = Array.new
 #Used in trace_flow.rb, keep track of traced methods(String)
 $non_repeat_list = Array.new
+#Some functions are repeatable, tailored for each app
+$repeatable_list = Array.new
 #key: "#{from_node_index}*#{to_node_index}" (String); value: (Dataflow_edge)
 $dataflow_edges = Hash.new
 #(INode), for only query nodes
@@ -59,6 +62,7 @@ $general_call_stack = Array.new
 $funccall_stack = Array.new
 $cur_query_stack = Array.new
 $closure_stack = Array.new
+$def_self_nodes = Hash.new
 #==============================
 
 

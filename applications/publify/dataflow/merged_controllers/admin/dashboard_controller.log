@@ -23,14 +23,14 @@ BB 2
 		 13: 
 		 14: (Article) def_%v_7 
 		 15: %self->current_user def_%v_8 %self[2.0,] 	 ARGS:
-		 16: %v_8->last_venue def_%v_9 %v_8[2.15,] 	 ARGS:
+		 16: %v_8->last_sign_in_at def_%v_9 %v_8[2.15,] 	 ARGS:
 		 17: %v_7->published_since def_%v_10 %v_7[2.14,] %v_9[2.16,] 	 ARGS:%v_9,
 		 18: %v_10->count def_%v_11 %v_10[2.17,] 	 ARGS:
 		 19: ATTRASSIGN %self->newposts_count %v_11[2.18,] 
 		 20: 
 		 21: (Feedback) def_%v_12 
 		 22: %self->current_user def_%v_13 %self[2.0,2.15,2.19,] 	 ARGS:
-		 23: %v_13->last_venue def_%v_14 %v_13[2.22,] 	 ARGS:
+		 23: %v_13->last_sign_in_at def_%v_14 %v_13[2.22,] 	 ARGS:
 		 24: %v_12->published_since def_%v_15 %v_12[2.21,] %v_14[2.23,] 	 ARGS:%v_14,
 		 25: %v_15->count def_%v_16 %v_15[2.24,] 	 ARGS:
 		 26: ATTRASSIGN %self->newcomments_count %v_16[2.25,] 
@@ -127,9 +127,9 @@ BB 2
 		 117: 
 		 118: %self->ruby_code_from_view def_%v_78 %self[2.0,2.15,2.19,2.22,2.26,2.33,2.40,2.46,2.52,2.58,2.63,2.69,2.76,2.83,2.90,2.94,2.99,2.103,2.108,2.110,2.111,2.113,2.114,2.116,] 	 ARGS:
 		 119: %v_78->ruby_code_from_view def_%v_79 %v_78[2.118,] %self[2.0,2.15,2.19,2.22,2.26,2.33,2.40,2.46,2.52,2.58,2.63,2.69,2.76,2.83,2.90,2.94,2.99,2.103,2.108,2.110,2.111,2.113,2.114,2.116,2.118,] 	 ARGS:%v_78,
-CLOSURE BEGIN: %self[2.0,2.15,2.19,2.22,2.26,2.33,2.40,2.46,2.52,2.58,2.63,2.69,2.76,2.83,2.90,2.94,2.99,2.103,2.108,2.110,2.111,2.113,2.114,2.116,2.118,] comment[] post[] link[] link_date[2.119,] 
+CLOSURE BEGIN: %self[2.0,2.15,2.19,2.22,2.26,2.33,2.40,2.46,2.52,2.58,2.63,2.69,2.76,2.83,2.90,2.94,2.99,2.103,2.108,2.110,2.111,2.113,2.114,2.116,2.118,] alert_level[] message[] links[] comment[] post[] link[] link_date[2.119,] 
 BB 1
-	outgoing: 27 2 
+	outgoing: 60 2 
 	datadep: 
 	instructions:
 BB 2
@@ -142,14 +142,368 @@ BB 2
 		 3: COPY TYPE_CurrentScope def_%current_scope 
 		 4: COPY TYPE_ScopeModule def_%current_module 
 BB 3
-	outgoing: 4 5 25 
+	outgoing: 4 5 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: %self->content_for def_%cl_1_3 %self[2.0,] %self[2.0,] 	 ARGS:Symbol,%self,
-CLOSURE BEGIN: %self[2.0,] 
+		 1: %self->this_blog def_%cl_1_3 %self[2.0,] 	 ARGS:
+		 2: %cl_1_3->blog_name def_%cl_1_4 %cl_1_3[3.1,] 	 ARGS:
+		 3: 
+		 4: %self->controller def_%cl_1_5 %self[3.1,2.0,] 	 ARGS:
+		 5: %cl_1_5->controller_name def_%cl_1_6 %cl_1_5[3.4,] 	 ARGS:
+		 6: 
+		 7: COPY TYPE_StringLiteral "publify_admin" def_%cl_1_7 
+		 8: HASH-async- def_%cl_1_8 
+		 9: %self->javascript_include_tag def_%cl_1_9 %self[3.1,3.4,2.0,] %cl_1_7[3.7,] %cl_1_8[3.8,] 	 ARGS:%cl_1_7,%cl_1_8,
+		 10: 
+		 11: COPY TYPE_StringLiteral "publify_admin" def_%cl_1_10 
+		 12: %self->stylesheet_link_tag def_%cl_1_11 %self[3.1,3.4,3.9,2.0,] %cl_1_10[3.11,] 	 ARGS:%cl_1_10,
+		 13: 
+		 14: %self->csrf_meta_tags def_%cl_1_12 %self[3.1,3.4,3.9,3.12,2.0,] 	 ARGS:
+		 15: 
+		 16: COPY TYPE_StringLiteral "" def_%cl_1_13 
+		 17: COPY TYPE_StringLiteral "glyphicon glyphicon-home" def_%cl_1_14 
+		 18: HASH-class- def_%cl_1_15 %cl_1_14[3.17,] 
+		 19: %self->content_tag def_%cl_1_16 %self[3.1,3.4,3.9,3.12,3.14,2.0,] %cl_1_13[3.16,] %cl_1_15[3.18,] 	 ARGS:Symbol,%cl_1_13,%cl_1_15,
+		 20: COPY TYPE_StringLiteral "admin/dashboard" def_%cl_1_17 
+		 21: HASH-controller- def_%cl_1_18 %cl_1_17[3.20,] 
+		 22: COPY TYPE_StringLiteral "navbar-brand" def_%cl_1_19 
+		 23: HASH-class- def_%cl_1_20 %cl_1_19[3.22,] 
+		 24: %self->link_to def_%cl_1_21 %self[3.1,3.4,3.9,3.12,3.14,3.19,2.0,] %cl_1_16[3.19,] %cl_1_18[3.21,] %cl_1_20[3.23,] 	 ARGS:%cl_1_16,%cl_1_18,%cl_1_20,
+		 25: 
+		 26: COPY TYPE_StringLiteral "admin/content" def_%cl_1_22 
+		 27: %self->can? def_%cl_1_23 %self[3.1,3.4,3.9,3.12,3.14,3.19,3.24,2.0,] %cl_1_22[3.26,] 	 ARGS:Symbol,%cl_1_22,
+		 28: BRANCH %cl_1_23[3.27,] 
+BB 4
+	outgoing: 6 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".articles" def_%cl_1_24 
+		 2: %self->t def_%cl_1_25 %self[2.0,] %cl_1_24[4.1,] 	 ARGS:%cl_1_24,
+		 3: 
+		 4: COPY TYPE_StringLiteral ".all_articles" def_%cl_1_26 
+		 5: %self->t def_%cl_1_27 %self[4.2,2.0,] %cl_1_26[4.4,] 	 ARGS:%cl_1_26,
+		 6: %self->admin_content_index_path def_%cl_1_28 %self[4.2,4.5,2.0,] 	 ARGS:
+		 7: %self->menu_item def_%cl_1_29 %self[4.2,4.5,4.6,2.0,] %cl_1_27[4.5,] %cl_1_28[4.6,] 	 ARGS:%cl_1_27,%cl_1_28,
+		 8: 
+		 9: COPY TYPE_StringLiteral ".new_article" def_%cl_1_30 
+		 10: %self->t def_%cl_1_31 %self[4.2,4.5,4.6,4.7,2.0,] %cl_1_30[4.9,] 	 ARGS:%cl_1_30,
+		 11: %self->new_admin_content_path def_%cl_1_32 %self[4.2,4.5,4.6,4.7,4.10,2.0,] 	 ARGS:
+		 12: %self->menu_item def_%cl_1_33 %self[4.2,4.5,4.6,4.7,4.10,4.11,2.0,] %cl_1_31[4.10,] %cl_1_32[4.11,] 	 ARGS:%cl_1_31,%cl_1_32,
+		 13: 
+		 14: COPY TYPE_StringLiteral ".feedback" def_%cl_1_34 
+		 15: %self->t def_%cl_1_35 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,2.0,] %cl_1_34[4.14,] 	 ARGS:%cl_1_34,
+		 16: %self->admin_feedback_index_path def_%cl_1_36 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,2.0,] 	 ARGS:
+		 17: %self->menu_item def_%cl_1_37 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,2.0,] %cl_1_35[4.15,] %cl_1_36[4.16,] 	 ARGS:%cl_1_35,%cl_1_36,
+		 18: 
+		 19: COPY TYPE_StringLiteral ".tags" def_%cl_1_38 
+		 20: %self->t def_%cl_1_39 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,2.0,] %cl_1_38[4.19,] 	 ARGS:%cl_1_38,
+		 21: %self->admin_tags_path def_%cl_1_40 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,4.20,2.0,] 	 ARGS:
+		 22: %self->menu_item def_%cl_1_41 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,4.20,4.21,2.0,] %cl_1_39[4.20,] %cl_1_40[4.21,] 	 ARGS:%cl_1_39,%cl_1_40,
+		 23: 
+		 24: COPY TYPE_StringLiteral ".article_types" def_%cl_1_42 
+		 25: %self->t def_%cl_1_43 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,4.20,4.21,4.22,2.0,] %cl_1_42[4.24,] 	 ARGS:%cl_1_42,
+		 26: %self->admin_post_types_path def_%cl_1_44 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,4.20,4.21,4.22,4.25,2.0,] 	 ARGS:
+		 27: %self->menu_item def_%cl_1_45 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,4.20,4.21,4.22,4.25,4.26,2.0,] %cl_1_43[4.25,] %cl_1_44[4.26,] 	 ARGS:%cl_1_43,%cl_1_44,
+		 28: 
+		 29: COPY TYPE_StringLiteral ".redirects" def_%cl_1_46 
+		 30: %self->t def_%cl_1_47 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,4.20,4.21,4.22,4.25,4.26,4.27,2.0,] %cl_1_46[4.29,] 	 ARGS:%cl_1_46,
+		 31: %self->admin_redirects_path def_%cl_1_48 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,4.20,4.21,4.22,4.25,4.26,4.27,4.30,2.0,] 	 ARGS:
+		 32: %self->menu_item def_%cl_1_49 %self[4.2,4.5,4.6,4.7,4.10,4.11,4.12,4.15,4.16,4.17,4.20,4.21,4.22,4.25,4.26,4.27,4.30,4.31,2.0,] %cl_1_47[4.30,] %cl_1_48[4.31,] 	 ARGS:%cl_1_47,%cl_1_48,
+		 33: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_49 
+BB 6
+	outgoing: 7 8 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "admin/notes" def_%cl_1_50 
+		 2: %self->can? def_%cl_1_51 %self[2.0,] %cl_1_50[6.1,] 	 ARGS:Symbol,%cl_1_50,
+		 3: BRANCH %cl_1_51[6.2,] 
+BB 7
+	outgoing: 9 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".notes" def_%cl_1_52 
+		 2: %self->t def_%cl_1_53 %self[2.0,] %cl_1_52[7.1,] 	 ARGS:%cl_1_52,
+		 3: %self->admin_notes_path def_%cl_1_54 %self[7.2,2.0,] 	 ARGS:
+		 4: %self->menu_item def_%cl_1_55 %self[7.2,7.3,2.0,] %cl_1_53[7.2,] %cl_1_54[7.3,] 	 ARGS:%cl_1_53,%cl_1_54,
+		 5: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_55 
+BB 9
+	outgoing: 10 11 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "admin/pages" def_%cl_1_56 
+		 2: %self->can? def_%cl_1_57 %self[2.0,] %cl_1_56[9.1,] 	 ARGS:Symbol,%cl_1_56,
+		 3: BRANCH %cl_1_57[9.2,] 
+BB 10
+	outgoing: 12 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".pages" def_%cl_1_58 
+		 2: %self->t def_%cl_1_59 %self[2.0,] %cl_1_58[10.1,] 	 ARGS:%cl_1_58,
+		 3: 
+		 4: COPY TYPE_StringLiteral ".all_pages" def_%cl_1_60 
+		 5: %self->t def_%cl_1_61 %self[10.2,2.0,] %cl_1_60[10.4,] 	 ARGS:%cl_1_60,
+		 6: %self->admin_pages_path def_%cl_1_62 %self[10.2,10.5,2.0,] 	 ARGS:
+		 7: %self->menu_item def_%cl_1_63 %self[10.2,10.5,10.6,2.0,] %cl_1_61[10.5,] %cl_1_62[10.6,] 	 ARGS:%cl_1_61,%cl_1_62,
+		 8: 
+		 9: COPY TYPE_StringLiteral ".new_page" def_%cl_1_64 
+		 10: %self->t def_%cl_1_65 %self[10.2,10.5,10.6,10.7,2.0,] %cl_1_64[10.9,] 	 ARGS:%cl_1_64,
+		 11: %self->new_admin_page_path def_%cl_1_66 %self[10.2,10.5,10.6,10.7,10.10,2.0,] 	 ARGS:
+		 12: %self->menu_item def_%cl_1_67 %self[10.2,10.5,10.6,10.7,10.10,10.11,2.0,] %cl_1_65[10.10,] %cl_1_66[10.11,] 	 ARGS:%cl_1_65,%cl_1_66,
+		 13: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_67 
+BB 12
+	outgoing: 13 14 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "admin/resources" def_%cl_1_68 
+		 2: %self->can? def_%cl_1_69 %self[2.0,] %cl_1_68[12.1,] 	 ARGS:Symbol,%cl_1_68,
+		 3: BRANCH %cl_1_69[12.2,] 
+BB 13
+	outgoing: 15 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".media_library" def_%cl_1_70 
+		 2: %self->t def_%cl_1_71 %self[2.0,] %cl_1_70[13.1,] 	 ARGS:%cl_1_70,
+		 3: %self->admin_resources_path def_%cl_1_72 %self[13.2,2.0,] 	 ARGS:
+		 4: %self->menu_item def_%cl_1_73 %self[13.2,13.3,2.0,] %cl_1_71[13.2,] %cl_1_72[13.3,] 	 ARGS:%cl_1_71,%cl_1_72,
+		 5: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_73 
+BB 15
+	outgoing: 16 17 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "admin/themes" def_%cl_1_74 
+		 2: %self->can? def_%cl_1_75 %self[2.0,] %cl_1_74[15.1,] 	 ARGS:Symbol,%cl_1_74,
+		 3: BRANCH %cl_1_75[15.2,] 
+BB 16
+	outgoing: 18 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".design" def_%cl_1_76 
+		 2: %self->t def_%cl_1_77 %self[2.0,] %cl_1_76[16.1,] 	 ARGS:%cl_1_76,
+		 3: 
+		 4: COPY TYPE_StringLiteral ".choose_theme" def_%cl_1_78 
+		 5: %self->t def_%cl_1_79 %self[16.2,2.0,] %cl_1_78[16.4,] 	 ARGS:%cl_1_78,
+		 6: %self->admin_themes_path def_%cl_1_80 %self[16.2,16.5,2.0,] 	 ARGS:
+		 7: %self->menu_item def_%cl_1_81 %self[16.2,16.5,16.6,2.0,] %cl_1_79[16.5,] %cl_1_80[16.6,] 	 ARGS:%cl_1_79,%cl_1_80,
+		 8: 
+		 9: COPY TYPE_StringLiteral ".customize_sidebar" def_%cl_1_82 
+		 10: %self->t def_%cl_1_83 %self[16.2,16.5,16.6,16.7,2.0,] %cl_1_82[16.9,] 	 ARGS:%cl_1_82,
+		 11: %self->admin_sidebar_index_path def_%cl_1_84 %self[16.2,16.5,16.6,16.7,16.10,2.0,] 	 ARGS:
+		 12: %self->menu_item def_%cl_1_85 %self[16.2,16.5,16.6,16.7,16.10,16.11,2.0,] %cl_1_83[16.10,] %cl_1_84[16.11,] 	 ARGS:%cl_1_83,%cl_1_84,
+		 13: 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_85 
+BB 18
+	outgoing: 19 20 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "admin/settings" def_%cl_1_86 
+		 2: %self->can? def_%cl_1_87 %self[2.0,] %cl_1_86[18.1,] 	 ARGS:Symbol,%cl_1_86,
+		 3: BRANCH %cl_1_87[18.2,] 
+BB 19
+	outgoing: 21 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".settings" def_%cl_1_88 
+		 2: %self->t def_%cl_1_89 %self[2.0,] %cl_1_88[19.1,] 	 ARGS:%cl_1_88,
+		 3: 
+		 4: COPY TYPE_StringLiteral ".general_settings" def_%cl_1_90 
+		 5: %self->t def_%cl_1_91 %self[19.2,2.0,] %cl_1_90[19.4,] 	 ARGS:%cl_1_90,
+		 6: %self->admin_settings_path def_%cl_1_92 %self[19.2,19.5,2.0,] 	 ARGS:
+		 7: %self->menu_item def_%cl_1_93 %self[19.2,19.5,19.6,2.0,] %cl_1_91[19.5,] %cl_1_92[19.6,] 	 ARGS:%cl_1_91,%cl_1_92,
+		 8: 
+		 9: COPY TYPE_StringLiteral ".write" def_%cl_1_94 
+		 10: %self->t def_%cl_1_95 %self[19.2,19.5,19.6,19.7,2.0,] %cl_1_94[19.9,] 	 ARGS:%cl_1_94,
+		 11: %self->write_admin_settings_path def_%cl_1_96 %self[19.2,19.5,19.6,19.7,19.10,2.0,] 	 ARGS:
+		 12: %self->menu_item def_%cl_1_97 %self[19.2,19.5,19.6,19.7,19.10,19.11,2.0,] %cl_1_95[19.10,] %cl_1_96[19.11,] 	 ARGS:%cl_1_95,%cl_1_96,
+		 13: 
+		 14: COPY TYPE_StringLiteral ".display" def_%cl_1_98 
+		 15: %self->t def_%cl_1_99 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,2.0,] %cl_1_98[19.14,] 	 ARGS:%cl_1_98,
+		 16: %self->display_admin_settings_path def_%cl_1_100 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,2.0,] 	 ARGS:
+		 17: %self->menu_item def_%cl_1_101 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,2.0,] %cl_1_99[19.15,] %cl_1_100[19.16,] 	 ARGS:%cl_1_99,%cl_1_100,
+		 18: 
+		 19: COPY TYPE_StringLiteral ".feedback" def_%cl_1_102 
+		 20: %self->t def_%cl_1_103 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,2.0,] %cl_1_102[19.19,] 	 ARGS:%cl_1_102,
+		 21: %self->feedback_admin_settings_path def_%cl_1_104 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,19.20,2.0,] 	 ARGS:
+		 22: %self->menu_item def_%cl_1_105 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,19.20,19.21,2.0,] %cl_1_103[19.20,] %cl_1_104[19.21,] 	 ARGS:%cl_1_103,%cl_1_104,
+		 23: 
+		 24: COPY TYPE_StringLiteral ".cache" def_%cl_1_106 
+		 25: %self->t def_%cl_1_107 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,19.20,19.21,19.22,2.0,] %cl_1_106[19.24,] 	 ARGS:%cl_1_106,
+		 26: %self->admin_cache_path def_%cl_1_108 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,19.20,19.21,19.22,19.25,2.0,] 	 ARGS:
+		 27: %self->menu_item def_%cl_1_109 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,19.20,19.21,19.22,19.25,19.26,2.0,] %cl_1_107[19.25,] %cl_1_108[19.26,] 	 ARGS:%cl_1_107,%cl_1_108,
+		 28: 
+		 29: COPY TYPE_StringLiteral ".manage_users" def_%cl_1_110 
+		 30: %self->t def_%cl_1_111 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,19.20,19.21,19.22,19.25,19.26,19.27,2.0,] %cl_1_110[19.29,] 	 ARGS:%cl_1_110,
+		 31: %self->admin_users_path def_%cl_1_112 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,19.20,19.21,19.22,19.25,19.26,19.27,19.30,2.0,] 	 ARGS:
+		 32: %self->menu_item def_%cl_1_113 %self[19.2,19.5,19.6,19.7,19.10,19.11,19.12,19.15,19.16,19.17,19.20,19.21,19.22,19.25,19.26,19.27,19.30,19.31,2.0,] %cl_1_111[19.30,] %cl_1_112[19.31,] 	 ARGS:%cl_1_111,%cl_1_112,
+		 33: 
+BB 20
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_113 
+BB 21
+	outgoing: 22 23 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "admin/seo" def_%cl_1_114 
+		 2: %self->can? def_%cl_1_115 %self[2.0,] %cl_1_114[21.1,] 	 ARGS:Symbol,%cl_1_114,
+		 3: BRANCH %cl_1_115[21.2,] 
+BB 22
+	outgoing: 24 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".seo" def_%cl_1_116 
+		 2: %self->t def_%cl_1_117 %self[2.0,] %cl_1_116[22.1,] 	 ARGS:%cl_1_116,
+		 3: 
+		 4: COPY TYPE_StringLiteral ".global_seo_settings" def_%cl_1_118 
+		 5: %self->t def_%cl_1_119 %self[22.2,2.0,] %cl_1_118[22.4,] 	 ARGS:%cl_1_118,
+		 6: COPY TYPE_StringLiteral "general" def_%cl_1_120 
+		 7: HASH-section- def_%cl_1_121 %cl_1_120[22.6,] 
+		 8: %self->admin_seo_path def_%cl_1_122 %self[22.2,22.5,2.0,] %cl_1_121[22.7,] 	 ARGS:%cl_1_121,
+		 9: %self->menu_item def_%cl_1_123 %self[22.2,22.5,22.8,2.0,] %cl_1_119[22.5,] %cl_1_122[22.8,] 	 ARGS:%cl_1_119,%cl_1_122,
+		 10: 
+		 11: COPY TYPE_StringLiteral ".permalinks" def_%cl_1_124 
+		 12: %self->t def_%cl_1_125 %self[22.2,22.5,22.8,22.9,2.0,] %cl_1_124[22.11,] 	 ARGS:%cl_1_124,
+		 13: COPY TYPE_StringLiteral "permalinks" def_%cl_1_126 
+		 14: HASH-section- def_%cl_1_127 %cl_1_126[22.13,] 
+		 15: %self->admin_seo_path def_%cl_1_128 %self[22.2,22.5,22.8,22.9,22.12,2.0,] %cl_1_127[22.14,] 	 ARGS:%cl_1_127,
+		 16: %self->menu_item def_%cl_1_129 %self[22.2,22.5,22.8,22.9,22.12,22.15,2.0,] %cl_1_125[22.12,] %cl_1_128[22.15,] 	 ARGS:%cl_1_125,%cl_1_128,
+		 17: 
+		 18: COPY TYPE_StringLiteral ".titles" def_%cl_1_130 
+		 19: %self->t def_%cl_1_131 %self[22.2,22.5,22.8,22.9,22.12,22.15,22.16,2.0,] %cl_1_130[22.18,] 	 ARGS:%cl_1_130,
+		 20: COPY TYPE_StringLiteral "titles" def_%cl_1_132 
+		 21: HASH-section- def_%cl_1_133 %cl_1_132[22.20,] 
+		 22: %self->admin_seo_path def_%cl_1_134 %self[22.2,22.5,22.8,22.9,22.12,22.15,22.16,22.19,2.0,] %cl_1_133[22.21,] 	 ARGS:%cl_1_133,
+		 23: %self->menu_item def_%cl_1_135 %self[22.2,22.5,22.8,22.9,22.12,22.15,22.16,22.19,22.22,2.0,] %cl_1_131[22.19,] %cl_1_134[22.22,] 	 ARGS:%cl_1_131,%cl_1_134,
+		 24: 
+BB 23
+	outgoing: 24 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_135 
+BB 24
+	outgoing: 25 26 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".logged_in_as" def_%cl_1_136 
+		 2: %self->current_user def_%cl_1_137 %self[2.0,] 	 ARGS:
+		 3: %cl_1_137->display_name def_%cl_1_138 %cl_1_137[24.2,] 	 ARGS:
+		 4: HASH-login- def_%cl_1_139 %cl_1_138[24.3,] 
+		 5: %self->t def_%cl_1_140 %self[24.2,2.0,] %cl_1_136[24.1,] %cl_1_139[24.4,] 	 ARGS:%cl_1_136,%cl_1_139,
+		 6: 
+		 7: COPY TYPE_StringLiteral ".profile" def_%cl_1_141 
+		 8: %self->t def_%cl_1_142 %self[24.2,24.5,2.0,] %cl_1_141[24.7,] 	 ARGS:%cl_1_141,
+		 9: COPY TYPE_StringLiteral "admin/profiles" def_%cl_1_143 
+		 10: COPY TYPE_StringLiteral "index" def_%cl_1_144 
+		 11: HASH-controller-action- def_%cl_1_145 %cl_1_143[24.9,] %cl_1_144[24.10,] 
+		 12: %self->link_to def_%cl_1_146 %self[24.2,24.5,24.8,2.0,] %cl_1_142[24.8,] %cl_1_145[24.11,] 	 ARGS:%cl_1_142,%cl_1_145,
+		 13: 
+		 14: COPY TYPE_StringLiteral ".documentation" def_%cl_1_147 
+		 15: %self->t def_%cl_1_148 %self[24.2,24.5,24.8,24.12,2.0,] %cl_1_147[24.14,] 	 ARGS:%cl_1_147,
+		 16: COPY TYPE_StringLiteral "https://github.com/fdv/publify/wiki" def_%cl_1_149 
+		 17: %self->link_to def_%cl_1_150 %self[24.2,24.5,24.8,24.12,24.15,2.0,] %cl_1_148[24.15,] %cl_1_149[24.16,] 	 ARGS:%cl_1_148,%cl_1_149,
+		 18: 
+		 19: COPY TYPE_StringLiteral ".report_a_bug" def_%cl_1_151 
+		 20: %self->t def_%cl_1_152 %self[24.2,24.5,24.8,24.12,24.15,24.17,2.0,] %cl_1_151[24.19,] 	 ARGS:%cl_1_151,
+		 21: COPY TYPE_StringLiteral "https://github.com/fdv/publify/issues" def_%cl_1_153 
+		 22: %self->link_to def_%cl_1_154 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,2.0,] %cl_1_152[24.20,] %cl_1_153[24.21,] 	 ARGS:%cl_1_152,%cl_1_153,
+		 23: 
+		 24: COPY TYPE_StringLiteral ".in_page_plugins" def_%cl_1_155 
+		 25: %self->t def_%cl_1_156 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,2.0,] %cl_1_155[24.24,] 	 ARGS:%cl_1_155,
+		 26: COPY TYPE_StringLiteral "https://github.com/fdv/publify/wiki/In-Page-Plugins" def_%cl_1_157 
+		 27: %self->link_to def_%cl_1_158 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,2.0,] %cl_1_156[24.25,] %cl_1_157[24.26,] 	 ARGS:%cl_1_156,%cl_1_157,
+		 28: 
+		 29: COPY TYPE_StringLiteral ".sidebar_plugins" def_%cl_1_159 
+		 30: %self->t def_%cl_1_160 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,2.0,] %cl_1_159[24.29,] 	 ARGS:%cl_1_159,
+		 31: COPY TYPE_StringLiteral "https://github.com/fdv/publify/wiki/Sidebar-plugins" def_%cl_1_161 
+		 32: %self->link_to def_%cl_1_162 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,2.0,] %cl_1_160[24.30,] %cl_1_161[24.31,] 	 ARGS:%cl_1_160,%cl_1_161,
+		 33: 
+		 34: COPY TYPE_StringLiteral ".logout_html" def_%cl_1_163 
+		 35: %self->t def_%cl_1_164 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,2.0,] %cl_1_163[24.34,] 	 ARGS:%cl_1_163,
+		 36: %self->destroy_user_session_path def_%cl_1_165 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,2.0,] 	 ARGS:
+		 37: HASH-method- def_%cl_1_166 
+		 38: %self->link_to def_%cl_1_167 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,2.0,] %cl_1_164[24.35,] %cl_1_165[24.36,] %cl_1_166[24.37,] 	 ARGS:%cl_1_164,%cl_1_165,%cl_1_166,
+		 39: 
+		 40: COPY TYPE_StringLiteral ".new" def_%cl_1_168 
+		 41: %self->t def_%cl_1_169 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,2.0,] %cl_1_168[24.40,] 	 ARGS:%cl_1_168,
+		 42: 
+		 43: COPY TYPE_StringLiteral ".new_article" def_%cl_1_170 
+		 44: %self->t def_%cl_1_171 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,2.0,] %cl_1_170[24.43,] 	 ARGS:%cl_1_170,
+		 45: COPY TYPE_StringLiteral "content" def_%cl_1_172 
+		 46: COPY TYPE_StringLiteral "new" def_%cl_1_173 
+		 47: HASH-controller-action- def_%cl_1_174 %cl_1_172[24.45,] %cl_1_173[24.46,] 
+		 48: %self->link_to def_%cl_1_175 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,24.44,2.0,] %cl_1_171[24.44,] %cl_1_174[24.47,] 	 ARGS:%cl_1_171,%cl_1_174,
+		 49: 
+		 50: COPY TYPE_StringLiteral ".new_page" def_%cl_1_176 
+		 51: %self->t def_%cl_1_177 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,24.44,24.48,2.0,] %cl_1_176[24.50,] 	 ARGS:%cl_1_176,
+		 52: COPY TYPE_StringLiteral "pages" def_%cl_1_178 
+		 53: COPY TYPE_StringLiteral "new" def_%cl_1_179 
+		 54: HASH-controller-actions- def_%cl_1_180 %cl_1_178[24.52,] %cl_1_179[24.53,] 
+		 55: %self->link_to def_%cl_1_181 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,24.44,24.48,24.51,2.0,] %cl_1_177[24.51,] %cl_1_180[24.54,] 	 ARGS:%cl_1_177,%cl_1_180,
+		 56: 
+		 57: COPY TYPE_StringLiteral ".new_media" def_%cl_1_182 
+		 58: %self->t def_%cl_1_183 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,24.44,24.48,24.51,24.55,2.0,] %cl_1_182[24.57,] 	 ARGS:%cl_1_182,
+		 59: COPY TYPE_StringLiteral "resources" def_%cl_1_184 
+		 60: COPY TYPE_StringLiteral "index" def_%cl_1_185 
+		 61: HASH-controller-action- def_%cl_1_186 %cl_1_184[24.59,] %cl_1_185[24.60,] 
+		 62: %self->link_to def_%cl_1_187 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,24.44,24.48,24.51,24.55,24.58,2.0,] %cl_1_183[24.58,] %cl_1_186[24.61,] 	 ARGS:%cl_1_183,%cl_1_186,
+		 63: 
+		 64: COPY TYPE_StringLiteral ".new_note" def_%cl_1_188 
+		 65: %self->t def_%cl_1_189 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,24.44,24.48,24.51,24.55,24.58,24.62,2.0,] %cl_1_188[24.64,] 	 ARGS:%cl_1_188,
+		 66: COPY TYPE_StringLiteral "notes" def_%cl_1_190 
+		 67: HASH-controller- def_%cl_1_191 %cl_1_190[24.66,] 
+		 68: %self->link_to def_%cl_1_192 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,24.44,24.48,24.51,24.55,24.58,24.62,24.65,2.0,] %cl_1_189[24.65,] %cl_1_191[24.67,] 	 ARGS:%cl_1_189,%cl_1_191,
+		 69: 
+		 70: %self->flash def_%cl_1_193 %self[24.2,24.5,24.8,24.12,24.15,24.17,24.20,24.22,24.25,24.27,24.30,24.32,24.35,24.36,24.38,24.41,24.44,24.48,24.51,24.55,24.58,24.62,24.65,24.68,2.0,] 	 ARGS:
+		 71: BRANCH %cl_1_193[24.70,] 
+BB 25
+	outgoing: 27 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%cl_1_194 %self[2.0,] 	 ARGS:
+		 2: %cl_1_194->each def_%cl_1_195 %cl_1_194[25.1,] %self[25.1,2.0,] 	 ARGS:%cl_1_194,
+CLOSURE BEGIN: %self[25.1,2.0,] alert_level[] message[25.2,] 
 BB 1
-	outgoing: 6 2 
+	outgoing: 9 2 
 	datadep: 
 	instructions:
 BB 2
@@ -158,236 +512,351 @@ BB 2
 	instructions:
 		 0: def_%self 
 		 1: def_%cl_2_0 
-		 2: COPY TYPE_CurrentScope def_%current_scope 
-		 3: COPY TYPE_ScopeModule def_%current_module 
+		 2: RECEIVEARG def_alert_level 
+		 3: RECEIVEARG def_message 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
 BB 3
-	outgoing: 4 6 
+	outgoing: 4 5 7 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".welcome_back" def_%cl_2_3 
-		 2: %self->current_user def_%cl_2_4 %self[2.0,] 	 ARGS:
-		 3: %cl_2_4->name def_%cl_2_5 %cl_2_4[3.2,] 	 ARGS:
-		 4: HASH-user_name- def_%cl_2_6 %cl_2_5[3.3,] 
-		 5: %self->t def_%cl_2_7 %self[3.2,2.0,] %cl_2_3[3.1,] %cl_2_6[3.4,] 	 ARGS:%cl_2_3,%cl_2_6,
-		 6: RETURN %cl_2_7[3.5,] %self[3.2,3.5,2.0,] 
+		 1: %self->flash def_%cl_2_3 %self[2.0,] 	 ARGS:
+		 2: %cl_2_3->[] def_%cl_2_4 %cl_2_3[3.1,] 	 ARGS:Symbol,
+		 3: BRANCH %cl_2_4[3.2,] 
 BB 4
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: def_%cl_2_8 
-		 1: def_%cl_2_9 %cl_2_8[4.0,] 
-		 2: RETURN %cl_2_9[4.1,] %self[2.0,] 
-BB 6
-	outgoing: 
-	datadep: 
-	instructions:
-CLOSURE END: 
-		 2: 
-		 3: COPY TYPE_StringLiteral ".dashboard_explain_html" def_%cl_1_4 
-		 4: %self->dashboard_action_links def_%cl_1_5 %self[3.1,2.0,] 	 ARGS:
-		 5: HASH-available_actions- def_%cl_1_6 %cl_1_5[3.4,] 
-		 6: %self->t def_%cl_1_7 %self[3.1,3.4,2.0,] %cl_1_4[3.3,] %cl_1_6[3.5,] 	 ARGS:%cl_1_4,%cl_1_6,
-		 7: 
-		 8: %self->current_user def_%cl_1_8 %self[3.1,3.4,3.6,2.0,] 	 ARGS:
-		 9: %cl_1_8->can_access_to_themes? def_%cl_1_9 %cl_1_8[3.8,] 	 ARGS:
-		 10: BRANCH %cl_1_9[3.9,] 
-BB 4
-	outgoing: 6 25 
-	datadep: 
-	instructions:
-		 0: 
-		 1: COPY TYPE_StringLiteral ".customization_explain_html" def_%cl_1_10 
-		 2: COPY TYPE_StringLiteral ".change_your_blog_presentation" def_%cl_1_11 
-		 3: %self->t def_%cl_1_12 %self[2.0,] %cl_1_11[4.2,] 	 ARGS:%cl_1_11,
-		 4: COPY TYPE_StringLiteral "themes" def_%cl_1_13 
-		 5: HASH-controller- def_%cl_1_14 %cl_1_13[4.4,] 
-		 6: %self->link_to def_%cl_1_15 %self[4.3,2.0,] %cl_1_12[4.3,] %cl_1_14[4.5,] 	 ARGS:%cl_1_12,%cl_1_14,
-		 7: COPY TYPE_StringLiteral ".enable_plugins" def_%cl_1_16 
-		 8: %self->t def_%cl_1_17 %self[4.3,4.6,2.0,] %cl_1_16[4.7,] 	 ARGS:%cl_1_16,
-		 9: COPY TYPE_StringLiteral "sidebar" def_%cl_1_18 
-		 10: HASH-controller- def_%cl_1_19 %cl_1_18[4.9,] 
-		 11: %self->link_to def_%cl_1_20 %self[4.3,4.6,4.8,2.0,] %cl_1_17[4.8,] %cl_1_19[4.10,] 	 ARGS:%cl_1_17,%cl_1_19,
-		 12: HASH-theme_link-sidebar_link- def_%cl_1_21 %cl_1_15[4.6,] %cl_1_20[4.11,] 
-		 13: %self->t def_%cl_1_22 %self[4.3,4.6,4.8,4.11,2.0,] %cl_1_10[4.1,] %cl_1_21[4.12,] 	 ARGS:%cl_1_10,%cl_1_21,
-		 14: 
+		 0: COPY TYPE_StringLiteral "danger" def_%cl_2_5 
+		 1: 
 BB 5
 	outgoing: 6 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_Nil def_%cl_1_22 
+		 0: COPY TYPE_StringLiteral "success" def_%cl_2_6 
+		 1: COPY TYPE_PASS def_%cl_2_5 %cl_2_6[5.0,] 
 BB 6
-	outgoing: 7 8 25 
+	outgoing: 7 9 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".help_explain_html" def_%cl_1_23 
-		 2: COPY TYPE_StringLiteral ".read_our_documentation" def_%cl_1_24 
-		 3: %self->t def_%cl_1_25 %self[2.0,] %cl_1_24[6.2,] 	 ARGS:%cl_1_24,
-		 4: COPY TYPE_StringLiteral "http://publify.co" def_%cl_1_26 
-		 5: %self->link_to def_%cl_1_27 %self[6.3,2.0,] %cl_1_25[6.3,] %cl_1_26[6.4,] 	 ARGS:%cl_1_25,%cl_1_26,
-		 6: HASH-doc_link- def_%cl_1_28 %cl_1_27[6.5,] 
-		 7: %self->t def_%cl_1_29 %self[6.3,6.5,2.0,] %cl_1_23[6.1,] %cl_1_28[6.6,] 	 ARGS:%cl_1_23,%cl_1_28,
-		 8: 
-		 9: COPY TYPE_StringLiteral ".today" def_%cl_1_30 
-		 10: %self->t def_%cl_1_31 %self[6.3,6.5,6.7,2.0,] %cl_1_30[6.9,] 	 ARGS:%cl_1_30,
-		 11: 
-		 12: COPY TYPE_StringLiteral ".articles_and_comments_count_since" def_%cl_1_32 
-		 13: GETFIELD %self->newposts_count def_%cl_1_33 %self[6.3,6.5,6.7,6.10,2.0,] 
-		 14: GETFIELD %self->newcomments_count def_%cl_1_34 %self[6.3,6.5,6.7,6.10,2.0,] 
-		 15: HASH-articles_count-comments_count- def_%cl_1_35 %cl_1_33[6.13,] %cl_1_34[6.14,] 
-		 16: %self->t def_%cl_1_36 %self[6.3,6.5,6.7,6.10,2.0,] %cl_1_32[6.12,] %cl_1_35[6.15,] 	 ARGS:%cl_1_32,%cl_1_35,
-		 17: 
-		 18: COPY TYPE_StringLiteral ".running_publify" def_%cl_1_37 
-		 19: (PUBLIFY_VERSION) def_%cl_1_38 
-		 20: HASH-version- def_%cl_1_39 %cl_1_38[6.19,] 
-		 21: %self->t def_%cl_1_40 %self[6.3,6.5,6.7,6.10,6.16,2.0,] %cl_1_37[6.18,] %cl_1_39[6.20,] 	 ARGS:%cl_1_37,%cl_1_39,
-		 22: 
-		 23: GETFIELD %self->version_message def_%cl_1_41 %self[6.3,6.5,6.7,6.10,6.16,6.21,2.0,] 
-		 24: %self->current_user def_%cl_1_42 %self[6.3,6.5,6.7,6.10,6.16,6.21,2.0,] 	 ARGS:
-		 25: %cl_1_42->can_access_to_articles? def_%cl_1_43 %cl_1_42[6.24,] 	 ARGS:
-		 26: BRANCH %cl_1_43[6.25,] 
-BB 7
-	outgoing: 9 25 
-	datadep: 
-	instructions:
-		 0: 
-		 1: COPY TYPE_StringLiteral ".content" def_%cl_1_44 
-		 2: %self->t def_%cl_1_45 %self[2.0,] %cl_1_44[7.1,] 	 ARGS:%cl_1_44,
+		 1: alert_level->to_s def_%cl_2_7 alert_level[2.2,] 	 ARGS:
+		 2: %cl_2_7->downcase def_%cl_2_8 %cl_2_7[6.1,] 	 ARGS:
 		 3: 
-		 4: COPY TYPE_StringLiteral ".articles_count" def_%cl_1_46 
-		 5: GETFIELD %self->statposts def_%cl_1_47 %self[7.2,2.0,] 
-		 6: HASH-count- def_%cl_1_48 %cl_1_47[7.5,] 
-		 7: %self->t def_%cl_1_49 %self[7.2,2.0,] %cl_1_46[7.4,] %cl_1_48[7.6,] 	 ARGS:%cl_1_46,%cl_1_48,
-		 8: COPY TYPE_StringLiteral "admin/content" def_%cl_1_50 
-		 9: HASH-controller- def_%cl_1_51 %cl_1_50[7.8,] 
-		 10: %self->link_to def_%cl_1_52 %self[7.2,7.7,2.0,] %cl_1_49[7.7,] %cl_1_51[7.9,] 	 ARGS:%cl_1_49,%cl_1_51,
-		 11: 
-		 12: COPY TYPE_StringLiteral ".your_articles_count" def_%cl_1_53 
-		 13: GETFIELD %self->statuserposts def_%cl_1_54 %self[7.2,7.7,7.10,2.0,] 
-		 14: HASH-count- def_%cl_1_55 %cl_1_54[7.13,] 
-		 15: %self->t def_%cl_1_56 %self[7.2,7.7,7.10,2.0,] %cl_1_53[7.12,] %cl_1_55[7.14,] 	 ARGS:%cl_1_53,%cl_1_55,
-		 16: COPY TYPE_StringLiteral "admin/content" def_%cl_1_57 
-		 17: COPY TYPE_StringLiteral "search[user_id]" def_%cl_1_58 
-		 18: %self->current_user def_%cl_1_59 %self[7.2,7.7,7.10,7.15,2.0,] 	 ARGS:
-		 19: %cl_1_59->id def_%cl_1_60 %cl_1_59[7.18,] 	 ARGS:
-		 20: HASH-controller- def_%cl_1_61 %cl_1_57[7.16,] %cl_1_58[7.17,] %cl_1_60[7.19,] 
-		 21: %self->link_to def_%cl_1_62 %self[7.2,7.7,7.10,7.15,7.18,2.0,] %cl_1_56[7.15,] %cl_1_61[7.20,] 	 ARGS:%cl_1_56,%cl_1_61,
-		 22: 
-		 23: COPY TYPE_StringLiteral ".drafts_count" def_%cl_1_63 
-		 24: GETFIELD %self->statsdrafts def_%cl_1_64 %self[7.2,7.7,7.10,7.15,7.18,7.21,2.0,] 
-		 25: HASH-count- def_%cl_1_65 %cl_1_64[7.24,] 
-		 26: %self->t def_%cl_1_66 %self[7.2,7.7,7.10,7.15,7.18,7.21,2.0,] %cl_1_63[7.23,] %cl_1_65[7.25,] 	 ARGS:%cl_1_63,%cl_1_65,
-		 27: COPY TYPE_StringLiteral "admin/content" def_%cl_1_67 
-		 28: COPY TYPE_StringLiteral "search[state]" def_%cl_1_68 
-		 29: COPY TYPE_StringLiteral "drafts" def_%cl_1_69 
-		 30: HASH-controller- def_%cl_1_70 %cl_1_67[7.27,] %cl_1_68[7.28,] %cl_1_69[7.29,] 
-		 31: %self->link_to def_%cl_1_71 %self[7.2,7.7,7.10,7.15,7.18,7.21,7.26,2.0,] %cl_1_66[7.26,] %cl_1_70[7.30,] 	 ARGS:%cl_1_66,%cl_1_70,
-		 32: 
-		 33: COPY TYPE_StringLiteral ".pages_count" def_%cl_1_72 
-		 34: GETFIELD %self->statspages def_%cl_1_73 %self[7.2,7.7,7.10,7.15,7.18,7.21,7.26,7.31,2.0,] 
-		 35: HASH-count- def_%cl_1_74 %cl_1_73[7.34,] 
-		 36: %self->t def_%cl_1_75 %self[7.2,7.7,7.10,7.15,7.18,7.21,7.26,7.31,2.0,] %cl_1_72[7.33,] %cl_1_74[7.35,] 	 ARGS:%cl_1_72,%cl_1_74,
-		 37: COPY TYPE_StringLiteral "admin/pages" def_%cl_1_76 
-		 38: HASH-controller- def_%cl_1_77 %cl_1_76[7.37,] 
-		 39: %self->link_to def_%cl_1_78 %self[7.2,7.7,7.10,7.15,7.18,7.21,7.26,7.31,7.36,2.0,] %cl_1_75[7.36,] %cl_1_77[7.38,] 	 ARGS:%cl_1_75,%cl_1_77,
-		 40: 
-		 41: COPY TYPE_StringLiteral ".notes_count" def_%cl_1_79 
-		 42: GETFIELD %self->statuses def_%cl_1_80 %self[7.2,7.7,7.10,7.15,7.18,7.21,7.26,7.31,7.36,7.39,2.0,] 
-		 43: HASH-count- def_%cl_1_81 %cl_1_80[7.42,] 
-		 44: %self->t def_%cl_1_82 %self[7.2,7.7,7.10,7.15,7.18,7.21,7.26,7.31,7.36,7.39,2.0,] %cl_1_79[7.41,] %cl_1_81[7.43,] 	 ARGS:%cl_1_79,%cl_1_81,
-		 45: COPY TYPE_StringLiteral "admin/notes" def_%cl_1_83 
-		 46: HASH-controller- def_%cl_1_84 %cl_1_83[7.45,] 
-		 47: %self->link_to def_%cl_1_85 %self[7.2,7.7,7.10,7.15,7.18,7.21,7.26,7.31,7.36,7.39,7.44,2.0,] %cl_1_82[7.44,] %cl_1_84[7.46,] 	 ARGS:%cl_1_82,%cl_1_84,
-		 48: 
-BB 8
+		 4: RETURN message[2.3,] %self[2.0,] 
+BB 7
 	outgoing: 9 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_Nil def_%cl_1_85 
+		 0: def_%cl_2_9 
+		 1: def_%cl_2_10 %cl_2_9[7.0,] 
+		 2: RETURN %cl_2_10[7.1,] %self[2.0,] 
 BB 9
-	outgoing: 10 11 25 
+	outgoing: 
 	datadep: 
 	instructions:
-		 0: 
-		 1: %self->current_user def_%cl_1_86 %self[2.0,] 	 ARGS:
-		 2: %cl_1_86->can_access_to_feedback? def_%cl_1_87 %cl_1_86[9.1,] 	 ARGS:
-		 3: BRANCH %cl_1_87[9.2,] 
-BB 10
-	outgoing: 12 25 
-	datadep: 
-	instructions:
-		 0: 
-		 1: COPY TYPE_StringLiteral ".feedback" def_%cl_1_88 
-		 2: %self->t def_%cl_1_89 %self[2.0,] %cl_1_88[10.1,] 	 ARGS:%cl_1_88,
+CLOSURE END: alert_level[2.2,] 
 		 3: 
-		 4: COPY TYPE_StringLiteral ".comments_count" def_%cl_1_90 
-		 5: GETFIELD %self->statcomments def_%cl_1_91 %self[10.2,2.0,] 
-		 6: HASH-count- def_%cl_1_92 %cl_1_91[10.5,] 
-		 7: %self->t def_%cl_1_93 %self[10.2,2.0,] %cl_1_90[10.4,] %cl_1_92[10.6,] 	 ARGS:%cl_1_90,%cl_1_92,
-		 8: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_94 
-		 9: HASH-controller- def_%cl_1_95 %cl_1_94[10.8,] 
-		 10: %self->link_to def_%cl_1_96 %self[10.2,10.7,2.0,] %cl_1_93[10.7,] %cl_1_95[10.9,] 	 ARGS:%cl_1_93,%cl_1_95,
+BB 26
+	outgoing: 27 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_195 
+BB 27
+	outgoing: 28 29 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->content_for? def_%cl_1_196 %self[2.0,] 	 ARGS:Symbol,
+		 2: BRANCH %cl_1_196[27.1,] 
+BB 28
+	outgoing: 30 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".welcome_back" def_%cl_1_197 
+		 2: %self->current_user def_%cl_1_198 %self[2.0,] 	 ARGS:
+		 3: %cl_1_198->name def_%cl_1_199 %cl_1_198[28.2,] 	 ARGS:
+		 4: HASH-user_name- def_%cl_1_200 %cl_1_199[28.3,] 
+		 5: %self->t def_%cl_1_201 %self[28.2,2.0,] %cl_1_197[28.1,] %cl_1_200[28.4,] 	 ARGS:%cl_1_197,%cl_1_200,
+		 6: 
+BB 29
+	outgoing: 30 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_201 
+BB 30
+	outgoing: 31 32 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_Array def_%cl_1_202 
+		 2: COPY TYPE_PASS def_links %cl_1_202[30.1,] 
+		 3: 
+		 4: COPY TYPE_StringLiteral "admin/content" def_%cl_1_203 
+		 5: %self->can? def_%cl_1_204 %self[2.0,] %cl_1_203[30.4,] 	 ARGS:Symbol,%cl_1_203,
+		 6: BRANCH %cl_1_204[30.5,] 
+BB 31
+	outgoing: 33 58 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral ".write_a_post" def_%cl_1_205 
+		 1: %self->t def_%cl_1_206 %self[2.0,] %cl_1_205[31.0,] 	 ARGS:%cl_1_205,
+		 2: COPY TYPE_StringLiteral "content" def_%cl_1_207 
+		 3: COPY TYPE_StringLiteral "new" def_%cl_1_208 
+		 4: HASH-controller-action- def_%cl_1_209 %cl_1_207[31.2,] %cl_1_208[31.3,] 
+		 5: %self->link_to def_%cl_1_210 %self[31.1,2.0,] %cl_1_206[31.1,] %cl_1_209[31.4,] 	 ARGS:%cl_1_206,%cl_1_209,
+		 6: links-><< def_%cl_1_211 links[30.2,] %cl_1_210[31.5,] 	 ARGS:%cl_1_210,
+		 7: 
+BB 32
+	outgoing: 33 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_211 
+BB 33
+	outgoing: 34 35 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "admin/pages" def_%cl_1_212 
+		 2: %self->can? def_%cl_1_213 %self[2.0,] %cl_1_212[33.1,] 	 ARGS:Symbol,%cl_1_212,
+		 3: BRANCH %cl_1_213[33.2,] 
+BB 34
+	outgoing: 36 58 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral ".write_a_page" def_%cl_1_214 
+		 1: %self->t def_%cl_1_215 %self[2.0,] %cl_1_214[34.0,] 	 ARGS:%cl_1_214,
+		 2: COPY TYPE_StringLiteral "pages" def_%cl_1_216 
+		 3: COPY TYPE_StringLiteral "new" def_%cl_1_217 
+		 4: HASH-controller-action- def_%cl_1_218 %cl_1_216[34.2,] %cl_1_217[34.3,] 
+		 5: %self->link_to def_%cl_1_219 %self[34.1,2.0,] %cl_1_215[34.1,] %cl_1_218[34.4,] 	 ARGS:%cl_1_215,%cl_1_218,
+		 6: links-><< def_%cl_1_220 links[30.2,] %cl_1_219[34.5,] 	 ARGS:%cl_1_219,
+		 7: 
+BB 35
+	outgoing: 36 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_220 
+BB 36
+	outgoing: 37 38 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".update_your_profile_or_change_your_password" def_%cl_1_221 
+		 2: %self->t def_%cl_1_222 %self[2.0,] %cl_1_221[36.1,] 	 ARGS:%cl_1_221,
+		 3: COPY TYPE_StringLiteral "profiles" def_%cl_1_223 
+		 4: COPY TYPE_StringLiteral "index" def_%cl_1_224 
+		 5: HASH-controller-action- def_%cl_1_225 %cl_1_223[36.3,] %cl_1_224[36.4,] 
+		 6: %self->link_to def_%cl_1_226 %self[36.2,2.0,] %cl_1_222[36.2,] %cl_1_225[36.5,] 	 ARGS:%cl_1_222,%cl_1_225,
+		 7: links-><< def_%cl_1_227 links[30.2,] %cl_1_226[36.6,] 	 ARGS:%cl_1_226,
+		 8: 
+		 9: COPY TYPE_StringLiteral ".dashboard_explain_html" def_%cl_1_228 
+		 10: COPY TYPE_StringLiteral ", " def_%cl_1_229 
+		 11: %self->safe_join def_%cl_1_230 %self[36.2,36.6,2.0,] links[36.7,30.2,] %cl_1_229[36.10,] 	 ARGS:links,%cl_1_229,
+		 12: HASH-available_actions- def_%cl_1_231 %cl_1_230[36.11,] 
+		 13: %self->t def_%cl_1_232 %self[36.2,36.6,36.11,2.0,] %cl_1_228[36.9,] %cl_1_231[36.12,] 	 ARGS:%cl_1_228,%cl_1_231,
+		 14: 
+		 15: COPY TYPE_StringLiteral "admin/themes" def_%cl_1_233 
+		 16: %self->can? def_%cl_1_234 %self[36.2,36.6,36.11,36.13,2.0,] %cl_1_233[36.15,] 	 ARGS:Symbol,%cl_1_233,
+		 17: BRANCH %cl_1_234[36.16,] 
+BB 37
+	outgoing: 39 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".customization_explain_html" def_%cl_1_235 
+		 2: COPY TYPE_StringLiteral ".change_your_blog_presentation" def_%cl_1_236 
+		 3: %self->t def_%cl_1_237 %self[2.0,] %cl_1_236[37.2,] 	 ARGS:%cl_1_236,
+		 4: COPY TYPE_StringLiteral "themes" def_%cl_1_238 
+		 5: HASH-controller- def_%cl_1_239 %cl_1_238[37.4,] 
+		 6: %self->link_to def_%cl_1_240 %self[37.3,2.0,] %cl_1_237[37.3,] %cl_1_239[37.5,] 	 ARGS:%cl_1_237,%cl_1_239,
+		 7: COPY TYPE_StringLiteral ".enable_plugins" def_%cl_1_241 
+		 8: %self->t def_%cl_1_242 %self[37.3,37.6,2.0,] %cl_1_241[37.7,] 	 ARGS:%cl_1_241,
+		 9: COPY TYPE_StringLiteral "sidebar" def_%cl_1_243 
+		 10: HASH-controller- def_%cl_1_244 %cl_1_243[37.9,] 
+		 11: %self->link_to def_%cl_1_245 %self[37.3,37.6,37.8,2.0,] %cl_1_242[37.8,] %cl_1_244[37.10,] 	 ARGS:%cl_1_242,%cl_1_244,
+		 12: HASH-theme_link-sidebar_link- def_%cl_1_246 %cl_1_240[37.6,] %cl_1_245[37.11,] 
+		 13: %self->t def_%cl_1_247 %self[37.3,37.6,37.8,37.11,2.0,] %cl_1_235[37.1,] %cl_1_246[37.12,] 	 ARGS:%cl_1_235,%cl_1_246,
+		 14: 
+BB 38
+	outgoing: 39 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_247 
+BB 39
+	outgoing: 40 41 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".help_explain_html" def_%cl_1_248 
+		 2: COPY TYPE_StringLiteral ".read_our_documentation" def_%cl_1_249 
+		 3: %self->t def_%cl_1_250 %self[2.0,] %cl_1_249[39.2,] 	 ARGS:%cl_1_249,
+		 4: COPY TYPE_StringLiteral "http://publify.co" def_%cl_1_251 
+		 5: %self->link_to def_%cl_1_252 %self[39.3,2.0,] %cl_1_250[39.3,] %cl_1_251[39.4,] 	 ARGS:%cl_1_250,%cl_1_251,
+		 6: HASH-doc_link- def_%cl_1_253 %cl_1_252[39.5,] 
+		 7: %self->t def_%cl_1_254 %self[39.3,39.5,2.0,] %cl_1_248[39.1,] %cl_1_253[39.6,] 	 ARGS:%cl_1_248,%cl_1_253,
+		 8: 
+		 9: COPY TYPE_StringLiteral ".today" def_%cl_1_255 
+		 10: %self->t def_%cl_1_256 %self[39.3,39.5,39.7,2.0,] %cl_1_255[39.9,] 	 ARGS:%cl_1_255,
 		 11: 
-		 12: COPY TYPE_StringLiteral ".approved_count" def_%cl_1_97 
-		 13: GETFIELD %self->confirmed def_%cl_1_98 %self[10.2,10.7,10.10,2.0,] 
-		 14: HASH-count- def_%cl_1_99 %cl_1_98[10.13,] 
-		 15: %self->t def_%cl_1_100 %self[10.2,10.7,10.10,2.0,] %cl_1_97[10.12,] %cl_1_99[10.14,] 	 ARGS:%cl_1_97,%cl_1_99,
-		 16: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_101 
-		 17: COPY TYPE_StringLiteral "ham" def_%cl_1_102 
-		 18: HASH-controller-only- def_%cl_1_103 %cl_1_101[10.16,] %cl_1_102[10.17,] 
-		 19: %self->link_to def_%cl_1_104 %self[10.2,10.7,10.10,10.15,2.0,] %cl_1_100[10.15,] %cl_1_103[10.18,] 	 ARGS:%cl_1_100,%cl_1_103,
+		 12: COPY TYPE_StringLiteral ".articles_and_comments_count_since" def_%cl_1_257 
+		 13: GETFIELD %self->newposts_count def_%cl_1_258 %self[39.3,39.5,39.7,39.10,2.0,] 
+		 14: GETFIELD %self->newcomments_count def_%cl_1_259 %self[39.3,39.5,39.7,39.10,2.0,] 
+		 15: HASH-articles_count-comments_count- def_%cl_1_260 %cl_1_258[39.13,] %cl_1_259[39.14,] 
+		 16: %self->t def_%cl_1_261 %self[39.3,39.5,39.7,39.10,2.0,] %cl_1_257[39.12,] %cl_1_260[39.15,] 	 ARGS:%cl_1_257,%cl_1_260,
+		 17: 
+		 18: COPY TYPE_StringLiteral ".running_publify" def_%cl_1_262 
+		 19: (PUBLIFY_VERSION) def_%cl_1_263 
+		 20: HASH-version- def_%cl_1_264 %cl_1_263[39.19,] 
+		 21: %self->t def_%cl_1_265 %self[39.3,39.5,39.7,39.10,39.16,2.0,] %cl_1_262[39.18,] %cl_1_264[39.20,] 	 ARGS:%cl_1_262,%cl_1_264,
+		 22: 
+		 23: GETFIELD %self->version_message def_%cl_1_266 %self[39.3,39.5,39.7,39.10,39.16,39.21,2.0,] 
+		 24: COPY TYPE_StringLiteral "admin/content" def_%cl_1_267 
+		 25: %self->can? def_%cl_1_268 %self[39.3,39.5,39.7,39.10,39.16,39.21,2.0,] %cl_1_267[39.24,] 	 ARGS:Symbol,%cl_1_267,
+		 26: BRANCH %cl_1_268[39.25,] 
+BB 40
+	outgoing: 42 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".content" def_%cl_1_269 
+		 2: %self->t def_%cl_1_270 %self[2.0,] %cl_1_269[40.1,] 	 ARGS:%cl_1_269,
+		 3: 
+		 4: COPY TYPE_StringLiteral ".articles_count" def_%cl_1_271 
+		 5: GETFIELD %self->statposts def_%cl_1_272 %self[40.2,2.0,] 
+		 6: HASH-count- def_%cl_1_273 %cl_1_272[40.5,] 
+		 7: %self->t def_%cl_1_274 %self[40.2,2.0,] %cl_1_271[40.4,] %cl_1_273[40.6,] 	 ARGS:%cl_1_271,%cl_1_273,
+		 8: COPY TYPE_StringLiteral "admin/content" def_%cl_1_275 
+		 9: HASH-controller- def_%cl_1_276 %cl_1_275[40.8,] 
+		 10: %self->link_to def_%cl_1_277 %self[40.2,40.7,2.0,] %cl_1_274[40.7,] %cl_1_276[40.9,] 	 ARGS:%cl_1_274,%cl_1_276,
+		 11: 
+		 12: COPY TYPE_StringLiteral ".your_articles_count" def_%cl_1_278 
+		 13: GETFIELD %self->statuserposts def_%cl_1_279 %self[40.2,40.7,40.10,2.0,] 
+		 14: HASH-count- def_%cl_1_280 %cl_1_279[40.13,] 
+		 15: %self->t def_%cl_1_281 %self[40.2,40.7,40.10,2.0,] %cl_1_278[40.12,] %cl_1_280[40.14,] 	 ARGS:%cl_1_278,%cl_1_280,
+		 16: COPY TYPE_StringLiteral "admin/content" def_%cl_1_282 
+		 17: COPY TYPE_StringLiteral "search[user_id]" def_%cl_1_283 
+		 18: %self->current_user def_%cl_1_284 %self[40.2,40.7,40.10,40.15,2.0,] 	 ARGS:
+		 19: %cl_1_284->id def_%cl_1_285 %cl_1_284[40.18,] 	 ARGS:
+		 20: HASH-controller- def_%cl_1_286 %cl_1_282[40.16,] %cl_1_283[40.17,] %cl_1_285[40.19,] 
+		 21: %self->link_to def_%cl_1_287 %self[40.2,40.7,40.10,40.15,40.18,2.0,] %cl_1_281[40.15,] %cl_1_286[40.20,] 	 ARGS:%cl_1_281,%cl_1_286,
+		 22: 
+		 23: COPY TYPE_StringLiteral ".drafts_count" def_%cl_1_288 
+		 24: GETFIELD %self->statsdrafts def_%cl_1_289 %self[40.2,40.7,40.10,40.15,40.18,40.21,2.0,] 
+		 25: HASH-count- def_%cl_1_290 %cl_1_289[40.24,] 
+		 26: %self->t def_%cl_1_291 %self[40.2,40.7,40.10,40.15,40.18,40.21,2.0,] %cl_1_288[40.23,] %cl_1_290[40.25,] 	 ARGS:%cl_1_288,%cl_1_290,
+		 27: COPY TYPE_StringLiteral "admin/content" def_%cl_1_292 
+		 28: COPY TYPE_StringLiteral "search[state]" def_%cl_1_293 
+		 29: COPY TYPE_StringLiteral "drafts" def_%cl_1_294 
+		 30: HASH-controller- def_%cl_1_295 %cl_1_292[40.27,] %cl_1_293[40.28,] %cl_1_294[40.29,] 
+		 31: %self->link_to def_%cl_1_296 %self[40.2,40.7,40.10,40.15,40.18,40.21,40.26,2.0,] %cl_1_291[40.26,] %cl_1_295[40.30,] 	 ARGS:%cl_1_291,%cl_1_295,
+		 32: 
+		 33: COPY TYPE_StringLiteral ".pages_count" def_%cl_1_297 
+		 34: GETFIELD %self->statspages def_%cl_1_298 %self[40.2,40.7,40.10,40.15,40.18,40.21,40.26,40.31,2.0,] 
+		 35: HASH-count- def_%cl_1_299 %cl_1_298[40.34,] 
+		 36: %self->t def_%cl_1_300 %self[40.2,40.7,40.10,40.15,40.18,40.21,40.26,40.31,2.0,] %cl_1_297[40.33,] %cl_1_299[40.35,] 	 ARGS:%cl_1_297,%cl_1_299,
+		 37: COPY TYPE_StringLiteral "admin/pages" def_%cl_1_301 
+		 38: HASH-controller- def_%cl_1_302 %cl_1_301[40.37,] 
+		 39: %self->link_to def_%cl_1_303 %self[40.2,40.7,40.10,40.15,40.18,40.21,40.26,40.31,40.36,2.0,] %cl_1_300[40.36,] %cl_1_302[40.38,] 	 ARGS:%cl_1_300,%cl_1_302,
+		 40: 
+		 41: COPY TYPE_StringLiteral ".notes_count" def_%cl_1_304 
+		 42: GETFIELD %self->statuses def_%cl_1_305 %self[40.2,40.7,40.10,40.15,40.18,40.21,40.26,40.31,40.36,40.39,2.0,] 
+		 43: HASH-count- def_%cl_1_306 %cl_1_305[40.42,] 
+		 44: %self->t def_%cl_1_307 %self[40.2,40.7,40.10,40.15,40.18,40.21,40.26,40.31,40.36,40.39,2.0,] %cl_1_304[40.41,] %cl_1_306[40.43,] 	 ARGS:%cl_1_304,%cl_1_306,
+		 45: COPY TYPE_StringLiteral "admin/notes" def_%cl_1_308 
+		 46: HASH-controller- def_%cl_1_309 %cl_1_308[40.45,] 
+		 47: %self->link_to def_%cl_1_310 %self[40.2,40.7,40.10,40.15,40.18,40.21,40.26,40.31,40.36,40.39,40.44,2.0,] %cl_1_307[40.44,] %cl_1_309[40.46,] 	 ARGS:%cl_1_307,%cl_1_309,
+		 48: 
+BB 41
+	outgoing: 42 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_310 
+BB 42
+	outgoing: 43 44 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_311 
+		 2: %self->can? def_%cl_1_312 %self[2.0,] %cl_1_311[42.1,] 	 ARGS:Symbol,%cl_1_311,
+		 3: BRANCH %cl_1_312[42.2,] 
+BB 43
+	outgoing: 45 58 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral ".feedback" def_%cl_1_313 
+		 2: %self->t def_%cl_1_314 %self[2.0,] %cl_1_313[43.1,] 	 ARGS:%cl_1_313,
+		 3: 
+		 4: COPY TYPE_StringLiteral ".comments_count" def_%cl_1_315 
+		 5: GETFIELD %self->statcomments def_%cl_1_316 %self[43.2,2.0,] 
+		 6: HASH-count- def_%cl_1_317 %cl_1_316[43.5,] 
+		 7: %self->t def_%cl_1_318 %self[43.2,2.0,] %cl_1_315[43.4,] %cl_1_317[43.6,] 	 ARGS:%cl_1_315,%cl_1_317,
+		 8: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_319 
+		 9: HASH-controller- def_%cl_1_320 %cl_1_319[43.8,] 
+		 10: %self->link_to def_%cl_1_321 %self[43.2,43.7,2.0,] %cl_1_318[43.7,] %cl_1_320[43.9,] 	 ARGS:%cl_1_318,%cl_1_320,
+		 11: 
+		 12: COPY TYPE_StringLiteral ".approved_count" def_%cl_1_322 
+		 13: GETFIELD %self->confirmed def_%cl_1_323 %self[43.2,43.7,43.10,2.0,] 
+		 14: HASH-count- def_%cl_1_324 %cl_1_323[43.13,] 
+		 15: %self->t def_%cl_1_325 %self[43.2,43.7,43.10,2.0,] %cl_1_322[43.12,] %cl_1_324[43.14,] 	 ARGS:%cl_1_322,%cl_1_324,
+		 16: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_326 
+		 17: COPY TYPE_StringLiteral "ham" def_%cl_1_327 
+		 18: HASH-controller-only- def_%cl_1_328 %cl_1_326[43.16,] %cl_1_327[43.17,] 
+		 19: %self->link_to def_%cl_1_329 %self[43.2,43.7,43.10,43.15,2.0,] %cl_1_325[43.15,] %cl_1_328[43.18,] 	 ARGS:%cl_1_325,%cl_1_328,
 		 20: 
-		 21: COPY TYPE_StringLiteral ".unconfirmed_count" def_%cl_1_105 
-		 22: GETFIELD %self->unconfirmed def_%cl_1_106 %self[10.2,10.7,10.10,10.15,10.19,2.0,] 
-		 23: HASH-count- def_%cl_1_107 %cl_1_106[10.22,] 
-		 24: %self->t def_%cl_1_108 %self[10.2,10.7,10.10,10.15,10.19,2.0,] %cl_1_105[10.21,] %cl_1_107[10.23,] 	 ARGS:%cl_1_105,%cl_1_107,
-		 25: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_109 
-		 26: COPY TYPE_StringLiteral "unapproved" def_%cl_1_110 
-		 27: HASH-controller-only- def_%cl_1_111 %cl_1_109[10.25,] %cl_1_110[10.26,] 
-		 28: %self->link_to def_%cl_1_112 %self[10.2,10.7,10.10,10.15,10.19,10.24,2.0,] %cl_1_108[10.24,] %cl_1_111[10.27,] 	 ARGS:%cl_1_108,%cl_1_111,
+		 21: COPY TYPE_StringLiteral ".unconfirmed_count" def_%cl_1_330 
+		 22: GETFIELD %self->unconfirmed def_%cl_1_331 %self[43.2,43.7,43.10,43.15,43.19,2.0,] 
+		 23: HASH-count- def_%cl_1_332 %cl_1_331[43.22,] 
+		 24: %self->t def_%cl_1_333 %self[43.2,43.7,43.10,43.15,43.19,2.0,] %cl_1_330[43.21,] %cl_1_332[43.23,] 	 ARGS:%cl_1_330,%cl_1_332,
+		 25: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_334 
+		 26: COPY TYPE_StringLiteral "unapproved" def_%cl_1_335 
+		 27: HASH-controller-only- def_%cl_1_336 %cl_1_334[43.25,] %cl_1_335[43.26,] 
+		 28: %self->link_to def_%cl_1_337 %self[43.2,43.7,43.10,43.15,43.19,43.24,2.0,] %cl_1_333[43.24,] %cl_1_336[43.27,] 	 ARGS:%cl_1_333,%cl_1_336,
 		 29: 
-		 30: COPY TYPE_StringLiteral ".spam_count" def_%cl_1_113 
-		 31: GETFIELD %self->statspam def_%cl_1_114 %self[10.2,10.7,10.10,10.15,10.19,10.24,10.28,2.0,] 
-		 32: HASH-count- def_%cl_1_115 %cl_1_114[10.31,] 
-		 33: %self->t def_%cl_1_116 %self[10.2,10.7,10.10,10.15,10.19,10.24,10.28,2.0,] %cl_1_113[10.30,] %cl_1_115[10.32,] 	 ARGS:%cl_1_113,%cl_1_115,
-		 34: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_117 
-		 35: COPY TYPE_StringLiteral "spam" def_%cl_1_118 
-		 36: HASH-controller-only- def_%cl_1_119 %cl_1_117[10.34,] %cl_1_118[10.35,] 
-		 37: %self->link_to def_%cl_1_120 %self[10.2,10.7,10.10,10.15,10.19,10.24,10.28,10.33,2.0,] %cl_1_116[10.33,] %cl_1_119[10.36,] 	 ARGS:%cl_1_116,%cl_1_119,
+		 30: COPY TYPE_StringLiteral ".spam_count" def_%cl_1_338 
+		 31: GETFIELD %self->statspam def_%cl_1_339 %self[43.2,43.7,43.10,43.15,43.19,43.24,43.28,2.0,] 
+		 32: HASH-count- def_%cl_1_340 %cl_1_339[43.31,] 
+		 33: %self->t def_%cl_1_341 %self[43.2,43.7,43.10,43.15,43.19,43.24,43.28,2.0,] %cl_1_338[43.30,] %cl_1_340[43.32,] 	 ARGS:%cl_1_338,%cl_1_340,
+		 34: COPY TYPE_StringLiteral "admin/feedback" def_%cl_1_342 
+		 35: COPY TYPE_StringLiteral "spam" def_%cl_1_343 
+		 36: HASH-controller-only- def_%cl_1_344 %cl_1_342[43.34,] %cl_1_343[43.35,] 
+		 37: %self->link_to def_%cl_1_345 %self[43.2,43.7,43.10,43.15,43.19,43.24,43.28,43.33,2.0,] %cl_1_341[43.33,] %cl_1_344[43.36,] 	 ARGS:%cl_1_341,%cl_1_344,
 		 38: 
-BB 11
-	outgoing: 12 
+BB 44
+	outgoing: 45 
 	datadep: 
 	instructions:
-		 0: COPY TYPE_Nil def_%cl_1_120 
-BB 12
-	outgoing: 13 14 25 
+		 0: COPY TYPE_Nil def_%cl_1_345 
+BB 45
+	outgoing: 46 47 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".latest_comments" def_%cl_1_121 
-		 2: %self->t def_%cl_1_122 %self[2.0,] %cl_1_121[12.1,] 	 ARGS:%cl_1_121,
+		 1: COPY TYPE_StringLiteral ".latest_comments" def_%cl_1_346 
+		 2: %self->t def_%cl_1_347 %self[2.0,] %cl_1_346[45.1,] 	 ARGS:%cl_1_346,
 		 3: 
-		 4: GETFIELD %self->comments def_%cl_1_123 %self[12.2,2.0,] 
-		 5: %cl_1_123->size def_%cl_1_124 %cl_1_123[12.4,] 	 ARGS:
-		 6: %cl_1_124->== def_%cl_1_125 %cl_1_124[12.5,] 	 ARGS:Fixnum,
-		 7: BRANCH %cl_1_125[12.6,] 
-BB 13
-	outgoing: 15 25 
+		 4: GETFIELD %self->comments def_%cl_1_348 %self[45.2,2.0,] 
+		 5: %cl_1_348->size def_%cl_1_349 %cl_1_348[45.4,] 	 ARGS:
+		 6: %cl_1_349->== def_%cl_1_350 %cl_1_349[45.5,] 	 ARGS:Fixnum,
+		 7: BRANCH %cl_1_350[45.6,] 
+BB 46
+	outgoing: 48 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".no_comments_yet" def_%cl_1_126 
-		 2: %self->t def_%cl_1_127 %self[2.0,] %cl_1_126[13.1,] 	 ARGS:%cl_1_126,
+		 1: COPY TYPE_StringLiteral ".no_comments_yet" def_%cl_1_351 
+		 2: %self->t def_%cl_1_352 %self[2.0,] %cl_1_351[46.1,] 	 ARGS:%cl_1_351,
 		 3: 
-BB 14
-	outgoing: 15 25 
+BB 47
+	outgoing: 48 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: GETFIELD %self->comments def_%cl_1_129 %self[2.0,] 
-		 2: %cl_1_129->each def_%cl_1_128 %cl_1_129[14.1,] %self[2.0,] 	 ARGS:%cl_1_129,
+		 1: GETFIELD %self->comments def_%cl_1_354 %self[2.0,] 
+		 2: %cl_1_354->each def_%cl_1_353 %cl_1_354[47.1,] %self[2.0,] 	 ARGS:%cl_1_354,
 CLOSURE BEGIN: comment[] %self[2.0,] 
 BB 1
 	outgoing: 7 2 
@@ -455,37 +924,37 @@ BB 7
 	datadep: 
 	instructions:
 CLOSURE END: comment[2.2,] 
-		 3: COPY TYPE_PASS def_%cl_1_127 %cl_1_128[14.2,] 
-BB 15
-	outgoing: 16 17 25 
+		 3: COPY TYPE_PASS def_%cl_1_352 %cl_1_353[47.2,] 
+BB 48
+	outgoing: 49 50 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".your_drafts" def_%cl_1_130 
-		 2: %self->t def_%cl_1_131 %self[2.0,] %cl_1_130[15.1,] 	 ARGS:%cl_1_130,
+		 1: COPY TYPE_StringLiteral ".your_drafts" def_%cl_1_355 
+		 2: %self->t def_%cl_1_356 %self[2.0,] %cl_1_355[48.1,] 	 ARGS:%cl_1_355,
 		 3: 
-		 4: GETFIELD %self->drafts def_%cl_1_132 %self[15.2,2.0,] 
-		 5: %cl_1_132->empty? def_%cl_1_133 %cl_1_132[15.4,] 	 ARGS:
-		 6: BRANCH %cl_1_133[15.5,] 
-BB 16
-	outgoing: 18 25 
+		 4: GETFIELD %self->drafts def_%cl_1_357 %self[48.2,2.0,] 
+		 5: %cl_1_357->empty? def_%cl_1_358 %cl_1_357[48.4,] 	 ARGS:
+		 6: BRANCH %cl_1_358[48.5,] 
+BB 49
+	outgoing: 51 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".no_drafts_yet" def_%cl_1_134 
-		 2: %self->t def_%cl_1_135 %self[2.0,] %cl_1_134[16.1,] 	 ARGS:%cl_1_134,
-		 3: COPY TYPE_StringLiteral "content" def_%cl_1_136 
-		 4: COPY TYPE_StringLiteral "new" def_%cl_1_137 
-		 5: HASH-controller-action- def_%cl_1_138 %cl_1_136[16.3,] %cl_1_137[16.4,] 
-		 6: %self->link_to def_%cl_1_139 %self[16.2,2.0,] %cl_1_135[16.2,] %cl_1_138[16.5,] 	 ARGS:%cl_1_135,%cl_1_138,
+		 1: COPY TYPE_StringLiteral ".no_drafts_yet" def_%cl_1_359 
+		 2: %self->t def_%cl_1_360 %self[2.0,] %cl_1_359[49.1,] 	 ARGS:%cl_1_359,
+		 3: COPY TYPE_StringLiteral "content" def_%cl_1_361 
+		 4: COPY TYPE_StringLiteral "new" def_%cl_1_362 
+		 5: HASH-controller-action- def_%cl_1_363 %cl_1_361[49.3,] %cl_1_362[49.4,] 
+		 6: %self->link_to def_%cl_1_364 %self[49.2,2.0,] %cl_1_360[49.2,] %cl_1_363[49.5,] 	 ARGS:%cl_1_360,%cl_1_363,
 		 7: 
-BB 17
-	outgoing: 18 25 
+BB 50
+	outgoing: 51 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: GETFIELD %self->drafts def_%cl_1_141 %self[2.0,] 
-		 2: %cl_1_141->each def_%cl_1_140 %cl_1_141[17.1,] %self[2.0,] 	 ARGS:%cl_1_141,
+		 1: GETFIELD %self->drafts def_%cl_1_366 %self[2.0,] 
+		 2: %cl_1_366->each def_%cl_1_365 %cl_1_366[50.1,] %self[2.0,] 	 ARGS:%cl_1_366,
 CLOSURE BEGIN: post[] %self[2.0,] 
 BB 1
 	outgoing: 7 2 
@@ -531,49 +1000,49 @@ BB 7
 	datadep: 
 	instructions:
 CLOSURE END: post[2.2,] 
-		 3: COPY TYPE_PASS def_%cl_1_139 %cl_1_140[17.2,] 
-BB 18
-	outgoing: 19 20 25 
+		 3: COPY TYPE_PASS def_%cl_1_364 %cl_1_365[50.2,] 
+BB 51
+	outgoing: 52 53 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".inbound_links" def_%cl_1_142 
-		 2: %self->t def_%cl_1_143 %self[2.0,] %cl_1_142[18.1,] 	 ARGS:%cl_1_142,
+		 1: COPY TYPE_StringLiteral ".inbound_links" def_%cl_1_367 
+		 2: %self->t def_%cl_1_368 %self[2.0,] %cl_1_367[51.1,] 	 ARGS:%cl_1_367,
 		 3: 
-		 4: GETFIELD %self->inbound_links def_%cl_1_144 %self[18.2,2.0,] 
-		 5: %cl_1_144->nil? def_%cl_1_145 %cl_1_144[18.4,] 	 ARGS:
-		 6: BRANCH %cl_1_145[18.5,] 
-BB 19
-	outgoing: 24 25 
+		 4: GETFIELD %self->inbound_links def_%cl_1_369 %self[51.2,2.0,] 
+		 5: %cl_1_369->nil? def_%cl_1_370 %cl_1_369[51.4,] 	 ARGS:
+		 6: BRANCH %cl_1_370[51.5,] 
+BB 52
+	outgoing: 57 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".you_have_no_internet_connection" def_%cl_1_146 
-		 2: %self->t def_%cl_1_147 %self[2.0,] %cl_1_146[19.1,] 	 ARGS:%cl_1_146,
+		 1: COPY TYPE_StringLiteral ".you_have_no_internet_connection" def_%cl_1_371 
+		 2: %self->t def_%cl_1_372 %self[2.0,] %cl_1_371[52.1,] 	 ARGS:%cl_1_371,
 		 3: 
-BB 20
-	outgoing: 21 22 25 
+BB 53
+	outgoing: 54 55 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: GETFIELD %self->inbound_links def_%cl_1_148 %self[2.0,] 
-		 2: %cl_1_148->empty? def_%cl_1_149 %cl_1_148[20.1,] 	 ARGS:
-		 3: BRANCH %cl_1_149[20.2,] 
-BB 21
-	outgoing: 23 25 
+		 1: GETFIELD %self->inbound_links def_%cl_1_373 %self[2.0,] 
+		 2: %cl_1_373->empty? def_%cl_1_374 %cl_1_373[53.1,] 	 ARGS:
+		 3: BRANCH %cl_1_374[53.2,] 
+BB 54
+	outgoing: 56 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: COPY TYPE_StringLiteral ".no_one_made_link_to_you_yet" def_%cl_1_150 
-		 2: %self->t def_%cl_1_151 %self[2.0,] %cl_1_150[21.1,] 	 ARGS:%cl_1_150,
+		 1: COPY TYPE_StringLiteral ".no_one_made_link_to_you_yet" def_%cl_1_375 
+		 2: %self->t def_%cl_1_376 %self[2.0,] %cl_1_375[54.1,] 	 ARGS:%cl_1_375,
 		 3: 
-BB 22
-	outgoing: 23 25 
+BB 55
+	outgoing: 56 58 
 	datadep: 
 	instructions:
 		 0: 
-		 1: GETFIELD %self->inbound_links def_%cl_1_153 %self[2.0,] 
-		 2: %cl_1_153->each def_%cl_1_152 %cl_1_153[22.1,] %self[2.0,] 	 ARGS:%cl_1_153,
+		 1: GETFIELD %self->inbound_links def_%cl_1_378 %self[2.0,] 
+		 2: %cl_1_378->each def_%cl_1_377 %cl_1_378[55.1,] %self[2.0,] 	 ARGS:%cl_1_378,
 CLOSURE BEGIN: link[] %self[2.0,] link_date[] 
 BB 1
 	outgoing: 16 2 
@@ -684,29 +1153,41 @@ BB 16
 	datadep: 
 	instructions:
 CLOSURE END: link_date[2.7,] link[2.2,] 
-		 3: COPY TYPE_PASS def_%cl_1_151 %cl_1_152[22.2,] 
-BB 23
-	outgoing: 27 
+		 3: COPY TYPE_PASS def_%cl_1_376 %cl_1_377[55.2,] 
+BB 56
+	outgoing: 57 
 	datadep: 
 	instructions:
-		 0: RETURN %cl_1_151[22.3,21.2,] %self[2.0,] 
-BB 24
-	outgoing: 27 
+		 0: COPY TYPE_PASS def_%cl_1_372 %cl_1_376[55.3,54.2,] 
+BB 57
+	outgoing: 58 60 
 	datadep: 
 	instructions:
-		 0: RETURN %cl_1_147[19.2,] %self[2.0,] 
-BB 25
-	outgoing: 27 
+		 0: 
+		 1: %self->this_blog def_%cl_1_379 %self[2.0,] 	 ARGS:
+		 2: %cl_1_379->blog_name def_%cl_1_380 %cl_1_379[57.1,] 	 ARGS:
+		 3: %self->this_blog def_%cl_1_381 %self[57.1,2.0,] 	 ARGS:
+		 4: %cl_1_381->base_url def_%cl_1_382 %cl_1_381[57.3,] 	 ARGS:
+		 5: %self->link_to def_%cl_1_383 %self[57.1,57.3,2.0,] %cl_1_380[57.2,] %cl_1_382[57.4,] 	 ARGS:%cl_1_380,%cl_1_382,
+		 6: 
+		 7: COPY TYPE_StringLiteral ".powered_by" def_%cl_1_384 
+		 8: %self->t def_%cl_1_385 %self[57.1,57.3,57.5,2.0,] %cl_1_384[57.7,] 	 ARGS:%cl_1_384,
+		 9: 
+		 10: (PUBLIFY_VERSION) def_%cl_1_386 
+		 11: %self->h def_%cl_1_387 %self[57.1,57.3,57.5,57.8,2.0,] %cl_1_386[57.10,] 	 ARGS:%cl_1_386,
+		 12: RETURN %cl_1_387[57.11,] %self[57.1,57.3,57.5,57.8,57.11,2.0,] 
+BB 58
+	outgoing: 60 
 	datadep: 
 	instructions:
-		 0: def_%cl_1_154 
-		 1: def_%cl_1_155 %cl_1_154[25.0,] 
-		 2: RETURN %cl_1_155[25.1,] %self[2.0,] 
-BB 27
+		 0: def_%cl_1_388 
+		 1: def_%cl_1_389 %cl_1_388[58.0,] 
+		 2: RETURN %cl_1_389[58.1,] %self[2.0,] 
+BB 60
 	outgoing: 
 	datadep: 
 	instructions:
-CLOSURE END: rb_from_view[2.2,] 
+CLOSURE END: rb_from_view[2.2,] links[30.2,] 
 		 120: RETURN %v_79[2.119,] %self[2.0,2.15,2.19,2.22,2.26,2.33,2.40,2.46,2.52,2.58,2.63,2.69,2.76,2.83,2.90,2.94,2.99,2.103,2.108,2.110,2.111,2.113,2.114,2.116,2.118,] 
 BB 3
 	outgoing: 
@@ -1087,28 +1568,6 @@ BB 13
 		 1: def_%v_13 %v_12[13.0,] 
 		 2: RETURN %v_13[13.1,] %self[2.0,] 
 BB 15
-	outgoing: 
-	datadep: 
-	instructions:
-
-SET IRMethod, name = to_s
-BB 1
-	outgoing: 3 2 
-	datadep: 
-	instructions:
-BB 2
-	outgoing: 3 
-	datadep: 
-	instructions:
-		 0: def_%self 
-		 1: def_%v_0 
-		 2: COPY TYPE_CurrentScope def_%current_scope 
-		 3: COPY TYPE_ScopeModule def_%current_module 
-		 4: 
-		 5: 
-		 6: %self->title def_%v_3 %self[2.0,] 	 ARGS:
-		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
-BB 3
 	outgoing: 
 	datadep: 
 	instructions:

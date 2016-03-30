@@ -153,7 +153,7 @@ for subdir, folders, files in os.walk(base_path):
 			fname = os.path.join(subdir, fn)
 			temp_l = list(find(fname, "/"))
 			cur_action_name = fname[temp_l[-2]+1:temp_l[-1]]
-			#print fname
+			print fname
 			tree = ET.parse(fname)
 			root = tree.getroot()
 			#root.tag = NEXTACTION

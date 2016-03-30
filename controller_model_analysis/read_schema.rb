@@ -25,7 +25,17 @@ end
 def find_class(tbl_name)
 	c_name = convert_tablename(tbl_name)
 	#TODO: How about inherited class?
-	return $class_map[c_name]
+	if $class_map[c_name]
+		return $class_map[c_name]
+	else
+		$class_map.each do |k, v|
+			chs = k.split("::")
+			if chs[-1].downcase == tbl_name.singularize
+				return v
+			end
+		end
+	end
+	return nil
 end
 
 class Table_field
@@ -41,8 +51,16 @@ class Class_field < Table_field
 end
 
 def isActiveRecord(caller_name)
-	if $class_map[caller_name] != nil
-		_caller = $class_map[caller_name]
+	_caller = $class_map[caller_name]
+	if _caller == nil
+		$class_map.each do |k, v|
+			chs = k.split("::")
+			if caller_name and chs[-1].downcase.singularize == caller_name.singularize
+				_caller = v
+			end
+		end
+	end
+	if _caller != nil
 		if _caller.getUpperClass == "ActiveRecord::Base"
 			return true
 		else
@@ -103,8 +121,9 @@ def read_schema(app_dir)
 			end
 			if @cur_class == nil
 				@cur_class = Class_class.new(tbl_name)
+				@cur_class.setUpperClass("ActiveRecord::Base")
 				$class_map[tbl_name] = @cur_class 
-				#puts "read schema: class #{tbl_name} (#{convert_tablename(tbl_name)}) cannot be found!"
+				puts "read schema: class #{tbl_name} (#{convert_tablename(tbl_name)}) cannot be found!"
 			end
 			$table_names.push(convert_tablename(tbl_name))
 		elsif line.delete(" ").delete("\n") == "end"

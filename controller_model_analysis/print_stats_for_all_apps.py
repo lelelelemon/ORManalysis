@@ -25,17 +25,32 @@ tableau_colors = (
     (199/255., 199/255., 199/255.),
     (219/255., 219/255., 141/255.),
     (158/255., 218/255., 229/255.),
+    (227/255., 119/255., 194/255.),
+		(219/255., 219/255., 141/255.),
+		(174/255., 199/255., 232/255.),
+		(109/255., 204/255., 218/255.),
+		(114/255., 158/255., 206/255.),
+		(199/255., 199/255., 199/255.),
+		(188/255., 189/255., 34/255.),
+		(255/255., 127/255., 14/255.),
+		(255/255., 125/255., 150/255.),
+		(196/255., 156/255., 148/255.),
+		(177/255., 3/255., 24/255.),
+		(0/255., 107/255., 164/255),
     (198/255., 118/255., 255/255.), #dsm added, not Tableau
     (58/255., 208/255., 129/255.),
 )
 
-TOTAL_COLOR_NUM=22
-colors = [2, 3, 5, 1, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+TOTAL_COLOR_NUM=33
+colors = [2, 3, 5, 1, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 0]
 #applications = ["boxroom","fulcrum","kandan","linuxfr","publify", "lobsters", "railscollab","communityengine","onebody","sugar","railscollab","browsercms","brevidy","amahiPlatform","amahiPlatform_layouts","rucksack","rucksack_layouts"]
 #app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
 
-app_string="amahiPlatform railscollab jobsworth communityengine sharetribe linuxfr rucksack fulcrum tracks brevidy lobsters onebody sugar publify boxroom"
-#app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sharetribe sugar jobsworth boxroom publify railscollab tracks brevidy communityengine"
+#app_string="amahiPlatform railscollab jobsworth communityengine sharetribe linuxfr rucksack fulcrum tracks brevidy lobsters onebody sugar publify boxroom"
+app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sharetribe sugar boxroom publify railscollab tracks brevidy communityengine forem enki calagator"
+#app_string="sugar lobsters boxroom enki publify amahiPlatform railscollab linuxfr calagator forem fulcrum tracks brevidy"
+
+#app_string="calagator forem fulcrum tracks brevidy"
 
 applications = app_string.split(" ")
 
@@ -69,28 +84,47 @@ def plot_stack_plot(plt, ary_list, legends, stat_name):
 def general_plot(stat_name):
 	ary_list = []
 	legends = []
+	name_map = {}
 	for app in applications:
 		for node in roots[app]:
 			if node.tag == stat_name:
 				for c in node:
 					if c.tag not in legends:
+						name_map[c.tag] = len(ary_list)
 						ary_list.append([])
 						legends.append(c.tag)
 	for app in applications:
 		for node in roots[app]:
 			if node.tag == stat_name:
-				i = 0
+				included = []
 				for child in node:
-					ary_list[i].append(float(child.text))
-					i += 1
-				if len(legends) > i:
-					for j in range(len(legends)-i):
-						ary_list[i].append(0)
-						i += 1
+					included.append(child.tag)
+					ary_list[name_map[child.tag]].append(float(child.text))
+				for l in legends:
+					if l not in included:
+						ary_list[name_map[l]].append(0)
+					#ary_list[i].append(float(child.text))
+				#if len(legends) > i:
+				#	for j in range(len(legends)-i):
+				#		ary_list[i].append(0)
+				#		i += 1
 
 	for ary in ary_list:
 		print "list:"
 		print ary
+	if stat_name == "queryGeneral":
+		temp_ary = {}
+		for app in applications:
+			temp_ary[app] = 0
+		i = 0
+		for app in applications:
+			for ary in ary_list:
+				temp_ary[app] += ary[i]
+			i = i + 1
+		print "TOTAL QUERY:"
+		for app in applications:
+			temp_ary[app] = temp_ary[app] * len(roots[app])
+			print "%s: %d"%(app, temp_ary[app])	
 	plot_stack_plot(plt, ary_list, legends, stat_name)
 
 if os.path.isdir(result_path) == False:
@@ -98,24 +132,27 @@ if os.path.isdir(result_path) == False:
 
 
 for app in applications:
-	#print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
-	#os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
+	print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
+	os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
 	#print "python collect_nextaction.py %s "%(app)
 	#os.system("python collect_nextaction.py %s %s/nextaction_%s_stat.xml"%(app, result_path, app))
 	#print "python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app)
 	#os.system("python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app))
 	fname = "%s/%s_stat.xml"%(result_path, app)
+	print fname
 	tree = ET.parse(fname)
 	roots[app] = tree.getroot()
 	print ""
 
-#stats = ["queryGeneral","branch","usedInView","onlyFromUser","queryTrivialBranch","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction","transactionNested", "queryString"]
-stats = ["readSink"]
+#stats=[]
+stats = ["queryGeneral","branch","branchInView","usedInView","usedSQLString","onlyFromUser","queryTrivialBranch","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction","transactionNested", "queryString", "constStat"]
+#stats = ["usedSQLString"]
 
 for s in stats:
 	print "printing %s..."%s
 	general_plot(s)
 
+exit(0)
 #NA stands for NextAction
 roots = {}
 app_string="lobsters amahiPlatform fulcrum onebody rucksack sharetribe jobsworth publify railscollab tracks brevidy communityengine"

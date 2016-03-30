@@ -1,9 +1,5 @@
 module Result
 
-  Success = Struct.new(
-    :success, # Boolean
-    :data # Additional response data
-  ) do
 
     def initialize(data = nil)
       self.success = true
@@ -69,13 +65,7 @@ module Result
       Maybe(data)
     end
 
-  end
 
-  Error = Struct.new(
-    :success,
-    :error_msg,
-    :data
-  ) do
 
     def initialize(error_msg, data = nil)
       self.success = false
@@ -111,9 +101,7 @@ module Result
       Maybe(nil)
     end
 
-  end
 
-  module_function
 
   # Runs the given operations (lambdas) sequentially.
   # The result data from the first operation is passed to the second operation, and so on

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #applications="boxroom lobsters communityengine publify jobsworth amahiPlatform railscollab sharetribe onebody linuxfr rucksack sugar kandan fulcrum tracks browsercms"
-applications="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth publify railscollab sharetribe tracks brevidy communityengine"
+#applications="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth publify railscollab sharetribe tracks brevidy communityengine"
 
-#applications="communityengine linuxfr railscollab rucksack discourse amahiPlatform"
+applications="sugar lobsters wallgig boxroom enki publify railscollab onebody jobsworth sharetribe communityengine linuxfr rucksack calagator forem fulcrum tracks brevidy"
 
-#applications="onebody linuxfr"
+#applications="lobsters boxroom enki publify communityengine sharetribe calagator forem"
 
 export PATH=$PATH:~/jruby/bin
 
@@ -14,6 +14,7 @@ function run_single_app () {
 	echo "start app ${app}"
 	cd ~/ruby_source/ORM_analysis/applications/${app}/
 	rm -rf results
+	#mv results old_results
 	mkdir results
 	#rm -rf dataflow
 	#cd ~/ruby_source/ORM_analysis/applications/
