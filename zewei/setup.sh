@@ -47,3 +47,4 @@ echo "Generating links for each controller action..."
 echo "Now you may find links for each controller action inside app/new_views"
 
 echo "If you want links with log info, try: ruby read_files.rb -c > links-log.txt"
+cp $1/ormanalysis/zewei/scripts/filter_start_render.rb $2
