@@ -1,4 +1,7 @@
 require "yard"
+require 'active_support'
+require 'active_support/inflector'
+require 'active_support/core_ext/string'
 require "pry"
 
 NOT_VALID = "not_valid"
@@ -40,6 +43,12 @@ def parse_render_statement(stmt)
         hash["template"] = hash["template"][1..-1]
       end
       ast = ast[1]
+    elsif ast.type.to_s == "list" and ["var_ref", "vcall"].include?(ast[0].type.to_s)
+      hash["template"] = ast[0].source.to_s
+      hash["template"].gsub! "@", ""
+      hash["template"].downcase!
+      hash["template"] = hash["template"].singularize
+
     elsif ast.type.to_s == "list"
       ast = ast[0]
     else
@@ -72,6 +81,11 @@ def parse_render_statement(stmt)
         hash["template"] = hash["template"][1..-1]
       end
       ast = ast[1]
+    elsif ast.type.to_s == "list" and ["var_ref", "vcall"].include?(ast[0].type.to_s)
+      hash["template"] = ast[0].source.to_s
+      hash["template"].gsub! "@", ""
+      hash["template"].downcase!
+      hash["template"] = hash["template"].singularize
     elsif ast.type.to_s == "list"
       ast = ast[0]
     else

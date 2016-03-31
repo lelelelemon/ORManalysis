@@ -166,6 +166,8 @@ def get_form_for_tag(tag_arr, named_routes_class, controller_hash)
 	return res
 end
 
+
+
 def print_form_for_tag(tag_arr, named_routes_class, controller_hash)
 	tag_arr.each do |tag|
 			#puts form_for_tag.source
