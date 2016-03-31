@@ -1,5 +1,5 @@
 require "yard"
-#require "pry"
+require "pry"
 
 NOT_VALID = "not_valid"
 
@@ -36,6 +36,9 @@ def parse_render_statement(stmt)
 
     if ast.type.to_s == "list" and ["symbol_literal", "string_literal"].include?(ast[0].type.to_s)
       hash["template"] = ast[0].source.to_s
+      while hash["template"].start_with?":"
+        hash["template"] = hash["template"][1..-1]
+      end
       ast = ast[1]
     elsif ast.type.to_s == "list"
       ast = ast[0]
@@ -65,6 +68,9 @@ def parse_render_statement(stmt)
   
     if ast.type.to_s == "list" and ["symbol_literal", "string_literal"].include?(ast[0].type.to_s)
       hash["template"] = ast[0].source.to_s
+      while hash["template"].start_with?":"
+        hash["template"] = hash["template"][1..-1]
+      end
       ast = ast[1]
     elsif ast.type.to_s == "list"
       ast = ast[0]
@@ -460,21 +466,24 @@ def get_render_statement_array(ast=nil)
   ast_arr.push ast
   while ast_arr.length > 0
     cur_ast = ast_arr.pop
-    if (cur_ast.source.start_with? keyword or cur_ast.source.start_with? "rneder(") and cur_ast.type.to_s != "list" #and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
+    if (cur_ast.source.start_with? keyword or cur_ast.source.start_with? "render(")# and cur_ast.type.to_s != "list" #and ["binary", "fcall", "command", "if_mod", "unless_mod"].include? cur_ast.type.to_s
       if cur_ast.parent.parent != nil and cur_ast.parent.parent.source.start_with?("escape_javascript(", "raw(")
         if cur_ast.parent.parent.parent.type.to_s == "ifop"
           res = cur_ast.parent.parent.parent.source.to_s
         else
           res = cur_ast.parent.parent.source.to_s
+    #      res = cur_ast.source.to_s
         end
       elsif cur_ast.parent.type.to_s == "arg_paren" and cur_ast.parent.parent.source.to_s.start_with?("return(", "escape_javascript(")
         res = cur_ast.parent.parent.source.to_s
+#        res = cur_ast.source.to_s
       elsif cur_ast.parent.source.to_s.start_with?("return", "escape_javascript") and ["return", "command"].include?(cur_ast.parent.type.to_s)
         res = cur_ast.parent.source.to_s
       else
         res =  cur_ast.source.to_s
       end
 
+      # [to_be_replaced, render_statement]
       if res.end_with?("\ne", "\te", " e")
         res = res[0..-2]
         res_arr.push [res, res]
@@ -490,7 +499,6 @@ def get_render_statement_array(ast=nil)
 
   return res_arr
 end
-
 =begin
 content = File.open(ARGV[0], "r").read
 ast = YARD::Parser::Ruby::RubyParser.parse(content).root
