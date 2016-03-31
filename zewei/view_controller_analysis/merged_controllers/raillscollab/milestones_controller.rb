@@ -160,9 +160,79 @@ class MilestonesController < ApplicationController
   unless @late_milestones.empty? and @calendar_milestones.empty? and @upcoming_milestones.empty? 
  unless @late_milestones.empty? 
  t('late_milestones') 
-    render :partial => 'show', :collection => [@milestone] 
- 
- 
+  milestone = show 
+ if milestone.is_completed? 
+ milestone.id 
+ elsif milestone.is_today? 
+ milestone.id 
+ elsif milestone.is_late? 
+ milestone.id 
+ else 
+ milestone.id 
+ end 
+ if milestone.is_private 
+ t('private_milestone') 
+ t('private_milestone') 
+ end 
+ if can?(:change_status, milestone) 
+ if milestone.is_completed? 
+ checkbox_link open_milestone_path(:id => milestone.id), true, nil, {:method => :put} 
+ else 
+ checkbox_link complete_milestone_path(:id => milestone.id), false, nil, {:method => :put} 
+ end 
+ end 
+ if not milestone.assigned_to.nil? 
+ h milestone.assigned_to.object_name 
+ end 
+ link_to (h milestone.name), milestone_path(:id => milestone.id) 
+ if milestone.is_upcoming? 
+ t('milestone_days_left', :days => milestone.days_left) 
+ elsif milestone.is_late? 
+ t('milestone_days_late', :days => milestone.days_late) 
+ elsif milestone.is_today? 
+ t('today') 
+ end 
+ if milestone.due_date.year > Date.today.year 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_extended_format) 
+ else 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_format) 
+ end 
+ if not milestone.description.nil? 
+ textilize milestone.description 
+ end 
+ if not (milestone.messages.length > 0 or milestone.task_lists.length > 0) 
+ t('milestone_empty_info', 
+               :message => link_to(t('message'), new_message_path(:milestone_id => milestone.id)),
+               :task_list => link_to(t('task_list'), new_task_list_path(:milestone_id => milestone.id))).html_safe 
+ else 
+ if milestone.messages.length > 0 
+ t('messages') 
+ (@logged_user.member_of_owner? ? milestone.messages : milestone.messages.is_public).each do |message| 
+ link_to (h message.title), message_path(:id => message.id) 
+ if not message.created_by.nil? 
+ t('milestone_messages_created_with_user', 
+             :time => format_usertime(message.created_on, :milestone_messages_created_format),
+             :user => link_to(h(message.created_by.display_name), user_path(:id => message.created_by.id) )).html_safe 
+ end 
+ end 
+ end 
+ if milestone.task_lists.length > 0 
+ t('task_lists') 
+ (@logged_user.member_of_owner? ? milestone.task_lists : milestone.task_lists.is_public).each do |task_list| 
+ if task_list.is_completed? 
+ task_list.completed_on.iso8601 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ else 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ end 
+ end 
+ end 
+ end 
+ t('tags') 
+ tag_list milestone 
+ action_list actions_for_milestone(milestone) 
  
  end 
  unless @upcoming_milestones.empty? 
@@ -186,9 +256,79 @@ class MilestonesController < ApplicationController
  
  end 
  t('all_upcoming_milestones') 
-    render :partial => 'show', :collection => [@milestone] 
- 
- 
+  milestone = show 
+ if milestone.is_completed? 
+ milestone.id 
+ elsif milestone.is_today? 
+ milestone.id 
+ elsif milestone.is_late? 
+ milestone.id 
+ else 
+ milestone.id 
+ end 
+ if milestone.is_private 
+ t('private_milestone') 
+ t('private_milestone') 
+ end 
+ if can?(:change_status, milestone) 
+ if milestone.is_completed? 
+ checkbox_link open_milestone_path(:id => milestone.id), true, nil, {:method => :put} 
+ else 
+ checkbox_link complete_milestone_path(:id => milestone.id), false, nil, {:method => :put} 
+ end 
+ end 
+ if not milestone.assigned_to.nil? 
+ h milestone.assigned_to.object_name 
+ end 
+ link_to (h milestone.name), milestone_path(:id => milestone.id) 
+ if milestone.is_upcoming? 
+ t('milestone_days_left', :days => milestone.days_left) 
+ elsif milestone.is_late? 
+ t('milestone_days_late', :days => milestone.days_late) 
+ elsif milestone.is_today? 
+ t('today') 
+ end 
+ if milestone.due_date.year > Date.today.year 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_extended_format) 
+ else 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_format) 
+ end 
+ if not milestone.description.nil? 
+ textilize milestone.description 
+ end 
+ if not (milestone.messages.length > 0 or milestone.task_lists.length > 0) 
+ t('milestone_empty_info', 
+               :message => link_to(t('message'), new_message_path(:milestone_id => milestone.id)),
+               :task_list => link_to(t('task_list'), new_task_list_path(:milestone_id => milestone.id))).html_safe 
+ else 
+ if milestone.messages.length > 0 
+ t('messages') 
+ (@logged_user.member_of_owner? ? milestone.messages : milestone.messages.is_public).each do |message| 
+ link_to (h message.title), message_path(:id => message.id) 
+ if not message.created_by.nil? 
+ t('milestone_messages_created_with_user', 
+             :time => format_usertime(message.created_on, :milestone_messages_created_format),
+             :user => link_to(h(message.created_by.display_name), user_path(:id => message.created_by.id) )).html_safe 
+ end 
+ end 
+ end 
+ if milestone.task_lists.length > 0 
+ t('task_lists') 
+ (@logged_user.member_of_owner? ? milestone.task_lists : milestone.task_lists.is_public).each do |task_list| 
+ if task_list.is_completed? 
+ task_list.completed_on.iso8601 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ else 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ end 
+ end 
+ end 
+ end 
+ t('tags') 
+ tag_list milestone 
+ action_list actions_for_milestone(milestone) 
  
  end 
  else 
@@ -335,9 +475,79 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   unless @late_milestones.empty? and @calendar_milestones.empty? and @upcoming_milestones.empty? 
  unless @late_milestones.empty? 
  t('late_milestones') 
-    render :partial => 'show', :collection => [@milestone] 
- 
- 
+  milestone = show 
+ if milestone.is_completed? 
+ milestone.id 
+ elsif milestone.is_today? 
+ milestone.id 
+ elsif milestone.is_late? 
+ milestone.id 
+ else 
+ milestone.id 
+ end 
+ if milestone.is_private 
+ t('private_milestone') 
+ t('private_milestone') 
+ end 
+ if can?(:change_status, milestone) 
+ if milestone.is_completed? 
+ checkbox_link open_milestone_path(:id => milestone.id), true, nil, {:method => :put} 
+ else 
+ checkbox_link complete_milestone_path(:id => milestone.id), false, nil, {:method => :put} 
+ end 
+ end 
+ if not milestone.assigned_to.nil? 
+ h milestone.assigned_to.object_name 
+ end 
+ link_to (h milestone.name), milestone_path(:id => milestone.id) 
+ if milestone.is_upcoming? 
+ t('milestone_days_left', :days => milestone.days_left) 
+ elsif milestone.is_late? 
+ t('milestone_days_late', :days => milestone.days_late) 
+ elsif milestone.is_today? 
+ t('today') 
+ end 
+ if milestone.due_date.year > Date.today.year 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_extended_format) 
+ else 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_format) 
+ end 
+ if not milestone.description.nil? 
+ textilize milestone.description 
+ end 
+ if not (milestone.messages.length > 0 or milestone.task_lists.length > 0) 
+ t('milestone_empty_info', 
+               :message => link_to(t('message'), new_message_path(:milestone_id => milestone.id)),
+               :task_list => link_to(t('task_list'), new_task_list_path(:milestone_id => milestone.id))).html_safe 
+ else 
+ if milestone.messages.length > 0 
+ t('messages') 
+ (@logged_user.member_of_owner? ? milestone.messages : milestone.messages.is_public).each do |message| 
+ link_to (h message.title), message_path(:id => message.id) 
+ if not message.created_by.nil? 
+ t('milestone_messages_created_with_user', 
+             :time => format_usertime(message.created_on, :milestone_messages_created_format),
+             :user => link_to(h(message.created_by.display_name), user_path(:id => message.created_by.id) )).html_safe 
+ end 
+ end 
+ end 
+ if milestone.task_lists.length > 0 
+ t('task_lists') 
+ (@logged_user.member_of_owner? ? milestone.task_lists : milestone.task_lists.is_public).each do |task_list| 
+ if task_list.is_completed? 
+ task_list.completed_on.iso8601 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ else 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ end 
+ end 
+ end 
+ end 
+ t('tags') 
+ tag_list milestone 
+ action_list actions_for_milestone(milestone) 
  
  end 
  unless @upcoming_milestones.empty? 
@@ -361,9 +571,79 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  end 
  t('all_upcoming_milestones') 
-    render :partial => 'show', :collection => [@milestone] 
- 
- 
+  milestone = show 
+ if milestone.is_completed? 
+ milestone.id 
+ elsif milestone.is_today? 
+ milestone.id 
+ elsif milestone.is_late? 
+ milestone.id 
+ else 
+ milestone.id 
+ end 
+ if milestone.is_private 
+ t('private_milestone') 
+ t('private_milestone') 
+ end 
+ if can?(:change_status, milestone) 
+ if milestone.is_completed? 
+ checkbox_link open_milestone_path(:id => milestone.id), true, nil, {:method => :put} 
+ else 
+ checkbox_link complete_milestone_path(:id => milestone.id), false, nil, {:method => :put} 
+ end 
+ end 
+ if not milestone.assigned_to.nil? 
+ h milestone.assigned_to.object_name 
+ end 
+ link_to (h milestone.name), milestone_path(:id => milestone.id) 
+ if milestone.is_upcoming? 
+ t('milestone_days_left', :days => milestone.days_left) 
+ elsif milestone.is_late? 
+ t('milestone_days_late', :days => milestone.days_late) 
+ elsif milestone.is_today? 
+ t('today') 
+ end 
+ if milestone.due_date.year > Date.today.year 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_extended_format) 
+ else 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_format) 
+ end 
+ if not milestone.description.nil? 
+ textilize milestone.description 
+ end 
+ if not (milestone.messages.length > 0 or milestone.task_lists.length > 0) 
+ t('milestone_empty_info', 
+               :message => link_to(t('message'), new_message_path(:milestone_id => milestone.id)),
+               :task_list => link_to(t('task_list'), new_task_list_path(:milestone_id => milestone.id))).html_safe 
+ else 
+ if milestone.messages.length > 0 
+ t('messages') 
+ (@logged_user.member_of_owner? ? milestone.messages : milestone.messages.is_public).each do |message| 
+ link_to (h message.title), message_path(:id => message.id) 
+ if not message.created_by.nil? 
+ t('milestone_messages_created_with_user', 
+             :time => format_usertime(message.created_on, :milestone_messages_created_format),
+             :user => link_to(h(message.created_by.display_name), user_path(:id => message.created_by.id) )).html_safe 
+ end 
+ end 
+ end 
+ if milestone.task_lists.length > 0 
+ t('task_lists') 
+ (@logged_user.member_of_owner? ? milestone.task_lists : milestone.task_lists.is_public).each do |task_list| 
+ if task_list.is_completed? 
+ task_list.completed_on.iso8601 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ else 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ end 
+ end 
+ end 
+ end 
+ t('tags') 
+ tag_list milestone 
+ action_list actions_for_milestone(milestone) 
  
  end 
  else 
@@ -509,10 +789,79 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t(action[:title]) 
  end 
  
-     render :partial => 'show', :collection => [@milestone] 
- 
- 
- 
+  milestone = show 
+ if milestone.is_completed? 
+ milestone.id 
+ elsif milestone.is_today? 
+ milestone.id 
+ elsif milestone.is_late? 
+ milestone.id 
+ else 
+ milestone.id 
+ end 
+ if milestone.is_private 
+ t('private_milestone') 
+ t('private_milestone') 
+ end 
+ if can?(:change_status, milestone) 
+ if milestone.is_completed? 
+ checkbox_link open_milestone_path(:id => milestone.id), true, nil, {:method => :put} 
+ else 
+ checkbox_link complete_milestone_path(:id => milestone.id), false, nil, {:method => :put} 
+ end 
+ end 
+ if not milestone.assigned_to.nil? 
+ h milestone.assigned_to.object_name 
+ end 
+ link_to (h milestone.name), milestone_path(:id => milestone.id) 
+ if milestone.is_upcoming? 
+ t('milestone_days_left', :days => milestone.days_left) 
+ elsif milestone.is_late? 
+ t('milestone_days_late', :days => milestone.days_late) 
+ elsif milestone.is_today? 
+ t('today') 
+ end 
+ if milestone.due_date.year > Date.today.year 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_extended_format) 
+ else 
+ t('due_date') 
+ format_usertime(milestone.due_date, :milestone_due_date_format) 
+ end 
+ if not milestone.description.nil? 
+ textilize milestone.description 
+ end 
+ if not (milestone.messages.length > 0 or milestone.task_lists.length > 0) 
+ t('milestone_empty_info', 
+               :message => link_to(t('message'), new_message_path(:milestone_id => milestone.id)),
+               :task_list => link_to(t('task_list'), new_task_list_path(:milestone_id => milestone.id))).html_safe 
+ else 
+ if milestone.messages.length > 0 
+ t('messages') 
+ (@logged_user.member_of_owner? ? milestone.messages : milestone.messages.is_public).each do |message| 
+ link_to (h message.title), message_path(:id => message.id) 
+ if not message.created_by.nil? 
+ t('milestone_messages_created_with_user', 
+             :time => format_usertime(message.created_on, :milestone_messages_created_format),
+             :user => link_to(h(message.created_by.display_name), user_path(:id => message.created_by.id) )).html_safe 
+ end 
+ end 
+ end 
+ if milestone.task_lists.length > 0 
+ t('task_lists') 
+ (@logged_user.member_of_owner? ? milestone.task_lists : milestone.task_lists.is_public).each do |task_list| 
+ if task_list.is_completed? 
+ task_list.completed_on.iso8601 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ else 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ end 
+ end 
+ end 
+ end 
+ t('tags') 
+ tag_list milestone 
+ action_list actions_for_milestone(milestone) 
  
  unless @content_for_sidebar.nil? 
  render :partial => @content_for_sidebar 

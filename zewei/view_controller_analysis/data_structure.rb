@@ -383,9 +383,10 @@ class View_Class
 		end
 		i = path.rindex("/")
 		@view_name = path[i+1..-1]
-		while @view_name[0] == "_"
-			@view_name = @view_name[1..-1]
-		end
+#partial files may start with underscore  
+#		while @view_name[0] == "_"
+#			@view_name = @view_name[1..-1]
+#		end
 		j = @view_name.index(".")
 		@view_name = @view_name[0..j-1]
     puts "view_name: " + @view_name

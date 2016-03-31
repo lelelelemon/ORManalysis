@@ -760,10 +760,37 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t(action[:title]) 
  end 
  
-     render :partial => 'times/show', :collection => [@time] 
- 
- 
- 
+  view_time = show 
+ if view_time.is_private 
+ t('private_time') 
+ t('private_time') 
+ end 
+ if view_time.is_billable 
+ t('billable_time') 
+ t('billable_time') 
+ end 
+ if !view_time.assigned_to.nil? 
+ h view_time.assigned_to.object_name 
+ end 
+ view_time.object_url 
+ h view_time.name 
+ if view_time.running? 
+ t('time_running') 
+ else 
+ "Done date" 
+ format_usertime(view_time.done_date, "done_date_long_format#{'_with_year' if view_time.done_date.year != Time.now.year}") 
+ end 
+ "Hours" 
+ if view_time.running? 
+ seconds_to_time Time.now - view_time.start_date 
+ else 
+ view_time.hours 
+ end 
+ if !view_time.open_task.nil? 
+ link_to(view_time.open_task.text, view_time.open_task.object_url) 
+ end 
+ textilize view_time.description 
+ action_list actions_for_time_short(view_time) 
  
  unless @content_for_sidebar.nil? 
  render :partial => @content_for_sidebar 

@@ -453,7 +453,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t(action[:title]) 
  end 
  
- t 'wiki_engine.title' 
+
+  @page_actions = []
+  if can? :create_wiki_page, @active_project
+    @page_actions << {:title => :add_page, :url => new_wiki_page_path}
+  end
+
+  t 'wiki_engine.title' 
  t 'wiki_engine.last_modified' 
  list.each do |wiki_page| 
  cycle('odd', 'even') 
@@ -462,6 +468,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   action_list actions_for_wiki_page(wiki_page) 
  
  end 
+ 
  unless @content_for_sidebar.nil? 
  render :partial => @content_for_sidebar 
  end 

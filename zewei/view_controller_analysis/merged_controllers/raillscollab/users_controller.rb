@@ -233,59 +233,31 @@ class UsersController < ApplicationController
  if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
  @permissions.keys.join('\',\'')
  t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
+  
+  user_permission = Person.where({'project_id' => permissions.id, 'user_id' => user.id})
+
+ check_box_tag "user_project[]", "#{permissions.id}", user.member_of(permissions), {:id => "projectPermissions#{permissions.id}", :class => 'checkbox normal', :onclick => "permissions_form_project_select(#{permissions.id})"} 
+ if !permissions.is_active? 
+ permissions.id 
+ "Completed on #{format_usertime(permissions.completed_on, :project_completed_time_format)} by #{permissions.completed_by.display_name}" 
+ h permissions.name 
  else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
+ permissions.id 
+ h permissions.name 
  end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
+ if can? :update_permissions, user 
+ permissions.id 
+ unless user.member_of(permissions) 
  end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
+ check_box_tag "project_#{permissions.id}_all", "1", user.has_all_permissions(permissions), {:id => "projectPermissions#{permissions.id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all(#{permissions.id})"} 
+ "projectPermissions#{permissions.id}All" 
  t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
+ @permissions.keys.each do |pname| 
+ check_box_tag "project_permission[#{permissions.id}][]", "#{pname}", user.has_permission(permissions, pname), {:id => "projectPermission#{permissions.id}#{pname}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item(#{permissions.id})"} 
+ "projectPermission#{permissions.id}#{pname}" 
+ @permissions[pname] 
  end 
  end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
  
  end 
  
@@ -471,59 +443,31 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
  @permissions.keys.join('\',\'')
  t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
+  
+  user_permission = Person.where({'project_id' => permissions.id, 'user_id' => user.id})
+
+ check_box_tag "user_project[]", "#{permissions.id}", user.member_of(permissions), {:id => "projectPermissions#{permissions.id}", :class => 'checkbox normal', :onclick => "permissions_form_project_select(#{permissions.id})"} 
+ if !permissions.is_active? 
+ permissions.id 
+ "Completed on #{format_usertime(permissions.completed_on, :project_completed_time_format)} by #{permissions.completed_by.display_name}" 
+ h permissions.name 
  else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
+ permissions.id 
+ h permissions.name 
  end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
+ if can? :update_permissions, user 
+ permissions.id 
+ unless user.member_of(permissions) 
  end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
+ check_box_tag "project_#{permissions.id}_all", "1", user.has_all_permissions(permissions), {:id => "projectPermissions#{permissions.id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all(#{permissions.id})"} 
+ "projectPermissions#{permissions.id}All" 
  t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
+ @permissions.keys.each do |pname| 
+ check_box_tag "project_permission[#{permissions.id}][]", "#{pname}", user.has_permission(permissions, pname), {:id => "projectPermission#{permissions.id}#{pname}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item(#{permissions.id})"} 
+ "projectPermission#{permissions.id}#{pname}" 
+ @permissions[pname] 
  end 
  end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
  
  end 
  
@@ -771,59 +715,31 @@ end
  if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
  @permissions.keys.join('\',\'')
  t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
+  
+  user_permission = Person.where({'project_id' => permissions.id, 'user_id' => user.id})
+
+ check_box_tag "user_project[]", "#{permissions.id}", user.member_of(permissions), {:id => "projectPermissions#{permissions.id}", :class => 'checkbox normal', :onclick => "permissions_form_project_select(#{permissions.id})"} 
+ if !permissions.is_active? 
+ permissions.id 
+ "Completed on #{format_usertime(permissions.completed_on, :project_completed_time_format)} by #{permissions.completed_by.display_name}" 
+ h permissions.name 
  else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
+ permissions.id 
+ h permissions.name 
  end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
+ if can? :update_permissions, user 
+ permissions.id 
+ unless user.member_of(permissions) 
  end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
+ check_box_tag "project_#{permissions.id}_all", "1", user.has_all_permissions(permissions), {:id => "projectPermissions#{permissions.id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all(#{permissions.id})"} 
+ "projectPermissions#{permissions.id}All" 
  t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
+ @permissions.keys.each do |pname| 
+ check_box_tag "project_permission[#{permissions.id}][]", "#{pname}", user.has_permission(permissions, pname), {:id => "projectPermission#{permissions.id}#{pname}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item(#{permissions.id})"} 
+ "projectPermission#{permissions.id}#{pname}" 
+ @permissions[pname] 
  end 
  end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
  
  end 
  
@@ -1015,59 +931,31 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
  @permissions.keys.join('\',\'')
  t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
+  
+  user_permission = Person.where({'project_id' => permissions.id, 'user_id' => user.id})
+
+ check_box_tag "user_project[]", "#{permissions.id}", user.member_of(permissions), {:id => "projectPermissions#{permissions.id}", :class => 'checkbox normal', :onclick => "permissions_form_project_select(#{permissions.id})"} 
+ if !permissions.is_active? 
+ permissions.id 
+ "Completed on #{format_usertime(permissions.completed_on, :project_completed_time_format)} by #{permissions.completed_by.display_name}" 
+ h permissions.name 
  else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
+ permissions.id 
+ h permissions.name 
  end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
+ if can? :update_permissions, user 
+ permissions.id 
+ unless user.member_of(permissions) 
  end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
+ check_box_tag "project_#{permissions.id}_all", "1", user.has_all_permissions(permissions), {:id => "projectPermissions#{permissions.id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all(#{permissions.id})"} 
+ "projectPermissions#{permissions.id}All" 
  t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
+ @permissions.keys.each do |pname| 
+ check_box_tag "project_permission[#{permissions.id}][]", "#{pname}", user.has_permission(permissions, pname), {:id => "projectPermission#{permissions.id}#{pname}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item(#{permissions.id})"} 
+ "projectPermission#{permissions.id}#{pname}" 
+ @permissions[pname] 
  end 
  end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
  
  end 
  
@@ -1335,59 +1223,31 @@ end
  if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
  @permissions.keys.join('\',\'')
  t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
+  
+  user_permission = Person.where({'project_id' => permissions.id, 'user_id' => user.id})
+
+ check_box_tag "user_project[]", "#{permissions.id}", user.member_of(permissions), {:id => "projectPermissions#{permissions.id}", :class => 'checkbox normal', :onclick => "permissions_form_project_select(#{permissions.id})"} 
+ if !permissions.is_active? 
+ permissions.id 
+ "Completed on #{format_usertime(permissions.completed_on, :project_completed_time_format)} by #{permissions.completed_by.display_name}" 
+ h permissions.name 
  else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
+ permissions.id 
+ h permissions.name 
  end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
+ if can? :update_permissions, user 
+ permissions.id 
+ unless user.member_of(permissions) 
  end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
+ check_box_tag "project_#{permissions.id}_all", "1", user.has_all_permissions(permissions), {:id => "projectPermissions#{permissions.id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all(#{permissions.id})"} 
+ "projectPermissions#{permissions.id}All" 
  t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
+ @permissions.keys.each do |pname| 
+ check_box_tag "project_permission[#{permissions.id}][]", "#{pname}", user.has_permission(permissions, pname), {:id => "projectPermission#{permissions.id}#{pname}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item(#{permissions.id})"} 
+ "projectPermission#{permissions.id}#{pname}" 
+ @permissions[pname] 
  end 
  end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
  
  end 
  
@@ -1596,59 +1456,31 @@ end
  if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
  @permissions.keys.join('\',\'')
  t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
+  
+  user_permission = Person.where({'project_id' => permissions.id, 'user_id' => user.id})
+
+ check_box_tag "user_project[]", "#{permissions.id}", user.member_of(permissions), {:id => "projectPermissions#{permissions.id}", :class => 'checkbox normal', :onclick => "permissions_form_project_select(#{permissions.id})"} 
+ if !permissions.is_active? 
+ permissions.id 
+ "Completed on #{format_usertime(permissions.completed_on, :project_completed_time_format)} by #{permissions.completed_by.display_name}" 
+ h permissions.name 
  else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
+ permissions.id 
+ h permissions.name 
  end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
+ if can? :update_permissions, user 
+ permissions.id 
+ unless user.member_of(permissions) 
  end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
+ check_box_tag "project_#{permissions.id}_all", "1", user.has_all_permissions(permissions), {:id => "projectPermissions#{permissions.id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all(#{permissions.id})"} 
+ "projectPermissions#{permissions.id}All" 
  t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
+ @permissions.keys.each do |pname| 
+ check_box_tag "project_permission[#{permissions.id}][]", "#{pname}", user.has_permission(permissions, pname), {:id => "projectPermission#{permissions.id}#{pname}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item(#{permissions.id})"} 
+ "projectPermission#{permissions.id}#{pname}" 
+ @permissions[pname] 
  end 
  end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
  
  end 
  
@@ -1886,59 +1718,31 @@ end
  if @logged_user.member_of_owner? and @user.new_record? and !@active_projects.empty? 
  @permissions.keys.join('\',\'')
  t('permissions') 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
+  
+  user_permission = Person.where({'project_id' => permissions.id, 'user_id' => user.id})
+
+ check_box_tag "user_project[]", "#{permissions.id}", user.member_of(permissions), {:id => "projectPermissions#{permissions.id}", :class => 'checkbox normal', :onclick => "permissions_form_project_select(#{permissions.id})"} 
+ if !permissions.is_active? 
+ permissions.id 
+ "Completed on #{format_usertime(permissions.completed_on, :project_completed_time_format)} by #{permissions.completed_by.display_name}" 
+ h permissions.name 
  else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
+ permissions.id 
+ h permissions.name 
  end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
+ if can? :update_permissions, user 
+ permissions.id 
+ unless user.member_of(permissions) 
  end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
+ check_box_tag "project_#{permissions.id}_all", "1", user.has_all_permissions(permissions), {:id => "projectPermissions#{permissions.id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all(#{permissions.id})"} 
+ "projectPermissions#{permissions.id}All" 
  t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
+ @permissions.keys.each do |pname| 
+ check_box_tag "project_permission[#{permissions.id}][]", "#{pname}", user.has_permission(permissions, pname), {:id => "projectPermission#{permissions.id}#{pname}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item(#{permissions.id})"} 
+ "projectPermission#{permissions.id}#{pname}" 
+ @permissions[pname] 
  end 
  end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
  
  end 
  
@@ -2603,59 +2407,31 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @permissions.keys.join('\',\'')
  unless @projects.empty? 
  form_tag permissions_user_path(:id => @user.id), :method => :put 
-  if @companies.length > 0
- form_tag permissions_project_path(:id => @active_project.id), :method => :put 
- @companies.each do |company| 
- if company.users.length > 0 
- company.logo_url 
- h company.name 
- if company.is_owner? 
- h company.name 
- company.id 
+  
+  user_permission = Person.where({'project_id' => permissions.id, 'user_id' => user.id})
+
+ check_box_tag "user_project[]", "#{permissions.id}", user.member_of(permissions), {:id => "projectPermissions#{permissions.id}", :class => 'checkbox normal', :onclick => "permissions_form_project_select(#{permissions.id})"} 
+ if !permissions.is_active? 
+ permissions.id 
+ "Completed on #{format_usertime(permissions.completed_on, :project_completed_time_format)} by #{permissions.completed_by.display_name}" 
+ h permissions.name 
  else 
- check_box_tag "project_company[]", "#{company.id}", company.is_part_of(@active_project), {:id => "projectCompany#{@active_project.id}_#{company.id}", :class => 'checkbox', :onclick => "permissions_form_project_select_company('#{@active_project.id}_#{company.id}')"} 
- "project_company[]" 
- h company.name 
+ permissions.id 
+ h permissions.name 
  end 
- "#{@active_project.id}_#{company.id}" 
- unless company.is_part_of(@active_project) 
+ if can? :update_permissions, user 
+ permissions.id 
+ unless user.member_of(permissions) 
  end 
- unless company.users.empty? 
-  perm_id = "#{project.id}_#{company.id}_#{permissions_users.id}" 
- if permissions_users.owner_of_owner? 
- render_icon 'ok', 'Ok' 
- h permissions_users.display_name 
- "people_#{permissions_users.id}" 
- else 
- check_box_tag "people[]", "#{permissions_users.id}", permissions_users.member_of(@active_project), {:id => "projectPermissions#{perm_id}", :class => 'checkbox', :onclick => "permissions_form_project_select('#{perm_id}')"} 
- "projectPermissions#{perm_id}" 
- h permissions_users.display_name 
- end 
- if permissions_users.is_admin? 
- t('administrator') 
- end 
- unless company.is_owner? 
- perm_id 
- unless permissions_users.member_of(project) 
- end 
- check_box_tag "people_#{permissions_users.id}_all", "1", permissions_users.has_all_permissions(project), {:id => "projectPermissions#{perm_id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all('#{perm_id}')"} 
- "projectPermissions#{perm_id}All" 
+ check_box_tag "project_#{permissions.id}_all", "1", user.has_all_permissions(permissions), {:id => "projectPermissions#{permissions.id}All", :class => 'checkbox', :onclick => "permissions_form_project_select_all(#{permissions.id})"} 
+ "projectPermissions#{permissions.id}All" 
  t('all') 
- @permissions.keys.each do |permission| 
- check_box_tag "people_permissions[#{permissions_users.id}][]", "#{permission}", permissions_users.has_permission(project, permission), {:id => "projectPermission#{perm_id}#{permission}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item('#{perm_id}')"} 
- "projectPermissions#{perm_id}#{permission}" 
- @permissions[permission] 
+ @permissions.keys.each do |pname| 
+ check_box_tag "project_permission[#{permissions.id}][]", "#{pname}", user.has_permission(permissions, pname), {:id => "projectPermission#{permissions.id}#{pname}", :class => 'checkbox normal', :onclick => "permissions_form_project_select_item(#{permissions.id})"} 
+ "projectPermission#{permissions.id}#{pname}" 
+ @permissions[pname] 
  end 
  end 
- 
- else 
- t('company_no_users') 
- end 
- end 
- end 
- t('update_people') 
- end 
- @permissions.keys.join('\',\'')
  
  t('update_permissions') 
  end 

@@ -174,9 +174,17 @@ def get_view_name_from_hash(options_hash, controller_name, action_name)
 #    res = controller_name + "_" + action_name
     res = "not_valid"
   elsif r == nil
-    res = controller_name + "_" + res
+    if options_hash.has_key? "partial" or options_hash.has_key? ":partial" or options_hash.has_key? "partial:"
+      res = controller_name + "__" + res
+    else
+      res = controller_name + "_" + res
+    end
   else
-    res = res[0..r-1] + "_" + res[r+1..-1]
+    if options_hash.has_key? "partial" or options_hash.has_key? ":partial" or options_hash.has_key? "partial:"
+      res = res[0..r-1] + "__" + res[r+1..-1]
+    else
+      res = res[0..r-1] + "_" + res[r+1..-1]
+    end
   end
  
   puts "res view: " + res
@@ -233,7 +241,11 @@ def get_view_name_from_hash_without_default(options_hash)
   elsif r == nil
     res = "not_valid"
   else
-    res = res[0..r-1] + "_" + res[r+1..-1]
+    if options_hash.has_key? "partial" or options_hash.has_key? ":partial" or options_hash.has_key? "partial:"
+      res = res[0..r-1] + "__" + res[r+1..-1]
+    else
+      res = res[0..r-1] + "_" + res[r+1..-1]
+    end
   end
   puts "res view: " + res
   return res 
