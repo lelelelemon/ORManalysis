@@ -71,6 +71,12 @@ File.open(ARGV[0], "r").each_line do |line|
   elsif line =~ /.*\|\| [^ ]*,.*/
     line.gsub! /\|\| [^ ]*,/, ","
     puts line
+  elsif line =~ /.*\#{[^}]*}.*/
+    line.gsub! /\#{[^}]*}/, ""
+    puts line
+  elsif line =~ /.*\('container-full' if content_for\?\(:use_full_container\) && yield\(:use_full_container\)\).*/
+    line.gsub! /\('container-full' if content_for\?\(:use_full_container\) && yield\(:use_full_container\)\)/, ""
+    puts line
   else
     puts line
   end

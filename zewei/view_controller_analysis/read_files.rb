@@ -38,8 +38,13 @@ def load_all_views_from_path(view_path)
     view_class = View_Class.new(item, view_path)
 		key = view_class.get_controller_name + "_" + view_class.get_view_name
 #		key = view_class.get_file_type + "_" + key if view_class.get_file_type != "html"
-		view_hash[key] = view_class
-	end
+
+    view_hash[key] = view_class
+	  _key = key.gsub "__", "_"
+    if not view_hash.has_key? _key
+      view_hash[_key] = view_class
+    end
+  end
 
 	return view_hash
 end
