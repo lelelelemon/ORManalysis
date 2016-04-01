@@ -92,6 +92,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  content_for :use_full_container, true 
  blank_value = lambda { |_,v| v.blank? } 
@@ -131,9 +132,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  {'sfw' => 'SFW', 'sketchy' => 'Sketchy', 'nsfw' => 'NSFW'}.each do |value, label| 
  active = (search_params[:purity].blank? && value == 'sfw') || search_params[:purity].include?(value) 
  if active 
- link_to label, wallpapers_path(search_params.merge(purity: (search_params[:purity] - [value])).reject(&blank_value)),                    class: "btn btn-sm btn-block btn-#{value} btn-active" 
+ link_to label, wallpapers_path(search_params.merge(purity: (search_params[:purity] - [value])).reject(&blank_value)),                    class: "btn btn-sm btn-block btn- btn-active" 
  else 
- link_to label, wallpapers_path(search_params.merge(purity: (search_params[:purity] + [value])).reject(&blank_value)),                    class: "btn btn-sm btn-block btn-#{value}" 
+ link_to label, wallpapers_path(search_params.merge(purity: (search_params[:purity] + [value])).reject(&blank_value)),                    class: "btn btn-sm btn-block btn-" 
  end 
  end 
  end 
@@ -141,9 +142,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  colors = search_params[:colors] || [] 
  Colorscore::Palette::DEFAULT.each do |hex| 
  if colors.include?(hex) 
- link_to '', wallpapers_path(search_params.merge(colors: (colors - [hex])).reject(&blank_value)), style: "background-color: \##{hex}" 
+ link_to '', wallpapers_path(search_params.merge(colors: (colors - [hex])).reject(&blank_value)), style: "background-color: \#" 
  else 
- link_to '', wallpapers_path(search_params.merge(colors: (colors + [hex])).reject(&blank_value)), style: "background-color: \##{hex}" 
+ link_to '', wallpapers_path(search_params.merge(colors: (colors + [hex])).reject(&blank_value)), style: "background-color: \#" 
  end 
  end 
  end 
@@ -157,11 +158,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  active = [screen_resolution.width.to_s, screen_resolution.height.to_s] == [search_params[:width], search_params[:height]] 
  css_class = active ? 'success' : 'link' 
  if active 
- link_to wallpapers_path(search_params.merge(width: nil, height: nil).reject(&blank_value)), class: "btn btn-xs btn-#{css_class}" do 
+ link_to wallpapers_path(search_params.merge(width: nil, height: nil).reject(&blank_value)), class: "btn btn-xs btn-" do 
  screen_resolution 
  end 
  else 
- link_to wallpapers_path(search_params.merge(width: screen_resolution.width, height: screen_resolution.height).reject(&blank_value)), class: "btn btn-xs btn-#{css_class}" do 
+ link_to wallpapers_path(search_params.merge(width: screen_resolution.width, height: screen_resolution.height).reject(&blank_value)), class: "btn btn-xs btn-" do 
  screen_resolution 
  end 
  end 
@@ -288,8 +289,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
- title ["\##{@wallpaper.id}", @wallpaper.cached_tag_list].reject &:blank? 
+ title ["\#", @wallpaper.cached_tag_list].reject &:blank? 
  description @wallpaper.cached_tag_list 
  keywords @wallpaper.cached_tag_list 
  content_for :wallpaper_sidebar_content do 
@@ -348,7 +350,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  cache ['show', @wallpaper, 'color_list'] do 
  if @wallpaper.wallpaper_colors.any? 
  @wallpaper.wallpaper_colors.includes(:color).each do |color| 
- link_to '', wallpapers_path(search_params.merge(colors: [color.hex])), style: "background-color: \##{color.hex}" 
+ link_to '', wallpapers_path(search_params.merge(colors: [color.hex])), style: "background-color: \#" 
  end 
  end 
  end 
@@ -364,7 +366,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if user_signed_in? 
  simple_form_for :comment, url: wallpaper_comments_path(@wallpaper), remote: true, data: { provide: 'comments' } do |f| 
  image_tag user_avatar_url(current_user, 30), alt: current_user.username, class: 'media-object' 
- f.input :comment, as: :text, label: false, placeholder: 'Your comment', input_html:  
+ f.input :comment, as: :text, label: false, placeholder: 'Your comment', input_html: {} 
+ end 
  comments = @wallpaper.comments.includes(:user).recent 
  ('hide' if comments.empty?) 
   link_to comment.user do 
@@ -399,16 +402,14 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  content_for :wallpaper_stage_content do 
- image_tag @wallpaper.requested_image_url, width: @wallpaper.requested_image_width, height: @wallpaper.requested_image_height, class: "img-wallpaper img-#{@wallpaper.format} state-1" 
+ image_tag @wallpaper.requested_image_url, width: @wallpaper.requested_image_width, height: @wallpaper.requested_image_height, class: "img-wallpaper img- state-1" 
  end 
  # OPTIMIZE 
- content_for :javascript_for_page do 
-   end
- end 
+  
  
  end 
  javascript_include_tag "application", "data-turbolinks-track" => true, "data-turbolinks-eval" => false 
- yield :javascript_for_page 
+  
   ENV['SEGMENT_IO_KEY'] 
  if user_signed_in? 
  current_user.id 
@@ -474,6 +475,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title 'New wallpaper' 
   simple_form_for(@wallpaper) do |f| 
@@ -557,6 +559,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@wallpaper) do |f| 
  f.error_notification 
@@ -645,8 +648,9 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
- title ["\##{@wallpaper.id}", @wallpaper.cached_tag_list].reject &:blank? 
+ title ["\#", @wallpaper.cached_tag_list].reject &:blank? 
  description @wallpaper.cached_tag_list 
  keywords @wallpaper.cached_tag_list 
  content_for :wallpaper_sidebar_content do 
@@ -705,7 +709,7 @@ end
  cache ['show', @wallpaper, 'color_list'] do 
  if @wallpaper.wallpaper_colors.any? 
  @wallpaper.wallpaper_colors.includes(:color).each do |color| 
- link_to '', wallpapers_path(search_params.merge(colors: [color.hex])), style: "background-color: \##{color.hex}" 
+ link_to '', wallpapers_path(search_params.merge(colors: [color.hex])), style: "background-color: \#" 
  end 
  end 
  end 
@@ -721,7 +725,8 @@ end
  if user_signed_in? 
  simple_form_for :comment, url: wallpaper_comments_path(@wallpaper), remote: true, data: { provide: 'comments' } do |f| 
  image_tag user_avatar_url(current_user, 30), alt: current_user.username, class: 'media-object' 
- f.input :comment, as: :text, label: false, placeholder: 'Your comment', input_html:  
+ f.input :comment, as: :text, label: false, placeholder: 'Your comment', input_html: {} 
+ end 
  comments = @wallpaper.comments.includes(:user).recent 
  ('hide' if comments.empty?) 
   link_to comment.user do 
@@ -756,16 +761,14 @@ end
  end 
  end 
  content_for :wallpaper_stage_content do 
- image_tag @wallpaper.requested_image_url, width: @wallpaper.requested_image_width, height: @wallpaper.requested_image_height, class: "img-wallpaper img-#{@wallpaper.format} state-1" 
+ image_tag @wallpaper.requested_image_url, width: @wallpaper.requested_image_width, height: @wallpaper.requested_image_height, class: "img-wallpaper img- state-1" 
  end 
  # OPTIMIZE 
- content_for :javascript_for_page do 
-   end
- end 
+  
  
  end 
  javascript_include_tag "application", "data-turbolinks-track" => true, "data-turbolinks-eval" => false 
- yield :javascript_for_page 
+  
   ENV['SEGMENT_IO_KEY'] 
  if user_signed_in? 
  current_user.id 
@@ -826,6 +829,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title 'New wallpaper' 
   simple_form_for(@wallpaper) do |f| 
@@ -919,6 +923,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@wallpaper) do |f| 
  f.error_notification 
@@ -1024,6 +1029,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
 json.extract! @wallpaper, :id, :purity 
  end 
@@ -1092,6 +1098,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  @wallpaper.versions.order(created_at: :desc).each do |version| 
  wallpaper = version.reify 
@@ -1204,6 +1211,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
 json.id @wallpaper.id
 json.fav_count @wallpaper.likes.size
@@ -1279,6 +1287,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
 json.toggle_collect_url toggle_collect_wallpaper_path(@wallpaper)
 json.collections @collections do |collection|
@@ -1363,6 +1372,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
 json.extract! @collection, :id
 json.collect_status @collect_status 

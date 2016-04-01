@@ -79,6 +79,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  @forum_topics.each do |forum_topic| 
  forum_topic.forum 
@@ -190,7 +191,80 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
+ title [@group.name, 'Forums', @forum.name, @forum_topic.title] 
+ if can? :moderate, @forum_topic 
+ if @forum_topic.pinned? 
+ link_to unpin_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ else 
+ link_to pin_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ end 
+ if @forum_topic.locked? 
+ link_to unlock_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ else 
+ link_to lock_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ end 
+ if @forum_topic.hidden? 
+ link_to unhide_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ else 
+ link_to hide_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ end 
+ if can? :update, @forum_topic 
+ link_to edit_forum_topic_path(@forum_topic) do 
+ end 
+ end 
+ link_to @forum_topic, data: { method: :destroy, confirm: 'Are you sure?' } do 
+ end 
+ end 
+ if can? :reply, @forum_topic 
+ link_to new_forum_topic_comment_path(@group, @forum), class: 'btn btn-primary' do 
+ end 
+ end 
+ link_to 'Forums', group_forums_path(@group) 
+ link_to @forum.name, [@group, @forum] 
+ @forum_topic.title 
+ if @forum_topic.pinned? 
+ end 
+ if @forum_topic.locked? 
+ end 
+ if @forum_topic.hidden? 
+ end 
+ link_to @forum_topic.user do 
+ image_tag user_avatar_url(@forum_topic.user, 50), alt: @forum_topic.user.username, width: 50, height: 50 
+ end 
+ link_to_user @forum_topic.user 
+ @group.title_for(@forum_topic.user) || role_name_for(@forum_topic.user) 
+ if can? :update, @forum_topic 
+ link_to 'Edit', edit_forum_topic_path(@forum_topic) 
+ end 
+ link_to 'Report', new_forum_topic_report_path(@forum_topic) 
+ @forum_topic.cooked_content 
+ paginate @comments 
+  link_to comment.user do 
+ image_tag user_avatar_url(comment.user, 50), alt: comment.user.username, width: 50, height: 50 
+ end 
+ link_to_user comment.user 
+ @group.title_for(comment.user) || role_name_for(comment.user) 
+ if can? :update, comment 
+ link_to 'Edit', edit_comment_path(comment) 
+ end 
+ link_to 'Report', new_comment_report_path(comment) 
+ comment.cooked_comment 
+ 
+ paginate @comments 
+ if can? :reply, @forum_topic 
+ simple_form_for :comment, url: forum_topic_comments_path(@forum_topic), data: { provide: 'comments' } do |f| 
+ f.input :comment, as: :text, label: false 
+ f.submit 'Post', class: 'btn btn-primary', data: { disable_with: 'Posting' } 
+ end 
+ end 
  
  end 
  javascript_include_tag "application", "data-turbolinks-track" => true, "data-turbolinks-eval" => false 
@@ -287,6 +361,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@forum_topic, url: form_url) do |f| 
  f.input :title 
@@ -388,6 +463,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@forum_topic, url: form_url) do |f| 
  f.input :title 
@@ -496,7 +572,80 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
+ title [@group.name, 'Forums', @forum.name, @forum_topic.title] 
+ if can? :moderate, @forum_topic 
+ if @forum_topic.pinned? 
+ link_to unpin_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ else 
+ link_to pin_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ end 
+ if @forum_topic.locked? 
+ link_to unlock_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ else 
+ link_to lock_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ end 
+ if @forum_topic.hidden? 
+ link_to unhide_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ else 
+ link_to hide_forum_topic_path(@forum_topic), method: :patch do 
+ end 
+ end 
+ if can? :update, @forum_topic 
+ link_to edit_forum_topic_path(@forum_topic) do 
+ end 
+ end 
+ link_to @forum_topic, data: { method: :destroy, confirm: 'Are you sure?' } do 
+ end 
+ end 
+ if can? :reply, @forum_topic 
+ link_to new_forum_topic_comment_path(@group, @forum), class: 'btn btn-primary' do 
+ end 
+ end 
+ link_to 'Forums', group_forums_path(@group) 
+ link_to @forum.name, [@group, @forum] 
+ @forum_topic.title 
+ if @forum_topic.pinned? 
+ end 
+ if @forum_topic.locked? 
+ end 
+ if @forum_topic.hidden? 
+ end 
+ link_to @forum_topic.user do 
+ image_tag user_avatar_url(@forum_topic.user, 50), alt: @forum_topic.user.username, width: 50, height: 50 
+ end 
+ link_to_user @forum_topic.user 
+ @group.title_for(@forum_topic.user) || role_name_for(@forum_topic.user) 
+ if can? :update, @forum_topic 
+ link_to 'Edit', edit_forum_topic_path(@forum_topic) 
+ end 
+ link_to 'Report', new_forum_topic_report_path(@forum_topic) 
+ @forum_topic.cooked_content 
+ paginate @comments 
+  link_to comment.user do 
+ image_tag user_avatar_url(comment.user, 50), alt: comment.user.username, width: 50, height: 50 
+ end 
+ link_to_user comment.user 
+ @group.title_for(comment.user) || role_name_for(comment.user) 
+ if can? :update, comment 
+ link_to 'Edit', edit_comment_path(comment) 
+ end 
+ link_to 'Report', new_comment_report_path(comment) 
+ comment.cooked_comment 
+ 
+ paginate @comments 
+ if can? :reply, @forum_topic 
+ simple_form_for :comment, url: forum_topic_comments_path(@forum_topic), data: { provide: 'comments' } do |f| 
+ f.input :comment, as: :text, label: false 
+ f.submit 'Post', class: 'btn btn-primary', data: { disable_with: 'Posting' } 
+ end 
+ end 
  
  end 
  javascript_include_tag "application", "data-turbolinks-track" => true, "data-turbolinks-eval" => false 
@@ -587,6 +736,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@forum_topic, url: form_url) do |f| 
  f.input :title 
@@ -698,6 +848,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@forum_topic, url: form_url) do |f| 
  f.input :title 

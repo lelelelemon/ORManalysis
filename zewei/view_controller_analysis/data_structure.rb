@@ -219,7 +219,7 @@ class Function_Class
 				if view_class == nil
           value = get_default_view_content(view_class_hash)
         else
-					value = view_class.replace_render_statements(view_class_hash, 0)
+					value = view_class.replace_render_statements(view_class_hash, [])
           puts "RENDER: #{view_name}"
         end
         puts "view_name: " + view_name
@@ -252,7 +252,7 @@ class Function_Class
         if view_class_hash.has_key?(layout)
           puts "RENDER: #{layout}"
           layout_view = view_class_hash[layout]
-          layout_content = layout_view.replace_render_statements(view_class_hash, 0)
+          layout_content = layout_view.replace_render_statements(view_class_hash, [])
         end
         return layout_content
       end
@@ -286,7 +286,7 @@ class Function_Class
     puts default_layout_view
     layout_content = nil
     if default_layout_view != nil
-      layout_content = default_layout_view.replace_render_statements(view_class_hash, 0)
+      layout_content = default_layout_view.replace_render_statements(view_class_hash, [])
     end
     return layout_content
   end
@@ -337,7 +337,7 @@ class Function_Class
     if view_class != nil
       puts "-----------------------------current view file: " + view_name
       puts "RENDER: #{view_name}"
-      v = view_class.replace_render_statements(view_class_hash, 0)
+      v = view_class.replace_render_statements(view_class_hash, [])
     end
     return v
   end
@@ -505,10 +505,12 @@ class View_Class
 
 #	get a hash of hash[render_statement] = view_file_content
 #	the render statements inside view_file_content will be replaces recursively before it is assigned to the hash
-	def get_render_view_mapping(view_class_hash, dep)
+	def get_render_view_mapping(view_class_hash, call_stack)
 		render_view_mapping = Hash.new
 
 		get_render_statement_array.each do |(str_to_be_replaced, stmt)|
+      next if call_stack.include? stmt
+      call_stack.push stmt
 #			view_name = get_view_name_from_render_statement(r)
       options_hash = parse_render_statement(stmt)
 			#if view_name != "not_valid"
@@ -517,7 +519,7 @@ class View_Class
 				view_class = view_class_hash[view_name]
         puts "view_name: " + view_name
 				if view_class != nil
-					value = view_class.replace_render_statements(view_class_hash, dep+1)
+					value = view_class.replace_render_statements(view_class_hash, call_stack)
 					render_view_mapping[str_to_be_replaced] = value
 			    puts "RENDER: #{view_name}"
         else
@@ -530,9 +532,9 @@ class View_Class
 	end
 
 #replace the render statements inside the ruby code of current view file
-	def replace_render_statements(view_class_hash, dep)
-    return self.get_rb_content if dep > 5
-		render_view_mapping = self.get_render_view_mapping(view_class_hash, dep)
+	def replace_render_statements(view_class_hash, call_stack)
+    #return self.get_rb_content if dep > 5
+		render_view_mapping = self.get_render_view_mapping(view_class_hash, call_stack)
 		rb_content = self.get_rb_content.dup 
 		puts "------------------------------current view file: " + self.to_s
 		render_view_mapping.each do |k, v|
@@ -588,9 +590,11 @@ class Helper_Class
   def parse_content(content)
     return YARD::Parser::Ruby::RubyParser.parse(content).root
   end
-  def get_render_view_mapping(view_class_hash, dep)
+  def get_render_view_mapping(view_class_hash, call_stack)
     render_view_mapping = Hash.new
     get_render_statement_array.each do |(str_to_be_replaced, stmt)|
+      next if call_stack.include? stmt
+      call_stack.push stmt
       puts "render statement: #{stmt}"
       options_hash = parse_render_statement(stmt)
       if options_hash != "not_valid"
@@ -607,8 +611,9 @@ class Helper_Class
     return render_view_mapping	
   end
   #replace the render statements inside the ruby code of current view file
-  def replace_render_statements(view_class_hash, dep)
-    return self.get_rb_content if dep > 5
+  def replace_render_statements(view_class_hash, call_stack)
+    
+    #return self.get_rb_content if dep > 5
     render_view_mapping = self.get_render_view_mapping(view_class_hash, dep)
     content = self.get_content.dup 
     render_view_mapping.each do |k, v|

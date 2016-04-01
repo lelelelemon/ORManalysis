@@ -49,6 +49,7 @@ class CommentsController < ApplicationController
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title 'Recent comments' 
  if @comments.any? 
@@ -66,7 +67,11 @@ class CommentsController < ApplicationController
  image_tag wallpaper.thumbnail_image_url, width: 250, height: 188, class: 'img-wallpaper' 
  end 
  end 
- render comment 
+  link_to_user comment.user 
+ comment.comment 
+ link_to new_comment_report_path(comment) do 
+ end 
+ 
  link_to comment.commentable, class: 'btn btn-default' do 
  end 
  end 
@@ -139,6 +144,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title 'Recent comments' 
  if @comments.any? 
@@ -156,7 +162,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  image_tag wallpaper.thumbnail_image_url, width: 250, height: 188, class: 'img-wallpaper' 
  end 
  end 
- render comment 
+  link_to_user comment.user 
+ comment.comment 
+ link_to new_comment_report_path(comment) do 
+ end 
+ 
  link_to comment.commentable, class: 'btn btn-default' do 
  end 
  end 
@@ -230,6 +240,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for([@parent, @comment]) do |f| 
  f.input :comment 
@@ -309,6 +320,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for([@parent, @comment]) do |f| 
  f.input :comment 
@@ -402,6 +414,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for([@parent, @comment]) do |f| 
  f.input :comment 

@@ -61,6 +61,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  if can? :create, Group 
  link_to 'Create group', new_group_path, class: 'btn btn-md btn-primary' 
@@ -152,6 +153,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title @group.name 
  markdown @group.description 
@@ -233,6 +235,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   content_for :access_hint do 
  end 
@@ -313,6 +316,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   content_for :access_hint do 
  end 
@@ -399,6 +403,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title @group.name 
  markdown @group.description 
@@ -475,6 +480,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   content_for :access_hint do 
  end 
@@ -565,6 +571,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   content_for :access_hint do 
  end 
@@ -659,6 +666,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  simple_form_for @group, url: update_apps_group_path(@group), method: :patch do |f| 
  f.input :has_forums, label: 'Forums', hint: 'Enable discussion forums.' 
@@ -737,6 +745,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  simple_form_for @group, url: update_apps_group_path(@group), method: :patch do |f| 
  f.input :has_forums, label: 'Forums', hint: 'Enable discussion forums.' 

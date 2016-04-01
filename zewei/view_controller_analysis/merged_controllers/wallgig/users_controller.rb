@@ -45,7 +45,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  username_tag @user 
  role_name_for @user 
  active_link_to 'Profile', @user, active: [['users'], ['show']], wrap_tag: :li 
- active_link_to 'Wallpapers', wallpapers_path(q: "user:#{@user.username}"), wrap_tag: :li 
+ active_link_to 'Wallpapers', wallpapers_path(q: "user:"), wrap_tag: :li 
  active_link_to 'Collections', user_collections_path(@user), wrap_tag: :li 
  active_link_to 'Favourites', user_favourites_path(@user), wrap_tag: :li 
  end 
@@ -89,6 +89,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title @user.username 
  if @collections.any? 
@@ -131,7 +132,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if @user.wallpapers.any? 
  if @user.wallpapers.size > @wallpapers.size 
- link_to wallpapers_path(q: "user:#{@user.username}"), class: 'btn btn-link pull-right' do 
+ link_to wallpapers_path(q: "user:"), class: 'btn btn-link pull-right' do 
  end 
  end 
  @user.wallpapers.size 

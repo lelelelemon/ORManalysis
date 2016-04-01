@@ -45,6 +45,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  simple_form_for @settings, url: account_settings_path, method: :patch do |f| 
  f.error_notification 
@@ -127,6 +128,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  simple_form_for @settings, url: account_settings_path, method: :patch do |f| 
  f.error_notification 

@@ -97,6 +97,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  if @user.present? 
  title [@user.username, 'Collections'], 'Collections' 
@@ -230,6 +231,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  if @collection.owner_type == 'User' 
  title [@collection.owner.username, @collection.name], @collection.name 

@@ -47,6 +47,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
 json.array!(@categories) do |category|
   json.extract! category, :id, :name, :slug, :wikipedia_title, :description, :ancestry
@@ -120,6 +121,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  @category.name 
  @category.wikipedia_title 
@@ -196,6 +198,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@category) do |f| 
  f.error_notification 
@@ -273,6 +276,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@category) do |f| 
  f.error_notification 
@@ -358,6 +362,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  @category.name 
  @category.wikipedia_title 
@@ -429,6 +434,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@category) do |f| 
  f.error_notification 
@@ -515,6 +521,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for(@category) do |f| 
  f.error_notification 

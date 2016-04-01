@@ -46,6 +46,7 @@ class Api::V1::FavouritesController < Api::V1::BaseController
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
 json.wallpapers do
   json.array! @wallpapers do |wallpaper|

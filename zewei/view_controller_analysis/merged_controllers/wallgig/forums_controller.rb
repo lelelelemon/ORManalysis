@@ -49,6 +49,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
 json.array!(@forums) do |forum|
   json.extract! forum, :id, :group_id, :name, :slug, :description, :position
@@ -122,6 +123,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  @groups.each do |group| 
  group.name 
@@ -206,6 +208,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title [@group.name, 'Forums', @forum.name] 
  if can? :update, @forum 
@@ -309,6 +312,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for([@group, @forum]) do |f| 
  f.error_notification 
@@ -392,6 +396,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for([@group, @forum]) do |f| 
  f.error_notification 
@@ -481,6 +486,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title [@group.name, 'Forums', @forum.name] 
  if can? :update, @forum 
@@ -579,6 +585,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for([@group, @forum]) do |f| 
  f.error_notification 
@@ -672,6 +679,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
   simple_form_for([@group, @forum]) do |f| 
  f.error_notification 

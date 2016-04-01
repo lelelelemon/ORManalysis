@@ -48,6 +48,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  link_to 'New', new_account_collection_path, class: 'btn btn-default btn-lg pull-right' 
  title 'My collections' 
@@ -138,6 +139,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title 'New collection' 
   simple_form_for([:account, @collection]) do |f| 
@@ -215,6 +217,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title 'Editing collection' 
   simple_form_for([:account, @collection]) do |f| 
@@ -299,6 +302,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title 'New collection' 
   simple_form_for([:account, @collection]) do |f| 
@@ -385,6 +389,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  title 'Editing collection' 
   simple_form_for([:account, @collection]) do |f| 

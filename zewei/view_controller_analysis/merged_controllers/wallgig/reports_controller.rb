@@ -53,6 +53,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  case @reportable.class.name 
  when 'Comment' 
@@ -144,6 +145,7 @@ end
  if content_for?(:main_container) 
  yield :main_container 
  else 
+  
  
  case @reportable.class.name 
  when 'Comment' 
