@@ -77,6 +77,9 @@ File.open(ARGV[0], "r").each_line do |line|
   elsif line =~ /.*\('container-full' if content_for\?\(:use_full_container\) && yield\(:use_full_container\)\).*/
     line.gsub! /\('container-full' if content_for\?\(:use_full_container\) && yield\(:use_full_container\)\)/, ""
     puts line
+  elsif line =~ /.*\(@page.is_favourite\?\(@user\) \? [^ ]* : [^ \)]*\).*/
+    line.gsub! /\(@page.is_favourite\?\(@user\) \? [^ ]* : [^ \)]*\)/, "()"
+    puts line
   else
     puts line
   end
