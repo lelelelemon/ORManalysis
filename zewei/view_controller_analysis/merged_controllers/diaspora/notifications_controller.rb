@@ -56,9 +56,7 @@ class NotificationsController < ApplicationController
       format.xml { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -82,10 +80,23 @@ class NotificationsController < ApplicationController
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
+ t(".notifications") 
+ if params[:type] 
+ link_to t(".mark_all_shown_as_read"), read_all_notifications_path(type: params[:type] ), class: "btn btn-default" 
+ else 
+ link_to t(".mark_all_as_read"), read_all_notifications_path, class: "btn btn-default" 
+ end 
+ @group_days.each do |date, notes| 
+ locale_date(date) 
+ notes.each do |note| 
+ person_image_link(note.actors.last,  size: :thumb_small, class: "media-object") 
+ notification_message_for(note) 
+ timeago(note.created_at) 
+ end 
+ end 
+ will_paginate @notifications,    previous_label: "&laquo;",    next_label: "&raquo;",    inner_window: 1,    outer_window: 0,    renderer: WillPaginate::ActionView::BootstrapLinkRenderer 
  
  yield :after_content 
  include_chartbeat 
@@ -100,9 +111,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -126,10 +135,23 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
+ t(".notifications") 
+ if params[:type] 
+ link_to t(".mark_all_shown_as_read"), read_all_notifications_path(type: params[:type] ), class: "btn btn-default" 
+ else 
+ link_to t(".mark_all_as_read"), read_all_notifications_path, class: "btn btn-default" 
+ end 
+ @group_days.each do |date, notes| 
+ locale_date(date) 
+ notes.each do |note| 
+ person_image_link(note.actors.last,  size: :thumb_small, class: "media-object") 
+ notification_message_for(note) 
+ timeago(note.created_at) 
+ end 
+ end 
+ will_paginate @notifications,    previous_label: "&laquo;",    next_label: "&raquo;",    inner_window: 1,    outer_window: 0,    renderer: WillPaginate::ActionView::BootstrapLinkRenderer 
  
  yield :after_content 
  include_chartbeat 

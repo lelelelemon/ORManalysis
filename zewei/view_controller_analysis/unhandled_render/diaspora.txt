@@ -1,0 +1,138 @@
+app/new_controllers/reshares_controller.rb:      render :json => ExtremePostPresenter.new(@reshare, current_user), :status => 201
+app/new_controllers/reshares_controller.rb:      render :nothing => true, :status => 422
+app/new_controllers/participations_controller.rb:      render nothing: true, status: :created
+app/new_controllers/participations_controller.rb:      render nothing: true, status: :forbidden
+app/new_controllers/participations_controller.rb:      render nothing: true, status: :ok
+app/new_controllers/participations_controller.rb:      render nothing: true, status: :unprocessable_entity
+app/new_controllers/posts_controller.rb:        format.all { render template: "errors/not_public", status: 404, layout: "error_page" }
+app/new_controllers/posts_controller.rb:    render text: "You are not allowed to do that", status: 403
+app/new_controllers/posts_controller.rb:      format.json { render json: post_service.present_json }
+app/new_controllers/posts_controller.rb:    render text: post_iframe_url(params[:id]), layout: false
+app/new_controllers/posts_controller.rb:    render json: post_service.present_oembed
+app/new_controllers/posts_controller.rb:      format.json { render nothing: true, status: 204 }
+app/new_controllers/status_messages_controller.rb:        render layout: nil
+app/new_controllers/status_messages_controller.rb:      format.json { render json: PostPresenter.new(@status_message, current_user), status: 201 }
+app/new_controllers/status_messages_controller.rb:      format.json { render text: error.message, status: 403 }
+app/new_controllers/tag_followings_controller.rb:      render :nothing => true, :status => 403
+app/new_controllers/tag_followings_controller.rb:        render :json => @tag.to_json, :status => 201
+app/new_controllers/tag_followings_controller.rb:        render :nothing => true, :status => 403
+app/new_controllers/tag_followings_controller.rb:        format.any(:js, :json) { render :nothing => true, :status => 204 }
+app/new_controllers/tag_followings_controller.rb:        format.any(:js, :json) {render :nothing => true, :status => 403}
+app/new_controllers/tag_followings_controller.rb:      format.json{ render(:json => tags.to_json, :status => 200) }
+app/new_controllers/admin/pods_controller.rb:        format.json { render json: pods_json }
+app/new_controllers/admin/pods_controller.rb:        format.json { render json: PodPresenter.new(pod).as_json }
+app/new_controllers/comments_controller.rb:    render nothing: true, status: 404
+app/new_controllers/comments_controller.rb:      render nothing: true, status: 404
+app/new_controllers/comments_controller.rb:      format.mobile { render layout: false }
+app/new_controllers/comments_controller.rb:      format.json  { render json: CommentPresenter.as_collection(@comments), status: 200 }
+app/new_controllers/comments_controller.rb:      format.mobile { render layout: false }
+app/new_controllers/comments_controller.rb:      format.json { render json: CommentPresenter.new(@comment), status: 201 }
+app/new_controllers/comments_controller.rb:      format.html { render nothing: true, status: 201 }
+app/new_controllers/comments_controller.rb:      format.js { render nothing: true, status: 204 }
+app/new_controllers/comments_controller.rb:      format.json { render nothing: true, status: 204 }
+app/new_controllers/comments_controller.rb:      format.js { render nothing: true, status: 403 }
+app/new_controllers/comments_controller.rb:      format.json { render nothing: true, status: 403 }
+app/new_controllers/aspects_controller.rb:      render json: {id: @aspect.id, name: @aspect.name}
+app/new_controllers/aspects_controller.rb:      render nothing: true, status: 422
+app/new_controllers/aspects_controller.rb:    render :json => { :id => @aspect.id, :name => @aspect.name }
+app/new_controllers/aspects_controller.rb:    render nothing: true
+app/new_controllers/aspects_controller.rb:    render :nothing => true
+app/new_controllers/aspects_controller.rb:    render :nothing => true
+app/new_controllers/aspect_memberships_controller.rb:          render :json => AspectMembershipPresenter.new(membership).base_hash
+app/new_controllers/aspect_memberships_controller.rb:          render :text => membership.errors.full_messages, :status => 403
+app/new_controllers/aspect_memberships_controller.rb:          render :json => AspectMembershipPresenter.new(
+app/new_controllers/aspect_memberships_controller.rb:      render :nothing => true, :status => 409
+app/new_controllers/aspect_memberships_controller.rb:    render :text => "Duplicate record rejected.", :status => 400
+app/new_controllers/aspect_memberships_controller.rb:    render :text => I18n.t('aspect_memberships.destroy.no_membership'), :status => 404
+app/new_controllers/aspect_memberships_controller.rb:    render :text => "You are not allowed to do that.", :status => 403
+app/new_controllers/terms_controller.rb:      render :terms
+app/new_controllers/home_controller.rb: render partial: "home/show" 
+app/new_controllers/home_controller.rb: render partial: "home/show" 
+app/new_controllers/home_controller.rb: render partial: "home/show" 
+app/new_controllers/users_controller.rb:  render "edit" 
+app/new_controllers/users_controller.rb: render "privacy_settings" 
+app/new_controllers/users_controller.rb:      format.js   { render :nothing => true, :status => 204 }
+app/new_controllers/users_controller.rb:  render "edit" 
+app/new_controllers/users_controller.rb:      render :nothing => true, :status => 404
+app/new_controllers/poll_participations_controller.rb:      format.json { render json: poll_participation, :status => 201 }
+app/new_controllers/poll_participations_controller.rb:      format.json { render :nothing => true, :status => 403 }
+app/new_controllers/profiles_controller.rb:      format.json { render :json => PersonPresenter.new(@person, current_user) }
+app/new_controllers/profiles_controller.rb:      format.js { render :nothing => true, :status => 200 }
+app/new_controllers/streams_controller.rb: render 'publisher/publisher', publisher_aspects_for(stream) 
+app/new_controllers/streams_controller.rb: render 'publisher/publisher', publisher_aspects_for(stream) 
+app/new_controllers/streams_controller.rb:      format.json { render :json => @stream.stream_posts.map {|p| LastThreeCommentsDecorator.new(PostPresenter.new(p, current_user)) }}
+app/new_controllers/likes_controller.rb:        format.html { render :nothing => true, :status => 201 }
+app/new_controllers/likes_controller.rb:        format.json { render :json => @like.as_api_response(:backbone), :status => 201 }
+app/new_controllers/likes_controller.rb:      render :nothing => true, :status => 422
+app/new_controllers/likes_controller.rb:      format.json { render :nothing => true, :status => 204 }
+app/new_controllers/likes_controller.rb:      format.all { render :layout => false }
+app/new_controllers/likes_controller.rb:      format.json { render :json => @likes.as_api_response(:backbone) }
+app/new_controllers/notifications_controller.rb:        format.json { render :json => { :guid => note.id, :unread => note.unread } }
+app/new_controllers/notifications_controller.rb:        format.json { render :json => {}.to_json }
+app/new_controllers/notifications_controller.rb:      note.note_html = render_to_string( :partial => 'notification', :locals => { :note => note } )
+app/new_controllers/notifications_controller.rb: will_paginate @notifications,    previous_label: "&laquo;",    next_label: "&raquo;",    inner_window: 1,    outer_window: 0,    renderer: WillPaginate::ActionView::BootstrapLinkRenderer 
+app/new_controllers/notifications_controller.rb:      format.json { render :json => @notifications.to_json }
+app/new_controllers/notifications_controller.rb: will_paginate @notifications,    previous_label: "&laquo;",    next_label: "&raquo;",    inner_window: 1,    outer_window: 0,    renderer: WillPaginate::ActionView::BootstrapLinkRenderer 
+app/new_controllers/notifications_controller.rb:      format.xml { render :xml => {}.to_xml }
+app/new_controllers/notifications_controller.rb:      format.json { render :json => {}.to_json }
+app/new_controllers/conversations_controller.rb:      format.json { render json: @visibilities.map(&:conversation), status: 200 }
+app/new_controllers/conversations_controller.rb: will_paginate @visibilities, previous_label: "&laquo;", next_label: "&raquo;", inner_window: 1, outer_window: 0,      renderer: WillPaginate::ActionView::BootstrapLinkRenderer 
+app/new_controllers/conversations_controller.rb:        format.json { render :json => @conversation, :status => 200 }
+app/new_controllers/conversations_controller.rb:  escape_javascript(render('conversations/show', :conversation => @conversation)) 
+app/new_controllers/conversations_controller.rb:      render :layout => true
+app/new_controllers/conversations_controller.rb:      render :layout => false
+app/new_controllers/conversations_controller.rb:  render 'conversations/new' 
+app/new_controllers/publics_controller.rb:    render :text => params['hub.challenge'], :status => 202, :layout => false
+app/new_controllers/publics_controller.rb:    render :nothing => true, :status => :ok
+app/new_controllers/publics_controller.rb:      render :nothing => true, :status => 404
+app/new_controllers/publics_controller.rb:    render :nothing => true, :status => 202
+app/new_controllers/publics_controller.rb:      render :nothing => true, :status => 422
+app/new_controllers/blocks_controller.rb:      format.json{ render :nothing => true, :status => 204 }
+app/new_controllers/blocks_controller.rb:      format.json{ render :nothing => true, :status => 204 }
+app/new_controllers/contacts_controller.rb:        render :json => @people.to_json
+app/new_controllers/contacts_controller.rb: will_paginate @contacts, renderer: WillPaginate::ActionView::BootstrapLinkRenderer 
+app/new_controllers/report_controller.rb:      render json: true, status: 200
+app/new_controllers/report_controller.rb:      render nothing: true, status: 409
+app/new_controllers/people_controller.rb:    render :file => Rails.root.join('public', '404').to_s,
+app/new_controllers/people_controller.rb:      format.json { render :nothing => true, :status => 410 } # 410 GONE
+app/new_controllers/people_controller.rb:        render :json => @people
+app/new_controllers/people_controller.rb: will_paginate @people, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer 
+app/new_controllers/people_controller.rb:      @answer_html = render_to_string :partial => 'people/person', :locals => @hashes.first
+app/new_controllers/people_controller.rb:    render :json => { :search_count => @people.count, :search_html => @answer_html }.to_json
+app/new_controllers/people_controller.rb: will_paginate @people, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer 
+app/new_controllers/people_controller.rb:  # renders the persons user profile page
+app/new_controllers/people_controller.rb:      format.json { render json: @person_json }
+app/new_controllers/people_controller.rb: render 'publisher/publisher', publisher_aspects_for(nil) 
+app/new_controllers/people_controller.rb:        render json: person_stream.stream_posts.map { |p| LastThreeCommentsDecorator.new(PostPresenter.new(p, current_user)) }
+app/new_controllers/people_controller.rb:        render :json => HovercardPresenter.new(@person)
+app/new_controllers/people_controller.rb:      render :nothing => true
+app/new_controllers/people_controller.rb:      render :nothing => true, :status => 422
+app/new_controllers/people_controller.rb:      format.json { render nothing: true, status: 406 }
+app/new_controllers/people_controller.rb: will_paginate @contacts_of_contact, renderer: WillPaginate::ActionView::BootstrapLinkRenderer 
+app/new_controllers/people_controller.rb:  # renders "thats you" in case the current user views himself
+app/new_controllers/people_controller.rb:    return render :text => I18n.t('people.person.thats_you') if @person == current_user.person
+app/new_controllers/social_relay_controller.rb:    render json: SocialRelayPresenter.new
+app/new_controllers/node_info_controller.rb:    render json: NodeInfo.jrd(CGI.unescape(node_info_url("123.123").sub("123.123", "%{version}")))
+app/new_controllers/node_info_controller.rb:      render json: document, content_type: document.content_type
+app/new_controllers/node_info_controller.rb:      format.json { render json: StatisticsPresenter.new }
+app/new_controllers/node_info_controller.rb:  render "statistics" 
+app/new_controllers/api/v1/tokens_controller.rb:    render :status => 200, :json => { :token => current_user.authentication_token }
+app/new_controllers/api/v1/tokens_controller.rb:    render :json => true, :status => 200
+app/new_controllers/services_controller.rb:      render(text: "<script>window.close()</script>")
+app/new_controllers/photos_controller.rb: render 'publisher/publisher', publisher_aspects_for(nil) 
+app/new_controllers/photos_controller.rb: render 'publisher/publisher', publisher_aspects_for(nil) 
+app/new_controllers/photos_controller.rb:        format.json{ render_for_api :backbone, :json => @posts, :root => :photos }
+app/new_controllers/photos_controller.rb:            format.json { render :json => {"success" => true, "data" => @photo.as_api_response(:backbone)} }
+app/new_controllers/photos_controller.rb:          format.js{ render :json => { :photo_id  => @photo.id,
+app/new_controllers/photos_controller.rb:        render :nothing => true, :status => 422
+app/new_controllers/photos_controller.rb:      render :nothing => true, :status => 422
+app/new_controllers/photos_controller.rb:        format.json{ render :nothing => true, :status => 204 }
+app/new_controllers/photos_controller.rb:          format.js{ render :json => photo, :status => 200 }
+app/new_controllers/photos_controller.rb:          format.js{ render :status => 403 }
+app/new_controllers/photos_controller.rb:        format.json{ render(:layout => false , :json => {"success" => true, "data" => @photo}.to_json )}
+app/new_controllers/photos_controller.rb:        format.html{ render(:layout => false , :json => {"success" => true, "data" => @photo}.to_json )}
+app/new_controllers/share_visibilities_controller.rb:    render :nothing => true, :status => 200
+app/new_controllers/invitations_controller.rb:      render 'notifier/invite', :layout => false
+app/new_controllers/tags_controller.rb:        format.json{ render(:json => @tags.to_json, :status => 200) }
+app/new_controllers/tags_controller.rb:        format.json{ render :nothing => true, :status => 422 }
+app/new_controllers/tags_controller.rb:      format.json { render :json => @stream.stream_posts.map { |p| LastThreeCommentsDecorator.new(PostPresenter.new(p, current_user)) }}

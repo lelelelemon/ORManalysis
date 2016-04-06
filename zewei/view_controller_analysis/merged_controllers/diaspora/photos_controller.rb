@@ -17,9 +17,7 @@ class PhotosController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -43,8 +41,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  image_tag photo.url(:scaled_full) 
@@ -91,9 +87,7 @@ end
           ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -117,8 +111,6 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  content_for :head do 
@@ -131,22 +123,9 @@ end
  if user_signed_in? && current_user.person.id == @person.id 
  render 'publisher/publisher', publisher_aspects_for(nil) 
  end 
- t('layouts.application.back_to_top') 
  if user_signed_in? && @person 
-  id 
- path 
- id 
- id 
- title 
+  title 
  
- if @contact 
-  id 
- path 
- id 
- id 
- title 
- 
- end 
  end 
  
  yield :after_content 
@@ -155,13 +134,12 @@ end
  flash_messages 
 
 end
+, layout: "with_header"
         end
         format.mobile { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -185,8 +163,6 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  content_for :head do 
@@ -199,22 +175,9 @@ end
  if user_signed_in? && current_user.person.id == @person.id 
  render 'publisher/publisher', publisher_aspects_for(nil) 
  end 
- t('layouts.application.back_to_top') 
  if user_signed_in? && @person 
-  id 
- path 
- id 
- id 
- title 
+  title 
  
- if @contact 
-  id 
- path 
- id 
- id 
- title 
- 
- end 
  end 
  
  yield :after_content 
@@ -233,9 +196,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -259,8 +220,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  for photo in photos 
@@ -350,9 +309,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -376,11 +333,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
- "#{t('.editing')} #{@photo.processed_image}" 
+ " " 
  @photo.id 
  image_tag @photo.url(:scaled_full) 
  form_for @photo do |photo| 

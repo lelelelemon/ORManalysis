@@ -52,9 +52,7 @@ class PeopleController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -78,10 +76,31 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
+ content_for :page_title do 
+ t('search') 
+ end 
+ form_tag(search_path, :method => 'get') do 
+ search_field_tag :q, nil, :placeholder => t('find_people'), :class => 'search' 
+ submit_tag t('search'), 'data-inline' => 'true', :class => 'btn' 
+ end 
+ if params[:q].blank? 
+ t('.no_results') 
+ else 
+ t('.results_for', search_term: params[:q]) 
+ if @hashes.empty? 
+ t('.no_one_found') 
+ else 
+ for hash in @hashes 
+  person.id 
+ person_image_link(person, size: :thumb_small, class: "media-object") 
+ person_link(person, size: :thumb_small) 
+ link_to person.diaspora_handle, local_or_remote_person_path(person), class: "black" 
+end 
+ will_paginate @people, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer 
+ end 
+ end 
  
  yield :after_content 
  include_chartbeat 
@@ -113,9 +132,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -139,11 +156,32 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
- escape_javascript(render("index", :people => @people)) 
+  content_for :page_title do 
+ t('search') 
+ end 
+ form_tag(search_path, :method => 'get') do 
+ search_field_tag :q, nil, :placeholder => t('find_people'), :class => 'search' 
+ submit_tag t('search'), 'data-inline' => 'true', :class => 'btn' 
+ end 
+ if params[:q].blank? 
+ t('.no_results') 
+ else 
+ t('.results_for', search_term: params[:q]) 
+ if @hashes.empty? 
+ t('.no_one_found') 
+ else 
+ for hash in @hashes 
+  person.id 
+ person_image_link(person, size: :thumb_small, class: "media-object") 
+ person_link(person, size: :thumb_small) 
+ link_to person.diaspora_handle, local_or_remote_person_path(person), class: "black" 
+end 
+ will_paginate @people, :renderer => WillPaginate::ActionView::BootstrapLinkRenderer 
+ end 
+ end 
+ 
  
  yield :after_content 
  include_chartbeat 
@@ -186,9 +224,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -212,8 +248,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  content_for :head do 
@@ -226,22 +260,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if user_signed_in? && current_user.person.id == @person.id 
  render 'publisher/publisher', publisher_aspects_for(nil) 
  end 
- t('layouts.application.back_to_top') 
  if user_signed_in? && @person 
-  id 
- path 
- id 
- id 
- title 
+  title 
  
- if @contact 
-  id 
- path 
- id 
- id 
- title 
- 
- end 
  end 
  
  yield :after_content 
@@ -314,9 +335,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -340,8 +359,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  content_for :head do 
@@ -359,22 +376,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  end 
  will_paginate @contacts_of_contact, renderer: WillPaginate::ActionView::BootstrapLinkRenderer 
- t('layouts.application.back_to_top') 
  if user_signed_in? && @person 
-  id 
- path 
- id 
- id 
- title 
+  title 
  
- if @contact 
-  id 
- path 
- id 
- id 
- title 
- 
- end 
  end 
  
  yield :after_content 
@@ -401,9 +405,7 @@ end
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -427,8 +429,6 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  aspect_membership_dropdown(@contact, @person, 'right', nil, size) 

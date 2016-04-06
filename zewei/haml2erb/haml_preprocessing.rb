@@ -31,54 +31,86 @@ File.open(ARGV[0], "r").each_line do |line|
 #  end
   if line.to_s.strip.length == 0
 
-  elsif content.start_with?"-#"
+  end
+  if content.start_with?"-#"
     is_comment = true
-  elsif content.end_with?", |"
+  end
+
+  if content.end_with?", |"
     content = content[0..-3]
     print indent + content
-  elsif line.end_with?","
+  end
+  if line.end_with?","
     print indent + content
-  elsif line =~ /.*==.*\#{.*}.*/
-  elsif line =~ /.*{[^}]*{.*}[^{]*}.*/
-    line.gsub! /{[^}]*{.*}[^{]*}/, "{}"
-    print line + "\n"
-  elsif line =~ /.*\|\| [^ ]* \? [^ ]* : "".*/
+  end
+
+  if line =~ /.*==.*\#{.*}.*/
+    line = ""
+  end
+  if line =~ /.*{[^}]*{.*}[^{]*}.*/
+    line.gsub! /{[^}]*{.*}[^{]*}/, "{}\n"
+  end
+  if line =~ /.*\|\| [^ ]* \? [^ ]* : "".*/
     line.gsub! /\|\| [^ ]* \? [^ ]* : ""/, ""
-    puts line
-  elsif line =~ /.*{class: [^ ]* \? [^ ]* : [^ ]*}.*/
+  end
+  if line =~ /.*{class: [^ ]* \? [^ ]* : [^ ]*}.*/
     line.gsub! /{class: [^ ]* \? [^ ]* : [^ ]*}/, "{class: \"\"}"
-    puts line
-  elsif line.include?"font{body_font}" or line.include?"font{big_quotation_mark_font}" or line.include?"font{quote_font}"
+  end
+  if line.include?"font{body_font}" or line.include?"font{big_quotation_mark_font}" or line.include?"font{quote_font}"
     line.gsub! "font{body_font}", "font"
     line.gsub! "font{big_quotation_mark_font}", "font"
     line.gsub! "font{quote_font}", "font"
-    puts line
-  elsif line =~ /.*, :class => \(.* \? .* : [^ ]*\).*/
-    line.gsub! /, :class => \(.* \? .* : [^ ]*\)/, ""
-    puts line
-  elsif line =~ /.*{:class => \(.* \? .* : [^ ]*\)}.*/
-    line.gsub! /{:class => \(.* \? .* : [^ ]*\)}/, ""
-    puts line
-  elsif line =~ /.*{:class => .* \? .* : [^ ]*}.*/
-    line.gsub! /{:class => .* \? .* : [^ ]*}/, ""
-    puts line
-  elsif line =~ /.*\|\| [^\(\)]*\).*/
-    line.gsub! /\|\| [^\(\)]*\)/, ")"
-    puts line
-  elsif line =~ /.*\|\| [^{}]*}.*/
-    line.gsub! /\|\| [^{}]*}/, "}"
-    puts line
-  elsif line =~ /.*\|\| [^ ]*,.*/
-    line.gsub! /\|\| [^ ]*,/, ","
-    puts line
-  elsif line =~ /.*\#{[^}]*}.*/
-    line.gsub! /\#{[^}]*}/, ""
-    puts line
-  elsif line =~ /.*\('container-full' if content_for\?\(:use_full_container\) && yield\(:use_full_container\)\).*/
-    line.gsub! /\('container-full' if content_for\?\(:use_full_container\) && yield\(:use_full_container\)\)/, ""
-    puts line
-  else
-    puts line
   end
+  if line =~ /.*, :class => \(.* \? .* : [^ ]*\).*/
+    line.gsub! /, :class => \(.* \? .* : [^ ]*\)/, ""
+  end
+  if line =~ /.*{:class => \(.* \? .* : [^ ]*\)}.*/
+    line.gsub! /{:class => \(.* \? .* : [^ ]*\)}/, ""
+  end
+  if line =~ /.*{:class => .* \? .* : [^ ]*}.*/
+    line.gsub! /{:class => .* \? .* : [^ ]*}/, ""
+  end
+  if line =~ /.*\|\| [^\(\)]*\).*/
+    line.gsub! /\|\| [^\(\)]*\)/, ")"
+  end
+  if line =~ /.*\|\| [^{}]*}.*/
+    line.gsub! /\|\| [^{}]*}/, "}"
+  end
+  if line =~ /.*\|\| [^ ]*,.*/
+    line.gsub! /\|\| [^ ]*,/, ","
+  end
+  if line =~ /.*\#{[^}]*}.*/
+    line.gsub! /\#{[^}]*}/, ""
+  end
+  if line =~ /.*\('container-full' if content_for\?\(:use_full_container\) && yield\(:use_full_container\)\).*/
+    line.gsub! /\('container-full' if content_for\?\(:use_full_container\) && yield\(:use_full_container\)\)/, ""
+  end
+  if line =~ /.*\(@page.is_favourite\?\(@user\) \? [^ ]* : [^ \)]*\).*/
+    line.gsub! /\(@page.is_favourite\?\(@user\) \? [^ ]* : [^ \)]*\)/, "()"
+  end
+  if line =~ /.*\+ \(params\[:show\] == 'unread' \? [^ \)]* : [^ \)]*\).*/
+    line.gsub! /\+ \(params\[:show\] == 'unread' \? [^ \)]* : [^ \)]*\)/, ""
+  end
+
+  if line =~ /.*&& @grouped_unread_notification_counts.has_key\?\(params\[:type\]\)\).*/
+    line.gsub! /&& @grouped_unread_notification_counts.has_key\?\(params\[:type\]\)\)/, ""
+  end
+
+  if line =~ /.*\+ \(params\[:type\] \? '\?type=' \+ params\[:type\] : ''\).*/
+    line.gsub! /\+ \(params\[:type\] \? '\?type=' \+ params\[:type\] : ''\)/, ""
+  end
+
+  if line =~ /.*&& "active".*/
+    line.gsub! /&& "active"/, ""
+  end
+
+  if line =~ /.*if \(!publisher_public && all_aspects_selected\?\(selected_aspects\)\).*/
+    line.gsub! /if \(!publisher_public && all_aspects_selected\?\(selected_aspects\)\)/, ""
+  end
+
+  if line =~ /.*&& selected_aspects.include\?\(aspect\) \? "selected" : "".*/
+    line.gsub! /&& selected_aspects.include\?\(aspect\) \? "selected" : ""/, ""
+  end
+  puts line
 
 end

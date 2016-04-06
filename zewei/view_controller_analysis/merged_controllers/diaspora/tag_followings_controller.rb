@@ -56,9 +56,7 @@ class TagFollowingsController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -82,10 +80,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
+ t("tag_followings.manage.title") 
+ if current_user.followed_tags.length == 0 
+ t("tag_followings.manage.no_tags") 
+ else 
+ t("tag_followings.manage.no_tags") 
+ current_user.followed_tags.each do |tag| 
+ "#" 
+ end 
+ end 
  
  yield :after_content 
  include_chartbeat 

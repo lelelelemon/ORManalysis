@@ -36,9 +36,7 @@ class CommentsController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -62,18 +60,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
   link_to "#", class: "back_to_stream_element_top pull-right" do 
  image_tag "mobile/arrow_up_small.png" 
  end 
  if user_signed_in? 
- form_tag( post_comments_path(post_id), id: "new_comment_on_#{post_id}", class: "new_comment", autocomplete: "off") do 
- hidden_field_tag :post_id,  post_id, id: "post_id_on_#{post_id}" 
- text_area_tag :text, nil, class: "col-md-12 comment_box form-control form-group", id: "comment_text_on_#{post_id}", placeholder: t(".comment") 
- submit_tag t(".comment"), :id => "comment_submit_#{post_id}", "data-disable-with" => t(".commenting"), :class => "btn btn-primary btn-block" 
+ form_tag( post_comments_path(post_id), id: "new_comment_on_", class: "new_comment", autocomplete: "off") do 
+ hidden_field_tag :post_id,  post_id, id: "post_id_on_" 
+ text_area_tag :text, nil, class: "col-md-12 comment_box form-control form-group", id: "comment_text_on_", placeholder: t(".comment") 
+ submit_tag t(".comment"), :id => "comment_submit_", "data-disable-with" => t(".commenting"), :class => "btn btn-primary btn-block" 
  end 
  end 
  
@@ -98,9 +94,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -124,8 +118,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
   if @post.public? 
@@ -137,10 +129,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  person_link(comment.author) 
  timeago(comment.created_at ? comment.created_at : Time.now) 
  if user_signed_in? && comment.author == current_user.person 
- link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: { confirm: "#{t('are_you_sure')}" }, class: "remove") 
+ link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}) 
  end 
- direction_for(comment.text) 
- comment.message.markdownified 
  
  
  
@@ -162,9 +152,7 @@ end
       format.mobile { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -188,18 +176,14 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  person_image_link(comment.author, size: :thumb_small, class: "media-object") 
  person_link(comment.author) 
  timeago(comment.created_at ? comment.created_at : Time.now) 
  if user_signed_in? && comment.author == current_user.person 
- link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: { confirm: "#{t('are_you_sure')}" }, class: "remove") 
+ link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}) 
  end 
- direction_for(comment.text) 
- comment.message.markdownified 
  
  yield :after_content 
  include_chartbeat 

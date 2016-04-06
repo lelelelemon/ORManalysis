@@ -32,9 +32,7 @@ class ProfilesController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -58,15 +56,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-  t('settings') 
- link_to_unless_current t('profile'), edit_profile_path 
- link_to_unless_current t('account'), edit_user_path 
- link_to_unless_current t('privacy'), privacy_settings_path 
- link_to_unless_current t('_services'), services_path 
+  t("settings") 
+ current_page?(edit_profile_path) 
+ link_to t("profile"), edit_profile_path 
+ current_page?(edit_user_path) 
+ link_to t("account"), edit_user_path 
+ current_page?(privacy_settings_path) 
+ link_to t("privacy"), privacy_settings_path 
+ current_page?(services_path) 
+ link_to t("_services"), services_path 
  
  content_for :submit_block do 
  link_to t("cancel"), local_or_remote_person_path(current_user.person), class: "btn btn-default" 
@@ -80,12 +80,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if mobile 
  flash.each do |name, msg| 
- name 
- msg 
- name 
  msg 
  end 
  end 
+ msg 
  t("profiles.edit.basic") 
  t("profiles.edit.basic_hint") 
  error_messages_for profile 
@@ -103,33 +101,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('.upload') 
  image_tag('mobile-spinner.gif', :class => 'hidden', :style => "z-index:-1", :id => 'file-upload-spinner') 
  
- 
-  t("profiles.edit.extended") 
- t("profiles.edit.extended_visibility_text") 
- check_box_tag "profile[public_details]", true, profile.public_details, {"data-size" => "mini", "data-on-text" => t("profiles.edit.public"), "data-off-text" => t("profiles.edit.limited")} 
- t("profiles.edit.extended_hint") 
- t('profiles.edit.your_bio') 
- text_area_tag 'profile[bio]', profile.bio, rows: 5, placeholder: t('fill_me_out'), class: 'col-md-12 form-control' 
- t('profiles.edit.your_location') 
- text_field_tag 'profile[location]', profile.location, placeholder: t('fill_me_out'), class: 'col-md-12 form-control' 
- t('profiles.edit.your_gender') 
- text_field_tag 'profile[gender]', profile.gender, placeholder: t("fill_me_out"), class: 'col-md-12 form-control' 
- t('profiles.edit.your_birthday') 
- select_date profile.birthday, { prompt: true, default: true, order: t('date.order'),      start_year: upper_limit_date_of_birth, end_year: lower_limit_date_of_birth, prefix: 'profile[date]' },      { class: 'form-control'} 
- t('profiles.edit.settings') 
- t('search') 
- label_tag 'profile[searchable]', class: "checkbox-inline" do 
- check_box_tag 'profile[searchable]', true, profile.searchable 
- t('profiles.edit.allow_search') 
- end 
- t('nsfw') 
- t('profiles.edit.nsfw_explanation') 
- label_tag 'profile[nsfw]', class: "checkbox-inline" do 
- check_box_tag 'profile[nsfw]', true, profile.nsfw? 
- t('profiles.edit.nsfw_check') 
- end 
- t('profiles.edit.nsfw_explanation2') 
- yield(:submit_block) 
  
  end 
  
