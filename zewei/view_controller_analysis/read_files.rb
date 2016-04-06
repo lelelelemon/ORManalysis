@@ -10,6 +10,14 @@ def load_all_controllers_from_path(controller_path)
 		controller_hash[controller.get_controller_name] = controller
 
 	end
+
+  if $lib_controller_path
+    Dir.glob($lib_controller_path + "**/*") do |item|
+      next if not item.end_with?"_controller.rb"
+      controller = Controller_Class.new(item, $lib_controller_path)
+      controller_hash[controller.get_controller_name] = controller
+    end
+  end
 	return controller_hash
 end
 
@@ -44,6 +52,21 @@ def load_all_views_from_path(view_path)
     if not view_hash.has_key? _key
       view_hash[_key] = view_class
     end
+  end
+
+  if $lib_view_path
+    Dir.glob($lib_view_path + "**/*") do |item|
+      next if not item.end_with?(".erb", ".rjs", "jbuilder")
+      puts item
+      view_class = View_Class.new(item, $lib_view_path)
+      key = view_class.get_controller_name + "_" + view_class.get_view_name
+      view_hash[key] = view_class
+      _key = key.gsub "__", "_"
+      if not view_hash.has_key? _key
+        view_hash[_key] = view_class
+      end
+    end
+
   end
 
 	return view_hash
@@ -345,6 +368,8 @@ $new_helper_path = "./app/new_helpers/"
 $view_path = "./app/views/"
 $new_view_path = "./app/new_views/"
 $output_path = "./output/"
+$lib_controller_path = "../piggybak/app/controllers/"
+$lib_view_path = "../piggybak/app/views/"
 
 options = {}
 
