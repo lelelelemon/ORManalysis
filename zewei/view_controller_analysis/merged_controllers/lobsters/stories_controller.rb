@@ -23,7 +23,7 @@ class StoriesController < ApplicationController
       end
     end
 
-    return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @meta_tags 
  @meta_tags.each do |k,v| 
  k 
@@ -196,10 +196,6 @@ class StoriesController < ApplicationController
         (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
         " the author of the story at this URL (or this text)",
         :class => "normal" 
- end 
- 
- submit_tag "Submit" 
-  if defined?(allow_images) && allow_images 
  end 
  
  end 
@@ -570,11 +566,6 @@ class StoriesController < ApplicationController
  raw comment.markeddown_comment 
  end 
  
- if (children = comments_by_parent[comment.id]) 
- ancestors << subtree 
- subtree = children 
- else 
- end 
  elsif (subtree = ancestors.pop) 
  end 
  end 
@@ -797,28 +788,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
         (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
         " the author of the story at this URL (or this text)",
         :class => "normal" 
- end 
- 
- if @user.is_moderator? 
- f.label :merge_story_short_id, "Merge Into:",
-            :class => "required" 
- f.text_field :merge_story_short_id, :autocomplete => "off",
-            :placeholder => "Short id of story into which this story " <<
-            "be merged" 
- f.label :unavailable_at, "Unavailable:",
-            :class => "required" 
- f.check_box :is_unavailable 
- f.label :unavailable_at, "Source URL is unavailable, " <<
-            "enable display of cached text", :class => "normal" 
- if @story.user_id != @user.id 
- f.label :moderation_reason, "Mod Reason:",
-              :class => "required" 
- f.text_field :moderation_reason, :autocomplete => "off" 
- end 
- end 
- submit_tag "Save" 
- story_path(@story.short_id) 
-  if defined?(allow_images) && allow_images 
  end 
  
  end 
@@ -1052,10 +1021,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
         :class => "normal" 
  end 
  
- submit_tag "Submit" 
-  if defined?(allow_images) && allow_images 
- end 
- 
  end 
  if @story.previewing && @story.valid? 
    story.short_id 
@@ -1424,11 +1389,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  raw comment.markeddown_comment 
  end 
  
- if (children = comments_by_parent[comment.id]) 
- ancestors << subtree 
- subtree = children 
- else 
- end 
  elsif (subtree = ancestors.pop) 
  end 
  end 
@@ -1460,7 +1420,7 @@ end
 
     @story.seen_previous = true
 
-    return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_for @story do |f| 
   if f.object.errors.count == 1 && f.object.already_posted_story 
 
@@ -1556,10 +1516,6 @@ end
         :class => "normal" 
  end 
  
- submit_tag "Submit" 
-  if defined?(allow_images) && allow_images 
- end 
- 
  end 
  if @story.previewing && @story.valid? 
    story.short_id 
@@ -1928,11 +1884,6 @@ end
  raw comment.markeddown_comment 
  end 
  
- if (children = comments_by_parent[comment.id]) 
- ancestors << subtree 
- subtree = children 
- else 
- end 
  elsif (subtree = ancestors.pop) 
  end 
  end 
@@ -2434,11 +2385,6 @@ end
  raw comment.markeddown_comment 
  end 
  
- if (children = comments_by_parent[comment.id]) 
- ancestors << subtree 
- subtree = children 
- else 
- end 
  elsif (subtree = ancestors.pop) 
  end 
  end 
@@ -2903,11 +2849,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  raw comment.markeddown_comment 
  end 
  
- if (children = comments_by_parent[comment.id]) 
- ancestors << subtree 
- subtree = children 
- else 
- end 
  elsif (subtree = ancestors.pop) 
  end 
  end 
@@ -3106,8 +3047,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
         :class => "normal" 
  end 
  
- submit_tag "Suggest Changes" 
- story_path(@story.short_id) 
  end 
  if @user && !@user.is_new? &&
         (iqc = InvitationRequest.verified_count) > 0 
@@ -3319,8 +3258,6 @@ end
         :class => "normal" 
  end 
  
- submit_tag "Suggest Changes" 
- story_path(@story.short_id) 
  end 
  if @user && !@user.is_new? &&
         (iqc = InvitationRequest.verified_count) > 0 
@@ -3366,7 +3303,7 @@ end
     if @story.save
       return redirect_to @story.comments_path
     else
-      return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if @meta_tags 
  @meta_tags.each do |k,v| 
  k 
@@ -3540,28 +3477,6 @@ end
         (f.object.id && f.object.user_id != @user.id ? "Submitter is" : "I am") +
         " the author of the story at this URL (or this text)",
         :class => "normal" 
- end 
- 
- if @user.is_moderator? 
- f.label :merge_story_short_id, "Merge Into:",
-            :class => "required" 
- f.text_field :merge_story_short_id, :autocomplete => "off",
-            :placeholder => "Short id of story into which this story " <<
-            "be merged" 
- f.label :unavailable_at, "Unavailable:",
-            :class => "required" 
- f.check_box :is_unavailable 
- f.label :unavailable_at, "Source URL is unavailable, " <<
-            "enable display of cached text", :class => "normal" 
- if @story.user_id != @user.id 
- f.label :moderation_reason, "Mod Reason:",
-              :class => "required" 
- f.text_field :moderation_reason, :autocomplete => "off" 
- end 
- end 
- submit_tag "Save" 
- story_path(@story.short_id) 
-  if defined?(allow_images) && allow_images 
  end 
  
  end 

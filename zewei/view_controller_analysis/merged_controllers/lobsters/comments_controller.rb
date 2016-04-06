@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
         comment.errors.add(:comment, "^You have already posted a comment " <<
           "here recently.")
 
-        return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  comment.short_id if comment.persisted? 
  form_for comment,
 :html => { :id => "edit_comment_#{comment.short_id}" } do |f| 
@@ -1403,11 +1403,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  raw comment.markeddown_comment 
  end 
  
- if (children = comments_by_parent[comment.id]) 
- ancestors << subtree 
- subtree = children 
- else 
- end 
  elsif (subtree = ancestors.pop) 
  end 
  end 
