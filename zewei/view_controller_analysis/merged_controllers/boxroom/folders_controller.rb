@@ -142,7 +142,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
   if clipboard.empty? 
  image_tag('information.png', :alt => 'Notice', :class => 'clipboard_info_image') 
-  link_to 'indietro', '#', :class => 'back_link' 
+  link_to 'zurück', '#', :class => 'back_link' 
  
  else 
  t :name 
