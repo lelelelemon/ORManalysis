@@ -6,14 +6,17 @@ def load_all_controllers_from_path(controller_path)
 	controller_hash = Hash.new
 	Dir.glob(controller_path + "**/*") do |item|
 		next if not item.end_with?"_controller.rb"
+    puts item
 		controller = Controller_Class.new(item, controller_path)
 		controller_hash[controller.get_controller_name] = controller
 
 	end
 
   if $lib_controller_path
+    puts "start loading controllers from the library"
     Dir.glob($lib_controller_path + "**/*") do |item|
       next if not item.end_with?"_controller.rb"
+      puts item
       controller = Controller_Class.new(item, $lib_controller_path)
       controller_hash[controller.get_controller_name] = controller
     end
