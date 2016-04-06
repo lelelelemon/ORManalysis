@@ -17,9 +17,7 @@ class ServicesController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -43,32 +41,31 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  content_for :page_title do 
  t(".edit_services") 
  end 
-  t('settings') 
- link_to_unless_current t('profile'), edit_profile_path 
- link_to_unless_current t('account'), edit_user_path 
- link_to_unless_current t('privacy'), privacy_settings_path 
- link_to_unless_current t('_services'), services_path 
+  t("settings") 
+ current_page?(edit_profile_path) 
+ link_to t("profile"), edit_profile_path 
+ current_page?(edit_user_path) 
+ link_to t("account"), edit_user_path 
+ current_page?(privacy_settings_path) 
+ link_to t("privacy"), privacy_settings_path 
+ current_page?(services_path) 
+ link_to t("_services"), services_path 
  
   if AppConfig.configured_services.count > 0 
  AppConfig.configured_services.each do |provider| 
  if AppConfig.show_service?(provider, current_user) 
- t("services.provider.#{provider}") 
+ t("services.provider.") 
  services_for_provider = @services.select{|x| x.provider == provider.to_s} 
  if services_for_provider.count > 0 
  services_for_provider.each do |service| 
  raw(t("services.index.logged_in_as", nickname: content_tag(:strong, service.nickname ))) 
- link_to t("services.index.disconnect"),                    service_path(service),                    data: { confirm: t("services.index.really_disconnect", service: t("services.provider.#{provider}")) },                    method: :delete 
+ link_to t("services.index.disconnect"),                    service_path(service),                    data: {} 
  end 
- else 
- t("services.index.not_logged_in") 
- link_to(t("services.index.connect"), "/auth/#{provider}") 
  end 
  end 
  end 

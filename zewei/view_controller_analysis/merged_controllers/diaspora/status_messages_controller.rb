@@ -35,9 +35,7 @@ class StatusMessagesController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -61,28 +59,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-  form_for StatusMessage.new, html: {class: "control-group", data: {ajax: false}} do |status| 
- status.hidden_field :provider_display_name, value: 'mobile' 
- status.text_area :text, placeholder: t('shared.publisher.whats_on_your_mind'), rows: 4, autofocus: "autofocus", class: "form-control" 
- if current_user.services 
- for service in current_user.services 
- image_tag "social_media_logos/#{service.provider}-32x32.png", title: service.provider.titleize, class: "service_icon dim", id:"#{service.provider}", maxchar: "#{service.class::MAX_CHARACTERS}" 
- end 
- end 
- t('public') 
- true 
- t('all_aspects') 
- current_user.aspects.each do |aspect| 
- aspect.id 
- " #{aspect.name}" 
- end 
- t('shared.publisher.upload_photos') 
- submit_tag t('shared.publisher.share'), class: 'btn btn-primary', id: "submit_new_message" 
- end 
+  form_for StatusMessage.new, html: {} 
  
  
  yield :after_content 
@@ -107,9 +86,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -133,28 +110,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  javascript_include_tag :jquery 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-  form_for StatusMessage.new, html: {class: "control-group", data: {ajax: false}} do |status| 
- status.hidden_field :provider_display_name, value: 'mobile' 
- status.text_area :text, placeholder: t('shared.publisher.whats_on_your_mind'), rows: 4, autofocus: "autofocus", class: "form-control" 
- if current_user.services 
- for service in current_user.services 
- image_tag "social_media_logos/#{service.provider}-32x32.png", title: service.provider.titleize, class: "service_icon dim", id:"#{service.provider}", maxchar: "#{service.class::MAX_CHARACTERS}" 
- end 
- end 
- t('public') 
- true 
- t('all_aspects') 
- current_user.aspects.each do |aspect| 
- aspect.id 
- " #{aspect.name}" 
- end 
- t('shared.publisher.upload_photos') 
- submit_tag t('shared.publisher.share'), class: 'btn btn-primary', id: "submit_new_message" 
- end 
+  form_for StatusMessage.new, html: {} 
  
   
  

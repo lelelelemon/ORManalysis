@@ -13,9 +13,7 @@ class UsersController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -39,14 +37,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-     render "edit" 
- 
- 
- 
+  render "edit" 
  
  
  yield :after_content 
@@ -63,9 +56,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -89,41 +80,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-  t('settings') 
- link_to_unless_current t('profile'), edit_profile_path 
- link_to_unless_current t('account'), edit_user_path 
- link_to_unless_current t('privacy'), privacy_settings_path 
- link_to_unless_current t('_services'), services_path 
- 
+ content_for :page_title do 
  t(".title") 
- form_for current_user, url: user_path, html: {method: :put} do |f| 
- f.error_messages 
- f.fields_for :stream_preferences do 
- f.label :strip_exif do 
- f.check_box :strip_exif 
- t(".strip_exif") 
  end 
- f.submit t("users.edit.change"), class: "btn btn-primary pull-right" 
+  content_for :page_title do 
+ t(".title") 
  end 
- end 
- t(".ignored_users") 
- if @blocks.length.zero? 
- t(".no_user_ignored_message") 
- else 
- @blocks.each do |block| 
-  person.id 
- link_to t("users.privacy_settings.stop_ignoring"), block_path(block),  class: "btn btn-danger", method: :delete 
- person_image_link(person, size: :thumb_small) 
- person_link(person) 
- block.person.diaspora_handle 
- Diaspora::Taggable.format_tags(person.profile.tag_string) 
+ render "privacy_settings" 
  
- end 
- end 
  
  yield :after_content 
  include_chartbeat 
@@ -206,9 +172,7 @@ end
           ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -232,14 +196,9 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-     render "edit" 
- 
- 
- 
+  render "edit" 
  
  
  yield :after_content 
@@ -295,9 +254,7 @@ end
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -321,8 +278,6 @@ end
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
  content_for :head do 
@@ -333,7 +288,7 @@ end
  invited_by_message 
  t(".who_are_you") 
  if AppConfig.configured_services.include? :facebook 
- raw(t('.connect_to_facebook', link: link_to(t('.connect_to_facebook_link'), "auth/facebook?callback_url=#{getting_started_url}"))) 
+ raw(t('.connect_to_facebook', link: link_to(t('.connect_to_facebook_link'), "auth/facebook?callback_url="))) 
  end 
  form_tag profile_path, method: :put, remote: true, id: "edit_profile" do 
  label_tag "profile[first_name]", t("profiles.edit.your_name") 
@@ -352,7 +307,7 @@ end
  label_tag "follow_tags", t(".hashtag_suggestions") 
  text_field_tag "follow_tags", nil, class: "nostrap form-control" 
  end 
- link_to "#{t('.awesome_take_me_to_diaspora')} ", stream_path, id: "awesome_button", class: "btn btn-primary" 
+ link_to " ", stream_path, id: "awesome_button", class: "btn btn-primary" 
  
  yield :after_content 
  include_chartbeat 

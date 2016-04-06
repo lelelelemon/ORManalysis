@@ -13,7 +13,25 @@ module Admin
           gon.error_count = Pod.check_failed.count
 
           ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-  
+  content_for :head do 
+ stylesheet_link_tag :admin 
+ end 
+ t(".pages") 
+ current_page?(admin_dashboard_path) 
+ link_to t(".dashboard"), admin_dashboard_path 
+ current_page?(user_search_path) 
+ link_to t(".user_search"), user_search_path 
+ current_page?(weekly_user_stats_path) 
+ link_to t(".weekly_user_stats"), weekly_user_stats_path 
+ current_page?(pod_stats_path) 
+ link_to t(".pod_stats"), pod_stats_path 
+ current_page?(report_index_path) 
+ link_to t(".report"), report_index_path 
+ current_page?(admin_pods_path) 
+ link_to t(".pod_network"), admin_pods_path 
+ current_page?(sidekiq_path) 
+ link_to t(".sidekiq_monitor"), sidekiq_path 
+ 
  t(".pod_network") 
 
 end

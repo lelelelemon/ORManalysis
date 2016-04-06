@@ -44,9 +44,7 @@ class TagsController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -70,9 +68,128 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
+ 
+ @stream.display_tag_name 
+ if user_signed_in? 
+ unless tag_followed? 
+ t(".follow", tag: @stream.tag_name) 
+ else 
+ t(".stop_following", tag: @stream.tag_name) 
+ end 
+ end 
+   if post.is_a?(Reshare) 
+  if post 
+  if post.is_a?(StatusMessage) 
+ if post.photos.size > 0 
+ link_to person_photo_path(post.author, post.photos.first), class: "stream-photo-link" do 
+ if post.photos.size > 1 
+ "+ " 
+ end 
+ image_tag post.photos.first.url(:thumb_large), class: "stream-photo big-stream-photo" 
+ end 
+ end 
+ elsif post.activity_streams? 
+ image_tag post.image_url 
+ end 
+ 
+ else 
+ t(".deleted") 
+ end 
+ t(".reshared_via") 
+ 
+ end 
+  if post.is_a?(StatusMessage) 
+ if post.photos.size > 0 
+ link_to person_photo_path(post.author, post.photos.first), class: "stream-photo-link" do 
+ if post.photos.size > 1 
+ "+ " 
+ end 
+ image_tag post.photos.first.url(:thumb_large), class: "stream-photo big-stream-photo" 
+ end 
+ end 
+ elsif post.activity_streams? 
+ image_tag post.image_url 
+ end 
+ 
+  person_image_link(post.author, size: :thumb_small, class: "media-object") 
+ person_link(post.author) 
+ if user_signed_in? && post.author == current_user.person 
+ link_to(raw("<i class='entypo-trash'></i>"), post_path(post), method: :delete,                data: {}) 
+ end 
+ 
+ unless post.is_a?(Reshare) 
+  if post.respond_to?(:nsfw) && post.nsfw 
+ link_to t("javascripts.stream.show_nsfw_post"), "#", class: "toggle_nsfw_state" 
+ end 
+ 
+ end 
+ if post.is_a?(StatusMessage) 
+  if defined?(reshare) && reshare 
+ if post.is_a?(StatusMessage) 
+ if post.photos.size > 0 
+ if post.photos.size > 1 
+ "+ " 
+ end 
+ image_tag post.first_photo_url(:thumb_large), :class => "stream-photo big-stream-photo" 
+ end 
+ elsif post.activity_streams? 
+ image_tag post.image_url 
+ end 
+ end 
+ direction_for(post.text) 
+ raw(post.message.markdownified) 
+ if post.poll 
+  t("polls.votes", count: poll.participation_count) 
+ poll.question 
+ poll.poll_answers.each do |answer| 
+ percentage = 0 
+ if poll.participation_count > 0 
+ percentage = (answer.vote_count.to_f / poll.participation_count * 100).round 
+ end 
+ "%" 
+ answer.answer 
+ "%" 
+ end 
+ 
+ end 
+ if post.o_embed_cache 
+ raw(o_embed_html post.o_embed_cache) 
+ end 
+ if post.open_graph_cache 
+ raw(og_html post.open_graph_cache) 
+ end 
+ 
+ end 
+ mobile_reshare_icon(post) 
+ mobile_comment_icon(post) 
+ mobile_like_icon(post) 
+ raw(reactions_link(post)) 
+ if defined?(expanded_info) && expanded_info 
+  if @post.public? 
+ @post.reshares.size 
+ end 
+ @post.comments.size 
+ @post.likes.size 
+  person_image_link(comment.author, size: :thumb_small, class: "media-object") 
+ person_link(comment.author) 
+ timeago(comment.created_at ? comment.created_at : Time.now) 
+ if user_signed_in? && comment.author == current_user.person 
+ link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}) 
+ end 
+ 
+ 
+ end 
+ 
+ 
+  if @stream.stream_posts.length == 15 
+ next_page_path 
+ t("more") 
+ elsif params[:max_time].present? || @stream.stream_posts.length > 0 
+ t("stream_helper.no_more_posts") 
+ else 
+ t("stream_helper.no_posts_yet") 
+ end 
  
  
  yield :after_content 

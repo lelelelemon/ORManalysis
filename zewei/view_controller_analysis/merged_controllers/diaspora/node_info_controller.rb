@@ -23,9 +23,7 @@ class NodeInfoController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -49,56 +47,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
- t("_statistics") 
-  activated 
- name 
- value 
+  render "statistics" 
  
-  activated 
- name 
- value 
- 
-  activated 
- name 
- value 
- 
- if @statistics.expose_user_counts? 
-  activated 
- name 
- value 
- 
-  activated 
- name 
- value 
- 
-  activated 
- name 
- value 
- 
- end 
- if @statistics.expose_posts_counts? 
-  activated 
- name 
- value 
- 
- end 
- if @statistics.expose_comment_counts? 
-  activated 
- name 
- value 
- 
- end 
- t("statistics.services") 
- Configuration::KNOWN_SERVICES.each do |service| 
-  activated 
- name 
- value 
- 
- end 
  
  yield :after_content 
  include_chartbeat 

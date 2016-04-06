@@ -6,9 +6,7 @@ class AdminsController < Admin::AdminController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -32,11 +30,27 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-  
+  content_for :head do 
+ stylesheet_link_tag :admin 
+ end 
+ t(".pages") 
+ current_page?(admin_dashboard_path) 
+ link_to t(".dashboard"), admin_dashboard_path 
+ current_page?(user_search_path) 
+ link_to t(".user_search"), user_search_path 
+ current_page?(weekly_user_stats_path) 
+ link_to t(".weekly_user_stats"), weekly_user_stats_path 
+ current_page?(pod_stats_path) 
+ link_to t(".pod_stats"), pod_stats_path 
+ current_page?(report_index_path) 
+ link_to t(".report"), report_index_path 
+ current_page?(admin_pods_path) 
+ link_to t(".pod_network"), admin_pods_path 
+ current_page?(sidekiq_path) 
+ link_to t(".sidekiq_monitor"), sidekiq_path 
+ 
  t(".pod_status") 
  t(".fetching_diaspora_version") 
  
@@ -62,9 +76,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -88,11 +100,27 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-  
+  content_for :head do 
+ stylesheet_link_tag :admin 
+ end 
+ t(".pages") 
+ current_page?(admin_dashboard_path) 
+ link_to t(".dashboard"), admin_dashboard_path 
+ current_page?(user_search_path) 
+ link_to t(".user_search"), user_search_path 
+ current_page?(weekly_user_stats_path) 
+ link_to t(".weekly_user_stats"), weekly_user_stats_path 
+ current_page?(pod_stats_path) 
+ link_to t(".pod_stats"), pod_stats_path 
+ current_page?(report_index_path) 
+ link_to t(".report"), report_index_path 
+ current_page?(admin_pods_path) 
+ link_to t(".pod_network"), admin_pods_path 
+ current_page?(sidekiq_path) 
+ link_to t(".sidekiq_monitor"), sidekiq_path 
+ 
  t('admins.admin_bar.user_search') 
  form_for @search, url: {action: 'user_search'}, html: {method: :get, class: 'form-horizontal'} do |f| 
  f.label :username, t('username'), class: 'col-sm-2 control-label' 
@@ -160,9 +188,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -186,11 +212,27 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-  
+  content_for :head do 
+ stylesheet_link_tag :admin 
+ end 
+ t(".pages") 
+ current_page?(admin_dashboard_path) 
+ link_to t(".dashboard"), admin_dashboard_path 
+ current_page?(user_search_path) 
+ link_to t(".user_search"), user_search_path 
+ current_page?(weekly_user_stats_path) 
+ link_to t(".weekly_user_stats"), weekly_user_stats_path 
+ current_page?(pod_stats_path) 
+ link_to t(".pod_stats"), pod_stats_path 
+ current_page?(report_index_path) 
+ link_to t(".report"), report_index_path 
+ current_page?(admin_pods_path) 
+ link_to t(".pod_network"), admin_pods_path 
+ current_page?(sidekiq_path) 
+ link_to t(".sidekiq_monitor"), sidekiq_path 
+ 
  t('.current_server', date: Time.now.to_date) 
  form_tag('/admins/weekly_user_stats', method: 'get', class: 'form-inline') do 
  select_tag(:week, options_for_select(@created_users_by_week.keys.reverse, @selected_week), class: "form-control") 
@@ -198,7 +240,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  t('.amount_of', count: @counter) 
  @created_users_by_week[@selected_week].each do |m| 
- link_to m, "/u/#{m}" 
+ link_to m, "/u/" 
  end 
  
  yield :after_content 
@@ -243,9 +285,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
  page_title yield(:page_title) 
- image_path('favicon.png') 
   if @post.present? 
- oembed_url(:url => post_url(@post)) 
  og_page_post_tags(@post) 
  else 
  og_general_tags 
@@ -269,11 +309,27 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield(:head) 
  csrf_meta_tag 
  include_gon(camel_case:  true) 
- controller_name 
- action_name 
  yield :before_content 
  
-  
+  content_for :head do 
+ stylesheet_link_tag :admin 
+ end 
+ t(".pages") 
+ current_page?(admin_dashboard_path) 
+ link_to t(".dashboard"), admin_dashboard_path 
+ current_page?(user_search_path) 
+ link_to t(".user_search"), user_search_path 
+ current_page?(weekly_user_stats_path) 
+ link_to t(".weekly_user_stats"), weekly_user_stats_path 
+ current_page?(pod_stats_path) 
+ link_to t(".pod_stats"), pod_stats_path 
+ current_page?(report_index_path) 
+ link_to t(".report"), report_index_path 
+ current_page?(admin_pods_path) 
+ link_to t(".pod_network"), admin_pods_path 
+ current_page?(sidekiq_path) 
+ link_to t(".sidekiq_monitor"), sidekiq_path 
+ 
  t('.usage_statistic') 
  form_tag('/admins/stats', :method => 'get', class: 'form-inline') do 
  ('selected' if params[:range] == 'daily') 
@@ -288,7 +344,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  raw(t('.display_results', :segment => @segment)) 
  [:posts, :comments, :aspect_memberships, :users].each do |name| 
- model = eval("@#{name.to_s}") 
+ model = eval("@") 
  if name == :aspect_memberships 
  name = t('.shares', :count => model[:yesterday]) 
  end 
@@ -303,8 +359,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  name.to_s 
  model[:day_before] 
- (model[:change] > 0 ? "green" : "red") 
- "(#{model[:change]}%)" 
+ "(%)" 
  end 
  raw(t('.current_segment', :post_yest => @posts[:yesterday]/@user_count.to_f, :post_day => @posts[:day_before]/@user_count.to_f)) 
  t('.50_most') 
