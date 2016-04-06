@@ -5,13 +5,13 @@ class HomeController < ApplicationController
   before_filter :require_logged_in_user, :only => [ :upvoted ]
 
   def about
-    begin
+#    begin
       render :action => "about"
-    rescue
-      render :text => "<div class=\"box wide\">" <<
-        "A mystery." <<
-        "</div>", :layout => "application"
-    end
+#    rescue
+#      render :text => "<div class=\"box wide\">" <<
+#        "A mystery." <<
+#        "</div>", :layout => "application"
+#    end
   end
 
   def chat
@@ -103,17 +103,16 @@ class HomeController < ApplicationController
  end 
 
 end
-
-  end
+end
 
   def privacy
-    begin
+ #   begin
       render :action => "privacy"
-    rescue
-      render :text => "<div class=\"box wide\">" <<
-        "You apparently have no privacy." <<
-        "</div>", :layout => "application"
-    end
+#    rescue
+ #     render :text => "<div class=\"box wide\">" <<
+#        "You apparently have no privacy." <<
+#        "</div>", :layout => "application"
+#    end
   end
 
   def hidden
