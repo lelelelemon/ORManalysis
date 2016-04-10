@@ -41,7 +41,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  active_nav_item :catalogue 
  @page_title = @product_category.name 
@@ -110,7 +109,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  active_nav_item :catalogue 
  @page_title = "#{params[:value]} - Products" 
@@ -175,7 +173,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  active_nav_item :catalogue 
  @page_title = 'Catalogue' 
@@ -231,7 +228,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  active_nav_item :catalogue 
  @page_title = @product.name + " - " + @product.product_category.name 

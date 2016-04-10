@@ -34,7 +34,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  @page_title = "Order Status ##{@order.number} " 
  @order.first_name + ' ' + @order.last_name 
@@ -228,7 +227,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  @page_title = 'Checkout' 
    
@@ -349,7 +347,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  @page_title = 'Checkout' 
    
@@ -434,7 +431,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  @page_title = 'Checkout' 
    

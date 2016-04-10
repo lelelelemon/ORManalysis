@@ -32,7 +32,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  end 
  
-  
  end 
  active_nav_item :home 
  @full_header = true 
