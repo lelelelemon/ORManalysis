@@ -148,7 +148,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- 	calname = h(calendar.gsub(/.ics$/,''))
+ 
+	calname = h(calendar.gsub(/.ics$/,''))
 	sp = "calendar-#{calname.gsub(/ /, '_sp_')}" 
  cycle("even","odd") 
  if has_ical 
@@ -169,7 +170,8 @@ spinner sp
  
  else
  
- 	calname = h(calendar.gsub(/.ics$/,''))
+ 
+	calname = h(calendar.gsub(/.ics$/,''))
 	sp = "calendar-#{calname.gsub(/ /, '_sp_')}" 
  cycle("even","odd") 
  if has_ical 
@@ -339,7 +341,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- 	calname = h(calendar.gsub(/.ics$/,''))
+ 
+	calname = h(calendar.gsub(/.ics$/,''))
 	sp = "calendar-#{calname.gsub(/ /, '_sp_')}" 
  cycle("even","odd") 
  if has_ical 
@@ -360,7 +363,8 @@ spinner sp
  
  else
  
- 	calname = h(calendar.gsub(/.ics$/,''))
+ 
+	calname = h(calendar.gsub(/.ics$/,''))
 	sp = "calendar-#{calname.gsub(/ /, '_sp_')}" 
  cycle("even","odd") 
  if has_ical 

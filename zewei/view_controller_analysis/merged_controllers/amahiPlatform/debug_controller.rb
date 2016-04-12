@@ -111,7 +111,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  _temple_html_attributeremover3 
  end 
  ::Temple::Utils.escape_html((link_to "System Info", '/tab/debug/system')) 
-  ::Temple::Utils.escape_html((button_tag 'Submit for Debug', :type => 'button', :class => 'open-area btn btn-create', :id => "debug-button",  :data => { :related => "#debug-submit-form" })) 
+ 
+ ::Temple::Utils.escape_html((button_tag 'Submit for Debug', :type => 'button', :class => 'open-area btn btn-create', :id => "debug-button",  :data => { :related => "#debug-submit-form" })) 
  ::Temple::Utils.escape_html(( message_string = "\n\nExplain the sequence of events leading to the error\nin as much detail as you can.\n\nThe more *concrete detail* you can add,\nthe higher chances we fix the problem quickly!"
 
 _slim_controls1 = form_for :debug, :remote => true, :html => {\
@@ -247,7 +248,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  _temple_html_attributeremover3 
  end 
  ::Temple::Utils.escape_html((link_to "System Info", '/tab/debug/system')) 
-  ::Temple::Utils.escape_html((SystemUtils.run "grep -v \"hda dhcpd:\" #{Platform.file_name(:syslog)} | tail -100 | tac")) 
+ 
+ ::Temple::Utils.escape_html((SystemUtils.run "grep -v \"hda dhcpd:\" #{Platform.file_name(:syslog)} | tail -100 | tac")) 
  
  ::Temple::Utils.escape_html(( ::Temple::Utils.escape_html((Date.today.year)) 
  ::Temple::Utils.escape_html((link_to "Amahi", "http://www.amahi.org", :target => "_blank")) 
@@ -367,7 +369,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  _temple_html_attributeremover3 
  end 
  ::Temple::Utils.escape_html((link_to "System Info", '/tab/debug/system')) 
-  ::Temple::Utils.escape_html((SystemUtils.uptime)) 
+ 
+ ::Temple::Utils.escape_html((SystemUtils.uptime)) 
  ::Temple::Utils.escape_html((SystemUtils.run 'cat /proc/cpuinfo')) 
  ::Temple::Utils.escape_html((SystemUtils.run 'cat /proc/meminfo')) 
  

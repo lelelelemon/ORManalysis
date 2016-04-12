@@ -134,7 +134,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -209,7 +210,8 @@ t 'start_at_boot_time'
  
  else
  
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -425,7 +427,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -500,7 +503,8 @@ t 'start_at_boot_time'
  
  else
  
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -716,7 +720,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -791,7 +796,8 @@ t 'start_at_boot_time'
  
  else
  
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -1006,7 +1012,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -1081,7 +1088,8 @@ t 'start_at_boot_time'
  
  else
  
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -1297,7 +1305,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -1372,7 +1381,8 @@ t 'start_at_boot_time'
  
  else
  
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -1588,7 +1598,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')
@@ -1663,7 +1674,8 @@ t 'start_at_boot_time'
  
  else
  
- 	uid = server.id.to_s
+ 
+	uid = server.id.to_s
 	is_running = ! pids.empty?
 	running = server_status('running')
 	stopped = server_status('stopped')

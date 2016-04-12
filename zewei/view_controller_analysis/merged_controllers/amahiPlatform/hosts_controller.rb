@@ -142,7 +142,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-   if hosts.size > 0 
+ 
+  if hosts.size > 0 
 t 'name' 
 t 'static_ip_address' 
  
@@ -288,7 +289,8 @@ t 'mac_address_of_the_device'
  
  else
  
-   if hosts.size > 0 
+ 
+  if hosts.size > 0 
 t 'name' 
 t 'static_ip_address' 
  
@@ -569,7 +571,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-   if hosts.size > 0 
+ 
+  if hosts.size > 0 
 t 'name' 
 t 'static_ip_address' 
  
@@ -715,7 +718,8 @@ t 'mac_address_of_the_device'
  
  else
  
-   if hosts.size > 0 
+ 
+  if hosts.size > 0 
 t 'name' 
 t 'static_ip_address' 
  
@@ -1015,7 +1019,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-  button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
    	page.hide 'new-host-to-step1'
    	page[:host_host].value = ""
    	page[:host_address].value = ""
@@ -1076,7 +1081,8 @@ t 'mac_address_of_the_device'
  
  else
  
-  button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
    	page.hide 'new-host-to-step1'
    	page[:host_host].value = ""
    	page[:host_address].value = ""
@@ -1272,7 +1278,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-  button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
    	page.hide 'new-host-to-step1'
    	page[:host_host].value = ""
    	page[:host_address].value = ""
@@ -1333,7 +1340,8 @@ t 'mac_address_of_the_device'
  
  else
  
-  button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
    	page.hide 'new-host-to-step1'
    	page[:host_host].value = ""
    	page[:host_address].value = ""
@@ -1547,7 +1555,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-   if hosts.size > 0 
+ 
+  if hosts.size > 0 
 t 'name' 
 t 'static_ip_address' 
  
@@ -1693,7 +1702,8 @@ t 'mac_address_of_the_device'
  
  else
  
-   if hosts.size > 0 
+ 
+  if hosts.size > 0 
 t 'name' 
 t 'static_ip_address' 
  
@@ -1976,7 +1986,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-  button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
    	page.hide 'new-host-to-step1'
    	page[:host_host].value = ""
    	page[:host_address].value = ""
@@ -2037,7 +2048,8 @@ t 'mac_address_of_the_device'
  
  else
  
-  button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_static_ip')} &raquo; ", update_page { |page|
    	page.hide 'new-host-to-step1'
    	page[:host_host].value = ""
    	page[:host_address].value = ""
@@ -2310,7 +2322,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-  if hosts.size > 0 
+ 
+ if hosts.size > 0 
 t 'name' 
 t 'static_ip_address' 
  
@@ -2396,7 +2409,8 @@ t 'there_are_no_static_ips_defined'
  
  else
  
-  if hosts.size > 0 
+ 
+ if hosts.size > 0 
 t 'name' 
 t 'static_ip_address' 
  
@@ -2622,7 +2636,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_not_valid')
+ 
+page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_not_valid')
 page.show 'host_messages'
 page[:host_address].disabled = true
 page[:host_mac].disabled = true
@@ -2630,7 +2645,8 @@ page[:host_create_button].disabled = true
  
  else
  
- page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_not_valid')
+ 
+page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_not_valid')
 page.show 'host_messages'
 page[:host_address].disabled = true
 page[:host_mac].disabled = true
@@ -2775,7 +2791,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_not_valid')
+ 
+page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_not_valid')
 page.show 'host_messages'
 page[:host_address].disabled = true
 page[:host_mac].disabled = true
@@ -2783,7 +2800,8 @@ page[:host_create_button].disabled = true
  
  else
  
- page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_not_valid')
+ 
+page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_not_valid')
 page.show 'host_messages'
 page[:host_address].disabled = true
 page[:host_mac].disabled = true
@@ -2930,13 +2948,15 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:host_messages].replace_html theme_image_tag("ok") + " " + t('name_looks_good')
+ 
+page[:host_messages].replace_html theme_image_tag("ok") + " " + t('name_looks_good')
 page.show 'host_messages'
 page[:host_address].disabled = false
  
  else
  
- page[:host_messages].replace_html theme_image_tag("ok") + " " + t('name_looks_good')
+ 
+page[:host_messages].replace_html theme_image_tag("ok") + " " + t('name_looks_good')
 page.show 'host_messages'
 page[:host_address].disabled = false
  
@@ -3077,7 +3097,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_taken_already_or_is_reserved')
+ 
+page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_taken_already_or_is_reserved')
 page.show 'host_messages'
 page[:host_address].disabled = true
 page[:host_mac].disabled = true
@@ -3085,7 +3106,8 @@ page[:host_create_button].disabled = true
  
  else
  
- page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_taken_already_or_is_reserved')
+ 
+page[:host_messages].replace_html theme_image_tag("stop") + " " + t('name_is_taken_already_or_is_reserved')
 page.show 'host_messages'
 page[:host_address].disabled = true
 page[:host_mac].disabled = true
@@ -3235,14 +3257,16 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_is_not_valid')
+ 
+page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_is_not_valid')
 page.show 'address_messages'
 page[:host_mac].disabled = true
 page[:host_create_button].disabled = true
  
  else
  
- page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_is_not_valid')
+ 
+page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_is_not_valid')
 page.show 'address_messages'
 page[:host_mac].disabled = true
 page[:host_create_button].disabled = true
@@ -3388,13 +3412,15 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:address_messages].replace_html theme_image_tag("ok") + " " + t('address_looks_good')
+ 
+page[:address_messages].replace_html theme_image_tag("ok") + " " + t('address_looks_good')
 page.show 'address_messages'
 page[:host_mac].disabled = false
  
  else
  
- page[:address_messages].replace_html theme_image_tag("ok") + " " + t('address_looks_good')
+ 
+page[:address_messages].replace_html theme_image_tag("ok") + " " + t('address_looks_good')
 page.show 'address_messages'
 page[:host_mac].disabled = false
  
@@ -3535,14 +3561,16 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_already_allocated')
+ 
+page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_already_allocated')
 page.show 'address_messages'
 page[:host_mac].disabled = true
 page[:host_create_button].disabled = true
  
  else
  
- page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_already_allocated')
+ 
+page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_already_allocated')
 page.show 'address_messages'
 page[:host_mac].disabled = true
 page[:host_create_button].disabled = true
@@ -3691,12 +3719,14 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:mac_messages].replace_html theme_image_tag("stop") + " " + t('mac_is_invalid')
+ 
+page[:mac_messages].replace_html theme_image_tag("stop") + " " + t('mac_is_invalid')
 page.show 'mac_messages'
 page[:host_create_button].disabled = true 
  else
  
- page[:mac_messages].replace_html theme_image_tag("stop") + " " + t('mac_is_invalid')
+ 
+page[:mac_messages].replace_html theme_image_tag("stop") + " " + t('mac_is_invalid')
 page.show 'mac_messages'
 page[:host_create_button].disabled = true 
  end 
@@ -3840,13 +3870,15 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:mac_messages].replace_html theme_image_tag("ok") + " " + t('mac_looks_good')
+ 
+page[:mac_messages].replace_html theme_image_tag("ok") + " " + t('mac_looks_good')
 page.show 'mac_messages'
 page[:host_create_button].disabled = false
  
  else
  
- page[:mac_messages].replace_html theme_image_tag("ok") + " " + t('mac_looks_good')
+ 
+page[:mac_messages].replace_html theme_image_tag("ok") + " " + t('mac_looks_good')
 page.show 'mac_messages'
 page[:host_create_button].disabled = false
  
@@ -3987,13 +4019,15 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:mac_messages].replace_html theme_image_tag("stop") + " " + t('mac_already_allocated')
+ 
+page[:mac_messages].replace_html theme_image_tag("stop") + " " + t('mac_already_allocated')
 page.show 'mac_messages'
 page[:host_create_button].disabled = true
  
  else
  
- page[:mac_messages].replace_html theme_image_tag("stop") + " " + t('mac_already_allocated')
+ 
+page[:mac_messages].replace_html theme_image_tag("stop") + " " + t('mac_already_allocated')
 page.show 'mac_messages'
 page[:host_create_button].disabled = true
  
@@ -4141,11 +4175,13 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page["wake-icon-#{@host.id}"].replace_html theme_image_tag("ok")
+ 
+page["wake-icon-#{@host.id}"].replace_html theme_image_tag("ok")
  
  else
  
- page["wake-icon-#{@host.id}"].replace_html theme_image_tag("ok")
+ 
+page["wake-icon-#{@host.id}"].replace_html theme_image_tag("ok")
  
  end 
  ::Temple::Utils.escape_html(( ::Temple::Utils.escape_html((Date.today.year)) 
@@ -4290,11 +4326,13 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page["wake-icon-#{@mac}"].replace_html theme_image_tag("ok")
+ 
+page["wake-icon-#{@mac}"].replace_html theme_image_tag("ok")
  
  else
  
- page["wake-icon-#{@mac}"].replace_html theme_image_tag("ok")
+ 
+page["wake-icon-#{@mac}"].replace_html theme_image_tag("ok")
  
  end 
  ::Temple::Utils.escape_html(( ::Temple::Utils.escape_html((Date.today.year)) 

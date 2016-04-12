@@ -97,7 +97,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  ::Temple::Utils.escape_html((msg)) 
  end 
 )) 
-  size = @apps.size
+ 
+ size = @apps.size
  
  if size > 6
  
@@ -105,7 +106,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  ::Temple::Utils.escape_html((link_to(image_tag(app.logo_url, :class => "welcome-logo#{subclass}", :title => app.name), app.full_url, :target => '_blank'))) 
  ::Temple::Utils.escape_html((link_to(app.name, app.full_url, :target => '_blank'))) 
 )) 
- ::Temple::Utils.escape_html((render(:partial => "one", :locals => { :app => pair.last, :subclass => "-small" }) if pair.last)) 
+ ::Temple::Utils.escape_html(( ::Temple::Utils.escape_html((subclass)) 
+ ::Temple::Utils.escape_html((link_to(image_tag(app.logo_url, :class => "welcome-logo#{subclass}", :title => app.name), app.full_url, :target => '_blank'))) 
+ ::Temple::Utils.escape_html((link_to(app.name, app.full_url, :target => '_blank'))) 
+)) 
 )) 
  else
  

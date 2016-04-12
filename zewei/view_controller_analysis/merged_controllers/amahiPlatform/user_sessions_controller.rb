@@ -33,7 +33,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
  ::Temple::Utils.escape_html((csrf_meta_tags)) 
  ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
-  flash.each do |name, msg|
+ 
+ flash.each do |name, msg|
  
  ::Temple::Utils.escape_html((name)) 
  ::Temple::Utils.escape_html((msg)) 
@@ -70,7 +71,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
  ::Temple::Utils.escape_html((csrf_meta_tags)) 
  ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
-  flash.each do |name, msg|
+ 
+ flash.each do |name, msg|
  
  ::Temple::Utils.escape_html((name)) 
  ::Temple::Utils.escape_html((msg)) 
@@ -109,7 +111,8 @@ end
  ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
  ::Temple::Utils.escape_html((csrf_meta_tags)) 
  ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
-  flash.each do |name, msg|
+ 
+ flash.each do |name, msg|
  
  ::Temple::Utils.escape_html((name)) 
  ::Temple::Utils.escape_html((msg)) 
@@ -155,7 +158,8 @@ end
  ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
  ::Temple::Utils.escape_html((csrf_meta_tags)) 
  ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
-  flash.each do |name, msg|
+ 
+ flash.each do |name, msg|
  
  ::Temple::Utils.escape_html((name)) 
  ::Temple::Utils.escape_html((msg)) 
@@ -193,7 +197,8 @@ end
  ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
  ::Temple::Utils.escape_html((csrf_meta_tags)) 
  ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
-  flash.each do |name, msg|
+ 
+ flash.each do |name, msg|
  
  ::Temple::Utils.escape_html((name)) 
  ::Temple::Utils.escape_html((msg)) 
@@ -240,7 +245,8 @@ end
  ::Temple::Utils.escape_html((stylesheet_link_tag "login")) 
  ::Temple::Utils.escape_html((csrf_meta_tags)) 
  ::Temple::Utils.escape_html((javascript_include_tag 'http://html5shim.googlecode.com/svn/trunk/html5.js')) 
-  flash.each do |name, msg|
+ 
+ flash.each do |name, msg|
  
  ::Temple::Utils.escape_html((name)) 
  ::Temple::Utils.escape_html((msg)) 

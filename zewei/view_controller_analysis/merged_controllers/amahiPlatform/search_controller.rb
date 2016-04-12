@@ -122,7 +122,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  ::Temple::Utils.escape_html((msg)) 
  end 
 )) 
-  _temple_html_attributeremover1 = (::Temple::Utils.escape_html((active 'hda'))).to_s 
+ 
+ _temple_html_attributeremover1 = (::Temple::Utils.escape_html((active 'hda'))).to_s 
  if !_temple_html_attributeremover1.empty? 
  _temple_html_attributeremover1 
  end 
@@ -290,7 +291,8 @@ end
  ::Temple::Utils.escape_html((msg)) 
  end 
 )) 
-  _temple_html_attributeremover1 = (::Temple::Utils.escape_html((active 'hda'))).to_s 
+ 
+ _temple_html_attributeremover1 = (::Temple::Utils.escape_html((active 'hda'))).to_s 
  if !_temple_html_attributeremover1.empty? 
  _temple_html_attributeremover1 
  end 
@@ -458,7 +460,8 @@ end
  ::Temple::Utils.escape_html((msg)) 
  end 
 )) 
-  _temple_html_attributeremover1 = (::Temple::Utils.escape_html((active 'hda'))).to_s 
+ 
+ _temple_html_attributeremover1 = (::Temple::Utils.escape_html((active 'hda'))).to_s 
  if !_temple_html_attributeremover1.empty? 
  _temple_html_attributeremover1 
  end 
@@ -626,7 +629,8 @@ end
  ::Temple::Utils.escape_html((msg)) 
  end 
 )) 
-  _temple_html_attributeremover1 = (::Temple::Utils.escape_html((active 'hda'))).to_s 
+ 
+ _temple_html_attributeremover1 = (::Temple::Utils.escape_html((active 'hda'))).to_s 
  if !_temple_html_attributeremover1.empty? 
  _temple_html_attributeremover1 
  end 

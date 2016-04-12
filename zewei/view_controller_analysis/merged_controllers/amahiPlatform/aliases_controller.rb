@@ -143,7 +143,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-   if aliases.size > 0 
+ 
+  if aliases.size > 0 
 t 'dns_alias' 
 t 'ip_address' 
  
@@ -258,7 +259,8 @@ t 'an_external_ip_address_to_make_the_alias'
  
  else
  
-   if aliases.size > 0 
+ 
+  if aliases.size > 0 
 t 'dns_alias' 
 t 'ip_address' 
  
@@ -508,7 +510,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-   if aliases.size > 0 
+ 
+  if aliases.size > 0 
 t 'dns_alias' 
 t 'ip_address' 
  
@@ -623,7 +626,8 @@ t 'an_external_ip_address_to_make_the_alias'
  
  else
  
-   if aliases.size > 0 
+ 
+  if aliases.size > 0 
 t 'dns_alias' 
 t 'ip_address' 
  
@@ -892,7 +896,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-  button_to " #{t('new_alias')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_alias')} &raquo; ", update_page { |page|
    	page.hide 'new-alias-to-step1'
    	page[:alias_alias].value = ""
    	page[:alias_address].value = ""
@@ -943,7 +948,8 @@ t 'an_external_ip_address_to_make_the_alias'
  
  else
  
-  button_to " #{t('new_alias')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_alias')} &raquo; ", update_page { |page|
    	page.hide 'new-alias-to-step1'
    	page[:alias_alias].value = ""
    	page[:alias_address].value = ""
@@ -1129,7 +1135,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-  button_to " #{t('new_alias')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_alias')} &raquo; ", update_page { |page|
    	page.hide 'new-alias-to-step1'
    	page[:alias_alias].value = ""
    	page[:alias_address].value = ""
@@ -1180,7 +1187,8 @@ t 'an_external_ip_address_to_make_the_alias'
  
  else
  
-  button_to " #{t('new_alias')} &raquo; ", update_page { |page|
+ 
+ button_to " #{t('new_alias')} &raquo; ", update_page { |page|
    	page.hide 'new-alias-to-step1'
    	page[:alias_alias].value = ""
    	page[:alias_address].value = ""
@@ -1384,7 +1392,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-   if aliases.size > 0 
+ 
+  if aliases.size > 0 
 t 'dns_alias' 
 t 'ip_address' 
  
@@ -1499,7 +1508,8 @@ t 'an_external_ip_address_to_make_the_alias'
  
  else
  
-   if aliases.size > 0 
+ 
+  if aliases.size > 0 
 t 'dns_alias' 
 t 'ip_address' 
  
@@ -1817,7 +1827,8 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
-  if aliases.size > 0 
+ 
+ if aliases.size > 0 
 t 'dns_alias' 
 t 'ip_address' 
  
@@ -1882,7 +1893,8 @@ t 'there_are_no_aliases_defined'
  
  else
  
-  if aliases.size > 0 
+ 
+ if aliases.size > 0 
 t 'dns_alias' 
 t 'ip_address' 
  
@@ -2087,14 +2099,16 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_not_valid')
+ 
+page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_not_valid')
 page.show 'alias_messages'
 page[:alias_address].disabled = true
 page[:alias_create_button].disabled = true
  
  else
  
- page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_not_valid')
+ 
+page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_not_valid')
 page.show 'alias_messages'
 page[:alias_address].disabled = true
 page[:alias_create_button].disabled = true
@@ -2238,14 +2252,16 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_not_valid')
+ 
+page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_not_valid')
 page.show 'alias_messages'
 page[:alias_address].disabled = true
 page[:alias_create_button].disabled = true
  
  else
  
- page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_not_valid')
+ 
+page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_not_valid')
 page.show 'alias_messages'
 page[:alias_address].disabled = true
 page[:alias_create_button].disabled = true
@@ -2391,13 +2407,15 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:alias_messages].replace_html theme_image_tag("ok") + " " + t('alias_looks_good')
+ 
+page[:alias_messages].replace_html theme_image_tag("ok") + " " + t('alias_looks_good')
 page.show 'alias_messages'
 page[:alias_address].disabled = false
  
  else
  
- page[:alias_messages].replace_html theme_image_tag("ok") + " " + t('alias_looks_good')
+ 
+page[:alias_messages].replace_html theme_image_tag("ok") + " " + t('alias_looks_good')
 page.show 'alias_messages'
 page[:alias_address].disabled = false
  
@@ -2538,14 +2556,16 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_taken_already')
+ 
+page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_taken_already')
 page.show 'alias_messages'
 page[:alias_address].disabled = true
 page[:alias_create_button].disabled = true
  
  else
  
- page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_taken_already')
+ 
+page[:alias_messages].replace_html theme_image_tag("stop") + " " + t('alias_is_taken_already')
 page.show 'alias_messages'
 page[:alias_address].disabled = true
 page[:alias_create_button].disabled = true
@@ -2694,13 +2714,15 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_is_not_valid')
+ 
+page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_is_not_valid')
 page.show 'address_messages'
 page[:alias_create_button].disabled = true
  
  else
  
- page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_is_not_valid')
+ 
+page[:address_messages].replace_html theme_image_tag("stop") + " " + t('address_is_not_valid')
 page.show 'address_messages'
 page[:alias_create_button].disabled = true
  
@@ -2841,13 +2863,15 @@ tab.basic_subtabs.each do |subtab|
  end; end 
  end 
 )) 
- page[:address_messages].replace_html theme_image_tag("ok") + " " + t('address_looks_good')
+ 
+page[:address_messages].replace_html theme_image_tag("ok") + " " + t('address_looks_good')
 page.show 'address_messages'
 page[:alias_create_button].disabled = false
  
  else
  
- page[:address_messages].replace_html theme_image_tag("ok") + " " + t('address_looks_good')
+ 
+page[:address_messages].replace_html theme_image_tag("ok") + " " + t('address_looks_good')
 page.show 'address_messages'
 page[:alias_create_button].disabled = false
  
