@@ -125,7 +125,7 @@ def parse_assoc(ast)
 end
 
 
-def get_view_name_from_hash(options_hash, controller_name, action_name)
+def get_view_name_from_hash(options_hash, controller_name, action_name, view_hash)
   res = ""
   if options_hash.has_key?":partial"
     res = options_hash[":partial"]
@@ -175,10 +175,21 @@ def get_view_name_from_hash(options_hash, controller_name, action_name)
     res = "not_valid"
   elsif r == nil
     if options_hash.has_key? "partial" or options_hash.has_key? ":partial" or options_hash.has_key? "partial:"
-      res = controller_name + "__" + res
+      _res = controller_name + "__" + res
     else
-      res = controller_name + "_" + res
+      _res = controller_name + "_" + res
     end
+    if view_hash.has_key?(_res)
+      res = _res
+    else
+      view_hash.each do |k, v|
+        if k.end_with?(res)
+          res = k
+          break
+        end
+      end
+    end
+    res = "not_valid" if res == nil
   else
     if options_hash.has_key? "partial" or options_hash.has_key? ":partial" or options_hash.has_key? "partial:"
       res = res[0..r-1] + "__" + res[r+1..-1]
@@ -252,10 +263,10 @@ def get_view_name_from_hash_without_default(options_hash)
 end
 
 
-def get_view_name_from_render_statement(stmt, controller_name, action_name)
+def get_view_name_from_render_statement(stmt, controller_name, action_name, view_hash)
   options_hash = parse_render_statement(stmt)
   if options_hash != NOT_VALID
-    res = get_view_name_from_hash(options_hash, controller_name, action_name)
+    res = get_view_name_from_hash(options_hash, controller_name, action_name, view_hash)
   else
     res = NOT_VALID
   end

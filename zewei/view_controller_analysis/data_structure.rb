@@ -174,7 +174,7 @@ class Function_Class
 
 		render_stmt_arr.each do |(str_to_be_replaced, stmt)|
 			puts stmt
-      view_name = get_view_name_from_render_statement(stmt, get_controller_name, get_function_name)
+      view_name = get_view_name_from_render_statement(stmt, get_controller_name, get_function_name, view_class_hash)
       layout_name = get_layout_name_from_render_statement(stmt)      
 			view_name_arr.push view_name unless view_name_arr.include?(view_name)
       view_name_arr.push layout_name unless view_name_arr.include?(layout_name)
@@ -209,7 +209,7 @@ class Function_Class
 		get_render_statement_array.each do |(str_to_be_replaced, stmt)|
       options_hash = parse_render_statement(stmt)
       if options_hash != "not_valid"
-        view_name = get_view_name_from_hash(options_hash, get_controller_name, get_function_name)
+        view_name = get_view_name_from_hash(options_hash, get_controller_name, get_function_name, view_class_hash)
 				
         # if render :nothing, then skip to the next render statement
         next if view_name.include?("nothing") or view_name == "not_valid"
@@ -464,10 +464,10 @@ class View_Class
 		render_stmt_arr = []
 		get_render_statement_array.each do |(str_to_be_replaced, stmt)|
 			render_stmt_arr.push stmt
-			render_arr.push get_view_name_from_render_statement(stmt, get_controller_name, get_view_name)
+			render_arr.push get_view_name_from_render_statement(stmt, get_controller_name, get_view_name, view_class_hash)
 		end
 		render_stmt_arr.each do |stmt|
-			view_name = get_view_name_from_render_statement(stmt, get_controller_name, get_view_name)
+			view_name = get_view_name_from_render_statement(stmt, get_controller_name, get_view_name, view_class_hash)
       puts "render statement: " + stmt
       puts "view_name: " + view_name
 			if view_name != "not_valid"	
@@ -515,7 +515,7 @@ class View_Class
       options_hash = parse_render_statement(stmt)
 			#if view_name != "not_valid"
       if options_hash != "not_valid"
-        view_name = get_view_name_from_hash(options_hash, get_controller_name, get_view_name)
+        view_name = get_view_name_from_hash(options_hash, get_controller_name, get_view_name, view_class_hash)
 				view_class = view_class_hash[view_name]
         puts "view_name: " + view_name
 				if view_class != nil
