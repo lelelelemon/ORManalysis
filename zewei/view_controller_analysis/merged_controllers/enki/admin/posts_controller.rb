@@ -84,9 +84,6 @@ end
  form.input :minor_edit, :as => 'boolean', :hint => 'Minor edits will not show up as refreshed in feed readers. Use this to fix spelling mistakes and the like.' unless @post.new_record? 
  end 
  
- form.actions do 
- form.action :submit, :as => :button 
- end 
  end 
  nav_link_to("Dashboard", admin_root_path,       :accesskey => '1') 
  nav_link_to("Posts",     admin_posts_path,      :accesskey => '2') 
@@ -139,9 +136,6 @@ end
  form.input :minor_edit, :as => 'boolean', :hint => 'Minor edits will not show up as refreshed in feed readers. Use this to fix spelling mistakes and the like.' unless @post.new_record? 
  end 
  
- form.actions do 
- form.action :submit, :as => :button 
- end 
  end 
  nav_link_to("Dashboard", admin_root_path,       :accesskey => '1') 
  nav_link_to("Posts",     admin_posts_path,      :accesskey => '2') 
@@ -223,9 +217,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form.input :minor_edit, :as => 'boolean', :hint => 'Minor edits will not show up as refreshed in feed readers. Use this to fix spelling mistakes and the like.' unless @post.new_record? 
  end 
  
- form.actions do 
- form.action :submit, :as => :button 
- end 
  end 
  nav_link_to("Dashboard", admin_root_path,       :accesskey => '1') 
  nav_link_to("Posts",     admin_posts_path,      :accesskey => '2') 
@@ -267,9 +258,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form.input :minor_edit, :as => 'boolean', :hint => 'Minor edits will not show up as refreshed in feed readers. Use this to fix spelling mistakes and the like.' unless @post.new_record? 
  end 
  
- form.actions do 
- form.action :submit, :as => :button 
- end 
  end 
  nav_link_to("Dashboard", admin_root_path,       :accesskey => '1') 
  nav_link_to("Posts",     admin_posts_path,      :accesskey => '2') 

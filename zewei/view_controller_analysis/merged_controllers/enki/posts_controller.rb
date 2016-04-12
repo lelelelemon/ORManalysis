@@ -28,7 +28,14 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  @posts.each do |post| 
  dom_id(post) 
- render post 
+  link_to_post(post) 
+ raw(post.body_html) 
+ format_post_date(post.published_at) if post.published? 
+ link_to_post_comments post 
+ unless post.tags.empty? 
+ linked_tag_list(post.tags) 
+ end 
+ 
  end 
  if more_content? 
  link_to 'archives', archives_path 
@@ -66,11 +73,22 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :page_title do 
  post_title @post 
  end 
- render @post 
+  link_to_post(post) 
+ raw(post.body_html) 
+ format_post_date(post.published_at) if post.published? 
+ link_to_post_comments post 
+ unless post.tags.empty? 
+ linked_tag_list(post.tags) 
+ end 
+ 
  @post.approved_comments.each do |comment| 
 raw cycle(' class="alt"', '') 
  comment.id 
- render comment 
+  author_link(comment) 
+ comment.id 
+ format_comment_date(comment.created_at) 
+ raw(comment.body_html) 
+ 
  end 
  link_to 'archives', archives_path 
  unless @comment.errors.empty? 

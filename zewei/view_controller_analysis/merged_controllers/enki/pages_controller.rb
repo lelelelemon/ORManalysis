@@ -11,7 +11,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  root_url 
  enki_config[:title] 
   
- render @page 
+  raw(page.body_html) 
+ 
  page_links_for_navigation.each do |link| 
  link_to(link.name, link.url) 
  end 

@@ -78,9 +78,6 @@ end
  form.input :body, :hint => "<a href='http://textile.thresholdstate.com/'>Textile enabled</a>. Use Ctrl+E to switch between preview and edit mode.".html_safe 
  end 
  
- form.actions do 
- form.action :submit, :as => :button 
- end 
  end 
  nav_link_to("Dashboard", admin_root_path,       :accesskey => '1') 
  nav_link_to("Posts",     admin_posts_path,      :accesskey => '2') 
@@ -128,9 +125,6 @@ end
  form.input :body, :hint => "<a href='http://textile.thresholdstate.com/'>Textile enabled</a>. Use Ctrl+E to switch between preview and edit mode.".html_safe 
  end 
  
- form.actions do 
- form.action :submit, :as => :button 
- end 
  end 
  nav_link_to("Dashboard", admin_root_path,       :accesskey => '1') 
  nav_link_to("Posts",     admin_posts_path,      :accesskey => '2') 
@@ -206,9 +200,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form.input :body, :hint => "<a href='http://textile.thresholdstate.com/'>Textile enabled</a>. Use Ctrl+E to switch between preview and edit mode.".html_safe 
  end 
  
- form.actions do 
- form.action :submit, :as => :button 
- end 
  end 
  nav_link_to("Dashboard", admin_root_path,       :accesskey => '1') 
  nav_link_to("Posts",     admin_posts_path,      :accesskey => '2') 
@@ -245,9 +236,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form.input :body, :hint => "<a href='http://textile.thresholdstate.com/'>Textile enabled</a>. Use Ctrl+E to switch between preview and edit mode.".html_safe 
  end 
  
- form.actions do 
- form.action :submit, :as => :button 
- end 
  end 
  nav_link_to("Dashboard", admin_root_path,       :accesskey => '1') 
  nav_link_to("Posts",     admin_posts_path,      :accesskey => '2') 
