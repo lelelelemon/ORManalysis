@@ -30,7 +30,7 @@ File.open(ARGV[0], "r").each_line do |line|
 #    line = line[1..-1]
 #  end
   if line.to_s.strip.length == 0
-
+    next
   end
   if content.start_with?"-#"
     is_comment = true
@@ -110,6 +110,18 @@ File.open(ARGV[0], "r").each_line do |line|
 
   if line =~ /.*&& selected_aspects.include\?\(aspect\) \? "selected" : "".*/
     line.gsub! /&& selected_aspects.include\?\(aspect\) \? "selected" : ""/, ""
+  end
+
+  if line.include? " + flash_class(level)"
+    line.gsub! " + flash_class(level)", ""
+  end
+
+  if line.include? " + css_class"
+    line.gsub! " + css_class", ""
+  end
+  
+  if line.include? "@selected.eql?(p.id.to_s) ? 'selected' : ''"
+    line.gsub! "@selected.eql?(p.id.to_s) ? 'selected' : ''", "''"
   end
   puts line
 

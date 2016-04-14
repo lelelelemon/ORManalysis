@@ -23,7 +23,6 @@ class MessagesController < BaseController
       @messages = @user.message_threads_as_recipient.order('updated_at DESC').page(params[:page]).per(20)
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- home_url 
  csrf_meta_tag 
  page_title 
  if @meta 
@@ -39,7 +38,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if forum_page? 
  unless @feed_icons.blank? 
  @feed_icons.each do |feed| 
- auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to ''" 
  end 
  end 
  end 
@@ -48,8 +47,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless configatron.auth_providers.facebook.key.blank? 
   
  end 
-  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
-  
+  # .navbar-toggle is used as the toggle for when the responsive design gets narrow and the navbar goes away 
+ link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  if params[:controller] == 'categories' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ if Category.all.any? 
+ categories_path 
+ :categories.l 
+ for category in Category.order('name') 
+ link_to category.name, category 
+ end 
+ end 
+ 
   if current_page?(site_clippings_path) 
  css_class = 'active' 
  else 
@@ -109,17 +121,47 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  
+  if logged_in? 
+ if !current_page?(users_path) && (params[:controller] == 'users' && !@user.nil? && @user == current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ dashboard_user_path(current_user) 
+ :logged_in.l + ' ' + current_user.login 
+ if current_user.admin? 
+ link_to :admin_dashboard.l, admin_dashboard_path 
+ end 
+ link_to :edit_profile.l, edit_user_path(current_user) 
+ link_to :edit_account.l, edit_account_user_path(current_user) 
+ link_to :manage_posts.l, manage_user_posts_path(current_user) 
+ link_to :inbox.l, user_messages_path(current_user) 
+ link_to :my_profile.l, user_path(current_user) 
+ link_to :my_blog.l, user_posts_path(current_user) 
+ link_to :photo_manager.l, user_photo_manager_index_path(current_user) 
+ link_to :my_clippings.l, user_clippings_path(current_user) 
+ link_to :my_friends.l, accepted_user_friendships_path(current_user) 
+ link_to :log_out.l, logout_path 
+ else 
+ link_to(:log_in.l, login_path) 
+ link_to(:sign_up.l, signup_path) 
+ end 
+ 
  
  render_jumbotron 
  container_title 
-  
-   widget do 
+  [:notice, :error, :alert].each do |level| 
+ unless flash[level].blank? 
+ content_tag :p, flash[level] 
+ end 
+ end 
+ 
+  widget do 
  :links.l 
  user_messages_path(@user) 
  :inbox.l 
  if @user.unread_messages? 
- "#{@user.unread_message_count}" 
+ "" 
  fa_icon "envelope inverse" 
  end 
  link_to :sent_messages.l, user_messages_path(@user, :mailbox => :sent) 
@@ -147,7 +189,33 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  else 
  bootstrap_form_tag :url => delete_message_threads_user_messages_path(@user) do 
-  
+  @page_title = :inbox.l 
+ if @messages.empty? 
+ :no_messages.l 
+ else 
+ @messages.each do |message_thread| 
+ message = message_thread.message 
+ children = message_thread.parent_message.children 
+ check_box_tag "delete[]", message_thread.id 
+ if children.any? 
+ if message_thread.read? 
+ children.size 
+ else 
+ children.size 
+ end 
+ end 
+ link_to h(message_thread.subject), user_message_path(@user, message) 
+ if !message_thread.read? 
+ :new.l 
+ end 
+ message.sender.login 
+ truncate(message.body) 
+ time_ago_in_words_or_date(message_thread.updated_at) 
+ end 
+ submit_tag :delete_selected.l, :class => 'btn btn-danger' 
+ paginate @messages, :theme => 'bootstrap' 
+ end 
+ 
  end 
  end 
   render_widgets 
@@ -156,7 +224,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  image_tag 'spinner.gif', :plugin => 'community_engine' 
  :loading_recent_content.l 
  end 
-  
+  :home.l 
+ if !logged_in? 
+ link_to :log_in.l, login_path 
+ else 
+ :log_out.l 
+ end 
+ Page.all.each do |page| 
+ if (logged_in? ) 
+ link_to page.title, pages_path(page) 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ link_to :rss.l, @rss_url, {:title => @rss_title} 
+ end 
+ 
  :community_tagline.l 
   javascript_include_tag 'community_engine' 
  tiny_mce_init_if_needed 
@@ -174,7 +256,6 @@ end
     @message_thread = MessageThread.for(@message, (admin? ? @message.recipient : current_user ))
     @reply = Message.new_reply(@user, @message_thread, params)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- home_url 
  csrf_meta_tag 
  page_title 
  if @meta 
@@ -190,7 +271,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if forum_page? 
  unless @feed_icons.blank? 
  @feed_icons.each do |feed| 
- auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to ''" 
  end 
  end 
  end 
@@ -199,8 +280,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless configatron.auth_providers.facebook.key.blank? 
   
  end 
-  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
-  
+  # .navbar-toggle is used as the toggle for when the responsive design gets narrow and the navbar goes away 
+ link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  if params[:controller] == 'categories' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ if Category.all.any? 
+ categories_path 
+ :categories.l 
+ for category in Category.order('name') 
+ link_to category.name, category 
+ end 
+ end 
+ 
   if current_page?(site_clippings_path) 
  css_class = 'active' 
  else 
@@ -260,12 +354,42 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  
+  if logged_in? 
+ if !current_page?(users_path) && (params[:controller] == 'users' && !@user.nil? && @user == current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ dashboard_user_path(current_user) 
+ :logged_in.l + ' ' + current_user.login 
+ if current_user.admin? 
+ link_to :admin_dashboard.l, admin_dashboard_path 
+ end 
+ link_to :edit_profile.l, edit_user_path(current_user) 
+ link_to :edit_account.l, edit_account_user_path(current_user) 
+ link_to :manage_posts.l, manage_user_posts_path(current_user) 
+ link_to :inbox.l, user_messages_path(current_user) 
+ link_to :my_profile.l, user_path(current_user) 
+ link_to :my_blog.l, user_posts_path(current_user) 
+ link_to :photo_manager.l, user_photo_manager_index_path(current_user) 
+ link_to :my_clippings.l, user_clippings_path(current_user) 
+ link_to :my_friends.l, accepted_user_friendships_path(current_user) 
+ link_to :log_out.l, logout_path 
+ else 
+ link_to(:log_in.l, login_path) 
+ link_to(:sign_up.l, signup_path) 
+ end 
+ 
  
  render_jumbotron 
  container_title 
-  
-  if @message_thread 
+  [:notice, :error, :alert].each do |level| 
+ unless flash[level].blank? 
+ content_tag :p, flash[level] 
+ end 
+ end 
+ 
+ if @message_thread 
  @page_title = @message_thread.parent_message.sender.login + ':' + @message_thread.parent_message.subject 
  else 
  @page_title= @message.subject 
@@ -275,7 +399,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  user_messages_path(@user) 
  :inbox.l 
  if @user.unread_messages? 
- "#{@user.unread_message_count}" 
+ "" 
  fa_icon "envelope inverse" 
  end 
  link_to :sent_messages.l, user_messages_path(@user, :mailbox => :sent) 
@@ -321,14 +445,28 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  image_tag 'spinner.gif', :plugin => 'community_engine' 
  :loading_recent_content.l 
  end 
-  
+  :home.l 
+ if !logged_in? 
+ link_to :log_in.l, login_path 
+ else 
+ :log_out.l 
+ end 
+ Page.all.each do |page| 
+ if (logged_in? ) 
+ link_to page.title, pages_path(page) 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ link_to :rss.l, @rss_url, {:title => @rss_title} 
+ end 
+ 
  :community_tagline.l 
   javascript_include_tag 'community_engine' 
  tiny_mce_init_if_needed 
  if show_footer_content? 
  end 
  
- tag_auto_complete_field 'message_to', {:url => { :controller => "messages", :action => 'auto_complete_for_username'}, :tokens => [','], :tagLimit => 1 } 
+ tag_auto_complete_field 'message_to', {} 
 
 end
 
@@ -341,7 +479,6 @@ end
     end
     @message = Message.new_reply(@user, message_thread, params)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- home_url 
  csrf_meta_tag 
  page_title 
  if @meta 
@@ -357,7 +494,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if forum_page? 
  unless @feed_icons.blank? 
  @feed_icons.each do |feed| 
- auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to ''" 
  end 
  end 
  end 
@@ -366,8 +503,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless configatron.auth_providers.facebook.key.blank? 
   
  end 
-  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
-  
+  # .navbar-toggle is used as the toggle for when the responsive design gets narrow and the navbar goes away 
+ link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  if params[:controller] == 'categories' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ if Category.all.any? 
+ categories_path 
+ :categories.l 
+ for category in Category.order('name') 
+ link_to category.name, category 
+ end 
+ end 
+ 
   if current_page?(site_clippings_path) 
  css_class = 'active' 
  else 
@@ -427,18 +577,48 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  
+  if logged_in? 
+ if !current_page?(users_path) && (params[:controller] == 'users' && !@user.nil? && @user == current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ dashboard_user_path(current_user) 
+ :logged_in.l + ' ' + current_user.login 
+ if current_user.admin? 
+ link_to :admin_dashboard.l, admin_dashboard_path 
+ end 
+ link_to :edit_profile.l, edit_user_path(current_user) 
+ link_to :edit_account.l, edit_account_user_path(current_user) 
+ link_to :manage_posts.l, manage_user_posts_path(current_user) 
+ link_to :inbox.l, user_messages_path(current_user) 
+ link_to :my_profile.l, user_path(current_user) 
+ link_to :my_blog.l, user_posts_path(current_user) 
+ link_to :photo_manager.l, user_photo_manager_index_path(current_user) 
+ link_to :my_clippings.l, user_clippings_path(current_user) 
+ link_to :my_friends.l, accepted_user_friendships_path(current_user) 
+ link_to :log_out.l, logout_path 
+ else 
+ link_to(:log_in.l, login_path) 
+ link_to(:sign_up.l, signup_path) 
+ end 
+ 
  
  render_jumbotron 
  container_title 
-  
-  @page_title= :compose_message.l 
+  [:notice, :error, :alert].each do |level| 
+ unless flash[level].blank? 
+ content_tag :p, flash[level] 
+ end 
+ end 
+ 
+ @page_title= :compose_message.l 
   widget do 
  :links.l 
  user_messages_path(@user) 
  :inbox.l 
  if @user.unread_messages? 
- "#{@user.unread_message_count}" 
+ "" 
  fa_icon "envelope inverse" 
  end 
  link_to :sent_messages.l, user_messages_path(@user, :mailbox => :sent) 
@@ -468,14 +648,28 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  image_tag 'spinner.gif', :plugin => 'community_engine' 
  :loading_recent_content.l 
  end 
-  
+  :home.l 
+ if !logged_in? 
+ link_to :log_in.l, login_path 
+ else 
+ :log_out.l 
+ end 
+ Page.all.each do |page| 
+ if (logged_in? ) 
+ link_to page.title, pages_path(page) 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ link_to :rss.l, @rss_url, {:title => @rss_title} 
+ end 
+ 
  :community_tagline.l 
   javascript_include_tag 'community_engine' 
  tiny_mce_init_if_needed 
  if show_footer_content? 
  end 
  
- tag_auto_complete_field 'message_to', {:url => { :controller => "messages", :action => 'auto_complete_for_username'}, :tokens => [','], :tagLimit => 1 } 
+ tag_auto_complete_field 'message_to', {} 
 
 end
 
@@ -489,7 +683,6 @@ end
       @message = Message.new(message_params)
       @message.valid?
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- home_url 
  csrf_meta_tag 
  page_title 
  if @meta 
@@ -505,7 +698,7 @@ end
  if forum_page? 
  unless @feed_icons.blank? 
  @feed_icons.each do |feed| 
- auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to ''" 
  end 
  end 
  end 
@@ -514,8 +707,21 @@ end
  unless configatron.auth_providers.facebook.key.blank? 
   
  end 
-  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
-  
+  # .navbar-toggle is used as the toggle for when the responsive design gets narrow and the navbar goes away 
+ link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  if params[:controller] == 'categories' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ if Category.all.any? 
+ categories_path 
+ :categories.l 
+ for category in Category.order('name') 
+ link_to category.name, category 
+ end 
+ end 
+ 
   if current_page?(site_clippings_path) 
  css_class = 'active' 
  else 
@@ -575,18 +781,48 @@ end
  end 
  end 
  
-  
+  if logged_in? 
+ if !current_page?(users_path) && (params[:controller] == 'users' && !@user.nil? && @user == current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ dashboard_user_path(current_user) 
+ :logged_in.l + ' ' + current_user.login 
+ if current_user.admin? 
+ link_to :admin_dashboard.l, admin_dashboard_path 
+ end 
+ link_to :edit_profile.l, edit_user_path(current_user) 
+ link_to :edit_account.l, edit_account_user_path(current_user) 
+ link_to :manage_posts.l, manage_user_posts_path(current_user) 
+ link_to :inbox.l, user_messages_path(current_user) 
+ link_to :my_profile.l, user_path(current_user) 
+ link_to :my_blog.l, user_posts_path(current_user) 
+ link_to :photo_manager.l, user_photo_manager_index_path(current_user) 
+ link_to :my_clippings.l, user_clippings_path(current_user) 
+ link_to :my_friends.l, accepted_user_friendships_path(current_user) 
+ link_to :log_out.l, logout_path 
+ else 
+ link_to(:log_in.l, login_path) 
+ link_to(:sign_up.l, signup_path) 
+ end 
+ 
  
  render_jumbotron 
  container_title 
-  
-  @page_title= :compose_message.l 
+  [:notice, :error, :alert].each do |level| 
+ unless flash[level].blank? 
+ content_tag :p, flash[level] 
+ end 
+ end 
+ 
+ @page_title= :compose_message.l 
   widget do 
  :links.l 
  user_messages_path(@user) 
  :inbox.l 
  if @user.unread_messages? 
- "#{@user.unread_message_count}" 
+ "" 
  fa_icon "envelope inverse" 
  end 
  link_to :sent_messages.l, user_messages_path(@user, :mailbox => :sent) 
@@ -616,14 +852,28 @@ end
  image_tag 'spinner.gif', :plugin => 'community_engine' 
  :loading_recent_content.l 
  end 
-  
+  :home.l 
+ if !logged_in? 
+ link_to :log_in.l, login_path 
+ else 
+ :log_out.l 
+ end 
+ Page.all.each do |page| 
+ if (logged_in? ) 
+ link_to page.title, pages_path(page) 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ link_to :rss.l, @rss_url, {:title => @rss_title} 
+ end 
+ 
  :community_tagline.l 
   javascript_include_tag 'community_engine' 
  tiny_mce_init_if_needed 
  if show_footer_content? 
  end 
  
- tag_auto_complete_field 'message_to', {:url => { :controller => "messages", :action => 'auto_complete_for_username'}, :tokens => [','], :tagLimit => 1 } 
+ tag_auto_complete_field 'message_to', {} 
 
 end
 
@@ -633,7 +883,6 @@ end
       @message.sender = @user
       unless @message.valid?
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- home_url 
  csrf_meta_tag 
  page_title 
  if @meta 
@@ -649,7 +898,7 @@ end
  if forum_page? 
  unless @feed_icons.blank? 
  @feed_icons.each do |feed| 
- auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'" 
+ auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to ''" 
  end 
  end 
  end 
@@ -658,8 +907,21 @@ end
  unless configatron.auth_providers.facebook.key.blank? 
   
  end 
-  link_to configatron.community_name, home_path, :class => 'navbar-brand' 
-  
+  # .navbar-toggle is used as the toggle for when the responsive design gets narrow and the navbar goes away 
+ link_to configatron.community_name, home_path, :class => 'navbar-brand' 
+  if params[:controller] == 'categories' 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ if Category.all.any? 
+ categories_path 
+ :categories.l 
+ for category in Category.order('name') 
+ link_to category.name, category 
+ end 
+ end 
+ 
   if current_page?(site_clippings_path) 
  css_class = 'active' 
  else 
@@ -719,18 +981,48 @@ end
  end 
  end 
  
-  
+  if logged_in? 
+ if !current_page?(users_path) && (params[:controller] == 'users' && !@user.nil? && @user == current_user) 
+ css_class = 'active' 
+ else 
+ css_class = 'inactive' 
+ end 
+ dashboard_user_path(current_user) 
+ :logged_in.l + ' ' + current_user.login 
+ if current_user.admin? 
+ link_to :admin_dashboard.l, admin_dashboard_path 
+ end 
+ link_to :edit_profile.l, edit_user_path(current_user) 
+ link_to :edit_account.l, edit_account_user_path(current_user) 
+ link_to :manage_posts.l, manage_user_posts_path(current_user) 
+ link_to :inbox.l, user_messages_path(current_user) 
+ link_to :my_profile.l, user_path(current_user) 
+ link_to :my_blog.l, user_posts_path(current_user) 
+ link_to :photo_manager.l, user_photo_manager_index_path(current_user) 
+ link_to :my_clippings.l, user_clippings_path(current_user) 
+ link_to :my_friends.l, accepted_user_friendships_path(current_user) 
+ link_to :log_out.l, logout_path 
+ else 
+ link_to(:log_in.l, login_path) 
+ link_to(:sign_up.l, signup_path) 
+ end 
+ 
  
  render_jumbotron 
  container_title 
-  
-  @page_title= :compose_message.l 
+  [:notice, :error, :alert].each do |level| 
+ unless flash[level].blank? 
+ content_tag :p, flash[level] 
+ end 
+ end 
+ 
+ @page_title= :compose_message.l 
   widget do 
  :links.l 
  user_messages_path(@user) 
  :inbox.l 
  if @user.unread_messages? 
- "#{@user.unread_message_count}" 
+ "" 
  fa_icon "envelope inverse" 
  end 
  link_to :sent_messages.l, user_messages_path(@user, :mailbox => :sent) 
@@ -760,14 +1052,28 @@ end
  image_tag 'spinner.gif', :plugin => 'community_engine' 
  :loading_recent_content.l 
  end 
-  
+  :home.l 
+ if !logged_in? 
+ link_to :log_in.l, login_path 
+ else 
+ :log_out.l 
+ end 
+ Page.all.each do |page| 
+ if (logged_in? ) 
+ link_to page.title, pages_path(page) 
+ end 
+ end 
+ if @rss_title && @rss_url 
+ link_to :rss.l, @rss_url, {:title => @rss_title} 
+ end 
+ 
  :community_tagline.l 
   javascript_include_tag 'community_engine' 
  tiny_mce_init_if_needed 
  if show_footer_content? 
  end 
  
- tag_auto_complete_field 'message_to', {:url => { :controller => "messages", :action => 'auto_complete_for_username'}, :tokens => [','], :tagLimit => 1 } 
+ tag_auto_complete_field 'message_to', {} 
 
 end
 
