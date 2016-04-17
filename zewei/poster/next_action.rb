@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def hidden
+  def newest_by_user
     story.merged_stories.each do |ms|
       ms.url_or_comments_path
       ms.sorted_taggings.each do |tagging|
