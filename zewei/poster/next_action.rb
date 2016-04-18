@@ -17,8 +17,25 @@ end
 
 
 
-
-
+class HomeController < ApplicationController
+  def tagged
+    user = User.where(:session_token => session[:u].to_s).first
+    @tag = Tag.where(:tag => params[:tag]).first!
+    @stories = Story.where(
+      :tag => @tag
+    )
+    @stories.each do |story|
+      story.vote
+    end
+  end
+end
+class StoriesController < ApplicationController
+  def show
+    user = User.where(:session_token => session[:u].to_s).first
+    @story = Story.where(:short_id => params[:id]).first!
+    @story.vote
+  end
+end
 
 
 class HomeController < ApplicationController
