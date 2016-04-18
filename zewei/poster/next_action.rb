@@ -1,3 +1,26 @@
+class CommentsController < ApplicationController
+  def index
+    @comments = Comment.where(
+      :is_deleted => false, :is_moderated => false
+    ).includes(
+      :user, :story
+    )
+  end
+  def threads
+    comments = Comment.where(
+      :thread_id => thread_ids
+    ).includes(
+      :user, :story
+    )
+  end
+end
+
+
+
+
+
+
+
 class HomeController < ApplicationController
   def newest_by_user
     story.merged_stories.each do |ms|
