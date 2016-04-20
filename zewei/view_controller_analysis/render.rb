@@ -182,10 +182,16 @@ def get_view_name_from_hash(options_hash, controller_name, action_name, view_has
     if view_hash.has_key?(_res)
       res = _res
     else
-      view_hash.each do |k, v|
-        if k.end_with?(res)
-          res = k
-          break
+      if view_hash.has_key? res.pluralize(2) + "_" + res
+        res =  res.pluralize(2) + "_" + res
+      elsif view_hash.has_key? res.pluralize(2) + "__" + res
+        res = res.pluralize(2) + "__" + res
+      else
+        view_hash.each do |k, v|
+          if k.end_with?(res)
+            res = k
+            break
+          end
         end
       end
     end
