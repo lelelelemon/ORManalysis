@@ -526,9 +526,13 @@ def get_render_statement_array(ast=nil)
         res =  cur_ast.source.to_s
       end
 
+
       # [to_be_replaced, render_statement]
       if res.end_with?("\ne", "\te", " e")
         res = res[0..-2]
+        res_arr.push [res, res]
+      elsif res.include? "rescue "
+        res.gsub! /rescue.*/m, ""
         res_arr.push [res, res]
       else
         res_arr.push [res, cur_ast.source.to_s]

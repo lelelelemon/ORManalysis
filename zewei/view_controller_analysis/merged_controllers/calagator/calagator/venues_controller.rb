@@ -229,34 +229,7 @@ skipped = 0
  unless events.blank? 
  for event in events do 
  new_day = previous_start_time.nil? || (previous_start_time.to_date != event.start_time.to_date) 
- 
-new_day ||= nil
-opts ||= {}
-opts[:dates] = opts.has_key?(:dates) ? opts[:dates] : true
-show_year ||= false
-
- date_class = (opts[:dates]==false || !new_day) ? ' hidden' : '' 
-date_class
- today_tomorrow_or_weekday(event) 
- datetime_format(event.start_time,'%b %d') 
- if show_year 
- datetime_format(event.start_time,'%Y') 
- end 
- url_for event_url(event) 
- event.title 
- display_tag_icons(event) 
- normalize_time(event, :context => event.start_time.to_date) 
- if event.venue && !event.venue.title.blank? 
- url_for venue_url(event.venue) 
- event.venue.title 
- end 
- if !event.description.blank? 
- format_description(event.description) 
- end 
- if !event.url.blank? 
- link_to "Website", h(event.url), :class => "url u-url", :rel => "nofollow" 
- end 
- 
+ render :partial => 'calagator/events/list_item', :locals => { :event => event, :new_day => new_day, :opts => opts, :show_year => show_year } 
  previous_start_time = event.start_time 
  end 
  else 
@@ -511,7 +484,65 @@ end
       message = "Cannot destroy venue that has associated events, you must reassociate all its events first."
       respond_to do |format|
         format.html { redirect_to venue, flash: { failure: message } }
-        format.xml  { render xml: message, status: :unprocessable_entity }
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ yield :open_graph_tags 
+ "#{yield(:title)} » ".html_safe if content_for?(:title) 
+ Calagator.title 
+ Calagator.tagline 
+ "#{root_path}opensearch.xml" 
+ Calagator.title 
+ stylesheet_link_tag 'application', :media => :all 
+ yield :css_insert 
+ javascript_include_tag *mapping_js_includes 
+ javascript_include_tag 'application' 
+ yield :javascript_insert 
+ auto_discovery_link_tag(:atom, events_url(:format => 'atom'), :title => 'Atom: All Events' )
+ yield :discovery_insert 
+ image_path("site-icon.png") 
+ "#{controller.controller_name}_#{action_name}" 
+ "#{controller.controller_name}_controller" 
+ %w[new create edit update].include?(action_name) ? "#{controller.controller_name}_change" : "" 
+  link_to Calagator.title, root_path, id: "project_title" 
+link_class[:events]
+ link_to "Events", events_path 
+link_class[:venues]
+ link_to "Venues", venues_path 
+  form_tag search_events_path, :method => :get do 
+ if request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"].include?("Safari") 
+ @query 
+ else 
+ text_field_tag 'query', @query, id: 'search_field', tabindex: 1 
+ end 
+ end 
+ 
+ # Pick a subnav 
+  link_to 'Browse events', root_url,
+              :class => subnav_class_for("site", "index") 
+ link_to 'Add an event', new_event_url,
+              :class => subnav_class_for("events", "new") 
+ link_to 'Import events', new_source_url,
+              :class => subnav_class_for("sources", "new") 
+ 
+  link_to 'Browse venues', venues_url,
+              :class => subnav_class_for("venues", "index") 
+ link_to 'Add a venue', new_venue_url,
+              :class => subnav_class_for("venues", "new") 
+ 
+  
+ 
+  render_flash 
+ begin 
+ render :partial => 'site/appropriateness' 
+ rescue ActionView::MissingTemplate => e 
+ end 
+ 
+  URI.parse(Calagator.url).host 
+ source_code_version 
+ 
+  
+
+end
+ }
       end
     end
 

@@ -371,8 +371,8 @@ $new_helper_path = "./app/new_helpers/"
 $view_path = "./app/views/"
 $new_view_path = "./app/new_views/"
 $output_path = "./output/"
-$lib_controller_path = "../piggybak/app/controllers/"
-$lib_view_path = "../piggybak/app/views/"
+$lib_controller_path = "../calagator/app/controllers/"
+$lib_view_path = "../calagator/app/views/"
 
 options = {}
 
