@@ -154,7 +154,137 @@ class CategoriesController < ApplicationController
  end 
  
  if @categories.length > 0 
- render :partial => 'show', :collection => @categories 
+  task_list = show 
+ task_list.id 
+ if task_list.is_private? 
+ t('private_task_list') 
+ t('private_task_list') 
+ end 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ if task_list.description 
+ textilize task_list.description 
+ end 
+ task_list.id 
+ if task_list.open_tasks.length > 0 
+  task_item = show 
+ task_item.id 
+ if can?(:edit,task_item) && !task_item.is_completed? 
+ end 
+ if can?(:edit,task_item) 
+ link_to render_icon('trash', 'Trash'), task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:confirm => t('task_delete_confirm'), :method => :delete, :class => 'blank taskDelete', 'data-remote' => true, 'data-type' => :json} 
+ link_to 'Edit', edit_task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:class => 'blank taskEdit edit', 'data-remote' => true, 'data-type' => :json} 
+ end 
+ if can?(:edit,task_item) 
+ if task_item.is_completed? 
+ end 
+ link_to '', status_task_path(:id => task_item, :task_list_id => task_item.task_list_id) 
+ else 
+ render_icon( (task_item.completed_on.nil? ? 'not-checked' : 'checked'), t('task_open')) 
+ end 
+ if not task_item.assigned_to.nil? 
+ task_item.assigned_to.object_name 
+ end 
+ h task_item.text 
+ t('task_created_by', 
+                            :user => link_to(h(task_item.created_by.display_name), user_path(:id => task_item.created_by_id))).html_safe 
+ if task_item.is_completed? 
+ t('task_list_completed_time_with_user', 
+                            :time => format_usertime(task_item.completed_on, :task_list_completed_time_format),
+                            :user => link_to_unless(task_item.completed_by.nil?, h(task_item.completed_by.try(:display_name)), user_path(:id => task_item.completed_by_id))).html_safe 
+ end 
+ if can?(:comment, task_item) 
+ link_to render_icon('comment','', { :class => "comment" }), task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:class => 'blank'} 
+ end 
+ if !task_item.is_completed? && can?(:create_time, task_item.project) 
+ running_time = running_time_for_task(task_item) 
+unless running_time.nil? 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => running_time.project_id, :id => running_time.id), :class => 'blank stopTime' 
+ else 
+ link_to render_icon('start', t('start_time')), times_path, :class => 'blank startTime', :task_id => task_item.id 
+ end 
+ end 
+ 
+ end 
+ if can?(:edit,task_list) 
+  show_form = @new_list.nil? ? false : true 
+ if show_form 
+ end 
+ link_to t('add_task'), new_task_path(:task_list_id => task_list.id) 
+ unless show_form 
+ end 
+ form_tag tasks_path(:task_list_id => task_list.id), { 'data-remote' => true, 'data-type' => :json } do 
+  task = form 
+ error_messages_for :task, :object => task 
+ if not task.new_record? and @no_show_list.nil? 
+ task.id 
+ t('task_list') 
+ select 'task', 'task_list_id', TaskList.select_list(@active_project), {}, :id => "addTaskTaskList#{task.id}" 
+ end 
+ task.id 
+ t('text') 
+ text_area 'task', 'text', :id => "addTaskText#{task.id}", :class => 'short autofocus', :rows => 10, :cols => 40  
+ task.id 
+ t('assign_to') 
+ assign_project_select 'task', 'assigned_to_id', @active_project, :id => "taskAssignedTo#{task.id}" 
+ check_box_tag 'send_notification', '1', params[:send_notification], :id => "taskSendNotification#{task.id}", :class => 'checkbox'  
+ task.id 
+ t('send_email_notification_to_user') 
+ t('estimated_hours') 
+ text_field 'task', 'estimated_hours', :id => 'addTaskHours', :class => 'short' 
+ 
+ end 
+ end 
+ if on_list_page 
+ t('completed_tasks') 
+ else 
+ t('recent_completed_tasks') 
+ end 
+  task_item = show 
+ task_item.id 
+ if can?(:edit,task_item) && !task_item.is_completed? 
+ end 
+ if can?(:edit,task_item) 
+ link_to render_icon('trash', 'Trash'), task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:confirm => t('task_delete_confirm'), :method => :delete, :class => 'blank taskDelete', 'data-remote' => true, 'data-type' => :json} 
+ link_to 'Edit', edit_task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:class => 'blank taskEdit edit', 'data-remote' => true, 'data-type' => :json} 
+ end 
+ if can?(:edit,task_item) 
+ if task_item.is_completed? 
+ end 
+ link_to '', status_task_path(:id => task_item, :task_list_id => task_item.task_list_id) 
+ else 
+ render_icon( (task_item.completed_on.nil? ? 'not-checked' : 'checked'), t('task_open')) 
+ end 
+ if not task_item.assigned_to.nil? 
+ task_item.assigned_to.object_name 
+ end 
+ h task_item.text 
+ t('task_created_by', 
+                            :user => link_to(h(task_item.created_by.display_name), user_path(:id => task_item.created_by_id))).html_safe 
+ if task_item.is_completed? 
+ t('task_list_completed_time_with_user', 
+                            :time => format_usertime(task_item.completed_on, :task_list_completed_time_format),
+                            :user => link_to_unless(task_item.completed_by.nil?, h(task_item.completed_by.try(:display_name)), user_path(:id => task_item.completed_by_id))).html_safe 
+ end 
+ if can?(:comment, task_item) 
+ link_to render_icon('comment','', { :class => "comment" }), task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:class => 'blank'} 
+ end 
+ if !task_item.is_completed? && can?(:create_time, task_item.project) 
+ running_time = running_time_for_task(task_item) 
+unless running_time.nil? 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => running_time.project_id, :id => running_time.id), :class => 'blank stopTime' 
+ else 
+ link_to render_icon('start', t('start_time')), times_path, :class => 'blank startTime', :task_id => task_item.id 
+ end 
+ end 
+ 
+ if !on_list_page and task_list.completed_tasks.length > 5 
+ link_to t('view_all_completed_tasks'), :controller => 'task_lists', :action => 'show', :id => task_list.id 
+ end 
+ t('tags') 
+ tag_list task_list 
+ action_list actions_for_task_list(task_list) 
+ t('edit_tasks') 
+ 
  else 
  t('config_category_empty') 
  end 
@@ -296,7 +426,137 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  if @categories.length > 0 
- render :partial => 'show', :collection => @categories 
+  task_list = show 
+ task_list.id 
+ if task_list.is_private? 
+ t('private_task_list') 
+ t('private_task_list') 
+ end 
+ link_to (h task_list.name), task_list_path(:id => task_list.id) 
+ if task_list.description 
+ textilize task_list.description 
+ end 
+ task_list.id 
+ if task_list.open_tasks.length > 0 
+  task_item = show 
+ task_item.id 
+ if can?(:edit,task_item) && !task_item.is_completed? 
+ end 
+ if can?(:edit,task_item) 
+ link_to render_icon('trash', 'Trash'), task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:confirm => t('task_delete_confirm'), :method => :delete, :class => 'blank taskDelete', 'data-remote' => true, 'data-type' => :json} 
+ link_to 'Edit', edit_task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:class => 'blank taskEdit edit', 'data-remote' => true, 'data-type' => :json} 
+ end 
+ if can?(:edit,task_item) 
+ if task_item.is_completed? 
+ end 
+ link_to '', status_task_path(:id => task_item, :task_list_id => task_item.task_list_id) 
+ else 
+ render_icon( (task_item.completed_on.nil? ? 'not-checked' : 'checked'), t('task_open')) 
+ end 
+ if not task_item.assigned_to.nil? 
+ task_item.assigned_to.object_name 
+ end 
+ h task_item.text 
+ t('task_created_by', 
+                            :user => link_to(h(task_item.created_by.display_name), user_path(:id => task_item.created_by_id))).html_safe 
+ if task_item.is_completed? 
+ t('task_list_completed_time_with_user', 
+                            :time => format_usertime(task_item.completed_on, :task_list_completed_time_format),
+                            :user => link_to_unless(task_item.completed_by.nil?, h(task_item.completed_by.try(:display_name)), user_path(:id => task_item.completed_by_id))).html_safe 
+ end 
+ if can?(:comment, task_item) 
+ link_to render_icon('comment','', { :class => "comment" }), task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:class => 'blank'} 
+ end 
+ if !task_item.is_completed? && can?(:create_time, task_item.project) 
+ running_time = running_time_for_task(task_item) 
+unless running_time.nil? 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => running_time.project_id, :id => running_time.id), :class => 'blank stopTime' 
+ else 
+ link_to render_icon('start', t('start_time')), times_path, :class => 'blank startTime', :task_id => task_item.id 
+ end 
+ end 
+ 
+ end 
+ if can?(:edit,task_list) 
+  show_form = @new_list.nil? ? false : true 
+ if show_form 
+ end 
+ link_to t('add_task'), new_task_path(:task_list_id => task_list.id) 
+ unless show_form 
+ end 
+ form_tag tasks_path(:task_list_id => task_list.id), { 'data-remote' => true, 'data-type' => :json } do 
+  task = form 
+ error_messages_for :task, :object => task 
+ if not task.new_record? and @no_show_list.nil? 
+ task.id 
+ t('task_list') 
+ select 'task', 'task_list_id', TaskList.select_list(@active_project), {}, :id => "addTaskTaskList#{task.id}" 
+ end 
+ task.id 
+ t('text') 
+ text_area 'task', 'text', :id => "addTaskText#{task.id}", :class => 'short autofocus', :rows => 10, :cols => 40  
+ task.id 
+ t('assign_to') 
+ assign_project_select 'task', 'assigned_to_id', @active_project, :id => "taskAssignedTo#{task.id}" 
+ check_box_tag 'send_notification', '1', params[:send_notification], :id => "taskSendNotification#{task.id}", :class => 'checkbox'  
+ task.id 
+ t('send_email_notification_to_user') 
+ t('estimated_hours') 
+ text_field 'task', 'estimated_hours', :id => 'addTaskHours', :class => 'short' 
+ 
+ end 
+ end 
+ if on_list_page 
+ t('completed_tasks') 
+ else 
+ t('recent_completed_tasks') 
+ end 
+  task_item = show 
+ task_item.id 
+ if can?(:edit,task_item) && !task_item.is_completed? 
+ end 
+ if can?(:edit,task_item) 
+ link_to render_icon('trash', 'Trash'), task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:confirm => t('task_delete_confirm'), :method => :delete, :class => 'blank taskDelete', 'data-remote' => true, 'data-type' => :json} 
+ link_to 'Edit', edit_task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:class => 'blank taskEdit edit', 'data-remote' => true, 'data-type' => :json} 
+ end 
+ if can?(:edit,task_item) 
+ if task_item.is_completed? 
+ end 
+ link_to '', status_task_path(:id => task_item, :task_list_id => task_item.task_list_id) 
+ else 
+ render_icon( (task_item.completed_on.nil? ? 'not-checked' : 'checked'), t('task_open')) 
+ end 
+ if not task_item.assigned_to.nil? 
+ task_item.assigned_to.object_name 
+ end 
+ h task_item.text 
+ t('task_created_by', 
+                            :user => link_to(h(task_item.created_by.display_name), user_path(:id => task_item.created_by_id))).html_safe 
+ if task_item.is_completed? 
+ t('task_list_completed_time_with_user', 
+                            :time => format_usertime(task_item.completed_on, :task_list_completed_time_format),
+                            :user => link_to_unless(task_item.completed_by.nil?, h(task_item.completed_by.try(:display_name)), user_path(:id => task_item.completed_by_id))).html_safe 
+ end 
+ if can?(:comment, task_item) 
+ link_to render_icon('comment','', { :class => "comment" }), task_path(:id => task_item.id, :task_list_id => task_item.task_list_id), {:class => 'blank'} 
+ end 
+ if !task_item.is_completed? && can?(:create_time, task_item.project) 
+ running_time = running_time_for_task(task_item) 
+unless running_time.nil? 
+ link_to render_icon('stop', t('stop_time')), stop_time_path(:active_project => running_time.project_id, :id => running_time.id), :class => 'blank stopTime' 
+ else 
+ link_to render_icon('start', t('start_time')), times_path, :class => 'blank startTime', :task_id => task_item.id 
+ end 
+ end 
+ 
+ if !on_list_page and task_list.completed_tasks.length > 5 
+ link_to t('view_all_completed_tasks'), :controller => 'task_lists', :action => 'show', :id => task_list.id 
+ end 
+ t('tags') 
+ tag_list task_list 
+ action_list actions_for_task_list(task_list) 
+ t('edit_tasks') 
+ 
  else 
  t('config_category_empty') 
  end 
