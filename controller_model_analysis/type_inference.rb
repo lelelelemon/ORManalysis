@@ -166,11 +166,11 @@ def read_util_function
 	end
 end
 def read_repeatable_function
-	f_name = "#{$app_dir}/repeatable_func_list.txt"
+	f_name = "#{$app_dir}/non_repeatable_func_list.txt"
 	if File.exist?(f_name)
 		File.open(f_name, "r").each do |line|
 			line = line.gsub("\n","")
-			$repeatable_list.push(line)
+			$non_repeatable_list.push(line)
 		end
 	end
 end

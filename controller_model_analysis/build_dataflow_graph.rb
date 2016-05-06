@@ -1,8 +1,18 @@
-def handle_single_call_node2(start_class, start_function, instr, level)
+def print_call_stack
+	str = ""
+	$call_stack_trace.each do |c|
+		str += "#{c} || "
+	end
+	return str
+end
 
+def handle_single_call_node2(start_class, start_function, instr, level)
 		if instr.isClassField or instr.isTableField or instr.instance_of?AttrAssign_instr or instr.instance_of?GetField_instr 
 			return 
 		end
+	
+		#puts "stack #{$call_stack_trace.length}: #{print_call_stack}  "
+		#puts "\tprocessing #{$ins_cnt}: #{instr.toString}"
 
 		caller_class = instr.getCallerType
 		if instr.isQuery
@@ -35,8 +45,10 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 				$in_validation.push(temp_node)
 				temp_actions.each do |action|
 						temp_name = "#{caller_class}.#{action}"
-						if $non_repeat_list.include?(temp_name) == false
+						#if $non_repeat_list.include?(temp_name) == false
+						if $call_stack_trace.include?(temp_name) == false					
 							$non_repeat_list.push(temp_name)
+							$call_stack_trace.push(temp_name)
 							#if $class_map[caller_class] != nil and $class_map[$class_map[caller_class].getUpperClass] != nil
 								#cur_cfg = trace_query_flow($class_map[caller_class].getUpperClass, action, "", "", level+2)
 								#TODO: add control flow edges...
@@ -69,6 +81,7 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 								end
 								last_cfg = cur_cfg
 							end
+							$call_stack_trace.pop
 						end
 				end
 				$in_validation.pop
@@ -91,12 +104,16 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 		elsif caller_class != nil	
 			temp_name = "#{caller_class}.#{instr.getFuncname}"
 
-			if $non_repeat_list.include?(temp_name) and is_repeatable_function(temp_name)==false
+			#if $non_repeat_list.include?(temp_name) and is_repeatable_function(temp_name)==false
 				#puts "executed before: #{instr.getCaller}, #{instr.getFuncname}"
+			if $call_stack_trace.include?(temp_name) or check_nonrepeat(caller_class, instr.getFuncname)==false
+				#puts "\t\t... #{temp_name} already in stack , called"
 			else
+				$call_stack_trace.push(temp_name)
 				$non_repeat_list.push(temp_name)
 				temp_node = $cur_node	
 				cur_cfg = trace_query_flow(caller_class, instr.getFuncname, "", "", level+1)
+				$call_stack_trace.pop
 				if cur_cfg != nil and cur_cfg.getBB[0]
 					temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
 				end
@@ -126,13 +143,24 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	for i in (0...level)
 		blank = blank + "\t"
 	end
-	#puts "#{blank}Instr: ##{node.getIndex} #{node.getInstr.toString} (#{node.getInstr.getFromUserInput})"
+#	puts "\tInstr: ##{node.getIndex} #{node.getInstr.toString} "
 	return_list.each do |r|
 		r.addChild(node)
 	end
 	$cur_node = node
 	$node_list.push($cur_node)
 	$ins_cnt += 1
+
+	#class member defined in one function may be used in another function
+	#add to class member def list
+	#For example, before_action can set some values used by other functions
+	if instr.instance_of?AttrAssign_instr
+		if class_handler.member_defs[instr.getFuncname]
+		else
+			class_handler.member_defs[instr.getFuncname] = Array.new
+		end
+		class_handler.member_defs[instr.getFuncname].push(node)
+	end
 
 	if instr.is_a?Call_instr
 		$funccall_stack.push($cur_node)
@@ -202,31 +230,31 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 
 	new_return_l = Array.new	
 	if instr.hasClosure?
-		cl = instr.getClosure
+		@cl = instr.getClosure
 		temp_node = $cur_node
-		if cl.getViewClosure
+		if @cl.getViewClosure
 			$in_view = true
 		else
 			$in_loop.push(true)
 		end
-		if instr.instance_of?Call_instr and (["transaction","form_for","form_tag","content_for","content_tag","respond_to","xml","input","html"].include?instr.getFuncname or instr.getCaller == "format")
-			handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
-		elsif instr.instance_of?Call_instr
+		if instr.instance_of?Call_instr and (["transaction","form_for","form_tag","content_for","content_tag","respond_to","xml","input","html","field_set_tag","json"].include?instr.getFuncname or instr.getCaller == "format")
+			handle_single_cfg2(start_class, start_function, class_handler, function_handler, @cl, level) 
+		else
 			$closure_stack.push($cur_node)
 			$general_call_stack.push($cur_node)
-			handle_single_cfg2(start_class, start_function, class_handler, function_handler, cl, level) 
+			handle_single_cfg2(start_class, start_function, class_handler, function_handler, @cl, level) 
 			$closure_stack.pop
 			$general_call_stack.pop
 		end
-		cl.getReturns.each do |r|
+		@cl.getReturns.each do |r|
 			new_return_l.push(r)
 		end
-		if cl.getViewClosure
+		if @cl.getViewClosure
 			$in_view = false
 		else
 			$in_loop.pop
 		end
-		temp_node.addChild(cl.getBB[0].getInstr[0].getINode)
+		temp_node.addChild(@cl.getFirstInstr.getINode)
 	elsif
 		new_return_l.push($cur_node)
 	end
@@ -288,7 +316,7 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 
 	if $funccall_stack.length > 0 and fromIns != nil
 		if isValidationFunc(function_handler.getName)
-		elsif is_sub_or_upper_class($funccall_stack[-1].getInstr.getCallerType, cfg.getMHandler.getCallerClass.getName) 
+		elsif is_sub_or_upper_class($funccall_stack[-1].getInstr.getCallerType, cfg.getMHandler.getCallerClass.getName) #and function_defself($funccall_stack[-1].getInstr.getBB.getCFG.getMHandler) #TODO: Messy too... only pass "self" when the upper class actually defines "self" 
 			dep = $funccall_stack[-1]
 			edge_name = "#{dep.getIndex}*#{fromIns.getINode.getIndex}"
 			edge = Dataflow_edge.new(dep, fromIns.getINode, "%self")
@@ -363,7 +391,9 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 	before_filter_name = "#{start_class}.before_filter"
 	filter_handler = $class_map[start_class].getMethods["before_filter"]
 
-	if $non_repeat_list.include?(before_filter_name) == false
+  if $call_stack_trace.include?(before_filter_name)==false and check_nonrepeat(start_class, "before_filter")
+		$call_stack_trace.push(before_filter_name)
+	#if $non_repeat_list.include?(before_filter_name) == false
 		$non_repeat_list.push(before_filter_name)
 		
 		cfg = CFG.new
@@ -384,6 +414,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 			cfg.addBB(bb)
 			handle_single_cfg2(start_class, "before_filter", class_handler, filter_handler, cfg, level)
 		end
+		$call_stack_trace.pop
 	end
 
 	if function_handler.getCFG != nil

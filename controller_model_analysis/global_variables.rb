@@ -8,6 +8,8 @@ $key_words = Hash.new
 $util_function_list = Hash.new
 #key: query word; value: count
 $query_word_count = Hash.new
+#key: query function; value: count
+$query_func_count = Hash.new
 #==============================
 
 #==============================Directories=================
@@ -41,7 +43,7 @@ $ignore_method_list = Array.new
 #Used in trace_flow.rb, keep track of traced methods(String)
 $non_repeat_list = Array.new
 #Some functions are repeatable, tailored for each app
-$repeatable_list = Array.new
+$non_repeatable_list = Array.new
 #key: "#{from_node_index}*#{to_node_index}" (String); value: (Dataflow_edge)
 $dataflow_edges = Hash.new
 #(INode), for only query nodes
@@ -60,6 +62,7 @@ $in_loop = Array.new
 $in_validation = Array.new
 $general_call_stack = Array.new
 $funccall_stack = Array.new
+$call_stack_trace = Array.new
 $cur_query_stack = Array.new
 $closure_stack = Array.new
 $def_self_nodes = Hash.new

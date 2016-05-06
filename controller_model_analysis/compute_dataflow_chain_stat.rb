@@ -526,10 +526,10 @@ class Temp_field_stat
 end
 
 def compute_chain_stats
+=begin
 	$sketch_node_list.each do |n|
 		#puts "#{n.node.getIndex}:#{n.node.getInstr.toString}"
 	end
-
 	$sketch_node_list.each do |n|
 		is_root = true
 		$sketch_node_list.each do |n1|
@@ -550,6 +550,23 @@ def compute_chain_stats
 				#puts "Input #{n.node.getIndex} reaches #{reaches}"
 			end
 		end 
+	end
+=end
+
+	$node_list.each do |n|
+		if n.getInstr.getFromUserInput
+			@input_reach_cnt = 0
+			@succcessors = find_all_succcessors(n)
+			str = ""
+			@succcessors.each do |p|
+				if p.isReadQuery?
+					str += "#{p.getIndex}, "
+					@input_reach_cnt += 1
+				end
+			end
+			#$temp_file.puts("Input #{n.getIndex} reaches: #{str}")
+			$graph_file.puts("\t<inputReaches>#{@input_reach_cnt}<\/inputReaches>")
+		end
 	end
 	#OK, here we compute fields being assigned but not part of schema
 	#should be in compute_stats.rb...
@@ -587,7 +604,7 @@ def compute_chain_stats
 						end
 					end
 				elsif tbl_name.include?("Controller")
-				else#if isActiveRecord(tbl_name)
+				elsif isActiveRecord(tbl_name)
 					p_s = p_s + " -> non field"
 					ftype = nil
 					if $class_map[tbl_name] != nil and $class_map[tbl_name].getVarMap[field_name] != nil

@@ -27,13 +27,13 @@ def is_transaction_function(fname)
 end
 
 def is_repeatable_function(fname)
-	if is_transaction_function(fname)
-		return true
-	elsif $repeatable_list.include?(fname)
-		return true
-	else
-		return false
-	end
+	#if is_transaction_function(fname)
+	#	return true
+	#elsif $repeatable_list.include?(fname)
+	#	return true
+	#else
+	#	return false
+	#end
 end
 
 def in_key_words(w)
@@ -238,6 +238,27 @@ def search_query_string(astnode)
 		end
 		return str
 	end
+end
+
+def check_nonrepeat(class_name, func_name)
+	$non_repeat_list.each do |n|
+		chs = n.split('.')
+		if chs[0].include?"ApplicationController" and class_name == chs[0] and func_name == chs[1] 
+			return false
+		end
+		if $non_repeat_list.include?"#{class_name}.#{func_name}"
+			if func_name == "before_filter"
+				return false
+			end
+			if class_name.include?"Controller" and ["show","create","index","new"].include?func_name
+				return false
+			end
+		end
+	end
+	if $non_repeat_list.include?"#{class_name}.#{func_name}" and $non_repeatable_list.include?"#{class_name}.#{func_name}"
+		return false
+	end	
+	return true
 end
 
 def dataflow_filename_match(dataflow_file_name)
@@ -455,8 +476,13 @@ def getControllerNameCap(name)
 	if c.length == 2
 		controller_name="#{c[0].capitalize}::#{c[1].capitalize}"
 	else
-		controller_name = name
-		controller_name[0] = controller_name[0].upcase
+		c1 = name.split('/')
+		if c1.length > 1
+			controller_name="#{c1[0].capitalize}::#{c1[1].capitalize}"
+		else
+			controller_name = name
+			controller_name[0] = controller_name[0].upcase
+		end
 	end
 	@t = controller_name.split("_")
 	if @t.length > 1
@@ -609,6 +635,28 @@ def OUTPUT_Direct(w)
 	$trace_output_file.write("#{w}\n")
 end
 
+def defself_not_receivearg(instr)
+	if instr.getIndex == 0 and (instr.getBB.getIndex == 2 or instr.getBB.getIndex == 1)
+		return false
+	end
+	return true
+end
+def function_defself(m_handler)
+	if m_handler.getCFG
+		m_handler.getCFG.getBB.each do |bb|
+			bb.getInstr.each do |instr|
+				if instr.getDefv and instr.getDefv.include?("self") and defself_not_receivearg(instr)
+					return true
+				end
+				if instr.instance_of?AttrAssign_instr #and instr.getCallerType == m_handler.getCallerClass.getName
+					return true
+				end 
+			end
+		end
+	end
+	return false
+end
+
 def clear_cfg(cfg)
  	cfg.clear
 	cfg.getBB.each do |bb|
@@ -634,6 +682,7 @@ def clear_data_structure
 		end
 	end
 	$class_map.each do |keyc, valuec|
+		valuec.member_defs = Hash.new
 		valuec.getMethods.each do |key, value|
 			cfg = value.getCFG
 			if cfg != nil
@@ -663,12 +712,15 @@ def clear_data_structure
 	$in_validation = Array.new
 	$general_call_stack = Array.new
 	$funccall_stack = Array.new
+	$call_stack_trace = Array.new
 	$root = nil
 	$cfg = nil
 	$ins_cnt = 0
 	#store all instruction node
 	$node_list = Array.new
 	$sketch_node_list = Array.new
+	$query_word_count = Hash.new
+	$query_func_count = Hash.new
 	#the very source of dataflow, all nodes using user input connect to this node
 	$dataflow_source = INode.new(nil)
 	

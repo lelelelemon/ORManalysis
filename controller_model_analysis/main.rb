@@ -37,6 +37,7 @@ load 'trace_flow.rb'
 load 'build_dataflow_graph.rb'
 
 #Compute stats:
+load 'compute_helper.rb'
 load 'compute_stats.rb'
 load 'compute_functional_dependency_stat.rb'
 load 'compare_consequent_actions.rb'
@@ -308,6 +309,7 @@ if options[:run_all]
 		$cur_node = nil
 		$root = nil
 		$non_repeat_list = Array.new
+		$call_stack_trace = Array.new
 		$global_check = Hash.new
 		$node_list = Array.new
 		$cur_query_stack = Array.new
@@ -353,12 +355,24 @@ if options[:run_all]
 				chs = line.split(',')
 				next_function = chs[1]
 				next_class = getControllerNameCap(chs[0])
-
-				compute_dataflow_stat($output_dir, next_class, next_function, true)
+				if next_function and next_function.include?"create" and next_function.include?"new"
+					next_function = "create"
+				end
 			
-				puts "Compare with: #{next_class}.#{next_function}"
-				compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list)
-				clear_data_structure
+				if $class_map[next_class] and $class_map[next_class].findMethodRecursive(next_function)	
+					$temp_file = File.open("#{$output_dir}/nextaction_#{next_class}_#{next_function}.log","w")
+
+					compute_dataflow_stat($output_dir, next_class, next_function, true)
+
+					$temp_file.puts "\n\n\n=================="
+					$temp_file.puts "==================\n\n\n"
+					$temp_file.puts "#{start_class}.#{start_function} Vs #{next_class}.#{next_function}"
+					puts "Compare with: #{next_class}.#{next_function}"
+					compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list)
+					clear_data_structure
+				else
+					puts "Cannot find #{chs[0]}->#{next_class}.#{next_function}"
+				end
 			end
 
 			$graph_file.puts("<\/NEXTACTION>")

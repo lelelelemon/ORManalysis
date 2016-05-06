@@ -2,13 +2,14 @@ class Temp_Qgeneral_stat
 	def initialize
 		@total = 0
 		@in_closure = 0
+		@in_closure_by_db = 0
 		@in_view = 0
 		@use_query_string = 0
 		@total_branch = 0	
 		@branch_dependon_query = 0
 		@branch_in_view = 0
 	end
-	attr_accessor :total, :in_closure, :in_view, :total_branch, :branch_dependon_query, :branch_in_view, :use_query_string
+	attr_accessor :total, :in_closure, :in_closure_by_db, :in_view, :total_branch, :branch_dependon_query, :branch_in_view, :use_query_string
 	def get_avg(v)
 		if @total > 0
 			return v.to_f / @total.to_f;

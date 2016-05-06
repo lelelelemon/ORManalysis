@@ -682,6 +682,14 @@ class CFG
 			@return_type = type
 		end
 	end
+	def getFirstInstr
+		@bb.each do |b|
+			b.getInstr.each do |i|
+				return i
+			end
+		end
+		return nil
+	end
 	def getVarMap
 		@var_map
 	end

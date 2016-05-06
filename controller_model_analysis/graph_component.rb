@@ -44,7 +44,7 @@ class INode
 
 		#add defSelf:
 		$in_validation.each do |v|
-			if instr and instr.getDefv and instr.getDefv.include?("self")
+			if instr and instr.getDefv and instr.getDefv.include?("self") and defself_not_receivearg(instr) #TODO: This is messy. The first instruction for any function or clousre is building stack and def self 
 				if type_valid(instr, instr.getDefv) == v.getInstr.getCallerType	
 					$def_self_nodes[v].push(self)
 				end
@@ -87,6 +87,11 @@ class INode
 		@in_validation
 	end
 	def addDataflowEdge(edge)
+		@dataflow_edges.each do |e|
+			if e.getToNode == edge.getToNode
+				return
+			end
+		end
 		@dataflow_edges.push(edge)
 		edge.getToNode.addBackwardEdge(edge)
 	end
@@ -270,6 +275,25 @@ def add_dataflow_edge(node)
 		return
 	end
 
+	if to_ins.instance_of?GetField_instr
+		dep_on_attr_assign = false
+		to_ins.getDeps.each do |dep|
+			if dep.getInstrHandler and dep.getInstrHandler.instance_of?AttrAssign_instr
+				dep_on_attr_assign = true
+			end
+		end
+		if dep_on_attr_assign == false
+			instr = to_ins
+			if instr.getClassName == instr.getCallerType and $class_map[instr.getClassName] and $class_map[instr.getClassName].member_defs[instr.getFuncname]
+				$class_map[instr.getClassName].member_defs[instr.getFuncname].each do |p|
+					edge_name = "#{p.getIndex}*#{node.getIndex}"
+					edge = Dataflow_edge.new(p, node, instr.getFuncname)
+					p.addDataflowEdge(edge)
+				end
+			end
+		end
+	end
+
 	to_ins.getDeps.each do |dep|
 		if dep.getInstrHandler == nil
 			puts "Handler nil: BB#{dep.getBlock}.#{dep.getInstr}"
@@ -291,6 +315,12 @@ def add_dataflow_edge(node)
 			if (from_node.isClassField?) and (dep.getVname == "%self")
 			elsif to_ins.is_a?Call_instr and to_ins.isClassField and from_node.getInstr.instance_of?AttrAssign_instr and to_ins.getCallerType == from_node.getInstr.getCallerType and to_ins.getFuncname != from_node.getInstr.getFuncname
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
+
+			#TODO: OK Here it is messy. Assume the functions in view does not define "self"
+			#elsif from_node.getInstr.getClassName.include?"Controller" and from_node.getInstr.instance_of?Call_instr and  from_node.getInView and dep.getVname == "%self"
+			#TODO: Here we assume all non-defined functions are read only...
+			elsif from_node.getInstr.instance_of?Call_instr and from_node.isQuery? == false and from_node.getInstr.getFromUserInput==false and (from_node.getInstr.getCallCFG==nil or function_defself(from_node.getInstr.getCallCFG.getMHandler)==false)
+
 			elsif dep.getInstrHandler != node.getInstr
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"
 				edge = Dataflow_edge.new(dep.getInstrHandler.getINode, node, dep.getVname)

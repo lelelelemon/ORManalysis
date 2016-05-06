@@ -1,9 +1,31 @@
 $query_words_exact_match = ["DESC","ASC","JOIN","ON","AND","OR","NOT","IN","NULL","EXIST","UPDATE","INSERT","SELECT","LIMIT","GROUP","ORDER","LIKE"]
 $query_words_include = ["SUM","MIN","MAX","COUNT"]
 
+#distinct: Specifies whether the records should be unique or not. Under a certain condition, return multiple records or single record
+#new_record return true/false
+$query_return_record = ["group_by","find","all","take","from","distinct","join","from","having","joins","limit","order","where","first","last","preload","includes","readonly","references","reorder","reverse_order","first_or_initialize","find_each","find_in_batches","try","uniq","select","association","find_by"]
+
+def addQueryFuncHash(_key)
+	key = _key.gsub('?','').gsub('!','')
+	if _key.include?("find_by")
+		key = "find_by"
+	elsif $key_words[_key]
+		key = _key.gsub('?','').gsub('!','')
+	else
+		key = "association"
+	end
+	if $query_func_count.include?(key)
+	else
+		$query_func_count[key] = 0
+	end
+	$query_func_count[key] += 1
+end
+
 def check_scope_query_string(query_node)
 	contain_query_string = false
 	if query_node.getInstr.getCallHandler
+		func_str = query_node.getInstr.getCallHandler.getFuncName
+		addQueryFuncHash(func_str)
 		str = query_node.getInstr.getCallHandler.query_string
 		if str
 			chs = str.split(" ")
@@ -28,6 +50,10 @@ def check_scope_query_string(query_node)
 		end
 	end
 	return contain_query_string
+end
+
+def check_query_function(query_node)
+		addQueryFuncHash(query_node.getInstr.getFuncname)
 end
 
 def check_query_string(query_node, const_node)
@@ -69,6 +95,12 @@ end
 
 def printQueryStringFreq
 	$query_word_count.each do |w, f|
+		$graph_file.puts("\t<#{w}>#{f}<\/#{w}>")
+	end
+end
+
+def printQueryFunctionFreq
+	$query_func_count.each do |w, f|
 		$graph_file.puts("\t<#{w}>#{f}<\/#{w}>")
 	end
 end

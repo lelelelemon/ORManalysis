@@ -1,11 +1,3 @@
-def is_chained_query(qnode)
-	qnode.getDataflowEdges.each do |e|
-		if e.getToNode.isReadQuery? and qnode.getDataflowEdges.length == 1
-			return true
-		end
-	end
-	return false
-end
 
 def test_trivial_branch(qnode, ary)
 	@branch_list = Array.new

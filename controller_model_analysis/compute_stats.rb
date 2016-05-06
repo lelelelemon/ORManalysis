@@ -1,143 +1,6 @@
 $QNODECOLOR = "coral1"
 $USERINOUTCOLOR = "cyan3"
 
-
-def traceback_data_dep(cur_node, stop_at_query=false)
-	@dep_array = Array.new
-	@node_list = Array.new
-	@node_list.push(cur_node)
-	while @node_list.length > 0 do
-		node = @node_list.pop
-		node.getBackwardEdges.each do |e|
-			if e.getFromNode != nil and e.getToNode != nil
-				if e.getFromNode.isReadQuery?
-					if @dep_array.include?(e.getFromNode)
-					else
-						@dep_array.push(e.getFromNode)
-					end
-					if stop_at_query
-						return e.getFromNode
-					end	
-				else
-					#if cur_node.getCallStack.include?(e.getToNode) and e.getVname == "returnv"
-					if e.getFromNode.getInstr.instance_of?Return_instr and e.getFromNode.getInstr.getClassName == cur_node.getInstr.getClassName and e.getFromNode.getInstr.getMethodName == cur_node.getInstr.getMethodName
-					elsif e.getFromNode.getIndex < cur_node.getIndex
-					#else
-						#test is both nodes are in the same basic block, prevent from tracing too far
-						#if e.getFromNode.getInstr.getBB == node.getInstr.getBB
-						if @dep_array.include?(e.getFromNode)
-						else
-							@dep_array.push(e.getFromNode)
-							@node_list.push(e.getFromNode)
-						end
-					end
-				end
-			elsif e.getFromNode == nil and e.getToNode != nil
-				#TODO: this is a bit annoying... if the type in @dep_array is Edge, then it is user input, otherwise other instruction nodes
-				@dep_array.push(e)
-			end
-		end
-	end
-	if stop_at_query
-		return nil
-	else
-		return @dep_array
-	end
-		@total = 0
-end
-
-#for a query, if it is like the form v = Vote.where(...)
-#Given the query instruction Vote.where
-#return the assign instruction v =
-#so that we can know the result of the query is put into the variable v
-#Or it can be like if Vote.where(...)
-#Stops at a nearest var define or branch instr
-#TODO: any other possiblilities?
-def find_nearest_var(cur_node)
-	@node_list = Array.new
-	@node_list.push(cur_node)
-	@traversed = Array.new
-	while @node_list.length > 0 do
-		node = @node_list.pop
-		@traversed.push(node)
-		node.getDataflowEdges.each do |e|
-			if e.getToNode.getInstr.getDefv != nil 
-				if e.getToNode.getInstr.getDefv.include?('%') == false
-					return e.getToNode
-				#elsif e.getToNode.getInstr.getDefv.include?("self")
-				#	return e.getToNode
-				end
-			elsif e.getToNode.getInstr.instance_of?AttrAssign_instr and e.getToNode.getInstr.getCaller.include?("self")
-				return e.getToNode
-			else
-				if @node_list.include?(e.getToNode) or @traversed.include?(e.getToNode)
-				else
-					if e.getToNode.getInstr.getBB == cur_node.getInstr.getBB
-						@node_list.push(e.getToNode)
-					end
-				end
-			end
-		end
-	end
-	return nil
-end
-
-def traceforward_data_dep(query_node)
-	@traversed = Array.new
-	@node_list = Array.new
-	@node_list.push(query_node)
-	if query_node.getInstr.getBB.getCFG.getMHandler.normal_function == false
-		query_node.getDataflowEdges.each do |e|
-			@node_list.push(e.getToNode)
-		end
-	end
-	while @node_list.length > 0 do
-		node = @node_list.pop
-		if @traversed.include?(node)
-		else
-			@traversed.push(node)
-		end
-		if node.getInstr.instance_of?Return_instr
-			toedge = node.getDataflowEdges[0]
-			if toedge and toedge.getToNode
-				toedge.getToNode.getDataflowEdges.each do |e1|
-					if e1.getToNode.getIndex <= query_node.getIndex or @traversed.include?(e1.getToNode)
-					else
-						@node_list.push(e1.getToNode)
-					end
-				end	
-			end
-		else
-			node.getDataflowEdges.each do |e|	
-				if e.getToNode.isQuery? and e.getToNode != query_node
-					if @traversed.include?(e.getToNode)
-					else
-						@traversed.push(e.getToNode)
-						@node_list.push(e.getToNode)
-					end
-				elsif @node_list.include?(e.getToNode) or @traversed.include?(e.getToNode)
-				else
-					if e.getToNode.getInstr.instance_of?Return_instr
-						toedge = e.getToNode.getDataflowEdges[0]
-						if toedge and toedge.getToNode
-							toedge.getToNode.getDataflowEdges.each do |e1|
-								if e1.getToNode.getIndex <= query_node.getIndex or @traversed.include?(e1.getToNode)
-								else
-									@node_list.push(e1.getToNode)
-								end
-							end	
-						end
-					elsif e.getToNode.getIndex > query_node.getIndex
-						@node_list.push(e.getToNode)
-					end
-				end
-			end
-		end
-	end
-	@traversed.shift
-	return @traversed
-end
-
 def print_dataflow_graph
 	$node_list.each do |n|
 		print "Node #{n.getIndex}: "
@@ -256,7 +119,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		end
 		n.getBackwardEdges.each do |e|
 			if e.getFromNode != nil
-				$temp_file.puts "\t\t <- #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+				$temp_file.puts "\t\t <- [#{e.getVname}] #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
 			else
 				#puts "\t\t <- params"
 			end
@@ -324,6 +187,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	total_branch = 0
 
 	cnt_materialized_query = 0	
+	cnt_not_materialized_query = 0
 
 	write_source_total = 0	
 	write_from_const = 0
@@ -404,9 +268,18 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				if n.getNonViewClosureStack.length > 0
 					@general_stat.in_closure += 1
 					@table_general_stat[@table_name].in_closure += 1
+					by_db = false
 					str = ""
 					n.getNonViewClosureStack.each do |cl|
+						if traceback_data_dep(cl, true)
+							by_db = true
+							str += "(DB)"
+						end
 						str += "#{cl.getIndex}, "
+					end
+					if by_db
+						@general_stat.in_closure_by_db += 1
+						@table_general_stat[@table_name].in_closure_by_db += 1
 					end
 					$temp_file.puts "query #{n.getIndex} in closure : #{str}"
 
@@ -422,12 +295,40 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					@read_source_stat.from_query_string += 1
 					@general_stat.use_query_string += 1
 					@table_general_stat[@table_name].use_query_string += 1
+				else
+					check_query_function(n)
 				end
 				@read_sink_stat.total += 1
 				@read_source_stat.total += 1
 				@table_read_stat[@table_name].total += 1
 				#puts "READ query instr #{n.getIndex}:#{n.getInstr.toString} forward flow:"
-				#v_node = find_nearest_var(n)
+				v_node = find_nearest_var(n)
+				_key = n.getInstr.getFuncname
+				if n.getInstr.getCallHandler
+					_key = n.getInstr.getCallHandler.getFuncName
+				end
+				key = _key.gsub('?','').gsub('!','')
+				if _key.include?("find_by")
+					key = "find_by"
+				elsif $key_words[_key]
+					key = _key.gsub('?','').gsub('!','')
+				else
+					key = "association"
+				end
+				if $query_return_record.include?(key)
+					if v_node
+						#AttrAssign or closure
+						if v_node.getInstr.getDefv != nil
+							#if check_necessary_materialization(v_node, v_node.getInstr.getDefv)
+								cnt_materialized_query += 1
+						else
+							cnt_materialized_query += 1
+						end
+					elsif is_chained_query(n)==false
+						cnt_not_materialized_query += 1
+						$temp_file.puts("Query #{n.getIndex} result not materialized")
+					end
+				end
 				#self_v_name = nil
 				#if v_node != nil
 				#	if v_node.getInstr.getDefv != nil
@@ -502,7 +403,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							@read_sink_stat.sink_total += 1
 						end
 						if n1.isBranch?
-							$temp_file.puts "#Q #{n.getIndex} reaches branch #{n1.getIndex}"
+							#$temp_file.puts "#Q #{n.getIndex} reaches branch #{n1.getIndex}"
 							n.getValidationStack.each do |vl|
 								@validation_stat[vl].queries.each do |w|
 									if w.isWriteQuery?
@@ -571,7 +472,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								analyzeConstSource(n1, @const_stat)
 							end
 						elsif isUtilSource(n1)
-							$temp_file.puts " x (#{n.getIndex} From Util #{n1.getIndex}: #{n1.getInstr.toString})" 
+							#$temp_file.puts " x (#{n.getIndex} From Util #{n1.getIndex}: #{n1.getInstr.toString})" 
 							@read_source_stat.from_util += 1
 						elsif n1.getInstr.instance_of?GlobalVar_instr
 							@read_source_stat.from_global += 1
@@ -582,6 +483,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				end
 				if @only_from_user_input
 					@singleQ_stat.only_from_user_input += 1
+					$temp_file.puts "# query #{n.getIndex} only uses user input"
 				end
 				if @used_query_string
 					@general_stat.use_query_string += 1
@@ -629,7 +531,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								@table_write_stat[@table_name].from_const += 1
 							elsif isUtilSource(n1)
 								has_source = true
-								$temp_file.puts " x (#{n.getIndex} From Util #{n1.getIndex}: #{n1.getInstr.toString})" 
+								#$temp_file.puts " x (#{n.getIndex} From Util #{n1.getIndex}: #{n1.getInstr.toString})" 
 								@write_source_stat.from_util += 1
 							elsif n1.getInstr.instance_of?GlobalVar_instr
 								@write_source_stat.from_global += 1
@@ -646,7 +548,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					end
 				end
 				if has_source == false
-					$temp_file.puts "Write Query #{n.getIndex} has no source"
+					#$temp_file.puts "Write Query #{n.getIndex} has no source"
 				end
 				if @only_from_user_input
 					@singleQ_stat.only_from_user_input += 1
@@ -659,7 +561,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		 	q = traceback_data_dep(n, true)
 			if q != nil
 				@general_stat.branch_dependon_query += 1
-				$temp_file.puts "Branch  #{n.getIndex} depend on QUERY #{q.getIndex}"
+				#$temp_file.puts "Branch  #{n.getIndex} depend on QUERY #{q.getIndex}"
 			else
 				#$temp_file.puts "Branch on other #{n.getIndex}"
 			end
@@ -709,6 +611,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$graph_file.puts("\t\t<queryUsedInView>#{@singleQ_stat.result_used_in_view}<\/queryUsedInView>")
 	$graph_file.puts("\t\t<queryToTrivialBranch>#{@query_to_trivial_branch.length}<\/queryToTrivialBranch>")
 	$graph_file.puts("\t\t<trivialBranch>#{@trivial_branches.length}<\/trivialBranch>")
+	$graph_file.puts("\t\t<materialized>#{cnt_materialized_query}<\/materialized>")	
+	$graph_file.puts("\t\t<notMaterialized>#{cnt_not_materialized_query}<\/notMaterialized>")	
 	$graph_file.puts("\t<\/general>")
 
 	@table_general_stat.each do |k, v|
@@ -741,7 +645,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		vd.queries.each do |q|
 			str += "#{q.getIndex}, "
 		end
-		$temp_file.puts "VALIDATION: #{k.getIndex} -> #{str}"
+		#$temp_file.puts "VALIDATION: #{k.getIndex} -> #{str}"
 		vd.queries.each do |q|
 			if vd.read_goes_to_write.include?(q)
 			elsif vd.read_goes_to_branch_on_write.include?(q)
@@ -776,7 +680,12 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	$graph_file.puts("<queryString>")
 	printQueryStringFreq
-	$graph_file.puts("<\/queryString>")	
+	$graph_file.puts("<\/queryString>")
+
+	$graph_file.puts("<queryFunction>")
+	printQueryFunctionFreq
+	$graph_file.puts("<\/queryFunction>")	
+	
 	
 	$graph_file.puts("<\/STATSHEADER>")	
 	$graph_file.close
@@ -793,6 +702,7 @@ def helper_print_stat(general, readSink, readSource, write, label, print_branch=
 
 	$graph_file.puts("\t\t<queryInView>#{general.in_view}<\/queryInView>")
 	$graph_file.puts("\t\t<queryInClosure>#{general.in_closure}<\/queryInClosure>")
+	$graph_file.puts("\t\t<queryInClosureByDB>#{general.in_closure_by_db}<\/queryInClosureByDB>")
 
 	$graph_file.puts("\t\t<queryUseSQLString>#{general.use_query_string}<\/queryUseSQLString>")
 

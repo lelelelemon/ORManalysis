@@ -78,6 +78,8 @@ class Class_class
 		@class_fields = Array.new
 		@assocs = Hash.new
 		@var_map = Hash.new	
+
+		@member_defs = Hash.new
 	
 		filter_meth = Method_class.new("before_filter")
 		addMethod(filter_meth)
@@ -94,7 +96,7 @@ class Class_class
 		#@after_create = Array.new
 		#@after_destroy = Array.new
 	end
-	attr_accessor :include_module, :filename
+	attr_accessor :include_module, :filename, :member_defs
 	def getAssocs
 		@assocs
 	end
@@ -234,17 +236,20 @@ class Class_class
 					temp_class_name = $class_map[temp_class_name].getUpperClass
 				end
 			end
+			@step = step
 			@include_module.each do |inc|
 				if $class_map[inc] == nil or (isActiveRecord(@name) and inc.include?("Controller"))
 				else
-					f = $class_map[inc].findMethodRecursive(name, step+1)
-					if f == nil or ()
+					f = $class_map[inc].findMethodRecursive(name, @step+1)
+					if f
 						return f
 					end
 				end
 			end
 			if cname = search_distinct_func_name(name)
-				if isActiveRecord(@name) and cname.include?("Controller") 
+				if isActiveRecord(@name) and cname.include?("Controller")
+				elsif @name != cname and cname.ends_with?("Controller")
+					puts "in #{@name} Reject #{cname} . #{name}" 
 				else
 					return $class_map[cname].getMethod(name)
 				end
