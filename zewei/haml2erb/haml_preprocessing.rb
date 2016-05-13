@@ -123,6 +123,30 @@ File.open(ARGV[0], "r").each_line do |line|
   if line.include? "@selected.eql?(p.id.to_s) ? 'selected' : ''"
     line.gsub! "@selected.eql?(p.id.to_s) ? 'selected' : ''", "''"
   end
-  puts line
+
+	if line =~ /.*class: fluid_layout \? "container-fluid" : "container-fluid".*/
+		line.gsub! /class: fluid_layout \? "container-fluid" : "container-fluid"/, "class: \"container-fluid\""
+	end
+
+	if line.include? "content: request.base_url + request.fullpath"
+		line.gsub! "content: request.base_url + request.fullpath", "content: request.base_url"
+	end
+	
+	if line.include? "('page-with-layout-nav' if defined?(nav) && nav)"
+		line.gsub! "('page-with-layout-nav' if defined?(nav) && nav)", "'page-with-layout-nav'"
+	end
+
+	if line.include? "(preview_class if defined?(preview_class))"
+		line.gsub! "(preview_class if defined?(preview_class))", "preview_class"
+	end
+  
+	if line.include? "can?(current_user, :update_issue, @issue) ? 'js-task-list-container' : ''"
+		line.gsub! "can?(current_user, :update_issue, @issue) ? 'js-task-list-container' : ''", "'js-task-list-container'"
+	end
+
+	if line.include? "%button.btn.btn-danger"
+		line.gsub! "%button.btn.btn-danger", "button.btn.btn-danger"
+	end
+	puts line
 
 end
