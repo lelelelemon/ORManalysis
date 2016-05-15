@@ -57,7 +57,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  image_path('logo.svg') 
  # Windows 8 pinned site tile 
  image_path('msapplication-tile.png') 
- yield :meta_tags 
+ auto_discovery_link_tag(:atom, user_url(@user, format: :atom), title: " activity") 
   
   
   
@@ -96,14 +96,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -225,6 +227,78 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  yield :flash_message 
  (container_class unless @no_container) 
+ page_title       @user.name 
+ page_description @user.bio 
+ header_title     @user.name, user_path(@user) 
+ @no_container = true 
+  
+ if @user == current_user 
+ link_to profile_path, class: 'btn btn-gray' do 
+ icon('pencil') 
+ end 
+ elsif current_user 
+ if @user.abuse_report 
+ else 
+ link_to new_abuse_report_path(user_id: @user.id, ref_url: request.referrer), class: 'btn btn-gray',              title: 'Report abuse', data: {toggle: 'tooltip', placement: 'left', container: 'body'} do 
+ icon('exclamation-circle') 
+ end 
+ end 
+ end 
+ if current_user 
+ link_to user_path(@user, :atom, { private_token: current_user.private_token }), class: 'btn btn-gray' do 
+ icon('rss') 
+ end 
+ end 
+ link_to avatar_icon(@user, 400), target: '_blank' do 
+ image_tag avatar_icon(@user, 90), class: "avatar s90", alt: '' 
+ end 
+ @user.name 
+ if @user.bio.present? 
+ @user.bio 
+ end 
+ unless @user.public_email.blank? 
+ link_to @user.public_email, "mailto:" 
+ end 
+ unless @user.skype.blank? 
+ link_to "skype:", title: "Skype" do 
+ icon('skype') 
+ end 
+ end 
+ unless @user.linkedin.blank? 
+ link_to "https://www.linkedin.com/in/", title: "LinkedIn" do 
+ icon('linkedin-square') 
+ end 
+ end 
+ unless @user.twitter.blank? 
+ link_to "https://twitter.com/", title: "Twitter" do 
+ icon('twitter-square') 
+ end 
+ end 
+ unless @user.website_url.blank? 
+ link_to @user.short_website_url, @user.full_website_url 
+ end 
+ unless @user.location.blank? 
+ icon('map-marker') 
+ @user.location 
+ end 
+ link_to user_calendar_activities_path, data: {target: 'div#activity', action: 'activity', toggle: 'tab'} do 
+ end 
+ link_to user_groups_path, data: {target: 'div#groups', action: 'groups', toggle: 'tab'} do 
+ end 
+ link_to user_contributed_projects_path, data: {target: 'div#contributed', action: 'contributed', toggle: 'tab'} do 
+ end 
+ link_to user_projects_path, data: {target: 'div#projects', action: 'projects', toggle: 'tab'} do 
+ end 
+ link_to user_snippets_path, data: {target: 'div#snippets', action: 'snippets', toggle: 'tab'} do 
+ end 
+ container_class 
+ container_class 
+ spinner 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ spinner 
  
  yield :scripts_body 
 
@@ -276,7 +350,7 @@ end
  image_path('logo.svg') 
  # Windows 8 pinned site tile 
  image_path('msapplication-tile.png') 
- yield :meta_tags 
+ auto_discovery_link_tag(:atom, user_url(@user, format: :atom), title: " activity") 
   
   
   
@@ -315,14 +389,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -444,6 +520,78 @@ end
  
  yield :flash_message 
  (container_class unless @no_container) 
+ page_title       @user.name 
+ page_description @user.bio 
+ header_title     @user.name, user_path(@user) 
+ @no_container = true 
+  
+ if @user == current_user 
+ link_to profile_path, class: 'btn btn-gray' do 
+ icon('pencil') 
+ end 
+ elsif current_user 
+ if @user.abuse_report 
+ else 
+ link_to new_abuse_report_path(user_id: @user.id, ref_url: request.referrer), class: 'btn btn-gray',              title: 'Report abuse', data: {toggle: 'tooltip', placement: 'left', container: 'body'} do 
+ icon('exclamation-circle') 
+ end 
+ end 
+ end 
+ if current_user 
+ link_to user_path(@user, :atom, { private_token: current_user.private_token }), class: 'btn btn-gray' do 
+ icon('rss') 
+ end 
+ end 
+ link_to avatar_icon(@user, 400), target: '_blank' do 
+ image_tag avatar_icon(@user, 90), class: "avatar s90", alt: '' 
+ end 
+ @user.name 
+ if @user.bio.present? 
+ @user.bio 
+ end 
+ unless @user.public_email.blank? 
+ link_to @user.public_email, "mailto:" 
+ end 
+ unless @user.skype.blank? 
+ link_to "skype:", title: "Skype" do 
+ icon('skype') 
+ end 
+ end 
+ unless @user.linkedin.blank? 
+ link_to "https://www.linkedin.com/in/", title: "LinkedIn" do 
+ icon('linkedin-square') 
+ end 
+ end 
+ unless @user.twitter.blank? 
+ link_to "https://twitter.com/", title: "Twitter" do 
+ icon('twitter-square') 
+ end 
+ end 
+ unless @user.website_url.blank? 
+ link_to @user.short_website_url, @user.full_website_url 
+ end 
+ unless @user.location.blank? 
+ icon('map-marker') 
+ @user.location 
+ end 
+ link_to user_calendar_activities_path, data: {target: 'div#activity', action: 'activity', toggle: 'tab'} do 
+ end 
+ link_to user_groups_path, data: {target: 'div#groups', action: 'groups', toggle: 'tab'} do 
+ end 
+ link_to user_contributed_projects_path, data: {target: 'div#contributed', action: 'contributed', toggle: 'tab'} do 
+ end 
+ link_to user_projects_path, data: {target: 'div#projects', action: 'projects', toggle: 'tab'} do 
+ end 
+ link_to user_snippets_path, data: {target: 'div#snippets', action: 'snippets', toggle: 'tab'} do 
+ end 
+ container_class 
+ container_class 
+ spinner 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ spinner 
  
  yield :scripts_body 
 
@@ -534,14 +682,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -719,7 +869,7 @@ end
  image_path('logo.svg') 
  # Windows 8 pinned site tile 
  image_path('msapplication-tile.png') 
- yield :meta_tags 
+ auto_discovery_link_tag(:atom, user_url(@user, format: :atom), title: " activity") 
   
   
   
@@ -758,14 +908,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -887,6 +1039,78 @@ end
  
  yield :flash_message 
  (container_class unless @no_container) 
+ page_title       @user.name 
+ page_description @user.bio 
+ header_title     @user.name, user_path(@user) 
+ @no_container = true 
+  
+ if @user == current_user 
+ link_to profile_path, class: 'btn btn-gray' do 
+ icon('pencil') 
+ end 
+ elsif current_user 
+ if @user.abuse_report 
+ else 
+ link_to new_abuse_report_path(user_id: @user.id, ref_url: request.referrer), class: 'btn btn-gray',              title: 'Report abuse', data: {toggle: 'tooltip', placement: 'left', container: 'body'} do 
+ icon('exclamation-circle') 
+ end 
+ end 
+ end 
+ if current_user 
+ link_to user_path(@user, :atom, { private_token: current_user.private_token }), class: 'btn btn-gray' do 
+ icon('rss') 
+ end 
+ end 
+ link_to avatar_icon(@user, 400), target: '_blank' do 
+ image_tag avatar_icon(@user, 90), class: "avatar s90", alt: '' 
+ end 
+ @user.name 
+ if @user.bio.present? 
+ @user.bio 
+ end 
+ unless @user.public_email.blank? 
+ link_to @user.public_email, "mailto:" 
+ end 
+ unless @user.skype.blank? 
+ link_to "skype:", title: "Skype" do 
+ icon('skype') 
+ end 
+ end 
+ unless @user.linkedin.blank? 
+ link_to "https://www.linkedin.com/in/", title: "LinkedIn" do 
+ icon('linkedin-square') 
+ end 
+ end 
+ unless @user.twitter.blank? 
+ link_to "https://twitter.com/", title: "Twitter" do 
+ icon('twitter-square') 
+ end 
+ end 
+ unless @user.website_url.blank? 
+ link_to @user.short_website_url, @user.full_website_url 
+ end 
+ unless @user.location.blank? 
+ icon('map-marker') 
+ @user.location 
+ end 
+ link_to user_calendar_activities_path, data: {target: 'div#activity', action: 'activity', toggle: 'tab'} do 
+ end 
+ link_to user_groups_path, data: {target: 'div#groups', action: 'groups', toggle: 'tab'} do 
+ end 
+ link_to user_contributed_projects_path, data: {target: 'div#contributed', action: 'contributed', toggle: 'tab'} do 
+ end 
+ link_to user_projects_path, data: {target: 'div#projects', action: 'projects', toggle: 'tab'} do 
+ end 
+ link_to user_snippets_path, data: {target: 'div#snippets', action: 'snippets', toggle: 'tab'} do 
+ end 
+ container_class 
+ container_class 
+ spinner 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ spinner 
  
  yield :scripts_body 
 
@@ -944,7 +1168,7 @@ end
  image_path('logo.svg') 
  # Windows 8 pinned site tile 
  image_path('msapplication-tile.png') 
- yield :meta_tags 
+ auto_discovery_link_tag(:atom, user_url(@user, format: :atom), title: " activity") 
   
   
   
@@ -983,14 +1207,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1112,6 +1338,78 @@ end
  
  yield :flash_message 
  (container_class unless @no_container) 
+ page_title       @user.name 
+ page_description @user.bio 
+ header_title     @user.name, user_path(@user) 
+ @no_container = true 
+  
+ if @user == current_user 
+ link_to profile_path, class: 'btn btn-gray' do 
+ icon('pencil') 
+ end 
+ elsif current_user 
+ if @user.abuse_report 
+ else 
+ link_to new_abuse_report_path(user_id: @user.id, ref_url: request.referrer), class: 'btn btn-gray',              title: 'Report abuse', data: {toggle: 'tooltip', placement: 'left', container: 'body'} do 
+ icon('exclamation-circle') 
+ end 
+ end 
+ end 
+ if current_user 
+ link_to user_path(@user, :atom, { private_token: current_user.private_token }), class: 'btn btn-gray' do 
+ icon('rss') 
+ end 
+ end 
+ link_to avatar_icon(@user, 400), target: '_blank' do 
+ image_tag avatar_icon(@user, 90), class: "avatar s90", alt: '' 
+ end 
+ @user.name 
+ if @user.bio.present? 
+ @user.bio 
+ end 
+ unless @user.public_email.blank? 
+ link_to @user.public_email, "mailto:" 
+ end 
+ unless @user.skype.blank? 
+ link_to "skype:", title: "Skype" do 
+ icon('skype') 
+ end 
+ end 
+ unless @user.linkedin.blank? 
+ link_to "https://www.linkedin.com/in/", title: "LinkedIn" do 
+ icon('linkedin-square') 
+ end 
+ end 
+ unless @user.twitter.blank? 
+ link_to "https://twitter.com/", title: "Twitter" do 
+ icon('twitter-square') 
+ end 
+ end 
+ unless @user.website_url.blank? 
+ link_to @user.short_website_url, @user.full_website_url 
+ end 
+ unless @user.location.blank? 
+ icon('map-marker') 
+ @user.location 
+ end 
+ link_to user_calendar_activities_path, data: {target: 'div#activity', action: 'activity', toggle: 'tab'} do 
+ end 
+ link_to user_groups_path, data: {target: 'div#groups', action: 'groups', toggle: 'tab'} do 
+ end 
+ link_to user_contributed_projects_path, data: {target: 'div#contributed', action: 'contributed', toggle: 'tab'} do 
+ end 
+ link_to user_projects_path, data: {target: 'div#projects', action: 'projects', toggle: 'tab'} do 
+ end 
+ link_to user_snippets_path, data: {target: 'div#snippets', action: 'snippets', toggle: 'tab'} do 
+ end 
+ container_class 
+ container_class 
+ spinner 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ spinner 
  
  yield :scripts_body 
 
@@ -1169,7 +1467,7 @@ end
  image_path('logo.svg') 
  # Windows 8 pinned site tile 
  image_path('msapplication-tile.png') 
- yield :meta_tags 
+ auto_discovery_link_tag(:atom, user_url(@user, format: :atom), title: " activity") 
   
   
   
@@ -1208,14 +1506,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1337,6 +1637,78 @@ end
  
  yield :flash_message 
  (container_class unless @no_container) 
+ page_title       @user.name 
+ page_description @user.bio 
+ header_title     @user.name, user_path(@user) 
+ @no_container = true 
+  
+ if @user == current_user 
+ link_to profile_path, class: 'btn btn-gray' do 
+ icon('pencil') 
+ end 
+ elsif current_user 
+ if @user.abuse_report 
+ else 
+ link_to new_abuse_report_path(user_id: @user.id, ref_url: request.referrer), class: 'btn btn-gray',              title: 'Report abuse', data: {toggle: 'tooltip', placement: 'left', container: 'body'} do 
+ icon('exclamation-circle') 
+ end 
+ end 
+ end 
+ if current_user 
+ link_to user_path(@user, :atom, { private_token: current_user.private_token }), class: 'btn btn-gray' do 
+ icon('rss') 
+ end 
+ end 
+ link_to avatar_icon(@user, 400), target: '_blank' do 
+ image_tag avatar_icon(@user, 90), class: "avatar s90", alt: '' 
+ end 
+ @user.name 
+ if @user.bio.present? 
+ @user.bio 
+ end 
+ unless @user.public_email.blank? 
+ link_to @user.public_email, "mailto:" 
+ end 
+ unless @user.skype.blank? 
+ link_to "skype:", title: "Skype" do 
+ icon('skype') 
+ end 
+ end 
+ unless @user.linkedin.blank? 
+ link_to "https://www.linkedin.com/in/", title: "LinkedIn" do 
+ icon('linkedin-square') 
+ end 
+ end 
+ unless @user.twitter.blank? 
+ link_to "https://twitter.com/", title: "Twitter" do 
+ icon('twitter-square') 
+ end 
+ end 
+ unless @user.website_url.blank? 
+ link_to @user.short_website_url, @user.full_website_url 
+ end 
+ unless @user.location.blank? 
+ icon('map-marker') 
+ @user.location 
+ end 
+ link_to user_calendar_activities_path, data: {target: 'div#activity', action: 'activity', toggle: 'tab'} do 
+ end 
+ link_to user_groups_path, data: {target: 'div#groups', action: 'groups', toggle: 'tab'} do 
+ end 
+ link_to user_contributed_projects_path, data: {target: 'div#contributed', action: 'contributed', toggle: 'tab'} do 
+ end 
+ link_to user_projects_path, data: {target: 'div#projects', action: 'projects', toggle: 'tab'} do 
+ end 
+ link_to user_snippets_path, data: {target: 'div#snippets', action: 'snippets', toggle: 'tab'} do 
+ end 
+ container_class 
+ container_class 
+ spinner 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ # This tab is always loaded via AJAX 
+ spinner 
  
  yield :scripts_body 
 

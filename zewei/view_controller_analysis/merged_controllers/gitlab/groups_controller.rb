@@ -101,14 +101,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -242,11 +244,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.label :path, class: 'control-label' do 
  end 
  root_url 
- f.text_field :path, placeholder: 'open-source', class: 'form-control'
+ f.text_field :path, placeholder: 'open-source', class: 'form-control',          autofocus: local_assigns[:autofocus] || false 
  if @group.persisted? 
  end 
  f.label :description, class: 'control-label' 
- f.text_area :description, maxlength: 250
+ f.text_area :description, maxlength: 250,        class: 'form-control js-gfm-input', rows: 4 
  
  f.label :avatar, "Group avatar", class: 'control-label' 
   f.file_field :avatar, class: 'js-group-avatar-input hidden' 
@@ -369,14 +371,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -510,11 +514,11 @@ end
  f.label :path, class: 'control-label' do 
  end 
  root_url 
- f.text_field :path, placeholder: 'open-source', class: 'form-control'
+ f.text_field :path, placeholder: 'open-source', class: 'form-control',          autofocus: local_assigns[:autofocus] || false 
  if @group.persisted? 
  end 
  f.label :description, class: 'control-label' 
- f.text_area :description, maxlength: 250
+ f.text_area :description, maxlength: 250,        class: 'form-control js-gfm-input', rows: 4 
  
  f.label :avatar, "Group avatar", class: 'control-label' 
   f.file_field :avatar, class: 'js-group-avatar-input hidden' 
@@ -659,14 +663,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -908,15 +914,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  project.name 
  end 
  if show_last_commit_as_description 
- link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit)
+ link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit),          class: "commit-row-message" 
  elsif project.description.present? 
  markdown(project.description, pipeline: :description) 
  end 
  end 
-
- end 
+ 
  end 
  paginate(projects, remote: remote, theme: "gitlab") if projects.respond_to? :total_pages 
+ else 
+ end 
  
  
  end 
@@ -1016,14 +1023,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1253,14 +1262,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1392,11 +1403,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.label :path, class: 'control-label' do 
  end 
  root_url 
- f.text_field :path, placeholder: 'open-source', class: 'form-control'
+ f.text_field :path, placeholder: 'open-source', class: 'form-control',          autofocus: local_assigns[:autofocus] || false 
  if @group.persisted? 
  end 
  f.label :description, class: 'control-label' 
- f.text_area :description, maxlength: 250
+ f.text_area :description, maxlength: 250,        class: 'form-control js-gfm-input', rows: 4 
  
  image_tag group_icon(@group), alt: '', class: 'avatar group-avatar s160' 
  if @group.avatar? 
@@ -1523,14 +1534,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1762,14 +1775,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1901,11 +1916,11 @@ end
  f.label :path, class: 'control-label' do 
  end 
  root_url 
- f.text_field :path, placeholder: 'open-source', class: 'form-control'
+ f.text_field :path, placeholder: 'open-source', class: 'form-control',          autofocus: local_assigns[:autofocus] || false 
  if @group.persisted? 
  end 
  f.label :description, class: 'control-label' 
- f.text_area :description, maxlength: 250
+ f.text_area :description, maxlength: 250,        class: 'form-control js-gfm-input', rows: 4 
  
  image_tag group_icon(@group), alt: '', class: 'avatar group-avatar s160' 
  if @group.avatar? 

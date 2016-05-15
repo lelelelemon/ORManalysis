@@ -80,14 +80,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -311,14 +313,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -538,14 +542,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -700,7 +706,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  identity.extern_uid 
  link_to edit_admin_user_identity_path(@user, identity), class: 'btn btn-xs btn-grouped' do 
  end 
- link_to [:admin, @user, identity], method: :delete
+ link_to [:admin, @user, identity], method: :delete,      class: 'btn btn-xs btn-danger',      data: { confirm: "Are you sure you want to remove this identity?" } do 
+ end 
  
  else 
  end 
@@ -789,14 +796,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1018,14 +1027,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1260,14 +1271,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1393,7 +1406,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  identity.extern_uid 
  link_to edit_admin_user_identity_path(@user, identity), class: 'btn btn-xs btn-grouped' do 
  end 
- link_to [:admin, @user, identity], method: :delete
+ link_to [:admin, @user, identity], method: :delete,      class: 'btn btn-xs btn-danger',      data: { confirm: "Are you sure you want to remove this identity?" } do 
+ end 
  
  yield :scripts_body 
  

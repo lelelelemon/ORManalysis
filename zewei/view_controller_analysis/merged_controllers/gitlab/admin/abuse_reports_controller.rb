@@ -77,14 +77,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -221,8 +223,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  time_ago_with_tooltip(abuse_report.created_at) 
  markdown(abuse_report.message.squish!, pipeline: :single_line) 
  if user 
- link_to 'Remove user & report', admin_abuse_report_path(abuse_report, remove_user: true)
+ link_to 'Remove user & report', admin_abuse_report_path(abuse_report, remove_user: true),        data: {}, remote: true, method: :delete, class: "btn btn-xs btn-remove js-remove-tr" 
  end 
+ if user && !user.blocked? 
+ link_to 'Block user', block_admin_user_path(user), data: {confirm: 'USER WILL BE BLOCKED! Are you sure?'}, method: :put, class: "btn btn-xs" 
+ else 
+ end 
+ link_to 'Remove report', [:admin, abuse_report], remote: true, method: :delete, class: "btn btn-xs btn-close js-remove-tr" 
  
  else 
  end 

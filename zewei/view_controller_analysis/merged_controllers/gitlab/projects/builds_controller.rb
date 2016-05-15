@@ -117,14 +117,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -263,14 +265,14 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if can?(current_user, :update_build, @project) 
  if @all_builds.running_or_pending.any? 
- link_to 'Cancel running', cancel_all_namespace_project_builds_path(@project.namespace, @project)
- end 
+ link_to 'Cancel running', cancel_all_namespace_project_builds_path(@project.namespace, @project),          data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', method: :post 
  end 
  unless @repository.gitlab_ci_yml 
  link_to 'Get started with Builds', help_page_path('ci/quick_start', 'README'), class: 'btn btn-info' 
  end 
  link_to ci_lint_path, class: 'btn btn-default' do 
  icon('wrench') 
+ end 
  end 
  if @builds.blank? 
  else 
@@ -325,8 +327,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to retry_namespace_project_build_path(build.project.namespace, build.project, build, return_to: request.original_url), method: :post, title: 'Retry', class: 'btn btn-build' do 
  end 
  end 
- end
-end 
+ end 
+end
  
  paginate @builds, theme: 'gitlab' 
  end 
@@ -453,14 +455,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -624,6 +628,84 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if @build.active? 
+ end 
+ link_to '#up-build-trace', class: 'btn' do 
+ end 
+ link_to '#down-build-trace', class: 'btn' do 
+ end 
+ if @build.erased? 
+ erased_by = "by " if @build.erased_by 
+ else 
+ preserve do 
+ raw @build.trace_html 
+ end 
+ end 
+ if @build.coverage 
+ end 
+ if can?(current_user, :read_build, @project) && @build.artifacts? 
+ :group 
+ link_to download_namespace_project_build_artifacts_path(@project.namespace, @project, @build), class: 'btn btn-sm btn-primary' do 
+ icon('download') 
+ end 
+ if @build.artifacts_metadata? 
+ link_to browse_namespace_project_build_artifacts_path(@project.namespace, @project, @build), class: 'btn btn-sm btn-primary' do 
+ icon('folder-open') 
+ end 
+ end 
+ end 
+ if can?(current_user, :update_build, @project) 
+ :group 
+ if @build.active? 
+ link_to "Cancel", cancel_namespace_project_build_path(@project.namespace, @project, @build), class: 'btn btn-sm btn-danger', method: :post 
+ elsif @build.retryable? 
+ link_to "Retry", retry_namespace_project_build_path(@project.namespace, @project, @build), class: 'btn btn-sm btn-primary', method: :post 
+ end 
+ if @build.erasable? 
+ link_to erase_namespace_project_build_path(@project.namespace, @project, @build),                            class: 'btn btn-sm btn-warning', method: :post,                            data: { confirm: 'Are you sure you want to erase this build?' } do 
+ icon('eraser') 
+ end 
+ end 
+ if @build.has_trace? 
+ link_to 'Raw', raw_namespace_project_build_path(@project.namespace, @project, @build),                            class: 'btn btn-sm btn-success', target: '_blank' 
+ end 
+ end 
+ if @build.duration 
+ end 
+ if @build.finished_at 
+ end 
+ if @build.erased_at 
+ end 
+ if @build.runner && current_user && current_user.admin 
+ link_to "#", admin_runner_path(@build.runner.id) 
+ elsif @build.runner 
+ end 
+ if @build.trigger_request 
+ if @build.trigger_request.variables 
+ @build.trigger_request.variables.each do |key, value| 
+ end 
+ end 
+ link_to @build.commit.short_sha, ci_status_path(@build.commit), class: "monospace" 
+ link_to @build.ref, namespace_project_commits_path(@project.namespace, @project, @build.ref) 
+ end 
+ if @build.tags.any? 
+ @build.tag_list.each do |tag| 
+ tag 
+ end 
+ end 
+ if @builds.present? 
+ succeed ":" do 
+ link_to @build.commit.short_sha, ci_status_path(@build.commit), class: "monospace" 
+ end 
+ @builds.each_with_index do |build, i| 
+ ci_icon_for_status(build.status) 
+ link_to namespace_project_build_path(@project.namespace, @project, build) do 
+ if build.name 
+ build.name 
+ else 
+ end 
+ end 
+ build.status 
+ end 
  end 
  
  yield :scripts_body 

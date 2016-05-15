@@ -114,6 +114,19 @@ def process_line(line)
 	if line.include? "%button.btn.btn-danger"
 		line.gsub! "%button.btn.btn-danger", "button.btn.btn-danger"
 	end
+
+	if line.include? "(dom_id(user) if user)"
+		line.gsub! "(dom_id(user) if user)", "dom_id(user)"
+	end
+
+	if line.include? "class: (level.to_s == params[:visibility_level]) ? 'active' : 'light'"
+		line.gsub! "class: (level.to_s == params[:visibility_level]) ? 'active' : 'light'", "class: 'light'"
+	end
+
+	if line.include? "class: (tag.name == params[:tag]) ? 'active' : 'light'"
+		line.gsub! "class: (tag.name == params[:tag]) ? 'active' : 'light'", "class: 'light'"
+	end
+
 	return line
 
 end
@@ -143,9 +156,9 @@ File.open(ARGV[0], "r").each_line do |line|
 #  while line.start_with?" " or line.start_with?"\t" or line.start_with?"\n"
 #    line = line[1..-1]
 #  end
-  if line.to_s.strip.length == 0
-    next
-  end
+#  if line.to_s.strip.length == 0
+#    next
+#  end
   if content.start_with?"-#"
     is_comment = true
   end

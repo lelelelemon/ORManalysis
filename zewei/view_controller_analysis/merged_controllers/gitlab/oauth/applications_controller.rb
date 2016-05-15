@@ -100,14 +100,16 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -278,9 +280,23 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
  member.human_access 
  if show_controls 
  if can?(current_user, :update_group_member, member) 
- button_tag class: "btn-xs btn js-toggle-button"
-button_tag class: "btn-xs btn js-toggle-button" 
+ button_tag class: "btn-xs btn js-toggle-button",                       title: 'Edit access level', type: 'button' do 
  end 
+ end 
+ if can?(current_user, :destroy_group_member, member) 
+ if current_user == user 
+ link_to leave_group_group_members_path(@group), data: { confirm: leave_group_message(@group.name)}, method: :delete, class: "btn-xs btn btn-remove", title: 'Remove user from group' do 
+ icon("sign-out") 
+ end 
+ else 
+ link_to group_group_member_path(@group, member), data: { confirm: remove_user_from_group_message(@group, member) }, method: :delete, remote: true, class: "btn-xs btn btn-remove", title: 'Remove user from group' do 
+ end 
+ end 
+ end 
+ end 
+ form_for [@group, member], remote: true do |f| 
+ f.select :access_level, options_for_select(GroupMember.access_level_roles, member.access_level), {}, class: 'form-control' 
+ f.submit 'Save', class: 'btn btn-save btn-sm' 
  end 
  end 
  

@@ -80,14 +80,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -216,8 +218,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_for [:admin, @broadcast_message], html: { class: 'broadcast-message-form form-horizontal js-quick-submit js-requires-input'} do |f| 
  form_errors(@broadcast_message) 
  f.label :message, class: 'control-label' 
- f.text_area :message, class: "form-control js-autosize"
- end 
+ f.text_area :message, class: "form-control js-autosize",        required: true,        data: { preview_path: preview_admin_broadcast_messages_path } 
  link_to 'Customize colors', '#', class: 'js-toggle-colors-link' 
  f.label :color, "Background Color", class: 'control-label' 
  f.color_field :color, class: "form-control" 
@@ -231,6 +232,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit "Update broadcast message", class: "btn btn-create" 
  else 
  f.submit "Add broadcast message", class: "btn btn-create" 
+ end 
  end 
  
  if @broadcast_messages.any? 
@@ -329,14 +331,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -465,8 +469,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_for [:admin, @broadcast_message], html: { class: 'broadcast-message-form form-horizontal js-quick-submit js-requires-input'} do |f| 
  form_errors(@broadcast_message) 
  f.label :message, class: 'control-label' 
- f.text_area :message, class: "form-control js-autosize"
- end 
+ f.text_area :message, class: "form-control js-autosize",        required: true,        data: { preview_path: preview_admin_broadcast_messages_path } 
  link_to 'Customize colors', '#', class: 'js-toggle-colors-link' 
  f.label :color, "Background Color", class: 'control-label' 
  f.color_field :color, class: "form-control" 
@@ -480,6 +483,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.submit "Update broadcast message", class: "btn btn-create" 
  else 
  f.submit "Add broadcast message", class: "btn btn-create" 
+ end 
  end 
  
  
@@ -572,14 +576,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -708,8 +714,7 @@ end
  form_for [:admin, @broadcast_message], html: { class: 'broadcast-message-form form-horizontal js-quick-submit js-requires-input'} do |f| 
  form_errors(@broadcast_message) 
  f.label :message, class: 'control-label' 
- f.text_area :message, class: "form-control js-autosize"
- end 
+ f.text_area :message, class: "form-control js-autosize",        required: true,        data: { preview_path: preview_admin_broadcast_messages_path } 
  link_to 'Customize colors', '#', class: 'js-toggle-colors-link' 
  f.label :color, "Background Color", class: 'control-label' 
  f.color_field :color, class: "form-control" 
@@ -723,6 +728,7 @@ end
  f.submit "Update broadcast message", class: "btn btn-create" 
  else 
  f.submit "Add broadcast message", class: "btn btn-create" 
+ end 
  end 
  
  if @broadcast_messages.any? 
@@ -825,14 +831,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -961,8 +969,7 @@ end
  form_for [:admin, @broadcast_message], html: { class: 'broadcast-message-form form-horizontal js-quick-submit js-requires-input'} do |f| 
  form_errors(@broadcast_message) 
  f.label :message, class: 'control-label' 
- f.text_area :message, class: "form-control js-autosize"
- end 
+ f.text_area :message, class: "form-control js-autosize",        required: true,        data: { preview_path: preview_admin_broadcast_messages_path } 
  link_to 'Customize colors', '#', class: 'js-toggle-colors-link' 
  f.label :color, "Background Color", class: 'control-label' 
  f.color_field :color, class: "form-control" 
@@ -976,6 +983,7 @@ end
  f.submit "Update broadcast message", class: "btn btn-create" 
  else 
  f.submit "Add broadcast message", class: "btn btn-create" 
+ end 
  end 
  
  
@@ -1074,14 +1082,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 

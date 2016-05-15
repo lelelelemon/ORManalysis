@@ -110,14 +110,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -246,8 +248,34 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_errors(@protected_branch) 
  f.label :name, "Branch", class: "label-light" 
  f.select(:name, @project.open_branches.map { |br| [br.name, br.name] } , {include_blank: true}, {}) 
+ f.check_box :developers_can_push, class: "pull-left" 
+ f.label :developers_can_push, "Developers can push", class: "label-light append-bottom-0" 
+ f.submit "Protect", class: "btn-create btn" 
  end 
  end 
+  if @branches.empty? 
+ else 
+ can_admin_project = can?(current_user, :admin_project, @project) 
+ if can_admin_project 
+ end 
+ if can_admin_project 
+ end 
+ @branches.each do |branch| 
+ @url = namespace_project_protected_branch_path(@project.namespace, @project, branch) 
+ link_to(branch.name, namespace_project_commits_path(@project.namespace, @project, branch.name)) 
+ if @project.root_ref?(branch.name) 
+ end 
+ if commit = branch.commit 
+ link_to(commit.short_id, namespace_project_commit_path(@project.namespace, @project, commit.id), class: 'commit_short_id') 
+ else 
+ end 
+ check_box_tag("developers_can_push", branch.id, branch.developers_can_push, data: { url: @url }) 
+ if can_admin_project 
+ link_to 'Unprotect', [@project.namespace.becomes(Namespace), @project, branch], data: { confirm: 'Branch will be writable for developers. Are you sure?' }, method: :delete, class: "btn btn-warning btn-sm" 
+ end 
+ end 
+ end 
+ 
  
  yield :scripts_body 
  

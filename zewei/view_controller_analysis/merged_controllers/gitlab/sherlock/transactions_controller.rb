@@ -5,8 +5,9 @@ module Sherlock
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title t('sherlock.title') 
  header_title t('sherlock.title'), sherlock_transactions_path 
- link_to(destroy_all_sherlock_transactions_path) 
+ link_to(destroy_all_sherlock_transactions_path,      class: 'btn btn-danger',      method: :delete) do 
  t('sherlock.delete_all_transactions') 
+ end 
  t('sherlock.introduction') 
  if @transactions.empty? 
  t('sherlock.no_transactions') 

@@ -131,14 +131,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -386,10 +388,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if editable_diff?(diff_file) 
- edit_blob_link(@merge_request.source_project)
- end 
+ edit_blob_link(@merge_request.source_project,              @merge_request.source_branch, diff_file.new_path,              from_merge_request_id: @merge_request.id) 
  end 
  view_file_btn(diff_commit.id, diff_file, project) 
+ end 
  # Skip all non non-supported blobs 
  return unless blob.respond_to?('text?') 
  if diff_file.too_large? 
@@ -402,7 +404,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if left[:type] == 'match' 
   line 
  line 
-
+ 
  elsif left[:type] == 'nonewline' 
  left[:text] 
  left[:text] 
@@ -410,8 +412,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to raw(left[:number]), "#", id: left[:line_code] 
  if @comments_allowed && can?(current_user, :create_note, @project) 
  link_to_new_diff_note(left[:line_code], 'old') 
- end 
- end 
  end 
  diff_line_content(left[:text]) 
  if right[:type] == 'new' 
@@ -426,6 +426,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to_new_diff_note(right[:line_code], 'new') 
  end 
  diff_line_content(right[:text]) 
+ end 
  if @reply_allowed 
  comments_left, comments_right = organize_comments(left[:type], right[:type], left[:line_code], right[:line_code]) 
  if comments_left.present? || comments_right.present? 
@@ -448,6 +449,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  end 
  end 
+ end 
  if diff_file.diff.diff.blank? && diff_file.mode_changed? 
  end 
  
@@ -459,9 +461,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
  else 
  end 
-
+ 
  end 
-
+ 
    if @discussions.present? 
  @discussions.each do |discussion_notes| 
  note = discussion_notes.first 
@@ -570,8 +572,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to note.attachment.url, target: '_blank' do 
  icon('paperclip') 
  note.attachment_identifier 
- link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note)
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
  icon('trash-o', class: 'cred') 
+ end 
  end 
  end 
  
@@ -639,8 +642,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to note.attachment.url, target: '_blank' do 
  icon('paperclip') 
  note.attachment_identifier 
- link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note)
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
  icon('trash-o', class: 'cred') 
+ end 
  end 
  end 
  
@@ -809,14 +813,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 

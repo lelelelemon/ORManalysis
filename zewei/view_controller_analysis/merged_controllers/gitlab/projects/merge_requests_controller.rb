@@ -148,14 +148,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -296,20 +298,18 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_context_word = 'issues' 
  end 
  ("active" if params[:state] == 'opened') 
- link_to page_filter_path(state: 'opened', label: true), title: "Filter by  that are currently opened." do 
+ link_to page_filter_path(state: 'opened', label: true), title: "Filter by  that are currently opened."  
  if defined?(type) && type == :merge_requests 
  ("active" if params[:state] == 'merged') 
- link_to page_filter_path(state: 'merged', label: true), title: 'Filter by merge requests that are currently merged.' do 
+ link_to page_filter_path(state: 'merged', label: true), title: 'Filter by merge requests that are currently merged.' 
  ("active" if params[:state] == 'closed') 
- link_to page_filter_path(state: 'closed', label: true), title: 'Filter by merge requests that are currently closed and unmerged.' do 
+ link_to page_filter_path(state: 'closed', label: true), title: 'Filter by merge requests that are currently closed and unmerged.' 
+ else 
  ("active" if params[:state] == 'closed') 
- link_to page_filter_path(state: 'closed', label: true), title: 'Filter by issues that are currently closed.' do 
- end
-end 
-end
-end
-end
-
+ link_to page_filter_path(state: 'closed', label: true), title: 'Filter by issues that are currently closed.' 
+ end 
+ ("active" if params[:state] == 'all') 
+ link_to page_filter_path(state: 'all', label: true), title: "Show all ." 
  
   form_tag(path, method: :get, id: "issue_search_form", class: 'issue-search-form') do 
  search_field_tag :issue_search, params[:issue_search], { placeholder: 'Filter by name ...', class: 'form-control issue_search search-text-input input-short', spellcheck: false } 
@@ -329,21 +329,20 @@ end
  end 
   form_tag page_filter_path(without: [:assignee_id, :author_id, :milestone_title, :label_name]), method: :get, class: 'filter-form' do 
  if controller.controller_name == 'issues' && can?(current_user, :admin_issue, @project) 
- check_box_tag "check_all_issues", nil, false
- end 
+ check_box_tag "check_all_issues", nil, false,            class: "check_all_issues left" 
  end 
  if params[:author_id].present? 
  hidden_field_tag(:author_id, params[:author_id]) 
  end 
- dropdown_tag(user_dropdown_label(params[:author_id], "Author"), options: { toggle_class: "js-user-search js-filter-submit js-author-search", title: "Filter by author", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-author js-filter-submit"})
+ dropdown_tag(user_dropdown_label(params[:author_id], "Author"), options: { toggle_class: "js-user-search js-filter-submit js-author-search", title: "Filter by author", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-author js-filter-submit",            placeholder: "Search authors", data: { any_user: "Any Author", first_user: (current_user.username if current_user), current_user: true, project_id: (@project.id if @project), selected: params[:author_id], field_name: "author_id", default_label: "Author" } }) 
  if params[:assignee_id].present? 
  hidden_field_tag(:assignee_id, params[:assignee_id]) 
  end 
- dropdown_tag(user_dropdown_label(params[:assignee_id], "Assignee"), options: { toggle_class: "js-user-search js-filter-submit js-assignee-search", title: "Filter by assignee", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-assignee js-filter-submit"})
+ dropdown_tag(user_dropdown_label(params[:assignee_id], "Assignee"), options: { toggle_class: "js-user-search js-filter-submit js-assignee-search", title: "Filter by assignee", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-assignee js-filter-submit",            placeholder: "Search assignee", data: { any_user: "Any Assignee", first_user: (current_user.username if current_user), null_user: true, current_user: true, project_id: (@project.id if @project), selected: params[:assignee_id], field_name: "assignee_id", default_label: "Assignee" } }) 
   if params[:milestone_title].present? 
  hidden_field_tag(:milestone_title, params[:milestone_title]) 
  end 
- dropdown_tag(milestone_dropdown_label(params[:milestone_title]), options: { title: "Filter by milestone", toggle_class: 'js-milestone-select js-filter-submit', filter: true, dropdown_class: "dropdown-menu-selectable"})
+ dropdown_tag(milestone_dropdown_label(params[:milestone_title]), options: { title: "Filter by milestone", toggle_class: 'js-milestone-select js-filter-submit', filter: true, dropdown_class: "dropdown-menu-selectable",  placeholder: "Search milestones", footer_content: @project.present?, data: { show_no: true, show_any: true, show_upcoming: true, field_name: "milestone_title", selected: params[:milestone_title], project_id: @project.try(:id), milestones: milestones_filter_dropdown_path, default_label: "Milestone" } }) do 
  if @project 
  if can? current_user, :admin_milestone, @project 
  link_to new_namespace_project_milestone_path(@project.namespace, @project), title: "New Milestone" do 
@@ -352,6 +351,7 @@ end
  link_to namespace_project_milestones_path(@project.namespace, @project) do 
  if can? current_user, :admin_milestone, @project 
  else 
+ end 
  end 
  end 
  end 
@@ -433,9 +433,25 @@ end
  sort_title_downvotes 
  end 
  
+ end 
  if controller.controller_name == 'issues' 
  form_tag bulk_update_namespace_project_issues_path(@project.namespace, @project), method: :post  do 
- dropdown_tag("Status", options: {}) 
+ dropdown_tag("Status", options: {} ) do 
+ end 
+ dropdown_tag("Assignee", options: { toggle_class: "js-user-search js-update-assignee js-filter-submit js-filter-bulk-update", title: "Assign to", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable",              placeholder: "Search authors", data: { first_user: (current_user.username if current_user), null_user: true, current_user: true, project_id: @project.id, field_name: "update[assignee_id]" } }) 
+ dropdown_tag("Milestone", options: {}) 
+ hidden_field_tag 'update[issues_ids]', [] 
+ hidden_field_tag :state_event, params[:state_event] 
+ button_tag "Update issues", class: "btn update_selected_issues btn-save" 
+ end 
+ end 
+ if !@labels.nil? 
+ ("hidden" if !@labels.any?) 
+ if @labels.any? 
+  labels.each do |label| 
+ link_to_label(label, tooltip: false) 
+ end 
+ 
  end 
  end 
  
@@ -594,14 +610,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -853,14 +871,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1093,14 +1113,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1335,14 +1357,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1598,14 +1622,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1859,10 +1885,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if editable_diff?(diff_file) 
- edit_blob_link(@merge_request.source_project)
- end 
+ edit_blob_link(@merge_request.source_project,              @merge_request.source_branch, diff_file.new_path,              from_merge_request_id: @merge_request.id) 
  end 
  view_file_btn(diff_commit.id, diff_file, project) 
+ end 
  # Skip all non non-supported blobs 
  return unless blob.respond_to?('text?') 
  if diff_file.too_large? 
@@ -1875,7 +1901,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if left[:type] == 'match' 
   line 
  line 
-
+ 
  elsif left[:type] == 'nonewline' 
  left[:text] 
  left[:text] 
@@ -1883,8 +1909,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to raw(left[:number]), "#", id: left[:line_code] 
  if @comments_allowed && can?(current_user, :create_note, @project) 
  link_to_new_diff_note(left[:line_code], 'old') 
- end 
- end 
  end 
  diff_line_content(left[:text]) 
  if right[:type] == 'new' 
@@ -1899,6 +1923,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to_new_diff_note(right[:line_code], 'new') 
  end 
  diff_line_content(right[:text]) 
+ end 
  if @reply_allowed 
  comments_left, comments_right = organize_comments(left[:type], right[:type], left[:line_code], right[:line_code]) 
  if comments_left.present? || comments_right.present? 
@@ -1921,6 +1946,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  end 
  end 
+ end 
  if diff_file.diff.diff.blank? && diff_file.mode_changed? 
  end 
  
@@ -1932,7 +1958,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
  else 
  end 
-
+ 
  end 
  
  end 
@@ -2014,8 +2040,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to retry_namespace_project_build_path(build.project.namespace, build.project, build, return_to: request.original_url), method: :post, title: 'Retry', class: 'btn btn-build' do 
  end 
  end 
- end
-end 
+ end 
+end
  
  if ci_commit.retried.any? 
  if @project.build_coverage_enabled? 
@@ -2029,7 +2055,56 @@ end
  else 
   form_for [@project.namespace.becomes(Namespace), @project, @merge_request], url: new_namespace_project_merge_request_path(@project.namespace, @project), method: :get, html: { class: "merge-request-form form-inline js-requires-input" } do |f| 
  f.hidden_field :source_project_id 
- dropdown_toggle @merge_request.source_project_path, {} 
+ dropdown_toggle @merge_request.source_project_path, {}, { toggle_class: "js-compare-dropdown js-source-project" } 
+ dropdown_title("Select source project") 
+ dropdown_filter("Search projects") 
+ dropdown_content do 
+  projects.each do |project| 
+ project.path_with_namespace 
+ end 
+ 
+ end 
+ f.hidden_field :source_branch 
+ dropdown_toggle "Select source branch", {}, { toggle_class: "js-compare-dropdown js-source-branch" } 
+ dropdown_title("Select source branch") 
+ dropdown_filter("Search branches") 
+ dropdown_content do 
+  branches.each do |branch| 
+ branch 
+ end 
+ 
+ end 
+ icon('spinner spin', class: 'js-source-loading') 
+ projects =  @project.forked_from_project.nil? ? [@project] : [@project, @project.forked_from_project] 
+ f.hidden_field :target_project_id 
+ dropdown_toggle f.object.target_project.path_with_namespace, {}, { toggle_class: "js-compare-dropdown js-target-project" } 
+ dropdown_title("Select target project") 
+ dropdown_filter("Search projects") 
+ dropdown_content do 
+  projects.each do |project| 
+ project.path_with_namespace 
+ end 
+ 
+ end 
+ f.hidden_field :target_branch 
+ dropdown_toggle f.object.target_branch, {}, { toggle_class: "js-compare-dropdown js-target-branch" } 
+ dropdown_title("Select target branch") 
+ dropdown_filter("Search branches") 
+ dropdown_content do 
+  branches.each do |branch| 
+ branch 
+ end 
+ 
+ end 
+ icon('spinner spin', class: "js-target-loading") 
+ if @merge_request.errors.any? 
+ form_errors(@merge_request) 
+ elsif @merge_request.source_branch.present? && @merge_request.target_branch.present? 
+ if @merge_request.source_branch == @merge_request.target_branch 
+ else 
+ end 
+ end 
+ f.submit 'Compare branches and continue', class: "btn btn-new mr-compare-btn" 
  end 
  
  end 
@@ -2149,14 +2224,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -2410,10 +2487,10 @@ end
  end 
  end 
  if editable_diff?(diff_file) 
- edit_blob_link(@merge_request.source_project)
- end 
+ edit_blob_link(@merge_request.source_project,              @merge_request.source_branch, diff_file.new_path,              from_merge_request_id: @merge_request.id) 
  end 
  view_file_btn(diff_commit.id, diff_file, project) 
+ end 
  # Skip all non non-supported blobs 
  return unless blob.respond_to?('text?') 
  if diff_file.too_large? 
@@ -2426,7 +2503,7 @@ end
  if left[:type] == 'match' 
   line 
  line 
-
+ 
  elsif left[:type] == 'nonewline' 
  left[:text] 
  left[:text] 
@@ -2434,8 +2511,6 @@ end
  link_to raw(left[:number]), "#", id: left[:line_code] 
  if @comments_allowed && can?(current_user, :create_note, @project) 
  link_to_new_diff_note(left[:line_code], 'old') 
- end 
- end 
  end 
  diff_line_content(left[:text]) 
  if right[:type] == 'new' 
@@ -2450,6 +2525,7 @@ end
  link_to_new_diff_note(right[:line_code], 'new') 
  end 
  diff_line_content(right[:text]) 
+ end 
  if @reply_allowed 
  comments_left, comments_right = organize_comments(left[:type], right[:type], left[:line_code], right[:line_code]) 
  if comments_left.present? || comments_right.present? 
@@ -2472,6 +2548,7 @@ end
  
  end 
  end 
+ end 
  if diff_file.diff.diff.blank? && diff_file.mode_changed? 
  end 
  
@@ -2483,7 +2560,7 @@ end
   
  else 
  end 
-
+ 
  end 
  
  end 
@@ -2565,8 +2642,8 @@ end
  link_to retry_namespace_project_build_path(build.project.namespace, build.project, build, return_to: request.original_url), method: :post, title: 'Retry', class: 'btn btn-build' do 
  end 
  end 
- end
-end 
+ end 
+end
  
  if ci_commit.retried.any? 
  if @project.build_coverage_enabled? 
@@ -2580,7 +2657,56 @@ end
  else 
   form_for [@project.namespace.becomes(Namespace), @project, @merge_request], url: new_namespace_project_merge_request_path(@project.namespace, @project), method: :get, html: { class: "merge-request-form form-inline js-requires-input" } do |f| 
  f.hidden_field :source_project_id 
- dropdown_toggle @merge_request.source_project_path, {} 
+ dropdown_toggle @merge_request.source_project_path, {}, { toggle_class: "js-compare-dropdown js-source-project" } 
+ dropdown_title("Select source project") 
+ dropdown_filter("Search projects") 
+ dropdown_content do 
+  projects.each do |project| 
+ project.path_with_namespace 
+ end 
+ 
+ end 
+ f.hidden_field :source_branch 
+ dropdown_toggle "Select source branch", {}, { toggle_class: "js-compare-dropdown js-source-branch" } 
+ dropdown_title("Select source branch") 
+ dropdown_filter("Search branches") 
+ dropdown_content do 
+  branches.each do |branch| 
+ branch 
+ end 
+ 
+ end 
+ icon('spinner spin', class: 'js-source-loading') 
+ projects =  @project.forked_from_project.nil? ? [@project] : [@project, @project.forked_from_project] 
+ f.hidden_field :target_project_id 
+ dropdown_toggle f.object.target_project.path_with_namespace, {}, { toggle_class: "js-compare-dropdown js-target-project" } 
+ dropdown_title("Select target project") 
+ dropdown_filter("Search projects") 
+ dropdown_content do 
+  projects.each do |project| 
+ project.path_with_namespace 
+ end 
+ 
+ end 
+ f.hidden_field :target_branch 
+ dropdown_toggle f.object.target_branch, {}, { toggle_class: "js-compare-dropdown js-target-branch" } 
+ dropdown_title("Select target branch") 
+ dropdown_filter("Search branches") 
+ dropdown_content do 
+  branches.each do |branch| 
+ branch 
+ end 
+ 
+ end 
+ icon('spinner spin', class: "js-target-loading") 
+ if @merge_request.errors.any? 
+ form_errors(@merge_request) 
+ elsif @merge_request.source_branch.present? && @merge_request.target_branch.present? 
+ if @merge_request.source_branch == @merge_request.target_branch 
+ else 
+ end 
+ end 
+ f.submit 'Compare branches and continue', class: "btn btn-new mr-compare-btn" 
  end 
  
  end 
@@ -2696,14 +2822,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -2953,14 +3081,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -3214,14 +3344,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -3470,14 +3602,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -3769,14 +3903,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -4099,14 +4235,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 

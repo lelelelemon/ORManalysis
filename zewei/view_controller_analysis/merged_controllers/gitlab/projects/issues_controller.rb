@@ -146,14 +146,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -285,20 +287,18 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_context_word = 'issues' 
  end 
  ("active" if params[:state] == 'opened') 
- link_to page_filter_path(state: 'opened', label: true), title: "Filter by  that are currently opened." do 
+ link_to page_filter_path(state: 'opened', label: true), title: "Filter by  that are currently opened."  
  if defined?(type) && type == :merge_requests 
  ("active" if params[:state] == 'merged') 
- link_to page_filter_path(state: 'merged', label: true), title: 'Filter by merge requests that are currently merged.' do 
+ link_to page_filter_path(state: 'merged', label: true), title: 'Filter by merge requests that are currently merged.' 
  ("active" if params[:state] == 'closed') 
- link_to page_filter_path(state: 'closed', label: true), title: 'Filter by merge requests that are currently closed and unmerged.' do 
+ link_to page_filter_path(state: 'closed', label: true), title: 'Filter by merge requests that are currently closed and unmerged.' 
+ else 
  ("active" if params[:state] == 'closed') 
- link_to page_filter_path(state: 'closed', label: true), title: 'Filter by issues that are currently closed.' do 
- end
-end 
-end
-end
-end
-
+ link_to page_filter_path(state: 'closed', label: true), title: 'Filter by issues that are currently closed.' 
+ end 
+ ("active" if params[:state] == 'all') 
+ link_to page_filter_path(state: 'all', label: true), title: "Show all ." 
  
  if current_user 
  link_to namespace_project_issues_path(@project.namespace, @project, :atom, { private_token: current_user.private_token }), class: 'btn append-right-10' do 
@@ -322,21 +322,20 @@ end
  end 
   form_tag page_filter_path(without: [:assignee_id, :author_id, :milestone_title, :label_name]), method: :get, class: 'filter-form' do 
  if controller.controller_name == 'issues' && can?(current_user, :admin_issue, @project) 
- check_box_tag "check_all_issues", nil, false
- end 
+ check_box_tag "check_all_issues", nil, false,            class: "check_all_issues left" 
  end 
  if params[:author_id].present? 
  hidden_field_tag(:author_id, params[:author_id]) 
  end 
- dropdown_tag(user_dropdown_label(params[:author_id], "Author"), options: { toggle_class: "js-user-search js-filter-submit js-author-search", title: "Filter by author", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-author js-filter-submit"})
+ dropdown_tag(user_dropdown_label(params[:author_id], "Author"), options: { toggle_class: "js-user-search js-filter-submit js-author-search", title: "Filter by author", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-author js-filter-submit",            placeholder: "Search authors", data: { any_user: "Any Author", first_user: (current_user.username if current_user), current_user: true, project_id: (@project.id if @project), selected: params[:author_id], field_name: "author_id", default_label: "Author" } }) 
  if params[:assignee_id].present? 
  hidden_field_tag(:assignee_id, params[:assignee_id]) 
  end 
- dropdown_tag(user_dropdown_label(params[:assignee_id], "Assignee"), options: { toggle_class: "js-user-search js-filter-submit js-assignee-search", title: "Filter by assignee", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-assignee js-filter-submit"})
+ dropdown_tag(user_dropdown_label(params[:assignee_id], "Assignee"), options: { toggle_class: "js-user-search js-filter-submit js-assignee-search", title: "Filter by assignee", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-assignee js-filter-submit",            placeholder: "Search assignee", data: { any_user: "Any Assignee", first_user: (current_user.username if current_user), null_user: true, current_user: true, project_id: (@project.id if @project), selected: params[:assignee_id], field_name: "assignee_id", default_label: "Assignee" } }) 
   if params[:milestone_title].present? 
  hidden_field_tag(:milestone_title, params[:milestone_title]) 
  end 
- dropdown_tag(milestone_dropdown_label(params[:milestone_title]), options: { title: "Filter by milestone", toggle_class: 'js-milestone-select js-filter-submit', filter: true, dropdown_class: "dropdown-menu-selectable"})
+ dropdown_tag(milestone_dropdown_label(params[:milestone_title]), options: { title: "Filter by milestone", toggle_class: 'js-milestone-select js-filter-submit', filter: true, dropdown_class: "dropdown-menu-selectable",  placeholder: "Search milestones", footer_content: @project.present?, data: { show_no: true, show_any: true, show_upcoming: true, field_name: "milestone_title", selected: params[:milestone_title], project_id: @project.try(:id), milestones: milestones_filter_dropdown_path, default_label: "Milestone" } }) do 
  if @project 
  if can? current_user, :admin_milestone, @project 
  link_to new_namespace_project_milestone_path(@project.namespace, @project), title: "New Milestone" do 
@@ -345,6 +344,7 @@ end
  link_to namespace_project_milestones_path(@project.namespace, @project) do 
  if can? current_user, :admin_milestone, @project 
  else 
+ end 
  end 
  end 
  end 
@@ -426,9 +426,25 @@ end
  sort_title_downvotes 
  end 
  
+ end 
  if controller.controller_name == 'issues' 
  form_tag bulk_update_namespace_project_issues_path(@project.namespace, @project), method: :post  do 
- dropdown_tag("Status", options: {}) 
+ dropdown_tag("Status", options: {} ) do 
+ end 
+ dropdown_tag("Assignee", options: { toggle_class: "js-user-search js-update-assignee js-filter-submit js-filter-bulk-update", title: "Assign to", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable",              placeholder: "Search authors", data: { first_user: (current_user.username if current_user), null_user: true, current_user: true, project_id: @project.id, field_name: "update[assignee_id]" } }) 
+ dropdown_tag("Milestone", options: {}) 
+ hidden_field_tag 'update[issues_ids]', [] 
+ hidden_field_tag :state_event, params[:state_event] 
+ button_tag "Update issues", class: "btn update_selected_issues btn-save" 
+ end 
+ end 
+ if !@labels.nil? 
+ ("hidden" if !@labels.any?) 
+ if @labels.any? 
+  labels.each do |label| 
+ link_to_label(label, tooltip: false) 
+ end 
+ 
  end 
  end 
  
@@ -580,14 +596,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -825,14 +843,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1080,14 +1100,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1381,8 +1403,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to note.attachment.url, target: '_blank' do 
  icon('paperclip') 
  note.attachment_identifier 
- link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note)
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
  icon('trash-o', class: 'cred') 
+ end 
  end 
  end 
  
@@ -1450,8 +1473,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to note.attachment.url, target: '_blank' do 
  icon('paperclip') 
  note.attachment_identifier 
- link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note)
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
  icon('trash-o', class: 'cred') 
+ end 
  end 
  end 
  
@@ -1519,6 +1543,114 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  f.hidden_field 'assignee_id', value: issuable.assignee_id, id: 'issue_assignee_id' 
  dropdown_tag('Select assignee', options: {}) 
+ icon('clock-o') 
+ if issuable.milestone 
+ issuable.milestone.title 
+ else 
+ end 
+ icon('spinner spin', class: 'block-loading') 
+ if can_edit_issuable 
+ link_to 'Edit', '#', class: 'edit-link pull-right' 
+ end 
+ if issuable.milestone 
+ link_to namespace_project_milestone_path(@project.namespace, @project, issuable.milestone) do 
+ issuable.milestone.title 
+ end 
+ else 
+ end 
+ f.hidden_field 'milestone_id', value: issuable.milestone_id, id: nil 
+ dropdown_tag('Milestone', options: {}) 
+ if issuable.has_attribute?(:due_date) 
+ icon('calendar') 
+ issuable.due_date.try(:to_s, :medium) || 'None' 
+ icon('spinner spin', class: 'block-loading') 
+ if can?(current_user, :"admin_", @project) 
+ link_to 'Edit', '#', class: 'edit-link pull-right' 
+ end 
+ if issuable.due_date 
+ issuable.due_date.to_s(:medium) 
+ else 
+ end 
+ if can?(current_user, :"admin_", @project) 
+ f.hidden_field :due_date, value: issuable.due_date 
+ icon('chevron-down') 
+ dropdown_title('Due date') 
+ dropdown_content do 
+ end 
+ end 
+ end 
+ if issuable.project.labels.any? 
+ icon('tags') 
+ issuable.labels.count 
+ icon('spinner spin', class: 'block-loading') 
+ if can_edit_issuable 
+ link_to 'Edit', '#', class: 'edit-link pull-right' 
+ end 
+ ("has-labels" if issuable.labels.any?) 
+ if issuable.labels.any? 
+ issuable.labels.each do |label| 
+ link_to_label(label, type: issuable.to_ability_name) 
+ end 
+ else 
+ end 
+ issuable.labels.each do |label| 
+ hidden_field_tag "[label_names][]", label.id, id: nil 
+ end 
+ icon('chevron-down') 
+  title = local_assigns.fetch(:title, 'Assign labels') 
+ filter_placeholder = local_assigns.fetch(:filter_placeholder, 'Search labels') 
+ dropdown_title(title) 
+ dropdown_filter(filter_placeholder) 
+ dropdown_content 
+ if @project 
+ dropdown_footer do 
+ if can? current_user, :admin_label, @project 
+ end 
+ link_to namespace_project_labels_path(@project.namespace, @project), :"data-is-link" => true do 
+ if can? current_user, :admin_label, @project 
+ else 
+ end 
+ end 
+ end 
+ end 
+ dropdown_loading 
+ 
+ if can? current_user, :admin_label, @project and @project 
+  dropdown_title("Create new label", back: true) 
+ dropdown_content do 
+ suggested_colors.each do |color| 
+ link_to '#', style: "background-color: ", data: { color: color } do 
+ end 
+ end 
+ end 
+ 
+ end 
+ end 
+  participants_row = 7 
+ participants_size = participants.size 
+ participants_extra = participants_size - participants_row 
+ icon('users') 
+ participants.count 
+ pluralize participants.count, "participant" 
+ participants.each do |participant| 
+ link_to_member(@project, participant, name: false, size: 24) 
+ end 
+ if participants_extra > 0 
+ end 
+ 
+ if current_user 
+ subscribed = issuable.subscribed?(current_user) 
+ icon('rss') 
+ subscribtion_status = subscribed ? 'subscribed' : 'unsubscribed' 
+ subscribed ? 'Unsubscribe' : 'Subscribe' 
+ ( 'hidden' if subscribed ) 
+ ( 'hidden' unless subscribed ) 
+ end 
+ project_ref = cross_project_reference(@project, issuable) 
+ clipboard_button(clipboard_text: project_ref) 
+ project_ref 
+ project_ref 
+ clipboard_button(clipboard_text: project_ref) 
  end 
  
  
@@ -1636,14 +1768,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1901,14 +2035,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -2173,14 +2309,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -2447,14 +2585,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 

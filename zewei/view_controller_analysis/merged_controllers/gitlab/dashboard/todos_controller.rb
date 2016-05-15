@@ -79,14 +79,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -224,11 +226,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  form_tag todos_filter_path(without: [:project_id, :author_id, :type, :action_id]), method: :get, class: 'filter-form' do 
- select_tag('project_id', todo_projects_options   ) 
+ select_tag('project_id', todo_projects_options,          class: 'select2 trigger-submit', include_blank: true,          data: {placeholder: 'Project'}) 
+ users_select_tag(:author_id, selected: params[:author_id],          placeholder: 'Author', class: 'trigger-submit', any_user: "Any Author", first_user: true, current_user: true) 
+ select_tag('type', todo_types_options,          class: 'select2 trigger-submit', include_blank: true,          data: {placeholder: 'Type'}) 
+ select_tag('action_id', todo_actions_options,          class: 'select2 trigger-submit', include_blank: true,          data: {placeholder: 'Action'}) 
  end 
- users_select_tag(:author_id, selected: params[:author_id]) 
- select_tag('type', todo_types_options)
- select_tag('action_id', todo_actions_options)
  if @todos.any? 
  @todos.group_by(&:project).each do |group| 
  project = group[0] 
@@ -353,14 +355,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 

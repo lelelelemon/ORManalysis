@@ -108,14 +108,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -242,17 +244,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  blob_icon @blob.mode, @blob.name 
  @path 
  number_to_human_size @blob.size 
-  link_to 'Raw', namespace_project_raw_path(@project.namespace, @project, @id)
+  link_to 'Raw', namespace_project_raw_path(@project.namespace, @project, @id),      class: 'btn btn-sm', target: '_blank' 
  # only show normal/blame view links for text files 
  if blob_text_viewable?(@blob) 
  if current_page? namespace_project_blame_path(@project.namespace, @project, @id) 
- link_to 'Normal View', namespace_project_blob_path(@project.namespace, @project, @id)
- end 
+ link_to 'Normal View', namespace_project_blob_path(@project.namespace, @project, @id),          class: 'btn btn-sm' 
  else 
- link_to 'Blame', namespace_project_blame_path(@project.namespace, @project, @id)
+ link_to 'Blame', namespace_project_blame_path(@project.namespace, @project, @id),          class: 'btn btn-sm' unless @blob.empty? 
  end 
- link_to 'History', namespace_project_commits_path(@project.namespace, @project, @id)
- link_to 'Permalink', namespace_project_blob_path(@project.namespace, @project)
+ end 
+ link_to 'History', namespace_project_commits_path(@project.namespace, @project, @id),      class: 'btn btn-sm' 
+ link_to 'Permalink', namespace_project_blob_path(@project.namespace, @project,      tree_join(@commit.sha, @path)), class: 'btn btn-sm' 
  if current_user 
  edit_blob_link 
  replace_blob_link 
@@ -274,7 +276,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  blame_group[:lines].each do |line| 
  end 
 end
-
  
  yield :scripts_body 
  

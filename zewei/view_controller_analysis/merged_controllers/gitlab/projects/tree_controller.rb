@@ -130,14 +130,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -338,22 +340,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  icon('folder fw') 
  end 
  elsif can?(current_user, :fork_project, @project) 
- continue_params = { to:         namespace_project_new_blob_path(@project.namespace, @project, @id)}
- fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id)
- end 
+ continue_params = { to:         namespace_project_new_blob_path(@project.namespace, @project, @id),                                      notice:     edit_in_new_fork_notice,                                      notice_now: edit_in_new_fork_notice_now } 
+ fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id,                                                                                        continue:       continue_params) 
  link_to fork_path, method: :post do 
  icon('pencil fw') 
  end 
- continue_params = { to:         request.fullpath}
- fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id)
- end 
+ continue_params = { to:         request.fullpath,                                      notice:     edit_in_new_fork_notice + " Try to upload a file again.",                                      notice_now: edit_in_new_fork_notice_now } 
+ fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id,                                                                                        continue:       continue_params) 
  link_to fork_path, method: :post do 
  icon('file fw') 
  end 
- continue_params = { to:         request.fullpath}
- fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id)
+ continue_params = { to:         request.fullpath,                                      notice:     edit_in_new_fork_notice + " Try to create a new directory again.",                                      notice_now: edit_in_new_fork_notice_now } 
+ fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id,                                                                                        continue:       continue_params) 
  link_to fork_path, method: :post do 
  icon('folder fw') 
+ end 
  end 
  link_to new_namespace_project_branch_path(@project.namespace, @project) do 
  icon('code-fork fw') 
@@ -361,7 +362,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to new_namespace_project_tag_path(@project.namespace, @project) do 
  icon('tags fw') 
  end 
-end
+ end 
+ end 
  
   link_to @commit.short_id, namespace_project_commit_path(@project.namespace, @project, @commit), class: "monospace" 
  truncate(@commit.title, length: 50) 
@@ -384,7 +386,7 @@ end
    nonce = SecureRandom.hex 
  label_tag "commit_message-", class: 'control-label' do 
  end 
- text_area_tag 'commit_message'
+ text_area_tag 'commit_message',          (params[:commit_message] ),          class: 'form-control js-commit-message', placeholder: local_assigns[:placeholder],          required: true, rows: (local_assigns[:rows] ),          id: "commit_message-" 
  if local_assigns[:hint] 
  end 
  

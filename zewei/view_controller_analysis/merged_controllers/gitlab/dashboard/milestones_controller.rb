@@ -89,14 +89,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -261,7 +263,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  end 
-
+ 
  
  end 
  end 
@@ -351,14 +353,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -540,12 +544,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  show_project_name = local_assigns.fetch(:show_project_name, false) 
  show_full_project_name = local_assigns.fetch(:show_full_project_name, false) 
-  args = { show_project_name: local_assigns.fetch(:show_project_name, false)}
+  args = { show_project_name: local_assigns.fetch(:show_project_name, false),           show_full_project_name: local_assigns.fetch(:show_full_project_name, false) } 
  render 'shared/milestones/issuables', args.merge(title: 'Unstarted Issues (open and unassigned)', issuables: issues.opened.unassigned, id: 'unassigned', show_counter: true) 
  render 'shared/milestones/issuables', args.merge(title: 'Ongoing Issues (open and assigned)', issuables: issues.opened.assigned, id: 'ongoing', show_counter: true) 
  render 'shared/milestones/issuables', args.merge(title: 'Completed Issues (closed)', issuables: issues.closed, id: 'closed', show_counter: true) 
  
-  args = { show_project_name: local_assigns.fetch(:show_project_name, false)}
+  args = { show_project_name: local_assigns.fetch(:show_project_name, false),           show_full_project_name: local_assigns.fetch(:show_full_project_name, false) } 
  render 'shared/milestones/issuables', args.merge(title: 'Work in progress (open and unassigned)', issuables: merge_requests.opened.unassigned, id: 'unassigned') 
  render 'shared/milestones/issuables', args.merge(title: 'Waiting for merge (open and assigned)', issuables: merge_requests.opened.assigned, id: 'ongoing') 
  render 'shared/milestones/issuables', args.merge(title: 'Rejected (closed)', issuables: merge_requests.closed, id: 'closed') 

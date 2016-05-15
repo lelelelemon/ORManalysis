@@ -95,14 +95,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -288,7 +290,37 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  
+  if current_user 
+ icon('globe') 
+ if params[:visibility_level].present? 
+ visibility_level_label(params[:visibility_level].to_i) 
+ else 
+ end 
+ link_to filter_projects_path(visibility_level: nil) do 
+ end 
+ Gitlab::VisibilityLevel.values.each do |level| 
+ link_to filter_projects_path(visibility_level: level) do 
+ visibility_level_icon(level) 
+ visibility_level_label(level) 
+ end 
+ end 
+ end 
+ if @tags.present? 
+ icon('tags') 
+ if params[:tag].present? 
+ params[:tag] 
+ else 
+ end 
+ link_to filter_projects_path(tag: nil) do 
+ end 
+ @tags.each do |tag| 
+ link_to filter_projects_path(tag: tag.name) do 
+ icon('tag') 
+ tag.name 
+ end 
+ end 
+ end 
+ 
    projects_limit = 20 unless local_assigns[:projects_limit] 
  avatar = true unless local_assigns[:avatar] == false 
  use_creator_avatar = false unless local_assigns[:use_creator_avatar] == true 
@@ -342,15 +374,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  project.name 
  end 
  if show_last_commit_as_description 
- link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit)
+ link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit),          class: "commit-row-message" 
  elsif project.description.present? 
  markdown(project.description, pipeline: :description) 
  end 
  end 
-
- end 
+ 
  end 
  paginate(projects, remote: remote, theme: "gitlab") if projects.respond_to? :total_pages 
+ else 
+ end 
  
  
  
@@ -451,14 +484,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -697,15 +732,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  project.name 
  end 
  if show_last_commit_as_description 
- link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit)
+ link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit),          class: "commit-row-message" 
  elsif project.description.present? 
  markdown(project.description, pipeline: :description) 
  end 
  end 
-
- end 
+ 
  end 
  paginate(projects, remote: remote, theme: "gitlab") if projects.respond_to? :total_pages 
+ else 
+ end 
  
  
  
@@ -807,14 +843,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1053,15 +1091,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  project.name 
  end 
  if show_last_commit_as_description 
- link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit)
+ link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit),          class: "commit-row-message" 
  elsif project.description.present? 
  markdown(project.description, pipeline: :description) 
  end 
  end 
-
- end 
+ 
  end 
  paginate(projects, remote: remote, theme: "gitlab") if projects.respond_to? :total_pages 
+ else 
+ end 
  
  
  

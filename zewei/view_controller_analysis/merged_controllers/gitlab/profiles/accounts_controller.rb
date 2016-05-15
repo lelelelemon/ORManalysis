@@ -78,14 +78,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -225,7 +227,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if !current_user.two_factor_enabled? 
  link_to 'Enable two-factor authentication', new_profile_two_factor_auth_path, class: 'btn btn-success' 
  else 
- link_to 'Disable Two-factor Authentication', profile_two_factor_auth_path, method: :delete, class: 'btn btn-danger'
+ link_to 'Disable Two-factor Authentication', profile_two_factor_auth_path, method: :delete, class: 'btn btn-danger',              data: { confirm: 'Are you sure?' } 
  end 
  if button_based_providers.any? 
  button_based_providers.each do |provider| 
@@ -255,7 +257,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  rp = current_user.personal_projects.count 
  unless rp.zero? 
  end 
- link_to 'Delete account', user_registration_path, data: {} 
+ link_to 'Delete account', user_registration_path, data: {}, method: :delete, class: "btn btn-remove" 
+ else 
+ if @user.solo_owned_groups.present? 
+ end 
  end 
  end 
  

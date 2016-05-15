@@ -117,14 +117,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -270,10 +272,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  link_to '#', class: 'how_to_import_link btn import_github' do 
  end 
-  if current_user.admin? 
- else 
- end 
- 
+  
  end 
  end 
  if bitbucket_import_enabled? 
@@ -283,10 +282,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  link_to status_import_bitbucket_path, class: 'how_to_import_link btn import_bitbucket', "data-no-turbolink" => "true" do 
  end 
-  if current_user.admin? 
- else 
- end 
- 
+  
  end 
  end 
  if gitlab_import_enabled? 
@@ -296,10 +292,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  else 
  link_to status_import_gitlab_path, class: 'how_to_import_link btn import_gitlab' do 
  end 
-  if current_user.admin? 
- else 
- end 
- 
+  
  end 
  end 
  if gitorious_import_enabled? 
@@ -460,14 +453,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -673,13 +668,14 @@ end
  end 
  f.submit 'Save changes', class: "btn btn-save" 
  end 
- link_to 'Housekeeping', housekeeping_namespace_project_path(@project.namespace, @project)
+ link_to 'Housekeeping', housekeeping_namespace_project_path(@project.namespace, @project),                method: :post, class: "btn btn-default" 
  if can? current_user, :archive_project, @project 
  if @project.archived? 
- link_to 'Unarchive project', unarchive_namespace_project_path(@project.namespace, @project)
+ link_to 'Unarchive project', unarchive_namespace_project_path(@project.namespace, @project),                    data: { confirm: "Are you sure that you want to unarchive this project?\nWhen this project is unarchived it is active and can be committed to again." },                    method: :post, class: "btn btn-success" 
+ else 
+ link_to 'Archive project', archive_namespace_project_path(@project.namespace, @project),                    data: { confirm: "Are you sure that you want to archive this project?\nAn archived project cannot be committed to." },                    method: :post, class: "btn btn-warning" 
  end 
  else 
- link_to 'Archive project', archive_namespace_project_path(@project.namespace, @project)
  end 
  form_for([@project.namespace.becomes(Namespace), @project], html: { class: 'form-horizontal' }) do |f| 
  f.label :name, class: 'control-label' do 
@@ -832,14 +828,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -985,10 +983,7 @@ end
  else 
  link_to '#', class: 'how_to_import_link btn import_github' do 
  end 
-  if current_user.admin? 
- else 
- end 
- 
+  
  end 
  end 
  if bitbucket_import_enabled? 
@@ -998,10 +993,7 @@ end
  else 
  link_to status_import_bitbucket_path, class: 'how_to_import_link btn import_bitbucket', "data-no-turbolink" => "true" do 
  end 
-  if current_user.admin? 
- else 
- end 
- 
+  
  end 
  end 
  if gitlab_import_enabled? 
@@ -1011,10 +1003,7 @@ end
  else 
  link_to status_import_gitlab_path, class: 'how_to_import_link btn import_gitlab' do 
  end 
-  if current_user.admin? 
- else 
- end 
- 
+  
  end 
  end 
  if gitorious_import_enabled? 
@@ -1192,14 +1181,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1405,13 +1396,14 @@ end
  end 
  f.submit 'Save changes', class: "btn btn-save" 
  end 
- link_to 'Housekeeping', housekeeping_namespace_project_path(@project.namespace, @project)
+ link_to 'Housekeeping', housekeeping_namespace_project_path(@project.namespace, @project),                method: :post, class: "btn btn-default" 
  if can? current_user, :archive_project, @project 
  if @project.archived? 
- link_to 'Unarchive project', unarchive_namespace_project_path(@project.namespace, @project)
+ link_to 'Unarchive project', unarchive_namespace_project_path(@project.namespace, @project),                    data: { confirm: "Are you sure that you want to unarchive this project?\nWhen this project is unarchived it is active and can be committed to again." },                    method: :post, class: "btn btn-success" 
+ else 
+ link_to 'Archive project', archive_namespace_project_path(@project.namespace, @project),                    data: { confirm: "Are you sure that you want to archive this project?\nAn archived project cannot be committed to." },                    method: :post, class: "btn btn-warning" 
  end 
  else 
- link_to 'Archive project', archive_namespace_project_path(@project.namespace, @project)
  end 
  form_for([@project.namespace.becomes(Namespace), @project], html: { class: 'form-horizontal' }) do |f| 
  f.label :name, class: 'control-label' do 
@@ -1557,14 +1549,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1805,14 +1799,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -2047,14 +2043,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -2291,14 +2289,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -2566,14 +2566,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -2730,7 +2732,8 @@ end
  end 
  end 
  if access 
- link_to leave_namespace_project_project_members_path(@project.namespace, @project)
+ link_to leave_namespace_project_project_members_path(@project.namespace, @project),                  data: { confirm: leave_project_message(@project) }, method: :delete, title: 'Leave project' do 
+ end 
  end 
  end 
  end 
@@ -2821,11 +2824,11 @@ end
  icon('file fw') 
  end 
  elsif can?(current_user, :fork_project, @project) 
- continue_params = { to:         namespace_project_new_blob_path(@project.namespace, @project, @project.default_branch || 'master')}
- fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace)
- end 
+ continue_params = { to:         namespace_project_new_blob_path(@project.namespace, @project, @project.default_branch ),                                notice:     edit_in_new_fork_notice,                                notice_now: edit_in_new_fork_notice_now } 
+ fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id,                                                                                  continue:       continue_params) 
  link_to fork_path, method: :post do 
  icon('file fw') 
+ end 
  end 
  end 
  
@@ -2960,14 +2963,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -3135,7 +3140,8 @@ end
  end 
  end 
  if access 
- link_to leave_namespace_project_project_members_path(@project.namespace, @project)
+ link_to leave_namespace_project_project_members_path(@project.namespace, @project),                  data: { confirm: leave_project_message(@project) }, method: :delete, title: 'Leave project' do 
+ end 
  end 
  end 
  end 
@@ -3226,11 +3232,11 @@ end
  icon('file fw') 
  end 
  elsif can?(current_user, :fork_project, @project) 
- continue_params = { to:         namespace_project_new_blob_path(@project.namespace, @project, @project.default_branch || 'master')}
- fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace)
- end 
+ continue_params = { to:         namespace_project_new_blob_path(@project.namespace, @project, @project.default_branch ),                                notice:     edit_in_new_fork_notice,                                notice_now: edit_in_new_fork_notice_now } 
+ fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id,                                                                                  continue:       continue_params) 
  link_to fork_path, method: :post do 
  icon('file fw') 
+ end 
  end 
  end 
  
@@ -3410,14 +3416,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -3661,14 +3669,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -3836,7 +3846,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if access 
- link_to leave_namespace_project_project_members_path(@project.namespace, @project)
+ link_to leave_namespace_project_project_members_path(@project.namespace, @project),                  data: { confirm: leave_project_message(@project) }, method: :delete, title: 'Leave project' do 
+ end 
  end 
  end 
  end 
@@ -3927,11 +3938,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  icon('file fw') 
  end 
  elsif can?(current_user, :fork_project, @project) 
- continue_params = { to:         namespace_project_new_blob_path(@project.namespace, @project, @project.default_branch || 'master')}
- fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace)
- end 
+ continue_params = { to:         namespace_project_new_blob_path(@project.namespace, @project, @project.default_branch ),                                notice:     edit_in_new_fork_notice,                                notice_now: edit_in_new_fork_notice_now } 
+ fork_path = namespace_project_forks_path(@project.namespace, @project, namespace_key:  current_user.namespace.id,                                                                                  continue:       continue_params) 
  link_to fork_path, method: :post do 
  icon('file fw') 
+ end 
  end 
  end 
  

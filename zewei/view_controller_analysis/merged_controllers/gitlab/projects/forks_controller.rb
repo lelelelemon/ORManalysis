@@ -125,14 +125,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -256,7 +258,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  (container_class unless @no_container) 
  full_count_title = " public and  private" 
  form_tag request.original_url, method: :get, class: 'project-filter-form', id: 'project-filter-form' do |f| 
- search_field_tag :filter_projects, nil, placeholder: 'Search forks', class: 'projects-list-filter project-filter-form-field form-control input-short'
+ search_field_tag :filter_projects, nil, placeholder: 'Search forks', class: 'projects-list-filter project-filter-form-field form-control input-short',        spellcheck: false, data: { 'filter-selector' => 'span.namespace-name' } 
  end 
  if @sort.present? 
  sort_options_hash[@sort] 
@@ -340,16 +342,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  project.name 
  end 
  if show_last_commit_as_description 
- link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit)
+ link_to_gfm project.commit.title, namespace_project_commit_path(project.namespace, project, project.commit),          class: "commit-row-message" 
  elsif project.description.present? 
  markdown(project.description, pipeline: :description) 
  end 
  end 
-
- end 
+ 
  end 
  paginate(projects, remote: remote, theme: "gitlab") if projects.respond_to? :total_pages 
-
+ else 
+ end 
+ 
  
  if @private_forks_count > 0 
  icon('lock fw', base: 'circle', class: 'fa-lg private-fork-icon') 
@@ -465,14 +468,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -739,14 +744,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 

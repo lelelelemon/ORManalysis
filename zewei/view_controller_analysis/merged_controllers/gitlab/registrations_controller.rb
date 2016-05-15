@@ -32,11 +32,11 @@ class RegistrationsController < Devise::RegistrationsController
  f.label :path, class: 'control-label' do 
  end 
  root_url 
- f.text_field :path, placeholder: 'open-source', class: 'form-control'
+ f.text_field :path, placeholder: 'open-source', class: 'form-control',          autofocus: local_assigns[:autofocus] || false 
  if @group.persisted? 
  end 
  f.label :description, class: 'control-label' 
- f.text_area :description, maxlength: 250
+ f.text_area :description, maxlength: 250,        class: 'form-control js-gfm-input', rows: 4 
  
  f.label :avatar, "Group avatar", class: 'control-label' 
   f.file_field :avatar, class: 'js-group-avatar-input hidden' 

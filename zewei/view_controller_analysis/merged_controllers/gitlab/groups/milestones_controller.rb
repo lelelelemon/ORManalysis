@@ -88,14 +88,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -258,29 +260,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  end 
-
- dashboard = local_assigns[:dashboard] 
- custom_dom_id = dom_id(@project ? milestone : milestone.milestones.first) 
- link_to_gfm truncate(milestone.title, length: 100), milestone_path 
- link_to pluralize(milestone.issues_visible_to_user(current_user).size, 'Issue'), issues_path 
- link_to pluralize(milestone.merge_requests.size, 'Merge Request'), merge_requests_path 
- milestone_progress_bar(milestone) 
- if milestone.is_a?(GlobalMilestone) 
-  if milestone.expired? and not milestone.closed? 
- end 
- if milestone.expires_at 
- milestone.expires_at 
- end 
- 
- end 
- if @project 
-  if milestone.expired? and not milestone.closed? 
- end 
- if milestone.expires_at 
- milestone.expires_at 
- end 
- 
- end 
  
  
  end 
@@ -373,14 +352,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -517,12 +498,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  render 'projects/zen', f: f, attr: :description, classes: 'note-textarea', placeholder: 'Write milestone description...' 
  end 
  f.label :projects, "Projects", class: "control-label" 
- f.collection_select :project_ids, @group.projects, :id, :name           
-f.collection_select :project_ids, @group.projects, :id, :name
+ f.collection_select :project_ids, @group.projects, :id, :name,            { selected: @group.projects.map(&:id) }, multiple: true, class: 'select2' 
+ f.label :due_date, "Due Date", class: "control-label" 
  f.hidden_field :due_date 
  f.submit 'Create Milestone', class: "btn-create btn" 
  link_to "Cancel", group_milestones_path(@group), class: "btn btn-cancel" 
-end
+ end 
  
  yield :scripts_body 
  
@@ -620,14 +601,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -810,12 +793,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  show_project_name = local_assigns.fetch(:show_project_name, false) 
  show_full_project_name = local_assigns.fetch(:show_full_project_name, false) 
-  args = { show_project_name: local_assigns.fetch(:show_project_name, false)}
+  args = { show_project_name: local_assigns.fetch(:show_project_name, false),           show_full_project_name: local_assigns.fetch(:show_full_project_name, false) } 
  render 'shared/milestones/issuables', args.merge(title: 'Unstarted Issues (open and unassigned)', issuables: issues.opened.unassigned, id: 'unassigned', show_counter: true) 
  render 'shared/milestones/issuables', args.merge(title: 'Ongoing Issues (open and assigned)', issuables: issues.opened.assigned, id: 'ongoing', show_counter: true) 
  render 'shared/milestones/issuables', args.merge(title: 'Completed Issues (closed)', issuables: issues.closed, id: 'closed', show_counter: true) 
  
-  args = { show_project_name: local_assigns.fetch(:show_project_name, false)}
+  args = { show_project_name: local_assigns.fetch(:show_project_name, false),           show_full_project_name: local_assigns.fetch(:show_full_project_name, false) } 
  render 'shared/milestones/issuables', args.merge(title: 'Work in progress (open and unassigned)', issuables: merge_requests.opened.unassigned, id: 'unassigned') 
  render 'shared/milestones/issuables', args.merge(title: 'Waiting for merge (open and assigned)', issuables: merge_requests.opened.assigned, id: 'ongoing') 
  render 'shared/milestones/issuables', args.merge(title: 'Rejected (closed)', issuables: merge_requests.closed, id: 'closed') 
@@ -957,14 +940,16 @@ end
  end 
  end 
  if Gitlab::Sherlock.enabled? 
- link_to sherlock_transactions_path, title: 'Sherlock Transactions'
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('tachometer fw') 
  end 
  end 
  link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('sign-out') 
  end 
+ else 
  link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
  title 
  yield :header_content 
   if outdated_browser? 
@@ -1101,12 +1086,12 @@ end
  render 'projects/zen', f: f, attr: :description, classes: 'note-textarea', placeholder: 'Write milestone description...' 
  end 
  f.label :projects, "Projects", class: "control-label" 
- f.collection_select :project_ids, @group.projects, :id, :name           
-f.collection_select :project_ids, @group.projects, :id, :name
+ f.collection_select :project_ids, @group.projects, :id, :name,            { selected: @group.projects.map(&:id) }, multiple: true, class: 'select2' 
+ f.label :due_date, "Due Date", class: "control-label" 
  f.hidden_field :due_date 
  f.submit 'Create Milestone', class: "btn-create btn" 
  link_to "Cancel", group_milestones_path(@group), class: "btn btn-cancel" 
-end
+ end 
  
  yield :scripts_body 
  
