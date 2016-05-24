@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 import sys
 import glob
 import os
+import math
 import matplotlib.pyplot as plt
 tableau_colors = (
     (114/255., 158/255., 206/255.),
@@ -31,6 +32,7 @@ tableau_colors = (
 
 TOTAL_COLOR_NUM=22
 
+width = 0.2
 roots = []
 app_name = sys.argv[1]
 
@@ -39,6 +41,10 @@ stats_file = open(stats_file_path, 'w')
 
 base_path = "../applications/%s/results"%app_name
 fig_path = "../applications/%s/figs"%app_name
+
+log_file = open("stats_log.log", 'a')
+log_file.write("\n\n==============%s============\n"%app_name)
+
 
 if os.path.isdir(fig_path) == False:
 	os.system("mkdir %s"%fig_path)
@@ -60,6 +66,22 @@ for line in tablefield_fp:
 	line = line.replace("\n", "")
 	tablefields.append(line)
 
+#{table_name: [read, write], ...}
+table_stats = {}
+
+def countNonZeroElement(ary):
+	cnt = 0
+	for a in ary:
+		if a > 0:
+			cnt += 1
+	return cnt
+
+def countFrequency(ary, item):
+	cnt = 0
+	for a in ary:
+		if a == item:
+			cnt += 1
+	return cnt
 
 def calculateAverageRecursive(cond_list, pos, node, to_float):
 	results = []
@@ -101,6 +123,16 @@ def getAverage(l):
 		return 0.0
 	else:
 		return float(sum(l)) / float(len(l))
+def getStd(lst):
+	if len(lst) == 0:
+		return 0
+	avg = float(sum(lst)) / float(len(lst))
+	variance = 0.0
+	for l in lst:
+		variance += (l-avg)**2
+	#variance = map(lambda x: (x - avg)**2, lst)
+	std = math.sqrt(variance)
+	return std
 
 #preprocess
 for subdir, folders, files in os.walk(base_path):
@@ -142,7 +174,7 @@ prefix1 = ["stat"]
 general_stats_prefix = prefix1[:]
 table_stats_prefix = prefix1[:]  
 general_stats_prefix.append("general")
-table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryInClosureByDB", "queryUseSQLString", "queryOnlyFromUser", "queryUsedInView", "materialized", "notMaterialized"]
+table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryInClosureByDB", "queryUseSQLString", "queryOnlyFromUser", "longestQueryPath", "queryUsedInView", "materialized", "notMaterialized"]
 general_stats_content = table_stats_content[:]
 general_stats_content.append("branchOnQuery")
 general_stats_content.append("branchInView")
@@ -194,6 +226,21 @@ def print_table_query_stat(prefix):
 		cond_list.append("queryTotal")
 		r = calculateAllActions(cond_list)	
 		print_table_stats.append(float(sum(r))/(float(len(roots))))
+		
+		cond_list = table_stats_prefix[:]
+		cond_list.append(table)
+		cond_list.append("readSink")
+		cond_list.append("total")
+		table_stats[table] = []
+		r = calculateAllActions(cond_list)
+		table_stats[table].append(sum(r))
+		cond_list = table_stats_prefix[:]
+		cond_list.append(table)
+		cond_list.append("writeSource")
+		cond_list.append("total")
+		r = calculateAllActions(cond_list)
+		table_stats[table].append(r)
+
 	sorted(print_table_stats, reverse=True)
 	j = 0
 	for p in print_table_stats:
@@ -205,6 +252,7 @@ def print_table_query_stat(prefix):
 # stats
 def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	data = {}
+	data_std = {}
 	global query_total
 	global read_query_total
 
@@ -213,8 +261,10 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		cond_list.append(g)
 		r = calculateAllActions(cond_list)
 		data[g] = getAverage(r)
+		data_std[g] = getStd(r)
 
 	reads = {}
+	reads_std = {}
 	read_sum = 0
 	for g in read_stats_content:
 		cond_list = prefix[:]
@@ -223,6 +273,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		r = calculateAllActions(cond_list)
 		if g == "total":
 			reads[g] = getAverage(r)
+			reads_std[g] = getStd(r)
 			read_sum = sum(r)
 		else:
 			reads[g] = float(sum(r))/float(read_sum)
@@ -243,6 +294,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		#readSource[g] = getAverage(r)
 
 	writes = {}
+	writes_std = {}
 	write_sum = 0
 	for g in write_stats_content:
 		cond_list = prefix[:]
@@ -251,6 +303,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		r = calculateAllActions(cond_list)
 		if g == "total":
 			writes[g] = getAverage(r)
+			writes_std[g] = getStd(r)
 			write_sum = sum(r)
 		else:
 			writes[g] = float(sum(r))/float(write_sum)
@@ -261,8 +314,8 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	read_query_total = read_sum
 
 	stats_file.write("\t<queryGeneral>\n")
-	stats_file.write("\t\t<readQuery>%f</readQuery>\n"%reads["total"])
-	stats_file.write("\t\t<writeQuery>%f</writeQuery>\n"%writes["total"])
+	stats_file.write("\t\t<readQuery std=\"\">%f</readQuery>\n"%(reads_std["total"], reads["total"]))
+	stats_file.write("\t\t<writeQuery std=\"\">%f</writeQuery>\n"%(writes_std["total"], writes["total"]))
 	stats_file.write("\t</queryGeneral>\n")
 
 	stats_file.write("\t<branch>\n")
@@ -295,6 +348,13 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t\t<queryOnlyUseOtherSource>%f</queryOnlyUseOtherSource>\n"%data["queryOnlyFromUser"])
 	stats_file.write("\t\t<queryUseQueryResults>%f</queryUseQueryResults>\n"%(reads["total"]-data["queryOnlyFromUser"]))
 	stats_file.write("\t</onlyFromUser>\n")
+
+	stats_file.write("\t<longestQueryPath>\n")
+	stats_file.write("\t\t<longestQueryPathLen>%f</longestQueryPathLen>\n"%data["longestQueryPath"])
+	#stats_file.write("\t\t<queryNotOnLongestPath>%f</queryNotOnLongestPath>\n"%(reads["total"]+writes["total"]-data["longestQueryPath"]))
+	stats_file.write("\t\t<totalQueryNumber>%f</totalQueryNumber>\n"%(reads["total"]+writes["total"]))
+	stats_file.write("\t</longestQueryPath>\n")
+
 
 	stats_file.write("\t<inClosure>\n")
 	stats_file.write("\t\t<queryInClosureByDB>%f</queryInClosureByDB>\n"%data["queryInClosureByDB"])
@@ -345,8 +405,8 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	#print "READsink:\t%f\t:\t%f\t%f\t%f\t%f"%(reads["sinkTotal"], reads["toReadQuery"], reads["toWriteQuery"], reads["toBranch"], reads["toView"])
 	#print "READsource:\t%f\t:\t%f\t%f\t%f\t%f"%(readSource["sourceTotal"], readSource["fromQuery"], readSource["fromUserInput"], readSource["fromConst"], readSource["fromUtil"])
 	#print "WRITEsource:\t%f\t:\t%f\t%f\t%f\t%f"%(writes["sourceTotal"], writes["fromQuery"], writes["fromUserInput"], writes["fromConst"], writes["fromUtil"])
+'''
 	ind = np.arange(1)
-	width = 0.2
 	
 	fig = plt.figure(figsize=(15, 7))
 	#first bar: Qread + Qwrite = Qtotal
@@ -477,6 +537,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	fig.savefig("%s/querystat_%s2.pdf"%(fig_path, prefix[-1]))
 	plt.close(fig)
 	#plt.show()
+'''
 
 def print_view_stat(prefix):
 	table = []
@@ -514,7 +575,7 @@ def print_view_stat(prefix):
 	stats_file.write("\t</TableInView>\n")
 	ind = np.arange(1)
 	width = 0.2
-	
+'''	
 	fig = plt.figure()
 
 	ax1 = fig.add_subplot(121)
@@ -543,7 +604,7 @@ def print_view_stat(prefix):
 	stats_file.write("\t\t<fieldNotUsedInView>%d</fieldNotUsedInView>\n"%(len(tablefields)-len(field)))
 	stats_file.write("\t</FieldInView>\n")
 	fig.savefig("%s/view_stat.pdf"%(fig_path))
-
+'''
 
 #chain
 def print_chain(prefix, content):
@@ -572,6 +633,7 @@ def print_chain(prefix, content):
 					range_count += 1
 		stats_file.write("\t\t<reach%dPercQuery>%f</reach%dPercQuery>\n"%((i+1)*20, float(range_count)/float(len(data2)), (i+1)*20))
 	stats_file.write("\t</inputReaches>\n")
+'''
 	if len(data)>0:
 		fig = plt.figure()
 		ax1 = fig.add_subplot(111)
@@ -579,7 +641,7 @@ def print_chain(prefix, content):
 
 		#plt.show()
 		fig.savefig("%s/inputReachQuery.pdf"%(fig_path))
-
+'''
 
 #fields
 def print_fields(prefix, content, non_field=False):
@@ -592,6 +654,9 @@ def print_fields(prefix, content, non_field=False):
 		else:
 			data[g] = calculateAllActions(cond_list)
 	#aggregate by data["type"]
+	if non_field:
+		print "non_field data:"
+		print data
 	agg_by_type = {}
 	for i in range(len(data["type"])):
 		n = data["type"][i]
@@ -602,35 +667,72 @@ def print_fields(prefix, content, non_field=False):
 		if f_name not in agg_by_type[n]:
 			agg_by_type[n][f_name] = {}
 			agg_by_type[n][f_name]["numAssigns"] = []
+			agg_by_type[n][f_name]["numUses"] = []
 			agg_by_type[n][f_name]["avgSourceDist"] = []
 		agg_by_type[n][f_name]["numAssigns"].append(data["numAssigns"][i])
+		agg_by_type[n][f_name]["numUses"].append(data["numUses"][i])
 		agg_by_type[n][f_name]["avgSourceDist"].append(data["avgSourceDist"][i])
 	
 	legend = []
 	legend_name = []
+	legend_scat = []
 	fig = plt.figure()
 	ax = fig.add_subplot(111)	
 	i = 0
+	max_ylim = 0
+	count_by_type = {}
+	max_v = 0
 	for k,v in agg_by_type.items():
+		for k1, v1 in v.items():
+			avgDist = 0
+			for kk in v1["avgSourceDist"]:
+				if kk == 10000:
+					avgDist = 1
+			if avgDist == 0 and getAverage(v1["avgSourceDist"]) > max_v:
+				max_v = getAverage(v1["avgSourceDist"])
+
+	for k,v in agg_by_type.items():
+		count_by_type[k] = 0
+		legend.append(k)
 		plt_data = []
 		plt_data.append([])
 		plt_data.append([])
 		for k1, v1 in v.items(): #k1 = class_name.field_name, v1 = {"numUses","avgS"}
-			plt_data[0].append(sum(v1["numAssigns"]))
-			plt_data[1].append(getAverage(v1["avgSourceDist"]))
+			#plt_data[0].append(sum(v1["numAssigns"]))
+			plt_data[0].append(sum(v1["numUses"]))
+			avgDist = 0
+			for kk in v1["avgSourceDist"]:
+				if kk == 10000:
+					avgDist = max_v*2
+			if avgDist == 0:
+				avgDist = getAverage(v1["avgSourceDist"])
+				count_by_type[k] += 1
+				if k == "text":
+					log_file.write(" # text field %s can be derived\n"%(k1))
+			#plt_data[1].append(getAverage(v1["avgSourceDist"]))
+			plt_data[1].append(avgDist)
 		l = ax.scatter(plt_data[0], plt_data[1], color=tableau_colors[i%TOTAL_COLOR_NUM], label=k)
+		legend_scat.append(l)
+		max_ylim = max(plt_data[1])
 		#legend_name.append(k)
 		#legend.append(l[0])
 		i = i + 1
 	#ax.legend(legend, legend_name)
-	ax.set_xlabel("Total: %d Actions"%len(roots)) 
-	ax.legend(bbox_to_anchor=(1.05, 1.05), prop={'size':'10'})
+	ax.set_xlabel("Total: %d Actions"%len(roots))
+	ax.set_ylim([0, max_ylim*1.1]) 
+	ax.legend(legend_scat, legend, bbox_to_anchor=(1.05, 1.05), prop={'size':'10'})
 	#plt.show()
 	if non_field:
 		fig.savefig("%s/notstored_field.pdf"%(fig_path))
 	else:
 		fig.savefig("%s/table_field.pdf"%(fig_path))
 	plt.close(fig)
+
+	if non_field == False:	
+		stats_file.write("\t<tableFieldCompute>\n")
+		for k,v in count_by_type.items():
+			stats_file.write("\t\t<%s>%d</%s>\n"%(k,v,k))
+		stats_file.write("\t</tableFieldCompute>\n")
 
 def print_clique_stat(prefix):
 	validation_r = []
@@ -672,9 +774,9 @@ def print_clique_stat(prefix):
 	print depth
 
 	cond_list = prefix[:]
-	cond_list.append("clique")
-	r = calculateAllActions(cond_list)
-	clique = clique + r
+	#cond_list.append("clique")
+	#r = calculateAllActions(cond_list)
+	#clique = clique + r
 
 	rtw_ratio = []
 	i=0
@@ -724,6 +826,119 @@ def print_clique_stat(prefix):
 	stats_file.write("\t</transactionNested>\n")
 	#print "Average clique size:\t%f\tnumber\t%d"%(getAverage(clique), len(clique)) 
 
+	cond_list = prefix[:]
+	cond_list.append("validation")
+	cond_list.append("validationTable")	
+	r = calculateAllActions(cond_list, False)
+	plt_datax = []
+	plt_datay = []
+	legends = []
+	for table in table_names:
+		legends.append(table)
+		c = countFrequency(r, table)
+		plt_datax.append(c)
+		update_frequency = countNonZeroElement(table_stats[table][1])
+		plt_datay.append(update_frequency)
+	fig = plt.figure()
+	ax = fig.add_subplot(111)
+	l = ax.scatter(plt_datax, plt_datay, color=tableau_colors[1])
+	ax.set_ylim([0,len(roots)])
+	ax.set_xlabel("number of appearance in queryies in validation, not to any write")
+	ax.set_ylabel("how many controller actions update a table")
+	fig.savefig("%s/validation_tableUpdate.pdf"%(fig_path))
+	plt.close(fig)
+
+def print_redundant_data(prefix):
+	redundant_by_table = {}
+	total_field_size = {}
+	avg_redundant = []
+	avg_actual = []
+	for root in roots:
+		for stat_tag in root:
+			if stat_tag.tag == "redundantData":
+				for child in stat_tag:
+					table_name = child.tag
+					totalFieldSize = int(child.attrib["totalFieldSize"], 10)
+					actualFieldSize = int(child.text)
+					if table_name not in redundant_by_table:
+						redundant_by_table[table_name] = []
+						total_field_size[table_name] = totalFieldSize
+					redundant_by_table[table_name].append(actualFieldSize)
+					avg_redundant.append(totalFieldSize-actualFieldSize)
+					avg_actual.append(actualFieldSize)
+	stats_file.write("\t<redundantData>\n")
+	stats_file.write("\t\t<redundant>%f</redundant>\n"%(getAverage(avg_redundant)))
+	stats_file.write("\t\t<actual>%f</actual>\n"%(getAverage(avg_actual)))
+	stats_file.write("\t</redundantData>\n")
+			
+def print_select_condition(prefix):	
+	select_pattern = {}			
+	for root in roots:
+		for stat_tag in root:
+			if stat_tag.tag == "selectCondition":
+				for child in stat_tag:
+					tblname = child.tag
+					if tblname not in select_pattern:
+						select_pattern[tblname] = {}
+					field_name = child.attrib["field"]
+					if field_name not in select_pattern[tblname]:
+						select_pattern[tblname][field_name] = 0
+					usage = int(child.text, 10)
+					select_pattern[tblname][field_name] += 1
+	data = []
+	max_fields = 0
+	legends = []
+	acc_bottom = []
+	print "select_pattern:"
+	print select_pattern
+	count_0kv = len(table_names) - len(select_pattern)
+	count_1kv = 0
+	count_2kv = 0
+	for tbl in table_names:
+		if tbl not in select_pattern:
+			log_file.write("* %s not being selected by any fields\n"%tbl)
+	for k,v in select_pattern.items():
+		legends.append(k)
+		if len(v) < 2:
+			count_1kv += 1
+		elif len(v) < 3:
+			count_2kv += 1
+
+		acc_bottom.append(0)
+		if max_fields<len(v):
+			max_fields = len(v)
+	for k,v in select_pattern.items():
+		temp = []
+		for s,v1 in v.items():
+			temp.append(v1)
+		for m in range(0, max_fields-len(v)):
+			temp.append(0)
+		temp.sort(reverse=True)
+		data.append(temp)
+	print_data = np.transpose(data)
+
+	ind = np.arange(len(select_pattern))
+	fig = plt.figure(figsize=(5, 4))
+	ax = fig.add_subplot(111)	
+
+	for i in range(0, max_fields):	
+		rect = ax.bar(ind, print_data[i], width, bottom=acc_bottom, color=tableau_colors[i])
+		for j in range(0, len(select_pattern)):
+			acc_bottom[j] += print_data[i][j]
+	ax.set_xticklabels(legends, rotation='vertical')
+	ax.set_xlabel("tables")
+	ax.set_ylabel("number of usage in select, added up across all actions")
+	plt.tight_layout()
+	fig.savefig("%s/field_selection.pdf"%(fig_path))
+
+	stats_file.write("\t<selectCondition>\n")
+	stats_file.write("\t\t<field0Selected>%d</field0Selected>\n"%count_0kv)
+	stats_file.write("\t\t<field1Selected>%d</field1Selected>\n"%count_1kv)
+	stats_file.write("\t\t<field2Selected>%d</field2Selected>\n"%count_2kv)
+	stats_file.write("\t\t<other>%d</other>\n"%(len(select_pattern)-count_1kv-count_2kv))
+	stats_file.write("\t</selectCondition>\n")
+
+
 query_keyword = {}
 query_func_keyword = {}
 def print_query_string(prefix):
@@ -758,6 +973,82 @@ def print_query_string(prefix):
 	stats_file.write("\t</queryFunction>\n")
 	print "sum_by_func = %d"%temp_sum
 
+def print_other_stat(prefix):
+	global read_query_total
+	global query_total
+	loop_nested_array = {}
+	deepest = 0
+	stats_file.write("\t<loopNestedDepth>\n")
+	for root in roots:
+		temp_ary = []
+		for child in root:
+			if child.tag == "loopNestedStats":
+				for c in child:
+					temp_ary.append(int(c.text, 10))
+					if float(c.text) > deepest:
+						deepest = int(c.text, 10)
+		for i in temp_ary:
+			if i not in loop_nested_array:
+				loop_nested_array[i] = 0
+			loop_nested_array[i] += 1
+	for i in range(1, deepest+1):
+		depth = i
+		if i in loop_nested_array: 
+			stats_file.write("\t\t<loop%dDepth>%f</loop%dDepth>\n"%(depth, float(loop_nested_array[depth])/float(len(roots)), depth))
+		else:
+			stats_file.write("\t\t<loop%dDepth>%f</loop%dDepth>\n"%(depth, 0, depth))
+	stats_file.write("\t</loopNestedDepth>\n")	
+
+	input_sensitivity = []
+	input_sense_query = []
+	for root in roots:
+		for child in root:
+			if child.tag == "inputSensitivityStats":
+				for c in child:
+					if c.tag == "inputBranchInstrDiff":
+						if float(c.text) == 0:
+							input_sensitivity.append(-1)
+						elif float(c.text) > 4000:
+							input_sensitivity.append(-2)
+						else:
+							input_sensitivity.append(int(math.floor(float(c.text)/200.0)))
+					elif c.tag == "inputBranchQueryDiff":
+						if float(c.text) == 0:
+							input_sense_query.append(-1)
+						elif float(c.text) > 200:
+							input_sense_query.append(-2)
+						else:
+							input_sense_query.append(int(math.floor(float(c.text)/10.0)))
+
+	stats_file.write("\t<inputAffectPath>\n")
+	stats_file.write("\t\t<inputReachBranch0Diff>%f</inputReachBranch0Diff>\n"%(float(input_sensitivity.count(-1))/float(len(input_sensitivity))))	
+	for i in range(0, max(input_sensitivity)+1):
+		stats_file.write("\t\t<diffLessThan%dInstr>%f</diffLessThan%dInstr>\n"%((i+1)*200, float(input_sensitivity.count(i))/float(len(input_sensitivity)), (i+1)*200))
+	stats_file.write("\t\t<diffLargerThan4000Instr>%f</diffLargerThan4000Instr>\n"%(float(input_sensitivity.count(-2))/float(len(input_sensitivity))))	
+	stats_file.write("\t</inputAffectPath>\n")
+
+	stats_file.write("\t<inputAffectQuery>\n")
+	stats_file.write("\t\t<inputReachQuery0Diff>%f</inputReachQuery0Diff>\n"%(float(input_sense_query.count(-1))/float(len(input_sense_query))))	
+	for i in range(0, max(input_sense_query)+1):
+		stats_file.write("\t\t<diffLessThan%dQuery>%f</diffLessThan%dQuery>\n"%((i+1)*10, float(input_sense_query.count(i))/float(len(input_sense_query)), (i+1)*10))
+	stats_file.write("\t\t<diffLargerThan200Query>%f</diffLargerThan200Query>\n"%(float(input_sense_query.count(-2))/float(len(input_sense_query))))
+	stats_file.write("\t</inputAffectQuery>\n")
+
+	
+	stats_file.write("\t<queryCardinality>\n")
+	cond_list = []
+	cond_list.append("queryCardStats")
+	cond_list.append("limitedCard")
+	r = calculateAllActions(cond_list)
+	stats_file.write("\t\t<limitedCard>%s</limitedCard>\n"%getAverage(r))
+	
+	cond_list = []
+	cond_list.append("queryCardStats")
+	cond_list.append("scaleCard")
+	r = calculateAllActions(cond_list)
+	stats_file.write("\t\t<scaleCard>%s</scaleCard>\n"%getAverage(r))
+	stats_file.write("\t</queryCardinality>\n")
+
 
 const_keyword = {}
 def print_const_stat(prefix):
@@ -773,7 +1064,6 @@ def print_const_stat(prefix):
 	for q,f in const_keyword.items():
 		stats_file.write("\t\t<%s>%f</%s>\n"%(q,float(f)/float(read_query_total),q))
 	stats_file.write("\t</constStat>\n")
-
 
 
 def print_schema_stat(prefix, table_stat_prefix):
@@ -900,7 +1190,7 @@ def print_path(prefix, content):
 	stats_file.write("\t\t<longest>%f</longest>\n"%data["longestPath"])
 	stats_file.write("\t\t<instrTotal>%f</instrTotal>\n"%data["instrTotal"])
 	stats_file.write("\t</path>\n")
-
+'''
 	ax1 = fig.add_subplot(121)
 	rect1 = ax1.bar(ind, [data["read"]["min"], data["read"]["max"]], width, color=tableau_colors[colors[0]], edgecolor='black')
 	rect2 = ax1.bar(ind, [data["write"]["min"], data["write"]["max"]], width, bottom=[data["read"]["min"], data["read"]["max"]], color=tableau_colors[colors[1]], edgecolor='black')
@@ -927,7 +1217,7 @@ def print_path(prefix, content):
 	plt.tight_layout(pad=1.08, h_pad=None, w_pad=None, rect=None)
 	#plt.show()
 	fig.savefig("%s/path.pdf"%(fig_path))
-
+'''
 
 
 #print_general_stat(general_stats_prefix, general_stats_content, True)
@@ -953,6 +1243,10 @@ print_schema_stat(schema_stat_prefix, table_stats_prefix)
 print_query_string("")
 print_const_stat("")
 print_chain(prefix2, [])
+
+print_other_stat("")
+print_select_condition("")
+print_redundant_data("")
 
 stats_file.write("</%s>"%app_name)
 

@@ -42,7 +42,12 @@ load 'compute_stats.rb'
 load 'compute_functional_dependency_stat.rb'
 load 'compare_consequent_actions.rb'
 load 'compute_branch_stat.rb'
+load 'compute_input_stat.rb'
+load 'compute_loop_stat.rb'
+load 'compute_query_card_stat.rb'
 load 'compute_dataflow_chain_stat.rb'
+load 'compute_redundant_field_access.rb'
+load 'compute_select_condition.rb'
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',

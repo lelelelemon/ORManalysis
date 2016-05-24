@@ -153,6 +153,17 @@ class Temp_validation_stat
 			@read_goes_to_branch_on_write.push(qnode)
 		end
 	end
+	def getOtherQueries
+		@r = Array.new
+		@queries.each do |q|
+			if @read_goes_to_write.include?(q)
+			elsif @read_goes_to_branch_on_write.include?(q)
+			elsif q.isReadQuery?
+				@r.push(q)
+			end
+		end
+		return @r
+	end
 end
 
 class Temp_const_stat

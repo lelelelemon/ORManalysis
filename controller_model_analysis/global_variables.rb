@@ -77,6 +77,8 @@ $ins_cnt = 0
 $node_list = Array.new
 #the very source of dataflow, all nodes using user input connect to this node
 #format: from_inode_index*to_inode_index
+#used to compute how many fields are used for table selection
+$table_select_fields = Hash.new
 #==============================
 
 #=======================trace_flow.rb, mostly deprecated====================

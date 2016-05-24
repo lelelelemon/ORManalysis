@@ -70,9 +70,17 @@ def handle_single_dataflow_file(item, class_name)
 		file = File.open(item, "r")
 		file.each_line do |line|
 			if line.include?("SET IRMethod")
-				i = line.index(" = ")
-				func_name = line[i+3...line.length-1]
+				#i = line.index(" = ")
+				#func_name = line[i+3...line.length-1]
+				chs = line.split(" ")
+				func_name = chs[4]
+				
 				$cur_cfg = CFG.new
+				if chs[-1] == "true"
+					$cur_cfg.setInstanceMethod(true)
+				else
+					$cur_cfg.setInstanceMethod(false)
+				end
 				#$cfg_map[func_name] = $cur_cfg
 				m = find_method(item, func_name)
 				if m == nil
@@ -231,6 +239,12 @@ def handle_single_dataflow_file(item, class_name)
 											cur_instr = AttrAssign_instr.new(fc_array[0], fc_array[1])
 										elsif cur_instr.instance_of?GetField_instr
 											cur_instr = GetField_instr.new(fc_array[0], fc_array[1])
+										elsif ["update_column","write_attribute","update_attribute"].include?(fc_array[0])
+											cur_instr = AttrAssign_instr.new(fc_array[0], fc_array[1])
+										#elsif ["write_attribute"].include?(fc_array[0])
+											if $cur_bb.getInstr[-1].instance_of?Copy_instr and $cur_bb.getInstr[-1].type == "StringLiteral"
+												cur_instr = AttrAssign_instr.new(fc_array[0], $cur_bb.getInstr[-1].const_string)
+											end
 										else
 											cur_instr = Call_instr.new(fc_array[0], fc_array[1])
 										end
@@ -252,6 +266,14 @@ def handle_single_dataflow_file(item, class_name)
 										args = single_attr[5...-1].split(',')
 										args.each do |a|
 											cur_instr.args.push(a)
+										end	
+									elsif single_attr.include?("SYMBOL:")
+										args = single_attr[7...-1].split(',')
+										args.each do |a|
+											cur_instr.addSymbol(a)
+										end
+										if cur_instr.is_a?Call_instr and ["update_column", "write_attribute","update_attribute"].include?(cur_instr.getFuncname) and cur_instr.symbols[0]
+											cur_instr.setFuncname(cur_instr.symbols[0])	
 										end	
 									elsif single_attr.include?('[') and single_attr.include?(']')
 										bracket_begin = single_attr.index('[')
@@ -404,6 +426,71 @@ def calculate_depinstr_for_cfg(cfg)
 			#puts ""
 			if instr.hasClosure?
 				calculate_depinstr_for_cfg(instr.getClosure)
+			end
+		end
+	end
+end
+
+def helper_get_all_outgoings(ary, bb)
+	if bb == nil
+		return
+	end
+	ary.push(bb.getIndex.to_i)
+	bb.getOutgoings.each do |o|
+		if ary.include?(o)
+		elsif o > bb.getIndex.to_i
+			helper_get_all_outgoings(bb.getCFG.getBBByIndex(o))
+		end
+	end
+end
+
+def calculate_merge_instr_for_branches(cfg)
+	cfg.getBB.each do |bb|
+		#puts "\tBB#{bb.getIndex}:"
+		instr = bb.getLastInstr
+		if instr.instance_of?Branch_instr
+			merging_bb = Hash.new
+			bb.getOutgoings.each do |o|
+				merging_bb[o] = Array.new
+				next_cfg = cfg.getBBByIndex(o)
+				helper_get_all_outgoings(merging_bb[o], bb)
+			end
+			merge_list = Array.new
+			merging_bb.each do |k,v|
+				v.each do |o|
+					if merge_list.include?o
+					else
+						is_merge = true
+						merging_bb.each do |k1, v1|
+							if v1.include?(o)
+							else
+								is_merge = false
+							end
+						end 
+						if is_merge
+							merge_list.push(o)
+						end
+					end
+				end
+			end
+			first_merge = merge_list[0]
+			merge_list.each do |m|
+				if m < first_merge
+					first_merge = m
+				end
+			end
+			merge_bb = cfg.getBBByIndex(first_merge)
+			if  merge_bb.getInstr[0]
+				istr.merge_instr = merge_bb.getInstr[0]
+			else
+				instr.merge_instr = cfg.getBBByIndex(first_merge-1).getLastInstr
+			end
+			puts "#{cfg.getMHandler.getCallerClass.getName}.#{cfg.getMHandler.getName} branch at #{bb.getIndex}  merge at #{first_merge.getIndex}"
+		end
+
+		bb.getInstr.each do |instr|
+			if instr.hasClosure?
+				calculate_merge_instr_for_branches(instr.getClosure)
 			end
 		end
 	end

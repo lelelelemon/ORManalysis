@@ -46,8 +46,8 @@ colors = [2, 3, 5, 1, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 #applications = ["boxroom","fulcrum","kandan","linuxfr","publify", "lobsters", "railscollab","communityengine","onebody","sugar","railscollab","browsercms","brevidy","amahiPlatform","amahiPlatform_layouts","rucksack","rucksack_layouts"]
 #app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
 
-app_string="forem fulcrum rucksack sugar boxroom publify brevidy tracks lobsters communityengine jobsworth linuxfr sharetribe onebody railscollab calagator shoppe amahiPlatform enki wallgig"
-#app_string="lobsters amahiPlatform fulcrum linuxfr rucksack sugar boxroom publify jobsworth sharetribe brevidy railscollab tracks communityengine forem enki calagator shoppe"
+#app_string="forem fulcrum rucksack sugar boxroom publify brevidy tracks lobsters communityengine jobsworth linuxfr sharetribe onebody railscollab calagator shoppe amahiPlatform enki wallgig"
+app_string="lobsters amahiPlatform fulcrum linuxfr rucksack sugar boxroom publify railscollab brevidy sharetribe onebody communityengine forem enki wallgig calagator shoppe"
 #app_string = "publify wallgig enki"
 #app_string="fulcrum wallgig amahiPlatform sugar forem boxroom calagator enki brevidy"
 #app_string="sugar lobsters boxroom enki publify amahiPlatform railscollab linuxfr calagator forem fulcrum tracks brevidy"
@@ -138,9 +138,6 @@ def general_plot(stat_name, Ylabel, alignedBar=False):
 				#		ary_list[i].append(0)
 				#		i += 1
 
-	for ary in ary_list:
-		print "list:"
-		print ary
 	if stat_name == "queryGeneral":
 		temp_ary = {}
 		for app in applications:
@@ -164,8 +161,8 @@ if os.path.isdir(result_path) == False:
 
 
 for app in applications:
-	#print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
-	#os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
+	print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
+	os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
 	#print "python collect_nextaction.py %s "%(app)
 	#os.system("python collect_nextaction.py %s %s/nextaction_%s_stat.xml"%(app, result_path, app))
 	#print "python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app)
@@ -176,8 +173,8 @@ for app in applications:
 	roots[app] = tree.getroot()
 	print ""
 
-stats=[]
-#stats = ["queryGeneral","branch","branchInView","queryInView","usedInView","usedSQLString","materialized","onlyFromUser","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction","transactionNested", "queryString", "queryFunction","constStat","inputReaches","tableStat"]
+#stats=[]
+stats = ["queryGeneral","branch","branchInView","queryInView","usedInView","usedSQLString","materialized","onlyFromUser","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction","transactionNested", "queryString", "queryFunction","constStat","inputReaches","tableStat","loopNestedDepth","inputAffectPath","inputAffectQuery","queryCardinality","redundantData","tableFieldCompute","selectCondition"]
 YaxisLabel = {}
 YaxisLabel["queryGeneral"] = "Average #Q in an action"
 YaxisLabel["branch"] = "Average #branch in an action"
@@ -201,11 +198,20 @@ YaxisLabel["constStat"] = "Average used frequency in each read query"
 YaxisLabel["inputReaches"] = "Breakdown of input affecting % of queries"
 YaxisLabel["tableStat"] = "Breakdown of #Q by tables in an action"
 YaxisLabel["path"] = "Number of instructions"
+YaxisLabel["loopNestedDepth"] = "average number of loop in each request"
+YaxisLabel["queryCardinality"] = "average number of queries in each request"
+YaxisLabel["inputAffectPath"] = "number of instructions"
+YaxisLabel["inputAffectQuery"] = "number of queries"
+YaxisLabel["tableFieldCompute"] = "number of fields"
+YaxisLabel["selectCondition"] = "number of tables"
+YaxisLabel["redundantData"] = "field size by byte"
+YaxisLabel["longestQueryPath"] = "number of queries"
 
-#for s in stats:
-#	print "printing %s..."%s
-#	general_plot(s, YaxisLabel[s])
+for s in stats:
+	print "printing %s..."%s
+	general_plot(s, YaxisLabel[s])
 
+general_plot("longestQueryPath", YaxisLabel["longestQueryPath"], True)
 general_plot("path", YaxisLabel["path"], True)
 exit(0)
 #NA stands for NextAction

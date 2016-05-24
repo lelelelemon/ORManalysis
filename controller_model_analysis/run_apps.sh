@@ -3,8 +3,7 @@
 #applications="boxroom lobsters communityengine publify jobsworth amahiPlatform railscollab sharetribe onebody linuxfr rucksack sugar kandan fulcrum tracks browsercms"
 #applications="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth publify railscollab sharetribe tracks brevidy communityengine"
 
-applications="sugar lobsters wallgig boxroom enki publify railscollab onebody jobsworth sharetribe communityengine linuxfr rucksack calagator forem fulcrum tracks brevidy"
-
+applications="sugar amahiPlatform lobsters wallgig boxroom enki publify railscollab onebody jobsworth rucksack sharetribe communityengine linuxfr calagator forem fulcrum tracks brevidy shoppe"
 #applications="lobsters boxroom enki publify communityengine sharetribe calagator forem"
 
 export PATH=$PATH:~/jruby/bin

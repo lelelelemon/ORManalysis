@@ -22,6 +22,7 @@ class INode
 		@longest_control_path_nextnode = nil
 		@shortest_control_path_nextnode = nil
 		@path_length = -1
+		@card_limited = false
 		@shortest_path_length = -1
 		@Tnode = nil
 		@source_list = Array.new
@@ -58,6 +59,10 @@ class INode
 	attr_accessor :index, :Tnode, :source_list, :sink_list
 	attr_accessor :longest_control_path_nextnode, :shortest_control_path_nextnode, :path_length, :shortest_path_length
 	attr_accessor :cur_class
+	attr_accessor :card_limited
+	def setCardLimited
+		@card_limited = true
+	end
 	def getClosureStack
 		@closure_stack
 	end
@@ -262,6 +267,33 @@ class Controlflow_edge
 	end
 end
 
+def handle_get_field_instr(node)
+	to_ins = node.getInstr
+	dep_on_attr_assign = false
+	attr_assign_instr = nil
+	to_ins.getDeps.each do |dep|
+		if dep.getInstrHandler and dep.getInstrHandler.instance_of?AttrAssign_instr and dep.getInstrHandler.getFuncname == to_ins.getFuncname
+			dep_on_attr_assign = true
+			attr_assign_instr = dep.getInstrHandler
+		end
+	end
+	
+	#puts "GET FIELD instr #{node.getIndex}, dep_on_attr_assign = #{dep_on_attr_assign} #{to_ins.getClassName} #{to_ins.getCallerType}"
+	if dep_on_attr_assign == false
+		instr = to_ins
+		if instr.getClassName == instr.getCallerType and $class_map[instr.getClassName] and $class_map[instr.getClassName].member_defs[instr.getFuncname]
+			$class_map[instr.getClassName].member_defs[instr.getFuncname].each do |p|
+				edge_name = "#{p.getIndex}*#{node.getIndex}"
+				#puts "ADD EDGE between #{p.getIndex} and #{node.getIndex}"
+				edge = Dataflow_edge.new(p, node, instr.getFuncname)
+				p.addDataflowEdge(edge)
+			end
+		end
+	else
+		#puts "\tattr assign: #{attr_assign_instr.getINode.getIndex}"
+	end
+end
+
 def add_dataflow_edge(node)
 	to_ins = node.getInstr
 	if to_ins.getFromUserInput
@@ -274,26 +306,7 @@ def add_dataflow_edge(node)
 		$dataflow_edges[edge_name].push(edge)
 		return
 	end
-
-	if to_ins.instance_of?GetField_instr
-		dep_on_attr_assign = false
-		to_ins.getDeps.each do |dep|
-			if dep.getInstrHandler and dep.getInstrHandler.instance_of?AttrAssign_instr
-				dep_on_attr_assign = true
-			end
-		end
-		if dep_on_attr_assign == false
-			instr = to_ins
-			if instr.getClassName == instr.getCallerType and $class_map[instr.getClassName] and $class_map[instr.getClassName].member_defs[instr.getFuncname]
-				$class_map[instr.getClassName].member_defs[instr.getFuncname].each do |p|
-					edge_name = "#{p.getIndex}*#{node.getIndex}"
-					edge = Dataflow_edge.new(p, node, instr.getFuncname)
-					p.addDataflowEdge(edge)
-				end
-			end
-		end
-	end
-
+	
 	to_ins.getDeps.each do |dep|
 		if dep.getInstrHandler == nil
 			puts "Handler nil: BB#{dep.getBlock}.#{dep.getInstr}"
@@ -315,6 +328,7 @@ def add_dataflow_edge(node)
 			if (from_node.isClassField?) and (dep.getVname == "%self")
 			elsif to_ins.is_a?Call_instr and to_ins.isClassField and from_node.getInstr.instance_of?AttrAssign_instr and to_ins.getCallerType == from_node.getInstr.getCallerType and to_ins.getFuncname != from_node.getInstr.getFuncname
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
+			#elsif to_ins.instance_of?GetField_instr and to_ins.getClassName.include?("Controller") and dep.getVname == "%self"
 
 			#TODO: OK Here it is messy. Assume the functions in view does not define "self"
 			#elsif from_node.getInstr.getClassName.include?"Controller" and from_node.getInstr.instance_of?Call_instr and  from_node.getInView and dep.getVname == "%self"

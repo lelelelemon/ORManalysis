@@ -176,7 +176,7 @@ class Function_call
 
 			#dealing with "super"
 			if @func_name == "super"
-				#puts "#{calling_func_class}.#{calling_func}, Found super"
+				puts "#{calling_func_class}.#{calling_func}, Found super #{$class_map[calling_func_class].getUpperClass}"
 				if $class_map[calling_func_class].getUpperClass != nil
 					upper_cname = $class_map[calling_func_class].getUpperClass
 					if $class_map[upper_cname] != nil and $class_map[upper_cname].getMethod(calling_func) != nil

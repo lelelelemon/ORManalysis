@@ -111,8 +111,13 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 			else
 				$call_stack_trace.push(temp_name)
 				$non_repeat_list.push(temp_name)
-				temp_node = $cur_node	
-				cur_cfg = trace_query_flow(caller_class, instr.getFuncname, "", "", level+1)
+				temp_node = $cur_node
+				if instr.getFuncname == "super" and $class_map[caller_class].getUpperClass
+					cur_cfg = trace_query_flow($class_map[caller_class].getUpperClass, start_function, "", "", level+1)
+					puts "Handle super call: #{start_class}: upper = #{$class_map[caller_class].getUpperClass} funcname = #{instr.getFuncname}, actual func name = #{start_function}"
+				else	
+					cur_cfg = trace_query_flow(caller_class, instr.getFuncname, "", "", level+1)
+				end
 				$call_stack_trace.pop
 				if cur_cfg != nil and cur_cfg.getBB[0]
 					temp_node.addChild(cur_cfg.getBB[0].getInstr[0].getINode)
@@ -203,7 +208,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 			end
 			if dep_inode != nil
 				edge_name = "#{dep_inode.getIndex}*#{node.getIndex}"
-				edge = Dataflow_edge.new(dep_inode, node, instr.var_name)
+				edge = Dataflow_edge.new(dep_inode, node, arg_name)
 				dep_inode.addDataflowEdge(edge)
 				if $dataflow_edges[edge_name] == nil
 					$dataflow_edges[edge_name] = Array.new
@@ -227,6 +232,9 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	#end
 
 	add_dataflow_edge(node)
+	if instr.instance_of?GetField_instr
+		handle_get_field_instr(node)
+	end
 
 	new_return_l = Array.new	
 	if instr.hasClosure?

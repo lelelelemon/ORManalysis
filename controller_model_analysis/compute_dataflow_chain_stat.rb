@@ -66,7 +66,7 @@ def build_sketch_graph
 	$node_list.each do |n|
 		#Nodes in sketched graph: queries, user_inputs
 		#if n.getInstr.getFromUserInput or (n.isQuery? and n.isWriteQuery?) or (n.getInstr.instance_of?AttrAssign_instr and n.getInstr.getFuncname.index('!') == nil)
-		if n.getInstr.getFromUserInput or n.isQuery? or isTableAttrAssign(n) 
+		if n.isQuery? #or n.getInstr.getFromUserInputor isTableAttrAssign(n) 
 			n.Tnode = TreeNode.new(n)
 			$sketch_node_list.push(n.Tnode)	
 			@temp_hop_record[n] = Array.new
@@ -120,7 +120,7 @@ def build_sketch_graph
 			break
 		end
 	end
-
+=begin
 	graph_write($graph_file, "digraph sketch {\n")
 	$node_list.each do |n|
 		if n.Tnode != nil
@@ -138,6 +138,7 @@ def build_sketch_graph
 		end
 	end
 	graph_write($graph_file, "}")
+=end
 end
 
 def getCliqueList(limit)
@@ -511,17 +512,31 @@ def compute_reachability(n)
 	end
 	return @reaches.length
 end
-
+$INFSOURCE=10000
 class Temp_field_stat
 	def initialize
 		@num_assign = 0
 		@num_use = 0
-		@total_source = 0
+		@total_source = Array.new
 		@type = nil
 	end
 	attr_accessor :num_assign, :num_use, :total_source, :type
 	def getAvgSource
-		return @total_source.to_f / @num_assign.to_f
+		#return @total_source.to_f / @num_assign.to_f
+		is_inf = false
+		tmp_add = 0
+		@total_source.each do |s|
+			if s == $INFSOURCE
+				is_inf = true
+			else
+				tmp_add += s
+			end
+		end	
+		if is_inf
+			return $INFSOURCE
+		else
+			return tmp_add.to_f / @num_assign.to_f
+		end
 	end
 end
 
@@ -573,38 +588,65 @@ def compute_chain_stats
 	@notstored = Hash.new
 	@stored = Hash.new
 	$node_list.each do |n|
-		if n.isClassField? or n.getInstr.instance_of?AttrAssign_instr #and n.getInstr.getCallHandler != nil and n.getInstr.getCallHandler.caller != nil
+		if n.isClassField? or n.getInstr.instance_of?AttrAssign_instr or (n.getInstr.is_a?Call_instr and ["write_attribute","update_attribute","update_column","update_columns","update_attributes"].include?n.getInstr.getFuncname)#and n.getInstr.getCallHandler != nil and n.getInstr.getCallHandler.caller != nil
 		  tbl_name = type_valid(n.getInstr, n.getInstr.getCaller)
-			field_name = n.getInstr.getFuncname
+			@field_names = Array.new
+			@field_names.push(n.getInstr.getFuncname)
+			if ["write_attribute","update_attribute","update_column","update_columns","update_attributes"].include?n.getInstr.getFuncname
+				for s in n.getInstr.symbols
+					@field_names.push(s)
+				end
+				if ["update_columns","update_attributes"].include?n.getInstr.getFuncname and n.getInstr.symbols.length == 0
+					if tbl_name and $class_map[tbl_name]
+						$class_map[tbl_name].getTableFields.each do |f|
+							@field_names.push(f.field_name)
+						end
+					end
+				end
+			end
 			if tbl_name != nil
+				@field_names.each do |field_name|
 				#puts "Found field: #{tbl_name}.#{field_name}"
 				#var_name = n.getInstr.getCallHandler.getObjName
 				#field_name = n.getInstr.getCallHandler.getFuncName
 				#tbl_name = n.getInstr.getCallHandler.caller.getName
-				p_s = "#{tbl_name}) . #{field_name}"
-				s = "#{tbl_name}.#{field_name}"
-				f = testTableField(tbl_name, field_name)
-				if f != nil
-					p_s = p_s + " -> field"
-					if @stored.has_key?(s)
-					else
-						@stored[s] = Temp_field_stat.new
-					end
-					if n.getInstr.isClassField
-						@stored[s].num_use += 1
-						@stored[s].type = f.type
-					elsif n.getInstr.instance_of?AttrAssign_instr
-						#puts "ATTRassign: #{n.getIndex}: #{n.getInstr.toString}:"
-						@stored[s].type = f.type
-						@stored[s].num_assign += 1
-						n.source_list.each do |sn|
-							r_lst = find_path_between_two_nodes(sn, n)
-							@stored[s].total_source += r_lst.length
-							#puts "\t source = #{sn.getIndex} (dist = #{r_lst.length}): #{sn.getInstr.toString}"
+					p_s = "(#{tbl_name}) . #{field_name}"
+					s = "#{tbl_name}.#{field_name}"
+					f = testTableField(tbl_name, field_name)
+					if f != nil
+						p_s = p_s + " -> field"
+						if @stored.has_key?(s)
+						else
+							@stored[s] = Temp_field_stat.new
+						end
+						if n.getInstr.isClassField
+							@stored[s].num_use += 1
+							@stored[s].type = f.type
+						else#if n.getInstr.instance_of?AttrAssign_instr
+							#puts "ATTRassign: #{n.getIndex}: #{n.getInstr.toString}:"
+
+							@stored[s].type = f.type
+							@stored[s].num_assign += 1
+							#n.source_list.each do |sn|
+							traceback_data_dep(n).each do |sn|
+								if sn.instance_of?Dataflow_edge
+									@stored[s].total_source.push($INFSOURCE)
+								else
+									#str += "#{sn.getIndex}(#{sn.getInstr.getFromUserInput}), "
+									r_lst = find_path_between_two_nodes(sn, n)
+									@stored[s].total_source.push(r_lst.length)
+								end
+								#puts "\t source = #{sn.getIndex} (dist = #{r_lst.length}): #{sn.getInstr.toString}"
+							end
 						end
 					end
-				elsif tbl_name.include?("Controller")
-				elsif isActiveRecord(tbl_name)
+				end
+				if tbl_name.include?("Controller")
+				elsif (n.isClassField? or n.getInstr.instance_of?AttrAssign_instr) and testTableField(tbl_name, @field_names[0])==nil and isActiveRecord(tbl_name)
+				#elsif isActiveRecord(tbl_name)
+					field_name = @field_names[0]
+					p_s = "(#{tbl_name}) . #{field_name}"
+					s = "#{tbl_name}.#{field_name}"
 					p_s = p_s + " -> non field"
 					ftype = nil
 					if $class_map[tbl_name] != nil and $class_map[tbl_name].getVarMap[field_name] != nil
@@ -624,13 +666,17 @@ def compute_chain_stats
 							@notstored[s].type = ftype
 						end
 						@notstored[s].num_assign += 1
-						n.source_list.each do |sn|
-							r_lst = find_path_between_two_nodes(sn, n)
-							@notstored[s].total_source += r_lst.length
+						#n.source_list.each do |sn|
+						traceback_data_dep(n).each do |sn|
+							if sn.instance_of?Dataflow_edge
+							else
+								r_lst = find_path_between_two_nodes(sn, n)
+								@notstored[s].total_source.push(r_lst.length)
+							end
 						end
 					end
-					#puts "#{p_s}"	
-				end
+					#puts "#{p_s}"
+				end	
 			end
 		end
 	end	
@@ -646,9 +692,16 @@ def compute_chain_stats
 		end
 	end
 	@stored.each do |f,v|
+		chs = f.split(".")
+		tbl_name = chs[0]
+		field_name = chs[1]
+		add_select_use = 0
+		if $table_select_fields[tbl_name] and $table_select_fields[tbl_name][field_name]
+			add_select_use = $table_select_fields[tbl_name][field_name]
+		end
 		$graph_file.puts("\t<field>")
 		$graph_file.puts("\t\t<name>#{f}<\/name>")
-		$graph_file.puts("\t\t<numUses>#{v.num_use}<\/numUses>")
+		$graph_file.puts("\t\t<numUses>#{v.num_use+add_select_use}<\/numUses>")
 		$graph_file.puts("\t\t<numAssigns>#{v.num_assign}<\/numAssigns>")
 		$graph_file.puts("\t\t<type>#{@stored[f].type}<\/type>")
 		$graph_file.puts("\t\t<avgSourceDist>#{@stored[f].getAvgSource}<\/avgSourceDist>")

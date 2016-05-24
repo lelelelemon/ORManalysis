@@ -33,6 +33,17 @@ def find_class(tbl_name)
 			if chs[-1].downcase == tbl_name.singularize
 				return v
 			end
+			#This is bad, but ruby doesn't know "data" is already plural :(
+			if tbl_name.end_with?("data")
+				if tbl_name.tr('_','').downcase == k.tr("::","").downcase
+					return v
+				end
+			end
+			#tbl_name = ci_comments, ci_runner_project
+			#class_name = Ci::Comment, Ci::RunnerProject
+			if tbl_name.tr('_','').downcase.singularize == k.tr("::","").downcase
+				return v
+			end
 		end
 	end
 	return nil

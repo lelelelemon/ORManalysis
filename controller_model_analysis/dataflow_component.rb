@@ -46,8 +46,12 @@ class Instruction
 		@defv = nil
 		@defv_var = nil
 		@args = Array.new
+		@symbols = Array.new
 	end
-	attr_accessor :defv_var, :args, :inodes, :inode
+	attr_accessor :defv_var, :args, :inodes, :inode, :symbols
+	def addSymbol(s)
+		@symbols.push(s)
+	end
 	def getArgs
 		@args
 	end
@@ -187,7 +191,8 @@ class Call_instr < Instruction
 		@field = nil
 		@hash_fields = Array.new
 		@args = Array.new
-		@inodes = Array.new
+		@inodes = Array.new	
+		@symbols = Array.new
 	end
 	attr_accessor :field, :hash_fields
 	def setCallCFG(c)
@@ -227,6 +232,27 @@ class Call_instr < Instruction
 			end
 		end
 		return self.getCallerType
+	end
+	def getAssociationType
+		t = type_valid(self, @caller)
+		if isActiveRecord(t)
+			qtype = check_method_keyword(t, @funcname)
+			if qtype
+				return nil
+			else
+				#foreign key relationship: has_many, has_one,...
+				tbl_name = self.getCallerType
+				if isActiveRecord(tbl_name)
+					#TODO: user should not be ignored...
+					if self.isClassField and @funcname != "user"
+						#TODO: check return type, if not know or polomorphism...
+						@relationship_name = $class_map[tbl_name].searchAssocForRelation(@funcname)
+						return @relationship_name
+					end
+				end
+			end
+		end
+		return nil
 	end
 	def getQueryType
 		if @call_handler and @call_handler.getQueryType 
@@ -405,7 +431,9 @@ end
 class Branch_instr < Instruction
 	def initialize
 		super
+		@merge_instr = nil
 	end
+	attr_accessor :merge_instr
 	def toString
 		s = "BRANCH "
 		s = s + super
@@ -485,6 +513,10 @@ class AttrAssign_instr < Call_instr
 	def initialize(_caller, _func_name)
 		super(_caller, _func_name)
 		@field = _func_name
+	end
+	def setFuncname(f)
+		@funcname = f
+		@field = f
 	end
 	def toString
 		s = "ATTRASSIGN "
@@ -661,6 +693,7 @@ end
 
 class CFG
 	def initialize
+		@instance_method = true
 		@bb = Array.new
 		#return_list is the return point in control flow, including both "RETURN" instr and exit point in CFG
 		@return_list = Array.new
@@ -674,6 +707,10 @@ class CFG
 		@arg_types = Array.new
 	end
 	attr_accessor :explicit_return, :return_list, :return_type, :arg_types
+	attr_accessor :instance_method
+	def setInstanceMethod(t)
+		@instance_method = t
+	end
 	def setReturnType(type)
 		if @return_type == nil
 			@return_type = type

@@ -723,6 +723,8 @@ def clear_data_structure
 	$query_func_count = Hash.new
 	#the very source of dataflow, all nodes using user input connect to this node
 	$dataflow_source = INode.new(nil)
+
+	$table_select_fields = Hash.new
 	
 	#format: from_inode_index*to_inode_index
 	$dataflow_edges = Hash.new

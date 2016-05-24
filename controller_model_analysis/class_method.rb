@@ -77,7 +77,7 @@ class Class_class
 		#XXX: If the class field is not explicitly defined, we don't deal with it
 		@class_fields = Array.new
 		@assocs = Hash.new
-		@var_map = Hash.new	
+		@var_map = Hash.new
 
 		@member_defs = Hash.new
 	

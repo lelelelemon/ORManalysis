@@ -117,9 +117,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#puts "\t\treturn type: #{type_valid(n.getInstr, n.getInstr.getDefv)}"
 			end
 		end
-		n.getBackwardEdges.each do |e|
-			if e.getFromNode != nil
-				$temp_file.puts "\t\t <- [#{e.getVname}] #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
+		n.getDataflowEdges.each do |e|
+			if e.getToNode != nil
+				$temp_file.puts "\t\t -> [#{e.getVname}] #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
 			else
 				#puts "\t\t <- params"
 			end
@@ -142,7 +142,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		return
 	end
 
-
+=begin
 	@clique_stat = Array.new
 	graph_fname = "#{output_dir}/sketch_graph.log"
 	$graph_file = File.open(graph_fname, "w")
@@ -171,6 +171,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	end
 
 	$graph_file.close
+=end
 
 	graph_fname = "#{output_dir}/stats.xml"
 	$graph_file = File.open(graph_fname, "w")
@@ -242,6 +243,12 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	#	end
 	#end
 
+	@query_length_graph = Hash.new
+	$node_list.each do |n|
+		if n.isReadQuery?
+			@query_length_graph[n] = Array.new
+		end
+	end
 	$node_list.each do |n|
 		if n.isQuery?
 			@general_stat.total += 1
@@ -345,11 +352,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#puts "Forward length = #{traceforward_data_dep(n).length}"
 				@used_in_view = false
 				@forwardarray = traceforward_data_dep(n)
-				temp_b = test_trivial_branch(n, @forwardarray)
-				if temp_b.length > 0
-					@trivial_branches += temp_b
-					@query_to_trivial_branch.push(n)
-				end
+				#temp_b = test_trivial_branch(n, @forwardarray)
+				#if temp_b.length > 0
+				#	@trivial_branches += temp_b
+				#	@query_to_trivial_branch.push(n)
+				#end
 
 				#if n.getIndex == 1190
 				#	str = ""
@@ -358,7 +365,15 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#	end
 				#	puts "1190 forward array: #{str}"
 				#end
-
+			
+				#Queries in validations need to be executed sequentially	
+				n.getValidationStack.each do |vl|
+					@validation_stat[vl].queries.each do |q|
+						if q.getIndex > n.getIndex
+							@query_length_graph[n].push(q)
+						end
+					end
+				end
 				@forwardarray.each do |n1|
 					#if n1.isTableField?
 					#	var_name = n1.getInstr.getCallHandler.getObjName
@@ -379,6 +394,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						#@table_read_stat[@table_name].sink_total += 1
 						#@read_sink_stat.sink_total += 1
 					if n1.isQuery?
+						if @query_length_graph[n].include?(n1)
+						else
+							@query_length_graph[n].push(n1)
+						end
+
 						@table_read_stat[@table_name].sink_total += 1
 						@read_sink_stat.sink_total += 1
 						#puts "QUERY: #{n.getIndex}: #{n.getInstr.toString}"
@@ -604,13 +624,36 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		end
 	end
 
+#compute longest query chain length
+	@temp_length_graph = Hash.new
+	@longest_query_len = 0
+	$node_list.reverse_each do |n|
+		if @query_length_graph.has_key?(n)
+			@q = @query_length_graph[n]
+			@temp_length_graph[n] = 1
+			if @q.length > 0
+				@q.each do |inner_q|
+					if @temp_length_graph[inner_q] == nil
+					elsif @temp_length_graph[n] < @temp_length_graph[inner_q]+1
+						@temp_length_graph[n] = @temp_length_graph[inner_q]+1
+					end
+				end
+			end
+			if @temp_length_graph[n] > @longest_query_len
+				@longest_query_len = @temp_length_graph[n]
+			end
+		end
+	end
+
+
 	$graph_file.puts("<stat>")
 	$graph_file.puts("\t<general>")
 	helper_print_stat(@general_stat, @read_sink_stat, @read_source_stat, @write_source_stat, "STATS")
 	$graph_file.puts("\t\t<queryOnlyFromUser>#{@singleQ_stat.only_from_user_input}<\/queryOnlyFromUser>")
+	$graph_file.puts("\t\t<longestQueryPath>#{@longest_query_len}<\/longestQueryPath>")
 	$graph_file.puts("\t\t<queryUsedInView>#{@singleQ_stat.result_used_in_view}<\/queryUsedInView>")
-	$graph_file.puts("\t\t<queryToTrivialBranch>#{@query_to_trivial_branch.length}<\/queryToTrivialBranch>")
-	$graph_file.puts("\t\t<trivialBranch>#{@trivial_branches.length}<\/trivialBranch>")
+	#$graph_file.puts("\t\t<queryToTrivialBranch>#{@query_to_trivial_branch.length}<\/queryToTrivialBranch>")
+	#$graph_file.puts("\t\t<trivialBranch>#{@trivial_branches.length}<\/trivialBranch>")
 	$graph_file.puts("\t\t<materialized>#{cnt_materialized_query}<\/materialized>")	
 	$graph_file.puts("\t\t<notMaterialized>#{cnt_not_materialized_query}<\/notMaterialized>")	
 	$graph_file.puts("\t<\/general>")
@@ -623,6 +666,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$graph_file.puts("<\/stat>")
 	$graph_file.puts("")
 
+	compute_loop_stat
+	compute_input_stat
+	compute_query_card_stat
+	compute_redundant_usage
+	compute_select_condition
 
 	$graph_file.puts("<viewStats>")
 	@view_stat.table_list.each do |t|
@@ -659,11 +707,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		$graph_file.puts("\t\t<depth>#{vd.depth}<\/depth>")
 		$graph_file.puts("\t\t<readToWrite>#{vd.read_goes_to_write.length}<\/readToWrite>")
 		$graph_file.puts("\t\t<readToBranchOnWrite>#{vd.read_goes_to_branch_on_write.length}<\/readToBranchOnWrite>")
+		vd.getOtherQueries.each do |q|
+			$graph_file.puts("\t\t<validationTable>#{q.getInstr.getTableName}<\/validationTable>")
+		end
 		$graph_file.puts("\t<\/validation>")
 	end
-	@clique_stat.each do |cq|
-		$graph_file.puts("\t<clique>#{cq}<\/clique>")
-	end
+	#@clique_stat.each do |cq|
+	#	$graph_file.puts("\t<clique>#{cq}<\/clique>")
+	#end
 	$graph_file.puts("<\/cliqueStat>")
 			
 	$graph_file.puts("<chainStats>")
@@ -741,7 +792,7 @@ def helper_print_stat(general, readSink, readSource, write, label, print_branch=
 	$graph_file.puts("\t\t\t<fromUserInput>#{write.get_from_user_input}<\/fromUserInput>")
 	$graph_file.puts("\t\t\t<fromUtil>#{write.get_from_util}<\/fromUtil>")
 	$graph_file.puts("\t\t\t<fromQuery>#{write.get_from_query}<\/fromQuery>")
-	$graph_file.puts("\t\t\t<selectCondition>#{write.get_from_select_condition}</selectCondition>")
+	$graph_file.puts("\t\t\t<selectCondition>#{write.get_from_select_condition}<\/selectCondition>")
 	$graph_file.puts("\t\t\t<fromConst>#{write.get_from_const}<\/fromConst>")
 	$graph_file.puts("\t\t\t<fromGlobal>#{write.get_from_global}<\/fromGlobal>")
 	$graph_file.puts("\t\t<\/writeSource>")

@@ -17,6 +17,7 @@ for root, dirs, files in os.walk(apppath):
 			k = fname.find("%s"%sys.argv[1])
 			#des_file = "%s/%s.log"%(des_controller,class_name)
 			l = fname.find(".rb")
+			os.system("ruby convert_scope.rb %s"%fname)
 			des_file = fname[:k+len(sys.argv[1])] + "/dataflow" + fname[k+len(sys.argv[1]):l] + ".log"
 			d_ind = des_file.rfind('/')
 			dir_name = des_file[:d_ind]

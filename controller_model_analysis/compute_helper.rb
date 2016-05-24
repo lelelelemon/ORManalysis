@@ -251,10 +251,27 @@ end
 
 def is_chained_query(qnode)
 	qnode.getDataflowEdges.each do |e|
-		if e.getToNode.isReadQuery? and qnode.getDataflowEdges.length == 1
+		if e.getToNode.isReadQuery? and e.getToNode.getInstr.getCaller == qnode.getInstr.getDefv#and qnode.getDataflowEdges.length == 1
 			return true
 		end
 	end
 	return false
+end
+
+def get_query_chain(qnode)
+	@r = Array.new
+	@r.push(qnode)
+	@cur_node = qnode
+	@temp_node = qnode
+	while @temp_node
+		@temp_node = nil
+		@cur_node.getDataflowEdges.each do |e|
+			if e.getToNode.isReadQuery? and e.getToNode.getInstr.getCaller == @cur_node.getInstr.getDefv
+				@r.push(e.getToNode)
+				@cur_node = e.getToNode
+				@temp_node = e.getToNode
+			end
+		end
+	end
 end
 

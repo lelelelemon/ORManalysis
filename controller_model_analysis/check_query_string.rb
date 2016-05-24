@@ -3,7 +3,7 @@ $query_words_include = ["SUM","MIN","MAX","COUNT"]
 
 #distinct: Specifies whether the records should be unique or not. Under a certain condition, return multiple records or single record
 #new_record return true/false
-$query_return_record = ["group_by","find","all","take","from","distinct","join","from","having","joins","limit","order","where","first","last","preload","includes","readonly","references","reorder","reverse_order","first_or_initialize","find_each","find_in_batches","try","uniq","select","association","find_by"]
+$query_return_record = ["find","all","take","from","distinct","from","having","joins","limit","order","where","first","last","preload","includes","references","reorder","reverse_order","first_or_initialize","find_each","find_in_batches","uniq","association","find_by"]
 
 def addQueryFuncHash(_key)
 	key = _key.gsub('?','').gsub('!','')
