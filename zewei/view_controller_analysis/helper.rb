@@ -324,7 +324,6 @@ def get_link_to_tags(tag_arr, named_routes_class, curr_controller)
       end
     end
 
-    return res
   end
 
   File.write("temp.rb", rb_console_code)
