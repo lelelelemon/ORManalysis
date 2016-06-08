@@ -2826,12 +2826,12 @@ private
   end
 
   def get_from_cache(opts={}, &block)
-    if Rails.env.development? || @user || tags_filtered_by_cookie.any?
-      yield
-    else
+#    if Rails.env.development? || @user || tags_filtered_by_cookie.any?
+#      yield
+#    else
       key = opts.merge(page: page).sort.map{|k,v| "#{k}=#{v.to_param}"
         }.join(" ")
       Rails.cache.fetch("stories #{key}", :expires_in => 45, &block)
-    end
+#    end
   end
 end
