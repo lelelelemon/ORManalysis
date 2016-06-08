@@ -113,7 +113,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  end 
  if @ordered_sidebars.empty? 
- t('.drag_some_plugins_here') 
  end 
  
  
@@ -139,7 +138,7 @@ end
     respond_to do |format|
       format.js do
         # render partial _target for it
-        return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  this_blog.blog_name 
  controller.controller_name 
  javascript_include_tag 'publify_admin', async: true 

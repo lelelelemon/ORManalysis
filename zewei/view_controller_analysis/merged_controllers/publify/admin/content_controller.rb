@@ -89,7 +89,22 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if content_for?(:page_heading) 
  yield :page_heading 
  end 
- raw escape_javascript(render(partial: "article_list", locals: { articles: @articles })) 
+  if @articles.empty? 
+ t('.no_articles') 
+ end 
+ for article in @articles 
+ if article.published 
+ link_to_permalink(article, article.title, nil, 'published')
+ else 
+ link_to(article.title, {controller: '/articles', action: "preview", id: article.id}, {class: 'unpublished', target: '_new'}) 
+ end 
+ show_actions article 
+ author_link(article)
+ l(article.published_at) 
+ (article.allow_comments?) ? link_to("#{article.comments.ham.size.to_s} <i class='glyphicon glyphicon-comment'></i>".html_safe, controller: '/admin/feedback', id: article.id, action: 'article') : '-' 
+ end 
+ display_pagination(@articles, 5, 'first', 'last')
+ 
  link_to(this_blog.blog_name, this_blog.base_url) 
  t(".powered_by")
 h PUBLIFY_VERSION 

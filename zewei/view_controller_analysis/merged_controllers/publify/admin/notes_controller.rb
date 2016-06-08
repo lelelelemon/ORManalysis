@@ -105,7 +105,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   if @notes.empty? 
  t("admin.notes.form.no_notes") 
  end 
- render @notes 
+  h(note.body.strip_html.slice(0..140)) 
+ link_to(content_tag(:span, '', class: 'glyphicon glyphicon-pencil'), {action: 'edit', id: note.id}, {class: 'btn btn-primary btn-xs btn-action'}) 
+ link_to(content_tag(:span, '', class: 'glyphicon glyphicon-trash'), admin_note_path(note), {class: 'btn btn-danger btn-xs btn-action'}) 
+ link_to(content_tag(:span, '', class: 'glyphicon glyphicon-link'), note.short_url, {class: 'btn btn-success btn-xs btn-action'}) 
+ author_link(note)
+ l(note.published_at) 
+ 
  display_pagination(@notes, 3, 'first', 'last')
  
  link_to(this_blog.blog_name, this_blog.base_url) 
@@ -304,7 +310,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   if @notes.empty? 
  t("admin.notes.form.no_notes") 
  end 
- render @notes 
+  h(note.body.strip_html.slice(0..140)) 
+ link_to(content_tag(:span, '', class: 'glyphicon glyphicon-pencil'), {action: 'edit', id: note.id}, {class: 'btn btn-primary btn-xs btn-action'}) 
+ link_to(content_tag(:span, '', class: 'glyphicon glyphicon-trash'), admin_note_path(note), {class: 'btn btn-danger btn-xs btn-action'}) 
+ link_to(content_tag(:span, '', class: 'glyphicon glyphicon-link'), note.short_url, {class: 'btn btn-success btn-xs btn-action'}) 
+ author_link(note)
+ l(note.published_at) 
+ 
  display_pagination(@notes, 3, 'first', 'last')
  
  link_to(this_blog.blog_name, this_blog.base_url) 

@@ -17,7 +17,18 @@ class TrackbacksController < FeedbackController
     end
 
     respond_to do |format|
-      format.xml { render 'trackback', formats: [:xml], handlers: [:builder] }
+      format.xml { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ trackback.id 
+ onhover_show_admin_tools(:trackback, trackback.id) 
+ trackback.id 
+ t(".from")
+ trackback.blog_name 
+ trackback.url 
+h trackback.title 
+ trackback.excerpt 
+
+end
+ }
       format.html { render nothing: true }
     end
   end

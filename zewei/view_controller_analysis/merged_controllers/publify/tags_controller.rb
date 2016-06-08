@@ -57,15 +57,45 @@ end
         @articles = @articles[0, this_blog.limit_rss_display]
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
- render article 
-  if article.tags.any? 
- t(".tags") 
- tag_links article 
+  link_to_permalink article,article.title 
+ t(".posted_by")
+ author_link(article) 
+ display_date_and_time article.published_at 
+  if article.password.blank? 
+  #puts "article length:" 
+ #@articles.each do |article|
+   #   puts article.to_partial_path.to_s
+#end 
+ if controller.action_name == 'redirect' 
+  article.html(:body) 
+ article.html(:extended) 
+ 
+ else 
+  if article.excerpt? 
+ article.excerpt 
+ link_to_permalink article, t(".continue_reading") 
+ else 
+ article.html(:body) 
+ if article.extended? 
+ link_to_permalink article, t(".continue_reading") 
  end 
- link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
- link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ end 
  
  end 
+ 
+ else 
+  article.id 
+ form_for(article, {:remote => true,
+                      :url => { :controller => 'articles', :action => 'check_password'},
+                      :update => "content-#{article.id}"}) do |f| 
+ password_field(:article, :password) 
+ article.id 
+ submit_tag(t('.submit') + '!', name: 'check_password') 
+ end 
+ 
+ end 
+ 
+end 
  paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
  
 
@@ -77,15 +107,45 @@ end
         @articles = @articles[0, this_blog.limit_rss_display]
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
- render article 
-  if article.tags.any? 
- t(".tags") 
- tag_links article 
+  link_to_permalink article,article.title 
+ t(".posted_by")
+ author_link(article) 
+ display_date_and_time article.published_at 
+  if article.password.blank? 
+  #puts "article length:" 
+ #@articles.each do |article|
+   #   puts article.to_partial_path.to_s
+#end 
+ if controller.action_name == 'redirect' 
+  article.html(:body) 
+ article.html(:extended) 
+ 
+ else 
+  if article.excerpt? 
+ article.excerpt 
+ link_to_permalink article, t(".continue_reading") 
+ else 
+ article.html(:body) 
+ if article.extended? 
+ link_to_permalink article, t(".continue_reading") 
  end 
- link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
- link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ end 
  
  end 
+ 
+ else 
+  article.id 
+ form_for(article, {:remote => true,
+                      :url => { :controller => 'articles', :action => 'check_password'},
+                      :update => "content-#{article.id}"}) do |f| 
+ password_field(:article, :password) 
+ article.id 
+ submit_tag(t('.submit') + '!', name: 'check_password') 
+ end 
+ 
+ end 
+ 
+end 
  paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
  
 
@@ -95,15 +155,45 @@ end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
- render article 
-  if article.tags.any? 
- t(".tags") 
- tag_links article 
+  link_to_permalink article,article.title 
+ t(".posted_by")
+ author_link(article) 
+ display_date_and_time article.published_at 
+  if article.password.blank? 
+  #puts "article length:" 
+ #@articles.each do |article|
+   #   puts article.to_partial_path.to_s
+#end 
+ if controller.action_name == 'redirect' 
+  article.html(:body) 
+ article.html(:extended) 
+ 
+ else 
+  if article.excerpt? 
+ article.excerpt 
+ link_to_permalink article, t(".continue_reading") 
+ else 
+ article.html(:body) 
+ if article.extended? 
+ link_to_permalink article, t(".continue_reading") 
  end 
- link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
- link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ end 
  
  end 
+ 
+ else 
+  article.id 
+ form_for(article, {:remote => true,
+                      :url => { :controller => 'articles', :action => 'check_password'},
+                      :update => "content-#{article.id}"}) do |f| 
+ password_field(:article, :password) 
+ article.id 
+ submit_tag(t('.submit') + '!', name: 'check_password') 
+ end 
+ 
+ end 
+ 
+end 
  paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
  
 

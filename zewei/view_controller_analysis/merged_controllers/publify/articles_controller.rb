@@ -46,15 +46,45 @@ class ArticlesController < ContentController
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
- render article 
-  if article.tags.any? 
- t(".tags") 
- tag_links article 
+  link_to_permalink article,article.title 
+ t(".posted_by")
+ author_link(article) 
+ display_date_and_time article.published_at 
+  if article.password.blank? 
+  #puts "article length:" 
+ #@articles.each do |article|
+   #   puts article.to_partial_path.to_s
+#end 
+ if controller.action_name == 'redirect' 
+  article.html(:body) 
+ article.html(:extended) 
+ 
+ else 
+  if article.excerpt? 
+ article.excerpt 
+ link_to_permalink article, t(".continue_reading") 
+ else 
+ article.html(:body) 
+ if article.extended? 
+ link_to_permalink article, t(".continue_reading") 
  end 
- link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
- link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ end 
  
  end 
+ 
+ else 
+  article.id 
+ form_for(article, {:remote => true,
+                      :url => { :controller => 'articles', :action => 'check_password'},
+                      :update => "content-#{article.id}"}) do |f| 
+ password_field(:article, :password) 
+ article.id 
+ submit_tag(t('.submit') + '!', name: 'check_password') 
+ end 
+ 
+ end 
+ 
+end 
  paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
  
 
@@ -137,7 +167,45 @@ h (html(@article).strip_html[0..255]).gsub(/-+/, '-')
  @article.updated_at.xmlschema 
  onhover_show_admin_tools(:article) 
  link_to(t(".edit"), { controller: "admin/content", action: "edit", id: @article.id }, class: "admintools", style: "display: none", id: "admin_article") 
- render @article 
+  link_to_permalink article,article.title 
+ t(".posted_by")
+ author_link(article) 
+ display_date_and_time article.published_at 
+  if article.password.blank? 
+  #puts "article length:" 
+ #@articles.each do |article|
+   #   puts article.to_partial_path.to_s
+#end 
+ if controller.action_name == 'redirect' 
+  article.html(:body) 
+ article.html(:extended) 
+ 
+ else 
+  if article.excerpt? 
+ article.excerpt 
+ link_to_permalink article, t(".continue_reading") 
+ else 
+ article.html(:body) 
+ if article.extended? 
+ link_to_permalink article, t(".continue_reading") 
+ end 
+ end 
+ 
+ end 
+ 
+ else 
+  article.id 
+ form_for(article, {:remote => true,
+                      :url => { :controller => 'articles', :action => 'check_password'},
+                      :update => "content-#{article.id}"}) do |f| 
+ password_field(:article, :password) 
+ article.id 
+ submit_tag(t('.submit') + '!', name: 'check_password') 
+ end 
+ 
+ end 
+ 
+ 
   if article.tags.any? 
  t(".tags") 
  tag_links article 
@@ -151,7 +219,45 @@ h (html(@article).strip_html[0..255]).gsub(/-+/, '-')
  t(".leave_a_response")
  end 
   if @article.published_comments.any? 
- render @article.published_comments 
+  link_to_permalink article,article.title 
+ t(".posted_by")
+ author_link(article) 
+ display_date_and_time article.published_at 
+  if article.password.blank? 
+  #puts "article length:" 
+ #@articles.each do |article|
+   #   puts article.to_partial_path.to_s
+#end 
+ if controller.action_name == 'redirect' 
+  article.html(:body) 
+ article.html(:extended) 
+ 
+ else 
+  if article.excerpt? 
+ article.excerpt 
+ link_to_permalink article, t(".continue_reading") 
+ else 
+ article.html(:body) 
+ if article.extended? 
+ link_to_permalink article, t(".continue_reading") 
+ end 
+ end 
+ 
+ end 
+ 
+ else 
+  article.id 
+ form_for(article, {:remote => true,
+                      :url => { :controller => 'articles', :action => 'check_password'},
+                      :update => "content-#{article.id}"}) do |f| 
+ password_field(:article, :password) 
+ article.id 
+ submit_tag(t('.submit') + '!', name: 'check_password') 
+ end 
+ 
+ end 
+ 
+.published_comments 
  end 
  
  end 
@@ -160,7 +266,15 @@ h (html(@article).strip_html[0..255]).gsub(/-+/, '-')
  t(".use_the_following_link_to_trackback")
  @article.trackback_url 
  unless @article.published_trackbacks.blank? 
- render(partial: "trackback", collection: @article.published_trackbacks) 
+  trackback.id 
+ onhover_show_admin_tools(:trackback, trackback.id) 
+ trackback.id 
+ t(".from")
+ trackback.blog_name 
+ trackback.url 
+h trackback.title 
+ trackback.excerpt 
+ 
  end 
  end 
  @article.feed_url('rss') 
@@ -373,15 +487,45 @@ end
     end
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   for article in articles 
- render article 
-  if article.tags.any? 
- t(".tags") 
- tag_links article 
+  link_to_permalink article,article.title 
+ t(".posted_by")
+ author_link(article) 
+ display_date_and_time article.published_at 
+  if article.password.blank? 
+  #puts "article length:" 
+ #@articles.each do |article|
+   #   puts article.to_partial_path.to_s
+#end 
+ if controller.action_name == 'redirect' 
+  article.html(:body) 
+ article.html(:extended) 
+ 
+ else 
+  if article.excerpt? 
+ article.excerpt 
+ link_to_permalink article, t(".continue_reading") 
+ else 
+ article.html(:body) 
+ if article.extended? 
+ link_to_permalink article, t(".continue_reading") 
  end 
- link_to(t('.comments', count: article.published_comments.size), article.permalink_url('comments', true)) if article.allow_comments? 
- link_to(t('.trackbacks', count: article.published_trackbacks.size), article.permalink_url('trackbacks', true)) if article.allow_pings? 
+ end 
  
  end 
+ 
+ else 
+  article.id 
+ form_for(article, {:remote => true,
+                      :url => { :controller => 'articles', :action => 'check_password'},
+                      :update => "content-#{article.id}"}) do |f| 
+ password_field(:article, :password) 
+ article.id 
+ submit_tag(t('.submit') + '!', name: 'check_password') 
+ end 
+ 
+ end 
+ 
+end 
  paginate articles, next_label: "#{t("pagination.next_page")} &raquo;", previous_label: "&laquo; #{t('pagination.previous_page')}" 
  
 
