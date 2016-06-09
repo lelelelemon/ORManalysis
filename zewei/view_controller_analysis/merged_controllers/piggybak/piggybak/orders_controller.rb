@@ -65,37 +65,9 @@ module Piggybak
         @order.initialize_user(current_user)
       end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @title || "Piggybak Demo" 
- stylesheet_link_tag    "application" 
- javascript_include_tag "application" 
+ stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true 
+ javascript_include_tag 'application', 'data-turbolinks-track' => true 
  csrf_meta_tags 
- piggybak_track_order("Piggybak Demo") 
- link_to image_tag("piggybak_demo.png"), "/demo/" 
- render_navigation(false, false) 
- link_to "Professional Frames", main_app.frame_url 
- link_to "Gift Certificates", piggybak_giftcerts.buy_giftcert_url 
- if current_user 
- if current_user.piggybak_orders.any? 
- orders_link("Order History") 
- end 
- if current_user.roles.size > 0 
- link_to 'ADMIN', "/demo/admin" 
- end 
- link_to 'LOGOUT', main_app.destroy_user_session_path, :method => :delete, :class => "last" 
- else 
- link_to 'LOG IN', main_app.new_user_session_path 
- end 
- cart_link 
- if params[:controller] == "home" 
- elsif params[:controller] == "image" 
- link_to "Home", root_url 
- if @image.categories.any? 
- link_to @image.categories.first.title, category_url(@image.categories.first.slug) 
- end 
- @image.title 
- end 
- if false 
- end 
  form_for @order, :url => piggybak.orders_url, :method => "POST" do |f| 
  if @order.errors.any? 
  raw @order.errors.full_messages.collect { |b| b.gsub(/^Line items payment/, 'Payment').gsub(/^Line items shipment shipping/, 'Shipping') }.join("<br />") 
@@ -247,13 +219,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  params[:piggybak_order][:shipments_attributes]["0"][:shipping_method_id] 
  else 
  end 
- Time.now.year.to_s 
- RUBY_VERSION 
- Rails::VERSION::STRING 
- Gem.loaded_specs["piggybak"].version.to_s 
- Page.all.each do |page| 
- link_to page.title, "/demo/#{page.slug}/" 
- end 
 
 end
 
@@ -269,37 +234,9 @@ end
 
       @order = Piggybak::Order.where(id: session[:last_order]).first
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @title || "Piggybak Demo" 
- stylesheet_link_tag    "application" 
- javascript_include_tag "application" 
+ stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true 
+ javascript_include_tag 'application', 'data-turbolinks-track' => true 
  csrf_meta_tags 
- piggybak_track_order("Piggybak Demo") 
- link_to image_tag("piggybak_demo.png"), "/demo/" 
- render_navigation(false, false) 
- link_to "Professional Frames", main_app.frame_url 
- link_to "Gift Certificates", piggybak_giftcerts.buy_giftcert_url 
- if current_user 
- if current_user.piggybak_orders.any? 
- orders_link("Order History") 
- end 
- if current_user.roles.size > 0 
- link_to 'ADMIN', "/demo/admin" 
- end 
- link_to 'LOGOUT', main_app.destroy_user_session_path, :method => :delete, :class => "last" 
- else 
- link_to 'LOG IN', main_app.new_user_session_path 
- end 
- cart_link 
- if params[:controller] == "home" 
- elsif params[:controller] == "image" 
- link_to "Home", root_url 
- if @image.categories.any? 
- link_to @image.categories.first.title, category_url(@image.categories.first.slug) 
- end 
- @image.title 
- end 
- if false 
- end 
   order.line_items.sellables.each do |line_item| 
  line_item.description 
  number_to_currency line_item.unit_price 
@@ -322,13 +259,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  raw order.billing_address.display 
  raw order.shipping_address.display 
  
- Time.now.year.to_s 
- RUBY_VERSION 
- Rails::VERSION::STRING 
- Gem.loaded_specs["piggybak"].version.to_s 
- Page.all.each do |page| 
- link_to page.title, "/demo/#{page.slug}/" 
- end 
 
 end
 
@@ -345,80 +275,17 @@ end
         render :layout => false
       else
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @title || "Piggybak Demo" 
- stylesheet_link_tag    "application" 
- javascript_include_tag "application" 
+ stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true 
+ javascript_include_tag 'application', 'data-turbolinks-track' => true 
  csrf_meta_tags 
- piggybak_track_order("Piggybak Demo") 
- link_to image_tag("piggybak_demo.png"), "/demo/" 
- render_navigation(false, false) 
- link_to "Professional Frames", main_app.frame_url 
- link_to "Gift Certificates", piggybak_giftcerts.buy_giftcert_url 
- if current_user 
- if current_user.piggybak_orders.any? 
- orders_link("Order History") 
- end 
- if current_user.roles.size > 0 
- link_to 'ADMIN', "/demo/admin" 
- end 
- link_to 'LOGOUT', main_app.destroy_user_session_path, :method => :delete, :class => "last" 
- else 
- link_to 'LOG IN', main_app.new_user_session_path 
- end 
- cart_link 
- if params[:controller] == "home" 
- elsif params[:controller] == "image" 
- link_to "Home", root_url 
- if @image.categories.any? 
- link_to @image.categories.first.title, category_url(@image.categories.first.slug) 
- end 
- @image.title 
- end 
- if false 
- end 
- Time.now.year.to_s 
- RUBY_VERSION 
- Rails::VERSION::STRING 
- Gem.loaded_specs["piggybak"].version.to_s 
- Page.all.each do |page| 
- link_to page.title, "/demo/#{page.slug}/" 
- end 
 
 end
 
       end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @title || "Piggybak Demo" 
- stylesheet_link_tag    "application" 
- javascript_include_tag "application" 
+ stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true 
+ javascript_include_tag 'application', 'data-turbolinks-track' => true 
  csrf_meta_tags 
- piggybak_track_order("Piggybak Demo") 
- link_to image_tag("piggybak_demo.png"), "/demo/" 
- render_navigation(false, false) 
- link_to "Professional Frames", main_app.frame_url 
- link_to "Gift Certificates", piggybak_giftcerts.buy_giftcert_url 
- if current_user 
- if current_user.piggybak_orders.any? 
- orders_link("Order History") 
- end 
- if current_user.roles.size > 0 
- link_to 'ADMIN', "/demo/admin" 
- end 
- link_to 'LOGOUT', main_app.destroy_user_session_path, :method => :delete, :class => "last" 
- else 
- link_to 'LOG IN', main_app.new_user_session_path 
- end 
- cart_link 
- if params[:controller] == "home" 
- elsif params[:controller] == "image" 
- link_to "Home", root_url 
- if @image.categories.any? 
- link_to @image.categories.first.title, category_url(@image.categories.first.slug) 
- end 
- @image.title 
- end 
- if false 
- end 
  @order.id 
  @order.email 
  @order.phone 
@@ -435,13 +302,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  number_to_currency @order.total_due 
  raw @order.billing_address.display.gsub("<br />", "\n") 
  raw @order.shipping_address.display.gsub("<br />", "\n") 
- Time.now.year.to_s 
- RUBY_VERSION 
- Rails::VERSION::STRING 
- Gem.loaded_specs["piggybak"].version.to_s 
- Page.all.each do |page| 
- link_to page.title, "/demo/#{page.slug}/" 
- end 
 
 end
 
