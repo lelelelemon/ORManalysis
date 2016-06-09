@@ -41,7 +41,24 @@ class RemindersController < ApplicationController
       format.html # index.html.erb
       format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @grouped_reminders.nil? 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
  end 
 
 end
@@ -56,7 +73,24 @@ end
  text_field 'reminder', 'friendly_at_time', :id => 'newReminderAt', :class => 'long' 
  t('add_reminder') 
  end 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
 
 end
  }
@@ -71,7 +105,24 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  text_field 'reminder', 'friendly_at_time', :id => 'newReminderAt', :class => 'long' 
  t('add_reminder') 
  end 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
 
 end
 
@@ -133,17 +184,64 @@ end
         format.html { redirect_to(reminders_path) }
         format.js { @grouped_reminders = get_groups; ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @grouped_reminders.nil? 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
  end 
 
 end
  }
         format.xml  { render :xml => @reminder, :status => :created, :location => @reminder }
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t('new_page') 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag pages_path(:use_route => nil) do 
+ raw(error_messages_for :page) 
+ raw(text_field 'page', 'title', :id => 'newpage_title', :class => 'long') 
+ raw(submit_tag t('page_create')) 
+ end 
+ pages_path 
+ t('page_back') 
+
+end
+ }
         format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @grouped_reminders.nil? 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
  end 
 
 end
@@ -165,7 +263,24 @@ end
         format.html { redirect_to(@reminder) }
         format.js { @grouped_reminders = get_groups; ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @grouped_reminders.nil? 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
  end 
 
 end
@@ -190,7 +305,24 @@ end
  }
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @grouped_reminders.nil? 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
  end 
 
 end
@@ -199,7 +331,24 @@ end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @grouped_reminders.nil? 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
  end 
 
 end
@@ -236,7 +385,24 @@ end
         format.html { redirect_to(@reminder) }
         format.js { @grouped_reminders = get_groups; ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @grouped_reminders.nil? 
-  
+  group[0][0] 
+ group[1].each do |reminder| 
+ needs_handle = !(group[0][2] == :done) and reminder.can_be_edited_by(@logged_user) 
+ if needs_handle 
+ page_handle widget_options(reminder), "reminder_handle_", '.reminderEntry' 
+ end 
+ h reminder.content 
+ if group[0][2] == :due_format_hours 
+ t(group[0][2], :count => (reminder.at_time.hour - @now.hour)) 
+ elsif group[0][2] == :due_upcomming 
+ t(group[0][2]) 
+ elsif group[0][2] == :done 
+ raw(action_list actions_for_reminder(reminder)) 
+ else 
+ reminder.at_time.strftime(t(group[0][2])) 
+ end 
+ end 
+ 
  end 
 
 end

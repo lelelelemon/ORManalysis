@@ -56,7 +56,7 @@ class JournalsController < ApplicationController
       format.html # index.html.erb
       format.js
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -69,11 +69,10 @@ class JournalsController < ApplicationController
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -81,24 +80,23 @@ class JournalsController < ApplicationController
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  unless @user_journals.nil? 
+ # Content 
+ unless @user_journals.nil? 
   unless @user_journals.empty? 
  t('user_journals_desc') 
  end 
@@ -114,11 +112,8 @@ class JournalsController < ApplicationController
  unless @journals.nil? 
  unless @journals.empty? 
   list[0] 
-  journal.id 
- journal.id 
- journal_path(journal) 
- if journal.can_be_edited_by(@logged_user) 
- page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+  if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_", '.journalEntry' 
  end 
  h(journal.content) 
  fancy_journal_time(journal.created_at) 
@@ -139,7 +134,7 @@ end
  }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -152,11 +147,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -164,24 +158,23 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  unless @user_journals.nil? 
+ # Content 
+ unless @user_journals.nil? 
   unless @user_journals.empty? 
  t('user_journals_desc') 
  end 
@@ -197,11 +190,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  unless @journals.nil? 
  unless @journals.empty? 
   list[0] 
-  journal.id 
- journal.id 
- journal_path(journal) 
- if journal.can_be_edited_by(@logged_user) 
- page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+  if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_", '.journalEntry' 
  end 
  h(journal.content) 
  fancy_journal_time(journal.created_at) 
@@ -267,7 +257,7 @@ end
         format.html { redirect_to(@journal) }
         format.js
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -280,11 +270,10 @@ end
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -292,30 +281,26 @@ end
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  @grouped_journals.first[0] 
+ # Content 
+ @grouped_journals.first[0] 
   list[0] 
-  journal.id 
- journal.id 
- journal_path(journal) 
- if journal.can_be_edited_by(@logged_user) 
- page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+  if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_", '.journalEntry' 
  end 
  h(journal.content) 
  fancy_journal_time(journal.created_at) 
@@ -330,7 +315,7 @@ end
  }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -343,11 +328,10 @@ end
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -355,35 +339,32 @@ end
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  @grouped_journals.first[0] 
-  list[0] 
-  journal.id 
- journal.id 
- journal_path(journal) 
- if journal.can_be_edited_by(@logged_user) 
- page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+ # Content 
+ @page_title = t('new_page') 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag pages_path(:use_route => nil) do 
+ raw(error_messages_for :page) 
+ raw(text_field 'page', 'title', :id => 'newpage_title', :class => 'long') 
+ raw(submit_tag t('page_create')) 
  end 
- h(journal.content) 
- fancy_journal_time(journal.created_at) 
- 
- 
+ pages_path 
+ t('page_back') 
  render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
   site_name 
  image_tag('icons/loading.gif') 
@@ -393,7 +374,7 @@ end
  }
         format.js {}
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -406,11 +387,10 @@ end
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -418,30 +398,26 @@ end
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  @grouped_journals.first[0] 
+ # Content 
+ @grouped_journals.first[0] 
   list[0] 
-  journal.id 
- journal.id 
- journal_path(journal) 
- if journal.can_be_edited_by(@logged_user) 
- page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+  if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_", '.journalEntry' 
  end 
  h(journal.content) 
  fancy_journal_time(journal.created_at) 
@@ -457,7 +433,7 @@ end
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -470,11 +446,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -482,30 +457,26 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  @grouped_journals.first[0] 
+ # Content 
+ @grouped_journals.first[0] 
   list[0] 
-  journal.id 
- journal.id 
- journal_path(journal) 
- if journal.can_be_edited_by(@logged_user) 
- page_handle widget_options(journal), "journal_handle_#{journal.id}", '.journalEntry' 
+  if journal.can_be_edited_by(@logged_user) 
+ page_handle widget_options(journal), "journal_handle_", '.journalEntry' 
  end 
  h(journal.content) 
  fancy_journal_time(journal.created_at) 
@@ -532,7 +503,75 @@ end
         format.js {}
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ " - " 
+ stylesheet_link_tag 'pages' 
+ unless @additional_stylesheets.nil? 
+ @additional_stylesheets.each do |ss| 
+ stylesheet_link_tag ss 
+ end 
+ end 
+ ie_stylesheet_link_tag 'ie_hack' 
+ javascript_include_tag 'jquery.js' 
+ javascript_include_tag 'jquery_ujs.js' 
+ javascript_include_tag 'jquery.ui.all.js' 
+ javascript_include_tag 'application.js' 
+ csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
+  if !@tabbed_navigation_items.nil? 
+ @tabbed_navigation_items.each do |item| 
+ if !site_account.send("_hidden?") 
+ item[:url] 
+ t item[:id] 
+ end 
+ end 
+ end 
+ if !@user_navigation_items.nil? 
+ @user_navigation_items.each do |item| 
+ item[:url] 
+ t item[:id] 
+ end 
+ if @logged_user.can_be_edited_by(@logged_user) 
+ current_users_path 
+ t('my_profile') 
+ t('logout') 
+ end 
+ end 
+ 
+ # Displays general alerts 
+ status_bar 
+ if @no_page_tile.nil? 
+ h @page_title 
+ end 
+ # Content 
+ "page_slot_#{@separator.page_slot.id}" 
+  if @separator.nil? or @separator.new_record? 
+ fpath = page_separators_path(@page) 
+ fmethod = :post 
+ fid = 'fixedWidgetForm' 
+ else 
+ fpath = page_separator_path(@page, @separator) 
+ fmethod = :put 
+ fid = 'widgetForm' 
+ end 
+ form_tag( fpath, :method => fmethod, :class => fid) do 
+ raw(text_field 'separator', 'title', :class => 'separatorFormTitle', :class => 'autofocus moderate') 
+ if @separator.nil? or @separator.new_record? 
+ t('add_separator') 
+ else 
+ t('edit_separator') 
+ end 
+ t('cancel') 
+ end 
+ 
+ "page_slot_#{@separator.page_slot.id}" 
+ render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
+  site_name 
+ image_tag('icons/loading.gif') 
+ 
+
+end
+ }
         format.js {}
         format.xml  { render :xml => @journal.errors, :status => :unprocessable_entity }
       end
@@ -551,7 +590,7 @@ end
       format.xml  { head :ok }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -564,11 +603,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -576,24 +614,23 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  "journal_#{@journal.id}" 
+ # Content 
+ "journal_#{@journal.id}" 
  render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
   site_name 
  image_tag('icons/loading.gif') 

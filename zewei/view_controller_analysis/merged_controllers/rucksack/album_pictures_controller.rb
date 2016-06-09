@@ -60,33 +60,35 @@ class AlbumPicturesController < ApplicationController
       format.html # show.html.erb
       format.js
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- url = show.can_be_edited_by(@logged_user) ? "/albums/#{show.album_id}/pictures/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+ if @new_picture 
+ @insert_element 
+ "album_picture_#{@album_picture.id}" 
+ end 
+ "album_picture_#{@album_picture.id}" 
+  url = show.can_be_edited_by(@logged_user) ? "/albums//pictures/" : nil 
  if show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_picture_handle_#{show.id}", '.albumPicture' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_picture_handle_", '.albumPicture' 
  end 
  show.picture.url 
- show.id 
- show.picture.url(:album) 
  textilize show.caption, true 
+ 
 
 end
  }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- url = show.can_be_edited_by(@logged_user) ? "/albums/#{show.album_id}/pictures/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+ if @new_picture 
+ @insert_element 
+ "album_picture_#{@album_picture.id}" 
+ end 
+ "album_picture_#{@album_picture.id}" 
+  url = show.can_be_edited_by(@logged_user) ? "/albums//pictures/" : nil 
  if show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_picture_handle_#{show.id}", '.albumPicture' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_picture_handle_", '.albumPicture' 
  end 
  show.picture.url 
- show.id 
- show.picture.url(:album) 
  textilize show.caption, true 
+ 
 
 end
 
@@ -114,7 +116,7 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "album_picture_#{@album_picture.id}" 
   if @album_picture.nil? or @album_picture.new_record? 
- url = page_album_album_pictures_path(@page, @album || object) 
+ url = page_album_album_pictures_path(@page, @album ) 
  mth = :post 
  action_name = t('add_picture') 
  else 
@@ -159,7 +161,16 @@ end
  }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- page_album_album_picture_url(@page, @album, @album_picture) 
+ @page_title = t('new_page') 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag pages_path(:use_route => nil) do 
+ raw(error_messages_for :page) 
+ raw(text_field 'page', 'title', :id => 'newpage_title', :class => 'long') 
+ raw(submit_tag t('page_create')) 
+ end 
+ pages_path 
+ t('page_back') 
 
 end
  }
@@ -200,7 +211,7 @@ end
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "album_picture_#{@album_picture.id}" 
   if @album_picture.nil? or @album_picture.new_record? 
- url = page_album_album_pictures_path(@page, @album || object) 
+ url = page_album_album_pictures_path(@page, @album ) 
  mth = :post 
  action_name = t('add_picture') 
  else 

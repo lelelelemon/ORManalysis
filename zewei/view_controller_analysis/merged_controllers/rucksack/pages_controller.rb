@@ -66,13 +66,11 @@ class PagesController < ApplicationController
  
  # Clear old results 
  # Add new results 
-  (shared ? 'mine' : nil) 
- page_tag_list(index_page) 
+  page_tag_list(index_page) 
  page_path(index_page) 
  h index_page.title 
  
-  (shared ? 'mine' : nil) 
- page_tag_list(index_page) 
+  page_tag_list(index_page) 
  page_path(index_page) 
  h index_page.title 
  
@@ -92,13 +90,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  # Clear old results 
  # Add new results 
-  (shared ? 'mine' : nil) 
- page_tag_list(index_page) 
+  page_tag_list(index_page) 
  page_path(index_page) 
  h index_page.title 
  
-  (shared ? 'mine' : nil) 
- page_tag_list(index_page) 
+  page_tag_list(index_page) 
  page_path(index_page) 
  h index_page.title 
  
@@ -119,6 +115,60 @@ end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @logged_user.member_of_owner? 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ end 
+ @additional_stylesheets = ['public_page'] if @logged_user.is_anonymous? 
+ if @page.can_be_edited_by(@logged_user) 
+ Page.widgets.each do |widget| 
+ next if widget.form_partial.nil? 
+ render :partial => widget.form_partial, :locals => {:widget => widget} unless widget.form_partial.nil? 
+ end 
+ end 
+ if @page.can_be_edited_by(@logged_user) 
+ t('tags') 
+  pages_url(:tags => [show]) 
+ h show 
+ 
+ t('edit_tags') 
+ end 
+ # Util widgets 
+ t('insert_here') 
+ t('cancel') 
+ ":" 
+ # Core slots 
+ @page.slots.with_widgets.each do |slot| 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ end 
+ -1 
+ if @page.can_be_favourited_by(@logged_user) 
+ () 
+ t('favourite') 
+ () 
+ t('not_favourite') 
+ end 
+ if @page.can_be_shared_by(@logged_user) 
+ raw(t(@page.is_shared? ? :page_is_shared : :page_is_not_shared, :link => link_to(t('change'), share_page_path(:id => @page.id)))) 
+ end 
+ if @page.can_be_duplicated_by(@logged_user) 
+ t('duplicate_page') 
+ end 
+ if @page.can_be_deleted_by(@logged_user) 
+ t('delete_page') 
+ end 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(t('email_page', :email => "@")) 
+ if @logged_user.member_of_owner? 
+ raw("()") 
+ end 
+ end 
 
 end
  }
@@ -130,6 +180,60 @@ end
       }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @logged_user.member_of_owner? 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ end 
+ @additional_stylesheets = ['public_page'] if @logged_user.is_anonymous? 
+ if @page.can_be_edited_by(@logged_user) 
+ Page.widgets.each do |widget| 
+ next if widget.form_partial.nil? 
+ render :partial => widget.form_partial, :locals => {:widget => widget} unless widget.form_partial.nil? 
+ end 
+ end 
+ if @page.can_be_edited_by(@logged_user) 
+ t('tags') 
+  pages_url(:tags => [show]) 
+ h show 
+ 
+ t('edit_tags') 
+ end 
+ # Util widgets 
+ t('insert_here') 
+ t('cancel') 
+ ":" 
+ # Core slots 
+ @page.slots.with_widgets.each do |slot| 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ end 
+ -1 
+ if @page.can_be_favourited_by(@logged_user) 
+ () 
+ t('favourite') 
+ () 
+ t('not_favourite') 
+ end 
+ if @page.can_be_shared_by(@logged_user) 
+ raw(t(@page.is_shared? ? :page_is_shared : :page_is_not_shared, :link => link_to(t('change'), share_page_path(:id => @page.id)))) 
+ end 
+ if @page.can_be_duplicated_by(@logged_user) 
+ t('duplicate_page') 
+ end 
+ if @page.can_be_deleted_by(@logged_user) 
+ t('delete_page') 
+ end 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(t('email_page', :email => "@")) 
+ if @logged_user.member_of_owner? 
+ raw("()") 
+ end 
+ end 
 
 end
 
@@ -141,6 +245,60 @@ end
 
     respond_to do |format|
       format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @logged_user.member_of_owner? 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ end 
+ @additional_stylesheets = ['public_page'] if @logged_user.is_anonymous? 
+ if @page.can_be_edited_by(@logged_user) 
+ Page.widgets.each do |widget| 
+ next if widget.form_partial.nil? 
+ render :partial => widget.form_partial, :locals => {:widget => widget} unless widget.form_partial.nil? 
+ end 
+ end 
+ if @page.can_be_edited_by(@logged_user) 
+ t('tags') 
+  pages_url(:tags => [show]) 
+ h show 
+ 
+ t('edit_tags') 
+ end 
+ # Util widgets 
+ t('insert_here') 
+ t('cancel') 
+ ":" 
+ # Core slots 
+ @page.slots.with_widgets.each do |slot| 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
+ end 
+ -1 
+ if @page.can_be_favourited_by(@logged_user) 
+ () 
+ t('favourite') 
+ () 
+ t('not_favourite') 
+ end 
+ if @page.can_be_shared_by(@logged_user) 
+ raw(t(@page.is_shared? ? :page_is_shared : :page_is_not_shared, :link => link_to(t('change'), share_page_path(:id => @page.id)))) 
+ end 
+ if @page.can_be_duplicated_by(@logged_user) 
+ t('duplicate_page') 
+ end 
+ if @page.can_be_deleted_by(@logged_user) 
+ t('delete_page') 
+ end 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(t('email_page', :email => "@")) 
+ if @logged_user.member_of_owner? 
+ raw("()") 
+ end 
+ end 
 
 end
  }
@@ -222,17 +380,11 @@ end
  @set_favourite 
  end 
   cclass = @pages.nil? ? nil : 'current' 
- (@logged_user.home_page == @page ? 'current' : nil) 
- @logged_user.home_page_id 
  page_path(@logged_user.home_page) 
  h @logged_user.home_page.title 
- cclass 
  pages_path 
  t('all_pages') 
  (@logged_user.favourite_pages.sort { |x,y| x.sidebar_order <=> y.sidebar_order }).each do |page| 
- (page == @page ? 'current' : nil) 
- page.id 
- page.id 
  page_path(page) 
  h page.title 
  end 
@@ -288,17 +440,11 @@ end
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  escape_javascript("<h1><span hover_handle=\"page_header_handle\">#{h(@page.title)}</span></h1>").html_safe 
   cclass = @pages.nil? ? nil : 'current' 
- (@logged_user.home_page == @page ? 'current' : nil) 
- @logged_user.home_page_id 
  page_path(@logged_user.home_page) 
  h @logged_user.home_page.title 
- cclass 
  pages_path 
  t('all_pages') 
  (@logged_user.favourite_pages.sort { |x,y| x.sidebar_order <=> y.sidebar_order }).each do |page| 
- (page == @page ? 'current' : nil) 
- page.id 
- page.id 
  page_path(page) 
  h page.title 
  end 
@@ -311,17 +457,11 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  escape_javascript("<h1><span hover_handle=\"page_header_handle\">#{h(@page.title)}</span></h1>").html_safe 
   cclass = @pages.nil? ? nil : 'current' 
- (@logged_user.home_page == @page ? 'current' : nil) 
- @logged_user.home_page_id 
  page_path(@logged_user.home_page) 
  h @logged_user.home_page.title 
- cclass 
  pages_path 
  t('all_pages') 
  (@logged_user.favourite_pages.sort { |x,y| x.sidebar_order <=> y.sidebar_order }).each do |page| 
- (page == @page ? 'current' : nil) 
- page.id 
- page.id 
  page_path(page) 
  h page.title 
  end 
@@ -428,17 +568,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @set_favourite 
  end 
   cclass = @pages.nil? ? nil : 'current' 
- (@logged_user.home_page == @page ? 'current' : nil) 
- @logged_user.home_page_id 
  page_path(@logged_user.home_page) 
  h @logged_user.home_page.title 
- cclass 
  pages_path 
  t('all_pages') 
  (@logged_user.favourite_pages.sort { |x,y| x.sidebar_order <=> y.sidebar_order }).each do |page| 
- (page == @page ? 'current' : nil) 
- page.id 
- page.id 
  page_path(page) 
  h page.title 
  end 
@@ -518,7 +652,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  next if user.id == @page.created_by_id 
  user.gravatar_url(:size => 50) 
  h user.display_name 
- raw(check_box_tag 'page[shared_users][]', user.id, @page.shared_user_ids.include?(user.id), :id => "pageShareUser#{user.id}") 
+ raw(check_box_tag 'page[shared_users][]', user.id, @page.shared_user_ids.include?(user.id), :id => "pageShareUser") 
  end 
  raw(submit_tag t('update')) 
  page_path(:id => @page.id) 

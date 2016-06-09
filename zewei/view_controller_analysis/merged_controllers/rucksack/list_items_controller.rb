@@ -62,43 +62,35 @@ end
       format.html # show.html.erb
       format.js
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+ "list_item_#{@list_item.id}" 
+  url = show.can_be_completed_by(@logged_user) ? "/lists//items/" : nil 
  if show.can_be_completed_by(@logged_user) 
  unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_", '.listItem' 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
  else 
  show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
  end 
- show.id 
  (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ raw(textilize h(show.content), true, {}) 
+ 
 
 end
  }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+ "list_item_#{@list_item.id}" 
+  url = show.can_be_completed_by(@logged_user) ? "/lists//items/" : nil 
  if show.can_be_completed_by(@logged_user) 
  unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_", '.listItem' 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
  else 
  show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
  end 
- show.id 
  (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ raw(textilize h(show.content), true, {}) 
+ 
 
 end
 
@@ -150,47 +142,32 @@ end
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  select_class = @list_item.is_completed? ? 'completedItems' : 'openItems' 
  "list_#{@list.id} .#{select_class} .listItems:first" 
-  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+  url = show.can_be_completed_by(@logged_user) ? "/lists//items/" : nil 
  if show.can_be_completed_by(@logged_user) 
  unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_", '.listItem' 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
  else 
  show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
  end 
- show.id 
  (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ raw(textilize h(show.content), true, {}) 
  
 
 end
  }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- select_class = @list_item.is_completed? ? 'completedItems' : 'openItems' 
- "list_#{@list.id} .#{select_class} .listItems:first" 
-  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
- if show.can_be_completed_by(@logged_user) 
- unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ @page_title = t('new_page') 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag pages_path(:use_route => nil) do 
+ raw(error_messages_for :page) 
+ raw(text_field 'page', 'title', :id => 'newpage_title', :class => 'long') 
+ raw(submit_tag t('page_create')) 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
- else 
- show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
- end 
- show.id 
- (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
- 
+ pages_path 
+ t('page_back') 
 
 end
  }
@@ -198,22 +175,16 @@ end
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  select_class = @list_item.is_completed? ? 'completedItems' : 'openItems' 
  "list_#{@list.id} .#{select_class} .listItems:first" 
-  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+  url = show.can_be_completed_by(@logged_user) ? "/lists//items/" : nil 
  if show.can_be_completed_by(@logged_user) 
  unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_", '.listItem' 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
  else 
  show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
  end 
- show.id 
  (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ raw(textilize h(show.content), true, {}) 
  
 
 end
@@ -223,22 +194,16 @@ end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  select_class = @list_item.is_completed? ? 'completedItems' : 'openItems' 
  "list_#{@list.id} .#{select_class} .listItems:first" 
-  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+  url = show.can_be_completed_by(@logged_user) ? "/lists//items/" : nil 
  if show.can_be_completed_by(@logged_user) 
  unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_", '.listItem' 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
  else 
  show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
  end 
- show.id 
  (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ raw(textilize h(show.content), true, {}) 
  
 
 end
@@ -274,22 +239,16 @@ end
         format.js
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "list_item_#{@list_item.id}" 
-  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+  url = show.can_be_completed_by(@logged_user) ? "/lists//items/" : nil 
  if show.can_be_completed_by(@logged_user) 
  unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_", '.listItem' 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
  else 
  show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
  end 
- show.id 
  (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ raw(textilize h(show.content), true, {}) 
  
 
 end
@@ -298,22 +257,16 @@ end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "list_item_#{@list_item.id}" 
-  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+  url = show.can_be_completed_by(@logged_user) ? "/lists//items/" : nil 
  if show.can_be_completed_by(@logged_user) 
  unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_", '.listItem' 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
  else 
  show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
  end 
- show.id 
  (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ raw(textilize h(show.content), true, {}) 
  
 
 end
@@ -358,22 +311,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  insert_into = @list_item.is_completed? ? 'completedItems' : 'openItems' 
  "list_item_#{@list_item.id}" 
  "list_#{@list.id} .#{insert_into} ul:first" 
-  url = show.can_be_completed_by(@logged_user) ? "/lists/#{show.list_id}/items/#{show.id}" : nil 
- show.id 
- show.id 
- url 
+  url = show.can_be_completed_by(@logged_user) ? "/lists//items/" : nil 
  if show.can_be_completed_by(@logged_user) 
  unless show.is_completed? or !show.can_be_edited_by(@logged_user) 
- page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_#{show.id}", '.listItem' 
+ page_handle [ ['delete', '-'], ['edit', t('edit')], ['handle', '+'] ], "page_item_handle_", '.listItem' 
  end 
- (show.is_completed? ? 'checked' : nil) 
- show.id 
  else 
  show.is_completed? ? render_icon('checked', t('list_item_completed')) : render_icon('not-checked', t('list_item_open')) 
  end 
- show.id 
  (show.is_completed? and show.can_be_edited_by(@logged_user)) ? render_icon('del_gen', '', {:class => 'itemDelete'}) : '' 
- raw(textilize h(show.content), true, {'hover_handle' => "page_item_handle_#{show.id}"}) 
+ raw(textilize h(show.content), true, {}) 
  
 
 end

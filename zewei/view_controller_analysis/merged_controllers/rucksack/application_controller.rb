@@ -53,10 +53,11 @@ protected
     # Construct a reply with a relevant error
     respond_to do |format|
         format.html { redirect_back_or_default('/') }
-        format.js { render(:update) do |page| 
-                      page.replace_html('statusBar', h(flash[:message]))
-                      page.show 'statusBar'
-                    end }
+        format.js { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ escape_javascript(@user.status.content) 
+
+end
+ }
         format.xml  { head(error ? :unprocessable_entity : :ok) }
     end
   end

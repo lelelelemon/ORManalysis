@@ -34,7 +34,7 @@ class AccountsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -47,11 +47,10 @@ class AccountsController < ApplicationController
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -59,28 +58,45 @@ class AccountsController < ApplicationController
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  @page_title = t('settings') 
+ # Content 
+ @page_title = t('settings') 
  @tabbed_navigation_items = common_tabs(nil) 
  @user_navigation_items = user_tabs(:settings) 
  form_tag account_path(), :method => :put do 
-  
+  error_messages_for :account 
+ t('site_name') 
+ text_field 'account', 'site_name', :id => 'settingsFormSiteName', :class => 'long' 
+ t('site_name_info') 
+ t('host_name') 
+ text_field 'account', 'host_name', :id => 'settingsFormHostName', :class => 'moderate' 
+ t('host_name_info') 
+ t('tabs_visible') 
+ "()" 
+ Account::Tabs.each do |tab| 
+ check_box 'account', "_hidden", :id => "setting__hidden" 
+ t tab 
+ end 
+ Account::Colours.each do |colour| 
+ " " 
+ text_field 'account', "_colour", :id => 'setting__colour', :class => 'short' 
+ "()" 
+ end 
+ 
  end 
  render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
   site_name 
@@ -91,7 +107,7 @@ end
  }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -104,11 +120,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -116,28 +131,45 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  @page_title = t('settings') 
+ # Content 
+ @page_title = t('settings') 
  @tabbed_navigation_items = common_tabs(nil) 
  @user_navigation_items = user_tabs(:settings) 
  form_tag account_path(), :method => :put do 
-  
+  error_messages_for :account 
+ t('site_name') 
+ text_field 'account', 'site_name', :id => 'settingsFormSiteName', :class => 'long' 
+ t('site_name_info') 
+ t('host_name') 
+ text_field 'account', 'host_name', :id => 'settingsFormHostName', :class => 'moderate' 
+ t('host_name_info') 
+ t('tabs_visible') 
+ "()" 
+ Account::Tabs.each do |tab| 
+ check_box 'account', "_hidden", :id => "setting__hidden" 
+ t tab 
+ end 
+ Account::Colours.each do |colour| 
+ " " 
+ text_field 'account', "_colour", :id => 'setting__colour', :class => 'short' 
+ "()" 
+ end 
+ 
  end 
  render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
   site_name 
@@ -160,7 +192,7 @@ end
         format.xml  { head :ok }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -173,11 +205,10 @@ end
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -185,28 +216,45 @@ end
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  @page_title = t('settings') 
+ # Content 
+ @page_title = t('settings') 
  @tabbed_navigation_items = common_tabs(nil) 
  @user_navigation_items = user_tabs(:settings) 
  form_tag account_path(), :method => :put do 
-  
+  error_messages_for :account 
+ t('site_name') 
+ text_field 'account', 'site_name', :id => 'settingsFormSiteName', :class => 'long' 
+ t('site_name_info') 
+ t('host_name') 
+ text_field 'account', 'host_name', :id => 'settingsFormHostName', :class => 'moderate' 
+ t('host_name_info') 
+ t('tabs_visible') 
+ "()" 
+ Account::Tabs.each do |tab| 
+ check_box 'account', "_hidden", :id => "setting__hidden" 
+ t tab 
+ end 
+ Account::Colours.each do |colour| 
+ " " 
+ text_field 'account', "_colour", :id => 'setting__colour', :class => 'short' 
+ "()" 
+ end 
+ 
  end 
  render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
   site_name 

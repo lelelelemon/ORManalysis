@@ -39,7 +39,7 @@ class DashboardsController < ApplicationController
       format.html # show.html.erb
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -52,11 +52,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -64,24 +63,23 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  @page_title = t('overview') 
+ # Content 
+ @page_title = t('overview') 
  @tabbed_navigation_items = common_tabs(:overview) 
  @user_navigation_items = user_tabs(nil) 
  @recent_activities.each do |items| 
@@ -90,10 +88,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  user.gravatar_url(:size => 30) 
  user.id == @logged_user.id ? t('you') : user.display_name 
  user_activity[1].each do |log| 
+ # " ( ) | p: by " 
  if !log.page_id.nil? 
  raw(t "activity_edit_Page", :object_name => h(log.page.object_name), :previous_name => h(log.previous_name), :url => !log.page.nil? ? url_for(log.page) : '#') 
+ # "()" 
  else 
- raw(t "activity_#{log.action}_#{log.rel_object_type}", :object_name => h(log.object_name), :previous_name => h(log.previous_name), :url => !log.rel_object.nil? ? url_for(log.rel_object) : '#') 
+ raw(t "activity__", :object_name => h(log.object_name), :previous_name => h(log.previous_name), :url => !log.rel_object.nil? ? url_for(log.rel_object) : '#') 
+ # "()" 
  end 
  end 
  

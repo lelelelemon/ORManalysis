@@ -63,33 +63,35 @@ class UploadedFilesController < ApplicationController
       format.html { redirect_to @uploaded_file.data.url }
       format.js
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- hhandle = "page_slot_handle_#{page_slot.id}" 
- hhandle 
- hhandle 
- file_icon_for(object.object_name) 
- hhandle 
- object.data.url 
- h object.object_name 
- format_size(object.data_file_size) 
- if object.description? 
- h object.description 
+ if @new_file 
+ @insert_element 
+ "<div class=\"pageSlot\" id=\"page_slot_#{@slot_id}\" slot=\"#{@slot_id}\"></div>".html_safe 
  end 
+ "page_slot_#{@uploaded_file.page_slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
 
 end
  }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- hhandle = "page_slot_handle_#{page_slot.id}" 
- hhandle 
- hhandle 
- file_icon_for(object.object_name) 
- hhandle 
- object.data.url 
- h object.object_name 
- format_size(object.data_file_size) 
- if object.description? 
- h object.description 
+ if @new_file 
+ @insert_element 
+ "<div class=\"pageSlot\" id=\"page_slot_#{@slot_id}\" slot=\"#{@slot_id}\"></div>".html_safe 
  end 
+ "page_slot_#{@uploaded_file.page_slot.id}" 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
+ page_url 
+ if @page.can_be_edited_by(@logged_user) 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
+ end 
+ raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
+ 
 
 end
 
@@ -175,7 +177,16 @@ end
  }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- page_uploaded_file_url(@page, @uploaded_file) 
+ @page_title = t('new_page') 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag pages_path(:use_route => nil) do 
+ raw(error_messages_for :page) 
+ raw(text_field 'page', 'title', :id => 'newpage_title', :class => 'long') 
+ raw(submit_tag t('page_create')) 
+ end 
+ pages_path 
+ t('page_back') 
 
 end
  }

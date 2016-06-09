@@ -45,19 +45,11 @@ class SeparatorsController < ApplicationController
       format.html # show.html.erb
       format.js
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- hhandle = "page_slot_handle_#{page_slot.id}" 
- hhandle 
- hhandle 
- h object.title 
 
 end
  }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- hhandle = "page_slot_handle_#{page_slot.id}" 
- hhandle 
- hhandle 
- h object.title 
 
 end
 
@@ -141,10 +133,10 @@ end
  ec 
  end 
  "page_slot_#{@slot.id}" 
-  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
  page_url 
  if @page.can_be_edited_by(@logged_user) 
- raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
  end 
  raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
  
@@ -153,22 +145,16 @@ end
  }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- ec = escape_javascript("<div class=\"pageSlot\" id=\"page_slot_#{@slot.id}\" slot=\"#{@slot.id}\"></div>").html_safe 
- if @insert_before 
- @insert_element 
- ec 
- else 
- @insert_element 
- ec 
+ @page_title = t('new_page') 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag pages_path(:use_route => nil) do 
+ raw(error_messages_for :page) 
+ raw(text_field 'page', 'title', :id => 'newpage_title', :class => 'long') 
+ raw(submit_tag t('page_create')) 
  end 
- "page_slot_#{@slot.id}" 
-  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
- page_url 
- if @page.can_be_edited_by(@logged_user) 
- raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
- end 
- raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
- 
+ pages_path 
+ t('page_back') 
 
 end
  }
@@ -183,10 +169,10 @@ end
  ec 
  end 
  "page_slot_#{@slot.id}" 
-  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
  page_url 
  if @page.can_be_edited_by(@logged_user) 
- raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
  end 
  raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
  
@@ -205,10 +191,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  ec 
  end 
  "page_slot_#{@slot.id}" 
-  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
  page_url 
  if @page.can_be_edited_by(@logged_user) 
- raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
  end 
  raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
  
@@ -259,10 +245,10 @@ end
         format.js {}
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "page_slot_#{@separator.page_slot.id}" 
-  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
  page_url 
  if @page.can_be_edited_by(@logged_user) 
- raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
  end 
  raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
  
@@ -273,10 +259,10 @@ end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "page_slot_#{@separator.page_slot.id}" 
-  page_url = @page.can_be_edited_by(@logged_user) ? "/#{page_slot.rel_object_type.pluralize.tableize}/#{page_slot.rel_object_id}" : '' 
+  page_url = @page.can_be_edited_by(@logged_user) ? "//" : '' 
  page_url 
  if @page.can_be_edited_by(@logged_user) 
- raw(page_handle widget_options(object), "page_slot_handle_#{page_slot.id}", '.pageWidget') 
+ raw(page_handle widget_options(object), "page_slot_handle_", '.pageWidget') 
  end 
  raw(render :partial => object.view_partial, :locals => {:object => object, :page_slot => page_slot}) 
  

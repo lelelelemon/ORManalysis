@@ -49,18 +49,18 @@ class EmailsController < ApplicationController
       format.html # show.html.erb
       format.js
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{t('email_from')}: #{@email.from}\n" 
- "#{t('email_subject')}: #{@email.subject}\n" 
- "#{t('email_date')}: #{@email.created_at}\n" 
+ ": \n" 
+ ": \n" 
+ ": \n" 
  textilize @email.body 
 
 end
  }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{t('email_from')}: #{@email.from}\n" 
- "#{t('email_subject')}: #{@email.subject}\n" 
- "#{t('email_date')}: #{@email.created_at}\n" 
+ ": \n" 
+ ": \n" 
+ ": \n" 
  textilize @email.body 
 
 end
@@ -112,7 +112,20 @@ end
         format.js {}
         format.xml  { render :xml => @email, :status => :created, :location => page_email_path(:page_id => @page.id, :id => @email.id) }
       else
-        format.html { render :action => "new" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @page_title = t('new_page') 
+ @tabbed_navigation_items = common_tabs(:pages) 
+ @user_navigation_items = user_tabs(nil) 
+ form_tag pages_path(:use_route => nil) do 
+ raw(error_messages_for :page) 
+ raw(text_field 'page', 'title', :id => 'newpage_title', :class => 'long') 
+ raw(submit_tag t('page_create')) 
+ end 
+ pages_path 
+ t('page_back') 
+
+end
+ }
         format.js {}
         format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
       end
@@ -133,7 +146,31 @@ end
         format.js {}
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "page_slot_#{@separator.page_slot.id}" 
+  if @separator.nil? or @separator.new_record? 
+ fpath = page_separators_path(@page) 
+ fmethod = :post 
+ fid = 'fixedWidgetForm' 
+ else 
+ fpath = page_separator_path(@page, @separator) 
+ fmethod = :put 
+ fid = 'widgetForm' 
+ end 
+ form_tag( fpath, :method => fmethod, :class => fid) do 
+ raw(text_field 'separator', 'title', :class => 'separatorFormTitle', :class => 'autofocus moderate') 
+ if @separator.nil? or @separator.new_record? 
+ t('add_separator') 
+ else 
+ t('edit_separator') 
+ end 
+ t('cancel') 
+ end 
+ 
+ "page_slot_#{@separator.page_slot.id}" 
+
+end
+ }
         format.js {}
         format.xml  { render :xml => @email.errors, :status => :unprocessable_entity }
       end
@@ -167,9 +204,9 @@ end
 
     respond_to do |format|
       format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{t('email_from')}: #{@email.from}\n" 
- "#{t('email_subject')}: #{@email.subject}\n" 
- "#{t('email_date')}: #{@email.created_at}\n" 
+ ": \n" 
+ ": \n" 
+ ": \n" 
  textilize @email.body 
 
 end

@@ -60,7 +60,7 @@ class StatusesController < ApplicationController
         format.xml  { head :ok }
       else
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -73,11 +73,10 @@ class StatusesController < ApplicationController
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -85,24 +84,43 @@ class StatusesController < ApplicationController
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  escape_javascript(@user.status.content) 
+ # Content 
+ "page_slot_#{@separator.page_slot.id}" 
+  if @separator.nil? or @separator.new_record? 
+ fpath = page_separators_path(@page) 
+ fmethod = :post 
+ fid = 'fixedWidgetForm' 
+ else 
+ fpath = page_separator_path(@page, @separator) 
+ fmethod = :put 
+ fid = 'widgetForm' 
+ end 
+ form_tag( fpath, :method => fmethod, :class => fid) do 
+ raw(text_field 'separator', 'title', :class => 'separatorFormTitle', :class => 'autofocus moderate') 
+ if @separator.nil? or @separator.new_record? 
+ t('add_separator') 
+ else 
+ t('edit_separator') 
+ end 
+ t('cancel') 
+ end 
+ 
+ "page_slot_#{@separator.page_slot.id}" 
  render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
   site_name 
  image_tag('icons/loading.gif') 
@@ -112,7 +130,7 @@ end
  }
         format.js {}
         format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -125,11 +143,10 @@ end
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -137,24 +154,23 @@ end
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  escape_javascript(@user.status.content) 
+ # Content 
+ escape_javascript(@user.status.content) 
  render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
   site_name 
  image_tag('icons/loading.gif') 
@@ -165,7 +181,7 @@ end
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{site_name} - #{h(@page_title)}" 
+ " - " 
  stylesheet_link_tag 'pages' 
  unless @additional_stylesheets.nil? 
  @additional_stylesheets.each do |ss| 
@@ -178,11 +194,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  javascript_include_tag 'jquery.ui.all.js' 
  javascript_include_tag 'application.js' 
  csrf_meta_tag 
+ # Top of page (tabs, user box, etc) 
   if !@tabbed_navigation_items.nil? 
  @tabbed_navigation_items.each do |item| 
- if !site_account.send("#{item[:id]}_hidden?") 
- (item[:id] == @selected_navigation_item ? 'active' : nil) 
- item[:id] 
+ if !site_account.send("_hidden?") 
  item[:url] 
  t item[:id] 
  end 
@@ -190,24 +205,23 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if !@user_navigation_items.nil? 
  @user_navigation_items.each do |item| 
- (item[:id] == @selected_user_item ? 'active' : nil) 
- item[:id] 
  item[:url] 
  t item[:id] 
  end 
  if @logged_user.can_be_edited_by(@logged_user) 
- (@selected_user_item == :my_profile ? 'active' : nil) 
  current_users_path 
  t('my_profile') 
  t('logout') 
  end 
  end 
  
+ # Displays general alerts 
  status_bar 
  if @no_page_tile.nil? 
  h @page_title 
  end 
-  escape_javascript(@user.status.content) 
+ # Content 
+ escape_javascript(@user.status.content) 
  render :partial => (@content_for_sidebar.nil? ? 'layouts/blank_sidebar' : @content_for_sidebar ) 
   site_name 
  image_tag('icons/loading.gif') 
