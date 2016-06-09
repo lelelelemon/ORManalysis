@@ -127,38 +127,62 @@ class ListController < ApplicationController
     @topic_list = TopicQuery.new(nil, order: 'created').list_latest
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- lang = SiteSetting.find_by_name('default_locale').try(:value) 
- site_email = SiteSetting.find_by_name('contact_email').try(:value) 
- @title 
- @link 
- @description 
- if lang 
- lang
+ if include_crawler_content? 
+ if @category 
+ if @category.parent_category 
+ link_to @category.parent_category.url, itemprop: 'item' do 
+ @category.parent_category.name 
  end 
- if @topic_list.topics && @topic_list.topics.length > 0 
- @topic_list.topics.first.created_at.rfc2822 
- @atom_link 
- @topic_list.topics.each do |topic| 
- topic_url = topic.url 
- topic.title 
- "@#{topic.user.username}#{" #{topic.user.name}" if (topic.user.name.present? && SiteSetting.enable_names?)}" 
- topic.category.name 
- t('author_wrote', author: link_to("@#{topic.user.username}", "#{Discourse.base_url}/users/#{topic.user.username_lower}")).html_safe 
- topic.posts.first.cooked.html_safe 
- t 'num_posts' 
- topic.posts_count 
- t 'num_participants' 
- topic.participant_count 
- link_to t('read_full_topic'), topic_url 
- topic_url 
- topic.created_at.rfc2822 
- topic.pinned_at ? 'Yes' : 'No' 
- topic.closed ? 'Yes' : 'No' 
- topic.archived ? 'Yes' : 'No' 
- Discourse.current_hostname 
- topic.id 
- topic_url 
- topic.title 
+ end 
+ link_to @category.url, itemprop: 'item' do 
+ @category.name 
+ end 
+ end 
+ @list.topics.each_with_index do |t,i| 
+ t.url 
+ t.relative_url 
+ t.title 
+ page_links(t) 
+ if (!@category || @category.has_children?) && t.category 
+ t.category.url 
+ t.category.name 
+ end 
+ t 'posts' 
+t.last_post_url
+ t.posts_count 
+ end 
+ if @list.topics.length > 0 && @list.more_topics_url 
+ if params[:page].to_i > 0 
+ @list.prev_topics_url 
+ t 'prev_page' 
+ end 
+ @list.more_topics_url 
+ t 'next_page' 
+ end 
+ end 
+ if @rss 
+ content_for :head do 
+ auto_discovery_link_tag(:rss, "#{Discourse.base_url}/posts.rss", title: I18n.t("rss_description.posts")) 
+ auto_discovery_link_tag(:rss, { action: "#{@rss}_feed" }, title: I18n.t("rss_description.#{@rss}")) 
+ end 
+ end 
+ if @category 
+ content_for :head do 
+ auto_discovery_link_tag(:rss, { action: :category_feed }, title: t('rss_topics_in_category', category: @category.name)) 
+ raw crawlable_meta_data(title: @category.name, description: @category.description) 
+ end 
+ end 
+ if @title 
+ content_for :title do 
+ @title 
+ end 
+ elsif @category 
+ content_for :title do 
+ @category.name 
+ end 
+ elsif params[:page] 
+ content_for :title do 
+t 'page_num', num: params[:page].to_i + 1 
  end 
  end 
 
@@ -176,38 +200,62 @@ end
     @topic_list = TopicQuery.new(nil).list_top_for("monthly")
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- lang = SiteSetting.find_by_name('default_locale').try(:value) 
- site_email = SiteSetting.find_by_name('contact_email').try(:value) 
- @title 
- @link 
- @description 
- if lang 
- lang
+ if include_crawler_content? 
+ if @category 
+ if @category.parent_category 
+ link_to @category.parent_category.url, itemprop: 'item' do 
+ @category.parent_category.name 
  end 
- if @topic_list.topics && @topic_list.topics.length > 0 
- @topic_list.topics.first.created_at.rfc2822 
- @atom_link 
- @topic_list.topics.each do |topic| 
- topic_url = topic.url 
- topic.title 
- "@#{topic.user.username}#{" #{topic.user.name}" if (topic.user.name.present? && SiteSetting.enable_names?)}" 
- topic.category.name 
- t('author_wrote', author: link_to("@#{topic.user.username}", "#{Discourse.base_url}/users/#{topic.user.username_lower}")).html_safe 
- topic.posts.first.cooked.html_safe 
- t 'num_posts' 
- topic.posts_count 
- t 'num_participants' 
- topic.participant_count 
- link_to t('read_full_topic'), topic_url 
- topic_url 
- topic.created_at.rfc2822 
- topic.pinned_at ? 'Yes' : 'No' 
- topic.closed ? 'Yes' : 'No' 
- topic.archived ? 'Yes' : 'No' 
- Discourse.current_hostname 
- topic.id 
- topic_url 
- topic.title 
+ end 
+ link_to @category.url, itemprop: 'item' do 
+ @category.name 
+ end 
+ end 
+ @list.topics.each_with_index do |t,i| 
+ t.url 
+ t.relative_url 
+ t.title 
+ page_links(t) 
+ if (!@category || @category.has_children?) && t.category 
+ t.category.url 
+ t.category.name 
+ end 
+ t 'posts' 
+t.last_post_url
+ t.posts_count 
+ end 
+ if @list.topics.length > 0 && @list.more_topics_url 
+ if params[:page].to_i > 0 
+ @list.prev_topics_url 
+ t 'prev_page' 
+ end 
+ @list.more_topics_url 
+ t 'next_page' 
+ end 
+ end 
+ if @rss 
+ content_for :head do 
+ auto_discovery_link_tag(:rss, "#{Discourse.base_url}/posts.rss", title: I18n.t("rss_description.posts")) 
+ auto_discovery_link_tag(:rss, { action: "#{@rss}_feed" }, title: I18n.t("rss_description.#{@rss}")) 
+ end 
+ end 
+ if @category 
+ content_for :head do 
+ auto_discovery_link_tag(:rss, { action: :category_feed }, title: t('rss_topics_in_category', category: @category.name)) 
+ raw crawlable_meta_data(title: @category.name, description: @category.description) 
+ end 
+ end 
+ if @title 
+ content_for :title do 
+ @title 
+ end 
+ elsif @category 
+ content_for :title do 
+ @category.name 
+ end 
+ elsif params[:page] 
+ content_for :title do 
+t 'page_num', num: params[:page].to_i + 1 
  end 
  end 
 
@@ -226,38 +274,62 @@ end
     @topic_list = TopicQuery.new.list_new_in_category(@category)
 
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- lang = SiteSetting.find_by_name('default_locale').try(:value) 
- site_email = SiteSetting.find_by_name('contact_email').try(:value) 
- @title 
- @link 
- @description 
- if lang 
- lang
+ if include_crawler_content? 
+ if @category 
+ if @category.parent_category 
+ link_to @category.parent_category.url, itemprop: 'item' do 
+ @category.parent_category.name 
  end 
- if @topic_list.topics && @topic_list.topics.length > 0 
- @topic_list.topics.first.created_at.rfc2822 
- @atom_link 
- @topic_list.topics.each do |topic| 
- topic_url = topic.url 
- topic.title 
- "@#{topic.user.username}#{" #{topic.user.name}" if (topic.user.name.present? && SiteSetting.enable_names?)}" 
- topic.category.name 
- t('author_wrote', author: link_to("@#{topic.user.username}", "#{Discourse.base_url}/users/#{topic.user.username_lower}")).html_safe 
- topic.posts.first.cooked.html_safe 
- t 'num_posts' 
- topic.posts_count 
- t 'num_participants' 
- topic.participant_count 
- link_to t('read_full_topic'), topic_url 
- topic_url 
- topic.created_at.rfc2822 
- topic.pinned_at ? 'Yes' : 'No' 
- topic.closed ? 'Yes' : 'No' 
- topic.archived ? 'Yes' : 'No' 
- Discourse.current_hostname 
- topic.id 
- topic_url 
- topic.title 
+ end 
+ link_to @category.url, itemprop: 'item' do 
+ @category.name 
+ end 
+ end 
+ @list.topics.each_with_index do |t,i| 
+ t.url 
+ t.relative_url 
+ t.title 
+ page_links(t) 
+ if (!@category || @category.has_children?) && t.category 
+ t.category.url 
+ t.category.name 
+ end 
+ t 'posts' 
+t.last_post_url
+ t.posts_count 
+ end 
+ if @list.topics.length > 0 && @list.more_topics_url 
+ if params[:page].to_i > 0 
+ @list.prev_topics_url 
+ t 'prev_page' 
+ end 
+ @list.more_topics_url 
+ t 'next_page' 
+ end 
+ end 
+ if @rss 
+ content_for :head do 
+ auto_discovery_link_tag(:rss, "#{Discourse.base_url}/posts.rss", title: I18n.t("rss_description.posts")) 
+ auto_discovery_link_tag(:rss, { action: "#{@rss}_feed" }, title: I18n.t("rss_description.#{@rss}")) 
+ end 
+ end 
+ if @category 
+ content_for :head do 
+ auto_discovery_link_tag(:rss, { action: :category_feed }, title: t('rss_topics_in_category', category: @category.name)) 
+ raw crawlable_meta_data(title: @category.name, description: @category.description) 
+ end 
+ end 
+ if @title 
+ content_for :title do 
+ @title 
+ end 
+ elsif @category 
+ content_for :title do 
+ @category.name 
+ end 
+ elsif params[:page] 
+ content_for :title do 
+t 'page_num', num: params[:page].to_i + 1 
  end 
  end 
 

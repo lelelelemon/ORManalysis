@@ -87,8 +87,39 @@ end
     file = "static/#{@page}"    if lookup_context.find_all("#{file}.html").empty?
 
     if lookup_context.find_all("#{file}.html").any?
-      render file, layout: !request.xhr?, formats: [:html]
-      return
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @topic.first_post.updated_at.to_date.to_formatted_s(:iso_8601) 
+ link_to t('about'), '/about' 
+ if @faq_overriden 
+ @page == 'faq' ? 'active' : '' 
+ guidelines_path 
+ t 'guidelines' 
+ faq_path 
+ t 'js.faq' 
+ else 
+ @page == 'faq' ? 'active' : '' 
+faq_path
+ t 'js.faq' 
+ end 
+ tos_path 
+ @page == 'tos' ? 'active' : '' 
+ t 'terms_of_service.title' 
+ privacy_path 
+ @page == 'privacy' ? 'active' : '' 
+ t 'privacy' 
+ if staff? 
+ @topic.url 
+ t 'edit_this_page' 
+ end 
+ @body.html_safe 
+ if @title 
+ content_for :title do 
+ @title 
+ end 
+ end 
+
+end
+
     end
 
     raise Discourse::NotFound

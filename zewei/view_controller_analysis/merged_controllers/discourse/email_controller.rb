@@ -83,7 +83,18 @@ asset_path "fontawesome-webfont.ttf"
  unless customization_disabled? 
  SiteCustomization.custom_header(session[:preview_style], mobile_view? ? :mobile : :desktop) 
  end 
- render partial: 'header' 
+  path "/" 
+ if application_logo_url.present? 
+ application_logo_url 
+ SiteSetting.title 
+ else 
+ SiteSetting.title 
+ end 
+ unless current_user 
+ path "/login"
+ I18n.t('log_in') 
+ end 
+ 
  @container_class ? @container_class : 'wrap' 
  if @success 
  t :'unsubscribed.title' 
@@ -163,7 +174,18 @@ asset_path "fontawesome-webfont.ttf"
  unless customization_disabled? 
  SiteCustomization.custom_header(session[:preview_style], mobile_view? ? :mobile : :desktop) 
  end 
- render partial: 'header' 
+  path "/" 
+ if application_logo_url.present? 
+ application_logo_url 
+ SiteSetting.title 
+ else 
+ SiteSetting.title 
+ end 
+ unless current_user 
+ path "/login"
+ I18n.t('log_in') 
+ end 
+ 
  @container_class ? @container_class : 'wrap' 
  t :'resubscribe.title' 
  t :'resubscribe.description' 

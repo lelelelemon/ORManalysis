@@ -4,6 +4,9 @@ class RobotsTxtController < ApplicationController
 
   def index
     path = SiteSetting.allow_index_in_robots_txt ? :index : :no_index
-    render path, content_type: 'text/plain'
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+
+end
+
   end
 end

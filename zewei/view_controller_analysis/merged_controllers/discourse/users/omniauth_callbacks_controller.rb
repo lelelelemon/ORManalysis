@@ -52,7 +52,7 @@ class Users::OmniauthCallbacksController < ApplicationController
 
     if @auth_result.failed?
       flash[:error] = @auth_result.failed_reason.html_safe
-      return ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   Discourse::VERSION::STRING 
  Discourse.git_version 
  if SiteSetting.favicon_url.present? 

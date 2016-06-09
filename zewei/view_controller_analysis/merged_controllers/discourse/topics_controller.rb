@@ -106,36 +106,48 @@ class TopicsController < ApplicationController
 
     raise ex
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- topic_url = @topic_view.absolute_url 
- lang = SiteSetting.find_by_name('default_locale').try(:value) 
- site_email = SiteSetting.find_by_name('contact_email').try(:value) 
- @topic_view.title 
- topic_url 
- @topic_view.posts.first.raw 
- "<language>#{lang}</language>" if lang 
- @topic_view.topic.bumped_at.rfc2822 
- @topic_view.topic.category.name 
- topic_url 
- @topic_view.recent_posts.each do |post| 
- next unless post.user 
- @topic_view.title 
- "@#{post.user.username}#{" #{post.user.name}" if (post.user.name.present? && SiteSetting.enable_names?)}" 
- post_url = Discourse.base_url + post.url 
- t('author_wrote', author: link_to("@#{post.user.username}", user_url(post.user.username_lower))).html_safe 
- if post.hidden 
- t('flagging.user_must_edit').html_safe 
- else 
- post.cooked.html_safe 
+ render_topic_title(@topic_view.topic) 
+ @breadcrumbs = categories_breadcrumb(@topic_view.topic)
+    if @breadcrumbs.present? 
+ @breadcrumbs.each_with_index do |c,i| 
+i
+if (i+1) < @breadcrumbs.length
+(i+1)
+end
+c[:url]
+c[:name]
  end 
- link_to t('read_full_topic'), post_url 
- post_url 
- post.created_at.rfc2822 
- Discourse.current_hostname 
- post.topic_id 
+ end 
+ server_plugin_outlet "topic_header" 
+ if include_crawler_content? 
+ @topic_view.posts.each do |post| 
+ if (u = post.user) 
+ Discourse.base_uri 
+ u.username 
+ u.username 
+ "(#{u.name})" if (SiteSetting.display_name_on_posts && SiteSetting.enable_names? && !u.name.blank?) 
+ post.created_at.to_formatted_s(:iso8601) 
+ post.created_at 
  post.post_number 
- @topic_view.absolute_url 
- @topic_view.title 
+ post.hidden ? t('flagging.user_must_edit').html_safe : post.cooked.html_safe 
+ post.like_count 
+ post.reply_count 
  end 
+ end 
+ if @topic_view.prev_page || @topic_view.next_page 
+ if @topic_view.prev_page 
+ link_to t(:prev_page), @topic_view.prev_page_path, rel: 'prev', itemprop: 'name' 
+ end 
+ if @topic_view.next_page 
+ link_to t(:next_page), @topic_view.next_page_path, rel: 'next', itemprop: 'name' 
+ end 
+ end 
+ end 
+ content_for :head do 
+ auto_discovery_link_tag(@topic_view, {action: :feed, slug: @topic_view.topic.slug, topic_id: @topic_view.topic.id}, title: t('rss_posts_in_topic', topic: @topic_view.title), type: 'application/rss+xml') 
+ raw crawlable_meta_data(title: @topic_view.title, description: @topic_view.summary, image: @topic_view.image_url, read_time: @topic_view.read_time, like_count: @topic_view.like_count) 
+ end 
+ content_for(:title) { "#{@topic_view.page_title}" } 
 
 end
 
@@ -518,36 +530,48 @@ end
     @topic_view = TopicView.new(params[:topic_id])
     discourse_expires_in 1.minute
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- topic_url = @topic_view.absolute_url 
- lang = SiteSetting.find_by_name('default_locale').try(:value) 
- site_email = SiteSetting.find_by_name('contact_email').try(:value) 
- @topic_view.title 
- topic_url 
- @topic_view.posts.first.raw 
- "<language>#{lang}</language>" if lang 
- @topic_view.topic.bumped_at.rfc2822 
- @topic_view.topic.category.name 
- topic_url 
- @topic_view.recent_posts.each do |post| 
- next unless post.user 
- @topic_view.title 
- "@#{post.user.username}#{" #{post.user.name}" if (post.user.name.present? && SiteSetting.enable_names?)}" 
- post_url = Discourse.base_url + post.url 
- t('author_wrote', author: link_to("@#{post.user.username}", user_url(post.user.username_lower))).html_safe 
- if post.hidden 
- t('flagging.user_must_edit').html_safe 
- else 
- post.cooked.html_safe 
+ render_topic_title(@topic_view.topic) 
+ @breadcrumbs = categories_breadcrumb(@topic_view.topic)
+    if @breadcrumbs.present? 
+ @breadcrumbs.each_with_index do |c,i| 
+i
+if (i+1) < @breadcrumbs.length
+(i+1)
+end
+c[:url]
+c[:name]
  end 
- link_to t('read_full_topic'), post_url 
- post_url 
- post.created_at.rfc2822 
- Discourse.current_hostname 
- post.topic_id 
+ end 
+ server_plugin_outlet "topic_header" 
+ if include_crawler_content? 
+ @topic_view.posts.each do |post| 
+ if (u = post.user) 
+ Discourse.base_uri 
+ u.username 
+ u.username 
+ "(#{u.name})" if (SiteSetting.display_name_on_posts && SiteSetting.enable_names? && !u.name.blank?) 
+ post.created_at.to_formatted_s(:iso8601) 
+ post.created_at 
  post.post_number 
- @topic_view.absolute_url 
- @topic_view.title 
+ post.hidden ? t('flagging.user_must_edit').html_safe : post.cooked.html_safe 
+ post.like_count 
+ post.reply_count 
  end 
+ end 
+ if @topic_view.prev_page || @topic_view.next_page 
+ if @topic_view.prev_page 
+ link_to t(:prev_page), @topic_view.prev_page_path, rel: 'prev', itemprop: 'name' 
+ end 
+ if @topic_view.next_page 
+ link_to t(:next_page), @topic_view.next_page_path, rel: 'next', itemprop: 'name' 
+ end 
+ end 
+ end 
+ content_for :head do 
+ auto_discovery_link_tag(@topic_view, {action: :feed, slug: @topic_view.topic.slug, topic_id: @topic_view.topic.id}, title: t('rss_posts_in_topic', topic: @topic_view.title), type: 'application/rss+xml') 
+ raw crawlable_meta_data(title: @topic_view.title, description: @topic_view.summary, image: @topic_view.image_url, read_time: @topic_view.read_time, like_count: @topic_view.like_count) 
+ end 
+ content_for(:title) { "#{@topic_view.page_title}" } 
 
 end
 
@@ -645,36 +669,48 @@ end
         @description_meta = @topic_view.topic.excerpt
         store_preloaded("topic_#{@topic_view.topic.id}", MultiJson.dump(topic_view_serializer))
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- topic_url = @topic_view.absolute_url 
- lang = SiteSetting.find_by_name('default_locale').try(:value) 
- site_email = SiteSetting.find_by_name('contact_email').try(:value) 
- @topic_view.title 
- topic_url 
- @topic_view.posts.first.raw 
- "<language>#{lang}</language>" if lang 
- @topic_view.topic.bumped_at.rfc2822 
- @topic_view.topic.category.name 
- topic_url 
- @topic_view.recent_posts.each do |post| 
- next unless post.user 
- @topic_view.title 
- "@#{post.user.username}#{" #{post.user.name}" if (post.user.name.present? && SiteSetting.enable_names?)}" 
- post_url = Discourse.base_url + post.url 
- t('author_wrote', author: link_to("@#{post.user.username}", user_url(post.user.username_lower))).html_safe 
- if post.hidden 
- t('flagging.user_must_edit').html_safe 
- else 
- post.cooked.html_safe 
+ render_topic_title(@topic_view.topic) 
+ @breadcrumbs = categories_breadcrumb(@topic_view.topic)
+    if @breadcrumbs.present? 
+ @breadcrumbs.each_with_index do |c,i| 
+i
+if (i+1) < @breadcrumbs.length
+(i+1)
+end
+c[:url]
+c[:name]
  end 
- link_to t('read_full_topic'), post_url 
- post_url 
- post.created_at.rfc2822 
- Discourse.current_hostname 
- post.topic_id 
+ end 
+ server_plugin_outlet "topic_header" 
+ if include_crawler_content? 
+ @topic_view.posts.each do |post| 
+ if (u = post.user) 
+ Discourse.base_uri 
+ u.username 
+ u.username 
+ "(#{u.name})" if (SiteSetting.display_name_on_posts && SiteSetting.enable_names? && !u.name.blank?) 
+ post.created_at.to_formatted_s(:iso8601) 
+ post.created_at 
  post.post_number 
- @topic_view.absolute_url 
- @topic_view.title 
+ post.hidden ? t('flagging.user_must_edit').html_safe : post.cooked.html_safe 
+ post.like_count 
+ post.reply_count 
  end 
+ end 
+ if @topic_view.prev_page || @topic_view.next_page 
+ if @topic_view.prev_page 
+ link_to t(:prev_page), @topic_view.prev_page_path, rel: 'prev', itemprop: 'name' 
+ end 
+ if @topic_view.next_page 
+ link_to t(:next_page), @topic_view.next_page_path, rel: 'next', itemprop: 'name' 
+ end 
+ end 
+ end 
+ content_for :head do 
+ auto_discovery_link_tag(@topic_view, {action: :feed, slug: @topic_view.topic.slug, topic_id: @topic_view.topic.id}, title: t('rss_posts_in_topic', topic: @topic_view.title), type: 'application/rss+xml') 
+ raw crawlable_meta_data(title: @topic_view.title, description: @topic_view.summary, image: @topic_view.image_url, read_time: @topic_view.read_time, like_count: @topic_view.like_count) 
+ end 
+ content_for(:title) { "#{@topic_view.page_title}" } 
 
 end
 
