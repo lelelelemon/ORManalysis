@@ -44,7 +44,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-   
+  
  @users.each do |user| 
  user 
  link_to 'Remove', project_user_path(@project, user),
@@ -115,7 +115,7 @@ end
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-   
+  
  @users.each do |user| 
  user 
  link_to 'Remove', project_user_path(@project, user),

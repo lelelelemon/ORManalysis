@@ -6,89 +6,9 @@ class StoriesController < ApplicationController
     @project = current_user.projects.with_stories_notes.find(params[:project_id])
     @stories = @project.stories
     respond_to do |format|
-      format.json { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{@project.name} - " if @project 
- t('fulcrum') 
- csrf_meta_tag 
- stylesheet_link_tag :application 
- javascript_include_tag :application 
- javascript_tag do 
- I18n.default_locale 
- I18n.locale 
- end 
- link_to t('fulcrum'), root_path 
- if current_user 
- ' class="secondary"'.html_safe if current_user.projects.present? 
- link_to Project.model_name.human(:count => 2), root_path 
- if current_user.projects.present? 
- current_user.projects.each do |project| 
- link_to project, project 
- end 
- end 
- link_to current_user.email, edit_user_registration_path 
- link_to t('log out'), destroy_user_session_path,
-                      :method => :delete 
- else 
- link_to t('log in'), new_user_session_path 
- unless Fulcrum::Application.config.fulcrum.disable_registration 
- link_to t('sign up'), new_user_registration_path 
- end 
- end 
- yield :title_bar 
- show_messages 
-  Story.csv_headers.join(',') 
-
-  CSV.generate do |csv|
-    @stories.each do |story|
-      csv << story.to_csv
-    end
-  end
-
-
-end
- }
+      format.json { render :json => @stories }
       format.csv do
-        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{@project.name} - " if @project 
- t('fulcrum') 
- csrf_meta_tag 
- stylesheet_link_tag :application 
- javascript_include_tag :application 
- javascript_tag do 
- I18n.default_locale 
- I18n.locale 
- end 
- link_to t('fulcrum'), root_path 
- if current_user 
- ' class="secondary"'.html_safe if current_user.projects.present? 
- link_to Project.model_name.human(:count => 2), root_path 
- if current_user.projects.present? 
- current_user.projects.each do |project| 
- link_to project, project 
- end 
- end 
- link_to current_user.email, edit_user_registration_path 
- link_to t('log out'), destroy_user_session_path,
-                      :method => :delete 
- else 
- link_to t('log in'), new_user_session_path 
- unless Fulcrum::Application.config.fulcrum.disable_registration 
- link_to t('sign up'), new_user_registration_path 
- end 
- end 
- yield :title_bar 
- show_messages 
-  Story.csv_headers.join(',') 
-
-  CSV.generate do |csv|
-    @stories.each do |story|
-      csv << story.to_csv
-    end
-  end
-
-
-end
-
+        render :csv => @stories.order(:position), :filename => @project.csv_filename
       end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
@@ -121,7 +41,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  yield :title_bar 
  show_messages 
-  Story.csv_headers.join(',') 
+ Story.csv_headers.join(',') 
 
   CSV.generate do |csv|
     @stories.each do |story|
@@ -149,7 +69,72 @@ end
         format.html { redirect_to project_url(@project) }
         format.js   { render :json => @story }
       else
-        format.html { render :action => 'edit' }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{@project.name} - " if @project 
+ t('fulcrum') 
+ csrf_meta_tag 
+ stylesheet_link_tag :application 
+ javascript_include_tag :application 
+ javascript_tag do 
+ I18n.default_locale 
+ I18n.locale 
+ end 
+ link_to t('fulcrum'), root_path 
+ if current_user 
+ ' class="secondary"'.html_safe if current_user.projects.present? 
+ link_to Project.model_name.human(:count => 2), root_path 
+ if current_user.projects.present? 
+ current_user.projects.each do |project| 
+ link_to project, project 
+ end 
+ end 
+ link_to current_user.email, edit_user_registration_path 
+ link_to t('log out'), destroy_user_session_path,
+                      :method => :delete 
+ else 
+ link_to t('log in'), new_user_session_path 
+ unless Fulcrum::Application.config.fulcrum.disable_registration 
+ link_to t('sign up'), new_user_registration_path 
+ end 
+ end 
+  
+ show_messages 
+  
+ form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| 
+ devise_error_messages! 
+ f.hidden_field :reset_password_token 
+ f.label :password, "New password" 
+ f.password_field :password 
+ f.label :password_confirmation, "Confirm new password" 
+ f.password_field :password_confirmation 
+ f.submit "Change my password" 
+ end 
+  if controller_name != 'sessions' 
+ link_to "Sign in", new_session_path(resource_name) 
+ end 
+ unless Fulcrum::Application.config.fulcrum.disable_registration 
+ if devise_mapping.registerable? && controller_name != 'registrations' 
+ link_to "Sign up", new_registration_path(resource_name) 
+ end 
+ end 
+ if devise_mapping.recoverable? && controller_name != 'passwords' 
+ link_to "Forgot your password?", new_password_path(resource_name) 
+ end 
+ if devise_mapping.confirmable? && controller_name != 'confirmations' 
+ link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) 
+ end 
+ if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' 
+ link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) 
+ end 
+ if devise_mapping.omniauthable? 
+ resource_class.omniauth_providers.each do |provider| 
+ link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) 
+ end 
+ end 
+ 
+
+end
+ }
         format.js   { render :json => @story, :status => :unprocessable_entity }
       end
     end
@@ -187,7 +172,69 @@ end
         format.html { redirect_to project_url(@project) }
         format.js   { render :json => @story }
       else
-        format.html { render :action => 'new' }
+        format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ "#{@project.name} - " if @project 
+ t('fulcrum') 
+ csrf_meta_tag 
+ stylesheet_link_tag :application 
+ javascript_include_tag :application 
+ javascript_tag do 
+ I18n.default_locale 
+ I18n.locale 
+ end 
+ link_to t('fulcrum'), root_path 
+ if current_user 
+ ' class="secondary"'.html_safe if current_user.projects.present? 
+ link_to Project.model_name.human(:count => 2), root_path 
+ if current_user.projects.present? 
+ current_user.projects.each do |project| 
+ link_to project, project 
+ end 
+ end 
+ link_to current_user.email, edit_user_registration_path 
+ link_to t('log out'), destroy_user_session_path,
+                      :method => :delete 
+ else 
+ link_to t('log in'), new_user_session_path 
+ unless Fulcrum::Application.config.fulcrum.disable_registration 
+ link_to t('sign up'), new_user_registration_path 
+ end 
+ end 
+  
+ show_messages 
+  
+ form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| 
+ devise_error_messages! 
+ f.label :email 
+ f.email_field :email 
+ f.submit "Resend unlock instructions" 
+ end 
+  if controller_name != 'sessions' 
+ link_to "Sign in", new_session_path(resource_name) 
+ end 
+ unless Fulcrum::Application.config.fulcrum.disable_registration 
+ if devise_mapping.registerable? && controller_name != 'registrations' 
+ link_to "Sign up", new_registration_path(resource_name) 
+ end 
+ end 
+ if devise_mapping.recoverable? && controller_name != 'passwords' 
+ link_to "Forgot your password?", new_password_path(resource_name) 
+ end 
+ if devise_mapping.confirmable? && controller_name != 'confirmations' 
+ link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) 
+ end 
+ if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' 
+ link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) 
+ end 
+ if devise_mapping.omniauthable? 
+ resource_class.omniauth_providers.each do |provider| 
+ link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) 
+ end 
+ end 
+ 
+
+end
+ }
         format.js   { render :json => @story, :status => :unprocessable_entity }
       end
     end
@@ -253,7 +300,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-   
+  
  form_tag import_upload_project_stories_path(@project), :multipart => true 
  file_field_tag :csv 
  submit_tag :import 
@@ -345,7 +392,7 @@ end
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-   
+  
  form_tag import_upload_project_stories_path(@project), :multipart => true 
  file_field_tag :csv 
  submit_tag :import 

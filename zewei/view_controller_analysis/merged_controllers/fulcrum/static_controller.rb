@@ -61,7 +61,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-  t('.done') 
+ t('.done') 
  t('.in_progress') 
  t('.backlog') 
  t('.icebox') 

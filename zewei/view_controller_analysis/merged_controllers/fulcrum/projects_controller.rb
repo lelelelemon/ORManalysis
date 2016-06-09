@@ -36,7 +36,7 @@ class ProjectsController < ApplicationController
  end 
  t('.listing projects') 
  show_messages 
-   
+  
  @projects.each do |project| 
  link_to t('edit'), edit_project_path(project) 
  link_to User.model_name.human(:count => 2), project_users_path(project) 
@@ -85,7 +85,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  t('.listing projects') 
  show_messages 
-   
+  
  @projects.each do |project| 
  link_to t('edit'), edit_project_path(project) 
  link_to User.model_name.human(:count => 2), project_users_path(project) 
@@ -113,66 +113,7 @@ end
 
     respond_to do |format|
       format.html # show.html.erb
-      format.js   { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- "#{@project.name} - " if @project 
- t('fulcrum') 
- csrf_meta_tag 
- stylesheet_link_tag :application 
- javascript_include_tag :application 
- javascript_tag do 
- I18n.default_locale 
- I18n.locale 
- end 
- link_to t('fulcrum'), root_path 
- if current_user 
- ' class="secondary"'.html_safe if current_user.projects.present? 
- link_to Project.model_name.human(:count => 2), root_path 
- if current_user.projects.present? 
- current_user.projects.each do |project| 
- link_to project, project 
- end 
- end 
- link_to current_user.email, edit_user_registration_path 
- link_to t('log out'), destroy_user_session_path,
-                      :method => :delete 
- else 
- link_to t('log in'), new_user_session_path 
- unless Fulcrum::Application.config.fulcrum.disable_registration 
- link_to t('sign up'), new_user_registration_path 
- end 
- end 
- project.name 
- if defined? show_column_toggles 
- end 
- link_to_unless_current Story.model_name.human(:count => 2), project_path(project) 
- link_to_unless_current User.model_name.human(:count => 2), project_users_path(project) 
- link_to_unless_current t('edit'), edit_project_path(project) 
- link_to_unless_current t('import'), import_project_stories_path(project) 
- link_to t('export'), project_stories_path(project, :format => :csv) 
- show_messages 
-  javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery? 
- @project.to_json.html_safe 
- @project.users.to_json.html_safe 
- current_user.to_json.html_safe 
- t('.done') 
- t('.in_progress') 
- t('.backlog') 
- t('.icebox') 
- if notice 
- notice 
- image_path('dialog-information.png') 
- end 
- if alert 
- alert 
- image_path('dialog-warning.png') 
- end 
-  
- if !Fulcrum::Application.config.fulcrum.column_order or Fulcrum::Application.config.fulcrum.column_order != 'progress_to_right' 
- elsif Fulcrum::Application.config.fulcrum.column_order == 'progress_to_right' 
- end 
-
-end
- }
+      format.js   { render :json => @project }
       format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  "#{@project.name} - " if @project 
  t('fulcrum') 
@@ -210,7 +151,7 @@ end
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-  javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery? 
+ javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery? 
  @project.to_json.html_safe 
  @project.users.to_json.html_safe 
  current_user.to_json.html_safe 
@@ -271,7 +212,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-  javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery? 
+ javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery? 
  @project.to_json.html_safe 
  @project.users.to_json.html_safe 
  current_user.to_json.html_safe 
@@ -333,29 +274,11 @@ end
  end 
  t('projects.new project') 
  show_messages 
-   
+  
   form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
- render 'shared/form_errors', :object => @project if @project.errors.any? 
- f.label :name 
- f.text_field :name 
- f.label :point_scale 
- f.select :point_scale, point_scale_options 
- f.label :default_velocity 
- f.text_field :default_velocity, :length => 2, :size => 3 
- f.label :start_date 
- f.date_select :start_date 
- f.label :iteration_start_day 
- f.select :iteration_start_day, day_name_options 
- f.label :iteration_length 
- f.select :iteration_length, iteration_length_options 
- f.submit 
- end 
- 
- end 
- 
+  t('errors.template.header', :count => object.errors.count, :model => object.class.name.humanize) 
+ object.errors.full_messages.each do |msg| 
+ msg 
  end 
  
  end 
@@ -395,29 +318,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  t('projects.new project') 
  show_messages 
-   
+  
   form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
- render 'shared/form_errors', :object => @project if @project.errors.any? 
- f.label :name 
- f.text_field :name 
- f.label :point_scale 
- f.select :point_scale, point_scale_options 
- f.label :default_velocity 
- f.text_field :default_velocity, :length => 2, :size => 3 
- f.label :start_date 
- f.date_select :start_date 
- f.label :iteration_start_day 
- f.select :iteration_start_day, day_name_options 
- f.label :iteration_length 
- f.select :iteration_length, iteration_length_options 
- f.submit 
- end 
- 
- end 
- 
+  t('errors.template.header', :count => object.errors.count, :model => object.class.name.humanize) 
+ object.errors.full_messages.each do |msg| 
+ msg 
  end 
  
  end 
@@ -469,30 +374,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-   
+  
  t('projects.edit project') 
   form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
- render 'shared/form_errors', :object => @project if @project.errors.any? 
- f.label :name 
- f.text_field :name 
- f.label :point_scale 
- f.select :point_scale, point_scale_options 
- f.label :default_velocity 
- f.text_field :default_velocity, :length => 2, :size => 3 
- f.label :start_date 
- f.date_select :start_date 
- f.label :iteration_start_day 
- f.select :iteration_start_day, day_name_options 
- f.label :iteration_length 
- f.select :iteration_length, iteration_length_options 
- f.submit 
- end 
- 
- end 
- 
+  t('errors.template.header', :count => object.errors.count, :model => object.class.name.humanize) 
+ object.errors.full_messages.each do |msg| 
+ msg 
  end 
  
  end 
@@ -543,29 +430,11 @@ end
  end 
  t('projects.new project') 
  show_messages 
-   
+  
   form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
- render 'shared/form_errors', :object => @project if @project.errors.any? 
- f.label :name 
- f.text_field :name 
- f.label :point_scale 
- f.select :point_scale, point_scale_options 
- f.label :default_velocity 
- f.text_field :default_velocity, :length => 2, :size => 3 
- f.label :start_date 
- f.date_select :start_date 
- f.label :iteration_start_day 
- f.select :iteration_start_day, day_name_options 
- f.label :iteration_length 
- f.select :iteration_length, iteration_length_options 
- f.submit 
- end 
- 
- end 
- 
+  t('errors.template.header', :count => object.errors.count, :model => object.class.name.humanize) 
+ object.errors.full_messages.each do |msg| 
+ msg 
  end 
  
  end 
@@ -626,30 +495,12 @@ end
  link_to_unless_current t('import'), import_project_stories_path(project) 
  link_to t('export'), project_stories_path(project, :format => :csv) 
  show_messages 
-   
+  
  t('projects.edit project') 
   form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
-  form_for(@project) do |f| 
- render 'shared/form_errors', :object => @project if @project.errors.any? 
- f.label :name 
- f.text_field :name 
- f.label :point_scale 
- f.select :point_scale, point_scale_options 
- f.label :default_velocity 
- f.text_field :default_velocity, :length => 2, :size => 3 
- f.label :start_date 
- f.date_select :start_date 
- f.label :iteration_start_day 
- f.select :iteration_start_day, day_name_options 
- f.label :iteration_length 
- f.select :iteration_length, iteration_length_options 
- f.submit 
- end 
- 
- end 
- 
+  t('errors.template.header', :count => object.errors.count, :model => object.class.name.humanize) 
+ object.errors.full_messages.each do |msg| 
+ msg 
  end 
  
  end 
