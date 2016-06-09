@@ -34,7 +34,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('friends.friends') 
  if @friendships.any? 
  @friendships.each do |friendship| 
- friendship.id 
  link_to friendship.friend do 
  avatar_tag friendship.friend 
  end 

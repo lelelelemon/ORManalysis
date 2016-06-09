@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
       overview_index
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript  @groups.each do |group| 
+  @groups.each do |group| 
  check_box_tag 'ids[]', group.id, false, style: 'float:left', data: { name: group.name } 
  group.category 
  group.name 
@@ -118,7 +118,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form.check_box :pictures, class: 'checkbox' 
  form.label :pictures, class: 'inline' 
  form.check_box :attendance, class: 'checkbox', disabled: @group.attendance_required? 
- form.label :attendance, class: "inline #{'disabled' if @group.attendance_required?}" 
+ form.label :attendance, class: "inline " 
  if @group.attendance_required? 
  t('groups.edit.attendance_disabled.help') 
  end 
@@ -252,7 +252,7 @@ end
  form.check_box :pictures, class: 'checkbox' 
  form.label :pictures, class: 'inline' 
  form.check_box :attendance, class: 'checkbox', disabled: @group.attendance_required? 
- form.label :attendance, class: "inline #{'disabled' if @group.attendance_required?}" 
+ form.label :attendance, class: "inline " 
  if @group.attendance_required? 
  t('groups.edit.attendance_disabled.help') 
  end 
@@ -382,7 +382,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form.check_box :pictures, class: 'checkbox' 
  form.label :pictures, class: 'inline' 
  form.check_box :attendance, class: 'checkbox', disabled: @group.attendance_required? 
- form.label :attendance, class: "inline #{'disabled' if @group.attendance_required?}" 
+ form.label :attendance, class: "inline " 
  if @group.attendance_required? 
  t('groups.edit.attendance_disabled.help') 
  end 
@@ -511,7 +511,7 @@ end
  form.check_box :pictures, class: 'checkbox' 
  form.label :pictures, class: 'inline' 
  form.check_box :attendance, class: 'checkbox', disabled: @group.attendance_required? 
- form.label :attendance, class: "inline #{'disabled' if @group.attendance_required?}" 
+ form.label :attendance, class: "inline " 
  if @group.attendance_required? 
  t('groups.edit.attendance_disabled.help') 
  end 

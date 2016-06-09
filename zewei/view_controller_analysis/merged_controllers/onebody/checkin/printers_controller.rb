@@ -11,6 +11,11 @@ class Checkin::PrintersController < ApplicationController
       @printer = {}
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ stylesheet_link_tag 'application' 
+ stylesheet_link_tag 'checkin-printer' 
+ csrf_meta_tags 
+  
+ yield(:head) 
  form_tag nil, method: 'put', class: 'form-inline' do 
  OneBody.current_version 
  text_field_tag :printer_name, @printer[:name], class: 'form-control' 
@@ -19,6 +24,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @printer[:id] 
  end 
  end 
+ javascript_include_tag 'checkin-printer' 
+ yield(:js) 
+ analytics_js 
 
 end
 

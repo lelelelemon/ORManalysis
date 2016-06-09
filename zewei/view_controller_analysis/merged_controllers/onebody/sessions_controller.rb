@@ -101,28 +101,42 @@ class SessionsController < ApplicationController
       @focus_password = true
     end
     ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @title = t('session.form.header') 
- @hide_title = true 
- @body_class = 'hold-transition login-page bg-black centered-header' 
- @section_class = 'content-centered' 
- form_tag session_path do 
- hidden_field_tag :from, params[:from] 
- hidden_field_tag :for, params[:for] 
- flash_messages 
- t('session.form.header') 
- text_field_tag :email, params[:email], placeholder: t('session.form.placeholder.email'), class: 'form-control', autofocus: !@focus_password 
- password_field_tag :password, '', placeholder: t('session.form.placeholder.password'), class: 'form-control', autofocus: @focus_password 
- check_box_tag :remember_me, true, params[:remember_me] 
- label_tag :remember_me, t('session.form.remember_me') 
- if has_social_logins 
- if support_facebook_login 
+ setting(:name, :site) 
+ if @title.present? 
+ yield(:meta) 
+ stylesheet_link_tag 'application' 
+ yield(:css) 
+ csrf_meta_tags 
+  
+ yield(:head) 
+ @body_class 
+ link_to setting(:name, :site), root_path, class: 'logo' 
+ @section_class 
+ content = yield 
+ if content =~ /^\s*<div class=.row.>/m 
+ flash_messages unless content =~ /class=.flash/ 
+ if @title 
+ @title 
  end 
+ content 
+ else 
+ flash_messages unless content =~ /class=.flash/ 
+ if title = yield(:title).presence 
+ title 
+ elsif @title and not @hide_title 
+ @title 
  end 
- icon 'fa fa-sign-in' 
- t('session.sign_in_button') 
- link_to t('session.sign_up_button'), new_account_path, class: 'btn btn-info btn-block' 
- link_to t('session.forgot_password_button'), new_account_path(forgot: true), class: 'btn btn-warning btn-block' 
+ content 
  end 
+  t('footer.powered_by') 
+ link_to t('footer.churchio_onebody'), 'http://church.io/', rel: 'nofollow' 
+ link_to t('footer.help'), page_for_public_path('help') 
+ link_to t('footer.privacy_policy'), page_for_public_path('help/privacy_policy') 
+ 
+ javascript_include_tag 'application' 
+ yield(:js) 
+ analytics_js 
+ end
 
 end
 
@@ -136,28 +150,42 @@ end
       SigninFailure.create(email: params[:email], ip: request.remote_ip)
       flash.now[:error] = t('session.email_not_found')
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @title = t('session.form.header') 
- @hide_title = true 
- @body_class = 'hold-transition login-page bg-black centered-header' 
- @section_class = 'content-centered' 
- form_tag session_path do 
- hidden_field_tag :from, params[:from] 
- hidden_field_tag :for, params[:for] 
- flash_messages 
- t('session.form.header') 
- text_field_tag :email, params[:email], placeholder: t('session.form.placeholder.email'), class: 'form-control', autofocus: !@focus_password 
- password_field_tag :password, '', placeholder: t('session.form.placeholder.password'), class: 'form-control', autofocus: @focus_password 
- check_box_tag :remember_me, true, params[:remember_me] 
- label_tag :remember_me, t('session.form.remember_me') 
- if has_social_logins 
- if support_facebook_login 
+ setting(:name, :site) 
+ if @title.present? 
+ yield(:meta) 
+ stylesheet_link_tag 'application' 
+ yield(:css) 
+ csrf_meta_tags 
+  
+ yield(:head) 
+ @body_class 
+ link_to setting(:name, :site), root_path, class: 'logo' 
+ @section_class 
+ content = yield 
+ if content =~ /^\s*<div class=.row.>/m 
+ flash_messages unless content =~ /class=.flash/ 
+ if @title 
+ @title 
  end 
+ content 
+ else 
+ flash_messages unless content =~ /class=.flash/ 
+ if title = yield(:title).presence 
+ title 
+ elsif @title and not @hide_title 
+ @title 
  end 
- icon 'fa fa-sign-in' 
- t('session.sign_in_button') 
- link_to t('session.sign_up_button'), new_account_path, class: 'btn btn-info btn-block' 
- link_to t('session.forgot_password_button'), new_account_path(forgot: true), class: 'btn btn-warning btn-block' 
+ content 
  end 
+  t('footer.powered_by') 
+ link_to t('footer.churchio_onebody'), 'http://church.io/', rel: 'nofollow' 
+ link_to t('footer.help'), page_for_public_path('help') 
+ link_to t('footer.privacy_policy'), page_for_public_path('help/privacy_policy') 
+ 
+ javascript_include_tag 'application' 
+ yield(:js) 
+ analytics_js 
+ end
 
 end
 

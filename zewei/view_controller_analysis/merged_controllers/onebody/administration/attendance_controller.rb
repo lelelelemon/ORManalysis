@@ -82,10 +82,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('attendance.can_pickup_people') 
  t('attendance.cannot_pickup_people') 
  @records.each do |record| 
- record.id 
  if record.first_name.present? 
  if record.person 
- link_to "#{record.first_name} #{record.last_name}", record.person 
+ link_to " ", record.person 
  else 
  record.first_name 
  record.last_name 

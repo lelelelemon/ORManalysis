@@ -33,15 +33,86 @@ class FamiliesController < ApplicationController
     if @logged_in.can_read?(@family)
       respond_to do |format|
         format.html
-        format.xml  { render xml: @family.to_xml } if can_export?
+        format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('families.show.heading', family: @family.name) 
+ map_header(@family) 
+ if show_family_name_suggestion 
+ icon 'fa fa-info-circle' 
+ t('families.show.suggested_name_html', count: @family.people.undeleted.adults.count, first: @family.people.undeleted.adults.first.try(:name), second: @family.people.undeleted.adults.second.try(:name), url: edit_family_path(@family), name: @family.suggested_name) 
+ end 
+ if @family.updates.pending.any? and @logged_in.can_update?(@family) 
+ icon 'fa fa-clock-o' 
+ t('families.updates.pending_callout') 
+ end 
+ avatar_tag @family, size: :large, class: 'fit-width' 
+ if @family.show_attribute_to?(:home_phone, @logged_in) 
+ t('.table.home_phone') 
+ link_to_phone @family.home_phone 
+ end 
+ if @family.show_attribute_to?(:address, @logged_in) 
+ t('.table.address') 
+ preserve_breaks @family.address 
+ end 
+ if anniversary = @family.anniversary_sharable_with(@logged_in) 
+ t('.table.anniversary') 
+ anniversary.to_s(:date_without_year) 
+ end 
+ @people.each_with_index do |person, person_index| 
+ if @logged_in.can_reorder?(@family) 
+ icon 'fa fa-reorder', style: 'color: #999' 
+ end 
+ link_to avatar_tag(person), person 
+ link_to person.name, person 
+ unless person.visible? 
+ end 
+ if @logged_in.can_update?(person) 
+ link_to edit_person_path(person), class: 'btn bg-gray btn-xs text-yellow' do 
+ icon 'fa fa-pencil' 
+ end 
+ end 
+ if @logged_in.can_delete?(person) 
+ link_to person, data: { method: 'delete', confirm: t('are_you_sure') },  class: 'btn bg-gray btn-xs text-red' do 
+ icon 'fa fa-minus-circle' 
+ end 
+ end 
+ end 
+ if @logged_in.can_update?(@family) 
+ link_to edit_family_path(@family), class: 'btn btn-info' do 
+ icon 'fa fa-pencil' 
+ t('families.show.edit_link') 
+ end 
+ if @logged_in.admin?(:edit_profiles) 
+ link_to new_family_person_path(@family), class: 'btn btn-success' do 
+ icon 'fa fa-plus-circle' 
+ t('families.add.new') 
+ end 
+ link_to family_search_path(@family), class: 'btn btn-warning' do 
+ icon 'fa fa-arrow-circle-left' 
+ t('families.add.existing') 
+ end 
+ link_to @family, data: { method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-danger' do 
+ icon 'fa fa-trash-o' 
+ t('families.delete.button') 
+ end 
+ end 
+ end 
+
+end
+ } if can_export?
         format.json { render text: @family.to_json(except: %w(site_id)) } if can_export?
         format.js do
           if params[:barcode_entry]
-            render :update do |page|
-              page.replace_html 'family', partial: 'details'
-              page.replace_html 'barcode', partial: 'barcode_entry'
-              page << "$('family_barcode_id').focus(); $('family_barcode_id').select();"
-            end
+            ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if not @group_time 
+ t('There_was_an_error') 
+ elsif @group_time.errors.any? 
+ escape_javascript @group_time.errors.values.join('; ') 
+ else 
+ dom_id(@group_time) 
+ end 
+
+end
+
           end
         end
       end
@@ -49,6 +120,68 @@ class FamiliesController < ApplicationController
       render text: t('families.not_found'), status: 404
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('families.show.heading', family: @family.name) 
+ map_header(@family) 
+ if show_family_name_suggestion 
+ icon 'fa fa-info-circle' 
+ t('families.show.suggested_name_html', count: @family.people.undeleted.adults.count, first: @family.people.undeleted.adults.first.try(:name), second: @family.people.undeleted.adults.second.try(:name), url: edit_family_path(@family), name: @family.suggested_name) 
+ end 
+ if @family.updates.pending.any? and @logged_in.can_update?(@family) 
+ icon 'fa fa-clock-o' 
+ t('families.updates.pending_callout') 
+ end 
+ avatar_tag @family, size: :large, class: 'fit-width' 
+ if @family.show_attribute_to?(:home_phone, @logged_in) 
+ t('.table.home_phone') 
+ link_to_phone @family.home_phone 
+ end 
+ if @family.show_attribute_to?(:address, @logged_in) 
+ t('.table.address') 
+ preserve_breaks @family.address 
+ end 
+ if anniversary = @family.anniversary_sharable_with(@logged_in) 
+ t('.table.anniversary') 
+ anniversary.to_s(:date_without_year) 
+ end 
+ @people.each_with_index do |person, person_index| 
+ if @logged_in.can_reorder?(@family) 
+ icon 'fa fa-reorder', style: 'color: #999' 
+ end 
+ link_to avatar_tag(person), person 
+ link_to person.name, person 
+ unless person.visible? 
+ end 
+ if @logged_in.can_update?(person) 
+ link_to edit_person_path(person), class: 'btn bg-gray btn-xs text-yellow' do 
+ icon 'fa fa-pencil' 
+ end 
+ end 
+ if @logged_in.can_delete?(person) 
+ link_to person, data: { method: 'delete', confirm: t('are_you_sure') },  class: 'btn bg-gray btn-xs text-red' do 
+ icon 'fa fa-minus-circle' 
+ end 
+ end 
+ end 
+ if @logged_in.can_update?(@family) 
+ link_to edit_family_path(@family), class: 'btn btn-info' do 
+ icon 'fa fa-pencil' 
+ t('families.show.edit_link') 
+ end 
+ if @logged_in.admin?(:edit_profiles) 
+ link_to new_family_person_path(@family), class: 'btn btn-success' do 
+ icon 'fa fa-plus-circle' 
+ t('families.add.new') 
+ end 
+ link_to family_search_path(@family), class: 'btn btn-warning' do 
+ icon 'fa fa-arrow-circle-left' 
+ t('families.add.existing') 
+ end 
+ link_to @family, data: { method: 'delete', confirm: t('are_you_sure') }, class: 'btn btn-danger' do 
+ icon 'fa fa-trash-o' 
+ t('families.delete.button') 
+ end 
+ end 
+ end 
 
 end
 
@@ -299,10 +432,17 @@ end
  }
         format.xml  { render xml: @family.errors, status: :unprocessable_entity } if can_export?
         format.js do # only used by barcode entry right now
-          render :update do |page|
-            page.replace_html :notice, t('There_were_errors') + ":<br/>#{@family.errors.values.join('; ')}"
-            page[:notice].show
-          end
+          ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if not @group_time 
+ t('There_was_an_error') 
+ elsif @group_time.errors.any? 
+ escape_javascript @group_time.errors.values.join('; ') 
+ else 
+ dom_id(@group_time) 
+ end 
+
+end
+
         end
       end
     end

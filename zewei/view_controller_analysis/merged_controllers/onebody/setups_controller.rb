@@ -14,28 +14,42 @@ class SetupsController < ApplicationController
     @host = URI.parse(request.url).host
     @host = nil if @host =~ /\A(localhost|\d+\.\d+\.\d+\.\d+)\z/
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t('setup.heading') 
- form_for @person, url: setup_path, method: 'POST', html: { role: 'form' } do |form| 
- t('setup.congratulations') 
- t('setup.do_right_away') 
- error_messages_for(form) 
- t('setup.domain_name') 
- text_field_tag 'domain_name', @host, class: 'form-control' 
- t('setup.domain_name_note') 
- t('setup.admin_account') 
- t('setup.more_accounts_later') 
- t('setup.first_name') 
- form.text_field :first_name, class: 'form-control' 
- t('setup.last_name') 
- form.text_field :last_name, class: 'form-control' 
- t('setup.email') 
- form.text_field :email, class: 'form-control' 
- t('setup.password') 
- form.password_field :password, class: 'form-control' 
- t('setup.password_confirmation') 
- form.password_field :password_confirmation, class: 'form-control' 
- button_tag t('setup.submit_button_html'), class: 'btn btn-success' 
+ setting(:name, :site) 
+ if @title.present? 
+ yield(:meta) 
+ stylesheet_link_tag 'application' 
+ yield(:css) 
+ csrf_meta_tags 
+  
+ yield(:head) 
+ @body_class 
+ link_to setting(:name, :site), root_path, class: 'logo' 
+ @section_class 
+ content = yield 
+ if content =~ /^\s*<div class=.row.>/m 
+ flash_messages unless content =~ /class=.flash/ 
+ if @title 
+ @title 
  end 
+ content 
+ else 
+ flash_messages unless content =~ /class=.flash/ 
+ if title = yield(:title).presence 
+ title 
+ elsif @title and not @hide_title 
+ @title 
+ end 
+ content 
+ end 
+  t('footer.powered_by') 
+ link_to t('footer.churchio_onebody'), 'http://church.io/', rel: 'nofollow' 
+ link_to t('footer.help'), page_for_public_path('help') 
+ link_to t('footer.privacy_policy'), page_for_public_path('help/privacy_policy') 
+ 
+ javascript_include_tag 'application' 
+ yield(:js) 
+ analytics_js 
+ end
 
 end
 
@@ -50,28 +64,42 @@ end
     else
       @person = @setup.person
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- t('setup.heading') 
- form_for @person, url: setup_path, method: 'POST', html: { role: 'form' } do |form| 
- t('setup.congratulations') 
- t('setup.do_right_away') 
- error_messages_for(form) 
- t('setup.domain_name') 
- text_field_tag 'domain_name', @host, class: 'form-control' 
- t('setup.domain_name_note') 
- t('setup.admin_account') 
- t('setup.more_accounts_later') 
- t('setup.first_name') 
- form.text_field :first_name, class: 'form-control' 
- t('setup.last_name') 
- form.text_field :last_name, class: 'form-control' 
- t('setup.email') 
- form.text_field :email, class: 'form-control' 
- t('setup.password') 
- form.password_field :password, class: 'form-control' 
- t('setup.password_confirmation') 
- form.password_field :password_confirmation, class: 'form-control' 
- button_tag t('setup.submit_button_html'), class: 'btn btn-success' 
+ setting(:name, :site) 
+ if @title.present? 
+ yield(:meta) 
+ stylesheet_link_tag 'application' 
+ yield(:css) 
+ csrf_meta_tags 
+  
+ yield(:head) 
+ @body_class 
+ link_to setting(:name, :site), root_path, class: 'logo' 
+ @section_class 
+ content = yield 
+ if content =~ /^\s*<div class=.row.>/m 
+ flash_messages unless content =~ /class=.flash/ 
+ if @title 
+ @title 
  end 
+ content 
+ else 
+ flash_messages unless content =~ /class=.flash/ 
+ if title = yield(:title).presence 
+ title 
+ elsif @title and not @hide_title 
+ @title 
+ end 
+ content 
+ end 
+  t('footer.powered_by') 
+ link_to t('footer.churchio_onebody'), 'http://church.io/', rel: 'nofollow' 
+ link_to t('footer.help'), page_for_public_path('help') 
+ link_to t('footer.privacy_policy'), page_for_public_path('help/privacy_policy') 
+ 
+ javascript_include_tag 'application' 
+ yield(:js) 
+ analytics_js 
+ end
 
 end
 

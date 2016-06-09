@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
       redirect_to 'http://' + site.host
       return false
     elsif request.host =~ /^www\./
-      redirect_to request.url.sub(/^(https?:\/\/)www\./, '')
+      redirect_to request.url.sub(/^(https?:\/\/)www\./, '\1')
       return false
     else
       render text: t('application.no_site_configured', host: request.host), status: 404

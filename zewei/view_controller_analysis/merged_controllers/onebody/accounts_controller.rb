@@ -17,11 +17,11 @@ class AccountsController < ApplicationController
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('accounts.forgot.heading') 
   t('accounts.verify_who_you_are') 
- link_to "<i class='fa fa-envelope'></i> #{t('accounts.verify_by_email')}".html_safe, new_account_path(email: true), class: 'btn btn-success' 
+ link_to "<i class='fa fa-envelope'></i> ".html_safe, new_account_path(email: true), class: 'btn btn-success' 
  t('accounts.verify_by_email_message') 
- link_to "<i class='fa fa-mobile'></i> #{t('accounts.verify_by_phone')}".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
+ link_to "<i class='fa fa-mobile'></i> ".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
  t('accounts.verify_by_phone_message') 
- link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> #{t('accounts.call_office', phone: Setting.get(:contact, :community_office_phone))}".html_safe, class: 'btn btn-info') 
+ link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> ".html_safe, class: 'btn btn-info') 
  t('accounts.call_office_message').html_safe 
  
 
@@ -85,11 +85,11 @@ end
  t('accounts.this_site_doesnt_allow_signup', office_phone: Setting.get(:contact, :community_office_phone)) 
  t('accounts.verify') 
   t('accounts.verify_who_you_are') 
- link_to "<i class='fa fa-envelope'></i> #{t('accounts.verify_by_email')}".html_safe, new_account_path(email: true), class: 'btn btn-success' 
+ link_to "<i class='fa fa-envelope'></i> ".html_safe, new_account_path(email: true), class: 'btn btn-success' 
  t('accounts.verify_by_email_message') 
- link_to "<i class='fa fa-mobile'></i> #{t('accounts.verify_by_phone')}".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
+ link_to "<i class='fa fa-mobile'></i> ".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
  t('accounts.verify_by_phone_message') 
- link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> #{t('accounts.call_office', phone: Setting.get(:contact, :community_office_phone))}".html_safe, class: 'btn btn-info') 
+ link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> ".html_safe, class: 'btn btn-info') 
  t('accounts.call_office_message').html_safe 
  
  end 
@@ -123,11 +123,11 @@ end
  t('accounts.this_site_doesnt_allow_signup', office_phone: Setting.get(:contact, :community_office_phone)) 
  t('accounts.verify') 
   t('accounts.verify_who_you_are') 
- link_to "<i class='fa fa-envelope'></i> #{t('accounts.verify_by_email')}".html_safe, new_account_path(email: true), class: 'btn btn-success' 
+ link_to "<i class='fa fa-envelope'></i> ".html_safe, new_account_path(email: true), class: 'btn btn-success' 
  t('accounts.verify_by_email_message') 
- link_to "<i class='fa fa-mobile'></i> #{t('accounts.verify_by_phone')}".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
+ link_to "<i class='fa fa-mobile'></i> ".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
  t('accounts.verify_by_phone_message') 
- link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> #{t('accounts.call_office', phone: Setting.get(:contact, :community_office_phone))}".html_safe, class: 'btn btn-info') 
+ link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> ".html_safe, class: 'btn btn-info') 
  t('accounts.call_office_message').html_safe 
  
  end 
@@ -161,11 +161,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('accounts.this_site_doesnt_allow_signup', office_phone: Setting.get(:contact, :community_office_phone)) 
  t('accounts.verify') 
   t('accounts.verify_who_you_are') 
- link_to "<i class='fa fa-envelope'></i> #{t('accounts.verify_by_email')}".html_safe, new_account_path(email: true), class: 'btn btn-success' 
+ link_to "<i class='fa fa-envelope'></i> ".html_safe, new_account_path(email: true), class: 'btn btn-success' 
  t('accounts.verify_by_email_message') 
- link_to "<i class='fa fa-mobile'></i> #{t('accounts.verify_by_phone')}".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
+ link_to "<i class='fa fa-mobile'></i> ".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
  t('accounts.verify_by_phone_message') 
- link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> #{t('accounts.call_office', phone: Setting.get(:contact, :community_office_phone))}".html_safe, class: 'btn btn-info') 
+ link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> ".html_safe, class: 'btn btn-info') 
  t('accounts.call_office_message').html_safe 
  
  end 
@@ -216,11 +216,11 @@ end
  t('accounts.this_site_doesnt_allow_signup', office_phone: Setting.get(:contact, :community_office_phone)) 
  t('accounts.verify') 
   t('accounts.verify_who_you_are') 
- link_to "<i class='fa fa-envelope'></i> #{t('accounts.verify_by_email')}".html_safe, new_account_path(email: true), class: 'btn btn-success' 
+ link_to "<i class='fa fa-envelope'></i> ".html_safe, new_account_path(email: true), class: 'btn btn-success' 
  t('accounts.verify_by_email_message') 
- link_to "<i class='fa fa-mobile'></i> #{t('accounts.verify_by_phone')}".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
+ link_to "<i class='fa fa-mobile'></i> ".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
  t('accounts.verify_by_phone_message') 
- link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> #{t('accounts.call_office', phone: Setting.get(:contact, :community_office_phone))}".html_safe, class: 'btn btn-info') 
+ link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> ".html_safe, class: 'btn btn-info') 
  t('accounts.call_office_message').html_safe 
  
  end 
@@ -284,11 +284,11 @@ end
  t('accounts.this_site_doesnt_allow_signup', office_phone: Setting.get(:contact, :community_office_phone)) 
  t('accounts.verify') 
   t('accounts.verify_who_you_are') 
- link_to "<i class='fa fa-envelope'></i> #{t('accounts.verify_by_email')}".html_safe, new_account_path(email: true), class: 'btn btn-success' 
+ link_to "<i class='fa fa-envelope'></i> ".html_safe, new_account_path(email: true), class: 'btn btn-success' 
  t('accounts.verify_by_email_message') 
- link_to "<i class='fa fa-mobile'></i> #{t('accounts.verify_by_phone')}".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
+ link_to "<i class='fa fa-mobile'></i> ".html_safe, new_account_path(phone: true), class: 'btn btn-warning' 
  t('accounts.verify_by_phone_message') 
- link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> #{t('accounts.call_office', phone: Setting.get(:contact, :community_office_phone))}".html_safe, class: 'btn btn-info') 
+ link_to_phone(Setting.get(:contact, :community_office_phone), label: "<i class='fa fa-phone'></i> ".html_safe, class: 'btn btn-info') 
  t('accounts.call_office_message').html_safe 
  
  end 
@@ -387,7 +387,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('accounts.please_select_your_name') 
  form_tag do 
  @people.each do |person| 
- radio_button_tag :id, person.id, false, class: "checkbox", id: "person_#{person.id}" 
+ radio_button_tag :id, person.id, false, class: "checkbox", id: "person_" 
  person.name 
  end 
  submit_tag t('accounts.I_am_this_person'), class: 'btn btn-success' 

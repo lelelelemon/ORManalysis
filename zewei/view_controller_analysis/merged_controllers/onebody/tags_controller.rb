@@ -18,7 +18,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  verse.text 
  unless @person 
   if (count = object.comments.count) > 0 
- names = object.comments.map { |c| link_to(c.person.try(:name) || '', c.person) }.uniq 
+ names = object.comments.map { |c| link_to(c.person.try(:name) ) }.uniq 
  link_to icon('fa fa-comment-o'), object 
  if names.length > 3 
  t('verses.comment_count.many', count: count, by: names[0..2].join(', '), extra_count: names[3..-1].size, url: url_for(object)).html_safe 

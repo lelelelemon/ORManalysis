@@ -6,7 +6,7 @@ class Checkin::FamiliesController < ApplicationController
     @attendance_records = AttendanceRecord.find_for_people_and_date(@family_people.map(&:id), Date.today)
                                           .group_by(&:person_id)
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript  link_to @family.name, @family 
+  link_to @family.name, @family 
  preserve_breaks @family.pretty_address 
  format_phone @family.home_phone 
   if @family_people.length > 1 
@@ -44,7 +44,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  image_tag @family.photo.url(:medium), :style => 'float:right' 
  end 
  
- escape_javascript  form_for @family, url: checkin_family_path(@family), remote: true do |form| 
+  form_for @family, url: checkin_family_path(@family), remote: true do |form| 
  form.label :barcode_id, 'Scan Card:', class: 'inline' 
  form.text_field :barcode_id, size: 15, autocomplete: 'off', class: 'form-control' 
  if @family.barcode_assigned_at 
@@ -90,10 +90,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to_function 'Add Person', "if(!addPersonRow()) $('#add_row_link').hide()", class: 'add-icon', style: 'background-position:0px -3px' 
  t('checkin.family.new.children') 
  end 
- text_field_tag "family[people_attributes][#{index}][first_name]", @people[index].first_name, size: 25, id: "family_people_attributes_#{index}_first_name", class: 'name form-control' 
- text_field_tag "family[people_attributes][#{index}][last_name]", @people[index].last_name, size: 25, id: "family_people_attributes_#{index}_last_name", class: 'name family-last-name form-control', onkeyup: index == 0 ? 'setLastName(this.value)' : nil, onblur: index == 0 ? 'setLastName(this.value)' : nil 
- date_field_tag "family[people_attributes][#{index}][birthday]", @people[index].birthday ? @people[index].birthday.to_s(:date) : '', size: 12, id: "family_people_attributes_#{index}_birthday", class: 'date-field form-control' 
- text_field_tag "family[people_attributes][#{index}][medical_notes]", @people[index].medical_notes, size: 25, id: "family_people_attributes_#{index}_medical_notes", class: 'form-control' 
+ text_field_tag "family[people_attributes][][first_name]", @people[index].first_name, size: 25, id: "family_people_attributes__first_name", class: 'name form-control' 
+ text_field_tag "family[people_attributes][][last_name]", @people[index].last_name, size: 25, id: "family_people_attributes__last_name", class: 'name family-last-name form-control', onkeyup: index == 0 ? 'setLastName(this.value)' : nil, onblur: index == 0 ? 'setLastName(this.value)' : nil 
+ date_field_tag "family[people_attributes][][birthday]", @people[index].birthday ? @people[index].birthday.to_s(:date) : '', size: 12, id: "family_people_attributes__birthday", class: 'date-field form-control' 
+ text_field_tag "family[people_attributes][][medical_notes]", @people[index].medical_notes, size: 25, id: "family_people_attributes__medical_notes", class: 'form-control' 
  end 
  form.label :barcode_id, t('checkin.family.new.barcode') 
  form.text_field :barcode_id, autocomplete: 'off', class: 'form-control', style: 'max-width: 732px' 
@@ -114,7 +114,47 @@ end
     family_form.create
     @family = family_form.family
     @people = family_form.people
-    render action: 'new' if @family.errors.any?
+    ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('checkin.family.new.heading') 
+  form_for @family, url: checkin_families_path, html: { onsubmit: "return validateNames()" } do |form| 
+ if params[:compact] 
+ hidden_field_tag :compact, true 
+ end 
+ if params[:people] 
+ hidden_field_tag :people,  true 
+ end 
+ if params[:barcode] 
+ hidden_field_tag :barcode, true 
+ end 
+ error_messages_for(form) 
+ t('checkin.family.new.first_name') 
+ t('checkin.family.new.last_name') 
+ t('checkin.family.new.birthday') 
+ t('checkin.family.new.medical_notes') 
+ @people.each_with_index do |person, index| 
+ if index == 0 
+ t('checkin.family.new.parents') 
+ elsif index == 2 
+ link_to_function 'Add Person', "if(!addPersonRow()) $('#add_row_link').hide()", class: 'add-icon', style: 'background-position:0px -3px' 
+ t('checkin.family.new.children') 
+ end 
+ text_field_tag "family[people_attributes][][first_name]", @people[index].first_name, size: 25, id: "family_people_attributes__first_name", class: 'name form-control' 
+ text_field_tag "family[people_attributes][][last_name]", @people[index].last_name, size: 25, id: "family_people_attributes__last_name", class: 'name family-last-name form-control', onkeyup: index == 0 ? 'setLastName(this.value)' : nil, onblur: index == 0 ? 'setLastName(this.value)' : nil 
+ date_field_tag "family[people_attributes][][birthday]", @people[index].birthday ? @people[index].birthday.to_s(:date) : '', size: 12, id: "family_people_attributes__birthday", class: 'date-field form-control' 
+ text_field_tag "family[people_attributes][][medical_notes]", @people[index].medical_notes, size: 25, id: "family_people_attributes__medical_notes", class: 'form-control' 
+ end 
+ form.label :barcode_id, t('checkin.family.new.barcode') 
+ form.text_field :barcode_id, autocomplete: 'off', class: 'form-control', style: 'max-width: 732px' 
+ t('checkin.family.new.ignore_spelling_errors') 
+ button_tag t('checkin.family.new.save'), class: 'btn btn-success' 
+ link_to t('checkin.family.new.cancel'), administration_checkin_dashboard_path 
+ end 
+ content_for :js do 
+ end 
+ 
+
+end
+
   end
 
   def update

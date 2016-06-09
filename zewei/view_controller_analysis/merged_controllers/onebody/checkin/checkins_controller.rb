@@ -8,12 +8,25 @@ class Checkin::CheckinsController < ApplicationController
     session[:checkin_printer_id] = params[:printer].presence if params[:printer]
     @checkin = CheckinPresenter.new(session[:checkin_campus])
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @title.present? 
+ yield(:meta) 
+ stylesheet_link_tag 'application' 
+ yield(:css) 
+ csrf_meta_tags 
+  
+ yield(:head) 
  @title = t('checkin.interface.heading') 
  content_for :css do 
  stylesheet_link_tag 'checkin-print', media: 'print' 
  end 
  content_for :js do 
  end 
+ content_for :js do 
+ end 
+ javascript_include_tag 'checkin' 
+ yield(:js) 
+ analytics_js 
+ end
 
 end
 
@@ -57,8 +70,21 @@ end
       @campuses = CheckinTime.campuses
       if @campuses.none?
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @title.present? 
+ yield(:meta) 
+ stylesheet_link_tag 'application' 
+ yield(:css) 
+ csrf_meta_tags 
+  
+ yield(:head) 
  t('checkin.interface.run_setup.intro') 
  link_to t('checkin.interface.run_setup.button'), administration_checkin_times_path, class: 'btn btn-warning' 
+ content_for :js do 
+ end 
+ javascript_include_tag 'checkin' 
+ yield(:js) 
+ analytics_js 
+ end
 
 end
 
@@ -66,9 +92,22 @@ end
         session[:checkin_campus] = @campuses.first
       else
         ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ if @title.present? 
+ yield(:meta) 
+ stylesheet_link_tag 'application' 
+ yield(:css) 
+ csrf_meta_tags 
+  
+ yield(:head) 
  @campuses.each do |campus| 
  link_to campus, { campus: campus }, class: 'btn checkin-btn' 
  end 
+ content_for :js do 
+ end 
+ javascript_include_tag 'checkin' 
+ yield(:js) 
+ analytics_js 
+ end
 
 end
 

@@ -10,7 +10,16 @@ class MembershipsController < ApplicationController
   def show
     # allow email links to work (since they will be GET requests)
     if params[:email]
-      render file: 'memberships/email'
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ form_tag group_membership_path(@group, params[:id]), method: 'PATCH', id: 'email_form' do |form| 
+ hidden_field_tag :email, params[:email] 
+ hidden_field_tag :code, params[:code] 
+ end 
+ content_for(:js) do 
+ end 
+
+end
+
     else
       fail ActionController::UnknownAction, t('No_action_to_show')
     end
@@ -63,7 +72,32 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  @memberships.includes(:person).order('people.last_name', 'people.first_name').each do |membership| 
  if person = membership.person 
-  
+  person = membership.person 
+ if @logged_in.can_update?(@group) 
+ check_box_tag 'ids[]', person.try(:id), false, class: 'checkbox simple' 
+ end 
+ avatar_tag person 
+ link_to person.name, person 
+ if params[:birthdays] 
+ person.birthday.to_s(:date_without_year) if person.birthday 
+ else 
+ membership.created_at.to_s(:date) if membership.created_at 
+ end 
+ if @logged_in.can_update?(@group) 
+ if (@group.linked? or @group.parents_of?) and not membership.auto? 
+ icon 'fa fa-exclamation-circle text-gray', title: t('memberships.index.details.manual.tooltip') 
+ end 
+ if membership.admin? 
+ link_to group_membership_path(@group, membership, promote: false), data: { method: :put, confirm: t('are_you_sure') }, class: 'btn btn-warning btn-xs', title: t('memberships.demote') do 
+ icon 'fa fa-toggle-down' 
+ end 
+ else 
+ link_to group_membership_path(@group, membership, promote: true), data: { method: :put, confirm: t('are_you_sure') }, class: 'btn btn-info btn-xs', title: t('memberships.promote') do 
+ icon 'fa fa-toggle-up' 
+ end 
+ end 
+ end 
+ 
  end 
  end 
  if @logged_in.can_update?(@group) 
@@ -195,7 +229,32 @@ end
       format.html { redirect_to :back }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- escape_javascript  
+  person = membership.person 
+ if @logged_in.can_update?(@group) 
+ check_box_tag 'ids[]', person.try(:id), false, class: 'checkbox simple' 
+ end 
+ avatar_tag person 
+ link_to person.name, person 
+ if params[:birthdays] 
+ person.birthday.to_s(:date_without_year) if person.birthday 
+ else 
+ membership.created_at.to_s(:date) if membership.created_at 
+ end 
+ if @logged_in.can_update?(@group) 
+ if (@group.linked? or @group.parents_of?) and not membership.auto? 
+ icon 'fa fa-exclamation-circle text-gray', title: t('memberships.index.details.manual.tooltip') 
+ end 
+ if membership.admin? 
+ link_to group_membership_path(@group, membership, promote: false), data: { method: :put, confirm: t('are_you_sure') }, class: 'btn btn-warning btn-xs', title: t('memberships.demote') do 
+ icon 'fa fa-toggle-down' 
+ end 
+ else 
+ link_to group_membership_path(@group, membership, promote: true), data: { method: :put, confirm: t('are_you_sure') }, class: 'btn btn-info btn-xs', title: t('memberships.promote') do 
+ icon 'fa fa-toggle-up' 
+ end 
+ end 
+ end 
+ 
  @added.map { |m| '#'+dom_id(m) }.join(',') 
 
 end

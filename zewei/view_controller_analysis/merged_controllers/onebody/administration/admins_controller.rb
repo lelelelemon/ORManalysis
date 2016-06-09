@@ -36,7 +36,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t('name'), '?order=name' 
  link_to t('admin.template'), '?order=template' 
  @people.each do |person| 
- person.id 
  content_tag :a, href: person_path(person) do 
  avatar_tag(person) 
  end 
@@ -93,7 +92,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('admin.super_admin_about') 
  end 
  Admin.privileges_for_show.each do |priv| 
- check_box_tag "privileges[#{priv[:name]}]", true, @admin.flags[priv[:name]], id: priv[:name] 
+ check_box_tag "privileges[]", true, @admin.flags[priv[:name]], id: priv[:name] 
  label_tag priv[:name], priv[:title] 
  priv[:about] 
  end 
@@ -117,7 +116,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  button_tag t('admin.add_selected'), class: 'btn btn-success' 
  end 
  @people.each do |person| 
- person.id 
  avatar_tag(person) 
  link_to person.name, person 
  link_to administration_admin_path(person.admin, person_id: person.id), data: { remote: true, method: :delete, confirm: t('are_you_sure') }, class: 'btn btn-delete' do 

@@ -54,7 +54,24 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :sub_title, link_to(@message.group.name, @message.group) 
  t('messages.group.description_html', group: link_to(@message.group.name, @message.group)) 
  end 
-  
+  error_messages_for(@message) 
+ form_for @message, html: {enctype: 'multipart/form-data', id: 'message'} do |form| 
+ form.hidden_field :group_id 
+ form.hidden_field :to_person_id 
+ form.hidden_field :parent_id 
+ if @message.parent 
+ form.hidden_field :subject 
+ else 
+ form.label :subject 
+ form.text_field :subject, class: 'form-control' 
+ end 
+ form.label :body 
+ form.text_area :body, rows: 15, cols: 80, class: 'form-control' 
+ t('messages.attachment_optional') 
+ t('multiple_files') 
+ form.button t('messages.send_message'), class: 'btn btn-success' 
+ end 
+ 
 
 end
 
@@ -210,7 +227,24 @@ end
  content_for :sub_title, link_to(@message.group.name, @message.group) 
  t('messages.group.description_html', group: link_to(@message.group.name, @message.group)) 
  end 
-  
+  error_messages_for(@message) 
+ form_for @message, html: {enctype: 'multipart/form-data', id: 'message'} do |form| 
+ form.hidden_field :group_id 
+ form.hidden_field :to_person_id 
+ form.hidden_field :parent_id 
+ if @message.parent 
+ form.hidden_field :subject 
+ else 
+ form.label :subject 
+ form.text_field :subject, class: 'form-control' 
+ end 
+ form.label :body 
+ form.text_area :body, rows: 15, cols: 80, class: 'form-control' 
+ t('messages.attachment_optional') 
+ t('multiple_files') 
+ form.button t('messages.send_message'), class: 'btn btn-success' 
+ end 
+ 
 
 end
 

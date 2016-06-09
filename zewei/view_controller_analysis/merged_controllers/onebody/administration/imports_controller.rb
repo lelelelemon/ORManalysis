@@ -42,7 +42,19 @@ end
       format.html do
         @rows = filter_rows(@import.rows).paginate(page: params[:page], per_page: 100)
         redirect_to(action: :edit) if @import.parsed?
-        render :errored if @import.errored?
+        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = 'There was a problem.' 
+ icon 'fa fa-warning text-red' 
+ t('.message') 
+ @import.error_message 
+ link_to @import, data: { method: :delete, confirm: t('are_you_sure') }, class: 'btn btn-delete pull-right' do 
+ icon 'fa fa-trash-o' 
+ t('administration.imports.show.delete.button') 
+ end 
+ link_to t('.new.button'), new_administration_import_path, class: 'btn btn-success' 
+
+end
+
       end
       format.json do
         render json: @import
@@ -53,7 +65,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('administration.imports.status_heading', status: status) 
  
  if @import.working? 
- @import.row_progress 
  end 
  t('.table.filename') 
  @import.filename 
@@ -213,7 +224,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('.table.example') 
  @import.mappings.each do |from, to| 
  from 
- select_tag "import[mappings][#{from}]",              import_mapping_option_tags(from, to),              include_blank: true,              class: 'form-control' 
+ select_tag "import[mappings][]",              import_mapping_option_tags(from, to),              include_blank: true,              class: 'form-control' 
  @example[from] 
  end 
  button_tag id: 'btn-preview', class: 'btn btn-success' do 
@@ -246,44 +257,7 @@ end
       redirect_to administration_import_path(@import)
     else
       @example = build_example
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
-  status = t(@import.status, scope: 'administration.imports.status') # notest 
- @title = t('administration.imports.status_heading', status: status) 
- 
- form_for @import do |form| 
- hidden_field_tag :status, 'matched' 
- form.label :match_strategy, t('.form.match_strategy') 
- form.select :match_strategy, import_match_strategies, {}, class: 'form-control' 
- form.check_box :create_as_active 
- form.label :create_as_active, t('.form.create_as_active') 
- form.check_box :overwrite_changed_emails 
- form.label :overwrite_changed_emails, t('.form.overwrite_changed_emails_html', url: administration_emails_path) 
- t('.table.column') 
- t('.table.attribute') 
- t('.table.example') 
- @import.mappings.each do |from, to| 
- from 
- select_tag "import[mappings][#{from}]",              import_mapping_option_tags(from, to),              include_blank: true,              class: 'form-control' 
- @example[from] 
- end 
- button_tag id: 'btn-preview', class: 'btn btn-success' do 
- t('.save.button') 
- icon 'fa fa-arrow-right' 
- end 
- button_tag id: 'btn-execute', class: 'btn btn-danger', data: { method: 'patch', confirm: t('are_you_sure') }, style: 'display:none' do 
- icon 'fa fa-bolt' 
- t('administration.imports.show.execute.button') 
- end 
- check_box_tag :dont_preview 
- label_tag :dont_preview, t('.form.dont_preview') 
- link_to @import, data: { method: :delete, confirm: t('are_you_sure') }, class: 'btn btn-delete pull-right' do 
- icon 'fa fa-trash-o' 
- t('.delete.button') 
- end 
- end 
-
-end
-
+      render action :edit
     end
   end
 

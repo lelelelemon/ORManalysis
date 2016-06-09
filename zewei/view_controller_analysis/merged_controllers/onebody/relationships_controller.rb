@@ -83,7 +83,71 @@ class RelationshipsController < ApplicationController
 
 end
  }
-      format.xml  { render xml: @relationships }
+      format.xml  { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ @title = t('relationships.heading', person: link_to(@person.name, @person)).html_safe 
+ if @relationships.any? 
+ form_tag batch_person_relationships_path(@person) do 
+ t('name') 
+ t('relationships.relationship') 
+ @relationships.each do |relationship| 
+ check_box_tag 'ids[]', relationship.id, false, class: 'outward_relationship_checkbox' 
+ link_to relationship.related.name, person_relationships_path(relationship.related) 
+ relationship.name_or_other 
+ end 
+ button_tag name: 'delete', data: { confirm: t('are_you_sure') }, class: 'btn btn-delete' do 
+ icon 'fa fa-trash-o' 
+ t('Delete') 
+ end 
+ button_tag name: 'reciprocate', class: 'btn btn-success' do 
+ icon 'fa fa-exchange' 
+ t('relationships.reciprocate.button') 
+ end 
+ end 
+ else 
+ t('none') 
+ end 
+ form_tag search_path, remote: true do 
+ hidden_field_tag :select_person, true 
+ t('relationships.add_relationship.intro') 
+ t('search.search_by_name') 
+ text_field_tag 'name', '', class: 'form-control' 
+ button_tag t('relationships.add_relationship.button'), class: 'btn btn-info' 
+ end 
+ form_tag person_relationships_path(@person) do 
+ t('relationships.relationship_type') 
+ select_tag :name, relationships_for_select,            id: 'relationship_name',            class: 'form-control',            include_blank: true,            data: { toggle: '#other_name', 'toggle-value' => 'other' } 
+ text_field_tag :other_name, nil,          style: 'display:none;',          class: 'form-control',          placeholder: t('relationships.other_name.placeholder') 
+ button_tag t('search.add_selected'), class: 'btn btn-success' 
+ end 
+ link_to family_relationships_path(@person.family), class: 'btn btn-info' do 
+ icon 'fa fa-group' 
+ t('relationships.family.button') 
+ end 
+ t('relationships.inward.heading') 
+ if @inward_relationships.any? 
+ form_tag batch_person_relationships_path(@person) do 
+ t('From') 
+ t('relationships.relationship') 
+ @inward_relationships.each do |relationship| 
+ check_box_tag 'ids[]', relationship.id, false, class: 'inward_relationship_checkbox' 
+ link_to relationship.person.name, person_relationships_path(relationship.person) 
+ relationship.name_or_other 
+ end 
+ button_tag name: 'delete', data: { confirm: t('are_you_sure') }, class: 'btn btn-delete' do 
+ icon 'fa fa-trash-o' 
+ t('Delete') 
+ end 
+ button_tag name: 'reciprocate', class: 'btn btn-success' do 
+ icon 'fa fa-exchange' 
+ t('relationships.reciprocate.button') 
+ end 
+ end 
+ else 
+ t('none') 
+ end 
+
+end
+ }
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('relationships.heading', person: link_to(@person.name, @person)).html_safe 
@@ -200,7 +264,7 @@ end
  relationships.each do |related, relationship| 
  link_to person.name, person 
  link_to related.name, related 
- select_tag "people[#{person.id}][#{related.id}]", options_for_select([["(#{t('none')})", '']]+relationship_labels, relationship.to_sym) 
+ select_tag "people[][]", options_for_select([["()", '']]+relationship_labels, relationship.to_sym) 
  end 
  end 
  button_tag t('relationships.family.create.button'), class: 'btn btn-success' 

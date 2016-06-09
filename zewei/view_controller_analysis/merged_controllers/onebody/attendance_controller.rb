@@ -31,10 +31,8 @@ class AttendanceController < ApplicationController
  hidden_field_tag :token, params[:token] 
  hidden_field_tag :attended_at, @attended_at.to_s(:date) 
  @records.each do |person, record| 
- check_box_tag 'ids[]', person.id, record ? true : false, id: "ids_#{person.id}", class: 'simple icon-check' 
- person.id 
+ check_box_tag 'ids[]', person.id, record ? true : false, id: "ids_", class: 'simple icon-check' 
  person.name 
- person.id 
  avatar_tag person, fallback_to_family: true 
  end 
  label_tag :notes, t('attendance.notes.label') 
@@ -54,8 +52,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  form_tag batch_group_attendance_index_path(@group), id: 'attendance_form' do 
  hidden_field_tag :attended_at, @attended_at 
  @records.each do |person, record| 
- check_box_tag 'ids[]', person.id, record ? true : false, id: "ids_#{person.id}" 
- label_tag "ids_#{person.id}", person.name, class: 'inline' 
+ check_box_tag 'ids[]', person.id, record ? true : false, id: "ids_" 
+ label_tag "ids_", person.name, class: 'inline' 
  end 
  label_tag :notes, t('attendance.notes.label') 
  text_area_tag :notes, '', class: 'form-control' 

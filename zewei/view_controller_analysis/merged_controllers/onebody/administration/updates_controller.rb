@@ -7,8 +7,8 @@ class Administration::UpdatesController < ApplicationController
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('admin.updates.profile_updates') 
  content_for :sub_title do 
- link_to t('admin.updates.toggle.pending'), { complete: nil }, class: "#{@complete ? 'toggle-enabled' : 'toggle-disabled'} btn-xs" 
- link_to t('admin.updates.toggle.complete'), { complete: true }, class: "#{@complete ? 'toggle-disabled' : 'toggle-enabled'} btn-xs" 
+ link_to t('admin.updates.toggle.pending'), { complete: nil }, class: " btn-xs" 
+ link_to t('admin.updates.toggle.complete'), { complete: true }, class: " btn-xs" 
  end 
  pagination @updates 
  @updates.each do |update| 
@@ -61,8 +61,8 @@ end
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = t('admin.updates.profile_updates') 
  content_for :sub_title do 
- link_to t('admin.updates.toggle.pending'), { complete: nil }, class: "#{@complete ? 'toggle-enabled' : 'toggle-disabled'} btn-xs" 
- link_to t('admin.updates.toggle.complete'), { complete: true }, class: "#{@complete ? 'toggle-disabled' : 'toggle-enabled'} btn-xs" 
+ link_to t('admin.updates.toggle.pending'), { complete: nil }, class: " btn-xs" 
+ link_to t('admin.updates.toggle.complete'), { complete: true }, class: " btn-xs" 
  end 
  pagination @updates 
  @updates.each do |update| 

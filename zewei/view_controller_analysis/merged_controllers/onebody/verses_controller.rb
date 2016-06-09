@@ -49,8 +49,7 @@ end
     get_verse
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @title = @verse.reference 
- content_for :sub_title, "(#{@verse.translation})" 
- small_verse?(@verse) ? 'big' : '' 
+ content_for :sub_title, "()" 
  @verse.text 
  if @verse.translation == 'WEB' 
  t('verses.disclaimer') 
@@ -105,7 +104,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t('tags.tags') 
  t('verses.about_tags') 
   controller ||= object.class.name.pluralize.downcase 
- object.id 
  if object.tags.any? 
  object.tags.each do |tag| 
  link_to tag.name, tag 
@@ -178,8 +176,7 @@ end
     end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @verse.id 
- escape_javascript  controller ||= object.class.name.pluralize.downcase 
- object.id 
+  controller ||= object.class.name.pluralize.downcase 
  if object.tags.any? 
  object.tags.each do |tag| 
  link_to tag.name, tag 
