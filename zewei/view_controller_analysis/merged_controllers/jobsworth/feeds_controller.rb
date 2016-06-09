@@ -286,7 +286,8 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  

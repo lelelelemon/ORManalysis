@@ -172,7 +172,11 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @scm_changesets.each do |changeset| 
+ h changeset.inspect 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  

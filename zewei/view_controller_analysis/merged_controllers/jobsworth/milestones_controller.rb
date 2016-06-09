@@ -196,7 +196,44 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("milestones.edit_title", title: Setting.productName) 
+ t("milestones.milestones") 
+ current_day = nil 
+ today_drawn = false 
+ @scheduled_milestones.each do |ml| 
+ if current_day != ml.due_at.strftime("%a, %d %b %Y")  
+ if current_day 
+ end 
+ current_day = ml.due_at.strftime("%a, %d %b %Y") 
+ if !today_drawn and ml.due_at > Time.now 
+ today_drawn = true 
+ end 
+ current_day 
+ end 
+ link_to_milestone ml, :text => "#{ml.project.name}/#{ml.name}" 
+ milestone_status_tag(ml) 
+ if current_user.can?(ml.project, 'milestone') 
+ link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(ml), :class => "hide action" 
+ end 
+ ml.description 
+ number_to_percentage(ml.percent_complete, :precision => 0)  
+ end 
+ if current_day 
+ end 
+ if @unscheduled_milestones.count > 0 
+ t("milestones.unscheduled") 
+ @unscheduled_milestones.each do |ml| 
+ link_to_milestone ml, :text => "#{ml.project.name}/#{ml.name}" 
+ milestone_status_tag(ml) 
+ if current_user.can?(ml.project, 'milestone') 
+ link_to '<i class="icon-pencil"></i>'.html_safe, edit_milestone_path(ml), :class => "hide action" 
+ end 
+ ml.description 
+ number_to_percentage(ml.percent_complete, :precision => 0)  
+ end 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -413,7 +450,26 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("milestones.new_title", title: Setting.productName) 
+ form_tag({:action => 'create'}, {:class => "form-horizontal"}) do 
+ "<legend>#{ t("milestones.new") }</legend>".html_safe unless @disable_title 
+  t("milestones.project") 
+ select 'milestone', 'project_id', grouped_client_projects_options(current_user.projects) 
+ t("milestones.name") 
+ text_field 'milestone', 'name'  
+ t("milestones.status") 
+ milestone_status_select_tag(@milestone) 
+ milestone_status_tip(@milestone.status_name || :planning) 
+ current_user.dateFormat 
+ t("milestones.due_date") 
+ text_field 'milestone', 'due_at', :class=>:datefield, :value=> (@milestone.due_date.nil? ? "" : @milestone.due_date.utc.strftime("#{current_user.date_format}"))  
+ t("milestones.description") 
+ text_area 'milestone', 'description', :rows => 5, :class => "input-xxlarge"  
+ 
+ t("button.create") 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -619,7 +675,26 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("milestones.new_title", title: Setting.productName) 
+ form_tag({:action => 'create'}, {:class => "form-horizontal"}) do 
+ "<legend>#{ t("milestones.new") }</legend>".html_safe unless @disable_title 
+  t("milestones.project") 
+ select 'milestone', 'project_id', grouped_client_projects_options(current_user.projects) 
+ t("milestones.name") 
+ text_field 'milestone', 'name'  
+ t("milestones.status") 
+ milestone_status_select_tag(@milestone) 
+ milestone_status_tip(@milestone.status_name || :planning) 
+ current_user.dateFormat 
+ t("milestones.due_date") 
+ text_field 'milestone', 'due_at', :class=>:datefield, :value=> (@milestone.due_date.nil? ? "" : @milestone.due_date.utc.strftime("#{current_user.date_format}"))  
+ t("milestones.description") 
+ text_area 'milestone', 'description', :rows => 5, :class => "input-xxlarge"  
+ 
+ t("button.create") 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -820,7 +895,41 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("milestones.edit_title", title: "#{@milestone.name} - #{Setting.productName}") 
+ form_for(@milestone, :html => {:class => "form-horizontal"}) do 
+ t("milestones.edit") 
+ link_to_tasks_filtered_by(t("milestones.view_tasks"), @milestone, :class => "btn btn-success pull-right") 
+  t("milestones.project") 
+ select 'milestone', 'project_id', grouped_client_projects_options(current_user.projects) 
+ t("milestones.name") 
+ text_field 'milestone', 'name'  
+ t("milestones.status") 
+ milestone_status_select_tag(@milestone) 
+ milestone_status_tip(@milestone.status_name || :planning) 
+ current_user.dateFormat 
+ t("milestones.due_date") 
+ text_field 'milestone', 'due_at', :class=>:datefield, :value=> (@milestone.due_date.nil? ? "" : @milestone.due_date.utc.strftime("#{current_user.date_format}"))  
+ t("milestones.description") 
+ text_area 'milestone', 'description', :rows => 5, :class => "input-xxlarge"  
+ 
+ t("button.save") 
+ if current_user.can?( @milestone.project, 'milestone' ) 
+ link_to t("button.delete"), milestone_path(@milestone), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-mini btn-danger pull-right"  
+ if @milestone.closed? 
+ link_to t("milestones.reopen"), revert_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ else 
+ link_to t("milestones.complete"), complete_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ end 
+ end 
+ end 
+ if current_user.company.use_score_rules? 
+ t("milestones.score_rules") 
+ container_name 
+ container_id 
+ 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1027,7 +1136,41 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("milestones.edit_title", title: "#{@milestone.name} - #{Setting.productName}") 
+ form_for(@milestone, :html => {:class => "form-horizontal"}) do 
+ t("milestones.edit") 
+ link_to_tasks_filtered_by(t("milestones.view_tasks"), @milestone, :class => "btn btn-success pull-right") 
+  t("milestones.project") 
+ select 'milestone', 'project_id', grouped_client_projects_options(current_user.projects) 
+ t("milestones.name") 
+ text_field 'milestone', 'name'  
+ t("milestones.status") 
+ milestone_status_select_tag(@milestone) 
+ milestone_status_tip(@milestone.status_name || :planning) 
+ current_user.dateFormat 
+ t("milestones.due_date") 
+ text_field 'milestone', 'due_at', :class=>:datefield, :value=> (@milestone.due_date.nil? ? "" : @milestone.due_date.utc.strftime("#{current_user.date_format}"))  
+ t("milestones.description") 
+ text_area 'milestone', 'description', :rows => 5, :class => "input-xxlarge"  
+ 
+ t("button.save") 
+ if current_user.can?( @milestone.project, 'milestone' ) 
+ link_to t("button.delete"), milestone_path(@milestone), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-mini btn-danger pull-right"  
+ if @milestone.closed? 
+ link_to t("milestones.reopen"), revert_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ else 
+ link_to t("milestones.complete"), complete_milestone_path(@milestone), :confirm => t("shared.are_you_sure"), :method => :post, :class => "btn" 
+ end 
+ end 
+ end 
+ if current_user.company.use_score_rules? 
+ t("milestones.score_rules") 
+ container_name 
+ container_id 
+ 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1234,7 +1377,24 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @milestones = @milestones.map { |m|
+  { :text  => m.name.gsub(/"/,'\"'),
+    :value => m.id.to_s,
+    :title => milestone_status_tip(m.status_name),
+    :date  => (m.due_at.nil? ? t('shared.not_set') : l(m.due_at.utc, format: current_user.date_format ))
+  }.to_json }
+   @milestones = @milestones.join(", ")
+
+  t('shared.none') 
+ ", #{@milestones}".html_safe if @milestones.present? 
+ if current_user.projects.find_by_id(params[:project_id])  && current_user.can?(p, 'milestone')
+      '"add_milestone_visible": true'
+    else
+      '"add_milestone_visible": false'
+    end.html_safe
+
+ 
  current_user.id 
  current_user.dateFormat 
  

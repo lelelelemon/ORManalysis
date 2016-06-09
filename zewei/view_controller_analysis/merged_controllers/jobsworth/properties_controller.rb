@@ -161,7 +161,58 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("properties.index") 
+ link_to t("properties.new"), new_property_path, :class => "btn pull-right" 
+ t("properties.name") 
+ t("properties.default_sort") 
+ t("properties.default_color") 
+ render :partial => @properties 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -321,7 +372,58 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("properties.index") 
+ link_to t("properties.new"), new_property_path, :class => "btn pull-right" 
+ t("properties.name") 
+ t("properties.default_sort") 
+ t("properties.default_color") 
+ render :partial => @properties 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -525,7 +627,94 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("properties.create") 
+  form_for(@property, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ t("properties.name") 
+ f.text_field :name 
+ t("properties.mandatory") 
+ f.check_box :mandatory 
+ t("properties.default_sort") 
+ f.check_box :default_sort 
+ t("properties.default_color") 
+ f.check_box :default_color 
+ t("properties.possible_values") 
+ @property.property_values.each do |pv| 
+  pv.id 
+ pv.id 
+
+     prefix = "property_values"
+     prefix = "new_#{ prefix }" if pv.new_record?
+   
+ fields_for(prefix, pv) do |f| 
+ t "properties.value" 
+ f.text_field :value, :index => pv.id 
+ sortable_handle_tag(pv) 
+ link_to "Remove value", "#", :class => "remove_property_value_link" 
+ t 'properties.default' 
+ f.check_box :default, :index => pv.id, :class => 'default nested-checkbox' 
+ t 'properties.color' 
+ f.text_field :color, :index => pv.id 
+ t "properties.icon_url" 
+ f.select :icon_url, task_icon_options(pv), {}, { :index => pv.id } 
+ end 
+ if current_user.company.use_score_rules? 
+ container_name 
+ container_id 
+ 
+ end 
+ 
+ end 
+ cit_submit_tag(@property) 
+ add_value_link 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -721,7 +910,94 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("properties.create") 
+  form_for(@property, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ t("properties.name") 
+ f.text_field :name 
+ t("properties.mandatory") 
+ f.check_box :mandatory 
+ t("properties.default_sort") 
+ f.check_box :default_sort 
+ t("properties.default_color") 
+ f.check_box :default_color 
+ t("properties.possible_values") 
+ @property.property_values.each do |pv| 
+  pv.id 
+ pv.id 
+
+     prefix = "property_values"
+     prefix = "new_#{ prefix }" if pv.new_record?
+   
+ fields_for(prefix, pv) do |f| 
+ t "properties.value" 
+ f.text_field :value, :index => pv.id 
+ sortable_handle_tag(pv) 
+ link_to "Remove value", "#", :class => "remove_property_value_link" 
+ t 'properties.default' 
+ f.check_box :default, :index => pv.id, :class => 'default nested-checkbox' 
+ t 'properties.color' 
+ f.text_field :color, :index => pv.id 
+ t "properties.icon_url" 
+ f.select :icon_url, task_icon_options(pv), {}, { :index => pv.id } 
+ end 
+ if current_user.company.use_score_rules? 
+ container_name 
+ container_id 
+ 
+ end 
+ 
+ end 
+ cit_submit_tag(@property) 
+ add_value_link 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -921,7 +1197,94 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("properties.edit") 
+  form_for(@property, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ t("properties.name") 
+ f.text_field :name 
+ t("properties.mandatory") 
+ f.check_box :mandatory 
+ t("properties.default_sort") 
+ f.check_box :default_sort 
+ t("properties.default_color") 
+ f.check_box :default_color 
+ t("properties.possible_values") 
+ @property.property_values.each do |pv| 
+  pv.id 
+ pv.id 
+
+     prefix = "property_values"
+     prefix = "new_#{ prefix }" if pv.new_record?
+   
+ fields_for(prefix, pv) do |f| 
+ t "properties.value" 
+ f.text_field :value, :index => pv.id 
+ sortable_handle_tag(pv) 
+ link_to "Remove value", "#", :class => "remove_property_value_link" 
+ t 'properties.default' 
+ f.check_box :default, :index => pv.id, :class => 'default nested-checkbox' 
+ t 'properties.color' 
+ f.text_field :color, :index => pv.id 
+ t "properties.icon_url" 
+ f.select :icon_url, task_icon_options(pv), {}, { :index => pv.id } 
+ end 
+ if current_user.company.use_score_rules? 
+ container_name 
+ container_id 
+ 
+ end 
+ 
+ end 
+ cit_submit_tag(@property) 
+ add_value_link 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1131,7 +1494,94 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("properties.create") 
+  form_for(@property, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ t("properties.name") 
+ f.text_field :name 
+ t("properties.mandatory") 
+ f.check_box :mandatory 
+ t("properties.default_sort") 
+ f.check_box :default_sort 
+ t("properties.default_color") 
+ f.check_box :default_color 
+ t("properties.possible_values") 
+ @property.property_values.each do |pv| 
+  pv.id 
+ pv.id 
+
+     prefix = "property_values"
+     prefix = "new_#{ prefix }" if pv.new_record?
+   
+ fields_for(prefix, pv) do |f| 
+ t "properties.value" 
+ f.text_field :value, :index => pv.id 
+ sortable_handle_tag(pv) 
+ link_to "Remove value", "#", :class => "remove_property_value_link" 
+ t 'properties.default' 
+ f.check_box :default, :index => pv.id, :class => 'default nested-checkbox' 
+ t 'properties.color' 
+ f.text_field :color, :index => pv.id 
+ t "properties.icon_url" 
+ f.select :icon_url, task_icon_options(pv), {}, { :index => pv.id } 
+ end 
+ if current_user.company.use_score_rules? 
+ container_name 
+ container_id 
+ 
+ end 
+ 
+ end 
+ cit_submit_tag(@property) 
+ add_value_link 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1349,7 +1799,94 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("properties.edit") 
+  form_for(@property, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ t("properties.name") 
+ f.text_field :name 
+ t("properties.mandatory") 
+ f.check_box :mandatory 
+ t("properties.default_sort") 
+ f.check_box :default_sort 
+ t("properties.default_color") 
+ f.check_box :default_color 
+ t("properties.possible_values") 
+ @property.property_values.each do |pv| 
+  pv.id 
+ pv.id 
+
+     prefix = "property_values"
+     prefix = "new_#{ prefix }" if pv.new_record?
+   
+ fields_for(prefix, pv) do |f| 
+ t "properties.value" 
+ f.text_field :value, :index => pv.id 
+ sortable_handle_tag(pv) 
+ link_to "Remove value", "#", :class => "remove_property_value_link" 
+ t 'properties.default' 
+ f.check_box :default, :index => pv.id, :class => 'default nested-checkbox' 
+ t 'properties.color' 
+ f.text_field :color, :index => pv.id 
+ t "properties.icon_url" 
+ f.select :icon_url, task_icon_options(pv), {}, { :index => pv.id } 
+ end 
+ if current_user.company.use_score_rules? 
+ container_name 
+ container_id 
+ 
+ end 
+ 
+ end 
+ cit_submit_tag(@property) 
+ add_value_link 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  

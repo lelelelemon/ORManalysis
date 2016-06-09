@@ -202,7 +202,52 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("work_logs.title", title: Setting.productName) 
+ t("work_logs.new_title") 
+ form_for(@log, :as => :work_log, :html => {:class => "form-horizontal"}) do |f| 
+  hidden_field_tag :task_id, @log.task.task_num 
+ if current_user.option_tracktime.to_i == 1 
+ label :started_at, @log.human_name(:started_at) 
+ if @log.new_record? 
+ text_field(:work_log, :started_at, :value => Time.now.strftime("#{current_user.date_format} #{current_user.time_format}")) 
+ else 
+ text_field(:work_log, :started_at, :value => @log.started_at.strftime("#{current_user.date_format} #{current_user.time_format}")) 
+ end 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ if @log.worktime? 
+ label :work_log, :customer_name, t("work_logs.client") 
+ select :work_log, :customer_id, work_log_customer_options(@log) 
+ t("work_logs.time_worked") 
+ text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
+            :size => 10, :rel => 'tooltip', :title => t("work_logs.time_worked_tooltip"), "data-placement" => "right") 
+ end 
+ end 
+ @log.human_name :body 
+ text_area(:work_log, :body, :rows => 10, :value => @log.body, :class => "input-xxlarge") 
+ 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -419,7 +464,52 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("work_logs.title", title: Setting.productName) 
+ t("work_logs.new_title") 
+ form_for(@log, :as => :work_log, :html => {:class => "form-horizontal"}) do |f| 
+  hidden_field_tag :task_id, @log.task.task_num 
+ if current_user.option_tracktime.to_i == 1 
+ label :started_at, @log.human_name(:started_at) 
+ if @log.new_record? 
+ text_field(:work_log, :started_at, :value => Time.now.strftime("#{current_user.date_format} #{current_user.time_format}")) 
+ else 
+ text_field(:work_log, :started_at, :value => @log.started_at.strftime("#{current_user.date_format} #{current_user.time_format}")) 
+ end 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ if @log.worktime? 
+ label :work_log, :customer_name, t("work_logs.client") 
+ select :work_log, :customer_id, work_log_customer_options(@log) 
+ t("work_logs.time_worked") 
+ text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
+            :size => 10, :rel => 'tooltip', :title => t("work_logs.time_worked_tooltip"), "data-placement" => "right") 
+ end 
+ end 
+ @log.human_name :body 
+ text_area(:work_log, :body, :rows => 10, :value => @log.body, :class => "input-xxlarge") 
+ 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -627,7 +717,53 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("work_logs.title", title: Setting.productName) 
+ t("work_logs.edit_title") 
+ @log.task 
+ form_for(@log, :as => :work_log, :html => {:class => "form-horizontal"}) do |f| 
+  hidden_field_tag :task_id, @log.task.task_num 
+ if current_user.option_tracktime.to_i == 1 
+ label :started_at, @log.human_name(:started_at) 
+ if @log.new_record? 
+ text_field(:work_log, :started_at, :value => Time.now.strftime("#{current_user.date_format} #{current_user.time_format}")) 
+ else 
+ text_field(:work_log, :started_at, :value => @log.started_at.strftime("#{current_user.date_format} #{current_user.time_format}")) 
+ end 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ if @log.worktime? 
+ label :work_log, :customer_name, t("work_logs.client") 
+ select :work_log, :customer_id, work_log_customer_options(@log) 
+ t("work_logs.time_worked") 
+ text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
+            :size => 10, :rel => 'tooltip', :title => t("work_logs.time_worked_tooltip"), "data-placement" => "right") 
+ end 
+ end 
+ @log.human_name :body 
+ text_area(:work_log, :body, :rows => 10, :value => @log.body, :class => "input-xxlarge") 
+ 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -844,7 +980,53 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("work_logs.title", title: Setting.productName) 
+ t("work_logs.edit_title") 
+ @log.task 
+ form_for(@log, :as => :work_log, :html => {:class => "form-horizontal"}) do |f| 
+  hidden_field_tag :task_id, @log.task.task_num 
+ if current_user.option_tracktime.to_i == 1 
+ label :started_at, @log.human_name(:started_at) 
+ if @log.new_record? 
+ text_field(:work_log, :started_at, :value => Time.now.strftime("#{current_user.date_format} #{current_user.time_format}")) 
+ else 
+ text_field(:work_log, :started_at, :value => @log.started_at.strftime("#{current_user.date_format} #{current_user.time_format}")) 
+ end 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ if @log.worktime? 
+ label :work_log, :customer_name, t("work_logs.client") 
+ select :work_log, :customer_id, work_log_customer_options(@log) 
+ t("work_logs.time_worked") 
+ text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
+            :size => 10, :rel => 'tooltip', :title => t("work_logs.time_worked_tooltip"), "data-placement" => "right") 
+ end 
+ end 
+ @log.human_name :body 
+ text_area(:work_log, :body, :rows => 10, :value => @log.body, :class => "input-xxlarge") 
+ 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  

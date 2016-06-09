@@ -169,7 +169,64 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("snippets.snippets") 
+ link_to t("snippets.new_snippet"), new_snippet_path, :class => "btn pull-right" 
+ t("snippets.name") 
+ t("snippets.body") 
+ @snippets.each do |snippet| 
+ hidden_field_tag("snippet_id", snippet.id) 
+ hidden_field_tag("snippet[position]", snippet.position)
+ image_tag('drag_drop.png')
+ link_to snippet.name, snippet_path(snippet) 
+ truncate(snippet.body, :length => 40) 
+ link_to '<i class="icon-pencil"></i>'.html_safe, edit_snippet_path(snippet) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -335,7 +392,56 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ @snippet.name 
+ @snippet.body.gsub("\n", "<br/>").html_safe 
+ link_to t("button.edit"), :action => 'edit', :id => @snippet 
+ link_to t("button.delete"), { :action => 'destroy', :id => @snippet}, :confirm => t("shared.are_you_sure"), :method=> :delete 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -516,7 +622,71 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("snippets.create_snippet") 
+  form_for(@snippet) do |f| 
+ if @snippet.errors.any? 
+ t("shared.#{pluralize(@snippet.errors.count, "error")}") 
+ t("snippets.error_msg") 
+ @snippet.errors.full_messages.each do |msg| 
+ msg 
+ end 
+ end 
+ f.label t("snippets.name") 
+ f.text_field :name, :class => "required input-xxlarge" 
+ f.label t("snippets.body") 
+ f.text_area :body, :style => "width:100%;", :class => "required" 
+ f.submit :class => "btn btn-primary" 
+ unless @snippet.new_record? 
+ link_to t("button.delete"), snippet_path(@snippet), :method => "delete", :class => "btn btn-danger", :confirm => t("shared.are_you_sure") 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -692,7 +862,71 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("snippets.edit_snippet") 
+  form_for(@snippet) do |f| 
+ if @snippet.errors.any? 
+ t("shared.#{pluralize(@snippet.errors.count, "error")}") 
+ t("snippets.error_msg") 
+ @snippet.errors.full_messages.each do |msg| 
+ msg 
+ end 
+ end 
+ f.label t("snippets.name") 
+ f.text_field :name, :class => "required input-xxlarge" 
+ f.label t("snippets.body") 
+ f.text_area :body, :style => "width:100%;", :class => "required" 
+ f.submit :class => "btn btn-primary" 
+ unless @snippet.new_record? 
+ link_to t("button.delete"), snippet_path(@snippet), :method => "delete", :class => "btn btn-danger", :confirm => t("shared.are_you_sure") 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -876,7 +1110,71 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("snippets.create_snippet") 
+  form_for(@snippet) do |f| 
+ if @snippet.errors.any? 
+ t("shared.#{pluralize(@snippet.errors.count, "error")}") 
+ t("snippets.error_msg") 
+ @snippet.errors.full_messages.each do |msg| 
+ msg 
+ end 
+ end 
+ f.label t("snippets.name") 
+ f.text_field :name, :class => "required input-xxlarge" 
+ f.label t("snippets.body") 
+ f.text_area :body, :style => "width:100%;", :class => "required" 
+ f.submit :class => "btn btn-primary" 
+ unless @snippet.new_record? 
+ link_to t("button.delete"), snippet_path(@snippet), :method => "delete", :class => "btn btn-danger", :confirm => t("shared.are_you_sure") 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1072,7 +1370,71 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("snippets.edit_snippet") 
+  form_for(@snippet) do |f| 
+ if @snippet.errors.any? 
+ t("shared.#{pluralize(@snippet.errors.count, "error")}") 
+ t("snippets.error_msg") 
+ @snippet.errors.full_messages.each do |msg| 
+ msg 
+ end 
+ end 
+ f.label t("snippets.name") 
+ f.text_field :name, :class => "required input-xxlarge" 
+ f.label t("snippets.body") 
+ f.text_area :body, :style => "width:100%;", :class => "required" 
+ f.submit :class => "btn btn-primary" 
+ unless @snippet.new_record? 
+ link_to t("button.delete"), snippet_path(@snippet), :method => "delete", :class => "btn btn-danger", :confirm => t("shared.are_you_sure") 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  

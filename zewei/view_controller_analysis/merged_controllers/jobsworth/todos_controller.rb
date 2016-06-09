@@ -168,7 +168,11 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @task.id 
+ render :partial => "todos/todo.html.erb", :collection => @task.todos.order("todos.id") 
+ text_field_tag("todo[name]", "", :size => 50, :placeholder => t("todos.add_todo_placeholder")) 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -369,7 +373,25 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ todo.position 
+ todo.css_classes
+ new_todo_open_close_check_box(todo) 
+ hidden_field_tag "todos[][creator_id]", todo.creator_id, :class => "creator_id" 
+ hidden_field_tag "todos[][completed_by_user_id]", todo.completed_by_user_id, :class => "completed_by_user_id" 
+ hidden_field_tag "todos[][completed_at]", todo.completed_at, :class => "completed_at" 
+h todo.name 
+ text_field_tag("todos[][name]", todo.name) 
+ link_to(t("button.cancel"), "#", :class => "toggle-todo-edit") 
+ if todo.done? 
+h "[#{ formatted_datetime_for_current_user(tz.utc_to_local(todo.completed_at)) }]" 
+h "[#{ todo.completed_by_user.name }]" if todo.completed_by_user 
+ else 
+ link_to('<i class="icon-pencil"></i>'.html_safe, "#", :class => "toggle-todo-edit") 
+ end 
+ link_to '<i class="icon-remove"></i>'.html_safe, "#", :rel => "tooltip", :title => t("todos.delete_todo_html", todo: h(todo.name)),
+              :onClick => "jQuery(this).parent().remove(); return false;"
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -568,7 +590,31 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @task.todos.each do |todo| 
+  todo.position 
+ todo.css_classes
+ new_todo_open_close_check_box(todo) 
+ hidden_field_tag "todos[][creator_id]", todo.creator_id, :class => "creator_id" 
+ hidden_field_tag "todos[][completed_by_user_id]", todo.completed_by_user_id, :class => "completed_by_user_id" 
+ hidden_field_tag "todos[][completed_at]", todo.completed_at, :class => "completed_at" 
+h todo.name 
+ text_field_tag("todos[][name]", todo.name) 
+ link_to(t("button.cancel"), "#", :class => "toggle-todo-edit") 
+ if todo.done? 
+h "[#{ formatted_datetime_for_current_user(tz.utc_to_local(todo.completed_at)) }]" 
+h "[#{ todo.completed_by_user.name }]" if todo.completed_by_user 
+ else 
+ link_to('<i class="icon-pencil"></i>'.html_safe, "#", :class => "toggle-todo-edit") 
+ end 
+ link_to '<i class="icon-remove"></i>'.html_safe, "#", :rel => "tooltip", :title => t("todos.delete_todo_html", todo: h(todo.name)),
+              :onClick => "jQuery(this).parent().remove(); return false;"
+ 
+ end 
+ template = render_to_string(:partial => "todos/new_todo", :locals => {:todo => Todo.new(:creator_id => current_user.id )}) 
+ template 
+ text_field_tag("todo[name]", "", :size => 50, :placeholder => t("todos.add_todo_placeholder")) 
+ 
  current_user.id 
  current_user.dateFormat 
  

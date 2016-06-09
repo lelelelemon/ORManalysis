@@ -230,7 +230,22 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ if @task 
+ @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
+ else 
+ @page_title = t("tasks.index_title", title: Setting.productName) 
+ end 
+   
+ 
+ t("tasks.icon_list") 
+ t("tasks.icon_calendar") 
+ t("tasks.icon_gantt") 
+ groupByOptions.html_safe 
+ if @task 
+ @task.task_num 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -442,7 +457,22 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ if @task 
+ @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
+ else 
+ @page_title = t("tasks.index_title", title: Setting.productName) 
+ end 
+   
+ 
+ t("tasks.icon_list") 
+ t("tasks.icon_calendar") 
+ t("tasks.icon_gantt") 
+ groupByOptions.html_safe 
+ if @task 
+ @task.task_num 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -619,7 +649,17 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("tasks.new_title", title: Setting.productName) 
+ if controller.class == TaskTemplatesController 
+ action = '/task_templates/create' 
+ else 
+ action = '/tasks/create' 
+ end 
+ form_tag(action, { :multipart => "true", :id => "taskform" }) do 
+ render_task_form(false) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -823,7 +863,17 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("tasks.new_title", title: Setting.productName) 
+ if controller.class == TaskTemplatesController 
+ action = '/task_templates/create' 
+ else 
+ action = '/tasks/create' 
+ end 
+ form_tag(action, { :multipart => "true", :id => "taskform" }) do 
+ render_task_form(false) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1037,7 +1087,15 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("tasks.calendar_title", title: Setting.productName) 
+   
+ 
+ t("tasks.icon_list") 
+ t("tasks.icon_calendar") 
+ t("tasks.icon_gantt") 
+ select_tag("chngroup", options_for_changegroup, :onChange => "change_group()") 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1228,7 +1286,31 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @tasks.collect{|task|
+  customClass = (task.due_at.nil? or task.estimate_date.nil? or task.estimate_date < task.due_at) ? "ganttOrange" : "ganttRed"
+  if task.resolved?
+    to = tz.utc_to_local(task.updated_at).to_i * 1000
+    from = to - task.duration * 60 * 1000
+    customClass = "ganttGray"
+  else
+    from = tz.utc_to_local(task.estimate_date || Time.now).to_i * 1000
+    to = from + task.duration * 60 * 1000
+  end
+
+  {
+   :name => "",
+   :desc => link_to("#{task.name}", edit_task_path(task.task_num)),
+   :values => [ {
+     :from => "/Date(#{from})/",
+     :to => "/Date(#{to})/",
+     :customClass => customClass,
+     :dataObj => {content:task_detail(task, current_user), title: truncate(task.name, :length => 25)}
+   }]
+  }
+}.to_json.html_safe
+
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1428,7 +1510,12 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ link_to '<i class="icon-remove"></i>'.html_safe, :class => "remove_link pull-right" 
+ hidden_field_tag("resource[ids][]", resource.id) 
+ resource.id 
+ link_to resource, edit_resource_path(resource), :target=> "_blank" 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1600,7 +1687,17 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ dependency.id 
+ if perms.empty? or perms['edit'].empty? 
+ dependency.id 
+ end 
+ if dependency.done? 
+ image_tag "tick.png", :border=> "0" 
+ end 
+ link_to_task(dependency) 
+ hidden_field_tag("dependencies[]", dependency.task_num) 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1768,7 +1865,17 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ dependency.id 
+ if perms.empty? or perms['edit'].empty? 
+ dependency.id 
+ end 
+ if dependency.done? 
+ image_tag "tick.png", :border=> "0" 
+ end 
+ link_to_task(dependency) 
+ hidden_field_tag("dependencies[]", dependency.task_num) 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1996,7 +2103,63 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
+  attrs = ajax ? {:remote => true, :'data-type' => "json"} : {} 
+ show_timer = current_user.option_tracktime.to_i == 1 && !(@current_sheet && @current_sheet.task) && controller.class == TasksController 
+ form_tag({ :action => 'update', :id => @task}, { :multipart => "true", :id => "taskform", :method => :put }.merge(attrs)) do 
+ render_task_form(show_timer) 
+ end 
+ 
+  last = @task.work_logs.worktimes.where(:user_id => current_user.id).last
+  # set default log settings
+  if last
+    @log = last.dup
+    @log.custom_attribute_values = last.custom_attribute_values
+  else
+    @log  = current_user.company.work_logs.build()
+    @log.task = @task
+    @log.started_at = Time.now.utc - @log.duration
+  end
+
+ t("tasks.new_log_entry") 
+ @log.task 
+ hidden_field_tag :task_id, @log.task.task_num 
+ label :started_at, t("tasks.start") 
+ text_field :work_log, :started_at, :value => tz.utc_to_local(Time.now.utc).strftime("#{current_user.date_format} #{current_user.time_format}"), :size => 20 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ label :work_log, :customer_name, t("tasks.client") 
+ select :work_log, :customer_id, work_log_customer_options(@log) 
+ t("tasks.time_worked") 
+ text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
+             :size => 10, :rel => 'tooltip', :title => t("tasks.work_log_tooltip"), "data-placement" => "right") 
+ t("button.ok") 
+ t("button.cancel") 
+ 
+ if show_timer 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -2215,7 +2378,63 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
+  attrs = ajax ? {:remote => true, :'data-type' => "json"} : {} 
+ show_timer = current_user.option_tracktime.to_i == 1 && !(@current_sheet && @current_sheet.task) && controller.class == TasksController 
+ form_tag({ :action => 'update', :id => @task}, { :multipart => "true", :id => "taskform", :method => :put }.merge(attrs)) do 
+ render_task_form(show_timer) 
+ end 
+ 
+  last = @task.work_logs.worktimes.where(:user_id => current_user.id).last
+  # set default log settings
+  if last
+    @log = last.dup
+    @log.custom_attribute_values = last.custom_attribute_values
+  else
+    @log  = current_user.company.work_logs.build()
+    @log.task = @task
+    @log.started_at = Time.now.utc - @log.duration
+  end
+
+ t("tasks.new_log_entry") 
+ @log.task 
+ hidden_field_tag :task_id, @log.task.task_num 
+ label :started_at, t("tasks.start") 
+ text_field :work_log, :started_at, :value => tz.utc_to_local(Time.now.utc).strftime("#{current_user.date_format} #{current_user.time_format}"), :size => 20 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ label :work_log, :customer_name, t("tasks.client") 
+ select :work_log, :customer_id, work_log_customer_options(@log) 
+ t("tasks.time_worked") 
+ text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
+             :size => 10, :rel => 'tooltip', :title => t("tasks.work_log_tooltip"), "data-placement" => "right") 
+ t("button.ok") 
+ t("button.cancel") 
+ 
+ if show_timer 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -2474,7 +2693,63 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("tasks.title", num: @task.task_num, title: "#{@task.name} - #{Setting.productName}") 
+  attrs = ajax ? {:remote => true, :'data-type' => "json"} : {} 
+ show_timer = current_user.option_tracktime.to_i == 1 && !(@current_sheet && @current_sheet.task) && controller.class == TasksController 
+ form_tag({ :action => 'update', :id => @task}, { :multipart => "true", :id => "taskform", :method => :put }.merge(attrs)) do 
+ render_task_form(show_timer) 
+ end 
+ 
+  last = @task.work_logs.worktimes.where(:user_id => current_user.id).last
+  # set default log settings
+  if last
+    @log = last.dup
+    @log.custom_attribute_values = last.custom_attribute_values
+  else
+    @log  = current_user.company.work_logs.build()
+    @log.task = @task
+    @log.started_at = Time.now.utc - @log.duration
+  end
+
+ t("tasks.new_log_entry") 
+ @log.task 
+ hidden_field_tag :task_id, @log.task.task_num 
+ label :started_at, t("tasks.start") 
+ text_field :work_log, :started_at, :value => tz.utc_to_local(Time.now.utc).strftime("#{current_user.date_format} #{current_user.time_format}"), :size => 20 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ label :work_log, :customer_name, t("tasks.client") 
+ select :work_log, :customer_id, work_log_customer_options(@log) 
+ t("tasks.time_worked") 
+ text_field(:work_log, :duration, :value => TimeParser.format_duration(@log.duration),
+             :size => 10, :rel => 'tooltip', :title => t("tasks.work_log_tooltip"), "data-placement" => "right") 
+ t("button.ok") 
+ t("button.cancel") 
+ 
+ if show_timer 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -2704,7 +2979,30 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+
+   user = notification
+   classname = "watcher clearfix access_level_#{user.access_level_id}"
+   is_assigned = @task.owners.include?(user)
+   classname += " is_assigned" if is_assigned
+
+ classname 
+ hidden_field_tag("users[]", user.id, :class => "watcher_id") 
+ hidden_field_tag("assigned[]", user.id, :class => "assigned",
+      :disabled => !@task.owners.include?(user)) 
+ unread_toggle_for_task_and_user(@task, user) 
+
+      content = content_tag(:span, t("tasks.assigned"), :class => "label label-success")
+
+      if @task.project.nil? or current_user.can?(@task.project, "reassign")
+        content = link_to(content, "#", :class => "toggle-link")
+      end
+    
+ content 
+ active_class = user.active ? "":"inactive" 
+ link_to user.to_html, "/users/edit/#{user.id}", :class => "username pull-left #{active_class}", :target => "_blank" 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "removeLink") 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -2878,7 +3176,12 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ task_customer.id
+ hidden_field_tag "task[customer_attributes][#{ task_customer.id }]", "1" 
+ link_to task_customer.name, {:controller => "customers", :action => "edit", :id => task_customer} 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "removeLink") 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -3055,7 +3358,12 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ task_customer.id
+ hidden_field_tag "task[customer_attributes][#{ task_customer.id }]", "1" 
+ link_to task_customer.name, {:controller => "customers", :action => "edit", :id => task_customer} 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "removeLink") 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -3381,7 +3689,17 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("tasks.new_title", title: Setting.productName) 
+ if controller.class == TaskTemplatesController 
+ action = '/task_templates/create' 
+ else 
+ action = '/tasks/create' 
+ end 
+ form_tag(action, { :multipart => "true", :id => "taskform" }) do 
+ render_task_form(false) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -3568,7 +3886,24 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("tasks.score") 
+ @task.weight 
+ t("tasks.score_adjustment") 
+ @task.weight_adjustment 
+ t("tasks.score_name") 
+ t("tasks.score") 
+ t("tasks.score_exponent") 
+ t("tasks.score_type") 
+ t("tasks.score_final_value") 
+ @task.score_rules.each do |score_rule| 
+ score_rule.name 
+ score_rule.score 
+ score_rule.exponent 
+ ScoreRuleTypes::get_name_of(score_rule.score_type) 
+ score_rule.final_value 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -3766,7 +4101,17 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("tasks.new_title", title: Setting.productName) 
+ if controller.class == TaskTemplatesController 
+ action = '/task_templates/create' 
+ else 
+ action = '/tasks/create' 
+ end 
+ form_tag(action, { :multipart => "true", :id => "taskform" }) do 
+ render_task_form(false) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  

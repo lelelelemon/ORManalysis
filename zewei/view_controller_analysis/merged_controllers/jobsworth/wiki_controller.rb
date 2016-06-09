@@ -178,7 +178,24 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("wiki.title", title: "#{@page.name} - #{Setting.productName}") 
+ @page.name 
+ t("wiki.linking_to_pages") 
+ t("wiki.link_helper") 
+ form_tag :action => 'create', :id => @page.name do 
+ if @page.revisions.empty? 
+ t("wiki.no_page_yet") 
+ else 
+ @page.to_plain_html(params[:rev].to_i) 
+ end 
+ t("wiki.edit_summary") 
+ submit_tag t("button.save"), :class => 'btn'  
+ unless @page.revisions.empty?
+ link_to t("button.cancel"), :controller => "wiki", :action => "cancel", :id => @page.name 
+ end 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -376,7 +393,45 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("wiki.title", title: Setting.productName) 
+
+    headings = []
+    src = @page.to_html(params[:rev].to_i)
+    src.gsub!(/<h(\d)>([^<]+)<\/h\d>/m) { |m|
+      headings << m
+      m.gsub(/<h(\d)>([^<]+)<\/h\d>/m, "<h\\1 id=\"toc_#{headings.size-1}\">\\2</h\\1>")
+    }
+    if headings.size > 0
+
+ @page.name 
+ headings.each_with_index do |head,idx| 
+idx
+ head.html_safe 
+ end 
+ end 
+ @page.name 
+ src.html_safe 
+ if !@page.locked? || @page.locked_by.id == current_user.id 
+ if params[:rev].to_i > 0 
+ link_to t("button.edit"), :controller => "wiki", :action => "edit", :id => @page.name, :rev => params[:rev] 
+ else 
+ link_to t("button.edit"), :controller => "wiki", :action => "edit", :id => @page.name 
+ end 
+ end 
+ if @page.pages_linking_here.size > 0 
+ t("wiki.linked_form") 
+ @page.pages_linking_here.collect {|p| p.to_url }.join(', ').html_safe 
+ end 
+ unless @page.new_record? 
+ link_to t("wiki.revision") + " #{(params[:rev].to_i > 0) ? params[:rev].to_i : @page.revisions.size}", :controller => 'wiki', :action => 'versions', :id => @page.name 
+ tz.utc_to_local(@page.revision(params[:rev].to_i).created_at).strftime("#{current_user.time_format} #{current_user.date_format} ") + t("shared.by", user: "#{@page.revision(params[:rev].to_i).user ? @page.revision(params[:rev].to_i).user.name : "Unknown"}") 
+ end 
+ if @page.locked? 
+ t("wiki.under_revision_by", user: @page.locked_by.name) 
+ tz.utc_to_local(@page.locked_at).strftime(current_user.time_format) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -599,7 +654,24 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("wiki.title", title: "#{@page.name} - #{Setting.productName}") 
+ @page.name 
+ t("wiki.linking_to_pages") 
+ t("wiki.link_helper") 
+ form_tag :action => 'create', :id => @page.name do 
+ if @page.revisions.empty? 
+ t("wiki.no_page_yet") 
+ else 
+ @page.to_plain_html(params[:rev].to_i) 
+ end 
+ t("wiki.edit_summary") 
+ submit_tag t("button.save"), :class => 'btn'  
+ unless @page.revisions.empty?
+ link_to t("button.cancel"), :controller => "wiki", :action => "cancel", :id => @page.name 
+ end 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -804,7 +876,36 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("wiki.revisions_title", title: "#{@page.name} - #{Setting.productName}")  
+ t("wiki.revisions") 
+ @page.name 
+ if @page.revisions.empty? 
+ t("wiki.no_page_yet") 
+ form_tag :action => 'create', :id => @page.name do 
+ t("button.create") 
+ t("button.or")
+ link_to t("button.cancel"), :controller => "wiki", :action => "cancel_create", :id => @page.name 
+ end 
+ else 
+
+  rev_num = @page.revisions.size
+  @page.revisions.reverse.each do |revision|
+
+ link_to( t("wiki.revision_n", n: rev_num), :controller => "wiki", :action => "show", :id => @page.name, :rev => rev_num )
+ t("shared.time_ago", time: time_ago_in_words(revision.created_at, false)) 
+ t("shared.by_html", user: revision.user.name) 
+ (" <small> - #{h(revision.change)}</small>").html_safe if revision.change && revision.change.length > 0 
+
+  rev_num = rev_num - 1
+  end
+
+ if @page.locked? 
+ t("wiki.under_revision_by", user: @page.locked_by.name) 
+ tz.utc_to_local(@page.locked_at).strftime(current_user.time_format) 
+ end 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  

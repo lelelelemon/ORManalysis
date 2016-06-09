@@ -284,7 +284,93 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ for task in tasks 
+  if session[:hide_deferred].to_i == 0 || task.snoozed? 
+task.id 
+
+ depth ||= 1
+ depth = 1 if depth < 1
+ classes = ""
+
+ can_complete = { :disabled => "disabled" } unless current_user.can?(task.project, 'close')
+ can_complete ||= {}
+
+ can_work = { :disabled => "disabled" } unless current_user.can?(task.project, 'work')
+ can_work ||= {}
+
+ classes << " #{task.project.to_css_name}"
+ classes << " override_filter" if defined?(override_filter) && override_filter
+ classes << " waiting_deferred" unless task.snoozed?
+
+ classes << " task_active_others" if task.worked_on?
+ classes << " task_active" if @current_sheet && @current_sheet.task_id == task.id
+ classes << " task_done" if task.done?
+ classes << " task_paused" if @current_sheet && @current_sheet.task_id == task.id && @current_sheet.paused?
+ classes << " #{task.dom_id}"
+ classes << " unread" if task.unread?(current_user)
+
+classes
+ color_style(task) 
+ if depth > 1 
+ 8 + (depth - 1) * 16
+ end 
+ @task = task 
+task.dom_id
+ task_icon(task) 
+ if (@current_sheet && @current_sheet.task_id == task.id) || task.done? 
+task.id
+ if !(@current_sheet && @current_sheet.task_id == task.id) 
+ if task.done? 
+ if task.hidden == 0 
+ link_to_function image_tag("folder_add.png", :border => 0, :title => t("tasks.archive_task_html", task: task.name), :rel => "tooltip"),
+               "jQuery.ajax({url: '/tasks/ajax_hide/#{task.id}', success:  function(response){ jQuery('#task_#{task.id}').fadeOut(500); }})" 
+ else 
+ link_to_function image_tag("folder_go.png", :border => 0, :title => t("tasks.restore_task_html", task: task.name) , :rel => "tooltip"),
+              "jQuery.ajax({url: '/tasks/ajax_restore/#{task.id}', success:  function(response){ jQuery('#task_#{task.id}').fadeOut(500); }})" 
+ end 
+ end 
+ end 
+ end 
+task.id
+ image_tag('drag.gif', :border => 0) 
+ image_tag "spacer.gif", :width => "16", :height => "16" 
+ avatar_for task.users.first, 25 unless task.users.empty? 
+ if controller.controller_name != 'search' 
+ link_to_task(task) 
+ else 
+ link_to_task(task, false, @keys)  
+ end 
+  if current_user.option_tracktime.to_i == 1 
+ if task.duration.to_i > 0 
+ worked_and_duration_class(task) 
+"(#{TimeParser.format_duration(task.worked_minutes)} / #{TimeParser.format_duration( task.duration )})"
+ end 
+ "(#{TimeParser.format_duration(task.worked_minutes)})" if( task.duration.to_i == 0 && task.worked_minutes > 0) 
+ end 
+ unless task.milestone_id.to_i == 0 
+ task.milestone.name 
+ end 
+ name = t("tasks.no_one")
+      name = task.users.collect{|u| u.name}.join(', ') unless task.users.empty?
+   
+ if controller.controller_name != 'search' 
+ if task.project 
+ task.project.full_name 
+ task.tags.each do |t| 
+ t.name 
+ t.name.capitalize.gsub(/\"/,'&quot;'.html_safe) 
+ end 
+ end 
+ else 
+ highlight_all(task.full_name_without_links, @keys) 
+ end 
+ name 
+ due_in_words(task) unless task.due_date && task.done?
+ "[#{overdue_time(task.completed_at)}]" if task.done?
+ end 
+end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -477,7 +563,31 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ form_tag({:controller => 'widgets', :action => 'create' }, :id => "add_widget", :remote => true, :class => "form-inline") do  
+ t("widgets.widget_title") 
+ text_field 'widget', 'name', {:size => 15} 
+
+    gadgets = [
+                [t("widgets.tasks"),0],
+                [t("widgets.due_tasks"),7],
+                [t("widgets.comments"),6],
+                [t("widgets.time_chart"),3],
+                [t("widgets.burndown"),4],
+                [t("widgets.burnup"),5],
+                [t("widgets.resolution"),9],
+                [t("widgets.active_tasks"),10] ]
+
+   if current_user.widgets.where("widget_type = 8").count == 0
+     gadgets << [t("widgets.google_gadget"),8]
+   end
+  
+ t("widgets.type") 
+ select( 'widget', 'widget_type', gadgets) 
+ submit_tag t("button.create"), :class => "btn" 
+ link_to_function(t("button.cancel"), "jQuery('#add-widget').addClass('hide');") 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  

@@ -311,7 +311,31 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+  hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_id]", qualifier.qualifiable_id, :class => "id" 
+ hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_type]", qualifier.qualifiable_type, :class => "type" 
+ hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_column]", qualifier.qualifiable_column, :class => "column" 
+ hidden_field_tag "task_filter[qualifiers_attributes][][reversed]", qualifier.reversed, :class => "reversed" 
+ link_to(image_tag("invert.png"), "#", :class => "reverse-filter-item-link") 
+ qualifier_name(qualifier) 
+ qualifier_value(qualifier) 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "pull-right remove-search-filter") 
+ 
+  hidden_field_tag "task_filter[keywords_attributes][][word]", keyword.word 
+ hidden_field_tag "task_filter[keywords_attributes][][reversed]", keyword.reversed, :class => "reversed" 
+ link_to(image_tag("invert.png"), "#", :class => "reverse-filter-item-link") 
+ keyword.reversed? ? t("task_filters.have_not_keyword") : t("task_filters.keyword")  
+ keyword.word 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "pull-right remove-search-filter") 
+ 
+  hidden_field_tag "task_filter[unread_only]", false 
+ if task_filter.unread_only? 
+ hidden_field_tag "task_filter[unread_only]", true 
+ t("task_filters.my_unread_only") 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "pull-right remove-search-filter") 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -504,7 +528,31 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+  hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_id]", qualifier.qualifiable_id, :class => "id" 
+ hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_type]", qualifier.qualifiable_type, :class => "type" 
+ hidden_field_tag "task_filter[qualifiers_attributes][][qualifiable_column]", qualifier.qualifiable_column, :class => "column" 
+ hidden_field_tag "task_filter[qualifiers_attributes][][reversed]", qualifier.reversed, :class => "reversed" 
+ link_to(image_tag("invert.png"), "#", :class => "reverse-filter-item-link") 
+ qualifier_name(qualifier) 
+ qualifier_value(qualifier) 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "pull-right remove-search-filter") 
+ 
+  hidden_field_tag "task_filter[keywords_attributes][][word]", keyword.word 
+ hidden_field_tag "task_filter[keywords_attributes][][reversed]", keyword.reversed, :class => "reversed" 
+ link_to(image_tag("invert.png"), "#", :class => "reverse-filter-item-link") 
+ keyword.reversed? ? t("task_filters.have_not_keyword") : t("task_filters.keyword")  
+ keyword.word 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "pull-right remove-search-filter") 
+ 
+  hidden_field_tag "task_filter[unread_only]", false 
+ if task_filter.unread_only? 
+ hidden_field_tag "task_filter[unread_only]", true 
+ t("task_filters.my_unread_only") 
+ link_to('<i class="icon-remove"></i>'.html_safe, "#", :class => "pull-right remove-search-filter") 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -693,7 +741,21 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("task_filters.filters") 
+ t("task_filters.save_current") 
+ filters_user_path(current_user) 
+ t("task_filters.manage") 
+ TaskFilter.recent_for(current_user).each do |filter| 
+ select_task_filter_link(filter) 
+ end 
+ link_to_open_tasks 
+ link_to_open_tasks(current_user) 
+ link_to_unread_tasks(current_user) 
+ current_user.visible_task_filters.each do |tf| 
+ select_task_filter_link(tf) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -879,7 +941,21 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("task_filters.filters") 
+ t("task_filters.save_current") 
+ filters_user_path(current_user) 
+ t("task_filters.manage") 
+ TaskFilter.recent_for(current_user).each do |filter| 
+ select_task_filter_link(filter) 
+ end 
+ link_to_open_tasks 
+ link_to_open_tasks(current_user) 
+ link_to_unread_tasks(current_user) 
+ current_user.visible_task_filters.each do |tf| 
+ select_task_filter_link(tf) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  

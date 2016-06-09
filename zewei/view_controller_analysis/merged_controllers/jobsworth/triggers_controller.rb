@@ -167,7 +167,65 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("triggers.trigger_title", title: Setting.productName) 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("triggers.triggers") 
+ link_to t("triggers.new_trigger"), new_trigger_path, :class => "btn pull-right" 
+ t("triggers.task_filter") 
+ t("triggers.fire_on") 
+ t("triggers.action") 
+ @triggers.each do |trigger| 
+h trigger.task_filter_name 
+h trigger.event_name 
+h trigger.actions.collect(&:name).join(', ') 
+ link_to t("button.destroy"), trigger, :confirm => t("shared.are_you_sure"), :method => :delete 
+ link_to t("button.edit"), edit_trigger_path(trigger) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -334,7 +392,65 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("triggers.trigger_title", title: Setting.productName) 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("triggers.triggers") 
+ link_to t("triggers.new_trigger"), new_trigger_path, :class => "btn pull-right" 
+ t("triggers.task_filter") 
+ t("triggers.fire_on") 
+ t("triggers.action") 
+ @triggers.each do |trigger| 
+h trigger.task_filter_name 
+h trigger.event_name 
+h trigger.actions.collect(&:name).join(', ') 
+ link_to t("button.destroy"), trigger, :confirm => t("shared.are_you_sure"), :method => :delete 
+ link_to t("button.edit"), edit_trigger_path(trigger) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -532,7 +648,81 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("triggers.new_trigger_title", title: Setting.productName) 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("triggers.create_trigger") 
+  form_for(@trigger, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.label :task_filter_id, t("triggers.task_filter") 
+ f.select :task_filter_id, objects_to_names_and_ids(current_user.visible_task_filters) 
+ f.label :event_id, t("triggers.event") 
+ f.select :event_id, objects_to_names_and_ids(Trigger::Event.all) 
+ t("triggers.add_action") 
+ t("shared.none") 
+ options_from_collection_for_select(Trigger::ActionFactory.all, :id, :name) 
+ @trigger.actions.each do |action| 
+ fields_for('trigger[actions_attributes]', action,  :index=>'') do |fields| 
+  render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>nil 
+ end 
+ end 
+ cit_submit_tag(f.object) 
+ end 
+ Trigger::ActionFactory.all.each do |factory| 
+factory.id
+ fields_for('trigger[actions_attributes][]', factory.build)  do |fields| 
+ render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>factory.id 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -715,7 +905,81 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("triggers.new_trigger_title", title: Setting.productName) 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("triggers.create_trigger") 
+  form_for(@trigger, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.label :task_filter_id, t("triggers.task_filter") 
+ f.select :task_filter_id, objects_to_names_and_ids(current_user.visible_task_filters) 
+ f.label :event_id, t("triggers.event") 
+ f.select :event_id, objects_to_names_and_ids(Trigger::Event.all) 
+ t("triggers.add_action") 
+ t("shared.none") 
+ options_from_collection_for_select(Trigger::ActionFactory.all, :id, :name) 
+ @trigger.actions.each do |action| 
+ fields_for('trigger[actions_attributes]', action,  :index=>'') do |fields| 
+  render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>nil 
+ end 
+ end 
+ cit_submit_tag(f.object) 
+ end 
+ Trigger::ActionFactory.all.each do |factory| 
+factory.id
+ fields_for('trigger[actions_attributes][]', factory.build)  do |fields| 
+ render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>factory.id 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -901,7 +1165,81 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("triggers.trigger_title", title: Setting.productName) 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("triggers.edit_trigger") 
+  form_for(@trigger, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.label :task_filter_id, t("triggers.task_filter") 
+ f.select :task_filter_id, objects_to_names_and_ids(current_user.visible_task_filters) 
+ f.label :event_id, t("triggers.event") 
+ f.select :event_id, objects_to_names_and_ids(Trigger::Event.all) 
+ t("triggers.add_action") 
+ t("shared.none") 
+ options_from_collection_for_select(Trigger::ActionFactory.all, :id, :name) 
+ @trigger.actions.each do |action| 
+ fields_for('trigger[actions_attributes]', action,  :index=>'') do |fields| 
+  render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>nil 
+ end 
+ end 
+ cit_submit_tag(f.object) 
+ end 
+ Trigger::ActionFactory.all.each do |factory| 
+factory.id
+ fields_for('trigger[actions_attributes][]', factory.build)  do |fields| 
+ render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>factory.id 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1095,7 +1433,81 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("triggers.new_trigger_title", title: Setting.productName) 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("triggers.create_trigger") 
+  form_for(@trigger, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.label :task_filter_id, t("triggers.task_filter") 
+ f.select :task_filter_id, objects_to_names_and_ids(current_user.visible_task_filters) 
+ f.label :event_id, t("triggers.event") 
+ f.select :event_id, objects_to_names_and_ids(Trigger::Event.all) 
+ t("triggers.add_action") 
+ t("shared.none") 
+ options_from_collection_for_select(Trigger::ActionFactory.all, :id, :name) 
+ @trigger.actions.each do |action| 
+ fields_for('trigger[actions_attributes]', action,  :index=>'') do |fields| 
+  render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>nil 
+ end 
+ end 
+ cit_submit_tag(f.object) 
+ end 
+ Trigger::ActionFactory.all.each do |factory| 
+factory.id
+ fields_for('trigger[actions_attributes][]', factory.build)  do |fields| 
+ render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>factory.id 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1291,7 +1703,81 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("triggers.trigger_title", title: Setting.productName) 
+ content_for :navigation do 
+  scripts = all_custom_scripts 
+ t("companies.admin_panel") 
+ active_class(selected, "general") 
+ link_to( t("companies.general"), edit_company_path(current_user.company) ) 
+ if current_user.company.use_score_rules? 
+ active_class(selected, "score-rules") 
+ link_to( ScoreRule.model_name.human(:count => 2), score_rules_companies_path ) 
+ end 
+ if scripts.size > 0 
+ active_class(selected, "custom-scripts") 
+ link_to( t("custom_scripts.custom_scripts"), custom_scripts_companies_path ) 
+ end 
+ active_class(selected, "templates") 
+ link_to( ::Template.model_name.human(:count => 2), task_templates_path ) 
+ active_class(selected, "triggers") 
+ link_to( Trigger.model_name.human(:count => 2), triggers_path ) 
+ if current_user.can_use_billing? 
+ active_class(selected, "services") 
+ link_to( Service.model_name.human(:count => 2), services_path ) 
+ end 
+ active_class(selected, "news-items") 
+ link_to( NewsItem.model_name.human(:count =>2), news_items_path ) 
+ active_class(selected, "snippets") 
+ link_to( Snippet.model_name.human(:count => 2), snippets_path ) 
+ active_class(selected, "orphaned-emails") 
+ link_to( t("email_addresses.orphaned_emails_link"), email_addresses_path ) 
+ t("companies.properties") 
+ active_class(selected, "users-properties") 
+ link_to t("companies.person"), "/custom_attributes/edit?type=User" 
+ active_class(selected, "customers-properties") 
+ link_to Company.model_name.human(:count => 1), "/custom_attributes/edit?type=Customer" 
+ active_class(selected, "organizational-units-properties") 
+ link_to t("companies.company_location"), "/custom_attributes/edit?type=OrganizationalUnit" 
+ active_class(selected, "work-logs-properties") 
+ link_to WorkLog.model_name.human(:count => 1), "/custom_attributes/edit?type=WorkLog" 
+ active_class(selected, "task-properties") 
+ link_to TaskRecord.model_name.human(:count => 1), properties_path 
+ if current_user.use_resources? 
+ active_class(selected, "resource-type") 
+ link_to ResourceType.model_name.human(:count => 1), resource_types_path 
+ end 
+ 
+ end 
+ t("triggers.edit_trigger") 
+  form_for(@trigger, :html => {:class => "form-horizontal"}) do |f| 
+ f.error_messages 
+ f.label :task_filter_id, t("triggers.task_filter") 
+ f.select :task_filter_id, objects_to_names_and_ids(current_user.visible_task_filters) 
+ f.label :event_id, t("triggers.event") 
+ f.select :event_id, objects_to_names_and_ids(Trigger::Event.all) 
+ t("triggers.add_action") 
+ t("shared.none") 
+ options_from_collection_for_select(Trigger::ActionFactory.all, :id, :name) 
+ @trigger.actions.each do |action| 
+ fields_for('trigger[actions_attributes]', action,  :index=>'') do |fields| 
+  render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>nil 
+ end 
+ end 
+ cit_submit_tag(f.object) 
+ end 
+ Trigger::ActionFactory.all.each do |factory| 
+factory.id
+ fields_for('trigger[actions_attributes][]', factory.build)  do |fields| 
+ render_action_partial(fields)  
+ fields.hidden_field :id 
+ fields.hidden_field :factory_id, :value=>factory.id 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  

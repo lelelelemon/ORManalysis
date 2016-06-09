@@ -203,7 +203,51 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("resources.new_title", title: "New Resource - #{Setting.productName}") 
+  form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
+ if @resource.new_record? 
+ t("resources.new") 
+ else 
+ t("resources.edit") 
+ end 
+ t("resources.name") 
+ f.text_field :name 
+ t("resources.company") 
+ f.hidden_field(:customer_id, :class => "auto_complete_id")  
+ text_field :resource_customer, :name, { :value => @resource.customer } 
+ @resource.customer.nil? ? "#" : "/customers/edit/#{@resource.customer.id}" 
+ t("resources.parent_resource") 
+ text_field :resource, :parent_id, { :size => 15 } 
+ t("resources.type") 
+ f.select(:resource_type_id, resource_types_options_array, { :include_blank => true }, :onchange => "updateResourceAttributes(this)") 
+ t("resources.active") 
+ f.check_box :active
+ t("resources.notes") 
+ f.text_area :notes, :class => "input-xxlarge", :rows => 4 
+ t("resources.attributes") 
+ @resource.all_attributes.each do |ra| 
+  
+     field_id = "attribute_#{ attribute.id }" 
+     prefix = "resource[attribute_values][]"
+     type = attribute.resource_type_attribute
+     same_as_last_type = (type == @last_type)
+     @last_type = type
+  
+ field_id 
+ type.name 
+ hidden_field_tag("#{ prefix }[resource_type_attribute_id]", type.id, :class => "type_id") 
+ hidden_field_tag "#{ prefix }[id]", attribute.id, :class => "attr_id" 
+ value_field(attribute, prefix, field_id, same_as_last_type) 
+ 
+ end 
+ cit_submit_tag(@resource) 
+ if !@resource.new_record? 
+ link_to(t("button.delete"), resource_path(@resource), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -406,7 +450,51 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("resources.new_title", title: "New Resource - #{Setting.productName}") 
+  form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
+ if @resource.new_record? 
+ t("resources.new") 
+ else 
+ t("resources.edit") 
+ end 
+ t("resources.name") 
+ f.text_field :name 
+ t("resources.company") 
+ f.hidden_field(:customer_id, :class => "auto_complete_id")  
+ text_field :resource_customer, :name, { :value => @resource.customer } 
+ @resource.customer.nil? ? "#" : "/customers/edit/#{@resource.customer.id}" 
+ t("resources.parent_resource") 
+ text_field :resource, :parent_id, { :size => 15 } 
+ t("resources.type") 
+ f.select(:resource_type_id, resource_types_options_array, { :include_blank => true }, :onchange => "updateResourceAttributes(this)") 
+ t("resources.active") 
+ f.check_box :active
+ t("resources.notes") 
+ f.text_area :notes, :class => "input-xxlarge", :rows => 4 
+ t("resources.attributes") 
+ @resource.all_attributes.each do |ra| 
+  
+     field_id = "attribute_#{ attribute.id }" 
+     prefix = "resource[attribute_values][]"
+     type = attribute.resource_type_attribute
+     same_as_last_type = (type == @last_type)
+     @last_type = type
+  
+ field_id 
+ type.name 
+ hidden_field_tag("#{ prefix }[resource_type_attribute_id]", type.id, :class => "type_id") 
+ hidden_field_tag "#{ prefix }[id]", attribute.id, :class => "attr_id" 
+ value_field(attribute, prefix, field_id, same_as_last_type) 
+ 
+ end 
+ cit_submit_tag(@resource) 
+ if !@resource.new_record? 
+ link_to(t("button.delete"), resource_path(@resource), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -625,7 +713,60 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("resources.edit_title", title: "#{@resource.name} - #{Setting.productName}") 
+  form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
+ if @resource.new_record? 
+ t("resources.new") 
+ else 
+ t("resources.edit") 
+ end 
+ t("resources.name") 
+ f.text_field :name 
+ t("resources.company") 
+ f.hidden_field(:customer_id, :class => "auto_complete_id")  
+ text_field :resource_customer, :name, { :value => @resource.customer } 
+ @resource.customer.nil? ? "#" : "/customers/edit/#{@resource.customer.id}" 
+ t("resources.parent_resource") 
+ text_field :resource, :parent_id, { :size => 15 } 
+ t("resources.type") 
+ f.select(:resource_type_id, resource_types_options_array, { :include_blank => true }, :onchange => "updateResourceAttributes(this)") 
+ t("resources.active") 
+ f.check_box :active
+ t("resources.notes") 
+ f.text_area :notes, :class => "input-xxlarge", :rows => 4 
+ t("resources.attributes") 
+ @resource.all_attributes.each do |ra| 
+  
+     field_id = "attribute_#{ attribute.id }" 
+     prefix = "resource[attribute_values][]"
+     type = attribute.resource_type_attribute
+     same_as_last_type = (type == @last_type)
+     @last_type = type
+  
+ field_id 
+ type.name 
+ hidden_field_tag("#{ prefix }[resource_type_attribute_id]", type.id, :class => "type_id") 
+ hidden_field_tag "#{ prefix }[id]", attribute.id, :class => "attr_id" 
+ value_field(attribute, prefix, field_id, same_as_last_type) 
+ 
+ end 
+ cit_submit_tag(@resource) 
+ if !@resource.new_record? 
+ link_to(t("button.delete"), resource_path(@resource), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
+  t("resources.history") 
+ resource.event_logs.each do |log| 
+ history_date_if_needed(log) 
+ avatar_for(log.user, 25) if log.user 
+ tz.utc_to_local(log.started_at).strftime(current_user.time_format) 
+ log.user.name 
+ log.body.html_safe 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -840,7 +981,51 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("resources.new_title", title: "New Resource - #{Setting.productName}") 
+  form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
+ if @resource.new_record? 
+ t("resources.new") 
+ else 
+ t("resources.edit") 
+ end 
+ t("resources.name") 
+ f.text_field :name 
+ t("resources.company") 
+ f.hidden_field(:customer_id, :class => "auto_complete_id")  
+ text_field :resource_customer, :name, { :value => @resource.customer } 
+ @resource.customer.nil? ? "#" : "/customers/edit/#{@resource.customer.id}" 
+ t("resources.parent_resource") 
+ text_field :resource, :parent_id, { :size => 15 } 
+ t("resources.type") 
+ f.select(:resource_type_id, resource_types_options_array, { :include_blank => true }, :onchange => "updateResourceAttributes(this)") 
+ t("resources.active") 
+ f.check_box :active
+ t("resources.notes") 
+ f.text_area :notes, :class => "input-xxlarge", :rows => 4 
+ t("resources.attributes") 
+ @resource.all_attributes.each do |ra| 
+  
+     field_id = "attribute_#{ attribute.id }" 
+     prefix = "resource[attribute_values][]"
+     type = attribute.resource_type_attribute
+     same_as_last_type = (type == @last_type)
+     @last_type = type
+  
+ field_id 
+ type.name 
+ hidden_field_tag("#{ prefix }[resource_type_attribute_id]", type.id, :class => "type_id") 
+ hidden_field_tag "#{ prefix }[id]", attribute.id, :class => "attr_id" 
+ value_field(attribute, prefix, field_id, same_as_last_type) 
+ 
+ end 
+ cit_submit_tag(@resource) 
+ if !@resource.new_record? 
+ link_to(t("button.delete"), resource_path(@resource), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1073,7 +1258,60 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("resources.edit_title", title: "#{@resource.name} - #{Setting.productName}") 
+  form_for(@resource, :html => {:class => "form-horizontal"}) do |f| 
+ if @resource.new_record? 
+ t("resources.new") 
+ else 
+ t("resources.edit") 
+ end 
+ t("resources.name") 
+ f.text_field :name 
+ t("resources.company") 
+ f.hidden_field(:customer_id, :class => "auto_complete_id")  
+ text_field :resource_customer, :name, { :value => @resource.customer } 
+ @resource.customer.nil? ? "#" : "/customers/edit/#{@resource.customer.id}" 
+ t("resources.parent_resource") 
+ text_field :resource, :parent_id, { :size => 15 } 
+ t("resources.type") 
+ f.select(:resource_type_id, resource_types_options_array, { :include_blank => true }, :onchange => "updateResourceAttributes(this)") 
+ t("resources.active") 
+ f.check_box :active
+ t("resources.notes") 
+ f.text_area :notes, :class => "input-xxlarge", :rows => 4 
+ t("resources.attributes") 
+ @resource.all_attributes.each do |ra| 
+  
+     field_id = "attribute_#{ attribute.id }" 
+     prefix = "resource[attribute_values][]"
+     type = attribute.resource_type_attribute
+     same_as_last_type = (type == @last_type)
+     @last_type = type
+  
+ field_id 
+ type.name 
+ hidden_field_tag("#{ prefix }[resource_type_attribute_id]", type.id, :class => "type_id") 
+ hidden_field_tag "#{ prefix }[id]", attribute.id, :class => "attr_id" 
+ value_field(attribute, prefix, field_id, same_as_last_type) 
+ 
+ end 
+ cit_submit_tag(@resource) 
+ if !@resource.new_record? 
+ link_to(t("button.delete"), resource_path(@resource), :method => :delete, :confirm => t("shared.are_you_sure"), :class => "btn btn-danger") 
+ end 
+ end 
+ 
+  t("resources.history") 
+ resource.event_logs.each do |log| 
+ history_date_if_needed(log) 
+ avatar_for(log.user, 25) if log.user 
+ tz.utc_to_local(log.started_at).strftime(current_user.time_format) 
+ log.user.name 
+ log.body.html_safe 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1269,7 +1507,20 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ 
+     field_id = "attribute_#{ attribute.id }" 
+     prefix = "resource[attribute_values][]"
+     type = attribute.resource_type_attribute
+     same_as_last_type = (type == @last_type)
+     @last_type = type
+  
+ field_id 
+ type.name 
+ hidden_field_tag("#{ prefix }[resource_type_attribute_id]", type.id, :class => "type_id") 
+ hidden_field_tag "#{ prefix }[id]", attribute.id, :class => "attr_id" 
+ value_field(attribute, prefix, field_id, same_as_last_type) 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1470,7 +1721,12 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @resources.each do |r| 
+ r.id 
+ r 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  

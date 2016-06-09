@@ -175,7 +175,23 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("service_level_agreements.list_sla") 
+ t("service_level_agreements.service") 
+ t("service_level_agreements.customer") 
+ t("service_level_agreements.billable") 
+ t("service_level_agreements.company") 
+ @service_level_agreements.each do |service_level_agreement| 
+ service_level_agreement.service_id 
+ service_level_agreement.customer_id 
+ service_level_agreement.billable 
+ service_level_agreement.company_id 
+ link_to t("button.show"), service_level_agreement 
+ link_to t("button.edit"), edit_service_level_agreement_path(service_level_agreement) 
+ link_to t("button.destroy"), service_level_agreement, confirm: t("shared.are_you_sure"), method: :delete 
+ end 
+ link_to t("service_level_agreements.new_sla"), new_service_level_agreement_path 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -354,7 +370,19 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ notice 
+ t("service_level_agreements.service") 
+ @service_level_agreement.service_id 
+ t("service_level_agreements.customer") 
+ @service_level_agreement.customer_id 
+ t("service_level_agreements.billable") 
+ @service_level_agreement.billable 
+ t("service_level_agreements.company") 
+ @service_level_agreement.company_id 
+ link_to t("button.edit"), edit_service_level_agreement_path(@service_level_agreement) 
+ link_to t("button.back"), service_level_agreements_path 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -534,7 +562,20 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("service_level_agreements.new_sla") 
+  form_for(@service_level_agreement) do |f| 
+  if object.errors.any? 
+ t("shared.form_errors") 
+ object.errors.full_messages.each do |error_message| 
+ error_message 
+ end 
+ end 
+ 
+ end 
+ 
+ link_to t("button.back"), service_level_agreements_path 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -710,7 +751,21 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("service_level_agreements.edit_sla") 
+  form_for(@service_level_agreement) do |f| 
+  if object.errors.any? 
+ t("shared.form_errors") 
+ object.errors.full_messages.each do |error_message| 
+ error_message 
+ end 
+ end 
+ 
+ end 
+ 
+ link_to t("button.show"), @service_level_agreement 
+ link_to t("button.back"), service_level_agreements_path 
+ 
  current_user.id 
  current_user.dateFormat 
  

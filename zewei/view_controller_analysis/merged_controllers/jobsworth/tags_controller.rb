@@ -164,7 +164,16 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("tags.tags") 
+ t("tags.name") 
+ t("tags.task_info") 
+ @tags.each do |tag| 
+ link_to_filter_on_tag(tag) 
+ t("tags.tag_count", open: tag.count, all: tag.total_count) 
+ link_to '<i class="icon-pencil"></i>'.html_safe, edit_tag_path(tag) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -341,7 +350,17 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ form_for(@tag) do |f| 
+ t("tags.edit_tags", :tag => @tag.name) 
+ f.label t("tags.name") 
+ f.text_field :name 
+ cit_submit_tag(@tag) 
+ unless @tag.new_record? 
+ link_to(t("button.delete"), tag_path(@tag), :class => "btn btn-danger", :method => :delete, :confirm => t("shared.are_you_sure")) 
+ end 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  

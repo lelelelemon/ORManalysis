@@ -169,7 +169,20 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ form_for(@scm_project, :html => {:class => "form-horizontal"}) do |f| 
+ t("scm_projects.new") 
+ f.label :scm_type, t("scm_project.scm_type") 
+ f.text_field :scm_type 
+ f.label :location, t("scm_project.location") 
+ f.text_field :location 
+ if @scm_project.new_record? 
+ submit_tag t("button.create"), :class => 'btn btn-primary' 
+ else 
+ submit_tag t("button.save"), :class => 'btn btn-primary' 
+ end 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -350,7 +363,20 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ form_for(@scm_project, :html => {:class => "form-horizontal"}) do |f| 
+ t("scm_projects.new") 
+ f.label :scm_type, t("scm_project.scm_type") 
+ f.text_field :scm_type 
+ f.label :location, t("scm_project.location") 
+ f.text_field :location 
+ if @scm_project.new_record? 
+ submit_tag t("button.create"), :class => 'btn btn-primary' 
+ else 
+ submit_tag t("button.save"), :class => 'btn btn-primary' 
+ end 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -521,7 +547,15 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @scm_project.dom_id 
+ t("scm_projects.scm_type") 
+ @scm_project.scm_type 
+ t("scm_projects.location") 
+ @scm_project.location 
+ t("scm_projects.secret_key") 
+ @scm_project.secret_key
+ 
  current_user.id 
  current_user.dateFormat 
  

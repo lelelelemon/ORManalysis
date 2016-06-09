@@ -16,7 +16,18 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t("score_rules.exponent") 
  t("score_rules.score_type") 
  t("shared.actions") 
- render @score_rules, :container => @container 
+  score_rule.name 
+ score_rule.score 
+ score_rule.exponent 
+ ScoreRuleTypes::get_name_of score_rule.score_type 
+ link_to t("button.edit"),
+                edit_container_score_rule_path(container, score_rule),
+                :class => 'edit-score-rule' 
+ link_to t("button.delete"),
+                container_score_rule_path(container, score_rule),
+                :method   => 'delete',
+                :class    => 'delete-score-rule' 
+ 
  link_to t("button.new"),
             new_container_score_rule_path(@container),
             :class => 'new-score-rule ui-button' 
@@ -175,7 +186,34 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ if @score_rules.any? 
+  t("score_rules.name") 
+ t("score_rules.score") 
+ t("score_rules.exponent") 
+ t("score_rules.score_type") 
+ t("shared.actions") 
+  score_rule.name 
+ score_rule.score 
+ score_rule.exponent 
+ ScoreRuleTypes::get_name_of score_rule.score_type 
+ link_to t("button.edit"),
+                edit_container_score_rule_path(container, score_rule),
+                :class => 'edit-score-rule' 
+ link_to t("button.delete"),
+                container_score_rule_path(container, score_rule),
+                :method   => 'delete',
+                :class    => 'delete-score-rule' 
+ 
+ link_to t("button.new"),
+            new_container_score_rule_path(@container),
+            :class => 'new-score-rule ui-button' 
+ 
+ else 
+ t("score_rules.no_rules", container: @container.class.to_s.humanize) 
+ t("score_rules.new_html", link: link_to(t("shared.here"), new_container_score_rule_path(@container), :class => 'new-score-rule')) 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -187,7 +225,18 @@ end
   def show
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  content_for :content do 
- render @score_rule, :container => @container 
+  score_rule.name 
+ score_rule.score 
+ score_rule.exponent 
+ ScoreRuleTypes::get_name_of score_rule.score_type 
+ link_to t("button.edit"),
+                edit_container_score_rule_path(container, score_rule),
+                :class => 'edit-score-rule' 
+ link_to t("button.delete"),
+                container_score_rule_path(container, score_rule),
+                :method   => 'delete',
+                :class    => 'delete-score-rule' 
+ 
  yield(:side_panel) 
   t("task_filters.filters") 
  t("task_filters.save_current") 
@@ -338,7 +387,20 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+  score_rule.name 
+ score_rule.score 
+ score_rule.exponent 
+ ScoreRuleTypes::get_name_of score_rule.score_type 
+ link_to t("button.edit"),
+                edit_container_score_rule_path(container, score_rule),
+                :class => 'edit-score-rule' 
+ link_to t("button.delete"),
+                container_score_rule_path(container, score_rule),
+                :method   => 'delete',
+                :class    => 'delete-score-rule' 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -513,7 +575,20 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("score_rules.add_new") 
+ t("score_rules.explanation", container: @container.class.to_s.humanize) 
+  form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
+  if object.errors.any? 
+ t("shared.form_errors") 
+ object.errors.full_messages.each do |error_message| 
+ error_message 
+ end 
+ end 
+ 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -695,7 +770,20 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("score_rules.add_new") 
+ t("score_rules.explanation", container: @container.class.to_s.humanize) 
+  form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
+  if object.errors.any? 
+ t("shared.form_errors") 
+ object.errors.full_messages.each do |error_message| 
+ error_message 
+ end 
+ end 
+ 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -869,7 +957,19 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("score_rules.edit") 
+  form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
+  if object.errors.any? 
+ t("shared.form_errors") 
+ object.errors.full_messages.each do |error_message| 
+ error_message 
+ end 
+ end 
+ 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1048,7 +1148,19 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ t("score_rules.edit") 
+  form_for @score_rule, :url => url, :html => {:class => "form-horizontal score_rule_form"} do |form| 
+  if object.errors.any? 
+ t("shared.form_errors") 
+ object.errors.full_messages.each do |error_message| 
+ error_message 
+ end 
+ end 
+ 
+ end 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  

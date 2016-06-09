@@ -140,7 +140,39 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("users.access_title", title: Setting.productName) 
+ link_to t("users.new_user"), new_user_path, :class => "pull-right" 
+ for user in @users 
+  link_to(user.name, "/users/edit/#{user.id}") 
+ t("users.email") 
+ h user.email 
+ h user.email 
+ t("users.last_login") 
+ if user.last_sign_in_at 
+ t("shared.time_ago", time: distance_of_time_in_words(user.last_sign_in_at, Time.now.utc)) 
+ else 
+ t("shared.never") 
+ end 
+ 
+  values = object.all_custom_attribute_values
+  values.each do |value|
+    if (value.value)
+
+ value.custom_attribute.display_name 
+ value.value.gsub("\n", "<br/>").html_safe 
+ end 
+ end 
+ 
+ if user.projects.size > 0 
+ t("users.projects") 
+ link_to_function t("users.n_projects", n: user.projects.size), "jQuery('#projects-#{user.dom_id}').toggle();" 
+user.dom_id
+ user.projects.collect{|project| link_to_tasks_filtered_by(project.full_name, project)}.join("<br/> ").html_safe 
+ end 
+end 
+ will_paginate @users 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -327,7 +359,65 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("users.new_user_title", title: Setting.productName) 
+
+  @user_ids = []
+  @current_user.company.projects.each do |p|
+    @user_ids << p.users.collect{ |pu| pu.id }
+  end
+
+  @user_ids = [0] if @user_ids.flatten.compact.size == 0
+  @users = User.where("id IN (?)", @user_ids.flatten.compact.uniq).order("name").collect{|u| [u.name, u.id.to_s]}
+
+ t("users.new_user") 
+ form_tag({:action => 'create'}, :class => "form-horizontal", :multipart => true) do 
+ t("users.name") 
+ text_field 'user', 'name'  
+ t("users.email") 
+ text_field_tag 'email', '', :autocomplete => "off" 
+ t("users.username") 
+ text_field 'user', 'username', :autocomplete => "off" 
+ t("users.password") 
+ password_field 'user', 'password', :autocomplete => "off"  
+ t("users.company") 
+ hidden_field_tag("user[customer_id]", @user.customer_id, :id => "user_customer_id", :class => "auto_complete_id") 
+ text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
+ @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
+ t("users.goto_company") 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+  label_tag t("users.send_welcome_email") 
+ check_box_tag :send_welcome_email, "1", params[:send_welcome_email] 
+ t('users.welcome_message_header') 
+ text_area_tag t("users.welcome_message"), "", :rows => 10, :class => "input-xxlarge", :placeholder => t("users.welcome_message_input") 
+ t('users.welcome_message_optional') 
+ 
+ t("permissions.copy_permissions") 
+ t("tasks.no_one") 
+ options_for_select @users, params[:copy_user].to_i 
+ submit_tag t("button.create"), :class => 'btn btn-primary' 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -520,7 +610,65 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("users.new_user_title", title: Setting.productName) 
+
+  @user_ids = []
+  @current_user.company.projects.each do |p|
+    @user_ids << p.users.collect{ |pu| pu.id }
+  end
+
+  @user_ids = [0] if @user_ids.flatten.compact.size == 0
+  @users = User.where("id IN (?)", @user_ids.flatten.compact.uniq).order("name").collect{|u| [u.name, u.id.to_s]}
+
+ t("users.new_user") 
+ form_tag({:action => 'create'}, :class => "form-horizontal", :multipart => true) do 
+ t("users.name") 
+ text_field 'user', 'name'  
+ t("users.email") 
+ text_field_tag 'email', '', :autocomplete => "off" 
+ t("users.username") 
+ text_field 'user', 'username', :autocomplete => "off" 
+ t("users.password") 
+ password_field 'user', 'password', :autocomplete => "off"  
+ t("users.company") 
+ hidden_field_tag("user[customer_id]", @user.customer_id, :id => "user_customer_id", :class => "auto_complete_id") 
+ text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
+ @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
+ t("users.goto_company") 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+  label_tag t("users.send_welcome_email") 
+ check_box_tag :send_welcome_email, "1", params[:send_welcome_email] 
+ t('users.welcome_message_header') 
+ text_area_tag t("users.welcome_message"), "", :rows => 10, :class => "input-xxlarge", :placeholder => t("users.welcome_message_input") 
+ t('users.welcome_message_optional') 
+ 
+ t("permissions.copy_permissions") 
+ t("tasks.no_one") 
+ options_for_select @users, params[:copy_user].to_i 
+ submit_tag t("button.create"), :class => 'btn btn-primary' 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -727,7 +875,102 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ form_tag(user_path(@user), :method => :put, :class => "form-horizontal", :multipart => true) do 
+  t("users.name") 
+ text_field 'user', 'name'  
+ t("users.username") 
+ text_field 'user', 'username', :autocomplete => "off" 
+ t("users.password") 
+ password_field 'user', 'password', :autocomplete => "off"  
+ t("users.company") 
+ hidden_field_tag("user[customer_id]", @user.customer_id, :id => "user_customer_id", :class => "auto_complete_id") 
+ text_field :customer, :name, {:id=>"user_customer_name", :value => @user.customer.try(:name)} 
+ @user.customer.nil? ? "#" : "/customers/edit/#{@user.customer.id}" 
+ t("users.goto_company") 
+  values = object.all_custom_attribute_values 
+ values.each do |value| 
+ prefix = "#{ object.class.name.underscore }[set_custom_attribute_values]" 
+ ca = value.custom_attribute 
+ field_id = custom_attribute_field_id 
+ fields_for(prefix, value) do |f| 
+ f.hidden_field(:custom_attribute_id, :index => nil) 
+ label_tag field_id, value.custom_attribute.display_name 
+ if ca and ca.preset? 
+ options = objects_to_names_and_ids(ca.custom_attribute_choices, :name_method => :value) 
+ options.unshift("") if ca.mandatory? 
+ f.select(:choice_id, options, { }, :id => field_id, :index => nil) 
+ elsif value.custom_attribute.max_length.to_i >= 100 
+ f.text_area(:value, :id => field_id, :index => nil, :class => "input-xxlarge", :rows => 10) 
+ else 
+ f.text_field(:value, :id => field_id, :index => nil, :class => "value") 
+ end 
+ multi_links(value) 
+ end 
+ end 
+ 
+ if @user.avatar? 
+ t("users.current_avatar") 
+ tag("img", {:src => @user.avatar_url(25), :border => 0 } ) 
+ tag("img", {:src => @user.avatar_url, :border => 0 } ) 
+ end 
+ t("users.new_avatar") 
+ file_field :user, :avatar 
+ t 'hint.user.avatar' 
+ t("users.language") 
+ select 'user', 'locale', I18n.available_locales 
+ t("users.location") 
+ time_zone_select 'user', 'time_zone', TZInfo::Timezone.all.sort, :model => TZInfo::Timezone 
+ t("users.receive_notifications") 
+ check_box 'user', 'receive_notifications' 
+ t("users.receive_own_notifications") 
+ check_box 'user', 'receive_own_notifications' 
+ t("users.auto_add_to_customer_tasks", customer: @user.customer.try(:name)) 
+ check_box "user", "auto_add_to_customer_tasks" 
+ t("users.active") 
+ check_box(:user, :active) 
+ t("users.private") 
+ check_box(:user, :comment_private_by_default)
+ t("users.time_format") 
+ select 'user', 'time_format', [ ['16:00', '%H:%M'], ['4:00 PM', '%I:%M%p'] ] 
+ t("users.date_format") 
+ select 'user', 'date_format', [ ['1/21/2007', '%m/%d/%Y'], ['21/1/2007', '%d/%m/%Y'], ['2007-1-21', '%Y-%m-%d'] ] 
+ t("users.track_time") 
+ check_box 'user', 'option_tracktime' 
+ t("users.show_avatars") 
+ check_box 'user', 'option_avatars' 
+ 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -903,7 +1146,60 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ form_tag(access_user_path(@user), :method => :put, :class => "form-horizontal") do 
+ t("permissions.administrator") 
+ check_box 'user', 'admin' 
+ t("permissions.create_projects") 
+ check_box 'user', 'create_projects' 
+ t("permissions.read_clients") 
+ check_box(:user, :read_clients) 
+ t("permissions.create_clients")  
+ check_box(:user, :create_clients) 
+ t("permissions.edit_clients") 
+ check_box(:user, :edit_clients) 
+ t("permissions.approve_work_logs") 
+ check_box(:user, :can_approve_work_logs) 
+ t("permissions.use_resources") 
+ check_box 'user', 'use_resources' 
+label(:user, :access_level_id, t("permissions.comment_access_level")) 
+select :user, :access_level_id, AccessLevel.all.collect{|al| [al.name, al.id]}
+ if @user.autologin && !@user.autologin.empty? 
+ t("users.widget_key") 
+ @user.autologin 
+ end 
+ submit_tag t("button.save"), :class => 'btn btn-primary' 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1047,7 +1343,40 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("users.access_title", title: "#{@user.name} - #{Setting.productName}") 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ render @user.email_addresses 
+ t("button.add") 
+ @user.id 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1217,7 +1546,60 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.view_tasks"), @user, :class => "btn btn-success pull-right") 
+ if @shared_filters.size > 0 
+ @shared_filters.each do |tf| 
+ tf.id 
+ select_task_filter_link(tf) 
+ tf.user.name 
+ link_to_toggle_status(tf, current_user) 
+ if tf.user == current_user or current_user.admin? 
+ link_to t("button.delete"), "#", {:class => "action_filter do_delete"} 
+ end 
+ end 
+ end 
+ t("users.no_shared_filters") if @shared_filters.size == 0 
+ if @private_filters.size > 0 
+ @private_filters.each do |tf| 
+ tf.id 
+ select_task_filter_link(tf) 
+ t 'task_filters.shared' if tf.shared? 
+ link_to_toggle_status(tf, current_user) 
+ if tf.user == current_user or current_user.admin? 
+ link_to t("button.delete"), "#", {:class => "action_filter do_delete"} 
+ end 
+ end 
+ end 
+ t("users.no_filters") if @private_filters.size == 0 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1403,7 +1785,82 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = t("users.access_title", title: Setting.productName) 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.new_user"), @user, :class => "btn btn-success pull-right") 
+  t("users.project") 
+ t("permissions.read") 
+ t("permissions.comment") 
+ t("permissions.work") 
+ t("permissions.close") 
+ t("permissions.see_unwatched") 
+ t("permissions.create") 
+ t("permissions.edit") 
+ t("permissions.assign") 
+ t("permissions.milestones") 
+ t("permissions.reports") 
+ t("permissions.grant") 
+ t("permissions.all") 
+  project.dom_id 
+ if user_edit 
+ link_to project.name, "/projects/edit/#{project.id}" 
+ else 
+ link_to @user.name, "/users/edit/#{@user.id}" 
+ end 
+
+   perm = @user.project_permissions.where("project_id=?", project.id).first
+   perms = ProjectPermission.permissions
+ if current_user.admin? and perm 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :user_edit => user_edit)}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" 
+ for p in perms 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" if perm.can?(p) 
+ link_to_function image_tag("delete.png", :title => t("users.grant_access", access: p, user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_add_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" unless perm.can?(p) 
+ end 
+ end 
+ 
+ if @user.active 
+ t("users.add_project_to_user") 
+ text_field :project, :name, {:id => "user_project_name_autocomplete", :value => "" }
+ end 
+ @user.id 
+ 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1619,7 +2076,104 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ @page_title = "User : #{@user.name} - #{Setting.productName}" 
+ content_for :navigation do 
+  user.name 
+ active_class(selected, "general") 
+ edit_user_path(user) 
+ t("users.general") 
+ if current_user.admin? 
+ active_class(selected, "access") 
+ access_user_path(user) 
+ t("users.access_control") 
+ end 
+ active_class(selected, "emails") 
+ emails_user_path(user) 
+ t("users.email_addresses") 
+ active_class(selected, "filters") 
+ filters_user_path(user) 
+ t("users.task_filters") 
+ if current_user.admin? 
+ active_class(selected, "projects") 
+ projects_user_path(user) 
+ t("users.project_permissions") 
+ end 
+ active_class(selected, "workplan") 
+ workplan_user_path(user) 
+ t("users.work_plan") 
+ 
+ end 
+ @user.name 
+ link_to_tasks_filtered_by(t("users.new_user"), @user, :class => "btn btn-success pull-right") 
+  t("users.recent_work") 
+ @user_recent_work_logs.each do |wl| 
+  pill_date ||= task.estimate_date 
+ time ||= :minutes_left 
+ sorting_disabled ||= false 
+ user.top_next_task == task ? 'top-next-task' : nil 
+ human_future_date(pill_date, user.tz) 
+ task.css_classes 
+ link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
+ task.name 
+ case time 
+ when :minutes_left 
+ "(" + TimeParser.format_duration(task.minutes_left) + ")" 
+ when :worked_minutes 
+ "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
+ end 
+ unless sorting_disabled 
+ link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
+ end 
+ 
+ end 
+ t("users.next_tasks") 
+ @user.schedule_tasks(:limit => 20, :save => false) do |task| 
+  pill_date ||= task.estimate_date 
+ time ||= :minutes_left 
+ sorting_disabled ||= false 
+ user.top_next_task == task ? 'top-next-task' : nil 
+ human_future_date(pill_date, user.tz) 
+ task.css_classes 
+ link_to "<b>##{task.task_num}</b>".html_safe, task_view_path(task.task_num), 'data-taskid' => task.id, "data-content" => task_detail(task, user) 
+ task.name 
+ case time 
+ when :minutes_left 
+ "(" + TimeParser.format_duration(task.minutes_left) + ")" 
+ when :worked_minutes 
+ "(" + TimeParser.format_duration(task.worked_minutes, true) + ")" 
+ end 
+ unless sorting_disabled 
+ link_to "<i class=\"icon-move\"></i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right" 
+ end 
+ 
+ end 
+ if @user.tasks.open_only.not_snoozed.count > 20 
+ t("tasks.more_tasks") 
+ end 
+ 
+ form_tag(workplan_user_path(@user), :method => :put, :class => "form-horizontal") do 
+ t("users.work_plan") 
+  fields_for("user[work_plan_attributes]", @user.work_plan) do |f| 
+ t("shared.monday_short") 
+ t("shared.tuesday_short") 
+ t("shared.wednesday_short") 
+ t("shared.thursday_short") 
+ t("shared.friday_short") 
+ t("shared.saturday_short") 
+ t("shared.sunday_short") 
+ f.text_field 'monday', :class => "input-tiny" 
+ f.text_field 'tuesday', :class => "input-tiny" 
+ f.text_field 'wednesday', :class => "input-tiny"  
+ f.text_field 'thursday', :class => "input-tiny"  
+ f.text_field 'friday', :class => "input-tiny"  
+ f.text_field 'saturday', :class => "input-tiny"  
+ f.text_field 'sunday', :class => "input-tiny"  
+ end 
+ 
+ submit_tag t("button.update"), :class => 'btn btn-primary' 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
@@ -1932,7 +2486,33 @@ unless news.nil?
         :remote => true) 
  end 
  
- content_for?(:content) ? yield(:content) : yield 
+ 
+ project.dom_id 
+ if user_edit 
+ link_to project.name, "/projects/edit/#{project.id}" 
+ else 
+ link_to @user.name, "/users/edit/#{@user.id}" 
+ end 
+
+   perm = @user.project_permissions.where("project_id=?", project.id).first
+   perms = ProjectPermission.permissions
+ if current_user.admin? and perm 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :user_edit => user_edit)}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" 
+ for p in perms 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" if perm.can?(p) 
+ link_to_function image_tag("delete.png", :title => t("users.grant_access", access: p, user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_add_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" unless perm.can?(p) 
+ end 
+ end 
+ 
  current_user.id 
  current_user.dateFormat 
  
