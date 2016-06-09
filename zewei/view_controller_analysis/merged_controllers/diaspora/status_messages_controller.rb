@@ -61,7 +61,24 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  include_gon(camel_case:  true) 
  yield :before_content 
  
-  form_for StatusMessage.new, html: {} 
+  form_for StatusMessage.new, html: {} do |status| 
+ status.hidden_field :provider_display_name, value: 'mobile' 
+ status.text_area :text, placeholder: t('shared.publisher.whats_on_your_mind'), rows: 4, autofocus: "autofocus", class: "form-control" 
+ if current_user.services 
+ for service in current_user.services 
+ image_tag "social_media_logos/-32x32.png", title: service.provider.titleize, class: "service_icon dim", id:"", maxchar: "" 
+ end 
+ end 
+ t('public') 
+ true 
+ t('all_aspects') 
+ current_user.aspects.each do |aspect| 
+ aspect.id 
+ " " 
+ end 
+ t('shared.publisher.upload_photos') 
+ submit_tag t('shared.publisher.share'), class: 'btn btn-primary', id: "submit_new_message" 
+ end 
  
  
  yield :after_content 
@@ -112,7 +129,24 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  include_gon(camel_case:  true) 
  yield :before_content 
  
-  form_for StatusMessage.new, html: {} 
+  form_for StatusMessage.new, html: {} do |status| 
+ status.hidden_field :provider_display_name, value: 'mobile' 
+ status.text_area :text, placeholder: t('shared.publisher.whats_on_your_mind'), rows: 4, autofocus: "autofocus", class: "form-control" 
+ if current_user.services 
+ for service in current_user.services 
+ image_tag "social_media_logos/-32x32.png", title: service.provider.titleize, class: "service_icon dim", id:"", maxchar: "" 
+ end 
+ end 
+ t('public') 
+ true 
+ t('all_aspects') 
+ current_user.aspects.each do |aspect| 
+ aspect.id 
+ " " 
+ end 
+ t('shared.publisher.upload_photos') 
+ submit_tag t('shared.publisher.share'), class: 'btn btn-primary', id: "submit_new_message" 
+ end 
  
   
  

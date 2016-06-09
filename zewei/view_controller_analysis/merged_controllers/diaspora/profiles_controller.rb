@@ -81,9 +81,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if mobile 
  flash.each do |name, msg| 
  msg 
- end 
- end 
  msg 
+ end 
+ end 
  t("profiles.edit.basic") 
  t("profiles.edit.basic_hint") 
  error_messages_for profile 

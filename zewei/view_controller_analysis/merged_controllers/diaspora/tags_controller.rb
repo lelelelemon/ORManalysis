@@ -115,7 +115,23 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   person_image_link(post.author, size: :thumb_small, class: "media-object") 
  person_link(post.author) 
  if user_signed_in? && post.author == current_user.person 
- link_to(raw("<i class='entypo-trash'></i>"), post_path(post), method: :delete,                data: {}) 
+ link_to(raw("<i class='entypo-trash'></i>"), post_path(post), method: :delete,                data: {}, class: "remove") 
+ end 
+ link_to(post_path(post)) do 
+ timeago(post.created_at) 
+ end 
+ if post.activity_streams? 
+ t('shared.stream_element.via', link: link_to("", post.actor_url)).html_safe 
+ elsif post.provider_display_name == 'mobile' 
+ t('shared.stream_element.via_mobile', link: nil) 
+ end 
+ if post.public? 
+ t('public') 
+ else 
+ t('limited') 
+ end 
+ if !post.is_a?(Reshare) and post.location 
+ t("posts.show.location", location: post.location.address) 
  end 
  
  unless post.is_a?(Reshare) 
@@ -175,8 +191,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  person_link(comment.author) 
  timeago(comment.created_at ? comment.created_at : Time.now) 
  if user_signed_in? && comment.author == current_user.person 
- link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}) 
+ link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}, class: "remove") 
  end 
+ direction_for(comment.text) 
+ comment.message.markdownified 
  
  
  end 

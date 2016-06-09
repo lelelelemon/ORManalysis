@@ -62,8 +62,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  link_to t(".new_conversation"), new_conversation_path, class: "btn btn-default pull-right" 
  flash.each do |name, msg| 
  msg 
- end 
  msg 
+ end 
  if @visibilities.count > 0 
   conversation = visibility.conversation 
  conversation_path(conversation) 

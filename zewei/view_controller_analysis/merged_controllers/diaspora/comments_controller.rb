@@ -129,8 +129,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  person_link(comment.author) 
  timeago(comment.created_at ? comment.created_at : Time.now) 
  if user_signed_in? && comment.author == current_user.person 
- link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}) 
+ link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}, class: "remove") 
  end 
+ direction_for(comment.text) 
+ comment.message.markdownified 
  
  
  
@@ -182,8 +184,10 @@ end
  person_link(comment.author) 
  timeago(comment.created_at ? comment.created_at : Time.now) 
  if user_signed_in? && comment.author == current_user.person 
- link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}) 
+ link_to(raw("<i class='entypo-trash'></i>"), comment_path(comment), method: :delete,                          data: {}, class: "remove") 
  end 
+ direction_for(comment.text) 
+ comment.message.markdownified 
  
  yield :after_content 
  include_chartbeat 

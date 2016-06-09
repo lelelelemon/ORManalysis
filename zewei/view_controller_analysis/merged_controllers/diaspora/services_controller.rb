@@ -64,8 +64,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if services_for_provider.count > 0 
  services_for_provider.each do |service| 
  raw(t("services.index.logged_in_as", nickname: content_tag(:strong, service.nickname ))) 
- link_to t("services.index.disconnect"),                    service_path(service),                    data: {} 
+ link_to t("services.index.disconnect"),                    service_path(service),                    data: {},                    method: :delete 
  end 
+ else 
+ t("services.index.not_logged_in") 
+ link_to(t("services.index.connect"), "/auth/") 
  end 
  end 
  end 

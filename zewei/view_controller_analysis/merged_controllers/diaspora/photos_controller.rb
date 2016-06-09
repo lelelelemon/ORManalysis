@@ -134,7 +134,6 @@ end
  flash_messages 
 
 end
-, layout: "with_header"
         end
         format.mobile { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  og_prefix 
