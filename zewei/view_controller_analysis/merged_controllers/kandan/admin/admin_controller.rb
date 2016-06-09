@@ -29,10 +29,32 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  f.submit :class => "btn btn-success" 
  end 
- render(:collection => @waiting_for_approval_users, :as => :user, :partial => "user") ||\
-        content_tag(:li, "There are no users needing approval right now. Invite others to join Kandan!", class: 'no-users') 
- render(:collection => @approved_users, :as => :user, :partial => "user") ||\
-        content_tag(:li, "There are no users. Invite others to join Kandan!", class: 'no-users') 
+  user.id
+ user.full_name_or_username 
+ image_tag avatar_url_for(user, :size => 70), class: 'avatar' 
+ if user.full_name.blank? 
+ user.username 
+ else 
+ "#{user.full_name} (#{user.username})" 
+ end 
+ user.email 
+ user_status_badge(user) 
+ user_status_button(user) 
+ user_admin_button(user) 
+ 
+  user.id
+ user.full_name_or_username 
+ image_tag avatar_url_for(user, :size => 70), class: 'avatar' 
+ if user.full_name.blank? 
+ user.username 
+ else 
+ "#{user.full_name} (#{user.username})" 
+ end 
+ user.email 
+ user_status_badge(user) 
+ user_status_button(user) 
+ user_admin_button(user) 
+ 
 
 end
 

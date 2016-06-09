@@ -43,7 +43,7 @@ name == :notice ? "success" : "danger"
  end 
  end 
  
-  content_for :title, "About Kandan" 
+ content_for :title, "About Kandan" 
   
  AppName::VERSION 
  AppName::REVISION 
