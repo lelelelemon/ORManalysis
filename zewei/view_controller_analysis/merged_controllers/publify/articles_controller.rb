@@ -257,7 +257,7 @@ h (html(@article).strip_html[0..255]).gsub(/-+/, '-')
  
  end 
  
-.published_comments 
+published_comments 
  end 
  
  end 

@@ -44,7 +44,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  favicon_link_tag 'favicon.ico' 
  favicon_link_tag 'apple-touch-icon.png', :rel => 'apple-touch-icon', :type => 'image/png' 
  @page_title 
-  t('login.account_login') 
+ t('login.account_login') 
  render_flash 
  t('login.please_login') 
  form_tag :action=> 'login' do 
@@ -85,7 +85,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  favicon_link_tag 'favicon.ico' 
  favicon_link_tag 'apple-touch-icon.png', :rel => 'apple-touch-icon', :type => 'image/png' 
  @page_title 
-   if @session_expired
+  if @session_expired
   theLink = link_to(t('login.log_in_again'), :controller => "login", :action => "login")
   message = I18n.t('login.session_time_out', :link => theLink)
   theHtml = escape_javascript(content_tag(:div, message.html_safe, :"class" => "warning"))

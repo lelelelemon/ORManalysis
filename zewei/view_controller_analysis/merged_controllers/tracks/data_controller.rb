@@ -68,7 +68,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  link_to "YAML file", data_yaml_export_path 
+ link_to "YAML file", data_yaml_export_path 
  link_to "CSV file (actions, contexts and projects)", data_csv_actions_path 
  link_to "CSV file (notes only)", data_csv_notes_path 
  link_to "XML file (actions only)", data_xml_export_path 
@@ -146,7 +146,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_tag csv_map_data_path, :id => 'upload_form', multipart: true do 
+ form_tag csv_map_data_path, :id => 'upload_form', multipart: true do 
  select_tag(:import_to, options_for_select([['Projects', 'projects'], ['Todos', 'todos']], 1) ) 
  file_field_tag :file 
  submit_tag "Upload", :id => "upload_form_submit" 
@@ -266,7 +266,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_tag csv_import_data_path do 
+ form_tag csv_import_data_path do 
  @labels.each do |l| 
  label_tag l 
  select_tag(l, options_for_select(@headers) ) 
@@ -410,7 +410,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-   TRACKS_VERSION 
+  TRACKS_VERSION 
  (link_to(t('layouts.mobile_navigation.full'),  todos_path(:format => 'html'))) 
  
 
@@ -556,7 +556,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_for :import, @import, :url => {:controller => 'data', :action => 'yaml_import'} do |f| 
+ form_for :import, @import, :url => {:controller => 'data', :action => 'yaml_import'} do |f| 
  f.text_area :yaml 
  end 
   TRACKS_VERSION 
@@ -642,7 +642,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if !(@errmessage == '') 
+ if !(@errmessage == '') 
  t('data.import_errors') 
  @errmessage 
  else 

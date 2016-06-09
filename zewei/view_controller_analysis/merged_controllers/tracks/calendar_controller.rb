@@ -107,7 +107,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  TRACKS_VERSION 
+ TRACKS_VERSION 
  for todo in @due_all
   due_date = todo.due
   overdue_text = ""
@@ -199,7 +199,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  TRACKS_VERSION 
+ TRACKS_VERSION 
  for todo in @due_all
   due_date = todo.due
   overdue_text = ""

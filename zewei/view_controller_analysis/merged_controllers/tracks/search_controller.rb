@@ -78,7 +78,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @count == 0 
+ if @count == 0 
  t('search.no_results') 
  else 
  render :layout => 'show_results_collection', :object => @results[:todos], :locals => { :collection_name => "found-todos", :collection_title => t('search.todos_matching_query')} do 
@@ -173,7 +173,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_tag(search_results_path, :id => 'search-form') do 
+ form_tag(search_results_path, :id => 'search-form') do 
  text_field_tag(:search, params[:search]) 
  submit_tag t('common.search') 
  end 

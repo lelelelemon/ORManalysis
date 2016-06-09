@@ -83,7 +83,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('users.manage_users') 
+ t('users.manage_users') 
  t('users.total_users_count', :count => "<span id=\"user_count\">#{@total_users}</span>").html_safe 
  User.human_attribute_name('login') 
  User.human_attribute_name('display_name') 
@@ -180,7 +180,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('users.manage_users') 
+ t('users.manage_users') 
  t('users.total_users_count', :count => "<span id=\"user_count\">#{@total_users}</span>").html_safe 
  User.human_attribute_name('login') 
  User.human_attribute_name('display_name') 
@@ -400,7 +400,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
  @total_users 
   t('users.destroy_successful', :login => @deleted_user.login) 
  else 
@@ -481,7 +481,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  @page_title 
+ @page_title 
  get_list_of_error_messages_for @user 
  t('users.change_password_prompt') 
  form_tag :action => 'update_password' do 
@@ -575,7 +575,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('users.change_authentication_type') 
+ t('users.change_authentication_type') 
  get_list_of_error_messages_for @user 
  t('users.select_authentication_type') 
  form_tag :action => 'update_auth_type' do 

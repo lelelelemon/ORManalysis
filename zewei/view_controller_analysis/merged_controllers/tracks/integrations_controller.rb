@@ -70,7 +70,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  has_contexts = !current_user.contexts.empty? 
+ has_contexts = !current_user.contexts.empty? 
  link_to "de documentatie voor ontwikkelaars met Tracks' REST API", url_for(:action => 'rest_api') 
  root_url 
  current_user.token 
@@ -153,7 +153,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  root_url 
+ root_url 
  root_url 
  root_url 
  root_url 

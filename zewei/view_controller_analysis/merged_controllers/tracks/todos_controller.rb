@@ -104,7 +104,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  TRACKS_VERSION 
+ TRACKS_VERSION 
  ENV['TZ'] || 'GMT' 
  Time.now.strftime("%Y%m%dT%H%M%SZ") 
  ENV['TZ'] 
@@ -203,7 +203,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  TRACKS_VERSION 
+ TRACKS_VERSION 
  ENV['TZ'] || 'GMT' 
  Time.now.strftime("%Y%m%dT%H%M%SZ") 
  ENV['TZ'] 
@@ -301,7 +301,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  TRACKS_VERSION 
+ TRACKS_VERSION 
  ENV['TZ'] || 'GMT' 
  Time.now.strftime("%Y%m%dT%H%M%SZ") 
  ENV['TZ'] 
@@ -409,7 +409,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_tag todos_path(:format => 'm'), :method => :post do 
+ form_tag todos_path(:format => 'm'), :method => :post do 
   todo = edit_form 
  form_for(todo, :html=> { :name=>'todo', :id => dom_id(@todo, 'form'), :class => 'inline-form edit_todo_form' }) do |t|
  if todo.errors.any? 
@@ -581,7 +581,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_tag todos_path(:format => 'm'), :method => :post do 
+ form_tag todos_path(:format => 'm'), :method => :post do 
   todo = edit_form 
  form_for(todo, :html=> { :name=>'todo', :id => dom_id(@todo, 'form'), :class => 'inline-form edit_todo_form' }) do |t|
  if todo.errors.any? 
@@ -724,7 +724,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
  js_error_messages_for(@todo) 
  else
 
@@ -847,7 +847,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
  js_error_messages_for(@todo) 
  else
 
@@ -1028,7 +1028,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
 
       # add error about missing todo description that is not available in @todos
       @multiple_error = content_tag(:div, content_tag(:p, @multiple_error), {:class => 'errorExplanation', :id => 'errorExplanation'}) if @multiple_error.present?
@@ -1142,7 +1142,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
 
       # add error about missing todo description that is not available in @todos
       @multiple_error = content_tag(:div, content_tag(:p, @multiple_error), {:class => 'errorExplanation', :id => 'errorExplanation'}) if @multiple_error.present?
@@ -1254,7 +1254,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
 
       # add error about missing todo description that is not available in @todos
       @multiple_error = content_tag(:div, content_tag(:p, @multiple_error), {:class => 'errorExplanation', :id => 'errorExplanation'}) if @multiple_error.present?
@@ -1378,7 +1378,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_tag todo_path(@todo, :format => 'm'), :name => 'mobileEdit', :method => :put do 
+ form_tag todo_path(@todo, :format => 'm'), :name => 'mobileEdit', :method => :put do 
   todo = edit_form 
  form_for(todo, :html=> { :name=>'todo', :id => dom_id(@todo, 'form'), :class => 'inline-form edit_todo_form' }) do |t|
  if todo.errors.any? 
@@ -1507,7 +1507,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('common.description') 
+ t('common.description') 
  @todo.description 
  t('common.actions') 
  edit_todo_path(@todo, :format => :m)
@@ -1600,7 +1600,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('common.description') 
+ t('common.description') 
  @todo.description 
  t('common.actions') 
  edit_todo_path(@todo, :format => :m)
@@ -1694,7 +1694,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('common.description') 
+ t('common.description') 
  @todo.description 
  t('common.actions') 
  edit_todo_path(@todo, :format => :m)
@@ -1812,7 +1812,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if !@saved
+ if !@saved
     if @predecessor.completed? 
  t('todos.cannot_add_dependency_to_completed_todo') 
 dom_id(@todo)
@@ -1922,7 +1922,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  # TODO: lots of overlap with add_predecessor --> helpers?
+ # TODO: lots of overlap with add_predecessor --> helpers?
   if @removed 
  t('todos.removed_predecessor', :successor => @successor.description, :predecessor => @predecessor.description) 
  else 
@@ -2078,7 +2078,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
  t('todos.error_toggle_complete') 
  else
   # create a unique object name to prevent concurrent toggles to overwrite each other functions
@@ -2165,7 +2165,12 @@ t('todos.recurrence_completed')
       if @pending_to_activate
         # do not render the js in case of an error or if no todos to activate
         @pending_to_activate.each do |t|
-          html = escape_javascript(render(:partial => t, :locals => { :parent_container_type => parent_container_type }))
+          html =  object_name = unique_object_name_for("edit_rec_todo_#{@recurring_todo.id}") 
+object_name
+object_name
+ js_render('edit_form') 
+object_name
+
           # only project and tag view have a deferred/blocked container
           if source_view_is_one_of(:project,:tag) 
  dom_id(t) 
@@ -2310,7 +2315,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_tag todo_path(@todo, :format => 'm'), :name => 'mobileEdit', :method => :put do 
+ form_tag todo_path(@todo, :format => 'm'), :name => 'mobileEdit', :method => :put do 
   todo = edit_form 
  form_for(todo, :html=> { :name=>'todo', :id => dom_id(@todo, 'form'), :class => 'inline-form edit_todo_form' }) do |t|
  if todo.errors.any? 
@@ -2437,7 +2442,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
  t('todos.error_toggle_complete') 
  else
   # create a unique object name to prevent concurrent toggles to overwrite each other functions
@@ -2524,7 +2529,12 @@ t('todos.recurrence_completed')
       if @pending_to_activate
         # do not render the js in case of an error or if no todos to activate
         @pending_to_activate.each do |t|
-          html = escape_javascript(render(:partial => t, :locals => { :parent_container_type => parent_container_type }))
+          html =  object_name = unique_object_name_for("edit_rec_todo_#{@recurring_todo.id}") 
+object_name
+object_name
+ js_render('edit_form') 
+object_name
+
           # only project and tag view have a deferred/blocked container
           if source_view_is_one_of(:project,:tag) 
  dom_id(t) 
@@ -2655,7 +2665,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
  @todo.id 
  else 
  t('todos.error_starring', :description => @todo.description) 
@@ -2743,7 +2753,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
  @todo.id 
  else 
  t('todos.error_starring', :description => @todo.description) 
@@ -2835,7 +2845,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  object_name = unique_object_name_for("update_todo_#{@todo.id}") 
+ object_name = unique_object_name_for("update_todo_#{@todo.id}") 
 object_name
  render :partial => (@saved ? "update_successful" : "update_has_errors"), locals: {object_name: object_name} 
 object_name
@@ -2963,7 +2973,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  object_name = unique_object_name_for("update_todo_#{@todo.id}") 
+ object_name = unique_object_name_for("update_todo_#{@todo.id}") 
 object_name
  render :partial => (@saved ? "update_successful" : "update_has_errors"), locals: {object_name: object_name} 
 object_name
@@ -3041,7 +3051,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  form_tag todo_path(@todo, :format => 'm'), :name => 'mobileEdit', :method => :put do 
+ form_tag todo_path(@todo, :format => 'm'), :name => 'mobileEdit', :method => :put do 
   todo = edit_form 
  form_for(todo, :html=> { :name=>'todo', :id => dom_id(@todo, 'form'), :class => 'inline-form edit_todo_form' }) do |t|
  if todo.errors.any? 
@@ -3168,7 +3178,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  object_name = unique_object_name_for("update_todo_#{@todo.id}") 
+ object_name = unique_object_name_for("update_todo_#{@todo.id}") 
 object_name
  render :partial => (@saved ? "update_successful" : "update_has_errors"), locals: {object_name: object_name} 
 object_name
@@ -3316,7 +3326,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
  t('todos.error_deleting_item', :description => @todo.description) 
  else 
   escape_javascript(t('todos.deleted_success')) 
@@ -3474,7 +3484,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  show_completed_todos_for("today", @done_today) 
+ show_completed_todos_for("today", @done_today) 
  show_completed_todos_for("rest_of_week", @done_rest_of_week) 
  show_completed_todos_for("rest_of_month", @done_rest_of_month) 
  raw t('todos.see_all_completed',
@@ -3552,7 +3562,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  show_completed_todos_for("today", @done_today) 
+ show_completed_todos_for("today", @done_today) 
  show_completed_todos_for("rest_of_week", @done_rest_of_week) 
  show_completed_todos_for("rest_of_month", @done_rest_of_month) 
  raw t('todos.see_all_completed',
@@ -3636,7 +3646,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   paginate_options = {
     :class => 'link_in_container_header',
     :previous_label => '&laquo; '+ t('common.previous'),
@@ -3770,7 +3780,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  empty_message_holder("deferred_pending", @not_done_todos.empty?) 
+ empty_message_holder("deferred_pending", @not_done_todos.empty?) 
  show_grouped_todos 
  if @group_view_by == 'project' 
  show_todos_without_project(@todos_without_project) 
@@ -3922,7 +3932,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  empty_message_holder("deferred_pending", @not_done_todos.empty?) 
+ empty_message_holder("deferred_pending", @not_done_todos.empty?) 
  show_grouped_todos 
  if @group_view_by == 'project' 
  show_todos_without_project(@todos_without_project) 
@@ -4083,7 +4093,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @due_tickles.empty? 
+ unless @due_tickles.empty? 
 t('todos.tickler_items_due', :count => @due_tickles.length)
  end 
   TRACKS_VERSION 
@@ -4248,7 +4258,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @not_done_todos.empty? 
+ if @not_done_todos.empty? 
  t('todos.no_actions_found_title') 
  t('todos.no_actions_with', :tag_name => @tag_title) 
  end 
@@ -4347,7 +4357,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  show_completed_todos_for("today", @done_today) 
+ show_completed_todos_for("today", @done_today) 
  show_completed_todos_for("rest_of_week", @done_rest_of_week) 
  show_completed_todos_for("rest_of_month", @done_rest_of_month) 
  raw t('todos.see_all_completed',
@@ -4429,7 +4439,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   paginate_options = {
     :class => 'link_in_container_header',
     :previous_label => '&laquo; '+ t('common.previous'),
@@ -4595,7 +4605,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  object_name = unique_object_name_for("update_todo_#{@todo.id}") 
+ object_name = unique_object_name_for("update_todo_#{@todo.id}") 
 object_name
  render :partial => (@saved ? "update_successful" : "update_has_errors"), locals: {object_name: object_name} 
 object_name
@@ -4732,7 +4742,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  raw "#{t('todos.next_action_description')} (#{link_to(t('common.go_back'), @return_path)}" 
+ raw "#{t('todos.next_action_description')} (#{link_to(t('common.go_back'), @return_path)}" 
  link_to @todo.description, todo_path(@todo, :format => 'm') 
  t('todos.notes') 
  Tracks::Utils.render_text(@todo.notes)  
@@ -4809,7 +4819,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  raw "#{t('todos.next_action_description')} (#{link_to(t('common.go_back'), @return_path)}" 
+ raw "#{t('todos.next_action_description')} (#{link_to(t('common.go_back'), @return_path)}" 
  link_to @todo.description, todo_path(@todo, :format => 'm') 
  t('todos.notes') 
  Tracks::Utils.render_text(@todo.notes)  

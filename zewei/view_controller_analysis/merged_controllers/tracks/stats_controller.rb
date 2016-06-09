@@ -73,7 +73,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('stats.totals') 
+ t('stats.totals') 
   t('stats.totals_project_count', :count => totals.projects) 
  t('stats.totals_active_project_count', :count => totals.active_projects) 
  t('stats.totals_hidden_project_count', :count => totals.hidden_projects) 
@@ -104,24 +104,12 @@ check_deferred_todos_path(:format => 'js')
  t('stats.actions_avg_completed', :count => (actions.done_last12months*10.0/12.0).round/10.0 )
  actions.completion_charts.each do |chart| 
 
-     @swf_count ||= 0 
- swf_tag "open-flash-chart.swf",
-  :flashvars => { 'width' => chart.width, 'height' => chart.height, 'data' => url_for(:action => chart.action)},
-  :parameters => { 'allowScriptAccess' => 'sameDomain', 'wmode' => 'transparent'},
-  :div_id => "chart_#{@swf_count+=1}",
-  :size => chart.dimensions 
-
+    render :partial => 'chart', :locals => {:chart => chart}
 
  end 
  actions.timing_charts.each do |chart| 
 
-     @swf_count ||= 0 
- swf_tag "open-flash-chart.swf",
-  :flashvars => { 'width' => chart.width, 'height' => chart.height, 'data' => url_for(:action => chart.action)},
-  :parameters => { 'allowScriptAccess' => 'sameDomain', 'wmode' => 'transparent'},
-  :div_id => "chart_#{@swf_count+=1}",
-  :size => chart.dimensions 
-
+    render :partial => 'chart', :locals => {:chart => chart}
 
  end 
  
@@ -144,12 +132,7 @@ check_deferred_todos_path(:format => 'js')
 c.total
  t('common.actions_midsentence', :count => c.total) 
  end 
-  from.upto(to) do |i| 
- i 
-t('common.not_available_abbr')
-t('common.not_available_abbr')
- end 
- 
+ render :partial => 'null_list_item', :locals => {:from => contexts.size + 1, :to => 5} 
  
   t("stats.top5_#{key}") 
  contexts.each_with_index do |c, i| 
@@ -175,12 +158,7 @@ t('common.not_available_abbr')
 p.send(n)
  t("common.#{i18n_key}", :count => p.send(n)) 
  end 
-  from.upto(to) do |i| 
- i 
-t('common.not_available_abbr')
-t('common.not_available_abbr')
- end 
- 
+ render :partial => 'null_list_item', :locals => {:from => projects.size + 1, :to => 10} 
  
   i18n_key ||= "actions_midsentence" 
  t("stats.top10_#{key}") 
@@ -190,12 +168,7 @@ t('common.not_available_abbr')
 p.send(n)
  t("common.#{i18n_key}", :count => p.send(n)) 
  end 
-  from.upto(to) do |i| 
- i 
-t('common.not_available_abbr')
-t('common.not_available_abbr')
- end 
- 
+ render :partial => 'null_list_item', :locals => {:from => projects.size + 1, :to => 10} 
  
   i18n_key ||= "actions_midsentence" 
  t("stats.top10_#{key}") 
@@ -364,7 +337,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-   @swf_count ||= 0 
+  @swf_count ||= 0 
  swf_tag "open-flash-chart.swf",
   :flashvars => { 'width' => chart.width, 'height' => chart.height, 'data' => url_for(:action => chart.action)},
   :parameters => { 'allowScriptAccess' => 'sameDomain', 'wmode' => 'transparent'},
@@ -709,7 +682,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-   @swf_count ||= 0 
+  @swf_count ||= 0 
  swf_tag "open-flash-chart.swf",
   :flashvars => { 'width' => chart.width, 'height' => chart.height, 'data' => url_for(:action => chart.action)},
   :parameters => { 'allowScriptAccess' => 'sameDomain', 'wmode' => 'transparent'},
@@ -850,7 +823,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-   @swf_count ||= 0 
+  @swf_count ||= 0 
  swf_tag "open-flash-chart.swf",
   :flashvars => { 'width' => chart.width, 'height' => chart.height, 'data' => url_for(:action => chart.action)},
   :parameters => { 'allowScriptAccess' => 'sameDomain', 'wmode' => 'transparent'},
@@ -985,7 +958,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  link_to t('common.show_all'), done_todos_path
+ link_to t('common.show_all'), done_todos_path
  t('common.last') 
  t('states.completed_plural' )
  t('common.actions') 

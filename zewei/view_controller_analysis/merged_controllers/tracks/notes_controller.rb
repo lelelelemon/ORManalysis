@@ -73,7 +73,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @all_notes.empty? 
+ if @all_notes.empty? 
  t('notes.no_notes_available') 
  else 
  render :partial => @all_notes 
@@ -149,7 +149,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @all_notes.empty? 
+ if @all_notes.empty? 
  t('notes.no_notes_available') 
  else 
  render :partial => @all_notes 
@@ -233,7 +233,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  render :partial => @note 
+ render :partial => @note 
   TRACKS_VERSION 
  (link_to(t('layouts.mobile_navigation.full'),  todos_path(:format => 'html'))) 
  
@@ -325,7 +325,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
  else 
  end 
  js_error_messages_for(@note) 
@@ -410,7 +410,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
  t('notes.save_status_message', id: @note.id) 
  else 
  end 
@@ -502,7 +502,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-   t('notes.deleted_note', :id => @note.id)
+  t('notes.deleted_note', :id => @note.id)
 
 if @source_view == 'note' 
  project_path(@note.project) 

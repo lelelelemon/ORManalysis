@@ -314,7 +314,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   paginate_options = {
     :class => 'link_in_container_header',
     :previous_label => '&laquo; '+ t('common.previous'),
@@ -437,7 +437,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  show_completed_todos_for("today", @done_today) 
+ show_completed_todos_for("today", @done_today) 
  show_completed_todos_for("rest_of_week", @done_rest_of_week) 
  show_completed_todos_for("rest_of_month", @done_rest_of_month) 
  raw t('todos.see_all_completed',

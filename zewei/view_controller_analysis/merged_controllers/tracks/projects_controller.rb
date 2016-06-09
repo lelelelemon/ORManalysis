@@ -101,7 +101,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('projects.active_projects') 
+ t('projects.active_projects') 
 
    project = project_listing 
 
@@ -206,7 +206,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('projects.active_projects') 
+ t('projects.active_projects') 
 
    project = project_listing 
 
@@ -318,7 +318,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  @no_projects ? 'display:block' : 'display:none'
+ @no_projects ? 'display:block' : 'display:none'
  t('projects.no_projects') 
  
   total_count ||= -1
@@ -342,11 +342,7 @@ check_deferred_todos_path(:format => 'js')
         :id => "#{state}_actionize_link", :class => "actionize_link", :title => t('common.sort.by_task_count_title'), :x_confirm_message => t('common.sort.by_task_count_title_confirm')) 
  end 
  state 
-  project = project_listing 
-
-  link_to(project.name, project_path(project, :format => 'm')) +
-    " (" + count_undone_todos_and_notes_phrase(project) + ")" 
- 
+ render :partial => 'projects/project_listing', :collection => project_state_group, :locals => {:suppress_drag_handle => suppress_drag_handle} 
  
  
   total_count ||= -1
@@ -370,11 +366,7 @@ check_deferred_todos_path(:format => 'js')
         :id => "#{state}_actionize_link", :class => "actionize_link", :title => t('common.sort.by_task_count_title'), :x_confirm_message => t('common.sort.by_task_count_title_confirm')) 
  end 
  state 
-  project = project_listing 
-
-  link_to(project.name, project_path(project, :format => 'm')) +
-    " (" + count_undone_todos_and_notes_phrase(project) + ")" 
- 
+ render :partial => 'projects/project_listing', :collection => project_state_group, :locals => {:suppress_drag_handle => suppress_drag_handle} 
  
  
   total_count ||= -1
@@ -398,11 +390,7 @@ check_deferred_todos_path(:format => 'js')
         :id => "#{state}_actionize_link", :class => "actionize_link", :title => t('common.sort.by_task_count_title'), :x_confirm_message => t('common.sort.by_task_count_title_confirm')) 
  end 
  state 
-  project = project_listing 
-
-  link_to(project.name, project_path(project, :format => 'm')) +
-    " (" + count_undone_todos_and_notes_phrase(project) + ")" 
- 
+ render :partial => 'projects/project_listing', :collection => project_state_group, :locals => {:suppress_drag_handle => suppress_drag_handle} 
  
  
   total_count ||= -1
@@ -522,7 +510,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   paginate_options = {
     :class => :link_in_container_header,
     :previous_label => '&laquo; '+ t('common.previous'),
@@ -584,7 +572,16 @@ end
  @projects.each do |p| 
  p.name.upcase 
  actions = p.todos.select { |t| t.active? } 
- render :partial => actions 
+  if @not_done_todos.empty? 
+ t('todos.no_actions.not_done') 
+ else 
+ render :partial => @contexts_to_show 
+ end 
+ unless @done.nil? 
+ t('todos.completed_actions') 
+ render :partial => @done 
+ end 
+ 
  end 
 
 end
@@ -694,7 +691,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   deferred_pending_options = {:append_descriptor => nil, :parent_container_type => 'project'}
   done_todo_options = {
     :append_descriptor => t('projects.last_completed_in_project', :number=>prefs.show_number_completed),
@@ -897,7 +894,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   deferred_pending_options = {:append_descriptor => nil, :parent_container_type => 'project'}
   done_todo_options = {
     :append_descriptor => t('projects.last_completed_in_project', :number=>prefs.show_number_completed),
@@ -1126,7 +1123,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
  js_error_messages_for(@project) 
  else 
  if @go_to_project 
@@ -1260,7 +1257,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   object_name = unique_object_name_for("update_project_#{@project.id}")
 
 object_name
@@ -1326,7 +1323,7 @@ object_name
     # render it into the function.
     
  source_view_is_one_of(:project_list, :review) ? js_render('project_listing', {:suppress_drag_handle => source_view_is(:review)}, @project) : "" 
- sidebar_html_for_titled_list(@sidebar.active_projects, t('sidebar.list_name_active_projects'))
+  sidebar_html_for_titled_list(@sidebar.active_projects, t('sidebar.list_name_active_projects'))
  sidebar_html_for_titled_list(@sidebar.active_contexts, t('sidebar.list_name_active_contexts'))
  sidebar_html_for_titled_list(@sidebar.hidden_projects, t('sidebar.list_name_hidden_projects')) if prefs.show_hidden_projects_in_sidebar 
  sidebar_html_for_titled_list(@sidebar.completed_projects, t('sidebar.list_name_completed_projects')) if prefs.show_completed_projects_in_sidebar 
@@ -1408,7 +1405,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   object_name = unique_object_name_for("update_project_#{@project.id}")
 
 object_name
@@ -1474,7 +1471,7 @@ object_name
     # render it into the function.
     
  source_view_is_one_of(:project_list, :review) ? js_render('project_listing', {:suppress_drag_handle => source_view_is(:review)}, @project) : "" 
- sidebar_html_for_titled_list(@sidebar.active_projects, t('sidebar.list_name_active_projects'))
+  sidebar_html_for_titled_list(@sidebar.active_projects, t('sidebar.list_name_active_projects'))
  sidebar_html_for_titled_list(@sidebar.active_contexts, t('sidebar.list_name_active_contexts'))
  sidebar_html_for_titled_list(@sidebar.hidden_projects, t('sidebar.list_name_hidden_projects')) if prefs.show_hidden_projects_in_sidebar 
  sidebar_html_for_titled_list(@sidebar.completed_projects, t('sidebar.list_name_completed_projects')) if prefs.show_completed_projects_in_sidebar 
@@ -1559,7 +1556,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   object_name = unique_object_name_for("update_project_#{@project.id}")
 
 object_name
@@ -1625,7 +1622,7 @@ object_name
     # render it into the function.
     
  source_view_is_one_of(:project_list, :review) ? js_render('project_listing', {:suppress_drag_handle => source_view_is(:review)}, @project) : "" 
- sidebar_html_for_titled_list(@sidebar.active_projects, t('sidebar.list_name_active_projects'))
+  sidebar_html_for_titled_list(@sidebar.active_projects, t('sidebar.list_name_active_projects'))
  sidebar_html_for_titled_list(@sidebar.active_contexts, t('sidebar.list_name_active_contexts'))
  sidebar_html_for_titled_list(@sidebar.hidden_projects, t('sidebar.list_name_hidden_projects')) if prefs.show_hidden_projects_in_sidebar 
  sidebar_html_for_titled_list(@sidebar.completed_projects, t('sidebar.list_name_completed_projects')) if prefs.show_completed_projects_in_sidebar 
@@ -1710,7 +1707,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   selector_edit = "div##{dom_id(@project, 'edit')}"
   selector_edit = "div.project-edit-current " + selector_edit unless @source_view=="project"
   selector_project = "div##{dom_id(@project)}"
@@ -1810,7 +1807,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- @active_projects_count
+@active_projects_count
 @hidden_projects_count
 @completed_projects_count
  t('projects.project_destroyed_status', name: @project.name) 
@@ -1903,7 +1900,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-   project = project_listing 
+  project = project_listing 
 
   link_to(project.name, project_path(project, :format => 'm')) +
     " (" + count_undone_todos_and_notes_phrase(project) + ")" 
@@ -1987,7 +1984,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-   project = project_listing 
+  project = project_listing 
 
   link_to(project.name, project_path(project, :format => 'm')) +
     " (" + count_undone_todos_and_notes_phrase(project) + ")" 

@@ -81,7 +81,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('todos.recurring_todos') 
+ t('todos.recurring_todos') 
  @no_recurring_todos ? 'display:block' : 'display:none'
  t('todos.no_recurring_todos') 
  render :partial => @recurring_todos 
@@ -254,7 +254,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-   form_for(@new_recurring_todo, :html=> { :id=>'recurring-todo-form-new-action', :name=>'recurring_todo', :class => 'inline-form' }) do 
+  form_for(@new_recurring_todo, :html=> { :id=>'recurring-todo-form-new-action', :name=>'recurring_todo', :class => 'inline-form' }) do 
  get_list_of_error_messages_for(@new_recurring_todo) 
  Todo.human_attribute_name('description') 
 
@@ -429,7 +429,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   paginate_options = {
     :class => :link_in_container_header,
     :previous_label => '&laquo; '+ t('common.previous'),
@@ -522,7 +522,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  object_name = unique_object_name_for("edit_rec_todo_#{@recurring_todo.id}") 
+ object_name = unique_object_name_for("edit_rec_todo_#{@recurring_todo.id}") 
 object_name
 object_name
  js_render('edit_form') 
@@ -608,7 +608,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
  else 
  end 
 dom_id(@recurring_todo)
@@ -723,7 +723,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
 @status_message
  @down_count 
  else 
@@ -832,7 +832,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
   escape_javascript(t('todos.recurring_deleted_success') + t('todos.recurring_pattern_removed', :count => pluralize(@number_of_todos,t('common.todo')))) 
  else 
  t('todos.error_deleting_recurring', :description => @recurring_todo.description) 
@@ -935,7 +935,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  unless @saved 
+ unless @saved 
   t('todos.error_completing_todo', :description => @recurring_todo.description) 
  else
   object_name = unique_object_name_for("toggle_check_rec")
@@ -1042,7 +1042,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
  @recurring_todo.id 
  else 
  t('todos.error_starring_recurring', :description => @recurring_todo.description) 

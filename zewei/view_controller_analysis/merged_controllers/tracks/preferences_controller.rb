@@ -68,7 +68,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  get_list_of_error_messages_for(@user)
+ get_list_of_error_messages_for(@user)
  get_list_of_error_messages_for(@prefs)
  form_for(@prefs) do 
  t('preferences.tabs.profile')
@@ -225,7 +225,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  get_list_of_error_messages_for(@user)
+ get_list_of_error_messages_for(@user)
  get_list_of_error_messages_for(@prefs)
  form_for(@prefs) do 
  t('preferences.tabs.profile')

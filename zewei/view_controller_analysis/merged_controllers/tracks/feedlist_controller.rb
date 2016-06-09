@@ -87,7 +87,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  rss_formatted_link({ :controller => 'todos', :action => 'index', :limit => 15 }) 
+ rss_formatted_link({ :controller => 'todos', :action => 'index', :limit => 15 }) 
  text_formatted_link({ :controller => 'todos', :action => 'index', :limit => 15 }) 
  ical_formatted_link({ :controller => 'todos', :action => 'index', :limit => 15 }) 
  rss_formatted_link( { :controller => 'todos', :action => 'index' } ) 
@@ -184,7 +184,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  all_feed_links_for_context(@context) 
+ all_feed_links_for_context(@context) 
   TRACKS_VERSION 
  (link_to(t('layouts.mobile_navigation.full'),  todos_path(:format => 'html'))) 
  
@@ -259,7 +259,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  all_feed_links_for_project(@project) 
+ all_feed_links_for_project(@project) 
   TRACKS_VERSION 
  (link_to(t('layouts.mobile_navigation.full'),  todos_path(:format => 'html'))) 
  

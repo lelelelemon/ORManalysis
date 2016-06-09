@@ -81,7 +81,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('contexts.visible_contexts') 
+ t('contexts.visible_contexts') 
   context = context_listing 
  link_to context.name, context_path(context, :format => 'm') 
  " (#{count_undone_todos_phrase(context)})".html_safe 
@@ -185,7 +185,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  t('contexts.visible_contexts') 
+ t('contexts.visible_contexts') 
   context = context_listing 
  link_to context.name, context_path(context, :format => 'm') 
  " (#{count_undone_todos_phrase(context)})".html_safe 
@@ -290,7 +290,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   suffix_completed = t('contexts.last_completed_in_context', :number=>prefs.show_number_completed)
   deferred_pending_options = {:append_descriptor => nil, :parent_container_type => 'context'}
   done_todo_options = {:append_descriptor => suffix_completed, :suppress_context => true, :parent_container_type => 'context'}
@@ -453,7 +453,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   suffix_completed = t('contexts.last_completed_in_context', :number=>prefs.show_number_completed)
   deferred_pending_options = {:append_descriptor => nil, :parent_container_type => 'context'}
   done_todo_options = {:append_descriptor => suffix_completed, :suppress_context => true, :parent_container_type => 'context'}
@@ -614,7 +614,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   suffix_completed = t('contexts.last_completed_in_context', :number=>prefs.show_number_completed)
   deferred_pending_options = {:append_descriptor => nil, :parent_container_type => 'context'}
   done_todo_options = {:append_descriptor => suffix_completed, :suppress_context => true, :parent_container_type => 'context'}
@@ -797,7 +797,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  if @saved 
+ if @saved 
  @down_count 
 @context.state
  else 
@@ -899,7 +899,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   object_name = unique_object_name_for("update_context_#{@context.id}")
 
 object_name
@@ -1011,7 +1011,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- 
+
   object_name = unique_object_name_for("update_context_#{@context.id}")
 
 object_name
@@ -1125,7 +1125,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
-  object_name = unique_object_name_for("edit_context_#{@context.id}") 
+ object_name = unique_object_name_for("edit_context_#{@context.id}") 
 object_name
 object_name
 dom_id(@context)
@@ -1223,7 +1223,7 @@ check_deferred_todos_path(:format => 'js')
  controller.controller_name 
  render_flash 
  controller.controller_name 
- @active_contexts_count
+@active_contexts_count
 @hidden_contexts_count
 @closed_contexts_count
 @down_count
