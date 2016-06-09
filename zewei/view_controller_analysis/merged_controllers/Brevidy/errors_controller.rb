@@ -12,15 +12,11 @@ class ErrorsController < ApplicationController
  public_video_url(:public_token => @video.public_token) 
  else 
  # Standard meta tags 
- image_path('meta_tag_logo.png') 
  end 
  browser_title 
  # Logged In CSS 
- cache_buster_path('/stylesheets/i_love_lamp-1.0.3.min.css') 
  # Site-wide JS 
  javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" 
- cache_buster_path('/javascripts/functions.min.js') 
- cache_buster_path('/javascripts/i_love_lamp-1.0.3.min.js') 
  javascript_include_tag "player/player.js" 
  javascript_include_tag "http://html5shiv.googlecode.com/svn/trunk/html5.js" 
  # Fav Icon and CSRF meta tag 
@@ -38,7 +34,7 @@ class ErrorsController < ApplicationController
  end 
  if signed_in? 
  link_to(user_path(current_user), :class => "dropdown-toggle") do 
- image_tag("#{current_user.image.blank? ? 'default_user_35px.jpg' : current_user.image_url(:small_profile) }", :alt => "#{current_user.name}", :size => "35x35") 
+ image_tag("", :alt => "", :size => "35x35") 
  current_user.username 
  end 
  link_to("My Channels", user_channels_path(current_user)) 
@@ -53,7 +49,7 @@ class ErrorsController < ApplicationController
  end 
  
  # Main container 
-  # Dark Content Wrapper 
+ # Dark Content Wrapper 
  # Main (White) Content Wrapper 
  link_to "Go back", :back 
  image_tag("okayguy.png", :alt => "Okay", :size => "256x275") 
@@ -87,8 +83,6 @@ class ErrorsController < ApplicationController
  # Scroll back to top 
 
 end
-
-    Airbrake.notify(:error_class => "Logged Error", :error_message => "SOCIAL CREDENTIALS: There was an OmniAuth authentication failure.") if Rails.env.production?
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if we_should_show_og_tags && !@video.blank? 
  # Facebook OpenGraph protocol for embedding our video link back to Brevidy 
@@ -99,15 +93,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  public_video_url(:public_token => @video.public_token) 
  else 
  # Standard meta tags 
- image_path('meta_tag_logo.png') 
  end 
  browser_title 
  # Logged In CSS 
- cache_buster_path('/stylesheets/i_love_lamp-1.0.3.min.css') 
  # Site-wide JS 
  javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" 
- cache_buster_path('/javascripts/functions.min.js') 
- cache_buster_path('/javascripts/i_love_lamp-1.0.3.min.js') 
  javascript_include_tag "player/player.js" 
  javascript_include_tag "http://html5shiv.googlecode.com/svn/trunk/html5.js" 
  # Fav Icon and CSRF meta tag 
@@ -125,7 +115,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if signed_in? 
  link_to(user_path(current_user), :class => "dropdown-toggle") do 
- image_tag("#{current_user.image.blank? ? 'default_user_35px.jpg' : current_user.image_url(:small_profile) }", :alt => "#{current_user.name}", :size => "35x35") 
+ image_tag("", :alt => "", :size => "35x35") 
  current_user.username 
  end 
  link_to("My Channels", user_channels_path(current_user)) 
@@ -140,7 +130,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  # Main container 
-  # Dark Content Wrapper 
+ # Dark Content Wrapper 
  # Main (White) Content Wrapper 
  link_to "Go back", :back 
  image_tag("okayguy.png", :alt => "Okay", :size => "256x275") 
@@ -175,7 +165,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
 
 end
 
-  end
+end
   
   def routing
     @browser_title ||= "Oops"
@@ -189,15 +179,11 @@ end
  public_video_url(:public_token => @video.public_token) 
  else 
  # Standard meta tags 
- image_path('meta_tag_logo.png') 
  end 
  browser_title 
  # Logged In CSS 
- cache_buster_path('/stylesheets/i_love_lamp-1.0.3.min.css') 
  # Site-wide JS 
  javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" 
- cache_buster_path('/javascripts/functions.min.js') 
- cache_buster_path('/javascripts/i_love_lamp-1.0.3.min.js') 
  javascript_include_tag "player/player.js" 
  javascript_include_tag "http://html5shiv.googlecode.com/svn/trunk/html5.js" 
  # Fav Icon and CSRF meta tag 
@@ -215,7 +201,7 @@ end
  end 
  if signed_in? 
  link_to(user_path(current_user), :class => "dropdown-toggle") do 
- image_tag("#{current_user.image.blank? ? 'default_user_35px.jpg' : current_user.image_url(:small_profile) }", :alt => "#{current_user.name}", :size => "35x35") 
+ image_tag("", :alt => "", :size => "35x35") 
  current_user.username 
  end 
  link_to("My Channels", user_channels_path(current_user)) 
@@ -230,7 +216,7 @@ end
  end 
  
  # Main container 
-  # Dark Content Wrapper 
+ # Dark Content Wrapper 
  # Main (White) Content Wrapper 
  link_to "Go back", :back 
  image_tag("okayguy.png", :alt => "Okay", :size => "256x275") 

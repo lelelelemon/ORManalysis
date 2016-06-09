@@ -11,15 +11,12 @@ class SessionsController < ApplicationController
         format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  [:notice, :error, :message].each do |key| 
  unless flash[key].blank? 
- key 
  flash[key] 
  end 
  end 
- link_to(image_tag("social_login_facebook.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/facebook") 
- link_to(image_tag("social_login_twitter.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/twitter") 
+ link_to(image_tag("social_login_facebook.png", :size => "225x43", :class => "left mtl"), "auth/facebook") 
+ link_to(image_tag("social_login_twitter.png", :size => "225x43", :class => "left mtl"), "auth/twitter") 
  sessions_path 
- request_forgery_protection_token 
- form_authenticity_token 
  text_field_tag :email, nil, :placeholder => "e-mail address", :class => "mls ras" 
  password_field_tag :password, nil, :placeholder => "password", :class => "mls ras" 
  link_to :forgotten_password do 
@@ -41,15 +38,11 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  public_video_url(:public_token => @video.public_token) 
  else 
  # Standard meta tags 
- image_path('meta_tag_logo.png') 
  end 
  browser_title 
  # Logged In CSS 
- cache_buster_path('/stylesheets/i_love_lamp-1.0.3.min.css') 
  # Site-wide JS 
  javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" 
- cache_buster_path('/javascripts/functions.min.js') 
- cache_buster_path('/javascripts/i_love_lamp-1.0.3.min.js') 
  javascript_include_tag "player/player.js" 
  javascript_include_tag "http://html5shiv.googlecode.com/svn/trunk/html5.js" 
  # Fav Icon and CSRF meta tag 
@@ -67,7 +60,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  if signed_in? 
  link_to(user_path(current_user), :class => "dropdown-toggle") do 
- image_tag("#{current_user.image.blank? ? 'default_user_35px.jpg' : current_user.image_url(:small_profile) }", :alt => "#{current_user.name}", :size => "35x35") 
+ image_tag("", :alt => "", :size => "35x35") 
  current_user.username 
  end 
  link_to("My Channels", user_channels_path(current_user)) 
@@ -82,17 +75,14 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  # Main container 
-  [:notice, :error, :message].each do |key| 
+ [:notice, :error, :message].each do |key| 
  unless flash[key].blank? 
- key 
  flash[key] 
  end 
  end 
- link_to(image_tag("social_login_facebook.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/facebook") 
- link_to(image_tag("social_login_twitter.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/twitter") 
+ link_to(image_tag("social_login_facebook.png", :size => "225x43", :class => "left mtl"), "auth/facebook") 
+ link_to(image_tag("social_login_twitter.png", :size => "225x43", :class => "left mtl"), "auth/twitter") 
  sessions_path 
- request_forgery_protection_token 
- form_authenticity_token 
  text_field_tag :email, nil, :placeholder => "e-mail address", :class => "mls ras" 
  password_field_tag :password, nil, :placeholder => "password", :class => "mls ras" 
  link_to :forgotten_password do 
@@ -182,7 +172,6 @@ end
             format.html { ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  compact_flash_messages 
  unless flash.empty? 
- @flash_key 
  @flash_msg 
  end 
  # validation error field placeholder 
@@ -227,8 +216,8 @@ end
  end 
  
  else 
- link_to(image_tag("social_signup_facebook.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/facebook") 
- link_to(image_tag("social_signup_twitter.png", :size => "225x43", :class => "left mtl"), "#{root_url}auth/twitter") 
+ link_to(image_tag("social_signup_facebook.png", :size => "225x43", :class => "left mtl"), "auth/facebook") 
+ link_to(image_tag("social_signup_twitter.png", :size => "225x43", :class => "left mtl"), "auth/twitter") 
   form_for(@user, :html => { :class => "ptxs"}, :remote => true) do |f| 
  @uid 
  @provider 
