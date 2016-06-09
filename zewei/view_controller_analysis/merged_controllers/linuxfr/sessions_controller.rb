@@ -7,16 +7,25 @@ class SessionsController < DeviseController
   def new
     session[:account_return_to] ||= url_for('/')
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- @account ||= Account.new 
- form_for @account, url: '/compte/connexion', html: { id: "#{dom_id @account}#{id_suffix}" }, authenticity_token: false do |f| 
- f.label "login#{id_suffix}", "Identifiant" 
- f.text_field :login, id: "account_login#{id_suffix}", required: "required", placeholder: "Identifiant", size: 20 
- f.label "password#{id_suffix}", "Mot de passe" 
- f.password_field :password, id: "account_password#{id_suffix}", required: "required", placeholder: "Mot de passe", size: 20 
- f.check_box :remember_me, id: "account_remember_me#{id_suffix}" 
- f.label "remember_me#{id_suffix}", "Connexion automatique" 
- f.submit "Se connecter", id: "account_submit#{id_suffix}" 
+  render "sessions/new", id_suffix: "" 
+ render "devise/shared/links" 
+ 
+  if controller_name != 'sessions' 
+ link_to "Se connecter", new_session_path(:account) 
  end 
+ if devise_mapping.registerable? && controller_name != 'registrations' 
+ link_to "S'inscrire", new_registration_path(:account) 
+ end 
+ if devise_mapping.recoverable? && controller_name != 'passwords' 
+ link_to "Mot de passe oubli ?", new_password_path(:account) 
+ end 
+ if devise_mapping.confirmable? && controller_name != 'confirmations' 
+ link_to "Pas encore reu les instructions de confirmation ?", new_confirmation_path(:account) 
+ end 
+ if devise_mapping.lockable? && controller_name != 'unlocks' 
+ link_to "Pas encore reu les instructions pour dverrouill votre compte ?", new_unlock_path(:account) 
+ end 
+ 
 
 end
 
