@@ -675,7 +675,39 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  configatron.community_name 
  link_to :update_your_profile.l, edit_user_path(@user) 
  end 
-  
+  widget :class => 'hentry', :id => 'profile_details' do 
+ link_to @user.login, user_path(@user) 
+ if @user.featured_writer? 
+ :featured_writer.l 
+ end 
+ if @is_current_user 
+ if @user.avatar 
+ @user.vendor ? "<div class='right_corner'><div class='community_pro'></div></div>".html_safe : '' 
+ @user.featured_writer ? "<div class='right_corner'><div class='featured_writer'></div></div>".html_safe : '' 
+ link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user) 
+ else 
+ :no_profile_photo.l 
+ link_to :click_here_to_upload_one.l, edit_user_path(@user) 
+ end 
+ end 
+ image_tag( @user.avatar_photo_url(:medium), :class => "img-responsive") 
+ if current_user and current_user.can_request_friendship_with(@user) 
+ add_friend_link(@user) 
+ end 
+ :member_since.l+" " 
+ :view_count.l 
+ "()" 
+ if @user.tags.any? 
+ end 
+ end 
+ if current_user && current_user.admin? 
+ widget do 
+ :admin_controls.l 
+ link_to(:assume_user_id.l, assume_user_path(@user), {:method => :post} ) 
+ link_to(:delete_this_user.l, user_path(@user), {}) 
+ end 
+ end 
+ 
  unless @user.description.blank? 
  box :id => "about_me" do 
  :about_me.l 

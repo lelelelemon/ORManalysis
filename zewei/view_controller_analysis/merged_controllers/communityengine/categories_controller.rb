@@ -594,6 +594,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  if logged_in? 
+ :have_something_to_contribute.l 
+# link_to fa_icon('check', :text => @category.display_new_post_text() , new_user_post_path({:user_id => current_user, :category_id => @category.id}))
  else 
  @category.display_new_post_text() || :write_new_post.l(:category=>@category.name) 
  link_to fa_icon('check', :text => :sign_up_for_an_account.l), signup_url 
@@ -602,7 +604,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  :show_category.l :category => @category.name 
  link_to :recent.l, category_path(@category) 
- link_to :popular.l, category_path(@category, :popular => 'DESC')
+ link_to :popular.l, category_path(@category, :popular => 'DESC') 
   
  paginate @posts, :theme => 'bootstrap' 
   render_widgets 

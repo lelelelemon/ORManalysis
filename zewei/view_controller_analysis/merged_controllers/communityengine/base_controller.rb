@@ -4,12 +4,10 @@ require 'pp'
 
 class BaseController < ApplicationController
 
-  include MethodLogging
   include AuthenticatedSystem
   include LocalizedApplication
   include BaseHelper
 
-  before_action :track_all!
   around_action :set_locale
   skip_before_action :verify_authenticity_token, :only => :footer_content
   before_action :initialize_header_tabs
@@ -707,13 +705,11 @@ end
     end
 
     def initialize_header_tabs
-      puts "HERE I AM INITIALIZING HEADER TABS!"
       # This hook allows plugins or host apps to easily add tabs to the header by adding to the @header_tabs array
       # Usage: @header_tabs << {:name => "My tab", :url => my_tab_path, :section => 'my_tab_section' }
       @header_tabs = []
     end
     def initialize_admin_tabs
-      puts "$$$$ $$$$ HERE I AM INITIALIZING ADMIN TABLS!"
       # This hook allows plugins or host apps to easily add tabs to the admin nav by adding to the @admin_nav_links array
       # Usage: @admin_nav_links << {:name => "My link", :url => my_link_path,  }
       @admin_nav_links = []

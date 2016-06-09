@@ -515,7 +515,39 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  @page_title = :denied_friendships.l 
-  
+  widget :class => 'hentry', :id => 'profile_details' do 
+ link_to @user.login, user_path(@user) 
+ if @user.featured_writer? 
+ :featured_writer.l 
+ end 
+ if @is_current_user 
+ if @user.avatar 
+ @user.vendor ? "<div class='right_corner'><div class='community_pro'></div></div>".html_safe : '' 
+ @user.featured_writer ? "<div class='right_corner'><div class='featured_writer'></div></div>".html_safe : '' 
+ link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user) 
+ else 
+ :no_profile_photo.l 
+ link_to :click_here_to_upload_one.l, edit_user_path(@user) 
+ end 
+ end 
+ image_tag( @user.avatar_photo_url(:medium), :class => "img-responsive") 
+ if current_user and current_user.can_request_friendship_with(@user) 
+ add_friend_link(@user) 
+ end 
+ :member_since.l+" " 
+ :view_count.l 
+ "()" 
+ if @user.tags.any? 
+ end 
+ end 
+ if current_user && current_user.admin? 
+ widget do 
+ :admin_controls.l 
+ link_to(:assume_user_id.l, assume_user_path(@user), {:method => :post} ) 
+ link_to(:delete_this_user.l, user_path(@user), {}) 
+ end 
+ end 
+ 
   user = friendship.friend 
  image_tag( user.avatar_photo_url(:medium)) 
  link_to user.login, user_path(user) 
@@ -706,7 +738,39 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  @page_title = :accepted_friendships.l(:count => @friend_count) 
-  
+  widget :class => 'hentry', :id => 'profile_details' do 
+ link_to @user.login, user_path(@user) 
+ if @user.featured_writer? 
+ :featured_writer.l 
+ end 
+ if @is_current_user 
+ if @user.avatar 
+ @user.vendor ? "<div class='right_corner'><div class='community_pro'></div></div>".html_safe : '' 
+ @user.featured_writer ? "<div class='right_corner'><div class='featured_writer'></div></div>".html_safe : '' 
+ link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user) 
+ else 
+ :no_profile_photo.l 
+ link_to :click_here_to_upload_one.l, edit_user_path(@user) 
+ end 
+ end 
+ image_tag( @user.avatar_photo_url(:medium), :class => "img-responsive") 
+ if current_user and current_user.can_request_friendship_with(@user) 
+ add_friend_link(@user) 
+ end 
+ :member_since.l+" " 
+ :view_count.l 
+ "()" 
+ if @user.tags.any? 
+ end 
+ end 
+ if current_user && current_user.admin? 
+ widget do 
+ :admin_controls.l 
+ link_to(:assume_user_id.l, assume_user_path(@user), {:method => :post} ) 
+ link_to(:delete_this_user.l, user_path(@user), {}) 
+ end 
+ end 
+ 
  box :id => "friends" do 
  link_to "( "+:pending.l+")", pending_user_friendships_path(@user) if  (@pending_friendships_count > 0) 
   user = friendship.friend 
@@ -896,7 +960,39 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  
+  widget :class => 'hentry', :id => 'profile_details' do 
+ link_to @user.login, user_path(@user) 
+ if @user.featured_writer? 
+ :featured_writer.l 
+ end 
+ if @is_current_user 
+ if @user.avatar 
+ @user.vendor ? "<div class='right_corner'><div class='community_pro'></div></div>".html_safe : '' 
+ @user.featured_writer ? "<div class='right_corner'><div class='featured_writer'></div></div>".html_safe : '' 
+ link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user) 
+ else 
+ :no_profile_photo.l 
+ link_to :click_here_to_upload_one.l, edit_user_path(@user) 
+ end 
+ end 
+ image_tag( @user.avatar_photo_url(:medium), :class => "img-responsive") 
+ if current_user and current_user.can_request_friendship_with(@user) 
+ add_friend_link(@user) 
+ end 
+ :member_since.l+" " 
+ :view_count.l 
+ "()" 
+ if @user.tags.any? 
+ end 
+ end 
+ if current_user && current_user.admin? 
+ widget do 
+ :admin_controls.l 
+ link_to(:assume_user_id.l, assume_user_path(@user), {:method => :post} ) 
+ link_to(:delete_this_user.l, user_path(@user), {}) 
+ end 
+ end 
+ 
  @page_title= :pending_friendships.l 
   user = friendship.friend 
  image_tag( user.avatar_photo_url(:medium)) 
