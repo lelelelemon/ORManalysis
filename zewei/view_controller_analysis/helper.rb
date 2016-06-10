@@ -269,7 +269,18 @@ def parse_params(tag, curr_controller)
   return res
 end
 
-#tag_arr: an array of all link_to statements
+def get_named_routes(rb_content, named_routes_class)
+  res = ""
+  res += "extra round for named routes in the code\n" if $log
+  named_routes_class.get_named_routes.each do |k, v|
+    if rb_content.include? k
+      res += ("" + v[0] + "," + v[1] + "\n")
+    end
+  end
+  res
+end
+
+  #tag_arr: an array of all link_to statements
 #named_routes_class: all named routes
 def get_link_to_tags(tag_arr, named_routes_class, curr_controller)
   

@@ -565,9 +565,13 @@ class View_Class
 			res += (indent + "link_to: \n") if $log
 
 			res += (get_link_to_tags(self.get_link_to_array, named_routes, self.get_controller_name) + "\n")  
-			@links_controller_view = res
+      #extra pass for named routes
+		  res += (get_named_routes(self.get_rb_content, named_routes) + "\n")
+      @links_controller_view = res
 		end
 		@links_controller_view 
+
+
 	end
 
 	def to_s
