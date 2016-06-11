@@ -1,0 +1,68 @@
+---controller: stories
+---view: listdetail
+---hrefs: 
+#<%= story.url_or_comments_path %>
+comments,index
+#<%= story.comments_path %>
+comments,index
+#<%= tag_path(tagging.tag.tag) %>
+home,tagged
+#<%= story.domain_search_url %>
+search,index
+#<%= ms.url_or_comments_path %>
+comments,index
+#<%= tag_path(tagging.tag.tag) %>
+home,tagged
+#<%= ms.domain_search_url %>
+search,index
+#<%= edit_story_path(story.short_id) %>
+stories,edit
+#<%= edit_story_path(story.short_id) %>
+stories,show
+#<%= story.comments_path %>
+comments,index
+#<%= story.comments_path %>
+comments,index
+route.recognize_path '' #
+home,index
+route.recognize_path '::u::2' #::u::<%= ms.user.username %>
+users,show
+route.recognize_path '::u::2' #::u::<%= ms.user.username %>
+users,show
+route.recognize_path '::u::2' #::u::<%= story.user.username %>
+users,show
+route.recognize_path '' #
+home,index
+route.recognize_path '::u::2' #::u::<%= story.user.username %>
+users,show
+route.recognize_path '' #
+home,index
+route.recognize_path '' #
+home,index
+---forms: 
+---form_for: 
+---link_to: 
+#link_to "hide", story_hide_path(story.short_id),
+              :class => "hider"
+stories,hide
+#link_to "unhide", story_unhide_path(story.short_id),
+              :class => "hider"
+stories,unhide
+#link_to "suggest", story_suggest_path(story.short_id),
+            :class => "suggester"
+stories,suggest
+#link_to "delete", story_path(story.short_id),
+                :method => :delete, :data => {
+                :confirm => "Are you sure you want to delete this story?" }
+stories,show
+#link_to "delete", story_path(story.short_id),
+                :method => :delete, :class => "mod_story_link"
+stories,show
+#link_to "undelete", story_undelete_path(story.short_id),
+              :method => :post, :data => {
+              :confirm => "Are you sure you want to undelete this story?" }
+stories,undelete
+#link_to "", login_path, :class => "upvoter"
+login,index
+view file home_newest_by_user not exists!
+---redirect_to tags in home_newest_by_user: 

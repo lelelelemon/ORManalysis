@@ -1,0 +1,19 @@
+---controller: scm_projects
+---view: new
+---hrefs: 
+---forms: 
+---form_for: 
+form_for(@scm_project, :html => {:class => "form-horizontal"}) do |f| 
+ t("scm_projects.new") 
+ f.label :scm_type, t("scm_project.scm_type") 
+ f.text_field :scm_type 
+ f.label :location, t("scm_project.location") 
+ f.text_field :location 
+ if @scm_project.new_record? 
+ submit_tag t("button.create"), :class => 'btn btn-primary' 
+ else 
+ submit_tag t("button.save"), :class => 'btn btn-primary' 
+ end 
+ end
+---link_to: 
+---redirect_to tags in scm_projects_new: 

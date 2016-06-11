@@ -1,0 +1,56 @@
+---controller: admin::dashboard
+---view: inbound
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+link_to(link.author, link.link)
+---controller: admin::dashboard
+---view: drafts
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+link_to(post.title, controller: "admin::content", action: "edit", id: post.id) 
+ display_date_and_time(post.created_at) 
+ post.body.strip_html.slice(0,300) if post.body 
+ e
+link_to t(".no_drafts_yet"), controller: 'content', action: 'new'
+---controller: admin::dashboard
+---view: comments
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: admin::dashboard
+---view: welcome
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+link_to(t(".spam_count", count: @statspam), controller: 'admin::feedback', only: 'spam')
+link_to(t('.unconfirmed_count', count: @unconfirmed), controller: 'admin::feedback', only: 'unapproved')
+link_to(t('.approved_count', count: @confirmed), controller: 'admin::feedback', only: 'ham')
+link_to(t('.comments_count', count: @statcomments), controller: 'admin::feedback')
+link_to(t(".notes_count", count: @statuses), controller: 'admin::notes')
+link_to(t(".pages_count", count: @statspages), controller: 'admin::pages')
+link_to(t(".drafts_count", count: @statsdrafts), controller: 'admin::content', "search[state]" => "drafts")
+link_to(t(".your_articles_count", count: @statuserposts), controller: 'admin::content', "search[user_id]" => current_user.id)
+link_to(t(".articles_count", count: @statposts), controller: 'admin::content')
+---controller: admin::dashboard
+---view: overview
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+link_to(t('.read_our_documentation'), 'http:::::publify.co')
+link_to(t(".enable_plugins"), controller: 'sidebar')
+link_to(t(".change_your_blog_presentation"), controller: 'themes')
+---controller: admin::dashboard
+---view: comment
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+link_to(h(comment.author), comment.url)
+---redirect_to tags in admin::dashboard_index: 

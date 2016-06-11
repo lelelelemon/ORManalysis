@@ -1,0 +1,34 @@
+---controller: messages
+---view: show
+---hrefs: 
+---forms: 
+<form class="MainForm" id="dummy_reply">
+    <textarea onclick="$('#reply').toggle(); $('#message_body').focus(); $('#dummy_reply').hide(); $(this).blur(); $('.sent').toggle(); return false;" style="height: 75px;"><::textarea>
+  <::form>
+---form_for: 
+---link_to: 
+#link_to :reply.l, new_user_message_path(@user, :reply_to => @message), :onclick => "$('#reply').toggle(); $('#dummy_reply').toggle(); $('#message_body').focus(); $('.sent').toggle(); return false;" 
+ render :partial => 'form', :locals => {:message => @reply, :user => @user}
+messages,new
+#link_to :reply.l, new_user_message_path(@user, :reply_to => @message), :onclick => "$('#reply').toggle(); $('#dummy_reply').toggle(); $('#message_body').focus(); $('.sent').toggle(); return false;" 
+ render :partial => 'form', :locals => {:message => @reply, :user => @user}
+messages,show
+---controller: messages
+---view: form
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: messages
+---view: sidebar_nav
+---hrefs: 
+#<%= user_messages_path(@user) %>
+messages,index
+---forms: 
+---form_for: 
+---link_to: 
+#link_to :compose.l, new_user_message_path(@user)
+messages,new
+#link_to :compose.l, new_user_message_path(@user)
+messages,show
+---redirect_to tags in messages_show: 

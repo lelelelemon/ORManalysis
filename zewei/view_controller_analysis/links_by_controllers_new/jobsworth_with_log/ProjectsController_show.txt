@@ -1,0 +1,56 @@
+---controller: projects
+---view: show
+---hrefs: 
+route.recognize_path '<%= @project.customer.nil? ? ' #<%= @project.customer.nil? ? 
+route.recognize_path '#milestones-pane' ##milestones-pane
+activities,index
+route.recognize_path '#completed-milestones-pane' ##completed-milestones-pane
+activities,index
+route.recognize_path '#score-rules-pane' ##score-rules-pane
+activities,index
+---forms: 
+---form_for: 
+---link_to: 
+#link_to t("projects.new_milestone"), new_milestone_path(:project_id => @project), :class => "btn pull-right"
+milestones,new
+#link_to t("projects.new_milestone"), new_milestone_path(:project_id => @project), :class => "btn pull-right"
+milestones,show
+---controller: shared
+---view: score_rules_container
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: milestones
+---view: completed_milestones
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+#link_to( t("milestones.revert"), revert_milestone_path(m), :method => :post, :confirm => t("shared.are_you_sure") )
+milestones,revert
+#link_to( t("milestones.revert"), revert_milestone_path(m), :method => :post, :confirm => t("shared.are_you_sure") )
+milestones,show
+---controller: milestones
+---view: milestone_row
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+#link_to '<i class="icon-pencil"><::i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,edit
+#link_to '<i class="icon-pencil"><::i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,show
+---controller: milestones
+---view: milestone_row
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+#link_to '<i class="icon-pencil"><::i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,edit
+#link_to '<i class="icon-pencil"><::i>'.html_safe, edit_milestone_path(milestone), :class => "hide action"
+milestones,show
+---redirect_to tags in projects_show: 
+#root_path
+activities,index

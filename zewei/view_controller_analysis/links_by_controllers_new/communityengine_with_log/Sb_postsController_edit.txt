@@ -1,0 +1,25 @@
+---controller: sb_posts
+---view: edit
+---hrefs: 
+---forms: 
+---form_for: 
+#form_for :post, :html => { :method => :patch },
+     :url  => sb_post_path(@post, :forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]) do |f| 
+ f.text_area :body, :class => "rich_text_editor" 
+ submit_tag :save.l 
+ :or.l 
+ link_to :cancel.l, forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]) 
+ end
+sb_posts,show
+#form_for :post, :html => { :method => :patch },
+     :url  => sb_post_path(@post, :forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]) do |f| 
+ f.text_area :body, :class => "rich_text_editor" 
+ submit_tag :save.l 
+ :or.l 
+ link_to :cancel.l, forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]) 
+ end
+topics,show
+---link_to: 
+#link_to :cancel.l, forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page])
+topics,show
+---redirect_to tags in sb_posts_edit: 

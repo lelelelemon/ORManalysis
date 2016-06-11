@@ -1,0 +1,144 @@
+---controller: scm_projects
+---view: new
+---hrefs: 
+---forms: 
+---form_for: 
+form_for(@scm_project, :html => {:class => "form-horizontal"}) do |f| 
+ t("scm_projects.new") 
+ f.label :scm_type, t("scm_project.scm_type") 
+ f.text_field :scm_type 
+ f.label :location, t("scm_project.location") 
+ f.text_field :location 
+ if @scm_project.new_record? 
+ submit_tag t("button.create"), :class => 'btn btn-primary' 
+ else 
+ submit_tag t("button.save"), :class => 'btn btn-primary' 
+ end 
+ end
+---link_to: 
+view file scm_projects_create not exists!
+---controller: layouts
+---view: application
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: layouts
+---view: basic
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: tasks
+---view: nextTasks
+---hrefs: 
+route.recognize_path '' #
+activities,index
+route.recognize_path '#' ##
+activities,index
+---forms: 
+---form_for: 
+---link_to: 
+---controller: tags
+---view: panel_list
+---hrefs: 
+route.recognize_path '::tags' #::tags
+tags,index
+---forms: 
+---form_for: 
+---link_to: 
+---controller: task_filters
+---view: list
+---hrefs: 
+#<%= filters_user_path(current_user) %>
+users,filters
+#<%= filters_user_path(current_user) %>
+users,update
+route.recognize_path '' #
+activities,index
+route.recognize_path '#filters-menu' ##filters-menu
+activities,index
+route.recognize_path '#' ##
+activities,index
+---forms: 
+---form_for: 
+---link_to: 
+link_to_unread_tasks(current_user)
+---controller: layouts
+---view: notice
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+# "[#{t("button.hide")}]", { :controller => 'users', :action => 'update_seen_news', :id => news.id}, :class => "right",
+        :onclick => "jQuery('#news').fadeOut(500)",
+        :remote => true
+users,update_seen_news
+---controller: layouts
+---view: tabmenu
+---hrefs: 
+route.recognize_path '' #
+activities,index
+route.recognize_path '#' ##
+activities,index
+route.recognize_path '#' ##
+activities,index
+route.recognize_path '#' ##
+activities,index
+route.recognize_path '#' ##
+activities,index
+---forms: 
+---form_for: 
+---link_to: 
+#link_to t('tabmenu.log_out'), destroy_user_session_path
+auth::sessions,create
+#link_to t('tabmenu.log_out'), destroy_user_session_path
+auth::sessions,destroy
+---controller: layouts
+---view: menu
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: layouts
+---view: ajax_spinner
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: layouts
+---view: flash
+---hrefs: 
+route.recognize_path '' #
+activities,index
+---forms: 
+---form_for: 
+---link_to: 
+---controller: layouts
+---view: menubar_search
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: layouts
+---view: sheet_info
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+#link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num))
+tasks,edit
+#link_to(@current_sheet.task.issue_name + " - " + @current_sheet.task.project.name, edit_task_path(@current_sheet.task.task_num))
+tasks,update
+---controller: tasks
+---view: task_line
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+route.recognize_path '"#"' #link_to "<i class=\"icon-move\"><::i>".html_safe, "#", :title => t("tasks.reorder_task"), :class => "pull-right"
+---redirect_to tags in scm_projects_create: 
+#scm_project_url(@scm_project)
+projects,show
+#scm_project_url(@scm_project)
+scm_projects,show

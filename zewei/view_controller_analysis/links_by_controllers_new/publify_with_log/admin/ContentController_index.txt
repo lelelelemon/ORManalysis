@@ -1,0 +1,10 @@
+---controller: admin::content
+---view: article_list
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+link_to("#{article.comments.ham.size.to_s} <i class='glyphicon glyphicon-comment'><::i>".html_safe, controller: '::admin::feedback', id: article.id, action: 'article')
+link_to(article.title, {controller: '::articles', action: "preview", id: article.id}, {class: 'unpublished', target: '_new'})
+link_to_permalink(article, article.title, nil, 'published')
+---redirect_to tags in admin::content_index: 

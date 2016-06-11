@@ -1,0 +1,20 @@
+---controller: wiki
+---view: edit
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: wiki
+---view: show
+---hrefs: 
+route.recognize_path '#toc_0' ##toc_0
+activities,index
+route.recognize_path '#toc_2' ##toc_<%=idx%>
+activities,index
+---forms: 
+---form_for: 
+---link_to: 
+#t("wiki.revision") + " #{(params[:rev].to_i > 0) ? params[:rev].to_i : @page.revisions.size}", :controller => 'wiki', :action => 'versions', :id => @page.name 
+ tz.utc_to_local(@page.revision(params[:rev].to_i).created_at).strftime("#{current_user.time_format} #{current_user.date_format} ") + t("shared.by", user: "#{@page.revision(params[:rev].to_i).user ? @page.revision(params[:rev].to_i).user.name : "Unknown"}")
+wiki,versions
+---redirect_to tags in wiki_show: 

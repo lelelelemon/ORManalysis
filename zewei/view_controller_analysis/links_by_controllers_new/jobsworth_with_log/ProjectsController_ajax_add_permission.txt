@@ -1,0 +1,56 @@
+---controller: projects
+---view: permission_list
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: users
+---view: project
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+#_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :user_edit => user_edit)}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" 
+ for p in perms 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" if perm.can?(p) 
+ link_to_function image_tag("delete.png", :title => t("users.grant_access", access: p, user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_add_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" unless perm.can?(p) 
+ end
+users,ajax_add_permission
+---controller: users
+---view: project_permissions
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: users
+---view: project
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+#_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :user_edit => user_edit)}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" 
+ for p in perms 
+ link_to_function image_tag("tick.png", :title => t("users.remove_all_access", user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_remove_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" if perm.can?(p) 
+ link_to_function image_tag("delete.png", :title => t("users.grant_access", access: p, user: escape_twice(@user.name)).html_safe),
+              "jQuery.ajax({url: '#{url_for(:controller => 'projects', :action => 'ajax_add_permission', :user_id => @user.id, :id => project.id, :perm => p, :user_edit => user_edit )}',
+               success: function(response){ jQuery('#permission_list').html(response); }
+               })" unless perm.can?(p) 
+ end
+users,ajax_add_permission
+view file projects_ajax_add_permission not exists!
+---redirect_to tags in projects_ajax_add_permission: 

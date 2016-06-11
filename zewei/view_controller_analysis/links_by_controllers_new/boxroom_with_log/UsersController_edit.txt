@@ -1,0 +1,44 @@
+---controller: users
+---view: edit
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: users
+---view: form
+---hrefs: 
+---forms: 
+---form_for: 
+#form_for @user do |f| 
+ f.error_messages 
+ unless @user.new_record? 
+ f.label :name 
+ f.text_field :name, { :class => 'text_input' } 
+ end 
+ f.label :email 
+ f.text_field :email, { :class => 'text_input' } 
+ unless @user.new_record? 
+ f.label :password 
+ f.password_field :password, { :class => 'text_input' } 
+ label_tag t(:confirm_password) 
+ f.password_field :password_confirmation, { :class => 'text_input' } 
+ end 
+ if signed_in? && current_user.member_of_admins? 
+ t :member_of_these_groups 
+ if @user.is_admin 
+ hidden_field_tag 'user[group_ids][]', Group.admins_group.id 
+ f.collection_check_boxes :group_ids, Group.all_except_admins, :id, :name 
+ else 
+ f.collection_check_boxes :group_ids, Group.all, :id, :name 
+ end 
+ end 
+ f.submit t(:save) 
+ if @user != current_user 
+ link_to t(:back), users_url 
+ end 
+ end
+users,index
+---link_to: 
+#link_to t(:back), users_url
+users,index
+---redirect_to tags in users_edit: 

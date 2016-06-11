@@ -1,0 +1,175 @@
+---controller: sb_posts
+---view: index
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+#link_to :forums.l, forums_path 
+ if params[:q].blank? 
+ @page_title 
+ else 
+ "#{:searching_for.l} '#{h params[:q]}'" 
+ end 
+ link_to fa_icon("rss"), all_sb_posts_path(:format => 'rss') 
+ :post_found.l(:count => @posts.size) 
+ for post in @posts do 
+ unless post == @posts.to_a.first 
+ end 
+ post.dom_id 
+ post.created_at.xmlschema 
+ time_ago_in_words(post.created_at) 
+ if post.user 
+ avatar_for post.user     
+ link_to truncate(h(post.username), :length => 15), user_path(post.user), :class => (post.topic.editable_by?(post.user) ? "admin" : nil) 
+ pluralize post.user.sb_posts_count, :post.l 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '32', :width => '32', :class => 'photo')         
+ truncate(h(post.username), :length => 15) 
+ end 
+ link_to(h(post.forum_name), forum_path(post.forum)) 
+ link_to h(post.topic_title), forum_topic_path(post.forum, post.topic) 
+ raw post.body 
+ end 
+ paginate @posts, :theme => 'bootstrap'
+sb_posts,index
+#link_to :forums.l, forums_path 
+ if params[:q].blank? 
+ @page_title 
+ else 
+ "#{:searching_for.l} '#{h params[:q]}'" 
+ end 
+ link_to fa_icon("rss"), all_sb_posts_path(:format => 'rss') 
+ :post_found.l(:count => @posts.size) 
+ for post in @posts do 
+ unless post == @posts.to_a.first 
+ end 
+ post.dom_id 
+ post.created_at.xmlschema 
+ time_ago_in_words(post.created_at) 
+ if post.user 
+ avatar_for post.user     
+ link_to truncate(h(post.username), :length => 15), user_path(post.user), :class => (post.topic.editable_by?(post.user) ? "admin" : nil) 
+ pluralize post.user.sb_posts_count, :post.l 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '32', :width => '32', :class => 'photo')         
+ truncate(h(post.username), :length => 15) 
+ end 
+ link_to(h(post.forum_name), forum_path(post.forum)) 
+ link_to h(post.topic_title), forum_topic_path(post.forum, post.topic) 
+ raw post.body 
+ end 
+ paginate @posts, :theme => 'bootstrap'
+sb_posts,index
+#link_to :forums.l, forums_path 
+ if params[:q].blank? 
+ @page_title 
+ else 
+ "#{:searching_for.l} '#{h params[:q]}'" 
+ end 
+ link_to fa_icon("rss"), all_sb_posts_path(:format => 'rss') 
+ :post_found.l(:count => @posts.size) 
+ for post in @posts do 
+ unless post == @posts.to_a.first 
+ end 
+ post.dom_id 
+ post.created_at.xmlschema 
+ time_ago_in_words(post.created_at) 
+ if post.user 
+ avatar_for post.user     
+ link_to truncate(h(post.username), :length => 15), user_path(post.user), :class => (post.topic.editable_by?(post.user) ? "admin" : nil) 
+ pluralize post.user.sb_posts_count, :post.l 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '32', :width => '32', :class => 'photo')         
+ truncate(h(post.username), :length => 15) 
+ end 
+ link_to(h(post.forum_name), forum_path(post.forum)) 
+ link_to h(post.topic_title), forum_topic_path(post.forum, post.topic) 
+ raw post.body 
+ end 
+ paginate @posts, :theme => 'bootstrap'
+topics,show
+#link_to :forums.l, forums_path 
+ if params[:q].blank? 
+ @page_title 
+ else 
+ "#{:searching_for.l} '#{h params[:q]}'" 
+ end 
+ link_to fa_icon("rss"), all_sb_posts_path(:format => 'rss') 
+ :post_found.l(:count => @posts.size) 
+ for post in @posts do 
+ unless post == @posts.to_a.first 
+ end 
+ post.dom_id 
+ post.created_at.xmlschema 
+ time_ago_in_words(post.created_at) 
+ if post.user 
+ avatar_for post.user     
+ link_to truncate(h(post.username), :length => 15), user_path(post.user), :class => (post.topic.editable_by?(post.user) ? "admin" : nil) 
+ pluralize post.user.sb_posts_count, :post.l 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '32', :width => '32', :class => 'photo')         
+ truncate(h(post.username), :length => 15) 
+ end 
+ link_to(h(post.forum_name), forum_path(post.forum)) 
+ link_to h(post.topic_title), forum_topic_path(post.forum, post.topic) 
+ raw post.body 
+ end 
+ paginate @posts, :theme => 'bootstrap'
+forums,index
+#link_to :forums.l, forums_path 
+ if params[:q].blank? 
+ @page_title 
+ else 
+ "#{:searching_for.l} '#{h params[:q]}'" 
+ end 
+ link_to fa_icon("rss"), all_sb_posts_path(:format => 'rss') 
+ :post_found.l(:count => @posts.size) 
+ for post in @posts do 
+ unless post == @posts.to_a.first 
+ end 
+ post.dom_id 
+ post.created_at.xmlschema 
+ time_ago_in_words(post.created_at) 
+ if post.user 
+ avatar_for post.user     
+ link_to truncate(h(post.username), :length => 15), user_path(post.user), :class => (post.topic.editable_by?(post.user) ? "admin" : nil) 
+ pluralize post.user.sb_posts_count, :post.l 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '32', :width => '32', :class => 'photo')         
+ truncate(h(post.username), :length => 15) 
+ end 
+ link_to(h(post.forum_name), forum_path(post.forum)) 
+ link_to h(post.topic_title), forum_topic_path(post.forum, post.topic) 
+ raw post.body 
+ end 
+ paginate @posts, :theme => 'bootstrap'
+forums,show
+#link_to :forums.l, forums_path 
+ if params[:q].blank? 
+ @page_title 
+ else 
+ "#{:searching_for.l} '#{h params[:q]}'" 
+ end 
+ link_to fa_icon("rss"), all_sb_posts_path(:format => 'rss') 
+ :post_found.l(:count => @posts.size) 
+ for post in @posts do 
+ unless post == @posts.to_a.first 
+ end 
+ post.dom_id 
+ post.created_at.xmlschema 
+ time_ago_in_words(post.created_at) 
+ if post.user 
+ avatar_for post.user     
+ link_to truncate(h(post.username), :length => 15), user_path(post.user), :class => (post.topic.editable_by?(post.user) ? "admin" : nil) 
+ pluralize post.user.sb_posts_count, :post.l 
+ else 
+ image_tag(configatron.photo.missing_thumb, :height => '32', :width => '32', :class => 'photo')         
+ truncate(h(post.username), :length => 15) 
+ end 
+ link_to(h(post.forum_name), forum_path(post.forum)) 
+ link_to h(post.topic_title), forum_topic_path(post.forum, post.topic) 
+ raw post.body 
+ end 
+ paginate @posts, :theme => 'bootstrap'
+users,show
+---redirect_to tags in sb_posts_index: 

@@ -1,0 +1,40 @@
+---controller: sb_posts
+---view: create
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: sb_posts
+---view: sb_post
+---hrefs: 
+route.recognize_path '#2' ##<%= post.dom_id %>
+---forms: 
+---form_for: 
+---link_to: 
+#link_to :edit_post.l, edit_forum_topic_sb_post_path(@forum, @topic, post), :class => 'edit-via-ajax', :id => "edit-post-#{post.id}"
+sb_posts,show
+#link_to :edit_post.l, edit_forum_topic_sb_post_path(@forum, @topic, post), :class => 'edit-via-ajax', :id => "edit-post-#{post.id}"
+sb_posts,edit
+#link_to :edit_post.l, edit_forum_topic_sb_post_path(@forum, @topic, post), :class => 'edit-via-ajax', :id => "edit-post-#{post.id}"
+sb_posts,show
+---controller: shared
+---view: messages
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+---controller: moderators
+---view: toggle
+---hrefs: 
+---forms: 
+---form_for: 
+---link_to: 
+#link_to :remove_moderator.l, forum_moderator_path(forum, moderatorship.id), :method => :delete, :class => 'act-via-ajax', :id => 'moderator-'+user.id.to_s
+moderators,show
+---redirect_to tags in sb_posts_create: 
+#forum_topic_path({:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => reply-form, :page => (params[:page] || 1)}.merge({:sb_post => params[:sb_post]}))
+topics,show
+#forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || 1)
+topics,show
+#(forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id]))
+topics,show
