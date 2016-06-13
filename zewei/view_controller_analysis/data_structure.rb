@@ -654,7 +654,12 @@ class Named_Routes_Class
 		num_of_lines = lines.length
 		i = 0
 		while i < num_of_lines
-			lines[i].strip
+	    if line[i+1].start_with? "{}"
+        i += 2
+        next
+      end
+      
+      lines[i].strip
 			helper = lines[i]
 
 			lines[i+1] = lines[i+1][1..lines[i+1].rindex('}')-1]
