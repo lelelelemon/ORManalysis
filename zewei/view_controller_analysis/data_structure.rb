@@ -654,7 +654,7 @@ class Named_Routes_Class
 		num_of_lines = lines.length
 		i = 0
 		while i < num_of_lines
-	    if line[i+1].start_with? "{}"
+	    if lines[i+1].start_with? "{}"
         i += 2
         next
       end
