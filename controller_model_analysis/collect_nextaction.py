@@ -180,8 +180,9 @@ for subdir, folders, files in os.walk(base_path):
 					for child in c:
 						#general stats
 						if child.tag in stats_content:
-							stat_list[c.tag][child.tag].append(float(child.text))
-							avg_list[child.tag].append(float(child.text))
+							for i in range(0,int(child.attrib["freq"], 10)):
+								stat_list[c.tag][child.tag].append(float(child.text))
+								avg_list[child.tag].append(float(child.text))
 					#child.tag = User
 						elif child.tag != "string" and child.tag != "integer" and child.tag != "boolean":
 							#assign colors

@@ -344,12 +344,17 @@ if options[:run_all]
 			end
 			
 			clear_data_structure
+			@next_action_freq = Hash.new
+			total_freq = 0
 			File.open(next_file, "r").each do |line|
 				if line.length > 1
 					line = line.gsub("\n","")
+					total_freq += 1
 					if @next_action.include?line
+						@next_action_freq[line] += 1
 					else
 						@next_action.push(line)
+						@next_action_freq[line] = 1
 					end
 				end
 			end
@@ -373,14 +378,17 @@ if options[:run_all]
 					$temp_file.puts "==================\n\n\n"
 					$temp_file.puts "#{start_class}.#{start_function} Vs #{next_class}.#{next_function}"
 					puts "Compare with: #{next_class}.#{next_function}"
-					compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list)
+					compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list, @next_action_freq[line])
+					collect_nextaction_query_instr(@next_action_freq[line])
 					clear_data_structure
 				else
 					puts "Cannot find #{chs[0]}->#{next_class}.#{next_function}"
 				end
 			end
 
+			print_nextaction_query_instr(total_freq)
 			$graph_file.puts("<\/NEXTACTION>")
+			$nextaction_query_count = Hash.new
 			$graph_file.close
 		end
 

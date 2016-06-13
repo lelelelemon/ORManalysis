@@ -47,8 +47,9 @@ class Instruction
 		@defv_var = nil
 		@args = Array.new
 		@symbols = Array.new
+		@in_while_loop = false
 	end
-	attr_accessor :defv_var, :args, :inodes, :inode, :symbols
+	attr_accessor :defv_var, :args, :inodes, :inode, :symbols, :in_while_loop
 	def addSymbol(s)
 		@symbols.push(s)
 	end
@@ -209,11 +210,18 @@ class Call_instr < Instruction
 	end
 	def getCallerType
 		#This is only for method without CFG, for example, scope
-		if @call_handler and @call_handler.caller
+		t = type_valid(self, @caller)
+		if t
+			return t
+		elsif @call_handler and @call_handler.caller
 			return @call_handler.caller.getName
-		else
-			return type_valid(self, @caller)
 		end
+		return nil
+		#if @call_handler and @call_handler.caller
+		#	return @call_handler.caller.getName
+		#else
+		#	return type_valid(self, @caller)
+		#end
 	end
 	def getTableName
 		if @funcname.end_with?("_count") and testTableField(getCallerType, @funcname[0...-6].downcase.singularize)
@@ -226,12 +234,14 @@ class Call_instr < Instruction
 			if self.isClassField and self.getDefv and $class_map[type_valid(self, self.getDefv)]
 				if testExactTableField(tbl_name, @funcname) == nil
 					if type_valid(self, self.getDefv)
-						return type_valid(self, self.getDefv)
+						#return type_valid(self, self.getDefv)
+						return get_table_name_from_class_name(type_valid(self, self.getDefv))
 					end
 				end
 			end
 		end
-		return self.getCallerType
+		#return self.getCallerType
+		return get_table_name_from_class_name(self.getCallerType)
 	end
 	def getAssociationType
 		t = type_valid(self, @caller)
@@ -255,9 +265,7 @@ class Call_instr < Instruction
 		return nil
 	end
 	def getQueryType
-		if @call_handler and @call_handler.getQueryType 
-			return @call_handler.getQueryType
-		end
+		
 		t = type_valid(self, @caller)
 		if isActiveRecord(t)
 			qtype = check_method_keyword(t, @funcname)
@@ -281,8 +289,11 @@ class Call_instr < Instruction
 					end
 				end 
 			end
-			return nil
-		end	
+		end
+		if @call_handler and @call_handler.getQueryType 
+			return @call_handler.getQueryType
+		end
+		return nil	
 	end
 	def isQuery
 		if getQueryType
@@ -333,6 +344,9 @@ class Call_instr < Instruction
 	end
 	def setFuncname(f)
 		@funcname = f
+	end
+	def setCaller(c)
+		@caller = c
 	end
 	def setResolvedCaller(_caller)
 		@resolved_caller = _caller
@@ -727,6 +741,14 @@ class CFG
 		end
 		return nil
 	end
+	def getLastInstr
+		@bb.reverse_each do |b|
+			b.getInstr.reverse_each do |i|
+				return i
+			end
+		end
+		return nil
+	end
 	def getVarMap
 		@var_map
 	end
@@ -790,6 +812,18 @@ class CFG
 		end
 		return nil
 	end
+	#get the previous BB of index i
+	def getBBPrevByIndex(i)
+		last_bb = @bb[0]
+		@bb.each do |b|
+			if b.getIndex == i
+				return last_bb
+			end
+			last_bb = b
+		end
+		return nil
+
+	end
 end
 
 class Closure < CFG
@@ -801,9 +835,10 @@ class Closure < CFG
 		@var_def_table = Array.new
 		@closure_def_table = Array.new 
 		@parent_instr = nil
+		@has_loop_carry_dep = false
 		super
 	end
-	attr_accessor :parent_instr
+	attr_accessor :parent_instr, :var_def_table, :closure_def_table, :has_loop_carry_dep
 	def setReturnType(type)
 		@return_type = type
 		if @parent_instr != nil

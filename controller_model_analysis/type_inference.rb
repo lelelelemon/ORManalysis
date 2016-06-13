@@ -137,7 +137,9 @@ end
 def type_not_found(var)
 	if var == nil
 		return true
-	elsif var.type == "unknown"
+	elsif var.type == nil
+		return true
+	elsif var.type == "unknown" or var.type == "Nil"
 		return true
 	end
 	return false
@@ -181,6 +183,17 @@ def util_function(fname, instr, cfg, c_name)
 	end
 	if t == "PASS"
 		type = nil
+		if instr.is_a?Call_instr
+			#return caller type
+			if type_not_found(known_type(instr.getCaller, cfg, c_name))
+			else
+				type = known_type(instr.getCaller, cfg, c_name)
+				if type_not_found(type)
+				else
+					return type.type
+				end
+			end
+		end
 		instr.getDeps.each do |d|
 			if type_not_found(known_type(d.getVname, cfg, c_name))
 			else
@@ -198,6 +211,20 @@ def util_function(fname, instr, cfg, c_name)
 		return "self_model_name"
 	else
 		return t
+	end
+end
+
+def solve_can_problem(cfg)
+	cfg.getBB.each do |bb|
+		bb.getInstr.each do |instr|
+			if instr.instance_of?Call_instr and instr.getFuncname.start_with?("can?_")
+				tp = type_valid(instr, instr.args[1])
+				if tp
+					instr.setFuncname("#{instr.getFuncname.gsub('?','')}_#{tp}")
+					puts "Set #{instr.getClassName}.#{instr.getMethodName} funcname to be #{instr.getFuncname}"
+				end 
+			end
+		end
 	end
 end
 
@@ -299,6 +326,24 @@ def do_type_inference
 			end
 		end
 	end
+
+	#TODO: Here are some filter code handling specific rails functions
+	$class_map.each do |keyc, valuec|
+		valuec.getMethods.each do |key, value|
+			cfg = value.getCFG
+			if cfg != nil
+				solve_can_problem(cfg)
+				cfg.getBB.each do |bb|
+					bb.getInstr.each do |instr|
+						if instr.hasClosure?
+							solve_can_problem(instr.getClosure)
+						end
+					end
+				end
+			end
+		end
+	end
+
 
 =begin
 	$class_map.each do |keyc, valuec|
@@ -479,9 +524,23 @@ def do_type_inference_cfg(cfg, f_name, c_name, print=false)
 				#	end
 				elsif instr.is_a?Call_instr
 					caller_type = known_type(instr.getCaller, cfg, c_name)
+					if type_not_found(caller_type)
+						caller_type = Local_variable.new(instr.getCaller, searchModelName(instr.getCaller))
+						if type_not_found(caller_type)
+						else
+							puts "Find caller_type = #{instr.getCaller}, #{caller_type.type}, in func #{c_name}.#{f_name}"
+							add_to_cfg_varmap(cfg, c_name, instr.getCaller, caller_type.type)
+						end
+					end	
 					if type=util_function(instr.getFuncname, instr, cfg, c_name)
 						add_to_cfg_varmap(cfg, c_name, instr.getDefv, type)
 					elsif type_not_found(caller_type)
+						#TODO: heuristic... 
+						if tname = searchModelName(instr.getFuncname)
+							if instr.getDefv
+								add_to_cfg_varmap(cfg, c_name, instr.getDefv, tname)
+							end 
+						end
 					else
 						if instr.getResolvedCaller.length == 0
 							instr.setResolvedCaller(caller_type.type)

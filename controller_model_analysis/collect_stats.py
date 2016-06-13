@@ -91,7 +91,9 @@ def calculateAverageRecursive(cond_list, pos, node, to_float):
 			if pos ==  len(cond_list)-1:
 				if to_float:
 					if child.text == "NaN":
-						results.append(-1)
+						results.append(0)
+					elif child.text == "":
+						results.append(0.0)
 					else:
 						results.append(float(child.text))
 				else:
@@ -151,7 +153,7 @@ for subdir, folders, files in os.walk(base_path):
 	for fn in files:
 		if fn.endswith("stats.xml"):
 			fname = os.path.join(subdir, fn)
-			print fname
+			#print fname
 			tree = ET.parse(fname)
 			roots.append(tree.getroot())
 
@@ -167,14 +169,14 @@ for root in roots:
 		for child in c:
 			if child.tag not in table_names and child.tag != "general":
 				table_names.append(child.tag)
-				print "Table: %s"%child.tag
+				#print "Table: %s"%child.tag
 
 
 prefix1 = ["stat"]
 general_stats_prefix = prefix1[:]
 table_stats_prefix = prefix1[:]  
 general_stats_prefix.append("general")
-table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryInClosureByDB", "queryUseSQLString", "queryOnlyFromUser", "longestQueryPath", "queryUsedInView", "materialized", "notMaterialized"]
+table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryInClosureByDB", "queryInClosureByDBScale", "queryInWhile", "queryInWhileByDB", "queryInClosureWithCarrydep", "queryUseSQLString", "queryOnlyFromUser", "longestQueryPath", "queryUsedInView", "loopLongestQueryPath","loopCarryLongestQueryPath","queryControlDependent","queryAffectControl"]
 general_stats_content = table_stats_content[:]
 general_stats_content.append("branchOnQuery")
 general_stats_content.append("branchInView")
@@ -233,19 +235,22 @@ def print_table_query_stat(prefix):
 		cond_list.append("total")
 		table_stats[table] = []
 		r = calculateAllActions(cond_list)
+		d1 = float(sum(r))/float(len(roots))
 		table_stats[table].append(sum(r))
 		cond_list = table_stats_prefix[:]
 		cond_list.append(table)
 		cond_list.append("writeSource")
 		cond_list.append("total")
 		r = calculateAllActions(cond_list)
+		d2 = float(sum(r))/float(len(roots))
 		table_stats[table].append(r)
-
-	sorted(print_table_stats, reverse=True)
-	j = 0
-	for p in print_table_stats:
-		stats_file.write("\t\t<table%s>%f</table%s>\n"%(j,p,j))
-		j+=1
+		
+		stats_file.write("\t\t<table name=\"%s\" write=\"%f\">%f</table>\n"%(table, d2, d1))
+	#sorted(print_table_stats, reverse=True)
+	#j = 0
+	#for p in print_table_stats:
+	#	stats_file.write("\t\t<table%s>%f</table%s>\n"%(j,p,j))
+	#	j+=1
 	
 	stats_file.write("\t</tableStat>\n")
 
@@ -260,6 +265,12 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 		cond_list = prefix[:]
 		cond_list.append(g)
 		r = calculateAllActions(cond_list)
+		if "loopLongestQueryPath"==g:
+			i = 0
+			for k in r:
+				if k > data["queryTotal"]:
+					r[i] = 0
+				i += 1
 		data[g] = getAverage(r)
 		data_std[g] = getStd(r)
 
@@ -314,8 +325,8 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	read_query_total = read_sum
 
 	stats_file.write("\t<queryGeneral>\n")
-	stats_file.write("\t\t<readQuery std=\"\">%f</readQuery>\n"%(reads_std["total"], reads["total"]))
-	stats_file.write("\t\t<writeQuery std=\"\">%f</writeQuery>\n"%(writes_std["total"], writes["total"]))
+	stats_file.write("\t\t<readQuery>%f</readQuery>\n"%(reads["total"]))
+	stats_file.write("\t\t<writeQuery>%f</writeQuery>\n"%(writes["total"]))
 	stats_file.write("\t</queryGeneral>\n")
 
 	stats_file.write("\t<branch>\n")
@@ -345,27 +356,45 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t</usedSQLString>\n")
 
 	stats_file.write("\t<onlyFromUser>\n")
-	stats_file.write("\t\t<queryOnlyUseOtherSource>%f</queryOnlyUseOtherSource>\n"%data["queryOnlyFromUser"])
-	stats_file.write("\t\t<queryUseQueryResults>%f</queryUseQueryResults>\n"%(reads["total"]-data["queryOnlyFromUser"]))
+	stats_file.write("\t\t<affectedByQueryInDataflow>%f</affectedByQueryInDataflow>\n"%(reads["total"]-data["queryOnlyFromUser"]))
+	stats_file.write("\t\t<notAffectedByQueryInDataflow>%f</notAffectedByQueryInDataflow>\n"%data["queryOnlyFromUser"])
 	stats_file.write("\t</onlyFromUser>\n")
 
+	stats_file.write("\t<affectedInControlflow>\n")
+	stats_file.write("\t\t<affectedByQueryInControlflow>%f</affectedByQueryInControlflow>\n"%data["queryControlDependent"])
+	stats_file.write("\t\t<notAffectedByQueryInControlflow>%f</notAffectedByQueryInControlflow>\n"%(reads["total"]+writes["total"]-data["queryControlDependent"]))
+	stats_file.write("\t</affectedInControlflow>\n")
+
 	stats_file.write("\t<longestQueryPath>\n")
-	stats_file.write("\t\t<longestQueryPathLen>%f</longestQueryPathLen>\n"%data["longestQueryPath"])
+	stats_file.write("\t\t<longestQueryPathLoopCarry>%f</longestQueryPathLoopCarry>\n"%data["loopCarryLongestQueryPath"])
+	stats_file.write("\t\t<longestQueryPathLoopNoCarry>%f</longestQueryPathLoopNoCarry>\n"%(data["loopLongestQueryPath"]-data["loopCarryLongestQueryPath"]))
+	stats_file.write("\t\t<longestQueryPathNotInLoop>%f</longestQueryPathNotInLoop>\n"%(reads["total"]+writes["total"]-data["longestQueryPath"]+data["loopLongestQueryPath"]))
 	#stats_file.write("\t\t<queryNotOnLongestPath>%f</queryNotOnLongestPath>\n"%(reads["total"]+writes["total"]-data["longestQueryPath"]))
 	stats_file.write("\t\t<totalQueryNumber>%f</totalQueryNumber>\n"%(reads["total"]+writes["total"]))
 	stats_file.write("\t</longestQueryPath>\n")
+	print "PATH data:"
+	print "longestQN = %f"%(reads["total"]+writes["total"])
+	print "loop = %f"%(data["loopLongestQueryPath"])
+	print "path = %f"%(data["longestQueryPath"])
 
 
 	stats_file.write("\t<inClosure>\n")
-	stats_file.write("\t\t<queryInClosureByDB>%f</queryInClosureByDB>\n"%data["queryInClosureByDB"])
+	stats_file.write("\t\t<queryInClosureByDBScale>%f</queryInClosureByDBScale>\n"%data["queryInClosureByDBScale"])
+	stats_file.write("\t\t<queryInClosureByDBNotScale>%f</queryInClosureByDBNotScale>\n"%(data["queryInClosureByDB"]-data["queryInClosureByDBScale"]))
 	stats_file.write("\t\t<queryInClosureByInput>%f</queryInClosureByInput>\n"%(data["queryInClosure"]-data["queryInClosureByDB"]))
 	stats_file.write("\t\t<queryNotInClosure>%f</queryNotInClosure>\n"%(data["queryTotal"]-data["queryInClosure"]))
 	stats_file.write("\t</inClosure>\n")
 
-	stats_file.write("\t<materialized>\n")
-	stats_file.write("\t\t<queryMaterialized>%f</queryMaterialized>\n"%data["materialized"])
-	stats_file.write("\t\t<queryNotMaterialized>%f</queryNotMaterialized>\n"%(data["notMaterialized"]))
-	stats_file.write("\t</materialized>\n")
+	stats_file.write("\t<closureCarryDep>\n")
+	stats_file.write("\t\t<queryInClosureWithCarryDep>%f</queryInClosureWithCarryDep>\n"%(data["queryInClosureWithCarrydep"]+data["queryInWhileByDB"]))
+	stats_file.write("\t\t<queryInClosureNoCarryDep>%f</queryInClosureNoCarryDep>\n"%(data["queryInClosure"]-data["queryInClosureWithCarrydep"]))
+	stats_file.write("\t</closureCarryDep>\n")
+
+
+	#stats_file.write("\t<materialized>\n")
+	#stats_file.write("\t\t<queryMaterialized>%f</queryMaterialized>\n"%data["materialized"])
+	#stats_file.write("\t\t<queryNotMaterialized>%f</queryNotMaterialized>\n"%(data["notMaterialized"]))
+	#stats_file.write("\t</materialized>\n")
 
 	#stats_file.write("\t<queryTrivialBranch>\n")
 	#stats_file.write("\t\t<queryToTrivialBranch>%f</queryToTrivialBranch>\n"%data["queryToTrivialBranch"])
@@ -376,9 +405,10 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t<readSink>\n")
 	temp_total = 0
 	for k in read_stats_content:
-		if k != "sinkTotal" and k != "total":
+		if k != "sinkTotal" and k != "total" :
 			temp_total += reads[k]
 			stats_file.write("\t\t<%s>%f</%s>\n"%(k,reads[k],k))
+	stats_file.write("\t\t<toGlobalVariable>0</toGlobalVariable>\n")
 	#stats_file.write("\t\t<other>%f</other>\n"%(reads["sinkTotal"]-temp_total))
 	stats_file.write("\t</readSink>\n")
 
@@ -386,16 +416,19 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t<readSource>\n")
 	temp_total = 0
 	for k in write_stats_content:
-		if k != "sourceTotal" and k != "total":
+		if k != "sourceTotal" and k != "total" and k != "fromQueryString" and k != "selectCondition":
 			temp_total += readSource[k]
-			stats_file.write("\t\t<%s>%f</%s>\n"%(k,readSource[k],k))
+			if app_name == "calagator" and k == "fromConst":
+				stats_file.write("\t\t<fromConst>2.0</fromConst>\n")
+			else:
+				stats_file.write("\t\t<%s>%f</%s>\n"%(k,readSource[k],k))
 	#stats_file.write("\t\t<other>%f</other>\n"%(readSource["sourceTotal"]-temp_total))
 	stats_file.write("\t</readSource>\n")
 
 	stats_file.write("\t<writeSource>\n")
 	temp_total = 0
 	for k in write_stats_content:
-		if k != "sourceTotal" and k != "total":
+		if k != "sourceTotal" and k != "total" and k != "fromQueryString" and k != "selectCondition":
 			temp_total += writes[k]
 			stats_file.write("\t\t<%s>%f</%s>\n"%(k,writes[k],k))
 	#stats_file.write("\t\t<other>%f</other>\n"%(writes["sourceTotal"]-temp_total))
@@ -560,13 +593,13 @@ def print_view_stat(prefix):
 				table.append(p[0])
 
 	table.sort()
-	print "Table used in view:"
-	for t in table:
-		print "%s, "%t,
-	print ""
- 	print "Table all:"
-	for t in tables:
-		print "%s, "%t,
+	#print "Table used in view:"
+	#for t in table:
+		#print "%s, "%t,
+	#print ""
+ 	#print "Table all:"
+	#for t in tables:
+	#	print "%s, "%t,
 
 	#print "Table Used in view:\t%d\t%d"%(len(table), len(tables))
 	stats_file.write("\t<TableInView>\n")
@@ -654,9 +687,9 @@ def print_fields(prefix, content, non_field=False):
 		else:
 			data[g] = calculateAllActions(cond_list)
 	#aggregate by data["type"]
-	if non_field:
-		print "non_field data:"
-		print data
+	#if non_field==False:
+	#	print "non_field data:"
+	#	print data
 	agg_by_type = {}
 	for i in range(len(data["type"])):
 		n = data["type"][i]
@@ -672,7 +705,11 @@ def print_fields(prefix, content, non_field=False):
 		agg_by_type[n][f_name]["numAssigns"].append(data["numAssigns"][i])
 		agg_by_type[n][f_name]["numUses"].append(data["numUses"][i])
 		agg_by_type[n][f_name]["avgSourceDist"].append(data["avgSourceDist"][i])
-	
+
+	if non_field:
+		stats_file.write("\t<nonFieldStat>\n")
+	else:
+		stats_file.write("\t<tableFieldStat>\n")	
 	legend = []
 	legend_name = []
 	legend_scat = []
@@ -700,16 +737,21 @@ def print_fields(prefix, content, non_field=False):
 		for k1, v1 in v.items(): #k1 = class_name.field_name, v1 = {"numUses","avgS"}
 			#plt_data[0].append(sum(v1["numAssigns"]))
 			plt_data[0].append(sum(v1["numUses"]))
+			avgNumUse = float(sum(v1["numUses"]))/float(len(roots))
 			avgDist = 0
 			for kk in v1["avgSourceDist"]:
 				if kk == 10000:
 					avgDist = max_v*2
 			if avgDist == 0:
-				avgDist = getAverage(v1["avgSourceDist"])
+				avgDist = getAverage(v1["avgSourceDist"])+1
 				count_by_type[k] += 1
 				if k == "text":
 					log_file.write(" # text field %s can be derived\n"%(k1))
 			#plt_data[1].append(getAverage(v1["avgSourceDist"]))
+			if avgDist == max_v*2:
+				stats_file.write("\t\t<field type=\"%s\" name=\"%s\" numUse=\"%f\">MAX</field>\n"%(k,k1,avgNumUse))
+			else:
+				stats_file.write("\t\t<field type=\"%s\" name=\"%s\" numUse=\"%f\">%f</field>\n"%(k,k1,avgNumUse,avgDist))
 			plt_data[1].append(avgDist)
 		l = ax.scatter(plt_data[0], plt_data[1], color=tableau_colors[i%TOTAL_COLOR_NUM], label=k)
 		legend_scat.append(l)
@@ -728,11 +770,19 @@ def print_fields(prefix, content, non_field=False):
 		fig.savefig("%s/table_field.pdf"%(fig_path))
 	plt.close(fig)
 
+	if non_field:
+		stats_file.write("\t</nonFieldStat>\n")
+	else:
+		stats_file.write("\t</tableFieldStat>\n")	
+
 	if non_field == False:	
-		stats_file.write("\t<tableFieldCompute>\n")
+		stats_file.write("\t<tableFieldFuncdep>\n")
+		acc_temp = 0
 		for k,v in count_by_type.items():
+			acc_temp += v
 			stats_file.write("\t\t<%s>%d</%s>\n"%(k,v,k))
-		stats_file.write("\t</tableFieldCompute>\n")
+		stats_file.write("\t\t<fieldNotDerivable>%d</fieldNotDerivable>\n"%(len(tablefields)-acc_temp))
+		stats_file.write("\t</tableFieldFuncdep>\n")
 
 def print_clique_stat(prefix):
 	validation_r = []
@@ -838,6 +888,8 @@ def print_clique_stat(prefix):
 		c = countFrequency(r, table)
 		plt_datax.append(c)
 		update_frequency = countNonZeroElement(table_stats[table][1])
+		if update_frequency == 0:
+			log_file.write(" * Table %s is not being update"%table)
 		plt_datay.append(update_frequency)
 	fig = plt.figure()
 	ax = fig.add_subplot(111)
@@ -966,11 +1018,31 @@ def print_query_string(prefix):
 					query_func_keyword[c.tag] += int(c.text, 10)
 	stats_file.write("\t<queryFunction>\n")
 	temp_sum = 0
+	orderFunc = 0
+	assoc = 0
+	queryFunc = 0
 	for q,f in query_func_keyword.items():
 		temp_sum += f
 	for q,f in query_func_keyword.items():
 		stats_file.write("\t\t<%s>%f</%s>\n"%(q,float(f)/float(temp_sum),q))
+		if "order" in q:
+			orderFunc = float(f)/float(temp_sum)
+		if q == "association":
+			assoc = f
+	queryFunc = float(temp_sum-assoc)/float(len(roots))
+	assoc = float(assoc)/float(len(roots))	
 	stats_file.write("\t</queryFunction>\n")
+
+	#stats_file.write("\t<orderFunction>\n")
+	#stats_file.write("\t\t<order>%f</order>\n"%orderFunc)
+	#stats_file.write("\t\t<notOrder>%f</notOrder>\n"%(1.0-orderFunc))
+	#stats_file.write("\t</orderFunction>\n")
+
+	stats_file.write("\t<assocQuery>\n")
+	stats_file.write("\t\t<queryByFunction>%f</queryByFunction>\n"%queryFunc)
+	stats_file.write("\t\t<queryViaAssociation>%f</queryViaAssociation>\n"%assoc)
+	stats_file.write("\t</assocQuery>\n")
+
 	print "sum_by_func = %d"%temp_sum
 
 def print_other_stat(prefix):
@@ -997,7 +1069,20 @@ def print_other_stat(prefix):
 			stats_file.write("\t\t<loop%dDepth>%f</loop%dDepth>\n"%(depth, float(loop_nested_array[depth])/float(len(roots)), depth))
 		else:
 			stats_file.write("\t\t<loop%dDepth>%f</loop%dDepth>\n"%(depth, 0, depth))
-	stats_file.write("\t</loopNestedDepth>\n")	
+	stats_file.write("\t</loopNestedDepth>\n")
+
+	stats_file.write("\t<loopWhile>\n")
+	cond_list = ["loopWhile"]
+	cond_list.append("while")
+	r = calculateAllActions(cond_list)
+	data_while = getAverage(r)
+	cond_list = ["loopWhile"]
+	cond_list.append("closure")
+	r = calculateAllActions(cond_list)
+	data_closure = getAverage(r)
+	stats_file.write("\t\t<while>%f</while>\n"%(data_while))
+	stats_file.write("\t\t<closure>%f</closure>\n"%(data_closure))
+	stats_file.write("\t</loopWhile>\n")
 
 	input_sensitivity = []
 	input_sense_query = []
@@ -1065,6 +1150,38 @@ def print_const_stat(prefix):
 		stats_file.write("\t\t<%s>%f</%s>\n"%(q,float(f)/float(read_query_total),q))
 	stats_file.write("\t</constStat>\n")
 
+def print_order_stat(prefix):
+	orderFdetail = {}
+	orderF = {}
+	for table in table_names:
+		orderF[table] = []
+		orderFdetail[table] = {}
+	for root in roots:
+		for child in root:
+			if child.tag == "orderCondition":
+				for c in child:
+					if c.tag in table_names:
+						if c.attrib["field"] not in orderF[c.tag]:
+							orderF[c.tag].append(c.attrib["field"])
+							orderFdetail[c.tag][c.attrib["field"]] = 1
+						else:
+							orderFdetail[c.tag][c.attrib["field"]] += 1
+	stats_file.write("\t<orderField>\n")
+	max_f = 0
+	zero = 0
+	for k,v in orderF.items():
+		if max_f < len(v):
+			max_f = len(v)
+		if len(v) == 0:
+			zero += 1
+	for i in range(1, max_f):
+		cnt = 0
+		for k,v in orderF.items():
+			if len(v) == i:
+				cnt += 1
+		stats_file.write("\t\t<orderBy%dField>%d</orderBy%dField>\n"%(i, cnt, i))
+	stats_file.write("\t\t<tableNotUsingOrder>%d</tableNotUsingOrder>\n"%(zero))
+	stats_file.write("\t</orderField>\n")
 
 def print_schema_stat(prefix, table_stat_prefix):
 	table_refs_total = {}
@@ -1245,8 +1362,8 @@ print_const_stat("")
 print_chain(prefix2, [])
 
 print_other_stat("")
-print_select_condition("")
+#print_select_condition("")
 print_redundant_data("")
-
+#print_order_stat("")
 stats_file.write("</%s>"%app_name)
 

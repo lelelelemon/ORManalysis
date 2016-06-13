@@ -6,6 +6,15 @@ def compute_redundant_usage
 			str = ""
 			if @qr and n.getInstr.getTableName
 				print_single_redundant_usage(n.getInstr.getTableName, @qr) 
+				if @qr.include?"ALL_FIELDS"
+					$class_map[n.getInstr.getTableName].getTableFields.each do |f|
+						add_used_field_to_chained_query(n, f.field_name)
+					end
+				else
+					@qr.each do |f|
+						add_used_field_to_chained_query(n, f)
+					end
+				end
 				@qr.each do |f|
 					str += "#{f}, "
 				end
@@ -18,9 +27,11 @@ def compute_redundant_usage
 	$graph_file.puts "<\/redundantData>"
 end
 
+
 def trace_query_result(qnode)
-	if is_chained_query(qnode)
+	if cq = is_chained_query(qnode)
 		#$temp_file.puts "#{qnode.getIndex} is chained query"
+		add_in_chained_query(qnode, cq)
 		return nil
 	end
 	if $query_return_record.include?qnode.getInstr.getFuncname  #TODO: association is not included!!!
@@ -140,7 +151,7 @@ def trace_query_result(qnode)
 	  into_query.each do |q|
 			c_str += "#{q.getIndex},"
 		end
-		$temp_file.puts "CHAINED QUERY #{str} || into query [#{c_str}]"
+		#$temp_file.puts "CHAINED QUERY #{str} || into query [#{c_str}]"
 		return nil
 	end
 	name_str = ""
@@ -221,4 +232,20 @@ def print_single_redundant_usage(class_name, r)
 		end
 		$graph_file.puts("\t<#{class_name} totalFieldSize=\"#{total_field_size}\">#{actual_used_size}<\/#{class_name}>")
 	end
+end
+
+def compute_kv_store
+	$graph_file.puts "<selectAndUse>"
+	$query_chain.each do |k,v|
+		used_str = ""
+		v.used_fields.each do |u|
+			used_str += "#{u} "
+		end
+		select_str = ""
+		v.select_conditions.each do |s|
+			select_str += "#{s} "
+		end
+		$graph_file.puts "\t<Qchain used_fields=\"#{used_str}\" select_fields=\"#{select_str}\">#{v.qnodes[0].getInstr.getTableName}<\/Qchain>"
+	end
+	$graph_file.puts "<\/selectAndUse>"
 end

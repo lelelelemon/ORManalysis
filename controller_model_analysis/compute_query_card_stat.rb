@@ -3,9 +3,6 @@ $query_return_limited_recs=['any?','blank?','maximum','minumum','calculate','ave
 #def find_instance_method_call
 
 def compute_query_card_stat
-	$graph_file.puts("<queryCardStats>")
-	@query_limited_card = 0
-	@query_scale_card = 0
 	$node_list.each do |n|
 		if n.isReadQuery?
 			#check chained query
@@ -49,11 +46,26 @@ def compute_query_card_stat
 			end
 			if @card_limited
 				n.setCardLimited
+				#@query_limited_card += 1
+			else
+				#@query_scale_card += 1
+				$temp_file.puts "CARD: query #{n.getIndex} has scale cardinality  #{n.getInstr.getAssociationType} #{n.getInstr.getFuncname}"
+			end	
+		end
+	end
+end
+
+def print_query_card_stat
+	$graph_file.puts("<queryCardStats>")
+	@query_limited_card = 0
+	@query_scale_card = 0
+	$node_list.each do |n|
+		if n.isReadQuery?
+			if n.card_limited
 				@query_limited_card += 1
 			else
 				@query_scale_card += 1
-				$temp_file.puts "CARD: query #{n.getIndex} has scale cardinality  #{n.getInstr.getAssociationType} #{n.getInstr.getFuncname}"
-			end	
+			end
 		end
 	end
 	$graph_file.puts("\t<limitedCard>#{@query_limited_card}<\/limitedCard>")

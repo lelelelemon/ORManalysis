@@ -5,6 +5,8 @@ def check_method_keyword(_caller, k)
 		return $key_words[k]
 	elsif k.index("find_by")==0
 		return "SELECT"
+	elsif k.index("find_or_create_by")==0
+		return "INSERT"
 	elsif k.index("not_")==0 and testTableField(_caller, k.gsub("not_",""))
 		return "SELECT"
 	elsif k.end_with?("count")

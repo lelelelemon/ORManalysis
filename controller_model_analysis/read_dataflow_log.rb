@@ -274,6 +274,10 @@ def handle_single_dataflow_file(item, class_name)
 										end
 										if cur_instr.is_a?Call_instr and ["update_column", "write_attribute","update_attribute"].include?(cur_instr.getFuncname) and cur_instr.symbols[0]
 											cur_instr.setFuncname(cur_instr.symbols[0])	
+										end
+										if cur_instr.is_a?Call_instr and cur_instr.getFuncname == "can?" and $class_map["Ability"] and cur_instr.symbols[0]
+											cur_instr.setFuncname("can?_#{cur_instr.symbols[0]}")
+											cur_instr.setCaller("Ability")
 										end	
 									elsif single_attr.include?('[') and single_attr.include?(']')
 										bracket_begin = single_attr.index('[')
@@ -393,6 +397,8 @@ def handle_single_dataflow_file(item, class_name)
 				cfg = value.getCFG
 				if cfg != nil
 					calculate_depinstr_for_cfg(cfg)
+					calculate_merge_instr_for_branches(cfg)
+					set_in_while_loop(cfg)
 				end
 			end
 		end	
@@ -439,7 +445,7 @@ def helper_get_all_outgoings(ary, bb)
 	bb.getOutgoings.each do |o|
 		if ary.include?(o)
 		elsif o > bb.getIndex.to_i
-			helper_get_all_outgoings(bb.getCFG.getBBByIndex(o))
+			helper_get_all_outgoings(ary, bb.getCFG.getBBByIndex(o))
 		end
 	end
 end
@@ -452,8 +458,7 @@ def calculate_merge_instr_for_branches(cfg)
 			merging_bb = Hash.new
 			bb.getOutgoings.each do |o|
 				merging_bb[o] = Array.new
-				next_cfg = cfg.getBBByIndex(o)
-				helper_get_all_outgoings(merging_bb[o], bb)
+				helper_get_all_outgoings(merging_bb[o], cfg.getBBByIndex(o))
 			end
 			merge_list = Array.new
 			merging_bb.each do |k,v|
@@ -480,12 +485,15 @@ def calculate_merge_instr_for_branches(cfg)
 				end
 			end
 			merge_bb = cfg.getBBByIndex(first_merge)
-			if  merge_bb.getInstr[0]
-				istr.merge_instr = merge_bb.getInstr[0]
+			if merge_bb and merge_bb.getInstr[0]
+				instr.merge_instr = merge_bb.getInstr[0]
+			elsif first_merge
+				instr.merge_instr = cfg.getBBPrevByIndex(first_merge).getLastInstr
 			else
-				instr.merge_instr = cfg.getBBByIndex(first_merge-1).getLastInstr
+				#merge_bb == nil, means that all the branch returns
+				instr.merge_instr = cfg.getLastInstr
 			end
-			puts "#{cfg.getMHandler.getCallerClass.getName}.#{cfg.getMHandler.getName} branch at #{bb.getIndex}  merge at #{first_merge.getIndex}"
+			#puts "#{cfg.getMHandler.getCallerClass.getName}.#{cfg.getMHandler.getName} branch at #{bb.getIndex}  merge at #{first_merge} / #{instr.merge_instr.getBB.getIndex}"
 		end
 
 		bb.getInstr.each do |instr|
@@ -496,7 +504,27 @@ def calculate_merge_instr_for_branches(cfg)
 	end
 end
 
-
+def set_in_while_loop(cfg)
+	cfg.getBB.each do |bb|
+		bb.getOutgoings.each do |o|
+			if bb.getIndex > o
+				loop_instr = cfg.getBBByIndex(o).getInstr[-1]
+				cfg.getBB.each do |inner_bb|
+					if inner_bb.getIndex > o and inner_bb.getIndex < bb.getIndex
+						inner_bb.getInstr.each do |instr|
+							instr.in_while_loop = loop_instr
+						end
+					end
+				end
+			end
+		end
+		bb.getInstr.each do |instr|
+			if instr.hasClosure?
+				set_in_while_loop(instr.getClosure)
+			end
+		end
+	end
+end
 
 #read_dataflow
 

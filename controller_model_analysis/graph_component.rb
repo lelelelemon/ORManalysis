@@ -69,7 +69,7 @@ class INode
 	def getNonViewClosureStack
 		@new_stack = Array.new
 		@closure_stack.each do |c|
-			if c.getInstr.is_a?Call_instr and ["ruby_code_from_view"].include?c.getInstr.getFuncname			 
+			if isNonClosureInstr(c.getInstr)	 
 			else
 				@new_stack.push(c)
 			end 
@@ -339,7 +339,8 @@ def add_dataflow_edge(node)
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"
 				edge = Dataflow_edge.new(dep.getInstrHandler.getINode, node, dep.getVname)
 				dep.getInstrHandler.getINode.addDataflowEdge(edge)
-				if $dataflow_edges[edge_name] == nil
+				if $dataflow_edges[edge_name]
+				else
 					$dataflow_edges[edge_name] = Array.new
 				end
 				$dataflow_edges[edge_name].push(edge)
@@ -432,6 +433,18 @@ def addAllControlEdges
 		end
 	end
 
+end
+
+#prenode should be a branch!
+def is_in_controlflow_range(after_node, pre_node)
+	if pre_node.getInstr.instance_of?Branch_instr
+		if pre_node.getInstr.merge_instr
+			if after_node.getIndex <= pre_node.getInstr.merge_instr.getINode.getIndex
+				return true
+			end
+		end
+	end
+	return false
 end
 
 def is_controlflow_reachable(after_node, pre_node)

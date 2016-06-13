@@ -43,37 +43,44 @@ tableau_colors = (
 
 TOTAL_COLOR_NUM=33
 colors = [2, 3, 5, 1, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-#applications = ["boxroom","fulcrum","kandan","linuxfr","publify", "lobsters", "railscollab","communityengine","onebody","sugar","railscollab","browsercms","brevidy","amahiPlatform","amahiPlatform_layouts","rucksack","rucksack_layouts"]
 #app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
 
-#app_string="forem fulcrum rucksack sugar boxroom publify brevidy tracks lobsters communityengine jobsworth linuxfr sharetribe onebody railscollab calagator shoppe amahiPlatform enki wallgig"
-app_string="lobsters amahiPlatform fulcrum linuxfr rucksack sugar boxroom publify railscollab brevidy sharetribe onebody communityengine forem enki wallgig calagator shoppe"
-#app_string = "publify wallgig enki"
-#app_string="fulcrum wallgig amahiPlatform sugar forem boxroom calagator enki brevidy"
-#app_string="sugar lobsters boxroom enki publify amahiPlatform railscollab linuxfr calagator forem fulcrum tracks brevidy"
+app_string = "enki calagator boxroom publify shoppe sugar brevidy linuxfr wallgig lobsters tracks diaspora railscollab rucksack communityengine amahiPlatform kandan fulcrum forem kanban"
+#app_string="lobsters amahiPlatform fulcrum linuxfr rucksack sugar boxroom publify brevidy railscollab sharetribe communityengine kandan forem enki wallgig calagator shoppe"
 
-#app_string="calagator forem fulcrum tracks brevidy"
 
 applications = app_string.split(" ")
 result_path = "../applications/general_stats/"
 width = 0.2
 
 roots = {}
-def plot_alignedbar_plot(plt, ary_list, legends, stat_name, Ylabel):
-	fig = plt.figure()
+
+def plot_alignedbar_plot(plt, ary_list, legends, stat_name, Ylabel, stack_array):
+	fig = plt.figure(figsize=(6,4))
 	ax = fig.add_subplot(111)
 	N = len(applications)
 	ind = np.arange(N)
 
 	rects = []
 	j=0
+	data_acc = {}
+	for i in stack_array:
+		data_acc[i] = []
+		for j in ary_list[0]:
+			data_acc[i].append(0)
+	j = 0
 	for ary in ary_list:
-		rects.append(ax.bar(ind+width*j, ary, width, color=tableau_colors[colors[j]]))
+		rects.append(ax.bar(ind+width*stack_array[j], ary, width, bottom=data_acc[stack_array[j]], color=tableau_colors[colors[j]]))
+		k = 0
+		for d in ary:
+			data_acc[stack_array[j]][k] += d
+			k += 1
 		j+=1
 	ax.legend(rects, legends, loc='upper right', prop={'size':'10'})
 	plt.ylabel(Ylabel, fontsize=10)
 	plt.xticks(ind,applications,rotation='vertical')
-	plt.tick_params(labelsize=8)
+	plt.tick_params(labelsize=10)
+	plt.tight_layout()
 	#plt.show()
 	fig.savefig("%s/general_%s.pdf"%(result_path, stat_name))
 
@@ -84,7 +91,7 @@ def plot_stack_plot(plt, ary_list, legends, stat_name, Ylabel):
 	#	print legends[i]
 	#	print ary
 	#	i += 1
-	fig = plt.figure()
+	fig = plt.figure(figsize=(6,4))
 	ax = fig.add_subplot(111)
 
 	N = len(applications)
@@ -106,11 +113,12 @@ def plot_stack_plot(plt, ary_list, legends, stat_name, Ylabel):
 		ax.legend(rects, legends, loc='upper right', prop={'size':'10'})
 	plt.ylabel(Ylabel, fontsize=10)
 	plt.xticks(ind,applications,rotation='vertical')
-	plt.tick_params(labelsize=8)
+	plt.tick_params(labelsize=10)
+	plt.tight_layout()
 	#plt.show()
 	fig.savefig("%s/general_%s.pdf"%(result_path, stat_name))
 
-def general_plot(stat_name, Ylabel, alignedBar=False):
+def general_plot(stat_name, Ylabel, alignedBar=False, alignedArray={}):
 	ary_list = []
 	legends = []
 	name_map = {}
@@ -152,9 +160,97 @@ def general_plot(stat_name, Ylabel, alignedBar=False):
 			temp_ary[app] = temp_ary[app] * len(roots[app])
 			print "%s: %d"%(app, temp_ary[app])
 	if alignedBar:
-		plot_alignedbar_plot(plt, ary_list, legends, stat_name, Ylabel)
+		stack_array = []
+		k = 0
+		for l in legends:
+			if l in alignedArray:
+				stack_array.append(alignedArray[l])
+			else:
+				stack_array.append(k)
+			k += 1
+		plot_alignedbar_plot(plt, ary_list, legends, stat_name, Ylabel, stack_array)
 	else:
 		plot_stack_plot(plt, ary_list, legends, stat_name, Ylabel)
+
+def plot_field_stat(stat_name):
+	x_data = []
+	y_data = []
+	max_x = 0
+	max_y = 0
+	i = 0
+	for app in applications:
+		for node in roots[app]:
+			if node.tag == stat_name:
+				for c in node:
+					if c.text != "MAX" and float(c.text) > max_y:
+						max_y = float(c.text)
+					if float(c.attrib["numUse"]) > max_x:
+						max_x = float(c.attrib["numUse"])
+
+	for app in applications:
+		x_data.append([])
+		y_data.append([])
+		for node in roots[app]:
+			if node.tag == stat_name:
+				for c in node:
+					x_data[i].append(float(c.attrib["numUse"]))
+					if c.text == "MAX":
+						y_data[i].append(max_y*1.5)
+					else:
+						y_data[i].append(float(c.text))
+		i += 1
+	fig = plt.figure(figsize=(6,4))
+	ax = fig.add_subplot(111)
+	i = 0
+	legend_scat = []
+	for app in applications:
+		l = ax.scatter(x_data[i], y_data[i], color=tableau_colors[i%TOTAL_COLOR_NUM], label=app)
+		legend_scat.append(l)	
+		i += 1
+	ax.legend(legend_scat, applications, bbox_to_anchor=(1.05, 1.05), prop={'size':'10'})
+	ax.set_ylim(0, max_y*1.6)
+	ax.set_xlim(0, max_x*1.1)
+	plt.ylabel("avg path distance to source", fontsize=10)
+	plt.xlabel("avg number of use per controller action", fontsize=10)
+	plt.tight_layout()
+	fig.savefig("%s/general_%s.pdf"%(result_path, stat_name))
+
+def plot_table_stat(stat_name):
+	x_data = []
+	y_data = []
+	i = 0
+	x_max = 0
+	y_max = 0
+	for app in applications:
+		x_data.append([])
+		y_data.append([])
+		for node in roots[app]:
+			if node.tag == stat_name:
+				for c in node:
+					x_data[i].append(float(c.text))
+					if float(c.text) > x_max:
+						x_max = float(c.text)
+					y_data[i].append(float(c.attrib["write"]))
+					if float(c.attrib["write"]) > y_max:
+						y_max = float(c.attrib["write"])
+		i += 1
+
+	fig = plt.figure(figsize=(6,4))
+	ax = fig.add_subplot(111)
+	i = 0
+	legend_scat = []
+	for app in applications:
+		l = ax.scatter(x_data[i], y_data[i], color=tableau_colors[i%TOTAL_COLOR_NUM], label=app)
+		legend_scat.append(l)	
+		i += 1
+	ax.legend(legend_scat, applications, bbox_to_anchor=(1.05, 1.05), prop={'size':'10'})
+	plt.ylabel("avg #write queries on a table", fontsize=10)
+	plt.xlabel("avg #read queries on a table", fontsize=10)
+	ax.set_ylim(0, y_max*1.1)
+	ax.set_xlim(0, x_max*1.6)
+	plt.tight_layout()
+	fig.savefig("%s/general_%s.pdf"%(result_path, stat_name))
+
 
 if os.path.isdir(result_path) == False:
 	os.system("mkdir %s"%result_path)
@@ -163,8 +259,8 @@ if os.path.isdir(result_path) == False:
 for app in applications:
 	print "python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app)
 	os.system("python collect_stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
-	#print "python collect_nextaction.py %s "%(app)
-	#os.system("python collect_nextaction.py %s %s/nextaction_%s_stat.xml"%(app, result_path, app))
+	print "python collect_nextaction.py %s "%(app)
+	os.system("python collect_nextaction.py %s %s/nextaction_%s_stat.xml"%(app, result_path, app))
 	#print "python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app)
 	#os.system("python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app))
 	fname = "%s/%s_stat.xml"%(result_path, app)
@@ -173,8 +269,8 @@ for app in applications:
 	roots[app] = tree.getroot()
 	print ""
 
-#stats=[]
-stats = ["queryGeneral","branch","branchInView","queryInView","usedInView","usedSQLString","materialized","onlyFromUser","inClosure","readSink","readSource","writeSource","TableInView","FieldInView","transaction","transactionNested", "queryString", "queryFunction","constStat","inputReaches","tableStat","loopNestedDepth","inputAffectPath","inputAffectQuery","queryCardinality","redundantData","tableFieldCompute","selectCondition"]
+#stats=["tableFieldCompute"]
+stats = ["queryGeneral","branch","branchInView","queryInView","usedInView","usedSQLString","onlyFromUser","inClosure","readSink","readSource","writeSource","TableInView","assocQuery","transaction","transactionNested", "queryString", "affectedInControlflow", "queryFunction","loopWhile","constStat","inputReaches","loopNestedDepth","inputAffectPath","inputAffectQuery","queryCardinality","redundantData","tableFieldFuncdep","closureCarryDep"]
 YaxisLabel = {}
 YaxisLabel["queryGeneral"] = "Average #Q in an action"
 YaxisLabel["branch"] = "Average #branch in an action"
@@ -202,23 +298,38 @@ YaxisLabel["loopNestedDepth"] = "average number of loop in each request"
 YaxisLabel["queryCardinality"] = "average number of queries in each request"
 YaxisLabel["inputAffectPath"] = "number of instructions"
 YaxisLabel["inputAffectQuery"] = "number of queries"
-YaxisLabel["tableFieldCompute"] = "number of fields"
+YaxisLabel["tableFieldFuncdep"] = "number of fields"
 YaxisLabel["selectCondition"] = "number of tables"
 YaxisLabel["redundantData"] = "field size by byte"
 YaxisLabel["longestQueryPath"] = "number of queries"
+YaxisLabel["orderFunction"] = "percentage of order/non_order queries in each request"
+YaxisLabel["orderField"] = "number of tables"
+YaxisLabel["loopWhile"] = "avg number of loops in each request"
+YaxisLabel["closureCarryDep"] = "avg number of queries in loop in each request"
+YaxisLabel["assocQuery"] = "avg number of queries in each request"
+YaxisLabel["affectedInControlflow"] = "avg number of queries in each request"
 
 for s in stats:
 	print "printing %s..."%s
 	general_plot(s, YaxisLabel[s])
 
-general_plot("longestQueryPath", YaxisLabel["longestQueryPath"], True)
-general_plot("path", YaxisLabel["path"], True)
-exit(0)
+plot_field_stat("tableFieldStat")
+plot_field_stat("nonFieldStat")
+plot_table_stat("tableStat")
+
+QP_stack = {}
+QP_stack["longestQueryPathLoopCarry"] = 0
+QP_stack["longestQueryPathLoopNoCarry"] = 0
+QP_stack["longestQueryPathNotInLoop"] = 0
+QP_stack["totalQueryNumber"] = 1
+general_plot("longestQueryPath", YaxisLabel["longestQueryPath"], True, QP_stack)
+general_plot("path", YaxisLabel["path"], True, {})
+#exit(0)
 #NA stands for NextAction
 roots = {}
 #app_string="lobsters amahiPlatform fulcrum boxroom rucksack sharetribe jobsworth publify enki wallgig railscollab tracks brevidy communityengine"
 #app_string="fulcrum rucksack boxroom publify shoppe amahiPlatform enki wallgig lobsters communityengine"
-app_string="fulcrum rucksack boxroom publify brevidy tracks lobsters communityengine jobsworth linuxfr sharetribe railscollab shoppe amahiPlatform enki wallgig"
+app_string="fulcrum rucksack boxroom publify brevidy tracks lobsters communityengine linuxfr railscollab shoppe amahiPlatform enki wallgig"
 
 
 applications = app_string.split(" ")

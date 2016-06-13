@@ -60,6 +60,17 @@ def searchTableName(name)
 	return nil
 end
 
+def searchModelName(name)
+	$class_map.each do |k,v|
+		if isActiveRecord(k)
+			if k.downcase == name.delete('@').delete('_').downcase
+				return k
+			end
+		end
+	end
+	return nil
+end
+
 def searchIncludeTableName(name)
 	$table_names.each do |t|
 		if name.downcase.include?(t.downcase)
@@ -146,6 +157,14 @@ def trigger_create?(call)
 	if ["INSERT"].include?call.getQueryType	
 		return true
 	end
+end
+
+def isNonClosureInstr(instr)
+	if instr.is_a?Call_instr and ["ruby_code_from_view","transaction","form_for","form_tag","content_for","content_tag","respond_to","xml","input","html","field_set_tag","json","lock","reject"].include?instr.getFuncname	
+		return true
+	else
+		return false
+	end	
 end
 
 #read variable class list
@@ -244,6 +263,9 @@ def check_nonrepeat(class_name, func_name)
 	$non_repeat_list.each do |n|
 		chs = n.split('.')
 		if chs[0].include?"ApplicationController" and class_name == chs[0] and func_name == chs[1] 
+			return false
+		end
+		if $class_map[class_name] and $class_map[class_name].hasUpperClass?("ApplicationController") and func_name == chs[1]
 			return false
 		end
 		if $non_repeat_list.include?"#{class_name}.#{func_name}"
@@ -725,6 +747,8 @@ def clear_data_structure
 	$dataflow_source = INode.new(nil)
 
 	$table_select_fields = Hash.new
+	$order_fields = Hash.new
+	$query_chain = Hash.new
 	
 	#format: from_inode_index*to_inode_index
 	$dataflow_edges = Hash.new

@@ -84,6 +84,38 @@ def traceback_data_dep(cur_node, stop_at_query=false)
 		@total = 0
 end
 
+def traceback_data_dep_for_funcdep(cur_node)
+	@dep_array = Array.new
+	@node_list = Array.new
+	@node_list.push(cur_node)
+	while @node_list.length > 0 do
+		node = @node_list.pop
+		node.getBackwardEdges.each do |e|
+			if e.getFromNode != nil and e.getToNode != nil
+				if e.getFromNode.isReadQuery? or e.getFromNode.instance_of?AttrAssign_instr
+					if @dep_array.include?(e.getFromNode)
+					else
+						@dep_array.push(e.getFromNode)
+					end
+				else
+					if e.getFromNode.getInstr.instance_of?Return_instr and e.getFromNode.getInstr.getClassName == cur_node.getInstr.getClassName and e.getFromNode.getInstr.getMethodName == cur_node.getInstr.getMethodName
+					elsif e.getFromNode.getIndex < cur_node.getIndex
+						if @dep_array.include?(e.getFromNode)
+						else
+							@dep_array.push(e.getFromNode)
+							@node_list.push(e.getFromNode)
+						end
+					end
+				end
+			elsif e.getFromNode == nil and e.getToNode != nil
+				#TODO: this is a bit annoying... if the type in @dep_array is Edge, then it is user input, otherwise other instruction nodes
+				@dep_array.push(e)
+			end
+		end
+	end
+	return @dep_array
+end
+
 #for a query, if it is like the form v = Vote.where(...)
 #Given the query instruction Vote.where
 #return the assign instruction v =
@@ -252,10 +284,10 @@ end
 def is_chained_query(qnode)
 	qnode.getDataflowEdges.each do |e|
 		if e.getToNode.isReadQuery? and e.getToNode.getInstr.getCaller == qnode.getInstr.getDefv#and qnode.getDataflowEdges.length == 1
-			return true
+			return e.getToNode
 		end
 	end
-	return false
+	return nil
 end
 
 def get_query_chain(qnode)
@@ -273,5 +305,179 @@ def get_query_chain(qnode)
 			end
 		end
 	end
+end
+class QChain
+	def initialize
+		@qnodes = Array.new
+		@used_fields = Array.new
+		@select_conditions = Array.new
+	end
+	attr_accessor :qnodes, :used_fields, :select_conditions
+	def add_node(qnode)
+		@qnodes.push(qnode)
+	end
+	def add_used_fields(f)
+		@used_fields.push(f) unless @used_fields.include?(f)
+	end
+	def add_select_conditions(c)
+		@select_conditions.push(c) unless @select_conditions.include?(c)
+	end	
+end
+def test_in_chained_query(qnode)
+	$query_chain.each do |k,v|
+		v.qnodes.each do |v1|
+			if v1 == qnode
+				return true
+			end
+		end
+	end
+	return false
+end
+
+def add_in_chained_query(qnode, prenode)
+	in_chain = false
+	added = false
+	$query_chain.each do |k,v|
+		v.qnodes.each do |v1|
+			if v1 == prenode and added == false
+				in_chain = true
+				$query_chain[k].add_node(qnode)
+				added = true
+			end
+		end
+	end
+	if in_chain == false
+		$query_chain[qnode] = QChain.new
+		$query_chain[qnode].add_node(qnode)
+	end
+end
+
+def add_select_field_to_chained_query(qnode, field_name)
+	$query_chain.each do |k,v|
+		in_chain = false
+		v.qnodes.each do |v1|
+			if v1 == qnode
+				in_chain = true
+			end
+		end
+		if in_chain
+			v.add_select_conditions(field_name)
+		end
+	end
+end
+
+def add_used_field_to_chained_query(qnode, field_name)
+	$query_chain.each do |k,v|
+		in_chain = false
+		v.qnodes.each do |v1|
+			if v1 == qnode
+				in_chain = true
+			end
+		end
+		if in_chain
+			v.add_used_fields(field_name)
+		end
+	end
+end
+
+
+def compute_query_chain_for_single_node(qnode)
+	if test_in_chained_query(qnode)
+		return 
+	end
+	add_in_chained_query(qnode, qnode)
+	if cq = is_chained_query(qnode)
+		#$temp_file.puts "#{qnode.getIndex} is chained query"
+		add_in_chained_query(cq, qnode)
+		return
+	end
+	@traversed = Array.new
+	@node_list = Array.new
+	@node_list.push(qnode)
+	@names = Array.new
+	if qnode.getInstr.getDefv
+		@names.push(qnode.getInstr.getDefv)
+	end
+	if qnode.getInstr.getBB.getCFG.getMHandler.normal_function == false
+		qnode.getDataflowEdges.each do |e|
+			@node_list.push(e.getToNode)
+		end
+	end
+
+	while @node_list.length > 0 do
+		temp_node = @node_list.pop
+		if @traversed.include?(temp_node)
+		else
+			@to_add = Array.new
+			@traversed.push(temp_node)
+			if temp_node.getInstr.instance_of?Return_instr
+				@names.delete_at(@names.index("%self") || @names.length)
+				if temp_node.getDataflowEdges[0]
+					tonode = temp_node.getDataflowEdges[0].getToNode
+					tonode.getDataflowEdges.each do |e1|
+						@to_add.push(e1.getToNode)
+					end
+					if tonode.getInstr.getDefv
+						@names.push(tonode.getInstr.getDefv)
+					end
+				end
+			else	
+				temp_node.getDataflowEdges.each do |e|
+					@to_add.push(e.getToNode)
+				end
+			end
+			@to_add.each do |n|
+				if @traversed.include?(n)
+				elsif n.getIndex > qnode.getIndex
+					if n.getInstr.instance_of?GetField_instr
+						@node_list.push(n)
+					elsif n.getInstr.instance_of?AttrAssign_instr
+						if isActiveRecord(n.getInstr.getCallerType)
+						else
+							@names.push(n.getInstr.getFuncname)
+							@node_list.push(n)
+						end
+					elsif n.isQuery?
+						add_in_chained_query(n, qnode)
+						if n.isReadQuery?
+							@node_list.push(n)
+							if n.getInstr.getDefv
+								@names.push(n.getInstr.getDefv)
+							end
+						end
+					elsif n.getInstr.instance_of?Copy_instr and n.getInstr.getDefv
+						@names.push(n.getInstr.getDefv)
+						@node_list.push(n)
+					elsif n.getInstr.is_a?Call_instr
+						if @names.include?(n.getInstr.getCaller)
+							@node_list.push(n)
+							if n.getInstr.getCallCFG == nil and n.getInstr.getDefv
+								@names.push(n.getInstr.getDefv)
+							else
+								@names.push("%self")
+							end
+						else
+							name_in_args = false
+							n.getInstr.getArgs.each do |a|
+								if @names.include?a
+									name_in_args = true
+									n.getDataflowEdges.each do |e1|
+										if e1.getToNode.getInstr.is_a?ReceiveArg_instr and e1.getVname == a
+											if e1.getToNode.getInstr.getDefv
+												@names.push(e1.getToNode.getInstr.getDefv)
+											end
+											@node_list.push(e1.getToNode)
+										end
+									end
+								end
+							end
+						end
+					else
+						@node_list.push(n)
+					end
+				end
+			end
+		end
+	end	
 end
 

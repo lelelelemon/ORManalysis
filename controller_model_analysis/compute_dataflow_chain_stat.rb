@@ -628,8 +628,8 @@ def compute_chain_stats
 							@stored[s].type = f.type
 							@stored[s].num_assign += 1
 							#n.source_list.each do |sn|
-							traceback_data_dep(n).each do |sn|
-								if sn.instance_of?Dataflow_edge
+							traceback_data_dep_for_funcdep(n).each do |sn|
+								if sn.instance_of?Dataflow_edge or isUtilSource(sn) 
 									@stored[s].total_source.push($INFSOURCE)
 								else
 									#str += "#{sn.getIndex}(#{sn.getInstr.getFromUserInput}), "
@@ -667,8 +667,8 @@ def compute_chain_stats
 						end
 						@notstored[s].num_assign += 1
 						#n.source_list.each do |sn|
-						traceback_data_dep(n).each do |sn|
-							if sn.instance_of?Dataflow_edge
+						traceback_data_dep_for_funcdep(n).each do |sn|
+							if sn.instance_of?Dataflow_edge or isUtilSource(sn)
 							else
 								r_lst = find_path_between_two_nodes(sn, n)
 								@notstored[s].total_source.push(r_lst.length)

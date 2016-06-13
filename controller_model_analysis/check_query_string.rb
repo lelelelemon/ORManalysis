@@ -7,7 +7,7 @@ $query_return_record = ["find","all","take","from","distinct","from","having","j
 
 def addQueryFuncHash(_key)
 	key = _key.gsub('?','').gsub('!','')
-	if _key.include?("find_by")
+	if _key.include?("find_by") or _key.include?("find_or_create_by")
 		key = "find_by"
 	elsif $key_words[_key]
 		key = _key.gsub('?','').gsub('!','')

@@ -20,7 +20,7 @@ def get_prevnodes_in_same_BB(node)
 	return @traversed
 end
 
-def compare_consequent_actions(action_name, prev_list, next_list)
+def compare_consequent_actions(action_name, prev_list, next_list, freq=1)
 	@tables = Hash.new
 
 	prev_list.each do |pn|
@@ -215,11 +215,11 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 	end	
 
 
-	$graph_file.puts("\t<nextReadOverlap>#{@next_read_overlap}<\/nextReadOverlap>")
-	$graph_file.puts("\t<nextReadTotal>#{@next_read_total}<\/nextReadTotal>")
-	$graph_file.puts("\t<nextReadSame>#{@next_read_same}<\/nextReadSame>")
-	$graph_file.puts("\t<nextReadSuper>#{@next_read_superset}<\/nextReadSuper>")
-	$graph_file.puts("\t<nextReadSub>#{@next_read_subset}<\/nextReadSub>")
+	$graph_file.puts("\t<nextReadOverlap freq=\"#{freq}\">#{@next_read_overlap}<\/nextReadOverlap>")
+	$graph_file.puts("\t<nextReadTotal freq=\"#{freq}\">#{@next_read_total}<\/nextReadTotal>")
+	$graph_file.puts("\t<nextReadSame freq=\"#{freq}\">#{@next_read_same}<\/nextReadSame>")
+	$graph_file.puts("\t<nextReadSuper freq=\"#{freq}\">#{@next_read_superset}<\/nextReadSuper>")
+	$graph_file.puts("\t<nextReadSub freq=\"#{freq}\">#{@next_read_subset}<\/nextReadSub>")
 	$graph_file.puts("<\/#{action_name}>")
 	#@tables.each do |k, v|
 	#	if @next_tables[k] != nil
@@ -236,4 +236,33 @@ def compare_consequent_actions(action_name, prev_list, next_list)
 	#end
 	#puts "================="
 	#puts ""
+end
+
+def collect_nextaction_query_instr(freq=1)
+	@temp_cnt = Array.new
+	$node_list.each do |n|
+		if n.isReadQuery?
+			@temp_cnt.push(n.getInstr) unless @temp_cnt.include?(n.getInstr)
+		end
+	end
+	@temp_cnt.each do |instr|
+		if $nextaction_query_count[instr]
+		else
+			$nextaction_query_count[instr] = 0
+		end
+		$nextaction_query_count[instr] += freq
+	end
+end
+
+def print_nextaction_query_instr(total_freq)
+	$graph_file.puts("<allNextActions>")
+	$graph_file.puts("\t<totalNextActions>#{total_freq}<\/totalNextActions>")
+	$nextaction_query_count.each do |k, v|
+		table_name = k.getTableName
+		func_name = k.getFuncname
+		assoc = k.getAssociationType
+		func_name = "assoc" unless assoc == nil
+		$graph_file.puts("\t<query name=\"#{table_name}.#{func_name}\">#{v}<\/query>")
+	end
+	$graph_file.puts("<\/allNextActions>")
 end

@@ -10,6 +10,8 @@ $util_function_list = Hash.new
 $query_word_count = Hash.new
 #key: query function; value: count
 $query_func_count = Hash.new
+#key: a specific query function instr; value: count; used like bins for all next actions
+$nextaction_query_count = Hash.new
 #==============================
 
 #==============================Directories=================
@@ -52,8 +54,9 @@ $sketch_node_list = Array.new
 $global_check = Hash.new
 $cur_query_stack = Array.new
 $query_edges = Array.new
+#Key is the first query
+$query_chain = Hash.new
 #==============================
-
 
 
 #======================build_dataflow_graph.rb, stacks to keep track of nested view/transaction/loop, etc==========
@@ -79,6 +82,7 @@ $node_list = Array.new
 #format: from_inode_index*to_inode_index
 #used to compute how many fields are used for table selection
 $table_select_fields = Hash.new
+$order_fields = Hash.new
 #==============================
 
 #=======================trace_flow.rb, mostly deprecated====================

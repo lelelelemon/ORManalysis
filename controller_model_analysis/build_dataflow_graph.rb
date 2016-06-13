@@ -23,11 +23,11 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 				$ins_cnt -= 1
 
 				temp_actions = Array.new
-				if caller_class != nil and instr_trigger_save?(instr)
+				if caller_class and instr_trigger_save?(instr)
 						temp_actions.push("before_save")
 						temp_actions.push("before_validation")
 				end
-				if caller_class != nil and instr_trigger_create?(instr)
+				if caller_class and instr_trigger_create?(instr)
 							temp_actions.push("before_create")
 				end
 
@@ -46,7 +46,8 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 				temp_actions.each do |action|
 						temp_name = "#{caller_class}.#{action}"
 						#if $non_repeat_list.include?(temp_name) == false
-						if $call_stack_trace.include?(temp_name) == false					
+						if $call_stack_trace.include?(temp_name) or check_nonrepeat(caller_class, action)==false
+						else	
 							$non_repeat_list.push(temp_name)
 							$call_stack_trace.push(temp_name)
 							#if $class_map[caller_class] != nil and $class_map[$class_map[caller_class].getUpperClass] != nil
@@ -245,7 +246,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		else
 			$in_loop.push(true)
 		end
-		if instr.instance_of?Call_instr and (["transaction","form_for","form_tag","content_for","content_tag","respond_to","xml","input","html","field_set_tag","json"].include?instr.getFuncname or instr.getCaller == "format")
+		if instr.instance_of?Call_instr and (isNonClosureInstr(instr) or instr.getCaller == "format")
 			handle_single_cfg2(start_class, start_function, class_handler, function_handler, @cl, level) 
 		else
 			$closure_stack.push($cur_node)
@@ -374,6 +375,9 @@ end
 
 def trace_query_flow(start_class, start_function, params, returnv, level)
 
+	if start_class == "StatusMessage"
+		puts "Call status message: #{start_function}"
+	end
 	$cur_class = start_class
 	class_handler = $class_map[start_class]
 	if class_handler != nil

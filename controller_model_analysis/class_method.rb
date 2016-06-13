@@ -70,6 +70,7 @@ class Class_class
 		@save_actions = Array.new
 		@create_actions = Array.new
 		@scope_list = Array.new
+		@table_name = nil
 		#table_fields is a list of Table_field
 		@table_fields = Array.new
 		#class_fields is actually a super set of table_fields
@@ -97,6 +98,7 @@ class Class_class
 		#@after_destroy = Array.new
 	end
 	attr_accessor :include_module, :filename, :member_defs
+	attr_accessor :table_name
 	def getAssocs
 		@assocs
 	end
@@ -256,6 +258,16 @@ class Class_class
 			end
 			return nil
 		end
+	end
+	def hasUpperClass?(class_name)
+		cur_class = self
+		while cur_class
+			if cur_class.getName == class_name
+				return true
+			end
+			cur_class = $class_map[cur_class.getUpperClass]
+		end 
+		return false
 	end
 	def addBelongsTo(belong_name)
 		@belongs_to.push(belong_name)
