@@ -6,7 +6,7 @@ def load_all_controllers_from_path(controller_path)
 	controller_hash = Hash.new
 	Dir.glob(controller_path + "**/*") do |item|
 		next if not item.end_with?"_controller.rb"
-    puts item
+#    puts item
 		controller = Controller_Class.new(item, controller_path)
 		controller_hash[controller.get_controller_name] = controller
 
@@ -16,7 +16,7 @@ def load_all_controllers_from_path(controller_path)
     puts "start loading controllers from the library"
     Dir.glob($lib_controller_path + "**/*") do |item|
       next if not item.end_with?"_controller.rb"
-      puts item
+ #     puts item
       controller = Controller_Class.new(item, $lib_controller_path)
       controller_hash[controller.get_controller_name] = controller
     end
@@ -45,7 +45,7 @@ def load_all_views_from_path(view_path)
 	view_hash = Hash.new
 	Dir.glob(view_path + "**/*") do |item|
 		next if not item.end_with?(".erb", ".rjs", "jbuilder")
-	  puts item
+	#  puts item
     view_class = View_Class.new(item, view_path)
 		key = view_class.get_controller_name + "_" + view_class.get_view_name
 #		key = view_class.get_file_type + "_" + key if view_class.get_file_type != "html"
@@ -60,7 +60,7 @@ def load_all_views_from_path(view_path)
   if $lib_view_path
     Dir.glob($lib_view_path + "**/*") do |item|
       next if not item.end_with?(".erb", ".rjs", "jbuilder")
-      puts item
+  #    puts item
       view_class = View_Class.new(item, $lib_view_path)
       key = view_class.get_controller_name + "_" + view_class.get_view_name
       view_hash[key] = view_class
@@ -115,6 +115,23 @@ def controller_print_all_controllers_render_replaced(controller_path, view_path,
 
 		File.write(controller_file_path, res)
 	end
+end
+
+def count_number_of_lines_rendered_by_view(view_path, controller_path, render_list_path)
+  view_hash = load_all_views_from_path(view_path)
+  #return a hash of rendered list
+  #render_hash[action] = [view1, view2, ...]
+  render_hash = load_all_rendered_views(render_list_path)
+  render_hash.each do |action, view_list|
+    puts "ACTION: " + action
+    view_list.each do |view|
+      puts "VIEW: " + view
+      view_class = view_hash[view]
+      puts "number of ruby code: " + view_class.get_lines_rb_content.to_s
+      puts "number of ruby and html code: " + view_class.get_lines_content.to_s
+    end
+  end
+
 end
 
 def helper_print_all_helpers_render_replaced(helper_path, view_path, new_helper_path)
@@ -373,6 +390,7 @@ $new_view_path = "./app/new_views/"
 $output_path = "./output/"
 $lib_controller_path = "../calagator/app/controllers/"
 $lib_view_path = "../calagator/app/views/"
+$render_list_path = "./render_list.txt"
 
 options = {}
 
@@ -397,6 +415,9 @@ opt_parser = OptionParser.new do |opt|
 	opt.on("-a", "--all", "apply the current operation on all controller actions or view files") do 
 		options[:all] = true
 	end
+  opt.on("-loc", "--linesofcode", "count number of lines of code rendered from the views", "example: --linesofcode") do 
+    options[:loc] = true
+  end
   opt.on("-h", "--helper", "work on helper ruby files") do
     options[:helper] = true
   end
@@ -456,7 +477,10 @@ elsif options[:controller] and options[:all]
 	controller_print_all_controllers_render_replaced($controller_path, $view_path, $new_controller_path)
 elsif options[:controller]
 	controller_print_links_controller_view_recursively($view_path, $controller_path, $new_view_path)
+elsif options[:loc]
+  count_number_of_lines_rendered_by_view($view_path, $controller_path, $render_list_path)
 elsif options[:helper]
   helper_print_all_helpers_render_replaced($helper_path, $view_path, $new_helper_path)
 end
+
 

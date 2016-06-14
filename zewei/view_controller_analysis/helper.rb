@@ -404,3 +404,21 @@ def get_redirect_to_tags(tag_arr, named_routes_class, curr_controller)
 	return res
 end
 
+
+def load_all_rendered_views(render_list_path)
+  cur_action = ""
+  rendered_views_hash = {}
+  File.open(render_list_path, "r").readlines.each do |line|
+    if line.start_with? "START:"
+      line.gsub! "START: ", ""
+      line.strip!
+      cur_action = line
+      rendered_views_hash[cur_action] = []
+    elsif line.start_with? "RENDER:"
+      line.gsub! "RENDER: ", ""
+      line.strip!
+      rendered_views_hash[cur_action].push line
+    end
+  end
+  return rendered_views_hash
+end

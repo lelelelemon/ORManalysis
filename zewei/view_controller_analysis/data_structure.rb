@@ -374,7 +374,7 @@ class View_Class
 			@file_type = "text"
 		else
 			@file_type = "unrecognized_file_type"
-			puts "WARNING: unrecognized file type " + @file_type + ", path: " + @path
+		#	puts "WARNING: unrecognized file type " + @file_type + ", path: " + @path
 		end
 
 		path.gsub! base_path, ""
@@ -389,7 +389,7 @@ class View_Class
 #		end
 		j = @view_name.index(".")
 		@view_name = @view_name[0..j-1]
-    puts "view_name: " + @view_name
+   # puts "view_name: " + @view_name
 #		if @file_type == "rss" or @file_type == "js"
 #			@view_name += ("." + @file_type)
 #		end
@@ -421,6 +421,13 @@ class View_Class
 		@rb_content
 	end
 
+  def get_lines_rb_content
+    get_rb_content.lines.count
+  end
+
+  def get_lines_content
+    get_content.lines.count
+  end
 	
 	def parse_content(content)
     return YARD::Parser::Ruby::RubyParser.parse(content).root
