@@ -23,7 +23,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -65,8 +65,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -83,6 +85,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -140,17 +143,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -161,7 +162,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -176,15 +177,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -241,6 +242,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -250,8 +253,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "New File", @path.presence, @ref 
-  header_title project_title(@project, "Files", project_files_path(@project)) 
- 
  form_tag(namespace_project_create_blob_path(@project.namespace, @project, @id), method: :post, class: 'form-horizontal js-new-blob-form js-quick-submit js-requires-input') do 
   icon('code-fork') 
  ref 
@@ -260,6 +261,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  text_field_tag 'file_name', params[:file_name], placeholder: "File name",        required: true, class: 'form-control new-file-name' 
  end 
  select_tag :license_type, grouped_options_for_select(licenses_for_select, @project.repository.license_key), include_blank: true, class: 'select2 license-select', data: {placeholder: 'Choose a license template', project: @project.name, fullname: @project.namespace.human_name} 
+ dropdown_tag("Choose a .gitignore template", options: {} ) 
  select_tag :encoding, options_for_select([ "base64", "text" ], "text"), class: 'select2' 
  if local_assigns[:path] 
  end 
@@ -285,7 +287,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -327,8 +329,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -345,6 +349,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -402,17 +407,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -423,7 +426,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -438,15 +441,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -503,6 +506,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -512,8 +517,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title @blob.path, @ref 
-  header_title project_title(@project, "Files", project_files_path(@project)) 
- 
   if event = last_push_event 
  if show_last_push_widget?(event) 
  link_to namespace_project_commits_path(event.project.namespace, event.project, event.ref_name) do 
@@ -643,7 +646,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -685,8 +688,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -703,6 +708,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -760,17 +766,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -781,7 +785,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -796,15 +800,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -861,6 +865,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -870,8 +876,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "Edit", @blob.path, @ref 
-  header_title project_title(@project, "Files", project_files_path(@project)) 
- 
  link_to '#editor' do 
  icon('edit') 
  end 
@@ -887,6 +891,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  text_field_tag 'file_name', params[:file_name], placeholder: "File name",        required: true, class: 'form-control new-file-name' 
  end 
  select_tag :license_type, grouped_options_for_select(licenses_for_select, @project.repository.license_key), include_blank: true, class: 'select2 license-select', data: {placeholder: 'Choose a license template', project: @project.name, fullname: @project.namespace.human_name} 
+ dropdown_tag("Choose a .gitignore template", options: {} ) 
  select_tag :encoding, options_for_select([ "base64", "text" ], "text"), class: 'select2' 
  if local_assigns[:path] 
  end 
@@ -968,7 +973,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -1010,8 +1015,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -1028,6 +1035,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -1085,17 +1093,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -1106,7 +1112,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -1121,15 +1127,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -1186,6 +1192,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 

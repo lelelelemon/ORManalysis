@@ -1,9 +1,11 @@
 class Projects::NotesController < Projects::ApplicationController
+  include ToggleAwardEmoji
+
   # Authorize
   before_action :authorize_read_note!
   before_action :authorize_create_note!, only: [:create]
   before_action :authorize_admin_note!, only: [:update, :destroy]
-  before_action :find_current_user_notes, except: [:destroy, :delete_attachment, :award_toggle]
+  before_action :find_current_user_notes, only: [:index]
 
   def index
     current_fetched_at = Time.now.to_i
@@ -43,7 +45,7 @@ class Projects::NotesController < Projects::ApplicationController
     end
 
     respond_to do |format|
-      format.js { render nothing: true }
+      format.js { head :ok }
     end
   end
 
@@ -52,32 +54,8 @@ class Projects::NotesController < Projects::ApplicationController
     note.update_attribute(:attachment, nil)
 
     respond_to do |format|
-      format.js { render nothing: true }
+      format.js { head :ok }
     end
-  end
-
-  def award_toggle
-    noteable = if note_params[:noteable_type] == "issue"
-                 project.issues.find(note_params[:noteable_id])
-               else
-                 project.merge_requests.find(note_params[:noteable_id])
-               end
-
-    data = {
-      author: current_user,
-      is_award: true,
-      note: note_params[:note].delete(":")
-    }
-
-    note = noteable.notes.find_by(data)
-
-    if note
-      note.destroy
-    else
-      Notes::CreateService.new(project, current_user, note_params).execute
-    end
-
-    render json: { ok: true }
   end
 
   private
@@ -88,7 +66,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -130,8 +108,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -148,6 +128,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -205,17 +186,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -226,7 +205,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -241,15 +220,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -306,6 +285,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -314,12 +295,14 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  yield :flash_message 
  (container_class unless @no_container) 
+ return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
  note_editable = note_editable?(note) 
  user_path(note.author) 
  image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
  link_to_member(note.project, note.author, avatar: false) 
- "" 
- if !note.system 
+ note.author.to_reference 
+ unless note.system 
  end 
  time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
  access = note.project.team.human_max_access(note.author.id) 
@@ -327,16 +310,21 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  access 
  end 
  if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
  link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
  icon('pencil') 
  end 
- link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button js-note-delete danger' do 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
  icon('trash-o') 
  end 
  end 
  preserve do 
- markdown(note.note, pipeline: :note, cache_key: [note, "note"]) 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
  end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
  if note_editable 
   form_for note, url: namespace_project_note_path(@project.namespace, @project, note), method: :put, remote: true, authenticity_token: true, html: { class: 'edit-note common-note-form js-quick-submit' } do |f| 
  note_target_fields(note) 
@@ -348,7 +336,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  end 
- edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+  grouped_emojis = awardable.grouped_awards(with_thumbs: inline) 
+ awards_sort(grouped_emojis).each do |emoji, awards| 
+ emoji_icon(emoji, sprite: false) 
+ awards.count 
+ end 
+ if current_user 
+ icon('smile-o', class: "award-control-icon award-control-icon-normal") 
+ icon('spinner spin', class: "award-control-icon award-control-icon-loading") 
+ end 
+ 
  if note.attachment.url 
  if note.attachment.image? 
  link_to note.attachment.url, target: '_blank' do 
@@ -370,6 +367,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
 end
 
   end
+  alias_method :awardable, :note
 
   def note_to_html(note)
     render_to_string(
@@ -381,7 +379,7 @@ end
   end
 
   def note_to_discussion_html(note)
-    return unless note.for_diff_line?
+    return unless note.diff_note?
 
     if params[:view] == 'parallel'
       template = "projects/notes/_diff_notes_with_reply_parallel"
@@ -405,7 +403,7 @@ end
   end
 
   def note_to_discussion_with_diff_html(note)
-    return unless note.for_diff_line?
+    return unless note.diff_note?
 
     render_to_string(
       "projects/notes/_discussion",
@@ -416,13 +414,20 @@ end
   end
 
   def note_json(note)
-    if note.valid?
+    if note.is_a?(AwardEmoji)
+      {
+        valid:  note.valid?,
+        award:  true,
+        id:     note.id,
+        name:   note.name
+      }
+    elsif note.valid?
       {
         valid: true,
         id: note.id,
         discussion_id: note.discussion_id,
         html: note_to_html(note),
-        award: note.is_award,
+        award: false,
         note: note.note,
         discussion_html: note_to_discussion_html(note),
         discussion_with_diff_html: note_to_discussion_with_diff_html(note)
@@ -430,7 +435,7 @@ end
     else
       {
         valid: false,
-        award: note.is_award,
+        award: false,
         errors: note.errors
       }
     end
@@ -443,7 +448,7 @@ end
   def note_params
     params.require(:note).permit(
       :note, :noteable, :noteable_id, :noteable_type, :project_id,
-      :attachment, :line_code, :commit_id
+      :attachment, :line_code, :commit_id, :type
     )
   end
 

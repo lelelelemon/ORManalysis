@@ -2,6 +2,7 @@ class Projects::MergeRequestsController < Projects::ApplicationController
   include ToggleSubscriptionAction
   include DiffHelper
   include IssuableActions
+  include ToggleAwardEmoji
 
   before_action :module_enabled
   before_action :merge_request, only: [
@@ -53,7 +54,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -95,8 +96,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -113,6 +116,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -170,17 +174,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -191,7 +193,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -206,15 +208,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -271,6 +273,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -280,8 +284,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "Merge Requests" 
-  header_title project_title(@project, "Merge Requests", namespace_project_merge_requests_path(@project.namespace, @project)) 
- 
   if event = last_push_event 
  if show_last_push_widget?(event) 
  link_to namespace_project_commits_path(event.project.namespace, event.project, event.ref_name) do 
@@ -298,27 +300,25 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_context_word = 'issues' 
  end 
  ("active" if params[:state] == 'opened') 
- link_to page_filter_path(state: 'opened', label: true), title: "Filter by  that are currently opened."  
+ link_to page_filter_path(state: 'opened', label: true), title: "Filter by  that are currently opened." do 
  if defined?(type) && type == :merge_requests 
  ("active" if params[:state] == 'merged') 
- link_to page_filter_path(state: 'merged', label: true), title: 'Filter by merge requests that are currently merged.' 
- ("active" if params[:state] == 'closed') 
- link_to page_filter_path(state: 'closed', label: true), title: 'Filter by merge requests that are currently closed and unmerged.' 
- else 
- ("active" if params[:state] == 'closed') 
- link_to page_filter_path(state: 'closed', label: true), title: 'Filter by issues that are currently closed.' 
+ end
+ end
+ link_to page_filter_path(state: 'merged', label: true), title: 'Filter by merge requests that are currently merged.' do 
+ end
+   ("active" if params[:state] == 'closed') 
+ link_to page_filter_path(state: 'closed', label: true), title: 'Filter by merge requests that are currently closed and unmerged.' do 
+ end
+   ("active" if params[:state] == 'closed') 
+ link_to page_filter_path(state: 'closed', label: true), title: 'Filter by issues that are currently closed.' do 
  end 
  ("active" if params[:state] == 'all') 
- link_to page_filter_path(state: 'all', label: true), title: "Show all ." 
+ link_to page_filter_path(state: 'all', label: true), title: "Show all ." do 
+ end
  
   form_tag(path, method: :get, id: "issue_search_form", class: 'issue-search-form') do 
  search_field_tag :issue_search, params[:issue_search], { placeholder: 'Filter by name ...', class: 'form-control issue_search search-text-input input-short', spellcheck: false } 
- hidden_field_tag :state, params['state'] 
- hidden_field_tag :scope, params['scope'] 
- hidden_field_tag :assignee_id, params['assignee_id'] 
- hidden_field_tag :author_id, params['author_id'] 
- hidden_field_tag :milestone_id, params['milestone_id'] 
- hidden_field_tag :label_id, params['label_id'] 
  end 
  
  merge_project = can?(current_user, :create_merge_request, @project) ? @project : (current_user && current_user.fork_of(@project)) 
@@ -327,14 +327,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  icon('plus') 
  end 
  end 
-  form_tag page_filter_path(without: [:assignee_id, :author_id, :milestone_title, :label_name]), method: :get, class: 'filter-form' do 
+  form_tag page_filter_path(without: [:assignee_id, :author_id, :milestone_title, :label_name, :issue_search]), method: :get, class: 'filter-form js-filter-form' do 
+ if params[:issue_search].present? 
+ hidden_field_tag :issue_search, params[:issue_search] 
+ end 
  if controller.controller_name == 'issues' && can?(current_user, :admin_issue, @project) 
  check_box_tag "check_all_issues", nil, false,            class: "check_all_issues left" 
  end 
  if params[:author_id].present? 
  hidden_field_tag(:author_id, params[:author_id]) 
  end 
- dropdown_tag(user_dropdown_label(params[:author_id], "Author"), options: { toggle_class: "js-user-search js-filter-submit js-author-search", title: "Filter by author", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-author js-filter-submit",            placeholder: "Search authors", data: { any_user: "Any Author", first_user: (current_user.username if current_user), current_user: true, project_id: (@project.id if @project), selected: params[:author_id], field_name: "author_id", default_label: "Author" } }) 
+ dropdown_tag(user_dropdown_label(params[:author_id], "Author"), options: { toggle_class: "js-user-search js-filter-submit js-author-search", title: "Filter by author", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable dropdown-menu-author js-filter-submit",            placeholder: "Search authors", data: { any_user: "Any Author", first_user: (current_user.username if current_user), current_user: true, project_id: (@project.id if @project), selected: params[:author], field_name: "author_id", default_label: "Author" } }) 
  if params[:assignee_id].present? 
  hidden_field_tag(:assignee_id, params[:assignee_id]) 
  end 
@@ -356,42 +359,30 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-  if params[:label_name].present? 
+  show_create = local_assigns.fetch(:show_create, true) 
+ extra_options = local_assigns.fetch(:extra_options, true) 
+ filter_submit = local_assigns.fetch(:filter_submit, true) 
+ show_footer = local_assigns.fetch(:show_footer, true) 
+ data_options = local_assigns.fetch(:data_options, {}) 
+ classes = local_assigns.fetch(:classes, []) 
+ dropdown_data = {toggle: 'dropdown', field_name: 'label_name[]', show_no: "true", show_any: "true", selected: params[:label_name], project_id: @project.try(:id), labels: labels_filter_path, default_label: "Label"} 
+ dropdown_data.merge!(data_options) 
+ classes << 'js-extra-options' if extra_options 
+ classes << 'js-filter-submit' if filter_submit 
+ if params[:label_name].present? 
  if params[:label_name].respond_to?('any?') 
  params[:label_name].each do |label| 
  hidden_field_tag "label_name[]", label, id: nil 
  end 
  end 
  end 
+ classes.join(' ') 
+ dropdown_data 
  h(multi_label_name(params[:label_name], "Label")) 
  icon('chevron-down') 
-  title = local_assigns.fetch(:title, 'Assign labels') 
- filter_placeholder = local_assigns.fetch(:filter_placeholder, 'Search labels') 
- dropdown_title(title) 
- dropdown_filter(filter_placeholder) 
- dropdown_content 
- if @project 
- dropdown_footer do 
- if can? current_user, :admin_label, @project 
- end 
- link_to namespace_project_labels_path(@project.namespace, @project), :"data-is-link" => true do 
- if can? current_user, :admin_label, @project 
- else 
- end 
- end 
- end 
- end 
- dropdown_loading 
- 
- if can? current_user, :admin_label, @project and @project 
-  dropdown_title("Create new label", back: true) 
- dropdown_content do 
- suggested_colors.each do |color| 
- link_to '#', style: "background-color: ", data: { color: color } do 
- end 
- end 
- end 
- 
+ render partial: "shared/issuable/label_page_default", locals: { title: "Filter by label", show_footer: show_footer, show_create: show_create } 
+ if show_create and @project and can?(current_user, :admin_label, @project) 
+ render partial: "shared/issuable/label_page_create" 
  end 
  dropdown_loading 
  
@@ -435,11 +426,64 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  end 
  if controller.controller_name == 'issues' 
- form_tag bulk_update_namespace_project_issues_path(@project.namespace, @project), method: :post  do 
+ form_tag bulk_update_namespace_project_issues_path(@project.namespace, @project), method: :post, class: 'bulk-update'  do 
  dropdown_tag("Status", options: {} ) do 
  end 
  dropdown_tag("Assignee", options: { toggle_class: "js-user-search js-update-assignee js-filter-submit js-filter-bulk-update", title: "Assign to", filter: true, dropdown_class: "dropdown-menu-user dropdown-menu-selectable",              placeholder: "Search authors", data: { first_user: (current_user.username if current_user), null_user: true, current_user: true, project_id: @project.id, field_name: "update[assignee_id]" } }) 
  dropdown_tag("Milestone", options: {}) 
+  show_create = local_assigns.fetch(:show_create, true) 
+ extra_options = local_assigns.fetch(:extra_options, true) 
+ filter_submit = local_assigns.fetch(:filter_submit, true) 
+ show_footer = local_assigns.fetch(:show_footer, true) 
+ data_options = local_assigns.fetch(:data_options, {}) 
+ classes = local_assigns.fetch(:classes, []) 
+ dropdown_data = {toggle: 'dropdown', field_name: 'label_name[]', show_no: "true", show_any: "true", selected: params[:label_name], project_id: @project.try(:id), labels: labels_filter_path, default_label: "Label"} 
+ dropdown_data.merge!(data_options) 
+ classes << 'js-extra-options' if extra_options 
+ classes << 'js-filter-submit' if filter_submit 
+ if params[:label_name].present? 
+ if params[:label_name].respond_to?('any?') 
+ params[:label_name].each do |label| 
+ hidden_field_tag "label_name[]", label, id: nil 
+ end 
+ end 
+ end 
+ classes.join(' ') 
+ dropdown_data 
+ h(multi_label_name(params[:label_name], "Label")) 
+ icon('chevron-down') 
+  title = local_assigns.fetch(:title, 'Assign labels') 
+ show_create = local_assigns.fetch(:show_create, true) 
+ show_footer = local_assigns.fetch(:show_footer, true) 
+ filter_placeholder = local_assigns.fetch(:filter_placeholder, 'Search labels') 
+ dropdown_title(title) 
+ dropdown_filter(filter_placeholder) 
+ dropdown_content 
+ if @project && show_footer 
+ dropdown_footer do 
+ if can?(current_user, :admin_label, @project) 
+ end 
+ link_to namespace_project_labels_path(@project.namespace, @project), :"data-is-link" => true do 
+ if show_create && @project && can?(current_user, :admin_label, @project) 
+ else 
+ end 
+ end 
+ end 
+ end 
+ dropdown_loading 
+ 
+ if show_create and @project and can?(current_user, :admin_label, @project) 
+  dropdown_title("Create new label", back: true) 
+ dropdown_content do 
+ suggested_colors.each do |color| 
+ link_to '#', style: "background-color: ", data: { color: color } do 
+ end 
+ end 
+ end 
+ 
+ end 
+ dropdown_loading 
+ 
  hidden_field_tag 'update[issues_ids]', [] 
  hidden_field_tag :state_event, params[:state_event] 
  button_tag "Update issues", class: "btn update_selected_issues btn-save" 
@@ -456,13 +500,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
    mr_css_classes(merge_request) 
- link_to_gfm merge_request.title, merge_request_path(merge_request) 
+ link_to merge_request.title, merge_request_path(merge_request) 
  if merge_request.merged? 
  elsif merge_request.closed? 
  icon('ban') 
  end 
  if merge_request.ci_commit 
- render_ci_status(merge_request.ci_commit) 
+ render_pipeline_status(merge_request.ci_commit) 
  end 
  if merge_request.open? && merge_request.broken? 
  link_to merge_request_path(merge_request), class: "has-tooltip", title: "Cannot be merged automatically", data: { container: 'body' } do 
@@ -481,7 +525,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  icon('thumbs-down') 
  downvotes 
  end 
- note_count = merge_request.mr_and_commit_notes.user.nonawards.count 
+ note_count = merge_request.mr_and_commit_notes.user.count 
  link_to merge_request_path(merge_request, anchor: 'notes'), class: ('merge-request-no-comments' if note_count.zero?) do 
  icon('comments') 
  note_count 
@@ -515,7 +559,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -557,8 +601,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -575,6 +621,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -632,17 +679,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -653,7 +698,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -668,15 +713,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -733,6 +778,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -761,12 +808,12 @@ end
     # but we need it for the "View file @ ..." link by deleted files
     @base_commit ||= @merge_request.first_commit.parent || @merge_request.first_commit
 
-    @comments_allowed = @reply_allowed = true
     @comments_target = {
       noteable_type: 'MergeRequest',
       noteable_id: @merge_request.id
     }
-    @line_notes = @merge_request.notes.where("line_code is not null")
+
+    @grouped_diff_notes = @merge_request.notes.grouped_diff_notes
 
     respond_to do |format|
       format.html
@@ -776,7 +823,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -818,8 +865,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -836,6 +885,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -893,17 +943,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -914,7 +962,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -929,15 +977,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -994,6 +1042,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -1018,7 +1068,7 @@ end
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -1060,8 +1110,10 @@ end
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -1078,6 +1130,7 @@ end
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -1135,17 +1188,15 @@ end
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -1156,7 +1207,7 @@ end
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -1171,15 +1222,15 @@ end
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -1236,6 +1287,8 @@ end
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -1262,7 +1315,7 @@ end
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -1304,8 +1357,10 @@ end
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -1322,6 +1377,7 @@ end
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -1379,17 +1435,15 @@ end
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -1400,7 +1454,7 @@ end
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -1415,15 +1469,15 @@ end
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -1480,6 +1534,8 @@ end
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -1517,6 +1573,7 @@ end
     @commit = @merge_request.last_commit
     @base_commit = @merge_request.diff_base_commit
     @diffs = @merge_request.compare.diffs(diff_options) if @merge_request.compare
+    @diff_notes_disabled = true
 
     @ci_commit = @merge_request.ci_commit
     @statuses = @ci_commit.statuses if @ci_commit
@@ -1527,7 +1584,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -1569,8 +1626,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -1587,6 +1646,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -1644,17 +1704,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -1665,7 +1723,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -1680,15 +1738,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -1745,6 +1803,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -1754,8 +1814,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "New Merge Request" 
-  header_title project_title(@project, "Merge Requests", namespace_project_merge_requests_path(@project.namespace, @project)) 
- 
  if @merge_request.can_be_created && !params[:change_branches] 
   source_title, target_title = format_mr_branch_names(@merge_request) 
  link_to 'Change branches', mr_change_branches_path(@merge_request) 
@@ -1778,7 +1836,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  project = @project 
  end 
  commits, hidden = limited_commits(@commits) 
- commits.group_by { |c| c.committed_date.in_time_zone.to_date }.sort.reverse.each do |day, commits| 
+ commits.chunk { |c| c.committed_date.in_time_zone.to_date }.each do |day, commits| 
  day.strftime('%d %b, %Y') 
  pluralize(commits.count, 'commit') 
   if @note_counts 
@@ -1794,12 +1852,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if commit.description? 
  end 
  if commit.status 
- render_ci_status(commit) 
+ render_commit_status(commit) 
  end 
  clipboard_button(clipboard_text: commit.id) 
  link_to commit.short_id, namespace_project_commit_path(project.namespace, project, commit), class: "commit_short_id" 
  if commit.description? 
- preserve(markdown(escape_once(commit.description), pipeline: :single_line)) 
+ preserve(markdown(escape_once(commit.description), pipeline: :single_line, author: commit.author)) 
  end 
  commit_author_link(commit, avatar: true, size: 24) 
  link_to_browse_code(project, commit) 
@@ -1890,7 +1948,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  view_file_btn(diff_commit.id, diff_file, project) 
  end 
  # Skip all non non-supported blobs 
- return unless blob.respond_to?('text?') 
+ return unless blob.respond_to?(:text?) 
  if diff_file.too_large? 
  elsif blob_text_viewable?(blob) && !project.repository.diffable?(blob) 
  elsif blob_text_viewable?(blob) 
@@ -1907,7 +1965,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  left[:text] 
  else 
  link_to raw(left[:number]), "#", id: left[:line_code] 
- if @comments_allowed && can?(current_user, :create_note, @project) 
+ if !@diff_notes_disabled && can?(current_user, :create_note, @project) 
  link_to_new_diff_note(left[:line_code], 'old') 
  end 
  diff_line_content(left[:text]) 
@@ -1919,26 +1977,137 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  new_line_code = left[:line_code] 
  end 
  link_to raw(right[:number]), "#", id: new_line_code 
- if @comments_allowed && can?(current_user, :create_note, @project) 
- link_to_new_diff_note(right[:line_code], 'new') 
+ if !@diff_notes_disabled && can?(current_user, :create_note, @project) 
+ link_to_new_diff_note(new_line_code, 'new') 
  end 
  diff_line_content(right[:text]) 
  end 
- if @reply_allowed 
- comments_left, comments_right = organize_comments(left[:type], right[:type], left[:line_code], right[:line_code]) 
- if comments_left.present? || comments_right.present? 
-  note1 = notes_left.present? ? notes_left.first : nil 
- note2 = notes_right.present? ? notes_right.first : nil 
- if note1 
- render notes_left 
- link_to_reply_diff(note1, 'old') 
+ unless @diff_notes_disabled 
+ notes_left, notes_right = organize_comments(left, right) 
+ if notes_left.present? || notes_right.present? 
+  note_left = notes_left.present? ? notes_left.first : nil 
+ note_right = notes_right.present? ? notes_right.first : nil 
+ if note_left 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
+ user_path(note.author) 
+ image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
+ link_to_member(note.project, note.author, avatar: false) 
+ note.author.to_reference 
+ unless note.system 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
+ access = note.project.team.human_max_access(note.author.id) 
+ if access 
+ access 
+ end 
+ if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
+ link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
+ icon('pencil') 
+ end 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
+ icon('trash-o') 
+ end 
+ end 
+ preserve do 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
+ end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+ render 'projects/notes/edit_form', note: note 
+ end 
+ render 'award_emoji/awards_block', awardable: note, inline: false 
+ if note.attachment.url 
+ if note.attachment.image? 
+ link_to note.attachment.url, target: '_blank' do 
+ image_tag note.attachment.url, class: 'note-image-attach' 
+ end 
+ end 
+ link_to note.attachment.url, target: '_blank' do 
+ icon('paperclip') 
+ note.attachment_identifier 
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
+ icon('trash-o', class: 'cred') 
+ end 
+ end 
+ end 
+ 
  else 
  "" 
  "" 
  end 
- if note2 
- render notes_right 
- link_to_reply_diff(note2, 'new') 
+ if note_right 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
+ user_path(note.author) 
+ image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
+ link_to_member(note.project, note.author, avatar: false) 
+ note.author.to_reference 
+ unless note.system 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
+ access = note.project.team.human_max_access(note.author.id) 
+ if access 
+ access 
+ end 
+ if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
+ link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
+ icon('pencil') 
+ end 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
+ icon('trash-o') 
+ end 
+ end 
+ preserve do 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
+ end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+  form_for note, url: namespace_project_note_path(@project.namespace, @project, note), method: :put, remote: true, authenticity_token: true, html: { class: 'edit-note common-note-form js-quick-submit' } do |f| 
+ note_target_fields(note) 
+ render layout: 'projects/md_preview', locals: { preview_class: 'md-preview' } do 
+ render 'projects/zen', f: f, attr: :note, classes: 'note-textarea js-note-text js-task-list-field', placeholder: "Write a comment or drag your files here..." 
+ render 'projects/notes/hints' 
+ end 
+ f.submit 'Save Comment', class: 'btn btn-nr btn-save btn-grouped js-comment-button' 
+ end 
+ 
+ end 
+  grouped_emojis = awardable.grouped_awards(with_thumbs: inline) 
+ awards_sort(grouped_emojis).each do |emoji, awards| 
+ emoji_icon(emoji, sprite: false) 
+ awards.count 
+ end 
+ if current_user 
+ icon('smile-o', class: "award-control-icon award-control-icon-normal") 
+ icon('spinner spin', class: "award-control-icon award-control-icon-loading") 
+ end 
+ 
+ if note.attachment.url 
+ if note.attachment.image? 
+ link_to note.attachment.url, target: '_blank' do 
+ image_tag note.attachment.url, class: 'note-image-attach' 
+ end 
+ end 
+ link_to note.attachment.url, target: '_blank' do 
+ icon('paperclip') 
+ note.attachment_identifier 
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
+ icon('trash-o', class: 'cred') 
+ end 
+ end 
+ end 
+ 
  else 
  "" 
  "" 
@@ -1963,90 +2132,46 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  end 
  if @ci_commit 
-   if can?(current_user, :update_build, @project) 
+   if can?(current_user, :update_pipeline, ci_commit.project) 
  if ci_commit.builds.latest.failed.any?(&:retryable?) 
- link_to "Retry failed", retry_builds_namespace_project_commit_path(@project.namespace, @project, ci_commit.sha), class: 'btn btn-grouped btn-primary', method: :post 
+ link_to "Retry failed", retry_namespace_project_pipeline_path(ci_commit.project.namespace, ci_commit.project, ci_commit.id), class: 'btn btn-grouped btn-primary', method: :post 
  end 
  if ci_commit.builds.running_or_pending.any? 
- link_to "Cancel running", cancel_builds_namespace_project_commit_path(@project.namespace, @project, ci_commit.sha), data: { confirm: 'Are you sure?' }, class: 'btn btn-grouped btn-danger', method: :post 
+ link_to "Cancel running", cancel_namespace_project_pipeline_path(ci_commit.project.namespace, ci_commit.project, ci_commit.id), data: { confirm: 'Are you sure?' }, class: 'btn btn-grouped btn-danger', method: :post 
  end 
  end 
+ if defined?(pipeline_details) && pipeline_details 
+ link_to "#", namespace_project_pipeline_path(ci_commit.project.namespace, ci_commit.project, ci_commit.id), class: "monospace" 
  pluralize ci_commit.statuses.count(:id), "build" 
  if ci_commit.ref 
- ci_commit.ref 
+ link_to ci_commit.ref, namespace_project_commits_path(ci_commit.project.namespace, ci_commit.project, ci_commit.ref), class: "monospace" 
  end 
  if defined?(link_to_commit) && link_to_commit 
- link_to ci_commit.short_sha, namespace_project_commit_path(@project.namespace, @project, ci_commit.sha), class: "monospace" 
+ link_to ci_commit.short_sha, namespace_project_commit_path(ci_commit.project.namespace, ci_commit.project, ci_commit.sha), class: "monospace" 
  end 
  if ci_commit.duration 
  time_interval_in_words ci_commit.duration 
+ end 
  end 
  if ci_commit.yaml_errors.present? 
  ci_commit.yaml_errors.split(",").each do |error| 
  error 
  end 
  end 
- if @project.builds_enabled? && !ci_commit.ci_yaml_file 
+ if ci_commit.project.builds_enabled? && !ci_commit.ci_yaml_file 
  end 
- if @project.build_coverage_enabled? 
+ if ci_commit.project.build_coverage_enabled? 
  end 
- builds = ci_commit.statuses.latest.ordered 
-  project = build.project 
- ci_status_with_icon(build.status) 
- if can?(current_user, :read_build, build.project) 
- link_to namespace_project_build_url(build.project.namespace, build.project, build) do 
+ ci_commit.statuses.stages.each do |stage| 
+  stage 
+ status = statuses.latest.status 
+ ci_icon_for_status(status) 
+ if stage 
+ stage.titleize.pluralize 
  end 
- else 
- end 
- if build.stuck? 
- end 
- if project 
- link_to project.name_with_namespace, admin_namespace_project_path(project.namespace, project) 
- end 
- link_to build.short_sha, namespace_project_commit_path(build.project.namespace, build.project, build.sha), class: "monospace" 
- if build.ref 
- link_to build.ref, namespace_project_commits_path(build.project.namespace, build.project, build.ref) 
- else 
- end 
- if build.try(:runner) 
- runner_link(build.runner) 
- else 
- end 
- if build.tags.any? 
- build.tags.each do |tag| 
- tag 
- end 
- end 
- if build.try(:trigger_request) 
- end 
- if build.try(:allow_failure) 
- end 
- if build.duration 
- if build.finished_at 
- end 
- if defined?(coverage) && coverage 
- if build.try(:coverage) 
- end 
- end 
- if can?(current_user, :read_build, project) && build.artifacts? 
- link_to download_namespace_project_build_artifacts_path(build.project.namespace, build.project, build), title: 'Download artifacts', class: 'btn btn-build' do 
- end 
- end 
- if can?(current_user, :update_build, build.project) 
- if build.active? 
- link_to cancel_namespace_project_build_path(build.project.namespace, build.project, build, return_to: request.original_url), method: :post, title: 'Cancel', class: 'btn btn-build' do 
- end 
- elsif defined?(allow_retry) && allow_retry && build.retryable? 
- link_to retry_namespace_project_build_path(build.project.namespace, build.project, build, return_to: request.original_url), method: :post, title: 'Retry', class: 'btn btn-build' do 
- end 
- end 
- end 
-end
+ render statuses.latest.ordered, coverage: @project.build_coverage_enabled?, stage: false, ref: false, allow_retry: true 
+ render statuses.retried.ordered, coverage: @project.build_coverage_enabled?, stage: false, ref: false, retried: true 
  
- if ci_commit.retried.any? 
- if @project.build_coverage_enabled? 
- end 
- render ci_commit.retried, coverage: @project.build_coverage_enabled?, stage: true, ref: false 
  end 
  
  
@@ -2129,7 +2254,7 @@ end
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -2171,8 +2296,10 @@ end
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -2189,6 +2316,7 @@ end
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -2246,17 +2374,15 @@ end
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -2267,7 +2393,7 @@ end
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -2282,15 +2408,15 @@ end
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -2347,6 +2473,8 @@ end
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -2356,8 +2484,6 @@ end
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "New Merge Request" 
-  header_title project_title(@project, "Merge Requests", namespace_project_merge_requests_path(@project.namespace, @project)) 
- 
  if @merge_request.can_be_created && !params[:change_branches] 
   source_title, target_title = format_mr_branch_names(@merge_request) 
  link_to 'Change branches', mr_change_branches_path(@merge_request) 
@@ -2380,7 +2506,7 @@ end
  project = @project 
  end 
  commits, hidden = limited_commits(@commits) 
- commits.group_by { |c| c.committed_date.in_time_zone.to_date }.sort.reverse.each do |day, commits| 
+ commits.chunk { |c| c.committed_date.in_time_zone.to_date }.each do |day, commits| 
  day.strftime('%d %b, %Y') 
  pluralize(commits.count, 'commit') 
   if @note_counts 
@@ -2396,12 +2522,12 @@ end
  if commit.description? 
  end 
  if commit.status 
- render_ci_status(commit) 
+ render_commit_status(commit) 
  end 
  clipboard_button(clipboard_text: commit.id) 
  link_to commit.short_id, namespace_project_commit_path(project.namespace, project, commit), class: "commit_short_id" 
  if commit.description? 
- preserve(markdown(escape_once(commit.description), pipeline: :single_line)) 
+ preserve(markdown(escape_once(commit.description), pipeline: :single_line, author: commit.author)) 
  end 
  commit_author_link(commit, avatar: true, size: 24) 
  link_to_browse_code(project, commit) 
@@ -2492,7 +2618,7 @@ end
  view_file_btn(diff_commit.id, diff_file, project) 
  end 
  # Skip all non non-supported blobs 
- return unless blob.respond_to?('text?') 
+ return unless blob.respond_to?(:text?) 
  if diff_file.too_large? 
  elsif blob_text_viewable?(blob) && !project.repository.diffable?(blob) 
  elsif blob_text_viewable?(blob) 
@@ -2509,7 +2635,7 @@ end
  left[:text] 
  else 
  link_to raw(left[:number]), "#", id: left[:line_code] 
- if @comments_allowed && can?(current_user, :create_note, @project) 
+ if !@diff_notes_disabled && can?(current_user, :create_note, @project) 
  link_to_new_diff_note(left[:line_code], 'old') 
  end 
  diff_line_content(left[:text]) 
@@ -2521,26 +2647,137 @@ end
  new_line_code = left[:line_code] 
  end 
  link_to raw(right[:number]), "#", id: new_line_code 
- if @comments_allowed && can?(current_user, :create_note, @project) 
- link_to_new_diff_note(right[:line_code], 'new') 
+ if !@diff_notes_disabled && can?(current_user, :create_note, @project) 
+ link_to_new_diff_note(new_line_code, 'new') 
  end 
  diff_line_content(right[:text]) 
  end 
- if @reply_allowed 
- comments_left, comments_right = organize_comments(left[:type], right[:type], left[:line_code], right[:line_code]) 
- if comments_left.present? || comments_right.present? 
-  note1 = notes_left.present? ? notes_left.first : nil 
- note2 = notes_right.present? ? notes_right.first : nil 
- if note1 
- render notes_left 
- link_to_reply_diff(note1, 'old') 
+ unless @diff_notes_disabled 
+ notes_left, notes_right = organize_comments(left, right) 
+ if notes_left.present? || notes_right.present? 
+  note_left = notes_left.present? ? notes_left.first : nil 
+ note_right = notes_right.present? ? notes_right.first : nil 
+ if note_left 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
+ user_path(note.author) 
+ image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
+ link_to_member(note.project, note.author, avatar: false) 
+ note.author.to_reference 
+ unless note.system 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
+ access = note.project.team.human_max_access(note.author.id) 
+ if access 
+ access 
+ end 
+ if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
+ link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
+ icon('pencil') 
+ end 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
+ icon('trash-o') 
+ end 
+ end 
+ preserve do 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
+ end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+ render 'projects/notes/edit_form', note: note 
+ end 
+ render 'award_emoji/awards_block', awardable: note, inline: false 
+ if note.attachment.url 
+ if note.attachment.image? 
+ link_to note.attachment.url, target: '_blank' do 
+ image_tag note.attachment.url, class: 'note-image-attach' 
+ end 
+ end 
+ link_to note.attachment.url, target: '_blank' do 
+ icon('paperclip') 
+ note.attachment_identifier 
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
+ icon('trash-o', class: 'cred') 
+ end 
+ end 
+ end 
+ 
  else 
  "" 
  "" 
  end 
- if note2 
- render notes_right 
- link_to_reply_diff(note2, 'new') 
+ if note_right 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
+ user_path(note.author) 
+ image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
+ link_to_member(note.project, note.author, avatar: false) 
+ note.author.to_reference 
+ unless note.system 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
+ access = note.project.team.human_max_access(note.author.id) 
+ if access 
+ access 
+ end 
+ if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
+ link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
+ icon('pencil') 
+ end 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
+ icon('trash-o') 
+ end 
+ end 
+ preserve do 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
+ end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+  form_for note, url: namespace_project_note_path(@project.namespace, @project, note), method: :put, remote: true, authenticity_token: true, html: { class: 'edit-note common-note-form js-quick-submit' } do |f| 
+ note_target_fields(note) 
+ render layout: 'projects/md_preview', locals: { preview_class: 'md-preview' } do 
+ render 'projects/zen', f: f, attr: :note, classes: 'note-textarea js-note-text js-task-list-field', placeholder: "Write a comment or drag your files here..." 
+ render 'projects/notes/hints' 
+ end 
+ f.submit 'Save Comment', class: 'btn btn-nr btn-save btn-grouped js-comment-button' 
+ end 
+ 
+ end 
+  grouped_emojis = awardable.grouped_awards(with_thumbs: inline) 
+ awards_sort(grouped_emojis).each do |emoji, awards| 
+ emoji_icon(emoji, sprite: false) 
+ awards.count 
+ end 
+ if current_user 
+ icon('smile-o', class: "award-control-icon award-control-icon-normal") 
+ icon('spinner spin', class: "award-control-icon award-control-icon-loading") 
+ end 
+ 
+ if note.attachment.url 
+ if note.attachment.image? 
+ link_to note.attachment.url, target: '_blank' do 
+ image_tag note.attachment.url, class: 'note-image-attach' 
+ end 
+ end 
+ link_to note.attachment.url, target: '_blank' do 
+ icon('paperclip') 
+ note.attachment_identifier 
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
+ icon('trash-o', class: 'cred') 
+ end 
+ end 
+ end 
+ 
  else 
  "" 
  "" 
@@ -2565,90 +2802,46 @@ end
  
  end 
  if @ci_commit 
-   if can?(current_user, :update_build, @project) 
+   if can?(current_user, :update_pipeline, ci_commit.project) 
  if ci_commit.builds.latest.failed.any?(&:retryable?) 
- link_to "Retry failed", retry_builds_namespace_project_commit_path(@project.namespace, @project, ci_commit.sha), class: 'btn btn-grouped btn-primary', method: :post 
+ link_to "Retry failed", retry_namespace_project_pipeline_path(ci_commit.project.namespace, ci_commit.project, ci_commit.id), class: 'btn btn-grouped btn-primary', method: :post 
  end 
  if ci_commit.builds.running_or_pending.any? 
- link_to "Cancel running", cancel_builds_namespace_project_commit_path(@project.namespace, @project, ci_commit.sha), data: { confirm: 'Are you sure?' }, class: 'btn btn-grouped btn-danger', method: :post 
+ link_to "Cancel running", cancel_namespace_project_pipeline_path(ci_commit.project.namespace, ci_commit.project, ci_commit.id), data: { confirm: 'Are you sure?' }, class: 'btn btn-grouped btn-danger', method: :post 
  end 
  end 
+ if defined?(pipeline_details) && pipeline_details 
+ link_to "#", namespace_project_pipeline_path(ci_commit.project.namespace, ci_commit.project, ci_commit.id), class: "monospace" 
  pluralize ci_commit.statuses.count(:id), "build" 
  if ci_commit.ref 
- ci_commit.ref 
+ link_to ci_commit.ref, namespace_project_commits_path(ci_commit.project.namespace, ci_commit.project, ci_commit.ref), class: "monospace" 
  end 
  if defined?(link_to_commit) && link_to_commit 
- link_to ci_commit.short_sha, namespace_project_commit_path(@project.namespace, @project, ci_commit.sha), class: "monospace" 
+ link_to ci_commit.short_sha, namespace_project_commit_path(ci_commit.project.namespace, ci_commit.project, ci_commit.sha), class: "monospace" 
  end 
  if ci_commit.duration 
  time_interval_in_words ci_commit.duration 
+ end 
  end 
  if ci_commit.yaml_errors.present? 
  ci_commit.yaml_errors.split(",").each do |error| 
  error 
  end 
  end 
- if @project.builds_enabled? && !ci_commit.ci_yaml_file 
+ if ci_commit.project.builds_enabled? && !ci_commit.ci_yaml_file 
  end 
- if @project.build_coverage_enabled? 
+ if ci_commit.project.build_coverage_enabled? 
  end 
- builds = ci_commit.statuses.latest.ordered 
-  project = build.project 
- ci_status_with_icon(build.status) 
- if can?(current_user, :read_build, build.project) 
- link_to namespace_project_build_url(build.project.namespace, build.project, build) do 
+ ci_commit.statuses.stages.each do |stage| 
+  stage 
+ status = statuses.latest.status 
+ ci_icon_for_status(status) 
+ if stage 
+ stage.titleize.pluralize 
  end 
- else 
- end 
- if build.stuck? 
- end 
- if project 
- link_to project.name_with_namespace, admin_namespace_project_path(project.namespace, project) 
- end 
- link_to build.short_sha, namespace_project_commit_path(build.project.namespace, build.project, build.sha), class: "monospace" 
- if build.ref 
- link_to build.ref, namespace_project_commits_path(build.project.namespace, build.project, build.ref) 
- else 
- end 
- if build.try(:runner) 
- runner_link(build.runner) 
- else 
- end 
- if build.tags.any? 
- build.tags.each do |tag| 
- tag 
- end 
- end 
- if build.try(:trigger_request) 
- end 
- if build.try(:allow_failure) 
- end 
- if build.duration 
- if build.finished_at 
- end 
- if defined?(coverage) && coverage 
- if build.try(:coverage) 
- end 
- end 
- if can?(current_user, :read_build, project) && build.artifacts? 
- link_to download_namespace_project_build_artifacts_path(build.project.namespace, build.project, build), title: 'Download artifacts', class: 'btn btn-build' do 
- end 
- end 
- if can?(current_user, :update_build, build.project) 
- if build.active? 
- link_to cancel_namespace_project_build_path(build.project.namespace, build.project, build, return_to: request.original_url), method: :post, title: 'Cancel', class: 'btn btn-build' do 
- end 
- elsif defined?(allow_retry) && allow_retry && build.retryable? 
- link_to retry_namespace_project_build_path(build.project.namespace, build.project, build, return_to: request.original_url), method: :post, title: 'Retry', class: 'btn btn-build' do 
- end 
- end 
- end 
-end
+ render statuses.latest.ordered, coverage: @project.build_coverage_enabled?, stage: false, ref: false, allow_retry: true 
+ render statuses.retried.ordered, coverage: @project.build_coverage_enabled?, stage: false, ref: false, retried: true 
  
- if ci_commit.retried.any? 
- if @project.build_coverage_enabled? 
- end 
- render ci_commit.retried, coverage: @project.build_coverage_enabled?, stage: true, ref: false 
  end 
  
  
@@ -2727,7 +2920,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -2769,8 +2962,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -2787,6 +2982,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -2844,17 +3040,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -2865,7 +3059,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -2880,15 +3074,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -2945,6 +3139,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -2954,8 +3150,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "Edit", " (", "Merge Requests" 
-  header_title project_title(@project, "Merge Requests", namespace_project_merge_requests_path(@project.namespace, @project)) 
- 
   form_for [@project.namespace.becomes(Namespace), @project, @merge_request], html: { class: 'merge-request-form form-horizontal common-note-form js-requires-input js-quick-submit' } do |f| 
   
  end 
@@ -2986,7 +3180,7 @@ end
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -3028,8 +3222,10 @@ end
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -3046,6 +3242,7 @@ end
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -3103,17 +3300,15 @@ end
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -3124,7 +3319,7 @@ end
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -3139,15 +3334,15 @@ end
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -3204,6 +3399,8 @@ end
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -3213,8 +3410,6 @@ end
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "Edit", " (", "Merge Requests" 
-  header_title project_title(@project, "Merge Requests", namespace_project_merge_requests_path(@project.namespace, @project)) 
- 
   form_for [@project.namespace.becomes(Namespace), @project, @merge_request], html: { class: 'merge-request-form form-horizontal common-note-form js-requires-input js-quick-submit' } do |f| 
   
  end 
@@ -3249,7 +3444,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -3291,8 +3486,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -3309,6 +3506,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -3366,17 +3564,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -3387,7 +3583,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -3402,15 +3598,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -3467,6 +3663,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -3491,13 +3689,18 @@ end
       return
     end
 
+    if params[:sha] != @merge_request.source_sha
+      @status = :sha_mismatch
+      return
+    end
+
     TodoService.new.merge_merge_request(merge_request, current_user)
 
     @merge_request.update(merge_error: nil)
 
     if params[:merge_when_build_succeeds].present? && @merge_request.ci_commit && @merge_request.ci_commit.active?
       MergeRequests::MergeWhenBuildSucceedsService.new(@project, current_user, merge_params)
-                                                      .execute(@merge_request)
+        .execute(@merge_request)
       @status = :merge_when_build_succeeds
     else
       MergeWorker.perform_async(@merge_request.id, current_user.id, params)
@@ -3507,7 +3710,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -3549,8 +3752,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -3567,6 +3772,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -3624,17 +3830,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -3645,7 +3849,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -3660,15 +3864,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -3725,6 +3929,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -3736,6 +3942,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  case @status 
  when :success 
  when :merge_when_build_succeeds 
+ when :sha_mismatch 
  else 
  end 
  
@@ -3747,7 +3954,7 @@ end
   end
 
   def branch_from
-    #This is always source
+    # This is always source
     @source_project = @merge_request.nil? ? @project : @merge_request.source_project
     @commit = @repository.commit(params[:ref]) if params[:ref].present?
     render layout: false
@@ -3771,6 +3978,8 @@ end
     if ci_commit
       status = ci_commit.status
       coverage = ci_commit.try(:coverage)
+
+      status ||= "preparing"
     else
       ci_service = @merge_request.source_project.ci_service
       status = ci_service.commit_status(merge_request.last_commit.sha, merge_request.source_branch) if ci_service
@@ -3779,8 +3988,6 @@ end
         coverage = ci_service.commit_coverage(merge_request.last_commit.sha, merge_request.source_branch)
       end
     end
-
-    status = "preparing" if status.nil?
 
     response = {
       title: merge_request.title,
@@ -3808,7 +4015,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -3850,8 +4057,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -3868,6 +4077,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -3925,17 +4135,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -3946,7 +4154,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -3961,15 +4169,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -4026,6 +4234,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -4035,13 +4245,13 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  mr_css_classes(merge_request) 
- link_to_gfm merge_request.title, merge_request_path(merge_request) 
+ link_to merge_request.title, merge_request_path(merge_request) 
  if merge_request.merged? 
  elsif merge_request.closed? 
  icon('ban') 
  end 
  if merge_request.ci_commit 
- render_ci_status(merge_request.ci_commit) 
+ render_pipeline_status(merge_request.ci_commit) 
  end 
  if merge_request.open? && merge_request.broken? 
  link_to merge_request_path(merge_request), class: "has-tooltip", title: "Cannot be merged automatically", data: { container: 'body' } do 
@@ -4060,7 +4270,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  icon('thumbs-down') 
  downvotes 
  end 
- note_count = merge_request.mr_and_commit_notes.user.nonawards.count 
+ note_count = merge_request.mr_and_commit_notes.user.count 
  link_to merge_request_path(merge_request, anchor: 'notes'), class: ('merge-request-no-comments' if note_count.zero?) do 
  icon('comments') 
  note_count 
@@ -4074,6 +4284,7 @@ end
   end
   alias_method :subscribable_resource, :merge_request
   alias_method :issuable, :merge_request
+  alias_method :awardable, :merge_request
 
   def closes_issues
     @closes_issues ||= @merge_request.closes_issues
@@ -4109,8 +4320,8 @@ end
   def define_show_vars
     # Build a note object for comment form
     @note = @project.notes.new(noteable: @merge_request)
-    @notes = @merge_request.mr_and_commit_notes.nonawards.inc_author.fresh
-    @discussions = Note.discussions_from_notes(@notes)
+    @notes = @merge_request.mr_and_commit_notes.inc_author.fresh
+    @discussions = @notes.discussions
     @noteable = @merge_request
 
     # Get commits from repository
@@ -4140,7 +4351,7 @@ end
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -4182,8 +4393,10 @@ end
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -4200,6 +4413,7 @@ end
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -4257,17 +4471,15 @@ end
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -4278,7 +4490,7 @@ end
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -4293,15 +4505,15 @@ end
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -4358,6 +4570,8 @@ end
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -4367,8 +4581,6 @@ end
  yield :flash_message 
  (container_class unless @no_container) 
  page_title " (", "Merge Requests" 
-  header_title project_title(@project, "Merge Requests", namespace_project_merge_requests_path(@project.namespace, @project)) 
- 
   status_box_class(@merge_request) 
  icon(@merge_request.state_icon_name, class: "hidden-sm hidden-md hidden-lg") 
  @merge_request.state_human_name 
@@ -4408,7 +4620,8 @@ end
     params.require(:merge_request).permit(
       :title, :assignee_id, :source_project_id, :source_branch,
       :target_project_id, :target_branch, :milestone_id,
-      :state_event, :description, :task_num, label_ids: []
+      :state_event, :description, :task_num, :force_remove_source_branch,
+      label_ids: []
     )
   end
 

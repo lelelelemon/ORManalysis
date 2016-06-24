@@ -3,15 +3,15 @@ class Projects::VariablesController < Projects::ApplicationController
 
   layout 'project_settings'
 
-  def show
+  def index
+    @variable = Ci::Variable.new
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title  "Settings" 
- header_title project_title(@project, "Settings", edit_project_path(@project)) 
- sidebar     "project_settings" 
+ nav         "project" 
   page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -53,8 +53,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -71,6 +73,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -128,17 +131,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -149,7 +150,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -164,15 +165,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -229,6 +230,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -238,17 +241,31 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "Variables" 
- nested_form_for @project, url: url_for(controller: 'projects/variables', action: 'update'), html: { class: 'form-horizontal' }  do |f| 
- form_errors(@project) 
- f.fields_for :variables do |variable_form| 
- variable_form.label :key, 'Key', class: 'control-label' 
- variable_form.text_field :key, class: 'form-control', placeholder: "PROJECT_VARIABLE" 
- variable_form.label :value, 'Value', class: 'control-label' 
- variable_form.text_area :value, class: 'form-control', rows: 2, placeholder: "" 
- variable_form.link_to_remove "Remove this variable", class: 'btn btn-danger pull-right prepend-top-10' 
+  
+  form_for [@project.namespace.becomes(Namespace), @project, @variable] do |f| 
+ form_errors(@variable) 
+ f.label :key, "Key", class: "label-light" 
+ f.text_field :key, class: "form-control", placeholder: "PROJECT_VARIABLE", required: true 
+ f.label :value, "Value", class: "label-light" 
+ f.text_area :value, class: "form-control", placeholder: "PROJECT_VARIABLE", required: true 
+ f.submit btn_text, class: "btn btn-save" 
  end 
- f.link_to_add "Add a variable", :variables, class: 'btn btn-success pull-right' 
- f.submit 'Save changes', class: 'btn btn-save', return_to: request.original_url 
+ 
+ if @project.variables.empty? 
+ else 
+  @project.variables.each do |variable| 
+ if variable.id? 
+ variable.key 
+ variable.value 
+ link_to namespace_project_variable_path(@project.namespace, @project, variable), class: "btn btn-transparent btn-variable-edit" do 
+ icon("pencil") 
+ end 
+ link_to namespace_project_variable_path(@project.namespace, @project, variable), class: "btn btn-transparent btn-variable-delete", method: :delete, data: { confirm: "Are you sure?" } do 
+ icon("trash") 
+ end 
+ end 
+ end 
+ 
  end 
  
  yield :scripts_body 
@@ -259,18 +276,15 @@ end
 
   end
 
-  def update
-    if project.update_attributes(project_params)
-      redirect_to namespace_project_variables_path(project.namespace, project), notice: 'Variables were successfully updated.'
-    else
-      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+  def show
+    @variable = @project.variables.find(params[:id])
+ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title  "Settings" 
- header_title project_title(@project, "Settings", edit_project_path(@project)) 
- sidebar     "project_settings" 
+ nav         "project" 
   page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -312,8 +326,10 @@ end
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -330,6 +346,7 @@ end
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -387,17 +404,15 @@ end
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -408,7 +423,7 @@ end
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -423,15 +438,15 @@ end
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -488,6 +503,8 @@ end
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -497,17 +514,554 @@ end
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "Variables" 
- nested_form_for @project, url: url_for(controller: 'projects/variables', action: 'update'), html: { class: 'form-horizontal' }  do |f| 
- form_errors(@project) 
- f.fields_for :variables do |variable_form| 
- variable_form.label :key, 'Key', class: 'control-label' 
- variable_form.text_field :key, class: 'form-control', placeholder: "PROJECT_VARIABLE" 
- variable_form.label :value, 'Value', class: 'control-label' 
- variable_form.text_area :value, class: 'form-control', rows: 2, placeholder: "" 
- variable_form.link_to_remove "Remove this variable", class: 'btn btn-danger pull-right prepend-top-10' 
+  
+  form_for [@project.namespace.becomes(Namespace), @project, @variable] do |f| 
+ form_errors(@variable) 
+ f.label :key, "Key", class: "label-light" 
+ f.text_field :key, class: "form-control", placeholder: "PROJECT_VARIABLE", required: true 
+ f.label :value, "Value", class: "label-light" 
+ f.text_area :value, class: "form-control", placeholder: "PROJECT_VARIABLE", required: true 
+ f.submit btn_text, class: "btn btn-save" 
  end 
- f.link_to_add "Add a variable", :variables, class: 'btn btn-success pull-right' 
- f.submit 'Save changes', class: 'btn btn-save', return_to: request.original_url 
+ 
+ 
+ yield :scripts_body 
+ 
+ 
+
+end
+
+  end
+
+  def update
+    @variable = @project.variables.find(params[:id])
+
+    if @variable.update_attributes(project_params)
+      redirect_to namespace_project_variables_path(project.namespace, project), notice: 'Variable was successfully updated.'
+    else
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_title  "Settings" 
+ nav         "project" 
+  page_title       @project.name_with_namespace 
+ page_description @project.description    unless page_description 
+ header_title     project_title(@project) unless header_title 
+ nav              "project" 
+ content_for :scripts_body_top do 
+ project = @target_project || @project 
+ if @project_wiki 
+ markdown_preview_path = namespace_project_wikis_markdown_preview_path(project.namespace, project) 
+ else 
+ markdown_preview_path = markdown_preview_namespace_project_path(project.namespace, project) 
+ end 
+ if current_user 
+ end 
+ end 
+ content_for :scripts_body do 
+  project = @target_project || @project 
+ if @noteable 
+ end 
+ 
+ end 
+ content_for :header_content do 
+ dropdown_title("Go to a project") 
+ dropdown_filter("Search your projects") 
+ dropdown_content 
+ dropdown_loading 
+ end 
+   page_description brand_title unless page_description 
+ site_name = "GitLab" 
+ # Open Graph - http://ogp.me/ 
+ site_name 
+ page_title 
+ page_description 
+ page_image 
+ request.base_url 
+ # Twitter Card - https://dev.twitter.com/cards/types/summary 
+ page_title 
+ page_description 
+ page_image 
+ page_card_meta_tags 
+ page_title(site_name) 
+ page_description 
+ favicon_link_tag 'favicon.ico' 
+ stylesheet_link_tag "application", media: "all" 
+ stylesheet_link_tag "print",       media: "print" 
+ javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
+ csrf_meta_tags 
+ unless browser.safari? 
+ end 
+ # Apple Safari/iOS home screen icons 
+ favicon_link_tag 'touch-icon-iphone.png',        rel: 'apple-touch-icon' 
+ favicon_link_tag 'touch-icon-ipad.png',          rel: 'apple-touch-icon', sizes: '76x76' 
+ favicon_link_tag 'touch-icon-iphone-retina.png', rel: 'apple-touch-icon', sizes: '120x120' 
+ favicon_link_tag 'touch-icon-ipad-retina.png',   rel: 'apple-touch-icon', sizes: '152x152' 
+ image_path('logo.svg') 
+ # Windows 8 pinned site tile 
+ image_path('msapplication-tile.png') 
+ yield :meta_tags 
+  
+  
+  
+  
+ 
+ Gon::Base.render_data 
+ # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
+ yield :scripts_body_top 
+  nav_header_class 
+ icon('bars') 
+ icon('angle-left') 
+  page_title    "Search" 
+ header_title  "Search", search_path 
+ render template: "layouts/application" 
+ 
+ link_to search_path, title: 'Search', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('search') 
+ end 
+ if current_user 
+ if session[:impersonator_id] 
+ link_to admin_impersonation_path, method: :delete, title: 'Stop Impersonation', data: { toggle: 'tooltip', placement: 'bottom', container: 'body' } do 
+ icon('user-secret fw') 
+ end 
+ end 
+ if current_user.is_admin? 
+ link_to admin_root_path, title: 'Admin Area', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('wrench fw') 
+ end 
+ end 
+ link_to dashboard_todos_path, title: 'Todos', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('bell fw') 
+ unless todos_pending_count == 0 
+ todos_pending_count 
+ end 
+ end 
+ if current_user.can_create_project? 
+ link_to new_project_path, title: 'New project', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('plus fw') 
+ end 
+ end 
+ if Gitlab::Sherlock.enabled? 
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('tachometer fw') 
+ end 
+ end 
+ link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('sign-out') 
+ end 
+ else 
+ link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
+ title 
+ yield :header_content 
+  if outdated_browser? 
+ link = "https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/install/requirements.md#supported-web-browsers" 
+ link_to 'supported web browser', link 
+ end 
+ 
+ if @project && !@project.empty_repo? 
+ if ref = @ref || @project.repository.root_ref 
+ end 
+ end 
+ 
+  nav_sidebar_class 
+ brand_header_logo 
+ link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
+ end 
+ if defined?(sidebar) && sidebar 
+ render "layouts/nav/" 
+ elsif current_user 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
+ icon('bookmark fw') 
+ end 
+ end 
+ nav_link(controller: :todos) do 
+ link_to dashboard_todos_path, title: 'Todos' do 
+ icon('bell fw') 
+ number_with_delimiter(todos_pending_count) 
+ end 
+ end 
+ nav_link(path: 'dashboard#activity') do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
+ icon('dashboard fw') 
+ end 
+ end 
+ nav_link(controller: [:groups, 'groups/milestones', 'groups/group_members']) do 
+ link_to dashboard_groups_path, title: 'Groups' do 
+ icon('group fw') 
+ end 
+ end 
+ nav_link(controller: 'dashboard/milestones') do 
+ link_to dashboard_milestones_path, title: 'Milestones' do 
+ icon('clock-o fw') 
+ end 
+ end 
+ nav_link(path: 'dashboard#issues') do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
+ icon('exclamation-circle fw') 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
+ end 
+ end 
+ nav_link(path: 'dashboard#merge_requests') do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
+ icon('tasks fw') 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
+ end 
+ end 
+ nav_link(controller: :snippets) do 
+ link_to dashboard_snippets_path, title: 'Snippets' do 
+ icon('clipboard fw') 
+ end 
+ end 
+ nav_link(controller: :help) do 
+ link_to help_path, title: 'Help' do 
+ icon('question-circle fw') 
+ end 
+ end 
+ nav_link(html_options: {class: profile_tab_class}) do 
+ link_to profile_path, title: 'Profile Settings', data: {placement: 'bottom'} do 
+ icon('user fw') 
+ end 
+ end 
+ 
+ else 
+  nav_link(path: ['dashboard#show', 'root#show', 'projects#trending', 'projects#starred', 'projects#index'], html_options: {class: 'home'}) do 
+ link_to explore_root_path, title: 'Projects' do 
+ icon('bookmark fw') 
+ end 
+ end 
+ nav_link(controller: [:groups, 'groups/milestones', 'groups/group_members']) do 
+ link_to explore_groups_path, title: 'Groups' do 
+ icon('group fw') 
+ end 
+ end 
+ nav_link(controller: :snippets) do 
+ link_to explore_snippets_path, title: 'Snippets' do 
+ icon('clipboard fw') 
+ end 
+ end 
+ nav_link(controller: :help) do 
+ link_to help_path, title: 'Help' do 
+ icon('question-circle fw') 
+ end 
+ end 
+ 
+ end 
+  if nav_menu_collapsed? 
+ link_to icon('angle-right'), '#', class: 'toggle-nav-collapse', title: "Open/Close" 
+ else 
+ link_to icon('angle-left'), '#', class: 'toggle-nav-collapse', title: "Open/Close" 
+ end 
+ 
+ if current_user 
+ link_to current_user, class: 'sidebar-user', title: "Profile" do 
+ image_tag avatar_icon(current_user, 60), alt: 'Profile', class: 'avatar avatar s36' 
+ current_user.username 
+ end 
+ end 
+ if defined?(nav) && nav 
+ render "layouts/nav/" 
+ end 
+  broadcast_message 
+ 
+  if alert 
+ alert 
+ elsif notice 
+ notice 
+ end 
+ 
+ yield :flash_message 
+ (container_class unless @no_container) 
+ page_title "Variables" 
+  
+  form_for [@project.namespace.becomes(Namespace), @project, @variable] do |f| 
+ form_errors(@variable) 
+ f.label :key, "Key", class: "label-light" 
+ f.text_field :key, class: "form-control", placeholder: "PROJECT_VARIABLE", required: true 
+ f.label :value, "Value", class: "label-light" 
+ f.text_area :value, class: "form-control", placeholder: "PROJECT_VARIABLE", required: true 
+ f.submit btn_text, class: "btn btn-save" 
+ end 
+ 
+ 
+ yield :scripts_body 
+ 
+ 
+
+end
+
+    end
+  end
+
+  def create
+    @variable = Ci::Variable.new(project_params)
+
+    if @variable.valid? && @project.variables << @variable
+      redirect_to namespace_project_variables_path(project.namespace, project), notice: 'Variables were successfully updated.'
+    else
+      ruby_code_from_view.ruby_code_from_view do |rb_from_view|
+ page_title  "Settings" 
+ nav         "project" 
+  page_title       @project.name_with_namespace 
+ page_description @project.description    unless page_description 
+ header_title     project_title(@project) unless header_title 
+ nav              "project" 
+ content_for :scripts_body_top do 
+ project = @target_project || @project 
+ if @project_wiki 
+ markdown_preview_path = namespace_project_wikis_markdown_preview_path(project.namespace, project) 
+ else 
+ markdown_preview_path = markdown_preview_namespace_project_path(project.namespace, project) 
+ end 
+ if current_user 
+ end 
+ end 
+ content_for :scripts_body do 
+  project = @target_project || @project 
+ if @noteable 
+ end 
+ 
+ end 
+ content_for :header_content do 
+ dropdown_title("Go to a project") 
+ dropdown_filter("Search your projects") 
+ dropdown_content 
+ dropdown_loading 
+ end 
+   page_description brand_title unless page_description 
+ site_name = "GitLab" 
+ # Open Graph - http://ogp.me/ 
+ site_name 
+ page_title 
+ page_description 
+ page_image 
+ request.base_url 
+ # Twitter Card - https://dev.twitter.com/cards/types/summary 
+ page_title 
+ page_description 
+ page_image 
+ page_card_meta_tags 
+ page_title(site_name) 
+ page_description 
+ favicon_link_tag 'favicon.ico' 
+ stylesheet_link_tag "application", media: "all" 
+ stylesheet_link_tag "print",       media: "print" 
+ javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
+ csrf_meta_tags 
+ unless browser.safari? 
+ end 
+ # Apple Safari/iOS home screen icons 
+ favicon_link_tag 'touch-icon-iphone.png',        rel: 'apple-touch-icon' 
+ favicon_link_tag 'touch-icon-ipad.png',          rel: 'apple-touch-icon', sizes: '76x76' 
+ favicon_link_tag 'touch-icon-iphone-retina.png', rel: 'apple-touch-icon', sizes: '120x120' 
+ favicon_link_tag 'touch-icon-ipad-retina.png',   rel: 'apple-touch-icon', sizes: '152x152' 
+ image_path('logo.svg') 
+ # Windows 8 pinned site tile 
+ image_path('msapplication-tile.png') 
+ yield :meta_tags 
+  
+  
+  
+  
+ 
+ Gon::Base.render_data 
+ # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
+ yield :scripts_body_top 
+  nav_header_class 
+ icon('bars') 
+ icon('angle-left') 
+  page_title    "Search" 
+ header_title  "Search", search_path 
+ render template: "layouts/application" 
+ 
+ link_to search_path, title: 'Search', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('search') 
+ end 
+ if current_user 
+ if session[:impersonator_id] 
+ link_to admin_impersonation_path, method: :delete, title: 'Stop Impersonation', data: { toggle: 'tooltip', placement: 'bottom', container: 'body' } do 
+ icon('user-secret fw') 
+ end 
+ end 
+ if current_user.is_admin? 
+ link_to admin_root_path, title: 'Admin Area', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('wrench fw') 
+ end 
+ end 
+ link_to dashboard_todos_path, title: 'Todos', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('bell fw') 
+ unless todos_pending_count == 0 
+ todos_pending_count 
+ end 
+ end 
+ if current_user.can_create_project? 
+ link_to new_project_path, title: 'New project', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('plus fw') 
+ end 
+ end 
+ if Gitlab::Sherlock.enabled? 
+ link_to sherlock_transactions_path, title: 'Sherlock Transactions',                  data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('tachometer fw') 
+ end 
+ end 
+ link_to destroy_user_session_path, class: 'logout', method: :delete, title: 'Sign out', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
+ icon('sign-out') 
+ end 
+ else 
+ link_to "Sign in", new_session_path(:user, redirect_to_referer: 'yes'), class: 'btn btn-sign-in btn-success' 
+ end 
+ title 
+ yield :header_content 
+  if outdated_browser? 
+ link = "https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/install/requirements.md#supported-web-browsers" 
+ link_to 'supported web browser', link 
+ end 
+ 
+ if @project && !@project.empty_repo? 
+ if ref = @ref || @project.repository.root_ref 
+ end 
+ end 
+ 
+  nav_sidebar_class 
+ brand_header_logo 
+ link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
+ end 
+ if defined?(sidebar) && sidebar 
+ render "layouts/nav/" 
+ elsif current_user 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
+ icon('bookmark fw') 
+ end 
+ end 
+ nav_link(controller: :todos) do 
+ link_to dashboard_todos_path, title: 'Todos' do 
+ icon('bell fw') 
+ number_with_delimiter(todos_pending_count) 
+ end 
+ end 
+ nav_link(path: 'dashboard#activity') do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
+ icon('dashboard fw') 
+ end 
+ end 
+ nav_link(controller: [:groups, 'groups/milestones', 'groups/group_members']) do 
+ link_to dashboard_groups_path, title: 'Groups' do 
+ icon('group fw') 
+ end 
+ end 
+ nav_link(controller: 'dashboard/milestones') do 
+ link_to dashboard_milestones_path, title: 'Milestones' do 
+ icon('clock-o fw') 
+ end 
+ end 
+ nav_link(path: 'dashboard#issues') do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
+ icon('exclamation-circle fw') 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
+ end 
+ end 
+ nav_link(path: 'dashboard#merge_requests') do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
+ icon('tasks fw') 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
+ end 
+ end 
+ nav_link(controller: :snippets) do 
+ link_to dashboard_snippets_path, title: 'Snippets' do 
+ icon('clipboard fw') 
+ end 
+ end 
+ nav_link(controller: :help) do 
+ link_to help_path, title: 'Help' do 
+ icon('question-circle fw') 
+ end 
+ end 
+ nav_link(html_options: {class: profile_tab_class}) do 
+ link_to profile_path, title: 'Profile Settings', data: {placement: 'bottom'} do 
+ icon('user fw') 
+ end 
+ end 
+ 
+ else 
+  nav_link(path: ['dashboard#show', 'root#show', 'projects#trending', 'projects#starred', 'projects#index'], html_options: {class: 'home'}) do 
+ link_to explore_root_path, title: 'Projects' do 
+ icon('bookmark fw') 
+ end 
+ end 
+ nav_link(controller: [:groups, 'groups/milestones', 'groups/group_members']) do 
+ link_to explore_groups_path, title: 'Groups' do 
+ icon('group fw') 
+ end 
+ end 
+ nav_link(controller: :snippets) do 
+ link_to explore_snippets_path, title: 'Snippets' do 
+ icon('clipboard fw') 
+ end 
+ end 
+ nav_link(controller: :help) do 
+ link_to help_path, title: 'Help' do 
+ icon('question-circle fw') 
+ end 
+ end 
+ 
+ end 
+  if nav_menu_collapsed? 
+ link_to icon('angle-right'), '#', class: 'toggle-nav-collapse', title: "Open/Close" 
+ else 
+ link_to icon('angle-left'), '#', class: 'toggle-nav-collapse', title: "Open/Close" 
+ end 
+ 
+ if current_user 
+ link_to current_user, class: 'sidebar-user', title: "Profile" do 
+ image_tag avatar_icon(current_user, 60), alt: 'Profile', class: 'avatar avatar s36' 
+ current_user.username 
+ end 
+ end 
+ if defined?(nav) && nav 
+ render "layouts/nav/" 
+ end 
+  broadcast_message 
+ 
+  if alert 
+ alert 
+ elsif notice 
+ notice 
+ end 
+ 
+ yield :flash_message 
+ (container_class unless @no_container) 
+ page_title "Variables" 
+  
+  form_for [@project.namespace.becomes(Namespace), @project, @variable] do |f| 
+ form_errors(@variable) 
+ f.label :key, "Key", class: "label-light" 
+ f.text_field :key, class: "form-control", placeholder: "PROJECT_VARIABLE", required: true 
+ f.label :value, "Value", class: "label-light" 
+ f.text_area :value, class: "form-control", placeholder: "PROJECT_VARIABLE", required: true 
+ f.submit btn_text, class: "btn btn-save" 
+ end 
+ 
+ if @project.variables.empty? 
+ else 
+  @project.variables.each do |variable| 
+ if variable.id? 
+ variable.key 
+ variable.value 
+ link_to namespace_project_variable_path(@project.namespace, @project, variable), class: "btn btn-transparent btn-variable-edit" do 
+ icon("pencil") 
+ end 
+ link_to namespace_project_variable_path(@project.namespace, @project, variable), class: "btn btn-transparent btn-variable-delete", method: :delete, data: { confirm: "Are you sure?" } do 
+ icon("trash") 
+ end 
+ end 
+ end 
+ 
  end 
  
  yield :scripts_body 
@@ -519,9 +1073,16 @@ end
     end
   end
 
+  def destroy
+    @key = @project.variables.find(params[:id])
+    @key.destroy
+
+    redirect_to namespace_project_variables_path(project.namespace, project), notice: 'Variable was successfully removed.'
+  end
+
   private
 
   def project_params
-    params.require(:project).permit({ variables_attributes: [:id, :key, :value, :_destroy] })
+    params.require(:variable).permit([:id, :key, :value, :_destroy])
   end
 end

@@ -25,8 +25,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -43,6 +45,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -100,17 +103,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -121,7 +122,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -136,15 +137,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -201,6 +202,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -295,8 +298,17 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.label :signup_enabled do 
  f.check_box :signup_enabled 
  end 
+ f.label :send_user_confirmation_email do 
+ f.check_box :send_user_confirmation_email 
+ end 
  f.label :signin_enabled do 
  f.check_box :signin_enabled 
+ end 
+ if omniauth_enabled? && button_based_providers.any? 
+ f.label :enabled_oauth_sign_in_sources, 'Enabled OAuth Sign-In sources', class: 'control-label col-sm-2' 
+ oauth_providers_checkboxes.each do |source| 
+ source 
+ end 
  end 
  f.label :two_factor_authentication, 'Two-factor authentication', class: 'control-label col-sm-2' 
  f.label :require_two_factor_authentication do 
@@ -321,6 +333,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.text_area :shared_runners_text, class: 'form-control', rows: 4 
  f.label :max_artifacts_size, 'Maximum artifacts size (MB)', class: 'control-label col-sm-2' 
  f.number_field :max_artifacts_size, class: 'form-control' 
+ if Gitlab.config.registry.enabled 
+ f.label :container_registry_token_expire_delay, 'Authorization token duration (minutes)', class: 'control-label col-sm-2' 
+ f.number_field :container_registry_token_expire_delay, class: 'form-control' 
+ end 
  f.label :metrics_enabled do 
  f.check_box :metrics_enabled 
  end 
@@ -398,8 +414,10 @@ end
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -416,6 +434,7 @@ end
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -473,17 +492,15 @@ end
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -494,7 +511,7 @@ end
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -509,15 +526,15 @@ end
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -574,6 +591,8 @@ end
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -668,8 +687,17 @@ end
  f.label :signup_enabled do 
  f.check_box :signup_enabled 
  end 
+ f.label :send_user_confirmation_email do 
+ f.check_box :send_user_confirmation_email 
+ end 
  f.label :signin_enabled do 
  f.check_box :signin_enabled 
+ end 
+ if omniauth_enabled? && button_based_providers.any? 
+ f.label :enabled_oauth_sign_in_sources, 'Enabled OAuth Sign-In sources', class: 'control-label col-sm-2' 
+ oauth_providers_checkboxes.each do |source| 
+ source 
+ end 
  end 
  f.label :two_factor_authentication, 'Two-factor authentication', class: 'control-label col-sm-2' 
  f.label :require_two_factor_authentication do 
@@ -694,6 +722,10 @@ end
  f.text_area :shared_runners_text, class: 'form-control', rows: 4 
  f.label :max_artifacts_size, 'Maximum artifacts size (MB)', class: 'control-label col-sm-2' 
  f.number_field :max_artifacts_size, class: 'form-control' 
+ if Gitlab.config.registry.enabled 
+ f.label :container_registry_token_expire_delay, 'Authorization token duration (minutes)', class: 'control-label col-sm-2' 
+ f.number_field :container_registry_token_expire_delay, class: 'form-control' 
+ end 
  f.label :metrics_enabled do 
  f.check_box :metrics_enabled 
  end 
@@ -750,6 +782,12 @@ end
     redirect_to admin_runners_path
   end
 
+  def reset_health_check_token
+    @application_setting.reset_health_check_access_token!
+    flash[:notice] = 'New health check access token has been generated!'
+    redirect_to :back
+  end
+
   def clear_repository_check_states
     RepositoryCheck::ClearWorker.perform_async
 
@@ -783,6 +821,12 @@ end
         source.to_str
       end
     end
+
+    enabled_oauth_sign_in_sources = params[:application_setting].delete(:enabled_oauth_sign_in_sources)
+
+    params[:application_setting][:disabled_oauth_sign_in_sources] =
+      AuthHelper.button_based_providers.map(&:to_s) -
+      Array(enabled_oauth_sign_in_sources)
 
     params.require(:application_setting).permit(
       :default_projects_limit,
@@ -825,8 +869,11 @@ end
       :email_author_in_body,
       :repository_checks_enabled,
       :metrics_packet_size,
+      :send_user_confirmation_email,
+      :container_registry_token_expire_delay,
       restricted_visibility_levels: [],
-      import_sources: []
+      import_sources: [],
+      disabled_oauth_sign_in_sources: []
     )
   end
 end

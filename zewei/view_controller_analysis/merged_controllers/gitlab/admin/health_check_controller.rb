@@ -1,21 +1,10 @@
-class InvitesController < ApplicationController
-  before_action :member
-  skip_before_action :authenticate_user!, only: :decline
-
-  respond_to :html
-
+class Admin::HealthCheckController < Admin::ApplicationController
   def show
-
+    @errors = HealthCheck::Utils.process_checks('standard')
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- render "layouts/head" 
- Gon::Base.render_data 
- # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
- yield :scripts_body_top 
-  nav_header_class 
- icon('bars') 
- icon('angle-left') 
-  page_title    "Search" 
- header_title  "Search", search_path 
+ page_title    "Admin Area" 
+ header_title  "Admin Area", admin_root_path 
+ sidebar       "admin" 
    page_description brand_title unless page_description 
  site_name = "GitLab" 
  # Open Graph - http://ogp.me/ 
@@ -58,10 +47,12 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
- render "layouts/header/default", title: header_title 
- render 'layouts/page', sidebar: sidebar, nav: nav 
- yield :scripts_body 
- 
+  nav_header_class 
+ icon('bars') 
+ icon('angle-left') 
+  page_title    "Search" 
+ header_title  "Search", search_path 
+ render template: "layouts/application" 
  
  link_to search_path, title: 'Search', data: {toggle: 'tooltip', placement: 'bottom', container: 'body'} do 
  icon('search') 
@@ -220,98 +211,31 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  
  yield :flash_message 
  (container_class unless @no_container) 
- page_title "Invitation" 
- if inviter = @member.created_by 
- link_to inviter.name, user_url(inviter) 
+ page_title "Health Check" 
+ current_application_settings.health_check_access_token 
+ button_to reset_health_check_token_admin_application_settings_path,    method: :put, class: 'btn btn-default',    data: { confirm: 'Are you sure you want to reset the health check token?' } do 
+ icon('refresh') 
  end 
- case @member.source 
- when Project 
- project = @member.source 
- link_to project.name_with_namespace, namespace_project_url(project.namespace, project) 
- when Group 
- group = @member.source 
- link_to group.name, group_url(group) 
- end 
- if @member.source.users.include?(current_user) 
+ health_check_url(token: current_application_settings.health_check_access_token) 
+ health_check_url(token: current_application_settings.health_check_access_token, format: :json) 
+ health_check_url(token: current_application_settings.health_check_access_token, format: :xml) 
+ health_check_url(token: current_application_settings.health_check_access_token, checks: :cache) 
+ health_check_url(token: current_application_settings.health_check_access_token, checks: :database) 
+ health_check_url(token: current_application_settings.health_check_access_token, checks: :migrations) 
+ if @errors.blank? 
+ icon('circle', class: 'cgreen') 
  else 
- link_to "Accept invitation", accept_invite_url(@token), method: :post, class: "btn btn-success" 
- link_to "Decline", decline_invite_url(@token), method: :post, class: "btn btn-danger prepend-left-10" 
+ icon('warning', class: 'cred') 
+ end 
+ if @errors.blank? 
+ else 
+ @errors 
  end 
  
  yield :scripts_body 
+ 
 
 end
 
-  end
-
-  def accept
-    if member.accept_invite!(current_user)
-      label, path = source_info(member.source)
-
-      redirect_to path, notice: "You have been granted #{member.human_access} access to #{label}."
-    else
-      redirect_back_or_default(options: { alert: "The invitation could not be accepted." })
-    end
-  end
-
-  def decline
-    if member.decline_invite!
-      label, _ = source_info(member.source)
-
-      path =
-        if current_user
-          dashboard_projects_path
-        else
-          new_user_session_path
-        end
-
-      redirect_to path, notice: "You have declined the invitation to join #{label}."
-    else
-      redirect_back_or_default(options: { alert: "The invitation could not be declined." })
-    end
-  end
-
-  private
-
-  def member
-    return @member if defined?(@member)
-
-    @token = params[:id]
-    @member = Member.find_by_invite_token(@token)
-
-    unless @member
-      render_404 and return
-    end
-
-    @member
-  end
-
-  def authenticate_user!
-    return if current_user
-
-    notice = "To accept this invitation, sign in"
-    notice << " or create an account" if current_application_settings.signup_enabled?
-    notice << "."
-
-    store_location_for :user, request.fullpath
-    redirect_to new_user_session_path, notice: notice
-  end
-
-  def source_info(source)
-    case source
-    when Project
-      project = member.source
-      label = "project #{project.name_with_namespace}"
-      path = namespace_project_path(project.namespace, project)
-    when Group
-      group = member.source
-      label = "group #{group.name}"
-      path = group_path(group)
-    else
-      label = "who knows what"
-      path = dashboard_projects_path
-    end
-
-    [label, path]
   end
 end

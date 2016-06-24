@@ -22,7 +22,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -64,8 +64,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -82,6 +84,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -139,17 +142,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -160,7 +161,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -175,15 +176,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -240,6 +241,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -249,7 +252,20 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "Builds" 
-  header_title project_title(@project, "Builds", project_builds_path(@project)) 
+  if project_nav_tab? :pipelines 
+ nav_link(controller: :pipelines) do 
+ link_to project_pipelines_path(@project), title: 'Pipelines', class: 'shortcuts-pipelines' do 
+ number_with_delimiter(@project.ci_commits.running_or_pending.count) 
+ end 
+ end 
+ end 
+ if project_nav_tab? :builds 
+ nav_link(controller: %w(builds)) do 
+ link_to project_builds_path(@project), title: 'Builds', class: 'shortcuts-builds' do 
+ number_with_delimiter(@project.running_or_pending_build_count) 
+ end 
+ end 
+ end 
  
  ('active' if @scope.nil?) 
  link_to project_builds_path(@project) do 
@@ -328,7 +344,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  end 
-end
+ end
  
  paginate @builds, theme: 'gitlab' 
  end 
@@ -360,7 +376,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -402,8 +418,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -420,6 +438,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -477,17 +496,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -498,7 +515,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -513,15 +530,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -578,6 +595,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -587,8 +606,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title " (#)", "Builds" 
-  header_title project_title(@project, "Builds", project_builds_path(@project)) 
- 
+ trace_with_state = @build.trace_with_state 
  link_to @build.commit.short_sha, ci_status_path(@build.commit) 
  link_to @build.ref, namespace_project_commits_path(@project.namespace, @project, @build.ref) 
  merge_request = @build.merge_request 
@@ -637,7 +655,9 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  erased_by = "by " if @build.erased_by 
  else 
  preserve do 
- raw @build.trace_html 
+ raw trace_with_state[:html] 
+ if @build.active? 
+ end 
  end 
  end 
  if @build.coverage 
@@ -715,6 +735,14 @@ end
 
   end
 
+  def trace
+    respond_to do |format|
+      format.json do
+        render json: @build.trace_with_state(params[:state]).merge!(id: @build.id, status: @build.status)
+      end
+    end
+  end
+
   def retry
     unless @build.retryable?
       return render_404
@@ -750,7 +778,7 @@ end
   private
 
   def build
-    @build ||= project.builds.unscoped.find_by!(id: params[:id])
+    @build ||= project.builds.find_by!(id: params[:id])
   end
 
   def build_path(build)

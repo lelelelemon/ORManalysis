@@ -1,5 +1,6 @@
 class SessionsController < Devise::SessionsController
   include AuthenticatesWithTwoFactor
+  include Devise::Controllers::Rememberable
   include Recaptcha::ClientHelper
 
   skip_before_action :check_2fa_requirement, only: [:destroy]
@@ -29,8 +30,7 @@ class SessionsController < Devise::SessionsController
         resource.update_attributes(reset_password_token: nil,
                                    reset_password_sent_at: nil)
       end
-      authenticated_with = user_params[:otp_attempt] ? "two-factor" : "standard"
-      log_audit_event(current_user, with: authenticated_with)
+      log_audit_event(current_user, with: authentication_method)
     end
   end
 
@@ -53,7 +53,7 @@ class SessionsController < Devise::SessionsController
   end
 
   def user_params
-    params.require(:user).permit(:login, :password, :remember_me, :otp_attempt)
+    params.require(:user).permit(:login, :password, :remember_me, :otp_attempt, :device_response)
   end
 
   def find_user
@@ -88,33 +88,6 @@ class SessionsController < Devise::SessionsController
     find_user.try(:two_factor_enabled?)
   end
 
-  def authenticate_with_two_factor
-    user = self.resource = find_user
-
-    if user_params[:otp_attempt].present? && session[:otp_user_id]
-      if valid_otp_attempt?(user)
-        # Remove any lingering user data from login
-        session.delete(:otp_user_id)
-
-        sign_in(user) and return
-      else
-        flash.now[:alert] = 'Invalid two-factor code.'
-        ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- form_for(resource, as: resource_name, url: session_path(resource_name), method: :post) do |f| 
- f.text_field :otp_attempt, class: 'form-control', placeholder: 'Two-factor Authentication code', required: true, autofocus: true 
- f.submit "Verify code", class: "btn btn-save" 
- end 
-
-end
-
-      end
-    else
-      if user && user.valid_password?(user_params[:password])
-        prompt_for_two_factor(user)
-      end
-    end
-  end
-
   def auto_sign_in_with_provider
     provider = Gitlab.config.omniauth.auto_sign_in_with_provider
     return unless provider.present?
@@ -142,5 +115,15 @@ end
 
   def load_recaptcha
     Gitlab::Recaptcha.load_configurations!
+  end
+
+  def authentication_method
+    if user_params[:otp_attempt]
+      "two-factor"
+    elsif user_params[:device_response]
+      "two-factor-via-u2f-device"
+    else
+      "standard"
+    end
   end
 end

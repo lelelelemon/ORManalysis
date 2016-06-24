@@ -17,12 +17,12 @@ class Projects::CommitController < Projects::ApplicationController
   def show
     apply_diff_view_cookie!
 
-    @line_notes = commit.notes.inline
+    @grouped_diff_notes = commit.notes.grouped_diff_notes
+
     @note = @project.build_commit_note(commit)
-    @notes = commit.notes.not_inline.fresh
+    @notes = commit.notes.non_diff_notes.fresh
     @noteable = @commit
-    @comments_allowed = @reply_allowed = true
-    @comments_target  = {
+    @comments_target = {
       noteable_type: 'Commit',
       commit_id: @commit.id
     }
@@ -36,7 +36,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -78,8 +78,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -96,6 +98,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -153,17 +156,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -174,7 +175,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -189,15 +190,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -254,6 +255,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -264,41 +267,46 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  (container_class unless @no_container) 
  page_title        " ()", "Commits" 
  page_description  @commit.description 
-  header_title project_title(@project, "Commits", project_commits_path(@project)) 
- 
-  if @notes_count > 0 
+  commit_author_link(@commit, avatar: true, size: 24) 
+ if defined?(@notes_count) && @notes_count > 0 
+ icon('comment') 
  @notes_count 
  end 
+ link_to namespace_project_tree_path(@project.namespace, @project, @commit), class: "btn btn-grouped hidden-xs hidden-sm" do 
+ end 
+ link_to namespace_project_tree_path(@project.namespace, @project, @commit) do 
+ end 
+ unless @commit.has_been_reverted?(current_user) 
+ revert_commit_link(@commit, namespace_project_commit_path(@project.namespace, @project, @commit.id), has_tooltip: false) 
+ end 
+ cherry_pick_commit_link(@commit, namespace_project_commit_path(@project.namespace, @project, @commit.id), has_tooltip: false) 
  unless @commit.parents.length > 1 
  link_to "Email Patches", namespace_project_commit_path(@project.namespace, @project, @commit, format: :patch) 
  end 
  link_to "Plain Diff",    namespace_project_commit_path(@project.namespace, @project, @commit, format: :diff) 
- link_to namespace_project_tree_path(@project.namespace, @project, @commit), class: "btn btn-grouped" do 
- icon('files-o') 
- end 
- unless @commit.has_been_reverted?(current_user) 
- revert_commit_link(@commit, namespace_project_commit_path(@project.namespace, @project, @commit.id)) 
- end 
- cherry_pick_commit_link(@commit, namespace_project_commit_path(@project.namespace, @project, @commit.id)) 
- if @commit.status 
- link_to builds_namespace_project_commit_path(@project.namespace, @project, @commit.id), class: "ci-status ci-" do 
- ci_icon_for_status(@commit.status) 
- ci_label_for_status(@commit.status) 
- end 
- end 
- commit_author_link(@commit, avatar: true, size: 24) 
  if @commit.different_committer? 
  commit_committer_link(@commit, avatar: true, size: 24) 
  end 
- link_to @commit.id, namespace_project_commit_path(@project.namespace, @project, @commit), class: "monospace" 
+ link_to @commit.id, namespace_project_commit_path(@project.namespace, @project, @commit), class: "monospace hidden-xs hidden-sm" 
+ link_to @commit.short_id, namespace_project_commit_path(@project.namespace, @project, @commit), class: "monospace visible-xs-inline visible-sm-inline" 
  clipboard_button(clipboard_text: @commit.id) 
  pluralize(@commit.parents.count, "parent") 
  @commit.parents.each do |parent| 
  link_to parent.short_id, namespace_project_commit_path(@project.namespace, @project, parent), class: "monospace" 
  end 
- markdown escape_once(@commit.title), pipeline: :single_line 
+ if @commit.status 
+ pluralize(@commit.ci_commits.count, 'pipeline') 
+ link_to builds_namespace_project_commit_path(@project.namespace, @project, @commit.id), class: "ci-status-link ci-status-icon-" do 
+ ci_icon_for_status(@commit.status) 
+ ci_label_for_status(@commit.status) 
+ end 
+ if @commit.ci_commits.duration 
+ time_interval_in_words @commit.ci_commits.duration 
+ end 
+ end 
+ markdown escape_once(@commit.title), pipeline: :single_line, author: @commit.author 
  if @commit.description.present? 
- preserve(markdown(escape_once(@commit.description), pipeline: :single_line)) 
+ preserve(markdown(escape_once(@commit.description), pipeline: :single_line, author: @commit.author)) 
  end 
  
  if @commit.status 
@@ -393,7 +401,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  view_file_btn(diff_commit.id, diff_file, project) 
  end 
  # Skip all non non-supported blobs 
- return unless blob.respond_to?('text?') 
+ return unless blob.respond_to?(:text?) 
  if diff_file.too_large? 
  elsif blob_text_viewable?(blob) && !project.repository.diffable?(blob) 
  elsif blob_text_viewable?(blob) 
@@ -410,7 +418,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  left[:text] 
  else 
  link_to raw(left[:number]), "#", id: left[:line_code] 
- if @comments_allowed && can?(current_user, :create_note, @project) 
+ if !@diff_notes_disabled && can?(current_user, :create_note, @project) 
  link_to_new_diff_note(left[:line_code], 'old') 
  end 
  diff_line_content(left[:text]) 
@@ -422,26 +430,120 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  new_line_code = left[:line_code] 
  end 
  link_to raw(right[:number]), "#", id: new_line_code 
- if @comments_allowed && can?(current_user, :create_note, @project) 
- link_to_new_diff_note(right[:line_code], 'new') 
+ if !@diff_notes_disabled && can?(current_user, :create_note, @project) 
+ link_to_new_diff_note(new_line_code, 'new') 
  end 
  diff_line_content(right[:text]) 
  end 
- if @reply_allowed 
- comments_left, comments_right = organize_comments(left[:type], right[:type], left[:line_code], right[:line_code]) 
- if comments_left.present? || comments_right.present? 
-  note1 = notes_left.present? ? notes_left.first : nil 
- note2 = notes_right.present? ? notes_right.first : nil 
- if note1 
- render notes_left 
- link_to_reply_diff(note1, 'old') 
+ unless @diff_notes_disabled 
+ notes_left, notes_right = organize_comments(left, right) 
+ if notes_left.present? || notes_right.present? 
+  note_left = notes_left.present? ? notes_left.first : nil 
+ note_right = notes_right.present? ? notes_right.first : nil 
+ if note_left 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
+ user_path(note.author) 
+ image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
+ link_to_member(note.project, note.author, avatar: false) 
+ note.author.to_reference 
+ unless note.system 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
+ access = note.project.team.human_max_access(note.author.id) 
+ if access 
+ access 
+ end 
+ if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
+ link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
+ icon('pencil') 
+ end 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
+ icon('trash-o') 
+ end 
+ end 
+ preserve do 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
+ end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+ render 'projects/notes/edit_form', note: note 
+ end 
+ render 'award_emoji/awards_block', awardable: note, inline: false 
+ if note.attachment.url 
+ if note.attachment.image? 
+ link_to note.attachment.url, target: '_blank' do 
+ image_tag note.attachment.url, class: 'note-image-attach' 
+ end 
+ end 
+ link_to note.attachment.url, target: '_blank' do 
+ icon('paperclip') 
+ note.attachment_identifier 
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
+ icon('trash-o', class: 'cred') 
+ end 
+ end 
+ end 
+ 
  else 
  "" 
  "" 
  end 
- if note2 
- render notes_right 
- link_to_reply_diff(note2, 'new') 
+ if note_right 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
+ user_path(note.author) 
+ image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
+ link_to_member(note.project, note.author, avatar: false) 
+ note.author.to_reference 
+ unless note.system 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
+ access = note.project.team.human_max_access(note.author.id) 
+ if access 
+ access 
+ end 
+ if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
+ link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
+ icon('pencil') 
+ end 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
+ icon('trash-o') 
+ end 
+ end 
+ preserve do 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
+ end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+ render 'projects/notes/edit_form', note: note 
+ end 
+ render 'award_emoji/awards_block', awardable: note, inline: false 
+ if note.attachment.url 
+ if note.attachment.image? 
+ link_to note.attachment.url, target: '_blank' do 
+ image_tag note.attachment.url, class: 'note-image-attach' 
+ end 
+ end 
+ link_to note.attachment.url, target: '_blank' do 
+ icon('paperclip') 
+ note.attachment_identifier 
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
+ icon('trash-o', class: 'cred') 
+ end 
+ end 
+ end 
+ 
  else 
  "" 
  "" 
@@ -468,80 +570,14 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  @discussions.each do |discussion_notes| 
  note = discussion_notes.first 
  if note_for_main_target?(note) 
- next if note.cross_reference_not_visible_for?(current_user) 
- render discussion_notes 
- else 
-  note = discussion_notes.first 
- link_to user_path(note.author) do 
- image_tag avatar_icon(note.author_email), class: "avatar s40" 
- end 
- if note.for_merge_request? 
- (active_notes, outdated_notes) = discussion_notes.partition(&:active?) 
-  note = discussion_notes.first 
- note.discussion_id 
- link_to_member(@project, note.author, avatar: false) 
- " started a discussion" 
- link_to diffs_namespace_project_merge_request_path(note.project.namespace, note.project, note.noteable, anchor: note.line_code) do 
- end 
- time_ago_with_tooltip(note.created_at, placement: "bottom", html_class: "discussion_updated_ago") 
- link_to "#", class: "discussion-action-button discussion-toggle-button js-toggle-button" do 
- end 
- render "projects/notes/discussions/diff", discussion_notes: discussion_notes, note: note 
- 
-  note = discussion_notes.first 
- note.discussion_id 
- link_to_member(@project, note.author, avatar: false) 
- " started a discussion" 
- time_ago_with_tooltip(note.created_at, placement: "bottom", html_class: "discussion_updated_ago") 
- link_to "#", class: "note-action-button discussion-toggle-button js-toggle-button" do 
- end 
- render "projects/notes/discussions/diff", discussion_notes: discussion_notes, note: note 
- 
- else 
-  note = discussion_notes.first 
- commit = note.noteable 
- commit_description = commit ? 'commit' : 'a deleted commit' 
- note.discussion_id 
- link_to_member(@project, note.author, avatar: false) 
- " started a discussion on " 
- if commit 
- link_to(commit.short_id, namespace_project_commit_path(note.project.namespace, note.project, note.noteable), class: 'monospace') 
- end 
- time_ago_with_tooltip(note.created_at, placement: "bottom", html_class: "discussion_updated_ago") 
- link_to "#", class: "note-action-button discussion-toggle-button js-toggle-button" do 
- end 
- if note.for_diff_line? 
-  diff = note.diff 
- if diff 
- if diff.deleted_file 
- diff.old_path 
- else 
- diff.new_path 
- if diff.a_mode && diff.b_mode && diff.a_mode != diff.b_mode 
- "  " 
- end 
- end 
- note.truncated_diff_lines.each do |line| 
- type = line.type 
- line_code = generate_line_code(note.file_path, line) 
- if type == "match" 
- "..." 
- "..." 
- line.text 
- else 
- ['noteable_line', type, line_code] 
- line_code 
- diff_line_content(line.text, type) 
- if line_code == note.line_code 
-  note = notes.first # example note 
- # Check if line want not changed since comment was left 
- if !defined?(line) || line == note.diff_line 
-  note_editable = note_editable?(note) 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
  user_path(note.author) 
  image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
  link_to_member(note.project, note.author, avatar: false) 
- "" 
- if !note.system 
+ note.author.to_reference 
+ unless note.system 
  end 
  time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
  access = note.project.team.human_max_access(note.author.id) 
@@ -549,20 +585,42 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  access 
  end 
  if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
  link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
  icon('pencil') 
  end 
- link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button js-note-delete danger' do 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
  icon('trash-o') 
  end 
  end 
  preserve do 
- markdown(note.note, pipeline: :note, cache_key: [note, "note"]) 
- end 
- if note_editable 
- render 'projects/notes/edit_form', note: note 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
  end 
  edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+  form_for note, url: namespace_project_note_path(@project.namespace, @project, note), method: :put, remote: true, authenticity_token: true, html: { class: 'edit-note common-note-form js-quick-submit' } do |f| 
+ note_target_fields(note) 
+ render layout: 'projects/md_preview', locals: { preview_class: 'md-preview' } do 
+ render 'projects/zen', f: f, attr: :note, classes: 'note-textarea js-note-text js-task-list-field', placeholder: "Write a comment or drag your files here..." 
+ render 'projects/notes/hints' 
+ end 
+ f.submit 'Save Comment', class: 'btn btn-nr btn-save btn-grouped js-comment-button' 
+ end 
+ 
+ end 
+  grouped_emojis = awardable.grouped_awards(with_thumbs: inline) 
+ awards_sort(grouped_emojis).each do |emoji, awards| 
+ emoji_icon(emoji, sprite: false) 
+ awards.count 
+ end 
+ if current_user 
+ icon('smile-o', class: "award-control-icon award-control-icon-normal") 
+ icon('spinner spin', class: "award-control-icon award-control-icon-loading") 
+ end 
+ 
  if note.attachment.url 
  if note.attachment.image? 
  link_to note.attachment.url, target: '_blank' do 
@@ -578,32 +636,70 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
- end 
- 
- end 
- end 
- end 
- end 
- 
  else 
- render discussion_notes 
- link_to_reply_diff(discussion_notes.first) 
+  note = discussion_notes.first 
+ expanded = !note.diff_note? || note.active? 
+ link_to user_path(note.author) do 
+ image_tag avatar_icon(note.author), class: "avatar s40" 
  end 
- 
- end 
- 
- end 
+ note.discussion_id 
+ link_to_member(@project, note.author, avatar: false) 
+ note.author.to_reference 
+ if note.for_commit? 
+ commit = note.noteable 
+ if commit 
+ link_to commit.short_id, namespace_project_commit_path(note.project.namespace, note.project, note.noteable, anchor: note.line_code), class: 'monospace' 
+ else 
  end 
  else 
- @notes.each do |note| 
- next unless note.author 
- next if note.cross_reference_not_visible_for?(current_user) 
-  note_editable = note_editable?(note) 
+ if note.active? 
+ link_to diffs_namespace_project_merge_request_path(note.project.namespace, note.project, note.noteable, anchor: note.line_code) do 
+ end 
+ else 
+ end 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: "bottom", html_class: "note-created-ago") 
+ link_to "#", class: "note-action-button discussion-toggle-button js-toggle-button" do 
+ if expanded 
+ icon("chevron-up") 
+ else 
+ icon("chevron-down") 
+ end 
+ end 
+ ("hide" unless expanded) 
+ if note.diff_note? 
+  note = discussion_notes.first 
+ diff = note.diff 
+ return unless diff 
+ if diff.deleted_file 
+ diff.old_path 
+ else 
+ diff.new_path 
+ if diff.a_mode && diff.b_mode && diff.a_mode != diff.b_mode 
+ "  " 
+ end 
+ end 
+ note.truncated_diff_lines.each do |line| 
+ type = line.type 
+ line_code = generate_line_code(note.diff_file_path, line) 
+ if type == "match" 
+ "..." 
+ "..." 
+ line.text 
+ else 
+ ['noteable_line', type, line_code] 
+ line_code 
+ diff_line_content(line.text, type) 
+ if line_code == note.line_code 
+  note = notes.first 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
  user_path(note.author) 
  image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
  link_to_member(note.project, note.author, avatar: false) 
- "" 
- if !note.system 
+ note.author.to_reference 
+ unless note.system 
  end 
  time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
  access = note.project.team.human_max_access(note.author.id) 
@@ -611,16 +707,135 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  access 
  end 
  if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
  link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
  icon('pencil') 
  end 
- link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button js-note-delete danger' do 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
  icon('trash-o') 
  end 
  end 
  preserve do 
- markdown(note.note, pipeline: :note, cache_key: [note, "note"]) 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
  end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+ render 'projects/notes/edit_form', note: note 
+ end 
+ render 'award_emoji/awards_block', awardable: note, inline: false 
+ if note.attachment.url 
+ if note.attachment.image? 
+ link_to note.attachment.url, target: '_blank' do 
+ image_tag note.attachment.url, class: 'note-image-attach' 
+ end 
+ end 
+ link_to note.attachment.url, target: '_blank' do 
+ icon('paperclip') 
+ note.attachment_identifier 
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
+ icon('trash-o', class: 'cred') 
+ end 
+ end 
+ end 
+ 
+ link_to_reply_discussion(note) 
+ 
+ end 
+ end 
+ end 
+ 
+ else 
+  note = discussion_notes.first 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
+ user_path(note.author) 
+ image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
+ link_to_member(note.project, note.author, avatar: false) 
+ note.author.to_reference 
+ unless note.system 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
+ access = note.project.team.human_max_access(note.author.id) 
+ if access 
+ access 
+ end 
+ if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
+ link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
+ icon('pencil') 
+ end 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
+ icon('trash-o') 
+ end 
+ end 
+ preserve do 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
+ end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+ if note_editable 
+ render 'projects/notes/edit_form', note: note 
+ end 
+ render 'award_emoji/awards_block', awardable: note, inline: false 
+ if note.attachment.url 
+ if note.attachment.image? 
+ link_to note.attachment.url, target: '_blank' do 
+ image_tag note.attachment.url, class: 'note-image-attach' 
+ end 
+ end 
+ link_to note.attachment.url, target: '_blank' do 
+ icon('paperclip') 
+ note.attachment_identifier 
+ link_to delete_attachment_namespace_project_note_path(note.project.namespace, note.project, note),                title: 'Delete this attachment', method: :delete, remote: true, data: { confirm: 'Are you sure you want to remove the attachment?' }, class: 'danger js-note-attachment-delete' do 
+ icon('trash-o', class: 'cred') 
+ end 
+ end 
+ end 
+ 
+ link_to_reply_discussion(note) 
+ 
+ end 
+ 
+ end 
+ end 
+ else 
+ @notes.each do |note| 
+  return unless note.author 
+ return if note.cross_reference_not_visible_for?(current_user) 
+ note_editable = note_editable?(note) 
+ user_path(note.author) 
+ image_tag avatar_icon(note.author), alt: '', class: 'avatar s40' 
+ link_to_member(note.project, note.author, avatar: false) 
+ note.author.to_reference 
+ unless note.system 
+ end 
+ time_ago_with_tooltip(note.created_at, placement: 'bottom', html_class: 'note-created-ago') 
+ access = note.project.team.human_max_access(note.author.id) 
+ if access 
+ access 
+ end 
+ if note_editable 
+ link_to '#', title: 'Award Emoji', class: 'note-action-button note-emoji-button js-add-award js-note-emoji', data: { position: 'right' } do 
+ icon('spinner spin') 
+ icon('smile-o') 
+ end 
+ link_to '#', title: 'Edit comment', class: 'note-action-button js-note-edit' do 
+ icon('pencil') 
+ end 
+ link_to namespace_project_note_path(note.project.namespace, note.project, note), title: 'Remove comment', method: :delete, data: { confirm: 'Are you sure you want to remove this comment?' }, remote: true, class: 'note-action-button hidden-xs js-note-delete danger' do 
+ icon('trash-o') 
+ end 
+ end 
+ preserve do 
+ markdown(note.note, pipeline: :note, cache_key: [note, "note"], author: note.author) 
+ end 
+ edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
  if note_editable 
   form_for note, url: namespace_project_note_path(@project.namespace, @project, note), method: :put, remote: true, authenticity_token: true, html: { class: 'edit-note common-note-form js-quick-submit' } do |f| 
  note_target_fields(note) 
@@ -632,7 +847,16 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  
  end 
- edited_time_ago_with_tooltip(note, placement: 'bottom', html_class: 'note_edited_ago', include_author: true) 
+  grouped_emojis = awardable.grouped_awards(with_thumbs: inline) 
+ awards_sort(grouped_emojis).each do |emoji, awards| 
+ emoji_icon(emoji, sprite: false) 
+ awards.count 
+ end 
+ if current_user 
+ icon('smile-o', class: "award-control-icon award-control-icon-normal") 
+ icon('spinner spin', class: "award-control-icon award-control-icon-loading") 
+ end 
+ 
  if note.attachment.url 
  if note.attachment.image? 
  link_to note.attachment.url, target: '_blank' do 
@@ -662,6 +886,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.hidden_field :line_code 
  f.hidden_field :noteable_id 
  f.hidden_field :noteable_type 
+ f.hidden_field :type 
  render layout: 'projects/md_preview', locals: { preview_class: "md-preview", referenced_users: true } do 
  render 'projects/zen', f: f, attr: :note, classes: 'note-textarea js-note-text', placeholder: "Write a comment or drag your files here..." 
  render 'projects/notes/hints' 
@@ -718,7 +943,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  page_title       @project.name_with_namespace 
  page_description @project.description    unless page_description 
  header_title     project_title(@project) unless header_title 
- sidebar          "project"               unless sidebar 
+ nav              "project" 
  content_for :scripts_body_top do 
  project = @target_project || @project 
  if @project_wiki 
@@ -760,8 +985,10 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  stylesheet_link_tag "application", media: "all" 
  stylesheet_link_tag "print",       media: "print" 
  javascript_include_tag "application" 
+ if page_specific_javascripts 
+ javascript_include_tag page_specific_javascripts, {"data-turbolinks-track" => true} 
+ end 
  csrf_meta_tags 
- include_gon 
  unless browser.safari? 
  end 
  # Apple Safari/iOS home screen icons 
@@ -778,6 +1005,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
   
   
  
+ Gon::Base.render_data 
  # Ideally this would be inside the head, but turbolinks only evaluates page-specific JS in the body. 
  yield :scripts_body_top 
   nav_header_class 
@@ -835,17 +1063,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  
-   broadcast_message 
- 
- nav_sidebar_class 
+  nav_sidebar_class 
  brand_header_logo 
  link_to root_path, class: 'gitlab-text-container-link', title: 'Dashboard', id: 'js-shortcuts-home' do 
  end 
  if defined?(sidebar) && sidebar 
  render "layouts/nav/" 
  elsif current_user 
-  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {class: 'home'}) do 
- link_to dashboard_projects_path, title: 'Projects' do 
+  nav_link(path: ['root#index', 'projects#trending', 'projects#starred', 'dashboard/projects#index'], html_options: {}) do 
+ link_to dashboard_projects_path, title: 'Projects', class: 'dashboard-shortcuts-projects' do 
  icon('bookmark fw') 
  end 
  end 
@@ -856,7 +1082,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#activity') do 
- link_to activity_dashboard_path, class: 'shortcuts-activity', title: 'Activity' do 
+ link_to activity_dashboard_path, class: 'dashboard-shortcuts-activity', title: 'Activity' do 
  icon('dashboard fw') 
  end 
  end 
@@ -871,15 +1097,15 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  end 
  end 
  nav_link(path: 'dashboard#issues') do 
- link_to assigned_issues_dashboard_path, title: 'Issues', class: 'shortcuts-issues' do 
+ link_to assigned_issues_dashboard_path, title: 'Issues', class: 'dashboard-shortcuts-issues' do 
  icon('exclamation-circle fw') 
- number_with_delimiter(current_user.assigned_issues.opened.count) 
+ number_with_delimiter(current_user.assigned_open_issues_count) 
  end 
  end 
  nav_link(path: 'dashboard#merge_requests') do 
- link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'shortcuts-merge_requests' do 
+ link_to assigned_mrs_dashboard_path, title: 'Merge Requests', class: 'dashboard-shortcuts-merge_requests' do 
  icon('tasks fw') 
- number_with_delimiter(current_user.assigned_merge_requests.opened.count) 
+ number_with_delimiter(current_user.assigned_open_merge_request_count) 
  end 
  end 
  nav_link(controller: :snippets) do 
@@ -936,6 +1162,8 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  if defined?(nav) && nav 
  render "layouts/nav/" 
  end 
+  broadcast_message 
+ 
   if alert 
  alert 
  elsif notice 
@@ -945,45 +1173,49 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  yield :flash_message 
  (container_class unless @no_container) 
  page_title "Builds", " ()", "Commits" 
- render "projects/commits/header_title" 
  render "commit_box" 
  render "ci_menu" 
   page_title "Builds", " ()", "Commits" 
-  header_title project_title(@project, "Commits", project_commits_path(@project)) 
- 
-  if @notes_count > 0 
+  commit_author_link(@commit, avatar: true, size: 24) 
+ if defined?(@notes_count) && @notes_count > 0 
+ icon('comment') 
  @notes_count 
  end 
+ link_to namespace_project_tree_path(@project.namespace, @project, @commit), class: "btn btn-grouped hidden-xs hidden-sm" do 
+ end 
+ link_to namespace_project_tree_path(@project.namespace, @project, @commit) do 
+ end 
+ unless @commit.has_been_reverted?(current_user) 
+ revert_commit_link(@commit, namespace_project_commit_path(@project.namespace, @project, @commit.id), has_tooltip: false) 
+ end 
+ cherry_pick_commit_link(@commit, namespace_project_commit_path(@project.namespace, @project, @commit.id), has_tooltip: false) 
  unless @commit.parents.length > 1 
  link_to "Email Patches", namespace_project_commit_path(@project.namespace, @project, @commit, format: :patch) 
  end 
  link_to "Plain Diff",    namespace_project_commit_path(@project.namespace, @project, @commit, format: :diff) 
- link_to namespace_project_tree_path(@project.namespace, @project, @commit), class: "btn btn-grouped" do 
- icon('files-o') 
- end 
- unless @commit.has_been_reverted?(current_user) 
- revert_commit_link(@commit, namespace_project_commit_path(@project.namespace, @project, @commit.id)) 
- end 
- cherry_pick_commit_link(@commit, namespace_project_commit_path(@project.namespace, @project, @commit.id)) 
- if @commit.status 
- link_to builds_namespace_project_commit_path(@project.namespace, @project, @commit.id), class: "ci-status ci-" do 
- ci_icon_for_status(@commit.status) 
- ci_label_for_status(@commit.status) 
- end 
- end 
- commit_author_link(@commit, avatar: true, size: 24) 
  if @commit.different_committer? 
  commit_committer_link(@commit, avatar: true, size: 24) 
  end 
- link_to @commit.id, namespace_project_commit_path(@project.namespace, @project, @commit), class: "monospace" 
+ link_to @commit.id, namespace_project_commit_path(@project.namespace, @project, @commit), class: "monospace hidden-xs hidden-sm" 
+ link_to @commit.short_id, namespace_project_commit_path(@project.namespace, @project, @commit), class: "monospace visible-xs-inline visible-sm-inline" 
  clipboard_button(clipboard_text: @commit.id) 
  pluralize(@commit.parents.count, "parent") 
  @commit.parents.each do |parent| 
  link_to parent.short_id, namespace_project_commit_path(@project.namespace, @project, parent), class: "monospace" 
  end 
- markdown escape_once(@commit.title), pipeline: :single_line 
+ if @commit.status 
+ pluralize(@commit.ci_commits.count, 'pipeline') 
+ link_to builds_namespace_project_commit_path(@project.namespace, @project, @commit.id), class: "ci-status-link ci-status-icon-" do 
+ ci_icon_for_status(@commit.status) 
+ ci_label_for_status(@commit.status) 
+ end 
+ if @commit.ci_commits.duration 
+ time_interval_in_words @commit.ci_commits.duration 
+ end 
+ end 
+ markdown escape_once(@commit.title), pipeline: :single_line, author: @commit.author 
  if @commit.description.present? 
- preserve(markdown(escape_once(@commit.description), pipeline: :single_line)) 
+ preserve(markdown(escape_once(@commit.description), pipeline: :single_line, author: @commit.author)) 
  end 
  
   nav_link(path: 'commit#show') do 
@@ -1037,10 +1269,10 @@ end
     create_commit(Commits::RevertService, success_notice: "The #{@commit.change_type_title} has been successfully reverted.",
                                           success_path: successful_change_path, failure_path: failed_change_path)
   end
-  
+
   def cherry_pick
     assign_change_commit_vars(@commit.cherry_pick_branch_name)
-    
+
     return render_404 if @target_branch.blank?
 
     create_commit(Commits::CherryPickService, success_notice: "The #{@commit.change_type_title} has been successfully cherry-picked.",

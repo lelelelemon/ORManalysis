@@ -101,7 +101,7 @@ end
     handle_signup_error
   end
 
-  def handle_service_ticket provider, ticket
+  def handle_service_ticket(provider, ticket)
     Gitlab::OAuth::Session.create provider, ticket
     session[:service_tickets] ||= {}
     session[:service_tickets][provider] = ticket
