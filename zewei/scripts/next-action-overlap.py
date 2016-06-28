@@ -51,6 +51,10 @@ for root, dirnames, filenames in os.walk(next_actions_folder):
                 next_action_mapping[curr_action].append(next_action)
 
 #print next_action_mapping
+total_lines_code = 0
+overlap_lines_code = 0
+total_views = 0
+overlap_views = 0
 for curr_action in next_action_mapping:
     for next_action in next_action_mapping[curr_action]:
         if not next_action in render_mapping:
@@ -80,3 +84,10 @@ for curr_action in next_action_mapping:
             percentage_view_file_overlap_lines = 0.0
         print("number of files overlap: " + str(percentage_view_file_overlap) + " # " + curr_action + " --> " + next_action)
         print("lines of code overlap: " + str(percentage_view_file_overlap_lines) + " # " + curr_action + " --> " + next_action)
+        total_lines_code += total_count_lines_next_action_views
+        overlap_lines_code += overlap_count_lines_next_action_views
+        total_views += total_count_next_action_views
+        overlap_views += overlap_count_next_action_views
+
+print("total number of files overlap: " + str(float(overlap_views)/float(total_views)))
+print("total number of lines of code overlap: " + str(float(overlap_lines_code)/float(total_lines_code)))
