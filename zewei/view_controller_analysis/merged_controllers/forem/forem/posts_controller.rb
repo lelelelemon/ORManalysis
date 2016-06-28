@@ -24,13 +24,15 @@ module Forem
         redirect_to [@topic.forum, @topic]
       end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- stylesheet_link_tag    "forem", media: "all", "data-turbolinks-track" => true 
- javascript_include_tag "forem", "data-turbolinks-track" => true 
+ stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true 
+ javascript_include_tag "application", "data-turbolinks-track" => true 
  csrf_meta_tags 
- forem_atom_auto_discovery_link_tag 
- flash.each do |k,v| 
- k 
- v 
+ if current_user 
+ current_user 
+ link_to "Sign out", main_app.destroy_user_session_path, :method => :delete 
+ else 
+ link_to "Sign in", main_app.new_user_session_path 
+ link_to "Register", main_app.new_user_registration_path 
  end 
   link_to t('forem.forum.forums'), forem.root_path 
  link_to forem_emojify(forum.category), [forem, forum.category] 
@@ -71,7 +73,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.hidden_field :reply_to_id, :value => params[:reply_to_id] 
  end 
  
- f.submit t("forem.post.buttons.reply"), :class => "btn btn-primary" 
  end 
 
 end
@@ -95,13 +96,15 @@ end
       authorize_edit_post_for_forum!
       find_post
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- stylesheet_link_tag    "forem", media: "all", "data-turbolinks-track" => true 
- javascript_include_tag "forem", "data-turbolinks-track" => true 
+ stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true 
+ javascript_include_tag "application", "data-turbolinks-track" => true 
  csrf_meta_tags 
- forem_atom_auto_discovery_link_tag 
- flash.each do |k,v| 
- k 
- v 
+ if current_user 
+ current_user 
+ link_to "Sign out", main_app.destroy_user_session_path, :method => :delete 
+ else 
+ link_to "Sign in", main_app.new_user_session_path 
+ link_to "Register", main_app.new_user_registration_path 
  end 
   link_to t('forem.forum.forums'), forem.root_path 
  link_to forem_emojify(forum.category), [forem, forum.category] 
@@ -126,7 +129,6 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  f.hidden_field :reply_to_id, :value => params[:reply_to_id] 
  end 
  
- f.submit t("forem.post.buttons.edit"), :class => "btn btn-primary" 
  end 
 
 end
@@ -181,13 +183,15 @@ end
       params[:reply_to_id] = params[:post][:reply_to_id]
       flash.now.alert = t("forem.post.not_created")
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- stylesheet_link_tag    "forem", media: "all", "data-turbolinks-track" => true 
- javascript_include_tag "forem", "data-turbolinks-track" => true 
+ stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true 
+ javascript_include_tag "application", "data-turbolinks-track" => true 
  csrf_meta_tags 
- forem_atom_auto_discovery_link_tag 
- flash.each do |k,v| 
- k 
- v 
+ if current_user 
+ current_user 
+ link_to "Sign out", main_app.destroy_user_session_path, :method => :delete 
+ else 
+ link_to "Sign in", main_app.new_user_session_path 
+ link_to "Register", main_app.new_user_registration_path 
  end 
   link_to t('forem.forum.forums'), forem.root_path 
  link_to forem_emojify(forum.category), [forem, forum.category] 
@@ -228,7 +232,6 @@ end
  f.hidden_field :reply_to_id, :value => params[:reply_to_id] 
  end 
  
- f.submit t("forem.post.buttons.reply"), :class => "btn btn-primary" 
  end 
 
 end
@@ -253,13 +256,15 @@ end
     def update_failed
       flash.now.alert = t("forem.post.not_edited")
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- stylesheet_link_tag    "forem", media: "all", "data-turbolinks-track" => true 
- javascript_include_tag "forem", "data-turbolinks-track" => true 
+ stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true 
+ javascript_include_tag "application", "data-turbolinks-track" => true 
  csrf_meta_tags 
- forem_atom_auto_discovery_link_tag 
- flash.each do |k,v| 
- k 
- v 
+ if current_user 
+ current_user 
+ link_to "Sign out", main_app.destroy_user_session_path, :method => :delete 
+ else 
+ link_to "Sign in", main_app.new_user_session_path 
+ link_to "Register", main_app.new_user_registration_path 
  end 
   link_to t('forem.forum.forums'), forem.root_path 
  link_to forem_emojify(forum.category), [forem, forum.category] 
@@ -284,7 +289,6 @@ end
  f.hidden_field :reply_to_id, :value => params[:reply_to_id] 
  end 
  
- f.submit t("forem.post.buttons.edit"), :class => "btn btn-primary" 
  end 
 
 end

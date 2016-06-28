@@ -14,13 +14,15 @@ module Forem
         @posts = @posts.send(pagination_method, params[pagination_param]).per(Forem.per_page)
       end
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- stylesheet_link_tag    "forem", media: "all", "data-turbolinks-track" => true 
- javascript_include_tag "forem", "data-turbolinks-track" => true 
+ stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true 
+ javascript_include_tag "application", "data-turbolinks-track" => true 
  csrf_meta_tags 
- forem_atom_auto_discovery_link_tag 
- flash.each do |k,v| 
- k 
- v 
+ if current_user 
+ current_user 
+ link_to "Sign out", main_app.destroy_user_session_path, :method => :delete 
+ else 
+ link_to "Sign in", main_app.new_user_session_path 
+ link_to "Register", main_app.new_user_registration_path 
  end 
  'un' unless @topic.locked? 
   link_to t('forem.forum.forums'), forem.forums_path 
@@ -50,12 +52,7 @@ ruby_code_from_view.ruby_code_from_view do |rb_from_view|
  t(".pending_review") 
  if forem_admin_or_moderator?(@topic.forum) 
  form_for @topic, :url => forem.moderate_forum_topic_path(@topic.forum, @topic), :method => :put do |f| 
-  f.radio_button "moderation_option", "approve" 
- f.label "moderation_option_approve", t('approve', :scope => 'forem.posts.moderation'), :class => "label label-success" 
- f.radio_button "moderation_option", "spam" 
- f.label "moderation_option_spam", t('spam', :scope => 'forem.posts.moderation'), :class => "label label-danger" 
- f.submit t('moderate', :scope => 'forem.posts.moderation'), :class => "btn btn-primary" 
- 
+ render "/forem/moderation/options", :f => f 
  end 
  end 
  end 
@@ -131,13 +128,15 @@ end
       @topic = @forum.topics.build
       @topic.posts.build
 ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- stylesheet_link_tag    "forem", media: "all", "data-turbolinks-track" => true 
- javascript_include_tag "forem", "data-turbolinks-track" => true 
+ stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true 
+ javascript_include_tag "application", "data-turbolinks-track" => true 
  csrf_meta_tags 
- forem_atom_auto_discovery_link_tag 
- flash.each do |k,v| 
- k 
- v 
+ if current_user 
+ current_user 
+ link_to "Sign out", main_app.destroy_user_session_path, :method => :delete 
+ else 
+ link_to "Sign in", main_app.new_user_session_path 
+ link_to "Register", main_app.new_user_registration_path 
  end 
   link_to t('forem.forum.forums'), forem.root_path 
  link_to forem_emojify(forum.category), [forem, forum.category] 
@@ -221,13 +220,15 @@ end
     def create_unsuccessful
       flash.now.alert = t('forem.topic.not_created')
       ruby_code_from_view.ruby_code_from_view do |rb_from_view|
- stylesheet_link_tag    "forem", media: "all", "data-turbolinks-track" => true 
- javascript_include_tag "forem", "data-turbolinks-track" => true 
+ stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true 
+ javascript_include_tag "application", "data-turbolinks-track" => true 
  csrf_meta_tags 
- forem_atom_auto_discovery_link_tag 
- flash.each do |k,v| 
- k 
- v 
+ if current_user 
+ current_user 
+ link_to "Sign out", main_app.destroy_user_session_path, :method => :delete 
+ else 
+ link_to "Sign in", main_app.new_user_session_path 
+ link_to "Register", main_app.new_user_registration_path 
  end 
   link_to t('forem.forum.forums'), forem.root_path 
  link_to forem_emojify(forum.category), [forem, forum.category] 
