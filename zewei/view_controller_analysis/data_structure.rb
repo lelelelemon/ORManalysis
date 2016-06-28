@@ -678,9 +678,10 @@ class Named_Routes_Class
 				a = item.split "=>"
 				hash[a[0]] = a[1]
 			end
-			
-			res[helper + "_path"] = [hash[":controller"], hash[":action"]]			
-			res[helper + "_url"] = [hash[":controller"], hash[":action"]]			
+			if hash[":controller"] != nil and hash[":action"] != nil		
+				res[helper + "_path"] = [hash[":controller"], hash[":action"]]			
+				res[helper + "_url"] = [hash[":controller"], hash[":action"]]			
+			end
 			i += 2
 		end
 		res
