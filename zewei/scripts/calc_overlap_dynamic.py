@@ -1,11 +1,15 @@
 import sys, os, fnmatch
 
+if len(sys.argv) != 3:
+    print("Usage: python calc_overlap_dynamic.py log_file app_folder")
+    exit(-1)
+
 log_file = sys.argv[1]
 app_folder = sys.argv[2]
 
 view_lines = {}
 for root, dirnames, filenames in os.walk(app_folder):
-    for filename in fnmatch.filter(filenames, "*.erb"):
+    for filename in fnmatch.filter(filenames, "*.rb"):
         fname = os.path.join(root, filename)
         num_lines = sum(1 for line in open(fname, "r"))
         view_lines[fname] = num_lines
@@ -33,7 +37,11 @@ with open(log_file) as f:
             line = line.split()
             for item in line:
                 if item != "identifier:" and item != "layout:" and item != "text" and item != "template":
-                    action_rendered_views_map[controller_action].append(item)
+                    if item.endswith(".erb"):
+                        item += ".rb"
+                    # remove duplication
+                    if not item in action_rendered_views_map[controller_action]:
+                        action_rendered_views_map[controller_action].append(item)
 
 
 total_lines_in_views = 0
@@ -71,4 +79,4 @@ for curr_action in next_action_pairs_map:
         overlap_files_in_views += overlap_next_rendered_views_count
 
 print "total percentage lines overlap: " + str(float(overlap_lines_in_views) / float(total_lines_in_views))
-print "total percentage lines overlap: " + str(float(overlap_files_in_views) / float(total_files_in_views))
+print "total percentage files overlap: " + str(float(overlap_files_in_views) / float(total_files_in_views))
