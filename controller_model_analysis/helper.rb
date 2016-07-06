@@ -603,8 +603,14 @@ def isSelectCondition(n1)
 end
 
 def isConstSource(n1)
-	if n1.getInstr.instance_of?ReceiveConstArg_instr or n1.getInstr.instance_of?AttrAssign_instr or n1.getInstr.instance_of?Constant_instr 
+	if n1.getInstr.instance_of?ReceiveConstArg_instr or n1.getInstr.instance_of?Constant_instr
 		return true
+	elsif n1.getInstr.instance_of?AttrAssign_instr
+		if isActiveRecord(n1.getInstr.getCallerType)
+			return true
+		else
+			return false
+		end
 	elsif n1.getInstr.instance_of?Copy_instr and n1.getInstr.isFromConst
 		return true
 	else
@@ -730,6 +736,7 @@ def clear_data_structure
 	$in_view = false
 	
 	$closure_stack = Array.new
+	$show_stack = Array.new
 	$in_loop = Array.new
 	$in_validation = Array.new
 	$general_call_stack = Array.new

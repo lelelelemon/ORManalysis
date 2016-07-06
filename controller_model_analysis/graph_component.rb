@@ -13,6 +13,7 @@ class INode
 		@in_loop = ($in_loop.length > 0)
 		@in_validation = ($in_validation.length > 0)	
 		@closure_stack = Array.new
+		@show_stack = Array.new
 		@call_stack = Array.new
 		@validation_stack = Array.new
 		@dataflow_edges = Array.new
@@ -35,6 +36,9 @@ class INode
 			$closure_stack.each do |cl|
 				@closure_stack.push(cl)
 			end
+		end
+		$show_stack.each do |s|
+			@show_stack.push(s)
 		end
 		$funccall_stack.each do |f|
 			@call_stack.push(f)
@@ -65,6 +69,17 @@ class INode
 	end
 	def getClosureStack
 		@closure_stack
+	end
+	def getShowStack
+		@show_stack
+	end
+	def getViewShowClosure
+		@show_stack.each do |c|
+			if c.getInstr.is_a?Call_instr
+			return true unless ["ruby_code_from_view","transaction"].include?c.getInstr.getFuncname
+			end
+		end
+		return false
 	end
 	def getNonViewClosureStack
 		@new_stack = Array.new
@@ -332,8 +347,9 @@ def add_dataflow_edge(node)
 
 			#TODO: OK Here it is messy. Assume the functions in view does not define "self"
 			#elsif from_node.getInstr.getClassName.include?"Controller" and from_node.getInstr.instance_of?Call_instr and  from_node.getInView and dep.getVname == "%self"
-			#TODO: Here we assume all non-defined functions are read only...
-			elsif from_node.getInstr.instance_of?Call_instr and from_node.isQuery? == false and from_node.getInstr.getFromUserInput==false and (from_node.getInstr.getCallCFG==nil or function_defself(from_node.getInstr.getCallCFG.getMHandler)==false)
+			#TODO: Here we assume all non-defined functions in view are read only...
+			elsif from_node.getInstr.instance_of?Call_instr and from_node.getInstr.in_view and from_node.isQuery? == false and from_node.getInstr.getFromUserInput==false and (from_node.getInstr.getCallCFG==nil or function_defself(from_node.getInstr.getCallCFG.getMHandler)==false)
+			elsif from_node.getInstr.instance_of?Call_instr and (from_node.getInstr.getCallerType == nil or from_node.getInstr.getCallerType.include?("Controller")) and to_ins.instance_of?GetField_instr and from_node.getInstr.getCallCFG==nil and dep.getVname == "%self" 
 
 			elsif dep.getInstrHandler != node.getInstr
 				edge_name = "#{dep.getInstrHandler.getINode.getIndex}*#{node.getIndex}"

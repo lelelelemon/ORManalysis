@@ -4,7 +4,7 @@ require 'optparse'
 require 'date'
 
 #Global variables:
-load 'global_variables.rb'
+load 'global_variables2.rb'
 
 #Helpers:
 load 'helper.rb'
@@ -38,7 +38,7 @@ load 'build_dataflow_graph.rb'
 
 #Compute stats:
 load 'compute_helper.rb'
-load 'compute_stats.rb'
+load 'compute_stats2.rb'
 load 'compute_functional_dependency_stat.rb'
 load 'compare_consequent_actions.rb'
 load 'compute_branch_stat.rb'
@@ -416,6 +416,7 @@ if options[:run_all]
 		compute_dataflow_stat($output_dir, start_class, start_function)
 		puts "+++ Take time: #{time_diff(Time.now, time1)} +++"
 	#start print overlap between current and next controller actions
+=begin
 		next_file = nil
 		if start_class.include?("::")
 			l = start_class.gsub("\n","")
@@ -485,6 +486,7 @@ if options[:run_all]
 			$nextaction_query_count = Hash.new
 			$graph_file.close
 		end
+=end
 
 		clear_data_structure
 	end

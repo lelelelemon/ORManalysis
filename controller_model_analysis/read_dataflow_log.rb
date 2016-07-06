@@ -16,13 +16,18 @@ def read_dataflow(application_dir=nil)
 	end
 
 	$dataflow_dir = "#{$app_dir}/dataflow/"
-
+	
 	root, files, dirs = os_walk($dataflow_dir)
 	for filename in files
 		if filename.to_s.end_with?(".log") and filename.to_s.include?("schema.log") == false
 			class_name = dataflow_filename_match(filename.to_s)
 			#puts "Dataflow file: #{filename} matches class name #{class_name}" 
 			if class_name != nil
+				if filename.to_s.include?("controllers")
+					$class_map[class_name].class_type = "controller"
+				elsif filename.to_s.include?("models")
+					$class_map[class_name].class_type = "model"
+				end
 				handle_single_dataflow_file(filename.to_s, class_name)
 				$class_map[class_name].getMethods.each do |key, meth|
 					if meth.getCFG != nil
@@ -70,6 +75,7 @@ def handle_single_dataflow_file(item, class_name)
 		file = File.open(item, "r")
 		file.each_line do |line|
 			if line.include?("SET IRMethod")
+				$view_start = false
 				#i = line.index(" = ")
 				#func_name = line[i+3...line.length-1]
 				chs = line.split(" ")
@@ -248,6 +254,9 @@ def handle_single_dataflow_file(item, class_name)
 										else
 											cur_instr = Call_instr.new(fc_array[0], fc_array[1])
 										end
+										if $view_start
+											cur_instr.in_view = true
+										end
 										#TODO: previous instr may not be dataflow dependent instr...
 										if $cur_bb.getInstr.length > 0 and $cur_bb.getInstr[-1].instance_of?HashField_instr and cur_instr.instance_of?Call_instr
 											prev_instr = $cur_bb.getInstr[-1]
@@ -261,6 +270,7 @@ def handle_single_dataflow_file(item, class_name)
 										if cur_instr.getFuncname == "ruby_code_from_view"
 												$view_ruby_code = true
 												$view_closure = true
+												$view_start = true
 										end
 									elsif single_attr.include?("ARGS:")
 										args = single_attr[5...-1].split(',')

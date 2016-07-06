@@ -4,9 +4,9 @@ def compute_redundant_usage
 		if n.isReadQuery?
 			@qr = trace_query_result(n)
 			str = ""
-			if @qr and n.getInstr.getTableName
+			if @qr and n.getInstr.getTableName and @qr != "int"
 				print_single_redundant_usage(n.getInstr.getTableName, @qr) 
-				if @qr.include?"ALL_FIELDS"
+				if @qr.include?"ALL_FIELDS" and $class_map[n.getInstr.getTableName]
 					$class_map[n.getInstr.getTableName].getTableFields.each do |f|
 						add_used_field_to_chained_query(n, f.field_name)
 					end
@@ -19,6 +19,9 @@ def compute_redundant_usage
 					str += "#{f}, "
 				end
 				$temp_file.puts "! query #{n.getIndex} uses fields #{str}"
+			elsif @qr == "int" and n.getInstr.getTableName
+				class_name = n.getInstr.getTableName
+				$graph_file.puts("\t<#{class_name} totalFieldSize=\"4\">4<\/#{class_name}>")
 			end
 		#elsif @qr
 		#	puts "Table name empty... #{n.getIndex}"
@@ -36,7 +39,11 @@ def trace_query_result(qnode)
 	end
 	if $query_return_record.include?qnode.getInstr.getFuncname  #TODO: association is not included!!!
 	else
-		return nil
+		if $key_words.has_key?(qnode.getInstr.getFuncname)
+			return "int"
+		else
+			return nil
+		end
 	end
 	@r = Array.new
 	@traversed = Array.new
@@ -122,6 +129,7 @@ def trace_query_result(qnode)
 							if ["send","send_data"].include?n.getInstr.getFuncname
 								@r.push("ALL_FIELDS")
 							end
+							
 						else
 							name_in_args = false
 							n.getInstr.getArgs.each do |a|
@@ -160,6 +168,14 @@ def trace_query_result(qnode)
 	end
 	#$temp_file.puts "traversed #{str}"
 	#$temp_file.puts "\t name = #{name_str}"
+	str = ""
+	qnode.getShowStack.each do |c|
+		str += "#{c.getIndex} "
+	end
+	puts "Qnode: #{qnode.getIndex}, viewstack = #{str} getViewShow = #{qnode.getViewShowClosure}"
+	if qnode.getViewShowClosure or goto_render(qnode)
+		@r.push("ALL_FIELDS")
+	end
 	return @r
 end
 
@@ -173,6 +189,7 @@ end
 #t.date  3byte
 #t.binary 1byte
 #t.references 4type (same as integer)
+$text_size = 2450
 def get_field_size(field)
 	#if string has a limit: count use limit
 	#if string has no limit: count as 64
@@ -198,13 +215,19 @@ def get_field_size(field)
 		field_size = 3
 	elsif f.type == "text"
 		if f.attrs["limit"]
-			if f.attrs["limit"].to_i > 1024
-				field_size = 1024
+			if f.attrs["limit"].to_i > 2450
+				field_size = 2450
 			else
 				field_size = f.attrs["limit"].to_i 
 			end
 		else
-			field_size = 1024
+			if f.field_name.include?("comment") 
+				field_size = 177
+			elsif ["path","location","gadget_url","public_key","settings","email","name","key","body_html","credentials","country_ids","url","context_id"].include?f.field_name
+				field_size = 128
+			else
+				field_size = 2450
+			end
 		end
 	end
 	return field_size
@@ -222,6 +245,7 @@ def print_single_redundant_usage(class_name, r)
 	actual_used_size = 0
 	if r.include?"ALL_FIELDS"
 		$graph_file.puts("\t<#{class_name} totalFieldSize=\"#{total_field_size}\">#{total_field_size}<\/#{class_name}>")
+		puts("\t<#{class_name} totalFieldSize=\"#{total_field_size}\">#{total_field_size}<\/#{class_name}>")
 	else
 		@r.each do |inner_r|
 			$class_map[class_name].getTableFields.each do |f|

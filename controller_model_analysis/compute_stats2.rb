@@ -113,7 +113,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			if n.getInstr.getDefv
 				returnv = type_valid(n.getInstr, n.getInstr.getDefv)
 			end
-			$temp_file.puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; QType = #{n.getInstr.getQueryType}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField} -- (#{returnv})"
+			str1 = ""
+			n.getShowStack.each do |c|
+				str1 += "#{c.getIndex} "
+			end
+			$temp_file.puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; QType = #{n.getInstr.getQueryType}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField} -- (#{returnv})  showstack = #{str1}"
 			if n.isQuery?
 				#puts "\t * table_name = #{n.getInstr.getTableName}"
 			end 
@@ -654,7 +658,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				@general_stat.branch_dependon_query += 1
 				#$temp_file.puts "Branch  #{n.getIndex} depend on QUERY #{q.getIndex}"
 			else
-				#$temp_file.puts "Branch on other #{n.getIndex}"
+				$temp_file.puts "Branch on other #{n.getIndex}"
 			end
 			if n.getInView
 				@general_stat.branch_in_view += 1
@@ -789,18 +793,19 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$graph_file.puts("<\/stat>")
 	$graph_file.puts("")
 
-	compute_view_stat
-	compute_loop_stat
-	compute_input_stat
-	print_query_card_stat
+	#compute_view_stat
+	#compute_loop_stat
+	#compute_input_stat
+	#print_query_card_stat
 	
-	compute_query_chain
+	#compute_query_chain
 	
-	compute_select_condition
+	#compute_select_condition
 	
 	#compute_order_stat
 	compute_redundant_usage
-
+	$graph_file.puts("</STATSHEADER>")
+	return
 	#compute_kv_store
 
 	$graph_file.puts("<viewStats>")

@@ -21,7 +21,7 @@ $dataflow_dir = "../applications/lobsters/dataflow/"
 $table_file = "../applications/lobsters/table_names.txt"
 $log_files = "" #deprecated
 
-$results_dir = "results2"
+$results_dir = "results_red2"
 $output_dir = "."
 $trace_output_file = ""
 $graph_file = nil

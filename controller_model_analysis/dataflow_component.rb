@@ -48,8 +48,9 @@ class Instruction
 		@args = Array.new
 		@symbols = Array.new
 		@in_while_loop = false
+		@in_view = false
 	end
-	attr_accessor :defv_var, :args, :inodes, :inode, :symbols, :in_while_loop
+	attr_accessor :defv_var, :args, :inodes, :inode, :symbols, :in_while_loop, :in_view
 	def addSymbol(s)
 		@symbols.push(s)
 	end
@@ -194,6 +195,8 @@ class Call_instr < Instruction
 		@args = Array.new
 		@inodes = Array.new	
 		@symbols = Array.new
+		@from_user_input = false
+		@in_view = false
 	end
 	attr_accessor :field, :hash_fields
 	def setCallCFG(c)
@@ -268,6 +271,7 @@ class Call_instr < Instruction
 		
 		t = type_valid(self, @caller)
 		if isActiveRecord(t)
+			#puts "activeRec: #{t} #{self.toString}"
 			qtype = check_method_keyword(t, @funcname)
 			
 			if qtype
@@ -276,6 +280,7 @@ class Call_instr < Instruction
 				#foreign key relationship: has_many, has_one,...
 				tbl_name = self.getCallerType
 				if isActiveRecord(tbl_name)
+					#puts "table activerec: #{self.toString}"
 					#TODO: user should not be ignored...
 					if self.isClassField and @funcname != "user"
 						#TODO: check return type, if not know or polomorphism...
@@ -388,6 +393,7 @@ class Const_instr < Instruction
 		@resolved = true
 		@resolved_caller = @const
 		@inodes = Array.new
+		@from_user_input = false
 	end
 	def getConst
 		@const

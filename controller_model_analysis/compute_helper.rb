@@ -48,14 +48,17 @@ def traceback_data_dep(cur_node, stop_at_query=false)
 		node = @node_list.pop
 		node.getBackwardEdges.each do |e|
 			if e.getFromNode != nil and e.getToNode != nil
+				if stop_at_query and e.getFromNode.isQuery? 
+					return e.getFromNode
+				end
+				if stop_at_query and e.getFromNode.getInstr.is_a?Call_instr and e.getFromNode.getInstr.getFuncname == "current_user"
+					return e.getFromNode
+				end
 				if e.getFromNode.isReadQuery?
 					if @dep_array.include?(e.getFromNode)
 					else
 						@dep_array.push(e.getFromNode)
 					end
-					if stop_at_query
-						return e.getFromNode
-					end	
 				else
 					#if cur_node.getCallStack.include?(e.getToNode) and e.getVname == "returnv"
 					if e.getFromNode.getInstr.instance_of?Return_instr and e.getFromNode.getInstr.getClassName == cur_node.getInstr.getClassName and e.getFromNode.getInstr.getMethodName == cur_node.getInstr.getMethodName
@@ -262,6 +265,33 @@ def find_all_succcessors(nodex)
 	return @successors
 end
 
+def goto_render(node)
+	node.getDataflowEdges.each do |e1|
+		instr1 = e1.getToNode.getInstr
+		if instr1.is_a?Call_instr and instr1.getFuncname == "render"
+			return true
+		end
+		e1.getToNode.getDataflowEdges.each do |e2|
+			instr2 = e2.getToNode.getInstr
+			if instr2.is_a?Call_instr and instr2.getFuncname == "render"
+				return true
+			end
+			e2.getToNode.getDataflowEdges.each do |e3|
+				instr3 = e3.getToNode.getInstr
+				if instr3.is_a?Call_instr and instr3.getFuncname == "render"
+					return true
+				end
+				e3.getToNode.getDataflowEdges.each do |e4|
+					instr4 = e4.getToNode.getInstr
+					if instr4.is_a?Call_instr and instr4.getFuncname == "render"
+						return true
+					end
+				end
+			end
+		end
+	end
+	return false
+end
 
 #node is the assignment of a local variable, v_name is the name of the variable
 #when a query result is stored in a variable, like @comment, check if there is any function call by @comment

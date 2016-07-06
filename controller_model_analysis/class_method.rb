@@ -58,6 +58,7 @@ end
 
 class Class_class
 	def initialize(name)
+		@class_type = "other"
 		@methods = Hash.new
 		@name = name
 		@belongs_to = Array.new
@@ -99,6 +100,7 @@ class Class_class
 	end
 	attr_accessor :include_module, :filename, :member_defs
 	attr_accessor :table_name
+	attr_accessor :class_type
 	def getAssocs
 		@assocs
 	end

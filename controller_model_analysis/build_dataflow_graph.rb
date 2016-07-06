@@ -247,7 +247,9 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 			$in_loop.push(true)
 		end
 		if instr.instance_of?Call_instr and (isNonClosureInstr(instr) or instr.getCaller == "format")
+			$show_stack.push($cur_node)
 			handle_single_cfg2(start_class, start_function, class_handler, function_handler, @cl, level) 
+			$show_stack.pop
 		else
 			$closure_stack.push($cur_node)
 			$general_call_stack.push($cur_node)
