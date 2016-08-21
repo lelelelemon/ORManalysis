@@ -1,76 +1,8 @@
 $QNODECOLOR = "coral1"
 $USERINOUTCOLOR = "cyan3"
-
-def print_dataflow_graph
-	$node_list.each do |n|
-		print "Node #{n.getIndex}: "
-		n.getDataflowEdges.each do |d|
-			print "n#{d.getToNode.getIndex}, "
-		end
-		puts ""
-	end
-end
-
-def construct_query_graph
-	$node_list.each do |n1|
-		if n1.isQuery?
-			$node_list.each do |n2|
-				if n2.isQuery?
-					connected = false
-					$global_check = Hash.new
-					if is_directly_connected(n1, n2)
-						graph_write($graph_file, "n#{n1.getIndex} -> n#{n2.getIndex}\n")
-					end
-				end
-			end
-		end
-	end		
-end
-
-def print_query_graph(output_dir, start_class, start_function)
-
-	graph_fname = "#{output_dir}/#{start_class}_#{start_function}_Qgraph.log"
-	$graph_file = File.open(graph_fname, "w");
-
-	graph_write($graph_file, "digraph #{remove_special_chars(start_class)}_#{start_function} {\n")
-	print_graph2(start_class, start_function)
-	graph_write($graph_file, "}");
-
-	$graph_file.close
-end
-
-def print_graph2(start_class, start_function)
-	if $root == nil
-		$cfg = trace_query_flow(start_class, start_function, "", "", 0)
-		$root = $cfg.getBB[0].getInstr[0].getINode	
-	end
-
-	#$graph_file.write
-	#traverse_instr_tree($root, 0)
-
-	#start constructing query graph	
-	construct_query_graph
-	$node_list.each do |n|
-		if n.isQuery?
-			if n.getInClosure == false
-				graph_write($graph_file, "\tn#{n.getIndex} [label=<<i>#{n.getLabel}</i>>]; \n")
-			else
-				graph_write($graph_file, "\tn#{n.getIndex} [label=<<i>#{n.getLabel}</i>> style=filled color=orange]; \n")
-			end
-		end
-	end
-	##end constructing query graph
-
-	#print_dataflow_graph
-
-	#$node_list.each do |n|
-	#	print "node #{n.getIndex}: "
-	#	n.getChildren.each do |c|
-	#		print "#{c.getIndex}, "
-	#	end
-	#	puts ""
-	#end
-end
+$READQCOLOR = "chartreuse4"
+$WRITEQCOLOR = "lightskyblue1"
+$
 
 def compute_dataflow_stat(output_dir, start_class, start_function, build_node_list_only=false)
 
@@ -263,7 +195,22 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	#keep track of query dependency in terms of controlflow
 	@query_affect_controlflow = Hash.new
 
+
+	$vis_file.puts "digraph \"QGraph\" {"
 	$node_list.each do |n|
+		if n.isQuery?
+			if n.isReadQuery?
+				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$READQCOLOR}];"
+			else
+				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$WRITEQCOLOR}];"
+			end
+		elsif n.getInstr.getFromUserInput
+			$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$USERINPUTCOLOR}];"
+		end
+	end
+
+	$node_list.each do |n|
+
 		if n.isQuery?
 			if $class_map[n.getInstr.getClassName]
 				if $class_map[n.getInstr.getClassName].class_type == "other"
@@ -451,6 +398,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						#@table_read_stat[@table_name].sink_total += 1
 						#@read_sink_stat.sink_total += 1
 					if n1.isQuery?
+						$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n1.getIndex}\";"						
+
 						if @query_length_graph[n].include?(n1)
 						else
 							@query_length_graph[n].push(n1)
@@ -537,6 +486,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					@read_source_stat.from_select_condition += 1
 				end 
 				traceback_data_dep(n).each do |n1|
+					if n1.getInstr.getFromUserInput
+						$vis_file.puts "\t\"n#{n1.getIndex}\" -> \"n#{n.getIndex}\";"
+					end
+
 					if n1.instance_of?Dataflow_edge
 						@read_source_stat.from_user_input += 1
 						@read_source_stat.source_total += 1
@@ -661,6 +614,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			end
 		end
 	end
+	$vis_file.puts "}"
+	return
 
 	$node_list.each do |n|
 		if n.getInView

@@ -413,7 +413,8 @@ if options[:run_all]
 		$output_dir = "#{$app_dir}/#{$results_dir}/#{start_class}_#{start_function}"
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
-		$graph_file = File.open(graph_fname, "w");
+		$graph_file = File.open(graph_fname, "w")
+		$vis_file = File.open("#{$output_dir}/qgraph_vis.gv", "w")
 		$temp_file = File.open("#{$output_dir}/trace.log","w")
 		if options[:dump_graph]
 			trace_query_flow(start_class, start_function, "", "", 0)
@@ -448,6 +449,8 @@ if options[:run_all]
 		else	
 			next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
 		end
+
+=begin
 		if File.exist?(next_file)
 
 			graph_fname = "#{$output_dir}/next_action.xml"
@@ -459,7 +462,7 @@ if options[:run_all]
 			$node_list.each do |n|
 				@prev_list.push(n)
 			end
-			
+
 			clear_data_structure
 			@next_action_freq = Hash.new
 			total_freq = 0
@@ -508,9 +511,10 @@ if options[:run_all]
 			$nextaction_query_count = Hash.new
 			$graph_file.close
 		end
-
+=end
 		clear_data_structure
 	end
+
 end
 
 if options[:consequent] != nil

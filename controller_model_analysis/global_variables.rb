@@ -25,6 +25,7 @@ $results_dir = "results"
 $output_dir = "."
 $trace_output_file = ""
 $graph_file = nil
+$vis_file = nil
 $temp_file = nil
 $dump_file = nil
 $table_query_file = nil
