@@ -50,6 +50,8 @@ load 'compute_dataflow_chain_stat.rb'
 load 'compute_redundant_field_access.rb'
 load 'compute_select_condition.rb'
 
+load 'dump_graph.rb'
+
 #Static count:
 load 'static_code_analysis.rb'
 
@@ -142,6 +144,10 @@ opt_parser = OptionParser.new do |opt|
 		options[:run_all] = true
 	end
 
+	opt.on("-g","--dump-graph","only dump graph, donot collect stats") do |dump|
+		options[:dump_graph] = true
+	end
+
 	opt.on("-i", "--only-type-inference","Only do type inference, and search method by name upon function call.","Using this option the script may not be able to resolve every function call, but no need for dynamic type logs.") do |inference|
 		options[:inference] = true
 	end
@@ -166,12 +172,12 @@ opt_parser = OptionParser.new do |opt|
 	#	options[:random_path] = true
 	#end
 
-	opt.on("-g", "--query-graph CLASS_NAME,FUNCTION_NAME",Array,"print out flow graph only containing queries") do |q_input|
-		options[:query_graph] = true
-		if options[:trace] == nil
-			options[:trace] = q_input
-		end
-	end
+	#opt.on("-g", "--query-graph CLASS_NAME,FUNCTION_NAME",Array,"print out flow graph only containing queries") do |q_input|
+	#	options[:query_graph] = true
+	#	if options[:trace] == nil
+	#		options[:trace] = q_input
+	#	end
+	#end
 
 	opt.on("-s", "--stats CLASS_NAME,FUNCTION_NAME",Array,"print some stats, including query_num, dataflow grap from user input to user output, etc. Needs two argument") do |stats|
 			options[:stats] = true
@@ -294,6 +300,12 @@ if options[:trace_flow] or options[:random_path] or options[:stats] or options[:
 		print_query_graph($output_dir, start_class, start_function)
 	end
 
+	if options[:dump_graph]
+		trace_query_flow(start_class, start_function, "", "", level)
+		$dump_file = File.open("dump_graph.gml", "w") 
+		dump_graphml
+	end
+
 	if options[:stats]
 		if options[:random_path]
 			compute_dataflow_stat($output_dir, start_class, start_function, true)
@@ -324,7 +336,7 @@ if options[:print_all] == true
 		#end
 		#puts ""
 	#end
-#=begin
+=begin
 	_file = File.open("#{$app_dir}/table_name.txt", "w")
 	f2 = File.open("#{$app_dir}/tablefields.txt","w")
 	$table_names.each do |t|
@@ -339,15 +351,19 @@ if options[:print_all] == true
 			#puts "Table #{t} doesn't have a class!"
 		end
 	end
-#=end
-	
+=end
+
+	$table_query_file = File.open("#{$app_dir}/table_query.stat", "w")	
 	$class_map.each do |keyc, valuec|
-		puts "+++ #{keyc} +++"
+		#puts "+++ #{keyc} +++"
 		valuec.getMethods.each do |key, value|
 			cfg = value.getCFG
-			calculate_query_issue_stat(cfg, valuec)
+			calculate_table_query_stat(cfg)
+			#calculate_query_issue_stat(cfg, valuec)
 		end
 	end
+	print_table_query_stat
+=begin
 	puts ""
 	puts "======"
 	puts "General stat:"
@@ -355,6 +371,7 @@ if options[:print_all] == true
 	puts " query_in_model: #{$query_in_model}"
 	puts " query_in_view: #{$query_in_view}"
 	puts " query_in_other: #{$query_in_other}"
+=end
 =begin
 		valuec.getMethods.each do |keym, valuem|
 			cfg = valuem.getCFG
@@ -391,13 +408,19 @@ if options[:run_all]
 		time1 = Time.now
 		level = 0
 	
+		
 		#start print query trace
 		$output_dir = "#{$app_dir}/#{$results_dir}/#{start_class}_#{start_function}"
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w");
 		$temp_file = File.open("#{$output_dir}/trace.log","w")
-
+		if options[:dump_graph]
+			trace_query_flow(start_class, start_function, "", "", 0)
+			$dump_file = File.open("#{$output_dir}/#{start_class.delete(':')}_#{start_function}_graph.gml", "w")
+			dump_graphml
+			next
+		end
 		#$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
 		#trace_flow(start_class, start_function, "", "", level)
 		#$trace_output_file.close

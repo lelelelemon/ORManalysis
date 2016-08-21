@@ -1,2 +1,0 @@
-class PageRouteRequirementsController < PageRouteOptionsController
-end

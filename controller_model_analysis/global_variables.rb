@@ -21,11 +21,13 @@ $dataflow_dir = "../applications/lobsters/dataflow/"
 $table_file = "../applications/lobsters/table_names.txt"
 $log_files = "" #deprecated
 
-$results_dir = "results2"
+$results_dir = "results"
 $output_dir = "."
 $trace_output_file = ""
 $graph_file = nil
 $temp_file = nil
+$dump_file = nil
+$table_query_file = nil
 #==============================
 
 #=============================Variables used for reading app file and constructing classes/functions, etc=============

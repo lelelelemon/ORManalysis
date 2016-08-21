@@ -1,2 +1,0 @@
-  class FileBlocksController < ContentBlockController
-  end

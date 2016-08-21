@@ -1,1 +1,0 @@
-class MaxNumberOfRetriesError < RuntimeError; end

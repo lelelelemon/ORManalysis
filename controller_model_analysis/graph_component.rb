@@ -5,6 +5,7 @@ class INode
 			instr.setINode(self)
 		end
  		@instr = instr
+		@dump_helper = nil
 		@children = Array.new
 		@index = $ins_cnt
 		@label = ""
@@ -64,6 +65,7 @@ class INode
 	attr_accessor :longest_control_path_nextnode, :shortest_control_path_nextnode, :path_length, :shortest_path_length
 	attr_accessor :cur_class
 	attr_accessor :card_limited
+	attr_accessor :dump_helper
 	def setCardLimited
 		@card_limited = true
 	end

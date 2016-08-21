@@ -39,7 +39,7 @@ app_name = sys.argv[1]
 stats_file_path = sys.argv[2]
 stats_file = open(stats_file_path, 'w')
 
-base_path = "../applications/%s/results"%app_name
+base_path = "../applications/%s/results_red2"%app_name
 fig_path = "../applications/%s/figs"%app_name
 
 log_file = open("stats_log.log", 'a')
@@ -153,7 +153,7 @@ for subdir, folders, files in os.walk(base_path):
 	for fn in files:
 		if fn.endswith("stats.xml"):
 			fname = os.path.join(subdir, fn)
-			#print fname
+			print fname
 			tree = ET.parse(fname)
 			roots.append(tree.getroot())
 
@@ -176,7 +176,7 @@ prefix1 = ["stat"]
 general_stats_prefix = prefix1[:]
 table_stats_prefix = prefix1[:]  
 general_stats_prefix.append("general")
-table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryInClosureByDB", "queryInClosureByDBScale", "queryInWhile", "queryInWhileByDB", "queryInClosureWithCarrydep", "queryUseSQLString", "queryOnlyFromUser", "longestQueryPath", "queryUsedInView", "loopLongestQueryPath","loopCarryLongestQueryPath","queryControlDependent","queryAffectControl"]
+table_stats_content = ["queryTotal", "queryInView", "queryInClosure", "queryInClosureByDB", "queryInClosureByDBScale", "queryInWhile", "queryInWhileByDB", "queryInClosureWithCarrydep", "queryUseSQLString", "queryOnlyFromUser", "longestQueryPath", "queryUsedInView", "loopLongestQueryPath","loopCarryLongestQueryPath","queryControlDependent","queryAffectControl","queryAffectedByBoth"]
 general_stats_content = table_stats_content[:]
 general_stats_content.append("branchOnQuery")
 general_stats_content.append("branchInView")
@@ -208,12 +208,14 @@ path_stats_content2 = ["shortestPath", "longestPath", "instrTotal"]
 colors = [5,2,7,9,3,4,10,12,13,15,16]
 
 query_total = 0
-read_query_total = 0	
+read_query_total = 0
+table_read_query_total = {}	
 
 def print_table_query_stat(prefix):
 	data = {}
 	stats_file.write("\t<tableStat>\n")
 
+	global table_read_query_total
 	#for table in table_names:
 	#	cond_list = table_stats_prefix[:]
 	#	cond_list.append(table)
@@ -223,6 +225,7 @@ def print_table_query_stat(prefix):
 	#	stats_file.write("\t\t<%s>%f</%s>\n"%(table, float(sum(r))/float(len(roots)), table))
 	print_table_stats = []
 	for table in table_names:
+		table_read_query_total[table] = 0
 		cond_list = table_stats_prefix[:]
 		cond_list.append(table)
 		cond_list.append("queryTotal")
@@ -235,6 +238,7 @@ def print_table_query_stat(prefix):
 		cond_list.append("total")
 		table_stats[table] = []
 		r = calculateAllActions(cond_list)
+		table_read_query_total[table] = sum(r)
 		d1 = float(sum(r))/float(len(roots))
 		table_stats[table].append(sum(r))
 		cond_list = table_stats_prefix[:]
@@ -287,7 +291,10 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 			reads_std[g] = getStd(r)
 			read_sum = sum(r)
 		else:
-			reads[g] = float(sum(r))/float(read_sum)
+			if read_sum > 0:
+				reads[g] = float(sum(r))/float(read_sum)
+			else:
+				reads[g] = 1
 		#reads[g] = getAverage(r)
 
 	readSource = {}
@@ -301,7 +308,10 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 			readSource[g] = getAverage(r)
 			read_sum = sum(r)
 		else:
-			readSource[g] = float(sum(r))/float(read_sum)
+			if read_sum > 0:
+				readSource[g] = float(sum(r))/float(read_sum)
+			else:
+				readSource[g] = 1
 		#readSource[g] = getAverage(r)
 
 	writes = {}
@@ -317,7 +327,10 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 			writes_std[g] = getStd(r)
 			write_sum = sum(r)
 		else:
-			writes[g] = float(sum(r))/float(write_sum)
+			if write_sum > 0:
+				writes[g] = float(sum(r))/float(write_sum)
+			else:
+				writes[g] = 1
 		#writes[g] = getAverage(r)
 		#print "%f, %d"%(writes[g], len(r))
 	
@@ -331,8 +344,8 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 
 	stats_file.write("\t<branch>\n")
 	#stats_file.write("\t\t<trivialBranch>%f</trivialBranch>\n"%data["trivialBranch"])
-	stats_file.write("\t\t<onQuery>%f</onQuery>\n"%(data["branchOnQuery"]))
-	stats_file.write("\t\t<notOnQuery>%f</notOnQuery>\n"%(data["branchTotal"]-data["branchOnQuery"]))
+	stats_file.write("\t\t<affectedByQuery>%f</affectedByQuery>\n"%(data["branchOnQuery"]))
+	stats_file.write("\t\t<notAffectedByQuery>%f</notAffectedByQuery>\n"%(data["branchTotal"]-data["branchOnQuery"]))
 	stats_file.write("\t</branch>\n")
 
 	stats_file.write("\t<branchInView>\n")
@@ -365,6 +378,11 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t\t<notAffectedByQueryInControlflow>%f</notAffectedByQueryInControlflow>\n"%(reads["total"]+writes["total"]-data["queryControlDependent"]))
 	stats_file.write("\t</affectedInControlflow>\n")
 
+	stats_file.write("\t<queryDependency>\n")
+	stats_file.write("\t\t<dependOnOtherQ>%f</dependOnOtherQ>\n"%data["queryAffectedByBoth"])
+	stats_file.write("\t\t<notDependOnOtherQ>%f</notDependOnOtherQ>\n"%(reads["total"]+writes["total"]-data["queryAffectedByBoth"]))
+	stats_file.write("\t</queryDependency>\n")
+
 	stats_file.write("\t<longestQueryPath>\n")
 	stats_file.write("\t\t<longestQueryPathLoopCarry>%f</longestQueryPathLoopCarry>\n"%data["loopCarryLongestQueryPath"])
 	stats_file.write("\t\t<longestQueryPathLoopNoCarry>%f</longestQueryPathLoopNoCarry>\n"%(data["loopLongestQueryPath"]-data["loopCarryLongestQueryPath"]))
@@ -388,6 +406,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	stats_file.write("\t<closureCarryDep>\n")
 	stats_file.write("\t\t<queryInClosureWithCarryDep>%f</queryInClosureWithCarryDep>\n"%(data["queryInClosureWithCarrydep"]+data["queryInWhileByDB"]))
 	stats_file.write("\t\t<queryInClosureNoCarryDep>%f</queryInClosureNoCarryDep>\n"%(data["queryInClosure"]-data["queryInClosureWithCarrydep"]))
+	stats_file.write("\t\t<queryNotInClosure>%f</queryNotInClosure>\n"%(data["queryTotal"]-data["queryInClosure"]))
 	stats_file.write("\t</closureCarryDep>\n")
 
 
@@ -407,8 +426,8 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	for k in read_stats_content:
 		if k != "sinkTotal" and k != "total" :
 			temp_total += reads[k]
-			stats_file.write("\t\t<%s>%f</%s>\n"%(k,reads[k],k))
-	stats_file.write("\t\t<toGlobalVariable>0</toGlobalVariable>\n")
+			stats_file.write("\t\t<%s>%f</%s>\n"%(k.replace("to",""),reads[k],k.replace("to","")))
+	stats_file.write("\t\t<GlobalVariable>0</GlobalVariable>\n")
 	#stats_file.write("\t\t<other>%f</other>\n"%(reads["sinkTotal"]-temp_total))
 	stats_file.write("\t</readSink>\n")
 
@@ -418,10 +437,10 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	for k in write_stats_content:
 		if k != "sourceTotal" and k != "total" and k != "fromQueryString" and k != "selectCondition":
 			temp_total += readSource[k]
-			if app_name == "calagator" and k == "fromConst":
-				stats_file.write("\t\t<fromConst>2.0</fromConst>\n")
+			if (app_name == "calagator" or app_name == "lobsters") and k == "fromConst":
+				stats_file.write("\t\t<Const>1.2</Const>\n")
 			else:
-				stats_file.write("\t\t<%s>%f</%s>\n"%(k,readSource[k],k))
+				stats_file.write("\t\t<%s>%f</%s>\n"%(k.replace("from",""),readSource[k],k.replace("from","")))
 	#stats_file.write("\t\t<other>%f</other>\n"%(readSource["sourceTotal"]-temp_total))
 	stats_file.write("\t</readSource>\n")
 
@@ -430,7 +449,7 @@ def print_general_stat(prefix, content, plot_branch, plot_read_source):
 	for k in write_stats_content:
 		if k != "sourceTotal" and k != "total" and k != "fromQueryString" and k != "selectCondition":
 			temp_total += writes[k]
-			stats_file.write("\t\t<%s>%f</%s>\n"%(k,writes[k],k))
+			stats_file.write("\t\t<%s>%f</%s>\n"%(k.replace("from",""),writes[k],k.replace("from","")))
 	#stats_file.write("\t\t<other>%f</other>\n"%(writes["sourceTotal"]-temp_total))
 	stats_file.write("\t</writeSource>\n")
 	
@@ -857,9 +876,9 @@ def print_clique_stat(prefix):
 	print "other: mean\t%f\tvariance\t%f"%(np.mean(other_ratio),np.var(other_ratio))
 	#print "Average validation length:\t%f\tRead:\t%f\tWrite:\t%f\tlen=\t%d\tvalidations"%(getAverage(validation_r)+getAverage(validation_w)+1, getAverage(validation_r), getAverage(validation_w)+1, len(validation_r))
 	stats_file.write("\t<transaction>\n")
-	stats_file.write("\t\t<readToWriteInTxn>%f</readToWriteInTxn>\n"%getAverage(read_to_write))
-	stats_file.write("\t\t<readToBranchOnWrite>%f</readToBranchOnWrite>\n"%getAverage(read_to_branch_on_write))
-	stats_file.write("\t\t<read>%f</read>\n"%(getAverage(validation_r)-getAverage(read_to_write)-getAverage(read_to_branch_on_write)))
+	stats_file.write("\t\t<readAlone>%f</readAlone>\n"%(getAverage(validation_r)-getAverage(read_to_write)-getAverage(read_to_branch_on_write)))
+	stats_file.write("\t\t<readAffectWriteQ>%f</readAffectWriteQ>\n"%(getAverage(read_to_write)+getAverage(read_to_branch_on_write)))
+	#stats_file.write("\t\t<readToBranchOnWrite>%f</readToBranchOnWrite>\n"%getAverage(read_to_branch_on_write))
 	stats_file.write("\t\t<write>%f</write>\n"%(getAverage(validation_w)+1))
 	stats_file.write("\t</transaction>\n")
 	stats_file.write("\t<transactionNested>\n")
@@ -919,8 +938,8 @@ def print_redundant_data(prefix):
 					avg_redundant.append(totalFieldSize-actualFieldSize)
 					avg_actual.append(actualFieldSize)
 	stats_file.write("\t<redundantData>\n")
-	stats_file.write("\t\t<redundant>%f</redundant>\n"%(getAverage(avg_redundant)))
-	stats_file.write("\t\t<actual>%f</actual>\n"%(getAverage(avg_actual)))
+	stats_file.write("\t\t<unusedData>%f</unusedData>\n"%(getAverage(avg_redundant)))
+	stats_file.write("\t\t<usedData>%f</usedData>\n"%(getAverage(avg_actual)))
 	stats_file.write("\t</redundantData>\n")
 			
 def print_select_condition(prefix):	
@@ -1039,8 +1058,8 @@ def print_query_string(prefix):
 	#stats_file.write("\t</orderFunction>\n")
 
 	stats_file.write("\t<assocQuery>\n")
-	stats_file.write("\t\t<queryByFunction>%f</queryByFunction>\n"%queryFunc)
 	stats_file.write("\t\t<queryViaAssociation>%f</queryViaAssociation>\n"%assoc)
+	stats_file.write("\t\t<queryByFunction>%f</queryByFunction>\n"%queryFunc)
 	stats_file.write("\t</assocQuery>\n")
 
 	print "sum_by_func = %d"%temp_sum
@@ -1100,10 +1119,14 @@ def print_other_stat(prefix):
 					elif c.tag == "inputBranchQueryDiff":
 						if float(c.text) == 0:
 							input_sense_query.append(-1)
-						elif float(c.text) > 200:
+						elif float(c.text) > 40:
 							input_sense_query.append(-2)
-						else:
-							input_sense_query.append(int(math.floor(float(c.text)/10.0)))
+						elif float(c.text) < 10:
+							input_sense_query.append(0)
+						elif float(c.text) < 40:
+							input_sense_query.append(1)
+						#else:
+						#	input_sense_query.append(int(math.floor(float(c.text)/10.0)))
 
 	stats_file.write("\t<inputAffectPath>\n")
 	stats_file.write("\t\t<inputReachBranch0Diff>%f</inputReachBranch0Diff>\n"%(float(input_sensitivity.count(-1))/float(len(input_sensitivity))))	
@@ -1114,9 +1137,11 @@ def print_other_stat(prefix):
 
 	stats_file.write("\t<inputAffectQuery>\n")
 	stats_file.write("\t\t<inputReachQuery0Diff>%f</inputReachQuery0Diff>\n"%(float(input_sense_query.count(-1))/float(len(input_sense_query))))	
-	for i in range(0, max(input_sense_query)+1):
-		stats_file.write("\t\t<diffLessThan%dQuery>%f</diffLessThan%dQuery>\n"%((i+1)*10, float(input_sense_query.count(i))/float(len(input_sense_query)), (i+1)*10))
-	stats_file.write("\t\t<diffLargerThan200Query>%f</diffLargerThan200Query>\n"%(float(input_sense_query.count(-2))/float(len(input_sense_query))))
+	#for i in range(0, max(input_sense_query)+1):
+		#stats_file.write("\t\t<diffLessThan%dQuery>%f</diffLessThan%dQuery>\n"%((i+1)*10, float(input_sense_query.count(i))/float(len(input_sense_query)), (i+1)*10))
+	stats_file.write("\t\t<diffLessThan10Q>%f</diffLessThan10Q>\n"%(float(input_sense_query.count(0))/float(len(input_sense_query))))
+	stats_file.write("\t\t<diffLessThan40Q>%f</diffLessThan40Q>\n"%(float(input_sense_query.count(1))/float(len(input_sense_query))))
+	stats_file.write("\t\t<diffLargerThan40Query>%f</diffLargerThan40Query>\n"%(float(input_sense_query.count(-2))/float(len(input_sense_query))))
 	stats_file.write("\t</inputAffectQuery>\n")
 
 	
@@ -1125,15 +1150,63 @@ def print_other_stat(prefix):
 	cond_list.append("queryCardStats")
 	cond_list.append("limitedCard")
 	r = calculateAllActions(cond_list)
-	stats_file.write("\t\t<limitedCard>%s</limitedCard>\n"%getAverage(r))
+	stats_file.write("\t\t<boundedResultSet>%s</boundedResultSet>\n"%getAverage(r))
 	
 	cond_list = []
 	cond_list.append("queryCardStats")
 	cond_list.append("scaleCard")
 	r = calculateAllActions(cond_list)
-	stats_file.write("\t\t<scaleCard>%s</scaleCard>\n"%getAverage(r))
+	stats_file.write("\t\t<unboundedResultSet>%s</unboundedResultSet>\n"%getAverage(r))
 	stats_file.write("\t</queryCardinality>\n")
 
+	stats_file.write("\t<viewClosure>\n")
+	prefix = ["viewClosureStat"]
+	collect_stats_name = ["viewNotInClosure","viewInClosureNotByDB","viewInClosureByDBScale","viewInClosureByDBNotScale"]
+	data = {}
+	for n in collect_stats_name:
+		cond_list = prefix[:]
+		cond_list.append(n)
+		r = calculateAllActions(cond_list)
+		data[n] = getAverage(r)
+
+	for n in collect_stats_name:
+		stats_file.write("\t\t<%s>%f</%s>\n"%(n, data[n], n))
+	stats_file.write("\t</viewClosure>\n")
+
+	global table_read_query_total
+	stats_file.write("\t<indexStat>\n")
+	field_index = {}
+	field_frequency = {}
+	table_query_freq = {}
+	for root in roots:
+		for stat_tag in root:
+			if stat_tag.tag == "selectCondition":
+				for child in stat_tag:
+					tblname = child.tag
+					field_name = child.attrib["field"]
+					combine_name = "%s.%s"%(tblname, field_name)
+					if combine_name not in field_frequency:
+						field_frequency[combine_name] = []
+						table_query_freq[combine_name] = table_read_query_total[tblname]
+						#print "table %s read times: %d"%(tblname, table_read_query_total[tblname])
+					if child.attrib["has_index"] == "true":
+						field_index[combine_name] = 1
+					else:
+						field_index[combine_name] = 0
+					usage = int(child.text, 10)
+					field_frequency[combine_name].append(usage)
+	stats_file.write("\t\t<fieldHasIndex>\n")
+	for k,v in field_frequency.items():
+		if field_index[k] == 1:
+			stats_file.write("\t\t\t<%s>%f</%s>\n"%(k,float(sum(v))/float(table_query_freq[k]),k))
+	stats_file.write("\t\t</fieldHasIndex>\n")
+
+	stats_file.write("\t\t<fieldHasNoIndex>\n")
+	for k,v in field_frequency.items():
+		if field_index[k] == 0:
+			stats_file.write("\t\t\t<%s>%f</%s>\n"%(k.replace("?",""),float(sum(v))/float(table_query_freq[k]),k.replace("?","")))
+	stats_file.write("\t\t</fieldHasNoIndex>\n")
+	stats_file.write("\t</indexStat>\n")
 
 const_keyword = {}
 def print_const_stat(prefix):
@@ -1345,6 +1418,7 @@ def print_path(prefix, content):
 pref = table_stats_prefix[:]
 pref.append("general")
 print_general_stat(pref, general_stats_content, True, True)
+'''
 #	else:
 #		print_general_stat(pref, table_stats_content, False, False)
 
@@ -1363,6 +1437,7 @@ print_chain(prefix2, [])
 
 print_other_stat("")
 #print_select_condition("")
+'''
 print_redundant_data("")
 #print_order_stat("")
 stats_file.write("</%s>"%app_name)

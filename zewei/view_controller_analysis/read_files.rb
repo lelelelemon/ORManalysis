@@ -2,25 +2,36 @@ require "optparse"
 require "unicode"
 load "data_structure.rb"
 
+#TBD: define $app_dir
+
 def load_all_controllers_from_path(controller_path)
 	controller_hash = Hash.new
-	Dir.glob(controller_path + "**/*") do |item|
-		next if not item.end_with?"_controller.rb"
-#    puts item
-		controller = Controller_Class.new(item, controller_path)
-		controller_hash[controller.get_controller_name] = controller
-
+	root, files, dirs = os_walk($app_dir)
+	for filename in files
+		# What about helper functions??
+		if filename.to_s.end_with?("_controller.rb")
+			item = filename.to_s
+			controller = Controller_Class.new(item, controller_path)
+			controller_hash[controller.get_controller_name] = controller
+		end
 	end
+#	Dir.glob(controller_path + "**/*") do |item|
+#		next if not item.end_with?"_controller.rb"
+##    puts item
+#		controller = Controller_Class.new(item, controller_path)
+#		controller_hash[controller.get_controller_name] = controller
+#
+#	end
 
-  if $lib_controller_path
-    puts "start loading controllers from the library"
-    Dir.glob($lib_controller_path + "**/*") do |item|
-      next if not item.end_with?"_controller.rb"
- #     puts item
-      controller = Controller_Class.new(item, $lib_controller_path)
-      controller_hash[controller.get_controller_name] = controller
-    end
-  end
+#  if $lib_controller_path
+#    puts "start loading controllers from the library"
+#    Dir.glob($lib_controller_path + "**/*") do |item|
+#      next if not item.end_with?"_controller.rb"
+# #     puts item
+#      controller = Controller_Class.new(item, $lib_controller_path)
+#      controller_hash[controller.get_controller_name] = controller
+#    end
+#  end
 	return controller_hash
 end
 
@@ -43,8 +54,12 @@ end
 
 def load_all_views_from_path(view_path)
 	view_hash = Hash.new
-	Dir.glob(view_path + "**/*") do |item|
-		next if not item.end_with?(".erb", ".rjs", "jbuilder")
+#	Dir.glob(view_path + "**/*") do |item|
+#		next if not item.end_with?(".erb", ".rjs", "jbuilder")
+	root, files, dirs = os_walk($view_dir)
+	for filename in files
+		next if not filename.to_s.end_with?(".erb", ".rjs", "jbuilder")
+		item = filename.to_s
 	#  puts item
     view_class = View_Class.new(item, view_path)
 		key = view_class.get_controller_name + "_" + view_class.get_view_name
@@ -57,18 +72,18 @@ def load_all_views_from_path(view_path)
     end
   end
 
-  if $lib_view_path
-    Dir.glob($lib_view_path + "**/*") do |item|
-      next if not item.end_with?(".erb", ".rjs", "jbuilder")
-  #    puts item
-      view_class = View_Class.new(item, $lib_view_path)
-      key = view_class.get_controller_name + "_" + view_class.get_view_name
-      view_hash[key] = view_class
-      _key = key.gsub "__", "_"
-      if not view_hash.has_key? _key
-        view_hash[_key] = view_class
-      end
-    end
+#  if $lib_view_path
+#    Dir.glob($lib_view_path + "**/*") do |item|
+#      next if not item.end_with?(".erb", ".rjs", "jbuilder")
+#  #    puts item
+#      view_class = View_Class.new(item, $lib_view_path)
+#      key = view_class.get_controller_name + "_" + view_class.get_view_name
+#      view_hash[key] = view_class
+#      _key = key.gsub "__", "_"
+#      if not view_hash.has_key? _key
+#        view_hash[_key] = view_class
+#      end
+#    end
 
   end
 
@@ -102,18 +117,27 @@ def controller_print_all_controllers_render_replaced(controller_path, view_path,
 	print_view_hash view_hash
 
 	controller_hash.each do |item_path, controller_class|
-		nested_path = get_nested_path(controller_class.get_controller_name)
-		filename = get_filename_from_path(controller_class.get_controller_name)
-		if not File.directory?(new_controller_path + nested_path)
-			FileUtils.mkdir_p new_controller_path + nested_path
+		#nested_path = get_nested_path(controller_class.get_controller_name)
+		#filename = get_filename_from_path(controller_class.get_controller_name)
+		#if not File.directory?(new_controller_path + nested_path)
+		#	FileUtils.mkdir_p new_controller_path + nested_path
+		#end
+		#controller_file_path = new_controller_path + nested_path + filename + "_controller.rb"
+		orig_file_path = controller_class.get_path
+		merged_file_path = orig_file_path.gsub("controllers","merged_controllers")
+		if Dir.exists?("#{$app_dir}/merged_controllers")
+			system("mkdir #{$app_dir}/merged_controllers")
 		end
-		controller_file_path = new_controller_path + nested_path + filename + "_controller.rb"
+		if orig_file_path[0..orig_file_path.rindex("/")-1].end_with?("controllers")
+		else
+			system("mkdir #{merged_file_path[0..merged_file_path.rindex("/")-1]}")
+		end
 		res = controller_class.get_content
 		controller_class.get_functions.each do |k, v|
 			res = res.gsub(v.get_content){v.replace_render_statements(view_hash, controller_hash)}
 		end
 
-		File.write(controller_file_path, res)
+		File.write(merged_file_path, res)
 	end
 end
 
@@ -474,6 +498,7 @@ elsif options[:render]
 elsif options[:view]
 	print_links_in_all_views($view_path, $controller_path)	
 elsif options[:controller] and options[:all]
+	#THIS IS THE MOST IMPORTANT FUNCTION
 	controller_print_all_controllers_render_replaced($controller_path, $view_path, $new_controller_path)
 elsif options[:controller]
 	controller_print_links_controller_view_recursively($view_path, $controller_path, $new_view_path)

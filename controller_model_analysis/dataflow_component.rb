@@ -178,6 +178,11 @@ class Instruction
 	def toString2
 		s = ""
 		return s
+	end
+	def toString3
+		meth = self.getBB.getCFG.getMHandler
+		s = "[#{meth.getCallerClass.getName}.#{meth.getName}] (#{@bb.getIndex}.#{@index})" 
+		return s
 	end 
 end
 
@@ -384,6 +389,47 @@ class Call_instr < Instruction
 		return s
 		#return s.tr(']', ')').tr('[', '(').tr('<', '(').tr('>', ')')
 	end
+	def toString3
+#		s = "#{@caller}->#{@funcname} "
+		s = super
+		if @call_handler != nil
+			s = s + " #{@call_handler.toString}"
+		else
+			s = s + " #{@caller} -> #{@funcname}"
+		end
+		if self.isQuery
+			hashes = Array.new
+			consts = Array.new
+			self.symbols.each do |s|
+				hashes.push(s)
+			end
+			self.getDeps.each do |dep|
+				if dep.getInstrHandler and dep.getInstrHandler.instance_of?HashField_instr
+					dep.getInstrHandler.hash_fields.each do |h|
+						hashes.push(h)
+					end	
+				elsif dep.getInstrHandler and dep.getInstrHandler.instance_of?Copy_instr
+					consts.push(dep.getInstrHandler.const_string) unless dep.getInstrHandler.const_string == nil
+				end
+			end
+			if hashes.length > 0
+				s += "\thashes: ["
+				hashes.each do |h|
+					s += "#{h}, "
+				end
+				s += "]; "
+			end
+			if consts.length > 0
+				s += "\tconst_string: ["
+				consts.each do |c|
+					s += "#{c}, "
+				end
+				s += "]; "
+			end
+		end
+		return s
+	end
+
 end
 
 class Const_instr < Instruction

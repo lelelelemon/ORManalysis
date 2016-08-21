@@ -28,3 +28,33 @@ def calculate_query_issue_stat(cfg, class_instance)
 	end
 
 end
+
+$table_query_hash = Hash.new
+def calculate_table_query_stat(cfg)
+	if cfg
+		cfg.getBB.each do |bb|
+			bb.getInstr.each do |instr|
+				if instr.hasClosure?
+					calculate_table_query_stat(instr.getClosure)
+				end
+				if instr.isQuery
+					table_name = instr.getTableName
+					if table_name
+						$table_query_hash[table_name] = Array.new unless $table_query_hash[table_name]	
+						$table_query_hash[table_name].push(instr)
+					end	
+				end
+			end
+		end
+	end
+end
+
+def print_table_query_stat
+	$table_query_hash.each do |k,v|
+		$table_query_file.puts "\n++++++++++++++++++++"
+		$table_query_file.puts "Table #{k}:  (#{v.length})"
+		v.each do |instr|
+			$table_query_file.puts "\t#{instr.toString3}"
+		end
+	end
+end

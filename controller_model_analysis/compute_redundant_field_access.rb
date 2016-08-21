@@ -5,7 +5,7 @@ def compute_redundant_usage
 			@qr = trace_query_result(n)
 			str = ""
 			if @qr and n.getInstr.getTableName and @qr != "int"
-				print_single_redundant_usage(n.getInstr.getTableName, @qr) 
+				print_single_redundant_usage(n.getInstr.getTableName, @qr, n) 
 				if @qr.include?"ALL_FIELDS" and $class_map[n.getInstr.getTableName]
 					$class_map[n.getInstr.getTableName].getTableFields.each do |f|
 						add_used_field_to_chained_query(n, f.field_name)
@@ -233,7 +233,7 @@ def get_field_size(field)
 	return field_size
 end
 
-def print_single_redundant_usage(class_name, r)
+def print_single_redundant_usage(class_name, r, query_node)
 	if $class_map[class_name] == nil
 		return
 	end
@@ -246,11 +246,21 @@ def print_single_redundant_usage(class_name, r)
 	if r.include?"ALL_FIELDS"
 		$graph_file.puts("\t<#{class_name} totalFieldSize=\"#{total_field_size}\">#{total_field_size}<\/#{class_name}>")
 		puts("\t<#{class_name} totalFieldSize=\"#{total_field_size}\">#{total_field_size}<\/#{class_name}>")
+		$class_map[class_name].getTableFields.each do |f|
+			if get_field_size(f) >= 2400
+				$temp_file.puts "Large Redundant Field: #{class_name}.#{f.field_name}, in query #{query_node.getInstr.toString}, used = true"
+			end
+		end	
 	else
 		@r.each do |inner_r|
 			$class_map[class_name].getTableFields.each do |f|
+				used = false
 				if f.field_name == inner_r
 					actual_used_size += get_field_size(f)
+					used = true
+				end
+				if get_field_size(f) >= 2400
+					$temp_file.puts "Large Redundant Field: #{class_name}.#{f.field_name}, in query #{query_node.getInstr.toString}, used = #{used}"
 				end
 			end
 		end

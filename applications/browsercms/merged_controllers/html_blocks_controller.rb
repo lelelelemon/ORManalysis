@@ -1,2 +1,0 @@
-  class HtmlBlocksController < ContentBlockController
-  end
