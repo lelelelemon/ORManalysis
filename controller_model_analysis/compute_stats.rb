@@ -1,8 +1,3 @@
-$QNODECOLOR = "coral1"
-$USERINPUTCOLOR = "bisque2"
-$READQCOLOR = "chartreuse4"
-$WRITEQCOLOR = "lightskyblue1"
-
 
 def compute_dataflow_stat(output_dir, start_class, start_function, build_node_list_only=false)
 
@@ -27,7 +22,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			n.getValidationStack.each do |v|
 				str += "#{v.getIndex}, "
 			end
-			$temp_file.puts "\t * \t validation #{str}"
+			#$temp_file.puts "\t * \t transaction #{str}"
 		end
 		#if n.getInClosure
 		#	if n.getInView and n.getClosureStack.length == 1
@@ -55,7 +50,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		end
 		n.getDataflowEdges.each do |e|
 			if e.getToNode != nil
-				$temp_file.puts "\t\t -> [#{e.getVname}] #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
+				#$temp_file.puts "\t\t -> [#{e.getVname}] #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
 			else
 				#puts "\t\t <- params"
 			end
@@ -153,7 +148,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$node_list.each do |n|
 		if n.isQuery?
 			if test_in_while_loop(n)
-				$temp_file.puts " +++ query #{n.getIndex} in while loop"
+				#$temp_file.puts " +++ query #{n.getIndex} in while loop"
 			end
 			n.getValidationStack.each do |vl|
 				if @validation_stat[vl]
@@ -206,11 +201,24 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$WRITEQCOLOR}, label=\"#{n.getInstr.getTableName}\"];"
 			end
 		elsif n.getInstr.getFromUserInput
-			$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$USERINPUTCOLOR}];"
+			$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$USERINPUTCOLOR}, label=\"instr#{n.getIndex}_user_input\"];"
 		end
 	end
 
 	$node_list.each do |n|
+
+		if n.getInstr.getFromUserInput
+			@forwardarray = traceforward_data_dep(n)
+			@forwardarray.each do |n1|
+				if n1.isBranch?
+					$node_list.each do |n2|
+						if n2.isQuery? and n2.getIndex > n.getIndex and is_in_controlflow_range(n2, n1)
+							$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n2.getIndex}\" [color=#{$CONTROLEDGECOLOR} label=\"control\"];"
+						end
+					end
+				end
+			end
+		end
 
 		if n.isQuery?
 			if $class_map[n.getInstr.getClassName]
@@ -271,7 +279,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						@general_stat.in_loop_has_carrydep += 1
 						@table_general_stat[@table_name].in_loop_has_carrydep += 1
 					end
-					$temp_file.puts "query #{n.getIndex} in closure : #{str}"
+					#$temp_file.puts "query #{n.getIndex} in closure : #{str}"
 
 				end
 				if n.getInstr.in_view#n.getInView
@@ -296,7 +304,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						@general_stat.in_while_by_db += 1
 						@table_general_stat[@table_name].in_while_by_db += 1
 				end
-				$temp_file.puts "query #{n.getIndex} in while loop : #{str}"
+				#$temp_file.puts "query #{n.getIndex} in while loop : #{str}"
 			end
 			if n.isReadQuery?
 				if check_scope_query_string(n)
@@ -334,7 +342,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						end
 					elsif is_chained_query(n)==nil
 						cnt_not_materialized_query += 1
-						$temp_file.puts("Query #{n.getIndex} result not materialized")
+						#$temp_file.puts("Query #{n.getIndex} result not materialized")
 					end
 				end
 				#self_v_name = nil
@@ -435,6 +443,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							$node_list.each do |n2|
 								if n2.isQuery? and n2.getIndex > n.getIndex and is_in_controlflow_range(n2, n1)
 									#@query_length_graph[n].push(n2) unless @query_length_graph[n].include?n2
+									$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n2.getIndex}\" [color=#{$CONTROLEDGECOLOR} label=\"control\"];"
 									@query_affect_controlflow[n].push(n2) unless @query_affect_controlflow[n].include?(n2)
 									#$temp_file.puts "#{n2.getIndex} is in the control flow range of #{n.getIndex} by branch node #{n1.getIndex}"
 								end
@@ -513,7 +522,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							elsif isSelectCondition(n1)
 								@read_source_stat.from_select_condition += 1
 							else
-								$temp_file.puts " x (#{n.getIndex} From copy const #{n1.getIndex}: #{n1.getInstr.toString})"
+								#$temp_file.puts " x (#{n.getIndex} From copy const #{n1.getIndex}: #{n1.getInstr.toString})"
 								@read_source_stat.from_const += 1
 								analyzeConstSource(n1, @const_stat)
 							end
@@ -529,7 +538,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				end
 				if @only_from_user_input
 					@singleQ_stat.only_from_user_input += 1
-					$temp_file.puts "# query #{n.getIndex} only uses user input"
+					#$temp_file.puts "# query #{n.getIndex} only uses user input"
 				end
 				if @used_query_string
 					@general_stat.use_query_string += 1
@@ -571,7 +580,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								@table_write_stat[@table_name].from_select_condition += 1
 							elsif isConstSource(n1)
 								has_source = true
-								$temp_file.puts " x (#{n.getIndex} From copy const #{n1.getIndex}: #{n1.getInstr.toString})"
+								#$temp_file.puts " x (#{n.getIndex} From copy const #{n1.getIndex}: #{n1.getInstr.toString})"
 								@write_source_stat.from_const += 1
 								analyzeConstSource(n1, @const_stat)
 								@table_write_stat[@table_name].from_const += 1

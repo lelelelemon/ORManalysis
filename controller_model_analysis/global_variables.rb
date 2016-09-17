@@ -109,4 +109,10 @@ $cfg_map = Hash.new
 $cur_bb = nil
 #==============================
 
-
+#============================Color definition for query flow graph===============
+$QNODECOLOR = "coral1"
+$USERINPUTCOLOR = "bisque2"
+$READQCOLOR = "chartreuse4"
+$WRITEQCOLOR = "lightskyblue1"
+$CONTROLEDGECOLOR = "grey"
+#==============================
