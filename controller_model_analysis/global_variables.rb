@@ -115,4 +115,5 @@ $USERINPUTCOLOR = "bisque2"
 $READQCOLOR = "chartreuse4"
 $WRITEQCOLOR = "lightskyblue1"
 $CONTROLEDGECOLOR = "grey"
+$graph_print_control_edge = false
 #==============================

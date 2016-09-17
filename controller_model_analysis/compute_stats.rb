@@ -194,12 +194,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$vis_file.puts "digraph \"QGraph\" {"
 	$vis_file.puts "node [ style = filled ];"
 	$node_list.each do |n|
+		#for each query node
 		if n.isQuery?
 			if n.isReadQuery?
 				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$READQCOLOR}, label=\"#{n.getInstr.getTableName}\"];"
 			else
 				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$WRITEQCOLOR}, label=\"#{n.getInstr.getTableName}\"];"
 			end
+		#for each user input node
 		elsif n.getInstr.getFromUserInput
 			$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$USERINPUTCOLOR}, label=\"instr#{n.getIndex}_user_input\"];"
 		end
@@ -207,13 +209,14 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	$node_list.each do |n|
 
-		if n.getInstr.getFromUserInput
+		if n.getInstr.getFromUserInput and $graph_print_control_edge
 			@forwardarray = traceforward_data_dep(n)
 			@forwardarray.each do |n1|
 				if n1.isBranch?
 					$node_list.each do |n2|
+						#user input node n affect a branch n1, and query node n2 is control-dependent on branch n1
 						if n2.isQuery? and n2.getIndex > n.getIndex and is_in_controlflow_range(n2, n1)
-							$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n2.getIndex}\" [color=#{$CONTROLEDGECOLOR} label=\"control\"];"
+							$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n2.getIndex}\" [color=#{$CONTROLEDGECOLOR}];"
 						end
 					end
 				end
@@ -407,6 +410,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						#@table_read_stat[@table_name].sink_total += 1
 						#@read_sink_stat.sink_total += 1
 					if n1.isQuery?
+						#dataflow from query node n to query node n1
 						$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n1.getIndex}\";"						
 
 						if @query_length_graph[n].include?(n1)
@@ -443,7 +447,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							$node_list.each do |n2|
 								if n2.isQuery? and n2.getIndex > n.getIndex and is_in_controlflow_range(n2, n1)
 									#@query_length_graph[n].push(n2) unless @query_length_graph[n].include?n2
-									$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n2.getIndex}\" [color=#{$CONTROLEDGECOLOR} label=\"control\"];"
+									if $graph_print_control_edge
+										#result of query n affect branch n1, and query n2 is control-dependent on branch n1
+										$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n2.getIndex}\" [color=#{$CONTROLEDGECOLOR}];"
+									end
 									@query_affect_controlflow[n].push(n2) unless @query_affect_controlflow[n].include?(n2)
 									#$temp_file.puts "#{n2.getIndex} is in the control flow range of #{n.getIndex} by branch node #{n1.getIndex}"
 								end
@@ -498,6 +505,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				traceback_data_dep(n).each do |n1|
 					if n1.instance_of?Dataflow_edge
 					elsif n1.getInstr.getFromUserInput
+						#user input n1 is used as param in query n
 						$vis_file.puts "\t\"n#{n1.getIndex}\" -> \"n#{n.getIndex}\";"
 					end
 
