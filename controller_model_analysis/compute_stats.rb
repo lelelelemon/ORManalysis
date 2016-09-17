@@ -1,8 +1,8 @@
 $QNODECOLOR = "coral1"
-$USERINOUTCOLOR = "cyan3"
+$USERINPUTCOLOR = "bisque2"
 $READQCOLOR = "chartreuse4"
 $WRITEQCOLOR = "lightskyblue1"
-$
+
 
 def compute_dataflow_stat(output_dir, start_class, start_function, build_node_list_only=false)
 
@@ -197,12 +197,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 
 	$vis_file.puts "digraph \"QGraph\" {"
+	$vis_file.puts "node [ style = filled ];"
 	$node_list.each do |n|
 		if n.isQuery?
 			if n.isReadQuery?
-				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$READQCOLOR}];"
+				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$READQCOLOR}, label=\"#{n.getInstr.getTableName}\"];"
 			else
-				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$WRITEQCOLOR}];"
+				$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$WRITEQCOLOR}, label=\"#{n.getInstr.getTableName}\"];"
 			end
 		elsif n.getInstr.getFromUserInput
 			$vis_file.puts "\t\"n#{n.getIndex}\" [color=#{$USERINPUTCOLOR}];"
@@ -486,7 +487,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					@read_source_stat.from_select_condition += 1
 				end 
 				traceback_data_dep(n).each do |n1|
-					if n1.getInstr.getFromUserInput
+					if n1.instance_of?Dataflow_edge
+					elsif n1.getInstr.getFromUserInput
 						$vis_file.puts "\t\"n#{n1.getIndex}\" -> \"n#{n.getIndex}\";"
 					end
 

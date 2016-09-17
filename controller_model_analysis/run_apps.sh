@@ -18,10 +18,10 @@ function run_single_app () {
 	#cd ~/ruby_source/ORM_analysis/applications/
 	#python generate_dataflow.py ${app} >> logs/${app}_log.log
 	
-	rm -rf results
-	mkdir results
+	#rm -rf results
+	#mkdir results
 	cd ~/ruby_source/ORM_analysis/controller_model_analysis
-	ruby main.rb -b -d ../applications/${app} &> ${app}_red.log
+	ruby main.rb -a -d ../applications/${app} &> ${app}.log
   echo "Finish app ${app}"
 }
 

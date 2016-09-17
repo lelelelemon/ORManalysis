@@ -414,7 +414,8 @@ if options[:run_all]
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w")
-		$vis_file = File.open("#{$output_dir}/qgraph_vis.gv", "w")
+		vis_file_name = "#{$output_dir}/qgraph_vis.gv"
+		$vis_file = File.open(vis_file_name, "w")
 		$temp_file = File.open("#{$output_dir}/trace.log","w")
 		if options[:dump_graph]
 			trace_query_flow(start_class, start_function, "", "", 0)
@@ -438,6 +439,11 @@ if options[:run_all]
 		$query_edges = Array.new
 
 		compute_dataflow_stat($output_dir, start_class, start_function)
+		
+		$vis_file.close
+		system "dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
+
+		puts "command : dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
 		puts "+++ Take time: #{time_diff(Time.now, time1)} +++"
 	#start print overlap between current and next controller actions
 		next_file = nil
