@@ -50,7 +50,7 @@ load 'compute_dataflow_chain_stat.rb'
 load 'compute_redundant_field_access.rb'
 load 'compute_select_condition.rb'
 
-load 'dump_graph.rb'
+#load 'dump_graph.rb'
 
 #Static count:
 load 'static_code_analysis.rb'
