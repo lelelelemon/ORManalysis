@@ -1,0 +1,185 @@
+SET IRMethod, name = cms_attachment_manager instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: HASH-as- def_%v_3 
+		 7: %self->input def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:attachments,	 ARGS:Symbol,%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = cms_tag_list instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_options 
+		 6: options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "Tags" def_%v_4 
+		 2: COPY TYPE_StringLiteral "off" def_%v_5 
+		 3: HASH-autocomplete- def_%v_6 %v_5[4.2,] 
+		 4: COPY TYPE_StringLiteral "A space separated list of tags." def_%v_7 
+		 5: HASH-as-label-input_html-hint- def_%v_8 %v_4[4.1,] %v_6[4.3,] %v_7[4.4,] 
+		 6: %self->input def_%v_9 %self[2.0,] %v_8[4.5,] 	 SYMBOL:tag_list,	 ARGS:Symbol,%v_8,
+		 7: RETURN %v_9[4.6,] %self[4.6,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = cms_error_messages instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->object def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->respond_to? def_%v_4 %v_3[2.6,] 	 SYMBOL:errors,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->object def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_5->errors def_%v_6 %v_5[3.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_6->any? def_%v_7 %v_6[3.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%v_4 %v_7[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_4[3.3,2.7,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+		 1: 
+		 2: COPY TYPE_StringLiteral "" def_%v_9 
+		 3: COPY TYPE_PASS def_errors_list %v_9[5.2,] 
+		 4: 
+		 5: GETFIELD %self->template def_%v_10 %self[2.0,] 
+		 6: %self->object def_%v_11 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_11->errors def_%v_12 %v_11[5.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_12->size def_%v_13 %v_12[5.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral " error prohibited this " def_%v_14 
+		 10: %self->object_name def_%v_15 %self[5.6,2.0,] 	 SYMBOL:	 ARGS:
+		 11: %v_15->humanize def_%v_16 %v_15[5.10,] 	 SYMBOL:	 ARGS:
+		 12: COPY TYPE_StringLiteral " from being saved." def_%v_17 
+		 13: BUILDSTRING def_%v_18 %v_13[5.8,] %v_14[5.9,] %v_16[5.11,] %v_17[5.12,] 
+		 14: %v_18->html_safe def_%v_19 %v_18[5.13,] 	 SYMBOL:	 ARGS:
+		 15: %v_10->content_tag def_%v_20 %v_10[5.5,] %v_19[5.14,] 	 SYMBOL:h2,	 ARGS:Symbol,%v_19,
+		 16: errors_list-><< def_%v_21 errors_list[5.3,] %v_20[5.15,] 	 SYMBOL:	 ARGS:%v_20,
+		 17: 
+		 18: GETFIELD %self->template def_%v_22 %self[5.6,5.10,2.0,] 
+		 19: COPY TYPE_StringLiteral "There were problems with the following fields:" def_%v_23 
+		 20: %v_22->content_tag def_%v_24 %v_22[5.18,] %v_23[5.19,] 	 SYMBOL:p,	 ARGS:Symbol,%v_23,
+		 21: errors_list-><< def_%v_25 errors_list[5.3,5.16,] %v_24[5.20,] 	 SYMBOL:	 ARGS:%v_24,
+		 22: 
+		 23: GETFIELD %self->template def_%v_26 %self[5.6,5.10,2.0,] 
+		 24: %self->object def_%v_27 %self[5.6,5.10,2.0,] 	 SYMBOL:	 ARGS:
+		 25: %v_27->errors def_%v_28 %v_27[5.24,] 	 SYMBOL:	 ARGS:
+		 26: %v_28->full_messages def_%v_29 %v_28[5.25,] 	 SYMBOL:	 ARGS:
+		 27: %v_29->map def_%v_30 %v_29[5.26,] %self[5.6,5.10,5.24,2.0,] 	 SYMBOL:	 ARGS:%v_29,
+CLOSURE BEGIN: %self[5.6,5.10,5.24,2.0,] message[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_message 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->template def_%cl_1_3 %self[2.0,] 
+		 2: %cl_1_3->content_tag def_%cl_1_4 %cl_1_3[3.1,] message[2.2,] 	 SYMBOL:li,	 ARGS:Symbol,message,
+		 3: %cl_1_4->html_safe def_%cl_1_5 %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: RETURN %cl_1_5[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 28: COPY TYPE_StringLiteral "
+" def_%v_31 
+		 29: %v_30->join def_%v_32 %v_30[5.27,] %v_31[5.28,] 	 SYMBOL:	 ARGS:%v_31,
+		 30: %v_32->html_safe def_%v_33 %v_32[5.29,] 	 SYMBOL:	 ARGS:
+		 31: %v_26->content_tag def_%v_34 %v_26[5.23,] %v_33[5.30,] 	 SYMBOL:ul,	 ARGS:Symbol,%v_33,
+		 32: %v_34->html_safe def_%v_35 %v_34[5.31,] 	 SYMBOL:	 ARGS:
+		 33: errors_list-><< def_%v_36 errors_list[5.3,5.16,5.21,] %v_35[5.32,] 	 SYMBOL:	 ARGS:%v_35,
+		 34: 
+		 35: GETFIELD %self->template def_%v_37 %self[5.6,5.10,5.24,2.0,] 
+		 36: errors_list->html_safe def_%v_38 errors_list[5.3,5.16,5.21,5.33,] 	 SYMBOL:	 ARGS:
+		 37: COPY TYPE_StringLiteral "errorExplanation" def_%v_39 
+		 38: COPY TYPE_StringLiteral "errorExplanation" def_%v_40 
+		 39: HASH-class-id- def_%v_41 %v_39[5.37,] %v_40[5.38,] 
+		 40: %v_37->content_tag def_%v_42 %v_37[5.35,] %v_38[5.36,] %v_41[5.39,] 	 SYMBOL:div,	 ARGS:Symbol,%v_38,%v_41,
+		 41: RETURN %v_42[5.40,] %self[5.6,5.10,5.24,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -1,0 +1,165 @@
+SET IRMethod, name = create instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Comment) def_%v_3 
+		 7: %self->comment_params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: COPY TYPE_PASS def_comment %v_5[2.8,] 
+		 10: 
+		 11: GETFIELD %self->logged_in def_%v_6 %self[2.0,2.7,] 
+		 12: %v_5->commentable def_%v_7 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 13: %v_6->can_read? def_%v_8 %v_6[2.11,] %v_7[2.12,] 	 SYMBOL:	 ARGS:%v_7,
+		 14: BRANCH %v_8[2.13,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: comment->save def_%v_9 comment[2.9,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_9[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "comments.saved" def_%v_11 
+		 3: %self->t def_%v_12 %self[4.1,2.0,] %v_11[4.2,] 	 SYMBOL:	 ARGS:%v_11,
+		 4: ATTRASSIGN %v_10->[] %v_12[4.3,] 
+		 5: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_13 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: comment->errors def_%v_14 comment[2.9,] 	 SYMBOL:	 ARGS:
+		 3: %v_14->values def_%v_15 %v_14[5.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral ". " def_%v_16 
+		 5: %v_15->join def_%v_17 %v_15[5.3,] %v_16[5.4,] 	 SYMBOL:	 ARGS:%v_16,
+		 6: ATTRASSIGN %v_13->[] %v_17[5.5,] 
+		 7: COPY TYPE_PASS def_%v_12 %v_17[5.5,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->redirect_back def_%v_18 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_18[6.1,] %self[6.1,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "comments.object_not_found" def_%v_19 
+		 2: comment->commentable def_%v_20 comment[2.9,] 	 SYMBOL:	 ARGS:
+		 3: %v_20->class def_%v_21 %v_20[7.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_21->name def_%v_22 %v_21[7.3,] 	 SYMBOL:	 ARGS:
+		 5: HASH-name- def_%v_23 %v_22[7.4,] 
+		 6: %self->t def_%v_24 %self[2.0,] %v_19[7.1,] %v_23[7.5,] 	 SYMBOL:	 ARGS:%v_19,%v_23,
+		 7: HASH-text-layout-status- def_%v_25 %v_24[7.6,] 
+		 8: %self->render def_%v_26 %self[7.6,2.0,] %v_25[7.7,] 	 SYMBOL:	 ARGS:%v_25,
+		 9: RETURN %v_26[7.8,] %self[7.6,7.8,2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Comment) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->comment %v_6[2.9,] 
+		 11: 
+		 12: GETFIELD %self->logged_in def_%v_7 %self[2.0,2.7,] 
+		 13: GETFIELD %self->comment def_%v_8 %self[2.0,2.7,2.10,] 
+		 14: %v_7->can_update? def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 SYMBOL:	 ARGS:%v_8,
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->comment def_%v_10 %self[2.0,2.10,] 
+		 2: %v_10->destroy def_%v_11 %v_10[3.1,] 	 SYMBOL:	 ARGS:
+		 3: 
+		 4: %self->flash def_%v_12 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral "comments.deleted" def_%v_13 
+		 6: %self->t def_%v_14 %self[3.4,2.0,2.10,] %v_13[3.5,] 	 SYMBOL:	 ARGS:%v_13,
+		 7: ATTRASSIGN %v_12->[] %v_14[3.6,] 
+		 8: 
+		 9: %self->redirect_back def_%v_15 %self[3.4,3.6,2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 10: RETURN %v_15[3.9,] %self[3.4,3.6,3.9,2.0,2.10,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "comments.not_authorized" def_%v_16 
+		 2: %self->t def_%v_17 %self[2.0,2.10,] %v_16[4.1,] 	 SYMBOL:	 ARGS:%v_16,
+		 3: HASH-text-layout-status- def_%v_18 %v_17[4.2,] 
+		 4: %self->render def_%v_19 %self[4.2,2.0,2.10,] %v_18[4.3,] 	 SYMBOL:	 ARGS:%v_18,
+		 5: RETURN %v_19[4.4,] %self[4.2,4.4,2.0,2.10,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = comment_params instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:comment,	 ARGS:Symbol,
+		 8: GETFIELD %self->logged_in def_%v_5 %self[2.0,2.6,] 
+		 9: %v_5->id def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: HASH-person_id- def_%v_7 %v_6[2.9,] 
+		 11: %v_4->merge! def_%v_8 %v_4[2.7,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: 
+		 13: %self->params def_%v_9 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 14: %v_9->require def_%v_10 %v_9[2.13,] 	 SYMBOL:comment,	 ARGS:Symbol,
+		 15: %v_10->permit def_%v_11 %v_10[2.14,] 	 SYMBOL:text,commentable_id,commentable_type,person_id,	 ARGS:Symbol,Symbol,Symbol,Symbol,
+		 16: RETURN %v_11[2.15,] %self[2.0,2.6,2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

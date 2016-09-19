@@ -1,0 +1,1646 @@
+SET IRMethod, name = included instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_model_class 
+		 6: 
+		 7: (MacroMethods) def_%v_3 
+		 8: model_class->extend def_%v_4 model_class[2.5,] %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: RETURN %v_4[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = has_dynamic_attributes? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->has_dynamic_attributes def_%v_3 %self[2.0,] 
+		 7: %v_3->! def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->! def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = has_dynamic_attributes instanceMethod = true
+SET IRMethod, name = reloadable? instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+BB 1
+	outgoing: 38 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_options 
+		 6: options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: ATTRASSIGN %self->has_dynamic_attributes 
+		 2: 
+		 3: (InstanceMethods) def_%v_4 
+		 4: %self->include def_%v_5 %self[4.1,2.0,] %v_4[4.3,] 	 SYMBOL:	 ARGS:%v_4,
+		 5: 
+		 6: options->[] def_%v_6 options[3.1,2.5,] 	 SYMBOL:class_name,	 ARGS:Symbol,
+		 7: BRANCH %v_6[4.6,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->model_name def_%v_7 %self[4.1,2.0,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_StringLiteral "Attribute" def_%v_8 
+		 2: BUILDSTRING def_%v_9 %v_7[5.0,] %v_8[5.1,] 
+		 3: options->[]= def_%v_6 options[3.1,2.5,] %v_9[5.2,] 	 SYMBOL:class_name,	 ARGS:Symbol,%v_9,
+		 4: COPY TYPE_PASS def_%v_6 %v_9[5.2,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_10 options[5.3,3.1,2.5,] 	 SYMBOL:table_name,	 ARGS:Symbol,
+		 2: BRANCH %v_10[6.1,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: options->[] def_%v_11 options[5.3,3.1,2.5,] 	 SYMBOL:class_name,	 ARGS:Symbol,
+		 1: %v_11->tableize def_%v_12 %v_11[7.0,] 	 SYMBOL:	 ARGS:
+		 2: options->[]= def_%v_10 options[7.0,5.3,3.1,2.5,] %v_12[7.1,] 	 SYMBOL:table_name,	 ARGS:Symbol,%v_12,
+		 3: COPY TYPE_PASS def_%v_10 %v_12[7.1,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_13 options[7.2,5.3,3.1,2.5,] 	 SYMBOL:relationship_name,	 ARGS:Symbol,
+		 2: BRANCH %v_13[8.1,] 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: options->[] def_%v_14 options[7.2,5.3,3.1,2.5,] 	 SYMBOL:class_name,	 ARGS:Symbol,
+		 1: %v_14->tableize def_%v_15 %v_14[9.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_15->to_sym def_%v_16 %v_15[9.1,] 	 SYMBOL:	 ARGS:
+		 3: options->[]= def_%v_13 options[9.0,7.2,5.3,3.1,2.5,] %v_16[9.2,] 	 SYMBOL:relationship_name,	 ARGS:Symbol,%v_16,
+		 4: COPY TYPE_PASS def_%v_13 %v_16[9.2,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_17 options[9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:foreign_key,	 ARGS:Symbol,
+		 2: BRANCH %v_17[10.1,] 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: %self->model_name def_%v_18 %self[4.1,2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_18->foreign_key def_%v_19 %v_18[11.0,] 	 SYMBOL:	 ARGS:
+		 2: options->[]= def_%v_17 options[9.3,7.2,5.3,3.1,2.5,] %v_19[11.1,] 	 SYMBOL:foreign_key,	 ARGS:Symbol,%v_19,
+		 3: COPY TYPE_PASS def_%v_17 %v_19[11.1,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_20 options[11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:base_foreign_key,	 ARGS:Symbol,
+		 2: BRANCH %v_20[12.1,] 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: %self->name def_%v_21 %self[4.1,2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_21->underscore def_%v_22 %v_21[13.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_22->foreign_key def_%v_23 %v_22[13.1,] 	 SYMBOL:	 ARGS:
+		 3: options->[]= def_%v_20 options[11.2,9.3,7.2,5.3,3.1,2.5,] %v_23[13.2,] 	 SYMBOL:base_foreign_key,	 ARGS:Symbol,%v_23,
+		 4: COPY TYPE_PASS def_%v_20 %v_23[13.2,] 
+BB 14
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_24 options[13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:name_field,	 ARGS:Symbol,
+		 2: BRANCH %v_24[14.1,] 
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "name" def_%v_25 
+		 1: options->[]= def_%v_24 options[13.3,11.2,9.3,7.2,5.3,3.1,2.5,] %v_25[15.0,] 	 SYMBOL:name_field,	 ARGS:Symbol,%v_25,
+		 2: COPY TYPE_PASS def_%v_24 %v_25[15.0,] 
+BB 16
+	outgoing: 17 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_26 options[15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:value_field,	 ARGS:Symbol,
+		 2: BRANCH %v_26[16.1,] 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "value" def_%v_27 
+		 1: options->[]= def_%v_26 options[15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] %v_27[17.0,] 	 SYMBOL:value_field,	 ARGS:Symbol,%v_27,
+		 2: COPY TYPE_PASS def_%v_26 %v_27[17.0,] 
+BB 18
+	outgoing: 19 20 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_28 options[17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:fields,	 ARGS:Symbol,
+		 2: %v_28->nil? def_%v_29 %v_28[18.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_29[18.2,] 
+BB 19
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_30 
+		 1: 
+BB 20
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: options->[] def_%v_31 options[17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:fields,	 ARGS:Symbol,
+		 1: %v_31->collect! def_%v_32 %v_31[20.0,] %self[4.1,2.0,] 	 SYMBOL:	 ARGS:%v_31,
+CLOSURE BEGIN: f[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_f 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: f->to_s def_%cl_1_3 f[2.2,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: COPY TYPE_PASS def_%v_30 %v_32[20.1,] 
+BB 21
+	outgoing: 22 23 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->cattr_accessor def_%v_33 %self[4.1,2.0,] 	 SYMBOL:dynamic_options,	 ARGS:Symbol,
+		 2: 
+		 3: %self->dynamic_options def_%v_34 %self[21.1,4.1,2.0,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %v_34[21.3,] 
+BB 22
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: (Hash) def_%v_36 
+		 1: %v_36->new def_%v_37 %v_36[22.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->dynamic_options= def_%v_35 %v_37[22.1,] 	 SYMBOL:	 ARGS:%v_37,
+		 3: COPY TYPE_PASS def_%v_34 %v_37[22.1,] 
+BB 23
+	outgoing: 24 25 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->dynamic_options def_%v_38 %self[22.2,4.1,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_38->keys def_%v_39 %v_38[23.1,] 	 SYMBOL:	 ARGS:
+		 3: options->[] def_%v_40 options[17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:class_name,	 ARGS:Symbol,
+		 4: %v_39->include? def_%v_41 %v_39[23.2,] %v_40[23.3,] 	 SYMBOL:	 ARGS:%v_40,
+		 5: BRANCH %v_41[23.4,] 
+BB 24
+	outgoing: 38 
+	datadep: 
+	instructions:
+		 0: RETURN %self[22.2,4.1,2.0,] 
+BB 25
+	outgoing: 27 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_42 
+		 1: 
+		 2: GLOBALVAR $! def_%v_43 
+BB 27
+	outgoing: 29 30 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: options->[] def_%v_46 options[17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:class_name,	 ARGS:Symbol,
+		 3: %v_46->constantize def_%v_47 %v_46[27.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_PASS def_%v_45 %v_47[27.3,] 
+		 5: %v_43[25.2,] 
+BB 29
+	outgoing: 37 
+	datadep: 
+	instructions:
+		 0: 
+BB 30
+	outgoing: 31 32 36 
+	datadep: 
+	instructions:
+		 0: def_%v_48 
+		 1: def_%v_49 %v_48[30.0,] 
+		 2: BRANCH %v_49[30.1,] 
+BB 31
+	outgoing: 36 38 
+	datadep: 
+	instructions:
+		 0: %v_48[30.0,] 
+BB 32
+	outgoing: 33 34 36 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Object) def_%v_50 
+		 2: options->[] def_%v_51 options[17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:class_name,	 ARGS:Symbol,
+		 3: (Class) def_%v_52 
+		 4: (ActiveRecord) def_%v_53 
+		 5: (inherit Base) def_%v_54 %v_53[32.4,] 
+		 6: %v_54[32.5,] 
+BB 33
+	outgoing: 34 36 
+	datadep: 
+	instructions:
+		 0: %v_53->const_missing def_%v_54 %v_53[32.4,] 	 SYMBOL:Base,	 ARGS:Symbol,
+BB 34
+	outgoing: 35 36 
+	datadep: 
+	instructions:
+		 0: %v_52->new def_%v_55 %v_52[32.3,] %v_54[33.0,32.5,] 	 SYMBOL:	 ARGS:%v_54,
+		 1: %v_50->const_set def_%v_56 %v_50[32.1,] %v_51[32.2,] %v_55[34.0,] 	 SYMBOL:	 ARGS:%v_51,%v_55,
+		 2: %v_56->class_eval def_%v_57 %v_56[34.1,] %self[22.2,4.1,2.0,] 	 SYMBOL:	 ARGS:%v_56,
+CLOSURE BEGIN: options[17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] %self[22.2,4.1,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%cl_2_3 options[] 	 SYMBOL:table_name,	 ARGS:Symbol,
+		 2: ATTRASSIGN %self->table_name %cl_2_3[3.1,] 
+		 3: 
+		 4: %self[3.2,2.0,] 
+		 5: RETURN %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_4 
+		 1: def_%cl_2_5 %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] %self[3.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: COPY TYPE_PASS def_%v_45 %v_57[34.2,] 
+		 4: %v_43[25.2,] 
+BB 35
+	outgoing: 37 
+	datadep: 
+	instructions:
+		 0: 
+BB 36
+	outgoing: 38 
+	datadep: 
+	instructions:
+		 0: def_%v_58 
+		 1: def_%v_59 %v_58[36.0,] %v_43[25.2,] 
+		 2: %v_58[36.0,] 
+BB 37
+	outgoing: 38 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->dynamic_options def_%v_60 %self[22.2,4.1,2.0,] 	 SYMBOL:	 ARGS:
+		 2: options->[] def_%v_61 options[17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:class_name,	 ARGS:Symbol,
+		 3: ATTRASSIGN %v_60->[] %v_61[37.2,] options[37.2,17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 
+		 4: 
+		 5: options->[] def_%v_62 options[37.2,17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] 	 SYMBOL:class_name,	 ARGS:Symbol,
+		 6: %v_62->constantize def_%v_63 %v_62[37.5,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_PASS def_attribute_class %v_63[37.6,] 
+		 8: 
+		 9: %self->name def_%v_64 %self[37.1,22.2,4.1,2.0,] 	 SYMBOL:	 ARGS:
+		 10: %v_64->underscore def_%v_65 %v_64[37.9,] 	 SYMBOL:	 ARGS:
+		 11: %v_65->to_sym def_%v_66 %v_65[37.10,] 	 SYMBOL:	 ARGS:
+		 12: COPY TYPE_PASS def_base_class %v_66[37.11,] 
+		 13: 
+		 14: attribute_class->class_eval def_%v_67 attribute_class[37.7,] %self[37.1,37.9,22.2,4.1,2.0,] 	 SYMBOL:	 ARGS:attribute_class,
+CLOSURE BEGIN: options[37.2,37.5,17.1,15.1,13.3,11.2,9.3,7.2,5.3,3.1,2.5,] %self[37.1,37.9,22.2,4.1,2.0,] base_class[37.12,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%cl_3_3 options[] 	 SYMBOL:base_foreign_key,	 ARGS:Symbol,
+		 2: HASH-foreign_key- def_%cl_3_4 %cl_3_3[3.1,] 
+		 3: %self->belongs_to def_%cl_3_5 %self[2.0,] base_class[] %cl_3_4[3.2,] 	 SYMBOL:	 ARGS:base_class,%cl_3_4,
+		 4: 
+		 5: %self->alias_method def_%cl_3_6 %self[3.3,2.0,] base_class[] 	 SYMBOL:base,	 ARGS:Symbol,base_class,
+		 6: RETURN %cl_3_6[3.5,] %self[3.3,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_7 
+		 1: def_%cl_3_8 %cl_3_7[4.0,] 
+		 2: RETURN %cl_3_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 15: RETURN %v_67[37.14,] %self[37.1,37.9,22.2,4.1,2.0,] 
+BB 38
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = is_dynamic_attribute? instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_attr 
+		 6: RECEIVEARG def_model 
+		 7: 
+		 8: attr->to_s def_%v_3 attr[2.5,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_PASS def_attr %v_3[2.8,] 
+		 10: 
+		 11: %self->dynamic_options def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 12: model->name def_%v_5 model[2.6,] 	 SYMBOL:	 ARGS:
+		 13: %v_4->[] def_%v_6 %v_4[2.11,] %v_5[2.12,] 	 SYMBOL:	 ARGS:%v_5,
+		 14: %v_6->[] def_%v_7 %v_6[2.13,] 	 SYMBOL:fields,	 ARGS:Symbol,
+		 15: %v_7->nil? def_%v_8 %v_7[2.14,] 	 SYMBOL:	 ARGS:
+		 16: BRANCH %v_8[2.15,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+		 1: 
+		 2: %self->dynamic_attributes def_%v_15 %self[2.0,] model[2.6,] 	 SYMBOL:	 ARGS:model,
+		 3: %v_15->nil? def_%v_16 %v_15[3.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %v_16[3.3,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %self->dynamic_options def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: model->name def_%v_11 model[2.6,] 	 SYMBOL:	 ARGS:
+		 2: %v_10->[] def_%v_12 %v_10[4.0,] %v_11[4.1,] 	 SYMBOL:	 ARGS:%v_11,
+		 3: %v_12->[] def_%v_13 %v_12[4.2,] 	 SYMBOL:fields,	 ARGS:Symbol,
+		 4: %v_13->include? def_%v_14 %v_13[4.3,] attr[2.5,2.9,] 	 SYMBOL:	 ARGS:attr,
+		 5: RETURN %v_14[4.4,] %self[4.0,2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_17 
+		 1: 
+		 2: RETURN %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %self->dynamic_attributes def_%v_18 %self[2.0,] model[2.6,] 	 SYMBOL:	 ARGS:model,
+		 1: %v_18->collect def_%v_19 %v_18[7.0,] %self[7.0,2.0,] 	 SYMBOL:	 ARGS:%v_18,
+CLOSURE BEGIN: f[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_f 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: f->to_s def_%cl_1_3 f[2.2,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: %v_19->include? def_%v_20 %v_19[7.1,] attr[2.5,2.9,] 	 SYMBOL:	 ARGS:attr,
+		 3: RETURN %v_20[7.2,] %self[7.0,2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = dynamic_attributes instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_model 
+		 6: 
+		 7: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = assign_attributes instanceMethod = true
+BB 1
+	outgoing: 13 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 11 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_new_attributes 
+		 6: RECEIVECONSTARG def_options 
+		 7: options[2.6,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[4.0,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: BRANCH new_attributes[2.5,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+BB 7
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 9 10 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: new_attributes->stringify_keys def_%v_5 new_attributes[2.5,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_attributes %v_5[8.1,] 
+		 3: 
+		 4: options->[] def_%v_6 options[4.1,2.6,] 	 SYMBOL:as,	 ARGS:Symbol,
+		 5: BRANCH %v_6[8.4,] 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Symbol def_%v_6 
+BB 10
+	outgoing: 11 13 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_role %v_6[9.0,8.4,] 
+		 1: 
+		 2: COPY TYPE_Array def_%v_7 
+		 3: COPY TYPE_PASS def_multi_parameter_attributes %v_7[10.2,] 
+		 4: 
+		 5: attributes->each def_%v_8 attributes[8.2,] %self[2.0,] 	 SYMBOL:	 ARGS:attributes,
+CLOSURE BEGIN: k[] v[] multi_parameter_attributes[10.3,] %self[2.0,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_k 
+		 3: RECEIVEARG def_v 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "(" def_%cl_1_3 
+		 2: k->include? def_%cl_1_4 k[2.2,] %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: BRANCH %cl_1_4[3.2,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_Array def_%cl_1_5 k[2.2,] v[2.3,] 
+		 2: multi_parameter_attributes-><< def_%cl_1_6 multi_parameter_attributes[] %cl_1_5[4.1,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 3: 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "=" def_%cl_1_7 
+		 2: BUILDSTRING def_%cl_1_8 k[2.2,] %cl_1_7[5.1,] 
+		 3: %self->send def_%cl_1_9 %self[2.0,] %cl_1_8[5.2,] v[2.3,] 	 SYMBOL:	 ARGS:%cl_1_8,v,
+		 4: RETURN %cl_1_9[5.3,] %self[5.3,2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_6[4.2,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[7.0,] 
+		 2: RETURN %cl_1_11[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: v[2.3,] 
+		 6: 
+		 7: %self->assign_multiparameter_attributes def_%v_9 %self[2.0,] multi_parameter_attributes[10.3,] 	 SYMBOL:	 ARGS:multi_parameter_attributes,
+		 8: RETURN %v_9[10.7,] %self[10.7,2.0,] 
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: def_%v_10 
+		 1: def_%v_11 %v_10[11.0,] 
+		 2: RETURN %v_11[11.1,] %self[2.0,] 
+BB 13
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = save_modified_dynamic_attributes instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->new_record? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: GETFIELD %self->save_dynamic_attr def_%v_5 %self[2.0,] 
+		 3: %v_5->nil? def_%v_6 %v_5[4.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %v_6[4.3,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_7 
+		 1: 
+		 2: GETFIELD %self->save_dynamic_attr def_%v_8 %self[2.0,] 
+		 3: %v_8->each def_%v_9 %v_8[7.2,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_8,
+CLOSURE BEGIN: s[] %self[2.0,] related_attr[] model[] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_s 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_PASS def_%cl_1_3 s[2.2,] 
+		 2: def_%cl_1_4 s[2.2,] 
+		 3: def_%cl_1_5 %cl_1_4[3.2,] 
+		 4: def_%cl_1_6 %cl_1_4[3.2,] 
+		 5: COPY TYPE_PASS def_model %cl_1_5[3.3,] 
+		 6: COPY TYPE_PASS def_attr_name %cl_1_6[3.4,] 
+		 7: 
+		 8: %self->dynamic_related_attr def_%cl_1_7 %self[2.0,] %cl_1_5[3.3,] %cl_1_6[3.4,] 	 SYMBOL:	 ARGS:model,attr_name,
+		 9: COPY TYPE_PASS def_related_attr %cl_1_7[3.8,] 
+		 10: 
+		 11: %cl_1_7->nil? def_%cl_1_8 %cl_1_7[3.8,] 	 SYMBOL:	 ARGS:
+		 12: BRANCH %cl_1_8[3.11,] 
+BB 4
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_9 
+		 1: RETURN %cl_1_9[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 6 7 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: related_attr->value def_%cl_1_10 related_attr[3.9,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_10->nil? def_%cl_1_11 %cl_1_10[5.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %cl_1_11[5.2,] 
+BB 6
+	outgoing: 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->dynamic_related def_%cl_1_12 %self[2.0,] model[3.5,] 	 SYMBOL:	 ARGS:model,
+		 2: %cl_1_12->delete def_%cl_1_13 %cl_1_12[6.1,] related_attr[3.9,] 	 SYMBOL:	 ARGS:related_attr,
+		 3: 
+BB 7
+	outgoing: 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: related_attr->save def_%cl_1_14 related_attr[3.9,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_%cl_1_13 %cl_1_14[7.1,] 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_13[7.2,6.2,] %self[2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_15 
+		 1: def_%cl_1_16 %cl_1_15[10.0,] 
+		 2: RETURN %cl_1_16[10.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: attr_name[3.6,] model[3.5,] related_attr[3.9,] 
+		 4: 
+		 5: COPY TYPE_Array def_%v_10 
+		 6: ATTRASSIGN %self->save_dynamic_attr %v_10[7.5,] 
+		 7: RETURN %v_10[7.5,] %self[7.6,2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = read_attribute_with_dynamic_attributes instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_attr_name 
+		 6: 
+		 7: attr_name->to_s def_%v_3 attr_name[2.5,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_PASS def_attr_name %v_3[2.7,] 
+		 9: 
+		 10: %self->exec_if_related def_%v_4 %self[2.0,] %v_3[2.7,] %self[2.0,] 	 SYMBOL:	 ARGS:attr_name,%self,
+CLOSURE BEGIN: %self[2.0,] r[] model[] attr_name[2.5,2.7,2.8,] related_attr[] value_field[] 
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_model 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->remove_dynamic_attr def_%cl_1_3 %self[2.0,] 
+		 2: %cl_1_3->nil? def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_4->! def_%cl_1_5 %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %cl_1_5[3.3,] 
+BB 4
+	outgoing: 5 12 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->remove_dynamic_attr def_%cl_1_6 %self[2.0,] 
+		 1: %cl_1_6->any? def_%cl_1_7 %cl_1_6[4.0,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_1_6,
+CLOSURE BEGIN: r[] model[2.2,] attr_name[] 
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_r 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: r->[] def_%cl_2_3 r[2.2,] 	 SYMBOL:	 ARGS:Fixnum,
+		 2: %cl_2_3->== def_%cl_2_4 %cl_2_3[3.1,] model[] 	 SYMBOL:	 ARGS:model,
+		 3: BRANCH %cl_2_4[3.2,] 
+BB 4
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: r->[] def_%cl_2_5 r[2.2,] 	 SYMBOL:	 ARGS:Fixnum,
+		 1: %cl_2_5->== def_%cl_2_6 %cl_2_5[4.0,] attr_name[] 	 SYMBOL:	 ARGS:attr_name,
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_2_4[3.2,] %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_7 
+		 1: def_%cl_2_8 %cl_2_7[6.0,] 
+		 2: RETURN %cl_2_8[6.1,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: COPY TYPE_PASS def_%cl_1_5 %cl_1_7[4.1,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %cl_1_5[4.2,3.3,] 
+BB 6
+	outgoing: 12 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_8 
+BB 8
+	outgoing: 9 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->dynamic_options def_%cl_1_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: model->name def_%cl_1_10 model[2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_9->[] def_%cl_1_11 %cl_1_9[8.1,] %cl_1_10[8.2,] 	 SYMBOL:	 ARGS:%cl_1_10,
+		 4: %cl_1_11->[] def_%cl_1_12 %cl_1_11[8.3,] 	 SYMBOL:value_field,	 ARGS:Symbol,
+		 5: COPY TYPE_PASS def_value_field %cl_1_12[8.4,] 
+		 6: 
+		 7: %self->dynamic_related_attr def_%cl_1_13 %self[8.1,2.0,] model[8.2,2.2,] attr_name[] 	 SYMBOL:	 ARGS:model,attr_name,
+		 8: COPY TYPE_PASS def_related_attr %cl_1_13[8.7,] 
+		 9: 
+		 10: %cl_1_13->nil? def_%cl_1_14 %cl_1_13[8.7,] 	 SYMBOL:	 ARGS:
+		 11: BRANCH %cl_1_14[8.10,] 
+BB 9
+	outgoing: 12 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_15 
+BB 11
+	outgoing: 12 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: related_attr->send def_%cl_1_16 related_attr[8.8,] value_field[8.5,] 	 SYMBOL:	 ARGS:value_field,
+		 2: 
+		 3: RETURN %cl_1_16[11.1,] %self[2.0,] 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_17 
+		 1: def_%cl_1_18 %cl_1_17[12.0,] 
+		 2: RETURN %cl_1_18[12.1,] %self[2.0,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: value_field[8.5,] related_attr[8.8,] 
+		 11: 
+		 12: %self->read_attribute_without_dynamic_attributes def_%v_5 %self[2.0,2.10,] attr_name[2.5,2.7,2.8,] 	 SYMBOL:	 ARGS:attr_name,
+		 13: RETURN %v_5[2.12,] %self[2.0,2.10,2.12,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%v_6 
+		 1: def_%v_7 %v_6[4.0,] 
+		 2: RETURN %v_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = write_attribute_with_dynamic_attributes instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_attr_name 
+		 6: RECEIVEARG def_value 
+		 7: 
+		 8: attr_name->to_s def_%v_3 attr_name[2.5,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_PASS def_attr_name %v_3[2.8,] 
+		 10: 
+		 11: %self->exec_if_related def_%v_4 %self[2.0,] %v_3[2.8,] %self[2.0,] 	 SYMBOL:	 ARGS:attr_name,%self,
+CLOSURE BEGIN: %self[2.0,] model[] attr_name[2.5,2.8,2.9,] value[2.6,] name_field[] value_field[] foreign_key[] related_attr[] 
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_model 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->dynamic_options def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: model->name def_%cl_1_4 model[2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_3->[] def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:%cl_1_4,
+		 4: %cl_1_5->[] def_%cl_1_6 %cl_1_5[3.3,] 	 SYMBOL:value_field,	 ARGS:Symbol,
+		 5: COPY TYPE_PASS def_value_field %cl_1_6[3.4,] 
+		 6: 
+		 7: def_%cl_1_8 %self[3.1,2.0,] 
+		 8: COPY TYPE_PASS def_%cl_1_7 %cl_1_8[3.7,] 
+		 9: %cl_1_8[3.7,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->save_dynamic_attr def_%cl_1_9 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%cl_1_7 %cl_1_9[4.0,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %cl_1_7[4.1,3.8,] 
+BB 6
+	outgoing: 7 13 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Array def_%cl_1_10 
+		 1: ATTRASSIGN %self->save_dynamic_attr %cl_1_10[6.0,] 
+		 2: COPY TYPE_PASS def_%cl_1_9 %cl_1_10[6.0,] 
+BB 7
+	outgoing: 8 12 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->save_dynamic_attr def_%cl_1_11 %self[6.1,2.0,] 
+		 2: COPY TYPE_Array def_%cl_1_12 model[2.2,] attr_name[] 
+		 3: %cl_1_11-><< def_%cl_1_13 %cl_1_11[7.1,] %cl_1_12[7.2,] 	 SYMBOL:	 ARGS:%cl_1_12,
+		 4: 
+		 5: %self->dynamic_related_attr def_%cl_1_14 %self[6.1,2.0,] model[2.2,] attr_name[] 	 SYMBOL:	 ARGS:model,attr_name,
+		 6: COPY TYPE_PASS def_related_attr %cl_1_14[7.5,] 
+		 7: 
+		 8: %cl_1_14->nil? def_%cl_1_15 %cl_1_14[7.5,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %cl_1_15[7.8,] 
+BB 8
+	outgoing: 9 10 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: value->blank? def_%cl_1_16 value[] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %cl_1_16[8.1,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_17 
+		 1: 
+BB 10
+	outgoing: 11 13 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->dynamic_options def_%cl_1_18 %self[6.1,2.0,] 	 SYMBOL:	 ARGS:
+		 2: model->name def_%cl_1_19 model[2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_18->[] def_%cl_1_20 %cl_1_18[10.1,] %cl_1_19[10.2,] 	 SYMBOL:	 ARGS:%cl_1_19,
+		 4: %cl_1_20->[] def_%cl_1_21 %cl_1_20[10.3,] 	 SYMBOL:name_field,	 ARGS:Symbol,
+		 5: COPY TYPE_PASS def_name_field %cl_1_21[10.4,] 
+		 6: 
+		 7: %self->dynamic_options def_%cl_1_22 %self[10.1,6.1,2.0,] 	 SYMBOL:	 ARGS:
+		 8: model->name def_%cl_1_23 model[10.2,2.2,] 	 SYMBOL:	 ARGS:
+		 9: %cl_1_22->[] def_%cl_1_24 %cl_1_22[10.7,] %cl_1_23[10.8,] 	 SYMBOL:	 ARGS:%cl_1_23,
+		 10: %cl_1_24->[] def_%cl_1_25 %cl_1_24[10.9,] 	 SYMBOL:foreign_key,	 ARGS:Symbol,
+		 11: COPY TYPE_PASS def_foreign_key %cl_1_25[10.10,] 
+		 12: 
+		 13: %self->dynamic_related def_%cl_1_26 %self[10.1,10.7,6.1,2.0,] model[10.2,10.8,2.2,] 	 SYMBOL:	 ARGS:model,
+		 14: %self->id def_%cl_1_27 %self[10.1,10.7,10.13,6.1,2.0,] 	 SYMBOL:	 ARGS:
+		 15: HASH- def_%cl_1_28 name_field[10.5,] attr_name[] value_field[3.5,] value[] foreign_key[10.11,] %cl_1_27[10.14,] 
+		 16: %cl_1_26->build def_%cl_1_29 %cl_1_26[10.13,] %cl_1_28[10.15,] 	 SYMBOL:	 ARGS:%cl_1_28,
+		 17: COPY TYPE_PASS def_%cl_1_17 %cl_1_29[10.16,] 
+BB 11
+	outgoing: 13 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: RETURN value[] %self[6.1,2.0,] 
+BB 12
+	outgoing: 13 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: value_field->to_s def_%cl_1_31 value_field[3.5,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "=" def_%cl_1_32 
+		 3: %cl_1_31->+ def_%cl_1_33 %cl_1_31[12.1,] %cl_1_32[12.2,] 	 SYMBOL:	 ARGS:%cl_1_32,
+		 4: %cl_1_33->to_sym def_%cl_1_34 %cl_1_33[12.3,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_PASS def_value_field %cl_1_34[12.4,] 
+		 6: 
+		 7: related_attr->send def_%cl_1_35 related_attr[7.6,] %cl_1_34[12.4,] value[] 	 SYMBOL:	 ARGS:value_field,value,
+		 8: 
+		 9: RETURN %cl_1_35[12.7,] %self[6.1,2.0,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_36 
+		 1: def_%cl_1_37 %cl_1_36[13.0,] 
+		 2: RETURN %cl_1_37[13.1,] %self[6.1,2.0,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: foreign_key[10.11,] value_field[12.5,3.5,] name_field[10.5,] related_attr[7.6,] 
+		 12: 
+		 13: %self->write_attribute_without_dynamic_attributes def_%v_5 %self[2.0,2.11,] attr_name[2.5,2.8,2.9,] value[2.6,] 	 SYMBOL:	 ARGS:attr_name,value,
+		 14: RETURN %v_5[2.13,] %self[2.0,2.11,2.13,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%v_6 
+		 1: def_%v_7 %v_6[4.0,] 
+		 2: RETURN %v_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = method_missing_with_dynamic_attributes instanceMethod = true
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 13 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_method_id 
+		 6: RECEIVEARG def_args 
+		 7: def_%v_3 
+		 8: def_block %v_3[2.7,] 
+		 9: 
+		 10: GLOBALVAR $! def_%v_4 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: COPY TYPE_Array def_%v_7 method_id[2.5,] 
+		 3: def_%v_8 %v_7[4.2,] args[2.6,] 
+		 4: %self->method_missing_without_dynamic_attributes def_%v_9 %self[2.0,] %v_8[4.3,] block[2.8,] 	 SYMBOL:	 ARGS:Splat,
+		 5: COPY TYPE_PASS def_%v_6 %v_9[4.4,] 
+		 6: %v_4[2.10,] 
+BB 6
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 9 11 
+	datadep: 
+	instructions:
+		 0: def_%v_10 
+		 1: (NoMethodError) def_%v_11 
+		 2: def_%v_12 %v_11[7.1,] %v_10[7.0,] 
+		 3: BRANCH %v_12[7.2,] 
+BB 8
+	outgoing: 11 15 
+	datadep: 
+	instructions:
+		 0: %v_10[7.0,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: GLOBALVAR $! def_%v_13 
+		 1: COPY TYPE_PASS def_e %v_13[9.0,] 
+		 2: 
+		 3: method_id->to_s def_%v_14 method_id[2.5,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_Regexp def_%v_15 
+		 5: COPY TYPE_StringLiteral "" def_%v_16 
+		 6: %v_14->sub def_%v_17 %v_14[9.3,] %v_16[9.5,] 	 SYMBOL:	 ARGS:%v_15,%v_16,
+		 7: COPY TYPE_PASS def_attr_name %v_17[9.6,] 
+		 8: 
+		 9: %self->exec_if_related def_%v_18 %self[2.0,] %v_17[9.6,] %self[2.0,] 	 SYMBOL:	 ARGS:attr_name,%self,
+CLOSURE BEGIN: method_id[9.3,2.5,] args[2.6,] %self[2.0,] attr_name[9.7,] 
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_model 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: method_id->to_s def_%cl_1_3 method_id[] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_Regexp def_%cl_1_4 
+		 3: %cl_1_3->=~ def_%cl_1_5 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_4,
+		 4: BRANCH %cl_1_5[3.3,] 
+BB 4
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: args->[] def_%cl_1_6 args[] 	 SYMBOL:	 ARGS:Fixnum,
+		 2: %self->write_attribute_with_dynamic_attributes def_%cl_1_7 %self[2.0,] attr_name[] %cl_1_6[4.1,] 	 SYMBOL:	 ARGS:attr_name,%cl_1_6,
+		 3: 
+		 4: RETURN %cl_1_7[4.2,] %self[4.2,2.0,] 
+BB 5
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->read_attribute_with_dynamic_attributes def_%cl_1_9 %self[2.0,] attr_name[] 	 SYMBOL:	 ARGS:attr_name,
+		 2: 
+		 3: RETURN %cl_1_9[5.1,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[6.0,] 
+		 2: RETURN %cl_1_11[6.1,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: 
+		 11: %self->raise def_%v_19 %self[9.9,2.0,] e[9.1,] 	 SYMBOL:	 ARGS:e,
+		 12: COPY TYPE_PASS def_%v_6 %v_19[9.11,] 
+		 13: %v_4[2.10,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 11
+	outgoing: 13 15 
+	datadep: 
+	instructions:
+		 0: def_%v_20 
+		 1: def_%v_21 %v_20[11.0,] %v_4[2.10,] 
+		 2: %v_20[11.0,] 
+BB 12
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN %v_6[4.5,9.12,] %self[2.0,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: def_%v_22 
+		 1: def_%v_23 %v_22[13.0,] 
+		 2: RETURN %v_23[13.1,] %self[2.0,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = dynamic_related_attr instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_model 
+		 6: RECEIVEARG def_attr 
+		 7: 
+		 8: %self->dynamic_options def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: model->name def_%v_4 model[2.5,] 	 SYMBOL:	 ARGS:
+		 10: %v_3->[] def_%v_5 %v_3[2.8,] %v_4[2.9,] 	 SYMBOL:	 ARGS:%v_4,
+		 11: %v_5->[] def_%v_6 %v_5[2.10,] 	 SYMBOL:name_field,	 ARGS:Symbol,
+		 12: COPY TYPE_PASS def_name_field %v_6[2.11,] 
+		 13: 
+		 14: %self->dynamic_related def_%v_7 %self[2.0,2.8,] model[2.5,2.9,] 	 SYMBOL:	 ARGS:model,
+		 15: %v_7->to_a def_%v_8 %v_7[2.14,] 	 SYMBOL:	 ARGS:
+		 16: %v_8->find def_%v_9 %v_8[2.15,] %self[2.0,2.8,2.14,] 	 SYMBOL:	 ARGS:%v_8,
+CLOSURE BEGIN: r[] name_field[2.12,] attr[2.6,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_r 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: r->send def_%cl_1_3 r[2.2,] name_field[] 	 SYMBOL:	 ARGS:name_field,
+		 2: %cl_1_3->== def_%cl_1_4 %cl_1_3[3.1,] attr[] 	 SYMBOL:	 ARGS:attr,
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: RETURN %v_9[2.16,] %self[2.0,2.8,2.14,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%v_10 
+		 1: def_%v_11 %v_10[4.0,] 
+		 2: RETURN %v_11[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = dynamic_related instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_model 
+		 6: 
+		 7: %self->dynamic_options def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: model->name def_%v_4 model[2.5,] 	 SYMBOL:	 ARGS:
+		 9: %v_3->[] def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: %v_5->[] def_%v_6 %v_5[2.9,] 	 SYMBOL:relationship_name,	 ARGS:Symbol,
+		 11: COPY TYPE_PASS def_relationship %v_6[2.10,] 
+		 12: 
+		 13: %self->send def_%v_7 %self[2.0,2.7,] %v_6[2.10,] 	 SYMBOL:	 ARGS:relationship,
+		 14: RETURN %v_7[2.13,] %self[2.0,2.7,2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = exec_if_related instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_attr_name 
+		 6: 
+		 7: %self->class def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->column_names def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->include? def_%v_5 %v_4[2.8,] attr_name[2.5,] 	 SYMBOL:	 ARGS:attr_name,
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: 
+		 2: %self->each_dynamic_relation def_%v_7 %self[2.0,] %self[2.0,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: %self[2.0,] attr_name[2.5,] model[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_model 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->is_dynamic_attribute? def_%cl_1_3 %self[2.0,] attr_name[] model[2.2,] 	 SYMBOL:	 ARGS:attr_name,model,
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%cl_1_4 %cl_1_0[2.1,] model[2.2,] 
+		 2: 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_4[4.1,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[7.0,] 
+		 2: RETURN %cl_1_6[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %v_7[4.2,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = each_dynamic_relation instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->dynamic_options def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->keys def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->each def_%v_5 %v_4[2.7,] %self[2.0,2.6,] 	 SYMBOL:	 ARGS:%v_4,
+CLOSURE BEGIN: kls[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_kls 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: kls->constantize def_%cl_1_4 kls[2.2,] 	 SYMBOL:	 ARGS:
+		 2: def_%cl_1_3 %cl_1_0[2.1,] %cl_1_4[3.1,] 
+		 3: RETURN %cl_1_3[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = dynamic_options instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->class def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->nonversioned_class def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: %v_4->dynamic_options def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = nonversioned_class instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_kls 
+		 6: 
+		 7: kls->name def_%v_3 kls[2.5,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_Regexp def_%v_4 
+		 9: %v_3->=~ def_%v_5 %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: kls->name def_%v_6 kls[2.5,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_base_class %v_6[3.1,] 
+		 3: 
+		 4: COPY TYPE_Regexp def_%v_7 
+		 5: COPY TYPE_StringLiteral "" def_%v_8 
+		 6: %v_6->sub! def_%v_9 %v_6[3.1,] %v_8[3.5,] 	 SYMBOL:	 ARGS:%v_7,%v_8,
+		 7: 
+		 8: base_class->constantize def_%v_10 base_class[3.2,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_10[3.8,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_11 
+		 1: 
+		 2: RETURN kls[2.5,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

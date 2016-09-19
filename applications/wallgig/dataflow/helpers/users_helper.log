@@ -1,0 +1,493 @@
+SET IRMethod, name = link_to_user instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: def_%v_3 
+		 7: COPY TYPE_PASS def_block %v_3[2.6,] 
+		 8: 
+		 9: %self->block_given? def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 10: BRANCH %v_4[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "link-user" def_%v_5 
+		 2: %self->css_class_for def_%v_6 %self[2.0,] user[2.5,] 	 SYMBOL:	 ARGS:user,
+		 3: COPY TYPE_Array def_%v_7 %v_5[3.1,] %v_6[3.2,] 
+		 4: %self->css_style_for_user def_%v_8 %self[3.2,2.0,] user[2.5,] 	 SYMBOL:	 ARGS:user,
+		 5: HASH-class-style- def_%v_9 %v_7[3.3,] %v_8[3.4,] 
+		 6: %self->link_to def_%v_10 %self[3.2,3.4,2.0,] user[2.5,] %v_9[3.5,] block[2.7,] 	 SYMBOL:	 ARGS:user,%v_9,
+		 7: RETURN %v_10[3.6,] %self[3.2,3.4,3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: user->username def_%v_11 user[2.5,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "link-user" def_%v_12 
+		 3: %self->css_class_for def_%v_13 %self[2.0,] user[4.1,2.5,] 	 SYMBOL:	 ARGS:user,
+		 4: COPY TYPE_Array def_%v_14 %v_12[4.2,] %v_13[4.3,] 
+		 5: %self->css_style_for_user def_%v_15 %self[4.3,2.0,] user[4.1,2.5,] 	 SYMBOL:	 ARGS:user,
+		 6: HASH-class-style- def_%v_16 %v_14[4.4,] %v_15[4.5,] 
+		 7: %self->link_to def_%v_17 %self[4.3,4.5,2.0,] %v_11[4.1,] user[4.1,2.5,] %v_16[4.6,] 	 SYMBOL:	 ARGS:%v_11,user,%v_16,
+		 8: RETURN %v_17[4.7,] %self[4.3,4.5,4.7,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = username_tag instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: 
+		 7: user->username def_%v_3 user[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %self->css_class_for def_%v_4 %self[2.0,] user[2.5,2.7,] 	 SYMBOL:	 ARGS:user,
+		 9: %self->css_style_for_user def_%v_5 %self[2.0,2.8,] user[2.5,2.7,] 	 SYMBOL:	 ARGS:user,
+		 10: HASH-class-style- def_%v_6 %v_4[2.8,] %v_5[2.9,] 
+		 11: %self->content_tag def_%v_7 %self[2.0,2.8,2.9,] %v_3[2.7,] %v_6[2.10,] 	 SYMBOL:span,	 ARGS:Symbol,%v_3,%v_6,
+		 12: RETURN %v_7[2.11,] %self[2.0,2.8,2.9,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = css_class_for instanceMethod = true
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: 
+		 7: user->developer? def_%v_3 user[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "user-developer" def_%v_4 
+		 2: RETURN %self[2.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: user->admin? def_%v_5 user[2.5,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_5[4.1,] 
+BB 5
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "user-admin" def_%v_6 
+		 2: 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: user->moderator? def_%v_7 user[2.5,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_7[6.1,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "user-moderator" def_%v_8 
+		 2: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_6 %v_8[8.0,7.1,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %v_6[9.0,5.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = css_style_for_user instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: 
+		 7: user->profile def_%v_3 user[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->username_color_hex def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->present? def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "color:#" def_%v_6 
+		 1: user->profile def_%v_7 user[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_7->username_color_hex def_%v_8 %v_7[3.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral ";" def_%v_9 
+		 4: BUILDSTRING def_%v_10 %v_6[3.0,] %v_8[3.2,] %v_9[3.3,] 
+		 5: RETURN %v_10[3.4,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = role_name_for instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: 
+		 7: user->profile def_%v_3 user[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->title def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->presence def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: user->role_name def_%v_6 user[2.5,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_6[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[2.9,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = user_avatar_url instanceMethod = true
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: RECEIVECONSTARG def_size 
+		 7: size[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_size 
+BB 4
+	outgoing: 5 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: size->present? def_%v_3 size[3.0,2.6,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_3[4.1,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: size->to_i def_%v_4 size[3.0,2.6,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_size %v_4[5.1,] 
+		 3: 
+		 4: (UserProfile) def_%v_5 
+		 5: (inherit AVATAR_SIZES) def_%v_6 %v_5[5.4,] 
+		 6: %v_6[5.5,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[5.4,] 	 SYMBOL:AVATAR_SIZES,	 ARGS:Symbol,
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: %v_6->include? def_%v_7 %v_6[6.0,5.5,] size[5.2,] 	 SYMBOL:	 ARGS:size,
+		 1: BRANCH %v_7[7.0,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+		 1: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_size 
+		 1: COPY TYPE_Nil def_%v_8 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_PASS def_%v_9 size[9.0,3.0,2.6,5.2,] 
+		 2: COPY TYPE_PASS def_%v_10 size[9.0,3.0,2.6,5.2,] 
+		 3: BRANCH size[9.0,3.0,2.6,5.2,] 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_size 
+		 1: COPY TYPE_Fixnum def_%v_10 
+BB 14
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: user->profile def_%v_11 user[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_11->avatar def_%v_12 %v_11[14.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_avatar %v_12[14.2,] 
+		 4: 
+		 5: %v_12->present? def_%v_13 %v_12[14.2,] 	 SYMBOL:	 ARGS:
+		 6: BRANCH %v_13[14.5,] 
+BB 15
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "x" def_%v_14 
+		 2: COPY TYPE_StringLiteral "#" def_%v_15 
+		 3: BUILDSTRING def_%v_16 size[13.0,9.0,3.0,2.6,5.2,] %v_14[15.1,] size[13.0,9.0,3.0,2.6,5.2,] %v_15[15.2,] 
+		 4: avatar->thumb def_%v_17 avatar[14.3,] %v_16[15.3,] 	 SYMBOL:	 ARGS:%v_16,
+		 5: %v_17->url def_%v_18 %v_17[15.4,] 	 SYMBOL:	 ARGS:
+		 6: RETURN %v_18[15.5,] %self[2.0,] 
+BB 16
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->gravatar_url def_%v_19 %self[2.0,] user[2.5,] size[13.0,9.0,3.0,2.6,5.2,] 	 SYMBOL:	 ARGS:user,size,
+		 2: RETURN %v_19[16.1,] %self[16.1,2.0,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = user_online_status_tag instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: 
+		 7: %self->users_online def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->online? def_%v_4 %v_3[2.7,] user[2.5,] 	 SYMBOL:	 ARGS:user,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "<span class="icon-user-online"></span>" def_%v_5 
+		 1: %v_5->html_safe def_%v_6 %v_5[3.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_6[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = flag_tag_for instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: 
+		 7: user->profile def_%v_3 user[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->country_code def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->blank? def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: 
+		 2: COPY TYPE_StringLiteral "flag flag-" def_%v_7 
+		 3: user->profile def_%v_8 user[2.5,] 	 SYMBOL:	 ARGS:
+		 4: %v_8->country_code def_%v_9 %v_8[4.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_9->downcase def_%v_10 %v_9[4.4,] 	 SYMBOL:	 ARGS:
+		 6: BUILDSTRING def_%v_11 %v_7[4.2,] %v_10[4.5,] 
+		 7: user->profile def_%v_12 user[4.3,2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_12->country_name def_%v_13 %v_12[4.7,] 	 SYMBOL:	 ARGS:
+		 9: HASH-country- def_%v_14 %v_13[4.8,] 
+		 10: HASH-class-data- def_%v_15 %v_11[4.6,] %v_14[4.9,] 
+		 11: %self->content_tag def_%v_16 %self[2.0,] %v_15[4.10,] 	 SYMBOL:span,	 ARGS:Symbol,Nil,%v_15,
+		 12: RETURN %v_16[4.11,] %self[4.11,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = user_avatar_tag instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: RECEIVECONSTARG def_options 
+		 7: options[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->symbolize_keys def_%v_4 options[3.1,2.6,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_options %v_4[4.1,] 
+		 3: 
+		 4: %v_4->[] def_%v_5 %v_4[4.1,] 	 SYMBOL:alt,	 ARGS:Symbol,
+		 5: BRANCH %v_5[4.4,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: user->username def_%v_6 user[2.5,] 	 SYMBOL:	 ARGS:
+		 1: options->[]= def_%v_5 options[4.2,] %v_6[5.0,] 	 SYMBOL:alt,	 ARGS:Symbol,%v_6,
+		 2: COPY TYPE_PASS def_%v_5 %v_6[5.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Array) def_%v_7 
+		 2: options->[] def_%v_8 options[5.1,4.2,] 	 SYMBOL:class,	 ARGS:Symbol,
+		 3: %v_7->wrap def_%v_9 %v_7[6.1,] %v_8[6.2,] 	 SYMBOL:	 ARGS:%v_8,
+		 4: ATTRASSIGN options->[] %v_9[6.3,] 
+		 5: 
+		 6: options->[] def_%v_10 options[6.2,6.4,5.1,4.2,] 	 SYMBOL:class,	 ARGS:Symbol,
+		 7: COPY TYPE_StringLiteral "user-avatar" def_%v_11 
+		 8: %v_10-><< def_%v_12 %v_10[6.6,] %v_11[6.7,] 	 SYMBOL:	 ARGS:%v_11,
+		 9: 
+		 10: options->[] def_%v_13 options[6.2,6.4,6.6,5.1,4.2,] 	 SYMBOL:size,	 ARGS:Symbol,
+		 11: %self->user_avatar_url def_%v_14 %self[2.0,] user[2.5,] %v_13[6.10,] 	 SYMBOL:	 ARGS:user,%v_13,
+		 12: %self->image_tag def_%v_15 %self[6.11,2.0,] %v_14[6.11,] options[6.2,6.4,6.6,6.10,5.1,4.2,] 	 SYMBOL:	 ARGS:%v_14,options,
+		 13: RETURN %v_15[6.12,] %self[6.11,6.12,2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+

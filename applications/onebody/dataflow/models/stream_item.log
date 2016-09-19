@@ -1,0 +1,295 @@
+SET IRMethod, name = groups instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "StreamItemGroup" def_%v_3 
+		 7: HASH-streamable_type- def_%v_4 %v_3[2.6,] 
+		 8: %self->where def_%v_5 %self[2.0,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = groups instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "StreamItemGroup" def_%v_3 
+		 7: HASH-streamable_type- def_%v_4 %v_3[2.6,] 
+		 8: %self->where def_%v_5 %self[2.0,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = groups instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "StreamItemGroup" def_%v_3 
+		 7: HASH-streamable_type- def_%v_4 %v_3[2.6,] 
+		 8: %self->where def_%v_5 %self[2.0,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = can_have_comments? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "Verse" def_%v_3 
+		 7: COPY TYPE_StringLiteral "Note" def_%v_4 
+		 8: COPY TYPE_StringLiteral "Album" def_%v_5 
+		 9: COPY TYPE_Array def_%v_6 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] 
+		 10: %self->streamable_type def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 11: %v_6->include? def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = shared_with instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_person 
+		 6: 
+		 7: HASH-created_at- def_%v_3 
+		 8: %self->order def_%v_4 %self[2.0,] %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: %v_4->includes def_%v_5 %v_4[2.8,] 	 SYMBOL:person,group,	 ARGS:Symbol,Symbol,
+		 10: %self->shared_streamable_types def_%v_6 %self[2.0,2.8,] 	 SYMBOL:	 ARGS:
+		 11: HASH-streamable_type- def_%v_7 %v_6[2.10,] 
+		 12: %v_5->where def_%v_8 %v_5[2.9,] %v_7[2.11,] 	 SYMBOL:	 ARGS:%v_7,
+		 13: HASH-shared- def_%v_9 
+		 14: %v_8->where def_%v_10 %v_8[2.12,] %v_9[2.13,] 	 SYMBOL:	 ARGS:%v_9,
+		 15: COPY TYPE_StringLiteral "(group_id is not null or streamable_type != 'Message')" def_%v_11 
+		 16: %v_10->where def_%v_12 %v_10[2.14,] %v_11[2.15,] 	 SYMBOL:	 ARGS:%v_11,
+		 17: COPY TYPE_StringLiteral "(group_id in (:group_ids) or (group_id is null and person_id in (:friend_ids)) or person_id = :id or streamable_type in ('NewsItem', 'Site', 'Person') or is_public = :true)" def_%v_13 
+		 18: person->groups def_%v_14 person[2.5,] 	 SYMBOL:	 ARGS:
+		 19: %v_14->active def_%v_15 %v_14[2.18,] 	 SYMBOL:	 ARGS:
+		 20: %v_15->pluck def_%v_16 %v_15[2.19,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 21: person->sharing_with_people def_%v_17 person[2.5,2.18,] 	 SYMBOL:	 ARGS:
+		 22: %v_17->pluck def_%v_18 %v_17[2.21,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 23: person->id def_%v_19 person[2.5,2.18,2.21,] 	 SYMBOL:	 ARGS:
+		 24: HASH-group_ids-friend_ids-id-true- def_%v_20 %v_16[2.20,] %v_18[2.22,] %v_19[2.23,] 
+		 25: %v_12->where def_%v_21 %v_12[2.16,] %v_13[2.17,] %v_20[2.24,] 	 SYMBOL:	 ARGS:%v_13,%v_20,
+		 26: COPY TYPE_StringLiteral "streamable_type != 'Person' or person_id != :id" def_%v_22 
+		 27: person->id def_%v_23 person[2.5,2.18,2.21,2.23,] 	 SYMBOL:	 ARGS:
+		 28: HASH-id- def_%v_24 %v_23[2.27,] 
+		 29: %v_21->where def_%v_25 %v_21[2.25,] %v_22[2.26,] %v_24[2.28,] 	 SYMBOL:	 ARGS:%v_22,%v_24,
+		 30: HASH-stream_item_group_id- def_%v_26 
+		 31: %v_25->where def_%v_27 %v_25[2.29,] %v_26[2.30,] 	 SYMBOL:	 ARGS:%v_26,
+		 32: RETURN %v_27[2.31,] %self[2.0,2.8,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = shared_streamable_types instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_Array def_%v_3 
+		 7: %v_3->tap def_%v_4 %v_3[2.6,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: types[] 
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_types 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "Message" def_%cl_1_3 
+		 2: types-><< def_%cl_1_4 types[2.2,] %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: 
+		 4: (Setting) def_%cl_1_5 
+		 5: %cl_1_5->get def_%cl_1_6 %cl_1_5[3.4,] 	 SYMBOL:features,news_page,	 ARGS:Symbol,Symbol,
+		 6: BRANCH %cl_1_6[3.5,] 
+BB 4
+	outgoing: 6 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "NewsItem" def_%cl_1_7 
+		 1: types-><< def_%cl_1_8 types[2.2,] %cl_1_7[4.0,] 	 SYMBOL:	 ARGS:%cl_1_7,
+		 2: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_8 
+BB 6
+	outgoing: 7 8 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Setting) def_%cl_1_9 
+		 2: %cl_1_9->get def_%cl_1_10 %cl_1_9[6.1,] 	 SYMBOL:features,verses,	 ARGS:Symbol,Symbol,
+		 3: BRANCH %cl_1_10[6.2,] 
+BB 7
+	outgoing: 9 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "Verse" def_%cl_1_11 
+		 1: types-><< def_%cl_1_12 types[2.2,] %cl_1_11[7.0,] 	 SYMBOL:	 ARGS:%cl_1_11,
+		 2: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_12 
+BB 9
+	outgoing: 10 11 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Setting) def_%cl_1_13 
+		 2: %cl_1_13->get def_%cl_1_14 %cl_1_13[9.1,] 	 SYMBOL:features,pictures,	 ARGS:Symbol,Symbol,
+		 3: BRANCH %cl_1_14[9.2,] 
+BB 10
+	outgoing: 12 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "Album" def_%cl_1_15 
+		 1: types-><< def_%cl_1_16 types[2.2,] %cl_1_15[10.0,] 	 SYMBOL:	 ARGS:%cl_1_15,
+		 2: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_16 
+BB 12
+	outgoing: 13 14 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Setting) def_%cl_1_17 
+		 2: %cl_1_17->get def_%cl_1_18 %cl_1_17[12.1,] 	 SYMBOL:features,notes,	 ARGS:Symbol,Symbol,
+		 3: BRANCH %cl_1_18[12.2,] 
+BB 13
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "Note" def_%cl_1_19 
+		 1: types-><< def_%cl_1_20 types[2.2,] %cl_1_19[13.0,] 	 SYMBOL:	 ARGS:%cl_1_19,
+		 2: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_20 
+BB 15
+	outgoing: 16 18 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "Person" def_%cl_1_21 
+		 2: types-><< def_%cl_1_22 types[2.2,] %cl_1_21[15.1,] 	 SYMBOL:	 ARGS:%cl_1_21,
+		 3: 
+		 4: COPY TYPE_StringLiteral "PrayerRequest" def_%cl_1_23 
+		 5: types-><< def_%cl_1_24 types[15.2,2.2,] %cl_1_23[15.4,] 	 SYMBOL:	 ARGS:%cl_1_23,
+		 6: 
+		 7: COPY TYPE_StringLiteral "Site" def_%cl_1_25 
+		 8: types-><< def_%cl_1_26 types[15.2,15.5,2.2,] %cl_1_25[15.7,] 	 SYMBOL:	 ARGS:%cl_1_25,
+		 9: 
+		 10: COPY TYPE_StringLiteral "StreamItemGroup" def_%cl_1_27 
+		 11: types-><< def_%cl_1_28 types[15.2,15.5,15.8,2.2,] %cl_1_27[15.10,] 	 SYMBOL:	 ARGS:%cl_1_27,
+		 12: RETURN %cl_1_28[15.11,] %self[2.0,] 
+BB 16
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_29 
+		 1: def_%cl_1_30 %cl_1_29[16.0,] 
+		 2: RETURN %cl_1_30[16.1,] %self[2.0,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: RETURN %v_4[2.7,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

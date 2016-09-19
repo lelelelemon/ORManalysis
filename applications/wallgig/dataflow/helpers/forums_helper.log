@@ -1,0 +1,106 @@
+SET IRMethod, name = css_styles_for_forum instanceMethod = true
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_forum 
+		 6: RECEIVECONSTARG def_swap 
+		 7: swap[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_swap 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "background-color" def_%v_3 
+		 2: COPY TYPE_StringLiteral "color" def_%v_4 
+		 3: COPY TYPE_Array def_%v_5 %v_3[4.1,] %v_4[4.2,] 
+		 4: COPY TYPE_PASS def_props %v_5[4.3,] 
+		 5: 
+		 6: BRANCH swap[3.0,2.6,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: props->reverse! def_%v_6 props[4.4,] 	 SYMBOL:	 ARGS:
+		 1: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "" def_%v_7 
+		 2: COPY TYPE_PASS def_styles %v_7[7.1,] 
+		 3: 
+		 4: forum->color def_%v_8 forum[2.5,] 	 SYMBOL:	 ARGS:
+		 5: %v_8->present? def_%v_9 %v_8[7.4,] 	 SYMBOL:	 ARGS:
+		 6: BRANCH %v_9[7.5,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: props->[] def_%v_10 props[4.4,] 	 SYMBOL:	 ARGS:Fixnum,
+		 1: COPY TYPE_StringLiteral ":#" def_%v_11 
+		 2: forum->color def_%v_12 forum[2.5,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral ";" def_%v_13 
+		 4: BUILDSTRING def_%v_14 %v_10[8.0,] %v_11[8.1,] %v_12[8.2,] %v_13[8.3,] 
+		 5: styles-><< def_%v_15 styles[7.2,] %v_14[8.4,] 	 SYMBOL:	 ARGS:%v_14,
+		 6: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_15 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: forum->text_color def_%v_16 forum[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_16->present? def_%v_17 %v_16[10.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_17[10.2,] 
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: props->[] def_%v_18 props[4.4,] 	 SYMBOL:	 ARGS:Fixnum,
+		 1: COPY TYPE_StringLiteral ":#" def_%v_19 
+		 2: forum->text_color def_%v_20 forum[2.5,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral ";" def_%v_21 
+		 4: BUILDSTRING def_%v_22 %v_18[11.0,] %v_19[11.1,] %v_20[11.2,] %v_21[11.3,] 
+		 5: styles-><< def_%v_23 styles[7.2,] %v_22[11.4,] 	 SYMBOL:	 ARGS:%v_22,
+		 6: 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_23 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN styles[7.2,] %self[2.0,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+

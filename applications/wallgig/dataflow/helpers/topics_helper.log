@@ -1,0 +1,83 @@
+SET IRMethod, name = icons_for_topic instanceMethod = true
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_topic 
+		 6: 
+		 7: COPY TYPE_StringLiteral "" def_%v_3 
+		 8: COPY TYPE_PASS def_icons %v_3[2.7,] 
+		 9: 
+		 10: topic->pinned? def_%v_4 topic[2.5,] 	 SYMBOL:	 ARGS:
+		 11: BRANCH %v_4[2.10,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "<span class="glyphicon glyphicon-pushpin"></span>" def_%v_5 
+		 1: icons-><< def_%v_6 icons[2.8,] %v_5[3.0,] 	 SYMBOL:	 ARGS:%v_5,
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: topic->locked? def_%v_7 topic[2.5,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_7[5.1,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "<span class="glyphicon glyphicon-lock"></span>" def_%v_8 
+		 1: icons-><< def_%v_9 icons[2.8,] %v_8[6.0,] 	 SYMBOL:	 ARGS:%v_8,
+		 2: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: topic->hidden? def_%v_10 topic[2.5,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_10[8.1,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "<span class="glyphicon glyphicon-eye-close"></span>" def_%v_11 
+		 1: icons-><< def_%v_12 icons[2.8,] %v_11[9.0,] 	 SYMBOL:	 ARGS:%v_11,
+		 2: 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_12 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: icons->html_safe def_%v_13 icons[2.8,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_13[11.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+

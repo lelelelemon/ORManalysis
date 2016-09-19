@@ -1,0 +1,43 @@
+SET IRMethod, name = image_tag_for_wallpaper_stage instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_wallpaper 
+		 6: 
+		 7: wallpaper->requested_image_url def_%v_3 wallpaper[2.5,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_PASS def_highres_src %v_3[2.7,] 
+		 9: 
+		 10: wallpaper->requested_image def_%v_4 wallpaper[2.5,2.7,] 	 SYMBOL:	 ARGS:
+		 11: COPY TYPE_StringLiteral "320x320" def_%v_5 
+		 12: %v_4->thumb def_%v_6 %v_4[2.10,] %v_5[2.11,] 	 SYMBOL:	 ARGS:%v_5,
+		 13: %v_6->url def_%v_7 %v_6[2.12,] 	 SYMBOL:	 ARGS:
+		 14: COPY TYPE_PASS def_lowres_src %v_7[2.13,] 
+		 15: 
+		 16: wallpaper->requested_image_resolution def_%v_8 wallpaper[2.5,2.7,2.10,] 	 SYMBOL:	 ARGS:
+		 17: %v_8->width def_%v_9 %v_8[2.16,] 	 SYMBOL:	 ARGS:
+		 18: wallpaper->requested_image_resolution def_%v_10 wallpaper[2.5,2.7,2.10,2.16,] 	 SYMBOL:	 ARGS:
+		 19: %v_10->height def_%v_11 %v_10[2.18,] 	 SYMBOL:	 ARGS:
+		 20: COPY TYPE_StringLiteral "img-wallpaper img-" def_%v_12 
+		 21: 
+		 22: wallpaper->format def_%v_13 wallpaper[2.5,2.7,2.10,2.16,2.18,] 	 SYMBOL:	 ARGS:
+		 23: COPY TYPE_StringLiteral " state-1 hide" def_%v_14 
+		 24: BUILDSTRING def_%v_15 %v_12[2.20,] %v_13[2.22,] %v_14[2.23,] 
+		 25: HASH-highres_src- def_%v_16 highres_src[2.8,] 
+		 26: HASH-width-height-class-data- def_%v_17 %v_9[2.17,] %v_11[2.19,] %v_15[2.24,] %v_16[2.25,] 
+		 27: %self->image_tag def_%v_18 %self[2.0,] lowres_src[2.14,] %v_17[2.26,] 	 SYMBOL:	 ARGS:lowres_src,%v_17,
+		 28: RETURN %v_18[2.27,] %self[2.0,2.27,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

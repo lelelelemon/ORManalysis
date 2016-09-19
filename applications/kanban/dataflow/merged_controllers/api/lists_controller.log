@@ -1,0 +1,290 @@
+SET IRMethod, name = index instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->current_user def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->lists def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_PASS def_lists %v_4[2.7,] 
+		 9: 
+		 10: HASH-json- def_%v_5 %v_4[2.7,] 
+		 11: %self->render def_%v_6 %self[2.0,2.6,] %v_5[2.10,] 	 SYMBOL:	 ARGS:%v_5,
+		 12: RETURN %v_6[2.11,] %self[2.0,2.6,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->current_user def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->lists def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: COPY TYPE_PASS def_list %v_7[2.10,] 
+		 12: 
+		 13: HASH-json- def_%v_8 %v_7[2.10,] 
+		 14: %self->render def_%v_9 %self[2.0,2.6,2.8,] %v_8[2.13,] 	 SYMBOL:	 ARGS:%v_8,
+		 15: RETURN %v_9[2.14,] %self[2.0,2.6,2.8,2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (List) def_%v_3 
+		 7: %self->list_params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: COPY TYPE_PASS def_list %v_5[2.8,] 
+		 10: 
+		 11: %v_5->save def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 12: BRANCH %v_6[2.11,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH-json-status- def_%v_7 list[2.9,] 
+		 2: %self->render def_%v_8 %self[2.0,] %v_7[3.1,] 	 SYMBOL:	 ARGS:%v_7,
+		 3: RETURN %v_8[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH-nothing-status- def_%v_9 
+		 2: %self->render def_%v_10 %self[2.0,] %v_9[4.1,] 	 SYMBOL:	 ARGS:%v_9,
+		 3: RETURN %v_10[4.2,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->current_user def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->lists def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: COPY TYPE_PASS def_list %v_7[2.10,] 
+		 12: 
+		 13: %self->list_params def_%v_8 %self[2.0,2.6,2.8,] 	 SYMBOL:	 ARGS:
+		 14: list->update_attributes def_%v_9 list[2.11,] %v_8[2.13,] 	 SYMBOL:	 ARGS:%v_8,
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH-json-status- def_%v_10 list[2.11,] 
+		 2: %self->render def_%v_11 %self[2.0,] %v_10[3.1,] 	 SYMBOL:	 ARGS:%v_10,
+		 3: RETURN %v_11[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH-nothing-status- def_%v_12 
+		 2: %self->render def_%v_13 %self[2.0,] %v_12[4.1,] 	 SYMBOL:	 ARGS:%v_12,
+		 3: RETURN %v_13[4.2,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->current_user def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->lists def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: COPY TYPE_PASS def_list %v_7[2.10,] 
+		 12: 
+		 13: %v_7->destroy def_%v_8 %v_7[2.10,] 	 SYMBOL:	 ARGS:
+		 14: BRANCH %v_8[2.13,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH-json-status- def_%v_9 list[2.11,] 
+		 2: %self->render def_%v_10 %self[2.0,] %v_9[3.1,] 	 SYMBOL:	 ARGS:%v_9,
+		 3: RETURN %v_10[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH-nothing-status- def_%v_11 
+		 2: %self->render def_%v_12 %self[2.0,] %v_11[4.1,] 	 SYMBOL:	 ARGS:%v_11,
+		 3: RETURN %v_12[4.2,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sort instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:list,	 ARGS:Symbol,
+		 8: %v_4->map def_%v_5 %v_4[2.7,] 	 SYMBOL:to_i,	 ARGS:
+		 9: COPY TYPE_PASS def_list_ids %v_5[2.8,] 
+		 10: 
+		 11: %v_5->each_with_index def_%v_6 %v_5[2.8,] %self[2.0,2.6,] 	 SYMBOL:	 ARGS:%v_5,
+CLOSURE BEGIN: list_id[] index[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_list_id 
+		 3: RECEIVEARG def_index 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (List) def_%cl_1_3 
+		 2: %cl_1_3->find def_%cl_1_4 %cl_1_3[3.1,] list_id[2.2,] 	 SYMBOL:	 ARGS:list_id,
+		 3: index->+ def_%cl_1_5 index[2.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 4: HASH-position- def_%cl_1_6 %cl_1_5[3.3,] 
+		 5: %cl_1_4->update_attributes def_%cl_1_7 %cl_1_4[3.2,] %cl_1_6[3.4,] 	 SYMBOL:	 ARGS:%cl_1_6,
+		 6: RETURN %cl_1_7[3.5,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: index[2.3,] 
+		 12: 
+		 13: (List) def_%v_7 
+		 14: list_ids->first def_%v_8 list_ids[2.9,] 	 SYMBOL:	 ARGS:
+		 15: %v_7->find def_%v_9 %v_7[2.13,] %v_8[2.14,] 	 SYMBOL:	 ARGS:%v_8,
+		 16: %v_9->board def_%v_10 %v_9[2.15,] 	 SYMBOL:	 ARGS:
+		 17: %v_10->lists def_%v_11 %v_10[2.16,] 	 SYMBOL:	 ARGS:
+		 18: COPY TYPE_PASS def_lists %v_11[2.17,] 
+		 19: 
+		 20: HASH-json- def_%v_12 %v_11[2.17,] 
+		 21: %self->render def_%v_13 %self[2.0,2.6,] %v_12[2.20,] 	 SYMBOL:	 ARGS:%v_12,
+		 22: RETURN %v_13[2.21,] %self[2.0,2.6,2.21,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = list_params instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->require def_%v_4 %v_3[2.6,] 	 SYMBOL:list,	 ARGS:Symbol,
+		 8: %v_4->permit def_%v_5 %v_4[2.7,] 	 SYMBOL:board_id,open,position,title,	 ARGS:Symbol,Symbol,Symbol,Symbol,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

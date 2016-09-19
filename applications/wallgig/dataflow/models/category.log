@@ -1,0 +1,324 @@
+SET IRMethod, name = alphabetically instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = alphabetically instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = alphabetically instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = ensure_consistency! instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->connection def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_StringLiteral "
+      UPDATE categories c
+      SET
+        sfw_tags_count = (
+          SELECT     COUNT(*)
+          FROM       tags t
+          WHERE      t.category_id = c.id
+            AND      t.purity = 'sfw'
+        ),
+        sketchy_tags_count = (
+          SELECT     COUNT(*)
+          FROM       tags t
+          WHERE      t.category_id = c.id
+            AND      t.purity = 'sketchy'
+        ),
+        nsfw_tags_count = (
+          SELECT     COUNT(*)
+          FROM       tags t
+          WHERE      t.category_id = c.id
+            AND      t.purity = 'nsfw'
+        )
+    " def_%v_4 
+		 8: %v_3->execute def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = fetch_wikipedia_content instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->wikipedia_title def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->present? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: (WikipediaClient) def_%v_5 
+		 1: %self->wikipedia_title def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->new def_%v_7 %v_5[3.0,] %v_6[3.1,] 	 SYMBOL:	 ARGS:%v_6,
+		 3: %v_7->extract def_%v_8 %v_7[3.2,] 	 SYMBOL:	 ARGS:
+		 4: ATTRASSIGN %self->cooked_content %v_8[3.3,] 
+		 5: RETURN %v_8[3.3,] %self[3.1,3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = arrange_as_array instanceMethod = false
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_options 
+		 6: options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: RECEIVECONSTARG def_hash 
+		 1: hash[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_hash 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_PASS def_%v_4 hash[5.0,4.0,] 
+		 2: COPY TYPE_PASS def_%v_5 hash[5.0,4.0,] 
+		 3: BRANCH hash[5.0,4.0,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %self->arrange def_%v_6 %self[2.0,] options[3.1,2.5,] 	 SYMBOL:	 ARGS:options,
+		 1: COPY TYPE_PASS def_hash %v_6[7.0,] 
+		 2: COPY TYPE_PASS def_%v_5 %v_6[7.0,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_Array def_%v_7 
+		 2: COPY TYPE_PASS def_arr %v_7[8.1,] 
+		 3: 
+		 4: hash->each def_%v_8 hash[7.1,5.0,4.0,] %self[2.0,] 	 SYMBOL:	 ARGS:hash,
+CLOSURE BEGIN: arr[8.2,] node[] children[] %self[2.0,] options[3.1,2.5,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_node 
+		 3: RECEIVEARG def_children 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: arr-><< def_%cl_1_3 arr[] node[2.2,] 	 SYMBOL:	 ARGS:node,
+		 2: 
+		 3: children->nil? def_%cl_1_4 children[2.3,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %cl_1_4[3.3,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_5 
+		 1: RETURN %cl_1_5[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: %self->arrange_as_array def_%cl_1_6 %self[2.0,] options[] children[2.3,] 	 SYMBOL:	 ARGS:options,children,
+		 1: arr->+ def_%cl_1_7 arr[] %cl_1_6[5.0,] 	 SYMBOL:	 ARGS:%cl_1_6,
+		 2: COPY TYPE_PASS def_arr %cl_1_7[5.1,] 
+		 3: RETURN %cl_1_7[5.1,] %self[5.0,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[7.0,] 
+		 2: RETURN %cl_1_9[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: arr[5.2,] children[2.3,] 
+		 5: 
+		 6: RETURN arr[8.2,8.4,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = name_for_selects instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "-" def_%v_3 
+		 7: %self->depth def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->* def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: COPY TYPE_StringLiteral " " def_%v_6 
+		 10: %self->name def_%v_7 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 11: BUILDSTRING def_%v_8 %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] 
+		 12: RETURN %v_8[2.11,] %self[2.0,2.7,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = possible_parents instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Category) def_%v_3 
+		 7: HASH-order- def_%v_4 
+		 8: %v_3->arrange_as_array def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: COPY TYPE_PASS def_parents %v_5[2.8,] 
+		 10: 
+		 11: %self->new_record? def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 12: BRANCH %v_6[2.11,] 
+BB 3
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_7 parents[2.9,] 
+		 1: RETURN %v_7[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %self->subtree def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: parents->- def_%v_9 parents[2.9,] %v_8[4.0,] 	 SYMBOL:	 ARGS:%v_8,
+		 2: RETURN %v_9[4.1,] %self[4.0,2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+

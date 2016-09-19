@@ -1,0 +1,795 @@
+SET IRMethod, name = recurring instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: HASH-the_datetime- def_%v_3 
+		 7: %self->where def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = today instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Time) def_%v_3 
+		 7: %v_3->now def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->campus def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %self->for_date def_%v_6 %self[2.0,2.8,] %v_4[2.7,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_4,%v_5,
+		 10: RETURN %v_6[2.9,] %self[2.0,2.8,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = upcoming_singles instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "the_datetime is not null and the_datetime between :from and :to" def_%v_3 
+		 7: CONSTANT def_%v_4 	 SYMBOL:	 ARGS:
+		 8: %v_4->ago def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_6 
+		 10: %v_5->strftime def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: CONSTANT def_%v_8 	 SYMBOL:	 ARGS:
+		 12: %v_8->from_now def_%v_9 %v_8[2.11,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_10 
+		 14: %v_9->strftime def_%v_11 %v_9[2.12,] %v_10[2.13,] 	 SYMBOL:	 ARGS:%v_10,
+		 15: HASH-from-to- def_%v_12 %v_7[2.10,] %v_11[2.14,] 
+		 16: %self->where def_%v_13 %self[2.0,] %v_3[2.6,] %v_12[2.15,] 	 SYMBOL:	 ARGS:%v_3,%v_12,
+		 17: RETURN %v_13[2.16,] %self[2.0,2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = future_singles instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "the_datetime is not null and the_datetime >= ?" def_%v_3 
+		 7: CONSTANT def_%v_4 	 SYMBOL:	 ARGS:
+		 8: %v_4->ago def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_6 
+		 10: %v_5->strftime def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: %self->where def_%v_8 %self[2.0,] %v_3[2.6,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_3,%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = recurring instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: HASH-the_datetime- def_%v_3 
+		 7: %self->where def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = today instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Time) def_%v_3 
+		 7: %v_3->now def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->campus def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %self->for_date def_%v_6 %self[2.0,2.8,] %v_4[2.7,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_4,%v_5,
+		 10: RETURN %v_6[2.9,] %self[2.0,2.8,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = upcoming_singles instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "the_datetime is not null and the_datetime between :from and :to" def_%v_3 
+		 7: CONSTANT def_%v_4 	 SYMBOL:	 ARGS:
+		 8: %v_4->ago def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_6 
+		 10: %v_5->strftime def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: CONSTANT def_%v_8 	 SYMBOL:	 ARGS:
+		 12: %v_8->from_now def_%v_9 %v_8[2.11,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_10 
+		 14: %v_9->strftime def_%v_11 %v_9[2.12,] %v_10[2.13,] 	 SYMBOL:	 ARGS:%v_10,
+		 15: HASH-from-to- def_%v_12 %v_7[2.10,] %v_11[2.14,] 
+		 16: %self->where def_%v_13 %self[2.0,] %v_3[2.6,] %v_12[2.15,] 	 SYMBOL:	 ARGS:%v_3,%v_12,
+		 17: RETURN %v_13[2.16,] %self[2.0,2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = future_singles instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "the_datetime is not null and the_datetime >= ?" def_%v_3 
+		 7: CONSTANT def_%v_4 	 SYMBOL:	 ARGS:
+		 8: %v_4->ago def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_6 
+		 10: %v_5->strftime def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: %self->where def_%v_8 %self[2.0,] %v_3[2.6,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_3,%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = recurring instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: HASH-the_datetime- def_%v_3 
+		 7: %self->where def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = today instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Time) def_%v_3 
+		 7: %v_3->now def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->campus def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %self->for_date def_%v_6 %self[2.0,2.8,] %v_4[2.7,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_4,%v_5,
+		 10: RETURN %v_6[2.9,] %self[2.0,2.8,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = upcoming_singles instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "the_datetime is not null and the_datetime between :from and :to" def_%v_3 
+		 7: CONSTANT def_%v_4 	 SYMBOL:	 ARGS:
+		 8: %v_4->ago def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_6 
+		 10: %v_5->strftime def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: CONSTANT def_%v_8 	 SYMBOL:	 ARGS:
+		 12: %v_8->from_now def_%v_9 %v_8[2.11,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_10 
+		 14: %v_9->strftime def_%v_11 %v_9[2.12,] %v_10[2.13,] 	 SYMBOL:	 ARGS:%v_10,
+		 15: HASH-from-to- def_%v_12 %v_7[2.10,] %v_11[2.14,] 
+		 16: %self->where def_%v_13 %self[2.0,] %v_3[2.6,] %v_12[2.15,] 	 SYMBOL:	 ARGS:%v_3,%v_12,
+		 17: RETURN %v_13[2.16,] %self[2.0,2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = future_singles instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "the_datetime is not null and the_datetime >= ?" def_%v_3 
+		 7: CONSTANT def_%v_4 	 SYMBOL:	 ARGS:
+		 8: %v_4->ago def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_6 
+		 10: %v_5->strftime def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: %self->where def_%v_8 %self[2.0,] %v_3[2.6,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_3,%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = for_date instanceMethod = false
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_date 
+		 6: RECEIVECONSTARG def_campus 
+		 7: campus[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_campus 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "((the_datetime >= ? and the_datetime <= ?) or weekday = ?)" def_%v_3 
+		 2: date->beginning_of_day def_%v_4 date[2.5,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_5 
+		 4: %v_4->strftime def_%v_6 %v_4[4.2,] %v_5[4.3,] 	 SYMBOL:	 ARGS:%v_5,
+		 5: date->end_of_day def_%v_7 date[4.2,2.5,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_8 
+		 7: %v_7->strftime def_%v_9 %v_7[4.5,] %v_8[4.6,] 	 SYMBOL:	 ARGS:%v_8,
+		 8: date->wday def_%v_10 date[4.2,4.5,2.5,] 	 SYMBOL:	 ARGS:
+		 9: %self->where def_%v_11 %self[2.0,] %v_3[4.1,] %v_6[4.4,] %v_9[4.7,] %v_10[4.8,] 	 SYMBOL:	 ARGS:%v_3,%v_6,%v_9,%v_10,
+		 10: COPY TYPE_PASS def_r %v_11[4.9,] 
+		 11: 
+		 12: BRANCH campus[3.0,2.6,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: HASH-campus- def_%v_12 campus[3.0,2.6,] 
+		 1: r->where! def_%v_13 r[4.10,] %v_12[5.0,] 	 SYMBOL:	 ARGS:%v_12,
+		 2: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_13 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN r[4.10,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = all_group_times instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (GroupTime) def_%v_3 
+		 7: %v_3->includes def_%v_4 %v_3[2.6,] 	 SYMBOL:checkin_folder,	 ARGS:Symbol,
+		 8: %v_4->references def_%v_5 %v_4[2.7,] 	 SYMBOL:checkin_folders,	 ARGS:Symbol,
+		 9: COPY TYPE_StringLiteral "coalesce(checkin_folders.sequence, group_times.sequence)" def_%v_6 
+		 10: %v_5->order def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: COPY TYPE_StringLiteral "group_times.checkin_folder_id in (?) or group_times.checkin_time_id = ?" def_%v_8 
+		 12: %self->checkin_folder_ids def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 13: %self->id def_%v_10 %self[2.0,2.12,] 	 SYMBOL:	 ARGS:
+		 14: %v_7->where def_%v_11 %v_7[2.10,] %v_8[2.11,] %v_9[2.12,] %v_10[2.13,] 	 SYMBOL:	 ARGS:%v_8,%v_9,%v_10,
+		 15: RETURN %v_11[2.14,] %self[2.0,2.12,2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = time= instanceMethod = true
+BB 1
+	outgoing: 17 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 13 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_t 
+		 6: 
+		 7: t->present? def_%v_3 t[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: GLOBALVAR $! def_%v_4 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Time) def_%v_7 
+		 2: %v_7->parse def_%v_8 %v_7[5.1,] t[2.5,] 	 SYMBOL:	 ARGS:t,
+		 3: COPY TYPE_PASS def_%v_6 %v_8[5.2,] 
+		 4: 
+		 5: %v_4[3.0,] 
+BB 6
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 7
+	outgoing: 8 9 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: def_%v_9 
+		 2: def_%v_10 %v_9[7.1,] 
+		 3: BRANCH %v_10[7.2,] 
+BB 8
+	outgoing: 11 17 
+	datadep: 
+	instructions:
+		 0: %v_9[7.1,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: 
+		 2: %v_4[3.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+BB 11
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: def_%v_11 
+		 1: def_%v_12 %v_11[11.0,] %v_4[3.0,] 
+		 2: %v_11[11.0,] 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_t %v_6[5.3,9.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_6[5.3,9.0,] 
+BB 13
+	outgoing: 14 15 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[12.1,2.7,] 
+BB 14
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "%H%M" def_%v_13 
+		 2: t->strftime def_%v_14 t[12.0,2.5,] %v_13[14.1,] 	 SYMBOL:	 ARGS:%v_13,
+		 3: %v_14->to_i def_%v_15 %v_14[14.2,] 	 SYMBOL:	 ARGS:
+		 4: %self->write_attribute def_%v_16 %self[2.0,] %v_15[14.3,] 	 SYMBOL:time,	 ARGS:Symbol,%v_15,
+		 5: RETURN %v_16[14.4,] %self[14.4,2.0,] 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->write_attribute def_%v_17 %self[2.0,] 	 SYMBOL:time,	 ARGS:Symbol,Nil,
+		 2: RETURN %v_17[15.1,] %self[15.1,2.0,] 
+BB 17
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = the_datetime= instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_t 
+		 6: 
+		 7: t->present? def_%v_3 t[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_4 
+		 1: %v_4->parse_in_locale def_%v_5 %v_4[3.0,] t[2.5,] 	 SYMBOL:	 ARGS:t,
+		 2: COPY TYPE_StringLiteral "%Y-%m-%d %H:%M:%S" def_%v_6 
+		 3: %v_5->strftime def_%v_7 %v_5[3.1,] %v_6[3.2,] 	 SYMBOL:	 ARGS:%v_6,
+		 4: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_7 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: ATTRASSIGN %self->[] %v_7[4.0,3.3,] 
+		 1: RETURN %v_7[4.0,3.3,] %self[5.0,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = to_s instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->the_datetime def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->the_datetime def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->to_s def_%v_5 %v_4[3.1,] 	 SYMBOL:full,	 ARGS:Symbol,
+		 3: RETURN %v_5[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 5 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->weekday def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_6[4.1,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Date) def_%v_7 
+		 2: (inherit DAYNAMES) def_%v_8 %v_7[5.1,] 
+		 3: %v_8[5.2,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %v_7->const_missing def_%v_8 %v_7[5.1,] 	 SYMBOL:DAYNAMES,	 ARGS:Symbol,
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %self->weekday def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_8->[] def_%v_10 %v_8[6.0,5.2,] %v_9[7.0,] 	 SYMBOL:	 ARGS:%v_9,
+		 2: COPY TYPE_StringLiteral " " def_%v_11 
+		 3: %self->time_to_s def_%v_12 %self[7.0,2.0,] 	 SYMBOL:	 ARGS:
+		 4: BUILDSTRING def_%v_13 %v_10[7.1,] %v_11[7.2,] %v_12[7.3,] 
+		 5: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "" def_%v_14 
+		 2: COPY TYPE_PASS def_%v_13 %v_14[8.1,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_13[8.2,7.4,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = time_to_s instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->the_datetime def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->the_datetime def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->to_s def_%v_5 %v_4[3.1,] 	 SYMBOL:time,	 ARGS:Symbol,
+		 3: RETURN %v_5[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Time) def_%v_6 
+		 2: %self->time def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_7->to_s def_%v_8 %v_7[4.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_Regexp def_%v_9 
+		 5: COPY TYPE_StringLiteral "\1:\2" def_%v_10 
+		 6: %v_8->sub def_%v_11 %v_8[4.3,] %v_10[4.5,] 	 SYMBOL:	 ARGS:%v_9,%v_10,
+		 7: %v_6->parse def_%v_12 %v_6[4.1,] %v_11[4.6,] 	 SYMBOL:	 ARGS:%v_11,
+		 8: %v_12->to_s def_%v_13 %v_12[4.7,] 	 SYMBOL:time,	 ARGS:Symbol,
+		 9: RETURN %v_13[4.8,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = to_time instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->the_datetime def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_4 
+		 1: %self->time_to_s def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->parse def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 SYMBOL:	 ARGS:%v_5,
+		 3: RETURN %v_6[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_3[2.6,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = entries instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->checkin_folders def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->to_a def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->group_times def_%v_5 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->to_a def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_4->+ def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: %v_7->sort_by def_%v_8 %v_7[2.10,] %self[2.0,2.6,2.8,] 	 SYMBOL:	 ARGS:%v_7,
+CLOSURE BEGIN: e[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_e 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: e->sequence def_%cl_1_3 e[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->to_i def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 12: RETURN %v_8[2.11,] %self[2.0,2.6,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = campuses instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->distinct def_%v_3 %self[2.0,] 	 SYMBOL:campus,	 ARGS:Symbol,
+		 7: %v_3->pluck def_%v_4 %v_3[2.6,] 	 SYMBOL:campus,	 ARGS:Symbol,
+		 8: %v_4->sort def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

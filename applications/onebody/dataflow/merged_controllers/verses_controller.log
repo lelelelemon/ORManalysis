@@ -1,0 +1,1980 @@
+SET IRMethod, name = index instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 9 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Person) def_%v_5 
+		 2: %self->params def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->[] def_%v_7 %v_6[3.2,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 4: %v_5->find def_%v_8 %v_5[3.1,] %v_7[3.3,] 	 SYMBOL:	 ARGS:%v_7,
+		 5: ATTRASSIGN %self->person %v_8[3.4,] 
+		 6: 
+		 7: GETFIELD %self->logged_in def_%v_9 %self[3.2,2.0,] 
+		 8: GETFIELD %self->person def_%v_10 %self[3.2,3.5,2.0,] 
+		 9: %v_9->can_read? def_%v_11 %v_9[3.7,] %v_10[3.8,] 	 SYMBOL:	 ARGS:%v_10,
+		 10: BRANCH %v_11[3.9,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%v_12 %self[3.5,2.0,] 
+		 2: %v_12->verses def_%v_13 %v_12[4.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "created_at desc" def_%v_14 
+		 4: %self->params def_%v_15 %self[3.5,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %v_15->[] def_%v_16 %v_15[4.4,] 	 SYMBOL:page,	 ARGS:Symbol,
+		 6: HASH-order-page- def_%v_17 %v_14[4.3,] %v_16[4.5,] 
+		 7: %v_13->paginate def_%v_18 %v_13[4.2,] %v_17[4.6,] 	 SYMBOL:	 ARGS:%v_17,
+		 8: ATTRASSIGN %self->verses %v_18[4.7,] 
+		 9: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "not_authorized" def_%v_19 
+		 2: %self->t def_%v_20 %self[3.5,2.0,] %v_19[5.1,] 	 SYMBOL:	 ARGS:%v_19,
+		 3: HASH-text-layout-status- def_%v_21 %v_20[5.2,] 
+		 4: %self->render def_%v_22 %self[5.2,3.5,2.0,] %v_21[5.3,] 	 SYMBOL:	 ARGS:%v_21,
+		 5: COPY TYPE_PASS def_%v_18 %v_22[5.4,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Verse) def_%v_23 
+		 2: COPY TYPE_StringLiteral "verses.id in (?)" def_%v_24 
+		 3: GETFIELD %self->verses def_%v_25 %self[4.8,2.0,] 
+		 4: %v_25->map def_%v_26 %v_25[6.3,] 	 SYMBOL:id,	 ARGS:
+		 5: BRANCH %v_26[6.4,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Array def_%v_27 
+		 1: COPY TYPE_PASS def_%v_26 %v_27[7.0,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Array def_%v_28 %v_24[6.2,] %v_26[7.1,6.4,] 
+		 1: COPY TYPE_StringLiteral "name" def_%v_29 
+		 2: HASH-conditions-order- def_%v_30 %v_28[8.0,] %v_29[8.1,] 
+		 3: %v_23->tag_counts def_%v_31 %v_23[6.1,] %v_30[8.2,] 	 SYMBOL:	 ARGS:%v_30,
+		 4: ATTRASSIGN %self->tags %v_31[8.3,] 
+		 5: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Verse) def_%v_32 
+		 2: %v_32->order def_%v_33 %v_32[9.1,] 	 SYMBOL:book,chapter,verse,	 ARGS:Symbol,Symbol,Symbol,
+		 3: %v_33->with_people_count def_%v_34 %v_33[9.2,] 	 SYMBOL:	 ARGS:
+		 4: %self->params def_%v_35 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 5: %v_35->[] def_%v_36 %v_35[9.4,] 	 SYMBOL:page,	 ARGS:Symbol,
+		 6: %v_34->page def_%v_37 %v_34[9.3,] %v_36[9.5,] 	 SYMBOL:	 ARGS:%v_36,
+		 7: ATTRASSIGN %self->verses %v_37[9.6,] 
+		 8: 
+		 9: (Verse) def_%v_38 
+		 10: COPY TYPE_StringLiteral "name" def_%v_39 
+		 11: HASH-order- def_%v_40 %v_39[9.10,] 
+		 12: %v_38->tag_counts def_%v_41 %v_38[9.9,] %v_40[9.11,] 	 SYMBOL:	 ARGS:%v_40,
+		 13: ATTRASSIGN %self->tags %v_41[9.12,] 
+		 14: COPY TYPE_PASS def_%v_31 %v_41[9.12,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view def_%v_42 %self[9.7,9.13,8.4,2.0,4.8,3.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_42->ruby_code_from_view def_%v_43 %v_42[10.1,] %self[10.1,9.7,9.13,8.4,2.0,4.8,3.5,] 	 SYMBOL:	 ARGS:%v_42,
+CLOSURE BEGIN: %self[10.1,9.7,9.13,8.4,2.0,4.8,3.5,] tag[] css_class[] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses.heading" def_%cl_1_3 
+		 2: %self->t def_%cl_1_4 %self[2.0,] %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: ATTRASSIGN %self->title %cl_1_4[3.2,] 
+		 4: 
+		 5: COPY TYPE_StringLiteral "verses.intro" def_%cl_1_5 
+		 6: (Setting) def_%cl_1_6 
+		 7: %cl_1_6->get def_%cl_1_7 %cl_1_6[3.6,] 	 SYMBOL:name,community,	 ARGS:Symbol,Symbol,
+		 8: HASH-community- def_%cl_1_8 %cl_1_7[3.7,] 
+		 9: %self->t def_%cl_1_9 %self[3.2,3.3,2.0,] %cl_1_5[3.5,] %cl_1_8[3.8,] 	 SYMBOL:	 ARGS:%cl_1_5,%cl_1_8,
+		 10: 
+		 11: %self->search_verses_path def_%cl_1_10 %self[3.2,3.3,3.9,2.0,] 	 SYMBOL:	 ARGS:
+		 12: COPY TYPE_StringLiteral "get" def_%cl_1_11 
+		 13: COPY TYPE_StringLiteral "search_verse_form" def_%cl_1_12 
+		 14: HASH-method-id- def_%cl_1_13 %cl_1_11[3.12,] %cl_1_12[3.13,] 
+		 15: %self->form_tag def_%cl_1_14 %self[3.2,3.3,3.9,3.11,2.0,] %cl_1_10[3.11,] %cl_1_13[3.14,] %self[3.2,3.3,3.9,3.11,2.0,] 	 SYMBOL:	 ARGS:%cl_1_10,%cl_1_13,%self,
+CLOSURE BEGIN: %self[3.2,3.3,3.9,3.11,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_form 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses.add_your_favorite_verse" def_%cl_2_3 
+		 2: %self->t def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:%cl_2_3,
+		 3: %self->label_tag def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] 	 SYMBOL:q,	 ARGS:Symbol,%cl_2_4,
+		 4: 
+		 5: COPY TYPE_StringLiteral "verses.example_verse" def_%cl_2_6 
+		 6: %self->t def_%cl_2_7 %self[3.2,3.3,2.0,] %cl_2_6[3.5,] 	 SYMBOL:	 ARGS:%cl_2_6,
+		 7: COPY TYPE_StringLiteral "form-control" def_%cl_2_8 
+		 8: HASH-placeholder-class- def_%cl_2_9 %cl_2_7[3.6,] %cl_2_8[3.7,] 
+		 9: %self->text_field_tag def_%cl_2_10 %self[3.2,3.3,3.6,2.0,] %cl_2_9[3.8,] 	 SYMBOL:q,	 ARGS:Symbol,Nil,%cl_2_9,
+		 10: 
+		 11: COPY TYPE_StringLiteral "submit" def_%cl_2_11 
+		 12: COPY TYPE_StringLiteral "btn btn-info" def_%cl_2_12 
+		 13: HASH-value-class- def_%cl_2_13 %cl_2_11[3.11,] %cl_2_12[3.12,] 
+		 14: %self->button_tag def_%cl_2_14 %self[3.2,3.3,3.6,3.9,2.0,] %cl_2_13[3.13,] %self[3.2,3.3,3.6,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_2_13,%self,
+CLOSURE BEGIN: %self[3.2,3.3,3.6,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-search" def_%cl_3_3 
+		 2: %self->icon def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 SYMBOL:	 ARGS:%cl_3_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "verses.search_verse" def_%cl_3_5 
+		 5: %self->t def_%cl_3_6 %self[3.2,2.0,] %cl_3_5[3.4,] 	 SYMBOL:	 ARGS:%cl_3_5,
+		 6: RETURN %cl_3_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_7 
+		 1: def_%cl_3_8 %cl_3_7[4.0,] 
+		 2: RETURN %cl_3_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 15: RETURN %cl_2_14[3.14,] %self[3.2,3.3,3.6,3.9,3.14,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_15 
+		 1: def_%cl_2_16 %cl_2_15[4.0,] 
+		 2: RETURN %cl_2_16[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 16: 
+		 17: COPY TYPE_StringLiteral "verses.search.error" def_%cl_1_15 
+		 18: %self->t def_%cl_1_16 %self[3.2,3.3,3.9,3.11,3.15,2.0,] %cl_1_15[3.17,] 	 SYMBOL:	 ARGS:%cl_1_15,
+		 19: 
+		 20: COPY TYPE_StringLiteral "tags.tags" def_%cl_1_17 
+		 21: %self->t def_%cl_1_18 %self[3.2,3.3,3.9,3.11,3.15,3.18,2.0,] %cl_1_17[3.20,] 	 SYMBOL:	 ARGS:%cl_1_17,
+		 22: 
+		 23: COPY TYPE_StringLiteral "verses.about_tags" def_%cl_1_19 
+		 24: %self->t def_%cl_1_20 %self[3.2,3.3,3.9,3.11,3.15,3.18,3.21,2.0,] %cl_1_19[3.23,] 	 SYMBOL:	 ARGS:%cl_1_19,
+		 25: 
+		 26: GETFIELD %self->tags def_%cl_1_21 %self[3.2,3.9,3.11,3.15,3.18,3.21,3.24,2.0,] 
+		 27: COPY TYPE_StringLiteral "size1" def_%cl_1_22 
+		 28: COPY TYPE_StringLiteral "size2" def_%cl_1_23 
+		 29: COPY TYPE_StringLiteral "size3" def_%cl_1_24 
+		 30: COPY TYPE_StringLiteral "size4" def_%cl_1_25 
+		 31: COPY TYPE_Array def_%cl_1_26 %cl_1_22[3.27,] %cl_1_23[3.28,] %cl_1_24[3.29,] %cl_1_25[3.30,] 
+		 32: %self->tag_cloud def_%cl_1_27 %self[3.2,3.3,3.9,3.11,3.15,3.18,3.21,3.24,2.0,] %cl_1_21[3.26,] %cl_1_26[3.31,] %self[3.2,3.3,3.9,3.11,3.15,3.18,3.21,3.24,2.0,] 	 SYMBOL:	 ARGS:%cl_1_21,%cl_1_26,%self,
+CLOSURE BEGIN: tag[] css_class[] %self[3.2,3.3,3.9,3.11,3.15,3.18,3.21,3.24,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: RECEIVEARG def_tag 
+		 3: RECEIVEARG def_css_class 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: tag->name def_%cl_4_3 tag[2.2,] 	 SYMBOL:	 ARGS:
+		 2: HASH-class- def_%cl_4_4 css_class[2.3,] 
+		 3: %self->link_to def_%cl_4_5 %self[2.0,] %cl_4_3[3.1,] tag[3.1,2.2,] %cl_4_4[3.2,] 	 SYMBOL:	 ARGS:%cl_4_3,tag,%cl_4_4,
+		 4: RETURN %cl_4_5[3.3,] %self[3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_6 
+		 1: def_%cl_4_7 %cl_4_6[4.0,] 
+		 2: RETURN %cl_4_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: css_class[2.3,] 
+		 33: 
+		 34: GETFIELD %self->tags def_%cl_1_28 %self[3.2,3.9,3.11,3.15,3.18,3.21,3.24,3.32,2.0,] 
+		 35: %cl_1_28->empty? def_%cl_1_29 %cl_1_28[3.34,] 	 SYMBOL:	 ARGS:
+		 36: BRANCH %cl_1_29[3.35,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "tags.no_tags_yet" def_%cl_1_30 
+		 2: %self->t def_%cl_1_31 %self[3.3,2.0,] %cl_1_30[4.1,] 	 SYMBOL:	 ARGS:%cl_1_30,
+		 3: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_31 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verses def_%cl_1_32 %self[2.0,] 
+		 2: %cl_1_32->any? def_%cl_1_33 %cl_1_32[6.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %cl_1_33[6.2,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verses def_%cl_1_34 %self[2.0,] 
+		 2: HASH-partial- def_%cl_1_35 %cl_1_34[7.1,] 
+		 3: %self->render def_%cl_1_36 %self[3.3,2.0,] %cl_1_35[7.2,] 	 SYMBOL:	 ARGS:%cl_1_35,
+		 4: 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses.no_verses_yet" def_%cl_1_37 
+		 2: %self->t def_%cl_1_38 %self[3.3,2.0,] %cl_1_37[8.1,] 	 SYMBOL:	 ARGS:%cl_1_37,
+		 3: COPY TYPE_PASS def_%cl_1_36 %cl_1_38[8.2,] 
+BB 9
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verses def_%cl_1_39 %self[2.0,] 
+		 2: %self->pagination def_%cl_1_40 %self[3.3,2.0,] %cl_1_39[9.1,] 	 SYMBOL:	 ARGS:%cl_1_39,
+		 3: RETURN %cl_1_40[9.2,] %self[9.2,3.3,2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_41 
+		 1: def_%cl_1_42 %cl_1_41[10.0,] 
+		 2: RETURN %cl_1_42[10.1,] %self[3.3,2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %v_43[10.2,] %self[10.1,9.7,9.13,8.4,2.0,4.8,3.5,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->get_verse def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: 
+		 8: %self->ruby_code_from_view def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->ruby_code_from_view def_%v_5 %v_4[2.8,] %self[2.0,2.6,2.8,] 	 SYMBOL:	 ARGS:%v_4,
+CLOSURE BEGIN: %self[2.0,2.6,2.8,] comment[] form[] person[] controller[] tag[] url[] 
+BB 1
+	outgoing: 26 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_1_3 %self[2.0,] 
+		 2: %cl_1_3->reference def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: ATTRASSIGN %self->title %cl_1_4[3.2,] 
+		 4: 
+		 5: COPY TYPE_StringLiteral "()" def_%cl_1_5 
+		 6: %self->content_for def_%cl_1_6 %self[3.3,2.0,] %cl_1_5[3.5,] 	 SYMBOL:sub_title,	 ARGS:Symbol,%cl_1_5,
+		 7: 
+		 8: GETFIELD %self->verse def_%cl_1_7 %self[3.6,2.0,] 
+		 9: %cl_1_7->text def_%cl_1_8 %cl_1_7[3.8,] 	 SYMBOL:	 ARGS:
+		 10: 
+		 11: GETFIELD %self->verse def_%cl_1_9 %self[3.6,2.0,] 
+		 12: %cl_1_9->translation def_%cl_1_10 %cl_1_9[3.11,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_StringLiteral "WEB" def_%cl_1_11 
+		 14: %cl_1_10->== def_%cl_1_12 %cl_1_10[3.12,] %cl_1_11[3.13,] 	 SYMBOL:	 ARGS:%cl_1_11,
+		 15: BRANCH %cl_1_12[3.14,] 
+BB 4
+	outgoing: 6 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses.disclaimer" def_%cl_1_13 
+		 2: %self->t def_%cl_1_14 %self[3.3,2.0,] %cl_1_13[4.1,] 	 SYMBOL:	 ARGS:%cl_1_13,
+		 3: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_14 
+BB 6
+	outgoing: 7 8 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "Comments" def_%cl_1_15 
+		 2: %self->t def_%cl_1_16 %self[3.3,2.0,] %cl_1_15[6.1,] 	 SYMBOL:	 ARGS:%cl_1_15,
+		 3: 
+		 4: %self->object def_%cl_1_17 %self[6.2,3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %cl_1_17->comments def_%cl_1_18 %cl_1_17[6.4,] 	 SYMBOL:	 ARGS:
+		 6: %cl_1_18->any? def_%cl_1_19 %cl_1_18[6.5,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %cl_1_19[6.6,] 
+BB 7
+	outgoing: 9 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->object def_%cl_1_20 %self[3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_20->comments def_%cl_1_21 %cl_1_20[7.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_21->each def_%cl_1_22 %cl_1_21[7.2,] %self[7.1,3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_1_21,
+CLOSURE BEGIN: comment[] %self[7.1,3.3,2.0,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_comment 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: comment->person def_%cl_2_3 comment[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %self->link_to def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_2_3,%self,
+CLOSURE BEGIN: comment[3.1,2.2,] %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: comment->person def_%cl_3_3 comment[] 	 SYMBOL:	 ARGS:
+		 2: %self->avatar_tag def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 SYMBOL:	 ARGS:%cl_3_3,
+		 3: RETURN %cl_3_4[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_5 
+		 1: def_%cl_3_6 %cl_3_5[4.0,] 
+		 2: RETURN %cl_3_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: 
+		 4: comment->person def_%cl_2_5 comment[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 5: %cl_2_5->name def_%cl_2_6 %cl_2_5[3.4,] 	 SYMBOL:	 ARGS:
+		 6: comment->person def_%cl_2_7 comment[3.1,3.4,2.2,] 	 SYMBOL:	 ARGS:
+		 7: %self->link_to def_%cl_2_8 %self[3.2,2.0,] %cl_2_6[3.5,] %cl_2_7[3.6,] 	 SYMBOL:	 ARGS:%cl_2_6,%cl_2_7,
+		 8: 
+		 9: comment->created_at def_%cl_2_9 comment[3.1,3.4,3.6,2.2,] 	 SYMBOL:	 ARGS:
+		 10: %cl_2_9->to_s def_%cl_2_10 %cl_2_9[3.9,] 	 SYMBOL:full,	 ARGS:Symbol,
+		 11: 
+		 12: GETFIELD %self->logged_in def_%cl_2_11 %self[3.2,3.7,2.0,] 
+		 13: %cl_2_11->can_update? def_%cl_2_12 %cl_2_11[3.12,] comment[3.1,3.4,3.6,3.9,2.2,] 	 SYMBOL:	 ARGS:comment,
+		 14: BRANCH %cl_2_12[3.13,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->comment_path def_%cl_2_13 %self[2.0,] comment[2.2,] 	 SYMBOL:	 ARGS:comment,
+		 2: COPY TYPE_StringLiteral "btn btn-xs bg-gray text-red" def_%cl_2_14 
+		 3: COPY TYPE_StringLiteral "delete" def_%cl_2_15 
+		 4: COPY TYPE_StringLiteral "are_you_sure" def_%cl_2_16 
+		 5: %self->t def_%cl_2_17 %self[4.1,2.0,] %cl_2_16[4.4,] 	 SYMBOL:	 ARGS:%cl_2_16,
+		 6: HASH-confirm- def_%cl_2_18 %cl_2_17[4.5,] 
+		 7: HASH-class-method-data- def_%cl_2_19 %cl_2_14[4.2,] %cl_2_15[4.3,] %cl_2_18[4.6,] 
+		 8: %self->link_to def_%cl_2_20 %self[4.1,4.5,2.0,] %cl_2_13[4.1,] %cl_2_19[4.7,] %self[4.1,4.5,2.0,] 	 SYMBOL:	 ARGS:%cl_2_13,%cl_2_19,%self,
+CLOSURE BEGIN: %self[4.1,4.5,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_4_3 
+		 2: %self->icon def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 SYMBOL:	 ARGS:%cl_4_3,
+		 3: RETURN %cl_4_4[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_5 
+		 1: def_%cl_4_6 %cl_4_5[4.0,] 
+		 2: RETURN %cl_4_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_20 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: comment->text def_%cl_2_21 comment[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %self->preserve_breaks def_%cl_2_22 %self[2.0,] %cl_2_21[6.1,] 	 SYMBOL:	 ARGS:%cl_2_21,
+		 3: RETURN %cl_2_22[6.2,] %self[6.2,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_23 
+		 1: def_%cl_2_24 %cl_2_23[7.0,] 
+		 2: RETURN %cl_2_24[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 8
+	outgoing: 9 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "comments.none_yet" def_%cl_1_23 
+		 2: %self->t def_%cl_1_24 %self[3.3,2.0,] %cl_1_23[8.1,] 	 SYMBOL:	 ARGS:%cl_1_23,
+		 3: COPY TYPE_PASS def_%cl_1_22 %cl_1_24[8.2,] 
+BB 9
+	outgoing: 10 11 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "comments.add_a_comment" def_%cl_1_25 
+		 2: %self->t def_%cl_1_26 %self[3.3,2.0,] %cl_1_25[9.1,] 	 SYMBOL:	 ARGS:%cl_1_25,
+		 3: 
+		 4: (Comment) def_%cl_1_27 
+		 5: %cl_1_27->new def_%cl_1_28 %cl_1_27[9.4,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_StringLiteral "border:none;" def_%cl_1_29 
+		 7: HASH-style- def_%cl_1_30 %cl_1_29[9.6,] 
+		 8: HASH-html- def_%cl_1_31 %cl_1_30[9.7,] 
+		 9: %self->form_for def_%cl_1_32 %self[9.2,3.3,2.0,] %cl_1_28[9.5,] %cl_1_31[9.8,] %self[9.2,3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_1_28,%cl_1_31,%self,
+CLOSURE BEGIN: %self[9.2,3.3,2.0,] form[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: RECEIVEARG def_form 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "comment[commentable_type]" def_%cl_5_3 
+		 2: %self->object def_%cl_5_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %cl_5_4->class def_%cl_5_5 %cl_5_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: %self->hidden_field_tag def_%cl_5_6 %self[3.2,2.0,] %cl_5_3[3.1,] %cl_5_5[3.3,] 	 SYMBOL:	 ARGS:%cl_5_3,%cl_5_5,
+		 5: 
+		 6: COPY TYPE_StringLiteral "comment[commentable_id]" def_%cl_5_7 
+		 7: %self->object def_%cl_5_8 %self[3.2,3.4,2.0,] 	 SYMBOL:	 ARGS:
+		 8: %cl_5_8->id def_%cl_5_9 %cl_5_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: %self->hidden_field_tag def_%cl_5_10 %self[3.2,3.4,3.7,2.0,] %cl_5_7[3.6,] %cl_5_9[3.8,] 	 SYMBOL:	 ARGS:%cl_5_7,%cl_5_9,
+		 10: 
+		 11: %self->request def_%cl_5_11 %self[3.2,3.4,3.7,3.9,2.0,] 	 SYMBOL:	 ARGS:
+		 12: %cl_5_11->fullpath def_%cl_5_12 %cl_5_11[3.11,] 	 SYMBOL:	 ARGS:
+		 13: %self->hidden_field_tag def_%cl_5_13 %self[3.2,3.4,3.7,3.9,3.11,2.0,] %cl_5_12[3.12,] 	 SYMBOL:return_to,	 ARGS:Symbol,%cl_5_12,
+		 14: 
+		 15: COPY TYPE_StringLiteral "comment[text]" def_%cl_5_14 
+		 16: COPY TYPE_StringLiteral "" def_%cl_5_15 
+		 17: COPY TYPE_StringLiteral "new_comment_textarea" def_%cl_5_16 
+		 18: COPY TYPE_StringLiteral "form-control" def_%cl_5_17 
+		 19: HASH-rows-cols-id-class- def_%cl_5_18 %cl_5_16[3.17,] %cl_5_17[3.18,] 
+		 20: %self->text_area_tag def_%cl_5_19 %self[3.2,3.4,3.7,3.9,3.11,3.13,2.0,] %cl_5_14[3.15,] %cl_5_15[3.16,] %cl_5_18[3.19,] 	 SYMBOL:	 ARGS:%cl_5_14,%cl_5_15,%cl_5_18,
+		 21: 
+		 22: COPY TYPE_StringLiteral "comments.save" def_%cl_5_20 
+		 23: %self->t def_%cl_5_21 %self[3.2,3.4,3.7,3.9,3.11,3.13,3.20,2.0,] %cl_5_20[3.22,] 	 SYMBOL:	 ARGS:%cl_5_20,
+		 24: COPY TYPE_StringLiteral "btn btn-success" def_%cl_5_22 
+		 25: HASH-class- def_%cl_5_23 %cl_5_22[3.24,] 
+		 26: form->submit def_%cl_5_24 form[2.2,] %cl_5_21[3.23,] %cl_5_23[3.25,] 	 SYMBOL:	 ARGS:%cl_5_21,%cl_5_23,
+		 27: RETURN %cl_5_24[3.26,] %self[3.2,3.4,3.7,3.9,3.11,3.13,3.20,3.23,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_25 
+		 1: def_%cl_5_26 %cl_5_25[4.0,] 
+		 2: RETURN %cl_5_26[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: 
+		 11: GETFIELD %self->verse def_%cl_1_33 %self[9.2,9.9,2.0,] 
+		 12: %cl_1_33->people def_%cl_1_34 %cl_1_33[9.11,] 	 SYMBOL:	 ARGS:
+		 13: %cl_1_34->any? def_%cl_1_35 %cl_1_34[9.12,] 	 SYMBOL:	 ARGS:
+		 14: BRANCH %cl_1_35[9.13,] 
+BB 10
+	outgoing: 12 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses.people_who_like_this_verse" def_%cl_1_36 
+		 2: %self->t def_%cl_1_37 %self[3.3,2.0,] %cl_1_36[10.1,] 	 SYMBOL:	 ARGS:%cl_1_36,
+		 3: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_37 
+BB 12
+	outgoing: 13 14 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_1_38 %self[2.0,] 
+		 2: %cl_1_38->people def_%cl_1_39 %cl_1_38[12.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_39->any? def_%cl_1_40 %cl_1_39[12.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %cl_1_40[12.3,] 
+BB 13
+	outgoing: 15 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_1_41 %self[2.0,] 
+		 2: %cl_1_41->people def_%cl_1_42 %cl_1_41[13.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_42->each def_%cl_1_43 %cl_1_42[13.2,] %self[3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_1_42,
+CLOSURE BEGIN: %self[3.3,2.0,] person[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_6_0 
+		 2: RECEIVEARG def_person 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->avatar_tag def_%cl_6_3 %self[2.0,] person[2.2,] 	 SYMBOL:	 ARGS:person,
+		 2: %self->link_to def_%cl_6_4 %self[3.1,2.0,] %cl_6_3[3.1,] person[2.2,] 	 SYMBOL:	 ARGS:%cl_6_3,person,
+		 3: 
+		 4: person->name def_%cl_6_5 person[2.2,] 	 SYMBOL:	 ARGS:
+		 5: %self->link_to def_%cl_6_6 %self[3.1,3.2,2.0,] %cl_6_5[3.4,] person[3.4,2.2,] 	 SYMBOL:	 ARGS:%cl_6_5,person,
+		 6: RETURN %cl_6_6[3.5,] %self[3.1,3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_6_7 
+		 1: def_%cl_6_8 %cl_6_7[4.0,] 
+		 2: RETURN %cl_6_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_43 
+BB 15
+	outgoing: 16 17 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->logged_in def_%cl_1_44 %self[2.0,] 
+		 2: %cl_1_44->verses def_%cl_1_45 %cl_1_44[15.1,] 	 SYMBOL:	 ARGS:
+		 3: GETFIELD %self->verse def_%cl_1_46 %self[2.0,] 
+		 4: %cl_1_45->include? def_%cl_1_47 %cl_1_45[15.2,] %cl_1_46[15.3,] 	 SYMBOL:	 ARGS:%cl_1_46,
+		 5: BRANCH %cl_1_47[15.4,] 
+BB 16
+	outgoing: 18 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_1_48 %self[2.0,] 
+		 2: COPY TYPE_StringLiteral "delete" def_%cl_1_49 
+		 3: COPY TYPE_StringLiteral "are_you_sure" def_%cl_1_50 
+		 4: %self->t def_%cl_1_51 %self[3.3,2.0,] %cl_1_50[16.3,] 	 SYMBOL:	 ARGS:%cl_1_50,
+		 5: HASH-confirm- def_%cl_1_52 %cl_1_51[16.4,] 
+		 6: COPY TYPE_StringLiteral "btn bg-gray text-red" def_%cl_1_53 
+		 7: HASH-method-data-class- def_%cl_1_54 %cl_1_49[16.2,] %cl_1_52[16.5,] %cl_1_53[16.6,] 
+		 8: %self->link_to def_%cl_1_55 %self[16.4,3.3,2.0,] %cl_1_48[16.1,] %cl_1_54[16.7,] %self[16.4,3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_1_48,%cl_1_54,%self,
+CLOSURE BEGIN: %self[16.4,3.3,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_7_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-minus-circle" def_%cl_7_3 
+		 2: %self->icon def_%cl_7_4 %self[2.0,] %cl_7_3[3.1,] 	 SYMBOL:	 ARGS:%cl_7_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "verses.remove_this_verse" def_%cl_7_5 
+		 5: %self->t def_%cl_7_6 %self[3.2,2.0,] %cl_7_5[3.4,] 	 SYMBOL:	 ARGS:%cl_7_5,
+		 6: RETURN %cl_7_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_7_7 
+		 1: def_%cl_7_8 %cl_7_7[4.0,] 
+		 2: RETURN %cl_7_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: 
+BB 17
+	outgoing: 18 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_1_56 %self[2.0,] 
+		 2: HASH-id- def_%cl_1_57 %cl_1_56[17.1,] 
+		 3: %self->verses_path def_%cl_1_58 %self[3.3,2.0,] %cl_1_57[17.2,] 	 SYMBOL:	 ARGS:%cl_1_57,
+		 4: COPY TYPE_StringLiteral "post" def_%cl_1_59 
+		 5: COPY TYPE_StringLiteral "btn btn-success" def_%cl_1_60 
+		 6: HASH-method-class- def_%cl_1_61 %cl_1_59[17.4,] %cl_1_60[17.5,] 
+		 7: %self->link_to def_%cl_1_62 %self[17.3,3.3,2.0,] %cl_1_58[17.3,] %cl_1_61[17.6,] %self[17.3,3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_1_58,%cl_1_61,%self,
+CLOSURE BEGIN: %self[17.3,3.3,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_8_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-plus-circle" def_%cl_8_3 
+		 2: %self->icon def_%cl_8_4 %self[2.0,] %cl_8_3[3.1,] 	 SYMBOL:	 ARGS:%cl_8_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "verses.add_this_verse_to_my_list" def_%cl_8_5 
+		 5: %self->t def_%cl_8_6 %self[3.2,2.0,] %cl_8_5[3.4,] 	 SYMBOL:	 ARGS:%cl_8_5,
+		 6: RETURN %cl_8_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_8_7 
+		 1: def_%cl_8_8 %cl_8_7[4.0,] 
+		 2: RETURN %cl_8_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: COPY TYPE_PASS def_%cl_1_55 %cl_1_62[17.7,] 
+BB 18
+	outgoing: 19 20 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "tags.tags" def_%cl_1_63 
+		 2: %self->t def_%cl_1_64 %self[3.3,2.0,] %cl_1_63[18.1,] 	 SYMBOL:	 ARGS:%cl_1_63,
+		 3: 
+		 4: COPY TYPE_StringLiteral "verses.about_tags" def_%cl_1_65 
+		 5: %self->t def_%cl_1_66 %self[18.2,3.3,2.0,] %cl_1_65[18.4,] 	 SYMBOL:	 ARGS:%cl_1_65,
+		 6: 
+		 7: COPY TYPE_PASS def_%cl_1_67 controller[] 
+		 8: COPY TYPE_PASS def_%cl_1_68 controller[] 
+		 9: BRANCH controller[] 
+BB 19
+	outgoing: 20 24 
+	datadep: 
+	instructions:
+		 0: %self->object def_%cl_1_69 %self[3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 1: %cl_1_69->class def_%cl_1_70 %cl_1_69[19.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_70->name def_%cl_1_71 %cl_1_70[19.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_71->pluralize def_%cl_1_72 %cl_1_71[19.2,] 	 SYMBOL:	 ARGS:
+		 4: %cl_1_72->downcase def_%cl_1_73 %cl_1_72[19.3,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_PASS def_controller %cl_1_73[19.4,] 
+		 6: COPY TYPE_PASS def_%cl_1_68 %cl_1_73[19.4,] 
+BB 20
+	outgoing: 21 22 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->object def_%cl_1_74 %self[3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_74->tags def_%cl_1_75 %cl_1_74[20.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_75->any? def_%cl_1_76 %cl_1_75[20.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %cl_1_76[20.3,] 
+BB 21
+	outgoing: 23 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->object def_%cl_1_77 %self[3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_77->tags def_%cl_1_78 %cl_1_77[21.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_78->each def_%cl_1_79 %cl_1_78[21.2,] %self[21.1,3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_1_78,
+CLOSURE BEGIN: tag[] %self[21.1,3.3,2.0,] controller[19.5,] url[] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_9_0 
+		 2: RECEIVEARG def_tag 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: tag->name def_%cl_9_3 tag[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %self->link_to def_%cl_9_4 %self[2.0,] %cl_9_3[3.1,] tag[3.1,2.2,] 	 SYMBOL:	 ARGS:%cl_9_3,tag,
+		 3: 
+		 4: %self->params def_%cl_9_5 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %cl_9_5->[] def_%cl_9_6 %cl_9_5[3.4,] 	 SYMBOL:controller,	 ARGS:Symbol,
+		 6: %cl_9_6->== def_%cl_9_7 %cl_9_6[3.5,] controller[] 	 SYMBOL:	 ARGS:controller,
+		 7: BRANCH %cl_9_7[3.6,] 
+BB 4
+	outgoing: 5 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses" def_%cl_9_8 
+		 2: controller->== def_%cl_9_9 controller[] %cl_9_8[4.1,] 	 SYMBOL:	 ARGS:%cl_9_8,
+		 3: BRANCH %cl_9_9[4.2,] 
+BB 5
+	outgoing: 7 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->object def_%cl_9_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: tag->name def_%cl_9_11 tag[2.2,] 	 SYMBOL:	 ARGS:
+		 3: HASH-id-remove_tag- def_%cl_9_12 %cl_9_10[5.1,] %cl_9_11[5.2,] 
+		 4: %self->verse_path def_%cl_9_13 %self[5.1,2.0,] %cl_9_12[5.3,] 	 SYMBOL:	 ARGS:%cl_9_12,
+		 5: COPY TYPE_PASS def_url %cl_9_13[5.4,] 
+		 6: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_9_13 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "delete" def_%cl_9_14 
+		 2: %self->t def_%cl_9_15 %self[2.0,] %cl_9_14[7.1,] 	 SYMBOL:	 ARGS:%cl_9_14,
+		 3: COPY TYPE_StringLiteral "delete" def_%cl_9_16 
+		 4: COPY TYPE_StringLiteral "put" def_%cl_9_17 
+		 5: COPY TYPE_StringLiteral "tags.confirm_delete" def_%cl_9_18 
+		 6: %self->t def_%cl_9_19 %self[7.2,2.0,] %cl_9_18[7.5,] 	 SYMBOL:	 ARGS:%cl_9_18,
+		 7: HASH-remote-confirm- def_%cl_9_20 %cl_9_19[7.6,] 
+		 8: HASH-title-class-method-data- def_%cl_9_21 %cl_9_15[7.2,] %cl_9_16[7.3,] %cl_9_17[7.4,] %cl_9_20[7.7,] 
+		 9: %self->link_to def_%cl_9_22 %self[7.2,7.6,2.0,] url[5.5,] %cl_9_21[7.8,] %self[7.2,7.6,2.0,] 	 SYMBOL:	 ARGS:url,%cl_9_21,%self,
+CLOSURE BEGIN: %self[7.2,7.6,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_10_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-times" def_%cl_10_3 
+		 2: %self->icon def_%cl_10_4 %self[2.0,] %cl_10_3[3.1,] 	 SYMBOL:	 ARGS:%cl_10_3,
+		 3: RETURN %cl_10_4[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_10_5 
+		 1: def_%cl_10_6 %cl_10_5[4.0,] 
+		 2: RETURN %cl_10_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_9_22[7.9,] %self[2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_9_23 
+		 1: def_%cl_9_24 %cl_9_23[10.0,] 
+		 2: RETURN %cl_9_24[10.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: url[5.5,] 
+		 4: 
+BB 22
+	outgoing: 23 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "tags.no_tags_yet" def_%cl_1_80 
+		 2: %self->t def_%cl_1_81 %self[3.3,2.0,] %cl_1_80[22.1,] 	 SYMBOL:	 ARGS:%cl_1_80,
+		 3: COPY TYPE_PASS def_%cl_1_79 %cl_1_81[22.2,] 
+BB 23
+	outgoing: 24 26 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_1_82 %self[2.0,] 
+		 2: COPY TYPE_StringLiteral "put" def_%cl_1_83 
+		 3: HASH-remote- def_%cl_1_84 
+		 4: HASH-method-data- def_%cl_1_85 %cl_1_83[23.2,] %cl_1_84[23.3,] 
+		 5: %self->form_tag def_%cl_1_86 %self[3.3,2.0,] %cl_1_82[23.1,] %cl_1_85[23.4,] %self[3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_1_82,%cl_1_85,%self,
+CLOSURE BEGIN: %self[3.3,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_11_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "tags.add_tags" def_%cl_11_3 
+		 2: %self->t def_%cl_11_4 %self[2.0,] %cl_11_3[3.1,] 	 SYMBOL:	 ARGS:%cl_11_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "form-control" def_%cl_11_5 
+		 5: HASH-class- def_%cl_11_6 %cl_11_5[3.4,] 
+		 6: %self->text_field_tag def_%cl_11_7 %self[3.2,2.0,] %cl_11_6[3.5,] 	 SYMBOL:add_tags,	 ARGS:Symbol,Nil,%cl_11_6,
+		 7: RETURN %cl_11_7[3.6,] %self[3.2,3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_11_8 
+		 1: def_%cl_11_9 %cl_11_8[4.0,] 
+		 2: RETURN %cl_11_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 6: RETURN %cl_1_86[23.5,] %self[23.5,3.3,2.0,] 
+BB 24
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_87 
+		 1: def_%cl_1_88 %cl_1_87[24.0,] 
+		 2: RETURN %cl_1_88[24.1,] %self[3.3,2.0,] 
+BB 26
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: controller[19.5,] 
+		 10: RETURN %v_5[2.9,] %self[2.0,2.6,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = search instanceMethod = true
+BB 1
+	outgoing: 17 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: GLOBALVAR $! def_%v_3 
+BB 4
+	outgoing: 5 6 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: (Verse) def_%v_6 
+		 3: %self->params def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_7->[] def_%v_8 %v_7[4.3,] 	 SYMBOL:q,	 ARGS:Symbol,
+		 5: %v_6->find def_%v_9 %v_6[4.2,] %v_8[4.4,] 	 SYMBOL:	 ARGS:%v_8,
+		 6: ATTRASSIGN %self->verse %v_9[4.5,] 
+		 7: 
+		 8: GETFIELD %self->verse def_%v_10 %self[4.3,4.6,2.0,] 
+		 9: %v_10->invalid? def_%v_11 %v_10[4.8,] 	 SYMBOL:	 ARGS:
+		 10: BRANCH %v_11[4.9,] 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses.not_found" def_%v_12 
+		 2: %self->t def_%v_13 %self[4.6,2.0,] %v_12[5.1,] 	 SYMBOL:	 ARGS:%v_12,
+		 3: HASH-text-layout-status- def_%v_14 %v_13[5.2,] 
+		 4: %self->render def_%v_15 %self[5.2,4.6,2.0,] %v_14[5.3,] 	 SYMBOL:	 ARGS:%v_14,
+		 5: 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view def_%v_16 %self[4.6,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_16->ruby_code_from_view def_%v_17 %v_16[6.1,] %self[6.1,4.6,2.0,] 	 SYMBOL:	 ARGS:%v_16,
+CLOSURE BEGIN: %self[6.1,4.6,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_1_3 %self[2.0,] 
+		 2: %cl_1_3->reference def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: 
+		 4: GETFIELD %self->verse def_%cl_1_5 %self[2.0,] 
+		 5: %cl_1_5->text def_%cl_1_6 %cl_1_5[3.4,] 	 SYMBOL:	 ARGS:
+		 6: 
+		 7: (Verse) def_%cl_1_7 
+		 8: %cl_1_7->new def_%cl_1_8 %cl_1_7[3.7,] 	 SYMBOL:	 ARGS:
+		 9: %self->form_for def_%cl_1_9 %self[2.0,] %cl_1_8[3.8,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_1_8,%self,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_form 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_2_3 %self[2.0,] 
+		 2: %cl_2_3->id def_%cl_2_4 %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %self->hidden_field_tag def_%cl_2_5 %self[2.0,] %cl_2_4[3.2,] 	 SYMBOL:id,	 ARGS:Symbol,%cl_2_4,
+		 4: 
+		 5: COPY TYPE_StringLiteral "submit" def_%cl_2_6 
+		 6: COPY TYPE_StringLiteral "btn btn-success" def_%cl_2_7 
+		 7: HASH-value-class- def_%cl_2_8 %cl_2_6[3.5,] %cl_2_7[3.6,] 
+		 8: %self->button_tag def_%cl_2_9 %self[3.3,2.0,] %cl_2_8[3.7,] %self[3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_2_8,%self,
+CLOSURE BEGIN: %self[3.3,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-plus" def_%cl_3_3 
+		 2: %self->icon def_%cl_3_4 %self[2.0,] %cl_3_3[3.1,] 	 SYMBOL:	 ARGS:%cl_3_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "verses.add_verse" def_%cl_3_5 
+		 5: %self->t def_%cl_3_6 %self[3.2,2.0,] %cl_3_5[3.4,] 	 SYMBOL:	 ARGS:%cl_3_5,
+		 6: RETURN %cl_3_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_7 
+		 1: def_%cl_3_8 %cl_3_7[4.0,] 
+		 2: RETURN %cl_3_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: RETURN %cl_2_9[3.8,] %self[3.3,3.8,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_10 
+		 1: def_%cl_2_11 %cl_2_10[4.0,] 
+		 2: RETURN %cl_2_11[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: RETURN %cl_1_9[3.9,] %self[3.9,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[4.0,] 
+		 2: RETURN %cl_1_11[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: COPY TYPE_PASS def_%v_15 %v_17[6.2,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_5 %v_15[6.3,5.4,] 
+		 1: %v_3[2.5,] 
+BB 8
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 11 15 
+	datadep: 
+	instructions:
+		 0: def_%v_18 
+		 1: (ActiveRecord) def_%v_19 
+		 2: (inherit RecordNotFound) def_%v_20 %v_19[9.1,] 
+		 3: %v_20[9.2,] 
+BB 10
+	outgoing: 11 15 
+	datadep: 
+	instructions:
+		 0: %v_19->const_missing def_%v_20 %v_19[9.1,] 	 SYMBOL:RecordNotFound,	 ARGS:Symbol,
+BB 11
+	outgoing: 12 13 15 
+	datadep: 
+	instructions:
+		 0: def_%v_21 %v_20[10.0,9.2,] %v_18[9.0,] 
+		 1: BRANCH %v_21[11.0,] 
+BB 12
+	outgoing: 15 17 
+	datadep: 
+	instructions:
+		 0: %v_18[9.0,] 
+BB 13
+	outgoing: 14 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses.not_found" def_%v_22 
+		 2: %self->t def_%v_23 %self[4.6,2.0,] %v_22[13.1,] 	 SYMBOL:	 ARGS:%v_22,
+		 3: HASH-text-layout-status- def_%v_24 %v_23[13.2,] 
+		 4: %self->render def_%v_25 %self[13.2,4.6,2.0,] %v_24[13.3,] 	 SYMBOL:	 ARGS:%v_24,
+		 5: COPY TYPE_PASS def_%v_5 %v_25[13.4,] 
+		 6: %v_3[2.5,] 
+BB 14
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: def_%v_26 
+		 1: def_%v_27 %v_26[15.0,] %v_3[2.5,] 
+		 2: %v_26[15.0,] 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[7.0,13.5,] %self[4.6,2.0,] 
+BB 17
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->get_verse def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%v_4 %self[2.0,] 
+		 2: %v_4->people def_%v_5 %v_4[3.1,] 	 SYMBOL:	 ARGS:
+		 3: GETFIELD %self->logged_in def_%v_6 %self[2.0,] 
+		 4: %v_5->include? def_%v_7 %v_5[3.2,] %v_6[3.3,] 	 SYMBOL:	 ARGS:%v_6,
+		 5: BRANCH %v_7[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+		 1: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%v_9 %self[2.0,] 
+		 2: %v_9->people def_%v_10 %v_9[5.1,] 	 SYMBOL:	 ARGS:
+		 3: GETFIELD %self->logged_in def_%v_11 %self[2.0,] 
+		 4: %v_10-><< def_%v_12 %v_10[5.2,] %v_11[5.3,] 	 SYMBOL:	 ARGS:%v_11,
+		 5: 
+		 6: GETFIELD %self->verse def_%v_13 %self[2.0,] 
+		 7: GETFIELD %self->logged_in def_%v_14 %self[2.0,] 
+		 8: %v_13->create_as_stream_item def_%v_15 %v_13[5.6,] %v_14[5.7,] 	 SYMBOL:	 ARGS:%v_14,
+		 9: COPY TYPE_PASS def_%v_8 %v_15[5.8,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%v_16 %self[2.0,] 
+		 2: %self->redirect_to def_%v_17 %self[2.0,] %v_16[6.1,] 	 SYMBOL:	 ARGS:%v_16,
+		 3: RETURN %v_17[6.2,] %self[6.2,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Verse) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->verse %v_6[2.9,] 
+		 11: 
+		 12: %self->params def_%v_7 %self[2.0,2.7,2.10,] 	 SYMBOL:	 ARGS:
+		 13: %v_7->[] def_%v_8 %v_7[2.12,] 	 SYMBOL:remove_tag,	 ARGS:Symbol,
+		 14: BRANCH %v_8[2.13,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->verse def_%v_9 %self[2.0,2.10,] 
+		 1: %v_9->tag_list def_%v_10 %v_9[3.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->params def_%v_11 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 3: %v_11->[] def_%v_12 %v_11[3.2,] 	 SYMBOL:remove_tag,	 ARGS:Symbol,
+		 4: %v_10->remove def_%v_13 %v_10[3.1,] %v_12[3.3,] 	 SYMBOL:	 ARGS:%v_12,
+		 5: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_13 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%v_14 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 2: %v_14->[] def_%v_15 %v_14[5.1,] 	 SYMBOL:add_tags,	 ARGS:Symbol,
+		 3: BRANCH %v_15[5.2,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%v_16 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 2: %v_16->[] def_%v_17 %v_16[6.1,] 	 SYMBOL:add_tags,	 ARGS:Symbol,
+		 3: COPY TYPE_Regexp def_%v_18 
+		 4: %v_17->split def_%v_19 %v_17[6.2,] 	 SYMBOL:	 ARGS:%v_18,
+		 5: %v_19->map def_%v_20 %v_19[6.4,] 	 SYMBOL:downcase,	 ARGS:
+		 6: GETFIELD %self->verse def_%v_21 %self[6.1,2.0,2.10,] 
+		 7: %v_21->tag_list def_%v_22 %v_21[6.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_22->map def_%v_23 %v_22[6.7,] 	 SYMBOL:downcase,	 ARGS:
+		 9: %v_20->- def_%v_24 %v_20[6.5,] %v_23[6.8,] 	 SYMBOL:	 ARGS:%v_23,
+		 10: COPY TYPE_PASS def_add %v_24[6.9,] 
+		 11: 
+		 12: GETFIELD %self->verse def_%v_25 %self[6.1,2.0,2.10,] 
+		 13: %v_25->tag_list def_%v_26 %v_25[6.12,] 	 SYMBOL:	 ARGS:
+		 14: def_%v_27 add[6.10,] 
+		 15: %v_26->add def_%v_28 %v_26[6.13,] %v_27[6.14,] 	 SYMBOL:	 ARGS:Splat,
+		 16: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_28 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%v_29 %self[2.0,2.10,] 
+		 2: %v_29->save def_%v_30 %v_29[8.1,] 	 SYMBOL:	 ARGS:
+		 3: 
+		 4: %self->respond_to def_%v_31 %self[2.0,2.10,] %self[2.0,2.10,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: format[] %self[2.0,2.10,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_2_3 %self[2.0,] 
+		 2: %self->redirect_to def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:%cl_2_3,
+		 3: RETURN %cl_2_4[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: 
+		 3: format->js def_%cl_1_4 format[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 4: RETURN %cl_1_4[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 5: 
+		 6: %self->ruby_code_from_view def_%v_32 %self[8.4,2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 7: %v_32->ruby_code_from_view def_%v_33 %v_32[8.6,] %self[8.4,8.6,2.0,2.10,] 	 SYMBOL:	 ARGS:%v_32,
+CLOSURE BEGIN: %self[8.4,8.6,2.0,2.10,] controller[] tag[] url[] 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%cl_3_3 %self[2.0,] 
+		 2: %cl_3_3->id def_%cl_3_4 %cl_3_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: 
+		 4: COPY TYPE_PASS def_%cl_3_5 controller[] 
+		 5: COPY TYPE_PASS def_%cl_3_6 controller[] 
+		 6: BRANCH controller[] 
+BB 4
+	outgoing: 5 9 
+	datadep: 
+	instructions:
+		 0: %self->object def_%cl_3_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %cl_3_7->class def_%cl_3_8 %cl_3_7[4.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_3_8->name def_%cl_3_9 %cl_3_8[4.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_3_9->pluralize def_%cl_3_10 %cl_3_9[4.2,] 	 SYMBOL:	 ARGS:
+		 4: %cl_3_10->downcase def_%cl_3_11 %cl_3_10[4.3,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_PASS def_controller %cl_3_11[4.4,] 
+		 6: COPY TYPE_PASS def_%cl_3_6 %cl_3_11[4.4,] 
+BB 5
+	outgoing: 6 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->object def_%cl_3_12 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_3_12->tags def_%cl_3_13 %cl_3_12[5.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_3_13->any? def_%cl_3_14 %cl_3_13[5.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %cl_3_14[5.3,] 
+BB 6
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->object def_%cl_3_15 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_3_15->tags def_%cl_3_16 %cl_3_15[6.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_3_16->each def_%cl_3_17 %cl_3_16[6.2,] %self[6.1,2.0,] 	 SYMBOL:	 ARGS:%cl_3_16,
+CLOSURE BEGIN: tag[] %self[6.1,2.0,] controller[4.5,] url[] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: RECEIVEARG def_tag 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: tag->name def_%cl_4_3 tag[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %self->link_to def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] tag[3.1,2.2,] 	 SYMBOL:	 ARGS:%cl_4_3,tag,
+		 3: 
+		 4: %self->params def_%cl_4_5 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %cl_4_5->[] def_%cl_4_6 %cl_4_5[3.4,] 	 SYMBOL:controller,	 ARGS:Symbol,
+		 6: %cl_4_6->== def_%cl_4_7 %cl_4_6[3.5,] controller[] 	 SYMBOL:	 ARGS:controller,
+		 7: BRANCH %cl_4_7[3.6,] 
+BB 4
+	outgoing: 5 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses" def_%cl_4_8 
+		 2: controller->== def_%cl_4_9 controller[] %cl_4_8[4.1,] 	 SYMBOL:	 ARGS:%cl_4_8,
+		 3: BRANCH %cl_4_9[4.2,] 
+BB 5
+	outgoing: 7 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->object def_%cl_4_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: tag->name def_%cl_4_11 tag[2.2,] 	 SYMBOL:	 ARGS:
+		 3: HASH-id-remove_tag- def_%cl_4_12 %cl_4_10[5.1,] %cl_4_11[5.2,] 
+		 4: %self->verse_path def_%cl_4_13 %self[5.1,2.0,] %cl_4_12[5.3,] 	 SYMBOL:	 ARGS:%cl_4_12,
+		 5: COPY TYPE_PASS def_url %cl_4_13[5.4,] 
+		 6: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_4_13 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "delete" def_%cl_4_14 
+		 2: %self->t def_%cl_4_15 %self[2.0,] %cl_4_14[7.1,] 	 SYMBOL:	 ARGS:%cl_4_14,
+		 3: COPY TYPE_StringLiteral "delete" def_%cl_4_16 
+		 4: COPY TYPE_StringLiteral "put" def_%cl_4_17 
+		 5: COPY TYPE_StringLiteral "tags.confirm_delete" def_%cl_4_18 
+		 6: %self->t def_%cl_4_19 %self[7.2,2.0,] %cl_4_18[7.5,] 	 SYMBOL:	 ARGS:%cl_4_18,
+		 7: HASH-remote-confirm- def_%cl_4_20 %cl_4_19[7.6,] 
+		 8: HASH-title-class-method-data- def_%cl_4_21 %cl_4_15[7.2,] %cl_4_16[7.3,] %cl_4_17[7.4,] %cl_4_20[7.7,] 
+		 9: %self->link_to def_%cl_4_22 %self[7.2,7.6,2.0,] url[5.5,] %cl_4_21[7.8,] %self[7.2,7.6,2.0,] 	 SYMBOL:	 ARGS:url,%cl_4_21,%self,
+CLOSURE BEGIN: %self[7.2,7.6,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-times" def_%cl_5_3 
+		 2: %self->icon def_%cl_5_4 %self[2.0,] %cl_5_3[3.1,] 	 SYMBOL:	 ARGS:%cl_5_3,
+		 3: RETURN %cl_5_4[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_5 
+		 1: def_%cl_5_6 %cl_5_5[4.0,] 
+		 2: RETURN %cl_5_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_4_22[7.9,] %self[2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_23 
+		 1: def_%cl_4_24 %cl_4_23[10.0,] 
+		 2: RETURN %cl_4_24[10.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: url[5.5,] 
+		 4: 
+BB 7
+	outgoing: 9 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "tags.no_tags_yet" def_%cl_3_18 
+		 2: %self->t def_%cl_3_19 %self[2.0,] %cl_3_18[7.1,] 	 SYMBOL:	 ARGS:%cl_3_18,
+		 3: RETURN %cl_3_19[7.2,] %self[7.2,2.0,] 
+BB 8
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_3_17[6.3,] %self[2.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_20 
+		 1: def_%cl_3_21 %cl_3_20[9.0,] 
+		 2: RETURN %cl_3_21[9.1,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: controller[4.5,] 
+		 8: RETURN %v_33[8.7,] %self[8.4,8.6,2.0,2.10,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Verse) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->verse %v_6[2.9,] 
+		 11: 
+		 12: GETFIELD %self->verse def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: %v_7->people def_%v_8 %v_7[2.12,] 	 SYMBOL:	 ARGS:
+		 14: GETFIELD %self->logged_in def_%v_9 %self[2.0,2.7,] 
+		 15: %v_8->delete def_%v_10 %v_8[2.13,] %v_9[2.14,] 	 SYMBOL:	 ARGS:%v_9,
+		 16: 
+		 17: GETFIELD %self->verse def_%v_11 %self[2.0,2.7,2.10,] 
+		 18: GETFIELD %self->logged_in def_%v_12 %self[2.0,2.7,] 
+		 19: %v_11->delete_stream_items def_%v_13 %v_11[2.17,] %v_12[2.18,] 	 SYMBOL:	 ARGS:%v_12,
+		 20: 
+		 21: COPY TYPE_StringLiteral "" def_%v_14 
+		 22: COPY TYPE_StringLiteral "views/people/" def_%v_15 
+		 23: GETFIELD %self->logged_in def_%v_16 %self[2.0,2.7,] 
+		 24: %v_16->id def_%v_17 %v_16[2.23,] 	 SYMBOL:	 ARGS:
+		 25: COPY TYPE_StringLiteral "_" def_%v_18 
+		 26: def_%v_19 %v_14[2.21,] %v_15[2.22,] %v_17[2.24,] %v_18[2.25,] 
+		 27: %self->expire_fragment def_%v_20 %self[2.0,2.7,2.10,] %v_19[2.26,] 	 SYMBOL:	 ARGS:%v_19,
+		 28: 
+		 29: GETFIELD %self->verse def_%v_21 %self[2.0,2.7,2.10,2.27,] 
+		 30: %v_21->people def_%v_22 %v_21[2.29,] 	 SYMBOL:	 ARGS:
+		 31: %v_22->count def_%v_23 %v_22[2.30,] 	 SYMBOL:	 ARGS:
+		 32: %v_23->== def_%v_24 %v_23[2.31,] 	 SYMBOL:	 ARGS:Fixnum,
+		 33: BRANCH %v_24[2.32,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%v_25 %self[2.0,2.10,] 
+		 2: %v_25->destroy def_%v_26 %v_25[3.1,] 	 SYMBOL:	 ARGS:
+		 3: 
+		 4: %self->verses_path def_%v_27 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 5: %self->redirect_to def_%v_28 %self[3.4,2.0,2.10,] %v_27[3.4,] 	 SYMBOL:	 ARGS:%v_27,
+		 6: RETURN %v_28[3.5,] %self[3.4,3.5,2.0,2.10,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%v_29 %self[2.0,2.10,] 
+		 2: %self->redirect_to def_%v_30 %self[2.0,2.10,] %v_29[4.1,] 	 SYMBOL:	 ARGS:%v_29,
+		 3: RETURN %v_30[4.2,] %self[4.2,2.0,2.10,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get_verse instanceMethod = true
+BB 1
+	outgoing: 26 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: GLOBALVAR $! def_%v_3 
+BB 4
+	outgoing: 5 12 20 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: (Verse) def_%v_6 
+		 3: %self->params def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_7->[] def_%v_8 %v_7[4.3,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 5: %v_6->find def_%v_9 %v_6[4.2,] %v_8[4.4,] 	 SYMBOL:	 ARGS:%v_8,
+		 6: ATTRASSIGN %self->verse %v_9[4.5,] 
+		 7: 
+		 8: GETFIELD %self->verse def_%v_10 %self[4.3,4.6,2.0,] 
+		 9: %v_10->try def_%v_11 %v_10[4.8,] 	 SYMBOL:valid?,	 ARGS:Symbol,
+		 10: BRANCH %v_11[4.9,] 
+BB 5
+	outgoing: 6 7 20 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%v_12 %self[4.6,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_12->[] def_%v_13 %v_12[5.1,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 3: COPY TYPE_Regexp def_%v_14 
+		 4: %v_13->!~ def_%v_15 %v_13[5.2,] 	 SYMBOL:	 ARGS:%v_14,
+		 5: BRANCH %v_15[5.4,] 
+BB 6
+	outgoing: 7 20 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->verse def_%v_16 %self[4.6,2.0,] 
+		 1: %v_16->reference def_%v_17 %v_16[6.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->params def_%v_18 %self[4.6,2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_18->[] def_%v_19 %v_18[6.2,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 4: %v_17->!= def_%v_20 %v_17[6.1,] %v_19[6.3,] 	 SYMBOL:	 ARGS:%v_19,
+		 5: COPY TYPE_PASS def_%v_15 %v_20[6.4,] 
+BB 7
+	outgoing: 8 10 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_15[6.5,5.4,] 
+BB 8
+	outgoing: 9 20 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%v_21 %self[4.6,2.0,] 
+		 2: %v_21->reference def_%v_22 %v_21[8.1,] 	 SYMBOL:	 ARGS:
+		 3: %self->verse_path def_%v_23 %self[4.6,2.0,] %v_22[8.2,] 	 SYMBOL:	 ARGS:%v_22,
+		 4: %self->redirect_to def_%v_24 %self[8.3,4.6,2.0,] %v_23[8.3,] 	 SYMBOL:	 ARGS:%v_23,
+		 5: 
+		 6: COPY TYPE_Boolean def_%v_25 
+		 7: %v_3[2.5,] 
+BB 9
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: RETURN %v_25[8.6,] %self[4.6,2.0,] 
+BB 10
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_26 
+		 1: 
+		 2: COPY TYPE_Boolean def_%v_27 
+		 3: 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->verse def_%v_28 %self[4.6,2.0,] 
+		 1: BRANCH %v_28[12.0,] 
+BB 13
+	outgoing: 14 20 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->verse def_%v_29 %self[4.6,2.0,] 
+		 1: %v_29->errors def_%v_30 %v_29[13.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_30->any? def_%v_31 %v_30[13.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%v_28 %v_31[13.2,] 
+BB 14
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_28[13.3,12.0,] 
+BB 15
+	outgoing: 17 20 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->verse def_%v_32 %self[4.6,2.0,] 
+		 2: %self->add_errors_to_flash def_%v_33 %self[4.6,2.0,] %v_32[15.1,] 	 SYMBOL:	 ARGS:%v_32,
+		 3: 
+		 4: %self->verses_path def_%v_34 %self[15.2,4.6,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %self->redirect_to def_%v_35 %self[15.2,15.4,4.6,2.0,] %v_34[15.4,] 	 SYMBOL:	 ARGS:%v_34,
+		 6: 
+		 7: COPY TYPE_Boolean def_%v_36 
+		 8: 
+BB 16
+	outgoing: 17 20 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verse not found" def_%v_37 
+		 2: %self->raise def_%v_38 %self[4.6,2.0,] %v_37[16.1,] 	 SYMBOL:	 ARGS:%v_37,
+		 3: COPY TYPE_PASS def_%v_36 %v_38[16.2,] 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_27 %v_36[16.3,15.7,] 
+BB 18
+	outgoing: 19 20 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_5 %v_27[17.0,10.2,] 
+		 1: %v_3[2.5,] 
+BB 19
+	outgoing: 25 
+	datadep: 
+	instructions:
+		 0: 
+BB 20
+	outgoing: 21 22 24 
+	datadep: 
+	instructions:
+		 0: def_%v_39 
+		 1: def_%v_40 %v_39[20.0,] 
+		 2: BRANCH %v_40[20.1,] 
+BB 21
+	outgoing: 24 26 
+	datadep: 
+	instructions:
+		 0: %v_39[20.0,] 
+BB 22
+	outgoing: 23 24 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "verses.not_found" def_%v_41 
+		 2: %self->t def_%v_42 %self[4.6,2.0,] %v_41[22.1,] 	 SYMBOL:	 ARGS:%v_41,
+		 3: HASH-text-layout-status- def_%v_43 %v_42[22.2,] 
+		 4: %self->render def_%v_44 %self[22.2,4.6,2.0,] %v_43[22.3,] 	 SYMBOL:	 ARGS:%v_43,
+		 5: 
+		 6: COPY TYPE_Boolean def_%v_5 
+		 7: %v_3[2.5,] 
+BB 23
+	outgoing: 25 
+	datadep: 
+	instructions:
+		 0: 
+BB 24
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: def_%v_45 
+		 1: def_%v_46 %v_45[24.0,] %v_3[2.5,] 
+		 2: %v_45[24.0,] 
+BB 25
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[18.0,22.6,] %self[4.6,2.0,] 
+BB 26
+	outgoing: 
+	datadep: 
+	instructions:
+

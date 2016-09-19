@@ -1,0 +1,1373 @@
+SET IRMethod, name = included instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_base 
+		 6: 
+		 7: (ClassMethods) def_%v_3 
+		 8: base->extend def_%v_4 base[2.5,] %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: RETURN %v_4[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = acts_as_list instanceMethod = true
+BB 1
+	outgoing: 16 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_options 
+		 6: options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "position" def_%v_4 
+		 2: COPY TYPE_StringLiteral "1 = 1" def_%v_5 
+		 3: HASH-column-scope- def_%v_6 %v_4[4.1,] %v_5[4.2,] 
+		 4: COPY TYPE_PASS def_configuration %v_6[4.3,] 
+		 5: 
+		 6: (Hash) def_%v_7 
+		 7: options->is_a? def_%v_8 options[3.1,2.5,] %v_7[4.6,] 	 SYMBOL:	 ARGS:%v_7,
+		 8: BRANCH %v_8[4.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: configuration->update def_%v_9 configuration[4.4,] options[3.1,2.5,] 	 SYMBOL:	 ARGS:options,
+		 1: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: configuration->[] def_%v_10 configuration[4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 2: (Symbol) def_%v_11 
+		 3: %v_10->is_a? def_%v_12 %v_10[7.1,] %v_11[7.2,] 	 SYMBOL:	 ARGS:%v_11,
+		 4: BRANCH %v_12[7.3,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: configuration->[] def_%v_13 configuration[4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 1: %v_13->to_s def_%v_14 %v_13[8.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_Regexp def_%v_15 
+		 3: %v_14->!~ def_%v_16 %v_14[8.1,] 	 SYMBOL:	 ARGS:%v_15,
+		 4: COPY TYPE_PASS def_%v_12 %v_16[8.3,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_12[8.4,7.3,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: configuration->[] def_%v_17 configuration[4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 1: COPY TYPE_StringLiteral "_id" def_%v_18 
+		 2: BUILDSTRING def_%v_19 %v_17[10.0,] %v_18[10.1,] 
+		 3: %v_19->intern def_%v_20 %v_19[10.2,] 	 SYMBOL:	 ARGS:
+		 4: ATTRASSIGN configuration->[] %v_20[10.3,] 
+		 5: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_20 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: configuration->[] def_%v_21 configuration[10.4,4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 2: (Symbol) def_%v_22 
+		 3: %v_21->is_a? def_%v_23 %v_21[12.1,] %v_22[12.2,] 	 SYMBOL:	 ARGS:%v_22,
+		 4: BRANCH %v_23[12.3,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "
+          def scope_condition
+            if " def_%v_24 
+		 2: 
+		 3: configuration->[] def_%v_25 configuration[10.4,4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 4: %v_25->to_s def_%v_26 %v_25[13.3,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral ".nil?
+              "" def_%v_27 
+		 6: 
+		 7: configuration->[] def_%v_28 configuration[13.3,10.4,4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 8: %v_28->to_s def_%v_29 %v_28[13.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral " IS NULL"
+            else
+              "" def_%v_30 
+		 10: 
+		 11: configuration->[] def_%v_31 configuration[13.3,13.7,10.4,4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 12: %v_31->to_s def_%v_32 %v_31[13.11,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_StringLiteral " = #{" def_%v_33 
+		 14: configuration->[] def_%v_34 configuration[13.3,13.7,13.11,10.4,4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 15: %v_34->to_s def_%v_35 %v_34[13.14,] 	 SYMBOL:	 ARGS:
+		 16: COPY TYPE_StringLiteral "}"
+            end
+          end
+        " def_%v_36 
+		 17: BUILDSTRING def_%v_37 %v_24[13.1,] %v_26[13.4,] %v_27[13.5,] %v_29[13.8,] %v_30[13.9,] %v_32[13.12,] %v_33[13.13,] %v_35[13.15,] %v_36[13.16,] 
+		 18: COPY TYPE_PASS def_scope_condition_method %v_37[13.17,] 
+		 19: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "def scope_condition() "" def_%v_38 
+		 2: configuration->[] def_%v_39 configuration[10.4,4.4,] 	 SYMBOL:scope,	 ARGS:Symbol,
+		 3: COPY TYPE_StringLiteral "" end" def_%v_40 
+		 4: BUILDSTRING def_%v_41 %v_38[14.1,] %v_39[14.2,] %v_40[14.3,] 
+		 5: COPY TYPE_PASS def_scope_condition_method %v_41[14.4,] 
+		 6: COPY TYPE_PASS def_%v_37 %v_41[14.4,] 
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "        include ActsAsList::InstanceMethods
+
+        def acts_as_list_class
+          ::" def_%v_42 
+		 2: 
+		 3: %self->name def_%v_43 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral "
+        end
+
+        def position_column
+          '" def_%v_44 
+		 5: 
+		 6: configuration->[] def_%v_45 configuration[10.4,4.4,] 	 SYMBOL:column,	 ARGS:Symbol,
+		 7: COPY TYPE_StringLiteral "'
+        end
+
+        " def_%v_46 
+		 8: 
+		 9: COPY TYPE_StringLiteral "
+
+        before_destroy :remove_from_list_without_saving
+        before_create  :add_to_list_bottom
+" def_%v_47 
+		 10: BUILDSTRING def_%v_48 %v_42[15.1,] %v_43[15.3,] %v_44[15.4,] %v_45[15.6,] %v_46[15.7,] scope_condition_method[14.5,13.18,] %v_47[15.9,] 
+		 11: %self->class_eval def_%v_49 %self[15.3,2.0,] %v_48[15.10,] 	 SYMBOL:	 ARGS:%v_48,
+		 12: RETURN %v_49[15.11,] %self[15.3,15.11,2.0,] 
+BB 16
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = insert_at instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_position 
+		 6: position[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_position 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->insert_at_position def_%v_3 %self[2.0,] position[3.0,2.5,] 	 SYMBOL:	 ARGS:position,
+		 2: RETURN %v_3[4.1,] %self[4.1,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = move_lower instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->lower_item def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_PASS def_lower %v_3[2.6,] 
+		 8: 
+		 9: BRANCH %v_3[2.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->acts_as_list_class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->transaction def_%v_6 %v_5[6.1,] %self[6.1,2.0,] 	 SYMBOL:	 ARGS:%v_5,
+CLOSURE BEGIN: %self[6.1,2.0,] lower[2.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->position_column def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->position_column def_%cl_1_4 %self[3.1,2.0,] 	 SYMBOL:	 ARGS:
+		 3: lower->send def_%cl_1_5 lower[] %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:%cl_1_4,
+		 4: %self->update_attribute def_%cl_1_6 %self[3.1,3.2,2.0,] %cl_1_3[3.1,] %cl_1_5[3.3,] 	 SYMBOL:	 ARGS:%cl_1_3,%cl_1_5,
+		 5: 
+		 6: lower->decrement_position def_%cl_1_7 lower[3.3,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %cl_1_7[3.6,] %self[3.1,3.2,3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %v_6[6.2,] %self[6.1,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%v_7 
+		 1: def_%v_8 %v_7[7.0,] 
+		 2: RETURN %v_8[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = move_higher instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->higher_item def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_PASS def_higher %v_3[2.6,] 
+		 8: 
+		 9: BRANCH %v_3[2.6,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->acts_as_list_class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->transaction def_%v_6 %v_5[6.1,] %self[6.1,2.0,] 	 SYMBOL:	 ARGS:%v_5,
+CLOSURE BEGIN: %self[6.1,2.0,] higher[2.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->position_column def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->position_column def_%cl_1_4 %self[3.1,2.0,] 	 SYMBOL:	 ARGS:
+		 3: higher->send def_%cl_1_5 higher[] %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:%cl_1_4,
+		 4: %self->update_attribute def_%cl_1_6 %self[3.1,3.2,2.0,] %cl_1_3[3.1,] %cl_1_5[3.3,] 	 SYMBOL:	 ARGS:%cl_1_3,%cl_1_5,
+		 5: 
+		 6: higher->increment_position def_%cl_1_7 higher[3.3,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %cl_1_7[3.6,] %self[3.1,3.2,3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %v_6[6.2,] %self[6.1,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%v_7 
+		 1: def_%v_8 %v_7[7.0,] 
+		 2: RETURN %v_8[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = move_to_bottom instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->acts_as_list_class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_5->transaction def_%v_6 %v_5[3.2,] %self[3.2,2.0,] 	 SYMBOL:	 ARGS:%v_5,
+CLOSURE BEGIN: %self[3.2,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->decrement_positions_on_lower_items def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: 
+		 3: %self->assume_bottom_position def_%cl_1_4 %self[3.1,2.0,] 	 SYMBOL:	 ARGS:
+		 4: RETURN %cl_1_4[3.3,] %self[3.1,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: RETURN %v_6[3.3,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = move_to_top instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->acts_as_list_class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_5->transaction def_%v_6 %v_5[3.2,] %self[3.2,2.0,] 	 SYMBOL:	 ARGS:%v_5,
+CLOSURE BEGIN: %self[3.2,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->increment_positions_on_higher_items def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: 
+		 3: %self->assume_top_position def_%cl_1_4 %self[3.1,2.0,] 	 SYMBOL:	 ARGS:
+		 4: RETURN %cl_1_4[3.3,] %self[3.1,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: RETURN %v_6[3.3,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = remove_from_list instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_save 
+		 6: save[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_save 
+BB 4
+	outgoing: 5 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_3[4.1,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->decrement_positions_on_lower_items def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: 
+		 3: BRANCH save[3.0,2.5,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %self->position_column def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %self->update_attribute def_%v_6 %self[6.0,2.0,] %v_5[6.0,] 	 SYMBOL:	 ARGS:%v_5,Nil,
+		 2: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+BB 8
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_6[7.0,6.1,] %self[2.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = remove_from_list_without_saving instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->remove_from_list def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:Boolean,
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = increment_position instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->position_column def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->position_column def_%v_6 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %self->send def_%v_7 %self[3.2,3.3,2.0,] %v_6[3.3,] 	 SYMBOL:	 ARGS:%v_6,
+		 5: %v_7->to_i def_%v_8 %v_7[3.4,] 	 SYMBOL:	 ARGS:
+		 6: %v_8->+ def_%v_9 %v_8[3.5,] 	 SYMBOL:	 ARGS:Fixnum,
+		 7: %self->update_attribute def_%v_10 %self[3.2,3.3,3.4,2.0,] %v_5[3.2,] %v_9[3.6,] 	 SYMBOL:	 ARGS:%v_5,%v_9,
+		 8: RETURN %v_10[3.7,] %self[3.2,3.3,3.4,3.7,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = decrement_position instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->position_column def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->position_column def_%v_6 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %self->send def_%v_7 %self[3.2,3.3,2.0,] %v_6[3.3,] 	 SYMBOL:	 ARGS:%v_6,
+		 5: %v_7->to_i def_%v_8 %v_7[3.4,] 	 SYMBOL:	 ARGS:
+		 6: %v_8->- def_%v_9 %v_8[3.5,] 	 SYMBOL:	 ARGS:Fixnum,
+		 7: %self->update_attribute def_%v_10 %self[3.2,3.3,3.4,2.0,] %v_5[3.2,] %v_9[3.6,] 	 SYMBOL:	 ARGS:%v_5,%v_9,
+		 8: RETURN %v_10[3.7,] %self[3.2,3.3,3.4,3.7,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = first? instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->position_column def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->send def_%v_6 %self[3.2,2.0,] %v_5[3.2,] 	 SYMBOL:	 ARGS:%v_5,
+		 4: %v_6->== def_%v_7 %v_6[3.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 5: RETURN %v_7[3.4,] %self[3.2,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = last? instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->position_column def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->send def_%v_6 %self[3.2,2.0,] %v_5[3.2,] 	 SYMBOL:	 ARGS:%v_5,
+		 4: %self->bottom_position_in_list def_%v_7 %self[3.2,3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %v_6->== def_%v_8 %v_6[3.3,] %v_7[3.4,] 	 SYMBOL:	 ARGS:%v_7,
+		 6: RETURN %v_8[3.5,] %self[3.2,3.3,3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = higher_item instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->acts_as_list_class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: 
+		 4: %self->scope_condition def_%v_6 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral " AND " def_%v_7 
+		 6: %self->position_column def_%v_8 %self[3.2,3.4,2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_StringLiteral " < " def_%v_9 
+		 8: %self->position_column def_%v_10 %self[3.2,3.4,3.6,2.0,] 	 SYMBOL:	 ARGS:
+		 9: %self->send def_%v_11 %self[3.2,3.4,3.6,3.8,2.0,] %v_10[3.8,] 	 SYMBOL:	 ARGS:%v_10,
+		 10: %v_11->to_s def_%v_12 %v_11[3.9,] 	 SYMBOL:	 ARGS:
+		 11: BUILDSTRING def_%v_13 %v_6[3.4,] %v_7[3.5,] %v_8[3.6,] %v_9[3.7,] %v_12[3.10,] 
+		 12: %v_5->where def_%v_14 %v_5[3.2,] %v_13[3.11,] 	 SYMBOL:	 ARGS:%v_13,
+		 13: 
+		 14: %self->position_column def_%v_15 %self[3.2,3.4,3.6,3.8,3.9,2.0,] 	 SYMBOL:	 ARGS:
+		 15: COPY TYPE_StringLiteral " DESC" def_%v_16 
+		 16: BUILDSTRING def_%v_17 %v_15[3.14,] %v_16[3.15,] 
+		 17: %v_14->order def_%v_18 %v_14[3.12,] %v_17[3.16,] 	 SYMBOL:	 ARGS:%v_17,
+		 18: %v_18->first def_%v_19 %v_18[3.17,] 	 SYMBOL:	 ARGS:
+		 19: RETURN %v_19[3.18,] %self[3.2,3.4,3.6,3.8,3.9,3.14,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = lower_item instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->acts_as_list_class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->scope_condition def_%v_6 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral " AND " def_%v_7 
+		 5: %self->position_column def_%v_8 %self[3.2,3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_StringLiteral " > " def_%v_9 
+		 7: %self->position_column def_%v_10 %self[3.2,3.3,3.5,2.0,] 	 SYMBOL:	 ARGS:
+		 8: %self->send def_%v_11 %self[3.2,3.3,3.5,3.7,2.0,] %v_10[3.7,] 	 SYMBOL:	 ARGS:%v_10,
+		 9: %v_11->to_s def_%v_12 %v_11[3.8,] 	 SYMBOL:	 ARGS:
+		 10: BUILDSTRING def_%v_13 %v_6[3.3,] %v_7[3.4,] %v_8[3.5,] %v_9[3.6,] %v_12[3.9,] 
+		 11: %v_5->where def_%v_14 %v_5[3.2,] %v_13[3.10,] 	 SYMBOL:	 ARGS:%v_13,
+		 12: 
+		 13: %self->position_column def_%v_15 %self[3.2,3.3,3.5,3.7,3.8,2.0,] 	 SYMBOL:	 ARGS:
+		 14: COPY TYPE_StringLiteral " ASC" def_%v_16 
+		 15: BUILDSTRING def_%v_17 %v_15[3.13,] %v_16[3.14,] 
+		 16: %v_14->order def_%v_18 %v_14[3.11,] %v_17[3.15,] 	 SYMBOL:	 ARGS:%v_17,
+		 17: %v_18->first def_%v_19 %v_18[3.16,] 	 SYMBOL:	 ARGS:
+		 18: RETURN %v_19[3.17,] %self[3.2,3.3,3.5,3.7,3.8,3.13,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = in_list? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->position_column def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->send def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: %v_4->nil? def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->! def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: RETURN %v_6[2.9,] %self[2.0,2.6,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_to_list_top instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->increment_positions_on_all_items def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_to_list_bottom instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->position_column def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->bottom_position_in_list def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->to_i def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->+ def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:Fixnum,
+		 10: ATTRASSIGN %self->[] %v_3[2.6,] %v_6[2.9,] 
+		 11: RETURN %v_6[2.9,] %self[2.0,2.6,2.7,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = scope_condition instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "1" def_%v_3 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = bottom_position_in_list instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_except 
+		 6: except[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_except 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->bottom_item def_%v_3 %self[2.0,] except[3.0,2.5,] 	 SYMBOL:	 ARGS:except,
+		 2: COPY TYPE_PASS def_item %v_3[4.1,] 
+		 3: 
+		 4: BRANCH %v_3[4.1,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %self->position_column def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: item->send def_%v_5 item[4.2,] %v_4[5.0,] 	 SYMBOL:	 ARGS:%v_4,
+		 2: RETURN %v_5[5.1,] %self[5.0,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = bottom_item instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_except 
+		 6: except[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_except 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->scope_condition def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_conditions %v_3[4.1,] 
+		 3: 
+		 4: BRANCH except[3.0,2.5,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral " AND " def_%v_4 
+		 1: %self->class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->primary_key def_%v_6 %v_5[5.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral " != " def_%v_7 
+		 4: except->id def_%v_8 except[3.0,2.5,] 	 SYMBOL:	 ARGS:
+		 5: BUILDSTRING def_%v_9 conditions[4.2,] %v_4[5.0,] %v_6[5.2,] %v_7[5.3,] %v_8[5.4,] 
+		 6: COPY TYPE_PASS def_conditions %v_9[5.5,] 
+		 7: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->acts_as_list_class def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_10->where def_%v_11 %v_10[7.1,] conditions[5.6,4.2,] 	 SYMBOL:	 ARGS:conditions,
+		 3: %self->position_column def_%v_12 %self[7.1,2.0,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral " DESC" def_%v_13 
+		 5: BUILDSTRING def_%v_14 %v_12[7.3,] %v_13[7.4,] 
+		 6: %v_11->order def_%v_15 %v_11[7.2,] %v_14[7.5,] 	 SYMBOL:	 ARGS:%v_14,
+		 7: %v_15->first def_%v_16 %v_15[7.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_16[7.7,] %self[7.1,7.3,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = assume_bottom_position instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->position_column def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->bottom_position_in_list def_%v_4 %self[2.0,2.6,] %self[2.0,2.6,] 	 SYMBOL:	 ARGS:%self,
+		 8: %v_4->to_i def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->+ def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:Fixnum,
+		 10: %self->update_attribute def_%v_7 %self[2.0,2.6,2.7,] %v_3[2.6,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_3,%v_6,
+		 11: RETURN %v_7[2.10,] %self[2.0,2.6,2.7,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = assume_top_position instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->position_column def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->update_attribute def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,Fixnum,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = decrement_positions_on_higher_items instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_position 
+		 6: 
+		 7: %self->acts_as_list_class def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: 
+		 9: %self->position_column def_%v_4 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 10: COPY TYPE_StringLiteral " = (" def_%v_5 
+		 11: %self->position_column def_%v_6 %self[2.0,2.7,2.9,] 	 SYMBOL:	 ARGS:
+		 12: COPY TYPE_StringLiteral " - 1)" def_%v_7 
+		 13: BUILDSTRING def_%v_8 %v_4[2.9,] %v_5[2.10,] %v_6[2.11,] %v_7[2.12,] 
+		 14: %self->scope_condition def_%v_9 %self[2.0,2.7,2.9,2.11,] 	 SYMBOL:	 ARGS:
+		 15: COPY TYPE_StringLiteral " AND " def_%v_10 
+		 16: %self->position_column def_%v_11 %self[2.0,2.7,2.9,2.11,2.14,] 	 SYMBOL:	 ARGS:
+		 17: COPY TYPE_StringLiteral " <= " def_%v_12 
+		 18: BUILDSTRING def_%v_13 %v_9[2.14,] %v_10[2.15,] %v_11[2.16,] %v_12[2.17,] position[2.5,] 
+		 19: %v_3->update_all def_%v_14 %v_3[2.7,] %v_8[2.13,] %v_13[2.18,] 	 SYMBOL:	 ARGS:%v_8,%v_13,
+		 20: RETURN %v_14[2.19,] %self[2.0,2.7,2.9,2.11,2.14,2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = decrement_positions_on_lower_items instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->acts_as_list_class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: 
+		 4: %self->scope_condition def_%v_6 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral " AND " def_%v_7 
+		 6: %self->position_column def_%v_8 %self[3.2,3.4,2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_StringLiteral " > " def_%v_9 
+		 8: %self->position_column def_%v_10 %self[3.2,3.4,3.6,2.0,] 	 SYMBOL:	 ARGS:
+		 9: %self->send def_%v_11 %self[3.2,3.4,3.6,3.8,2.0,] %v_10[3.8,] 	 SYMBOL:	 ARGS:%v_10,
+		 10: %v_11->to_i def_%v_12 %v_11[3.9,] 	 SYMBOL:	 ARGS:
+		 11: BUILDSTRING def_%v_13 %v_6[3.4,] %v_7[3.5,] %v_8[3.6,] %v_9[3.7,] %v_12[3.10,] 
+		 12: %v_5->where def_%v_14 %v_5[3.2,] %v_13[3.11,] 	 SYMBOL:	 ARGS:%v_13,
+		 13: 
+		 14: %self->position_column def_%v_15 %self[3.2,3.4,3.6,3.8,3.9,2.0,] 	 SYMBOL:	 ARGS:
+		 15: COPY TYPE_StringLiteral " = (" def_%v_16 
+		 16: %self->position_column def_%v_17 %self[3.2,3.4,3.6,3.8,3.9,3.14,2.0,] 	 SYMBOL:	 ARGS:
+		 17: COPY TYPE_StringLiteral " - 1)" def_%v_18 
+		 18: BUILDSTRING def_%v_19 %v_15[3.14,] %v_16[3.15,] %v_17[3.16,] %v_18[3.17,] 
+		 19: %v_14->update_all def_%v_20 %v_14[3.12,] %v_19[3.18,] 	 SYMBOL:	 ARGS:%v_19,
+		 20: RETURN %v_20[3.19,] %self[3.2,3.4,3.6,3.8,3.9,3.14,3.16,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = increment_positions_on_higher_items instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->in_list? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: 
+		 2: %self->acts_as_list_class def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->scope_condition def_%v_6 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral " AND " def_%v_7 
+		 5: %self->position_column def_%v_8 %self[3.2,3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_StringLiteral " < " def_%v_9 
+		 7: %self->position_column def_%v_10 %self[3.2,3.3,3.5,2.0,] 	 SYMBOL:	 ARGS:
+		 8: %self->send def_%v_11 %self[3.2,3.3,3.5,3.7,2.0,] %v_10[3.7,] 	 SYMBOL:	 ARGS:%v_10,
+		 9: %v_11->to_i def_%v_12 %v_11[3.8,] 	 SYMBOL:	 ARGS:
+		 10: BUILDSTRING def_%v_13 %v_6[3.3,] %v_7[3.4,] %v_8[3.5,] %v_9[3.6,] %v_12[3.9,] 
+		 11: %v_5->where def_%v_14 %v_5[3.2,] %v_13[3.10,] 	 SYMBOL:	 ARGS:%v_13,
+		 12: %self->position_column def_%v_15 %self[3.2,3.3,3.5,3.7,3.8,2.0,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_StringLiteral " = (" def_%v_16 
+		 14: %self->position_column def_%v_17 %self[3.2,3.3,3.5,3.7,3.8,3.12,2.0,] 	 SYMBOL:	 ARGS:
+		 15: COPY TYPE_StringLiteral " + 1)" def_%v_18 
+		 16: BUILDSTRING def_%v_19 %v_15[3.12,] %v_16[3.13,] %v_17[3.14,] %v_18[3.15,] 
+		 17: %v_14->update_all def_%v_20 %v_14[3.11,] %v_19[3.16,] 	 SYMBOL:	 ARGS:%v_19,
+		 18: RETURN %v_20[3.17,] %self[3.2,3.3,3.5,3.7,3.8,3.12,3.14,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = increment_positions_on_lower_items instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_position 
+		 6: 
+		 7: %self->acts_as_list_class def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %self->scope_condition def_%v_4 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral " AND " def_%v_5 
+		 10: %self->position_column def_%v_6 %self[2.0,2.7,2.8,] 	 SYMBOL:	 ARGS:
+		 11: COPY TYPE_StringLiteral " >= " def_%v_7 
+		 12: BUILDSTRING def_%v_8 %v_4[2.8,] %v_5[2.9,] %v_6[2.10,] %v_7[2.11,] position[2.5,] 
+		 13: %v_3->where def_%v_9 %v_3[2.7,] %v_8[2.12,] 	 SYMBOL:	 ARGS:%v_8,
+		 14: 
+		 15: %self->position_column def_%v_10 %self[2.0,2.7,2.8,2.10,] 	 SYMBOL:	 ARGS:
+		 16: COPY TYPE_StringLiteral " = (" def_%v_11 
+		 17: %self->position_column def_%v_12 %self[2.0,2.7,2.8,2.10,2.15,] 	 SYMBOL:	 ARGS:
+		 18: COPY TYPE_StringLiteral " + 1)" def_%v_13 
+		 19: BUILDSTRING def_%v_14 %v_10[2.15,] %v_11[2.16,] %v_12[2.17,] %v_13[2.18,] 
+		 20: %v_9->update_all def_%v_15 %v_9[2.13,] %v_14[2.19,] 	 SYMBOL:	 ARGS:%v_14,
+		 21: RETURN %v_15[2.20,] %self[2.0,2.7,2.8,2.10,2.15,2.17,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = increment_positions_on_all_items instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->acts_as_list_class def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->scope_condition def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 8: BUILDSTRING def_%v_5 %v_4[2.7,] 
+		 9: %v_3->where def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: 
+		 11: %self->position_column def_%v_7 %self[2.0,2.6,2.7,] 	 SYMBOL:	 ARGS:
+		 12: COPY TYPE_StringLiteral " = (" def_%v_8 
+		 13: %self->position_column def_%v_9 %self[2.0,2.6,2.7,2.11,] 	 SYMBOL:	 ARGS:
+		 14: COPY TYPE_StringLiteral " + 1)" def_%v_10 
+		 15: BUILDSTRING def_%v_11 %v_7[2.11,] %v_8[2.12,] %v_9[2.13,] %v_10[2.14,] 
+		 16: %v_6->update_all def_%v_12 %v_6[2.9,] %v_11[2.15,] 	 SYMBOL:	 ARGS:%v_11,
+		 17: RETURN %v_12[2.16,] %self[2.0,2.6,2.7,2.11,2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = insert_at_position instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_position 
+		 6: 
+		 7: %self->remove_from_list def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: 
+		 9: %self->increment_positions_on_lower_items def_%v_4 %self[2.0,2.7,] position[2.5,] 	 SYMBOL:	 ARGS:position,
+		 10: 
+		 11: %self->position_column def_%v_5 %self[2.0,2.7,2.9,] 	 SYMBOL:	 ARGS:
+		 12: %self->update_attribute def_%v_6 %self[2.0,2.7,2.9,2.11,] %v_5[2.11,] position[2.5,] 	 SYMBOL:	 ARGS:%v_5,position,
+		 13: RETURN %v_6[2.12,] %self[2.0,2.7,2.9,2.11,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

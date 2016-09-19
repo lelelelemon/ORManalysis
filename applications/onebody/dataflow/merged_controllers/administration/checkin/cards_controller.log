@@ -1,0 +1,508 @@
+SET IRMethod, name = index instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->respond_to def_%v_3 %self[2.0,] %self[2.0,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: format[] %self[2.0,] scope[] family[] csv[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Family) def_%cl_1_3 
+		 2: COPY TYPE_StringLiteral "barcode_id is not null and barcode_id != '' and deleted = ?" def_%cl_1_4 
+		 3: %cl_1_3->where def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:%cl_1_4,Boolean,
+		 4: COPY TYPE_PASS def_scope %cl_1_5[3.3,] 
+		 5: 
+		 6: format->html def_%cl_1_6 format[2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] scope[3.4,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (VALID_SORT_COLS) def_%cl_2_3 
+		 2: %self->params def_%cl_2_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %cl_2_4->[] def_%cl_2_5 %cl_2_4[3.2,] 	 SYMBOL:sort,	 ARGS:Symbol,
+		 4: %cl_2_3->include? def_%cl_2_6 %cl_2_3[3.1,] %cl_2_5[3.3,] 	 SYMBOL:	 ARGS:%cl_2_5,
+		 5: BRANCH %cl_2_6[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_7 
+		 1: 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: %self->params def_%cl_2_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_StringLiteral "barcode_assigned_at desc" def_%cl_2_9 
+		 2: ATTRASSIGN %cl_2_8->[] %cl_2_9[5.1,] 
+		 3: COPY TYPE_PASS def_%cl_2_7 %cl_2_9[5.1,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%cl_2_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_2_10->[] def_%cl_2_11 %cl_2_10[6.1,] 	 SYMBOL:sort,	 ARGS:Symbol,
+		 3: scope->order def_%cl_2_12 scope[] %cl_2_11[6.2,] 	 SYMBOL:	 ARGS:%cl_2_11,
+		 4: %self->params def_%cl_2_13 %self[6.1,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %cl_2_13->[] def_%cl_2_14 %cl_2_13[6.4,] 	 SYMBOL:page,	 ARGS:Symbol,
+		 6: HASH-per_page-page- def_%cl_2_15 %cl_2_14[6.5,] 
+		 7: %cl_2_12->paginate def_%cl_2_16 %cl_2_12[6.3,] %cl_2_15[6.6,] 	 SYMBOL:	 ARGS:%cl_2_15,
+		 8: ATTRASSIGN %self->families %cl_2_16[6.7,] 
+		 9: RETURN %cl_2_16[6.7,] %self[6.1,6.4,6.8,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_17 
+		 1: def_%cl_2_18 %cl_2_17[7.0,] 
+		 2: RETURN %cl_2_18[7.1,] %self[6.8,2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 7: 
+		 8: format->csv def_%cl_1_7 format[3.6,2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: scope[3.4,] %self[2.0,] family[] csv[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "id, legacy_id, name, last_name, barcode_id, barcode_assigned_at" def_%cl_3_3 
+		 2: scope->select def_%cl_3_4 scope[] %cl_3_3[3.1,] 	 SYMBOL:	 ARGS:%cl_3_3,
+		 3: COPY TYPE_StringLiteral "barcode_assigned_at desc" def_%cl_3_5 
+		 4: %cl_3_4->order def_%cl_3_6 %cl_3_4[3.2,] %cl_3_5[3.3,] 	 SYMBOL:	 ARGS:%cl_3_5,
+		 5: ATTRASSIGN %self->families %cl_3_6[3.4,] 
+		 6: 
+		 7: (CSV) def_%cl_3_7 
+		 8: %cl_3_7->generate def_%cl_3_8 %cl_3_7[3.7,] %self[3.5,2.0,] 	 SYMBOL:	 ARGS:%cl_3_7,
+CLOSURE BEGIN: %self[3.5,2.0,] family[] csv[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: RECEIVEARG def_csv 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->families def_%cl_4_3 %self[2.0,] 
+		 2: %cl_4_3->each def_%cl_4_4 %cl_4_3[3.1,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_4_3,
+CLOSURE BEGIN: family[] csv[2.2,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: RECEIVEARG def_family 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: family->id def_%cl_5_3 family[2.2,] 	 SYMBOL:	 ARGS:
+		 2: family->legacy_id def_%cl_5_4 family[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 3: family->name def_%cl_5_5 family[3.1,3.2,2.2,] 	 SYMBOL:	 ARGS:
+		 4: family->barcode_id def_%cl_5_6 family[3.1,3.2,3.3,2.2,] 	 SYMBOL:	 ARGS:
+		 5: family->barcode_assigned_at def_%cl_5_7 family[3.1,3.2,3.3,3.4,2.2,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_Array def_%cl_5_8 %cl_5_3[3.1,] %cl_5_4[3.2,] %cl_5_5[3.3,] %cl_5_6[3.4,] %cl_5_7[3.5,] 
+		 7: csv-><< def_%cl_5_9 csv[] %cl_5_8[3.6,] 	 SYMBOL:	 ARGS:%cl_5_8,
+		 8: RETURN %cl_5_9[3.7,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_10 
+		 1: def_%cl_5_11 %cl_5_10[4.0,] 
+		 2: RETURN %cl_5_11[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %cl_4_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_5 
+		 1: def_%cl_4_6 %cl_4_5[4.0,] 
+		 2: RETURN %cl_4_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: COPY TYPE_PASS def_out %cl_3_8[3.8,] 
+		 10: 
+		 11: HASH-text- def_%cl_3_9 %cl_3_8[3.8,] 
+		 12: %self->render def_%cl_3_10 %self[3.5,2.0,] %cl_3_9[3.11,] 	 SYMBOL:	 ARGS:%cl_3_9,
+		 13: RETURN %cl_3_10[3.12,] %self[3.5,3.12,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_11 
+		 1: def_%cl_3_12 %cl_3_11[4.0,] 
+		 2: RETURN %cl_3_12[4.1,] %self[3.5,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: RETURN %cl_1_7[3.8,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: scope[3.4,] 
+		 7: 
+		 8: %self->ruby_code_from_view def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->ruby_code_from_view def_%v_5 %v_4[2.8,] %self[2.0,2.6,2.8,] 	 SYMBOL:	 ARGS:%v_4,
+CLOSURE BEGIN: %self[2.0,2.6,2.8,] family[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_6_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "checkin.cards.heading" def_%cl_6_3 
+		 2: %self->t def_%cl_6_4 %self[2.0,] %cl_6_3[3.1,] 	 SYMBOL:	 ARGS:%cl_6_3,
+		 3: ATTRASSIGN %self->title %cl_6_4[3.2,] 
+		 4: 
+		 5: GETFIELD %self->families def_%cl_6_5 %self[3.2,2.0,] 
+		 6: %self->pagination def_%cl_6_6 %self[3.2,3.3,2.0,] %cl_6_5[3.5,] 	 SYMBOL:	 ARGS:%cl_6_5,
+		 7: 
+		 8: COPY TYPE_StringLiteral "checkin.cards.table.id" def_%cl_6_7 
+		 9: %self->t def_%cl_6_8 %self[3.2,3.3,3.6,2.0,] %cl_6_7[3.8,] 	 SYMBOL:	 ARGS:%cl_6_7,
+		 10: COPY TYPE_StringLiteral "id" def_%cl_6_9 
+		 11: HASH-sort- def_%cl_6_10 %cl_6_9[3.10,] 
+		 12: %self->administration_checkin_cards_path def_%cl_6_11 %self[3.2,3.3,3.6,3.9,2.0,] %cl_6_10[3.11,] 	 SYMBOL:	 ARGS:%cl_6_10,
+		 13: %self->link_to def_%cl_6_12 %self[3.2,3.3,3.6,3.9,3.12,2.0,] %cl_6_8[3.9,] %cl_6_11[3.12,] 	 SYMBOL:	 ARGS:%cl_6_8,%cl_6_11,
+		 14: 
+		 15: COPY TYPE_StringLiteral "checkin.cards.table.legacy_id" def_%cl_6_13 
+		 16: %self->t def_%cl_6_14 %self[3.2,3.3,3.6,3.9,3.12,3.13,2.0,] %cl_6_13[3.15,] 	 SYMBOL:	 ARGS:%cl_6_13,
+		 17: COPY TYPE_StringLiteral "legacy_id" def_%cl_6_15 
+		 18: HASH-sort- def_%cl_6_16 %cl_6_15[3.17,] 
+		 19: %self->administration_checkin_cards_path def_%cl_6_17 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,2.0,] %cl_6_16[3.18,] 	 SYMBOL:	 ARGS:%cl_6_16,
+		 20: %self->link_to def_%cl_6_18 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,2.0,] %cl_6_14[3.16,] %cl_6_17[3.19,] 	 SYMBOL:	 ARGS:%cl_6_14,%cl_6_17,
+		 21: 
+		 22: COPY TYPE_StringLiteral "checkin.cards.table.family" def_%cl_6_19 
+		 23: %self->t def_%cl_6_20 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,2.0,] %cl_6_19[3.22,] 	 SYMBOL:	 ARGS:%cl_6_19,
+		 24: COPY TYPE_StringLiteral "last_name,name" def_%cl_6_21 
+		 25: HASH-sort- def_%cl_6_22 %cl_6_21[3.24,] 
+		 26: %self->administration_checkin_cards_path def_%cl_6_23 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,2.0,] %cl_6_22[3.25,] 	 SYMBOL:	 ARGS:%cl_6_22,
+		 27: %self->link_to def_%cl_6_24 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,2.0,] %cl_6_20[3.23,] %cl_6_23[3.26,] 	 SYMBOL:	 ARGS:%cl_6_20,%cl_6_23,
+		 28: 
+		 29: COPY TYPE_StringLiteral "checkin.cards.table.barcode" def_%cl_6_25 
+		 30: %self->t def_%cl_6_26 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,2.0,] %cl_6_25[3.29,] 	 SYMBOL:	 ARGS:%cl_6_25,
+		 31: COPY TYPE_StringLiteral "barcode_id" def_%cl_6_27 
+		 32: HASH-sort- def_%cl_6_28 %cl_6_27[3.31,] 
+		 33: %self->administration_checkin_cards_path def_%cl_6_29 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,2.0,] %cl_6_28[3.32,] 	 SYMBOL:	 ARGS:%cl_6_28,
+		 34: %self->link_to def_%cl_6_30 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,2.0,] %cl_6_26[3.30,] %cl_6_29[3.33,] 	 SYMBOL:	 ARGS:%cl_6_26,%cl_6_29,
+		 35: 
+		 36: COPY TYPE_StringLiteral "checkin.cards.table.assigned_at" def_%cl_6_31 
+		 37: %self->t def_%cl_6_32 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,2.0,] %cl_6_31[3.36,] 	 SYMBOL:	 ARGS:%cl_6_31,
+		 38: COPY TYPE_StringLiteral "barcode_assigned_at desc" def_%cl_6_33 
+		 39: HASH-sort- def_%cl_6_34 %cl_6_33[3.38,] 
+		 40: %self->administration_checkin_cards_path def_%cl_6_35 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,3.37,2.0,] %cl_6_34[3.39,] 	 SYMBOL:	 ARGS:%cl_6_34,
+		 41: %self->link_to def_%cl_6_36 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,3.37,3.40,2.0,] %cl_6_32[3.37,] %cl_6_35[3.40,] 	 SYMBOL:	 ARGS:%cl_6_32,%cl_6_35,
+		 42: 
+		 43: GETFIELD %self->families def_%cl_6_37 %self[3.2,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,3.37,3.40,3.41,2.0,] 
+		 44: %cl_6_37->each def_%cl_6_38 %cl_6_37[3.43,] %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,3.37,3.40,3.41,2.0,] 	 SYMBOL:	 ARGS:%cl_6_37,
+CLOSURE BEGIN: family[] %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,3.37,3.40,3.41,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_7_0 
+		 2: RECEIVEARG def_family 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: family->id def_%cl_7_3 family[2.2,] 	 SYMBOL:	 ARGS:
+		 2: 
+		 3: family->legacy_id def_%cl_7_4 family[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 4: 
+		 5: family->name def_%cl_7_5 family[3.1,3.3,2.2,] 	 SYMBOL:	 ARGS:
+		 6: %self->link_to def_%cl_7_6 %self[2.0,] %cl_7_5[3.5,] family[3.1,3.3,3.5,2.2,] 	 SYMBOL:	 ARGS:%cl_7_5,family,
+		 7: 
+		 8: family->barcode_id def_%cl_7_7 family[3.1,3.3,3.5,2.2,] 	 SYMBOL:	 ARGS:
+		 9: 
+		 10: family->barcode_assigned_at def_%cl_7_8 family[3.1,3.3,3.5,3.8,2.2,] 	 SYMBOL:	 ARGS:
+		 11: %cl_7_8->to_s def_%cl_7_9 %cl_7_8[3.10,] 	 SYMBOL:	 ARGS:
+		 12: RETURN %cl_7_9[3.11,] %self[3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_7_10 
+		 1: def_%cl_7_11 %cl_7_10[4.0,] 
+		 2: RETURN %cl_7_11[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 45: 
+		 46: GETFIELD %self->families def_%cl_6_39 %self[3.2,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,3.37,3.40,3.41,2.0,] 
+		 47: %self->pagination def_%cl_6_40 %self[3.2,3.3,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,3.37,3.40,3.41,2.0,] %cl_6_39[3.46,] 	 SYMBOL:	 ARGS:%cl_6_39,
+		 48: 
+		 49: GETFIELD %self->families def_%cl_6_41 %self[3.2,3.6,3.9,3.12,3.13,3.16,3.19,3.20,3.23,3.26,3.27,3.30,3.33,3.34,3.37,3.40,3.41,3.47,2.0,] 
+		 50: %cl_6_41->any? def_%cl_6_42 %cl_6_41[3.49,] 	 SYMBOL:	 ARGS:
+		 51: BRANCH %cl_6_42[3.50,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "csv" def_%cl_6_43 
+		 2: HASH-format- def_%cl_6_44 %cl_6_43[4.1,] 
+		 3: %self->administration_checkin_cards_path def_%cl_6_45 %self[3.3,2.0,] %cl_6_44[4.2,] 	 SYMBOL:	 ARGS:%cl_6_44,
+		 4: COPY TYPE_StringLiteral "btn btn-info" def_%cl_6_46 
+		 5: HASH-class- def_%cl_6_47 %cl_6_46[4.4,] 
+		 6: %self->link_to def_%cl_6_48 %self[4.3,3.3,2.0,] %cl_6_45[4.3,] %cl_6_47[4.5,] %self[4.3,3.3,2.0,] 	 SYMBOL:	 ARGS:%cl_6_45,%cl_6_47,%self,
+CLOSURE BEGIN: %self[4.3,3.3,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_8_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-download" def_%cl_8_3 
+		 2: %self->icon def_%cl_8_4 %self[2.0,] %cl_8_3[3.1,] 	 SYMBOL:	 ARGS:%cl_8_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "checkin.cards.export.button" def_%cl_8_5 
+		 5: %self->t def_%cl_8_6 %self[3.2,2.0,] %cl_8_5[3.4,] 	 SYMBOL:	 ARGS:%cl_8_5,
+		 6: RETURN %cl_8_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_8_7 
+		 1: def_%cl_8_8 %cl_8_7[4.0,] 
+		 2: RETURN %cl_8_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 7: 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "checkin.cards.none" def_%cl_6_49 
+		 2: %self->t def_%cl_6_50 %self[3.3,2.0,] %cl_6_49[5.1,] 	 SYMBOL:	 ARGS:%cl_6_49,
+		 3: RETURN %cl_6_50[5.2,] %self[5.2,3.3,2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_6_48[4.6,] %self[3.3,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_6_51 
+		 1: def_%cl_6_52 %cl_6_51[7.0,] 
+		 2: RETURN %cl_6_52[7.1,] %self[3.3,2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: RETURN %v_5[2.9,] %self[2.0,2.6,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = only_admins instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
+		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 	 SYMBOL:manage_checkin,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "You must be an administrator to use this section." def_%v_6 
+		 2: HASH-text-layout-status- def_%v_7 %v_6[4.1,] 
+		 3: %self->render def_%v_8 %self[2.0,] %v_7[4.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: 
+		 5: RETURN %self[4.3,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = feature_enabled? instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Setting) def_%v_3 
+		 7: %v_3->get def_%v_4 %v_3[2.6,] 	 SYMBOL:features,checkin,	 ARGS:Symbol,Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "This feature is unavailable." def_%v_6 
+		 2: HASH-text-layout- def_%v_7 %v_6[4.1,] 
+		 3: %self->render def_%v_8 %self[2.0,] %v_7[4.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: 
+		 5: RETURN %self[4.3,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

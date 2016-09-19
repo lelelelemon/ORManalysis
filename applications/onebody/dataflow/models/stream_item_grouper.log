@@ -1,0 +1,505 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_items 
+		 6: def_expose_count 
+		 7: expose_count[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (DEFAULT_EXPOSE_COUNT) def_%v_3 
+		 1: COPY TYPE_PASS def_expose_count %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: items->dup def_%v_4 items[2.5,] 	 SYMBOL:	 ARGS:
+		 2: ATTRASSIGN %self->items %v_4[4.1,] 
+		 3: 
+		 4: ATTRASSIGN %self->expose_count expose_count[3.1,2.6,] 
+		 5: 
+		 6: %self->expose def_%v_5 %self[4.2,4.4,2.0,] 	 SYMBOL:	 ARGS:
+		 7: 
+		 8: %self->group def_%v_6 %self[4.2,4.4,4.6,2.0,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_6[4.8,] %self[4.2,4.4,4.6,4.8,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = exposed_shared instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->exposed def_%v_3 %self[2.0,] 
+		 7: %v_3->select def_%v_4 %v_3[2.6,] 	 SYMBOL:shared,	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = expose instanceMethod = true
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->items def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->expose_count def_%v_4 %self[2.0,] 
+		 8: %v_3->pop def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: ATTRASSIGN %self->exposed %v_5[2.8,] 
+		 10: 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: %self->enough_exposed? def_%v_7 %self[2.0,2.9,] 	 SYMBOL:	 ARGS:
+		 1: %v_7->! def_%v_8 %v_7[3.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_8[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->items def_%v_9 %self[2.0,] 
+		 1: %v_9->any? def_%v_10 %v_9[4.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_%v_8 %v_10[4.1,] 
+BB 5
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_8[4.2,3.1,] 
+BB 6
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->exposed def_%v_11 %self[2.0,2.9,] 
+		 2: GETFIELD %self->items def_%v_12 %self[2.0,] 
+		 3: %v_12->pop def_%v_13 %v_12[6.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_11->unshift def_%v_14 %v_11[6.1,] %v_13[6.3,] 	 SYMBOL:	 ARGS:%v_13,
+		 5: 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: 
+BB 10
+	outgoing: 11 13 
+	datadep: 
+	instructions:
+		 0: %self->pop_unshared def_%v_16 %self[2.0,2.9,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_PASS def_item %v_16[10.0,] 
+		 2: BRANCH %v_16[10.0,] 
+BB 11
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: 
+		 2: GETFIELD %self->exposed def_%v_17 %self[2.0,2.9,] 
+		 3: %v_17->unshift def_%v_18 %v_17[11.2,] item[10.1,] 	 SYMBOL:	 ARGS:item,
+		 4: 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,2.9,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = group instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->items def_%v_3 %self[2.0,] 
+		 7: ATTRASSIGN %self->grouped %v_3[2.6,] 
+		 8: RETURN %v_3[2.6,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = enough_exposed? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->exposed_shared def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->size def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: GETFIELD %self->expose_count def_%v_5 %self[2.0,2.6,] 
+		 9: %v_4->>= def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = pop_unshared instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->items def_%v_3 %self[2.0,] 
+		 7: %v_3->rindex def_%v_4 %v_3[2.6,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: i[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_i 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: i->shared def_%cl_1_3 i[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->! def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: COPY TYPE_PASS def_index %v_4[2.7,] 
+		 9: 
+		 10: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->items def_%v_5 %self[2.0,] 
+		 1: %v_5->slice! def_%v_6 %v_5[3.0,] index[2.8,] 	 SYMBOL:	 ARGS:index,
+		 2: RETURN %v_6[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_base_item 
+		 6: 
+		 7: base_item->nil? def_%v_3 base_item[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "base_item is nil" def_%v_4 
+		 1: %self->fail def_%v_5 %self[2.0,] %v_4[3.0,] 	 SYMBOL:	 ARGS:%v_4,
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: ATTRASSIGN %self->base_item base_item[2.5,] 
+		 2: RETURN base_item[2.5,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = group instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->destroy_existing_groups def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: 
+		 8: %self->create_group def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_4[2.8,] %self[2.0,2.6,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = grouper instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->grouper def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Grouper) def_%v_6 
+		 1: %self->items def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_7->to_a def_%v_8 %v_7[5.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->new def_%v_9 %v_6[5.0,] %v_8[5.2,] 	 SYMBOL:	 ARGS:%v_8,
+		 4: ATTRASSIGN %self->grouper %v_9[5.3,] 
+		 5: RETURN %v_9[5.3,] %self[5.1,5.4,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = items instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (StreamItem) def_%v_3 
+		 7: %v_3->order def_%v_4 %v_3[2.6,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 8: GETFIELD %self->base_item def_%v_5 %self[2.0,] 
+		 9: %v_5->streamable_type def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: HASH-streamable_type- def_%v_7 %v_6[2.9,] 
+		 11: %v_4->where def_%v_8 %v_4[2.7,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: COPY TYPE_StringLiteral "created_at >= ?" def_%v_9 
+		 13: GETFIELD %self->base_item def_%v_10 %self[2.0,] 
+		 14: %v_10->created_at def_%v_11 %v_10[2.13,] 	 SYMBOL:	 ARGS:
+		 15: (GROUPING_PERIOD) def_%v_12 
+		 16: %v_11->- def_%v_13 %v_11[2.14,] %v_12[2.15,] 	 SYMBOL:	 ARGS:%v_12,
+		 17: %v_8->where def_%v_14 %v_8[2.11,] %v_9[2.12,] %v_13[2.16,] 	 SYMBOL:	 ARGS:%v_9,%v_13,
+		 18: RETURN %v_14[2.17,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy_existing_groups instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->items def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->map def_%v_4 %v_3[2.6,] 	 SYMBOL:stream_item_group,	 ARGS:
+		 8: %v_4->uniq def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->compact def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_6->each def_%v_7 %v_6[2.9,] 	 SYMBOL:destroy,	 ARGS:
+		 11: RETURN %v_7[2.10,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_group instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->grouper def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->exposed_shared def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->none? def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->grouper def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_6->grouped def_%v_7 %v_6[3.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_7->none? def_%v_8 %v_7[3.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%v_5 %v_8[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_5[3.3,2.8,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+		 1: 
+		 2: %self->grouper def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_10->exposed_shared def_%v_11 %v_10[6.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_11->first def_%v_12 %v_11[6.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_12->created_at def_%v_13 %v_12[6.4,] 	 SYMBOL:	 ARGS:
+		 6: CONSTANT def_%v_14 	 SYMBOL:	 ARGS:
+		 7: %v_13->- def_%v_15 %v_13[6.5,] %v_14[6.6,] 	 SYMBOL:	 ARGS:%v_14,
+		 8: COPY TYPE_PASS def_created_at %v_15[6.7,] 
+		 9: 
+		 10: (StreamItem) def_%v_16 
+		 11: COPY TYPE_StringLiteral "StreamItemGroup" def_%v_17 
+		 12: GETFIELD %self->base_item def_%v_18 %self[6.2,2.0,] 
+		 13: %v_18->streamable_type def_%v_19 %v_18[6.12,] 	 SYMBOL:	 ARGS:
+		 14: HASH-streamable_type- def_%v_20 %v_19[6.13,] 
+		 15: %self->grouper def_%v_21 %self[6.2,2.0,] 	 SYMBOL:	 ARGS:
+		 16: %v_21->grouped def_%v_22 %v_21[6.15,] 	 SYMBOL:	 ARGS:
+		 17: HASH-streamable_type-context-items-created_at-shared-is_public- def_%v_23 %v_17[6.11,] %v_20[6.14,] %v_22[6.16,] created_at[6.8,] 
+		 18: %v_16->create! def_%v_24 %v_16[6.10,] %v_23[6.17,] 	 SYMBOL:	 ARGS:%v_23,
+		 19: RETURN %v_24[6.18,] %self[6.2,6.15,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+

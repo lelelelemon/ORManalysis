@@ -1,0 +1,231 @@
+SET IRMethod, name = mobile_cache_directory instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Rails) def_%v_3 
+		 7: %v_3->application def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->config def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->cms def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_6->mobile_cache_directory def_%v_7 %v_6[2.9,] 	 SYMBOL:	 ARGS:
+		 11: RETURN %v_7[2.10,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = cms_cache_directory instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Rails) def_%v_3 
+		 7: %v_3->application def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->config def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->cms def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_6->page_cache_directory def_%v_7 %v_6[2.9,] 	 SYMBOL:	 ARGS:
+		 11: RETURN %v_7[2.10,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = caching_enabled? instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (ActionController) def_%v_3 
+		 7: (inherit Base) def_%v_4 %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[2.6,] 	 SYMBOL:Base,	 ARGS:Symbol,
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %v_4->perform_caching def_%v_5 %v_4[3.0,2.7,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_5[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = flush instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->caching_enabled? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flush_caches def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_4[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = flush_caches instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->cms_cache_directory def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->flush_cache_directory def_%v_4 %self[2.0,2.6,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: 
+		 9: %self->mobile_cache_directory def_%v_5 %self[2.0,2.6,2.7,] 	 SYMBOL:	 ARGS:
+		 10: %self->flush_cache_directory def_%v_6 %self[2.0,2.6,2.7,2.9,] %v_5[2.9,] 	 SYMBOL:	 ARGS:%v_5,
+		 11: RETURN %v_6[2.10,] %self[2.0,2.6,2.7,2.9,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = flush_cache_directory instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_cache 
+		 6: 
+		 7: (File) def_%v_3 
+		 8: %v_3->exists? def_%v_4 %v_3[2.7,] cache[2.5,] 	 SYMBOL:	 ARGS:cache,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->not_public_directory? def_%v_5 %self[2.0,] cache[2.5,] 	 SYMBOL:	 ARGS:cache,
+		 1: COPY TYPE_PASS def_%v_4 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_4[3.1,2.8,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (FileUtils) def_%v_6 
+		 2: (Dir) def_%v_7 
+		 3: COPY TYPE_StringLiteral "/*" def_%v_8 
+		 4: BUILDSTRING def_%v_9 cache[2.5,] %v_8[5.3,] 
+		 5: %v_7->glob def_%v_10 %v_7[5.2,] %v_9[5.4,] 	 SYMBOL:	 ARGS:%v_9,
+		 6: %v_6->rm_rf def_%v_11 %v_6[5.1,] %v_10[5.5,] 	 SYMBOL:	 ARGS:%v_10,
+		 7: 
+		 8: (Rails) def_%v_12 
+		 9: %v_12->logger def_%v_13 %v_12[5.8,] 	 SYMBOL:	 ARGS:
+		 10: COPY TYPE_StringLiteral "Flush cache in '" def_%v_14 
+		 11: COPY TYPE_StringLiteral "'" def_%v_15 
+		 12: BUILDSTRING def_%v_16 %v_14[5.10,] cache[2.5,] %v_15[5.11,] 
+		 13: %v_13->info def_%v_17 %v_13[5.9,] %v_16[5.12,] 	 SYMBOL:	 ARGS:%v_16,
+		 14: RETURN %v_17[5.13,] %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = not_public_directory? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_directory 
+		 6: 
+		 7: (File) def_%v_3 
+		 8: %v_3->basename def_%v_4 %v_3[2.7,] directory[2.5,] 	 SYMBOL:	 ARGS:directory,
+		 9: COPY TYPE_StringLiteral "public" def_%v_5 
+		 10: %v_4->!= def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 SYMBOL:	 ARGS:%v_5,
+		 11: RETURN %v_6[2.10,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

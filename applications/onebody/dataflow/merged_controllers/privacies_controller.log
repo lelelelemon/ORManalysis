@@ -1,0 +1,358 @@
+SET IRMethod, name = edit instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->family def_%v_3 %self[2.0,] 
+		 7: %v_3->people def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->undeleted def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->children def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: ATTRASSIGN %self->children %v_6[2.9,] 
+		 11: 
+		 12: GETFIELD %self->logged_in def_%v_7 %self[2.0,] 
+		 13: GETFIELD %self->family def_%v_8 %self[2.0,] 
+		 14: %v_7->can_update? def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 SYMBOL:	 ARGS:%v_8,
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_10 
+		 1: 
+		 2: GETFIELD %self->family def_%v_15 %self[2.0,] 
+		 3: %v_15->visible? def_%v_16 %v_15[3.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %v_16[3.3,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "not_authorized" def_%v_11 
+		 2: %self->t def_%v_12 %self[2.0,2.10,] %v_11[4.1,] 	 SYMBOL:	 ARGS:%v_11,
+		 3: HASH-text-layout-status- def_%v_13 %v_12[4.2,] 
+		 4: %self->render def_%v_14 %self[4.2,2.0,2.10,] %v_13[4.3,] 	 SYMBOL:	 ARGS:%v_13,
+		 5: 
+		 6: RETURN %self[4.2,4.4,2.0,2.10,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_17 
+		 1: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_18 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "privacies.family_hidden" def_%v_19 
+		 3: %self->t def_%v_20 %self[7.1,2.0,2.10,] %v_19[7.2,] 	 SYMBOL:	 ARGS:%v_19,
+		 4: ATTRASSIGN %v_18->[] %v_20[7.3,] 
+		 5: COPY TYPE_PASS def_%v_17 %v_20[7.3,] 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view def_%v_21 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 2: %v_21->ruby_code_from_view def_%v_22 %v_21[8.1,] %self[8.1,2.0,2.10,] 	 SYMBOL:	 ARGS:%v_21,
+CLOSURE BEGIN: 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+		 5: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %v_22[8.2,] %self[8.1,2.0,2.10,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:agree,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_5->[] def_%v_6 %v_5[3.0,] 	 SYMBOL:agree_commit,	 ARGS:Symbol,
+		 2: COPY TYPE_PASS def_%v_4 %v_6[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_4[3.2,2.7,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->update_consent def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_7[5.1,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->update_privacy def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_8[6.1,] %self[6.1,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_consent instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (ParentalConsent) def_%v_3 
+		 7: GETFIELD %self->person def_%v_4 %self[2.0,] 
+		 8: GETFIELD %self->logged_in def_%v_5 %self[2.0,] 
+		 9: %self->params def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 10: %v_6->[] def_%v_7 %v_6[2.9,] 	 SYMBOL:agree,	 ARGS:Symbol,
+		 11: %v_3->new def_%v_8 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_4,%v_5,%v_7,
+		 12: COPY TYPE_PASS def_consent %v_8[2.11,] 
+		 13: 
+		 14: %v_8->perform def_%v_9 %v_8[2.11,] 	 SYMBOL:	 ARGS:
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "privacies.agreement_saved" def_%v_11 
+		 3: %self->t def_%v_12 %self[3.1,2.0,] %v_11[3.2,] 	 SYMBOL:	 ARGS:%v_11,
+		 4: ATTRASSIGN %v_10->[] %v_12[3.3,] 
+		 5: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_13 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: consent->errors def_%v_14 consent[2.12,] 	 SYMBOL:	 ARGS:
+		 3: %v_14->values def_%v_15 %v_14[4.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral "; " def_%v_16 
+		 5: %v_15->join def_%v_17 %v_15[4.3,] %v_16[4.4,] 	 SYMBOL:	 ARGS:%v_16,
+		 6: ATTRASSIGN %v_13->[] %v_17[4.5,] 
+		 7: COPY TYPE_PASS def_%v_12 %v_17[4.5,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%v_18 %self[2.0,] 
+		 2: %self->edit_person_privacy_path def_%v_19 %self[2.0,] %v_18[5.1,] 	 SYMBOL:	 ARGS:%v_18,
+		 3: %self->redirect_to def_%v_20 %self[5.2,2.0,] %v_19[5.2,] 	 SYMBOL:	 ARGS:%v_19,
+		 4: RETURN %v_20[5.3,] %self[5.2,5.3,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_privacy instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->family def_%v_4 %self[2.0,] 
+		 8: %v_3->can_update? def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->family def_%v_6 %self[2.0,] 
+		 2: %self->family_params def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->update_attributes! def_%v_8 %v_6[3.1,] %v_7[3.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: 
+		 5: (MembershipSharingUpdater) def_%v_9 
+		 6: GETFIELD %self->logged_in def_%v_10 %self[3.2,2.0,] 
+		 7: %self->params def_%v_11 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_11->[] def_%v_12 %v_11[3.7,] 	 SYMBOL:memberships,	 ARGS:Symbol,
+		 9: %v_9->new def_%v_13 %v_9[3.5,] %v_10[3.6,] %v_12[3.8,] 	 SYMBOL:	 ARGS:%v_10,%v_12,
+		 10: %v_13->perform def_%v_14 %v_13[3.9,] 	 SYMBOL:	 ARGS:
+		 11: 
+		 12: GETFIELD %self->family def_%v_15 %self[3.2,3.7,2.0,] 
+		 13: %v_15->visible? def_%v_16 %v_15[3.12,] 	 SYMBOL:	 ARGS:
+		 14: BRANCH %v_16[3.13,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_17 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "privacies.saved" def_%v_18 
+		 3: %self->t def_%v_19 %self[4.1,2.0,] %v_18[4.2,] 	 SYMBOL:	 ARGS:%v_18,
+		 4: ATTRASSIGN %v_17->[] %v_19[4.3,] 
+		 5: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%v_20 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "privacies.family_hidden" def_%v_21 
+		 3: %self->t def_%v_22 %self[5.1,2.0,] %v_21[5.2,] 	 SYMBOL:	 ARGS:%v_21,
+		 4: ATTRASSIGN %v_20->[] %v_22[5.3,] 
+		 5: COPY TYPE_PASS def_%v_19 %v_22[5.3,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%v_23 %self[2.0,] 
+		 2: %self->redirect_to def_%v_24 %self[2.0,] %v_23[6.1,] 	 SYMBOL:	 ARGS:%v_23,
+		 3: RETURN %v_24[6.2,] %self[6.2,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "not_authorized" def_%v_25 
+		 2: %self->t def_%v_26 %self[2.0,] %v_25[7.1,] 	 SYMBOL:	 ARGS:%v_25,
+		 3: HASH-text-layout-status- def_%v_27 %v_26[7.2,] 
+		 4: %self->render def_%v_28 %self[7.2,2.0,] %v_27[7.3,] 	 SYMBOL:	 ARGS:%v_27,
+		 5: RETURN %v_28[7.4,] %self[7.2,7.4,2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = family_params instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:agree_commit,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->permit def_%v_6 %v_5[3.1,] 	 SYMBOL:agree,commit,	 ARGS:Symbol,Symbol,
+		 3: RETURN %v_6[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_7->require def_%v_8 %v_7[4.1,] 	 SYMBOL:family,	 ARGS:Symbol,
+		 3: COPY TYPE_Array def_%v_9 
+		 4: HASH-people_attributes- def_%v_10 %v_9[4.3,] 
+		 5: %v_8->permit def_%v_11 %v_8[4.2,] %v_10[4.4,] 	 SYMBOL:visible,	 ARGS:Symbol,%v_10,
+		 6: RETURN %v_11[4.5,] %self[4.1,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get_person instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Person) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->person %v_7[2.10,] 
+		 12: 
+		 13: GETFIELD %self->person def_%v_8 %self[2.0,2.8,2.11,] 
+		 14: %v_8->family def_%v_9 %v_8[2.13,] 	 SYMBOL:	 ARGS:
+		 15: ATTRASSIGN %self->family %v_9[2.14,] 
+		 16: RETURN %v_9[2.14,] %self[2.0,2.8,2.11,2.15,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -1,0 +1,109 @@
+SET IRMethod, name = perform instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_options 
+		 6: options[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_4 options[3.1,2.5,] 	 SYMBOL:wallpaper_id,	 ARGS:Symbol,
+		 2: %v_4->present? def_%v_5 %v_4[4.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_5[4.2,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Wallpaper) def_%v_6 
+		 2: options->[] def_%v_7 options[3.1,2.5,] 	 SYMBOL:wallpaper_id,	 ARGS:Symbol,
+		 3: HASH-id- def_%v_8 %v_7[5.2,] 
+		 4: %v_6->where def_%v_9 %v_6[5.1,] %v_8[5.3,] 	 SYMBOL:	 ARGS:%v_8,
+		 5: %v_9->find_each def_%v_10 %v_9[5.4,] 	 SYMBOL:cache_tag_list,	 ARGS:
+		 6: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_10 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: options->[] def_%v_11 options[3.1,2.5,] 	 SYMBOL:tag_id,	 ARGS:Symbol,
+		 2: %v_11->present? def_%v_12 %v_11[7.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_12[7.2,] 
+BB 8
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Tag) def_%v_13 
+		 2: options->[] def_%v_14 options[3.1,2.5,] 	 SYMBOL:tag_id,	 ARGS:Symbol,
+		 3: HASH-id- def_%v_15 %v_14[8.2,] 
+		 4: %v_13->where def_%v_16 %v_13[8.1,] %v_15[8.3,] 	 SYMBOL:	 ARGS:%v_15,
+		 5: %v_16->find_each def_%v_17 %v_16[8.4,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_16,
+CLOSURE BEGIN: tag[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_tag 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: tag->wallpapers def_%cl_1_3 tag[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->find_each def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:cache_tag_list,	 ARGS:
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 6: RETURN %v_17[8.5,] %self[2.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -1,0 +1,78 @@
+SET IRMethod, name = readable_by? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: 
+		 7: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = updatable_by? instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: 
+		 7: %self->resource def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->person def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->== def_%v_5 %v_4[2.8,] user[2.5,] 	 SYMBOL:	 ARGS:user,
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_Boolean def_%v_6 
+		 2: RETURN %self[2.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: user->admin? def_%v_7 user[2.5,] 	 SYMBOL:manage_comments,	 ARGS:Symbol,
+		 2: BRANCH %v_7[4.1,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_Boolean def_%v_8 
+		 2: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %v_8[6.0,5.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+

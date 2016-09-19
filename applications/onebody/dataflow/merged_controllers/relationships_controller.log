@@ -1,0 +1,3284 @@
+SET IRMethod, name = index instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->person_index def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_5[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_6->[] def_%v_7 %v_6[4.1,] 	 SYMBOL:family_id,	 ARGS:Symbol,
+		 3: BRANCH %v_7[4.2,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->family_index def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.no_person_selected" def_%v_9 
+		 2: %self->t def_%v_10 %self[2.0,] %v_9[6.1,] 	 SYMBOL:	 ARGS:%v_9,
+		 3: HASH-text-layout- def_%v_11 %v_10[6.2,] 
+		 4: %self->render def_%v_12 %self[6.2,2.0,] %v_11[6.3,] 	 SYMBOL:	 ARGS:%v_11,
+		 5: COPY TYPE_PASS def_%v_8 %v_12[6.4,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %v_8[6.5,5.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = person_index instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Person) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->person %v_7[2.10,] 
+		 12: 
+		 13: GETFIELD %self->person def_%v_8 %self[2.0,2.8,2.11,] 
+		 14: %v_8->relationships def_%v_9 %v_8[2.13,] 	 SYMBOL:	 ARGS:
+		 15: %v_9->includes def_%v_10 %v_9[2.14,] 	 SYMBOL:related,	 ARGS:Symbol,
+		 16: COPY TYPE_StringLiteral "people.last_name" def_%v_11 
+		 17: COPY TYPE_StringLiteral "people.first_name" def_%v_12 
+		 18: %v_10->order def_%v_13 %v_10[2.15,] %v_11[2.16,] %v_12[2.17,] 	 SYMBOL:	 ARGS:%v_11,%v_12,
+		 19: ATTRASSIGN %self->relationships %v_13[2.18,] 
+		 20: 
+		 21: GETFIELD %self->person def_%v_14 %self[2.0,2.8,2.11,] 
+		 22: %v_14->inward_relationships def_%v_15 %v_14[2.21,] 	 SYMBOL:	 ARGS:
+		 23: %v_15->includes def_%v_16 %v_15[2.22,] 	 SYMBOL:person,	 ARGS:Symbol,
+		 24: COPY TYPE_StringLiteral "people.last_name" def_%v_17 
+		 25: COPY TYPE_StringLiteral "people.first_name" def_%v_18 
+		 26: %v_16->order def_%v_19 %v_16[2.23,] %v_17[2.24,] %v_18[2.25,] 	 SYMBOL:	 ARGS:%v_17,%v_18,
+		 27: ATTRASSIGN %self->inward_relationships %v_19[2.26,] 
+		 28: 
+		 29: (Relationship) def_%v_20 
+		 30: %v_20->other_names def_%v_21 %v_20[2.29,] 	 SYMBOL:	 ARGS:
+		 31: ATTRASSIGN %self->other_names %v_21[2.30,] 
+		 32: 
+		 33: (Relationship) def_%v_22 
+		 34: GETFIELD %self->person def_%v_23 %self[2.0,2.8,2.11,] 
+		 35: HASH-person- def_%v_24 %v_23[2.34,] 
+		 36: %v_22->new def_%v_25 %v_22[2.33,] %v_24[2.35,] 	 SYMBOL:	 ARGS:%v_24,
+		 37: ATTRASSIGN %self->relationship %v_25[2.36,] 
+		 38: 
+		 39: %self->respond_to def_%v_26 %self[2.0,2.8,2.11,2.19,2.27,2.31,2.37,] %self[2.0,2.8,2.11,2.19,2.27,2.31,2.37,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: format[] %self[2.0,2.8,2.11,2.19,2.27,2.31,2.37,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: format->html def_%cl_1_3 format[2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view def_%cl_2_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_2_3->ruby_code_from_view def_%cl_2_4 %cl_2_3[3.1,] %self[3.1,2.0,] 	 SYMBOL:	 ARGS:%cl_2_3,
+CLOSURE BEGIN: %self[3.1,2.0,] relationship[] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.heading" def_%cl_3_3 
+		 2: GETFIELD %self->person def_%cl_3_4 %self[2.0,] 
+		 3: %cl_3_4->name def_%cl_3_5 %cl_3_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: GETFIELD %self->person def_%cl_3_6 %self[2.0,] 
+		 5: %self->link_to def_%cl_3_7 %self[2.0,] %cl_3_5[3.3,] %cl_3_6[3.4,] 	 SYMBOL:	 ARGS:%cl_3_5,%cl_3_6,
+		 6: HASH-person- def_%cl_3_8 %cl_3_7[3.5,] 
+		 7: %self->t def_%cl_3_9 %self[3.5,2.0,] %cl_3_3[3.1,] %cl_3_8[3.6,] 	 SYMBOL:	 ARGS:%cl_3_3,%cl_3_8,
+		 8: %cl_3_9->html_safe def_%cl_3_10 %cl_3_9[3.7,] 	 SYMBOL:	 ARGS:
+		 9: ATTRASSIGN %self->title %cl_3_10[3.8,] 
+		 10: 
+		 11: GETFIELD %self->relationships def_%cl_3_11 %self[3.5,3.7,2.0,] 
+		 12: %cl_3_11->any? def_%cl_3_12 %cl_3_11[3.11,] 	 SYMBOL:	 ARGS:
+		 13: BRANCH %cl_3_12[3.12,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%cl_3_13 %self[2.0,] 
+		 2: %self->batch_person_relationships_path def_%cl_3_14 %self[3.9,2.0,] %cl_3_13[4.1,] 	 SYMBOL:	 ARGS:%cl_3_13,
+		 3: %self->form_tag def_%cl_3_15 %self[4.2,3.9,2.0,] %cl_3_14[4.2,] %self[4.2,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_3_14,%self,
+CLOSURE BEGIN: %self[4.2,3.9,2.0,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "name" def_%cl_4_3 
+		 2: %self->t def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 SYMBOL:	 ARGS:%cl_4_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_4_5 
+		 5: %self->t def_%cl_4_6 %self[3.2,2.0,] %cl_4_5[3.4,] 	 SYMBOL:	 ARGS:%cl_4_5,
+		 6: 
+		 7: GETFIELD %self->relationships def_%cl_4_7 %self[3.2,3.5,2.0,] 
+		 8: %cl_4_7->each def_%cl_4_8 %cl_4_7[3.7,] %self[3.2,3.5,2.0,] 	 SYMBOL:	 ARGS:%cl_4_7,
+CLOSURE BEGIN: relationship[] %self[3.2,3.5,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: RECEIVEARG def_relationship 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "ids[]" def_%cl_5_3 
+		 2: relationship->id def_%cl_5_4 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "outward_relationship_checkbox" def_%cl_5_5 
+		 4: HASH-class- def_%cl_5_6 %cl_5_5[3.3,] 
+		 5: %self->check_box_tag def_%cl_5_7 %self[2.0,] %cl_5_3[3.1,] %cl_5_4[3.2,] %cl_5_6[3.4,] 	 SYMBOL:	 ARGS:%cl_5_3,%cl_5_4,Boolean,%cl_5_6,
+		 6: 
+		 7: relationship->related def_%cl_5_8 relationship[3.2,2.2,] 	 SYMBOL:	 ARGS:
+		 8: %cl_5_8->name def_%cl_5_9 %cl_5_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: relationship->related def_%cl_5_10 relationship[3.2,3.7,2.2,] 	 SYMBOL:	 ARGS:
+		 10: %self->person_relationships_path def_%cl_5_11 %self[3.5,2.0,] %cl_5_10[3.9,] 	 SYMBOL:	 ARGS:%cl_5_10,
+		 11: %self->link_to def_%cl_5_12 %self[3.5,3.10,2.0,] %cl_5_9[3.8,] %cl_5_11[3.10,] 	 SYMBOL:	 ARGS:%cl_5_9,%cl_5_11,
+		 12: 
+		 13: relationship->name_or_other def_%cl_5_13 relationship[3.2,3.7,3.9,2.2,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %cl_5_13[3.13,] %self[3.5,3.10,3.11,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_14 
+		 1: def_%cl_5_15 %cl_5_14[4.0,] 
+		 2: RETURN %cl_5_15[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: 
+		 10: COPY TYPE_StringLiteral "delete" def_%cl_4_9 
+		 11: COPY TYPE_StringLiteral "are_you_sure" def_%cl_4_10 
+		 12: %self->t def_%cl_4_11 %self[3.2,3.5,2.0,] %cl_4_10[3.11,] 	 SYMBOL:	 ARGS:%cl_4_10,
+		 13: HASH-confirm- def_%cl_4_12 %cl_4_11[3.12,] 
+		 14: COPY TYPE_StringLiteral "btn btn-delete" def_%cl_4_13 
+		 15: HASH-name-data-class- def_%cl_4_14 %cl_4_9[3.10,] %cl_4_12[3.13,] %cl_4_13[3.14,] 
+		 16: %self->button_tag def_%cl_4_15 %self[3.2,3.5,3.12,2.0,] %cl_4_14[3.15,] %self[3.2,3.5,3.12,2.0,] 	 SYMBOL:	 ARGS:%cl_4_14,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_6_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_6_3 
+		 2: %self->icon def_%cl_6_4 %self[2.0,] %cl_6_3[3.1,] 	 SYMBOL:	 ARGS:%cl_6_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "Delete" def_%cl_6_5 
+		 5: %self->t def_%cl_6_6 %self[3.2,2.0,] %cl_6_5[3.4,] 	 SYMBOL:	 ARGS:%cl_6_5,
+		 6: RETURN %cl_6_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_6_7 
+		 1: def_%cl_6_8 %cl_6_7[4.0,] 
+		 2: RETURN %cl_6_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: 
+		 18: COPY TYPE_StringLiteral "reciprocate" def_%cl_4_16 
+		 19: COPY TYPE_StringLiteral "btn btn-success" def_%cl_4_17 
+		 20: HASH-name-class- def_%cl_4_18 %cl_4_16[3.18,] %cl_4_17[3.19,] 
+		 21: %self->button_tag def_%cl_4_19 %self[3.2,3.5,3.12,3.16,2.0,] %cl_4_18[3.20,] %self[3.2,3.5,3.12,3.16,2.0,] 	 SYMBOL:	 ARGS:%cl_4_18,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,3.16,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_7_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-exchange" def_%cl_7_3 
+		 2: %self->icon def_%cl_7_4 %self[2.0,] %cl_7_3[3.1,] 	 SYMBOL:	 ARGS:%cl_7_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.reciprocate.button" def_%cl_7_5 
+		 5: %self->t def_%cl_7_6 %self[3.2,2.0,] %cl_7_5[3.4,] 	 SYMBOL:	 ARGS:%cl_7_5,
+		 6: RETURN %cl_7_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_7_7 
+		 1: def_%cl_7_8 %cl_7_7[4.0,] 
+		 2: RETURN %cl_7_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 22: RETURN %cl_4_19[3.21,] %self[3.2,3.5,3.12,3.16,3.21,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_20 
+		 1: def_%cl_4_21 %cl_4_20[4.0,] 
+		 2: RETURN %cl_4_21[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 5
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "none" def_%cl_3_16 
+		 2: %self->t def_%cl_3_17 %self[3.9,2.0,] %cl_3_16[5.1,] 	 SYMBOL:	 ARGS:%cl_3_16,
+		 3: COPY TYPE_PASS def_%cl_3_15 %cl_3_17[5.2,] 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->search_path def_%cl_3_18 %self[3.9,2.0,] 	 SYMBOL:	 ARGS:
+		 2: HASH-remote- def_%cl_3_19 
+		 3: %self->form_tag def_%cl_3_20 %self[6.1,3.9,2.0,] %cl_3_18[6.1,] %cl_3_19[6.2,] %self[6.1,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_3_18,%cl_3_19,%self,
+CLOSURE BEGIN: %self[6.1,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_8_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->hidden_field_tag def_%cl_8_3 %self[2.0,] 	 SYMBOL:select_person,	 ARGS:Symbol,Boolean,
+		 2: 
+		 3: COPY TYPE_StringLiteral "relationships.add_relationship.intro" def_%cl_8_4 
+		 4: %self->t def_%cl_8_5 %self[3.1,2.0,] %cl_8_4[3.3,] 	 SYMBOL:	 ARGS:%cl_8_4,
+		 5: 
+		 6: COPY TYPE_StringLiteral "search.search_by_name" def_%cl_8_6 
+		 7: %self->t def_%cl_8_7 %self[3.1,3.4,2.0,] %cl_8_6[3.6,] 	 SYMBOL:	 ARGS:%cl_8_6,
+		 8: 
+		 9: COPY TYPE_StringLiteral "name" def_%cl_8_8 
+		 10: COPY TYPE_StringLiteral "" def_%cl_8_9 
+		 11: COPY TYPE_StringLiteral "form-control" def_%cl_8_10 
+		 12: HASH-class- def_%cl_8_11 %cl_8_10[3.11,] 
+		 13: %self->text_field_tag def_%cl_8_12 %self[3.1,3.4,3.7,2.0,] %cl_8_8[3.9,] %cl_8_9[3.10,] %cl_8_11[3.12,] 	 SYMBOL:	 ARGS:%cl_8_8,%cl_8_9,%cl_8_11,
+		 14: 
+		 15: COPY TYPE_StringLiteral "relationships.add_relationship.button" def_%cl_8_13 
+		 16: %self->t def_%cl_8_14 %self[3.1,3.4,3.7,3.13,2.0,] %cl_8_13[3.15,] 	 SYMBOL:	 ARGS:%cl_8_13,
+		 17: COPY TYPE_StringLiteral "btn btn-info" def_%cl_8_15 
+		 18: HASH-class- def_%cl_8_16 %cl_8_15[3.17,] 
+		 19: %self->button_tag def_%cl_8_17 %self[3.1,3.4,3.7,3.13,3.16,2.0,] %cl_8_14[3.16,] %cl_8_16[3.18,] 	 SYMBOL:	 ARGS:%cl_8_14,%cl_8_16,
+		 20: RETURN %cl_8_17[3.19,] %self[3.1,3.4,3.7,3.13,3.16,3.19,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_8_18 
+		 1: def_%cl_8_19 %cl_8_18[4.0,] 
+		 2: RETURN %cl_8_19[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+		 5: GETFIELD %self->person def_%cl_3_21 %self[6.1,6.3,2.0,] 
+		 6: %self->person_relationships_path def_%cl_3_22 %self[6.1,6.3,3.9,2.0,] %cl_3_21[6.5,] 	 SYMBOL:	 ARGS:%cl_3_21,
+		 7: %self->form_tag def_%cl_3_23 %self[6.1,6.3,6.6,3.9,2.0,] %cl_3_22[6.6,] %self[6.1,6.3,6.6,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_3_22,%self,
+CLOSURE BEGIN: %self[6.1,6.3,6.6,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_9_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.relationship_type" def_%cl_9_3 
+		 2: %self->t def_%cl_9_4 %self[2.0,] %cl_9_3[3.1,] 	 SYMBOL:	 ARGS:%cl_9_3,
+		 3: 
+		 4: %self->relationships_for_select def_%cl_9_5 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral "relationship_name" def_%cl_9_6 
+		 6: COPY TYPE_StringLiteral "form-control" def_%cl_9_7 
+		 7: COPY TYPE_StringLiteral "#other_name" def_%cl_9_8 
+		 8: COPY TYPE_StringLiteral "toggle-value" def_%cl_9_9 
+		 9: COPY TYPE_StringLiteral "other" def_%cl_9_10 
+		 10: HASH-toggle- def_%cl_9_11 %cl_9_8[3.7,] %cl_9_9[3.8,] %cl_9_10[3.9,] 
+		 11: HASH-id-class-include_blank-data- def_%cl_9_12 %cl_9_6[3.5,] %cl_9_7[3.6,] %cl_9_11[3.10,] 
+		 12: %self->select_tag def_%cl_9_13 %self[3.2,3.4,2.0,] %cl_9_5[3.4,] %cl_9_12[3.11,] 	 SYMBOL:name,	 ARGS:Symbol,%cl_9_5,%cl_9_12,
+		 13: 
+		 14: COPY TYPE_StringLiteral "display:none;" def_%cl_9_14 
+		 15: COPY TYPE_StringLiteral "form-control" def_%cl_9_15 
+		 16: COPY TYPE_StringLiteral "relationships.other_name.placeholder" def_%cl_9_16 
+		 17: %self->t def_%cl_9_17 %self[3.2,3.4,3.12,2.0,] %cl_9_16[3.16,] 	 SYMBOL:	 ARGS:%cl_9_16,
+		 18: HASH-style-class-placeholder- def_%cl_9_18 %cl_9_14[3.14,] %cl_9_15[3.15,] %cl_9_17[3.17,] 
+		 19: %self->text_field_tag def_%cl_9_19 %self[3.2,3.4,3.12,3.17,2.0,] %cl_9_18[3.18,] 	 SYMBOL:other_name,	 ARGS:Symbol,Nil,%cl_9_18,
+		 20: 
+		 21: COPY TYPE_StringLiteral "search.add_selected" def_%cl_9_20 
+		 22: %self->t def_%cl_9_21 %self[3.2,3.4,3.12,3.17,3.19,2.0,] %cl_9_20[3.21,] 	 SYMBOL:	 ARGS:%cl_9_20,
+		 23: COPY TYPE_StringLiteral "btn btn-success" def_%cl_9_22 
+		 24: HASH-class- def_%cl_9_23 %cl_9_22[3.23,] 
+		 25: %self->button_tag def_%cl_9_24 %self[3.2,3.4,3.12,3.17,3.19,3.22,2.0,] %cl_9_21[3.22,] %cl_9_23[3.24,] 	 SYMBOL:	 ARGS:%cl_9_21,%cl_9_23,
+		 26: RETURN %cl_9_24[3.25,] %self[3.2,3.4,3.12,3.17,3.19,3.22,3.25,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_9_25 
+		 1: def_%cl_9_26 %cl_9_25[4.0,] 
+		 2: RETURN %cl_9_26[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: 
+		 9: GETFIELD %self->person def_%cl_3_24 %self[6.1,6.3,6.6,6.7,2.0,] 
+		 10: %cl_3_24->family def_%cl_3_25 %cl_3_24[6.9,] 	 SYMBOL:	 ARGS:
+		 11: %self->family_relationships_path def_%cl_3_26 %self[6.1,6.3,6.6,6.7,3.9,2.0,] %cl_3_25[6.10,] 	 SYMBOL:	 ARGS:%cl_3_25,
+		 12: COPY TYPE_StringLiteral "btn btn-info" def_%cl_3_27 
+		 13: HASH-class- def_%cl_3_28 %cl_3_27[6.12,] 
+		 14: %self->link_to def_%cl_3_29 %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] %cl_3_26[6.11,] %cl_3_28[6.13,] %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_3_26,%cl_3_28,%self,
+CLOSURE BEGIN: %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_10_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-group" def_%cl_10_3 
+		 2: %self->icon def_%cl_10_4 %self[2.0,] %cl_10_3[3.1,] 	 SYMBOL:	 ARGS:%cl_10_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.family.button" def_%cl_10_5 
+		 5: %self->t def_%cl_10_6 %self[3.2,2.0,] %cl_10_5[3.4,] 	 SYMBOL:	 ARGS:%cl_10_5,
+		 6: RETURN %cl_10_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_10_7 
+		 1: def_%cl_10_8 %cl_10_7[4.0,] 
+		 2: RETURN %cl_10_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 15: 
+		 16: COPY TYPE_StringLiteral "relationships.inward.heading" def_%cl_3_30 
+		 17: %self->t def_%cl_3_31 %self[6.1,6.3,6.6,6.7,6.11,6.14,3.9,2.0,] %cl_3_30[6.16,] 	 SYMBOL:	 ARGS:%cl_3_30,
+		 18: 
+		 19: GETFIELD %self->inward_relationships def_%cl_3_32 %self[6.1,6.3,6.6,6.7,6.11,6.14,6.17,2.0,] 
+		 20: %cl_3_32->any? def_%cl_3_33 %cl_3_32[6.19,] 	 SYMBOL:	 ARGS:
+		 21: BRANCH %cl_3_33[6.20,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%cl_3_34 %self[2.0,] 
+		 2: %self->batch_person_relationships_path def_%cl_3_35 %self[3.9,2.0,] %cl_3_34[7.1,] 	 SYMBOL:	 ARGS:%cl_3_34,
+		 3: %self->form_tag def_%cl_3_36 %self[7.2,3.9,2.0,] %cl_3_35[7.2,] %self[7.2,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_3_35,%self,
+CLOSURE BEGIN: %self[7.2,3.9,2.0,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_11_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "From" def_%cl_11_3 
+		 2: %self->t def_%cl_11_4 %self[2.0,] %cl_11_3[3.1,] 	 SYMBOL:	 ARGS:%cl_11_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_11_5 
+		 5: %self->t def_%cl_11_6 %self[3.2,2.0,] %cl_11_5[3.4,] 	 SYMBOL:	 ARGS:%cl_11_5,
+		 6: 
+		 7: GETFIELD %self->inward_relationships def_%cl_11_7 %self[3.2,3.5,2.0,] 
+		 8: %cl_11_7->each def_%cl_11_8 %cl_11_7[3.7,] %self[3.2,3.5,2.0,] 	 SYMBOL:	 ARGS:%cl_11_7,
+CLOSURE BEGIN: relationship[] %self[3.2,3.5,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_12_0 
+		 2: RECEIVEARG def_relationship 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "ids[]" def_%cl_12_3 
+		 2: relationship->id def_%cl_12_4 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "inward_relationship_checkbox" def_%cl_12_5 
+		 4: HASH-class- def_%cl_12_6 %cl_12_5[3.3,] 
+		 5: %self->check_box_tag def_%cl_12_7 %self[2.0,] %cl_12_3[3.1,] %cl_12_4[3.2,] %cl_12_6[3.4,] 	 SYMBOL:	 ARGS:%cl_12_3,%cl_12_4,Boolean,%cl_12_6,
+		 6: 
+		 7: relationship->person def_%cl_12_8 relationship[3.2,2.2,] 	 SYMBOL:	 ARGS:
+		 8: %cl_12_8->name def_%cl_12_9 %cl_12_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: relationship->person def_%cl_12_10 relationship[3.2,3.7,2.2,] 	 SYMBOL:	 ARGS:
+		 10: %self->person_relationships_path def_%cl_12_11 %self[3.5,2.0,] %cl_12_10[3.9,] 	 SYMBOL:	 ARGS:%cl_12_10,
+		 11: %self->link_to def_%cl_12_12 %self[3.5,3.10,2.0,] %cl_12_9[3.8,] %cl_12_11[3.10,] 	 SYMBOL:	 ARGS:%cl_12_9,%cl_12_11,
+		 12: 
+		 13: relationship->name_or_other def_%cl_12_13 relationship[3.2,3.7,3.9,2.2,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %cl_12_13[3.13,] %self[3.5,3.10,3.11,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_12_14 
+		 1: def_%cl_12_15 %cl_12_14[4.0,] 
+		 2: RETURN %cl_12_15[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: 
+		 10: COPY TYPE_StringLiteral "delete" def_%cl_11_9 
+		 11: COPY TYPE_StringLiteral "are_you_sure" def_%cl_11_10 
+		 12: %self->t def_%cl_11_11 %self[3.2,3.5,2.0,] %cl_11_10[3.11,] 	 SYMBOL:	 ARGS:%cl_11_10,
+		 13: HASH-confirm- def_%cl_11_12 %cl_11_11[3.12,] 
+		 14: COPY TYPE_StringLiteral "btn btn-delete" def_%cl_11_13 
+		 15: HASH-name-data-class- def_%cl_11_14 %cl_11_9[3.10,] %cl_11_12[3.13,] %cl_11_13[3.14,] 
+		 16: %self->button_tag def_%cl_11_15 %self[3.2,3.5,3.12,2.0,] %cl_11_14[3.15,] %self[3.2,3.5,3.12,2.0,] 	 SYMBOL:	 ARGS:%cl_11_14,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_13_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_13_3 
+		 2: %self->icon def_%cl_13_4 %self[2.0,] %cl_13_3[3.1,] 	 SYMBOL:	 ARGS:%cl_13_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "Delete" def_%cl_13_5 
+		 5: %self->t def_%cl_13_6 %self[3.2,2.0,] %cl_13_5[3.4,] 	 SYMBOL:	 ARGS:%cl_13_5,
+		 6: RETURN %cl_13_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_13_7 
+		 1: def_%cl_13_8 %cl_13_7[4.0,] 
+		 2: RETURN %cl_13_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: 
+		 18: COPY TYPE_StringLiteral "reciprocate" def_%cl_11_16 
+		 19: COPY TYPE_StringLiteral "btn btn-success" def_%cl_11_17 
+		 20: HASH-name-class- def_%cl_11_18 %cl_11_16[3.18,] %cl_11_17[3.19,] 
+		 21: %self->button_tag def_%cl_11_19 %self[3.2,3.5,3.12,3.16,2.0,] %cl_11_18[3.20,] %self[3.2,3.5,3.12,3.16,2.0,] 	 SYMBOL:	 ARGS:%cl_11_18,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,3.16,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_14_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-exchange" def_%cl_14_3 
+		 2: %self->icon def_%cl_14_4 %self[2.0,] %cl_14_3[3.1,] 	 SYMBOL:	 ARGS:%cl_14_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.reciprocate.button" def_%cl_14_5 
+		 5: %self->t def_%cl_14_6 %self[3.2,2.0,] %cl_14_5[3.4,] 	 SYMBOL:	 ARGS:%cl_14_5,
+		 6: RETURN %cl_14_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_14_7 
+		 1: def_%cl_14_8 %cl_14_7[4.0,] 
+		 2: RETURN %cl_14_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 22: RETURN %cl_11_19[3.21,] %self[3.2,3.5,3.12,3.16,3.21,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_11_20 
+		 1: def_%cl_11_21 %cl_11_20[4.0,] 
+		 2: RETURN %cl_11_21[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 8
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "none" def_%cl_3_37 
+		 2: %self->t def_%cl_3_38 %self[3.9,2.0,] %cl_3_37[8.1,] 	 SYMBOL:	 ARGS:%cl_3_37,
+		 3: RETURN %cl_3_38[8.2,] %self[8.2,3.9,2.0,] 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_3_36[7.3,] %self[3.9,2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_39 
+		 1: def_%cl_3_40 %cl_3_39[10.0,] 
+		 2: RETURN %cl_3_40[10.1,] %self[3.9,2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %cl_2_4[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: 
+		 3: format->xml def_%cl_1_4 format[3.1,2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_15_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->ruby_code_from_view def_%cl_15_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_15_3->ruby_code_from_view def_%cl_15_4 %cl_15_3[3.1,] %self[3.1,2.0,] 	 SYMBOL:	 ARGS:%cl_15_3,
+CLOSURE BEGIN: %self[3.1,2.0,] relationship[] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_16_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.heading" def_%cl_16_3 
+		 2: GETFIELD %self->person def_%cl_16_4 %self[2.0,] 
+		 3: %cl_16_4->name def_%cl_16_5 %cl_16_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: GETFIELD %self->person def_%cl_16_6 %self[2.0,] 
+		 5: %self->link_to def_%cl_16_7 %self[2.0,] %cl_16_5[3.3,] %cl_16_6[3.4,] 	 SYMBOL:	 ARGS:%cl_16_5,%cl_16_6,
+		 6: HASH-person- def_%cl_16_8 %cl_16_7[3.5,] 
+		 7: %self->t def_%cl_16_9 %self[3.5,2.0,] %cl_16_3[3.1,] %cl_16_8[3.6,] 	 SYMBOL:	 ARGS:%cl_16_3,%cl_16_8,
+		 8: %cl_16_9->html_safe def_%cl_16_10 %cl_16_9[3.7,] 	 SYMBOL:	 ARGS:
+		 9: ATTRASSIGN %self->title %cl_16_10[3.8,] 
+		 10: 
+		 11: GETFIELD %self->relationships def_%cl_16_11 %self[3.5,3.7,2.0,] 
+		 12: %cl_16_11->any? def_%cl_16_12 %cl_16_11[3.11,] 	 SYMBOL:	 ARGS:
+		 13: BRANCH %cl_16_12[3.12,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%cl_16_13 %self[2.0,] 
+		 2: %self->batch_person_relationships_path def_%cl_16_14 %self[3.9,2.0,] %cl_16_13[4.1,] 	 SYMBOL:	 ARGS:%cl_16_13,
+		 3: %self->form_tag def_%cl_16_15 %self[4.2,3.9,2.0,] %cl_16_14[4.2,] %self[4.2,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_16_14,%self,
+CLOSURE BEGIN: %self[4.2,3.9,2.0,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_17_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "name" def_%cl_17_3 
+		 2: %self->t def_%cl_17_4 %self[2.0,] %cl_17_3[3.1,] 	 SYMBOL:	 ARGS:%cl_17_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_17_5 
+		 5: %self->t def_%cl_17_6 %self[3.2,2.0,] %cl_17_5[3.4,] 	 SYMBOL:	 ARGS:%cl_17_5,
+		 6: 
+		 7: GETFIELD %self->relationships def_%cl_17_7 %self[3.2,3.5,2.0,] 
+		 8: %cl_17_7->each def_%cl_17_8 %cl_17_7[3.7,] %self[3.2,3.5,2.0,] 	 SYMBOL:	 ARGS:%cl_17_7,
+CLOSURE BEGIN: relationship[] %self[3.2,3.5,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_18_0 
+		 2: RECEIVEARG def_relationship 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "ids[]" def_%cl_18_3 
+		 2: relationship->id def_%cl_18_4 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "outward_relationship_checkbox" def_%cl_18_5 
+		 4: HASH-class- def_%cl_18_6 %cl_18_5[3.3,] 
+		 5: %self->check_box_tag def_%cl_18_7 %self[2.0,] %cl_18_3[3.1,] %cl_18_4[3.2,] %cl_18_6[3.4,] 	 SYMBOL:	 ARGS:%cl_18_3,%cl_18_4,Boolean,%cl_18_6,
+		 6: 
+		 7: relationship->related def_%cl_18_8 relationship[3.2,2.2,] 	 SYMBOL:	 ARGS:
+		 8: %cl_18_8->name def_%cl_18_9 %cl_18_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: relationship->related def_%cl_18_10 relationship[3.2,3.7,2.2,] 	 SYMBOL:	 ARGS:
+		 10: %self->person_relationships_path def_%cl_18_11 %self[3.5,2.0,] %cl_18_10[3.9,] 	 SYMBOL:	 ARGS:%cl_18_10,
+		 11: %self->link_to def_%cl_18_12 %self[3.5,3.10,2.0,] %cl_18_9[3.8,] %cl_18_11[3.10,] 	 SYMBOL:	 ARGS:%cl_18_9,%cl_18_11,
+		 12: 
+		 13: relationship->name_or_other def_%cl_18_13 relationship[3.2,3.7,3.9,2.2,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %cl_18_13[3.13,] %self[3.5,3.10,3.11,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_18_14 
+		 1: def_%cl_18_15 %cl_18_14[4.0,] 
+		 2: RETURN %cl_18_15[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: 
+		 10: COPY TYPE_StringLiteral "delete" def_%cl_17_9 
+		 11: COPY TYPE_StringLiteral "are_you_sure" def_%cl_17_10 
+		 12: %self->t def_%cl_17_11 %self[3.2,3.5,2.0,] %cl_17_10[3.11,] 	 SYMBOL:	 ARGS:%cl_17_10,
+		 13: HASH-confirm- def_%cl_17_12 %cl_17_11[3.12,] 
+		 14: COPY TYPE_StringLiteral "btn btn-delete" def_%cl_17_13 
+		 15: HASH-name-data-class- def_%cl_17_14 %cl_17_9[3.10,] %cl_17_12[3.13,] %cl_17_13[3.14,] 
+		 16: %self->button_tag def_%cl_17_15 %self[3.2,3.5,3.12,2.0,] %cl_17_14[3.15,] %self[3.2,3.5,3.12,2.0,] 	 SYMBOL:	 ARGS:%cl_17_14,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_19_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_19_3 
+		 2: %self->icon def_%cl_19_4 %self[2.0,] %cl_19_3[3.1,] 	 SYMBOL:	 ARGS:%cl_19_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "Delete" def_%cl_19_5 
+		 5: %self->t def_%cl_19_6 %self[3.2,2.0,] %cl_19_5[3.4,] 	 SYMBOL:	 ARGS:%cl_19_5,
+		 6: RETURN %cl_19_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_19_7 
+		 1: def_%cl_19_8 %cl_19_7[4.0,] 
+		 2: RETURN %cl_19_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: 
+		 18: COPY TYPE_StringLiteral "reciprocate" def_%cl_17_16 
+		 19: COPY TYPE_StringLiteral "btn btn-success" def_%cl_17_17 
+		 20: HASH-name-class- def_%cl_17_18 %cl_17_16[3.18,] %cl_17_17[3.19,] 
+		 21: %self->button_tag def_%cl_17_19 %self[3.2,3.5,3.12,3.16,2.0,] %cl_17_18[3.20,] %self[3.2,3.5,3.12,3.16,2.0,] 	 SYMBOL:	 ARGS:%cl_17_18,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,3.16,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_20_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-exchange" def_%cl_20_3 
+		 2: %self->icon def_%cl_20_4 %self[2.0,] %cl_20_3[3.1,] 	 SYMBOL:	 ARGS:%cl_20_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.reciprocate.button" def_%cl_20_5 
+		 5: %self->t def_%cl_20_6 %self[3.2,2.0,] %cl_20_5[3.4,] 	 SYMBOL:	 ARGS:%cl_20_5,
+		 6: RETURN %cl_20_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_20_7 
+		 1: def_%cl_20_8 %cl_20_7[4.0,] 
+		 2: RETURN %cl_20_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 22: RETURN %cl_17_19[3.21,] %self[3.2,3.5,3.12,3.16,3.21,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_17_20 
+		 1: def_%cl_17_21 %cl_17_20[4.0,] 
+		 2: RETURN %cl_17_21[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 5
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "none" def_%cl_16_16 
+		 2: %self->t def_%cl_16_17 %self[3.9,2.0,] %cl_16_16[5.1,] 	 SYMBOL:	 ARGS:%cl_16_16,
+		 3: COPY TYPE_PASS def_%cl_16_15 %cl_16_17[5.2,] 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->search_path def_%cl_16_18 %self[3.9,2.0,] 	 SYMBOL:	 ARGS:
+		 2: HASH-remote- def_%cl_16_19 
+		 3: %self->form_tag def_%cl_16_20 %self[6.1,3.9,2.0,] %cl_16_18[6.1,] %cl_16_19[6.2,] %self[6.1,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_16_18,%cl_16_19,%self,
+CLOSURE BEGIN: %self[6.1,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_21_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->hidden_field_tag def_%cl_21_3 %self[2.0,] 	 SYMBOL:select_person,	 ARGS:Symbol,Boolean,
+		 2: 
+		 3: COPY TYPE_StringLiteral "relationships.add_relationship.intro" def_%cl_21_4 
+		 4: %self->t def_%cl_21_5 %self[3.1,2.0,] %cl_21_4[3.3,] 	 SYMBOL:	 ARGS:%cl_21_4,
+		 5: 
+		 6: COPY TYPE_StringLiteral "search.search_by_name" def_%cl_21_6 
+		 7: %self->t def_%cl_21_7 %self[3.1,3.4,2.0,] %cl_21_6[3.6,] 	 SYMBOL:	 ARGS:%cl_21_6,
+		 8: 
+		 9: COPY TYPE_StringLiteral "name" def_%cl_21_8 
+		 10: COPY TYPE_StringLiteral "" def_%cl_21_9 
+		 11: COPY TYPE_StringLiteral "form-control" def_%cl_21_10 
+		 12: HASH-class- def_%cl_21_11 %cl_21_10[3.11,] 
+		 13: %self->text_field_tag def_%cl_21_12 %self[3.1,3.4,3.7,2.0,] %cl_21_8[3.9,] %cl_21_9[3.10,] %cl_21_11[3.12,] 	 SYMBOL:	 ARGS:%cl_21_8,%cl_21_9,%cl_21_11,
+		 14: 
+		 15: COPY TYPE_StringLiteral "relationships.add_relationship.button" def_%cl_21_13 
+		 16: %self->t def_%cl_21_14 %self[3.1,3.4,3.7,3.13,2.0,] %cl_21_13[3.15,] 	 SYMBOL:	 ARGS:%cl_21_13,
+		 17: COPY TYPE_StringLiteral "btn btn-info" def_%cl_21_15 
+		 18: HASH-class- def_%cl_21_16 %cl_21_15[3.17,] 
+		 19: %self->button_tag def_%cl_21_17 %self[3.1,3.4,3.7,3.13,3.16,2.0,] %cl_21_14[3.16,] %cl_21_16[3.18,] 	 SYMBOL:	 ARGS:%cl_21_14,%cl_21_16,
+		 20: RETURN %cl_21_17[3.19,] %self[3.1,3.4,3.7,3.13,3.16,3.19,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_21_18 
+		 1: def_%cl_21_19 %cl_21_18[4.0,] 
+		 2: RETURN %cl_21_19[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+		 5: GETFIELD %self->person def_%cl_16_21 %self[6.1,6.3,2.0,] 
+		 6: %self->person_relationships_path def_%cl_16_22 %self[6.1,6.3,3.9,2.0,] %cl_16_21[6.5,] 	 SYMBOL:	 ARGS:%cl_16_21,
+		 7: %self->form_tag def_%cl_16_23 %self[6.1,6.3,6.6,3.9,2.0,] %cl_16_22[6.6,] %self[6.1,6.3,6.6,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_16_22,%self,
+CLOSURE BEGIN: %self[6.1,6.3,6.6,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_22_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.relationship_type" def_%cl_22_3 
+		 2: %self->t def_%cl_22_4 %self[2.0,] %cl_22_3[3.1,] 	 SYMBOL:	 ARGS:%cl_22_3,
+		 3: 
+		 4: %self->relationships_for_select def_%cl_22_5 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral "relationship_name" def_%cl_22_6 
+		 6: COPY TYPE_StringLiteral "form-control" def_%cl_22_7 
+		 7: COPY TYPE_StringLiteral "#other_name" def_%cl_22_8 
+		 8: COPY TYPE_StringLiteral "toggle-value" def_%cl_22_9 
+		 9: COPY TYPE_StringLiteral "other" def_%cl_22_10 
+		 10: HASH-toggle- def_%cl_22_11 %cl_22_8[3.7,] %cl_22_9[3.8,] %cl_22_10[3.9,] 
+		 11: HASH-id-class-include_blank-data- def_%cl_22_12 %cl_22_6[3.5,] %cl_22_7[3.6,] %cl_22_11[3.10,] 
+		 12: %self->select_tag def_%cl_22_13 %self[3.2,3.4,2.0,] %cl_22_5[3.4,] %cl_22_12[3.11,] 	 SYMBOL:name,	 ARGS:Symbol,%cl_22_5,%cl_22_12,
+		 13: 
+		 14: COPY TYPE_StringLiteral "display:none;" def_%cl_22_14 
+		 15: COPY TYPE_StringLiteral "form-control" def_%cl_22_15 
+		 16: COPY TYPE_StringLiteral "relationships.other_name.placeholder" def_%cl_22_16 
+		 17: %self->t def_%cl_22_17 %self[3.2,3.4,3.12,2.0,] %cl_22_16[3.16,] 	 SYMBOL:	 ARGS:%cl_22_16,
+		 18: HASH-style-class-placeholder- def_%cl_22_18 %cl_22_14[3.14,] %cl_22_15[3.15,] %cl_22_17[3.17,] 
+		 19: %self->text_field_tag def_%cl_22_19 %self[3.2,3.4,3.12,3.17,2.0,] %cl_22_18[3.18,] 	 SYMBOL:other_name,	 ARGS:Symbol,Nil,%cl_22_18,
+		 20: 
+		 21: COPY TYPE_StringLiteral "search.add_selected" def_%cl_22_20 
+		 22: %self->t def_%cl_22_21 %self[3.2,3.4,3.12,3.17,3.19,2.0,] %cl_22_20[3.21,] 	 SYMBOL:	 ARGS:%cl_22_20,
+		 23: COPY TYPE_StringLiteral "btn btn-success" def_%cl_22_22 
+		 24: HASH-class- def_%cl_22_23 %cl_22_22[3.23,] 
+		 25: %self->button_tag def_%cl_22_24 %self[3.2,3.4,3.12,3.17,3.19,3.22,2.0,] %cl_22_21[3.22,] %cl_22_23[3.24,] 	 SYMBOL:	 ARGS:%cl_22_21,%cl_22_23,
+		 26: RETURN %cl_22_24[3.25,] %self[3.2,3.4,3.12,3.17,3.19,3.22,3.25,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_22_25 
+		 1: def_%cl_22_26 %cl_22_25[4.0,] 
+		 2: RETURN %cl_22_26[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: 
+		 9: GETFIELD %self->person def_%cl_16_24 %self[6.1,6.3,6.6,6.7,2.0,] 
+		 10: %cl_16_24->family def_%cl_16_25 %cl_16_24[6.9,] 	 SYMBOL:	 ARGS:
+		 11: %self->family_relationships_path def_%cl_16_26 %self[6.1,6.3,6.6,6.7,3.9,2.0,] %cl_16_25[6.10,] 	 SYMBOL:	 ARGS:%cl_16_25,
+		 12: COPY TYPE_StringLiteral "btn btn-info" def_%cl_16_27 
+		 13: HASH-class- def_%cl_16_28 %cl_16_27[6.12,] 
+		 14: %self->link_to def_%cl_16_29 %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] %cl_16_26[6.11,] %cl_16_28[6.13,] %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_16_26,%cl_16_28,%self,
+CLOSURE BEGIN: %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_23_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-group" def_%cl_23_3 
+		 2: %self->icon def_%cl_23_4 %self[2.0,] %cl_23_3[3.1,] 	 SYMBOL:	 ARGS:%cl_23_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.family.button" def_%cl_23_5 
+		 5: %self->t def_%cl_23_6 %self[3.2,2.0,] %cl_23_5[3.4,] 	 SYMBOL:	 ARGS:%cl_23_5,
+		 6: RETURN %cl_23_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_23_7 
+		 1: def_%cl_23_8 %cl_23_7[4.0,] 
+		 2: RETURN %cl_23_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 15: 
+		 16: COPY TYPE_StringLiteral "relationships.inward.heading" def_%cl_16_30 
+		 17: %self->t def_%cl_16_31 %self[6.1,6.3,6.6,6.7,6.11,6.14,3.9,2.0,] %cl_16_30[6.16,] 	 SYMBOL:	 ARGS:%cl_16_30,
+		 18: 
+		 19: GETFIELD %self->inward_relationships def_%cl_16_32 %self[6.1,6.3,6.6,6.7,6.11,6.14,6.17,2.0,] 
+		 20: %cl_16_32->any? def_%cl_16_33 %cl_16_32[6.19,] 	 SYMBOL:	 ARGS:
+		 21: BRANCH %cl_16_33[6.20,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%cl_16_34 %self[2.0,] 
+		 2: %self->batch_person_relationships_path def_%cl_16_35 %self[3.9,2.0,] %cl_16_34[7.1,] 	 SYMBOL:	 ARGS:%cl_16_34,
+		 3: %self->form_tag def_%cl_16_36 %self[7.2,3.9,2.0,] %cl_16_35[7.2,] %self[7.2,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_16_35,%self,
+CLOSURE BEGIN: %self[7.2,3.9,2.0,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_24_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "From" def_%cl_24_3 
+		 2: %self->t def_%cl_24_4 %self[2.0,] %cl_24_3[3.1,] 	 SYMBOL:	 ARGS:%cl_24_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_24_5 
+		 5: %self->t def_%cl_24_6 %self[3.2,2.0,] %cl_24_5[3.4,] 	 SYMBOL:	 ARGS:%cl_24_5,
+		 6: 
+		 7: GETFIELD %self->inward_relationships def_%cl_24_7 %self[3.2,3.5,2.0,] 
+		 8: %cl_24_7->each def_%cl_24_8 %cl_24_7[3.7,] %self[3.2,3.5,2.0,] 	 SYMBOL:	 ARGS:%cl_24_7,
+CLOSURE BEGIN: relationship[] %self[3.2,3.5,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_25_0 
+		 2: RECEIVEARG def_relationship 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "ids[]" def_%cl_25_3 
+		 2: relationship->id def_%cl_25_4 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "inward_relationship_checkbox" def_%cl_25_5 
+		 4: HASH-class- def_%cl_25_6 %cl_25_5[3.3,] 
+		 5: %self->check_box_tag def_%cl_25_7 %self[2.0,] %cl_25_3[3.1,] %cl_25_4[3.2,] %cl_25_6[3.4,] 	 SYMBOL:	 ARGS:%cl_25_3,%cl_25_4,Boolean,%cl_25_6,
+		 6: 
+		 7: relationship->person def_%cl_25_8 relationship[3.2,2.2,] 	 SYMBOL:	 ARGS:
+		 8: %cl_25_8->name def_%cl_25_9 %cl_25_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: relationship->person def_%cl_25_10 relationship[3.2,3.7,2.2,] 	 SYMBOL:	 ARGS:
+		 10: %self->person_relationships_path def_%cl_25_11 %self[3.5,2.0,] %cl_25_10[3.9,] 	 SYMBOL:	 ARGS:%cl_25_10,
+		 11: %self->link_to def_%cl_25_12 %self[3.5,3.10,2.0,] %cl_25_9[3.8,] %cl_25_11[3.10,] 	 SYMBOL:	 ARGS:%cl_25_9,%cl_25_11,
+		 12: 
+		 13: relationship->name_or_other def_%cl_25_13 relationship[3.2,3.7,3.9,2.2,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %cl_25_13[3.13,] %self[3.5,3.10,3.11,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_25_14 
+		 1: def_%cl_25_15 %cl_25_14[4.0,] 
+		 2: RETURN %cl_25_15[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: 
+		 10: COPY TYPE_StringLiteral "delete" def_%cl_24_9 
+		 11: COPY TYPE_StringLiteral "are_you_sure" def_%cl_24_10 
+		 12: %self->t def_%cl_24_11 %self[3.2,3.5,2.0,] %cl_24_10[3.11,] 	 SYMBOL:	 ARGS:%cl_24_10,
+		 13: HASH-confirm- def_%cl_24_12 %cl_24_11[3.12,] 
+		 14: COPY TYPE_StringLiteral "btn btn-delete" def_%cl_24_13 
+		 15: HASH-name-data-class- def_%cl_24_14 %cl_24_9[3.10,] %cl_24_12[3.13,] %cl_24_13[3.14,] 
+		 16: %self->button_tag def_%cl_24_15 %self[3.2,3.5,3.12,2.0,] %cl_24_14[3.15,] %self[3.2,3.5,3.12,2.0,] 	 SYMBOL:	 ARGS:%cl_24_14,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_26_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_26_3 
+		 2: %self->icon def_%cl_26_4 %self[2.0,] %cl_26_3[3.1,] 	 SYMBOL:	 ARGS:%cl_26_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "Delete" def_%cl_26_5 
+		 5: %self->t def_%cl_26_6 %self[3.2,2.0,] %cl_26_5[3.4,] 	 SYMBOL:	 ARGS:%cl_26_5,
+		 6: RETURN %cl_26_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_26_7 
+		 1: def_%cl_26_8 %cl_26_7[4.0,] 
+		 2: RETURN %cl_26_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: 
+		 18: COPY TYPE_StringLiteral "reciprocate" def_%cl_24_16 
+		 19: COPY TYPE_StringLiteral "btn btn-success" def_%cl_24_17 
+		 20: HASH-name-class- def_%cl_24_18 %cl_24_16[3.18,] %cl_24_17[3.19,] 
+		 21: %self->button_tag def_%cl_24_19 %self[3.2,3.5,3.12,3.16,2.0,] %cl_24_18[3.20,] %self[3.2,3.5,3.12,3.16,2.0,] 	 SYMBOL:	 ARGS:%cl_24_18,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,3.16,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_27_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-exchange" def_%cl_27_3 
+		 2: %self->icon def_%cl_27_4 %self[2.0,] %cl_27_3[3.1,] 	 SYMBOL:	 ARGS:%cl_27_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.reciprocate.button" def_%cl_27_5 
+		 5: %self->t def_%cl_27_6 %self[3.2,2.0,] %cl_27_5[3.4,] 	 SYMBOL:	 ARGS:%cl_27_5,
+		 6: RETURN %cl_27_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_27_7 
+		 1: def_%cl_27_8 %cl_27_7[4.0,] 
+		 2: RETURN %cl_27_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 22: RETURN %cl_24_19[3.21,] %self[3.2,3.5,3.12,3.16,3.21,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_24_20 
+		 1: def_%cl_24_21 %cl_24_20[4.0,] 
+		 2: RETURN %cl_24_21[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 8
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "none" def_%cl_16_37 
+		 2: %self->t def_%cl_16_38 %self[3.9,2.0,] %cl_16_37[8.1,] 	 SYMBOL:	 ARGS:%cl_16_37,
+		 3: RETURN %cl_16_38[8.2,] %self[8.2,3.9,2.0,] 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_16_36[7.3,] %self[3.9,2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_16_39 
+		 1: def_%cl_16_40 %cl_16_39[10.0,] 
+		 2: RETURN %cl_16_40[10.1,] %self[3.9,2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %cl_15_4[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_15_5 
+		 1: def_%cl_15_6 %cl_15_5[4.0,] 
+		 2: RETURN %cl_15_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: RETURN %cl_1_4[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 40: 
+		 41: %self->ruby_code_from_view def_%v_27 %self[2.0,2.8,2.11,2.19,2.27,2.31,2.37,2.39,] 	 SYMBOL:	 ARGS:
+		 42: %v_27->ruby_code_from_view def_%v_28 %v_27[2.41,] %self[2.0,2.8,2.11,2.19,2.27,2.31,2.37,2.39,2.41,] 	 SYMBOL:	 ARGS:%v_27,
+CLOSURE BEGIN: %self[2.0,2.8,2.11,2.19,2.27,2.31,2.37,2.39,2.41,] relationship[] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_28_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.heading" def_%cl_28_3 
+		 2: GETFIELD %self->person def_%cl_28_4 %self[2.0,] 
+		 3: %cl_28_4->name def_%cl_28_5 %cl_28_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: GETFIELD %self->person def_%cl_28_6 %self[2.0,] 
+		 5: %self->link_to def_%cl_28_7 %self[2.0,] %cl_28_5[3.3,] %cl_28_6[3.4,] 	 SYMBOL:	 ARGS:%cl_28_5,%cl_28_6,
+		 6: HASH-person- def_%cl_28_8 %cl_28_7[3.5,] 
+		 7: %self->t def_%cl_28_9 %self[3.5,2.0,] %cl_28_3[3.1,] %cl_28_8[3.6,] 	 SYMBOL:	 ARGS:%cl_28_3,%cl_28_8,
+		 8: %cl_28_9->html_safe def_%cl_28_10 %cl_28_9[3.7,] 	 SYMBOL:	 ARGS:
+		 9: ATTRASSIGN %self->title %cl_28_10[3.8,] 
+		 10: 
+		 11: GETFIELD %self->relationships def_%cl_28_11 %self[3.5,3.7,2.0,] 
+		 12: %cl_28_11->any? def_%cl_28_12 %cl_28_11[3.11,] 	 SYMBOL:	 ARGS:
+		 13: BRANCH %cl_28_12[3.12,] 
+BB 4
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%cl_28_13 %self[2.0,] 
+		 2: %self->batch_person_relationships_path def_%cl_28_14 %self[3.9,2.0,] %cl_28_13[4.1,] 	 SYMBOL:	 ARGS:%cl_28_13,
+		 3: %self->form_tag def_%cl_28_15 %self[4.2,3.9,2.0,] %cl_28_14[4.2,] %self[4.2,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_28_14,%self,
+CLOSURE BEGIN: %self[4.2,3.9,2.0,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_29_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "name" def_%cl_29_3 
+		 2: %self->t def_%cl_29_4 %self[2.0,] %cl_29_3[3.1,] 	 SYMBOL:	 ARGS:%cl_29_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_29_5 
+		 5: %self->t def_%cl_29_6 %self[3.2,2.0,] %cl_29_5[3.4,] 	 SYMBOL:	 ARGS:%cl_29_5,
+		 6: 
+		 7: GETFIELD %self->relationships def_%cl_29_7 %self[3.2,3.5,2.0,] 
+		 8: %cl_29_7->each def_%cl_29_8 %cl_29_7[3.7,] %self[3.2,3.5,2.0,] 	 SYMBOL:	 ARGS:%cl_29_7,
+CLOSURE BEGIN: relationship[] %self[3.2,3.5,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_30_0 
+		 2: RECEIVEARG def_relationship 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "ids[]" def_%cl_30_3 
+		 2: relationship->id def_%cl_30_4 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "outward_relationship_checkbox" def_%cl_30_5 
+		 4: HASH-class- def_%cl_30_6 %cl_30_5[3.3,] 
+		 5: %self->check_box_tag def_%cl_30_7 %self[2.0,] %cl_30_3[3.1,] %cl_30_4[3.2,] %cl_30_6[3.4,] 	 SYMBOL:	 ARGS:%cl_30_3,%cl_30_4,Boolean,%cl_30_6,
+		 6: 
+		 7: relationship->related def_%cl_30_8 relationship[3.2,2.2,] 	 SYMBOL:	 ARGS:
+		 8: %cl_30_8->name def_%cl_30_9 %cl_30_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: relationship->related def_%cl_30_10 relationship[3.2,3.7,2.2,] 	 SYMBOL:	 ARGS:
+		 10: %self->person_relationships_path def_%cl_30_11 %self[3.5,2.0,] %cl_30_10[3.9,] 	 SYMBOL:	 ARGS:%cl_30_10,
+		 11: %self->link_to def_%cl_30_12 %self[3.5,3.10,2.0,] %cl_30_9[3.8,] %cl_30_11[3.10,] 	 SYMBOL:	 ARGS:%cl_30_9,%cl_30_11,
+		 12: 
+		 13: relationship->name_or_other def_%cl_30_13 relationship[3.2,3.7,3.9,2.2,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %cl_30_13[3.13,] %self[3.5,3.10,3.11,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_30_14 
+		 1: def_%cl_30_15 %cl_30_14[4.0,] 
+		 2: RETURN %cl_30_15[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: 
+		 10: COPY TYPE_StringLiteral "delete" def_%cl_29_9 
+		 11: COPY TYPE_StringLiteral "are_you_sure" def_%cl_29_10 
+		 12: %self->t def_%cl_29_11 %self[3.2,3.5,2.0,] %cl_29_10[3.11,] 	 SYMBOL:	 ARGS:%cl_29_10,
+		 13: HASH-confirm- def_%cl_29_12 %cl_29_11[3.12,] 
+		 14: COPY TYPE_StringLiteral "btn btn-delete" def_%cl_29_13 
+		 15: HASH-name-data-class- def_%cl_29_14 %cl_29_9[3.10,] %cl_29_12[3.13,] %cl_29_13[3.14,] 
+		 16: %self->button_tag def_%cl_29_15 %self[3.2,3.5,3.12,2.0,] %cl_29_14[3.15,] %self[3.2,3.5,3.12,2.0,] 	 SYMBOL:	 ARGS:%cl_29_14,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_31_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_31_3 
+		 2: %self->icon def_%cl_31_4 %self[2.0,] %cl_31_3[3.1,] 	 SYMBOL:	 ARGS:%cl_31_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "Delete" def_%cl_31_5 
+		 5: %self->t def_%cl_31_6 %self[3.2,2.0,] %cl_31_5[3.4,] 	 SYMBOL:	 ARGS:%cl_31_5,
+		 6: RETURN %cl_31_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_31_7 
+		 1: def_%cl_31_8 %cl_31_7[4.0,] 
+		 2: RETURN %cl_31_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: 
+		 18: COPY TYPE_StringLiteral "reciprocate" def_%cl_29_16 
+		 19: COPY TYPE_StringLiteral "btn btn-success" def_%cl_29_17 
+		 20: HASH-name-class- def_%cl_29_18 %cl_29_16[3.18,] %cl_29_17[3.19,] 
+		 21: %self->button_tag def_%cl_29_19 %self[3.2,3.5,3.12,3.16,2.0,] %cl_29_18[3.20,] %self[3.2,3.5,3.12,3.16,2.0,] 	 SYMBOL:	 ARGS:%cl_29_18,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,3.16,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_32_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-exchange" def_%cl_32_3 
+		 2: %self->icon def_%cl_32_4 %self[2.0,] %cl_32_3[3.1,] 	 SYMBOL:	 ARGS:%cl_32_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.reciprocate.button" def_%cl_32_5 
+		 5: %self->t def_%cl_32_6 %self[3.2,2.0,] %cl_32_5[3.4,] 	 SYMBOL:	 ARGS:%cl_32_5,
+		 6: RETURN %cl_32_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_32_7 
+		 1: def_%cl_32_8 %cl_32_7[4.0,] 
+		 2: RETURN %cl_32_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 22: RETURN %cl_29_19[3.21,] %self[3.2,3.5,3.12,3.16,3.21,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_29_20 
+		 1: def_%cl_29_21 %cl_29_20[4.0,] 
+		 2: RETURN %cl_29_21[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 5
+	outgoing: 6 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "none" def_%cl_28_16 
+		 2: %self->t def_%cl_28_17 %self[3.9,2.0,] %cl_28_16[5.1,] 	 SYMBOL:	 ARGS:%cl_28_16,
+		 3: COPY TYPE_PASS def_%cl_28_15 %cl_28_17[5.2,] 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->search_path def_%cl_28_18 %self[3.9,2.0,] 	 SYMBOL:	 ARGS:
+		 2: HASH-remote- def_%cl_28_19 
+		 3: %self->form_tag def_%cl_28_20 %self[6.1,3.9,2.0,] %cl_28_18[6.1,] %cl_28_19[6.2,] %self[6.1,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_28_18,%cl_28_19,%self,
+CLOSURE BEGIN: %self[6.1,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_33_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->hidden_field_tag def_%cl_33_3 %self[2.0,] 	 SYMBOL:select_person,	 ARGS:Symbol,Boolean,
+		 2: 
+		 3: COPY TYPE_StringLiteral "relationships.add_relationship.intro" def_%cl_33_4 
+		 4: %self->t def_%cl_33_5 %self[3.1,2.0,] %cl_33_4[3.3,] 	 SYMBOL:	 ARGS:%cl_33_4,
+		 5: 
+		 6: COPY TYPE_StringLiteral "search.search_by_name" def_%cl_33_6 
+		 7: %self->t def_%cl_33_7 %self[3.1,3.4,2.0,] %cl_33_6[3.6,] 	 SYMBOL:	 ARGS:%cl_33_6,
+		 8: 
+		 9: COPY TYPE_StringLiteral "name" def_%cl_33_8 
+		 10: COPY TYPE_StringLiteral "" def_%cl_33_9 
+		 11: COPY TYPE_StringLiteral "form-control" def_%cl_33_10 
+		 12: HASH-class- def_%cl_33_11 %cl_33_10[3.11,] 
+		 13: %self->text_field_tag def_%cl_33_12 %self[3.1,3.4,3.7,2.0,] %cl_33_8[3.9,] %cl_33_9[3.10,] %cl_33_11[3.12,] 	 SYMBOL:	 ARGS:%cl_33_8,%cl_33_9,%cl_33_11,
+		 14: 
+		 15: COPY TYPE_StringLiteral "relationships.add_relationship.button" def_%cl_33_13 
+		 16: %self->t def_%cl_33_14 %self[3.1,3.4,3.7,3.13,2.0,] %cl_33_13[3.15,] 	 SYMBOL:	 ARGS:%cl_33_13,
+		 17: COPY TYPE_StringLiteral "btn btn-info" def_%cl_33_15 
+		 18: HASH-class- def_%cl_33_16 %cl_33_15[3.17,] 
+		 19: %self->button_tag def_%cl_33_17 %self[3.1,3.4,3.7,3.13,3.16,2.0,] %cl_33_14[3.16,] %cl_33_16[3.18,] 	 SYMBOL:	 ARGS:%cl_33_14,%cl_33_16,
+		 20: RETURN %cl_33_17[3.19,] %self[3.1,3.4,3.7,3.13,3.16,3.19,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_33_18 
+		 1: def_%cl_33_19 %cl_33_18[4.0,] 
+		 2: RETURN %cl_33_19[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+		 5: GETFIELD %self->person def_%cl_28_21 %self[6.1,6.3,2.0,] 
+		 6: %self->person_relationships_path def_%cl_28_22 %self[6.1,6.3,3.9,2.0,] %cl_28_21[6.5,] 	 SYMBOL:	 ARGS:%cl_28_21,
+		 7: %self->form_tag def_%cl_28_23 %self[6.1,6.3,6.6,3.9,2.0,] %cl_28_22[6.6,] %self[6.1,6.3,6.6,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_28_22,%self,
+CLOSURE BEGIN: %self[6.1,6.3,6.6,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_34_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.relationship_type" def_%cl_34_3 
+		 2: %self->t def_%cl_34_4 %self[2.0,] %cl_34_3[3.1,] 	 SYMBOL:	 ARGS:%cl_34_3,
+		 3: 
+		 4: %self->relationships_for_select def_%cl_34_5 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral "relationship_name" def_%cl_34_6 
+		 6: COPY TYPE_StringLiteral "form-control" def_%cl_34_7 
+		 7: COPY TYPE_StringLiteral "#other_name" def_%cl_34_8 
+		 8: COPY TYPE_StringLiteral "toggle-value" def_%cl_34_9 
+		 9: COPY TYPE_StringLiteral "other" def_%cl_34_10 
+		 10: HASH-toggle- def_%cl_34_11 %cl_34_8[3.7,] %cl_34_9[3.8,] %cl_34_10[3.9,] 
+		 11: HASH-id-class-include_blank-data- def_%cl_34_12 %cl_34_6[3.5,] %cl_34_7[3.6,] %cl_34_11[3.10,] 
+		 12: %self->select_tag def_%cl_34_13 %self[3.2,3.4,2.0,] %cl_34_5[3.4,] %cl_34_12[3.11,] 	 SYMBOL:name,	 ARGS:Symbol,%cl_34_5,%cl_34_12,
+		 13: 
+		 14: COPY TYPE_StringLiteral "display:none;" def_%cl_34_14 
+		 15: COPY TYPE_StringLiteral "form-control" def_%cl_34_15 
+		 16: COPY TYPE_StringLiteral "relationships.other_name.placeholder" def_%cl_34_16 
+		 17: %self->t def_%cl_34_17 %self[3.2,3.4,3.12,2.0,] %cl_34_16[3.16,] 	 SYMBOL:	 ARGS:%cl_34_16,
+		 18: HASH-style-class-placeholder- def_%cl_34_18 %cl_34_14[3.14,] %cl_34_15[3.15,] %cl_34_17[3.17,] 
+		 19: %self->text_field_tag def_%cl_34_19 %self[3.2,3.4,3.12,3.17,2.0,] %cl_34_18[3.18,] 	 SYMBOL:other_name,	 ARGS:Symbol,Nil,%cl_34_18,
+		 20: 
+		 21: COPY TYPE_StringLiteral "search.add_selected" def_%cl_34_20 
+		 22: %self->t def_%cl_34_21 %self[3.2,3.4,3.12,3.17,3.19,2.0,] %cl_34_20[3.21,] 	 SYMBOL:	 ARGS:%cl_34_20,
+		 23: COPY TYPE_StringLiteral "btn btn-success" def_%cl_34_22 
+		 24: HASH-class- def_%cl_34_23 %cl_34_22[3.23,] 
+		 25: %self->button_tag def_%cl_34_24 %self[3.2,3.4,3.12,3.17,3.19,3.22,2.0,] %cl_34_21[3.22,] %cl_34_23[3.24,] 	 SYMBOL:	 ARGS:%cl_34_21,%cl_34_23,
+		 26: RETURN %cl_34_24[3.25,] %self[3.2,3.4,3.12,3.17,3.19,3.22,3.25,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_34_25 
+		 1: def_%cl_34_26 %cl_34_25[4.0,] 
+		 2: RETURN %cl_34_26[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: 
+		 9: GETFIELD %self->person def_%cl_28_24 %self[6.1,6.3,6.6,6.7,2.0,] 
+		 10: %cl_28_24->family def_%cl_28_25 %cl_28_24[6.9,] 	 SYMBOL:	 ARGS:
+		 11: %self->family_relationships_path def_%cl_28_26 %self[6.1,6.3,6.6,6.7,3.9,2.0,] %cl_28_25[6.10,] 	 SYMBOL:	 ARGS:%cl_28_25,
+		 12: COPY TYPE_StringLiteral "btn btn-info" def_%cl_28_27 
+		 13: HASH-class- def_%cl_28_28 %cl_28_27[6.12,] 
+		 14: %self->link_to def_%cl_28_29 %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] %cl_28_26[6.11,] %cl_28_28[6.13,] %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_28_26,%cl_28_28,%self,
+CLOSURE BEGIN: %self[6.1,6.3,6.6,6.7,6.11,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_35_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-group" def_%cl_35_3 
+		 2: %self->icon def_%cl_35_4 %self[2.0,] %cl_35_3[3.1,] 	 SYMBOL:	 ARGS:%cl_35_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.family.button" def_%cl_35_5 
+		 5: %self->t def_%cl_35_6 %self[3.2,2.0,] %cl_35_5[3.4,] 	 SYMBOL:	 ARGS:%cl_35_5,
+		 6: RETURN %cl_35_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_35_7 
+		 1: def_%cl_35_8 %cl_35_7[4.0,] 
+		 2: RETURN %cl_35_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 15: 
+		 16: COPY TYPE_StringLiteral "relationships.inward.heading" def_%cl_28_30 
+		 17: %self->t def_%cl_28_31 %self[6.1,6.3,6.6,6.7,6.11,6.14,3.9,2.0,] %cl_28_30[6.16,] 	 SYMBOL:	 ARGS:%cl_28_30,
+		 18: 
+		 19: GETFIELD %self->inward_relationships def_%cl_28_32 %self[6.1,6.3,6.6,6.7,6.11,6.14,6.17,2.0,] 
+		 20: %cl_28_32->any? def_%cl_28_33 %cl_28_32[6.19,] 	 SYMBOL:	 ARGS:
+		 21: BRANCH %cl_28_33[6.20,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%cl_28_34 %self[2.0,] 
+		 2: %self->batch_person_relationships_path def_%cl_28_35 %self[3.9,2.0,] %cl_28_34[7.1,] 	 SYMBOL:	 ARGS:%cl_28_34,
+		 3: %self->form_tag def_%cl_28_36 %self[7.2,3.9,2.0,] %cl_28_35[7.2,] %self[7.2,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_28_35,%self,
+CLOSURE BEGIN: %self[7.2,3.9,2.0,] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_36_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "From" def_%cl_36_3 
+		 2: %self->t def_%cl_36_4 %self[2.0,] %cl_36_3[3.1,] 	 SYMBOL:	 ARGS:%cl_36_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_36_5 
+		 5: %self->t def_%cl_36_6 %self[3.2,2.0,] %cl_36_5[3.4,] 	 SYMBOL:	 ARGS:%cl_36_5,
+		 6: 
+		 7: GETFIELD %self->inward_relationships def_%cl_36_7 %self[3.2,3.5,2.0,] 
+		 8: %cl_36_7->each def_%cl_36_8 %cl_36_7[3.7,] %self[3.2,3.5,2.0,] 	 SYMBOL:	 ARGS:%cl_36_7,
+CLOSURE BEGIN: relationship[] %self[3.2,3.5,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_37_0 
+		 2: RECEIVEARG def_relationship 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "ids[]" def_%cl_37_3 
+		 2: relationship->id def_%cl_37_4 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "inward_relationship_checkbox" def_%cl_37_5 
+		 4: HASH-class- def_%cl_37_6 %cl_37_5[3.3,] 
+		 5: %self->check_box_tag def_%cl_37_7 %self[2.0,] %cl_37_3[3.1,] %cl_37_4[3.2,] %cl_37_6[3.4,] 	 SYMBOL:	 ARGS:%cl_37_3,%cl_37_4,Boolean,%cl_37_6,
+		 6: 
+		 7: relationship->person def_%cl_37_8 relationship[3.2,2.2,] 	 SYMBOL:	 ARGS:
+		 8: %cl_37_8->name def_%cl_37_9 %cl_37_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: relationship->person def_%cl_37_10 relationship[3.2,3.7,2.2,] 	 SYMBOL:	 ARGS:
+		 10: %self->person_relationships_path def_%cl_37_11 %self[3.5,2.0,] %cl_37_10[3.9,] 	 SYMBOL:	 ARGS:%cl_37_10,
+		 11: %self->link_to def_%cl_37_12 %self[3.5,3.10,2.0,] %cl_37_9[3.8,] %cl_37_11[3.10,] 	 SYMBOL:	 ARGS:%cl_37_9,%cl_37_11,
+		 12: 
+		 13: relationship->name_or_other def_%cl_37_13 relationship[3.2,3.7,3.9,2.2,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %cl_37_13[3.13,] %self[3.5,3.10,3.11,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_37_14 
+		 1: def_%cl_37_15 %cl_37_14[4.0,] 
+		 2: RETURN %cl_37_15[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: 
+		 10: COPY TYPE_StringLiteral "delete" def_%cl_36_9 
+		 11: COPY TYPE_StringLiteral "are_you_sure" def_%cl_36_10 
+		 12: %self->t def_%cl_36_11 %self[3.2,3.5,2.0,] %cl_36_10[3.11,] 	 SYMBOL:	 ARGS:%cl_36_10,
+		 13: HASH-confirm- def_%cl_36_12 %cl_36_11[3.12,] 
+		 14: COPY TYPE_StringLiteral "btn btn-delete" def_%cl_36_13 
+		 15: HASH-name-data-class- def_%cl_36_14 %cl_36_9[3.10,] %cl_36_12[3.13,] %cl_36_13[3.14,] 
+		 16: %self->button_tag def_%cl_36_15 %self[3.2,3.5,3.12,2.0,] %cl_36_14[3.15,] %self[3.2,3.5,3.12,2.0,] 	 SYMBOL:	 ARGS:%cl_36_14,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_38_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-trash-o" def_%cl_38_3 
+		 2: %self->icon def_%cl_38_4 %self[2.0,] %cl_38_3[3.1,] 	 SYMBOL:	 ARGS:%cl_38_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "Delete" def_%cl_38_5 
+		 5: %self->t def_%cl_38_6 %self[3.2,2.0,] %cl_38_5[3.4,] 	 SYMBOL:	 ARGS:%cl_38_5,
+		 6: RETURN %cl_38_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_38_7 
+		 1: def_%cl_38_8 %cl_38_7[4.0,] 
+		 2: RETURN %cl_38_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: 
+		 18: COPY TYPE_StringLiteral "reciprocate" def_%cl_36_16 
+		 19: COPY TYPE_StringLiteral "btn btn-success" def_%cl_36_17 
+		 20: HASH-name-class- def_%cl_36_18 %cl_36_16[3.18,] %cl_36_17[3.19,] 
+		 21: %self->button_tag def_%cl_36_19 %self[3.2,3.5,3.12,3.16,2.0,] %cl_36_18[3.20,] %self[3.2,3.5,3.12,3.16,2.0,] 	 SYMBOL:	 ARGS:%cl_36_18,%self,
+CLOSURE BEGIN: %self[3.2,3.5,3.12,3.16,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_39_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "fa fa-exchange" def_%cl_39_3 
+		 2: %self->icon def_%cl_39_4 %self[2.0,] %cl_39_3[3.1,] 	 SYMBOL:	 ARGS:%cl_39_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.reciprocate.button" def_%cl_39_5 
+		 5: %self->t def_%cl_39_6 %self[3.2,2.0,] %cl_39_5[3.4,] 	 SYMBOL:	 ARGS:%cl_39_5,
+		 6: RETURN %cl_39_6[3.5,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_39_7 
+		 1: def_%cl_39_8 %cl_39_7[4.0,] 
+		 2: RETURN %cl_39_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 22: RETURN %cl_36_19[3.21,] %self[3.2,3.5,3.12,3.16,3.21,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_36_20 
+		 1: def_%cl_36_21 %cl_36_20[4.0,] 
+		 2: RETURN %cl_36_21[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 8
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "none" def_%cl_28_37 
+		 2: %self->t def_%cl_28_38 %self[3.9,2.0,] %cl_28_37[8.1,] 	 SYMBOL:	 ARGS:%cl_28_37,
+		 3: RETURN %cl_28_38[8.2,] %self[8.2,3.9,2.0,] 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_28_36[7.3,] %self[3.9,2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_28_39 
+		 1: def_%cl_28_40 %cl_28_39[10.0,] 
+		 2: RETURN %cl_28_40[10.1,] %self[3.9,2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 43: RETURN %v_28[2.42,] %self[2.0,2.8,2.11,2.19,2.27,2.31,2.37,2.39,2.41,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = family_index instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Family) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:family_id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->family %v_7[2.10,] 
+		 12: 
+		 13: GETFIELD %self->family def_%v_8 %self[2.0,2.8,2.11,] 
+		 14: %v_8->people def_%v_9 %v_8[2.13,] 	 SYMBOL:	 ARGS:
+		 15: %v_9->map def_%v_10 %v_9[2.14,] %self[2.0,2.8,2.11,] 	 SYMBOL:	 ARGS:%v_9,
+CLOSURE BEGIN: p[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_p 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: p->id def_%cl_1_3 p[2.2,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 16: COPY TYPE_PASS def_people_ids %v_10[2.15,] 
+		 17: 
+		 18: (Relationship) def_%v_11 
+		 19: COPY TYPE_StringLiteral "person_id in (?) and related_id in (?)" def_%v_12 
+		 20: %v_11->where def_%v_13 %v_11[2.18,] %v_12[2.19,] %v_10[2.15,] %v_10[2.15,] 	 SYMBOL:	 ARGS:%v_12,people_ids,people_ids,
+		 21: ATTRASSIGN %self->relationships %v_13[2.20,] 
+		 22: 
+		 23: HASH- def_%v_14 
+		 24: ATTRASSIGN %self->unique_relationships %v_14[2.23,] 
+		 25: 
+		 26: GETFIELD %self->relationships def_%v_15 %self[2.0,2.8,2.21,] 
+		 27: %v_15->each def_%v_16 %v_15[2.26,] %self[2.0,2.8,2.11,2.21,2.24,] 	 SYMBOL:	 ARGS:%v_15,
+CLOSURE BEGIN: %self[2.0,2.8,2.11,2.21,2.24,] relationship[] 
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_relationship 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->unique_relationships def_%cl_2_3 %self[2.0,] 
+		 2: relationship->related def_%cl_2_5 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_2_3->[] def_%cl_2_4 %cl_2_3[3.1,] %cl_2_5[3.2,] 	 SYMBOL:	 ARGS:%cl_2_5,
+		 4: BRANCH %cl_2_4[3.3,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Array def_%cl_2_6 
+		 1: %cl_2_3->[]= def_%cl_2_4 %cl_2_3[3.1,] %cl_2_5[3.2,] %cl_2_6[4.0,] 	 SYMBOL:	 ARGS:%cl_2_5,%cl_2_6,
+		 2: COPY TYPE_PASS def_%cl_2_4 %cl_2_6[4.0,] 
+BB 5
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->unique_relationships def_%cl_2_7 %self[2.0,] 
+		 2: relationship->related def_%cl_2_8 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_2_7->[] def_%cl_2_9 %cl_2_7[5.1,] %cl_2_8[5.2,] 	 SYMBOL:	 ARGS:%cl_2_8,
+		 4: relationship->name_or_other def_%cl_2_10 relationship[5.2,2.2,] 	 SYMBOL:	 ARGS:
+		 5: %cl_2_9-><< def_%cl_2_11 %cl_2_9[5.3,] %cl_2_10[5.4,] 	 SYMBOL:	 ARGS:%cl_2_10,
+		 6: 
+		 7: GETFIELD %self->unique_relationships def_%cl_2_12 %self[2.0,] 
+		 8: relationship->related def_%cl_2_13 relationship[5.2,5.4,2.2,] 	 SYMBOL:	 ARGS:
+		 9: %cl_2_12->[] def_%cl_2_14 %cl_2_12[5.7,] %cl_2_13[5.8,] 	 SYMBOL:	 ARGS:%cl_2_13,
+		 10: %cl_2_14->uniq! def_%cl_2_15 %cl_2_14[5.9,] 	 SYMBOL:	 ARGS:
+		 11: RETURN %cl_2_15[5.10,] %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_16 
+		 1: def_%cl_2_17 %cl_2_16[6.0,] 
+		 2: RETURN %cl_2_17[6.1,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 28: 
+		 29: GETFIELD %self->family def_%v_17 %self[2.0,2.8,2.11,] 
+		 30: %v_17->suggested_relationships def_%v_18 %v_17[2.29,] 	 SYMBOL:	 ARGS:
+		 31: ATTRASSIGN %self->suggested_relationships %v_18[2.30,] 
+		 32: 
+		 33: %self->ruby_code_from_view def_%v_19 %self[2.0,2.8,2.11,2.21,2.24,2.31,] 	 SYMBOL:	 ARGS:
+		 34: %v_19->ruby_code_from_view def_%v_20 %v_19[2.33,] %self[2.0,2.8,2.11,2.21,2.24,2.31,2.33,] 	 SYMBOL:	 ARGS:%v_19,
+CLOSURE BEGIN: %self[2.0,2.8,2.11,2.21,2.24,2.31,2.33,] person[] relationship_names[] relationship[2.27,] relationships[] related[] relationship[2.27,] 
+BB 1
+	outgoing: 23 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_rb_from_view 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.family.heading" def_%cl_3_3 
+		 2: GETFIELD %self->family def_%cl_3_4 %self[2.0,] 
+		 3: %cl_3_4->name def_%cl_3_5 %cl_3_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: GETFIELD %self->family def_%cl_3_6 %self[2.0,] 
+		 5: %self->link_to def_%cl_3_7 %self[2.0,] %cl_3_5[3.3,] %cl_3_6[3.4,] 	 SYMBOL:	 ARGS:%cl_3_5,%cl_3_6,
+		 6: HASH-family- def_%cl_3_8 %cl_3_7[3.5,] 
+		 7: %self->t def_%cl_3_9 %self[3.5,2.0,] %cl_3_3[3.1,] %cl_3_8[3.6,] 	 SYMBOL:	 ARGS:%cl_3_3,%cl_3_8,
+		 8: %cl_3_9->html_safe def_%cl_3_10 %cl_3_9[3.7,] 	 SYMBOL:	 ARGS:
+		 9: ATTRASSIGN %self->title %cl_3_10[3.8,] 
+		 10: 
+		 11: GETFIELD %self->relationships def_%cl_3_11 %self[3.5,3.7,2.0,] 
+		 12: %cl_3_11->any? def_%cl_3_12 %cl_3_11[3.11,] 	 SYMBOL:	 ARGS:
+		 13: BRANCH %cl_3_12[3.12,] 
+BB 4
+	outgoing: 6 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "name" def_%cl_3_13 
+		 2: %self->t def_%cl_3_14 %self[3.9,2.0,] %cl_3_13[4.1,] 	 SYMBOL:	 ARGS:%cl_3_13,
+		 3: 
+		 4: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_3_15 
+		 5: %self->t def_%cl_3_16 %self[4.2,3.9,2.0,] %cl_3_15[4.4,] 	 SYMBOL:	 ARGS:%cl_3_15,
+		 6: 
+		 7: GETFIELD %self->unique_relationships def_%cl_3_17 %self[4.2,4.5,2.0,] 
+		 8: %cl_3_17->each def_%cl_3_18 %cl_3_17[4.7,] %self[4.2,4.5,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_3_17,
+CLOSURE BEGIN: person[] %self[4.2,4.5,3.9,2.0,] relationship_names[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: RECEIVEARG def_person 
+		 3: RECEIVEARG def_relationship_names 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: person->name def_%cl_4_3 person[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %self->person_relationships_path def_%cl_4_4 %self[2.0,] person[3.1,2.2,] 	 SYMBOL:	 ARGS:person,
+		 3: %self->link_to def_%cl_4_5 %self[3.2,2.0,] %cl_4_3[3.1,] %cl_4_4[3.2,] 	 SYMBOL:	 ARGS:%cl_4_3,%cl_4_4,
+		 4: 
+		 5: COPY TYPE_StringLiteral ", " def_%cl_4_6 
+		 6: relationship_names->join def_%cl_4_7 relationship_names[2.3,] %cl_4_6[3.5,] 	 SYMBOL:	 ARGS:%cl_4_6,
+		 7: RETURN %cl_4_7[3.6,] %self[3.2,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_8 
+		 1: def_%cl_4_9 %cl_4_8[4.0,] 
+		 2: RETURN %cl_4_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: relationship_names[2.3,] 
+		 9: 
+		 10: COPY TYPE_StringLiteral "From" def_%cl_3_19 
+		 11: %self->t def_%cl_3_20 %self[4.2,4.5,3.9,2.0,] %cl_3_19[4.10,] 	 SYMBOL:	 ARGS:%cl_3_19,
+		 12: 
+		 13: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_3_21 
+		 14: %self->t def_%cl_3_22 %self[4.2,4.5,4.11,3.9,2.0,] %cl_3_21[4.13,] 	 SYMBOL:	 ARGS:%cl_3_21,
+		 15: 
+		 16: GETFIELD %self->relationships def_%cl_3_23 %self[4.2,4.5,4.11,4.14,2.0,] 
+		 17: %cl_3_23->each def_%cl_3_24 %cl_3_23[4.16,] %self[4.2,4.5,4.11,4.14,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_3_23,
+CLOSURE BEGIN: relationship[] %self[4.2,4.5,4.11,4.14,3.9,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: RECEIVEARG def_relationship 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: relationship->person def_%cl_5_3 relationship[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_5_3->name def_%cl_5_4 %cl_5_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: relationship->person def_%cl_5_5 relationship[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 4: %self->person_relationships_path def_%cl_5_6 %self[2.0,] %cl_5_5[3.3,] 	 SYMBOL:	 ARGS:%cl_5_5,
+		 5: %self->link_to def_%cl_5_7 %self[3.4,2.0,] %cl_5_4[3.2,] %cl_5_6[3.4,] 	 SYMBOL:	 ARGS:%cl_5_4,%cl_5_6,
+		 6: 
+		 7: relationship->related def_%cl_5_8 relationship[3.1,3.3,2.2,] 	 SYMBOL:	 ARGS:
+		 8: %cl_5_8->name def_%cl_5_9 %cl_5_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: relationship->related def_%cl_5_10 relationship[3.1,3.3,3.7,2.2,] 	 SYMBOL:	 ARGS:
+		 10: %self->person_relationships_path def_%cl_5_11 %self[3.4,3.5,2.0,] %cl_5_10[3.9,] 	 SYMBOL:	 ARGS:%cl_5_10,
+		 11: %self->link_to def_%cl_5_12 %self[3.4,3.5,3.10,2.0,] %cl_5_9[3.8,] %cl_5_11[3.10,] 	 SYMBOL:	 ARGS:%cl_5_9,%cl_5_11,
+		 12: 
+		 13: relationship->name_or_other def_%cl_5_13 relationship[3.1,3.3,3.7,3.9,2.2,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %cl_5_13[3.13,] %self[3.4,3.5,3.10,3.11,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_14 
+		 1: def_%cl_5_15 %cl_5_14[4.0,] 
+		 2: RETURN %cl_5_15[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 18: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_3_24 
+BB 6
+	outgoing: 7 8 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->relationships def_%cl_3_25 %self[2.0,] 
+		 2: %cl_3_25->any? def_%cl_3_26 %cl_3_25[6.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %cl_3_26[6.2,] 
+BB 7
+	outgoing: 8 21 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->family def_%cl_3_27 %self[2.0,] 
+		 1: %cl_3_27->people def_%cl_3_28 %cl_3_27[7.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_3_28->any? def_%cl_3_29 %cl_3_28[7.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%cl_3_26 %cl_3_29[7.2,] 
+BB 8
+	outgoing: 9 16 
+	datadep: 
+	instructions:
+		 0: BRANCH %cl_3_26[7.3,6.2,] 
+BB 9
+	outgoing: 10 11 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->relationships def_%cl_3_30 %self[2.0,] 
+		 2: %cl_3_30->any? def_%cl_3_31 %cl_3_30[9.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %cl_3_31[9.2,] 
+BB 10
+	outgoing: 12 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.toggle_individual" def_%cl_3_32 
+		 2: %self->t def_%cl_3_33 %self[3.9,2.0,] %cl_3_32[10.1,] 	 SYMBOL:	 ARGS:%cl_3_32,
+		 3: COPY TYPE_StringLiteral "$('#unique_relationships, #individual_relationships').toggle();" def_%cl_3_34 
+		 4: COPY TYPE_StringLiteral "btn bg-gray" def_%cl_3_35 
+		 5: HASH-class- def_%cl_3_36 %cl_3_35[10.4,] 
+		 6: %self->link_to_function def_%cl_3_37 %self[10.2,3.9,2.0,] %cl_3_33[10.2,] %cl_3_34[10.3,] %cl_3_36[10.5,] 	 SYMBOL:	 ARGS:%cl_3_33,%cl_3_34,%cl_3_36,
+		 7: 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_3_37 
+BB 12
+	outgoing: 13 14 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->family def_%cl_3_38 %self[2.0,] 
+		 2: %cl_3_38->people def_%cl_3_39 %cl_3_38[12.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_3_39->any? def_%cl_3_40 %cl_3_39[12.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %cl_3_40[12.3,] 
+BB 13
+	outgoing: 15 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.family.create.button" def_%cl_3_41 
+		 2: %self->t def_%cl_3_42 %self[3.9,2.0,] %cl_3_41[13.1,] 	 SYMBOL:	 ARGS:%cl_3_41,
+		 3: COPY TYPE_StringLiteral "$('#auto_generate').show()" def_%cl_3_43 
+		 4: COPY TYPE_StringLiteral "btn bg-gray" def_%cl_3_44 
+		 5: HASH-class- def_%cl_3_45 %cl_3_44[13.4,] 
+		 6: %self->link_to_function def_%cl_3_46 %self[13.2,3.9,2.0,] %cl_3_42[13.2,] %cl_3_43[13.3,] %cl_3_45[13.5,] 	 SYMBOL:	 ARGS:%cl_3_42,%cl_3_43,%cl_3_45,
+		 7: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_3_46 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+BB 16
+	outgoing: 17 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "none" def_%cl_3_47 
+		 2: %self->t def_%cl_3_48 %self[3.9,2.0,] %cl_3_47[16.1,] 	 SYMBOL:	 ARGS:%cl_3_47,
+		 3: COPY TYPE_PASS def_%cl_3_46 %cl_3_48[16.2,] 
+BB 17
+	outgoing: 18 19 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->family def_%cl_3_49 %self[2.0,] 
+		 2: %cl_3_49->people def_%cl_3_50 %cl_3_49[17.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_3_50->count def_%cl_3_51 %cl_3_50[17.2,] 	 SYMBOL:	 ARGS:
+		 4: %cl_3_51->> def_%cl_3_52 %cl_3_51[17.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 5: BRANCH %cl_3_52[17.4,] 
+BB 18
+	outgoing: 20 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->family def_%cl_3_53 %self[2.0,] 
+		 2: %self->family_relationships_path def_%cl_3_54 %self[3.9,2.0,] %cl_3_53[18.1,] 	 SYMBOL:	 ARGS:%cl_3_53,
+		 3: %self->form_tag def_%cl_3_55 %self[18.2,3.9,2.0,] %cl_3_54[18.2,] %self[18.2,3.9,2.0,] 	 SYMBOL:	 ARGS:%cl_3_54,%self,
+CLOSURE BEGIN: %self[18.2,3.9,2.0,] relationships[] person[4.8,] related[] relationship[4.17,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_6_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.family.create.intro" def_%cl_6_3 
+		 2: %self->t def_%cl_6_4 %self[2.0,] %cl_6_3[3.1,] 	 SYMBOL:	 ARGS:%cl_6_3,
+		 3: 
+		 4: COPY TYPE_StringLiteral "From" def_%cl_6_5 
+		 5: %self->t def_%cl_6_6 %self[3.2,2.0,] %cl_6_5[3.4,] 	 SYMBOL:	 ARGS:%cl_6_5,
+		 6: 
+		 7: COPY TYPE_StringLiteral "To" def_%cl_6_7 
+		 8: %self->t def_%cl_6_8 %self[3.2,3.5,2.0,] %cl_6_7[3.7,] 	 SYMBOL:	 ARGS:%cl_6_7,
+		 9: 
+		 10: COPY TYPE_StringLiteral "relationships.relationship" def_%cl_6_9 
+		 11: %self->t def_%cl_6_10 %self[3.2,3.5,3.8,2.0,] %cl_6_9[3.10,] 	 SYMBOL:	 ARGS:%cl_6_9,
+		 12: 
+		 13: GETFIELD %self->suggested_relationships def_%cl_6_11 %self[3.2,3.5,3.8,3.11,2.0,] 
+		 14: %cl_6_11->each def_%cl_6_12 %cl_6_11[3.13,] %self[3.2,3.5,3.8,3.11,2.0,] 	 SYMBOL:	 ARGS:%cl_6_11,
+CLOSURE BEGIN: relationships[] %self[3.2,3.5,3.8,3.11,2.0,] person[] related[] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_7_0 
+		 2: RECEIVEARG def_person 
+		 3: RECEIVEARG def_relationships 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: relationships->each def_%cl_7_3 relationships[2.3,] %self[2.0,] 	 SYMBOL:	 ARGS:relationships,
+CLOSURE BEGIN: person[2.2,] %self[2.0,] related[] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_8_0 
+		 2: RECEIVEARG def_related 
+		 3: RECEIVEARG def_relationship 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: person->name def_%cl_8_3 person[] 	 SYMBOL:	 ARGS:
+		 2: %self->link_to def_%cl_8_4 %self[2.0,] %cl_8_3[3.1,] person[3.1,] 	 SYMBOL:	 ARGS:%cl_8_3,person,
+		 3: 
+		 4: related->name def_%cl_8_5 related[2.2,] 	 SYMBOL:	 ARGS:
+		 5: %self->link_to def_%cl_8_6 %self[3.2,2.0,] %cl_8_5[3.4,] related[3.4,2.2,] 	 SYMBOL:	 ARGS:%cl_8_5,related,
+		 6: 
+		 7: COPY TYPE_StringLiteral "people[][]" def_%cl_8_7 
+		 8: COPY TYPE_StringLiteral "()" def_%cl_8_8 
+		 9: COPY TYPE_StringLiteral "" def_%cl_8_9 
+		 10: COPY TYPE_Array def_%cl_8_10 %cl_8_8[3.8,] %cl_8_9[3.9,] 
+		 11: COPY TYPE_Array def_%cl_8_11 %cl_8_10[3.10,] 
+		 12: %self->relationship_labels def_%cl_8_12 %self[3.2,3.5,2.0,] 	 SYMBOL:	 ARGS:
+		 13: %cl_8_11->+ def_%cl_8_13 %cl_8_11[3.11,] %cl_8_12[3.12,] 	 SYMBOL:	 ARGS:%cl_8_12,
+		 14: relationship->to_sym def_%cl_8_14 relationship[2.3,] 	 SYMBOL:	 ARGS:
+		 15: %self->options_for_select def_%cl_8_15 %self[3.2,3.5,3.12,2.0,] %cl_8_13[3.13,] %cl_8_14[3.14,] 	 SYMBOL:	 ARGS:%cl_8_13,%cl_8_14,
+		 16: %self->select_tag def_%cl_8_16 %self[3.2,3.5,3.12,3.15,2.0,] %cl_8_7[3.7,] %cl_8_15[3.15,] 	 SYMBOL:	 ARGS:%cl_8_7,%cl_8_15,
+		 17: RETURN %cl_8_16[3.16,] %self[3.2,3.5,3.12,3.15,3.16,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_8_17 
+		 1: def_%cl_8_18 %cl_8_17[4.0,] 
+		 2: RETURN %cl_8_18[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: relationship[2.3,] 
+		 2: RETURN %cl_7_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_7_4 
+		 1: def_%cl_7_5 %cl_7_4[4.0,] 
+		 2: RETURN %cl_7_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: relationships[2.3,] 
+		 15: 
+		 16: COPY TYPE_StringLiteral "relationships.family.create.button" def_%cl_6_13 
+		 17: %self->t def_%cl_6_14 %self[3.2,3.5,3.8,3.11,2.0,] %cl_6_13[3.16,] 	 SYMBOL:	 ARGS:%cl_6_13,
+		 18: COPY TYPE_StringLiteral "btn btn-success" def_%cl_6_15 
+		 19: HASH-class- def_%cl_6_16 %cl_6_15[3.18,] 
+		 20: %self->button_tag def_%cl_6_17 %self[3.2,3.5,3.8,3.11,3.17,2.0,] %cl_6_14[3.17,] %cl_6_16[3.19,] 	 SYMBOL:	 ARGS:%cl_6_14,%cl_6_16,
+		 21: RETURN %cl_6_17[3.20,] %self[3.2,3.5,3.8,3.11,3.17,3.20,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_6_18 
+		 1: def_%cl_6_19 %cl_6_18[4.0,] 
+		 2: RETURN %cl_6_19[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 19
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: RETURN %self[3.9,2.0,] 
+BB 20
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_3_55[18.3,] %self[3.9,2.0,] 
+BB 21
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_56 
+		 1: def_%cl_3_57 %cl_3_56[21.0,] 
+		 2: RETURN %cl_3_57[21.1,] %self[3.9,2.0,] 
+BB 23
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 35: RETURN %v_20[2.34,] %self[2.0,2.8,2.11,2.21,2.24,2.31,2.33,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->create_for_person def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_5[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_6->[] def_%v_7 %v_6[4.1,] 	 SYMBOL:family_id,	 ARGS:Symbol,
+		 3: BRANCH %v_7[4.2,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->create_for_family def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "relationships.no_person_selected" def_%v_9 
+		 2: %self->t def_%v_10 %self[2.0,] %v_9[6.1,] 	 SYMBOL:	 ARGS:%v_9,
+		 3: HASH-text-layout- def_%v_11 %v_10[6.2,] 
+		 4: %self->render def_%v_12 %self[6.2,2.0,] %v_11[6.3,] 	 SYMBOL:	 ARGS:%v_11,
+		 5: COPY TYPE_PASS def_%v_8 %v_12[6.4,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %v_8[6.5,5.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_for_person instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Person) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->person %v_7[2.10,] 
+		 12: 
+		 13: (Person) def_%v_8 
+		 14: %v_8->undeleted def_%v_9 %v_8[2.13,] 	 SYMBOL:	 ARGS:
+		 15: %self->params def_%v_10 %self[2.0,2.8,2.11,] 	 SYMBOL:	 ARGS:
+		 16: %v_10->[] def_%v_11 %v_10[2.15,] 	 SYMBOL:ids,	 ARGS:Symbol,
+		 17: %self->Array def_%v_12 %self[2.0,2.8,2.11,2.15,] %v_11[2.16,] 	 SYMBOL:	 ARGS:%v_11,
+		 18: %v_12->first def_%v_13 %v_12[2.17,] 	 SYMBOL:	 ARGS:
+		 19: %v_9->find def_%v_14 %v_9[2.14,] %v_13[2.18,] 	 SYMBOL:	 ARGS:%v_13,
+		 20: ATTRASSIGN %self->related %v_14[2.19,] 
+		 21: 
+		 22: (Relationship) def_%v_15 
+		 23: GETFIELD %self->person def_%v_16 %self[2.0,2.8,2.11,2.15,2.17,] 
+		 24: GETFIELD %self->related def_%v_17 %self[2.0,2.8,2.15,2.17,2.20,] 
+		 25: %self->params def_%v_18 %self[2.0,2.8,2.11,2.15,2.17,2.20,] 	 SYMBOL:	 ARGS:
+		 26: %v_18->[] def_%v_19 %v_18[2.25,] 	 SYMBOL:name,	 ARGS:Symbol,
+		 27: %self->params def_%v_20 %self[2.0,2.8,2.11,2.15,2.17,2.20,2.25,] 	 SYMBOL:	 ARGS:
+		 28: %v_20->[] def_%v_21 %v_20[2.27,] 	 SYMBOL:other_name,	 ARGS:Symbol,
+		 29: HASH-person-related-name-other_name- def_%v_22 %v_16[2.23,] %v_17[2.24,] %v_19[2.26,] %v_21[2.28,] 
+		 30: %v_15->new def_%v_23 %v_15[2.22,] %v_22[2.29,] 	 SYMBOL:	 ARGS:%v_22,
+		 31: ATTRASSIGN %self->relationship %v_23[2.30,] 
+		 32: 
+		 33: %self->respond_to def_%v_24 %self[2.0,2.8,2.11,2.15,2.17,2.20,2.25,2.27,2.31,] %self[2.0,2.8,2.11,2.15,2.17,2.20,2.25,2.27,2.31,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: %self[2.0,2.8,2.11,2.15,2.17,2.20,2.25,2.27,2.31,] format[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->relationship def_%cl_1_3 %self[2.0,] 
+		 2: %cl_1_3->save def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %cl_1_4[3.2,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: format->html def_%cl_1_5 format[2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->person def_%cl_2_3 %self[2.0,] 
+		 2: %self->person_relationships_path def_%cl_2_4 %self[2.0,] %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:%cl_2_3,
+		 3: %self->redirect_to def_%cl_2_5 %self[3.2,2.0,] %cl_2_4[3.2,] 	 SYMBOL:	 ARGS:%cl_2_4,
+		 4: RETURN %cl_2_5[3.3,] %self[3.2,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_6 
+		 1: def_%cl_2_7 %cl_2_6[4.0,] 
+		 2: RETURN %cl_2_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: 
+		 3: format->xml def_%cl_1_6 format[4.1,2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->relationship def_%cl_3_3 %self[2.0,] 
+		 2: GETFIELD %self->person def_%cl_3_4 %self[2.0,] 
+		 3: GETFIELD %self->relationship def_%cl_3_5 %self[2.0,] 
+		 4: %self->person_relationship_path def_%cl_3_6 %self[2.0,] %cl_3_4[3.2,] %cl_3_5[3.3,] 	 SYMBOL:	 ARGS:%cl_3_4,%cl_3_5,
+		 5: HASH-xml-status-location- def_%cl_3_7 %cl_3_3[3.1,] %cl_3_6[3.4,] 
+		 6: %self->render def_%cl_3_8 %self[3.4,2.0,] %cl_3_7[3.5,] 	 SYMBOL:	 ARGS:%cl_3_7,
+		 7: RETURN %cl_3_8[3.6,] %self[3.4,3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_9 
+		 1: def_%cl_3_10 %cl_3_9[4.0,] 
+		 2: RETURN %cl_3_10[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: format->html def_%cl_1_7 format[2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->relationship def_%cl_4_3 %self[2.0,] 
+		 2: %self->add_errors_to_flash def_%cl_4_4 %self[2.0,] %cl_4_3[3.1,] 	 SYMBOL:	 ARGS:%cl_4_3,
+		 3: GETFIELD %self->person def_%cl_4_5 %self[3.2,2.0,] 
+		 4: %self->person_relationships_path def_%cl_4_6 %self[3.2,2.0,] %cl_4_5[3.3,] 	 SYMBOL:	 ARGS:%cl_4_5,
+		 5: %self->redirect_to def_%cl_4_7 %self[3.2,3.4,2.0,] %cl_4_6[3.4,] 	 SYMBOL:	 ARGS:%cl_4_6,
+		 6: RETURN %cl_4_7[3.5,] %self[3.2,3.4,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_8 
+		 1: def_%cl_4_9 %cl_4_8[4.0,] 
+		 2: RETURN %cl_4_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: 
+		 3: format->xml def_%cl_1_8 format[5.1,2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->relationship def_%cl_5_3 %self[2.0,] 
+		 2: %cl_5_3->errors def_%cl_5_4 %cl_5_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: HASH-xml-status- def_%cl_5_5 %cl_5_4[3.2,] 
+		 4: %self->render def_%cl_5_6 %self[2.0,] %cl_5_5[3.3,] 	 SYMBOL:	 ARGS:%cl_5_5,
+		 5: RETURN %cl_5_6[3.4,] %self[3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_7 
+		 1: def_%cl_5_8 %cl_5_7[4.0,] 
+		 2: RETURN %cl_5_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: RETURN %cl_1_8[5.3,] %self[2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_6[4.3,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[7.0,] 
+		 2: RETURN %cl_1_10[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 34: RETURN %v_24[2.33,] %self[2.0,2.8,2.11,2.15,2.17,2.20,2.25,2.27,2.31,2.33,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_for_family instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Family) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:family_id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->family %v_7[2.10,] 
+		 12: 
+		 13: %self->params def_%v_8 %self[2.0,2.8,2.11,] 	 SYMBOL:	 ARGS:
+		 14: %v_8->[] def_%v_9 %v_8[2.13,] 	 SYMBOL:people,	 ARGS:Symbol,
+		 15: %v_9->to_a def_%v_10 %v_9[2.14,] 	 SYMBOL:	 ARGS:
+		 16: %v_10->each def_%v_11 %v_10[2.15,] %self[2.0,2.8,2.11,2.13,] 	 SYMBOL:	 ARGS:%v_10,
+CLOSURE BEGIN: relationships[] %self[2.0,2.8,2.11,2.13,] person_id[] related_id[] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_person_id 
+		 3: RECEIVEARG def_relationships 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: relationships->each def_%cl_1_3 relationships[2.3,] %self[2.0,] 	 SYMBOL:	 ARGS:relationships,
+CLOSURE BEGIN: %self[2.0,] person_id[2.2,] related_id[] relationship[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_related_id 
+		 3: RECEIVEARG def_relationship 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Relationship) def_%cl_2_3 
+		 2: GETFIELD %self->family def_%cl_2_4 %self[2.0,] 
+		 3: %cl_2_4->people def_%cl_2_5 %cl_2_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: %cl_2_5->find def_%cl_2_6 %cl_2_5[3.3,] person_id[] 	 SYMBOL:	 ARGS:person_id,
+		 5: GETFIELD %self->family def_%cl_2_7 %self[2.0,] 
+		 6: %cl_2_7->people def_%cl_2_8 %cl_2_7[3.5,] 	 SYMBOL:	 ARGS:
+		 7: %cl_2_8->find def_%cl_2_9 %cl_2_8[3.6,] related_id[2.2,] 	 SYMBOL:	 ARGS:related_id,
+		 8: HASH-person-related-name- def_%cl_2_10 %cl_2_6[3.4,] %cl_2_9[3.7,] relationship[2.3,] 
+		 9: %cl_2_3->create def_%cl_2_11 %cl_2_3[3.1,] %cl_2_10[3.8,] 	 SYMBOL:	 ARGS:%cl_2_10,
+		 10: RETURN %cl_2_11[3.9,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_12 
+		 1: def_%cl_2_13 %cl_2_12[4.0,] 
+		 2: RETURN %cl_2_13[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: relationship[2.3,] 
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: relationships[2.3,] 
+		 17: 
+		 18: GETFIELD %self->family def_%v_12 %self[2.0,2.8,2.11,2.13,] 
+		 19: %self->family_relationships_path def_%v_13 %self[2.0,2.8,2.11,2.13,] %v_12[2.18,] 	 SYMBOL:	 ARGS:%v_12,
+		 20: %self->redirect_to def_%v_14 %self[2.0,2.8,2.11,2.13,2.19,] %v_13[2.19,] 	 SYMBOL:	 ARGS:%v_13,
+		 21: RETURN %v_14[2.20,] %self[2.0,2.8,2.11,2.13,2.19,2.20,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Person) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->person %v_7[2.10,] 
+		 12: 
+		 13: GETFIELD %self->person def_%v_8 %self[2.0,2.8,2.11,] 
+		 14: %v_8->relationship def_%v_9 %v_8[2.13,] 	 SYMBOL:	 ARGS:
+		 15: %self->params def_%v_10 %self[2.0,2.8,2.11,] 	 SYMBOL:	 ARGS:
+		 16: %v_10->[] def_%v_11 %v_10[2.15,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 17: %v_9->find def_%v_12 %v_9[2.14,] %v_11[2.16,] 	 SYMBOL:	 ARGS:%v_11,
+		 18: %v_12->destroy def_%v_13 %v_12[2.17,] 	 SYMBOL:	 ARGS:
+		 19: 
+		 20: %self->respond_to def_%v_14 %self[2.0,2.8,2.11,2.15,] %self[2.0,2.8,2.11,2.15,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: format[] %self[2.0,2.8,2.11,2.15,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: format->xml def_%cl_1_3 format[2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->head def_%cl_2_3 %self[2.0,] 	 SYMBOL:ok,	 ARGS:Symbol,
+		 2: RETURN %cl_2_3[3.1,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_4 
+		 1: def_%cl_2_5 %cl_2_4[4.0,] 
+		 2: RETURN %cl_2_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 21: RETURN %v_14[2.20,] %self[2.0,2.8,2.11,2.15,2.20,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = batch instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: (Person) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:person_id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->person %v_7[2.10,] 
+		 12: 
+		 13: %self->params def_%v_8 %self[2.0,2.8,2.11,] 	 SYMBOL:	 ARGS:
+		 14: %v_8->[] def_%v_9 %v_8[2.13,] 	 SYMBOL:ids,	 ARGS:Symbol,
+		 15: %v_9->to_a def_%v_10 %v_9[2.14,] 	 SYMBOL:	 ARGS:
+		 16: %v_10->each def_%v_11 %v_10[2.15,] %self[2.0,2.8,2.11,2.13,] 	 SYMBOL:	 ARGS:%v_10,
+CLOSURE BEGIN: %self[2.0,2.8,2.11,2.13,] id[] relationship[] r[] 
+BB 1
+	outgoing: 23 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_id 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 19 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Relationship) def_%cl_1_3 
+		 2: COPY TYPE_StringLiteral "id = ? and (person_id = ? or related_id = ?)" def_%cl_1_4 
+		 3: GETFIELD %self->person def_%cl_1_5 %self[2.0,] 
+		 4: %cl_1_5->id def_%cl_1_6 %cl_1_5[3.3,] 	 SYMBOL:	 ARGS:
+		 5: GETFIELD %self->person def_%cl_1_7 %self[2.0,] 
+		 6: %cl_1_7->id def_%cl_1_8 %cl_1_7[3.5,] 	 SYMBOL:	 ARGS:
+		 7: %cl_1_3->where def_%cl_1_9 %cl_1_3[3.1,] %cl_1_4[3.2,] id[2.2,] %cl_1_6[3.4,] %cl_1_8[3.6,] 	 SYMBOL:	 ARGS:%cl_1_4,id,%cl_1_6,%cl_1_8,
+		 8: %cl_1_9->first def_%cl_1_10 %cl_1_9[3.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_PASS def_relationship %cl_1_10[3.8,] 
+		 10: BRANCH %cl_1_10[3.8,] 
+BB 4
+	outgoing: 5 6 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%cl_1_11 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_11->[] def_%cl_1_12 %cl_1_11[4.1,] 	 SYMBOL:delete,	 ARGS:Symbol,
+		 3: BRANCH %cl_1_12[4.2,] 
+BB 5
+	outgoing: 18 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: relationship->destroy def_%cl_1_13 relationship[3.9,] 	 SYMBOL:	 ARGS:
+		 2: 
+BB 6
+	outgoing: 7 16 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->params def_%cl_1_14 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_14->[] def_%cl_1_15 %cl_1_14[6.1,] 	 SYMBOL:reciprocate,	 ARGS:Symbol,
+		 3: BRANCH %cl_1_15[6.2,] 
+BB 7
+	outgoing: 8 11 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: relationship->reciprocate def_%cl_1_16 relationship[3.9,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_r %cl_1_16[7.1,] 
+		 3: 
+		 4: %cl_1_16->nil? def_%cl_1_17 %cl_1_16[7.1,] 	 SYMBOL:	 ARGS:
+		 5: BRANCH %cl_1_17[7.4,] 
+BB 8
+	outgoing: 9 10 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%cl_1_18 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_18->[] def_%cl_1_19 %cl_1_18[8.1,] 	 SYMBOL:warning,	 ARGS:Symbol,
+		 3: BRANCH %cl_1_19[8.2,] 
+BB 9
+	outgoing: 10 21 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "" def_%cl_1_20 
+		 1: %cl_1_18->[]= def_%cl_1_19 %cl_1_18[8.1,] %cl_1_20[9.0,] 	 SYMBOL:warning,	 ARGS:Symbol,%cl_1_20,
+		 2: COPY TYPE_PASS def_%cl_1_19 %cl_1_20[9.0,] 
+BB 10
+	outgoing: 15 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->flash def_%cl_1_21 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_21->[] def_%cl_1_22 %cl_1_21[10.1,] 	 SYMBOL:warning,	 ARGS:Symbol,
+		 3: COPY TYPE_StringLiteral "relationships.reciprocate.failure" def_%cl_1_23 
+		 4: relationship->related def_%cl_1_24 relationship[3.9,] 	 SYMBOL:	 ARGS:
+		 5: %cl_1_24->name def_%cl_1_25 %cl_1_24[10.4,] 	 SYMBOL:	 ARGS:
+		 6: HASH-name- def_%cl_1_26 %cl_1_25[10.5,] 
+		 7: %self->t def_%cl_1_27 %self[10.1,2.0,] %cl_1_23[10.3,] %cl_1_26[10.6,] 	 SYMBOL:	 ARGS:%cl_1_23,%cl_1_26,
+		 8: COPY TYPE_StringLiteral "
+" def_%cl_1_28 
+		 9: %cl_1_27->+ def_%cl_1_29 %cl_1_27[10.7,] %cl_1_28[10.8,] 	 SYMBOL:	 ARGS:%cl_1_28,
+		 10: %cl_1_22-><< def_%cl_1_30 %cl_1_22[10.2,] %cl_1_29[10.9,] 	 SYMBOL:	 ARGS:%cl_1_29,
+		 11: 
+BB 11
+	outgoing: 12 13 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: r->valid? def_%cl_1_31 r[7.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_31->! def_%cl_1_32 %cl_1_31[11.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %cl_1_32[11.2,] 
+BB 12
+	outgoing: 14 21 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->add_errors_to_flash def_%cl_1_33 %self[2.0,] r[7.2,] 	 SYMBOL:	 ARGS:r,
+		 2: 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_33 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%cl_1_30 %cl_1_33[13.0,12.1,] 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_30 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%cl_1_13 %cl_1_30[16.0,14.0,10.10,] 
+BB 18
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_13[17.0,5.1,] %self[2.0,] 
+BB 19
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 21
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_34 
+		 1: def_%cl_1_35 %cl_1_34[21.0,] 
+		 2: RETURN %cl_1_35[21.1,] %self[2.0,] 
+BB 23
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: r[7.2,] relationship[3.9,] 
+		 17: 
+		 18: GETFIELD %self->person def_%v_12 %self[2.0,2.8,2.11,2.13,] 
+		 19: %self->person_relationships_path def_%v_13 %self[2.0,2.8,2.11,2.13,] %v_12[2.18,] 	 SYMBOL:	 ARGS:%v_12,
+		 20: %self->redirect_to def_%v_14 %self[2.0,2.8,2.11,2.13,2.19,] %v_13[2.19,] 	 SYMBOL:	 ARGS:%v_13,
+		 21: RETURN %v_14[2.20,] %self[2.0,2.8,2.11,2.13,2.19,2.20,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = only_admins instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
+		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 	 SYMBOL:edit_profiles,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "only_admins" def_%v_6 
+		 2: %self->t def_%v_7 %self[2.0,] %v_6[4.1,] 	 SYMBOL:	 ARGS:%v_6,
+		 3: HASH-text-layout-status- def_%v_8 %v_7[4.2,] 
+		 4: %self->render def_%v_9 %self[4.2,2.0,] %v_8[4.3,] 	 SYMBOL:	 ARGS:%v_8,
+		 5: 
+		 6: RETURN %self[4.2,4.4,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

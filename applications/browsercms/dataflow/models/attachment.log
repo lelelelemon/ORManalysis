@@ -1,0 +1,1319 @@
+SET IRMethod, name = permitted_params instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->super def_%v_3 %v_0[2.1,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_Array def_%v_4 
+		 8: %v_3->+ def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sanitize_file_path instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_file_path 
+		 6: 
+		 7: (SANITIZATION_REGEXES) def_%v_3 
+		 8: file_path->to_s def_%v_4 file_path[2.5,] 	 SYMBOL:	 ARGS:
+		 9: %v_3->inject def_%v_5 %v_3[2.7,] %v_4[2.8,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_4,%v_3,
+CLOSURE BEGIN: s[] regex[] replace[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_s 
+		 3: RECEIVEARG def_%cl_1_1 
+		 4: def_%cl_1_2 %cl_1_1[2.3,] 
+		 5: def_regex %cl_1_2[2.4,] 
+		 6: def_replace %cl_1_2[2.4,] 
+		 7: COPY TYPE_CurrentScope def_%current_scope 
+		 8: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: s->gsub def_%cl_1_5 s[2.2,] regex[2.5,] replace[2.6,] 	 SYMBOL:	 ARGS:regex,replace,
+		 2: RETURN %cl_1_5[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: regex[2.5,] replace[2.6,] 
+		 10: RETURN %v_5[2.9,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = definitions_for instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_klass 
+		 6: RECEIVEARG def_type 
+		 7: 
+		 8: %self->definitions def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_3->[] def_%v_4 %v_3[2.8,] klass[2.5,] 	 SYMBOL:	 ARGS:klass,
+		 10: HASH- def_%v_5 
+		 11: %v_4->inject def_%v_6 %v_4[2.9,] %v_5[2.10,] %self[2.0,2.8,] 	 SYMBOL:	 ARGS:%v_5,%v_4,
+CLOSURE BEGIN: v[] type[2.6,] k[] d[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_d 
+		 3: RECEIVEARG def_%cl_1_1 
+		 4: def_%cl_1_2 %cl_1_1[2.3,] 
+		 5: def_k %cl_1_2[2.4,] 
+		 6: def_v %cl_1_2[2.4,] 
+		 7: COPY TYPE_CurrentScope def_%current_scope 
+		 8: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "type" def_%cl_1_5 
+		 2: v->[] def_%cl_1_6 v[2.6,] %cl_1_5[3.1,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 3: %cl_1_6->== def_%cl_1_7 %cl_1_6[3.2,] type[] 	 SYMBOL:	 ARGS:type,
+		 4: BRANCH %cl_1_7[3.3,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: k->capitalize def_%cl_1_8 k[2.5,] 	 SYMBOL:	 ARGS:
+		 1: ATTRASSIGN d->[] %cl_1_8[4.0,] v[2.6,] 
+		 2: COPY TYPE_PASS def_%cl_1_9 v[2.6,] 
+		 3: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_9 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN d[4.1,2.2,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[7.0,] 
+		 2: RETURN %cl_1_11[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: v[2.6,] k[2.5,] 
+		 12: RETURN %v_6[2.11,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = configuration instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: def_%v_4 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: def_%v_5 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Attachments) def_%v_6 
+		 1: %v_6->configuration def_%v_7 %v_6[5.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_7[5.1,] 
+		 3: RETURN %v_7[5.1,] %self[2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = dynamically_return_styles instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->lambda def_%v_3 %self[2.0,] %self[2.0,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: paperclip_attachment[] cms_attachment[] %self[2.0,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_paperclip_attachment 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: paperclip_attachment->instance def_%cl_1_3 paperclip_attachment[2.2,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_cms_attachment %cl_1_3[3.1,] 
+		 3: 
+		 4: %cl_1_3->has_assigned_content_type? def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 5: BRANCH %cl_1_4[3.4,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: cms_attachment->content_block_class def_%cl_1_5 cms_attachment[3.2,] 	 SYMBOL:	 ARGS:
+		 2: cms_attachment->attachment_name def_%cl_1_6 cms_attachment[4.1,3.2,] 	 SYMBOL:	 ARGS:
+		 3: %self->configuration_value def_%cl_1_7 %self[2.0,] %cl_1_5[4.1,] %cl_1_6[4.2,] 	 SYMBOL:styles,	 ARGS:%cl_1_5,%cl_1_6,Symbol,
+		 4: 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: HASH- def_%cl_1_8 
+		 2: RETURN %cl_1_8[5.1,] %self[2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_7[4.3,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[7.0,] 
+		 2: RETURN %cl_1_10[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: cms_attachment[3.2,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_live_by_file_path instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_path 
+		 6: 
+		 7: (Attachment) def_%v_3 
+		 8: %v_3->published def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->not_archived def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_5->find_by_data_file_path def_%v_6 %v_5[2.9,] path[2.5,] 	 SYMBOL:	 ARGS:path,
+		 11: RETURN %v_6[2.10,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = configure_paperclip instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->configuration def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->url def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->configuration def_%v_5 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->path def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %self->dynamically_return_styles def_%v_7 %self[2.0,2.6,2.8,] 	 SYMBOL:	 ARGS:
+		 11: %self->configuration def_%v_8 %self[2.0,2.6,2.8,2.10,] 	 SYMBOL:	 ARGS:
+		 12: %v_8->processors def_%v_9 %v_8[2.11,] 	 SYMBOL:	 ARGS:
+		 13: %self->configuration def_%v_10 %self[2.0,2.6,2.8,2.10,2.11,] 	 SYMBOL:	 ARGS:
+		 14: %v_10->default_url def_%v_11 %v_10[2.13,] 	 SYMBOL:	 ARGS:
+		 15: %self->configuration def_%v_12 %self[2.0,2.6,2.8,2.10,2.11,2.13,] 	 SYMBOL:	 ARGS:
+		 16: %v_12->default_style def_%v_13 %v_12[2.15,] 	 SYMBOL:	 ARGS:
+		 17: %self->configuration def_%v_14 %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,] 	 SYMBOL:	 ARGS:
+		 18: %v_14->use_timestamp def_%v_15 %v_14[2.17,] 	 SYMBOL:	 ARGS:
+		 19: %self->configuration def_%v_16 %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,2.17,] 	 SYMBOL:	 ARGS:
+		 20: %v_16->whiny def_%v_17 %v_16[2.19,] 	 SYMBOL:	 ARGS:
+		 21: %self->rail_config def_%v_18 %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,2.17,2.19,] 	 SYMBOL:storage,	 ARGS:Symbol,
+		 22: %self->rail_config def_%v_19 %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,2.17,2.19,2.21,] 	 SYMBOL:s3_credentials,	 ARGS:Symbol,
+		 23: %self->rail_config def_%v_20 %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,2.17,2.19,2.21,2.22,] 	 SYMBOL:s3_bucket,	 ARGS:Symbol,
+		 24: %self->rail_config def_%v_21 %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,2.17,2.19,2.21,2.22,2.23,] 	 SYMBOL:s3_host_name,	 ARGS:Symbol,
+		 25: %self->rail_config def_%v_22 %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,2.17,2.19,2.21,2.22,2.23,2.24,] 	 SYMBOL:s3_host_alias,	 ARGS:Symbol,
+		 26: HASH-url-path-styles-preserve_files-processors-default_url-default_style-use_timestamp-whiny-storage-s3_credentials-bucket-s3_host_name-s3_host_alias- def_%v_23 %v_4[2.7,] %v_6[2.9,] %v_7[2.10,] %v_9[2.12,] %v_11[2.14,] %v_13[2.16,] %v_15[2.18,] %v_17[2.20,] %v_18[2.21,] %v_19[2.22,] %v_20[2.23,] %v_21[2.24,] %v_22[2.25,] 
+		 27: %self->has_attached_file def_%v_24 %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,2.17,2.19,2.21,2.22,2.23,2.24,2.25,] %v_23[2.26,] 	 SYMBOL:data,	 ARGS:Symbol,%v_23,
+		 28: RETURN %v_24[2.27,] %self[2.0,2.6,2.8,2.10,2.11,2.13,2.15,2.17,2.19,2.21,2.22,2.23,2.24,2.25,2.27,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = rail_config instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_key 
+		 6: 
+		 7: (Rails) def_%v_3 
+		 8: %v_3->configuration def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->cms def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_5->attachments def_%v_6 %v_5[2.9,] 	 SYMBOL:	 ARGS:
+		 11: %v_6->[] def_%v_7 %v_6[2.10,] key[2.5,] 	 SYMBOL:	 ARGS:key,
+		 12: RETURN %v_7[2.11,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = configuration_value instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_block_class 
+		 6: RECEIVEARG def_name_of_attachment 
+		 7: RECEIVEARG def_key 
+		 8: 
+		 9: %self->definitions def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 10: %v_3->[] def_%v_4 %v_3[2.9,] block_class[2.5,] 	 SYMBOL:	 ARGS:block_class,
+		 11: COPY TYPE_PASS def_class_definitions %v_4[2.10,] 
+		 12: 
+		 13: %v_4->== def_%v_5 %v_4[2.10,] 	 SYMBOL:	 ARGS:Nil,
+		 14: BRANCH %v_5[2.13,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "Couldn't find any definitions for '" def_%v_6 
+		 2: COPY TYPE_StringLiteral "'. Available definitions are " def_%v_7 
+		 3: %self->definitions def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_8->inspect def_%v_9 %v_8[3.3,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral "." def_%v_10 
+		 6: BUILDSTRING def_%v_11 %v_6[3.1,] block_class[2.5,] %v_7[3.2,] %v_9[3.4,] %v_10[3.5,] 
+		 7: %self->raise def_%v_12 %self[3.3,2.0,] %v_11[3.6,] 	 SYMBOL:	 ARGS:%v_11,
+		 8: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_12 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: class_definitions->[] def_%v_13 class_definitions[2.11,] name_of_attachment[2.6,] 	 SYMBOL:	 ARGS:name_of_attachment,
+		 2: COPY TYPE_PASS def_attachment_definition %v_13[5.1,] 
+		 3: 
+		 4: %v_13->== def_%v_14 %v_13[5.1,] 	 SYMBOL:	 ARGS:Nil,
+		 5: BRANCH %v_14[5.4,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "Verify that '" def_%v_15 
+		 2: COPY TYPE_StringLiteral "' defines an attachment named ':" def_%v_16 
+		 3: COPY TYPE_StringLiteral "'." def_%v_17 
+		 4: BUILDSTRING def_%v_18 %v_15[6.1,] block_class[2.5,] %v_16[6.2,] name_of_attachment[2.6,] %v_17[6.3,] 
+		 5: %self->raise def_%v_19 %self[2.0,] %v_18[6.4,] 	 SYMBOL:	 ARGS:%v_18,
+		 6: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_19 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: 
+		 1: attachment_definition->[] def_%v_20 attachment_definition[5.2,] key[2.7,] 	 SYMBOL:	 ARGS:key,
+		 2: BRANCH %v_20[8.1,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: %self->configuration def_%v_21 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_21->send def_%v_22 %v_21[9.0,] key[2.7,] 	 SYMBOL:	 ARGS:key,
+		 2: RETURN %v_22[9.1,] %self[9.0,2.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_20[8.1,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = attachable_class instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->attachable_type def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = attachable_class= instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_klass 
+		 6: 
+		 7: ATTRASSIGN %self->attachable_type klass[2.5,] 
+		 8: RETURN klass[2.5,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = section= instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section 
+		 6: 
+		 7: %self->section def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->!= def_%v_4 %v_3[2.7,] section[2.5,] 	 SYMBOL:	 ARGS:section,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->dirty! def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->super def_%v_6 %current_module[2.3,] section[2.5,] %v_0[2.1,] 	 SYMBOL:	 ARGS:section,
+		 2: RETURN %v_6[5.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = config_value_for instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_key 
+		 6: 
+		 7: %self->class def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %self->content_block_class def_%v_4 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 9: %self->attachment_name def_%v_5 %self[2.0,2.7,2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_3->configuration_value def_%v_6 %v_3[2.7,] %v_4[2.8,] %v_5[2.9,] key[2.5,] 	 SYMBOL:	 ARGS:%v_4,%v_5,key,
+		 11: RETURN %v_6[2.10,] %self[2.0,2.7,2.8,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = content_block_class instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->attachable def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->try def_%v_4 %v_3[2.6,] 	 SYMBOL:class,	 ARGS:Symbol,
+		 8: %v_4->try def_%v_5 %v_4[2.7,] 	 SYMBOL:name,	 ARGS:Symbol,
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->attachable_type def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_6[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[2.8,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = icon instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "doc" def_%v_3 
+		 7: COPY TYPE_Array def_%v_4 %v_3[2.6,] 
+		 8: COPY TYPE_StringLiteral "gif" def_%v_5 
+		 9: COPY TYPE_StringLiteral "jpg" def_%v_6 
+		 10: COPY TYPE_StringLiteral "jpeg" def_%v_7 
+		 11: COPY TYPE_StringLiteral "png" def_%v_8 
+		 12: COPY TYPE_StringLiteral "tiff" def_%v_9 
+		 13: COPY TYPE_StringLiteral "bmp" def_%v_10 
+		 14: COPY TYPE_Array def_%v_11 %v_5[2.8,] %v_6[2.9,] %v_7[2.10,] %v_8[2.11,] %v_9[2.12,] %v_10[2.13,] 
+		 15: COPY TYPE_StringLiteral "htm" def_%v_12 
+		 16: COPY TYPE_StringLiteral "html" def_%v_13 
+		 17: COPY TYPE_Array def_%v_14 %v_12[2.15,] %v_13[2.16,] 
+		 18: COPY TYPE_StringLiteral "pdf" def_%v_15 
+		 19: COPY TYPE_Array def_%v_16 %v_15[2.18,] 
+		 20: COPY TYPE_StringLiteral "ppt" def_%v_17 
+		 21: COPY TYPE_Array def_%v_18 %v_17[2.20,] 
+		 22: COPY TYPE_StringLiteral "swf" def_%v_19 
+		 23: COPY TYPE_Array def_%v_20 %v_19[2.22,] 
+		 24: COPY TYPE_StringLiteral "txt" def_%v_21 
+		 25: COPY TYPE_Array def_%v_22 %v_21[2.24,] 
+		 26: COPY TYPE_StringLiteral "xls" def_%v_23 
+		 27: COPY TYPE_Array def_%v_24 %v_23[2.26,] 
+		 28: COPY TYPE_StringLiteral "xml" def_%v_25 
+		 29: COPY TYPE_Array def_%v_26 %v_25[2.28,] 
+		 30: COPY TYPE_StringLiteral "zip" def_%v_27 
+		 31: COPY TYPE_StringLiteral "rar" def_%v_28 
+		 32: COPY TYPE_StringLiteral "tar" def_%v_29 
+		 33: COPY TYPE_StringLiteral "gz" def_%v_30 
+		 34: COPY TYPE_StringLiteral "tgz" def_%v_31 
+		 35: COPY TYPE_Array def_%v_32 %v_27[2.30,] %v_28[2.31,] %v_29[2.32,] %v_30[2.33,] %v_31[2.34,] 
+		 36: HASH-doc-gif-htm-pdf-ppt-swf-txt-xls-xml-zip- def_%v_33 %v_4[2.7,] %v_11[2.14,] %v_14[2.17,] %v_16[2.19,] %v_18[2.21,] %v_20[2.23,] %v_22[2.25,] %v_24[2.27,] %v_26[2.29,] %v_32[2.35,] 
+		 37: %v_33->each def_%v_34 %v_33[2.36,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_33,
+CLOSURE BEGIN: %self[2.0,] extensions[] icon[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_icon 
+		 3: RECEIVEARG def_extensions 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->data_file_extension def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: extensions->include? def_%cl_1_4 extensions[2.3,] %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: BRANCH %cl_1_4[3.2,] 
+BB 4
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN icon[2.2,] %self[2.0,] 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[7.0,] 
+		 2: RETURN %cl_1_7[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: extensions[2.3,] 
+		 38: 
+		 39: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%v_35 
+		 1: def_%v_36 %v_35[4.0,] 
+		 2: RETURN %v_36[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = attachment_version_path instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "/cms/attachments/" def_%v_3 
+		 7: %self->id def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_StringLiteral "?version=" def_%v_5 
+		 9: %self->version def_%v_6 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 10: BUILDSTRING def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] %self[2.0,2.7,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = public? instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->section def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->section def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_4->public? def_%v_5 %v_4[3.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_5[3.1,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = is_image? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: COPY TYPE_StringLiteral "jpg" def_%v_3 
+		 7: COPY TYPE_StringLiteral "gif" def_%v_4 
+		 8: COPY TYPE_StringLiteral "png" def_%v_5 
+		 9: COPY TYPE_StringLiteral "jpeg" def_%v_6 
+		 10: COPY TYPE_Array def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
+		 11: %self->data_file_extension def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 12: %v_7->include? def_%v_9 %v_7[2.10,] %v_8[2.11,] 	 SYMBOL:	 ARGS:%v_8,
+		 13: RETURN %v_9[2.12,] %self[2.0,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = url instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_style_name 
+		 6: style_name[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->configuration def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_3->default_style def_%v_4 %v_3[3.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_style_name %v_4[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->data def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->url def_%v_6 %v_5[4.1,] style_name[3.2,2.5,] 	 SYMBOL:	 ARGS:style_name,
+		 3: RETURN %v_6[4.2,] %self[4.1,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = path instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_style_name 
+		 6: style_name[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->configuration def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_3->default_style def_%v_4 %v_3[3.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_style_name %v_4[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->data def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->path def_%v_6 %v_5[4.1,] style_name[3.2,2.5,] 	 SYMBOL:	 ARGS:style_name,
+		 3: RETURN %v_6[4.2,] %self[4.1,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = original_filename instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->data_file_name def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = size instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->data_file_size def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = content_type instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->data_content_type def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = config instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->definitions def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->content_block_class def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->[] def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->definitions def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %self->content_block_class def_%v_7 %self[3.0,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_6->[] def_%v_8 %v_6[3.0,] %v_7[3.1,] 	 SYMBOL:	 ARGS:%v_7,
+		 3: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_9 
+		 1: COPY TYPE_PASS def_%v_8 %v_9[4.0,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_content_defs %v_8[4.1,3.2,] 
+		 1: 
+		 2: %self->attachment_name def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: content_defs->[] def_%v_11 content_defs[5.0,] %v_10[5.2,] 	 SYMBOL:	 ARGS:%v_10,
+		 4: BRANCH %v_11[5.3,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: %self->attachment_name def_%v_12 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: content_defs->[] def_%v_13 content_defs[5.0,] %v_12[6.0,] 	 SYMBOL:	 ARGS:%v_12,
+		 2: RETURN %v_13[6.1,] %self[6.0,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_14 
+		 1: RETURN %v_14[7.0,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = has_assigned_content_type? instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->attachable_type def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->attachment_name def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_4[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_3[2.6,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = data_file_extension instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->data_file_name def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->data_file_name def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_StringLiteral "." def_%v_5 
+		 2: %v_4->[] def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 SYMBOL:	 ARGS:%v_5,
+		 3: COPY TYPE_PASS def_%v_3 %v_6[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.3,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %self->data_file_name def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_StringLiteral "." def_%v_8 
+		 2: %v_7->split def_%v_9 %v_7[5.0,] %v_8[5.1,] 	 SYMBOL:	 ARGS:%v_8,
+		 3: %v_9->last def_%v_10 %v_9[5.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_10->downcase def_%v_11 %v_10[5.3,] 	 SYMBOL:	 ARGS:
+		 5: RETURN %v_11[5.4,] %self[5.0,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sanitized_file_path_and_name instanceMethod = true
+BB 1
+	outgoing: 14 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 9 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->data_file_path def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->class def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->data_file_path def_%v_5 %self[3.1,2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_4->sanitize_file_path def_%v_6 %v_4[3.1,] %v_5[3.2,] 	 SYMBOL:	 ARGS:%v_5,
+		 4: ATTRASSIGN %self->data_file_path %v_6[3.3,] 
+		 5: 
+		 6: %self->data_file_path def_%v_7 %self[3.1,3.2,3.4,2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_7->empty? def_%v_8 %v_7[3.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_8->! def_%v_9 %v_8[3.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_9[3.8,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->data_file_path def_%v_10 %self[3.4,2.0,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_StringLiteral "/" def_%v_11 
+		 2: %v_10->starts_with? def_%v_12 %v_10[4.0,] %v_11[4.1,] 	 SYMBOL:	 ARGS:%v_11,
+		 3: %v_12->! def_%v_13 %v_12[4.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_PASS def_%v_9 %v_13[4.3,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_9[4.4,3.8,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+		 1: COPY TYPE_StringLiteral "/" def_%v_14 
+		 2: %self->data_file_path def_%v_15 %self[3.4,2.0,] 	 SYMBOL:	 ARGS:
+		 3: BUILDSTRING def_%v_16 %v_14[6.1,] %v_15[6.2,] 
+		 4: ATTRASSIGN %self->data_file_path %v_16[6.3,] 
+		 5: 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_16 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_16 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->data_file_name def_%v_17 %self[2.0,6.4,3.4,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_17[10.1,] 
+BB 11
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->class def_%v_18 %self[2.0,6.4,3.4,] 	 SYMBOL:	 ARGS:
+		 2: %self->data_file_name def_%v_19 %self[11.1,2.0,6.4,3.4,] 	 SYMBOL:	 ARGS:
+		 3: %v_18->sanitize_file_path def_%v_20 %v_18[11.1,] %v_19[11.2,] 	 SYMBOL:	 ARGS:%v_19,
+		 4: ATTRASSIGN %self->data_file_name %v_20[11.3,] 
+		 5: RETURN %v_20[11.3,] %self[11.1,11.2,11.4,2.0,6.4,3.4,] 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,6.4,3.4,] 
+BB 14
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_section instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->parent def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: RETURN %v_4[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: (Section) def_%v_5 
+		 2: %v_5->root def_%v_6 %v_5[4.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->first def_%v_7 %v_6[4.2,] 	 SYMBOL:	 ARGS:
+		 4: ATTRASSIGN %self->parent %v_7[4.3,] 
+		 5: RETURN %v_7[4.3,] %self[4.4,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = setup_attachment instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->data def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->config_value_for def_%v_4 %self[2.0,2.6,] 	 SYMBOL:url,	 ARGS:Symbol,
+		 8: %v_3->instance_variable_set def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:@url,	 ARGS:Symbol,%v_4,
+		 9: 
+		 10: %self->data def_%v_6 %self[2.0,2.6,2.7,] 	 SYMBOL:	 ARGS:
+		 11: %self->config_value_for def_%v_7 %self[2.0,2.6,2.7,2.10,] 	 SYMBOL:path,	 ARGS:Symbol,
+		 12: %v_6->instance_variable_set def_%v_8 %v_6[2.10,] %v_7[2.11,] 	 SYMBOL:@path,	 ARGS:Symbol,%v_7,
+		 13: 
+		 14: %self->data def_%v_9 %self[2.0,2.6,2.7,2.10,2.11,] 	 SYMBOL:	 ARGS:
+		 15: %self->config_value_for def_%v_10 %self[2.0,2.6,2.7,2.10,2.11,2.14,] 	 SYMBOL:styles,	 ARGS:Symbol,
+		 16: %v_9->instance_variable_set def_%v_11 %v_9[2.14,] %v_10[2.15,] 	 SYMBOL:@styles,	 ARGS:Symbol,%v_10,
+		 17: 
+		 18: %self->data def_%v_12 %self[2.0,2.6,2.7,2.10,2.11,2.14,2.15,] 	 SYMBOL:	 ARGS:
+		 19: %v_12->instance_variable_set def_%v_13 %v_12[2.18,] 	 SYMBOL:@normalized_styles,	 ARGS:Symbol,Nil,
+		 20: 
+		 21: %self->data def_%v_14 %self[2.0,2.6,2.7,2.10,2.11,2.14,2.15,2.18,] 	 SYMBOL:	 ARGS:
+		 22: %v_14->send def_%v_15 %v_14[2.21,] 	 SYMBOL:post_process_styles,	 ARGS:Symbol,
+		 23: RETURN %v_15[2.22,] %self[2.0,2.6,2.7,2.10,2.11,2.14,2.15,2.18,2.21,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_cardinality instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: 
+		 6: %self->cardinality def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: RETURN %v_4[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+		 1: %self->config def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->[] def_%v_6 %v_5[4.1,] 	 SYMBOL:type,	 ARGS:Symbol,
+		 3: %v_6->to_s def_%v_7 %v_6[4.2,] 	 SYMBOL:	 ARGS:
+		 4: ATTRASSIGN %self->cardinality %v_7[4.3,] 
+		 5: RETURN %v_7[4.3,] %self[4.1,4.4,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
