@@ -60,6 +60,7 @@ def read_each_class(class_name, class_node, filename)
 	cur_controller = Controller.new(filename, class_name)
 	$controllers[class_name] = cur_controller
 	$cur_controller = cur_controller
+	$cur_controller.get_layout_render
 	level = 0
 	traverse_ast(class_node, level)
 end
@@ -76,10 +77,10 @@ def traverse_ast(astnode, level)
 		astnode.children.each do |child|
 			traverse_ast(child, level+1)
 		end
-	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode"
+	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode" and astnode.type.to_s != "command"
 		if astnode.children[0].source == "render"
-			puts "In #{$cur_controller.controller_name}.#{$cur_action.action_name}"
-			puts "\tFind render stmt: #{astnode.source}"
+			#puts "In #{$cur_controller.controller_name}.#{$cur_action.action_name}"
+			#puts "\tFind render stmt: #{astnode.source}"
 			#render stmt
 			rnder = Render_stmt.new($cur_action, astnode)
 			rnder.parse_render
@@ -88,6 +89,9 @@ def traverse_ast(astnode, level)
 				traverse_ast(child, level+1)
 			end
 		end
+	elsif astnode.type.to_s == "command" and astnode.children[0] and astnode.children[0].source == "layout"
+		layout_name = get_left_most_leaf(astnode.children[1]).source
+		$cur_controller.find_layout(layout_name)
 	elsif astnode.class.to_s != "Symbol"
 		astnode.children.each do |child|
 			traverse_ast(child, level+1)

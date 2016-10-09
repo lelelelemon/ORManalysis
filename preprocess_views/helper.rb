@@ -21,6 +21,28 @@ def class_includes_functions(astnode)
 	end 
 end
 
+def is_ast_node(node)
+	if node != nil and node.class.to_s == "YARD::Parser::Ruby::AstNode"
+		return true
+	elsif node != nil
+		return node.class.ancestors.include?YARD::Parser::Ruby::AstNode
+	else
+		return false
+	end
+end
+
+def get_left_most_leaf(node)
+	rv = node	
+	while is_ast_node(rv) do
+		if rv.children.length > 0
+			rv = rv.children[0]
+		else
+			break
+		end
+	end
+	return rv
+end
+
 #Input: ProjectsController
 #Output: projects
 #Input: My::ProjectsController

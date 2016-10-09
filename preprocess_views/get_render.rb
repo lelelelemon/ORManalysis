@@ -3,9 +3,31 @@ class Controller
 	def initialize(fname, cname)
 		@file_name = fname
 		@controller_name = cname
+		#Here they are default renders
+		@render_stmts = Array.new
 		#puts "Find new class #{cname}"
 	end
-	attr_accessor :controller_name
+	attr_accessor :controller_name, :render_stmts
+	def get_layout_render
+		controller_path = get_controller_downcase(@controller_name).split("::")
+		controller_path = controller_path.join("/")
+		file_path = "#{$path_prefix}/#{$new_view_folder_name}/layouts/#{controller_path}.html.erb"
+		exist = File.exist?(file_path)
+		if exist
+			puts "#{@controller_name}: Default layout path = #{file_path}"
+			rnder = Render_stmt.new(self, nil)
+			rnder.is_layout = true
+		end
+	end
+	def find_layout(layout_name)
+		file_path = "#{$path_prefix}/#{$new_view_folder_name}/layouts/#{layout_name}.html.erb"
+		exist = File.exist?(file_path)
+		if exist
+			puts "#{@controller_name}: Defined layout path = #{file_path}"
+			rnder = Render_stmt.new(self, nil)
+			rnder.is_layout = true
+		end
+	end
 end
 
 class Action
@@ -20,10 +42,13 @@ class Action
 		controller_path = get_controller_downcase(@controller.controller_name).split("::")
 		controller_path = controller_path.join("/")
 		file_path = "#{$path_prefix}/#{$new_view_folder_name}/#{controller_path}/#{@action_name}.html.erb"
-		exist = $view_files.has_key?file_path
-		puts "default render path = #{file_path}"
+		exist = File.exist?(file_path)
+		if exist
+			#puts "default render path = #{file_path}, exist = #{exist}"
+			rnder = Render_stmt.new(self, nil)
+			rnder.is_default = true
+		end
 	end
-
 end
 
 class View_file
@@ -74,6 +99,7 @@ class Render_stmt
 		@is_layout = false
 		@astnode = astnode
 	end
+	attr_accessor :is_default, :is_layout, :astnode, :action
 	def parse_render
 	end
 end
