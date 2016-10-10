@@ -43,10 +43,51 @@ def get_left_most_leaf(node)
 	return rv
 end
 
+#pre-order traverse
+def recursive_parse_render(cur_node, key_words)
+	if key_words.include?cur_node.type.to_s and cur_node.children.length == 0
+		if cur_node.source != "render"
+			$node_stack.push(cur_node)
+		end
+	end
+	cur_node.children.each do |child|
+		recursive_parse_render(child, key_words)
+	end
+end
+
 #Input: ProjectsController
 #Output: projects
 #Input: My::ProjectsController
-#Output: my::projects 
+#Output: my::projects
+#Input: AuthSourcesController
+#Output: auth_sources 
+def helper_downcase(str)
+	state = 0
+	char_array = []
+	str.split("").each do |c|
+		if c == c.capitalize and state == 1
+			char_array.push('_')
+			char_array.push(c.downcase)
+		else
+			state = 1
+			char_array.push(c.downcase)
+		end
+	end
+	return char_array.join("")
+end
 def get_controller_downcase(controller_name)
-	return controller_name.downcase.gsub("controller","")	
+	#return controller_name.downcase.gsub("controller","")
+	str = controller_name.gsub("Controller", "")
+	if str.include?"::"
+		chs = str.split("::")
+		word_array = []
+		chs.each do |c|
+			word_array.push(helper_downcase)
+		end
+		return word_array.join("::")
+	else
+		state = 0
+		str = helper_downcase(str)
+		return str	
+	end
 end

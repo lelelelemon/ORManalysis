@@ -11,3 +11,5 @@ $actions = Hash.new
 $controllers = Hash.new
 $cur_controller = nil
 $cur_action = nil
+
+$node_stack = nil
