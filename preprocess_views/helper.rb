@@ -76,6 +76,8 @@ def helper_downcase(str)
 	return char_array.join("")
 end
 def get_controller_downcase(controller_name)
+	return "" unless controller_name.include?"Controller"
+	
 	#return controller_name.downcase.gsub("controller","")
 	str = controller_name.gsub("Controller", "")
 	if str.include?"::"

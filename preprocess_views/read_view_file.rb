@@ -16,3 +16,12 @@ def read_view_files
 		end
 	end
 end
+
+def find_view_file(view_file)
+	$view_files.each do |k, v|
+		if same_file(k, view_file) 
+			return v
+		end
+	end
+	return nil
+end

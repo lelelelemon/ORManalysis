@@ -6,24 +6,37 @@ class BaseStructure
 	attr_accessor :render_stmts, :use_layout
 end
 
+class Helper < BaseStructure
+	def initialize(fname, cname)
+		super()
+		@name = cname
+		@upper_class = nil
+		@actions = Array.new
+	end
+	attr_accessor :name, :upper_class, :actions
+	def exist_layout
+		return false
+	end
+end
+
 class Controller < BaseStructure
 	def initialize(fname, cname)
 		super()
 		@file_name = fname
-		@controller_name = cname
+		@name = cname
 		#Here they are default renders
 		#puts "Find new class #{cname}"
 		@upper_class = nil
 		@actions = Array.new
 	end
-	attr_accessor :controller_name, :upper_class, :actions
+	attr_accessor :name, :upper_class, :actions
 	def get_layout_render
-		controller_path = get_controller_downcase(@controller_name).split("::")
+		controller_path = get_controller_downcase(@name).split("::")
 		controller_path = controller_path.join("/")
 		file_path = "#{$path_prefix}/#{$new_view_folder_name}/layouts/#{controller_path}.html.erb"
 		exist = File.exist?(file_path)
 		if exist
-			puts "#{@controller_name}: Default layout path = #{file_path}"
+			#puts "#{@name}: Default layout path = #{file_path}"
 			rnder = Render_stmt.new(self, nil, file_path)
 			rnder.is_layout = true
 		end
@@ -32,7 +45,7 @@ class Controller < BaseStructure
 		file_path = "#{$path_prefix}/#{$new_view_folder_name}/layouts/#{layout_name}.html.erb"
 		exist = File.exist?(file_path)
 		if exist
-			#puts "#{@controller_name}: Defined layout path = #{file_path}"
+			#puts "#{@name}: Defined layout path = #{file_path}"
 			rnder = Render_stmt.new(self, nil, file_path)
 			rnder.is_layout = true
 		end
@@ -60,14 +73,18 @@ class Action < BaseStructure
 		super()
 		@controller = controller
 		controller.actions.push(self)
-		@action_name = aname
-		#puts "Find new action #{controller.controller_name}.#{aname}"
+		@name = aname
+		#This array collects all the renders solved recursively
+		#Final merge_controller append all renders to the end of the action
+		@render_stack = Array.new
+		@is_entrance = false
+		#puts "Find new action #{controller.name}.#{aname}"
 	end
-	attr_accessor :action_name, :controller
+	attr_accessor :name, :controller, :render_stack, :is_entrance
 	def get_default_render
-		controller_path = get_controller_downcase(@controller.controller_name).split("::")
+		controller_path = get_controller_downcase(@controller.name).split("::")
 		controller_path = controller_path.join("/")
-		file_path = "#{$path_prefix}/#{$new_view_folder_name}/#{controller_path}/#{@action_name}.html.erb"
+		file_path = "#{$path_prefix}/#{$new_view_folder_name}/#{controller_path}/#{@name}.html.erb"
 		exist = File.exist?(file_path)
 		if exist
 			#puts "default render path = #{file_path}, exist = #{exist}"
@@ -90,6 +107,23 @@ class Action < BaseStructure
 			end
 		end
 		return nil
+	end
+	def push_to_render_stack(r)
+		@render_stack.each do |rnd|
+			if rnd.valid_file_path and r.valid_file_path and same_file(rnd.render_file, r.render_file)
+				return false
+			end
+		end
+		@render_stack.push(r)
+		return true
+	end
+	def has_non_default_or_layout_render
+		@render_stmts.each do |r|
+			if r.is_default == false and r.is_layout == false
+				return true
+			end
+		end
+		return false
 	end
 end
 
@@ -148,6 +182,9 @@ class Render_stmt
 		self.parse_render
 	end
 	attr_accessor :is_default, :is_layout, :astnode, :action, :render_file
+	def valid_file_path
+		return @render_file.length > 0
+	end
 	def parse_render
 		if @astnode == nil
 			return
@@ -156,7 +193,7 @@ class Render_stmt
 		$node_stack = Array.new
 		recursive_parse_render(@astnode, $render_key_words)
 		#if @action.instance_of?Action
-		#	print "#{@action.controller.controller_name}.#{@action.action_name}:"
+		#	print "#{@action.controller.name}.#{@action.name}:"
 		#end
 		#puts "parse render: #{@astnode.source} (#{$node_stack.length})"
 		state = 0
@@ -176,11 +213,12 @@ class Render_stmt
 		#puts str	
 		@properties.each do |k,v|
 			if k == "partial" or k == "template" or k == "action"
-				controller_name = ""
+				name = ""
 				if @action.instance_of?Action
-					controller_name = get_controller_downcase(@action.controller.controller_name).gsub("::","/")
+					#TODO: for helpers, if a helper is included in a function, it should search for the name of that function, instead of helper class name...
+					name = get_controller_downcase(@action.controller.name).gsub("::","/")
 				elsif @action.instance_of?View_file
-					controller_name = @action.controller.gsub("::","/")
+					name = @action.controller.gsub("::","/")
 				end
 				file_path = ""
 				if v.include?'/'
@@ -192,9 +230,9 @@ class Render_stmt
 					end
 				else
 					if k == "partial"
-						file_path = "#{$path_prefix}/#{$new_view_folder_name}/#{controller_name}/_#{v}.html.erb" 
+						file_path = "#{$path_prefix}/#{$new_view_folder_name}/#{name}/_#{v}.html.erb" 
 					else
-						file_path = "#{$path_prefix}/#{$new_view_folder_name}/#{controller_name}/#{v}.html.erb" 
+						file_path = "#{$path_prefix}/#{$new_view_folder_name}/#{name}/#{v}.html.erb" 
 					end
 				end
 				exist = File.exist?(file_path)
@@ -218,7 +256,7 @@ class Render_stmt
 		if @render_file.length == 0 and @astnode and set_layout == false
 			str = "Empty render -> "
 			if @action.instance_of?Action
-				str += "#{@action.controller.controller_name}.#{@action.action_name}: "
+				str += "#{@action.controller.name}.#{@action.name}: "
 			elsif @action.instance_of?View_file
 				str += "#{@action.file_path}: "
 			end

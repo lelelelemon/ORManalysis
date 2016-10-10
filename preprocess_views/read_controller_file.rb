@@ -1,19 +1,31 @@
 require 'yard'
 
-def read_controller_files
-	root, files, dirs = os_walk($controller_dir)
+def read_entrance_actions
+	fp = File.open("#{$path_prefix}/calls.txt", "r")
+	fp.each_line do |line|
+		chs = line.gsub("\n","").split(",")
+		$actions.each do |k, a|
+			if get_controller_downcase(a.controller.name) == chs[0] and a.name == chs[1]
+				a.is_entrance = true
+			end
+		end
+	end
+end
+
+def read_controller_files(file_dir, is_controller)
+	root, files, dirs = os_walk(file_dir)
 	for filename in files
 		if filename.to_s.end_with?(".rb")
 			fp = File.open(filename.to_s, "r")
 			contents = fp.read
 			ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 			@class_stack = Array.new
-			recursive_get_class_stack(ast, @class_stack, filename)
+			recursive_get_class_stack(ast, @class_stack, filename, is_controller)
 		end
 	end
 end
 
-def recursive_get_class_stack(astnode, class_stack, filename)
+def recursive_get_class_stack(astnode, class_stack, filename, is_controller)
 	if astnode.is_a?YARD::Parser::Ruby::AstNode
 		if astnode.type.to_s == "class" or astnode.type.to_s == "module"
 			class_stack.push(astnode)
@@ -39,31 +51,36 @@ def recursive_get_class_stack(astnode, class_stack, filename)
 				if @has_subclass
 					@has_sub = true
 					#read_each_class(@class_name, astnode, filename)
-					recursive_get_class_stack(child, class_stack, filename)
+					recursive_get_class_stack(child, class_stack, filename, is_controller)
 				end
 			end
 			if (@has_sub and @include_function) or @has_sub == false
-				read_each_class(@class_name, astnode, filename)
+				read_each_class(@class_name, astnode, filename, is_controller)
 			else
 				#puts "#{@class_name} is not read!!! #{@has_sub} #{@include_function}"
 			end
 			class_stack.pop
 		else
 			astnode.each do |child|
-				recursive_get_class_stack(child, class_stack, filename)
+				recursive_get_class_stack(child, class_stack, filename, is_controller)
 			end
 		end 
 	end
 end
 
-def read_each_class(class_name, class_node, filename)
-	cur_controller = Controller.new(filename, class_name)
-	$controllers[class_name] = cur_controller
-	$cur_controller = cur_controller
-	$cur_controller.get_layout_render
+def read_each_class(class_name, class_node, filename, is_controller)
+	if is_controller
+		cur_controller = Controller.new(filename, class_name)
+		$controllers[class_name] = cur_controller
+		$cur_class = cur_controller
+		$cur_class.get_layout_render
+	else
+		cur_helper = Helper.new(filename, class_name)
+		$cur_class = cur_helper
+	end
 	if class_node.children[1].type.to_s == "const_path_ref" or class_node.children[1].type.to_s  == "var_ref"
 		upper_class = class_node.children[1].source.to_s
-		$cur_controller.upper_class = upper_class
+		$cur_class.upper_class = upper_class
 	end
 
 	level = 0
@@ -77,16 +94,18 @@ def traverse_ast(astnode, level)
 		if @method_name == "self"
 			@method_name = astnode.children[2].source.to_s
 		end
-		$cur_action = Action.new($cur_controller, @method_name)
-		$cur_action.get_default_render
-		$actions[@method_name] = $cur_action
+		$cur_action = Action.new($cur_class, @method_name)
+		if $cur_class.instance_of?Controller
+			$cur_action.get_default_render
+		end
+		$actions["#{$cur_class.name}.#{@method_name}"] = $cur_action
 		astnode.children.each do |child|
 			traverse_ast(child, level+1)
 		end
 		$cur_action = nil
 	elsif astnode.class.to_s == "YARD::Parser::Ruby::MethodCallNode" and astnode.type.to_s != "command"
 		if astnode.children[0].source == "render"
-			#puts "In #{$cur_controller.controller_name}.#{$cur_action.action_name}"
+			#puts "In #{$cur_class.name}.#{$cur_action.name}"
 			#puts "\tFind render stmt: #{astnode.source}"
 			#render stmt
 			rnder = Render_stmt.new($cur_action, astnode)
@@ -97,7 +116,9 @@ def traverse_ast(astnode, level)
 		end
 	elsif astnode.type.to_s == "command" and astnode.children[0] and astnode.children[0].source == "layout"
 		layout_name = get_left_most_leaf(astnode.children[1]).source
-		$cur_controller.find_layout(layout_name)
+		if $cur_class.instance_of?Controller
+			$cur_class.find_layout(layout_name)
+		end
 	elsif astnode.type.to_s == "command" and astnode.children[0] and astnode.children[0].source == "render"
 		rnder = Render_stmt.new($cur_action, astnode)
 		#puts "\tFind render stmt in command: #{astnode.source}"
@@ -123,7 +144,7 @@ def resolve_upper_class
 		if v.controller.upper_class and $controllers[v.controller.upper_class]
 			if v.exist_template == false 
 				$controllers[v.controller.upper_class].actions.each do |a|
-					if a.action_name == v.action_name and a.exist_template
+					if a.name == v.name and a.exist_template
 						v.render_stmts.push(a.get_template)
 					end
 				end

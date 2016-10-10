@@ -20,3 +20,7 @@ def run_command(cmd)
 	#system(cmd)
 end
 
+def same_file(f1, f2)
+	#TODO: replace this with ruby path_equal function
+	return f1.gsub('/','') == f2.gsub('/','')
+end

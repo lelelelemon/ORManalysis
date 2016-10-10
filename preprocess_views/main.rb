@@ -6,6 +6,7 @@ load 'util.rb'
 load 'get_render.rb'
 load 'read_view_file.rb'
 load 'read_controller_file.rb'
+load 'recursive_render.rb'
 
 options = {}
 opt_parser = OptionParser.new do |opt|
@@ -18,6 +19,10 @@ opt_parser = OptionParser.new do |opt|
 	
 	opt.on("-m","--haml","Is Haml code","example: -m") do |haml|
 		options[:haml] = true
+	end
+
+	opt.on("-e", "--has-helper","Has helper folder","example: -e") do |helper|
+		options[:helper] = true
 	end
 
 	opt.on("-h","--help","help") do
@@ -46,11 +51,21 @@ else
 	$new_controller_dir = "../applications/#{options[:application]}/merged_controllers/"
 	run_command("rm -rf #{$new_controller_dir}")
 	run_command("mkdir #{$new_controller_dir}")
-
+	if options[:helper]
+		$helper_dir = "../applications/#{options[:application]}/helpers/"
+		$new_helper_dir = "../applications/#{options[:application]}/merged_helpers/"
+		run_command("rm -rf #{$new_helper_dir}")
+		run_command("mkdir #{$new_helper_dir}")
+	end
 end
 
 read_view_files
-read_controller_files
+read_controller_files($controller_dir, true)
+if options[:helper]
+	read_controller_files($helper_dir, false)
+end
 #The following function should be called twice because I am not recursively solving upper class...
 resolve_upper_class
 resolve_upper_class
+read_entrance_actions
+solve_all_renders
