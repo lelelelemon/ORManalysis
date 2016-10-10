@@ -51,4 +51,6 @@ end
 
 read_view_files
 read_controller_files
-
+#The following function should be called twice because I am not recursively solving upper class...
+resolve_upper_class
+resolve_upper_class

@@ -1,4 +1,3 @@
-
 class Controller
 	def initialize(fname, cname)
 		@file_name = fname
@@ -6,8 +5,10 @@ class Controller
 		#Here they are default renders
 		@render_stmts = Array.new
 		#puts "Find new class #{cname}"
+		@upper_class = nil
+		@actions = Array.new
 	end
-	attr_accessor :controller_name, :render_stmts
+	attr_accessor :controller_name, :render_stmts, :upper_class, :actions
 	def get_layout_render
 		controller_path = get_controller_downcase(@controller_name).split("::")
 		controller_path = controller_path.join("/")
@@ -28,16 +29,33 @@ class Controller
 			rnder.is_layout = true
 		end
 	end
+	def exist_layout
+		@render_stmts.each do |r|
+			if r.is_layout
+				return true
+			end
+		end
+		return false
+	end
+	def get_layout
+		@render_stmts.each do |r|
+			if r.is_layout
+				return r
+			end
+		end
+		return nil
+	end
 end
 
 class Action
 	def initialize(controller, aname)
 		@render_stmts = Array.new
 		@controller = controller
+		controller.actions.push(self)
 		@action_name = aname
 		#puts "Find new action #{controller.controller_name}.#{aname}"
 	end
-	attr_accessor :render_stmts, :action_name
+	attr_accessor :render_stmts, :action_name, :controller
 	def get_default_render
 		controller_path = get_controller_downcase(@controller.controller_name).split("::")
 		controller_path = controller_path.join("/")
@@ -49,11 +67,28 @@ class Action
 			rnder.is_default = true
 		end
 	end
+	def exist_template
+		@render_stmts.each do |r|
+			if r.is_default
+				return true
+			end	
+		end
+		return false
+	end
+	def get_template
+		@render_stmts.each do |r|
+			if r.is_default
+				return r
+			end
+		end
+		return nil
+	end
 end
 
 class View_file
 	def initialize(file_path)
 		@file_path = file_path
+		@render_stmts = Array.new
 		state = 0
 		@controller = ""
 		@action = ""
@@ -88,6 +123,7 @@ class View_file
 		end
 		#puts "\tcontroller = #{@controller}, action = #{@action}"
 	end
+	attr_accessor :render_stmts, :file_path
 end
 
 class Render_stmt

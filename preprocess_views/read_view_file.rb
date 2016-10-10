@@ -6,8 +6,13 @@ def read_view_files
 			#TODO: full path
 			view_file = View_file.new(new_file_name)
 			$view_files[new_file_name] = view_file
-			
 			run_command("#{$extract_ruby_script} #{filename} #{new_file_name}")
+			fp = File.open(view_file.file_path, "r")
+			contents = fp.read
+			ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
+			#TODO: This is a bit messy... $cur_action and view_file should be of different types
+			$cur_action = view_file
+			traverse_ast(ast, 0)	
 		end
 	end
 end
