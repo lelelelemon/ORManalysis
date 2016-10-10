@@ -1,1 +1,0 @@
-stories,submit_suggestions

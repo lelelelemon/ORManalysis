@@ -50,7 +50,7 @@ load 'compute_dataflow_chain_stat.rb'
 load 'compute_redundant_field_access.rb'
 load 'compute_select_condition.rb'
 
-load 'dump_graph.rb'
+#load 'dump_graph.rb'
 
 #Static count:
 load 'static_code_analysis.rb'
@@ -144,21 +144,28 @@ opt_parser = OptionParser.new do |opt|
 		options[:run_all] = true
 	end
 
-	opt.on("-g","--dump-graph","only dump graph, donot collect stats") do |dump|
-		options[:dump_graph] = true
-	end
+	#opt.on("-g","--dump-graph","only dump graph, donot collect stats") do |dump|
+	#	options[:dump_graph] = true
+	#end
 
 	opt.on("-i", "--only-type-inference","Only do type inference, and search method by name upon function call.","Using this option the script may not be able to resolve every function call, but no need for dynamic type logs.") do |inference|
 		options[:inference] = true
 	end
 
-	opt.on("-v", "--print-validation",String,"Print queries in validation") do |print_validation|
-		options[:print_validation] = true
-	end
+	#opt.on("-v", "--print-validation",String,"Print queries in validation") do |print_validation|
+	#	options[:print_validation] = true
+	#end
 
 
-	opt.on("-n", "--print-instr [CLASS_NAME]",String,"Print instructions and CFG of all methods in the specified class") do |class_name|
-		options[:printinstr] = class_name
+	#opt.on("-n", "--print-instr [CLASS_NAME]",String,"Print instructions and CFG of all methods in the specified class") do |class_name|
+	#	options[:printinstr] = class_name
+	#end
+
+	opt.on("-f", "--print-dataflow CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name,action_name; print the dataflow and controlflow of the action") do |print_flow_input|
+		options[:print_flow] = true
+		if options[:trace] == nil
+			options[:trace]  = print_flow_input
+		end
 	end
 
 	opt.on("-t", "--trace-dataflow CLASS_NAME,FUNCTION_NAME",Array,"needs two arguments, class_name,function_name; print call graph and data flow to a file, use graphviz to visualize") do |trace_input|
@@ -276,7 +283,7 @@ if options[:output] != nil
 end
 
 
-if options[:trace_flow] or options[:random_path] or options[:stats] or options[:query_graph]
+if options[:trace_flow] or options[:stats] or options[:query_graph]
 	start_class = options[:trace][0]
 	start_function = options[:trace][1]
 	level = 0
@@ -414,7 +421,8 @@ if options[:run_all]
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w")
-		$vis_file = File.open("#{$output_dir}/qgraph_vis.gv", "w")
+		vis_file_name = "#{$output_dir}/qgraph_vis.gv"
+		$vis_file = File.open(vis_file_name, "w")
 		$temp_file = File.open("#{$output_dir}/trace.log","w")
 		if options[:dump_graph]
 			trace_query_flow(start_class, start_function, "", "", 0)
@@ -438,6 +446,11 @@ if options[:run_all]
 		$query_edges = Array.new
 
 		compute_dataflow_stat($output_dir, start_class, start_function)
+		
+		$vis_file.close
+		system "dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
+
+		puts "command : dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
 		puts "+++ Take time: #{time_diff(Time.now, time1)} +++"
 	#start print overlap between current and next controller actions
 		next_file = nil
@@ -531,7 +544,7 @@ if options[:consequent] != nil
 		@prev_list.push(n)
 	end
 
-	view_by_controllers_dir = "../zewei/view_controller_analysis/links_by_controllers/lobsters/#{start_class}_#{start_function}.txt"
+	view_by_controllers_dir = "../applications/lobsters/next_calls/#{start_class}_#{start_function}.txt"
 	@next_action = Array.new
 	File.open(view_by_controllers_dir, "r").each do |line|
 		if line.length > 1
@@ -588,3 +601,29 @@ if options[:print_validation] == true
 end
 
 
+if options[:print_flow]
+	start_class = options[:trace][0]
+	start_function = options[:trace][1]
+	$temp_file = File.open("#{$output_dir}/trace.log","w")
+	$output_dir = "./"
+	vis_file_name = "#{$output_dir}/qgraph_vis.gv"
+	$vis_file = File.open(vis_file_name, "w")
+
+	#some initialization
+	$cur_node = nil
+	$root = nil
+	$non_repeat_list = Array.new
+	$call_stack_trace = Array.new
+	$global_check = Hash.new
+	$node_list = Array.new
+	$cur_query_stack = Array.new
+	$query_edges = Array.new
+
+	compute_dataflow_stat($output_dir, start_class, start_function)
+	
+	$vis_file.close
+	system "dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
+
+	puts "command : dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
+
+end
