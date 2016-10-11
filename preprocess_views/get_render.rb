@@ -8,12 +8,13 @@ end
 
 class Helper < BaseStructure
 	def initialize(fname, cname)
-		super()
+		super()	
+		@file_name = fname
 		@name = cname
 		@upper_class = nil
 		@actions = Array.new
 	end
-	attr_accessor :name, :upper_class, :actions
+	attr_accessor :name, :upper_class, :actions, :file_name
 	def exist_layout
 		return false
 	end
@@ -29,7 +30,7 @@ class Controller < BaseStructure
 		@upper_class = nil
 		@actions = Array.new
 	end
-	attr_accessor :name, :upper_class, :actions
+	attr_accessor :name, :upper_class, :actions, :file_name
 	def get_layout_render
 		controller_path = get_controller_downcase(@name).split("::")
 		controller_path = controller_path.join("/")
@@ -69,7 +70,7 @@ class Controller < BaseStructure
 end
 
 class Action < BaseStructure
-	def initialize(controller, aname)
+	def initialize(controller, aname, ast)
 		super()
 		@controller = controller
 		controller.actions.push(self)
@@ -78,9 +79,11 @@ class Action < BaseStructure
 		#Final merge_controller append all renders to the end of the action
 		@render_stack = Array.new
 		@is_entrance = false
+		@astnode = ast
+		@replaced_code = ""
 		#puts "Find new action #{controller.name}.#{aname}"
 	end
-	attr_accessor :name, :controller, :render_stack, :is_entrance
+	attr_accessor :name, :controller, :render_stack, :is_entrance, :astnode, :replaced_code
 	def get_default_render
 		controller_path = get_controller_downcase(@controller.name).split("::")
 		controller_path = controller_path.join("/")
@@ -166,6 +169,10 @@ class View_file < BaseStructure
 		#puts "\tcontroller = #{@controller}, action = #{@action}"
 	end
 	attr_accessor :file_path, :controller, :action
+	def get_content	
+		content = File.open(@file_path, "r").read
+		return content
+	end
 end
 
 $render_key_words=["ident","tstring_content","kw", "int"]
@@ -182,6 +189,14 @@ class Render_stmt
 		self.parse_render
 	end
 	attr_accessor :is_default, :is_layout, :astnode, :action, :render_file
+	def get_content
+		if File.exist?(@render_file)
+			content = File.open(@render_file, "r").read
+			return content
+		else
+			return ""
+		end
+	end
 	def valid_file_path
 		return @render_file.length > 0
 	end

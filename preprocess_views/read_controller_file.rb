@@ -20,7 +20,7 @@ def read_controller_files(file_dir, is_controller)
 			contents = fp.read
 			ast = YARD::Parser::Ruby::RubyParser.parse(contents).root
 			@class_stack = Array.new
-			recursive_get_class_stack(ast, @class_stack, filename, is_controller)
+			recursive_get_class_stack(ast, @class_stack, filename.to_s, is_controller)
 		end
 	end
 end
@@ -76,6 +76,8 @@ def read_each_class(class_name, class_node, filename, is_controller)
 		$cur_class.get_layout_render
 	else
 		cur_helper = Helper.new(filename, class_name)
+		$helpers[class_name] = cur_helper
+		puts "PUSH HELPER: #{class_name}"
 		$cur_class = cur_helper
 	end
 	if class_node.children[1].type.to_s == "const_path_ref" or class_node.children[1].type.to_s  == "var_ref"
@@ -94,7 +96,7 @@ def traverse_ast(astnode, level)
 		if @method_name == "self"
 			@method_name = astnode.children[2].source.to_s
 		end
-		$cur_action = Action.new($cur_class, @method_name)
+		$cur_action = Action.new($cur_class, @method_name, astnode.children[-1])
 		if $cur_class.instance_of?Controller
 			$cur_action.get_default_render
 		end

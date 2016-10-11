@@ -23,6 +23,7 @@ opt_parser = OptionParser.new do |opt|
 
 	opt.on("-e", "--has-helper","Has helper folder","example: -e") do |helper|
 		options[:helper] = true
+		$has_helper = true
 	end
 
 	opt.on("-h","--help","help") do
@@ -47,13 +48,13 @@ else
 	$new_view_dir = "../applications/#{options[:application]}/#{$new_view_folder_name}/"
 	run_command("rm -rf #{$new_view_dir}")
 	run_command("mkdir #{$new_view_dir}")
-	$controller_dir = "../applications/#{options[:application]}/controllers/"
-	$new_controller_dir = "../applications/#{options[:application]}/merged_controllers/"
+	$controller_dir = "../applications/#{options[:application]}/#{$controller_folder_name}/"
+	$new_controller_dir = "../applications/#{options[:application]}/#{$new_controller_folder_name}/"
 	run_command("rm -rf #{$new_controller_dir}")
 	run_command("mkdir #{$new_controller_dir}")
 	if options[:helper]
-		$helper_dir = "../applications/#{options[:application]}/helpers/"
-		$new_helper_dir = "../applications/#{options[:application]}/merged_helpers/"
+		$helper_dir = "../applications/#{options[:application]}/#{$helper_folder_name}/"
+		$new_helper_dir = "../applications/#{options[:application]}/#{$new_helper_folder_name}/"
 		run_command("rm -rf #{$new_helper_dir}")
 		run_command("mkdir #{$new_helper_dir}")
 	end
@@ -69,3 +70,4 @@ resolve_upper_class
 resolve_upper_class
 read_entrance_actions
 solve_all_renders
+replace_files
