@@ -596,6 +596,7 @@ class GetField_instr < Call_instr
 		super(_caller, _func_name)
 		@field = _func_name
 	end
+	attr_accessor :field
 	def toString
 		s = "GETFIELD "
 		s = s + super
