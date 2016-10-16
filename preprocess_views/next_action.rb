@@ -47,6 +47,16 @@ class Next_action
 				@action = r[1]
 			end
 		end
+		if self.valid_action == false and @astnode.source.include?"form_for"
+			v = get_first_localvar(@astnode)
+			if v != nil
+				c = has_controller(v)
+				if c != nil 
+					@controller = c
+					@action = "new"
+				end
+			end
+		end
 		#debug
 		if self.valid_action == false
 			puts "URL PATH CANNOT FOUND: #{@astnode.source}"
@@ -128,6 +138,19 @@ def traverse_ast_and_get_path(na_stack, astnode)
 			traverse_ast_and_get_path(na_stack, child)
 		end
 	end
+end
+
+def get_first_localvar(astnode)
+	if astnode.type.to_s == "ivar"
+		return astnode.source.gsub("@","")
+	end
+	astnode.children.each do |c|
+		v = get_first_localvar(c)
+		if v != nil
+			return v
+		end
+	end
+	return nil
 end
 
 def find_view_file_by_path(render_file)

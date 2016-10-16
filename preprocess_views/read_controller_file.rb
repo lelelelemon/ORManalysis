@@ -77,7 +77,6 @@ def read_each_class(class_name, class_node, filename, is_controller)
 	else
 		cur_helper = Helper.new(filename, class_name)
 		$helpers[class_name] = cur_helper
-		puts "PUSH HELPER: #{class_name}"
 		$cur_class = cur_helper
 	end
 	if class_node.children[1].type.to_s == "const_path_ref" or class_node.children[1].type.to_s  == "var_ref"
