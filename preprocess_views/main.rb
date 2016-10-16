@@ -6,6 +6,7 @@ load 'util.rb'
 load 'get_render.rb'
 load 'read_view_file.rb'
 load 'read_controller_file.rb'
+load 'next_action.rb'
 load 'recursive_render.rb'
 
 options = {}
@@ -15,6 +16,15 @@ opt_parser = OptionParser.new do |opt|
 	opt.on("-a","--application APP",String,"Application name","example: -a redmine") do |app|
 		options[:application] = app
 		$app_name = app
+	end
+
+	opt.on("-f", "--only-pathfunc", "Only generate path functions for next calls", "example: -p") do |pathfunc|
+		$only_generate_nextcall_pathfunc = true
+	end
+
+	opt.on("-n", "--next-calls", "generate next actions", "example: -n") do |na|
+		options[:next_action] = true
+		$only_generate_nextcall = true
 	end
 	
 	opt.on("-m","--haml","Is Haml code","example: -m") do |haml|
@@ -50,6 +60,7 @@ else
 	run_command("mkdir #{$new_view_dir}")
 	$controller_dir = "../applications/#{options[:application]}/#{$controller_folder_name}/"
 	$new_controller_dir = "../applications/#{options[:application]}/#{$new_controller_folder_name}/"
+	$routes_file = "../applications/#{options[:application]}/routes.rb"
 	run_command("rm -rf #{$new_controller_dir}")
 	run_command("mkdir #{$new_controller_dir}")
 	if options[:helper]
@@ -58,9 +69,21 @@ else
 		run_command("rm -rf #{$new_helper_dir}")
 		run_command("mkdir #{$new_helper_dir}")
 	end
+	$next_action_dir = "../applications/#{options[:application]}/next_calls/"
+	if options[:next_action]
+		run_command("rm -rf #{$next_action_dir}")
+		run_command("mkdir #{$next_action_dir}")
+	end
 end
 
 read_view_files
+
+if $only_generate_nextcall_pathfunc
+	solve_next_actions
+	generate_path_func_script
+	exit
+end
+
 read_controller_files($controller_dir, true)
 if options[:helper]
 	read_controller_files($helper_dir, false)
@@ -69,5 +92,11 @@ end
 resolve_upper_class
 resolve_upper_class
 read_entrance_actions
+
 solve_all_renders
-replace_files
+if options[:next_action]
+	solve_next_actions
+	generate_nextaction_files
+else
+	replace_files
+end

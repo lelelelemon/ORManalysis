@@ -111,6 +111,11 @@ def traverse_ast(astnode, level)
 			#puts "\tFind render stmt: #{astnode.source}"
 			#render stmt
 			rnder = Render_stmt.new($cur_action, astnode)
+		elsif ["link_to","url_for","form_for","labelled_form_for"].include?astnode.children[0].source or astnode.children[0].source.start_with?("link_to")
+			#Noting that here $cur_action can only be of View_file type
+			if $cur_action.instance_of?View_file
+				next_action = Next_action.new($cur_action, astnode)
+			end
 		else
 			astnode.children.each do |child|
 				traverse_ast(child, level+1)
@@ -124,6 +129,10 @@ def traverse_ast(astnode, level)
 	elsif astnode.type.to_s == "command" and astnode.children[0] and astnode.children[0].source == "render"
 		rnder = Render_stmt.new($cur_action, astnode)
 		#puts "\tFind render stmt in command: #{astnode.source}"
+	elsif astnode.type.to_s == "command" and astnode.children[0] and (["link_to","url_for","form_for","labelled_form_for"].include?astnode.children[0].source or astnode.children[0].source.start_with?("link_to"))
+		if $cur_action.instance_of?View_file
+			next_action = Next_action.new($cur_action, astnode)
+		end
 	elsif astnode.class.to_s != "Symbol"
 		astnode.children.each do |child|
 			traverse_ast(child, level+1)

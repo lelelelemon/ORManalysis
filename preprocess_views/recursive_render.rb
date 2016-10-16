@@ -2,15 +2,17 @@ def solve_all_renders
 	$actions.each do |k, a|
 		if a.is_entrance or a.has_non_default_or_layout_render
 			solve_render_for_action(a)
-			puts "Action: #{a.controller.name}.#{a.name} renders:"
-			str = ""
-			a.render_stack.each do |r|
-				puts "\t#{r.render_file}"
+			if $only_generate_nextcall == false
+				puts "Action: #{a.controller.name}.#{a.name} renders:"
+				str = ""
+				a.render_stack.each do |r|
+					puts "\t#{r.render_file}"
+					str += "\n"
+					str += r.get_content
+				end
 				str += "\n"
-				str += r.get_content
+				a.replaced_code = str 
 			end
-			str += "\n"
-			a.replaced_code = str 
 		end
 	end
 end

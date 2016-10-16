@@ -2,8 +2,9 @@ class BaseStructure
 	def initialize
 		@render_stmts = Array.new
 		@use_layout = true
+		@next_actions = Array.new
 	end
-	attr_accessor :render_stmts, :use_layout
+	attr_accessor :render_stmts, :use_layout, :next_actions
 end
 
 class Helper < BaseStructure
@@ -161,6 +162,7 @@ class View_file < BaseStructure
 				end
 				break
 			end
+			$controller_names_downcase.push(@controller) unless $controller_names_downcase.include?(@controller)
 		end
 		if File.directory?(words[0...-1].join('/'))
 		else
