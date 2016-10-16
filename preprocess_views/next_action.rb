@@ -46,7 +46,11 @@ class Next_action
 				@controller = r[0]
 				@action = r[1]
 			end
-		end	
+		end
+		#debug
+		if self.valid_action == false
+			puts "URL PATH CANNOT FOUND: #{@astnode.source}"
+		end
 	end
 end
 
@@ -59,6 +63,7 @@ def generate_path_func_script
 			if na.path_function.length > 0
 				@path_funcs.push(na.path_function) unless @path_funcs.include?(na.path_function)
 			elsif na.valid_action == false
+				#debug
 				puts "#{cnt}: #{na.astnode.source} cannot find path function"
 				cnt += 1
 			end
@@ -87,25 +92,36 @@ def read_path_funcs
 		if line.include?"PATHFUNC: "
 			state = 1
 			cur_path_func = line.gsub("\n","").gsub("PATHFUNC: ","")
-		elsif line.include?":controller=>" and line.include?":action=>" and state == 1
+		elsif line.include?"controller=>" and line.include?"action=>" and state == 1
+			str_pos1 = line.index('{')
+			str_pos2 = line.index('}')
+			substr = line[str_pos1+1..str_pos2-1]
 			r = Array.new
-			#r[0]: controller, r[1]: action
+			controller = ""
+			action = ""
+			#:controller=>"account", :action=>"lost_password"
 			#This is a crappy parser...
-			chs = line.split(", ")
-			chs1 = chs[0].split("=>")
-			r.append(chs1[1].gsub("\"",""))
-			chs2 = chs[1].split("=>")
-			r.append(chs2[1].gsub("\"",""))
-			$path_funcs[cur_path_func]=r
-			state = 0
-		else
+			chs = substr.split(", ")
+			chs.each do |c|
+				if c.include?("controller")
+					controller = c.gsub(":controller=>","").gsub("\"","")
+				elsif c.include?("action")
+					action = c.gsub(":action=>","").gsub("\"","")
+				end
+			end
+			if controller.length > 0 and action.length > 0
+				r.push(controller)
+				r.push(action)
+				$path_funcs[cur_path_func]=r
+				#puts "PATHFUNC: #{cur_path_func} controller = #{controller}, action = #{action}"
+			end
 			state = 0
 		end
 	end
 end
 
 def traverse_ast_and_get_path(na_stack, astnode)
-	if astnode.source.to_s.end_with?("_path") or astnode.source.to_s.end_with?("_url")
+	if astnode.children.length == 0 and (astnode.source.to_s.end_with?("_path") or astnode.source.to_s.end_with?("_url"))
 		na_stack.push(astnode.source)
 	else
 		astnode.children.each do |child|
@@ -139,11 +155,12 @@ def generate_nextaction_files
 			@na_stack = Array.new
 			a.render_stack.each do |r|
 				vfile = find_view_file_by_path(r.render_file)	
-				if v != nil
-					v.next_actions.each do |na|
+				if vfile != nil
+					vfile.next_actions.each do |na|
 						if na.valid_action
 							na_string = "#{na.controller},#{na.action}"
-							@na_stack.push(na_string) unless @na_stack.include?(na_string)
+							#TODO: Now we don't deal with duplicate actions...
+							@na_stack.push(na_string) #unless @na_stack.include?(na_string)
 						end
 					end
 				end	

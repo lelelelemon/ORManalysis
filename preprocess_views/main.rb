@@ -94,7 +94,9 @@ resolve_upper_class
 read_entrance_actions
 
 solve_all_renders
+
 if options[:next_action]
+	read_path_funcs
 	solve_next_actions
 	generate_nextaction_files
 else
