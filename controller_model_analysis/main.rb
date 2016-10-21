@@ -121,7 +121,7 @@ pgr = Random.new((DateTime.now.strftime('%Q')).to_i)
 $fast_random = Fast_random.new(pgr.rand(1...104829910))
 
 opt_parser = OptionParser.new do |opt|
-  opt.banner = "Usage: ruby parsing.rb [OPTIONS]"
+  opt.banner = "Usage: ruby main.rb [OPTIONS]"
 
   opt.on("-p","--print [CLASS_NAME]",String,"print out variable and function call names of class specified; or type all to print out all classes","example: --print CommentsController or --print all") do |class_name|
 		options[:class_name] = class_name
