@@ -5,6 +5,7 @@ require 'date'
 
 #Global variables:
 load 'global_variables.rb'
+load 'compute_switch.rb'
 
 #Helpers:
 load 'helper.rb'
