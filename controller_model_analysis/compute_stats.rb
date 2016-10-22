@@ -872,6 +872,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	#	$graph_file.puts("\t<clique>#{cq}<\/clique>")
 	#end
 	$graph_file.puts("<\/cliqueStat>")
+
+	if $compute_assignment_source
+		compute_assignment_source
+	end
 			
 	if $compute_physical_volatile_store
 		$graph_file.puts("<chainStats>")
