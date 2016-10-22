@@ -1,3 +1,37 @@
+def branch_queries
+	@branch_on_query_cnt = Hash.new
+	$node_list.each do |n|
+		if n.isBranch?
+			qn_list = traceback_data_dep(n)
+			qn = nil
+			qn_list.each do |q|
+				if q.instance_of?INode and q.isReadQuery? and (qn == nil or q.getIndex > qn.getIndex)
+					qn = q
+				end
+			end
+			if qn
+				_key = qn.getInstr.getFuncname
+				if _key.include?("find_by")
+					key = "find_by"
+				elsif $key_words[_key]
+					key = _key.gsub('?','').gsub('!','')
+				else
+					key = "association"
+				end
+				@branch_on_query_cnt[key] = 0 unless @branch_on_query_cnt.has_key?(key)
+				@branch_on_query_cnt[key] += 1
+				
+				puts "branch depend on Q: #{qn.getIndex}:#{qn.getInstr.toString}"
+			end
+		end
+	end
+	$graph_file.puts "<branchOnQueryType>"
+	@branch_on_query_cnt.each do |k, v|
+		$graph_file.puts "\t<#{k}>#{v}<\/#{k}>"
+	end
+	$graph_file.puts "<\/branchOnQueryType>"
+end
+
 
 def test_trivial_branch(qnode, ary)
 	@branch_list = Array.new

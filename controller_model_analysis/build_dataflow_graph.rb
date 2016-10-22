@@ -115,7 +115,7 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 				temp_node = $cur_node
 				if instr.getFuncname == "super" and $class_map[caller_class].getUpperClass
 					cur_cfg = trace_query_flow($class_map[caller_class].getUpperClass, start_function, "", "", level+1)
-					puts "Handle super call: #{start_class}: upper = #{$class_map[caller_class].getUpperClass} funcname = #{instr.getFuncname}, actual func name = #{start_function}"
+					#puts "Handle super call: #{start_class}: upper = #{$class_map[caller_class].getUpperClass} funcname = #{instr.getFuncname}, actual func name = #{start_function}"
 				else	
 					cur_cfg = trace_query_flow(caller_class, instr.getFuncname, "", "", level+1)
 				end

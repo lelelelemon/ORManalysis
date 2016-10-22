@@ -341,17 +341,23 @@ class QChain
 		@qnodes = Array.new
 		@used_fields = Array.new
 		@select_conditions = Array.new
+		@order = Array.new
 	end
-	attr_accessor :qnodes, :used_fields, :select_conditions
+	attr_accessor :qnodes, :used_fields, :select_conditions, :order
 	def add_node(qnode)
 		@qnodes.push(qnode)
 	end
 	def add_used_fields(f)
+		#format: class_name.field_name
 		@used_fields.push(f) unless @used_fields.include?(f)
 	end
 	def add_select_conditions(c)
 		@select_conditions.push(c) unless @select_conditions.include?(c)
 	end	
+	def add_order(c)
+		#format: class_name.field_name
+		@order.push(c) unless @order.include?(c)
+	end
 end
 def test_in_chained_query(qnode)
 	$query_chain.each do |k,v|
@@ -379,6 +385,20 @@ def add_in_chained_query(qnode, prenode)
 	if in_chain == false
 		$query_chain[qnode] = QChain.new
 		$query_chain[qnode].add_node(qnode)
+	end
+end
+
+def add_order_to_chained_query(qnode, class_name, field_name)
+	$query_chain.each do |k,v|
+		in_chain = false
+		v.qnodes.each do |v1|
+			if v1 == qnode
+				in_chain = true
+			end
+		end
+		if in_chain
+			v.add_order("#{class_name}.#{field_name}")
+		end
 	end
 end
 

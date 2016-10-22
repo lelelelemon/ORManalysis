@@ -17,7 +17,7 @@ def run_command(cmd)
 	#if cmd.include?("mkdir")
 	#	puts "command = #{cmd}"
 	#end
-	#system(cmd)
+	system(cmd)
 end
 
 def same_file(f1, f2)

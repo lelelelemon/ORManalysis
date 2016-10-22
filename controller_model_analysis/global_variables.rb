@@ -88,6 +88,7 @@ $node_list = Array.new
 #used to compute how many fields are used for table selection
 $table_select_fields = Hash.new
 $order_fields = Hash.new
+$result_usage_fields = Hash.new
 #==============================
 
 #=======================trace_flow.rb, mostly deprecated====================

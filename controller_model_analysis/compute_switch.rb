@@ -1,5 +1,5 @@
 $tempfile_print_forward_edges=false
-$tempfile_print_backward_edges=false
+$tempfile_print_backward_edges=true
 $tempfile_print_control_edges=false
 
 $compute_card=false
@@ -31,7 +31,13 @@ $compute_select_condition=false
 
 $compute_order_stat=false
 
+$compute_field_order_stat=true
+
 $compute_redundant_usage=false
+
+$compute_redundant_table_usage=true
+
+$compute_branch_queries=true
 
 $compute_physical_volatile_store=false
 
@@ -42,3 +48,5 @@ $print_table_detail=false
 
 $print_querydep_graph=false
 $graph_print_control_edge = false
+
+

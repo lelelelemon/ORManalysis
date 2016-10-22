@@ -343,7 +343,8 @@ def add_dataflow_edge(node)
 				end
 			end
 			if (from_node.isClassField?) and (dep.getVname == "%self")
-			elsif to_ins.is_a?Call_instr and to_ins.isClassField and from_node.getInstr.instance_of?AttrAssign_instr and to_ins.getCallerType == from_node.getInstr.getCallerType and to_ins.getFuncname != from_node.getInstr.getFuncname
+			elsif to_ins.is_a?Call_instr and from_node.getInstr.instance_of?AttrAssign_instr and to_ins.getCallerType == from_node.getInstr.getCallerType and to_ins.getFuncname != from_node.getInstr.getFuncname #and to_ins.isClassField
+			elsif to_ins.is_a?GetField_instr and from_node.getInstr.hasClosure?
 			elsif to_ins.instance_of?Return_instr and dep.getVname == "%self"
 			#elsif to_ins.instance_of?GetField_instr and to_ins.getClassName.include?("Controller") and dep.getVname == "%self"
 

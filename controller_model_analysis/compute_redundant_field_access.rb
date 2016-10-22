@@ -8,11 +8,11 @@ def compute_redundant_usage
 				print_single_redundant_usage(n.getInstr.getTableName, @qr, n) 
 				if @qr.include?"ALL_FIELDS" and $class_map[n.getInstr.getTableName]
 					$class_map[n.getInstr.getTableName].getTableFields.each do |f|
-						add_used_field_to_chained_query(n, f.field_name)
+						add_used_field_to_chained_query(n, "#{n.getInstr.getTableName}.#{f.field_name}")
 					end
 				else
 					@qr.each do |f|
-						add_used_field_to_chained_query(n, f)
+						add_used_field_to_chained_query(n, "#{n.getInstr.getTableName}.#{f}")
 					end
 				end
 				@qr.each do |f|

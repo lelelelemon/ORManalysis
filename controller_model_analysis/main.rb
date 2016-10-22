@@ -49,6 +49,7 @@ load 'compute_loop_stat.rb'
 load 'compute_query_card_stat.rb'
 load 'compute_dataflow_chain_stat.rb'
 load 'compute_redundant_field_access.rb'
+load 'compute_redundant_table_access.rb'
 load 'compute_select_condition.rb'
 
 #load 'dump_graph.rb'

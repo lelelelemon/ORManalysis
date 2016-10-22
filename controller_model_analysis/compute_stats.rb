@@ -57,7 +57,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				if e.getFromNode != nil 
 					$temp_file.puts "\t\t <- [#{e.getVname}] #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
 				else
-					puts "\t\t <- params"
+					$temp_file.puts "\t\t <- params"
 				end
 			end
 		end
@@ -319,6 +319,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				else
 					check_query_function(n)
 				end
+				@general_stat.read += 1
 				@read_sink_stat.total += 1
 				@read_source_stat.total += 1
 				@table_read_stat[@table_name].total += 1
@@ -540,6 +541,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			end
 			if n.isWriteQuery?
 				has_source = false
+				@general_stat.write += 1
 				@write_source_stat.total += 1
 				@table_write_stat[@table_name].total += 1
 				#puts "READ / DELETE/UPDATE/INSERT instr #{n.getIndex}:#{n.getInstr.toString} backflow:"
@@ -769,9 +771,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	if $compute_partial_overlap
 		$graph_file.puts("<queryVariable>")
 		@query_on_variable.each do |k,v|
-			$graph_file.puts("\t<#{k.gsub("::","")}>#{v.length}<\/#{k}>")
+			$graph_file.puts("\t<#{k.gsub("::","")}>#{v.length}<\/#{k.gsub("::","")}>")
 		end
-		$graph_file.puts("<\queryVariable>")
+		$graph_file.puts("<\/queryVariable>")
 	end
 
 	if $compute_view_stat
@@ -796,12 +798,30 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		compute_select_condition
 	end
 	
+	if $compute_branch_queries
+		branch_queries
+	end
+
 	if $compute_order_stat
 		compute_order_stat
 	end
 
 	if $compute_redundant_usage
 		compute_redundant_usage
+	end
+
+	if $compute_field_order_stat
+		if $compute_redundant_usage == false
+			compute_redundant_usage
+		end
+		if $compute_select_condition == false
+			compute_select_condition
+		end
+		compute_field_order_stat
+	end
+
+	if $compute_redundant_table_usage
+		compute_redundant_table_access
 	end
 
 	#compute_kv_store
@@ -891,7 +911,8 @@ end
 
 def helper_print_stat(general, readSink, readSource, write, label, print_branch=true)
 	$graph_file.puts("\t\t<queryTotal>#{general.total}<\/queryTotal>")
-
+	$graph_file.puts("\t\t<readTotal>#{general.read}<\/readTotal>")
+	$graph_file.puts("\t\t<writeTotal>#{general.write}<\/writeTotal>")
 	$graph_file.puts("\t\t<queryInView>#{general.in_view}<\/queryInView>")
 	$graph_file.puts("\t\t<queryInViewAssoc>#{general.in_view_assoc}<\/queryInViewAssoc>")
 	$graph_file.puts("\t\t<queryIssuedByOther>#{general.issued_by_other}<\/queryIssuedByOther>")

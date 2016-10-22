@@ -203,7 +203,7 @@ class Call_instr < Instruction
 		@from_user_input = false
 		@in_view = false
 	end
-	attr_accessor :field, :hash_fields
+	attr_accessor :field, :hash_fields, :symbols
 	def setCallCFG(c)
 		@call_cfg = c
 	end
