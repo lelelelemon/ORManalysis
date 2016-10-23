@@ -1,5 +1,5 @@
 $tempfile_print_forward_edges=false
-$tempfile_print_backward_edges=true
+$tempfile_print_backward_edges=false
 $tempfile_print_control_edges=false
 
 $compute_card=false

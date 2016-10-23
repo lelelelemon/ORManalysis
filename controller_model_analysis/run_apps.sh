@@ -3,7 +3,7 @@
 #applications="boxroom lobsters communityengine publify jobsworth amahiPlatform railscollab sharetribe onebody linuxfr rucksack sugar kandan fulcrum tracks browsercms"
 #applications="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth publify railscollab sharetribe tracks brevidy communityengine"
 
-applications="sugar amahiPlatform lobsters wallgig boxroom enki kandan kanban discourse diaspora publify railscollab onebody gitlab jobsworth rucksack sharetribe communityengine linuxfr calagator forem fulcrum tracks brevidy shoppe"
+applications="sugar amahiPlatform lobsters wallgig boxroom enki kandan kanban discourse diaspora publify railscollab onebody gitlab jobsworth rucksack sharetribe communityengine linuxfr calagator forem fulcrum tracks brevidy shoppe redmine"
 #applications="gitlab discourse shoppe sharetribe kandan lobsters communityengine"
 #applications="sugar amahiPlatform lobsters wallgig boxroom enki kandan kanban publify railscollab diaspora tracks rucksack communityengine linuxfr calagator forem fulcrum brevidy shoppe"
 

@@ -422,6 +422,9 @@ if options[:run_all]
 		$output_dir = "#{$app_dir}/#{$results_dir}/#{start_class}_#{start_function}"
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
+		$lock_file = File.open("#{$app_dir}/dirlock.log", "w")
+		$lock_file.puts("#{start_class}_#{start_function}")
+		$lock_file.close
 		$graph_file = File.open(graph_fname, "w")
 		vis_file_name = "#{$output_dir}/qgraph_vis.gv"
 		$vis_file = File.open(vis_file_name, "w")
@@ -448,7 +451,7 @@ if options[:run_all]
 		$query_edges = Array.new
 
 		compute_dataflow_stat($output_dir, start_class, start_function)
-		
+	
 		$vis_file.close
 		system "dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
 

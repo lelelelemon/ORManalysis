@@ -13,8 +13,8 @@ def print_field_order(roots, stats_file, args):
 		for v1 in v:
 			if v1[0] not in orders:
 				orders.append(v1[0])
-		stas_file.write("\t\t<%s>%d</%s>\n"%(k, len(orders), k))
-	stats_file.write("\t<fieldOrderByName>\n")
+		stats_file.write("\t\t<%s>%d</%s>\n"%(k, len(orders), k))
+	stats_file.write("\t</fieldOrderByName>\n")
 
 	
 	#r = collectByAttribute(roots, cond_list, "sz", ["fieldn"])

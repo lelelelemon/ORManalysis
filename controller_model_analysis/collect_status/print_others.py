@@ -21,11 +21,11 @@ def print_redundant_table(roots, stats_file, args):
 	for t in tables:
 		cond_list = args['prefix'][:]
 		cond_list.append(t)
-		r = util.calculateAllActions(roots, cond_list)
+		r = util.calculateAllActions(roots, cond_list, to_float=False)
 		data[t] = len(r)
 
 	stats_file.write("\t<redundantTable>\n")
 	for k,v in data.items():
 		stats_file.write("\t\t<%s>%d</%s>\n"%(k,v,k))
-	stats_file.write("\t<redundantTable>\n")
+	stats_file.write("\t</redundantTable>\n")
 
