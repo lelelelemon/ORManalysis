@@ -2,6 +2,8 @@ $tempfile_print_forward_edges=false
 $tempfile_print_backward_edges=false
 $tempfile_print_control_edges=false
 
+$compute_assignment_source=true
+
 $compute_card=false
 
 #loop iteration affected by DB or not, has loop carry dep or not
@@ -16,7 +18,7 @@ $compute_querydep_controlflow=false
 $compute_querychain_length=false
 
 #check how many queries are on the same data structure
-$compute_partial_overlap=true
+$compute_partial_overlap=false
 
 #whether a view lives in closure or not, I guess this data is kind of useless...
 $compute_view_stat=false
@@ -31,13 +33,13 @@ $compute_select_condition=false
 
 $compute_order_stat=false
 
-$compute_field_order_stat=true
+$compute_field_order_stat=false
 
 $compute_redundant_usage=false
 
-$compute_redundant_table_usage=true
+$compute_redundant_table_usage=false
 
-$compute_branch_queries=true
+$compute_branch_queries=false
 
 $compute_physical_volatile_store=false
 
