@@ -82,6 +82,7 @@ class Class_class
 		@var_map = Hash.new
 
 		@member_defs = Hash.new
+		@member_gets = Hash.new
 	
 		filter_meth = Method_class.new("before_filter")
 		addMethod(filter_meth)
@@ -98,7 +99,7 @@ class Class_class
 		#@after_create = Array.new
 		#@after_destroy = Array.new
 	end
-	attr_accessor :include_module, :filename, :member_defs
+	attr_accessor :include_module, :filename, :member_defs, :member_gets
 	attr_accessor :table_name
 	attr_accessor :class_type
 	def getAssocs

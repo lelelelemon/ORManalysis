@@ -296,19 +296,19 @@ def handle_get_field_instr(node)
 	end
 	
 	#puts "GET FIELD instr #{node.getIndex}, dep_on_attr_assign = #{dep_on_attr_assign} #{to_ins.getClassName} #{to_ins.getCallerType}"
-	if dep_on_attr_assign == false
+	#if dep_on_attr_assign == false
 		instr = to_ins
 		if instr.getClassName == instr.getCallerType and $class_map[instr.getClassName] and $class_map[instr.getClassName].member_defs[instr.getFuncname]
 			$class_map[instr.getClassName].member_defs[instr.getFuncname].each do |p|
 				edge_name = "#{p.getIndex}*#{node.getIndex}"
-				#puts "ADD EDGE between #{p.getIndex} and #{node.getIndex}"
+				#puts "ADD EDGE between #{p.getIndex} and #{node.getIndex} on #{instr.getFuncname}"
 				edge = Dataflow_edge.new(p, node, instr.getFuncname)
 				p.addDataflowEdge(edge)
 			end
 		end
-	else
+	#else
 		#puts "\tattr assign: #{attr_assign_instr.getINode.getIndex}"
-	end
+	#end
 end
 
 def add_dataflow_edge(node)

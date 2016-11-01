@@ -711,6 +711,7 @@ def clear_data_structure
 	end
 	$class_map.each do |keyc, valuec|
 		valuec.member_defs = Hash.new
+		valuec.member_gets = Hash.new
 		valuec.getMethods.each do |key, value|
 			cfg = value.getCFG
 			if cfg != nil

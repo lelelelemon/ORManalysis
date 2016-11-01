@@ -160,12 +160,31 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 	#class member defined in one function may be used in another function
 	#add to class member def list
 	#For example, before_action can set some values used by other functions
-	if instr.instance_of?AttrAssign_instr
+	if instr.instance_of?GetField_instr and instr.getCallerType == class_handler.getName
+		class_handler.member_gets[instr.getFuncname] = Array.new unless class_handler.member_gets.has_key?(instr.getFuncname)
+		class_handler.member_gets[instr.getFuncname].push(instr.getDefv)
+	end
+	if instr.instance_of?AttrAssign_instr and instr.getCallerType == class_handler.getName
 		if class_handler.member_defs[instr.getFuncname]
 		else
 			class_handler.member_defs[instr.getFuncname] = Array.new
 		end
 		class_handler.member_defs[instr.getFuncname].push(node)
+	elsif instr.instance_of?AttrAssign_instr
+		
+		#puts "FIND A GETFIELD: #{$ins_cnt} #{instr.toString} #{instr.getCaller}"
+		field_name = nil
+		class_handler.member_gets.each do |k, v|
+			v.each do |temp_var_name|
+				if temp_var_name == instr.getCaller
+					field_name = k 
+				end
+			end
+		end
+		if field_name
+			class_handler.member_defs[field_name] = Array.new unless class_handler.member_defs.has_key?(field_name)
+			class_handler.member_defs[field_name].push(node)
+		end
 	end
 
 	if instr.is_a?Call_instr
