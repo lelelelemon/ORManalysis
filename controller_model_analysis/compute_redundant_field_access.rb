@@ -5,7 +5,7 @@ def compute_redundant_usage
 			@qr = trace_query_result(n)
 			str = ""
 			if @qr and n.getInstr.getTableName and @qr != "int"
-				print_single_redundant_usage(n.getInstr.getTableName, @qr, n) 
+				print_single_redundant_usage(n.getInstr.getTableName, @qr, n)
 				if @qr.include?"ALL_FIELDS" and $class_map[n.getInstr.getTableName]
 					$class_map[n.getInstr.getTableName].getTableFields.each do |f|
 						add_used_field_to_chained_query(n, "#{n.getInstr.getTableName}.#{f.field_name}")
@@ -81,7 +81,7 @@ def trace_query_result(qnode)
 						@names.push(tonode.getInstr.getDefv)
 					end
 				end
-			else	
+			else
 				temp_node.getDataflowEdges.each do |e|
 					@to_add.push(e.getToNode)
 				end
@@ -101,13 +101,13 @@ def trace_query_result(qnode)
 							@node_list.push(n)
 						end
 					elsif n.getInstr.instance_of?AttrAssign_instr
-						if isActiveRecord(n.getInstr.getCallerType) #unlikely to happen? assign to a member to another class 
+						if isActiveRecord(n.getInstr.getCallerType) #unlikely to happen? assign to a member to another class
 							@r.push("ALL_FIELDS")
 							stop_chain = true
 						else
 							@names.push(n.getInstr.getFuncname)
 							@node_list.push(n)
-						end 
+						end
 					elsif n.isQuery?
 						into_query.push(n)
 						chained_query = true   #There might be branches that chained at one branch but not chained at the other... :(
@@ -129,7 +129,7 @@ def trace_query_result(qnode)
 							if ["send","send_data"].include?n.getInstr.getFuncname
 								@r.push("ALL_FIELDS")
 							end
-							
+
 						else
 							name_in_args = false
 							n.getInstr.getArgs.each do |a|
@@ -145,7 +145,7 @@ def trace_query_result(qnode)
 									end
 								end
 							end
-						end 
+						end
 					else
 						@node_list.push(n)
 					end
@@ -194,10 +194,10 @@ def get_field_size(field)
 	#if string has a limit: count use limit
 	#if string has no limit: count as 64
 	f = field
-	field_size = 0	
+	field_size = 0
 	if f.type == "string"
 		if f.attrs["limit"]
-			field_size = f.attrs["limit"].to_i 
+			field_size = f.attrs["limit"].to_i
 		else
 			field_size = 64
 		end
@@ -211,17 +211,17 @@ def get_field_size(field)
 		field_size = 3
 	elsif f.type == "float"
 		field_size = 4
-	elsif f.type == "decimal"	
+	elsif f.type == "decimal"
 		field_size = 3
 	elsif f.type == "text"
 		if f.attrs["limit"]
 			if f.attrs["limit"].to_i > 2450
 				field_size = 2450
 			else
-				field_size = f.attrs["limit"].to_i 
+				field_size = f.attrs["limit"].to_i
 			end
 		else
-			if f.field_name.include?("comment") 
+			if f.field_name.include?("comment")
 				field_size = 177
 			elsif ["path","location","gadget_url","public_key","settings","email","name","key","body_html","credentials","country_ids","url","context_id"].include?f.field_name
 				field_size = 128
@@ -250,7 +250,7 @@ def print_single_redundant_usage(class_name, r, query_node)
 			if get_field_size(f) >= 2400
 				$temp_file.puts "Large Redundant Field: #{class_name}.#{f.field_name}, in query #{query_node.getInstr.toString}, used = true"
 			end
-		end	
+		end
 	else
 		@r.each do |inner_r|
 			$class_map[class_name].getTableFields.each do |f|

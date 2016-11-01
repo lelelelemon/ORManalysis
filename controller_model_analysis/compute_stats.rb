@@ -11,9 +11,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		if $cfg.getBB[0] == nil or $cfg.getBB[0].getInstr[0] == nil
 			exit
 		end
-		$root = $cfg.getBB[0].getInstr[0].getINode	
+		$root = $cfg.getBB[0].getInstr[0].getINode
 	end
-	
+
 	$node_list.each do |n|
 		n.setLabel
 		$temp_file.puts "#{n.getIndex}:#{n.getInstr.toString}"
@@ -29,7 +29,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		#	else
 		#		s = ""
 		#		n.getClosureStack.each do |n1|
-		#			s += "#{n1.getIndex}," 
+		#			s += "#{n1.getIndex},"
 		#		end
 		#		puts "\t * IN CLOSURE (#{n.isQuery?})  [#{s}]"
 		#	end
@@ -43,18 +43,18 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			$temp_file.puts "\tcallert #{n.getInstr.getCallerType}; isQuery? #{n.getInstr.isQuery}; isReadQuery? #{n.getInstr.isReadQuery}; QType = #{n.getInstr.getQueryType}; isTableField? #{n.getInstr.isTableField}; isClassField? #{n.getInstr.isClassField} -- (#{returnv})"
 			if n.isQuery?
 				#puts "\t * table_name = #{n.getInstr.getTableName}"
-			end 
+			end
 		end
 		if $tempfile_print_forward_edges
 			n.getDataflowEdges.each do |e|
-				if e.getToNode != nil 
+				if e.getToNode != nil
 					$temp_file.puts "\t\t -> [#{e.getVname}] #{e.getToNode.getIndex}: #{e.getToNode.getInstr.toString}"
 				end
 			end
 		end
 		if $tempfile_print_backward_edges
 			n.getBackwardEdges.each do |e|
-				if e.getFromNode != nil 
+				if e.getFromNode != nil
 					$temp_file.puts "\t\t <- [#{e.getVname}] #{e.getFromNode.getIndex}: #{e.getFromNode.getInstr.toString}"
 				else
 					$temp_file.puts "\t\t <- params"
@@ -96,10 +96,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	branch_dependon_query = 0
 	total_branch = 0
 
-	cnt_materialized_query = 0	
+	cnt_materialized_query = 0
 	cnt_not_materialized_query = 0
 
-	write_source_total = 0	
+	write_source_total = 0
 	write_from_const = 0
 	write_from_user_input = 0
 	write_from_query = 0
@@ -203,7 +203,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						@query_on_variable[hash_key] = [] unless @query_on_variable.has_key?(hash_key)
 						@query_on_variable[hash_key].append(query) unless @query_on_variable[hash_key].include?(query)
 					end
-				end	
+				end
 			end
 		end
 	end
@@ -292,7 +292,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						if $key_words[n.getInstr.getFuncname]
 						else
 							@general_stat.in_view_assoc += 1
-						end 
+						end
 						@table_general_stat[@table_name].in_view += 1
 					end
 				elsif n.getInstr.in_while_loop
@@ -355,11 +355,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				end
 				@used_in_view = false
 				@forwardarray = traceforward_data_dep(n)
-							
-				#Queries in validations need to be executed sequentially	
+
+				#Queries in validations need to be executed sequentially
 				#n.getValidationStack.each do |vl|
 				#	@validation_stat[vl].queries.each do |q|
-				#		if q.getIndex > n.getIndex 
+				#		if q.getIndex > n.getIndex
 				#			if @query_length_graph[n].include?(q)
 				#			else
 				#				@query_length_graph[n].push(q)
@@ -367,7 +367,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				#		end
 				#	end
 				#end
-				
+
 				@forwardarray.each do |n1|
 					#if n1.isTableField?
 					#	var_name = n1.getInstr.getCallHandler.getObjName
@@ -391,9 +391,9 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 						if $print_querydep_graph
 						#dataflow from query node n to query node n1
-							$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n1.getIndex}\";"						
+							$vis_file.puts "\t\"n#{n.getIndex}\" -> \"n#{n1.getIndex}\";"
 						end
-	
+
 						if @query_length_graph[n].include?(n1)
 						else
 							@query_length_graph[n].push(n1)
@@ -423,7 +423,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							@read_sink_stat.sink_total += 1
 						end
 						if n1.isBranch?
-							
+
 							if $compute_querydep_controlflow or ($print_querydep_graph and $graph_print_control_edge)
 								@query_affect_controlflow[n] = Array.new unless @query_affect_controlflow[n]
 								$node_list.each do |n2|
@@ -460,7 +460,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						elsif n1.getInView
 								@table_read_stat[@table_name].to_view += 1
 								@read_sink_stat.to_view += 1
-							
+
 						#elsif n1.getDataflowEdges.length == 0
 						elsif isValidationSink(n1)
 							@table_read_stat[@table_name].to_validation += 1
@@ -477,7 +477,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					end
 					#puts "\t--\t#{n1.getIndex}:#{n1.getInstr.toString}"
 				end
-				
+
 				if @used_in_view
 					@singleQ_stat.result_used_in_view += 1
 				end
@@ -485,7 +485,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				@used_query_string = false
 				if n.getInstr.args.include?("Fixnum")
 					@read_source_stat.from_select_condition += 1
-				end 
+				end
 				traceback_data_dep(n).each do |n1|
 					if n1.instance_of?Dataflow_edge
 					elsif n1.getInstr.getFromUserInput
@@ -521,7 +521,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								analyzeConstSource(n1, @const_stat)
 							end
 						elsif isUtilSource(n1)
-							#$temp_file.puts " x (#{n.getIndex} From Util #{n1.getIndex}: #{n1.getInstr.toString})" 
+							#$temp_file.puts " x (#{n.getIndex} From Util #{n1.getIndex}: #{n1.getInstr.toString})"
 							@read_source_stat.from_util += 1
 						elsif n1.getInstr.instance_of?GlobalVar_instr
 							@read_source_stat.from_global += 1
@@ -556,7 +556,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 						@table_write_stat[@table_name].from_user_input += 1
 						@table_write_stat[@table_name].source_total += 1
 					else
-						if n1.isQuery? 
+						if n1.isQuery?
 							@only_from_user_input = false
 							if n1.isReadQuery?
 								has_source = true
@@ -581,7 +581,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 								@table_write_stat[@table_name].from_const += 1
 							elsif isUtilSource(n1)
 								has_source = true
-								#$temp_file.puts " x (#{n.getIndex} From Util #{n1.getIndex}: #{n1.getInstr.toString})" 
+								#$temp_file.puts " x (#{n.getIndex} From Util #{n1.getIndex}: #{n1.getInstr.toString})"
 								@write_source_stat.from_util += 1
 							elsif n1.getInstr.instance_of?GlobalVar_instr
 								@write_source_stat.from_global += 1
@@ -605,7 +605,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				end
 			end
 			#graph_write($graph_file, "\n")
-	
+
 		elsif n.isBranch?
 			@general_stat.total_branch += 1
 		 	q = traceback_data_dep(n, true)
@@ -636,7 +636,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				if f != nil
 					@view_stat.addField("#{tbl_name}.#{field_name}")
 				end
-			end 
+			end
 		elsif n.isTableField?
 			@used_in_view = false
 			tbl_name = type_valid(n.getInstr, n.getInstr.getCaller)
@@ -653,7 +653,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					@view_stat.addField("#{tbl_name}.#{field_name}")
 					@view_stat.addTable(tbl_name)
 				end
-			end 
+			end
 		end
 	end
 
@@ -665,7 +665,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	@queries_in_loop_has_carrydep = 0
 	@queries_in_loop_no_carrydep = 0
 	@queries_affected = Array.new
-	
+
 	if $compute_querychain_length
 		$node_list.reverse_each do |n|
 			if @query_length_graph[n]
@@ -674,7 +674,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				@following_nodes[n] = nil
 				if @q.length > 0
 					@q.each do |inner_q|
-						@queries_affected.push(inner_q) unless @queries_affected.include?(inner_q)			
+						@queries_affected.push(inner_q) unless @queries_affected.include?(inner_q)
 
 						if @temp_length_graph[inner_q] == nil
 						elsif @temp_length_graph[n] < @temp_length_graph[inner_q]+1
@@ -711,7 +711,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			end
 			cur_node = @following_nodes[cur_node]
 			iter += 1
-		end 
+		end
 		if @queries_in_loop_has_carrydep > @longest_query_len
 			@queries_in_loop_has_carrydep = 0
 		end
@@ -725,7 +725,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		@query_affect_controlflow.each do |k, v|
 			v.each do |n|
 				@query_affected_by_controlflow.push(n) unless @query_affected_by_controlflow.include?(n)
-			end 
+			end
 		end
 	end
 
@@ -733,7 +733,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$graph_file.puts("\t<general>")
 	helper_print_stat(@general_stat, @read_sink_stat, @read_source_stat, @write_source_stat, "STATS")
 	$graph_file.puts("\t\t<queryOnlyFromUser>#{@singleQ_stat.only_from_user_input}<\/queryOnlyFromUser>")
-	
+
 	if $compute_querydep_controlflow
 		$graph_file.puts("\t\t<queryControlDependent>#{@query_affected_by_controlflow.length}<\/queryControlDependent>")
 		$graph_file.puts("\t\t<queryAffectControl>#{@query_affect_controlflow.length}<\/queryAffectControl>")
@@ -751,8 +751,8 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	#$graph_file.puts("\t\t<trivialBranch>#{@trivial_branches.length}<\/trivialBranch>")
 
 	if $compute_materialized_result
-		$graph_file.puts("\t\t<materialized>#{cnt_materialized_query}<\/materialized>")	
-		$graph_file.puts("\t\t<notMaterialized>#{cnt_not_materialized_query}<\/notMaterialized>")	
+		$graph_file.puts("\t\t<materialized>#{cnt_materialized_query}<\/materialized>")
+		$graph_file.puts("\t\t<notMaterialized>#{cnt_not_materialized_query}<\/notMaterialized>")
 	end
 
 	$graph_file.puts("\t<\/general>")
@@ -783,7 +783,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	if $compute_loop_stat
 		compute_loop_stat
 	end
-	
+
 	if $compute_input_stat
 		compute_input_stat
 	end
@@ -791,13 +791,13 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	if $compute_card
 		print_query_card_stat
 	end
-	
+
 	compute_query_chain
-	
+
 	if $compute_select_condition
 		compute_select_condition
 	end
-	
+
 	if $compute_branch_queries
 		branch_queries
 	end
@@ -854,7 +854,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			elsif q.isReadQuery?
 				$temp_file.puts "Read #{q.getIndex} in txn #{k.getIndex} can be kicked out"
 			end
-		end	
+		end
 		$graph_file.puts("\t<validation>")
 		$graph_file.puts("\t\t<read>#{vd.read}<\/read>")
 		$graph_file.puts("\t\t<write>#{vd.write+1}<\/write>")
@@ -873,10 +873,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	#end
 	$graph_file.puts("<\/cliqueStat>")
 
-	if $compute_assignment_source
-		compute_assignment_source
+	if $analyse_functional_dependencies
+		analyse_functional_dependencies
 	end
-			
+
 	if $compute_physical_volatile_store
 		$graph_file.puts("<chainStats>")
 		compute_chain_stats
@@ -885,7 +885,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	if $compute_single_path
 		$graph_file.puts("<singlePath>")
-		compute_longest_single_path	
+		compute_longest_single_path
 		$graph_file.puts("<\/singlePath>")
 	end
 
@@ -900,10 +900,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	$graph_file.puts("<queryFunction>")
 	printQueryFunctionFreq
-	$graph_file.puts("<\/queryFunction>")	
-	
-	
-	$graph_file.puts("<\/STATSHEADER>")	
+	$graph_file.puts("<\/queryFunction>")
+
+
+	$graph_file.puts("<\/STATSHEADER>")
 	$graph_file.close
 	#number of query functions
 	#number of tables  --- Hard to know. If Comment.where(story_id <= 1).first, second "story" table will not be detected

@@ -1,70 +1,99 @@
-def compute_assignment_source
-	#key: table_name.column_name
-	#value: an array of source
-	@column_assignments = Hash.new
+def analyse_functional_dependencies
+	find_interesting_nodes
+end
+
+def find_interesting_nodes
+	$statistics = Hash.new
+
+	content = ""
 	$node_list.each do |n|
-		#Assignments: 1.explicit assign like comment.text = params[:text]
-		#             2.write_attribute... functions (this list may not be complete)
-		@table_name = nil
-		@column_names = Array.new
-		if n.getInstr.instance_of?AttrAssign_instr 
-			@table_name = type_valid(n.getInstr, n.getInstr.getCaller)
-			if testTableField(@table_name, n.getInstr.getFuncname)
-				@column_names.push(n.getInstr.getFuncname)
-			end
-		elsif  (n.getInstr.is_a?Call_instr and ["write_attribute","update_attribute","update_column","update_columns","update_attributes", "save"].include?n.getInstr.getFuncname)
-			@table_name = type_valid(n.getInstr, n.getInstr.getCaller)
-			#update_column(:text), ':text' is symbol
-			for s in n.getInstr.symbols
-				@column_names.push(s)
-			end
-			#if update_columns doesn't have any symbol, highly likely it is the case that all columns are updated (not 100% sure)
-			if ["update_columns","update_attributes", "save"].include?n.getInstr.getFuncname and n.getInstr.symbols.length == 0
-				if @table_name and $class_map[@table_name]
-					$class_map[@table_name].getTableFields.each do |f|
-						@column_names.push(f.field_name)
-					end
-				end
-			end
-		end
-		if @table_name != nil and @column_names.length > 0
-			#trace back the data flow graph from the current assignment node
-			@sources = Array.new
-			traceback_data_dep_for_funcdep(n).each do |pn|
-				#from user input
-				if pn.instance_of?Dataflow_edge
-					@sources.push("user_input")
-				elsif pn.isQuery?
-					@sources.push("#{pn.getInstr.getTableName}")
-					#@sources.push("#{pn.getInstr.getTableName}.#{pn.getInstr.getFuncname}")
-				#source node in the graph
-				elsif pn.getBackwardEdges.length == 0 
-					if isUtilSource(pn)
-						@sources.push("util_func")
-						#@source.push("util_func:#{pn.getInstr.getFuncname}")
-					elsif isConstSource(pn)
-						@sources.push("user_input")
-					end
-				end
-			end
-			#debug
-			@str = "columns ("
-			@column_names.each do |c|
-				key = "#{@table_name}.#{c}"
-				@column_assignments[key] = Array.new unless @column_assignments.has_key?(key)
-				@column_assignments[key] << @sources
-			end
-			@str += @column_names.join(", ")
-			@str += ") from table #{@table_name} take sources: "
-			@str += @sources.join(",")
-			puts @str
+		if n.getInstr.is_a?Call_instr and ["save", "save!"].include?n.getInstr.getFuncname
+			table_name = type_valid(n.getInstr, n.getInstr.getCaller)
+			content += get_xml("action", trace_complete_data_dependency_graph(n, 0, [],print_query: true), attributes: [["table", table_name]])
 		end
 	end
 
-	#print out the assignments for each column in this action
-	$graph_file.puts "<assignmentDetail>"
-	@column_assignments.each do |k, v|
-		$graph_file.puts "\t<#{k}>#{v}<\/#{k}>" 
+	if(content != "")
+		info_file = File.open("#{$app_dir}/fdAnalysis.xml", "a")
+		analysis_content = get_xml("actions", content)
+		statistics_content = ""
+		$statistics.keys.each do |k|
+			statistics_content += get_xml(k, $statistics[k].to_s)
+		end
+		analysis_content += get_xml("statistics", statistics_content)
+		info_file.puts get_xml("analysis", analysis_content)
+		info_file.close
 	end
-	$graph_file.puts "<\/assignmentDetail>"
+end
+
+def increment_statistics(key)
+	if($statistics.has_key?key)
+		$statistics[key] += 1
+	else
+		$statistics[key] = 1
+	end
+end
+
+def trace_complete_data_dependency_graph(node, distance, visited_nodes, print_query: false)
+	#node details
+	instruction_index = -1
+	instruction_type = "unknown"
+	instruction_content = ""
+
+	children_count = 0
+	children_content = ""
+
+	if node == nil
+		instruction_type = "user-input"
+	else
+		children_count = node.getBackwardEdges.length
+		#the current node is a leaf.
+		instruction_content = node.getInstr.toString
+		instruction_index = node.getIndex
+		if isUtilSource(node)
+			instruction_type = "utility"
+			increment_statistics("UTILITY")
+		elsif isConstSource(node)
+			instruction_type = "constant"
+			if children_count == 0
+				increment_statistics("CONSTANT")
+			end
+		elsif node.isQuery?
+			instruction_type = "query"
+			query_type = node.getInstr.getQueryType
+			increment_statistics(query_type)
+		else
+			instruction_type = "unknown"
+		end
+
+		#children details
+		if children_count > 0 and not visited_nodes.include?(node.getIndex) and (instruction_type != "query" || print_query)
+			visited_nodes.push(node.getIndex)
+			#perform a depth first traversal
+			node.getBackwardEdges.each do |edge|
+				children_content += trace_complete_data_dependency_graph(edge.getFromNode, distance + 1, visited_nodes)
+			end
+			visited_nodes.delete(node.getIndex)
+		end
+
+	end
+
+	if(children_content != "")
+		node_content = get_xml("instruction", instruction_content, attributes: [["type", instruction_type]], escape_content: true)
+		node_content += get_xml("children", children_content, attributes: [["count", children_count]])
+		return get_xml("node", node_content, attributes: [["index", instruction_index.to_s], ["distance", distance.to_s]])
+	elsif instruction_type != "user-input" and instruction_type != "unknown"
+		node_content = get_xml("instruction", instruction_content, attributes: [["type", instruction_type]], escape_content: true)
+		return get_xml("node", node_content, attributes: [["index", instruction_index.to_s], ["distance", distance.to_s]])
+	else
+		return ""
+	end
+end
+
+def post_process_functional_dependencies
+	content = File.read("#{$app_dir}/fdAnalysis.xml")
+	File.delete("#{$app_dir}/fdAnalysis.xml")
+	info_file = File.open("#{$app_dir}/fdAnalysis.xml", "w")
+	info_file.puts get_xml("app", content)
+	info_file.close
 end

@@ -1,8 +1,8 @@
 $tempfile_print_forward_edges=false
-$tempfile_print_backward_edges=false
+$tempfile_print_backward_edges=true
 $tempfile_print_control_edges=false
 
-$compute_assignment_source=true
+$analyse_functional_dependencies=true
 
 $compute_card=false
 
@@ -43,12 +43,10 @@ $compute_branch_queries=false
 
 $compute_physical_volatile_store=false
 
-#the diff between longest and shortest path 
+#the diff between longest and shortest path
 $compute_single_path=false
 
 $print_table_detail=false
 
 $print_querydep_graph=false
 $graph_print_control_edge = false
-
-

@@ -13,6 +13,7 @@ load 'check_is_query.rb'
 load 'check_query_string.rb'
 load 'check_validation.rb'
 load 'util.rb'
+load 'xml_string_lib.rb'
 
 #App ruby code parser:
 load 'traverse_ast.rb'
@@ -76,7 +77,7 @@ def print_classes(class_name=nil)
 	if class_name == nil
 		$class_map.each do |keyc, valuec|
 			valuec.print_calls
-		end	
+		end
 	else
 		$class_map[class_name].print_calls
 	end
@@ -86,7 +87,7 @@ def print_types(class_name=nil)
 	if class_name == nil
 		$class_map.each do |keyc, valuec|
 			valuec.print_var_types
-		end	
+		end
 	else
 		$class_map[class_name].print_var_types
 	end
@@ -96,7 +97,7 @@ def print_instructions(class_name=nil)
 	if class_name == nil
 		$class_map.each do |keyc, valuec|
 			valuec.print_instructions
-		end	
+		end
 	else
 		$class_map[class_name].print_instructions
 	end
@@ -196,7 +197,7 @@ opt_parser = OptionParser.new do |opt|
 	opt.on("-o", "--output-dir DIR",String,"Output directory for graphviz files") do |output_dir|
 		options[:output] = output_dir
 	end
-	
+
 	opt.on("-b", "--print-all","Print all calls, only for debug") do |print_all|
 		options[:print_all] = true
 	end
@@ -227,7 +228,7 @@ if options[:dir] != nil
 		$app_dir = options[:dir]
 		read_ruby_files(options[:dir])
 		puts "Finish reading files"
-	
+
 		#$class_map.each do |k, v|
 		#	v.getMethods.each do |k1, v1|
 		#		puts "#{k} . #{k1}:   #{v.filename}"
@@ -240,7 +241,7 @@ if options[:dir] != nil
 		#end
 
 		read_dataflow(options[:dir])
-		
+
 		do_type_inference
 	end
 else
@@ -311,7 +312,7 @@ if options[:trace_flow] or options[:stats] or options[:query_graph]
 
 	if options[:dump_graph]
 		trace_query_flow(start_class, start_function, "", "", level)
-		$dump_file = File.open("dump_graph.gml", "w") 
+		$dump_file = File.open("dump_graph.gml", "w")
 		dump_graphml
 	end
 
@@ -362,7 +363,7 @@ if options[:print_all] == true
 	end
 =end
 
-	$table_query_file = File.open("#{$app_dir}/table_query.stat", "w")	
+	$table_query_file = File.open("#{$app_dir}/table_query.stat", "w")
 	$class_map.each do |keyc, valuec|
 		#puts "+++ #{keyc} +++"
 		valuec.getMethods.each do |key, value|
@@ -416,8 +417,6 @@ if options[:run_all]
 		puts "Handling #{start_class}, #{start_function}"
 		time1 = Time.now
 		level = 0
-	
-		
 		#start print query trace
 		$output_dir = "#{$app_dir}/#{$results_dir}/#{start_class}_#{start_function}"
 		system("mkdir #{$output_dir}")
@@ -439,8 +438,7 @@ if options[:run_all]
 		#trace_flow(start_class, start_function, "", "", level)
 		#$trace_output_file.close
 
-
-	#start compute stat
+	  #start compute stat
 		$cur_node = nil
 		$root = nil
 		$non_repeat_list = Array.new
@@ -451,7 +449,7 @@ if options[:run_all]
 		$query_edges = Array.new
 
 		compute_dataflow_stat($output_dir, start_class, start_function)
-	
+
 		$vis_file.close
 		system "dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
 
@@ -464,87 +462,24 @@ if options[:run_all]
 			chs = l.split('::')
  			chs[0] = chs[0].downcase
 			next_file = "#{$app_dir}/next_calls/#{chs[0]}/#{chs[1]}_#{start_function}.txt"
-		else	
+		else
 			next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
 		end
-
-=begin
-		if File.exist?(next_file)
-
-			graph_fname = "#{$output_dir}/next_action.xml"
-			$graph_file = File.open(graph_fname, "w")
-			$graph_file.puts("<NEXTACTION>")
-
-			@next_action = Array.new
-			@prev_list = Array.new 
-			$node_list.each do |n|
-				@prev_list.push(n)
-			end
-
-			clear_data_structure
-			@next_action_freq = Hash.new
-			total_freq = 0
-			File.open(next_file, "r").each do |line|
-				if line.length > 1
-					line = line.gsub("\n","")
-					total_freq += 1
-					if @next_action.include?line
-						@next_action_freq[line] += 1
-					else
-						@next_action.push(line)
-						@next_action_freq[line] = 1
-					end
-				end
-			end
-				
-			@next_action.each do |line|
-
-				line = line.gsub("\n","")
-				chs = line.split(',')
-				next_function = chs[1]
-				next_class = getControllerNameCap(chs[0])
-				if next_function and next_function.include?"create" and next_function.include?"new"
-					next_function = "create"
-				end
-			
-				if $class_map[next_class] and $class_map[next_class].findMethodRecursive(next_function)	
-					$temp_file = File.open("#{$output_dir}/nextaction_#{next_class}_#{next_function}.log","w")
-
-					compute_dataflow_stat($output_dir, next_class, next_function, true)
-
-					$temp_file.puts "\n\n\n=================="
-					$temp_file.puts "==================\n\n\n"
-					$temp_file.puts "#{start_class}.#{start_function} Vs #{next_class}.#{next_function}"
-					puts "Compare with: #{next_class}.#{next_function}"
-					compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list, @next_action_freq[line])
-					collect_nextaction_query_instr(@next_action_freq[line])
-					clear_data_structure
-				else
-					puts "Cannot find #{chs[0]}->#{next_class}.#{next_function}"
-				end
-			end
-
-			print_nextaction_query_instr(total_freq)
-			$graph_file.puts("<\/NEXTACTION>")
-			$nextaction_query_count = Hash.new
-			$graph_file.close
-		end
-=end
 		clear_data_structure
 	end
-
+  post_process_functional_dependencies
 end
 
 if options[:consequent] != nil
 	start_class = options[:consequent][0]
 	start_function = options[:consequent][1]
-	
+
 	level = 0
 	$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
 	compute_dataflow_stat($output_dir, start_class, start_function, true)
 
 
-	@prev_list = Array.new 
+	@prev_list = Array.new
 	$node_list.each do |n|
 		@prev_list.push(n)
 	end
@@ -560,7 +495,7 @@ if options[:consequent] != nil
 			end
 		end
 	end
-			
+
 #	next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
 #	File.open(next_file, "r").each do |line|
 	@next_action.each do |line|
@@ -572,7 +507,7 @@ if options[:consequent] != nil
 		chs[0] = chs[0].capitalize
 		next_class = "#{chs[0]}Controller"
 		compute_dataflow_stat($output_dir, next_class, next_function, true)
-	
+
 		#puts "Compare with: #{next_class}.#{next_function}"
 		compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list)
 	end
@@ -625,7 +560,7 @@ if options[:print_flow]
 	$query_edges = Array.new
 
 	compute_dataflow_stat($output_dir, start_class, start_function)
-	
+
 	$vis_file.close
 	system "dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
 
