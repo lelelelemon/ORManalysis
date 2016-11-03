@@ -52,9 +52,10 @@ def compute_redundant_table_access
 	@table_includes.each do |t, v|
 		v.each do |inc|
 			if @table_field_usage.has_key?(t) and @table_field_usage[t].include?(inc)
+				$graph_file.puts "\t<used base=\"#{t}\">#{inc}<\/used>"
 			else
 				puts "---Non used included tables: #{t}.#{inc}"
-				$graph_file.puts "\t<#{inc}>#{t}<\/#{inc}>"
+				$graph_file.puts "\t<notused base=\"#{t}\">#{inc}<\/notused>"
 			end
 		end
 	end	

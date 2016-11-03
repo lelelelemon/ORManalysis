@@ -50,6 +50,7 @@ load 'compute_query_card_stat.rb'
 load 'compute_dataflow_chain_stat.rb'
 load 'compute_redundant_field_access.rb'
 load 'compute_redundant_table_access.rb'
+load 'compute_redundant_rows.rb'
 load 'compute_select_condition.rb'
 
 #load 'dump_graph.rb'
@@ -468,7 +469,6 @@ if options[:run_all]
 			next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
 		end
 
-=begin
 		if File.exist?(next_file)
 
 			graph_fname = "#{$output_dir}/next_action.xml"
@@ -496,6 +496,15 @@ if options[:run_all]
 					end
 				end
 			end
+			if start_function == "new"
+				line = "#{start_class},create"
+				if @next_action.include?line
+					@next_action_freq[line] += 1
+				else
+					@next_action.push(line)
+					@next_action_freq[line] = 1
+				end
+			end
 				
 			@next_action.each do |line|
 
@@ -516,23 +525,23 @@ if options[:run_all]
 					$temp_file.puts "==================\n\n\n"
 					$temp_file.puts "#{start_class}.#{start_function} Vs #{next_class}.#{next_function}"
 					puts "Compare with: #{next_class}.#{next_function}"
-					compare_consequent_actions("#{next_class}_#{next_function}", @prev_list, $node_list, @next_action_freq[line])
-					collect_nextaction_query_instr(@next_action_freq[line])
+					compare_consequent_actions_simple("#{start_class}_#{start_function}", "#{next_class}_#{next_function}", @prev_list, $node_list, @next_action_freq[line])
+					#collect_nextaction_query_instr(@next_action_freq[line])
 					clear_data_structure
 				else
 					puts "Cannot find #{chs[0]}->#{next_class}.#{next_function}"
 				end
 			end
 
-			print_nextaction_query_instr(total_freq)
+			#print_nextaction_query_instr(total_freq)
 			$graph_file.puts("<\/NEXTACTION>")
 			$nextaction_query_count = Hash.new
 			$graph_file.close
 		end
-=end
 		clear_data_structure
 	end
 
+	system("rm #{$app_dir}/dirlock.log")
 end
 
 if options[:consequent] != nil

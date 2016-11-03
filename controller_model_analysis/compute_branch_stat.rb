@@ -1,12 +1,15 @@
 def branch_queries
+	$graph_file.puts "<branchOnQueryType>"
 	@branch_on_query_cnt = Hash.new
 	$node_list.each do |n|
 		if n.isBranch?
-			qn_list = traceback_data_dep(n)
+			qn_list = traceback_data_dep_track_dist(n)
 			qn = nil
-			qn_list.each do |q|
+			dist = 0
+			qn_list.each do |q, d|
 				if q.instance_of?INode and q.isReadQuery? and (qn == nil or q.getIndex > qn.getIndex)
 					qn = q
+					dist = d
 				end
 			end
 			if qn
@@ -18,17 +21,18 @@ def branch_queries
 				else
 					key = "association"
 				end
-				@branch_on_query_cnt[key] = 0 unless @branch_on_query_cnt.has_key?(key)
-				@branch_on_query_cnt[key] += 1
-				
-				puts "branch depend on Q: #{qn.getIndex}:#{qn.getInstr.toString}"
+				#@branch_on_query_cnt[key] = 0 unless @branch_on_query_cnt.has_key?(key)
+				#@branch_on_query_cnt[key] += 1
+				$graph_file.puts "\t<#{key}>#{dist}<\/#{key}>"
+				meth = n.getInstr.getBB.getCFG.getMHandler
+				puts "branch in #{meth.getCallerClass.getName}.#{meth.getName} depend on Q: #{qn.getIndex}:#{qn.getInstr.toString} dist = #{dist}"
 			end
 		end
 	end
-	$graph_file.puts "<branchOnQueryType>"
-	@branch_on_query_cnt.each do |k, v|
-		$graph_file.puts "\t<#{k}>#{v}<\/#{k}>"
-	end
+	#$graph_file.puts "<branchOnQueryType>"
+	#@branch_on_query_cnt.each do |k, v|
+	#	$graph_file.puts "\t<#{k}>#{v}<\/#{k}>"
+	#end
 	$graph_file.puts "<\/branchOnQueryType>"
 end
 

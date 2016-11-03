@@ -59,16 +59,24 @@ def print_query_card_stat
 	$graph_file.puts("<queryCardStats>")
 	@query_limited_card = 0
 	@query_scale_card = 0
+	@scale_in_loop = 0
+	@limited_in_loop = 0
 	$node_list.each do |n|
 		if n.isReadQuery?
 			if n.card_limited
 				@query_limited_card += 1
+				if n.getNonViewClosureStack.length > 0
+					@limited_in_loop += 1
+				end
 			else
 				@query_scale_card += 1
+				if n.getNonViewClosureStack.length > 0
+					@scale_in_loop += 1
+				end
 			end
 		end
 	end
-	$graph_file.puts("\t<limitedCard>#{@query_limited_card}<\/limitedCard>")
-	$graph_file.puts("\t<scaleCard>#{@query_scale_card}<\/scaleCard>")
+	$graph_file.puts("\t<limitedCard in_loop=\"#{@limited_in_loop}\">#{@query_limited_card}<\/limitedCard>")
+	$graph_file.puts("\t<scaleCard in_loop=\"#{@scale_in_loop}\">#{@query_scale_card}<\/scaleCard>")
 	$graph_file.puts("<\/queryCardStats>")
 end

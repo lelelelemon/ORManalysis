@@ -20,6 +20,31 @@ def get_prevnodes_in_same_BB(node)
 	return @traversed
 end
 
+def compare_consequent_actions_simple(cur_action_name, action_name, prev_list, next_list, freq=1)
+	next_queries = 0
+	same_queries = 0
+	same_in_loop = 0
+	next_list.each do |n|
+		if n.isReadQuery?
+			next_queries += 1
+			prev_list.each do |pn|
+				if pn.isReadQuery?
+					if pn.getInstr.getCaller == n.getInstr.getCaller and pn.getInstr.getTableName == n.getInstr.getTableName and pn.getInstr.getFuncname == n.getInstr.getFuncname
+						same_queries += 1
+						if pn.getNonViewClosureStack.length > 0
+							same_in_loop += 1
+						end
+					end
+				end
+			end
+		end
+	end
+	$graph_file.puts("<#{action_name}>")
+	$graph_file.puts("\t<nextTotal freq=\"#{freq}\">#{next_queries}<\/nextTotal>")
+	$graph_file.puts("\t<nextSame freq=\"#{freq}\" in_loop=\"#{same_in_loop}\">#{same_queries}<\/nextSame>")
+	$graph_file.puts("<\/#{action_name}>")
+end
+
 def compare_consequent_actions(action_name, prev_list, next_list, freq=1)
 	@tables = Hash.new
 

@@ -12,6 +12,7 @@ def add_to_table_select_fields(qnode, class_name, field_name)
 end
 
 def add_to_order_fields(qnode, class_name, field_name)
+	#puts "FIND ORDER: #{qnode.getIndex}:#{qnode.getInstr.toString} (order = #{field_name})"
 	add_order_to_chained_query(qnode, class_name, field_name)
 	if $order_fields[class_name]
 	else
@@ -69,6 +70,10 @@ def trace_query_select_condition(qnode)
 						add_to_table_select_fields(qnode, qnode.getInstr.getTableName, c)
 						if qnode.getInstr.getFuncname == "order"
 							add_to_order_fields(qnode, qnode.getInstr.getTableName, c)
+						end
+					elsif c.split(".")[1] and testTableField(qnode.getInstr.getTableName, c.split(".")[1])
+						if qnode.getInstr.getFuncname == "order"
+							add_to_order_fields(qnode, qnode.getInstr.getTableName, c.split(".")[1])
 						end
 					end
 				end
@@ -138,7 +143,7 @@ def compute_field_order_stat
 		str = "Field (#{tbl}.#{k.field_name}, sz=#{sz}) has #{ordern} orders: ["
 		v.each do |o|
 			str += "#{o}, "
-			$graph_file.puts "<f fieldn=\"#{tbl}.#{k.field_name}\" sz=\"#{sz}\">#{o}</f>"
+			$graph_file.puts "\t<f fieldn=\"#{tbl}.#{k.field_name}\" sz=\"#{sz}\">#{o}</f>"
 		end
 		str += "]"
 		puts str

@@ -50,11 +50,11 @@ TOTAL_COLOR_NUM=33
 colors = [2, 3, 5, 1, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 #app_string="lobsters amahiPlatform fulcrum linuxfr onebody rucksack sugar boxroom jobsworth kandan publify railscollab rucksack sharetribe tracks brevidy communityengine"
 
-app_string="forem lobsters linuxfr sugar kandan onebody communityengine diaspora calagator rucksack railscollab jobsworth gitlab kanban fulcrum tracks boxroom brevidy wallgig piggybak shoppe amahiPlatform sharetribe enki publify"
+app_string="forem lobsters linuxfr sugar kandan onebody communityengine diaspora calagator rucksack railscollab jobsworth gitlab kanban fulcrum tracks boxroom brevidy wallgig shoppe amahiPlatform sharetribe enki publify"
 #app_string="sharetribe enki publify"
 
 applications = app_string.split(" ")
-result_path = "../applications/general_stats/"
+result_path = "../../applications/general_stats/"
 width = 0.2
 applications_on_figure = []
 i=1
@@ -337,23 +337,27 @@ if os.path.isdir(result_path) == False:
 
 
 for app in applications:
-	#print "python collect_stats.py %s %s/%s_stat_redundant.xml"%(app, result_path, app)
-	#os.system("python collect_stats.py %s %s/%s_stat_redundant.xml"%(app, result_path, app))	
+	print "python stats.py %s %s/%s_stat.xml"%(app, result_path, app)
+	os.system("python stats.py %s %s/%s_stat.xml"%(app, result_path, app))	
 	#print "python collect_nextaction.py %s "%(app)
 	#os.system("python collect_nextaction.py %s %s/nextaction_%s_stat.xml"%(app, result_path, app))
 	#print "python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app)
 	#os.system("python collect_funcdeps.py %s %s/%s_funcdeps.log"%(app, result_path, app))
-	fname = "%s/%s_stat_redundant.xml"%(result_path, app)
+	fname = "%s/%s_stat.xml"%(result_path, app)
 	print fname
 	tree = ET.parse(fname)
 	roots[app] = tree.getroot()
 	print ""
 
-plot_index_stat("indexStat")
-stats=["redundantData", "branch"]
+#plot_index_stat("indexStat")
+stats=["queryGeneral","redundantField", "queryCard", "queryOnlyToQuery", "fieldOnlyConst", "fieldNoInput", "queryPartial"]
 #stats = ["queryGeneral","branch","branchInView","queryInView","usedInView","usedSQLString","onlyFromUser","inClosure","readSink","readSource","writeSource","TableInView","assocQuery","transaction","transactionNested", "queryString", "affectedInControlflow", "queryFunction","viewClosure","loopWhile","constStat","inputReaches","loopNestedDepth","inputAffectPath","inputAffectQuery","queryCardinality","redundantData","tableFieldFuncdep","closureCarryDep","queryDependency"]
 YaxisLabel = {}
+YaxisLabel["queryOnlyToQuery"] = "Avg #queries in an action"
+YaxisLabel["queryPartial"] = "Avg #queries in an action"
 YaxisLabel["queryGeneral"] = "Avg #queries in an action"
+YaxisLabel["fieldOnlyConst"] = "#fields"
+YaxisLabel["fieldNoInput"] = "#fields"
 YaxisLabel["branch"] = "Avg #branch in an action"
 YaxisLabel["branchInView"] = "Avg #branch in an action"
 YaxisLabel["queryInView"] = "Avg #Q in an action"
@@ -376,12 +380,12 @@ YaxisLabel["inputReaches"] = "Breakdown of input affecting % of queries"
 YaxisLabel["tableStat"] = "Breakdown of #Q by tables in an action"
 YaxisLabel["path"] = "Number of instructions"
 YaxisLabel["loopNestedDepth"] = "Avg #loop in an action"
-YaxisLabel["queryCardinality"] = "Avg #query in an action"
+YaxisLabel["queryCard"] = "Avg #query in an action"
 YaxisLabel["inputAffectPath"] = "#nodes"
 YaxisLabel["inputAffectQuery"] = "#queries"
 YaxisLabel["tableFieldFuncdep"] = "#fields"
 YaxisLabel["selectCondition"] = "#tables"
-YaxisLabel["redundantData"] = "field size by byte"
+YaxisLabel["redundantField"] = "field size by byte"
 YaxisLabel["longestQueryPath"] = "#queries"
 YaxisLabel["orderFunction"] = "percentage of order/non_order queries in an action"
 YaxisLabel["orderField"] = "#tables"
@@ -397,6 +401,7 @@ for s in stats:
 	print "=============="
 	print "printing %s..."%s
 	general_plot(s, YaxisLabel[s])
+
 exit(0)
 plot_field_stat("tableFieldStat")
 plot_field_stat("nonFieldStat")

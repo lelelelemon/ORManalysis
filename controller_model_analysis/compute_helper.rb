@@ -87,6 +87,50 @@ def traceback_data_dep(cur_node, stop_at_query=false)
 		@total = 0
 end
 
+def increase_dist(dist, node)
+	#If it is a simple copy or assign func, then don't count as dist
+	if node.getInstr.instance_of?Copy_instr or node.getInstr.instance_of?Return_instr or node.getInstr.is_a?ReceiveArg_instr
+		return dist
+	elsif node.getInstr.instance_of?GetField_instr #???
+		return dist
+	elsif node.getInstr.is_a?Call_instr and ["exists", "try"].include?node.getInstr.getFuncname.gsub('?','').gsub('!','')
+		return dist 
+	else
+		return dist+1
+	end
+end
+
+def traceback_data_dep_track_dist(cur_node)
+	@node_list = Array.new
+	@node_list.push(cur_node)
+	@dist_hash = Hash.new
+	@dist_hash[cur_node] = 0
+	while @node_list.length > 0 do
+		node = @node_list.pop
+		node.getBackwardEdges.each do |e|
+			if e.getFromNode != nil and e.getToNode != nil
+				if e.getFromNode.isQuery?
+					@dist_hash[e.getFromNode] = increase_dist(@dist_hash[node], node)
+				else
+					#if cur_node.getCallStack.include?(e.getToNode) and e.getVname == "returnv"
+					if e.getFromNode.getInstr.instance_of?Return_instr and e.getFromNode.getInstr.getClassName == cur_node.getInstr.getClassName and e.getFromNode.getInstr.getMethodName == cur_node.getInstr.getMethodName
+					elsif e.getFromNode.getIndex < cur_node.getIndex
+						if @dist_hash.has_key?(e.getFromNode)
+						else
+							@dist_hash[e.getFromNode] = increase_dist(@dist_hash[node], node)
+							@node_list.push(e.getFromNode)
+						end
+					end
+				end
+			elsif e.getFromNode == nil and e.getToNode != nil
+				@dist_hash[e] = increase_dist(@dist_hash[node], node)
+			end
+		end
+	end
+		return @dist_hash
+end
+
+
 def traceback_data_dep_for_funcdep(cur_node)
 	@dep_array = Array.new
 	@node_list = Array.new
@@ -432,14 +476,16 @@ end
 
 
 def compute_query_chain_for_single_node(qnode)
-	if test_in_chained_query(qnode)
-		return 
-	end
-	add_in_chained_query(qnode, qnode)
-	if cq = is_chained_query(qnode)
+	cq = is_chained_query(qnode)
+	if cq
 		#$temp_file.puts "#{qnode.getIndex} is chained query"
 		add_in_chained_query(cq, qnode)
 		return
+	end
+	if test_in_chained_query(qnode)
+		return 
+	else
+		add_in_chained_query(qnode, qnode)
 	end
 	@traversed = Array.new
 	@node_list = Array.new

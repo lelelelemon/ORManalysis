@@ -35,15 +35,16 @@ def compute_assignment_source
 				if pn.instance_of?Dataflow_edge
 					@sources.push("user_input")
 				elsif pn.isQuery?
-					@sources.push("#{pn.getInstr.getTableName}")
+					#@sources.push("#{pn.getInstr.getTableName}")
+					@sources.push("query") unless @sources.include?("query")
 					#@sources.push("#{pn.getInstr.getTableName}.#{pn.getInstr.getFuncname}")
 				#source node in the graph
 				elsif pn.getBackwardEdges.length == 0 
 					if isUtilSource(pn)
-						@sources.push("util_func")
+						@sources.push("util_func") unless @sources.include?("util_func")
 						#@source.push("util_func:#{pn.getInstr.getFuncname}")
 					elsif isConstSource(pn)
-						@sources.push("user_input")
+						@sources.push("const") unless @sources.include?("const")
 					end
 				end
 			end
@@ -52,7 +53,10 @@ def compute_assignment_source
 			@column_names.each do |c|
 				key = "#{@table_name}.#{c}"
 				@column_assignments[key] = Array.new unless @column_assignments.has_key?(key)
-				@column_assignments[key] << @sources
+				#@column_assignments[key] << @sources
+				@sources.each do |s|
+					@column_assignments[key].push(s) unless @column_assignments[key].include?(s)
+				end
 			end
 			@str += @column_names.join(", ")
 			@str += ") from table #{@table_name} take sources: "
@@ -64,7 +68,10 @@ def compute_assignment_source
 	#print out the assignments for each column in this action
 	$graph_file.puts "<assignmentDetail>"
 	@column_assignments.each do |k, v|
-		$graph_file.puts "\t<#{k}>#{v}<\/#{k}>" 
+		str = v.join(",")
+		$graph_file.puts "\t<#{k}>#{str}<\/#{k}>" 
 	end
 	$graph_file.puts "<\/assignmentDetail>"
 end
+
+

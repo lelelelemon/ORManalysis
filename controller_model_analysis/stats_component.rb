@@ -4,6 +4,7 @@ class Temp_Qgeneral_stat
 		@read = 0
 		@write = 0
 		@in_closure = 0
+		@read_in_closure = 0
 		@in_while = 0
 		@in_closure_by_db = 0
 		@in_closure_by_db_scale = 0
@@ -17,7 +18,7 @@ class Temp_Qgeneral_stat
 		@branch_in_view = 0
 		@issued_by_other = 0
 	end
-	attr_accessor :total, :read, :write, :in_closure, :in_while, :in_closure_by_db, :in_closure_by_db_scale, :in_loop_has_carrydep, :in_while_by_db, :in_view, :in_view_assoc, :total_branch, :branch_dependon_query, :branch_in_view, :use_query_string, :issued_by_other
+	attr_accessor :total, :read, :write, :in_closure, :read_in_closure, :in_while, :in_closure_by_db, :in_closure_by_db_scale, :in_loop_has_carrydep, :in_while_by_db, :in_view, :in_view_assoc, :total_branch, :branch_dependon_query, :branch_in_view, :use_query_string, :issued_by_other
 	def get_avg(v)
 		if @total > 0
 			return v.to_f / @total.to_f;

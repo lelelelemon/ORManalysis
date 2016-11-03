@@ -15,11 +15,14 @@ def countFrequency(ary, item):
 			cnt += 1
 	return cnt
 
-def calculateAverageRecursive(cond_list, pos, node, to_float):
+def calculateAverageRecursive(cond_list, pos, node, to_float, count_loop):
 	results = []
+	results_loop = []
 	for child in node:
 		if child.tag == cond_list[pos]:
 			if pos ==  len(cond_list)-1:
+				if count_loop and child.attrib["in_loop"]:
+					results_loop.append(int(child.attrib["in_loop"], 10))
 				if to_float:
 					if child.text == "NaN":
 						results.append(0)
@@ -30,14 +33,31 @@ def calculateAverageRecursive(cond_list, pos, node, to_float):
 				else:
 					results.append(child.text)
 			else:
-				results = results + calculateAverageRecursive(cond_list, pos+1, child, to_float)
-	return results
+				if count_loop:
+					r = calculateAverageRecursive(cond_list, pos+1, child, to_float, count_loop)
+					results = results + r[0]
+					results_loop = results_loop + r[1]
+				else:
+					results = results + calculateAverageRecursive(cond_list, pos+1, child, to_float, count_loop)
+	if count_loop:
+		return [results, results_loop]
+	else:
+		return results
 
-def calculateAllActions(roots, cond_list, to_float=True):
+def calculateAllActions(roots, cond_list, to_float=True, count_loop=False):
 	result = []
+	result_loop = []
 	for root in roots:
-		result = result + calculateAverageRecursive(cond_list, 0, root, to_float)
-	return result
+		if count_loop:
+			r = calculateAverageRecursive(cond_list, 0, root, to_float, count_loop)
+			result += r[0]
+			result_loop += r[1]
+		else:
+			result = result + calculateAverageRecursive(cond_list, 0, root, to_float, count_loop)
+	if count_loop:
+		return [result, result_loop]
+	else:
+		return result
 
 #result = {{attrib_value => [value, [all_attribs]]},}
 def collectByAttributeRecursive(cond_list, pos, node, results, main_attrib, other_attribs):

@@ -193,21 +193,24 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 		@query_on_variable = Hash.new
 		$node_list.each do |n|
 			if n.isQuery?
-				n.getBackwardEdges.each do |e|
-					if e.getFromNode.getInstr.instance_of?GetField_instr
+				traceback_data_dep(n).each do |n1|
+					if n1.instance_of?Dataflow_edge
+					elsif n1.getInstr.instance_of?GetField_instr and n1.getInstr.getBB == n.getInstr.getBB
 						#puts "#{n.getIndex}:#{n.getInstr.toString} FROM (#{e.getFromNode.getInstr.field})"
-						class_name = n.getInstr.getBB.getCFG.getMHandler.getCallerClass.getName
-						variable_name = e.getFromNode.getInstr.field
+						class_name = n1.getInstr.getBB.getCFG.getMHandler.getCallerClass.getName
+						variable_name = n1.getInstr.field
 						query = n.getInstr.getFuncname
 						hash_key = "#{class_name}.#{variable_name}"
 						@query_on_variable[hash_key] = [] unless @query_on_variable.has_key?(hash_key)
-						@query_on_variable[hash_key].append(query) unless @query_on_variable[hash_key].include?(query)
+						@query_on_variable[hash_key].append(n) unless @query_on_variable[hash_key].include?(n)
 					end
 				end	
 			end
 		end
 	end
 
+	@temp_use_input = 0
+	@temp_use_input_in_loop = 0
 	$node_list.each do |n|
 		if $print_querydep_graph
 			if n.getInstr.getFromUserInput and $graph_print_control_edge
@@ -251,10 +254,21 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 			end
 			@table_general_stat[@table_name].total += 1
 
+			if n.getInClosure
+				if n.getNonViewClosureStack.length > 0
+					@general_stat.in_closure += 1
+					if n.isReadQuery?
+						@general_stat.read_in_closure += 1
+					end
+				end
+			end
 			if $compute_loopdetail
 				if n.getInClosure
 					if n.getNonViewClosureStack.length > 0
 						@general_stat.in_closure += 1
+						if n.isReadQuery?
+							@general_stat.read_in_closure += 1
+						end
 						@table_general_stat[@table_name].in_closure += 1
 						by_db = false
 						by_db_scale = false
@@ -483,6 +497,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				end
 				@only_from_user_input = true
 				@used_query_string = false
+				@use_user_input = false
 				if n.getInstr.args.include?("Fixnum")
 					@read_source_stat.from_select_condition += 1
 				end 
@@ -498,6 +513,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 					if n1.instance_of?Dataflow_edge
 						@read_source_stat.from_user_input += 1
 						@read_source_stat.source_total += 1
+						@use_user_input = true
 					elsif n1.isQuery?
 						@read_source_stat.from_query += 1
 						@read_source_stat.source_total += 1
@@ -533,6 +549,12 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				if @only_from_user_input
 					@singleQ_stat.only_from_user_input += 1
 					#$temp_file.puts "# query #{n.getIndex} only uses user input"
+				end
+				if @use_user_input
+					@temp_use_input += 1
+					if n.getNonViewClosureStack.length > 0
+						@temp_use_input_in_loop += 1
+					end
 				end
 				if @used_query_string
 					@general_stat.use_query_string += 1
@@ -771,10 +793,19 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	if $compute_partial_overlap
 		$graph_file.puts("<queryVariable>")
 		@query_on_variable.each do |k,v|
-			$graph_file.puts("\t<#{k.gsub("::","")}>#{v.length}<\/#{k.gsub("::","")}>")
+			in_loop = 0
+			v.each do |n1|
+				if n1.getNonViewClosureStack.length > 0
+					in_loop += 1
+				end
+			end
+			$graph_file.puts("\t<#{k.gsub("::","")} in_loop=\"#{in_loop}\">#{v.length}<\/#{k.gsub("::","")}>")
 		end
 		$graph_file.puts("<\/queryVariable>")
 	end
+
+	$graph_file.puts("<readFromInput in_loop=\"#{@temp_use_input_in_loop}\">#{@temp_use_input}<\/readFromInput>")
+
 
 	if $compute_view_stat
 		compute_view_stat
@@ -822,6 +853,7 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	if $compute_redundant_table_usage
 		compute_redundant_table_access
+		compute_query_only_used_for_queries
 	end
 
 	#compute_kv_store
@@ -921,6 +953,7 @@ def helper_print_stat(general, readSink, readSource, write, label, print_branch=
 	$graph_file.puts("\t\t<queryInViewAssoc>#{general.in_view_assoc}<\/queryInViewAssoc>")
 	$graph_file.puts("\t\t<queryIssuedByOther>#{general.issued_by_other}<\/queryIssuedByOther>")
 	$graph_file.puts("\t\t<queryInClosure>#{general.in_closure}<\/queryInClosure>")
+	$graph_file.puts("\t\t<queryReadInClosure>#{general.read_in_closure}<\/queryReadInClosure>")
 	$graph_file.puts("\t\t<queryInClosureByDB>#{general.in_closure_by_db}<\/queryInClosureByDB>")
 	$graph_file.puts("\t\t<queryInClosureByDBScale>#{general.in_closure_by_db_scale}<\/queryInClosureByDBScale>")
 	$graph_file.puts("\t\t<queryInWhile>#{general.in_while}<\/queryInWhile>")

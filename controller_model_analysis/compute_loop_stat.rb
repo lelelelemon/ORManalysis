@@ -1,17 +1,17 @@
 def compute_loop_stat
-	$graph_file.puts("<loopNestedStats>")
-	@loop_hash = Hash.new
-	$node_list.each do |n|
-		if n.getInClosure
-			n.getNonViewClosureStack.each do |cl|
-				@loop_hash[cl] = cl.getNonViewClosureStack.length+1
-			end
-		end
-	end
-	@loop_hash.each do |k, v|
-		$graph_file.puts("\t<depth>#{v}<\/depth>")
-	end
-	$graph_file.puts("<\/loopNestedStats>")
+	#$graph_file.puts("<loopNestedStats>")
+	#@loop_hash = Hash.new
+	#$node_list.each do |n|
+	#	if n.getInClosure
+	#		n.getNonViewClosureStack.each do |cl|
+	#			@loop_hash[cl] = cl.getNonViewClosureStack.length+1
+	#		end
+	#	end
+	#end
+	#@loop_hash.each do |k, v|
+	#	$graph_file.puts("\t<depth>#{v}<\/depth>")
+	#end
+	#$graph_file.puts("<\/loopNestedStats>")
 
 	$graph_file.puts("<loopWhile>")
 	@closure_cnt = Array.new
@@ -28,6 +28,36 @@ def compute_loop_stat
 	$graph_file.puts("\t<closure>#{@closure_cnt.length}<\/closure>")
 	$graph_file.puts("<\/loopWhile>")
 
+	@query_in_loop_by_db = 0
+	@query_in_loop = 0 
+	@loop_by_db = Array.new
+	$node_list.each do |n|
+		if n.isQuery?
+			if n.getInClosure
+				if n.getNonViewClosureStack.length > 0
+					by_db = false
+					has_loop_carrydep = false
+					@query_in_loop += 1
+					n.getNonViewClosureStack.each do |cl|
+						if cl.getInstr.getClosure and cl.getInstr.getClosure.has_loop_carry_dep
+							has_loop_carrydep = true
+						end
+						r = traceback_data_dep(cl, true)
+						@loop_by_db.push(cl) unless @loop_by_db.include?(cl)
+						if r
+							by_db = true
+							@query_in_loop_by_db += 1
+						end
+					end
+				end
+			end
+		end
+	end
+	$graph_file.puts "<loopByDB>"
+	$graph_file.puts "\t<queryInLoop>#{@query_in_loop}<\/queryInLoop>"
+	$graph_file.puts "\t<queryInLoopByDB>#{@query_in_loop_by_db}<\/queryInLoopByDB>"
+	$graph_file.puts "\t<loopByDB>#{@loop_by_db.length}<\/loopByDB>"
+	$graph_file.puts "<\/loopByDB>"
 end
 
 
