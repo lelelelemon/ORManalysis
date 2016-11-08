@@ -7,17 +7,17 @@ def print_call_stack
 end
 
 def handle_single_call_node2(start_class, start_function, instr, level)
-		if instr.isClassField or instr.isTableField or instr.instance_of?AttrAssign_instr or instr.instance_of?GetField_instr 
-			return 
+		if instr.isClassField or instr.isTableField or instr.instance_of?AttrAssign_instr or instr.instance_of?GetField_instr
+			return
 		end
-	
+
 		#puts "stack #{$call_stack_trace.length}: #{print_call_stack}  "
 		#puts "\tprocessing #{$ins_cnt}: #{instr.toString}"
 
 		caller_class = instr.getCallerType
 		if instr.isQuery
 			$cur_node.setLabel
-		
+
 			if instr_trigger_save?(instr) or instr_trigger_create?(instr)
 				$node_list.pop
 				$ins_cnt -= 1
@@ -47,7 +47,7 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 						temp_name = "#{caller_class}.#{action}"
 						#if $non_repeat_list.include?(temp_name) == false
 						if $call_stack_trace.include?(temp_name) or check_nonrepeat(caller_class, action)==false
-						else	
+						else
 							$non_repeat_list.push(temp_name)
 							$call_stack_trace.push(temp_name)
 							#if $class_map[caller_class] != nil and $class_map[$class_map[caller_class].getUpperClass] != nil
@@ -101,8 +101,8 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 				end
 				$ins_cnt += 1
 			end
-				
-		elsif caller_class != nil	
+
+		elsif caller_class != nil
 			temp_name = "#{caller_class}.#{instr.getFuncname}"
 
 			#if $non_repeat_list.include?(temp_name) and is_repeatable_function(temp_name)==false
@@ -116,7 +116,7 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 				if instr.getFuncname == "super" and $class_map[caller_class].getUpperClass
 					cur_cfg = trace_query_flow($class_map[caller_class].getUpperClass, start_function, "", "", level+1)
 					#puts "Handle super call: #{start_class}: upper = #{$class_map[caller_class].getUpperClass} funcname = #{instr.getFuncname}, actual func name = #{start_function}"
-				else	
+				else
 					cur_cfg = trace_query_flow(caller_class, instr.getFuncname, "", "", level+1)
 				end
 				$call_stack_trace.pop
@@ -127,7 +127,7 @@ def handle_single_call_node2(start_class, start_function, instr, level)
 					cur_cfg.getExplicitReturn.each do |rt|
 						dataflow_edge_name = "#{rt.getIndex}*#{temp_node.getIndex}*returnv"
 						edge = Dataflow_edge.new(rt, temp_node, "returnv")
-						
+
 						rt.getInstr.getINode.addDataflowEdge(edge)
 						$dataflow_edges[dataflow_edge_name] = edge
 					end
@@ -171,13 +171,13 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		end
 		class_handler.member_defs[instr.getFuncname].push(node)
 	elsif instr.instance_of?AttrAssign_instr
-		
+
 		#puts "FIND A GETFIELD: #{$ins_cnt} #{instr.toString} #{instr.getCaller}"
 		field_name = nil
 		class_handler.member_gets.each do |k, v|
 			v.each do |temp_var_name|
 				if temp_var_name == instr.getCaller
-					field_name = k 
+					field_name = k
 				end
 			end
 		end
@@ -256,7 +256,7 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		handle_get_field_instr(node)
 	end
 
-	new_return_l = Array.new	
+	new_return_l = Array.new
 	if instr.hasClosure?
 		@cl = instr.getClosure
 		temp_node = $cur_node
@@ -267,12 +267,12 @@ def handle_single_instr2(start_class, start_function, class_handler, function_ha
 		end
 		if instr.instance_of?Call_instr and (isNonClosureInstr(instr) or instr.getCaller == "format")
 			$show_stack.push($cur_node)
-			handle_single_cfg2(start_class, start_function, class_handler, function_handler, @cl, level) 
+			handle_single_cfg2(start_class, start_function, class_handler, function_handler, @cl, level)
 			$show_stack.pop
 		else
 			$closure_stack.push($cur_node)
 			$general_call_stack.push($cur_node)
-			handle_single_cfg2(start_class, start_function, class_handler, function_handler, @cl, level) 
+			handle_single_cfg2(start_class, start_function, class_handler, function_handler, @cl, level)
 			$closure_stack.pop
 			$general_call_stack.pop
 		end
@@ -298,10 +298,10 @@ def handle_single_bb2(start_class, start_function, class_handler, function_handl
 #	end
 #	puts ""
 
-	r_list = Array.new	
+	r_list = Array.new
 	if bb.getInstr.length == 0
 		empty_instr = Instruction.new
-		bb.addInstr(empty_instr)	
+		bb.addInstr(empty_instr)
 	end
 	bb.getInstr.each do |instr|
 		r_list = handle_single_instr2(start_class, start_function, class_handler, function_handler, instr, level, r_list)
@@ -316,7 +316,7 @@ def handle_single_bb2(start_class, start_function, class_handler, function_handl
 		end
 	end
 
-	#puts "instr #{$cur_node.getIndex}.return length = #{r_list.length}"	
+	#puts "instr #{$cur_node.getIndex}.return length = #{r_list.length}"
 	#The last instr's return list plus all return instrs.
 	r_list.each do |r|
 		bb.addReturn(r)
@@ -325,10 +325,10 @@ end
 
 def handle_single_cfg2(start_class, start_function, class_handler, function_handler, cfg, level)
 	#puts "CFG: #{class_handler.getName}.#{function_handler.getName}"
-	
+
 	cfg.getBB.each do |bb|
 		handle_single_bb2(start_class, start_function, class_handler, function_handler, bb, level)
-	end	
+	end
 
 	#add data dependency between "self" and funccall instr
 	#Can either be bb1.instr0
@@ -338,7 +338,7 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 		fromIns = cfg.getBB[0].getInstr[0]
 	elsif cfg.getBB[1]
 		fromIns = cfg.getBB[1].getInstr[0]
-	end	
+	end
 	if fromIns and fromIns.getDefv != nil and fromIns.getDefv == "%self"
 	else
 		fromIns = nil
@@ -346,7 +346,7 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 
 	if $funccall_stack.length > 0 and fromIns != nil
 		if isValidationFunc(function_handler.getName)
-		elsif is_sub_or_upper_class($funccall_stack[-1].getInstr.getCallerType, cfg.getMHandler.getCallerClass.getName) #and function_defself($funccall_stack[-1].getInstr.getBB.getCFG.getMHandler) #TODO: Messy too... only pass "self" when the upper class actually defines "self" 
+		elsif is_sub_or_upper_class($funccall_stack[-1].getInstr.getCallerType, cfg.getMHandler.getCallerClass.getName) #and function_defself($funccall_stack[-1].getInstr.getBB.getCFG.getMHandler) #TODO: Messy too... only pass "self" when the upper class actually defines "self"
 			dep = $funccall_stack[-1]
 			edge_name = "#{dep.getIndex}*#{fromIns.getINode.getIndex}"
 			edge = Dataflow_edge.new(dep, fromIns.getINode, "%self")
@@ -374,17 +374,17 @@ def handle_single_cfg2(start_class, start_function, class_handler, function_hand
 		#puts "BB's return length = #{bb.getReturns.length}"
 		bb.getOutgoings.each do |o|
 			o_bb = cfg.getBBByIndex(o)
-	
+
 			#Add edge to instruction node
 			bb.getReturns.each do |r|
 				r.addChild(o_bb.getInstr[0].getINode)
-				#puts "ADD BLOCK CONNECT: #{r.getIndex} -> #{o_bb.getInstr[0].getINode.getIndex}"	
+				#puts "ADD BLOCK CONNECT: #{r.getIndex} -> #{o_bb.getInstr[0].getINode.getIndex}"
 			end
 		end
 		bb.getExplicitReturn.each do |r|
 			cfg.addExplicitReturn(r)
 		end
-		
+
 		#control flow outage point
 		#TODO: return instr is not handled, sometimes the outage point may be return instrs
 		#if bb.getOutgoings.length == 0
@@ -416,11 +416,11 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 			#end
 		end
 		#puts "function #{start_class}.#{start_function} cannot be found"
-		return nil 
+		return nil
 	end
 
-	
-	#TODO: Before filter is not handled here, since most of them just do validation and are not involved in dataflow	
+
+	#TODO: Before filter is not handled here, since most of them just do validation and are not involved in dataflow
 	before_filter_name = "#{start_class}.before_filter"
 	filter_handler = $class_map[start_class].getMethods["before_filter"]
 
@@ -428,7 +428,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 		$call_stack_trace.push(before_filter_name)
 	#if $non_repeat_list.include?(before_filter_name) == false
 		$non_repeat_list.push(before_filter_name)
-		
+
 		cfg = CFG.new
 		filter_handler.setCFG(cfg)
 		filter_handler.normal_function = false
@@ -436,7 +436,7 @@ def trace_query_flow(start_class, start_function, params, returnv, level)
 		def_self = Instruction.new
 		def_self.setDefv("%self")
 		bb.addInstr(def_self)
-		if filter_handler != nil	
+		if filter_handler != nil
 			filter_handler.getCalls.each do |c|
 				if c.getOn.length == 0 or c.getOn.include?(start_function)
 					call_instr = Call_instr.new(c.getObjName, c.getFuncName)
@@ -484,7 +484,7 @@ def traverse_instr_tree(node, level)
 		#	puts "QUERY: #{c.getInstr.getCaller}.#{c.getInstr.getFuncname}"
 		#end
 		blank = ""
-		
+
 		for i in (0...level)
 			blank = blank + " "
 		end
@@ -515,4 +515,3 @@ def is_directly_connected(node1, node2)
 	end
 	return false
 end
-
