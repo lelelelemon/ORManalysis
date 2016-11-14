@@ -217,10 +217,17 @@ def checkActiveRecord(word)
 		return false
 	end
 end
+
+def get_app_name_from_dir(app_dir)
+	words = app_dir.split("/")
+	return words[words.length - 1]
+end
+
 def post_process_functional_dependencies
 	content = File.read("#{$app_dir}/fdAnalysis.xml")
 	File.delete("#{$app_dir}/fdAnalysis.xml")
-	info_file = File.open("#{$app_dir}/fdAnalysis.xml", "w")
+	app_name = get_app_name_from_dir($app_dir)
+	info_file = File.open("results/#{app_name}.xml", "w")
 	info_file.puts get_xml("app", content)
 	info_file.close
 end
