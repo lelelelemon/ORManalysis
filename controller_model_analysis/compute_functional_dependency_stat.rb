@@ -1,3 +1,4 @@
+require 'active_support/core_ext/string'
 def analyse_functional_dependencies
 	find_interesting_nodes
 end
@@ -9,7 +10,7 @@ def find_interesting_nodes
 	$node_list.each do |n|
 		if n.getInstr.is_a?Call_instr and ["save", "save!"].include?n.getInstr.getFuncname
 			table_name = type_valid(n.getInstr, n.getInstr.getCaller)
-			content += get_xml("action", trace_data_dependency_till_source(n, 0, [], is_root: true), attributes: [["table", table_name]])
+			content += get_xml("action", trace_data_dependency_till_source(n, 0, [], is_root:true), attributes: [["table", table_name]])
 		end
 	end
 
@@ -20,8 +21,8 @@ def find_interesting_nodes
 		$statistics.keys.each do |k|
 			statistics_content += get_xml(k, $statistics[k].to_s)
 		end
-		analysis_content += get_xml("statistics", statistics_content)
-		analysis_content += explore_query_nodes
+		#analysis_content += get_xml("statistics", statistics_content)
+		#analysis_content += explore_query_nodes
 		info_file.puts get_xml("analysis", analysis_content)
 		info_file.close
 	end
@@ -110,7 +111,16 @@ def trace_dataflow_of_query(node, distance, visited_nodes)
 			visited_nodes.push(node.getIndex)
 			#perform a depth first traversal
 			node.getBackwardEdges.each do |edge|
-				children_content += trace_data_dependency_till_source(edge.getFromNode, distance + 1, visited_nodes)
+				if is_root
+					fromNode = edge.getFromNode
+					if fromNode != nil
+						if fromNode.getInstr.instance_of?AttrAssign_instr and  not isActiveRecord(fromNode.getInstr.getCallerType)
+							children_content += trace_data_dependency_till_source(fromNode, distance + 1, visited_nodes)
+						end
+					end
+				else
+					children_content += trace_data_dependency_till_source(edge.getFromNode, distance + 1, visited_nodes)
+				end
 			end
 			visited_nodes.delete(node.getIndex)
 			node_content += get_xml("children", children_content, attributes: [["count", children_count]])
@@ -175,18 +185,38 @@ def trace_data_dependency_till_source(node, distance, visited_nodes, is_root: fa
 				not node.getInstr.toString.include?"before_" and \
 				explore_children
 			visited_nodes.push(node.getIndex)
+
 			#perform a depth first traversal
 			node.getBackwardEdges.each do |edge|
-				children_content += trace_data_dependency_till_source(edge.getFromNode, distance + 1, visited_nodes)
+				if is_root
+					fromNode = edge.getFromNode
+					if fromNode != nil
+						if fromNode.getInstr.instance_of?AttrAssign_instr and checkActiveRecord(fromNode.getInstr.getFuncname)
+							children_content += get_xml("active-record-assignment", fromNode.getInstr.toString)
+						else
+							children_content += trace_data_dependency_till_source(fromNode, distance + 1, visited_nodes)
+						end
+					end
+				else
+					children_content += trace_data_dependency_till_source(edge.getFromNode, distance + 1, visited_nodes)
+				end
 			end
 			visited_nodes.delete(node.getIndex)
 			node_content += get_xml("children", children_content, attributes: [["count", children_count]])
 		end
 	end
 
-	return get_xml("node", node_content.to_s, attributes: [["index", instruction_index.to_s], ["distance", distance.to_s]])
+	return get_xml("node", node_content.to_s, attributes: [["index", instruction_index.to_s], ["distance", distance.to_s], ["root", is_root.to_s]])
 end
 
+def checkActiveRecord(word)
+	if word != nil
+		plural = word.pluralize
+		return $table_names.include?(plural)
+	else
+		return false
+	end
+end
 def post_process_functional_dependencies
 	content = File.read("#{$app_dir}/fdAnalysis.xml")
 	File.delete("#{$app_dir}/fdAnalysis.xml")
