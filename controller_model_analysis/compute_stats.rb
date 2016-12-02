@@ -355,7 +355,11 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 				end
 				@used_in_view = false
 				@forwardarray = traceforward_data_dep(n)
+				#@forwardarray.each do |n1|
+					#if n1.isQuery?
+					#elsif n1.getDataflowEdges.length == 0
 
+				#
 				#Queries in validations need to be executed sequentially
 				#n.getValidationStack.each do |vl|
 				#	@validation_stat[vl].queries.each do |q|
@@ -423,7 +427,6 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 							@read_sink_stat.sink_total += 1
 						end
 						if n1.isBranch?
-
 							if $compute_querydep_controlflow or ($print_querydep_graph and $graph_print_control_edge)
 								@query_affect_controlflow[n] = Array.new unless @query_affect_controlflow[n]
 								$node_list.each do |n2|
@@ -875,6 +878,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 
 	if $analyse_functional_dependencies
 		analyse_functional_dependencies
+	end
+
+	if $analyse_query_sinks
+		analyse_query_sinks
 	end
 
 	if $compute_physical_volatile_store

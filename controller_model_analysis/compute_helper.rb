@@ -4,7 +4,7 @@ def isAttrAssign(node)
 			return true
 		end
 	end
-	return false  
+	return false
 end
 
 def isTableAttrAssign(n)
@@ -48,7 +48,7 @@ def traceback_data_dep(cur_node, stop_at_query=false)
 		node = @node_list.pop
 		node.getBackwardEdges.each do |e|
 			if e.getFromNode != nil and e.getToNode != nil
-				if stop_at_query and e.getFromNode.isQuery? 
+				if stop_at_query and e.getFromNode.isQuery?
 					return e.getFromNode
 				end
 				if stop_at_query and e.getFromNode.getInstr.is_a?Call_instr and e.getFromNode.getInstr.getFuncname == "current_user"
@@ -134,7 +134,7 @@ def find_nearest_var(cur_node)
 		node = @node_list.pop
 		@traversed.push(node)
 		node.getDataflowEdges.each do |e|
-			if e.getToNode.getInstr.getDefv != nil 
+			if e.getToNode.getInstr.getDefv != nil
 				if e.getToNode.getInstr.getDefv.include?('%') == false
 					return e.getToNode
 				#elsif e.getToNode.getInstr.getDefv.include?("self")
@@ -163,11 +163,13 @@ def traceforward_data_dep(query_node)
 	@traversed = Array.new
 	@node_list = Array.new
 	@node_list.push(query_node)
+
 	if query_node.getInstr.getBB.getCFG.getMHandler.normal_function == false
 		query_node.getDataflowEdges.each do |e|
 			@node_list.push(e.getToNode)
 		end
 	end
+
 	while @node_list.length > 0 do
 		node = @node_list.pop
 		if @traversed.include?(node)
@@ -182,10 +184,10 @@ def traceforward_data_dep(query_node)
 					else
 						@node_list.push(e1.getToNode)
 					end
-				end	
+				end
 			end
 		else
-			node.getDataflowEdges.each do |e|	
+			node.getDataflowEdges.each do |e|
 				if e.getToNode.isQuery? and e.getToNode != query_node
 					if @traversed.include?(e.getToNode)
 					else
@@ -202,7 +204,7 @@ def traceforward_data_dep(query_node)
 								else
 									@node_list.push(e1.getToNode)
 								end
-							end	
+							end
 						end
 					elsif e.getToNode.getIndex > query_node.getIndex
 						@node_list.push(e.getToNode)
@@ -223,7 +225,7 @@ def find_all_ancestors(nodex)
 		temp_node = @temp_node_list.shift
 		@ancestors.push(temp_node)
 		temp_node.getBackwardEdges.each do |e|
-			if e.getFromNode != nil and @ancestors.include?(e.getFromNode) == false 
+			if e.getFromNode != nil and @ancestors.include?(e.getFromNode) == false
 				if e.getFromNode.getInstr.instance_of?Return_instr and e.getFromNode.getInstr.getClassName == nodex.getInstr.getClassName and e.getFromNode.getInstr.getMethodName == nodex.getInstr.getMethodName
 				elsif e.getFromNode.getIndex < nodex.getIndex
 					@temp_node_list.push(e.getFromNode)
@@ -251,7 +253,7 @@ def find_all_succcessors(nodex)
 					else
 						@temp_node_list.push(e1.getToNode)
 					end
-				end	
+				end
 			end
 		else
 			node.getDataflowEdges.each do |e|
@@ -305,10 +307,10 @@ def check_necessary_materialization(v_name, node)
 			if p.getInstr.instance_of?Call_instr #Has to be strictly Call_instr, not using is_a
 				#TODO: caller name match, complicated...
 				return true
-			end 
+			end
 		end
-	end 	
-	return false		
+	end
+	return false
 end
 
 def is_chained_query(qnode)
@@ -353,7 +355,7 @@ class QChain
 	end
 	def add_select_conditions(c)
 		@select_conditions.push(c) unless @select_conditions.include?(c)
-	end	
+	end
 	def add_order(c)
 		#format: class_name.field_name
 		@order.push(c) unless @order.include?(c)
@@ -433,7 +435,7 @@ end
 
 def compute_query_chain_for_single_node(qnode)
 	if test_in_chained_query(qnode)
-		return 
+		return
 	end
 	add_in_chained_query(qnode, qnode)
 	if cq = is_chained_query(qnode)
@@ -471,7 +473,7 @@ def compute_query_chain_for_single_node(qnode)
 						@names.push(tonode.getInstr.getDefv)
 					end
 				end
-			else	
+			else
 				temp_node.getDataflowEdges.each do |e|
 					@to_add.push(e.getToNode)
 				end
@@ -528,6 +530,5 @@ def compute_query_chain_for_single_node(qnode)
 				end
 			end
 		end
-	end	
+	end
 end
-

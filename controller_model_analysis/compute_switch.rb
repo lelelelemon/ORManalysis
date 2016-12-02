@@ -2,7 +2,8 @@ $tempfile_print_forward_edges=false
 $tempfile_print_backward_edges=true
 $tempfile_print_control_edges=false
 
-$analyse_functional_dependencies=true
+$analyse_functional_dependencies=false
+$analyse_query_sinks=true
 
 $compute_card=false
 

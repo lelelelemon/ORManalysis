@@ -42,6 +42,7 @@ load 'build_dataflow_graph.rb'
 load 'compute_helper.rb'
 load 'compute_stats.rb'
 load 'compute_functional_dependency_stat.rb'
+load 'compute_query_sinks.rb'
 load 'compare_consequent_actions.rb'
 load 'compute_branch_stat.rb'
 load 'compute_input_stat.rb'
@@ -275,8 +276,8 @@ if options[:printinstr] != nil
 end
 
 if options[:trace_input] != nil
-	start_class = options[:trace_input][0]
-	start_function = options[:trace_input][1]
+	$start_class = options[:trace_input][0]
+	$start_function = options[:trace_input][1]
 	level = 0
 end
 
@@ -287,40 +288,40 @@ end
 
 
 if options[:trace_flow] or options[:stats] or options[:query_graph]
-	start_class = options[:trace][0]
-	start_function = options[:trace][1]
+	$start_class = options[:trace][0]
+	$start_function = options[:trace][1]
 	level = 0
 
 	$temp_file = File.open("#{$output_dir}/trace.log","w")
 	puts "temp file name: #{$output_dir}/trace.log"
 	if options[:trace_flow] or options[:random_path]
-		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
+		graph_fname = "#{$output_dir}/#{$start_class}_#{$start_function}_graph.log"
 		$graph_file = File.open(graph_fname, "w");
 
-		$graph_file.write("digraph #{remove_special_chars(start_class)}_#{start_function} {\n")
+		$graph_file.write("digraph #{remove_special_chars($start_class)}_#{$start_function} {\n")
 		if options[:random_path]
-			#print_random_trace(start_class, start_function)
+			#print_random_trace(start_class, $start_function)
 		else
-			trace_flow(start_class, start_function, "", "", level)
+			trace_flow($start_class, $start_function, "", "", level)
 		end
 		$graph_file.write("}")
 	end
 
 	if options[:query_graph]
-		print_query_graph($output_dir, start_class, start_function)
+		print_query_graph($output_dir, $start_class, $start_function)
 	end
 
 	if options[:dump_graph]
-		trace_query_flow(start_class, start_function, "", "", level)
+		trace_query_flow($start_class, $start_function, "", "", level)
 		$dump_file = File.open("dump_graph.gml", "w")
 		dump_graphml
 	end
 
 	if options[:stats]
 		if options[:random_path]
-			compute_dataflow_stat($output_dir, start_class, start_function, true)
+			compute_dataflow_stat($output_dir, $start_class, $start_function, true)
 		else
-			compute_dataflow_stat($output_dir, start_class, start_function)
+			compute_dataflow_stat($output_dir, $start_class, $start_function)
 		end
 	end
 end
@@ -410,32 +411,32 @@ if options[:run_all]
 	File.open(call_file, "r").each do |line|
 		line = line.gsub("\n","")
 		chs = line.split(',')
-		start_function = chs[1]
-		start_class = getControllerNameCap(chs[0])
+		$start_function = chs[1]
+		$start_class = getControllerNameCap(chs[0])
 		puts "\n\n================================="
 		puts "================================="
-		puts "Handling #{start_class}, #{start_function}"
+		puts "Handling #{$start_class}, #{$start_function}"
 		time1 = Time.now
 		level = 0
 		#start print query trace
-		$output_dir = "#{$app_dir}/#{$results_dir}/#{start_class}_#{start_function}"
+		$output_dir = "#{$app_dir}/#{$results_dir}/#{$start_class}_#{$start_function}"
 		system("mkdir #{$output_dir}")
-		graph_fname = "#{$output_dir}/#{start_class}_#{start_function}_graph.log"
+		graph_fname = "#{$output_dir}/#{$start_class}_#{$start_function}_graph.log"
 		$lock_file = File.open("#{$app_dir}/dirlock.log", "w")
-		$lock_file.puts("#{start_class}_#{start_function}")
+		$lock_file.puts("#{$start_class}_#{$start_function}")
 		$lock_file.close
 		$graph_file = File.open(graph_fname, "w")
 		vis_file_name = "#{$output_dir}/qgraph_vis.gv"
 		$vis_file = File.open(vis_file_name, "w")
 		$temp_file = File.open("#{$output_dir}/trace.log","w")
 		if options[:dump_graph]
-			trace_query_flow(start_class, start_function, "", "", 0)
-			$dump_file = File.open("#{$output_dir}/#{start_class.delete(':')}_#{start_function}_graph.gml", "w")
+			trace_query_flow($start_class, $start_function, "", "", 0)
+			$dump_file = File.open("#{$output_dir}/#{$start_class.delete(':')}_#{$start_function}_graph.gml", "w")
 			dump_graphml
 			next
 		end
 		#$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
-		#trace_flow(start_class, start_function, "", "", level)
+		#trace_flow(start_class, $start_function, "", "", level)
 		#$trace_output_file.close
 
 	  #start compute stat
@@ -448,7 +449,7 @@ if options[:run_all]
 		$cur_query_stack = Array.new
 		$query_edges = Array.new
 
-		compute_dataflow_stat($output_dir, start_class, start_function)
+		compute_dataflow_stat($output_dir, $start_class, $start_function)
 
 		$vis_file.close
 		system "dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"
@@ -457,26 +458,32 @@ if options[:run_all]
 		puts "+++ Take time: #{time_diff(Time.now, time1)} +++"
 	#start print overlap between current and next controller actions
 		next_file = nil
-		if start_class.include?("::")
-			l = start_class.gsub("\n","")
+		if $start_class.include?("::")
+			l = $start_class.gsub("\n","")
 			chs = l.split('::')
  			chs[0] = chs[0].downcase
-			next_file = "#{$app_dir}/next_calls/#{chs[0]}/#{chs[1]}_#{start_function}.txt"
+			next_file = "#{$app_dir}/next_calls/#{chs[0]}/#{chs[1]}_#{$start_function}.txt"
 		else
-			next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
+			next_file = "#{$app_dir}/next_calls/#{$start_class}_#{$start_function}.txt"
 		end
 		clear_data_structure
 	end
-  post_process_functional_dependencies
+  if $analyse_functional_dependencies
+    post_process_functional_dependencies
+  end
+  if $analyse_query_sinks
+    post_process_query_sinks_analysis
+  end
+
 end
 
 if options[:consequent] != nil
-	start_class = options[:consequent][0]
-	start_function = options[:consequent][1]
+	$start_class = options[:consequent][0]
+	$start_function = options[:consequent][1]
 
 	level = 0
 	$trace_output_file = File.open("#{$output_dir}/trace.temp", "w")
-	compute_dataflow_stat($output_dir, start_class, start_function, true)
+	compute_dataflow_stat($output_dir, $start_class, $start_function, true)
 
 
 	@prev_list = Array.new
@@ -484,7 +491,7 @@ if options[:consequent] != nil
 		@prev_list.push(n)
 	end
 
-	view_by_controllers_dir = "../applications/lobsters/next_calls/#{start_class}_#{start_function}.txt"
+	view_by_controllers_dir = "../applications/lobsters/next_calls/#{$start_class}_#{$start_function}.txt"
 	@next_action = Array.new
 	File.open(view_by_controllers_dir, "r").each do |line|
 		if line.length > 1
@@ -496,7 +503,7 @@ if options[:consequent] != nil
 		end
 	end
 
-#	next_file = "#{$app_dir}/next_calls/#{start_class}_#{start_function}.txt"
+#	next_file = "#{$app_dir}/next_calls/#{start_class}_#{$start_function}.txt"
 #	File.open(next_file, "r").each do |line|
 	@next_action.each do |line|
 		clear_data_structure
@@ -518,21 +525,21 @@ if options[:print_validation] == true
 	File.open(call_file, "r").each do |line|
 		line = line.gsub("\n","")
 		chs = line.split(',')
-		start_function = chs[1]
+		$start_function = chs[1]
 		chs[0] = chs[0].capitalize
-		start_class = "#{chs[0]}Controller"
+		$start_class = "#{chs[0]}Controller"
 		puts "\n\n================================="
 		puts "================================="
-		puts "Handling #{start_class}, #{start_function}"
+		puts "Handling #{$start_class}, #{$start_function}"
 		level = 0
 
-		$output_dir = "#{$app_dir}/#{$results_dir}/#{start_class}_#{start_function}"
+		$output_dir = "#{$app_dir}/#{$results_dir}/#{$start_class}_#{$start_function}"
 		system("mkdir #{$output_dir}")
 		graph_fname = "#{$output_dir}/validation.log"
 		$graph_file = File.open(graph_fname, "w");
 		clear_data_structure
 
-		$cfg = trace_query_flow(start_class, start_function, "", "", 0)
+		$cfg = trace_query_flow($start_class, $start_function, "", "", 0)
 		addAllControlEdges
 		compute_source_sink_for_all_nodes
 		check_validations
@@ -542,8 +549,8 @@ end
 
 
 if options[:print_flow]
-	start_class = options[:trace][0]
-	start_function = options[:trace][1]
+	$start_class = options[:trace][0]
+	$start_function = options[:trace][1]
 	$temp_file = File.open("#{$output_dir}/trace.log","w")
 	$output_dir = "./"
 	vis_file_name = "#{$output_dir}/qgraph_vis.gv"
@@ -559,7 +566,7 @@ if options[:print_flow]
 	$cur_query_stack = Array.new
 	$query_edges = Array.new
 
-	compute_dataflow_stat($output_dir, start_class, start_function)
+	compute_dataflow_stat($output_dir, $start_class, $start_function)
 
 	$vis_file.close
 	system "dot -Tpdf #{vis_file_name} -o #{$output_dir}/qgraph.pdf"

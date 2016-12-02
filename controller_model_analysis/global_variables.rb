@@ -2,9 +2,9 @@
 #key: class name (String); value: class structure (Class_class)
 $class_map = Hash.new
 $table_names = Array.new
-#key: database query functions (String); value: query type (String) 
+#key: database query functions (String); value: query type (String)
 $key_words = Hash.new
-#key: utility function (String); value: function return value type (String) 
+#key: utility function (String); value: function return value type (String)
 $util_function_list = Hash.new
 #key: query word; value: count
 $query_word_count = Hash.new
@@ -21,6 +21,8 @@ $dataflow_dir = "../applications/lobsters/dataflow/"
 $table_file = "../applications/lobsters/table_names.txt"
 $log_files = "" #deprecated
 
+$start_class = ""
+$start_function = ""
 $results_dir = "results"
 $output_dir = "."
 $trace_output_file = ""
