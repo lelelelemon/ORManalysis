@@ -7,7 +7,7 @@ def compute_query_only_used_for_queries
 			only_to_query = true
 			test2 = true
 			#This kind of remove the cases like C.where().group(), so C.where() will not be considered
-			if n.getDataflowEdges.length == 1 and n.getDataflowEdges[0].getFromNode.isQuery?
+			if n.getDataflowEdges.length == 1 and n.getDataflowEdges[0].getFromNode.getInstr.isQuery
 				test2 = false
 			end
 			qn_list.each do |n1|
