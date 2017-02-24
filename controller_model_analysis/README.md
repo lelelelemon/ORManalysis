@@ -1,8 +1,7 @@
-Requirements:
 
 1. YARD installed:
 gem install yard
 
-Usage:
+run:
+ruby main.rb --help
 
-ruby parsing.rb --help
