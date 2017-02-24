@@ -1,6 +1,6 @@
 1. Run the static analysis:
 ```
-$cd controller\_model\_analysis
+$cd controller_model_analysis
 ```
 1.1 run
 ```
@@ -11,7 +11,7 @@ to get the options
 1.2 Basically, to get the statistics and program flow of a specific action from an app, you would like to run:
 
 ```
-$ruby main.rb -d DIR\_TO\_APP\_FILES -s CONTROLLER\_NAME,ACTION\_NAME
+$ruby main.rb -d DIR_TO_APP_FILES -s CONTROLLER_NAME,ACTION_NAME
 ```
 
 
@@ -24,7 +24,7 @@ Results will be printed to the screen.
 
 1.3 If you wish to run all actions from an application, do:
 ```
-$ruby main.rb -a -d DIR\_TO\_APP\_FILES
+$ruby main.rb -a -d DIR_TO_APP_FILES
 ```
 
 Results will be saved to the folder under the app directory.
@@ -58,7 +58,7 @@ e. use jruby to "compile" your app. The modified jruby should be checked out at 
 Then go to the applications folder and run the script:
 ```
 $cd applications/
-$python generate\_dataflow.py APPNAME
+$python generate_dataflow.py APPNAME
 ```
 
 
