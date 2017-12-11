@@ -1,0 +1,33 @@
+SET IRMethod, name = new_transaction_ledgers instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_transactor 
+		 6: RECEIVEARG def_credit_transaction_account_id 
+		 7: RECEIVEARG def_debit_transaction_account_id 
+		 8: RECEIVEARG def_amount 
+		 9: RECEIVEARG def_at 
+		 10: Line Number 22
+		 11: %self->transaction_ledgers def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 12: transactor->new_credit def_%v_4 transactor[2.5,] credit_transaction_account_id[2.6,] amount[2.8,] at[2.9,] 	 SYMBOL:	 ARGS:credit_transaction_account_id,amount,at,
+		 13: %v_3->push def_%v_5 %v_3[2.11,] %v_4[2.12,] 	 SYMBOL:	 ARGS:%v_4,
+		 14: Line Number 23
+		 15: %self->transaction_ledgers def_%v_6 %self[2.0,2.11,] 	 SYMBOL:	 ARGS:
+		 16: transactor->new_debit def_%v_7 transactor[2.5,2.12,] debit_transaction_account_id[2.7,] amount[2.8,] at[2.9,] 	 SYMBOL:	 ARGS:debit_transaction_account_id,amount,at,
+		 17: %v_6->push def_%v_8 %v_6[2.15,] %v_7[2.16,] 	 SYMBOL:	 ARGS:%v_7,
+		 18: RETURN %v_8[2.17,] %self[2.0,2.11,2.15,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

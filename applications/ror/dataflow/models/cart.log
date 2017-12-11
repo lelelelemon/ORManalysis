@@ -1,0 +1,1195 @@
+SET IRMethod, name = sub_total instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 106
+		 6: %self->shopping_cart_items def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->map def_%v_4 %v_3[2.6,] 	 SYMBOL:total,	 ARGS:
+		 8: %v_4->sum def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = number_of_shopping_cart_items instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 114
+		 6: %self->shopping_cart_items def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->map def_%v_4 %v_3[2.6,] 	 SYMBOL:quantity,	 ARGS:
+		 8: %v_4->sum def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_items_to_checkout instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_order 
+		 6: Line Number 124
+		 7: order->in_progress? def_%v_3 order[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 125
+		 1: order->order_items def_%v_4 order[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->map def_%v_5 %v_4[3.1,] 	 SYMBOL:destroy,	 ARGS:
+		 3: Line Number 126
+		 4: order->order_items def_%v_6 order[3.1,2.5,] 	 SYMBOL:	 ARGS:
+		 5: %v_6->reload def_%v_7 %v_6[3.4,] 	 SYMBOL:	 ARGS:
+		 6: Line Number 127
+		 7: %self->shopping_cart_items def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %self->items_to_add def_%v_9 %self[3.7,2.0,] order[3.1,3.4,2.5,] %v_8[3.7,] 	 SYMBOL:	 ARGS:order,%v_8,
+		 9: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 129
+		 1: RETURN order[2.5,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = shopping_cart_items_equal_order_items? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_order 
+		 6: Line Number 138
+		 7: COPY TYPE_Array def_%v_3 
+		 8: COPY TYPE_PASS def_variant_ids_in_cart %v_3[2.7,] 
+		 9: Line Number 139
+		 10: %self->shopping_cart_items def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 11: %v_4->each def_%v_5 %v_4[2.10,] %self[2.0,2.10,] 	 SYMBOL:	 ARGS:%v_4,
+CLOSURE BEGIN: item[] %self[2.0,2.10,] variant_ids_in_cart[2.8,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_item 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 140
+		 1: item->quantity def_%cl_1_3 item[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->times def_%cl_1_4 %cl_1_3[3.1,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_1_3,
+CLOSURE BEGIN: item[3.1,2.2,] variant_ids_in_cart[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 141
+		 1: item->variant_id def_%cl_2_3 item[] 	 SYMBOL:	 ARGS:
+		 2: variant_ids_in_cart->push def_%cl_2_4 variant_ids_in_cart[] %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:%cl_2_3,
+		 3: RETURN %cl_2_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 12: Line Number 144
+		 13: order->order_items def_%v_6 order[2.5,] 	 SYMBOL:	 ARGS:
+		 14: %v_6->map def_%v_7 %v_6[2.13,] 	 SYMBOL:variant_id,	 ARGS:
+		 15: COPY TYPE_PASS def_order_items %v_7[2.14,] 
+		 16: Line Number 145
+		 17: variant_ids_in_cart->sort def_%v_8 variant_ids_in_cart[2.8,] 	 SYMBOL:	 ARGS:
+		 18: order_items->sort def_%v_9 order_items[2.15,] 	 SYMBOL:	 ARGS:
+		 19: %v_8->== def_%v_10 %v_8[2.17,] %v_9[2.18,] 	 SYMBOL:	 ARGS:%v_9,
+		 20: RETURN %v_10[2.19,] %self[2.0,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_variant instanceMethod = true
+BB 1
+	outgoing: 24 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_variant_id 
+		 6: RECEIVEARG def_customer 
+		 7: RECEIVECONSTARG def_qty 
+		 8: qty[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_qty 
+BB 4
+	outgoing: 5 8 
+	datadep: 
+	instructions:
+		 0: RECEIVECONSTARG def_cart_item_type_id 
+		 1: cart_item_type_id[4.0,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: (ItemType) def_%v_3 
+		 1: (inherit SHOPPING_CART_ID) def_%v_4 %v_3[5.0,] 
+		 2: %v_4[5.1,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[5.0,] 	 SYMBOL:SHOPPING_CART_ID,	 ARGS:Symbol,
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_cart_item_type_id %v_4[6.0,5.1,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: RECEIVECONSTARG def_admin_purchase 
+		 1: admin_purchase[8.0,] 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_admin_purchase 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: Line Number 155
+		 1: %self->shopping_cart_items def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: HASH-variant_id- def_%v_6 variant_id[2.5,] 
+		 3: %v_5->where def_%v_7 %v_5[10.1,] %v_6[10.2,] 	 SYMBOL:	 ARGS:%v_6,
+		 4: %v_7->to_a def_%v_8 %v_7[10.3,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_PASS def_items %v_8[10.4,] 
+		 6: Line Number 156
+		 7: (Variant) def_%v_9 
+		 8: HASH-id- def_%v_10 variant_id[2.5,] 
+		 9: %v_9->find_by def_%v_11 %v_9[10.7,] %v_10[10.8,] 	 SYMBOL:	 ARGS:%v_10,
+		 10: COPY TYPE_PASS def_variant %v_11[10.9,] 
+		 11: Line Number 157
+		 12: qty->to_i def_%v_12 qty[3.0,2.7,] 	 SYMBOL:	 ARGS:
+		 13: variant->quantity_purchaseable_if_user_wants def_%v_13 variant[10.10,] %v_12[10.12,] admin_purchase[9.0,8.0,] 	 SYMBOL:	 ARGS:%v_12,admin_purchase,
+		 14: COPY TYPE_PASS def_quantity_to_purchase %v_13[10.13,] 
+		 15: Line Number 158
+		 16: COPY TYPE_PASS def_%v_14 admin_purchase[9.0,8.0,] 
+		 17: BRANCH admin_purchase[9.0,8.0,] 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: quantity_to_purchase->> def_%v_15 quantity_to_purchase[10.14,] 	 SYMBOL:	 ARGS:Fixnum,
+		 1: COPY TYPE_PASS def_%v_14 %v_15[11.0,] 
+BB 12
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_14[11.1,10.16,] 
+BB 13
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: Line Number 159
+		 1: %self->add_cart_items def_%v_16 %self[2.0,] items[10.5,] quantity_to_purchase[10.14,] customer[2.6,] cart_item_type_id[7.0,4.0,] variant_id[2.5,] 	 SYMBOL:	 ARGS:items,quantity_to_purchase,customer,cart_item_type_id,variant_id,
+		 2: COPY TYPE_PASS def_cart_item %v_16[13.1,] 
+		 3: 
+BB 14
+	outgoing: 15 21 
+	datadep: 
+	instructions:
+		 0: Line Number 160
+		 1: variant->sold_out? def_%v_17 variant[10.10,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_17[14.1,] 
+BB 15
+	outgoing: 16 19 
+	datadep: 
+	instructions:
+		 0: Line Number 165
+		 1: items->size def_%v_18 items[10.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_18->< def_%v_19 %v_18[15.1,] 	 SYMBOL:	 ARGS:Fixnum,
+		 3: BRANCH %v_19[15.2,] 
+BB 16
+	outgoing: 17 18 
+	datadep: 
+	instructions:
+		 0: %self->saved_cart_items def_%v_20 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: (ItemType) def_%v_21 
+		 2: (inherit SAVE_FOR_LATER_ID) def_%v_22 %v_21[16.1,] 
+		 3: %v_22[16.2,] 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: %v_21->const_missing def_%v_22 %v_21[16.1,] 	 SYMBOL:SAVE_FOR_LATER_ID,	 ARGS:Symbol,
+BB 18
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: HASH-variant_id-user-item_type_id-quantity- def_%v_23 variant_id[2.5,] customer[2.6,] %v_22[17.0,16.2,] qty[3.0,2.7,] 
+		 1: %v_20->create def_%v_24 %v_20[16.0,] %v_23[18.0,] 	 SYMBOL:	 ARGS:%v_23,
+		 2: COPY TYPE_PASS def_cart_item %v_24[18.1,] 
+		 3: 
+BB 19
+	outgoing: 20 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_24 
+BB 20
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: 
+BB 21
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: Line Number 167
+		 1: %self->add_cart_items def_%v_25 %self[2.0,] items[10.5,] quantity_to_purchase[10.14,] customer[2.6,] cart_item_type_id[7.0,4.0,] variant_id[2.5,] 	 SYMBOL:	 ARGS:items,quantity_to_purchase,customer,cart_item_type_id,variant_id,
+		 2: COPY TYPE_PASS def_cart_item %v_25[21.1,] 
+		 3: COPY TYPE_PASS def_%v_24 %v_25[21.1,] 
+BB 22
+	outgoing: 23 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_16 %v_24[21.3,19.0,18.1,] 
+BB 23
+	outgoing: 24 
+	datadep: 
+	instructions:
+		 0: Line Number 169
+		 1: RETURN cart_item[13.2,21.2,18.2,] %self[2.0,] 
+BB 24
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = remove_variant instanceMethod = true
+BB 1
+	outgoing: 4 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_variant_id 
+		 6: Line Number 179
+		 7: %self->cart_items def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->each def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: variant_id[2.5,] ci[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_ci 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 179
+		 1: variant_id->to_i def_%cl_1_3 variant_id[] 	 SYMBOL:	 ARGS:
+		 2: ci->variant_id def_%cl_1_4 ci[2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_3->== def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:%cl_1_4,
+		 4: BRANCH %cl_1_5[3.3,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: ci->inactivate! def_%cl_1_6 ci[2.2,] 	 SYMBOL:	 ARGS:
+		 1: 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_6[4.0,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 
+		 1: def_%cl_1_8 %cl_1_7[7.0,] 
+		 2: RETURN %cl_1_8[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: COPY TYPE_PASS def_citems %v_4[2.8,] 
+		 10: Line Number 180
+		 11: RETURN %v_4[2.8,] %self[2.0,2.7,] 
+BB 4
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = save_user instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_u 
+		 6: Line Number 187
+		 7: COPY TYPE_PASS def_%v_3 u[2.5,] 
+		 8: BRANCH u[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->user_id def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: u->id def_%v_5 u[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->!= def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 SYMBOL:	 ARGS:%v_5,
+		 3: COPY TYPE_PASS def_%v_3 %v_6[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.3,2.7,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 188
+		 1: u->id def_%v_7 u[2.5,] 	 SYMBOL:	 ARGS:
+		 2: ATTRASSIGN %self->user_id %v_7[5.1,] 
+		 3: Line Number 189
+		 4: %self->save def_%v_8 %self[5.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: RETURN %v_8[5.4,] %self[5.2,5.4,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = mark_items_purchased instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_order 
+		 6: Line Number 200
+		 7: order->variant_ids def_%v_3 order[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->empty? def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->! def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: (CartItem) def_%v_6 
+		 1: Line Number 198
+		 2: %self->cart_item_ids def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->shopping_cart_item_ids def_%v_8 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_7->+ def_%v_9 %v_7[3.2,] %v_8[3.3,] 	 SYMBOL:	 ARGS:%v_8,
+		 5: %v_9->uniq def_%v_10 %v_9[3.4,] 	 SYMBOL:	 ARGS:
+		 6: HASH-id- def_%v_11 %v_10[3.5,] 
+		 7: %v_6->where def_%v_12 %v_6[3.0,] %v_11[3.6,] 	 SYMBOL:	 ARGS:%v_11,
+		 8: order->variant_ids def_%v_13 order[2.5,] 	 SYMBOL:	 ARGS:
+		 9: HASH-variant_id- def_%v_14 %v_13[3.8,] 
+		 10: %v_12->where def_%v_15 %v_12[3.7,] %v_14[3.9,] 	 SYMBOL:	 ARGS:%v_14,
+		 11: COPY TYPE_StringLiteral "item_type_id = " def_%v_16 
+		 12: Line Number 200
+		 13: (ItemType) def_%v_17 
+		 14: (inherit PURCHASED_ID) def_%v_18 %v_17[3.13,] 
+		 15: %v_18[3.14,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %v_17->const_missing def_%v_18 %v_17[3.13,] 	 SYMBOL:PURCHASED_ID,	 ARGS:Symbol,
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: BUILDSTRING def_%v_19 %v_16[3.11,] %v_18[4.0,3.14,] 
+		 1: %v_15->update_all def_%v_20 %v_15[3.10,] %v_19[5.0,] 	 SYMBOL:	 ARGS:%v_19,
+		 2: RETURN %v_20[5.1,] %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = merge_with_previous_cart! instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 204
+		 6: %self->user_id def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->previous_cart def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_PASS def_%v_3 %v_4[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 205
+		 1: %self->cart_items def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->map def_%v_6 %v_5[5.1,] 	 SYMBOL:variant_id,	 ARGS:
+		 3: COPY TYPE_PASS def_current_items %v_6[5.2,] 
+		 4: Line Number 206
+		 5: %self->previous_cart def_%v_7 %self[5.1,2.0,] 	 SYMBOL:	 ARGS:
+		 6: %v_7->cart_items def_%v_8 %v_7[5.5,] 	 SYMBOL:	 ARGS:
+		 7: %v_8->each def_%v_9 %v_8[5.6,] %self[5.1,5.5,2.0,] 	 SYMBOL:	 ARGS:%v_8,
+CLOSURE BEGIN: item[] current_items[5.3,] %self[5.1,5.5,2.0,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_item 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 207
+		 1: item->variant_id def_%cl_1_3 item[2.2,] 	 SYMBOL:	 ARGS:
+		 2: current_items->include? def_%cl_1_4 current_items[] %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: BRANCH %cl_1_4[3.2,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_5 
+		 1: RETURN %cl_1_5[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: item->variant_id def_%cl_1_6 item[2.2,] 	 SYMBOL:	 ARGS:
+		 1: item->user def_%cl_1_7 item[5.0,2.2,] 	 SYMBOL:	 ARGS:
+		 2: item->quantity def_%cl_1_8 item[5.0,5.1,2.2,] 	 SYMBOL:	 ARGS:
+		 3: %self->add_variant def_%cl_1_9 %self[2.0,] %cl_1_6[5.0,] %cl_1_7[5.1,] %cl_1_8[5.2,] 	 SYMBOL:	 ARGS:%cl_1_6,%cl_1_7,%cl_1_8,
+		 4: RETURN %cl_1_9[5.3,] %self[5.3,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[7.0,] 
+		 2: RETURN %cl_1_11[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: RETURN %v_9[5.7,] %self[5.1,5.5,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = previous_for_user instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_cart_id 
+		 6: RECEIVEARG def_user_id 
+		 7: Line Number 213
+		 8: (Cart) def_%v_3 
+		 9: COPY TYPE_StringLiteral "id <> ?" def_%v_4 
+		 10: COPY TYPE_Array def_%v_5 %v_4[2.9,] cart_id[2.5,] 
+		 11: %v_3->where def_%v_6 %v_3[2.8,] %v_5[2.10,] 	 SYMBOL:	 ARGS:%v_5,
+		 12: HASH-user_id- def_%v_7 user_id[2.6,] 
+		 13: %v_6->where def_%v_8 %v_6[2.11,] %v_7[2.12,] 	 SYMBOL:	 ARGS:%v_7,
+		 14: %v_8->last def_%v_9 %v_8[2.13,] 	 SYMBOL:	 ARGS:
+		 15: RETURN %v_9[2.14,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = previous_cart instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 219
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->previous_cart def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Cart) def_%v_6 
+		 1: %self->id def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->user_id def_%v_8 %self[5.1,2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->previous_for_user def_%v_9 %v_6[5.0,] %v_7[5.1,] %v_8[5.2,] 	 SYMBOL:	 ARGS:%v_7,%v_8,
+		 4: ATTRASSIGN %self->previous_cart %v_9[5.3,] 
+		 5: RETURN %v_9[5.3,] %self[5.1,5.2,5.4,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_shopping_cart instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_cart_item 
+		 6: RECEIVEARG def_customer 
+		 7: RECEIVECONSTARG def_qty 
+		 8: qty[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_qty 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 223
+		 1: BRANCH customer[2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 224
+		 1: %self->shopping_cart_items def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: cart_item->id def_%v_4 cart_item[2.5,] 	 SYMBOL:	 ARGS:
+		 3: %v_3->find def_%v_5 %v_3[5.1,] %v_4[5.2,] 	 SYMBOL:	 ARGS:%v_4,
+		 4: cart_item->quantity def_%v_6 cart_item[5.2,2.5,] 	 SYMBOL:	 ARGS:
+		 5: %v_6->+ def_%v_7 %v_6[5.4,] qty[3.0,2.7,] 	 SYMBOL:	 ARGS:qty,
+		 6: customer->id def_%v_8 customer[2.6,] 	 SYMBOL:	 ARGS:
+		 7: HASH-quantity-user_id- def_%v_9 %v_7[5.5,] %v_8[5.6,] 
+		 8: %v_5->update_attributes def_%v_10 %v_5[5.3,] %v_9[5.7,] 	 SYMBOL:	 ARGS:%v_9,
+		 9: RETURN %v_10[5.8,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 226
+		 1: %self->shopping_cart_items def_%v_11 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: cart_item->id def_%v_12 cart_item[2.5,] 	 SYMBOL:	 ARGS:
+		 3: %v_11->find def_%v_13 %v_11[6.1,] %v_12[6.2,] 	 SYMBOL:	 ARGS:%v_12,
+		 4: cart_item->quantity def_%v_14 cart_item[6.2,2.5,] 	 SYMBOL:	 ARGS:
+		 5: %v_14->+ def_%v_15 %v_14[6.4,] qty[3.0,2.7,] 	 SYMBOL:	 ARGS:qty,
+		 6: HASH-quantity- def_%v_16 %v_15[6.5,] 
+		 7: %v_13->update_attributes def_%v_17 %v_13[6.3,] %v_16[6.6,] 	 SYMBOL:	 ARGS:%v_16,
+		 8: RETURN %v_17[6.7,] %self[6.1,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_cart_items instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_items 
+		 6: RECEIVEARG def_qty 
+		 7: RECEIVEARG def_customer 
+		 8: RECEIVEARG def_cart_item_type_id 
+		 9: RECEIVEARG def_variant_id 
+		 10: Line Number 231
+		 11: items->size def_%v_3 items[2.5,] 	 SYMBOL:	 ARGS:
+		 12: %v_3->< def_%v_4 %v_3[2.11,] 	 SYMBOL:	 ARGS:Fixnum,
+		 13: BRANCH %v_4[2.12,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 232
+		 1: %self->shopping_cart_items def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: HASH-variant_id-user-item_type_id-quantity- def_%v_6 variant_id[2.9,] customer[2.7,] cart_item_type_id[2.8,] qty[2.6,] 
+		 3: %v_5->create def_%v_7 %v_5[3.1,] %v_6[3.2,] 	 SYMBOL:	 ARGS:%v_6,
+		 4: COPY TYPE_PASS def_cart_item %v_7[3.3,] 
+		 5: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 238
+		 1: items->first def_%v_8 items[2.5,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_cart_item %v_8[4.1,] 
+		 3: Line Number 239
+		 4: %self->update_shopping_cart def_%v_9 %self[2.0,] %v_8[4.1,] customer[2.7,] qty[2.6,] 	 SYMBOL:	 ARGS:cart_item,customer,qty,
+		 5: COPY TYPE_PASS def_%v_7 %v_9[4.4,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 241
+		 1: RETURN cart_item[4.2,3.4,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = items_to_add instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_order 
+		 6: RECEIVEARG def_items 
+		 7: Line Number 245
+		 8: items->each def_%v_3 items[2.6,] %self[2.0,] 	 SYMBOL:	 ARGS:items,
+CLOSURE BEGIN: order[2.5,] item[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_item 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 246
+		 1: order->add_cart_item def_%cl_1_3 order[] item[2.2,] 	 SYMBOL:	 ARGS:item,Nil,
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: RETURN %v_3[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = items_to_add_or_destroy instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_items_in_cart 
+		 6: RECEIVEARG def_order 
+		 7: Line Number 252
+		 8: %self->destroy_order_items_not_in_cart! def_%v_3 %self[2.0,] items_in_cart[2.5,] order[2.6,] 	 SYMBOL:	 ARGS:items_in_cart,order,
+		 9: Line Number 254
+		 10: order->order_items def_%v_4 order[2.6,] 	 SYMBOL:	 ARGS:
+		 11: HASH- def_%v_5 
+		 12: %v_4->inject def_%v_6 %v_4[2.10,] %v_5[2.11,] %self[2.0,2.8,] 	 SYMBOL:	 ARGS:%v_5,%v_4,
+CLOSURE BEGIN: item[] h[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_h 
+		 3: RECEIVEARG def_item 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 254
+		 1: item->variant_id def_%cl_1_3 item[2.3,] 	 SYMBOL:	 ARGS:
+		 2: h->[] def_%cl_1_4 h[2.2,] %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: %cl_1_4->nil? def_%cl_1_5 %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: BRANCH %cl_1_5[3.3,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: item->variant_id def_%cl_1_6 item[2.3,] 	 SYMBOL:	 ARGS:
+		 1: item->id def_%cl_1_7 item[4.0,2.3,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_Array def_%cl_1_8 %cl_1_7[4.1,] 
+		 3: ATTRASSIGN h->[] %cl_1_6[4.0,] %cl_1_8[4.2,] 
+		 4: 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: item->variant_id def_%cl_1_9 item[2.3,] 	 SYMBOL:	 ARGS:
+		 1: h->[] def_%cl_1_10 h[2.2,] %cl_1_9[5.0,] 	 SYMBOL:	 ARGS:%cl_1_9,
+		 2: item->id def_%cl_1_11 item[5.0,2.3,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_10-><< def_%cl_1_12 %cl_1_10[5.1,] %cl_1_11[5.2,] 	 SYMBOL:	 ARGS:%cl_1_11,
+		 4: COPY TYPE_PASS def_%cl_1_8 %cl_1_12[5.3,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN h[4.3,2.2,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_13 
+		 1: def_%cl_1_14 %cl_1_13[7.0,] 
+		 2: RETURN %cl_1_14[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: item[2.3,] 
+		 13: COPY TYPE_PASS def_items %v_6[2.12,] 
+		 14: Line Number 255
+		 15: items_in_cart->each_pair def_%v_7 items_in_cart[2.5,] %self[2.0,2.8,] 	 SYMBOL:	 ARGS:items_in_cart,
+CLOSURE BEGIN: variant_id[] items[2.13,] order[2.6,2.10,] variant[] qty_in_cart[] 
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_variant_id 
+		 3: RECEIVEARG def_qty_in_cart 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 13 
+	datadep: 
+	instructions:
+		 0: Line Number 256
+		 1: (Variant) def_%cl_2_3 
+		 2: %cl_2_3->find def_%cl_2_4 %cl_2_3[3.1,] variant_id[2.2,] 	 SYMBOL:	 ARGS:variant_id,
+		 3: COPY TYPE_PASS def_variant %cl_2_4[3.2,] 
+		 4: Line Number 257
+		 5: items->[] def_%cl_2_5 items[] variant_id[2.2,] 	 SYMBOL:	 ARGS:variant_id,
+		 6: %cl_2_5->nil? def_%cl_2_6 %cl_2_5[3.5,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %cl_2_6[3.6,] 
+BB 4
+	outgoing: 12 13 
+	datadep: 
+	instructions:
+		 0: Line Number 258
+		 1: order->add_items def_%cl_2_7 order[] variant[3.3,] qty_in_cart[2.3,] 	 SYMBOL:	 ARGS:variant,qty_in_cart,
+		 2: 
+BB 5
+	outgoing: 6 7 13 
+	datadep: 
+	instructions:
+		 0: Line Number 259
+		 1: items->[] def_%cl_2_8 items[] variant_id[2.2,] 	 SYMBOL:	 ARGS:variant_id,
+		 2: %cl_2_8->size def_%cl_2_9 %cl_2_8[5.1,] 	 SYMBOL:	 ARGS:
+		 3: qty_in_cart->- def_%cl_2_10 qty_in_cart[2.3,] %cl_2_9[5.2,] 	 SYMBOL:	 ARGS:%cl_2_9,
+		 4: %cl_2_10->> def_%cl_2_11 %cl_2_10[5.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 5: BRANCH %cl_2_11[5.4,] 
+BB 6
+	outgoing: 11 13 
+	datadep: 
+	instructions:
+		 0: Line Number 260
+		 1: items->[] def_%cl_2_12 items[] variant_id[2.2,] 	 SYMBOL:	 ARGS:variant_id,
+		 2: %cl_2_12->size def_%cl_2_13 %cl_2_12[6.1,] 	 SYMBOL:	 ARGS:
+		 3: qty_in_cart->- def_%cl_2_14 qty_in_cart[2.3,] %cl_2_13[6.2,] 	 SYMBOL:	 ARGS:%cl_2_13,
+		 4: order->add_items def_%cl_2_15 order[] variant[3.3,] %cl_2_14[6.3,] 	 SYMBOL:	 ARGS:variant,%cl_2_14,
+		 5: 
+BB 7
+	outgoing: 8 9 13 
+	datadep: 
+	instructions:
+		 0: Line Number 261
+		 1: items->[] def_%cl_2_16 items[] variant_id[2.2,] 	 SYMBOL:	 ARGS:variant_id,
+		 2: %cl_2_16->size def_%cl_2_17 %cl_2_16[7.1,] 	 SYMBOL:	 ARGS:
+		 3: qty_in_cart->- def_%cl_2_18 qty_in_cart[2.3,] %cl_2_17[7.2,] 	 SYMBOL:	 ARGS:%cl_2_17,
+		 4: %cl_2_18->< def_%cl_2_19 %cl_2_18[7.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 5: BRANCH %cl_2_19[7.4,] 
+BB 8
+	outgoing: 10 13 
+	datadep: 
+	instructions:
+		 0: Line Number 262
+		 1: order->remove_items def_%cl_2_20 order[] variant[3.3,] qty_in_cart[2.3,] 	 SYMBOL:	 ARGS:variant,qty_in_cart,
+		 2: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_20 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%cl_2_15 %cl_2_20[9.0,8.1,] 
+BB 11
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_2_15[10.0,6.4,] %self[2.0,] 
+BB 12
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_2_7[4.1,] %self[2.0,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_21 
+		 1: def_%cl_2_22 %cl_2_21[13.0,] 
+		 2: RETURN %cl_2_22[13.1,] %self[2.0,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: variant[3.3,] qty_in_cart[2.3,] 
+		 16: Line Number 265
+		 17: RETURN order[2.6,2.10,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy_order_items_not_in_cart! instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_items_in_cart 
+		 6: RECEIVEARG def_order 
+		 7: Line Number 269
+		 8: order->order_items def_%v_3 order[2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_3->delete_if def_%v_4 %v_3[2.8,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: items_in_cart[2.5,] %self[2.0,] order_item[] variant_id[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_order_item 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 269
+		 1: items_in_cart->keys def_%cl_1_3 items_in_cart[] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->any? def_%cl_1_4 %cl_1_3[3.1,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_1_3,
+CLOSURE BEGIN: order_item[2.2,] variant_id[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_variant_id 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 269
+		 1: order_item->variant_id def_%cl_2_3 order_item[] 	 SYMBOL:	 ARGS:
+		 2: variant_id->== def_%cl_2_4 variant_id[2.2,] %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:%cl_2_3,
+		 3: RETURN %cl_2_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: %cl_1_4->! def_%cl_1_5 %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: RETURN %cl_1_5[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: RETURN %v_4[2.9,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

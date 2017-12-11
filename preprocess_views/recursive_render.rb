@@ -32,6 +32,8 @@ def replace_files
 			end
 		end
 		new_file_name = v.file_name.gsub($controller_folder_name, $new_controller_folder_name)
+		file_path = new_file_name.gsub(File.basename(new_file_name),'')
+		run_command("mkdir -p #{file_path}")
 		File.write("#{new_file_name}", content)
 		#make sure the replaced file parses
 		ast = YARD::Parser::Ruby::RubyParser.parse(File.open(new_file_name, "r").read)
@@ -50,6 +52,9 @@ def replace_files
 				end
 			end
 			new_file_name = v.file_name.gsub($helper_folder_name, $new_helper_folder_name)
+			
+                	file_path = new_file_name.gsub(File.basename(new_file_name),'')
+                	run_command("mkdir -p #{file_path}")
 			File.write("#{new_file_name}", content)
 			ast = YARD::Parser::Ruby::RubyParser.parse(File.open(new_file_name, "r").read)
 		end

@@ -1,0 +1,399 @@
+SET IRMethod, name = best_qualifing_deal instanceMethod = false
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 8 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_order 
+		 6: Line Number 42
+		 7: order->number_of_a_given_product_type def_%v_3 order[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->sort_by def_%v_4 %v_3[2.7,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: v[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_v 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 42
+		 1: v->last def_%cl_1_3 v[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->size def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: %v_4->reverse def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: COPY TYPE_PASS def_product_type_and_amount_hash %v_5[2.9,] 
+		 11: Line Number 43
+		 12: order->completed_at def_%v_6 order[2.5,2.7,] 	 SYMBOL:	 ARGS:
+		 13: BRANCH %v_6[2.12,] 
+BB 4
+	outgoing: 5 8 
+	datadep: 
+	instructions:
+		 0: order->deal_time def_%v_7 order[2.5,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_PASS def_%v_6 %v_7[4.0,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_6[4.1,2.12,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_8 
+		 1: %v_8->zone def_%v_9 %v_8[6.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_9->now def_%v_10 %v_9[6.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%v_6 %v_10[6.2,] 
+BB 7
+	outgoing: 8 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_deal_time %v_6[6.3,4.1,2.12,] 
+		 1: Line Number 44
+		 2: (Hash) def_%v_11 
+		 3: %v_11->[] def_%v_12 %v_11[7.2,] product_type_and_amount_hash[2.10,] 	 SYMBOL:	 ARGS:product_type_and_amount_hash,
+		 4: %v_12->each_pair def_%v_13 %v_12[7.3,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_12,
+CLOSURE BEGIN: %self[2.0,] product_type_id[] product_type_prices[] deal_time[7.0,] deal_amount[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_product_type_id 
+		 3: RECEIVEARG def_product_type_prices 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 45
+		 1: %self->qualifing_deal def_%cl_2_3 %self[2.0,] product_type_id[2.2,] product_type_prices[2.3,] deal_time[] 	 SYMBOL:	 ARGS:product_type_id,product_type_prices,deal_time,
+		 2: COPY TYPE_PASS def_deal_amount %cl_2_3[3.1,] 
+		 3: Line Number 46
+		 4: BRANCH %cl_2_3[3.1,] 
+BB 4
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: deal_amount->round_at def_%cl_2_4 deal_amount[3.2,] 	 SYMBOL:	 ARGS:Fixnum,
+		 1: 
+		 2: RETURN %cl_2_4[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_6 
+		 1: def_%cl_2_7 %cl_2_6[7.0,] 
+		 2: RETURN %cl_2_7[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: deal_amount[3.2,] product_type_prices[2.3,] 
+		 5: Line Number 48
+		 6: RETURN %self[2.0,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: def_%v_14 
+		 1: def_%v_15 %v_14[8.0,] 
+		 2: RETURN %v_15[8.1,] %self[2.0,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = qualifing_deal instanceMethod = false
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_product_type_id 
+		 6: RECEIVEARG def_product_type_prices 
+		 7: RECEIVEARG def_at 
+		 8: Line Number 51
+		 9: product_type_prices->size def_%v_3 product_type_prices[2.6,] 	 SYMBOL:	 ARGS:
+		 10: %self->for_x_number_purchased def_%v_4 %self[2.0,] %v_3[2.9,] 	 SYMBOL:	 ARGS:%v_3,
+		 11: %v_4->for_product_type_id def_%v_5 %v_4[2.10,] product_type_id[2.5,] 	 SYMBOL:	 ARGS:product_type_id,
+		 12: %v_5->existed_at def_%v_6 %v_5[2.11,] at[2.7,] 	 SYMBOL:	 ARGS:at,
+		 13: %v_6->active_at def_%v_7 %v_6[2.12,] at[2.7,] 	 SYMBOL:	 ARGS:at,
+		 14: COPY TYPE_StringLiteral "deals.get_percentage DESC" def_%v_8 
+		 15: %v_7->order def_%v_9 %v_7[2.13,] %v_8[2.14,] 	 SYMBOL:	 ARGS:%v_8,
+		 16: %v_9->first def_%v_10 %v_9[2.15,] 	 SYMBOL:	 ARGS:
+		 17: COPY TYPE_PASS def_deal %v_10[2.16,] 
+		 18: Line Number 54
+		 19: BRANCH %v_10[2.16,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: deal->final_deal_amount def_%v_11 deal[2.17,] product_type_prices[2.6,] 	 SYMBOL:	 ARGS:product_type_prices,
+		 1: RETURN %v_11[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = for_x_number_purchased instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_num 
+		 6: Line Number 58
+		 7: COPY TYPE_StringLiteral "deals.buy_quantity <= ?" def_%v_3 
+		 8: COPY TYPE_Array def_%v_4 %v_3[2.7,] num[2.5,] 
+		 9: %self->where def_%v_5 %self[2.0,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: RETURN %v_5[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = active_at instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_at 
+		 6: Line Number 62
+		 7: COPY TYPE_StringLiteral "deals.deleted_at >= ? OR deals.deleted_at IS NULL" def_%v_3 
+		 8: COPY TYPE_Array def_%v_4 %v_3[2.7,] at[2.5,] 
+		 9: %self->where def_%v_5 %self[2.0,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: RETURN %v_5[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = existed_at instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_at 
+		 6: Line Number 66
+		 7: COPY TYPE_StringLiteral "deals.created_at <= ?" def_%v_3 
+		 8: COPY TYPE_Array def_%v_4 %v_3[2.7,] at[2.5,] 
+		 9: %self->where def_%v_5 %self[2.0,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: RETURN %v_5[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = for_product_type_id instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_product_type_id 
+		 6: Line Number 70
+		 7: COPY TYPE_StringLiteral "deals.product_type_id IN (?)" def_%v_3 
+		 8: COPY TYPE_Array def_%v_4 %v_3[2.7,] product_type_id[2.5,] 
+		 9: %self->where def_%v_5 %self[2.0,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: RETURN %v_5[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = final_deal_amount instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_product_type_prices 
+		 6: Line Number 74
+		 7: %self->get_amount def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->get_amount def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_4->> def_%v_5 %v_4[3.0,] 	 SYMBOL:	 ARGS:Float,
+		 2: COPY TYPE_PASS def_%v_3 %v_5[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.2,2.7,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 75
+		 1: %self->get_amount def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_6->to_f def_%v_7 %v_6[5.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_7->/ def_%v_8 %v_7[5.2,] 	 SYMBOL:	 ARGS:Float,
+		 4: RETURN %v_8[5.3,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 77
+		 1: product_type_prices->sort def_%v_9 product_type_prices[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_9->reverse def_%v_10 %v_9[6.1,] 	 SYMBOL:	 ARGS:
+		 3: %self->buy_quantity def_%v_12 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_12->- def_%v_13 %v_12[6.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 5: CONSTANT def_%v_11 %v_13[6.4,] 
+		 6: %v_10->[] def_%v_14 %v_10[6.2,] %v_11[6.5,] 	 SYMBOL:	 ARGS:%v_11,
+		 7: %v_14->min def_%v_15 %v_14[6.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->get_percentage def_%v_16 %self[6.3,2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_15->* def_%v_17 %v_15[6.7,] %v_16[6.8,] 	 SYMBOL:	 ARGS:%v_16,
+		 10: %v_17->to_f def_%v_18 %v_17[6.9,] 	 SYMBOL:	 ARGS:
+		 11: %v_18->/ def_%v_19 %v_18[6.10,] 	 SYMBOL:	 ARGS:Float,
+		 12: RETURN %v_19[6.11,] %self[6.3,6.8,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get_percentage_is_blank? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 83
+		 6: %self->get_percentage def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->blank? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get_amount_is_blank? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 86
+		 6: %self->get_amount def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->blank? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

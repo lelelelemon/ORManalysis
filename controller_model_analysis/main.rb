@@ -46,6 +46,7 @@ load 'compute_branch_stat.rb'
 load 'compute_input_stat.rb'
 load 'compute_view_stat.rb'
 load 'compute_loop_stat.rb'
+load 'compute_loop_invariant.rb'
 load 'compute_query_card_stat.rb'
 load 'compute_dataflow_chain_stat.rb'
 load 'compute_redundant_field_access.rb'
@@ -57,6 +58,7 @@ load 'compute_select_condition.rb'
 
 #Static count:
 load 'static_code_analysis.rb'
+
 
 PATH_ORDER = [
   'lib/yard/autoload.rb',
@@ -291,6 +293,9 @@ if options[:trace_flow] or options[:stats] or options[:query_graph]
 	start_function = options[:trace][1]
 	level = 0
 
+	loop_invariant_fname = "#{$output_dir}/#{start_class}_#{start_function}_loop_invariant.log"
+	$loop_invariant_file = File.open(loop_invariant_fname, "w");
+
 	$temp_file = File.open("#{$output_dir}/trace.log","w")
 	puts "temp file name: #{$output_dir}/trace.log"
 	if options[:trace_flow] or options[:random_path]
@@ -407,6 +412,8 @@ if options[:run_all]
 	system("rm -rf #{$app_dir}/#{$results_dir}/")
 	system("mkdir #{$app_dir}/#{$results_dir}/")
 	call_file = "#{$app_dir}/calls.txt"
+	loop_invariant_fname = "#{$app_dir}/#{$results_dir}/loop_invariant.txt"
+	loop_invariant_file = File.open(loop_invariant_fname, "w")
 	File.open(call_file, "r").each do |line|
 		line = line.gsub("\n","")
 		chs = line.split(',')

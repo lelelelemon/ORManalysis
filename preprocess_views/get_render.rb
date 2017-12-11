@@ -54,7 +54,7 @@ class Controller < BaseStructure
 	end
 	def exist_layout
 		@render_stmts.each do |r|
-			if r.is_layout
+			if r and r.is_layout
 				return true
 			end
 		end
@@ -62,7 +62,7 @@ class Controller < BaseStructure
 	end
 	def get_layout
 		@render_stmts.each do |r|
-			if r.is_layout
+			if r and r.is_layout
 				return r
 			end
 		end

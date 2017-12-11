@@ -1,0 +1,138 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_user 
+		 6: Line Number 6
+		 7: COPY TYPE_PASS def_%v_3 user[2.5,] 
+		 8: COPY TYPE_PASS def_%v_4 user[2.5,] 
+		 9: BRANCH user[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (User) def_%v_5 
+		 1: %v_5->new def_%v_6 %v_5[3.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_user %v_6[3.1,] 
+		 3: COPY TYPE_PASS def_%v_4 %v_6[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 8
+		 1: user->super_admin? def_%v_7 user[3.2,2.5,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_7[4.1,] 
+BB 5
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: Line Number 9
+		 1: %self->can def_%v_8 %self[2.0,] 	 SYMBOL:manage,all,	 ARGS:Symbol,Symbol,
+		 2: RETURN %v_8[5.1,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: Line Number 10
+		 1: user->admin? def_%v_9 user[3.2,2.5,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_9[6.1,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: Line Number 11
+		 1: %self->can def_%v_10 %self[2.0,] 	 SYMBOL:manage,all,	 ARGS:Symbol,Symbol,
+		 2: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: Line Number 13
+		 1: (Order) def_%v_11 
+		 2: user->id def_%v_12 user[3.2,2.5,] 	 SYMBOL:	 ARGS:
+		 3: HASH-user_id- def_%v_13 %v_12[8.2,] 
+		 4: %self->can def_%v_14 %self[2.0,] %v_11[8.1,] %v_13[8.3,] 	 SYMBOL:read,	 ARGS:Symbol,%v_11,%v_13,
+		 5: Line Number 14
+		 6: (Order) def_%v_15 
+		 7: %self->can def_%v_16 %self[8.4,2.0,] %v_15[8.6,] %self[8.4,2.0,] 	 SYMBOL:manage,	 ARGS:Symbol,%v_15,%self,
+CLOSURE BEGIN: action[] order[] user[8.2,3.2,2.5,] 
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_action 
+		 3: RECEIVEARG def_order 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 8 
+	datadep: 
+	instructions:
+		 0: Line Number 15
+		 1: action->!= def_%cl_1_3 action[2.2,] 	 SYMBOL:destroy,	 ARGS:Symbol,
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 5 8 
+	datadep: 
+	instructions:
+		 0: order->state def_%cl_1_4 order[2.3,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_StringLiteral "complete" def_%cl_1_5 
+		 2: %cl_1_4->!= def_%cl_1_6 %cl_1_4[4.0,] %cl_1_5[4.1,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 3: COPY TYPE_PASS def_%cl_1_3 %cl_1_6[4.2,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %cl_1_3[4.3,3.1,] 
+BB 6
+	outgoing: 8 10 
+	datadep: 
+	instructions:
+		 0: order->user_id def_%cl_1_7 order[2.3,] 	 SYMBOL:	 ARGS:
+		 1: user->id def_%cl_1_8 user[] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_7->== def_%cl_1_9 %cl_1_7[6.0,] %cl_1_8[6.1,] 	 SYMBOL:	 ARGS:%cl_1_8,
+		 3: RETURN %cl_1_9[6.2,] %self[2.0,] 
+BB 7
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_3[4.3,3.1,] %self[2.0,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[8.0,] 
+		 2: RETURN %cl_1_11[8.1,] %self[2.0,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: order[2.3,] 
+		 8: COPY TYPE_PASS def_%v_10 %v_16[8.7,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_10[8.8,7.1,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+

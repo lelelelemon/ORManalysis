@@ -1,0 +1,422 @@
+SET IRMethod, name = process_ledger_transactions instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 82
+		 6: (Invoice) def_%v_3 
+		 7: %self->amount def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %self->restocking_fee def_%v_5 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_4->- def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: %self->order def_%v_7 %self[2.0,2.7,2.8,] 	 SYMBOL:	 ARGS:
+		 11: %v_3->process_rma def_%v_8 %v_3[2.6,] %v_6[2.9,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_6,%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.7,2.8,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = mark_items_returned instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 86
+		 6: %self->return_items def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->map def_%v_4 %v_3[2.6,] 	 SYMBOL:mark_returned!,	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = order_number instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 94
+		 6: %self->order def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->number def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = user_name instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 102
+		 6: %self->user def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->name def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_number instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 110
+		 6: %self->id def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->set_order_number def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_4[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: Line Number 111
+		 2: (Time) def_%v_6 
+		 3: %v_6->now def_%v_7 %v_6[4.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_7->to_i def_%v_8 %v_7[4.3,] 	 SYMBOL:	 ARGS:
+		 5: (CHARACTERS_SEED) def_%v_9 
+		 6: %v_8->to_s def_%v_10 %v_8[4.4,] %v_9[4.5,] 	 SYMBOL:	 ARGS:%v_9,
+		 7: ATTRASSIGN %self->number %v_10[4.6,] 
+		 8: RETURN %v_10[4.6,] %self[4.7,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_order_number instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 119
+		 6: (NUMBER_SEED) def_%v_3 
+		 7: %self->id def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->+ def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: (CHARACTERS_SEED) def_%v_6 
+		 10: %v_5->to_s def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->number %v_7[2.10,] 
+		 12: RETURN %v_7[2.10,] %self[2.0,2.7,2.11,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = save_order_number instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 127
+		 6: %self->set_order_number def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: Line Number 128
+		 8: %self->save def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_4[2.8,] %self[2.0,2.6,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = id_from_number instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_num 
+		 6: Line Number 136
+		 7: (CHARACTERS_SEED) def_%v_3 
+		 8: num->to_i def_%v_4 num[2.5,] %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: (NUMBER_SEED) def_%v_5 
+		 10: %v_4->- def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 SYMBOL:	 ARGS:%v_5,
+		 11: RETURN %v_6[2.10,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = find_by_number instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_num 
+		 6: Line Number 145
+		 7: %self->id_from_number def_%v_3 %self[2.0,] num[2.5,] 	 SYMBOL:	 ARGS:num,
+		 8: %self->find def_%v_4 %self[2.0,2.7,] %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: RETURN %v_4[2.8,] %self[2.0,2.7,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = admin_grid instanceMethod = false
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_params 
+		 6: params[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_params %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 154
+		 1: params->[] def_%v_4 params[3.1,2.5,] 	 SYMBOL:page,	 ARGS:Symbol,
+		 2: BRANCH %v_4[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: params->[]= def_%v_4 params[3.1,2.5,] 	 SYMBOL:page,	 ARGS:Symbol,Fixnum,
+		 1: COPY TYPE_Fixnum def_%v_4 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: Line Number 155
+		 1: params->[] def_%v_5 params[5.0,3.1,2.5,] 	 SYMBOL:rows,	 ARGS:Symbol,
+		 2: BRANCH %v_5[6.1,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: (SETTINGS) def_%v_6 
+		 1: %v_6->[] def_%v_7 %v_6[7.0,] 	 SYMBOL:admin_grid_rows,	 ARGS:Symbol,
+		 2: params->[]= def_%v_5 params[5.0,3.1,2.5,] %v_7[7.1,] 	 SYMBOL:rows,	 ARGS:Symbol,%v_7,
+		 3: COPY TYPE_PASS def_%v_5 %v_7[7.1,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: Line Number 157
+		 1: COPY TYPE_Array def_%v_8 
+		 2: %self->includes def_%v_9 %self[2.0,] %v_8[8.1,] 	 SYMBOL:	 ARGS:%v_8,
+		 3: COPY TYPE_PASS def_grid %v_9[8.2,] 
+		 4: Line Number 159
+		 5: params->[] def_%v_10 params[7.2,5.0,3.1,2.5,] 	 SYMBOL:number,	 ARGS:Symbol,
+		 6: %v_10->present? def_%v_11 %v_10[8.5,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_11[8.6,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "return_authorizations.number LIKE ?" def_%v_12 
+		 1: params->[] def_%v_13 params[7.2,5.0,3.1,2.5,] 	 SYMBOL:number,	 ARGS:Symbol,
+		 2: COPY TYPE_StringLiteral "%" def_%v_14 
+		 3: BUILDSTRING def_%v_15 %v_13[9.1,] %v_14[9.2,] 
+		 4: grid->where def_%v_16 grid[8.3,] %v_12[9.0,] %v_15[9.3,] 	 SYMBOL:	 ARGS:%v_12,%v_15,
+		 5: COPY TYPE_PASS def_grid %v_16[9.4,] 
+		 6: 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_16 
+BB 11
+	outgoing: 12 13 
+	datadep: 
+	instructions:
+		 0: Line Number 160
+		 1: params->[] def_%v_17 params[7.2,5.0,3.1,2.5,] 	 SYMBOL:order_number,	 ARGS:Symbol,
+		 2: %v_17->present? def_%v_18 %v_17[11.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_18[11.2,] 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "orders.order_number LIKE ?" def_%v_19 
+		 1: params->[] def_%v_20 params[7.2,5.0,3.1,2.5,] 	 SYMBOL:order_number,	 ARGS:Symbol,
+		 2: COPY TYPE_StringLiteral "%" def_%v_21 
+		 3: BUILDSTRING def_%v_22 %v_20[12.1,] %v_21[12.2,] 
+		 4: grid->where def_%v_23 grid[9.5,8.3,] %v_19[12.0,] %v_22[12.3,] 	 SYMBOL:	 ARGS:%v_19,%v_22,
+		 5: COPY TYPE_PASS def_grid %v_23[12.4,] 
+		 6: 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_23 
+BB 14
+	outgoing: 15 16 
+	datadep: 
+	instructions:
+		 0: Line Number 161
+		 1: params->[] def_%v_24 params[7.2,5.0,3.1,2.5,] 	 SYMBOL:state,	 ARGS:Symbol,
+		 2: %v_24->present? def_%v_25 %v_24[14.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_25[14.2,] 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "return_authorizations.state LIKE ?" def_%v_26 
+		 1: params->[] def_%v_27 params[7.2,5.0,3.1,2.5,] 	 SYMBOL:state,	 ARGS:Symbol,
+		 2: grid->where def_%v_28 grid[12.5,9.5,8.3,] %v_26[15.0,] %v_27[15.1,] 	 SYMBOL:	 ARGS:%v_26,%v_27,
+		 3: COPY TYPE_PASS def_grid %v_28[15.2,] 
+		 4: 
+BB 16
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_28 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: Line Number 162
+		 1: RETURN grid[15.3,12.5,9.5,8.3,] %self[2.0,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = ensure_refund_is_larger_than_restocking instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 172
+		 6: %self->restocking_fee def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->restocking_fee def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %self->amount def_%v_5 %self[3.0,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->>= def_%v_6 %v_4[3.0,] %v_5[3.1,] 	 SYMBOL:	 ARGS:%v_5,
+		 3: COPY TYPE_PASS def_%v_3 %v_6[3.2,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.3,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 173
+		 1: %self->errors def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "The amount must be larger than the restocking fee." def_%v_8 
+		 3: %v_7->add def_%v_9 %v_7[5.1,] %v_8[5.2,] 	 SYMBOL:amount,	 ARGS:Symbol,%v_8,
+		 4: RETURN %v_9[5.3,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+

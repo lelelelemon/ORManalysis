@@ -125,7 +125,7 @@ def get_controller_downcase(controller_name)
 		chs = str.split("::")
 		word_array = []
 		chs.each do |c|
-			word_array.push(helper_downcase)
+			word_array.push(helper_downcase(c))
 		end
 		return word_array.join("::")
 	else

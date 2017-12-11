@@ -12,7 +12,7 @@ export PATH=$PATH:~/jruby/bin
 function run_single_app () {
 	app=$1
 	echo "start app ${app}"
-	cd ~/ruby_source/ORM_analysis/applications/${app}/
+	#cd ~/workspace/ORM_analysis/applications/${app}/
 
 	#rm -rf dataflow
 	#cd ~/ruby_source/ORM_analysis/applications/
@@ -20,8 +20,8 @@ function run_single_app () {
 	
 	#rm -rf results
 	#mkdir results
-	cd ~/ruby_source/ORM_analysis/controller_model_analysis
-	ruby main.rb -a -d ../applications/${app} &> ${app}.log
+	#cd ~/ruby_source/ORM_analysis/controller_model_analysis
+	ruby main.rb -a -d ../applications/${app} > ${app}.log
   echo "Finish app ${app}"
 }
 

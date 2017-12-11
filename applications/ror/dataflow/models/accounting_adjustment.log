@@ -1,0 +1,153 @@
+SET IRMethod, name = adjust_stock instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_inventory 
+		 6: RECEIVEARG def_qty_to_add 
+		 7: RECEIVEARG def_return_amount 
+		 8: Line Number 33
+		 9: %self->transaction def_%v_3 %self[2.0,] %self[2.0,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: inventory[2.5,] return_amount[2.7,] qty_to_add[2.6,] accounting_adjustment[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 34
+		 1: inventory->accounting_adjustments def_%cl_1_3 inventory[] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "" def_%cl_1_4 
+		 3: HASH-amount-notes- def_%cl_1_5 return_amount[] %cl_1_4[3.2,] 
+		 4: %cl_1_3->create def_%cl_1_6 %cl_1_3[3.1,] %cl_1_5[3.3,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 5: COPY TYPE_PASS def_accounting_adjustment %cl_1_6[3.4,] 
+		 6: Line Number 35
+		 7: inventory->add_count_on_hand def_%cl_1_7 inventory[3.1,] qty_to_add[] 	 SYMBOL:	 ARGS:qty_to_add,
+		 8: Line Number 36
+		 9: accounting_adjustment->refund_inventory def_%cl_1_8 accounting_adjustment[3.5,] 	 SYMBOL:	 ARGS:
+		 10: RETURN %cl_1_8[3.9,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_9 
+		 1: def_%cl_1_10 %cl_1_9[4.0,] 
+		 2: RETURN %cl_1_10[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: RETURN %v_3[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = refund_inventory instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 41
+		 6: (Time) def_%v_3 
+		 7: %v_3->zone def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->now def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_PASS def_now %v_5[2.8,] 
+		 10: Line Number 42
+		 11: %self->batches def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 12: %v_6->create def_%v_7 %v_6[2.11,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_PASS def_batch %v_7[2.12,] 
+		 14: Line Number 43
+		 15: (RefundInventory) def_%v_8 
+		 16: %v_8->new def_%v_9 %v_8[2.15,] 	 SYMBOL:	 ARGS:
+		 17: COPY TYPE_PASS def_transaction %v_9[2.16,] 
+		 18: Line Number 44
+		 19: %self->transaction_ledgers def_%v_10 %self[2.0,2.11,] 	 SYMBOL:	 ARGS:
+		 20: (TransactionAccount) def_%v_11 
+		 21: (inherit EXPENSE_ID) def_%v_12 %v_11[2.20,] 
+		 22: %v_12[2.21,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_11->const_missing def_%v_12 %v_11[2.20,] 	 SYMBOL:EXPENSE_ID,	 ARGS:Symbol,
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: %self->amount def_%v_13 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: now->month def_%v_14 now[2.9,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "-" def_%v_15 
+		 3: now->year def_%v_16 now[4.1,2.9,] 	 SYMBOL:	 ARGS:
+		 4: BUILDSTRING def_%v_17 %v_14[4.1,] %v_15[4.2,] %v_16[4.3,] 
+		 5: HASH-transaction_account_id-debit-credit-period- def_%v_18 %v_12[3.0,2.21,] %v_13[4.0,] %v_17[4.4,] 
+		 6: %v_10->new def_%v_19 %v_10[2.19,] %v_18[4.5,] 	 SYMBOL:	 ARGS:%v_18,
+		 7: COPY TYPE_PASS def_credit %v_19[4.6,] 
+		 8: Line Number 45
+		 9: %self->transaction_ledgers def_%v_20 %self[4.0,2.0,] 	 SYMBOL:	 ARGS:
+		 10: (TransactionAccount) def_%v_21 
+		 11: (inherit CASH_ID) def_%v_22 %v_21[4.10,] 
+		 12: %v_22[4.11,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %v_21->const_missing def_%v_22 %v_21[4.10,] 	 SYMBOL:CASH_ID,	 ARGS:Symbol,
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %self->amount def_%v_23 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: now->month def_%v_24 now[2.9,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "-" def_%v_25 
+		 3: now->year def_%v_26 now[6.1,2.9,] 	 SYMBOL:	 ARGS:
+		 4: BUILDSTRING def_%v_27 %v_24[6.1,] %v_25[6.2,] %v_26[6.3,] 
+		 5: HASH-transaction_account_id-debit-credit-period- def_%v_28 %v_22[5.0,4.11,] %v_23[6.0,] %v_27[6.4,] 
+		 6: %v_20->new def_%v_29 %v_20[4.9,] %v_28[6.5,] 	 SYMBOL:	 ARGS:%v_28,
+		 7: COPY TYPE_PASS def_debit %v_29[6.6,] 
+		 8: Line Number 46
+		 9: transaction->transaction_ledgers def_%v_30 transaction[2.17,] 	 SYMBOL:	 ARGS:
+		 10: %v_30->push def_%v_31 %v_30[6.9,] credit[4.7,] 	 SYMBOL:	 ARGS:credit,
+		 11: Line Number 47
+		 12: transaction->transaction_ledgers def_%v_32 transaction[6.9,2.17,] 	 SYMBOL:	 ARGS:
+		 13: %v_32->push def_%v_33 %v_32[6.12,] debit[6.7,] 	 SYMBOL:	 ARGS:debit,
+		 14: Line Number 48
+		 15: batch->transactions def_%v_34 batch[2.13,] 	 SYMBOL:	 ARGS:
+		 16: %v_34->push def_%v_35 %v_34[6.15,] transaction[6.9,6.12,2.17,] 	 SYMBOL:	 ARGS:transaction,
+		 17: Line Number 49
+		 18: batch->save def_%v_36 batch[6.15,2.13,] 	 SYMBOL:	 ARGS:
+		 19: RETURN %v_36[6.18,] %self[6.0,2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+

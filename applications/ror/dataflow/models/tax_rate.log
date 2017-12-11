@@ -1,0 +1,345 @@
+SET IRMethod, name = tax_percentage instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 26
+		 6: (Settings) def_%v_3 
+		 7: %v_3->vat def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Float def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->percentage def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_6[4.0,] %self[4.0,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = vat_percentage instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 30
+		 6: (Settings) def_%v_3 
+		 7: %v_3->vat def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->percentage def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_5[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = active instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 34
+		 6: COPY TYPE_StringLiteral "tax_rates.active = ?" def_%v_3 
+		 7: COPY TYPE_Array def_%v_4 %v_3[2.6,] 
+		 8: %self->where def_%v_5 %self[2.0,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = inactivate! instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 38
+		 6: HASH-active- def_%v_3 
+		 7: %self->update_attributes def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = at instanceMethod = false
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_time 
+		 6: time[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_3 
+		 1: %v_3->zone def_%v_4 %v_3[3.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->now def_%v_5 %v_4[3.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_time %v_5[3.2,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 42
+		 1: (TaxRate) def_%v_6 
+		 2: time->to_date def_%v_7 time[3.3,2.5,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->active_at_ids def_%v_8 %v_6[4.1,] %v_7[4.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: HASH-id- def_%v_9 %v_8[4.3,] 
+		 5: HASH-tax_rates- def_%v_10 %v_9[4.4,] 
+		 6: %self->where def_%v_11 %self[2.0,] %v_10[4.5,] 	 SYMBOL:	 ARGS:%v_10,
+		 7: RETURN %v_11[4.6,] %self[4.6,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = for_region instanceMethod = false
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_region_id 
+		 6: Line Number 47
+		 7: (Settings) def_%v_3 
+		 8: %v_3->tax_per_state_id def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "state_id" def_%v_5 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "country_id" def_%v_6 
+		 1: COPY TYPE_PASS def_%v_5 %v_6[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral " = ?" def_%v_7 
+		 1: BUILDSTRING def_%v_8 %v_5[4.1,3.0,] %v_7[5.0,] 
+		 2: COPY TYPE_Array def_%v_9 %v_8[5.1,] region_id[2.5,] 
+		 3: %self->where def_%v_10 %self[2.0,] %v_9[5.2,] 	 SYMBOL:	 ARGS:%v_9,
+		 4: RETURN %v_10[5.3,] %self[5.3,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = active_at_ids instanceMethod = false
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_date 
+		 6: date[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_3 
+		 1: %v_3->zone def_%v_4 %v_3[3.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->now def_%v_5 %v_4[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_5->to_date def_%v_6 %v_5[3.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_PASS def_date %v_6[3.3,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 52
+		 1: (TaxRate) def_%v_7 
+		 2: COPY TYPE_StringLiteral "tax_rates.start_date <= ? AND
+             (end_date > ? OR end_date IS NULL)" def_%v_8 
+		 3: date->to_s def_%v_9 date[3.4,2.5,] 	 SYMBOL:db,	 ARGS:Symbol,
+		 4: date->to_s def_%v_10 date[4.3,3.4,2.5,] 	 SYMBOL:db,	 ARGS:Symbol,
+		 5: COPY TYPE_Array def_%v_11 %v_8[4.2,] %v_9[4.3,] %v_10[4.4,] 
+		 6: %v_7->where def_%v_12 %v_7[4.1,] %v_11[4.5,] 	 SYMBOL:	 ARGS:%v_11,
+		 7: %v_12->pluck def_%v_13 %v_12[4.6,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 8: RETURN %v_13[4.7,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = expire_cache instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 60
+		 6: (Rails) def_%v_3 
+		 7: %v_3->cache def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_StringLiteral "TaxRate-" def_%v_5 
+		 9: (I18n) def_%v_6 
+		 10: %v_6->t def_%v_7 %v_6[2.9,] 	 SYMBOL:company,	 ARGS:Symbol,
+		 11: COPY TYPE_StringLiteral "-active_at_ids-" def_%v_8 
+		 12: (Date) def_%v_9 
+		 13: %v_9->yesterday def_%v_10 %v_9[2.12,] 	 SYMBOL:	 ARGS:
+		 14: BUILDSTRING def_%v_11 %v_5[2.8,] %v_7[2.10,] %v_8[2.11,] %v_10[2.13,] 
+		 15: %v_4->delete def_%v_12 %v_4[2.7,] %v_11[2.14,] 	 SYMBOL:	 ARGS:%v_11,
+		 16: Line Number 61
+		 17: (Rails) def_%v_13 
+		 18: %v_13->cache def_%v_14 %v_13[2.17,] 	 SYMBOL:	 ARGS:
+		 19: COPY TYPE_StringLiteral "TaxRate-" def_%v_15 
+		 20: (I18n) def_%v_16 
+		 21: %v_16->t def_%v_17 %v_16[2.20,] 	 SYMBOL:company,	 ARGS:Symbol,
+		 22: COPY TYPE_StringLiteral "-active_at_ids-" def_%v_18 
+		 23: (Date) def_%v_19 
+		 24: %v_19->today def_%v_20 %v_19[2.23,] 	 SYMBOL:	 ARGS:
+		 25: BUILDSTRING def_%v_21 %v_15[2.19,] %v_17[2.21,] %v_18[2.22,] %v_20[2.24,] 
+		 26: %v_14->delete def_%v_22 %v_14[2.18,] %v_21[2.25,] 	 SYMBOL:	 ARGS:%v_21,
+		 27: Line Number 62
+		 28: (Rails) def_%v_23 
+		 29: %v_23->cache def_%v_24 %v_23[2.28,] 	 SYMBOL:	 ARGS:
+		 30: COPY TYPE_StringLiteral "TaxRate-" def_%v_25 
+		 31: (I18n) def_%v_26 
+		 32: %v_26->t def_%v_27 %v_26[2.31,] 	 SYMBOL:company,	 ARGS:Symbol,
+		 33: COPY TYPE_StringLiteral "-active_at_ids-" def_%v_28 
+		 34: (Date) def_%v_29 
+		 35: %v_29->tomorrow def_%v_30 %v_29[2.34,] 	 SYMBOL:	 ARGS:
+		 36: BUILDSTRING def_%v_31 %v_25[2.30,] %v_27[2.32,] %v_28[2.33,] %v_30[2.35,] 
+		 37: %v_24->delete def_%v_32 %v_24[2.29,] %v_31[2.36,] 	 SYMBOL:	 ARGS:%v_31,
+		 38: RETURN %v_32[2.37,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = tax_per_state? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 66
+		 6: (Settings) def_%v_3 
+		 7: %v_3->tax_per_state_id def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = tax_per_country? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 70
+		 6: %self->tax_per_state? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->! def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

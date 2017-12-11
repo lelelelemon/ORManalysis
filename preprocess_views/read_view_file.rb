@@ -5,7 +5,10 @@ def read_view_files
 			new_file_name = filename.to_s.gsub($view_folder_name, $new_view_folder_name)
 			#TODO: full path
 			view_file = View_file.new(new_file_name)
+			view_path = new_file_name.gsub(File.basename(new_file_name),'')
+			run_command("mkdir -p #{view_path}")
 			$view_files[new_file_name] = view_file
+			puts view_file.file_path
 			run_command("#{$extract_ruby_script} #{filename} #{new_file_name}")
 			fp = File.open(view_file.file_path, "r")
 			contents = fp.read

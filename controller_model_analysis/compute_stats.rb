@@ -933,8 +933,10 @@ def compute_dataflow_stat(output_dir, start_class, start_function, build_node_li
 	$graph_file.puts("<queryFunction>")
 	printQueryFunctionFreq
 	$graph_file.puts("<\/queryFunction>")	
+
 	
-	
+	compute_loop_invariant
+
 	$graph_file.puts("<\/STATSHEADER>")	
 	$graph_file.close
 	#number of query functions

@@ -1,0 +1,353 @@
+SET IRMethod, name = value instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_item_prices 
+		 6: RECEIVEARG def_order 
+		 7: Line Number 59
+		 8: %self->qualified? def_%v_3 %self[2.0,] item_prices[2.5,] order[2.6,] 	 SYMBOL:	 ARGS:item_prices,order,
+		 9: BRANCH %v_3[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->coupon_amount def_%v_4 %self[2.0,] item_prices[2.5,] 	 SYMBOL:	 ARGS:item_prices,
+		 1: RETURN %v_4[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = qualified? instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_item_prices 
+		 6: RECEIVEARG def_order 
+		 7: RECEIVECONSTARG def_at 
+		 8: at[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_at 
+BB 4
+	outgoing: 5 8 
+	datadep: 
+	instructions:
+		 0: Line Number 64
+		 1: COPY TYPE_PASS def_%v_3 at[3.0,2.7,] 
+		 2: COPY TYPE_PASS def_%v_4 at[3.0,2.7,] 
+		 3: BRANCH at[3.0,2.7,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: order->completed_at def_%v_5 order[2.6,] 	 SYMBOL:	 ARGS:
+		 1: BRANCH %v_5[5.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_6 
+		 1: %v_6->zone def_%v_7 %v_6[6.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_7->now def_%v_8 %v_7[6.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%v_5 %v_8[6.2,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_at %v_5[6.3,5.0,] 
+		 1: COPY TYPE_PASS def_%v_4 %v_5[6.3,5.0,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: Line Number 65
+		 1: item_prices->sum def_%v_9 item_prices[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %self->minimum_value def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_9->> def_%v_11 %v_9[8.1,] %v_10[8.2,] 	 SYMBOL:	 ARGS:%v_10,
+		 4: BRANCH %v_11[8.3,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: %self->eligible? def_%v_12 %self[2.0,] order[2.6,] at[7.0,3.0,2.7,] 	 SYMBOL:	 ARGS:order,at,
+		 1: RETURN %v_12[9.0,] %self[9.0,2.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_11[8.3,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = eligible? instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_order 
+		 6: RECEIVECONSTARG def_at 
+		 7: at[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_at 
+BB 4
+	outgoing: 5 8 
+	datadep: 
+	instructions:
+		 0: Line Number 69
+		 1: COPY TYPE_PASS def_%v_3 at[3.0,2.6,] 
+		 2: COPY TYPE_PASS def_%v_4 at[3.0,2.6,] 
+		 3: BRANCH at[3.0,2.6,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: order->completed_at def_%v_5 order[2.5,] 	 SYMBOL:	 ARGS:
+		 1: BRANCH %v_5[5.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_6 
+		 1: %v_6->zone def_%v_7 %v_6[6.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_7->now def_%v_8 %v_7[6.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%v_5 %v_8[6.2,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_at %v_5[6.3,5.0,] 
+		 1: COPY TYPE_PASS def_%v_4 %v_5[6.3,5.0,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: Line Number 70
+		 1: %self->starts_at def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_9-><= def_%v_10 %v_9[8.1,] at[7.0,3.0,2.6,] 	 SYMBOL:	 ARGS:at,
+		 3: BRANCH %v_10[8.2,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: %self->expires_at def_%v_11 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_11->>= def_%v_12 %v_11[9.0,] at[7.0,3.0,2.6,] 	 SYMBOL:	 ARGS:at,
+		 2: RETURN %v_12[9.1,] %self[9.0,2.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_10[8.2,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = display_start_time instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_format 
+		 6: format[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Symbol def_format 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 74
+		 1: %self->starts_at def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_3[4.1,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: (I18n) def_%v_4 
+		 1: %self->starts_at def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: HASH-format- def_%v_6 format[3.0,2.5,] 
+		 3: %v_4->localize def_%v_7 %v_4[5.0,] %v_5[5.1,] %v_6[5.2,] 	 SYMBOL:	 ARGS:%v_5,%v_6,
+		 4: RETURN %v_7[5.3,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "N/A" def_%v_8 
+		 1: RETURN %v_8[6.0,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = display_expires_time instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_format 
+		 6: format[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Symbol def_format 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 78
+		 1: %self->expires_at def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_3[4.1,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: (I18n) def_%v_4 
+		 1: %self->expires_at def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: HASH-format- def_%v_6 format[3.0,2.5,] 
+		 3: %v_4->localize def_%v_7 %v_4[5.0,] %v_5[5.1,] %v_6[5.2,] 	 SYMBOL:	 ARGS:%v_5,%v_6,
+		 4: RETURN %v_7[5.3,] %self[5.1,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "N/A" def_%v_8 
+		 1: RETURN %v_8[6.0,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = coupon_amount instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_item_prices 
+		 6: Line Number 85
+		 7: item_prices->sum def_%v_3 item_prices[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %self->minimum_value def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_3->>= def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: BRANCH %v_5[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->amount def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_6[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = value_of_items_to_apply instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_item_prices 
+		 6: Line Number 92
+		 7: %self->combine def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: item_prices->sum def_%v_4 item_prices[2.5,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_4[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: item_prices->max def_%v_5 item_prices[2.5,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_5[4.0,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

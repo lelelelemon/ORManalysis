@@ -1,0 +1,279 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_start__time 
+		 6: RECEIVEARG def_end__time 
+		 7: Line Number 4
+		 8: ATTRASSIGN %self->start_time start__time[2.5,] 
+		 9: Line Number 5
+		 10: ATTRASSIGN %self->end_time end__time[2.6,] 
+		 11: RETURN end__time[2.6,] %self[2.0,2.8,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = total_users instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 9
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->total_users def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (User) def_%v_6 
+		 1: COPY TYPE_StringLiteral "users.created_at <= ?" def_%v_7 
+		 2: %self->end_time def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->where def_%v_9 %v_6[5.0,] %v_7[5.1,] %v_8[5.2,] 	 SYMBOL:	 ARGS:%v_7,%v_8,
+		 4: %v_9->count def_%v_10 %v_9[5.3,] 	 SYMBOL:	 ARGS:
+		 5: ATTRASSIGN %self->total_users %v_10[5.4,] 
+		 6: RETURN %v_10[5.4,] %self[5.2,5.5,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = users_in_timeframe instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 13
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->users_in_timeframe def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (User) def_%v_6 
+		 1: COPY TYPE_StringLiteral "users.created_at >= ? AND users.created_at <= ?" def_%v_7 
+		 2: %self->start_time def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->end_time def_%v_9 %self[5.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_6->where def_%v_10 %v_6[5.0,] %v_7[5.1,] %v_8[5.2,] %v_9[5.3,] 	 SYMBOL:	 ARGS:%v_7,%v_8,%v_9,
+		 5: %v_10->count def_%v_11 %v_10[5.4,] 	 SYMBOL:	 ARGS:
+		 6: ATTRASSIGN %self->users_in_timeframe %v_11[5.5,] 
+		 7: RETURN %v_11[5.5,] %self[5.2,5.3,5.6,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = total_customers instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 17
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->total_customers def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Order) def_%v_6 
+		 1: %v_6->finished def_%v_7 %v_6[5.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "orders.completed_at <= ?" def_%v_8 
+		 3: %self->end_time def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_7->where def_%v_10 %v_7[5.1,] %v_8[5.2,] %v_9[5.3,] 	 SYMBOL:	 ARGS:%v_8,%v_9,
+		 5: %v_10->group def_%v_11 %v_10[5.4,] 	 SYMBOL:user_id,	 ARGS:Symbol,
+		 6: %v_11->count def_%v_12 %v_11[5.5,] 	 SYMBOL:	 ARGS:
+		 7: %v_12->size def_%v_13 %v_12[5.6,] 	 SYMBOL:	 ARGS:
+		 8: ATTRASSIGN %self->total_customers %v_13[5.7,] 
+		 9: RETURN %v_13[5.7,] %self[5.3,5.8,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = customers_in_timeframe instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 21
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->customers_in_timeframe def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Order) def_%v_6 
+		 1: %v_6->finished def_%v_7 %v_6[5.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "orders.completed_at >= ? AND orders.completed_at <= ?" def_%v_8 
+		 3: %self->start_time def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %self->end_time def_%v_10 %self[5.3,2.0,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_Array def_%v_11 %v_8[5.2,] %v_9[5.3,] %v_10[5.4,] 
+		 6: %v_7->where def_%v_12 %v_7[5.1,] %v_11[5.5,] 	 SYMBOL:	 ARGS:%v_11,
+		 7: %v_12->group def_%v_13 %v_12[5.6,] 	 SYMBOL:user_id,	 ARGS:Symbol,
+		 8: %v_13->count def_%v_14 %v_13[5.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_14->size def_%v_15 %v_14[5.8,] 	 SYMBOL:	 ARGS:
+		 10: ATTRASSIGN %self->customers_in_timeframe %v_15[5.9,] 
+		 11: RETURN %v_15[5.9,] %self[5.3,5.4,5.10,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = start_time instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 26
+		 6: GETFIELD %self->start_time def_%v_3 %self[2.0,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = end_time instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 30
+		 6: GETFIELD %self->end_time def_%v_3 %self[2.0,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -1,0 +1,1108 @@
+SET IRMethod, name = featured_image instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_image_size 
+		 6: image_size[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Symbol def_image_size 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 73
+		 1: %self->image_urls def_%v_3 %self[2.0,] image_size[3.0,2.5,] 	 SYMBOL:	 ARGS:image_size,
+		 2: %v_3->first def_%v_4 %v_3[4.1,] 	 SYMBOL:	 ARGS:
+		 3: RETURN %v_4[4.2,] %self[4.1,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = image_urls instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_image_size 
+		 6: image_size[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Symbol def_image_size 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 77
+		 1: (Rails) def_%v_3 
+		 2: %v_3->cache def_%v_4 %v_3[4.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "variant-image_urls-" def_%v_5 
+		 4: COPY TYPE_StringLiteral "-" def_%v_6 
+		 5: BUILDSTRING def_%v_7 %v_5[4.3,] %self[2.0,] %v_6[4.4,] image_size[3.0,2.5,] 
+		 6: CONSTANT def_%v_8 	 SYMBOL:	 ARGS:
+		 7: HASH-expires_in- def_%v_9 %v_8[4.6,] 
+		 8: %v_4->fetch def_%v_10 %v_4[4.2,] %v_7[4.5,] %v_9[4.7,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_7,%v_9,%v_4,
+CLOSURE BEGIN: %self[2.0,] image_size[3.0,2.5,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 78
+		 1: %self->image_group def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: %self->image_group def_%cl_1_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %cl_1_4->image_urls def_%cl_1_5 %cl_1_4[4.0,] image_size[] 	 SYMBOL:	 ARGS:image_size,
+		 2: 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: %self->product def_%cl_1_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %cl_1_6->image_urls def_%cl_1_7 %cl_1_6[5.0,] image_size[] 	 SYMBOL:	 ARGS:image_size,
+		 2: RETURN %cl_1_7[5.1,] %self[5.0,2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[7.0,] 
+		 2: RETURN %cl_1_9[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: RETURN %v_10[4.8,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = active? instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 83
+		 6: %self->deleted_at def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %self->deleted_at def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: (Time) def_%v_6 
+		 2: %v_6->zone def_%v_7 %v_6[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_7->now def_%v_8 %v_7[3.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_5->> def_%v_9 %v_5[3.0,] %v_8[3.3,] 	 SYMBOL:	 ARGS:%v_8,
+		 5: RETURN %v_9[3.4,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_4[2.7,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = inactivate= instanceMethod = true
+BB 1
+	outgoing: 13 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_val 
+		 6: Line Number 91
+		 7: val->present? def_%v_3 val[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: Line Number 92
+		 2: COPY TYPE_StringLiteral "1" def_%v_5 
+		 3: val->== def_%v_6 val[2.5,] %v_5[3.2,] 	 SYMBOL:	 ARGS:%v_5,
+		 4: BRANCH %v_6[3.3,] 
+BB 4
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: val->to_s def_%v_7 val[2.5,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_StringLiteral "true" def_%v_8 
+		 2: %v_7->== def_%v_9 %v_7[6.0,] %v_8[6.1,] 	 SYMBOL:	 ARGS:%v_8,
+		 3: COPY TYPE_PASS def_%v_6 %v_9[6.2,] 
+BB 7
+	outgoing: 8 11 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_6[6.3,3.3,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: Line Number 93
+		 1: %self->deleted_at def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_10[8.1,] 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_12 
+		 1: %v_12->zone def_%v_13 %v_12[9.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_13->now def_%v_14 %v_13[9.1,] 	 SYMBOL:	 ARGS:
+		 3: %self->deleted_at= def_%v_11 %v_14[9.2,] 	 SYMBOL:	 ARGS:%v_14,
+		 4: COPY TYPE_PASS def_%v_10 %v_14[9.2,] 
+BB 10
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: RETURN %v_10[9.4,8.1,] %self[9.3,2.0,] 
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: Line Number 95
+		 1: ATTRASSIGN %self->deleted_at 
+		 2: RETURN %self[11.1,2.0,] 
+BB 13
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = inactivate instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 100
+		 6: %self->deleted_at def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_%v_4 
+		 1: RETURN %v_4[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = total_price instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_tax_rate 
+		 6: Line Number 108
+		 7: %self->tax_percentage def_%v_3 %self[2.0,] tax_rate[2.5,] 	 SYMBOL:	 ARGS:tax_rate,
+		 8: %v_3->+ def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: %self->price def_%v_5 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 10: %v_4->* def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 SYMBOL:	 ARGS:%v_5,
+		 11: RETURN %v_6[2.10,] %self[2.0,2.7,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = tax_percentage instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_tax_rate 
+		 6: Line Number 116
+		 7: BRANCH tax_rate[2.5,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: tax_rate->tax_percentage def_%v_3 tax_rate[2.5,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_3[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = product_tax_rate instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_state_id 
+		 6: RECEIVECONSTARG def_tax_time 
+		 7: tax_time[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (Time) def_%v_3 
+		 1: %v_3->now def_%v_4 %v_3[3.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_tax_time %v_4[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 126
+		 1: %self->product def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->tax_rate def_%v_6 %v_5[4.1,] state_id[2.5,] tax_time[3.2,2.6,] 	 SYMBOL:	 ARGS:state_id,tax_time,
+		 3: RETURN %v_6[4.2,] %self[4.1,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = shipping_category_id instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 134
+		 6: %self->product def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->shipping_category_id def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = property_details instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_separator 
+		 6: separator[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral ": " def_%v_3 
+		 1: COPY TYPE_PASS def_separator %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 143
+		 1: %self->variant_properties def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->collect def_%v_5 %v_4[4.1,] %self[4.1,2.0,] 	 SYMBOL:	 ARGS:%v_4,
+CLOSURE BEGIN: vp[] separator[3.1,2.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_vp 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 143
+		 1: vp->property def_%cl_1_3 vp[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->display_name def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: vp->description def_%cl_1_5 vp[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_Array def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 5: %cl_1_6->join def_%cl_1_7 %cl_1_6[3.4,] separator[] 	 SYMBOL:	 ARGS:separator,
+		 6: RETURN %cl_1_7[3.5,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %v_5[4.2,] %self[4.1,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = display_property_details instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_separator 
+		 6: separator[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "<br/>" def_%v_3 
+		 1: COPY TYPE_PASS def_separator %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 152
+		 1: %self->property_details def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->join def_%v_5 %v_4[4.1,] separator[3.1,2.5,] 	 SYMBOL:	 ARGS:separator,
+		 3: RETURN %v_5[4.2,] %self[4.1,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = product_name instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 161
+		 6: %self->name? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->name def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_4[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->product def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_5->name def_%v_6 %v_5[4.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->sub_name def_%v_7 %self[4.0,2.0,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_Array def_%v_8 %v_6[4.1,] %v_7[4.2,] 
+		 4: %v_8->reject def_%v_9 %v_8[4.3,] %self[4.0,4.2,2.0,] 	 SYMBOL:	 ARGS:%v_8,
+CLOSURE BEGIN: a[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_a 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 161
+		 1: a->strip def_%cl_1_3 a[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->length def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_4->== def_%cl_1_5 %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:Fixnum,
+		 4: RETURN %cl_1_5[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 5: COPY TYPE_StringLiteral " - " def_%v_10 
+		 6: %v_9->join def_%v_11 %v_9[4.4,] %v_10[4.5,] 	 SYMBOL:	 ARGS:%v_10,
+		 7: RETURN %v_11[4.6,] %self[4.0,4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sub_name instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 170
+		 6: %self->primary_property def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->primary_property def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_4->description def_%v_5 %v_4[3.0,] 	 SYMBOL:	 ARGS:
+		 2: BUILDSTRING def_%v_6 %v_5[3.1,] 
+		 3: RETURN %v_6[3.2,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "" def_%v_7 
+		 1: RETURN %v_7[4.0,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = brand_name instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 179
+		 6: %self->product def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->brand_name def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = primary_property instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 188
+		 6: %self->variant_properties def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: HASH-primary- def_%v_4 
+		 8: %v_3->find_by def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: COPY TYPE_PASS def_pp %v_5[2.8,] 
+		 10: Line Number 189
+		 11: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_6 pp[2.9,] 
+		 1: RETURN %v_6[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->variant_properties def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_7->first def_%v_8 %v_7[4.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_8[4.1,] %self[4.0,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = name_with_sku instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 198
+		 6: %self->product_name def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %self->sku def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_Array def_%v_5 %v_3[2.6,] %v_4[2.7,] 
+		 9: %v_5->compact def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: COPY TYPE_StringLiteral ": " def_%v_7 
+		 11: %v_6->join def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.6,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = is_available? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 206
+		 6: %self->count_available def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->> def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:Fixnum,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = count_available instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_reload_variant 
+		 6: reload_variant[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_reload_variant 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 214
+		 1: BRANCH reload_variant[3.0,2.5,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %self->reload def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_3 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 215
+		 1: %self->count_on_hand def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->count_pending_to_customer def_%v_5 %self[7.1,2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_4->- def_%v_6 %v_4[7.1,] %v_5[7.2,] 	 SYMBOL:	 ARGS:%v_5,
+		 4: RETURN %v_6[7.3,] %self[7.1,7.2,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = subtract_count_on_hand instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_num 
+		 6: Line Number 223
+		 7: num->to_i def_%v_3 num[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->* def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:Fixnum,
+		 9: %self->add_count_on_hand def_%v_5 %self[2.0,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: RETURN %v_5[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_pending_to_customer instanceMethod = true
+BB 1
+	outgoing: 10 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_num 
+		 6: num[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_num 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 232
+		 1: %self->low_stock? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %v_3[4.1,] 
+BB 5
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: Line Number 234
+		 1: %self->inventory def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_4->lock! def_%v_5 %v_4[5.1,] 	 SYMBOL:	 ARGS:
+		 3: Line Number 235
+		 4: %self->inventory def_%v_6 %self[5.1,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %self->inventory def_%v_7 %self[5.1,5.4,2.0,] 	 SYMBOL:	 ARGS:
+		 6: %v_7->count_pending_to_customer def_%v_8 %v_7[5.5,] 	 SYMBOL:	 ARGS:
+		 7: %v_8->to_i def_%v_9 %v_8[5.6,] 	 SYMBOL:	 ARGS:
+		 8: num->to_i def_%v_10 num[3.0,2.5,] 	 SYMBOL:	 ARGS:
+		 9: %v_9->+ def_%v_11 %v_9[5.7,] %v_10[5.8,] 	 SYMBOL:	 ARGS:%v_10,
+		 10: ATTRASSIGN %v_6->count_pending_to_customer %v_11[5.9,] 
+		 11: Line Number 236
+		 12: %self->inventory def_%v_12 %self[5.1,5.4,5.5,2.0,] 	 SYMBOL:	 ARGS:
+		 13: %v_12->save! def_%v_13 %v_12[5.12,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %v_13[5.13,] %self[5.1,5.4,5.5,5.12,2.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: Line Number 238
+		 1: COPY TYPE_StringLiteral "UPDATE inventories SET count_pending_to_customer = (" def_%v_14 
+		 2: COPY TYPE_StringLiteral " + count_pending_to_customer) WHERE id = " def_%v_15 
+		 3: %self->inventory def_%v_16 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_16->id def_%v_17 %v_16[6.3,] 	 SYMBOL:	 ARGS:
+		 5: BUILDSTRING def_%v_18 %v_14[6.1,] num[3.0,2.5,] %v_15[6.2,] %v_17[6.4,] 
+		 6: COPY TYPE_PASS def_sql %v_18[6.5,] 
+		 7: Line Number 239
+		 8: (ActiveRecord) def_%v_19 
+		 9: (inherit Base) def_%v_20 %v_19[6.8,] 
+		 10: %v_20[6.9,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %v_19->const_missing def_%v_20 %v_19[6.8,] 	 SYMBOL:Base,	 ARGS:Symbol,
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: %v_20->connection def_%v_21 %v_20[7.0,6.9,] 	 SYMBOL:	 ARGS:
+		 1: %v_21->execute def_%v_22 %v_21[8.0,] sql[6.6,] 	 SYMBOL:	 ARGS:sql,
+		 2: RETURN %v_22[8.1,] %self[2.0,] 
+BB 10
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = subtract_pending_to_customer instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_num 
+		 6: Line Number 248
+		 7: num->to_i def_%v_3 num[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->* def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:Fixnum,
+		 9: %self->add_pending_to_customer def_%v_5 %self[2.0,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: RETURN %v_5[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = qty_to_add= instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_num 
+		 6: Line Number 257
+		 7: %self->add_count_on_hand def_%v_3 %self[2.0,] num[2.5,] 	 SYMBOL:	 ARGS:num,
+		 8: RETURN %v_3[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = qty_to_add instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 265
+		 6: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = admin_grid instanceMethod = false
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_product 
+		 6: RECEIVECONSTARG def_params 
+		 7: params[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_params %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 274
+		 1: product->id def_%v_4 product[2.5,] 	 SYMBOL:	 ARGS:
+		 2: HASH-product_id- def_%v_5 %v_4[4.1,] 
+		 3: HASH-variants- def_%v_6 %v_5[4.2,] 
+		 4: %self->where def_%v_7 %self[2.0,] %v_6[4.3,] 	 SYMBOL:	 ARGS:%v_6,
+		 5: %v_7->includes def_%v_8 %v_7[4.4,] 	 SYMBOL:product,	 ARGS:Symbol,
+		 6: params->[] def_%v_9 params[3.1,2.6,] 	 SYMBOL:product_name,	 ARGS:Symbol,
+		 7: %v_8->product_name_filter def_%v_10 %v_8[4.5,] %v_9[4.6,] 	 SYMBOL:	 ARGS:%v_9,
+		 8: params->[] def_%v_11 params[4.6,3.1,2.6,] 	 SYMBOL:sku,	 ARGS:Symbol,
+		 9: %v_10->sku_filter def_%v_12 %v_10[4.7,] %v_11[4.8,] 	 SYMBOL:	 ARGS:%v_11,
+		 10: RETURN %v_12[4.9,] %self[4.4,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sku_filter instanceMethod = false
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_sku 
+		 6: Line Number 282
+		 7: sku->present? def_%v_3 sku[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 283
+		 1: COPY TYPE_StringLiteral "sku LIKE ? " def_%v_4 
+		 2: COPY TYPE_StringLiteral "%" def_%v_5 
+		 3: BUILDSTRING def_%v_6 sku[2.5,] %v_5[3.2,] 
+		 4: COPY TYPE_Array def_%v_7 %v_4[3.1,] %v_6[3.3,] 
+		 5: %self->where def_%v_8 %self[2.0,] %v_7[3.4,] 	 SYMBOL:	 ARGS:%v_7,
+		 6: RETURN %v_8[3.5,] %self[3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 285
+		 1: %self->all def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_9[4.1,] %self[4.1,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = product_name_filter instanceMethod = false
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_product_name 
+		 6: Line Number 289
+		 7: product_name->present? def_%v_3 product_name[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 290
+		 1: HASH-name- def_%v_4 product_name[2.5,] 
+		 2: HASH-products- def_%v_5 %v_4[3.1,] 
+		 3: %self->where def_%v_6 %self[2.0,] %v_5[3.2,] 	 SYMBOL:	 ARGS:%v_5,
+		 4: RETURN %v_6[3.3,] %self[3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 292
+		 1: %self->all def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_7[4.1,] %self[4.1,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_inventory instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 297
+		 6: %self->inventory_id def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: RETURN %v_4[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: (Inventory) def_%v_5 
+		 1: HASH-count_on_hand-count_pending_to_customer-count_pending_from_supplier- def_%v_6 
+		 2: %v_5->create def_%v_7 %v_5[4.0,] %v_6[4.1,] 	 SYMBOL:	 ARGS:%v_6,
+		 3: ATTRASSIGN %self->inventory %v_7[4.2,] 
+		 4: RETURN %v_7[4.2,] %self[4.3,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

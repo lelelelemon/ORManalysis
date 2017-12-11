@@ -1,0 +1,402 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_start__time 
+		 6: RECEIVEARG def_end__time 
+		 7: Line Number 5
+		 8: ATTRASSIGN %self->start_time start__time[2.5,] 
+		 9: Line Number 6
+		 10: ATTRASSIGN %self->end_time end__time[2.6,] 
+		 11: Line Number 7
+		 12: (Order) def_%v_3 
+		 13: COPY TYPE_StringLiteral "created_at >= ? AND created_at <= ?" def_%v_4 
+		 14: %self->start_time def_%v_5 %self[2.0,2.8,2.10,] 	 SYMBOL:	 ARGS:
+		 15: %self->end_time def_%v_6 %self[2.0,2.8,2.10,2.14,] 	 SYMBOL:	 ARGS:
+		 16: %v_3->where def_%v_7 %v_3[2.12,] %v_4[2.13,] %v_5[2.14,] %v_6[2.15,] 	 SYMBOL:	 ARGS:%v_4,%v_5,%v_6,
+		 17: ATTRASSIGN %self->legders %v_7[2.16,] 
+		 18: RETURN %v_7[2.16,] %self[2.0,2.8,2.10,2.14,2.15,2.17,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = finished_order_ids instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 11
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->order_ids def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Order) def_%v_6 
+		 1: %v_6->finished def_%v_7 %v_6[5.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "created_at >= ? AND created_at <= ?" def_%v_8 
+		 3: %self->start_time def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %self->end_time def_%v_10 %self[5.3,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %v_7->where def_%v_11 %v_7[5.1,] %v_8[5.2,] %v_9[5.3,] %v_10[5.4,] 	 SYMBOL:	 ARGS:%v_8,%v_9,%v_10,
+		 6: %v_11->pluck def_%v_12 %v_11[5.5,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 7: ATTRASSIGN %self->order_ids %v_12[5.6,] 
+		 8: RETURN %v_12[5.6,] %self[5.3,5.4,5.7,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = quantity instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 15
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->quantity def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %self->finished_order_ids def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_6->size def_%v_7 %v_6[5.0,] 	 SYMBOL:	 ARGS:
+		 2: ATTRASSIGN %self->quantity %v_7[5.1,] 
+		 3: RETURN %v_7[5.1,] %self[5.0,5.2,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = taxes_collected instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 19
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->taxes_collected def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Invoice) def_%v_6 
+		 1: COPY TYPE_StringLiteral "created_at >= ? AND created_at <= ?" def_%v_7 
+		 2: %self->start_time def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->end_time def_%v_9 %self[5.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_6->where def_%v_10 %v_6[5.0,] %v_7[5.1,] %v_8[5.2,] %v_9[5.3,] 	 SYMBOL:	 ARGS:%v_7,%v_8,%v_9,
+		 5: COPY TYPE_StringLiteral "paid" def_%v_11 
+		 6: HASH-state- def_%v_12 %v_11[5.5,] 
+		 7: HASH-invoices- def_%v_13 %v_12[5.6,] 
+		 8: %v_10->where def_%v_14 %v_10[5.4,] %v_13[5.7,] 	 SYMBOL:	 ARGS:%v_13,
+		 9: %v_14->sum def_%v_15 %v_14[5.8,] 	 SYMBOL:tax_amount,	 ARGS:Symbol,
+		 10: %v_15->to_f def_%v_16 %v_15[5.9,] 	 SYMBOL:	 ARGS:
+		 11: %v_16->/ def_%v_17 %v_16[5.10,] 	 SYMBOL:	 ARGS:Float,
+		 12: ATTRASSIGN %self->taxes_collected %v_17[5.11,] 
+		 13: RETURN %v_17[5.11,] %self[5.2,5.3,5.12,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = total_amount instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 23
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->total_amount def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (Invoice) def_%v_6 
+		 1: COPY TYPE_StringLiteral "created_at >= ? AND created_at <= ?" def_%v_7 
+		 2: %self->start_time def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->end_time def_%v_9 %self[5.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_6->where def_%v_10 %v_6[5.0,] %v_7[5.1,] %v_8[5.2,] %v_9[5.3,] 	 SYMBOL:	 ARGS:%v_7,%v_8,%v_9,
+		 5: COPY TYPE_StringLiteral "paid" def_%v_11 
+		 6: HASH-state- def_%v_12 %v_11[5.5,] 
+		 7: HASH-invoices- def_%v_13 %v_12[5.6,] 
+		 8: %v_10->where def_%v_14 %v_10[5.4,] %v_13[5.7,] 	 SYMBOL:	 ARGS:%v_13,
+		 9: %v_14->sum def_%v_15 %v_14[5.8,] 	 SYMBOL:amount,	 ARGS:Symbol,
+		 10: %v_15->round_at def_%v_16 %v_15[5.9,] 	 SYMBOL:	 ARGS:Fixnum,
+		 11: ATTRASSIGN %self->total_amount %v_16[5.10,] 
+		 12: RETURN %v_16[5.10,] %self[5.2,5.3,5.11,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = taxes_returned instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 27
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->taxes_returned def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (ReturnAuthorization) def_%v_6 
+		 1: COPY TYPE_StringLiteral "created_at >= ? AND created_at <= ?" def_%v_7 
+		 2: %self->start_time def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->end_time def_%v_9 %self[5.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_6->where def_%v_10 %v_6[5.0,] %v_7[5.1,] %v_8[5.2,] %v_9[5.3,] 	 SYMBOL:	 ARGS:%v_7,%v_8,%v_9,
+		 5: COPY TYPE_StringLiteral "complete" def_%v_11 
+		 6: HASH-state- def_%v_12 %v_11[5.5,] 
+		 7: HASH-return_authorizations- def_%v_13 %v_12[5.6,] 
+		 8: %v_10->where def_%v_14 %v_10[5.4,] %v_13[5.7,] 	 SYMBOL:	 ARGS:%v_13,
+		 9: %v_14->sum def_%v_15 %v_14[5.8,] 	 SYMBOL:tax_amount,	 ARGS:Symbol,
+		 10: %v_15->to_f def_%v_16 %v_15[5.9,] 	 SYMBOL:	 ARGS:
+		 11: %v_16->/ def_%v_17 %v_16[5.10,] 	 SYMBOL:	 ARGS:Float,
+		 12: ATTRASSIGN %self->taxes_returned %v_17[5.11,] 
+		 13: RETURN %v_17[5.11,] %self[5.2,5.3,5.12,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = amount_returned instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 31
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->amount_returned def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (ReturnAuthorization) def_%v_6 
+		 1: COPY TYPE_StringLiteral "created_at >= ? AND created_at <= ?" def_%v_7 
+		 2: %self->start_time def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->end_time def_%v_9 %self[5.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_6->where def_%v_10 %v_6[5.0,] %v_7[5.1,] %v_8[5.2,] %v_9[5.3,] 	 SYMBOL:	 ARGS:%v_7,%v_8,%v_9,
+		 5: COPY TYPE_StringLiteral "complete" def_%v_11 
+		 6: HASH-state- def_%v_12 %v_11[5.5,] 
+		 7: HASH-return_authorizations- def_%v_13 %v_12[5.6,] 
+		 8: %v_10->where def_%v_14 %v_10[5.4,] %v_13[5.7,] 	 SYMBOL:	 ARGS:%v_13,
+		 9: %v_14->sum def_%v_15 %v_14[5.8,] 	 SYMBOL:amount,	 ARGS:Symbol,
+		 10: %v_15->round_at def_%v_16 %v_15[5.9,] 	 SYMBOL:	 ARGS:Fixnum,
+		 11: ATTRASSIGN %self->amount_returned %v_16[5.10,] 
+		 12: RETURN %v_16[5.10,] %self[5.2,5.3,5.11,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = start_time instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 36
+		 6: GETFIELD %self->start_time def_%v_3 %self[2.0,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = end_time instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 40
+		 6: GETFIELD %self->end_time def_%v_3 %self[2.0,] 
+		 7: RETURN %v_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

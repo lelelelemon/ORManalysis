@@ -1,0 +1,415 @@
+SET IRMethod, name = sortable instanceMethod = true
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_column 
+		 6: RECEIVECONSTARG def_title 
+		 7: title[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_title 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 15
+		 1: COPY TYPE_PASS def_%v_3 title[3.0,2.6,] 
+		 2: COPY TYPE_PASS def_%v_4 title[3.0,2.6,] 
+		 3: BRANCH title[3.0,2.6,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: column->titleize def_%v_5 column[2.5,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_PASS def_title %v_5[5.0,] 
+		 2: COPY TYPE_PASS def_%v_4 %v_5[5.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: Line Number 16
+		 1: %self->sort_column def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: column->== def_%v_7 column[2.5,] %v_6[6.1,] 	 SYMBOL:	 ARGS:%v_6,
+		 3: BRANCH %v_7[6.2,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "current " def_%v_8 
+		 1: %self->sort_direction def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BUILDSTRING def_%v_10 %v_8[7.0,] %v_9[7.1,] 
+		 3: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_10 
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_css_class %v_10[8.0,7.2,] 
+		 1: Line Number 17
+		 2: %self->sort_column def_%v_11 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: column->== def_%v_12 column[2.5,] %v_11[9.2,] 	 SYMBOL:	 ARGS:%v_11,
+		 4: BRANCH %v_12[9.3,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: %self->sort_direction def_%v_13 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_StringLiteral "asc" def_%v_14 
+		 2: %v_13->== def_%v_15 %v_13[10.0,] %v_14[10.1,] 	 SYMBOL:	 ARGS:%v_14,
+		 3: COPY TYPE_PASS def_%v_12 %v_15[10.2,] 
+BB 11
+	outgoing: 12 13 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_12[10.3,9.3,] 
+BB 12
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "desc" def_%v_16 
+		 1: 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "asc" def_%v_17 
+		 1: COPY TYPE_PASS def_%v_16 %v_17[13.0,] 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_direction %v_16[13.1,12.0,] 
+		 1: Line Number 18
+		 2: HASH-sort-direction- def_%v_18 column[2.5,] %v_16[13.1,12.0,] 
+		 3: HASH-class- def_%v_19 css_class[9.0,] 
+		 4: %self->link_to def_%v_20 %self[2.0,] title[5.1,3.0,2.6,] %v_18[14.2,] %v_19[14.3,] 	 SYMBOL:	 ARGS:title,%v_18,%v_19,
+		 5: RETURN %v_20[14.4,] %self[14.4,2.0,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = site_name instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 22
+		 6: (I18n) def_%v_3 
+		 7: %v_3->t def_%v_4 %v_3[2.6,] 	 SYMBOL:company,	 ARGS:Symbol,
+		 8: RETURN %v_4[2.7,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = remove_child_link instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_name 
+		 6: RECEIVEARG def_f 
+		 7: Line Number 26
+		 8: f->hidden_field def_%v_3 f[2.6,] 	 SYMBOL:_destroy,	 ARGS:Symbol,
+		 9: COPY TYPE_StringLiteral "javascript:void(0)" def_%v_4 
+		 10: COPY TYPE_StringLiteral "remove_child" def_%v_5 
+		 11: HASH-class- def_%v_6 %v_5[2.10,] 
+		 12: %self->link_to def_%v_7 %self[2.0,] name[2.5,] %v_4[2.9,] %v_6[2.11,] 	 SYMBOL:	 ARGS:name,%v_4,%v_6,
+		 13: %v_3->+ def_%v_8 %v_3[2.8,] %v_7[2.12,] 	 SYMBOL:	 ARGS:%v_7,
+		 14: RETURN %v_8[2.13,] %self[2.0,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_child_link instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_name 
+		 6: RECEIVEARG def_association 
+		 7: RECEIVECONSTARG def_classes 
+		 8: classes[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "" def_%v_3 
+		 1: COPY TYPE_PASS def_classes %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 30
+		 1: COPY TYPE_StringLiteral "javascript:void(0);" def_%v_4 
+		 2: COPY TYPE_StringLiteral "add_child " def_%v_5 
+		 3: BUILDSTRING def_%v_6 %v_5[4.2,] classes[3.1,2.7,] 
+		 4: HASH-class-data-association- def_%v_7 %v_6[4.3,] association[2.6,] 
+		 5: %self->link_to def_%v_8 %self[2.0,] name[2.5,] %v_4[4.1,] %v_7[4.4,] 	 SYMBOL:	 ARGS:name,%v_4,%v_7,
+		 6: RETURN %v_8[4.5,] %self[4.5,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_child_button instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_name 
+		 6: RECEIVEARG def_association 
+		 7: RECEIVECONSTARG def_classes 
+		 8: classes[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "" def_%v_3 
+		 1: COPY TYPE_PASS def_classes %v_3[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 34
+		 1: COPY TYPE_StringLiteral "javascript:void(0);" def_%v_4 
+		 2: COPY TYPE_StringLiteral "add_child button " def_%v_5 
+		 3: BUILDSTRING def_%v_6 %v_5[4.2,] classes[3.1,2.7,] 
+		 4: HASH-class-data-association- def_%v_7 %v_6[4.3,] association[2.6,] 
+		 5: %self->link_to def_%v_8 %self[2.0,] name[2.5,] %v_4[4.1,] %v_7[4.4,] 	 SYMBOL:	 ARGS:name,%v_4,%v_7,
+		 6: RETURN %v_8[4.5,] %self[4.5,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new_child_fields_template instanceMethod = true
+BB 1
+	outgoing: 13 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_form_builder 
+		 6: RECEIVEARG def_association 
+		 7: RECEIVECONSTARG def_options 
+		 8: options[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_3 
+		 1: COPY TYPE_PASS def_options %v_3[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 38
+		 1: options->[] def_%v_4 options[3.1,2.7,] 	 SYMBOL:object,	 ARGS:Symbol,
+		 2: BRANCH %v_4[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: form_builder->object def_%v_5 form_builder[2.5,] 	 SYMBOL:	 ARGS:
+		 1: %v_5->class def_%v_6 %v_5[5.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_6->reflect_on_association def_%v_7 %v_6[5.1,] association[2.6,] 	 SYMBOL:	 ARGS:association,
+		 3: %v_7->klass def_%v_8 %v_7[5.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_8->new def_%v_9 %v_8[5.3,] 	 SYMBOL:	 ARGS:
+		 5: options->[]= def_%v_4 options[3.1,2.7,] %v_9[5.4,] 	 SYMBOL:object,	 ARGS:Symbol,%v_9,
+		 6: COPY TYPE_PASS def_%v_4 %v_9[5.4,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: Line Number 39
+		 1: options->[] def_%v_10 options[5.5,3.1,2.7,] 	 SYMBOL:partial,	 ARGS:Symbol,
+		 2: BRANCH %v_10[6.1,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: association->to_s def_%v_11 association[2.6,] 	 SYMBOL:	 ARGS:
+		 1: %v_11->singularize def_%v_12 %v_11[7.0,] 	 SYMBOL:	 ARGS:
+		 2: options->[]= def_%v_10 options[5.5,3.1,2.7,] %v_12[7.1,] 	 SYMBOL:partial,	 ARGS:Symbol,%v_12,
+		 3: COPY TYPE_PASS def_%v_10 %v_12[7.1,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: Line Number 40
+		 1: options->[] def_%v_13 options[7.2,5.5,3.1,2.7,] 	 SYMBOL:locals,	 ARGS:Symbol,
+		 2: BRANCH %v_13[8.1,] 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_14 
+		 1: options->[]= def_%v_13 options[7.2,5.5,3.1,2.7,] %v_14[9.0,] 	 SYMBOL:locals,	 ARGS:Symbol,%v_14,
+		 2: COPY TYPE_PASS def_%v_13 %v_14[9.0,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: Line Number 41
+		 1: options->[] def_%v_15 options[9.1,7.2,5.5,3.1,2.7,] 	 SYMBOL:form_builder_local,	 ARGS:Symbol,
+		 2: BRANCH %v_15[10.1,] 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: options->[]= def_%v_15 options[9.1,7.2,5.5,3.1,2.7,] 	 SYMBOL:form_builder_local,f,	 ARGS:Symbol,Symbol,
+		 1: COPY TYPE_Symbol def_%v_15 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: Line Number 43
+		 1: COPY TYPE_StringLiteral "_fields_template" def_%v_16 
+		 2: BUILDSTRING def_%v_17 association[2.6,] %v_16[12.1,] 
+		 3: COPY TYPE_StringLiteral "display: none" def_%v_18 
+		 4: HASH-id-style- def_%v_19 %v_17[12.2,] %v_18[12.3,] 
+		 5: %self->content_tag def_%v_20 %self[2.0,] %v_19[12.4,] %self[2.0,] 	 SYMBOL:div,	 ARGS:Symbol,%v_19,%self,
+CLOSURE BEGIN: options[11.0,9.1,7.2,5.5,3.1,2.7,] association[2.6,] form_builder[2.5,] %self[2.0,] f[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 44
+		 1: options->[] def_%cl_1_3 options[] 	 SYMBOL:object,	 ARGS:Symbol,
+		 2: COPY TYPE_StringLiteral "new_" def_%cl_1_4 
+		 3: BUILDSTRING def_%cl_1_5 %cl_1_4[3.2,] association[] 
+		 4: HASH-child_index- def_%cl_1_6 %cl_1_5[3.3,] 
+		 5: form_builder->fields_for def_%cl_1_7 form_builder[] association[] %cl_1_3[3.1,] %cl_1_6[3.4,] %self[2.0,] 	 SYMBOL:	 ARGS:association,%cl_1_3,%cl_1_6,form_builder,
+CLOSURE BEGIN: options[3.1,] f[] %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_f 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 45
+		 1: options->[] def_%cl_2_3 options[] 	 SYMBOL:partial,	 ARGS:Symbol,
+		 2: options->[] def_%cl_2_4 options[3.1,] 	 SYMBOL:form_builder_local,	 ARGS:Symbol,
+		 3: HASH- def_%cl_2_5 %cl_2_4[3.2,] f[2.2,] 
+		 4: options->[] def_%cl_2_6 options[3.1,3.2,] 	 SYMBOL:locals,	 ARGS:Symbol,
+		 5: %cl_2_5->merge def_%cl_2_7 %cl_2_5[3.3,] %cl_2_6[3.4,] 	 SYMBOL:	 ARGS:%cl_2_6,
+		 6: HASH-partial-locals- def_%cl_2_8 %cl_2_3[3.1,] %cl_2_7[3.5,] 
+		 7: %self->render def_%cl_2_9 %self[2.0,] %cl_2_8[3.6,] 	 SYMBOL:	 ARGS:%cl_2_8,
+		 8: %self->raw def_%cl_2_10 %self[3.7,2.0,] %cl_2_9[3.7,] 	 SYMBOL:	 ARGS:%cl_2_9,
+		 9: RETURN %cl_2_10[3.8,] %self[3.7,3.8,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_11 
+		 1: def_%cl_2_12 %cl_2_11[4.0,] 
+		 2: RETURN %cl_2_12[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 6: RETURN %cl_1_7[3.5,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 6: RETURN %v_20[12.5,] %self[12.5,2.0,] 
+BB 13
+	outgoing: 
+	datadep: 
+	instructions:
+
