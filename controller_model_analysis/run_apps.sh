@@ -21,7 +21,7 @@ function run_single_app () {
 	#rm -rf results
 	#mkdir results
 	#cd ~/ruby_source/ORM_analysis/controller_model_analysis
-	ruby main.rb -a -d ../applications/${app} > ${app}.log
+	ruby main.rb -a -d ../applications/${app}/ > ${app}.log
   echo "Finish app ${app}"
 }
 

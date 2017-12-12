@@ -267,7 +267,8 @@ def handle_single_dataflow_file(item, class_name)
 										if cur_instr.getCaller.include?("self") and ["params","session","cookies"].include?cur_instr.getFuncname
 												cur_instr.setFromUserInput
 										end
-										if cur_instr.getFuncname == "ruby_code_from_view"
+										if cur_instr.getFuncname == "ruby_code_from_view" 
+												puts "cur_instr is : #{cur_instr.getFuncname}"
 												$view_ruby_code = true
 												$view_closure = true
 												$view_start = true

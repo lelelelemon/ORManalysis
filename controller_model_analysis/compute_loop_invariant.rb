@@ -1,7 +1,7 @@
 def compute_loop_invariant
 
 	puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-	puts "~~~~~~~~~~~~~Handling loop invaraint~~~~~~~~~~~~~~~~~"
+	puts "~~~~~~~~~~~~~Handling loop invariant~~~~~~~~~~~~~~~~~"
 
 
 	@closures = Array.new
@@ -28,29 +28,47 @@ def compute_loop_invariant
 
 			@loop_inv = Array.new
 
-			cl_dep = traceback_data_dep(cl)
+			
+			
 			write_tables = []
 			#puts "clnodes size is #{@cl_nodes.length}"
 			@cl_nodes.each do |cl_n|
 				# if the variable is def self, it can be added to the loop variant
 				if cl_n.getInstr.getDefv and cl_n.getInstr.getDefv.include?("self")
 					@loop_inv.push(cl_n) unless @loop_inv.include?(cl_n)
-					#puts "self #{cl_n.getInstr.toString}"
+					#puts "self #{cl_n.getInstr.getDefv}"
 				# if the variable is not self, but its data dependency are all out of the closure
-			    elsif !cl_n.getInstr.getDefv and (traceback_data_dep(cl_n) & @cl_nodes).empty? and !traceback_data_dep(cl_n).empty?
-			    	@loop_inv.push(cl_n) unless @loop_inv.include?(cl_n)
-			    	traceback_data_dep(cl_n).each do |td|
-			    		#uts td.getInstr.toString
+			    elsif cl_n.getInstr.getDefv and (traceback_data_dep(cl_n) & @cl_nodes).empty? and !traceback_data_dep(cl_n).empty?
+			    	# ReceiveArg_instr is the loop condition
+			    	if cl_n.getInstr.instance_of?ReceiveArg_instr 
+			    		next
 			    	end
+			    	isLambda = false
+			    	# To check whether the loop is inside a lambda loop
+			    	traceback_data_dep(cl_n).each do |dc|
+						# puts "tc #{dc.getInstr.toString}"
+						if !dc.instance_of?Dataflow_edge and dc.getInstr.instance_of?Call_instr 
+							fname = dc.getInstr.getFuncname
+							if fname == 'lambda' or fname == 'cache_if'  or fname == 'cache'
+								puts "fname : #{fname}"
+								isLambda = true
+								break
+							end
+						end
+					end
+					if isLambda 
+						next
+					end
+					@loop_inv.push(cl_n) unless @loop_inv.include?(cl_n)
 					#puts "no dep #{cl_n.getInstr.toString}"
 			    end
 				if cl_n.isWriteQuery?
 					write_table = cl_n.getInstr.getTableName
-					write_tables.push(write_tables) unless write_tables.include?(Qu_table)
+					write_tables.push(write_table) unless write_tables.include?(write_table)
 				end
 			end
 			write_tables.each do |wt|
-				puts "write table #{wt}"
+				#puts "write table #{wt}"
 			end
 			# test whether there are read_query who touches the same table with the write query
 			@loop_inv.each do |li|
@@ -58,9 +76,9 @@ def compute_loop_invariant
 					@loop_inv.delete(li)
 				end
 			end
-			puts "loop_inv size is #{@loop_inv.length}"
+			#puts "loop_inv size is #{@loop_inv.length}"
 			
-			puts "write_tables size is #{write_tables.length}"
+			#puts "write_tables size is #{write_tables.length}"
 			@loop_stack = @loop_inv.dup
 			while(true)
 				if @loop_stack.empty?
@@ -76,7 +94,7 @@ def compute_loop_invariant
 					 if @cl_nodes.include?(child) and ((traceback_data_dep(child) - @loop_inv) & @cl_nodes).empty?
 					 	if child.isReadQuery? and write_tables.include?(child.getInstr.getTableName)
 							next
-						end 
+						end
 					 	@loop_inv.push(child) unless @loop_inv.include?(child)
 					 	@loop_stack.push(child) unless @loop_stack.include?(child)
 					 end 
@@ -84,14 +102,9 @@ def compute_loop_invariant
 			end
 			#puts "After popping loop_inv size is #{@loop_inv.length}"
 			@loop_inv.each do |li|
-				puts li.getInstr.toString
+				#puts li.getInstr.toString
 				if li.isReadQuery? 
-					self_cnt = 0
-					traceback_data_dep(li).each do |tdd|
-						self_cnt += 1 if !tdd.instance_of?Dataflow_edge and tdd.getInstr.getDefv and tdd.getInstr.getDefv.include?("self")
-					 	
-					end
-					next if self_cnt == traceback_data_dep(li).length
+					next if li.getInstr.getCaller == '%self'
 					@results.push([li,cl]) unless (@results.include?([li,cl]) || @results.map { |e| e.first }.include?(li))
 				end
 			end
@@ -100,11 +113,14 @@ def compute_loop_invariant
 
 	puts "the number of loop in query is : #{@results.length}" if @results.length > 0
 	cnt = 1
-	@results.each do |re|
-		puts "#{cnt} query" 
-		puts re[0].getInstr.toString
-		cnt += 1
-		re[1].getInstr.getClosure.self_print
+	result_group_cl = @results.group_by{|re| re[1]}
+	result_group_cl.each do |cl, res|
+		res.each do |re|
+			puts "#{cnt} query" 
+			puts re[0].getInstr.toString
+			cnt += 1
+		end
+		cl.getInstr.getClosure.self_print
 	end
 
 

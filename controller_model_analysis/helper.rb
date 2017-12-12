@@ -160,7 +160,7 @@ def trigger_create?(call)
 end
 
 def isNonClosureInstr(instr)
-	if instr.is_a?Call_instr and ["ruby_code_from_view","transaction","form_for","form_tag","content_for","content_tag","respond_to","xml","input","html","field_set_tag","json","lock","reject"].include?instr.getFuncname	
+	if instr.is_a?Call_instr and ["ruby_code_from_view","transaction","form_for","form_tag","content_for","content_tag","respond_to","xml","input","html","field_set_tag","json","lock","reject","cache","cache_if","lambda"].include?instr.getFuncname	
 		return true
 	else
 		return false

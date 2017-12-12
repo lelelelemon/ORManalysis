@@ -950,6 +950,8 @@ class Closure < CFG
 	def getViewCode
 		@view_code
 	end
+
+	
 	def getLastBB
 		return @bb[-1]
 	end
