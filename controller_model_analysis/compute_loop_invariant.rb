@@ -5,6 +5,7 @@ def compute_loop_invariant
 
 
 	@closures = Array.new
+	@query_loops = Array.new
 	$node_list.each do |n|
 		if n.isReadQuery?
 			if n.getInClosure
@@ -13,8 +14,13 @@ def compute_loop_invariant
 				end
 			end
 		end
+		# "query loop"
+		if n.getInstr.instance_of?Copy_instr and /IN.*\(SELECT/.match(n.getInstr.const_string)
+			@query_loops.push(n.getInstr) unless @query_loops.include?(n.getInstr)
+		end
 	end
 	@results = Array.new
+	@instr_rd = {}
 	@closures.each do |cl|
 			@cl_nodes = Array.new
 			if !cl.getInstr.getClosure
@@ -122,7 +128,9 @@ def compute_loop_invariant
 		end
 		cl.getInstr.getClosure.self_print
 	end
-
+	@query_loops.each do |ql|
+		puts ql.getInstr.toString
+	end
 
 	puts "~~~~~~~~~~~~~Finish handling loop invariant~~~~~~~~~~~"
 	puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
