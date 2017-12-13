@@ -182,7 +182,7 @@ class Render_stmt
 	def initialize(action, astnode, file_path="")
 		#type of action can be: Controller, Action, View_file
 		@action = action
-		action.render_stmts.push(self)
+		action.render_stmts.push(self) if action
 		@render_file = file_path
 		@is_default = false
 		@is_layout = false

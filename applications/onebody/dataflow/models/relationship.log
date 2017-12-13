@@ -1,0 +1,182 @@
+SET IRMethod, name = name_or_other instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 19
+		 6: %self->name def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_StringLiteral "other" def_%v_4 
+		 8: %v_3->== def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->other_name def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: RETURN %v_6[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: (I18n) def_%v_7 
+		 1: %self->name def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "relationships.names" def_%v_9 
+		 3: HASH-scope- def_%v_10 %v_9[4.2,] 
+		 4: %v_7->t def_%v_11 %v_7[4.0,] %v_8[4.1,] %v_10[4.3,] 	 SYMBOL:	 ARGS:%v_8,%v_10,
+		 5: RETURN %v_11[4.4,] %self[4.1,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = reciprocate instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 23
+		 6: %self->can_auto_reciprocate? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 24
+		 1: (Relationship) def_%v_4 
+		 2: %self->related def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %self->person def_%v_6 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %self->reciprocal_name def_%v_7 %self[3.2,3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 5: HASH-person-related-name- def_%v_8 %v_5[3.2,] %v_6[3.3,] %v_7[3.4,] 
+		 6: %v_4->create def_%v_9 %v_4[3.1,] %v_8[3.5,] 	 SYMBOL:	 ARGS:%v_8,
+		 7: RETURN %v_9[3.6,] %self[3.2,3.3,3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = reciprocal_name instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 29
+		 6: (RECIPROCAL_RELATIONSHIP_NAMES) def_%v_3 
+		 7: %self->name def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->[] def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: %self->person def_%v_6 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 10: %v_6->gender def_%v_7 %v_6[2.9,] 	 SYMBOL:	 ARGS:
+		 11: %v_5->[] def_%v_8 %v_5[2.8,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.7,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = can_auto_reciprocate? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 33
+		 6: %self->reciprocal_name def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->! def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = other_names instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 37
+		 6: %self->connection def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_StringLiteral "select distinct other_name from relationships where other_name is not null and other_name != '' and site_id=" def_%v_4 
+		 8: (Site) def_%v_5 
+		 9: %v_5->current def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_6->id def_%v_7 %v_6[2.9,] 	 SYMBOL:	 ARGS:
+		 11: COPY TYPE_StringLiteral " order by other_name" def_%v_8 
+		 12: BUILDSTRING def_%v_9 %v_4[2.7,] %v_7[2.10,] %v_8[2.11,] 
+		 13: %v_3->select_values def_%v_10 %v_3[2.6,] %v_9[2.12,] 	 SYMBOL:	 ARGS:%v_9,
+		 14: RETURN %v_10[2.13,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_relationships_hash instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 43
+		 6: %self->person def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->update_relationships_hash! def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

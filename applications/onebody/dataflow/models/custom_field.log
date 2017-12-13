@@ -1,0 +1,150 @@
+SET IRMethod, name = slug instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 22
+		 6: COPY TYPE_StringLiteral "field" def_%v_3 
+		 7: %self->id def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_StringLiteral "_" def_%v_5 
+		 9: %self->slugged_name def_%v_6 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 10: BUILDSTRING def_%v_7 %v_3[2.6,] %v_4[2.7,] %v_5[2.8,] %v_6[2.9,] 
+		 11: RETURN %v_7[2.10,] %self[2.0,2.7,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = slugged_name instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 26
+		 6: %self->name def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_Regexp def_%v_4 
+		 8: COPY TYPE_StringLiteral "" def_%v_5 
+		 9: %v_3->gsub def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_4,%v_5,
+		 10: RETURN %v_6[2.9,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = select_field_options_lookup_by_label instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 30
+		 6: %self->select_fields def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: HASH- def_%v_4 
+		 8: %v_3->each_with_object def_%v_5 %v_3[2.6,] %v_4[2.7,] %self[2.0,2.6,] 	 SYMBOL:	 ARGS:%v_4,%v_3,
+CLOSURE BEGIN: f[] %self[2.0,2.6,] o[] h[] hash[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_f 
+		 3: RECEIVEARG def_hash 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 31
+		 1: f->id def_%cl_1_3 f[2.2,] 	 SYMBOL:	 ARGS:
+		 2: f->options def_%cl_1_4 f[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 3: HASH- def_%cl_1_5 
+		 4: %cl_1_4->each_with_object def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_1_5,%cl_1_4,
+CLOSURE BEGIN: o[] h[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_o 
+		 3: RECEIVEARG def_h 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 32
+		 1: o->label def_%cl_2_3 o[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_2_3->downcase def_%cl_2_4 %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: o->id def_%cl_2_5 o[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 4: ATTRASSIGN h->[] %cl_2_4[3.2,] %cl_2_5[3.3,] 
+		 5: RETURN %cl_2_5[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_6 
+		 1: def_%cl_2_7 %cl_2_6[4.0,] 
+		 2: RETURN %cl_2_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: h[3.4,2.3,] 
+		 5: ATTRASSIGN hash->[] %cl_1_3[3.1,] %cl_1_6[3.4,] 
+		 6: RETURN %cl_1_6[3.4,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_7 
+		 1: def_%cl_1_8 %cl_1_7[4.0,] 
+		 2: RETURN %cl_1_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: hash[3.5,2.3,] 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -1,0 +1,55 @@
+SET IRMethod, name = destroy_tag_if_unused instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 11
+		 6: (Tag) def_%v_3 
+		 7: %v_3->destroy_unused def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: Line Number 12
+		 1: %self->tag def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->taggings def_%v_6 %v_5[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->count def_%v_7 %v_6[3.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_7->zero? def_%v_8 %v_7[3.3,] 	 SYMBOL:	 ARGS:
+		 5: BRANCH %v_8[3.4,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->tag def_%v_9 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_9->destroy def_%v_10 %v_9[4.0,] 	 SYMBOL:	 ARGS:
+		 2: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_10 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %v_10[5.0,4.1,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+

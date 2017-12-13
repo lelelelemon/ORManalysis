@@ -1,0 +1,314 @@
+SET IRMethod, name = show instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 4
+		 6: (OneBody) def_%v_3 
+		 7: %v_3->email_configured? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 5
+		 1: (OneBody) def_%v_5 
+		 2: %v_5->smtp_config def_%v_6 %v_5[3.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "address" def_%v_7 
+		 4: %v_6->[] def_%v_8 %v_6[3.2,] %v_7[3.3,] 	 SYMBOL:	 ARGS:%v_7,
+		 5: ATTRASSIGN %self->smtp_server %v_8[3.4,] 
+		 6: Line Number 6
+		 7: (Site) def_%v_9 
+		 8: %v_9->current def_%v_10 %v_9[3.7,] 	 SYMBOL:	 ARGS:
+		 9: %v_10->email_host def_%v_11 %v_10[3.8,] 	 SYMBOL:	 ARGS:
+		 10: ATTRASSIGN %self->email_host %v_11[3.9,] 
+		 11: RETURN %v_11[3.9,] %self[3.5,3.10,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 8
+		 1: %self->new_administration_email_setup_path def_%v_12 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->redirect_to def_%v_13 %self[4.1,2.0,] %v_12[4.1,] 	 SYMBOL:	 ARGS:%v_12,
+		 3: RETURN %v_13[4.2,] %self[4.1,4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RETURN %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 16
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:secret_api_key,	 ARGS:Symbol,
+		 8: COPY TYPE_PASS def_secret_api_key %v_4[2.7,] 
+		 9: Line Number 17
+		 10: %v_4->present? def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 11: BRANCH %v_5[2.10,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 18
+		 1: %self->session def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: ATTRASSIGN %v_6->[] secret_api_key[2.8,] 
+		 3: Line Number 19
+		 4: HASH-action- def_%v_7 
+		 5: %self->redirect_to def_%v_8 %self[3.1,2.0,] %v_7[3.4,] 	 SYMBOL:	 ARGS:%v_7,
+		 6: RETURN %v_8[3.5,] %self[3.1,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 21
+		 1: HASH-action- def_%v_9 
+		 2: %self->redirect_to def_%v_10 %self[2.0,] %v_9[4.1,] 	 SYMBOL:	 ARGS:%v_9,
+		 3: RETURN %v_10[4.2,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = edit instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 26
+		 6: %self->session def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:mailgun_key,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 27
+		 1: %self->email_setup def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->domains def_%v_6 %v_5[3.1,] 	 SYMBOL:	 ARGS:
+		 3: ATTRASSIGN %self->domains %v_6[3.2,] 
+		 4: RETURN %v_6[3.2,] %self[3.1,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 29
+		 1: HASH-action- def_%v_7 
+		 2: %self->redirect_to def_%v_8 %self[2.0,] %v_7[4.1,] 	 SYMBOL:	 ARGS:%v_7,
+		 3: RETURN %v_8[4.2,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 34
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:domain,	 ARGS:Symbol,
+		 8: %v_4->present? def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: Line Number 35
+		 1: %self->email_setup def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %self->params def_%v_7 %self[3.1,2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_7->[] def_%v_8 %v_7[3.2,] 	 SYMBOL:domain,	 ARGS:Symbol,
+		 4: ATTRASSIGN %v_6->domain %v_8[3.3,] 
+		 5: Line Number 36
+		 6: %self->email_setup def_%v_9 %self[3.1,3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_9->save! def_%v_10 %v_9[3.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_10[3.7,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 37
+		 1: COPY TYPE_StringLiteral "administration.email_setups.edit.success" def_%v_11 
+		 2: %self->t def_%v_12 %self[2.0,] %v_11[4.1,] 	 SYMBOL:	 ARGS:%v_11,
+		 3: HASH-action-notice- def_%v_13 %v_12[4.2,] 
+		 4: %self->redirect_to def_%v_14 %self[4.2,2.0,] %v_13[4.3,] 	 SYMBOL:	 ARGS:%v_13,
+		 5: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 39
+		 1: COPY TYPE_StringLiteral "administration.email_setups.edit.failure" def_%v_15 
+		 2: %self->t def_%v_16 %self[2.0,] %v_15[5.1,] 	 SYMBOL:	 ARGS:%v_15,
+		 3: HASH-action-notice- def_%v_17 %v_16[5.2,] 
+		 4: %self->redirect_to def_%v_18 %self[5.2,2.0,] %v_17[5.3,] 	 SYMBOL:	 ARGS:%v_17,
+		 5: COPY TYPE_PASS def_%v_14 %v_18[5.4,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %v_14[5.5,4.4,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: Line Number 42
+		 1: HASH-action- def_%v_19 
+		 2: %self->redirect_to def_%v_20 %self[2.0,] %v_19[7.1,] 	 SYMBOL:	 ARGS:%v_19,
+		 3: RETURN %v_20[7.2,] %self[7.2,2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = email_setup instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 49
+		 6: def_%v_4 %self[2.0,] 
+		 7: COPY TYPE_PASS def_%v_3 %v_4[2.6,] 
+		 8: %v_4[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->email_setup def_%v_5 %self[2.0,] 
+		 1: COPY TYPE_PASS def_%v_3 %v_5[3.0,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.1,2.7,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: (EmailSetup) def_%v_6 
+		 1: %self->session def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_7->[] def_%v_8 %v_7[5.1,] 	 SYMBOL:mailgun_key,	 ARGS:Symbol,
+		 3: %self->request def_%v_9 %self[5.1,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_9->scheme def_%v_10 %v_9[5.3,] 	 SYMBOL:	 ARGS:
+		 5: HASH-key-scheme- def_%v_11 %v_8[5.2,] %v_10[5.4,] 
+		 6: %v_6->new def_%v_12 %v_6[5.0,] %v_11[5.5,] 	 SYMBOL:	 ARGS:%v_11,
+		 7: ATTRASSIGN %self->email_setup %v_12[5.6,] 
+		 8: RETURN %v_12[5.6,] %self[5.1,5.3,5.7,2.0,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[3.0,] %self[2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = only_admins instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 53
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
+		 7: %v_3->super_admin? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: Line Number 54
+		 2: COPY TYPE_StringLiteral "only_admins" def_%v_6 
+		 3: %self->t def_%v_7 %self[2.0,] %v_6[4.2,] 	 SYMBOL:	 ARGS:%v_6,
+		 4: HASH-html-layout-status- def_%v_8 %v_7[4.3,] 
+		 5: %self->render def_%v_9 %self[4.3,2.0,] %v_8[4.4,] 	 SYMBOL:	 ARGS:%v_8,
+		 6: Line Number 56
+		 7: RETURN %self[4.3,4.5,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

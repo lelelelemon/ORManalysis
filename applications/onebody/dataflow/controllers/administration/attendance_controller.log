@@ -1,0 +1,612 @@
+SET IRMethod, name = index instanceMethod = true
+BB 1
+	outgoing: 22 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 14
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:attended_at,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: (Date) def_%v_5 
+		 1: %self->params def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_6->[] def_%v_7 %v_6[3.1,] 	 SYMBOL:attended_at,	 ARGS:Symbol,
+		 3: %v_5->parse_in_locale def_%v_8 %v_5[3.0,] %v_7[3.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: (Date) def_%v_9 
+		 1: %v_9->current def_%v_10 %v_9[4.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_%v_8 %v_10[4.1,] 
+BB 5
+	outgoing: 6 9 
+	datadep: 
+	instructions:
+		 0: ATTRASSIGN %self->attended_at %v_8[4.2,3.3,] 
+		 1: Line Number 15
+		 2: (AttendanceRecord) def_%v_11 
+		 3: GETFIELD %self->attended_at def_%v_12 %self[5.0,2.0,] 
+		 4: %v_11->groups_for_date def_%v_13 %v_11[5.2,] %v_12[5.3,] 	 SYMBOL:	 ARGS:%v_12,
+		 5: ATTRASSIGN %self->groups %v_13[5.4,] 
+		 6: Line Number 16
+		 7: (AttendanceRecord) def_%v_14 
+		 8: COPY TYPE_StringLiteral "attended_at >= ? and attended_at <= ?" def_%v_15 
+		 9: GETFIELD %self->attended_at def_%v_16 %self[5.0,2.0,] 
+		 10: COPY TYPE_StringLiteral "%Y-%m-%d 0:00" def_%v_17 
+		 11: %v_16->strftime def_%v_18 %v_16[5.9,] %v_17[5.10,] 	 SYMBOL:	 ARGS:%v_17,
+		 12: GETFIELD %self->attended_at def_%v_19 %self[5.0,2.0,] 
+		 13: COPY TYPE_StringLiteral "%Y-%m-%d 23:59:59" def_%v_20 
+		 14: %v_19->strftime def_%v_21 %v_19[5.12,] %v_20[5.13,] 	 SYMBOL:	 ARGS:%v_20,
+		 15: %v_14->where def_%v_22 %v_14[5.7,] %v_15[5.8,] %v_18[5.11,] %v_21[5.14,] 	 SYMBOL:	 ARGS:%v_15,%v_18,%v_21,
+		 16: ATTRASSIGN %self->rel %v_22[5.15,] 
+		 17: Line Number 17
+		 18: GETFIELD %self->rel def_%v_23 %self[5.16,2.0,] 
+		 19: %v_23->includes! def_%v_24 %v_23[5.18,] 	 SYMBOL:person,group,	 ARGS:Symbol,Symbol,
+		 20: Line Number 18
+		 21: GETFIELD %self->rel def_%v_25 %self[5.16,2.0,] 
+		 22: %v_25->references! def_%v_26 %v_25[5.21,] 	 SYMBOL:person,group,	 ARGS:Symbol,Symbol,
+		 23: Line Number 19
+		 24: %self->params def_%v_27 %self[5.0,5.5,5.16,2.0,] 	 SYMBOL:	 ARGS:
+		 25: %v_27->[] def_%v_28 %v_27[5.24,] 	 SYMBOL:group_id,	 ARGS:Symbol,
+		 26: %v_28->to_i def_%v_29 %v_28[5.25,] 	 SYMBOL:	 ARGS:
+		 27: %v_29->> def_%v_30 %v_29[5.26,] 	 SYMBOL:	 ARGS:Fixnum,
+		 28: BRANCH %v_30[5.27,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: Line Number 20
+		 1: (Group) def_%v_31 
+		 2: %self->params def_%v_32 %self[5.0,5.5,5.16,2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_32->[] def_%v_33 %v_32[6.2,] 	 SYMBOL:group_id,	 ARGS:Symbol,
+		 4: %v_31->find def_%v_34 %v_31[6.1,] %v_33[6.3,] 	 SYMBOL:	 ARGS:%v_33,
+		 5: ATTRASSIGN %self->group %v_34[6.4,] 
+		 6: Line Number 21
+		 7: GETFIELD %self->rel def_%v_35 %self[6.2,5.16,2.0,] 
+		 8: GETFIELD %self->group def_%v_36 %self[6.2,6.5,2.0,] 
+		 9: %v_36->id def_%v_37 %v_36[6.8,] 	 SYMBOL:	 ARGS:
+		 10: HASH-group_id- def_%v_38 %v_37[6.9,] 
+		 11: %v_35->where! def_%v_39 %v_35[6.7,] %v_38[6.10,] 	 SYMBOL:	 ARGS:%v_38,
+		 12: Line Number 22
+		 13: %self->params def_%v_40 %self[6.2,6.5,5.0,5.5,5.16,2.0,] 	 SYMBOL:	 ARGS:
+		 14: %v_40->[] def_%v_41 %v_40[6.13,] 	 SYMBOL:sort,	 ARGS:Symbol,
+		 15: BRANCH %v_41[6.14,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "attendance_records.last_name,attendance_records.first_name" def_%v_42 
+		 1: %v_40->[]= def_%v_41 %v_40[6.13,] %v_42[7.0,] 	 SYMBOL:sort,	 ARGS:Symbol,%v_42,
+		 2: COPY TYPE_PASS def_%v_41 %v_42[7.0,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_41 
+BB 10
+	outgoing: 11 14 
+	datadep: 
+	instructions:
+		 0: Line Number 24
+		 1: %self->params def_%v_43 %self[5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_43->[] def_%v_44 %v_43[10.1,] 	 SYMBOL:ids,	 ARGS:Symbol,
+		 3: BRANCH %v_44[10.2,] 
+BB 11
+	outgoing: 12 13 
+	datadep: 
+	instructions:
+		 0: Line Number 25
+		 1: (Group) def_%v_45 
+		 2: %self->params def_%v_46 %self[5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_46->[] def_%v_47 %v_46[11.2,] 	 SYMBOL:ids,	 ARGS:Symbol,
+		 4: %v_45->find def_%v_48 %v_45[11.1,] %v_47[11.3,] 	 SYMBOL:	 ARGS:%v_47,
+		 5: ATTRASSIGN %self->groups %v_48[11.4,] 
+		 6: Line Number 26
+		 7: GETFIELD %self->rel def_%v_49 %self[11.2,5.16,2.0,] 
+		 8: GETFIELD %self->groups def_%v_50 %self[11.2,11.5,5.5,2.0,] 
+		 9: %v_50->map def_%v_51 %v_50[11.8,] 	 SYMBOL:id,	 ARGS:
+		 10: HASH-group_id- def_%v_52 %v_51[11.9,] 
+		 11: %v_49->where! def_%v_53 %v_49[11.7,] %v_52[11.10,] 	 SYMBOL:	 ARGS:%v_52,
+		 12: Line Number 27
+		 13: %self->params def_%v_54 %self[11.2,11.5,5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:
+		 14: %v_54->[] def_%v_55 %v_54[11.13,] 	 SYMBOL:sort,	 ARGS:Symbol,
+		 15: BRANCH %v_55[11.14,] 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "attendance_records.last_name,attendance_records.first_name" def_%v_56 
+		 1: %v_54->[]= def_%v_55 %v_54[11.13,] %v_56[12.0,] 	 SYMBOL:sort,	 ARGS:Symbol,%v_56,
+		 2: COPY TYPE_PASS def_%v_55 %v_56[12.0,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_55 
+BB 15
+	outgoing: 16 17 
+	datadep: 
+	instructions:
+		 0: Line Number 29
+		 1: %self->params def_%v_57 %self[11.5,5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_57->[] def_%v_58 %v_57[15.1,] 	 SYMBOL:person_name,	 ARGS:Symbol,
+		 3: BRANCH %v_58[15.2,] 
+BB 16
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: Line Number 30
+		 1: GETFIELD %self->rel def_%v_59 %self[5.16,2.0,] 
+		 2: COPY TYPE_StringLiteral "concat(attendance_records.first_name, ' ', attendance_records.last_name) like ?" def_%v_60 
+		 3: COPY TYPE_StringLiteral "%" def_%v_61 
+		 4: %self->params def_%v_62 %self[11.5,5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:
+		 5: %v_62->[] def_%v_63 %v_62[16.4,] 	 SYMBOL:person_name,	 ARGS:Symbol,
+		 6: COPY TYPE_StringLiteral "%" def_%v_64 
+		 7: BUILDSTRING def_%v_65 %v_61[16.3,] %v_63[16.5,] %v_64[16.6,] 
+		 8: %v_59->where! def_%v_66 %v_59[16.1,] %v_60[16.2,] %v_65[16.7,] 	 SYMBOL:	 ARGS:%v_60,%v_65,
+		 9: 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_66 
+BB 18
+	outgoing: 19 20 
+	datadep: 
+	instructions:
+		 0: Line Number 32
+		 1: %self->params def_%v_67 %self[11.5,5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_67->[] def_%v_68 %v_67[18.1,] 	 SYMBOL:sort,	 ARGS:Symbol,
+		 3: %v_68->to_s def_%v_69 %v_68[18.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral "," def_%v_70 
+		 5: %v_69->split def_%v_71 %v_69[18.3,] %v_70[18.4,] 	 SYMBOL:	 ARGS:%v_70,
+		 6: %v_71->all? def_%v_72 %v_71[18.5,] %self[18.1,11.5,5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:%v_71,
+CLOSURE BEGIN: col[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_col 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 32
+		 1: (VALID_SORT_COLS) def_%cl_1_3 
+		 2: %cl_1_3->include? def_%cl_1_4 %cl_1_3[3.1,] col[2.2,] 	 SYMBOL:	 ARGS:col,
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 7: BRANCH %v_72[18.6,] 
+BB 19
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_73 
+		 1: 
+BB 20
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: Line Number 33
+		 1: %self->params def_%v_74 %self[11.5,5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "groups.name" def_%v_75 
+		 3: ATTRASSIGN %v_74->[] %v_75[20.2,] 
+		 4: COPY TYPE_PASS def_%v_73 %v_75[20.2,] 
+BB 21
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: Line Number 35
+		 1: GETFIELD %self->rel def_%v_76 %self[5.16,2.0,] 
+		 2: %self->params def_%v_77 %self[11.5,5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_77->[] def_%v_78 %v_77[21.2,] 	 SYMBOL:sort,	 ARGS:Symbol,
+		 4: %v_76->order! def_%v_79 %v_76[21.1,] %v_78[21.3,] 	 SYMBOL:	 ARGS:%v_78,
+		 5: Line Number 36
+		 6: %self->respond_to def_%v_80 %self[21.2,11.5,5.0,5.5,5.16,6.5,2.0,] %self[21.2,11.5,5.0,5.5,5.16,6.5,2.0,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: format[] %self[21.2,11.5,5.0,5.5,5.16,6.5,2.0,] csv[] record[] csv_str[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 37
+		 1: format->html def_%cl_2_3 format[2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 38
+		 1: GETFIELD %self->rel def_%cl_3_3 %self[2.0,] 
+		 2: %self->params def_%cl_3_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %cl_3_4->[] def_%cl_3_5 %cl_3_4[3.2,] 	 SYMBOL:page,	 ARGS:Symbol,
+		 4: HASH-page-per_page- def_%cl_3_6 %cl_3_5[3.3,] 
+		 5: %cl_3_3->paginate def_%cl_3_7 %cl_3_3[3.1,] %cl_3_6[3.4,] 	 SYMBOL:	 ARGS:%cl_3_6,
+		 6: ATTRASSIGN %self->records %cl_3_7[3.5,] 
+		 7: Line Number 39
+		 8: GETFIELD %self->records def_%cl_3_8 %self[3.2,3.6,2.0,] 
+		 9: %cl_3_8->total_entries def_%cl_3_9 %cl_3_8[3.8,] 	 SYMBOL:	 ARGS:
+		 10: ATTRASSIGN %self->record_count %cl_3_9[3.9,] 
+		 11: RETURN %cl_3_9[3.9,] %self[3.2,3.6,3.10,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_10 
+		 1: def_%cl_3_11 %cl_3_10[4.0,] 
+		 2: RETURN %cl_3_11[4.1,] %self[3.6,3.10,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: Line Number 41
+		 3: format->csv def_%cl_2_4 format[3.1,2.2,] %self[2.0,] 	 SYMBOL:	 ARGS:format,
+CLOSURE BEGIN: %self[2.0,] csv[] record[] csv_str[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 42
+		 1: (CSV) def_%cl_4_3 
+		 2: COPY TYPE_PASS def_%cl_4_4 %cl_4_3[3.1,] 
+		 3: COPY TYPE_StringLiteral "" def_%cl_4_5 
+		 4: COPY TYPE_PASS def_csv_str %cl_4_5[3.3,] 
+		 5: COPY TYPE_PASS def_%cl_4_6 %cl_4_5[3.3,] 
+		 6: %cl_4_3->generate def_%cl_4_7 %cl_4_3[3.1,] %cl_4_5[3.3,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_4_6,%cl_4_3,
+CLOSURE BEGIN: csv[] %self[2.0,] record[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_5_0 
+		 2: RECEIVEARG def_csv 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 43
+		 1: COPY TYPE_StringLiteral "group_name" def_%cl_5_3 
+		 2: COPY TYPE_StringLiteral "group_id" def_%cl_5_4 
+		 3: COPY TYPE_StringLiteral "group_link_code" def_%cl_5_5 
+		 4: COPY TYPE_StringLiteral "first_name" def_%cl_5_6 
+		 5: COPY TYPE_StringLiteral "last_name" def_%cl_5_7 
+		 6: COPY TYPE_StringLiteral "person_id" def_%cl_5_8 
+		 7: COPY TYPE_StringLiteral "person_legacy_id" def_%cl_5_9 
+		 8: COPY TYPE_StringLiteral "class_time" def_%cl_5_10 
+		 9: COPY TYPE_StringLiteral "recorded_time" def_%cl_5_11 
+		 10: COPY TYPE_Array def_%cl_5_12 %cl_5_3[3.1,] %cl_5_4[3.2,] %cl_5_5[3.3,] %cl_5_6[3.4,] %cl_5_7[3.5,] %cl_5_8[3.6,] %cl_5_9[3.7,] %cl_5_10[3.8,] %cl_5_11[3.9,] 
+		 11: csv-><< def_%cl_5_13 csv[2.2,] %cl_5_12[3.10,] 	 SYMBOL:	 ARGS:%cl_5_12,
+		 12: Line Number 44
+		 13: GETFIELD %self->rel def_%cl_5_14 %self[2.0,] 
+		 14: %cl_5_14->each def_%cl_5_15 %cl_5_14[3.13,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_5_14,
+CLOSURE BEGIN: record[] csv[3.11,2.2,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_6_0 
+		 2: RECEIVEARG def_record 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 45
+		 1: record->group def_%cl_6_3 record[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_6_3->try def_%cl_6_4 %cl_6_3[3.1,] 	 SYMBOL:name,	 ARGS:Symbol,
+		 3: record->group def_%cl_6_5 record[3.1,2.2,] 	 SYMBOL:	 ARGS:
+		 4: %cl_6_5->try def_%cl_6_6 %cl_6_5[3.3,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 5: record->group def_%cl_6_7 record[3.1,3.3,2.2,] 	 SYMBOL:	 ARGS:
+		 6: %cl_6_7->try def_%cl_6_8 %cl_6_7[3.5,] 	 SYMBOL:link_code,	 ARGS:Symbol,
+		 7: record->first_name def_%cl_6_9 record[3.1,3.3,3.5,2.2,] 	 SYMBOL:	 ARGS:
+		 8: record->last_name def_%cl_6_10 record[3.1,3.3,3.5,3.7,2.2,] 	 SYMBOL:	 ARGS:
+		 9: record->person_id def_%cl_6_11 record[3.1,3.3,3.5,3.7,3.8,2.2,] 	 SYMBOL:	 ARGS:
+		 10: record->person def_%cl_6_12 record[3.1,3.3,3.5,3.7,3.8,3.9,2.2,] 	 SYMBOL:	 ARGS:
+		 11: %cl_6_12->try def_%cl_6_13 %cl_6_12[3.10,] 	 SYMBOL:legacy_id,	 ARGS:Symbol,
+		 12: record->attended_at def_%cl_6_14 record[3.1,3.3,3.5,3.7,3.8,3.9,3.10,2.2,] 	 SYMBOL:	 ARGS:
+		 13: %cl_6_14->to_s def_%cl_6_15 %cl_6_14[3.12,] 	 SYMBOL:	 ARGS:
+		 14: record->created_at def_%cl_6_16 record[3.1,3.3,3.5,3.7,3.8,3.9,3.10,3.12,2.2,] 	 SYMBOL:	 ARGS:
+		 15: %cl_6_16->to_s def_%cl_6_17 %cl_6_16[3.14,] 	 SYMBOL:	 ARGS:
+		 16: COPY TYPE_Array def_%cl_6_18 %cl_6_4[3.2,] %cl_6_6[3.4,] %cl_6_8[3.6,] %cl_6_9[3.7,] %cl_6_10[3.8,] %cl_6_11[3.9,] %cl_6_13[3.11,] %cl_6_15[3.13,] %cl_6_17[3.15,] 
+		 17: csv-><< def_%cl_6_19 csv[] %cl_6_18[3.16,] 	 SYMBOL:	 ARGS:%cl_6_18,
+		 18: RETURN %cl_6_19[3.17,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_6_20 
+		 1: def_%cl_6_21 %cl_6_20[4.0,] 
+		 2: RETURN %cl_6_21[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 15: RETURN %cl_5_15[3.14,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_5_16 
+		 1: def_%cl_5_17 %cl_5_16[4.0,] 
+		 2: RETURN %cl_5_17[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 7: Line Number 58
+		 8: HASH-plain- def_%cl_4_8 csv_str[3.4,] 
+		 9: %self->render def_%cl_4_9 %self[2.0,] %cl_4_8[3.8,] 	 SYMBOL:	 ARGS:%cl_4_8,
+		 10: RETURN %cl_4_9[3.9,] %self[3.9,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_10 
+		 1: def_%cl_4_11 %cl_4_10[4.0,] 
+		 2: RETURN %cl_4_11[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: RETURN %cl_2_4[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_5 
+		 1: def_%cl_2_6 %cl_2_5[4.0,] 
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 7: RETURN %v_80[21.6,] %self[21.2,21.6,11.5,5.0,5.5,5.16,6.5,2.0,] 
+BB 22
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = prev instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 64
+		 6: (Date) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:attended_at,	 ARGS:Symbol,
+		 9: %v_3->parse def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->attended_at %v_6[2.9,] 
+		 11: Line Number 65
+		 12: (AttendanceRecord) def_%v_7 
+		 13: COPY TYPE_StringLiteral "attended_at < ?" def_%v_8 
+		 14: GETFIELD %self->attended_at def_%v_9 %self[2.0,2.7,2.10,] 
+		 15: COPY TYPE_StringLiteral "%Y/%m/%d 0:00" def_%v_10 
+		 16: %v_9->strftime def_%v_11 %v_9[2.14,] %v_10[2.15,] 	 SYMBOL:	 ARGS:%v_10,
+		 17: %v_7->where def_%v_12 %v_7[2.12,] %v_8[2.13,] %v_11[2.16,] 	 SYMBOL:	 ARGS:%v_8,%v_11,
+		 18: %v_12->maximum def_%v_13 %v_12[2.17,] 	 SYMBOL:attended_at,	 ARGS:Symbol,
+		 19: COPY TYPE_PASS def_date %v_13[2.18,] 
+		 20: Line Number 66
+		 21: HASH-attended_at- def_%v_14 %v_13[2.18,] 
+		 22: %self->administration_attendance_index_path def_%v_15 %self[2.0,2.7,2.10,] %v_14[2.21,] 	 SYMBOL:	 ARGS:%v_14,
+		 23: %self->redirect_to def_%v_16 %self[2.0,2.7,2.10,2.22,] %v_15[2.22,] 	 SYMBOL:	 ARGS:%v_15,
+		 24: RETURN %v_16[2.23,] %self[2.0,2.7,2.10,2.22,2.23,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = next instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 70
+		 6: (Date) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:attended_at,	 ARGS:Symbol,
+		 9: %v_3->parse def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->attended_at %v_6[2.9,] 
+		 11: Line Number 71
+		 12: (AttendanceRecord) def_%v_7 
+		 13: COPY TYPE_StringLiteral "attended_at > ?" def_%v_8 
+		 14: GETFIELD %self->attended_at def_%v_9 %self[2.0,2.7,2.10,] 
+		 15: COPY TYPE_StringLiteral "%Y/%m/%d 23:59:59" def_%v_10 
+		 16: %v_9->strftime def_%v_11 %v_9[2.14,] %v_10[2.15,] 	 SYMBOL:	 ARGS:%v_10,
+		 17: %v_7->where def_%v_12 %v_7[2.12,] %v_8[2.13,] %v_11[2.16,] 	 SYMBOL:	 ARGS:%v_8,%v_11,
+		 18: %v_12->minimum def_%v_13 %v_12[2.17,] 	 SYMBOL:attended_at,	 ARGS:Symbol,
+		 19: COPY TYPE_PASS def_date %v_13[2.18,] 
+		 20: Line Number 72
+		 21: HASH-attended_at- def_%v_14 %v_13[2.18,] 
+		 22: %self->administration_attendance_index_path def_%v_15 %self[2.0,2.7,2.10,] %v_14[2.21,] 	 SYMBOL:	 ARGS:%v_14,
+		 23: %self->redirect_to def_%v_16 %self[2.0,2.7,2.10,2.22,] %v_15[2.22,] 	 SYMBOL:	 ARGS:%v_15,
+		 24: RETURN %v_16[2.23,] %self[2.0,2.7,2.10,2.22,2.23,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 76
+		 6: (AttendanceRecord) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->record %v_6[2.9,] 
+		 11: Line Number 77
+		 12: GETFIELD %self->record def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: %v_7->destroy def_%v_8 %v_7[2.12,] 	 SYMBOL:	 ARGS:
+		 14: RETURN %v_8[2.13,] %self[2.0,2.7,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = only_admins instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 83
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
+		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 	 SYMBOL:manage_attendance,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 84
+		 1: COPY TYPE_StringLiteral "only_admins" def_%v_6 
+		 2: %self->t def_%v_7 %self[2.0,] %v_6[4.1,] 	 SYMBOL:	 ARGS:%v_6,
+		 3: HASH-html-layout-status- def_%v_8 %v_7[4.2,] 
+		 4: %self->render def_%v_9 %self[4.2,2.0,] %v_8[4.3,] 	 SYMBOL:	 ARGS:%v_8,
+		 5: Line Number 86
+		 6: RETURN %self[4.2,4.4,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

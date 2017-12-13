@@ -1,0 +1,189 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_args 
+		 6: Line Number 5
+		 7: %self->super def_%v_3 args[2.5,] %v_0[2.1,] 	 SYMBOL:	 ARGS:Splat,
+		 8: Line Number 6
+		 9: %self->initialize_group def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 10: RETURN %v_4[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_title instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 10
+		 6: COPY TYPE_StringLiteral "reports.reports.group_contact_details" def_%v_3 
+		 7: %self->group_title def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = headings instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 15
+		 6: (I18n) def_%v_3 
+		 7: COPY TYPE_StringLiteral "reports.reports.group_contact_details.columns.first_name" def_%v_4 
+		 8: %v_3->t def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: (I18n) def_%v_6 
+		 10: COPY TYPE_StringLiteral "reports.reports.group_contact_details.columns.last_name" def_%v_7 
+		 11: %v_6->t def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: (I18n) def_%v_9 
+		 13: COPY TYPE_StringLiteral "reports.reports.group_contact_details.columns.email_address" def_%v_10 
+		 14: %v_9->t def_%v_11 %v_9[2.12,] %v_10[2.13,] 	 SYMBOL:	 ARGS:%v_10,
+		 15: (I18n) def_%v_12 
+		 16: COPY TYPE_StringLiteral "reports.reports.group_contact_details.columns.mobile_phone" def_%v_13 
+		 17: %v_12->t def_%v_14 %v_12[2.15,] %v_13[2.16,] 	 SYMBOL:	 ARGS:%v_13,
+		 18: (I18n) def_%v_15 
+		 19: COPY TYPE_StringLiteral "reports.reports.group_contact_details.columns.home_phone" def_%v_16 
+		 20: %v_15->t def_%v_17 %v_15[2.18,] %v_16[2.19,] 	 SYMBOL:	 ARGS:%v_16,
+		 21: (I18n) def_%v_18 
+		 22: COPY TYPE_StringLiteral "reports.reports.group_contact_details.columns.address" def_%v_19 
+		 23: %v_18->t def_%v_20 %v_18[2.21,] %v_19[2.22,] 	 SYMBOL:	 ARGS:%v_19,
+		 24: COPY TYPE_Array def_%v_21 %v_5[2.8,] %v_8[2.11,] %v_11[2.14,] %v_14[2.17,] %v_17[2.20,] %v_20[2.23,] 
+		 25: RETURN %v_21[2.24,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sql instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 36
+		 6: (Group) def_%v_3 
+		 7: (COLUMNS) def_%v_4 
+		 8: %v_3->select def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: HASH-person- def_%v_6 
+		 10: HASH-memberships- def_%v_7 %v_6[2.9,] 
+		 11: %v_5->joins def_%v_8 %v_5[2.8,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: COPY TYPE_StringLiteral "groups.id" def_%v_9 
+		 13: %self->group_id def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 14: HASH- def_%v_11 %v_9[2.12,] %v_10[2.13,] 
+		 15: %v_8->where def_%v_12 %v_8[2.11,] %v_11[2.14,] 	 SYMBOL:	 ARGS:%v_11,
+		 16: %v_12->to_sql def_%v_13 %v_12[2.15,] 	 SYMBOL:	 ARGS:
+		 17: RETURN %v_13[2.16,] %self[2.0,2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = group_id instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 43
+		 6: %self->options def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:group_id,	 ARGS:Symbol,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = format_home_phone instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_value 
+		 6: Line Number 47
+		 7: %self->format_phone def_%v_3 %self[2.0,] value[2.5,] 	 SYMBOL:	 ARGS:value,
+		 8: RETURN %v_3[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = format_mobile_phone instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_value 
+		 6: Line Number 51
+		 7: %self->format_phone def_%v_3 %self[2.0,] value[2.5,] value[2.5,] 	 SYMBOL:	 ARGS:value,value,
+		 8: RETURN %v_3[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

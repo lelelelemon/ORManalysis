@@ -1,0 +1,320 @@
+SET IRMethod, name = index instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 4
+		 6: (CheckinTime) def_%v_3 
+		 7: %v_3->recurring def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->order def_%v_5 %v_4[2.7,] 	 SYMBOL:weekday,time,	 ARGS:Symbol,Symbol,
+		 9: ATTRASSIGN %self->recurring_times %v_5[2.8,] 
+		 10: Line Number 5
+		 11: (CheckinTime) def_%v_6 
+		 12: %v_6->future_singles def_%v_7 %v_6[2.11,] 	 SYMBOL:	 ARGS:
+		 13: %v_7->order def_%v_8 %v_7[2.12,] 	 SYMBOL:the_datetime,	 ARGS:Symbol,
+		 14: ATTRASSIGN %self->single_times %v_8[2.13,] 
+		 15: RETURN %v_8[2.13,] %self[2.0,2.9,2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = show instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 9
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 8: %self->administration_checkin_time_groups_path def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: %self->redirect_to def_%v_6 %self[2.0,2.6,2.8,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: RETURN %v_6[2.9,] %self[2.0,2.6,2.8,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = edit instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 13
+		 6: (CheckinTime) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->time %v_6[2.9,] 
+		 11: RETURN %v_6[2.9,] %self[2.0,2.7,2.10,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 17
+		 6: (CheckinTime) def_%v_3 
+		 7: %self->time_params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->create def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: ATTRASSIGN %self->time %v_5[2.8,] 
+		 10: Line Number 18
+		 11: GETFIELD %self->time def_%v_6 %self[2.0,2.7,2.9,] 
+		 12: %v_6->valid? def_%v_7 %v_6[2.11,] 	 SYMBOL:	 ARGS:
+		 13: BRANCH %v_7[2.12,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->time def_%v_9 %self[2.0,2.9,] 
+		 1: %self->add_errors_to_flash def_%v_10 %self[2.0,2.9,] %v_9[4.0,] 	 SYMBOL:	 ARGS:%v_9,
+		 2: COPY TYPE_PASS def_%v_8 %v_10[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 19
+		 1: %self->administration_checkin_times_path def_%v_11 %self[2.0,2.9,] 	 SYMBOL:	 ARGS:
+		 2: %self->redirect_to def_%v_12 %self[5.1,2.0,2.9,] %v_11[5.1,] 	 SYMBOL:	 ARGS:%v_11,
+		 3: RETURN %v_12[5.2,] %self[5.1,5.2,2.0,2.9,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 23
+		 6: (CheckinTime) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->time %v_6[2.9,] 
+		 11: Line Number 24
+		 12: GETFIELD %self->time def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: %self->time_params def_%v_8 %self[2.0,2.7,2.10,] 	 SYMBOL:	 ARGS:
+		 14: %v_7->update_attributes def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 SYMBOL:	 ARGS:%v_8,
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 25
+		 1: %self->flash def_%v_10 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "changes_saved" def_%v_11 
+		 3: %self->t def_%v_12 %self[3.1,2.0,2.10,] %v_11[3.2,] 	 SYMBOL:	 ARGS:%v_11,
+		 4: ATTRASSIGN %v_10->[] %v_12[3.3,] 
+		 5: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 27
+		 1: GETFIELD %self->time def_%v_13 %self[2.0,2.10,] 
+		 2: %self->add_errors_to_flash def_%v_14 %self[2.0,2.10,] %v_13[4.1,] 	 SYMBOL:	 ARGS:%v_13,
+		 3: COPY TYPE_PASS def_%v_12 %v_14[4.2,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 29
+		 1: %self->administration_checkin_times_path def_%v_15 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 2: %self->redirect_to def_%v_16 %self[5.1,2.0,2.10,] %v_15[5.1,] 	 SYMBOL:	 ARGS:%v_15,
+		 3: RETURN %v_16[5.2,] %self[5.1,5.2,2.0,2.10,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 33
+		 6: (CheckinTime) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->time %v_6[2.9,] 
+		 11: Line Number 34
+		 12: GETFIELD %self->time def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: %v_7->destroy def_%v_8 %v_7[2.12,] 	 SYMBOL:	 ARGS:
+		 14: Line Number 35
+		 15: %self->administration_checkin_times_path def_%v_9 %self[2.0,2.7,2.10,] 	 SYMBOL:	 ARGS:
+		 16: %self->redirect_to def_%v_10 %self[2.0,2.7,2.10,2.15,] %v_9[2.15,] 	 SYMBOL:	 ARGS:%v_9,
+		 17: RETURN %v_10[2.16,] %self[2.0,2.7,2.10,2.15,2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = time_params instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 41
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->require def_%v_4 %v_3[2.6,] 	 SYMBOL:checkin_time,	 ARGS:Symbol,
+		 8: %v_4->permit def_%v_5 %v_4[2.7,] 	 SYMBOL:weekday,time,the_datetime,campus,	 ARGS:Symbol,Symbol,Symbol,Symbol,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = only_admins instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 45
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
+		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 	 SYMBOL:manage_checkin,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 46
+		 1: COPY TYPE_StringLiteral "You must be an administrator to use this section." def_%v_6 
+		 2: HASH-html-layout-status- def_%v_7 %v_6[4.1,] 
+		 3: %self->render def_%v_8 %self[2.0,] %v_7[4.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: Line Number 48
+		 5: RETURN %self[4.3,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = feature_enabled? instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 52
+		 6: (Setting) def_%v_3 
+		 7: %v_3->get def_%v_4 %v_3[2.6,] 	 SYMBOL:features,checkin,	 ARGS:Symbol,Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 53
+		 1: COPY TYPE_StringLiteral "This feature is unavailable." def_%v_6 
+		 2: HASH-html-layout- def_%v_7 %v_6[4.1,] 
+		 3: %self->render def_%v_8 %self[2.0,] %v_7[4.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: Line Number 55
+		 5: RETURN %self[4.3,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

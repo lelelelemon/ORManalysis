@@ -1,0 +1,444 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_args 
+		 6: Line Number 4
+		 7: %self->super def_%v_3 args[2.5,] %v_0[2.1,] 	 SYMBOL:	 ARGS:Splat,
+		 8: Line Number 5
+		 9: %self->options def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 10: %v_4->[] def_%v_5 %v_4[2.9,] 	 SYMBOL:group_id,	 ARGS:Symbol,
+		 11: %v_5->present? def_%v_6 %v_5[2.10,] 	 SYMBOL:	 ARGS:
+		 12: BRANCH %v_6[2.11,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: (Group) def_%v_7 
+		 1: %self->options def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_8->[] def_%v_9 %v_8[3.1,] 	 SYMBOL:group_id,	 ARGS:Symbol,
+		 3: %v_7->find def_%v_10 %v_7[3.0,] %v_9[3.2,] 	 SYMBOL:	 ARGS:%v_9,
+		 4: ATTRASSIGN %self->group %v_10[3.3,] 
+		 5: RETURN %v_10[3.3,] %self[3.1,3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = headings instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 10
+		 6: (I18n) def_%v_3 
+		 7: COPY TYPE_StringLiteral "reports.reports.weekly_attendance.columns.person_id" def_%v_4 
+		 8: %v_3->t def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: (I18n) def_%v_6 
+		 10: COPY TYPE_StringLiteral "reports.reports.weekly_attendance.columns.first_name" def_%v_7 
+		 11: %v_6->t def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: (I18n) def_%v_9 
+		 13: COPY TYPE_StringLiteral "reports.reports.weekly_attendance.columns.last_name" def_%v_10 
+		 14: %v_9->t def_%v_11 %v_9[2.12,] %v_10[2.13,] 	 SYMBOL:	 ARGS:%v_10,
+		 15: (I18n) def_%v_12 
+		 16: COPY TYPE_StringLiteral "reports.reports.weekly_attendance.columns.attended" def_%v_13 
+		 17: %v_12->t def_%v_14 %v_12[2.15,] %v_13[2.16,] 	 SYMBOL:	 ARGS:%v_13,
+		 18: COPY TYPE_Array def_%v_15 %v_5[2.8,] %v_8[2.11,] %v_11[2.14,] %v_14[2.17,] 
+		 19: RETURN %v_15[2.18,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_title instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 18
+		 6: (I18n) def_%v_3 
+		 7: Line Number 19
+		 8: GETFIELD %self->group def_%v_4 %self[2.0,] 
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "title_for_group" def_%v_5 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "title" def_%v_6 
+		 1: COPY TYPE_PASS def_%v_5 %v_6[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "reports.reports.weekly_attendance" def_%v_7 
+		 1: GETFIELD %self->group def_%v_8 %self[2.0,] 
+		 2: %v_8->try def_%v_9 %v_8[5.1,] 	 SYMBOL:name,	 ARGS:Symbol,
+		 3: HASH-scope-group- def_%v_10 %v_7[5.0,] %v_9[5.2,] 
+		 4: %v_3->t def_%v_11 %v_3[2.6,] %v_5[4.1,3.0,] %v_10[5.3,] 	 SYMBOL:	 ARGS:%v_5,%v_10,
+		 5: RETURN %v_11[5.4,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sql instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 27
+		 6: GETFIELD %self->group def_%v_3 %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: GETFIELD %self->group def_%v_7 %self[2.0,] 
+		 2: %v_7->attendance_records def_%v_8 %v_7[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_8->select def_%v_9 %v_8[3.2,] 	 SYMBOL:person_id,first_name,last_name,	 ARGS:Symbol,Symbol,Symbol,
+		 4: COPY TYPE_StringLiteral "attended_at between ? and ?" def_%v_10 
+		 5: %self->from_date def_%v_11 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 6: %self->thru_date def_%v_12 %self[3.5,2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_9->where def_%v_13 %v_9[3.3,] %v_10[3.4,] %v_11[3.5,] %v_12[3.6,] 	 SYMBOL:	 ARGS:%v_10,%v_11,%v_12,
+		 8: %v_13->order def_%v_14 %v_13[3.7,] 	 SYMBOL:first_name,last_name,	 ARGS:Symbol,Symbol,
+		 9: %v_14->to_sql def_%v_15 %v_14[3.8,] 	 SYMBOL:	 ARGS:
+		 10: RETURN %v_15[3.9,] %self[3.5,3.6,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: (AttendanceRecord) def_%v_5 
+		 1: %v_5->none def_%v_6 %v_5[4.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %v_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = execute instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 36
+		 6: GETFIELD %self->group def_%v_3 %self[2.0,] 
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: %self->super def_%v_6 %current_module[2.3,] %v_0[2.1,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_rows %v_6[3.1,] 
+		 3: Line Number 37
+		 4: HASH- def_%v_7 
+		 5: COPY TYPE_PASS def_found %v_7[3.4,] 
+		 6: Line Number 38
+		 7: %v_6->each def_%v_8 %v_6[3.1,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_6,
+CLOSURE BEGIN: row[] found[3.5,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_row 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 39
+		 1: row->[] def_%cl_1_3 row[2.2,] 	 SYMBOL:	 ARGS:Fixnum,
+		 2: ATTRASSIGN found->[] %cl_1_3[3.1,] 
+		 3: Line Number 40
+		 4: (I18n) def_%cl_1_4 
+		 5: COPY TYPE_StringLiteral "reports.reports.weekly_attendance.attended.yes" def_%cl_1_5 
+		 6: %cl_1_4->t def_%cl_1_6 %cl_1_4[3.4,] %cl_1_5[3.5,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 7: row-><< def_%cl_1_7 row[3.1,2.2,] %cl_1_6[3.6,] 	 SYMBOL:	 ARGS:%cl_1_6,
+		 8: RETURN %cl_1_7[3.7,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[4.0,] 
+		 2: RETURN %cl_1_9[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: Line Number 42
+		 9: GETFIELD %self->group def_%v_9 %self[2.0,] 
+		 10: %v_9->people def_%v_10 %v_9[3.9,] 	 SYMBOL:	 ARGS:
+		 11: %v_10->each def_%v_11 %v_10[3.10,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_10,
+CLOSURE BEGIN: person[] found[3.5,] rows[3.2,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_person 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 43
+		 1: person->id def_%cl_2_3 person[2.2,] 	 SYMBOL:	 ARGS:
+		 2: found->[] def_%cl_2_4 found[] %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:%cl_2_3,
+		 3: BRANCH %cl_2_4[3.2,] 
+BB 4
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_5 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: Line Number 44
+		 1: person->id def_%cl_2_6 person[2.2,] 	 SYMBOL:	 ARGS:
+		 2: person->first_name def_%cl_2_7 person[6.1,2.2,] 	 SYMBOL:	 ARGS:
+		 3: person->last_name def_%cl_2_8 person[6.1,6.2,2.2,] 	 SYMBOL:	 ARGS:
+		 4: (I18n) def_%cl_2_9 
+		 5: COPY TYPE_StringLiteral "reports.reports.weekly_attendance.attended.no" def_%cl_2_10 
+		 6: %cl_2_9->t def_%cl_2_11 %cl_2_9[6.4,] %cl_2_10[6.5,] 	 SYMBOL:	 ARGS:%cl_2_10,
+		 7: COPY TYPE_Array def_%cl_2_12 %cl_2_6[6.1,] %cl_2_7[6.2,] %cl_2_8[6.3,] %cl_2_11[6.6,] 
+		 8: rows-><< def_%cl_2_13 rows[] %cl_2_12[6.7,] 	 SYMBOL:	 ARGS:%cl_2_12,
+		 9: RETURN %cl_2_13[6.8,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_14 
+		 1: def_%cl_2_15 %cl_2_14[7.0,] 
+		 2: RETURN %cl_2_15[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 12: Line Number 51
+		 13: rows->sort_by! def_%v_12 rows[3.2,] %self[2.0,] 	 SYMBOL:	 ARGS:rows,
+CLOSURE BEGIN: p[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_p 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 51
+		 1: p->[] def_%cl_3_3 p[2.2,] 	 SYMBOL:	 ARGS:Fixnum,
+		 2: p->[] def_%cl_3_4 p[3.1,2.2,] 	 SYMBOL:	 ARGS:Fixnum,
+		 3: COPY TYPE_Array def_%cl_3_5 %cl_3_3[3.1,] %cl_3_4[3.2,] 
+		 4: RETURN %cl_3_5[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_6 
+		 1: def_%cl_3_7 %cl_3_6[4.0,] 
+		 2: RETURN %cl_3_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 14: RETURN %v_12[3.13,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Array def_%v_5 
+		 1: RETURN %v_5[4.0,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = from_date instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 55
+		 6: %self->options def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:from_date,	 ARGS:Symbol,
+		 8: (Date) def_%v_5 
+		 9: %v_5->current def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: CONSTANT def_%v_7 	 SYMBOL:	 ARGS:
+		 11: %v_6->- def_%v_8 %v_6[2.9,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: %self->format_dateparam def_%v_9 %self[2.0,2.6,] %v_4[2.7,] %v_8[2.11,] 	 SYMBOL:	 ARGS:%v_4,%v_8,
+		 13: RETURN %v_9[2.12,] %self[2.0,2.6,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = thru_date instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 59
+		 6: %self->options def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:thru_date,	 ARGS:Symbol,
+		 8: %self->format_dateparam def_%v_5 %self[2.0,2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = format_attended_at instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_value 
+		 6: Line Number 63
+		 7: %self->format_date def_%v_3 %self[2.0,] value[2.5,] 	 SYMBOL:	 ARGS:value,
+		 8: RETURN %v_3[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = group_id instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 67
+		 6: %self->options def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->[] def_%v_4 %v_3[2.6,] 	 SYMBOL:group_id,	 ARGS:Symbol,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

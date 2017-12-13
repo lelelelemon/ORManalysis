@@ -1,0 +1,436 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_group 
+		 6: RECEIVEARG def_attended_at 
+		 7: Line Number 4
+		 8: ATTRASSIGN %self->group group[2.5,] 
+		 9: Line Number 5
+		 10: %self->parse def_%v_3 %self[2.0,2.8,] attended_at[2.6,] 	 SYMBOL:	 ARGS:attended_at,
+		 11: %self->time_without_zone def_%v_4 %self[2.0,2.8,2.10,] %v_3[2.10,] 	 SYMBOL:	 ARGS:%v_3,
+		 12: ATTRASSIGN %self->attended_at %v_4[2.11,] 
+		 13: RETURN %v_4[2.11,] %self[2.0,2.8,2.10,2.11,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = parse instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_time 
+		 6: Line Number 9
+		 7: time->blank? def_%v_3 time[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: Line Number 10
+		 2: %self->ensure_date def_%v_5 %self[2.0,] time[2.5,] 	 SYMBOL:	 ARGS:time,
+		 3: COPY TYPE_PASS def_time %v_5[4.2,] 
+		 4: Line Number 11
+		 5: (Time) def_%v_6 
+		 6: %v_6->parse_in_locale def_%v_7 %v_6[4.5,] %v_5[4.2,] 	 SYMBOL:	 ARGS:time,
+		 7: BRANCH %v_7[4.6,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: (Date) def_%v_8 
+		 1: %v_8->parse_in_locale def_%v_9 %v_8[6.0,] time[4.3,] 	 SYMBOL:	 ARGS:time,
+		 2: RETURN %v_9[6.1,] %self[2.0,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %v_7[4.6,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = ensure_date instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_time 
+		 6: Line Number 15
+		 7: COPY TYPE_Regexp def_%v_3 
+		 8: time->=~ def_%v_4 time[2.5,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN time[2.5,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: Line Number 16
+		 2: (Date) def_%v_6 
+		 3: %v_6->current def_%v_7 %v_6[4.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral "%Y-%m-%d " def_%v_8 
+		 5: %v_7->strftime def_%v_9 %v_7[4.3,] %v_8[4.4,] 	 SYMBOL:	 ARGS:%v_8,
+		 6: %v_9->+ def_%v_10 %v_9[4.5,] time[2.5,] 	 SYMBOL:	 ARGS:time,
+		 7: RETURN %v_10[4.6,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = time_without_zone instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_time 
+		 6: Line Number 20
+		 7: time->blank? def_%v_3 time[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: Line Number 21
+		 2: (ActiveSupport) def_%v_5 
+		 3: (inherit TimeZone) def_%v_6 %v_5[4.2,] 
+		 4: %v_6[4.3,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[4.2,] 	 SYMBOL:TimeZone,	 ARGS:Symbol,
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "UTC" def_%v_7 
+		 1: %v_6->[] def_%v_8 %v_6[6.0,4.3,] %v_7[7.0,] 	 SYMBOL:	 ARGS:%v_7,
+		 2: COPY TYPE_StringLiteral "%Y-%m-%dT%H:%M:%S" def_%v_9 
+		 3: time->strftime def_%v_10 time[2.5,] %v_9[7.2,] 	 SYMBOL:	 ARGS:%v_9,
+		 4: %v_8->parse def_%v_11 %v_8[7.1,] %v_10[7.3,] 	 SYMBOL:	 ARGS:%v_10,
+		 5: RETURN %v_11[7.4,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = remove instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_ids 
+		 6: Line Number 25
+		 7: %self->Array def_%v_3 %self[2.0,] ids[2.5,] 	 SYMBOL:	 ARGS:ids,
+		 8: %v_3->map def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: id[] %self[2.0,2.7,] person[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_id 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 26
+		 1: (Person) def_%cl_1_3 
+		 2: %cl_1_3->undeleted def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: HASH-id- def_%cl_1_5 id[2.2,] 
+		 4: %cl_1_4->where def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 5: %cl_1_6->first def_%cl_1_7 %cl_1_6[3.4,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_PASS def_person %cl_1_7[3.5,] 
+		 7: BRANCH %cl_1_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_8 
+		 1: 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: Line Number 27
+		 1: %self->clear def_%cl_1_9 %self[2.0,] person[3.6,] 	 SYMBOL:	 ARGS:person,
+		 2: RETURN %cl_1_9[6.1,] %self[6.1,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[7.0,] 
+		 2: RETURN %cl_1_11[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: person[3.6,] 
+		 9: %v_4->compact def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: RETURN %v_5[2.9,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_ids 
+		 6: Line Number 32
+		 7: %self->Array def_%v_3 %self[2.0,] ids[2.5,] 	 SYMBOL:	 ARGS:ids,
+		 8: %v_3->map def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: id[] %self[2.0,2.7,] person[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_id 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 33
+		 1: (Person) def_%cl_1_3 
+		 2: %cl_1_3->undeleted def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: HASH-id- def_%cl_1_5 id[2.2,] 
+		 4: %cl_1_4->where def_%cl_1_6 %cl_1_4[3.2,] %cl_1_5[3.3,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 5: %cl_1_6->first def_%cl_1_7 %cl_1_6[3.4,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_PASS def_person %cl_1_7[3.5,] 
+		 7: BRANCH %cl_1_7[3.5,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_8 
+		 1: 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: Line Number 34
+		 1: %self->clear def_%cl_1_9 %self[2.0,] person[3.6,] 	 SYMBOL:	 ARGS:person,
+		 2: Line Number 35
+		 3: %self->create def_%cl_1_10 %self[6.1,2.0,] person[3.6,] 	 SYMBOL:	 ARGS:person,
+		 4: RETURN %cl_1_10[6.3,] %self[6.1,6.3,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_11 
+		 1: def_%cl_1_12 %cl_1_11[7.0,] 
+		 2: RETURN %cl_1_12[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: person[3.6,] 
+		 9: %v_4->compact def_%v_5 %v_4[2.8,] 	 SYMBOL:	 ARGS:
+		 10: RETURN %v_5[2.9,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = clear instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_person 
+		 6: Line Number 40
+		 7: (AttendanceRecord) def_%v_3 
+		 8: person->id def_%v_4 person[2.5,] 	 SYMBOL:	 ARGS:
+		 9: GETFIELD %self->attended_at def_%v_5 %self[2.0,] 
+		 10: HASH-person_id-attended_at- def_%v_6 %v_4[2.8,] %v_5[2.9,] 
+		 11: %v_3->where def_%v_7 %v_3[2.7,] %v_6[2.10,] 	 SYMBOL:	 ARGS:%v_6,
+		 12: %v_7->delete_all def_%v_8 %v_7[2.11,] 	 SYMBOL:	 ARGS:
+		 13: RETURN %v_8[2.12,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_person 
+		 6: Line Number 47
+		 7: GETFIELD %self->group def_%v_3 %self[2.0,] 
+		 8: %v_3->attendance_records def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: person->id def_%v_5 person[2.5,] 	 SYMBOL:	 ARGS:
+		 10: GETFIELD %self->attended_at def_%v_6 %self[2.0,] 
+		 11: person->first_name def_%v_7 person[2.5,2.9,] 	 SYMBOL:	 ARGS:
+		 12: person->last_name def_%v_8 person[2.5,2.9,2.11,] 	 SYMBOL:	 ARGS:
+		 13: person->family def_%v_9 person[2.5,2.9,2.11,2.12,] 	 SYMBOL:	 ARGS:
+		 14: %v_9->name def_%v_10 %v_9[2.13,] 	 SYMBOL:	 ARGS:
+		 15: person->age_group def_%v_11 person[2.5,2.9,2.11,2.12,2.13,] 	 SYMBOL:	 ARGS:
+		 16: person->can_pick_up def_%v_12 person[2.5,2.9,2.11,2.12,2.13,2.15,] 	 SYMBOL:	 ARGS:
+		 17: person->cannot_pick_up def_%v_13 person[2.5,2.9,2.11,2.12,2.13,2.15,2.16,] 	 SYMBOL:	 ARGS:
+		 18: person->medical_notes def_%v_14 person[2.5,2.9,2.11,2.12,2.13,2.15,2.16,2.17,] 	 SYMBOL:	 ARGS:
+		 19: HASH-person_id-attended_at-first_name-last_name-family_name-age-can_pick_up-cannot_pick_up-medical_notes- def_%v_15 %v_5[2.9,] %v_6[2.10,] %v_7[2.11,] %v_8[2.12,] %v_10[2.14,] %v_11[2.15,] %v_12[2.16,] %v_13[2.17,] %v_14[2.18,] 
+		 20: %v_4->create! def_%v_16 %v_4[2.8,] %v_15[2.19,] 	 SYMBOL:	 ARGS:%v_15,
+		 21: RETURN %v_16[2.20,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create_unlinked instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_person 
+		 6: Line Number 61
+		 7: GETFIELD %self->group def_%v_3 %self[2.0,] 
+		 8: %v_3->attendance_records def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: GETFIELD %self->attended_at def_%v_5 %self[2.0,] 
+		 10: COPY TYPE_StringLiteral "first_name" def_%v_6 
+		 11: person->[] def_%v_7 person[2.5,] %v_6[2.10,] 	 SYMBOL:	 ARGS:%v_6,
+		 12: COPY TYPE_StringLiteral "last_name" def_%v_8 
+		 13: person->[] def_%v_9 person[2.5,2.11,] %v_8[2.12,] 	 SYMBOL:	 ARGS:%v_8,
+		 14: COPY TYPE_StringLiteral "age" def_%v_10 
+		 15: person->[] def_%v_11 person[2.5,2.11,2.13,] %v_10[2.14,] 	 SYMBOL:	 ARGS:%v_10,
+		 16: HASH-attended_at-first_name-last_name-age- def_%v_12 %v_5[2.9,] %v_7[2.11,] %v_9[2.13,] %v_11[2.15,] 
+		 17: %v_4->create! def_%v_13 %v_4[2.8,] %v_12[2.16,] 	 SYMBOL:	 ARGS:%v_12,
+		 18: RETURN %v_13[2.17,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

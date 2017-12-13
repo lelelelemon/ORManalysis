@@ -1,0 +1,424 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: def_import 
+		 6: import[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: def_data 
+		 1: data[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: def_strategy_name 
+		 1: strategy_name[6.0,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: Line Number 8
+		 1: ATTRASSIGN %self->import import[2.5,] 
+		 2: Line Number 9
+		 3: ATTRASSIGN %self->data data[4.0,] 
+		 4: Line Number 10
+		 5: %self->lookup_strategy def_%v_3 %self[8.1,8.3,2.0,] strategy_name[6.0,] 	 SYMBOL:	 ARGS:strategy_name,
+		 6: RETURN %v_3[8.5,] %self[8.1,8.3,8.5,2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = lookup_strategy instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_strategy_name 
+		 6: Line Number 14
+		 7: (STRATEGIES) def_%v_3 
+		 8: %v_3->[] def_%v_4 %v_3[2.7,] strategy_name[2.5,] 	 SYMBOL:	 ARGS:strategy_name,
+		 9: COPY TYPE_PASS def_strategy_class %v_4[2.8,] 
+		 10: Line Number 15
+		 11: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 16
+		 1: (UnknownStrategyError) def_%v_6 
+		 2: COPY TYPE_StringLiteral "strategy " def_%v_7 
+		 3: Line Number 17
+		 4: COPY TYPE_StringLiteral " is not known to the importer" def_%v_8 
+		 5: BUILDSTRING def_%v_9 %v_7[4.2,] strategy_name[2.5,] %v_8[4.4,] 
+		 6: %self->raise def_%v_10 %self[2.0,] %v_6[4.1,] %v_9[4.5,] 	 SYMBOL:	 ARGS:%v_6,%v_9,
+		 7: COPY TYPE_PASS def_%v_5 %v_10[4.6,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 19
+		 1: strategy_class->new def_%v_11 strategy_class[2.9,] 	 SYMBOL:	 ARGS:
+		 2: ATTRASSIGN %self->strategy %v_11[5.1,] 
+		 3: RETURN %v_11[5.1,] %self[5.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = parse instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 23
+		 6: GETFIELD %self->strategy def_%v_3 %self[2.0,] 
+		 7: GETFIELD %self->data def_%v_4 %self[2.0,] 
+		 8: %v_3->parse def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: COPY TYPE_PASS def_parsed %v_5[2.8,] 
+		 10: Line Number 24
+		 11: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:error,	 ARGS:Symbol,
+		 12: BRANCH %v_6[2.11,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 25
+		 1: GETFIELD %self->import def_%v_7 %self[2.0,] 
+		 2: ATTRASSIGN %v_7->status 
+		 3: Line Number 26
+		 4: GETFIELD %self->import def_%v_8 %self[2.0,] 
+		 5: parsed->[] def_%v_9 parsed[2.9,] 	 SYMBOL:error,	 ARGS:Symbol,
+		 6: ATTRASSIGN %v_8->error_message %v_9[3.5,] 
+		 7: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 28
+		 1: GETFIELD %self->import def_%v_10 %self[2.0,] 
+		 2: ATTRASSIGN %v_10->status 
+		 3: Line Number 29
+		 4: GETFIELD %self->import def_%v_11 %self[2.0,] 
+		 5: parsed->[] def_%v_12 parsed[2.9,] 	 SYMBOL:rows,	 ARGS:Symbol,
+		 6: %v_12->size def_%v_13 %v_12[4.5,] 	 SYMBOL:	 ARGS:
+		 7: ATTRASSIGN %v_11->row_count %v_13[4.6,] 
+		 8: Line Number 30
+		 9: GETFIELD %self->import def_%v_14 %self[2.0,] 
+		 10: %v_14->save! def_%v_15 %v_14[4.9,] 	 SYMBOL:	 ARGS:
+		 11: Line Number 31
+		 12: parsed->[] def_%v_16 parsed[4.5,2.9,] 	 SYMBOL:rows,	 ARGS:Symbol,
+		 13: %v_16->each_with_index def_%v_17 %v_16[4.12,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_16,
+CLOSURE BEGIN: %self[2.0,] row[] index[] attributes[] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_row 
+		 3: RECEIVEARG def_index 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: Line Number 32
+		 1: %self->attrs_for_row def_%cl_1_3 %self[2.0,] row[2.2,] 	 SYMBOL:	 ARGS:row,
+		 2: COPY TYPE_PASS def_attributes %cl_1_3[3.1,] 
+		 3: Line Number 33
+		 4: %cl_1_3->empty? def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 5: BRANCH %cl_1_4[3.4,] 
+BB 4
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_5 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: Line Number 34
+		 1: index->% def_%cl_1_6 index[2.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 2: %cl_1_6->== def_%cl_1_7 %cl_1_6[6.1,] 	 SYMBOL:	 ARGS:Fixnum,
+		 3: BRANCH %cl_1_7[6.2,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->import def_%cl_1_8 %self[2.0,] 
+		 1: %cl_1_8->reload def_%cl_1_9 %cl_1_8[7.0,] 	 SYMBOL:	 ARGS:
+		 2: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_9 
+BB 9
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: Line Number 35
+		 1: GETFIELD %self->import def_%cl_1_10 %self[2.0,] 
+		 2: %cl_1_10->rows def_%cl_1_11 %cl_1_10[9.1,] 	 SYMBOL:	 ARGS:
+		 3: index->+ def_%cl_1_12 index[2.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 4: HASH-sequence-import_attributes_attributes-status- def_%cl_1_13 %cl_1_12[9.3,] attributes[3.2,] 
+		 5: %cl_1_11->create! def_%cl_1_14 %cl_1_11[9.2,] %cl_1_13[9.4,] 	 SYMBOL:	 ARGS:%cl_1_13,
+		 6: RETURN %cl_1_14[9.5,] %self[2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_15 
+		 1: def_%cl_1_16 %cl_1_15[10.0,] 
+		 2: RETURN %cl_1_16[10.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: index[2.3,] attributes[3.2,] 
+		 14: Line Number 41
+		 15: GETFIELD %self->import def_%v_18 %self[2.0,] 
+		 16: parsed->[] def_%v_19 parsed[4.5,4.12,2.9,] 	 SYMBOL:headers,	 ARGS:Symbol,
+		 17: %self->build_mappings def_%v_20 %self[2.0,] %v_19[4.16,] 	 SYMBOL:	 ARGS:%v_19,
+		 18: ATTRASSIGN %v_18->mappings %v_20[4.17,] 
+		 19: Line Number 42
+		 20: GETFIELD %self->import def_%v_21 %self[4.17,2.0,] 
+		 21: ATTRASSIGN %v_21->status 
+		 22: COPY TYPE_Symbol def_%v_9 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 44
+		 1: GETFIELD %self->import def_%v_22 %self[2.0,] 
+		 2: %v_22->save! def_%v_23 %v_22[5.1,] 	 SYMBOL:	 ARGS:
+		 3: RETURN %v_23[5.2,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = build_mappings instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_headers 
+		 6: Line Number 50
+		 7: GETFIELD %self->import def_%v_3 %self[2.0,] 
+		 8: %v_3->mappings def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_5 
+		 1: COPY TYPE_PASS def_%v_4 %v_5[3.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_previous_mappings %v_4[3.1,2.8,] 
+		 1: Line Number 51
+		 2: HASH- def_%v_6 
+		 3: headers->each_with_object def_%v_7 headers[2.5,] %v_6[4.2,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_6,headers,
+CLOSURE BEGIN: previous_mappings[4.0,] name[] hash[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_name 
+		 3: RECEIVEARG def_hash 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 52
+		 1: previous_mappings->[] def_%cl_1_3 previous_mappings[] name[2.2,] 	 SYMBOL:	 ARGS:name,
+		 2: ATTRASSIGN hash->[] name[2.2,] %cl_1_3[3.1,] 
+		 3: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: hash[3.2,2.3,] 
+		 4: RETURN %v_7[4.3,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = attrs_for_row instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_row 
+		 6: Line Number 57
+		 7: row->each_with_index def_%v_3 row[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->map def_%v_4 %v_3[2.7,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: value[] %self[2.0,] index[] key[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_%cl_1_1 
+		 3: def_%cl_1_2 %cl_1_1[2.2,] 
+		 4: def_key %cl_1_2[2.3,] 
+		 5: def_value %cl_1_2[2.3,] 
+		 6: RECEIVEARG def_index 
+		 7: COPY TYPE_CurrentScope def_%current_scope 
+		 8: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 58
+		 1: (String) def_%cl_1_5 
+		 2: value->is_a? def_%cl_1_6 value[2.5,] %cl_1_5[3.1,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 3: BRANCH %cl_1_6[3.2,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "UTF-8" def_%cl_1_7 
+		 1: COPY TYPE_StringLiteral " " def_%cl_1_8 
+		 2: HASH-invalid-undef-replace- def_%cl_1_9 %cl_1_8[4.1,] 
+		 3: value->encode! def_%cl_1_10 value[2.5,] %cl_1_7[4.0,] %cl_1_9[4.2,] 	 SYMBOL:	 ARGS:%cl_1_7,%cl_1_9,
+		 4: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_10 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: Line Number 60
+		 1: GETFIELD %self->import def_%cl_1_11 %self[2.0,] 
+		 2: %cl_1_11->id def_%cl_1_12 %cl_1_11[6.1,] 	 SYMBOL:	 ARGS:
+		 3: index->+ def_%cl_1_13 index[2.6,] 	 SYMBOL:	 ARGS:Fixnum,
+		 4: HASH-name-value-import_id-sequence- def_%cl_1_14 key[2.4,] value[2.5,] %cl_1_12[6.2,] %cl_1_13[6.3,] 
+		 5: RETURN %cl_1_14[6.4,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_15 
+		 1: def_%cl_1_16 %cl_1_15[7.0,] 
+		 2: RETURN %cl_1_16[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: index[2.6,] value[2.5,] 
+		 9: RETURN %v_4[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

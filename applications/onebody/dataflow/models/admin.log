@@ -1,0 +1,409 @@
+SET IRMethod, name = person instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 4
+		 6: %self->people def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->first def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = people_count instanceMethod = false
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 8
+		 6: %self->all def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->inject def_%v_4 %v_3[2.6,] %self[2.0,2.6,] 	 SYMBOL:	 ARGS:Fixnum,%v_3,
+CLOSURE BEGIN: admin[] sum[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_sum 
+		 3: RECEIVEARG def_admin 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 8
+		 1: admin->people def_%cl_1_3 admin[2.3,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->count def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: sum->+ def_%cl_1_5 sum[2.2,] %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:%cl_1_4,
+		 4: COPY TYPE_PASS def_sum %cl_1_5[3.3,] 
+		 5: RETURN %cl_1_5[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: admin[2.3,] 
+		 8: RETURN %v_4[2.7,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = template? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 16
+		 6: %self->template_name def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->nil? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->! def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = ensure_flags_is_hash instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 24
+		 6: %self->flags def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: (Hash) def_%v_4 
+		 8: %v_3->is_a? def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: RETURN %v_6[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: HASH- def_%v_7 
+		 1: ATTRASSIGN %self->flags %v_7[4.0,] 
+		 2: RETURN %v_7[4.0,] %self[4.1,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = privileges_for_show instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 33
+		 6: (I18n) def_%v_3 
+		 7: COPY TYPE_StringLiteral "admin.privileges" def_%v_4 
+		 8: %v_3->t def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: %v_5->select def_%v_6 %v_5[2.8,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_5,
+CLOSURE BEGIN: %self[2.0,] name[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_name 
+		 3: RECEIVEARG def__priv 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 34
+		 1: %self->privileges def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: name->to_s def_%cl_1_4 name[2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_1_3->include? def_%cl_1_5 %cl_1_3[3.1,] %cl_1_4[3.2,] 	 SYMBOL:	 ARGS:%cl_1_4,
+		 4: RETURN %cl_1_5[3.3,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: _priv[2.3,] 
+		 10: %v_6->sort_by def_%v_7 %v_6[2.9,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_6,
+CLOSURE BEGIN: priv[] %self[2.0,] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def__name 
+		 3: RECEIVEARG def_priv 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 36
+		 1: priv->[] def_%cl_2_3 priv[2.3,] 	 SYMBOL:order,	 ARGS:Symbol,
+		 2: (Integer) def_%cl_2_4 
+		 3: %cl_2_3->is_a? def_%cl_2_5 %cl_2_3[3.1,] %cl_2_4[3.2,] 	 SYMBOL:	 ARGS:%cl_2_4,
+		 4: BRANCH %cl_2_5[3.3,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "%03d" def_%cl_2_6 
+		 1: priv->[] def_%cl_2_7 priv[2.3,] 	 SYMBOL:order,	 ARGS:Symbol,
+		 2: %self->format def_%cl_2_8 %self[2.0,] %cl_2_6[4.0,] %cl_2_7[4.1,] 	 SYMBOL:	 ARGS:%cl_2_6,%cl_2_7,
+		 3: 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: priv->[] def_%cl_2_9 priv[2.3,] 	 SYMBOL:order,	 ARGS:Symbol,
+		 1: %cl_2_9->to_s def_%cl_2_10 %cl_2_9[5.0,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %cl_2_10[5.1,] %self[2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_2_8[4.2,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_11 
+		 1: def_%cl_2_12 %cl_2_11[7.0,] 
+		 2: RETURN %cl_2_12[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: priv[2.3,] 
+		 11: %v_7->map def_%v_8 %v_7[2.10,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_7,
+CLOSURE BEGIN: name[2.9,] priv[2.10,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_name 
+		 3: RECEIVEARG def_priv 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 38
+		 1: name->to_s def_%cl_3_3 name[2.2,] 	 SYMBOL:	 ARGS:
+		 2: ATTRASSIGN priv->[] %cl_3_3[3.1,] 
+		 3: Line Number 39
+		 4: RETURN priv[3.2,2.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_4 
+		 1: def_%cl_3_5 %cl_3_4[4.0,] 
+		 2: RETURN %cl_3_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: priv[3.2,2.3,] 
+		 12: RETURN %v_8[2.11,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = add_privileges instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 4 5 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_privs 
+		 6: Line Number 44
+		 7: %self->privileges def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Array def_%v_5 
+		 1: %self->privileges= def_%v_4 %v_5[4.0,] 	 SYMBOL:	 ARGS:%v_5,
+		 2: COPY TYPE_PASS def_%v_3 %v_5[4.0,] 
+BB 5
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: Line Number 45
+		 1: privs->each def_%v_6 privs[2.5,] %self[4.1,2.0,] 	 SYMBOL:	 ARGS:privs,
+CLOSURE BEGIN: priv[] %self[4.1,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_priv 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 46
+		 1: priv->to_s def_%cl_1_3 priv[2.2,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_priv %cl_1_3[3.1,] 
+		 3: Line Number 47
+		 4: %self->privileges def_%cl_1_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 5: %cl_1_4-><< def_%cl_1_5 %cl_1_4[3.4,] priv[3.1,3.2,] 	 SYMBOL:	 ARGS:priv,
+		 6: Line Number 48
+		 7: COPY TYPE_StringLiteral "          def " def_%cl_1_6 
+		 8: Line Number 49
+		 9: COPY TYPE_StringLiteral "?
+            self.flags ||= {}
+            self.flags[" def_%cl_1_7 
+		 10: Line Number 51
+		 11: priv->inspect def_%cl_1_8 priv[3.1,3.2,] 	 SYMBOL:	 ARGS:
+		 12: COPY TYPE_StringLiteral "] || false
+          end
+          def " def_%cl_1_9 
+		 13: Line Number 53
+		 14: COPY TYPE_StringLiteral "=(v)
+            self.flags ||= {}
+            if [false, nil].include?(v)
+              self.flags.delete(" def_%cl_1_10 
+		 15: Line Number 56
+		 16: priv->inspect def_%cl_1_11 priv[3.1,3.2,3.11,] 	 SYMBOL:	 ARGS:
+		 17: COPY TYPE_StringLiteral ")
+            else
+              self.flags[" def_%cl_1_12 
+		 18: Line Number 58
+		 19: priv->inspect def_%cl_1_13 priv[3.1,3.2,3.11,3.16,] 	 SYMBOL:	 ARGS:
+		 20: COPY TYPE_StringLiteral "] = v
+            end
+          end
+" def_%cl_1_14 
+		 21: BUILDSTRING def_%cl_1_15 %cl_1_6[3.7,] priv[3.1,3.2,3.11,3.16,3.19,] %cl_1_7[3.9,] %cl_1_8[3.11,] %cl_1_9[3.12,] priv[3.1,3.2,3.11,3.16,3.19,] %cl_1_10[3.14,] %cl_1_11[3.16,] %cl_1_12[3.17,] %cl_1_13[3.19,] %cl_1_14[3.20,] 
+		 22: %self->class_eval def_%cl_1_16 %self[3.4,2.0,] %cl_1_15[3.21,] 	 SYMBOL:	 ARGS:%cl_1_15,
+		 23: RETURN %cl_1_16[3.22,] %self[3.4,3.22,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_17 
+		 1: def_%cl_1_18 %cl_1_17[4.0,] 
+		 2: RETURN %cl_1_18[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: RETURN %v_6[5.1,] %self[4.1,2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: def_%v_7 
+		 1: def_%v_8 %v_7[6.0,] 
+		 2: RETURN %v_8[6.1,] %self[4.1,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+

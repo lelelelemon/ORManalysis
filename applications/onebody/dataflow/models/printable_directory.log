@@ -1,0 +1,1335 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 7 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_person 
+		 6: def_pictures 
+		 7: pictures[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_pictures 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 2
+		 1: ATTRASSIGN %self->person person[2.5,] 
+		 2: Line Number 3
+		 3: ATTRASSIGN %self->pictures pictures[3.0,2.6,] 
+		 4: Line Number 4
+		 5: (Prawn) def_%v_3 
+		 6: (inherit Document) def_%v_4 %v_3[4.5,] 
+		 7: %v_4[4.6,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[4.5,] 	 SYMBOL:Document,	 ARGS:Symbol,
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %v_4->new def_%v_5 %v_4[5.0,4.6,] 	 SYMBOL:	 ARGS:
+		 1: ATTRASSIGN %self->pdf %v_5[6.0,] 
+		 2: RETURN %v_5[6.0,] %self[6.1,4.1,4.3,2.0,] 
+BB 7
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = render instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 23
+		 6: %self->set_font def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: Line Number 24
+		 8: %self->render_cover_page def_%v_4 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: Line Number 25
+		 10: %self->start_new_page def_%v_5 %self[2.0,2.6,2.8,] 	 SYMBOL:	 ARGS:
+		 11: Line Number 26
+		 12: %self->render_header def_%v_6 %self[2.0,2.6,2.8,2.10,] 	 SYMBOL:	 ARGS:
+		 13: Line Number 27
+		 14: %self->render_families def_%v_7 %self[2.0,2.6,2.8,2.10,2.12,] 	 SYMBOL:	 ARGS:
+		 15: Line Number 28
+		 16: GETFIELD %self->pdf def_%v_8 %self[2.0,2.6,2.8,2.10,2.12,2.14,] 
+		 17: %v_8->render def_%v_9 %v_8[2.16,] 	 SYMBOL:	 ARGS:
+		 18: RETURN %v_9[2.17,] %self[2.0,2.6,2.8,2.10,2.12,2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_font instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 34
+		 6: GETFIELD %self->pdf def_%v_3 %self[2.0,] 
+		 7: (Rails) def_%v_4 
+		 8: %v_4->root def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral "vendor/assets/fonts/OpenSans-Regular.ttf" def_%v_6 
+		 10: %v_5->join def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: %v_3->font def_%v_8 %v_3[2.6,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_7,
+		 12: Line Number 35
+		 13: GETFIELD %self->pdf def_%v_9 %self[2.0,] 
+		 14: %v_9->default_leading def_%v_10 %v_9[2.13,] 	 SYMBOL:	 ARGS:Fixnum,
+		 15: RETURN %v_10[2.14,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = render_cover_page instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 39
+		 6: %self->bounds def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->left def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->bounds def_%v_5 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->top def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %v_6->/ def_%v_7 %v_6[2.9,] 	 SYMBOL:	 ARGS:Fixnum,
+		 11: %v_7->+ def_%v_8 %v_7[2.10,] 	 SYMBOL:	 ARGS:Fixnum,
+		 12: COPY TYPE_Array def_%v_9 %v_4[2.7,] %v_8[2.11,] 
+		 13: %self->bounds def_%v_10 %self[2.0,2.6,2.8,] 	 SYMBOL:	 ARGS:
+		 14: %v_10->width def_%v_11 %v_10[2.13,] 	 SYMBOL:	 ARGS:
+		 15: HASH-width- def_%v_12 %v_11[2.14,] 
+		 16: %self->bounding_box def_%v_13 %self[2.0,2.6,2.8,2.13,] %v_9[2.12,] %v_12[2.15,] %self[2.0,2.6,2.8,2.13,] 	 SYMBOL:	 ARGS:%v_9,%v_12,%self,
+CLOSURE BEGIN: %self[2.0,2.6,2.8,2.13,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 40
+		 1: (Setting) def_%cl_1_3 
+		 2: %cl_1_3->get def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:name,community,	 ARGS:Symbol,Symbol,
+		 3: HASH-align-size- def_%cl_1_5 
+		 4: %self->text def_%cl_1_6 %self[2.0,] %cl_1_4[3.2,] %cl_1_5[3.3,] 	 SYMBOL:	 ARGS:%cl_1_4,%cl_1_5,
+		 5: Line Number 43
+		 6: (I18n) def_%cl_1_7 
+		 7: COPY TYPE_StringLiteral "printable_directories.pdf.cover_page_sub_heading" def_%cl_1_8 
+		 8: %cl_1_7->t def_%cl_1_9 %cl_1_7[3.6,] %cl_1_8[3.7,] 	 SYMBOL:	 ARGS:%cl_1_8,
+		 9: HASH-align-size- def_%cl_1_10 
+		 10: %self->text def_%cl_1_11 %self[3.4,2.0,] %cl_1_9[3.8,] %cl_1_10[3.9,] 	 SYMBOL:	 ARGS:%cl_1_9,%cl_1_10,
+		 11: Line Number 46
+		 12: %self->move_down def_%cl_1_12 %self[3.4,3.10,2.0,] 	 SYMBOL:	 ARGS:Fixnum,
+		 13: Line Number 47
+		 14: (I18n) def_%cl_1_13 
+		 15: COPY TYPE_StringLiteral "printable_directories.pdf.created_for" def_%cl_1_14 
+		 16: %self->person def_%cl_1_15 %self[3.4,3.10,3.12,2.0,] 	 SYMBOL:	 ARGS:
+		 17: %cl_1_15->name def_%cl_1_16 %cl_1_15[3.16,] 	 SYMBOL:	 ARGS:
+		 18: (Date) def_%cl_1_17 
+		 19: %cl_1_17->current def_%cl_1_18 %cl_1_17[3.18,] 	 SYMBOL:	 ARGS:
+		 20: %cl_1_18->to_s def_%cl_1_19 %cl_1_18[3.19,] 	 SYMBOL:date,	 ARGS:Symbol,
+		 21: HASH-name-date- def_%cl_1_20 %cl_1_16[3.17,] %cl_1_19[3.20,] 
+		 22: %cl_1_13->t def_%cl_1_21 %cl_1_13[3.14,] %cl_1_14[3.15,] %cl_1_20[3.21,] 	 SYMBOL:	 ARGS:%cl_1_14,%cl_1_20,
+		 23: HASH-align-size- def_%cl_1_22 
+		 24: %self->text def_%cl_1_23 %self[3.4,3.10,3.12,3.16,2.0,] %cl_1_21[3.22,] %cl_1_22[3.23,] 	 SYMBOL:	 ARGS:%cl_1_21,%cl_1_22,
+		 25: RETURN %cl_1_23[3.24,] %self[3.4,3.10,3.12,3.16,3.24,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_24 
+		 1: def_%cl_1_25 %cl_1_24[4.0,] 
+		 2: RETURN %cl_1_25[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: RETURN %v_13[2.16,] %self[2.0,2.6,2.8,2.13,2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = render_header instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 54
+		 6: def_%v_3 %self[2.0,] 
+CLOSURE BEGIN: pg[] 
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 5 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: RECEIVEARG def_pg 
+		 5: Line Number 54
+		 6: pg->> def_%cl_1_3 pg[2.4,] 	 SYMBOL:	 ARGS:Fixnum,
+		 7: RETURN %cl_1_3[2.6,] %self[2.0,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[3.0,] 
+		 2: RETURN %cl_1_5[3.1,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 7: HASH-dynamic- def_%v_4 
+		 8: %self->repeat def_%v_5 %self[2.0,] %v_3[2.6,] %v_4[2.7,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_3,%v_4,%self,
+CLOSURE BEGIN: %self[2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 55
+		 1: %self->bounds def_%cl_2_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_2_3->left def_%cl_2_4 %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %self->bounds def_%cl_2_5 %self[3.1,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %cl_2_5->top def_%cl_2_6 %cl_2_5[3.3,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_Array def_%cl_2_7 %cl_2_4[3.2,] %cl_2_6[3.4,] 
+		 6: %self->bounds def_%cl_2_8 %self[3.1,3.3,2.0,] 	 SYMBOL:	 ARGS:
+		 7: %cl_2_8->width def_%cl_2_9 %cl_2_8[3.6,] 	 SYMBOL:	 ARGS:
+		 8: HASH-width- def_%cl_2_10 %cl_2_9[3.7,] 
+		 9: %self->bounding_box def_%cl_2_11 %self[3.1,3.3,3.6,2.0,] %cl_2_7[3.5,] %cl_2_10[3.8,] %self[3.1,3.3,3.6,2.0,] 	 SYMBOL:	 ARGS:%cl_2_7,%cl_2_10,%self,
+CLOSURE BEGIN: %self[3.1,3.3,3.6,2.0,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 56
+		 1: (I18n) def_%cl_3_3 
+		 2: COPY TYPE_StringLiteral "printable_directories.pdf.heading" def_%cl_3_4 
+		 3: (Setting) def_%cl_3_5 
+		 4: %cl_3_5->get def_%cl_3_6 %cl_3_5[3.3,] 	 SYMBOL:name,community,	 ARGS:Symbol,Symbol,
+		 5: HASH-community- def_%cl_3_7 %cl_3_6[3.4,] 
+		 6: %cl_3_3->t def_%cl_3_8 %cl_3_3[3.1,] %cl_3_4[3.2,] %cl_3_7[3.5,] 	 SYMBOL:	 ARGS:%cl_3_4,%cl_3_7,
+		 7: HASH-align-size- def_%cl_3_9 
+		 8: %self->text def_%cl_3_10 %self[2.0,] %cl_3_8[3.6,] %cl_3_9[3.7,] 	 SYMBOL:	 ARGS:%cl_3_8,%cl_3_9,
+		 9: Line Number 59
+		 10: %self->stroke_horizontal_rule def_%cl_3_11 %self[3.8,2.0,] 	 SYMBOL:	 ARGS:
+		 11: RETURN %cl_3_11[3.10,] %self[3.8,3.10,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_12 
+		 1: def_%cl_3_13 %cl_3_12[4.0,] 
+		 2: RETURN %cl_3_13[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 10: RETURN %cl_2_11[3.9,] %self[3.1,3.3,3.6,3.9,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_12 
+		 1: def_%cl_2_13 %cl_2_12[4.0,] 
+		 2: RETURN %cl_2_13[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: RETURN %v_5[2.8,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = render_families instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 67
+		 6: ATTRASSIGN %self->last_alpha 
+		 7: Line Number 68
+		 8: %self->bounds def_%v_3 %self[2.0,2.6,] 	 SYMBOL:	 ARGS:
+		 9: %v_3->left def_%v_4 %v_3[2.8,] 	 SYMBOL:	 ARGS:
+		 10: %self->bounds def_%v_5 %self[2.0,2.6,2.8,] 	 SYMBOL:	 ARGS:
+		 11: %v_5->top def_%v_6 %v_5[2.10,] 	 SYMBOL:	 ARGS:
+		 12: %v_6->- def_%v_7 %v_6[2.11,] 	 SYMBOL:	 ARGS:Fixnum,
+		 13: COPY TYPE_Array def_%v_8 %v_4[2.9,] %v_7[2.12,] 
+		 14: %self->bounds def_%v_9 %self[2.0,2.6,2.8,2.10,] 	 SYMBOL:	 ARGS:
+		 15: %v_9->width def_%v_10 %v_9[2.14,] 	 SYMBOL:	 ARGS:
+		 16: %self->bounds def_%v_11 %self[2.0,2.6,2.8,2.10,2.14,] 	 SYMBOL:	 ARGS:
+		 17: %v_11->height def_%v_12 %v_11[2.16,] 	 SYMBOL:	 ARGS:
+		 18: %v_12->- def_%v_13 %v_12[2.17,] 	 SYMBOL:	 ARGS:Fixnum,
+		 19: HASH-width-height-columns- def_%v_14 %v_10[2.15,] %v_13[2.18,] 
+		 20: %self->column_box def_%v_15 %self[2.0,2.6,2.8,2.10,2.14,2.16,] %v_8[2.13,] %v_14[2.19,] %self[2.0,2.6,2.8,2.10,2.14,2.16,] 	 SYMBOL:	 ARGS:%v_8,%v_14,%self,
+CLOSURE BEGIN: %self[2.0,2.6,2.8,2.10,2.14,2.16,] family[] alpha[] alpha_heading[] photo[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 69
+		 1: %self->families def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_3->each def_%cl_1_4 %cl_1_3[3.1,] %self[3.1,2.0,] 	 SYMBOL:	 ARGS:%cl_1_3,
+CLOSURE BEGIN: family[] %self[3.1,2.0,] alpha[] alpha_heading[] photo[] 
+BB 1
+	outgoing: 17 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_family 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 15 
+	datadep: 
+	instructions:
+		 0: Line Number 70
+		 1: family->last_name def_%cl_2_3 family[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_2_3->[] def_%cl_2_4 %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:Fixnum,
+		 3: %cl_2_4->upcase def_%cl_2_5 %cl_2_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_PASS def_alpha %cl_2_5[3.3,] 
+		 5: Line Number 71
+		 6: GETFIELD %self->pictures def_%cl_2_6 %self[2.0,] 
+		 7: BRANCH %cl_2_6[3.6,] 
+BB 4
+	outgoing: 5 15 
+	datadep: 
+	instructions:
+		 0: %self->family_photo def_%cl_2_7 %self[2.0,] family[2.2,] 	 SYMBOL:	 ARGS:family,
+		 1: COPY TYPE_PASS def_%cl_2_6 %cl_2_7[4.0,] 
+BB 5
+	outgoing: 6 7 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_photo %cl_2_6[4.1,3.6,] 
+		 1: Line Number 72
+		 2: %self->alpha_and_family_fits? def_%cl_2_8 %self[2.0,] alpha[3.4,] family[2.2,] %cl_2_6[4.1,3.6,] 	 SYMBOL:	 ARGS:alpha,family,photo,
+		 3: BRANCH %cl_2_8[5.2,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_9 
+		 1: 
+BB 7
+	outgoing: 8 15 
+	datadep: 
+	instructions:
+		 0: %self->cursor def_%cl_2_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %self->move_down def_%cl_2_11 %self[7.0,2.0,] %cl_2_10[7.0,] 	 SYMBOL:	 ARGS:%cl_2_10,
+		 2: COPY TYPE_PASS def_%cl_2_9 %cl_2_11[7.1,] 
+BB 8
+	outgoing: 9 10 15 
+	datadep: 
+	instructions:
+		 0: Line Number 73
+		 1: %self->formatted_alpha_heading def_%cl_2_12 %self[2.0,] alpha[3.4,] 	 SYMBOL:	 ARGS:alpha,
+		 2: COPY TYPE_PASS def_alpha_heading %cl_2_12[8.1,] 
+		 3: BRANCH %cl_2_12[8.1,] 
+BB 9
+	outgoing: 11 15 
+	datadep: 
+	instructions:
+		 0: Line Number 74
+		 1: HASH-inline_format- def_%cl_2_13 
+		 2: %self->text def_%cl_2_14 %self[2.0,] alpha_heading[8.2,] %cl_2_13[9.1,] 	 SYMBOL:	 ARGS:alpha_heading,%cl_2_13,
+		 3: Line Number 75
+		 4: %self->stroke_horizontal_rule def_%cl_2_15 %self[9.2,2.0,] 	 SYMBOL:	 ARGS:
+		 5: Line Number 76
+		 6: COPY TYPE_StringLiteral "
+" def_%cl_2_16 
+		 7: %self->text def_%cl_2_17 %self[9.2,9.4,2.0,] %cl_2_16[9.6,] 	 SYMBOL:	 ARGS:%cl_2_16,
+		 8: 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_17 
+BB 11
+	outgoing: 12 13 
+	datadep: 
+	instructions:
+		 0: Line Number 79
+		 1: GETFIELD %self->pictures def_%cl_2_18 %self[2.0,] 
+		 2: BRANCH %cl_2_18[11.1,] 
+BB 12
+	outgoing: 14 15 
+	datadep: 
+	instructions:
+		 0: %self->render_photo def_%cl_2_19 %self[2.0,] photo[5.0,] 	 SYMBOL:	 ARGS:photo,
+		 1: 
+BB 13
+	outgoing: 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_19 
+BB 14
+	outgoing: 15 17 
+	datadep: 
+	instructions:
+		 0: %self->formatted_family def_%cl_2_20 %self[2.0,] family[2.2,] 	 SYMBOL:	 ARGS:family,
+		 1: HASH-inline_format- def_%cl_2_21 
+		 2: %self->text def_%cl_2_22 %self[14.0,2.0,] %cl_2_20[14.0,] %cl_2_21[14.1,] 	 SYMBOL:	 ARGS:%cl_2_20,%cl_2_21,
+		 3: Line Number 80
+		 4: (FAMILY_MARGIN) def_%cl_2_23 
+		 5: %self->move_down def_%cl_2_24 %self[14.0,14.2,2.0,] %cl_2_23[14.4,] 	 SYMBOL:	 ARGS:%cl_2_23,
+		 6: Line Number 81
+		 7: ATTRASSIGN %self->last_alpha alpha[3.4,] 
+		 8: RETURN alpha[3.4,] %self[14.0,14.2,14.5,14.7,2.0,] 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_25 
+		 1: def_%cl_2_26 %cl_2_25[15.0,] 
+		 2: RETURN %cl_2_26[15.1,] %self[14.7,2.0,] 
+BB 17
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: alpha_heading[8.2,] alpha[3.4,] photo[5.0,] 
+		 3: RETURN %cl_1_4[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 21: RETURN %v_15[2.20,] %self[2.0,2.6,2.8,2.10,2.14,2.16,2.20,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = render_photo instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_photo 
+		 6: Line Number 89
+		 7: BRANCH photo[2.5,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_3 
+		 1: Line Number 90
+		 2: photo->path def_%v_4 photo[2.5,] 	 SYMBOL:	 ARGS:
+		 3: %self->image_bounds_width def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: HASH-width- def_%v_6 %v_5[3.3,] 
+		 5: %self->image def_%v_7 %self[3.3,2.0,] %v_4[3.2,] %v_6[3.4,] 	 SYMBOL:	 ARGS:%v_4,%v_6,
+		 6: Line Number 91
+		 7: (PHOTO_MARGIN) def_%v_8 
+		 8: %self->move_down def_%v_9 %self[3.3,3.5,2.0,] %v_8[3.7,] 	 SYMBOL:	 ARGS:%v_8,
+		 9: RETURN %v_9[3.8,] %self[3.3,3.5,3.8,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = alpha_and_family_fits? instanceMethod = true
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_alpha 
+		 6: RECEIVEARG def_family 
+		 7: RECEIVEARG def_photo 
+		 8: Line Number 95
+		 9: (Prawn) def_%v_3 
+		 10: (inherit Text) def_%v_4 %v_3[2.9,] 
+		 11: %v_4[2.10,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[2.9,] 	 SYMBOL:Text,	 ARGS:Symbol,
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: (inherit Formatted) def_%v_5 %v_4[3.0,2.10,] 
+		 1: %v_5[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %v_4->const_missing def_%v_5 %v_4[3.0,2.10,] 	 SYMBOL:Formatted,	 ARGS:Symbol,
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: (inherit Box) def_%v_6 %v_5[5.0,4.0,] 
+		 1: %v_6[6.0,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[5.0,4.0,] 	 SYMBOL:Box,	 ARGS:Symbol,
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: %self->formatted_alpha_and_family def_%v_7 %self[2.0,] alpha[2.5,] family[2.6,] 	 SYMBOL:	 ARGS:alpha,family,
+		 1: HASH-text- def_%v_8 %v_7[8.0,] 
+		 2: COPY TYPE_Array def_%v_9 %v_8[8.1,] 
+		 3: %self->bounds def_%v_10 %self[8.0,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_10->left def_%v_11 %v_10[8.3,] 	 SYMBOL:	 ARGS:
+		 5: %self->bounds def_%v_12 %self[8.0,8.3,2.0,] 	 SYMBOL:	 ARGS:
+		 6: %v_12->top def_%v_13 %v_12[8.5,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_Array def_%v_14 %v_11[8.4,] %v_13[8.6,] 
+		 8: %self->bounds def_%v_15 %self[8.0,8.3,8.5,2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_15->width def_%v_16 %v_15[8.8,] 	 SYMBOL:	 ARGS:
+		 10: GETFIELD %self->pdf def_%v_17 %self[8.0,8.3,8.5,8.8,2.0,] 
+		 11: HASH-at-width-inline_format-document- def_%v_18 %v_14[8.7,] %v_16[8.9,] %v_17[8.10,] 
+		 12: %v_6->new def_%v_19 %v_6[7.0,6.0,] %v_9[8.2,] %v_18[8.11,] 	 SYMBOL:	 ARGS:%v_9,%v_18,
+		 13: COPY TYPE_PASS def_trial %v_19[8.12,] 
+		 14: Line Number 102
+		 15: HASH-dry_run- def_%v_20 
+		 16: %v_19->render def_%v_21 %v_19[8.12,] %v_20[8.15,] 	 SYMBOL:	 ARGS:%v_20,
+		 17: Line Number 103
+		 18: trial->height def_%v_22 trial[8.13,] 	 SYMBOL:	 ARGS:
+		 19: COPY TYPE_PASS def_height %v_22[8.18,] 
+		 20: Line Number 104
+		 21: BRANCH photo[2.7,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: %self->family_photo_height def_%v_23 %self[2.0,] photo[2.7,] 	 SYMBOL:	 ARGS:photo,
+		 1: (PHOTO_MARGIN) def_%v_24 
+		 2: %v_23->+ def_%v_25 %v_23[9.0,] %v_24[9.1,] 	 SYMBOL:	 ARGS:%v_24,
+		 3: height->+ def_%v_26 height[8.19,] %v_25[9.2,] 	 SYMBOL:	 ARGS:%v_25,
+		 4: COPY TYPE_PASS def_height %v_26[9.3,] 
+		 5: 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_26 
+BB 11
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: Line Number 105
+		 1: %self->cursor def_%v_27 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_27->- def_%v_28 %v_27[11.1,] height[9.4,8.19,] 	 SYMBOL:	 ARGS:height,
+		 3: %self->bounds def_%v_29 %self[11.1,2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_29->bottom def_%v_30 %v_29[11.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_28->>= def_%v_31 %v_28[11.2,] %v_30[11.4,] 	 SYMBOL:	 ARGS:%v_30,
+		 6: RETURN %v_31[11.5,] %self[11.1,11.3,2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_alpha_and_family instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_alpha 
+		 6: RECEIVEARG def_family 
+		 7: Line Number 110
+		 8: %self->formatted_alpha_heading def_%v_3 %self[2.0,] alpha[2.5,] 	 SYMBOL:	 ARGS:alpha,
+		 9: %self->formatted_family def_%v_4 %self[2.0,2.8,] family[2.6,] 	 SYMBOL:	 ARGS:family,
+		 10: COPY TYPE_Array def_%v_5 %v_3[2.8,] %v_4[2.9,] 
+		 11: %v_5->compact def_%v_6 %v_5[2.10,] 	 SYMBOL:	 ARGS:
+		 12: COPY TYPE_StringLiteral "
+" def_%v_7 
+		 13: %v_6->join def_%v_8 %v_6[2.11,] %v_7[2.12,] 	 SYMBOL:	 ARGS:%v_7,
+		 14: RETURN %v_8[2.13,] %self[2.0,2.8,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_alpha_heading instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_alpha 
+		 6: Line Number 116
+		 7: GETFIELD %self->last_alpha def_%v_3 %self[2.0,] 
+		 8: alpha->== def_%v_4 alpha[2.5,] %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: Line Number 117
+		 2: COPY TYPE_StringLiteral "<font size='20'>" def_%v_6 
+		 3: COPY TYPE_StringLiteral "</font>
+" def_%v_7 
+		 4: BUILDSTRING def_%v_8 %v_6[4.2,] alpha[2.5,] %v_7[4.3,] 
+		 5: RETURN %v_8[4.4,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_family instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_family 
+		 6: Line Number 122
+		 7: COPY TYPE_StringLiteral "<font size='18'>" def_%v_3 
+		 8: family->name def_%v_4 family[2.5,] 	 SYMBOL:	 ARGS:
+		 9: %self->h def_%v_5 %self[2.0,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: COPY TYPE_StringLiteral "</font>" def_%v_6 
+		 11: BUILDSTRING def_%v_7 %v_3[2.7,] %v_5[2.9,] %v_6[2.10,] 
+		 12: %self->formatted_address def_%v_8 %self[2.0,2.9,] family[2.5,2.8,] 	 SYMBOL:	 ARGS:family,
+		 13: %self->formatted_home_phone def_%v_9 %self[2.0,2.9,2.12,] family[2.5,2.8,] 	 SYMBOL:	 ARGS:family,
+		 14: family->people def_%v_10 family[2.5,2.8,] 	 SYMBOL:	 ARGS:
+		 15: %v_10->undeleted def_%v_11 %v_10[2.14,] 	 SYMBOL:	 ARGS:
+		 16: %v_11->map def_%v_12 %v_11[2.15,] %self[2.0,2.9,2.12,2.13,] 	 SYMBOL:	 ARGS:%v_11,
+CLOSURE BEGIN: %self[2.0,2.9,2.12,2.13,] p[] family[2.5,2.8,2.14,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_p 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 127
+		 1: %self->formatted_name def_%cl_1_3 %self[2.0,] p[2.2,] family[] 	 SYMBOL:	 ARGS:p,family,
+		 2: %self->formatted_mobile_phone def_%cl_1_4 %self[3.1,2.0,] p[2.2,] 	 SYMBOL:	 ARGS:p,
+		 3: %self->formatted_email def_%cl_1_5 %self[3.1,3.2,2.0,] p[2.2,] 	 SYMBOL:	 ARGS:p,
+		 4: COPY TYPE_Array def_%cl_1_6 %cl_1_3[3.1,] %cl_1_4[3.2,] %cl_1_5[3.3,] 
+		 5: %cl_1_6->compact def_%cl_1_7 %cl_1_6[3.4,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_StringLiteral " Â· " def_%cl_1_8 
+		 7: %cl_1_7->join def_%cl_1_9 %cl_1_7[3.5,] %cl_1_8[3.6,] 	 SYMBOL:	 ARGS:%cl_1_8,
+		 8: RETURN %cl_1_9[3.7,] %self[3.1,3.2,3.3,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_10 
+		 1: def_%cl_1_11 %cl_1_10[4.0,] 
+		 2: RETURN %cl_1_11[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 17: COPY TYPE_Array def_%v_13 %v_7[2.11,] %v_8[2.12,] %v_9[2.13,] %v_12[2.16,] 
+		 18: %v_13->flatten def_%v_14 %v_13[2.17,] 	 SYMBOL:	 ARGS:
+		 19: %v_14->compact def_%v_15 %v_14[2.18,] 	 SYMBOL:	 ARGS:
+		 20: COPY TYPE_StringLiteral "
+" def_%v_16 
+		 21: %v_15->join def_%v_17 %v_15[2.19,] %v_16[2.20,] 	 SYMBOL:	 ARGS:%v_16,
+		 22: RETURN %v_17[2.21,] %self[2.0,2.9,2.12,2.13,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_address instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_family 
+		 6: Line Number 136
+		 7: family->pretty_address def_%v_3 family[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->blank? def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: Line Number 137
+		 2: family->people def_%v_6 family[2.5,] 	 SYMBOL:	 ARGS:
+		 3: %v_6->undeleted def_%v_7 %v_6[4.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_7->detect def_%v_8 %v_7[4.3,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_7,
+CLOSURE BEGIN: %self[2.0,] p[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_p 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 137
+		 1: %self->person def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: p->share_address_with def_%cl_1_4 p[2.2,] %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: RETURN %cl_1_4[3.2,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 5: BRANCH %v_8[4.4,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+		 1: Line Number 138
+		 2: COPY TYPE_StringLiteral "<font size='14'>" def_%v_10 
+		 3: family->pretty_address def_%v_11 family[2.5,] 	 SYMBOL:	 ARGS:
+		 4: %v_11->strip def_%v_12 %v_11[6.3,] 	 SYMBOL:	 ARGS:
+		 5: %self->h def_%v_13 %self[2.0,] %v_12[6.4,] 	 SYMBOL:	 ARGS:%v_12,
+		 6: COPY TYPE_StringLiteral "</font>" def_%v_14 
+		 7: BUILDSTRING def_%v_15 %v_10[6.2,] %v_13[6.5,] %v_14[6.6,] 
+		 8: RETURN %v_15[6.7,] %self[6.5,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_home_phone instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_family 
+		 6: Line Number 142
+		 7: family->home_phone def_%v_3 family[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->blank? def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: Line Number 143
+		 2: COPY TYPE_StringLiteral "<font size='14'>" def_%v_6 
+		 3: family->home_phone def_%v_7 family[2.5,] 	 SYMBOL:	 ARGS:
+		 4: %self->format_phone def_%v_8 %self[2.0,] %v_7[4.3,] 	 SYMBOL:	 ARGS:%v_7,
+		 5: %self->h def_%v_9 %self[4.4,2.0,] %v_8[4.4,] 	 SYMBOL:	 ARGS:%v_8,
+		 6: COPY TYPE_StringLiteral "</font>" def_%v_10 
+		 7: BUILDSTRING def_%v_11 %v_6[4.2,] %v_9[4.5,] %v_10[4.6,] 
+		 8: RETURN %v_11[4.7,] %self[4.4,4.5,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_name instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_p 
+		 6: RECEIVEARG def_family 
+		 7: Line Number 147
+		 8: p->last_name def_%v_3 p[2.5,] 	 SYMBOL:	 ARGS:
+		 9: family->last_name def_%v_4 family[2.6,] 	 SYMBOL:	 ARGS:
+		 10: %v_3->== def_%v_5 %v_3[2.8,] %v_4[2.9,] 	 SYMBOL:	 ARGS:%v_4,
+		 11: BRANCH %v_5[2.10,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 148
+		 1: p->first_name def_%v_6 p[2.5,] 	 SYMBOL:	 ARGS:
+		 2: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 150
+		 1: p->name def_%v_7 p[2.5,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_%v_6 %v_7[4.1,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_name %v_6[4.2,3.1,] 
+		 1: Line Number 152
+		 2: COPY TYPE_StringLiteral "<font size='12'>" def_%v_8 
+		 3: %self->h def_%v_9 %self[2.0,] %v_6[4.2,3.1,] 	 SYMBOL:	 ARGS:name,
+		 4: COPY TYPE_StringLiteral "</font>" def_%v_10 
+		 5: BUILDSTRING def_%v_11 %v_8[5.2,] %v_9[5.3,] %v_10[5.4,] 
+		 6: RETURN %v_11[5.5,] %self[5.3,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_mobile_phone instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_p 
+		 6: Line Number 156
+		 7: %self->person def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: p->show_attribute_to? def_%v_4 p[2.5,] %v_3[2.7,] 	 SYMBOL:mobile_phone,	 ARGS:Symbol,%v_3,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: Line Number 157
+		 2: COPY TYPE_StringLiteral "<font size='10'>" def_%v_6 
+		 3: p->mobile_phone def_%v_7 p[2.5,] 	 SYMBOL:	 ARGS:
+		 4: %self->format_phone def_%v_8 %self[2.0,] %v_7[3.3,] 	 SYMBOL:	 ARGS:%v_7,
+		 5: %self->h def_%v_9 %self[3.4,2.0,] %v_8[3.4,] 	 SYMBOL:	 ARGS:%v_8,
+		 6: COPY TYPE_StringLiteral "</font>" def_%v_10 
+		 7: BUILDSTRING def_%v_11 %v_6[3.2,] %v_9[3.5,] %v_10[3.6,] 
+		 8: RETURN %v_11[3.7,] %self[3.4,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_email instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_p 
+		 6: Line Number 161
+		 7: %self->person def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: p->show_attribute_to? def_%v_4 p[2.5,] %v_3[2.7,] 	 SYMBOL:email,	 ARGS:Symbol,%v_3,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: Line Number 162
+		 2: COPY TYPE_StringLiteral "<font size='10'>" def_%v_6 
+		 3: p->email def_%v_7 p[2.5,] 	 SYMBOL:	 ARGS:
+		 4: %self->h def_%v_8 %self[2.0,] %v_7[3.3,] 	 SYMBOL:	 ARGS:%v_7,
+		 5: COPY TYPE_StringLiteral "</font>" def_%v_9 
+		 6: BUILDSTRING def_%v_10 %v_6[3.2,] %v_8[3.4,] %v_9[3.5,] 
+		 7: RETURN %v_10[3.6,] %self[3.4,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = family_photo instanceMethod = true
+BB 1
+	outgoing: 16 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_family 
+		 6: Line Number 166
+		 7: family->photo def_%v_3 family[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->present? def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: Line Number 167
+		 1: family->photo def_%v_5 family[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->path def_%v_6 %v_5[3.1,] 	 SYMBOL:large,	 ARGS:Symbol,
+		 3: 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 168
+		 1: family->people def_%v_7 family[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_7->undeleted def_%v_8 %v_7[4.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_8->size def_%v_9 %v_8[4.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_9->== def_%v_10 %v_9[4.3,] 	 SYMBOL:	 ARGS:Fixnum,
+		 5: BRANCH %v_10[4.4,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: Line Number 169
+		 1: family->people def_%v_11 family[2.5,] 	 SYMBOL:	 ARGS:
+		 2: %v_11->undeleted def_%v_12 %v_11[5.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_12->first def_%v_13 %v_12[5.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_13->photo def_%v_14 %v_13[5.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_14->presence def_%v_15 %v_14[5.4,] 	 SYMBOL:	 ARGS:
+		 6: %v_15->try def_%v_16 %v_15[5.5,] 	 SYMBOL:path,large,	 ARGS:Symbol,Symbol,
+		 7: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_16 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_6 %v_16[6.0,5.6,] 
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_path %v_6[7.0,3.2,] 
+		 1: Line Number 171
+		 2: COPY TYPE_PASS def_%v_17 %v_6[7.0,3.2,] 
+		 3: BRANCH %v_6[7.0,3.2,] 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: (File) def_%v_18 
+		 1: %v_18->exist? def_%v_19 %v_18[9.0,] path[8.0,] 	 SYMBOL:	 ARGS:path,
+		 2: COPY TYPE_PASS def_%v_17 %v_19[9.1,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_17[9.2,8.2,] 
+BB 11
+	outgoing: 14 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_20 
+		 1: Line Number 172
+		 2: (MiniMagick) def_%v_21 
+		 3: (inherit Image) def_%v_22 %v_21[11.2,] 
+		 4: %v_22[11.3,] 
+BB 12
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: %v_21->const_missing def_%v_22 %v_21[11.2,] 	 SYMBOL:Image,	 ARGS:Symbol,
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: %v_22->new def_%v_23 %v_22[14.0,11.3,] path[8.0,] 	 SYMBOL:	 ARGS:path,
+		 1: RETURN %v_23[15.0,] %self[2.0,] 
+BB 16
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = family_photo_height instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_photo 
+		 6: Line Number 177
+		 7: photo->[] def_%v_3 photo[2.5,] 	 SYMBOL:height,	 ARGS:Symbol,
+		 8: %self->image_bounds_width def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_3->* def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: photo->[] def_%v_6 photo[2.5,2.7,] 	 SYMBOL:width,	 ARGS:Symbol,
+		 11: %v_5->/ def_%v_7 %v_5[2.9,] %v_6[2.10,] 	 SYMBOL:	 ARGS:%v_6,
+		 12: %v_7->to_i def_%v_8 %v_7[2.11,] 	 SYMBOL:	 ARGS:
+		 13: RETURN %v_8[2.12,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = image_bounds_width instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 181
+		 6: %self->bounds def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->width def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->* def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:Float,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = families instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 185
+		 6: (Family) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->has_printable_people def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_StringLiteral "families.last_name, families.name, people.position" def_%v_6 
+		 10: %v_5->order def_%v_7 %v_5[2.8,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: %v_7->includes def_%v_8 %v_7[2.10,] 	 SYMBOL:people,	 ARGS:Symbol,
+		 12: %v_8->references def_%v_9 %v_8[2.11,] 	 SYMBOL:people,	 ARGS:Symbol,
+		 13: RETURN %v_9[2.12,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = format_phone instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_phone 
+		 6: Line Number 193
+		 7: (ApplicationHelper) def_%v_3 
+		 8: %v_3->format_phone def_%v_4 %v_3[2.7,] phone[2.5,] 	 SYMBOL:	 ARGS:phone,
+		 9: RETURN %v_4[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = h instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_html 
+		 6: Line Number 197
+		 7: (ERB) def_%v_3 
+		 8: (inherit Util) def_%v_4 %v_3[2.7,] 
+		 9: %v_4[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[2.7,] 	 SYMBOL:Util,	 ARGS:Symbol,
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %v_4->h def_%v_5 %v_4[3.0,2.8,] html[2.5,] 	 SYMBOL:	 ARGS:html,
+		 1: RETURN %v_5[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+

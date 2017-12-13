@@ -1,0 +1,498 @@
+SET IRMethod, name = attributes_for_person instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_row 
+		 6: Line Number 8
+		 7: %self->attributes def_%v_3 %self[2.0,] row[2.5,] 	 SYMBOL:	 ARGS:row,
+		 8: %v_3->reject def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: a[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_a 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 8
+		 1: COPY TYPE_Regexp def_%cl_1_3 
+		 2: a->=~ def_%cl_1_4 a[2.2,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: COPY TYPE_PASS def_attrs %v_4[2.8,] 
+		 10: Line Number 9
+		 11: GETFIELD %self->import def_%v_5 %self[2.0,2.7,] 
+		 12: %v_5->create_as_active def_%v_6 %v_5[2.11,] 	 SYMBOL:	 ARGS:
+		 13: BRANCH %v_6[2.12,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "status" def_%v_7 
+		 1: COPY TYPE_StringLiteral "active" def_%v_8 
+		 2: HASH- def_%v_9 %v_7[3.0,] %v_8[3.1,] 
+		 3: attrs->reverse_merge! def_%v_10 attrs[2.9,] %v_9[3.2,] 	 SYMBOL:	 ARGS:%v_9,
+		 4: 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_10 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 10
+		 1: COPY TYPE_StringLiteral "fields" def_%v_11 
+		 2: %self->custom_field_values_for_person def_%v_12 %self[2.0,] row[2.5,] 	 SYMBOL:	 ARGS:row,
+		 3: ATTRASSIGN attrs->[] %v_11[5.1,] %v_12[5.2,] 
+		 4: Line Number 11
+		 5: COPY TYPE_StringLiteral "birthday" def_%v_13 
+		 6: COPY TYPE_StringLiteral "anniversary" def_%v_14 
+		 7: COPY TYPE_Array def_%v_15 %v_13[5.5,] %v_14[5.6,] 
+		 8: %v_15->each def_%v_16 %v_15[5.7,] %self[5.2,2.0,] 	 SYMBOL:	 ARGS:%v_15,
+CLOSURE BEGIN: attrs[5.3,2.9,] key[] %self[5.2,2.0,] 
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_key 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 10 
+	datadep: 
+	instructions:
+		 0: Line Number 12
+		 1: attrs->key? def_%cl_2_3 attrs[] key[2.2,] 	 SYMBOL:	 ARGS:key,
+		 2: BRANCH %cl_2_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_4 
+		 1: 
+BB 5
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 6
+	outgoing: 7 8 10 
+	datadep: 
+	instructions:
+		 0: Line Number 13
+		 1: attrs->[] def_%cl_2_5 attrs[] key[2.2,] 	 SYMBOL:	 ARGS:key,
+		 2: %self->empty_date? def_%cl_2_6 %self[2.0,] %cl_2_5[6.1,] 	 SYMBOL:	 ARGS:%cl_2_5,
+		 3: BRANCH %cl_2_6[6.2,] 
+BB 7
+	outgoing: 10 12 
+	datadep: 
+	instructions:
+		 0: ATTRASSIGN attrs->[] key[2.2,] 
+		 1: COPY TYPE_Nil def_%cl_2_7 
+		 2: RETURN %self[2.0,] 
+BB 8
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_8 
+		 1: def_%cl_2_9 %cl_2_8[10.0,] 
+		 2: RETURN %cl_2_9[10.1,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: Line Number 15
+		 10: RETURN attrs[5.3,2.9,] %self[5.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = custom_field_values_for_person instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_row 
+		 6: Line Number 19
+		 7: %self->attributes def_%v_3 %self[2.0,] row[2.5,] 	 SYMBOL:	 ARGS:row,
+		 8: HASH- def_%v_4 
+		 9: %v_3->each_with_object def_%v_5 %v_3[2.7,] %v_4[2.8,] %self[2.0,2.7,] 	 SYMBOL:	 ARGS:%v_4,%v_3,
+CLOSURE BEGIN: name[] hash[] value[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_%cl_1_1 
+		 3: def_%cl_1_2 %cl_1_1[2.2,] 
+		 4: def_name %cl_1_2[2.3,] 
+		 5: def_value %cl_1_2[2.3,] 
+		 6: RECEIVEARG def_hash 
+		 7: COPY TYPE_CurrentScope def_%current_scope 
+		 8: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 20
+		 1: COPY TYPE_Regexp def_%cl_1_5 
+		 2: name->=~ def_%cl_1_6 name[2.4,] 	 SYMBOL:	 ARGS:%cl_1_5,
+		 3: BRANCH %cl_1_6[3.2,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_7 
+		 1: 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: 
+		 1: RETURN %self[2.0,] 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: Line Number 21
+		 1: (Regexp) def_%cl_1_8 
+		 2: %cl_1_8->last_match def_%cl_1_9 %cl_1_8[6.1,] 	 SYMBOL:	 ARGS:Fixnum,
+		 3: %cl_1_9->to_i def_%cl_1_10 %cl_1_9[6.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_PASS def_id %cl_1_10[6.3,] 
+		 5: Line Number 22
+		 6: ATTRASSIGN hash->[] %cl_1_10[6.3,] value[2.5,] 
+		 7: RETURN value[2.5,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_11 
+		 1: def_%cl_1_12 %cl_1_11[7.0,] 
+		 2: RETURN %cl_1_12[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: id[6.4,] value[2.5,] hash[6.6,2.6,] 
+		 10: RETURN %v_5[2.9,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = id_for_person instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_row 
+		 6: Line Number 27
+		 7: %self->attributes def_%v_3 %self[2.0,] row[2.5,] 	 SYMBOL:	 ARGS:row,
+		 8: COPY TYPE_StringLiteral "id" def_%v_4 
+		 9: %v_3->[] def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: RETURN %v_5[2.9,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = attributes_for_family instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_row 
+		 6: Line Number 31
+		 7: %self->attributes def_%v_3 %self[2.0,] row[2.5,] 	 SYMBOL:	 ARGS:row,
+		 8: %v_3->select def_%v_4 %v_3[2.7,] %self[2.0,2.7,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: a[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_a 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 31
+		 1: COPY TYPE_Regexp def_%cl_1_3 
+		 2: a->=~ def_%cl_1_4 a[2.2,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: RETURN %cl_1_4[3.2,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_5 
+		 1: def_%cl_1_6 %cl_1_5[4.0,] 
+		 2: RETURN %cl_1_6[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 9: COPY TYPE_PASS def_family_attributes %v_4[2.8,] 
+		 10: Line Number 32
+		 11: HASH- def_%v_5 
+		 12: %v_4->each_with_object def_%v_6 %v_4[2.8,] %v_5[2.11,] %self[2.0,2.7,] 	 SYMBOL:	 ARGS:%v_5,%v_4,
+CLOSURE BEGIN: name[] hash[] value[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 7 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_%cl_2_1 
+		 3: def_%cl_2_2 %cl_2_1[2.2,] 
+		 4: def_name %cl_2_2[2.3,] 
+		 5: def_value %cl_2_2[2.3,] 
+		 6: RECEIVEARG def_hash 
+		 7: COPY TYPE_CurrentScope def_%current_scope 
+		 8: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 33
+		 1: COPY TYPE_StringLiteral "family_id" def_%cl_2_5 
+		 2: name->== def_%cl_2_6 name[2.4,] %cl_2_5[3.1,] 	 SYMBOL:	 ARGS:%cl_2_5,
+		 3: BRANCH %cl_2_6[3.2,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_7 
+		 1: RETURN %cl_2_7[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Regexp def_%cl_2_8 
+		 1: COPY TYPE_StringLiteral "" def_%cl_2_9 
+		 2: name->sub def_%cl_2_10 name[2.4,] %cl_2_9[5.1,] 	 SYMBOL:	 ARGS:%cl_2_8,%cl_2_9,
+		 3: ATTRASSIGN hash->[] %cl_2_10[5.2,] value[2.5,] 
+		 4: RETURN value[2.5,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_11 
+		 1: def_%cl_2_12 %cl_2_11[7.0,] 
+		 2: RETURN %cl_2_12[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: value[2.5,] hash[5.3,2.6,] 
+		 13: RETURN %v_6[2.12,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = id_for_family instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_row 
+		 6: Line Number 38
+		 7: %self->attributes def_%v_3 %self[2.0,] row[2.5,] 	 SYMBOL:	 ARGS:row,
+		 8: COPY TYPE_StringLiteral "family_id" def_%v_4 
+		 9: %v_3->[] def_%v_5 %v_3[2.7,] %v_4[2.8,] 	 SYMBOL:	 ARGS:%v_4,
+		 10: RETURN %v_5[2.9,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = legacy_id_for_family instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_row 
+		 6: Line Number 42
+		 7: %self->attributes def_%v_3 %self[2.0,] row[2.5,] 	 SYMBOL:	 ARGS:row,
+		 8: COPY TYPE_PASS def_attrs %v_3[2.7,] 
+		 9: Line Number 43
+		 10: COPY TYPE_StringLiteral "family_legacy_id" def_%v_4 
+		 11: %v_3->[] def_%v_5 %v_3[2.7,] %v_4[2.10,] 	 SYMBOL:	 ARGS:%v_4,
+		 12: BRANCH %v_5[2.11,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "legacy_family_id" def_%v_6 
+		 1: attrs->[] def_%v_7 attrs[2.8,] %v_6[3.0,] 	 SYMBOL:	 ARGS:%v_6,
+		 2: RETURN %v_7[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[2.11,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = attributes instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_row 
+		 6: Line Number 47
+		 7: HASH-real_attributes- def_%v_3 
+		 8: row->import_attributes_as_hash def_%v_4 row[2.5,] %v_3[2.7,] 	 SYMBOL:	 ARGS:%v_3,
+		 9: RETURN %v_4[2.8,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = empty_date? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_date 
+		 6: Line Number 51
+		 7: date->to_s def_%v_3 date[2.5,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_Regexp def_%v_4 
+		 9: COPY TYPE_StringLiteral "" def_%v_5 
+		 10: %v_3->gsub def_%v_6 %v_3[2.7,] %v_5[2.9,] 	 SYMBOL:	 ARGS:%v_4,%v_5,
+		 11: %v_6->blank? def_%v_7 %v_6[2.10,] 	 SYMBOL:	 ARGS:
+		 12: RETURN %v_7[2.11,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

@@ -1,0 +1,329 @@
+SET IRMethod, name = show instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 2
+		 6: (Family) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->family %v_7[2.10,] 
+		 12: Line Number 3
+		 13: GETFIELD %self->family def_%v_8 %self[2.0,2.8,2.11,] 
+		 14: %v_8->people def_%v_9 %v_8[2.13,] 	 SYMBOL:	 ARGS:
+		 15: %v_9->undeleted def_%v_10 %v_9[2.14,] 	 SYMBOL:	 ARGS:
+		 16: %v_10->order def_%v_11 %v_10[2.15,] 	 SYMBOL:position,	 ARGS:Symbol,
+		 17: ATTRASSIGN %self->family_people %v_11[2.16,] 
+		 18: Line Number 4
+		 19: (AttendanceRecord) def_%v_12 
+		 20: GETFIELD %self->family_people def_%v_13 %self[2.0,2.8,2.17,] 
+		 21: %v_13->map def_%v_14 %v_13[2.20,] 	 SYMBOL:id,	 ARGS:
+		 22: (Date) def_%v_15 
+		 23: %v_15->current def_%v_16 %v_15[2.22,] 	 SYMBOL:	 ARGS:
+		 24: %v_12->find_for_people_and_date def_%v_17 %v_12[2.19,] %v_14[2.21,] %v_16[2.23,] 	 SYMBOL:	 ARGS:%v_14,%v_16,
+		 25: %v_17->group_by def_%v_18 %v_17[2.24,] 	 SYMBOL:person_id,	 ARGS:
+		 26: ATTRASSIGN %self->attendance_records %v_18[2.25,] 
+		 27: RETURN %v_18[2.25,] %self[2.0,2.8,2.11,2.17,2.26,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = new instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 9
+		 6: (FamilyFormPresenter) def_%v_3 
+		 7: %v_3->new def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_PASS def_family_form %v_4[2.7,] 
+		 9: Line Number 10
+		 10: %v_4->family def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 11: ATTRASSIGN %self->family %v_5[2.10,] 
+		 12: Line Number 11
+		 13: family_form->build_people def_%v_6 family_form[2.8,] 	 SYMBOL:	 ARGS:
+		 14: ATTRASSIGN %self->people %v_6[2.13,] 
+		 15: RETURN %v_6[2.13,] %self[2.0,2.11,2.14,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = create instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 15
+		 6: (FamilyFormPresenter) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->new def_%v_5 %v_3[2.6,] %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_4,
+		 9: COPY TYPE_PASS def_family_form %v_5[2.8,] 
+		 10: Line Number 16
+		 11: %v_5->create def_%v_6 %v_5[2.8,] 	 SYMBOL:	 ARGS:
+		 12: Line Number 17
+		 13: family_form->family def_%v_7 family_form[2.9,] 	 SYMBOL:	 ARGS:
+		 14: ATTRASSIGN %self->family %v_7[2.13,] 
+		 15: Line Number 18
+		 16: family_form->people def_%v_8 family_form[2.9,2.13,] 	 SYMBOL:	 ARGS:
+		 17: ATTRASSIGN %self->people %v_8[2.16,] 
+		 18: Line Number 19
+		 19: GETFIELD %self->family def_%v_9 %self[2.0,2.7,2.14,] 
+		 20: %v_9->errors def_%v_10 %v_9[2.19,] 	 SYMBOL:	 ARGS:
+		 21: %v_10->any? def_%v_11 %v_10[2.20,] 	 SYMBOL:	 ARGS:
+		 22: BRANCH %v_11[2.21,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "new" def_%v_12 
+		 1: HASH-action- def_%v_13 %v_12[3.0,] 
+		 2: %self->render def_%v_14 %self[2.0,2.14,2.17,] %v_13[3.1,] 	 SYMBOL:	 ARGS:%v_13,
+		 3: RETURN %v_14[3.2,] %self[3.2,2.0,2.14,2.17,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,2.14,2.17,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 23
+		 6: (Family) def_%v_3 
+		 7: %v_3->undeleted def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %self->params def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 9: %v_5->[] def_%v_6 %v_5[2.8,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 10: %v_4->find def_%v_7 %v_4[2.7,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: ATTRASSIGN %self->family %v_7[2.10,] 
+		 12: Line Number 24
+		 13: GETFIELD %self->family def_%v_8 %self[2.0,2.8,2.11,] 
+		 14: %self->params def_%v_9 %self[2.0,2.8,2.11,] 	 SYMBOL:	 ARGS:
+		 15: %v_9->[] def_%v_10 %v_9[2.14,] 	 SYMBOL:family,	 ARGS:Symbol,
+		 16: %v_10->[] def_%v_11 %v_10[2.15,] 	 SYMBOL:barcode_id,	 ARGS:Symbol,
+		 17: ATTRASSIGN %v_8->barcode_id %v_11[2.16,] 
+		 18: Line Number 25
+		 19: GETFIELD %self->family def_%v_12 %self[2.0,2.8,2.11,2.14,] 
+		 20: %self->params def_%v_13 %self[2.0,2.8,2.11,2.14,] 	 SYMBOL:	 ARGS:
+		 21: %v_13->[] def_%v_14 %v_13[2.20,] 	 SYMBOL:family,	 ARGS:Symbol,
+		 22: %v_14->[] def_%v_15 %v_14[2.21,] 	 SYMBOL:alternate_barcode_id,	 ARGS:Symbol,
+		 23: ATTRASSIGN %v_12->alternate_barcode_id %v_15[2.22,] 
+		 24: Line Number 26
+		 25: GETFIELD %self->family def_%v_16 %self[2.0,2.8,2.11,2.14,2.20,] 
+		 26: %v_16->save def_%v_17 %v_16[2.25,] 	 SYMBOL:	 ARGS:
+		 27: ATTRASSIGN %self->success %v_17[2.26,] 
+		 28: Line Number 27
+		 29: %self->respond_to def_%v_18 %self[2.0,2.8,2.11,2.14,2.20,2.27,] %self[2.0,2.8,2.11,2.14,2.20,2.27,] 	 SYMBOL:	 ARGS:%self,
+CLOSURE BEGIN: format[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_format 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 28
+		 1: format->js def_%cl_1_3 format[2.2,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 30: RETURN %v_18[2.29,] %self[2.0,2.8,2.11,2.14,2.20,2.27,2.29,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = build_family_people instanceMethod = true
+BB 1
+	outgoing: 22 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 35
+		 6: GETFIELD %self->family def_%v_3 %self[2.0,] 
+		 7: %v_3->people def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->to_a def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: ATTRASSIGN %self->people %v_5[2.8,] 
+		 10: Line Number 36
+		 11: COPY TYPE_Array def_%v_6 
+		 12: COPY TYPE_PASS def_adults %v_6[2.11,] 
+		 13: Line Number 37
+BB 3
+	outgoing: 4 5 
+	datadep: 
+	instructions:
+		 0: adults->length def_%v_8 adults[2.12,] 	 SYMBOL:	 ARGS:
+		 1: %v_8->>= def_%v_9 %v_8[3.0,] 	 SYMBOL:	 ARGS:Fixnum,
+		 2: BRANCH %v_9[3.1,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->people def_%v_10 %self[2.0,2.9,] 
+		 1: %v_10->first def_%v_11 %v_10[4.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_11->nil? def_%v_12 %v_11[4.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%v_9 %v_12[4.2,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_9[4.3,3.1,] 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->people def_%v_13 %self[2.0,2.9,] 
+		 1: %v_13->first def_%v_14 %v_13[6.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_14->child? def_%v_15 %v_14[6.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_%v_9 %v_15[6.2,] 
+BB 7
+	outgoing: 8 10 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_9[6.3,4.3,3.1,] 
+BB 8
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->people def_%v_16 %self[2.0,2.9,] 
+		 2: %v_16->shift def_%v_17 %v_16[8.1,] 	 SYMBOL:	 ARGS:
+		 3: adults-><< def_%v_18 adults[2.12,] %v_17[8.2,] 	 SYMBOL:	 ARGS:%v_17,
+		 4: 
+BB 10
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_7 
+		 1: Line Number 38
+BB 12
+	outgoing: 13 15 
+	datadep: 
+	instructions:
+		 0: adults->length def_%v_20 adults[2.12,] 	 SYMBOL:	 ARGS:
+		 1: %v_20->>= def_%v_21 %v_20[12.0,] 	 SYMBOL:	 ARGS:Fixnum,
+		 2: BRANCH %v_21[12.1,] 
+BB 13
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->family def_%v_22 %self[2.0,] 
+		 2: %v_22->people def_%v_23 %v_22[13.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_23->adults def_%v_24 %v_23[13.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_24->build def_%v_25 %v_24[13.3,] 	 SYMBOL:	 ARGS:
+		 5: adults-><< def_%v_26 adults[2.12,] %v_25[13.4,] 	 SYMBOL:	 ARGS:%v_25,
+		 6: 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_19 
+		 1: Line Number 39
+		 2: GETFIELD %self->people def_%v_27 %self[2.0,2.9,] 
+		 3: def_%v_28 adults[2.12,] 
+		 4: %v_27->unshift def_%v_29 %v_27[15.2,] %v_28[15.3,] 	 SYMBOL:	 ARGS:Splat,
+		 5: Line Number 40
+BB 17
+	outgoing: 18 20 
+	datadep: 
+	instructions:
+		 0: GETFIELD %self->people def_%v_31 %self[2.0,2.9,] 
+		 1: %v_31->length def_%v_32 %v_31[17.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_32->>= def_%v_33 %v_32[17.1,] 	 SYMBOL:	 ARGS:Fixnum,
+		 3: BRANCH %v_33[17.2,] 
+BB 18
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: 
+		 1: GETFIELD %self->people def_%v_34 %self[2.0,2.9,] 
+		 2: GETFIELD %self->family def_%v_35 %self[2.0,] 
+		 3: %v_35->people def_%v_36 %v_35[18.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_36->children def_%v_37 %v_36[18.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_37->build def_%v_38 %v_37[18.4,] 	 SYMBOL:	 ARGS:
+		 6: %v_34-><< def_%v_39 %v_34[18.1,] %v_38[18.5,] 	 SYMBOL:	 ARGS:%v_38,
+		 7: 
+BB 20
+	outgoing: 22 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,2.9,] 
+BB 22
+	outgoing: 
+	datadep: 
+	instructions:
+

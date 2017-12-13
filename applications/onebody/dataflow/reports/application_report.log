@@ -1,0 +1,343 @@
+SET IRMethod, name = initialize instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_options 
+		 6: Line Number 2
+		 7: options->with_indifferent_access def_%v_3 options[2.5,] 	 SYMBOL:	 ARGS:
+		 8: ATTRASSIGN %self->options %v_3[2.7,] 
+		 9: RETURN %v_3[2.7,] %self[2.0,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = formatted_title instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 8
+		 6: %self->class def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->name def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->titleize def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = results instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 12
+		 6: %self->execute def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = to_param instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 16
+		 6: %self->class def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->name def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->underscore def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: COPY TYPE_Regexp def_%v_6 
+		 10: COPY TYPE_StringLiteral "" def_%v_7 
+		 11: %v_5->sub def_%v_8 %v_5[2.8,] %v_7[2.10,] 	 SYMBOL:	 ARGS:%v_6,%v_7,
+		 12: RETURN %v_8[2.11,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = execute instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 20
+		 6: (ActiveRecord) def_%v_3 
+		 7: (inherit Base) def_%v_4 %v_3[2.6,] 
+		 8: %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[2.6,] 	 SYMBOL:Base,	 ARGS:Symbol,
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %v_4->connection def_%v_5 %v_4[3.0,2.7,] 	 SYMBOL:	 ARGS:
+		 1: %self->sql def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %v_5->select_all def_%v_7 %v_5[4.0,] %v_6[4.1,] 	 SYMBOL:	 ARGS:%v_6,
+		 3: %v_7->to_a def_%v_8 %v_7[4.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_8->map def_%v_9 %v_8[4.3,] 	 SYMBOL:values,	 ARGS:
+		 5: RETURN %v_9[4.4,] %self[4.1,2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = headings instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 24
+		 6: COPY TYPE_StringLiteral "must override in report class" def_%v_3 
+		 7: %self->raise def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = sql instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 28
+		 6: COPY TYPE_StringLiteral "must override in report class" def_%v_3 
+		 7: %self->raise def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: RETURN %v_4[2.7,] %self[2.0,2.7,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = to_csv instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 32
+		 6: (CSV) def_%v_3 
+		 7: %v_3->generate def_%v_4 %v_3[2.6,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_3,
+CLOSURE BEGIN: %self[2.0,] csv[] result[] value[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_csv 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 33
+		 1: %self->headings def_%cl_1_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: %self->headings def_%cl_1_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: csv-><< def_%cl_1_5 csv[2.2,] %cl_1_4[4.0,] 	 SYMBOL:	 ARGS:%cl_1_4,
+		 2: 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_5 
+BB 6
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: Line Number 34
+		 1: %self->results def_%cl_1_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: %cl_1_6->each def_%cl_1_7 %cl_1_6[6.1,] %self[6.1,2.0,] 	 SYMBOL:	 ARGS:%cl_1_6,
+CLOSURE BEGIN: result[] %self[6.1,2.0,] value[] csv[2.2,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_result 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 35
+		 1: result->values def_%cl_2_3 result[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_2_3->map def_%cl_2_4 %cl_2_3[3.1,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_2_3,
+CLOSURE BEGIN: value[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_value 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 36
+		 1: value->respond_to? def_%cl_3_3 value[2.2,] 	 SYMBOL:strftime,	 ARGS:Symbol,
+		 2: BRANCH %cl_3_3[3.1,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: Line Number 37
+		 1: value->to_s def_%cl_3_4 value[2.2,] 	 SYMBOL:full,	 ARGS:Symbol,
+		 2: 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: Line Number 39
+		 1: RETURN value[2.2,] %self[2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_3_4[4.1,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_5 
+		 1: def_%cl_3_6 %cl_3_5[7.0,] 
+		 2: RETURN %cl_3_6[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: csv-><< def_%cl_2_5 csv[] %cl_2_4[3.2,] 	 SYMBOL:	 ARGS:%cl_2_4,
+		 4: RETURN %cl_2_5[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_6 
+		 1: def_%cl_2_7 %cl_2_6[4.0,] 
+		 2: RETURN %cl_2_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 3: RETURN %cl_1_7[6.2,] %self[6.1,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_8 
+		 1: def_%cl_1_9 %cl_1_8[7.0,] 
+		 2: RETURN %cl_1_9[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 8: RETURN %v_4[2.7,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

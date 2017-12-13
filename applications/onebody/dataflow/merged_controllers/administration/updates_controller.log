@@ -1,0 +1,220 @@
+SET IRMethod, name = index instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 4
+		 6: (Update) def_%v_3 
+		 7: %self->toggle def_%v_4 %self[2.0,] %v_3[2.6,] 	 SYMBOL:	 ARGS:%v_3,
+		 8: COPY TYPE_StringLiteral "created_at desc" def_%v_5 
+		 9: %v_4->order def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: %self->params def_%v_7 %self[2.0,2.7,] 	 SYMBOL:	 ARGS:
+		 11: %v_7->[] def_%v_8 %v_7[2.10,] 	 SYMBOL:page,	 ARGS:Symbol,
+		 12: %v_6->page def_%v_9 %v_6[2.9,] %v_8[2.11,] 	 SYMBOL:	 ARGS:%v_8,
+		 13: ATTRASSIGN %self->updates %v_9[2.12,] 
+		 14: Line Number 5
+		 15: (Group) def_%v_10 
+		 16: %v_10->unapproved def_%v_11 %v_10[2.15,] 	 SYMBOL:	 ARGS:
+		 17: ATTRASSIGN %self->unapproved_groups %v_11[2.16,] 
+		 18: RETURN %v_11[2.16,] %self[2.0,2.7,2.10,2.13,2.17,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 9
+		 6: (Update) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->update %v_6[2.9,] 
+		 11: Line Number 10
+		 12: GETFIELD %self->update def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: %self->update_params def_%v_8 %self[2.0,2.7,2.10,] 	 SYMBOL:	 ARGS:
+		 14: %v_7->update_attributes! def_%v_9 %v_7[2.12,] %v_8[2.13,] 	 SYMBOL:	 ARGS:%v_8,
+		 15: BRANCH %v_9[2.14,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 11
+		 1: %self->administration_updates_path def_%v_10 %self[2.0,2.10,] 	 SYMBOL:	 ARGS:
+		 2: %self->redirect_to def_%v_11 %self[3.1,2.0,2.10,] %v_10[3.1,] 	 SYMBOL:	 ARGS:%v_10,
+		 3: RETURN %v_11[3.2,] %self[3.1,3.2,2.0,2.10,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 13
+		 1: COPY TYPE_StringLiteral "index" def_%v_12 
+		 2: HASH-action- def_%v_13 %v_12[4.1,] 
+		 3: %self->render def_%v_14 %self[2.0,2.10,] %v_13[4.2,] 	 SYMBOL:	 ARGS:%v_13,
+		 4: RETURN %v_14[4.3,] %self[4.3,2.0,2.10,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = destroy instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 18
+		 6: (Update) def_%v_3 
+		 7: %self->params def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->[] def_%v_5 %v_4[2.7,] 	 SYMBOL:id,	 ARGS:Symbol,
+		 9: %v_3->find def_%v_6 %v_3[2.6,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: ATTRASSIGN %self->update %v_6[2.9,] 
+		 11: Line Number 19
+		 12: GETFIELD %self->update def_%v_7 %self[2.0,2.7,2.10,] 
+		 13: %v_7->destroy def_%v_8 %v_7[2.12,] 	 SYMBOL:	 ARGS:
+		 14: Line Number 20
+		 15: %self->administration_updates_path def_%v_9 %self[2.0,2.7,2.10,] 	 SYMBOL:	 ARGS:
+		 16: %self->redirect_to def_%v_10 %self[2.0,2.7,2.10,2.15,] %v_9[2.15,] 	 SYMBOL:	 ARGS:%v_9,
+		 17: RETURN %v_10[2.16,] %self[2.0,2.7,2.10,2.15,2.16,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_params instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 26
+		 6: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->require def_%v_4 %v_3[2.6,] 	 SYMBOL:update,	 ARGS:Symbol,
+		 8: %v_4->permit def_%v_5 %v_4[2.7,] 	 SYMBOL:complete,apply,child,	 ARGS:Symbol,Symbol,Symbol,
+		 9: RETURN %v_5[2.8,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = toggle instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_klass 
+		 6: Line Number 30
+		 7: %self->params def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->[] def_%v_4 %v_3[2.7,] 	 SYMBOL:complete,	 ARGS:Symbol,
+		 9: COPY TYPE_StringLiteral "true" def_%v_5 
+		 10: %v_4->== def_%v_6 %v_4[2.8,] %v_5[2.9,] 	 SYMBOL:	 ARGS:%v_5,
+		 11: BRANCH %v_6[2.10,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 31
+		 1: ATTRASSIGN %self->complete 
+		 2: Line Number 32
+		 3: klass->complete def_%v_7 klass[2.5,] 	 SYMBOL:	 ARGS:
+		 4: RETURN %v_7[3.3,] %self[3.1,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 34
+		 1: ATTRASSIGN %self->complete 
+		 2: Line Number 35
+		 3: klass->pending def_%v_8 klass[2.5,] 	 SYMBOL:	 ARGS:
+		 4: RETURN %v_8[4.3,] %self[4.1,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = only_admins instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 40
+		 6: GETFIELD %self->logged_in def_%v_3 %self[2.0,] 
+		 7: %v_3->admin? def_%v_4 %v_3[2.6,] 	 SYMBOL:manage_updates,	 ARGS:Symbol,
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: RETURN %v_5[3.0,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 41
+		 1: COPY TYPE_StringLiteral "only_admins" def_%v_6 
+		 2: %self->t def_%v_7 %self[2.0,] %v_6[4.1,] 	 SYMBOL:	 ARGS:%v_6,
+		 3: HASH-html-layout-status- def_%v_8 %v_7[4.2,] 
+		 4: %self->render def_%v_9 %self[4.2,2.0,] %v_8[4.3,] 	 SYMBOL:	 ARGS:%v_8,
+		 5: Line Number 43
+		 6: RETURN %self[4.2,4.4,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+

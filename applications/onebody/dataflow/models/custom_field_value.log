@@ -1,0 +1,531 @@
+SET IRMethod, name = value= instanceMethod = true
+BB 1
+	outgoing: 18 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_v 
+		 6: Line Number 17
+		 7: (Concerns) def_%v_3 
+		 8: (inherit Person) def_%v_4 %v_3[2.7,] 
+		 9: %v_4[2.8,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[2.7,] 	 SYMBOL:Person,	 ARGS:Symbol,
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: (inherit Fields) def_%v_5 %v_4[3.0,2.8,] 
+		 1: %v_5[4.0,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %v_4->const_missing def_%v_5 %v_4[3.0,2.8,] 	 SYMBOL:Fields,	 ARGS:Symbol,
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: (inherit LabelLookupFailure) def_%v_6 %v_5[5.0,4.0,] 
+		 1: %v_6[6.0,] 
+BB 7
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: %v_5->const_missing def_%v_6 %v_5[5.0,4.0,] 	 SYMBOL:LabelLookupFailure,	 ARGS:Symbol,
+BB 8
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: v->is_a? def_%v_7 v[2.5,] %v_6[7.0,6.0,] 	 SYMBOL:	 ARGS:%v_6,
+		 1: BRANCH %v_7[8.0,] 
+BB 9
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: Line Number 18
+		 1: v->label def_%v_8 v[2.5,] 	 SYMBOL:	 ARGS:
+		 2: ATTRASSIGN %self->label_lookup_failed %v_8[9.1,] 
+		 3: Line Number 19
+		 4: RETURN %self[9.2,2.0,] 
+BB 10
+	outgoing: 12 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+		 1: Line Number 21
+		 2: %self->field def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_10->format def_%v_11 %v_10[10.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_StringLiteral "date" def_%v_14 
+		 5: def_%v_13 %v_14[10.4,] %v_11[10.3,] 
+		 6: BRANCH %v_13[10.5,] 
+BB 12
+	outgoing: 13 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "boolean" def_%v_16 
+		 1: def_%v_15 %v_16[12.0,] %v_11[10.3,] 
+		 2: BRANCH %v_15[12.1,] 
+BB 13
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: Line Number 27
+		 1: COPY TYPE_PASS def_%v_12 v[2.5,] 
+		 2: 
+BB 14
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: Line Number 23
+		 1: %self->format_date_string def_%v_17 %self[2.0,] v[2.5,] 	 SYMBOL:	 ARGS:v,
+		 2: COPY TYPE_PASS def_%v_12 %v_17[14.1,] 
+		 3: 
+BB 15
+	outgoing: 17 
+	datadep: 
+	instructions:
+		 0: Line Number 25
+		 1: %self->format_boolean_string def_%v_18 %self[2.0,] v[2.5,] 	 SYMBOL:	 ARGS:v,
+		 2: COPY TYPE_PASS def_%v_12 %v_18[15.1,] 
+		 3: 
+BB 17
+	outgoing: 18 
+	datadep: 
+	instructions:
+		 0: ATTRASSIGN %self->[] %v_12[14.2,15.2,13.1,] 
+		 1: RETURN %v_12[14.2,15.2,13.1,] %self[17.0,2.0,] 
+BB 18
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = validate_value_format instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 6 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 34
+		 6: %self->field def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->format def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_StringLiteral "number" def_%v_7 
+		 9: def_%v_6 %v_7[2.8,] %v_4[2.7,] 
+		 10: BRANCH %v_6[2.9,] 
+BB 3
+	outgoing: 4 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "boolean" def_%v_9 
+		 1: def_%v_8 %v_9[3.0,] %v_4[2.7,] 
+		 2: BRANCH %v_8[3.1,] 
+BB 4
+	outgoing: 5 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "date" def_%v_11 
+		 1: def_%v_10 %v_11[4.0,] %v_4[2.7,] 
+		 2: BRANCH %v_10[4.1,] 
+BB 5
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: 
+BB 6
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: Line Number 36
+		 1: %self->validate_number_value_format def_%v_12 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_%v_5 %v_12[6.1,] 
+		 3: RETURN %v_12[6.1,] %self[6.1,2.0,] 
+BB 7
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: Line Number 38
+		 1: %self->validate_boolean_value_format def_%v_13 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_%v_5 %v_13[7.1,] 
+		 3: RETURN %v_13[7.1,] %self[7.1,2.0,] 
+BB 8
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: Line Number 40
+		 1: %self->validate_date_value_format def_%v_14 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_PASS def_%v_5 %v_14[8.1,] 
+		 3: RETURN %v_14[8.1,] %self[8.1,2.0,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[5.0,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = validate_number_value_format instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 45
+		 6: %self->value def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->to_s def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_Regexp def_%v_5 
+		 9: %v_4->=~ def_%v_6 %v_4[2.7,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: BRANCH %v_6[2.9,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_7 
+		 1: Line Number 46
+		 2: %self->errors def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_8->add def_%v_9 %v_8[4.2,] 	 SYMBOL:value,invalid,	 ARGS:Symbol,Symbol,
+		 4: RETURN %v_9[4.3,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = validate_boolean_value_format instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 50
+		 6: %self->value def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->blank? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "0" def_%v_5 
+		 1: COPY TYPE_StringLiteral "1" def_%v_6 
+		 2: COPY TYPE_Array def_%v_7 %v_5[3.0,] %v_6[3.1,] 
+		 3: %self->value def_%v_8 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 4: %v_7->include? def_%v_9 %v_7[3.2,] %v_8[3.3,] 	 SYMBOL:	 ARGS:%v_8,
+		 5: COPY TYPE_PASS def_%v_4 %v_9[3.4,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_4[3.5,2.7,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_10 
+		 1: Line Number 51
+		 2: %self->errors def_%v_11 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_11->add def_%v_12 %v_11[6.2,] 	 SYMBOL:value,invalid,	 ARGS:Symbol,Symbol,
+		 4: RETURN %v_12[6.3,] %self[6.2,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = validate_date_value_format instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 55
+		 6: %self->value def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: %v_3->blank? def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_4[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->value def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: %v_5->to_s def_%v_6 %v_5[3.0,] 	 SYMBOL:	 ARGS:
+		 2: (DATE_FORMAT_PATTERN) def_%v_7 
+		 3: %v_6->=~ def_%v_8 %v_6[3.1,] %v_7[3.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: COPY TYPE_PASS def_%v_4 %v_8[3.3,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_4[3.4,2.7,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+		 1: Line Number 56
+		 2: %self->errors def_%v_10 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: %v_10->add def_%v_11 %v_10[6.2,] 	 SYMBOL:value,invalid,	 ARGS:Symbol,Symbol,
+		 4: RETURN %v_11[6.3,] %self[6.2,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = validate_label_lookup instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 60
+		 6: %self->label_lookup_failed def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: Line Number 61
+		 2: %self->errors def_%v_5 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: (I18n) def_%v_6 
+		 4: COPY TYPE_StringLiteral "activerecord.errors.models.custom_field_value.option_not_found" def_%v_7 
+		 5: %self->label_lookup_failed def_%v_8 %self[3.2,2.0,] 	 SYMBOL:	 ARGS:
+		 6: HASH-label- def_%v_9 %v_8[3.5,] 
+		 7: %v_6->t def_%v_10 %v_6[3.3,] %v_7[3.4,] %v_9[3.6,] 	 SYMBOL:	 ARGS:%v_7,%v_9,
+		 8: %v_5->add def_%v_11 %v_5[3.2,] %v_10[3.7,] 	 SYMBOL:value,	 ARGS:Symbol,%v_10,
+		 9: RETURN %v_11[3.8,] %self[3.2,3.5,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = format_date_string instanceMethod = true
+BB 1
+	outgoing: 15 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_string 
+		 6: Line Number 71
+		 7: string->present? def_%v_3 string[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: Line Number 72
+		 2: %self->empty_date? def_%v_5 %self[2.0,] string[2.5,] 	 SYMBOL:	 ARGS:string,
+		 3: BRANCH %v_5[3.2,] 
+BB 4
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 7
+	outgoing: 9 10 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: Line Number 73
+		 2: (DATE_FORMAT_PATTERN) def_%v_7 
+		 3: string->=~ def_%v_8 string[2.5,] %v_7[7.2,] 	 SYMBOL:	 ARGS:%v_7,
+		 4: BRANCH %v_8[7.3,] 
+BB 9
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: Line Number 74
+		 1: COPY TYPE_PASS def_%v_9 string[2.5,] 
+		 2: RETURN string[2.5,] %self[2.0,] 
+BB 10
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: Line Number 75
+		 1: (Date) def_%v_10 
+		 2: %v_10->parse_in_locale def_%v_11 %v_10[10.1,] string[2.5,] 	 SYMBOL:	 ARGS:string,
+		 3: COPY TYPE_PASS def_date %v_11[10.2,] 
+		 4: BRANCH %v_11[10.2,] 
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: Line Number 76
+		 1: (DATE_FORMAT) def_%v_12 
+		 2: date->strftime def_%v_13 date[10.3,] %v_12[11.1,] 	 SYMBOL:	 ARGS:%v_12,
+		 3: 
+BB 12
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: Line Number 78
+		 1: COPY TYPE_PASS def_%v_13 string[2.5,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: RETURN %v_13[12.1,11.2,] %self[2.0,] 
+BB 15
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = empty_date? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_date 
+		 6: Line Number 83
+		 7: date->to_s def_%v_3 date[2.5,] 	 SYMBOL:	 ARGS:
+		 8: COPY TYPE_Regexp def_%v_4 
+		 9: COPY TYPE_StringLiteral "" def_%v_5 
+		 10: %v_3->gsub def_%v_6 %v_3[2.7,] %v_5[2.9,] 	 SYMBOL:	 ARGS:%v_4,%v_5,
+		 11: %v_6->blank? def_%v_7 %v_6[2.10,] 	 SYMBOL:	 ARGS:
+		 12: RETURN %v_7[2.11,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = format_boolean_string instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_string 
+		 6: Line Number 87
+		 7: string->present? def_%v_3 string[2.5,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_3[2.7,] 
+BB 3
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: Line Number 88
+		 2: COPY TYPE_Regexp def_%v_5 
+		 3: string->=~ def_%v_6 string[2.5,] 	 SYMBOL:	 ARGS:%v_5,
+		 4: BRANCH %v_6[3.3,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "1" def_%v_7 
+		 1: RETURN %v_7[6.0,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "0" def_%v_8 
+		 1: RETURN %v_8[7.0,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+

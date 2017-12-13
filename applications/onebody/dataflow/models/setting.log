@@ -1,0 +1,1528 @@
+SET IRMethod, name = value instanceMethod = true
+BB 1
+	outgoing: 12 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 5 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 8
+		 6: %self->read_attribute def_%v_3 %self[2.0,] 	 SYMBOL:value,	 ARGS:Symbol,
+		 7: COPY TYPE_PASS def_v %v_3[2.6,] 
+		 8: Line Number 9
+		 9: COPY TYPE_StringLiteral "format" def_%v_4 
+		 10: %self->[] def_%v_5 %self[2.0,2.6,] %v_4[2.9,] 	 SYMBOL:	 ARGS:%v_4,
+		 11: COPY TYPE_StringLiteral "boolean" def_%v_8 
+		 12: def_%v_7 %v_8[2.11,] %v_5[2.10,] 
+		 13: BRANCH %v_7[2.12,] 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_StringLiteral "list" def_%v_10 
+		 1: def_%v_9 %v_10[3.0,] %v_5[2.10,] 
+		 2: BRANCH %v_9[3.1,] 
+BB 4
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: Line Number 15
+		 1: COPY TYPE_PASS def_%v_6 v[2.7,] 
+		 2: RETURN v[2.7,] %self[2.0,] 
+BB 5
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: Line Number 11
+		 1: COPY TYPE_StringLiteral "" def_%v_11 
+		 2: COPY TYPE_StringLiteral "0" def_%v_12 
+		 3: COPY TYPE_StringLiteral "f" def_%v_13 
+		 4: COPY TYPE_StringLiteral "false" def_%v_14 
+		 5: COPY TYPE_StringLiteral "no" def_%v_15 
+		 6: COPY TYPE_Array def_%v_16 %v_11[5.1,] %v_12[5.2,] %v_13[5.3,] %v_14[5.4,] %v_15[5.5,] 
+		 7: v->to_s def_%v_17 v[2.7,] 	 SYMBOL:	 ARGS:
+		 8: %v_16->include? def_%v_18 %v_16[5.6,] %v_17[5.7,] 	 SYMBOL:	 ARGS:%v_17,
+		 9: %v_18->! def_%v_19 %v_18[5.8,] 	 SYMBOL:	 ARGS:
+		 10: COPY TYPE_PASS def_%v_6 %v_19[5.9,] 
+		 11: RETURN %v_19[5.9,] %self[2.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: Line Number 13
+		 1: BRANCH v[2.7,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: v->to_s def_%v_20 v[2.7,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_Regexp def_%v_21 
+		 2: %v_20->split def_%v_22 %v_20[7.0,] 	 SYMBOL:	 ARGS:%v_21,
+		 3: 
+BB 8
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Array def_%v_23 
+		 1: COPY TYPE_PASS def_%v_22 %v_23[8.0,] 
+BB 9
+	outgoing: 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_6 %v_22[8.1,7.2,] 
+		 1: RETURN %v_6[9.0,] %self[2.0,] 
+BB 12
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = value? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 20
+		 6: %self->value def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = get instanceMethod = true
+BB 1
+	outgoing: 32 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section 
+		 6: RECEIVEARG def_name 
+		 7: RECEIVECONSTARG def_default 
+		 8: default[2.7,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_default 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 25
+		 1: (SETTINGS) def_%v_3 
+		 2: %v_3->any? def_%v_4 %v_3[4.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_4[4.2,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_5 
+		 1: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: %self->precache_settings def_%v_6 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_PASS def_%v_5 %v_6[6.0,] 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: Line Number 26
+		 1: (SETTINGS) def_%v_7 
+		 2: %v_7->any? def_%v_8 %v_7[7.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_8[7.2,] 
+BB 8
+	outgoing: 11 12 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_9 
+		 1: Line Number 27
+		 2: section->to_s def_%v_10 section[2.5,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_PASS def_section %v_10[8.2,] 
+		 4: Line Number 28
+		 5: name->to_s def_%v_11 name[2.6,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_PASS def_name %v_11[8.5,] 
+		 7: Line Number 29
+		 8: %self->global? def_%v_12 %self[2.0,] section[8.2,8.3,] %v_11[8.5,] 	 SYMBOL:	 ARGS:section,name,
+		 9: BRANCH %v_12[8.8,] 
+BB 9
+	outgoing: 32 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 11
+	outgoing: 32 
+	datadep: 
+	instructions:
+		 0: Line Number 30
+		 1: (SETTINGS) def_%v_13 
+		 2: %v_13->[] def_%v_14 %v_13[11.1,] 	 SYMBOL:	 ARGS:Fixnum,
+		 3: %v_14->[] def_%v_15 %v_14[11.2,] section[8.3,] 	 SYMBOL:	 ARGS:section,
+		 4: %v_15->[] def_%v_16 %v_15[11.3,] name[8.6,] 	 SYMBOL:	 ARGS:name,
+		 5: %v_16->try def_%v_17 %v_16[11.4,] 	 SYMBOL:value,	 ARGS:Symbol,
+		 6: RETURN %v_17[11.5,] %self[2.0,] 
+BB 12
+	outgoing: 13 29 
+	datadep: 
+	instructions:
+		 0: Line Number 32
+		 1: (Site) def_%v_18 
+		 2: %v_18->current def_%v_19 %v_18[12.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_19[12.2,] 
+BB 13
+	outgoing: 14 15 
+	datadep: 
+	instructions:
+		 0: Line Number 33
+		 1: (SETTINGS) def_%v_20 
+		 2: (Site) def_%v_21 
+		 3: %v_21->current def_%v_22 %v_21[13.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_22->id def_%v_23 %v_22[13.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_20->[] def_%v_24 %v_20[13.1,] %v_23[13.4,] 	 SYMBOL:	 ARGS:%v_23,
+		 6: %v_24->nil? def_%v_25 %v_24[13.5,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_25[13.6,] 
+BB 14
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: Line Number 34
+		 1: (Site) def_%v_26 
+		 2: %v_26->current def_%v_27 %v_26[14.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_27->add_settings def_%v_28 %v_27[14.2,] 	 SYMBOL:	 ARGS:
+		 4: Line Number 35
+		 5: (Setting) def_%v_29 
+		 6: %v_29->precache_settings def_%v_30 %v_29[14.5,] 	 SYMBOL:	 ARGS:Boolean,
+		 7: 
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_30 
+BB 16
+	outgoing: 17 27 
+	datadep: 
+	instructions:
+		 0: Line Number 37
+		 1: (SETTINGS) def_%v_31 
+		 2: (Site) def_%v_32 
+		 3: %v_32->current def_%v_33 %v_32[16.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_33->id def_%v_34 %v_33[16.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_31->[] def_%v_35 %v_31[16.1,] %v_34[16.4,] 	 SYMBOL:	 ARGS:%v_34,
+		 6: %v_35->[] def_%v_36 %v_35[16.5,] section[8.3,] 	 SYMBOL:	 ARGS:section,
+		 7: BRANCH %v_36[16.6,] 
+BB 17
+	outgoing: 18 19 
+	datadep: 
+	instructions:
+		 0: Line Number 38
+		 1: COPY TYPE_StringLiteral "features" def_%v_37 
+		 2: section->== def_%v_38 section[8.3,] %v_37[17.1,] 	 SYMBOL:	 ARGS:%v_37,
+		 3: BRANCH %v_38[17.2,] 
+BB 18
+	outgoing: 19 
+	datadep: 
+	instructions:
+		 0: (Site) def_%v_39 
+		 1: %v_39->current def_%v_40 %v_39[18.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "_enabled?" def_%v_41 
+		 3: BUILDSTRING def_%v_42 name[8.6,] %v_41[18.2,] 
+		 4: %v_40->respond_to? def_%v_43 %v_40[18.1,] %v_42[18.3,] 	 SYMBOL:	 ARGS:%v_42,
+		 5: COPY TYPE_PASS def_%v_38 %v_43[18.4,] 
+BB 19
+	outgoing: 20 21 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_38[18.5,17.2,] 
+BB 20
+	outgoing: 21 
+	datadep: 
+	instructions:
+		 0: (Site) def_%v_44 
+		 1: %v_44->current def_%v_45 %v_44[20.0,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral "_enabled?" def_%v_46 
+		 3: BUILDSTRING def_%v_47 name[8.6,] %v_46[20.2,] 
+		 4: %v_45->send def_%v_48 %v_45[20.1,] %v_47[20.3,] 	 SYMBOL:	 ARGS:%v_47,
+		 5: %v_48->! def_%v_49 %v_48[20.4,] 	 SYMBOL:	 ARGS:
+		 6: COPY TYPE_PASS def_%v_38 %v_49[20.5,] 
+BB 21
+	outgoing: 22 23 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_38[20.6,18.5,17.2,] 
+BB 22
+	outgoing: 32 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 23
+	outgoing: 25 26 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_50 
+		 1: Line Number 39
+		 2: (SETTINGS) def_%v_51 
+		 3: (Site) def_%v_52 
+		 4: %v_52->current def_%v_53 %v_52[23.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_53->id def_%v_54 %v_53[23.4,] 	 SYMBOL:	 ARGS:
+		 6: %v_51->[] def_%v_55 %v_51[23.2,] %v_54[23.5,] 	 SYMBOL:	 ARGS:%v_54,
+		 7: %v_55->[] def_%v_56 %v_55[23.6,] section[8.3,] 	 SYMBOL:	 ARGS:section,
+		 8: %v_56->[] def_%v_57 %v_56[23.7,] name[8.6,] 	 SYMBOL:	 ARGS:name,
+		 9: %v_57->try def_%v_58 %v_57[23.8,] 	 SYMBOL:value,	 ARGS:Symbol,
+		 10: BRANCH %v_58[23.9,] 
+BB 25
+	outgoing: 26 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_%v_58 default[3.0,2.7,] 
+BB 26
+	outgoing: 28 
+	datadep: 
+	instructions:
+		 0: 
+BB 27
+	outgoing: 28 
+	datadep: 
+	instructions:
+		 0: Line Number 41
+		 1: COPY TYPE_PASS def_%v_58 default[3.0,2.7,] 
+BB 28
+	outgoing: 30 
+	datadep: 
+	instructions:
+		 0: 
+BB 29
+	outgoing: 30 
+	datadep: 
+	instructions:
+		 0: Line Number 44
+		 1: COPY TYPE_StringLiteral "Site.current is not set so Setting.get(:" def_%v_59 
+		 2: COPY TYPE_StringLiteral ", :" def_%v_60 
+		 3: COPY TYPE_StringLiteral ") failed." def_%v_61 
+		 4: BUILDSTRING def_%v_62 %v_59[29.1,] section[8.3,] %v_60[29.2,] name[8.6,] %v_61[29.3,] 
+		 5: %self->raise def_%v_63 %self[2.0,] %v_62[29.4,] 	 SYMBOL:	 ARGS:%v_62,
+		 6: COPY TYPE_PASS def_%v_58 %v_63[29.5,] 
+BB 30
+	outgoing: 32 
+	datadep: 
+	instructions:
+		 0: RETURN %v_58[29.6,27.1,25.0,23.9,] %self[2.0,] 
+BB 32
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = global? instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section 
+		 6: RECEIVEARG def_name 
+		 7: Line Number 50
+		 8: (Setting) def_%v_3 
+		 9: (inherit GLOBAL_SETTINGS) def_%v_4 %v_3[2.8,] 
+		 10: %v_4[2.9,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %v_3->const_missing def_%v_4 %v_3[2.8,] 	 SYMBOL:GLOBAL_SETTINGS,	 ARGS:Symbol,
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: %v_4->map def_%v_5 %v_4[3.0,2.9,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_4,
+CLOSURE BEGIN: s[] %self[2.0,] p[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_s 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 50
+		 1: COPY TYPE_StringLiteral "." def_%cl_1_3 
+		 2: s->split def_%cl_1_4 s[2.2,] %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:%cl_1_3,
+		 3: %cl_1_4->map def_%cl_1_5 %cl_1_4[3.2,] %self[2.0,] 	 SYMBOL:	 ARGS:%cl_1_4,
+CLOSURE BEGIN: p[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_p 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 50
+		 1: p->underscore def_%cl_2_3 p[2.2,] 	 SYMBOL:	 ARGS:
+		 2: COPY TYPE_StringLiteral " " def_%cl_2_4 
+		 3: COPY TYPE_StringLiteral "_" def_%cl_2_5 
+		 4: %cl_2_3->tr def_%cl_2_6 %cl_2_3[3.1,] %cl_2_4[3.2,] %cl_2_5[3.3,] 	 SYMBOL:	 ARGS:%cl_2_4,%cl_2_5,
+		 5: RETURN %cl_2_6[3.4,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_7 
+		 1: def_%cl_2_8 %cl_2_7[4.0,] 
+		 2: RETURN %cl_2_8[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 4: RETURN %cl_1_5[3.3,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_6 
+		 1: def_%cl_1_7 %cl_1_6[4.0,] 
+		 2: RETURN %cl_1_7[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 1: COPY TYPE_Array def_%v_6 section[2.5,] name[2.6,] 
+		 2: %v_5->include? def_%v_7 %v_5[4.0,] %v_6[4.1,] 	 SYMBOL:	 ARGS:%v_6,
+		 3: RETURN %v_7[4.2,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_args 
+		 6: Line Number 54
+		 7: args->length def_%v_3 args[2.5,] 	 SYMBOL:	 ARGS:
+		 8: %v_3->== def_%v_4 %v_3[2.7,] 	 SYMBOL:	 ARGS:Fixnum,
+		 9: BRANCH %v_4[2.8,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 55
+		 1: def_%v_5 args[2.5,] 
+		 2: %self->set_current def_%v_6 %self[2.0,] %v_5[3.1,] 	 SYMBOL:	 ARGS:Splat,
+		 3: RETURN %v_6[3.2,] %self[3.2,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: Line Number 57
+		 1: def_%v_7 args[2.5,] 
+		 2: %self->set_any def_%v_8 %self[2.0,] %v_7[4.1,] 	 SYMBOL:	 ARGS:Splat,
+		 3: RETURN %v_8[4.2,] %self[4.2,2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_current instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section 
+		 6: RECEIVEARG def_name 
+		 7: RECEIVEARG def_value 
+		 8: Line Number 62
+		 9: (Site) def_%v_3 
+		 10: %v_3->current def_%v_4 %v_3[2.9,] 	 SYMBOL:	 ARGS:
+		 11: %v_4->id def_%v_5 %v_4[2.10,] 	 SYMBOL:	 ARGS:
+		 12: %self->set_any def_%v_6 %self[2.0,] %v_5[2.11,] section[2.5,] name[2.6,] value[2.7,] 	 SYMBOL:	 ARGS:%v_5,section,name,value,
+		 13: RETURN %v_6[2.12,] %self[2.0,2.12,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_any instanceMethod = true
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_site_id 
+		 6: RECEIVEARG def_section 
+		 7: RECEIVEARG def_name 
+		 8: RECEIVEARG def_value 
+		 9: Line Number 66
+		 10: (Symbol) def_%v_3 
+		 11: section->is_a? def_%v_4 section[2.6,] %v_3[2.10,] 	 SYMBOL:	 ARGS:%v_3,
+		 12: BRANCH %v_4[2.11,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: (Symbol) def_%v_5 
+		 1: name->is_a? def_%v_6 name[2.7,] %v_5[3.0,] 	 SYMBOL:	 ARGS:%v_5,
+		 2: COPY TYPE_PASS def_%v_4 %v_6[3.1,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_4[3.2,2.11,] 
+BB 5
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: Line Number 67
+		 1: (SETTINGS) def_%v_7 
+		 2: %v_7->[] def_%v_8 %v_7[5.1,] site_id[2.5,] 	 SYMBOL:	 ARGS:site_id,
+		 3: section->to_s def_%v_9 section[2.6,] 	 SYMBOL:	 ARGS:
+		 4: %v_8->[] def_%v_10 %v_8[5.2,] %v_9[5.3,] 	 SYMBOL:	 ARGS:%v_9,
+		 5: name->to_s def_%v_11 name[2.7,] 	 SYMBOL:	 ARGS:
+		 6: %v_10->[] def_%v_12 %v_10[5.4,] %v_11[5.5,] 	 SYMBOL:	 ARGS:%v_11,
+		 7: COPY TYPE_PASS def_setting %v_12[5.6,] 
+		 8: Line Number 68
+		 9: %v_12->section def_%v_13 %v_12[5.6,] 	 SYMBOL:	 ARGS:
+		 10: COPY TYPE_PASS def_section %v_13[5.9,] 
+		 11: Line Number 69
+		 12: setting->name def_%v_14 setting[5.7,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_PASS def_name %v_14[5.12,] 
+		 14: 
+BB 6
+	outgoing: 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_14 
+BB 7
+	outgoing: 8 9 
+	datadep: 
+	instructions:
+		 0: Line Number 71
+		 1: HASH-site_id-section-name- def_%v_15 site_id[2.5,] section[5.10,2.6,] name[5.13,2.7,] 
+		 2: %self->where def_%v_16 %self[2.0,] %v_15[7.1,] 	 SYMBOL:	 ARGS:%v_15,
+		 3: %v_16->first def_%v_17 %v_16[7.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_PASS def_setting %v_17[7.3,] 
+		 5: BRANCH %v_17[7.3,] 
+BB 8
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: Line Number 72
+		 1: HASH-value- def_%v_18 value[2.8,] 
+		 2: setting->update_attributes! def_%v_19 setting[7.4,] %v_18[8.1,] 	 SYMBOL:	 ARGS:%v_18,
+		 3: 
+BB 9
+	outgoing: 10 
+	datadep: 
+	instructions:
+		 0: Line Number 74
+		 1: COPY TYPE_StringLiteral "No setting found for " def_%v_20 
+		 2: COPY TYPE_StringLiteral "/" def_%v_21 
+		 3: COPY TYPE_StringLiteral "." def_%v_22 
+		 4: BUILDSTRING def_%v_23 %v_20[9.1,] section[5.10,2.6,] %v_21[9.2,] name[5.13,2.7,] %v_22[9.3,] 
+		 5: %self->raise def_%v_24 %self[2.0,] %v_23[9.4,] 	 SYMBOL:	 ARGS:%v_23,
+		 6: COPY TYPE_PASS def_%v_19 %v_24[9.5,] 
+BB 10
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: Line Number 76
+		 1: %self->precache_settings def_%v_25 %self[2.0,] 	 SYMBOL:	 ARGS:Boolean,
+		 2: RETURN %v_25[10.1,] %self[10.1,2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = set_global instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_section 
+		 6: RECEIVEARG def_name 
+		 7: RECEIVEARG def_value 
+		 8: Line Number 80
+		 9: %self->set def_%v_3 %self[2.0,] section[2.5,] name[2.6,] value[2.7,] 	 SYMBOL:	 ARGS:Nil,section,name,value,
+		 10: RETURN %v_3[2.9,] %self[2.0,2.9,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = reload_if_stale instanceMethod = true
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 84
+		 6: %self->cache_stale? def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: %self->precache_settings def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:Boolean,
+		 1: RETURN %v_4[3.0,] %self[3.0,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = cache_stale? instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 88
+		 6: (Site) def_%v_3 
+		 7: %v_3->current def_%v_4 %v_3[2.6,] 	 SYMBOL:	 ARGS:
+		 8: %v_4->settings_changed_at def_%v_5 %v_4[2.7,] 	 SYMBOL:	 ARGS:
+		 9: BRANCH %v_5[2.8,] 
+BB 3
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: (SETTINGS) def_%v_6 
+		 1: COPY TYPE_StringLiteral "timestamp" def_%v_7 
+		 2: %v_6->[] def_%v_8 %v_6[3.0,] %v_7[3.1,] 	 SYMBOL:	 ARGS:%v_7,
+		 3: (Site) def_%v_9 
+		 4: %v_9->current def_%v_10 %v_9[3.3,] 	 SYMBOL:	 ARGS:
+		 5: %v_10->settings_changed_at def_%v_11 %v_10[3.4,] 	 SYMBOL:	 ARGS:
+		 6: %v_8->< def_%v_12 %v_8[3.2,] %v_11[3.5,] 	 SYMBOL:	 ARGS:%v_11,
+		 7: RETURN %v_12[3.6,] %self[2.0,] 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: RETURN %v_5[2.8,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = precache_settings instanceMethod = true
+BB 1
+	outgoing: 16 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVECONSTARG def_fresh 
+		 6: fresh[2.5,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_fresh 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 93
+		 1: (SETTINGS) def_%v_3 
+		 2: %v_3->any? def_%v_4 %v_3[4.1,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_4[4.2,] 
+BB 5
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: fresh->! def_%v_5 fresh[3.0,2.5,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_PASS def_%v_4 %v_5[5.0,] 
+BB 6
+	outgoing: 7 8 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_4[5.1,4.2,] 
+BB 7
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 8
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_6 
+		 1: Line Number 94
+		 2: %self->table_exists? def_%v_7 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 3: BRANCH %v_7[8.2,] 
+BB 10
+	outgoing: 13 14 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+		 1: Line Number 95
+		 2: (Setting) def_%v_9 
+		 3: %v_9->all def_%v_10 %v_9[10.2,] 	 SYMBOL:	 ARGS:
+		 4: %v_10->each def_%v_11 %v_10[10.3,] %self[2.0,] 	 SYMBOL:	 ARGS:%v_10,
+CLOSURE BEGIN: setting[] site_id[] section[] name[] 
+BB 1
+	outgoing: 13 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_setting 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 11 
+	datadep: 
+	instructions:
+		 0: Line Number 96
+		 1: setting->global? def_%cl_1_3 setting[2.2,] 	 SYMBOL:	 ARGS:
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Fixnum def_%cl_1_4 
+		 1: 
+BB 5
+	outgoing: 6 11 
+	datadep: 
+	instructions:
+		 0: setting->site_id def_%cl_1_5 setting[2.2,] 	 SYMBOL:	 ARGS:
+		 1: COPY TYPE_PASS def_%cl_1_4 %cl_1_5[5.0,] 
+BB 6
+	outgoing: 7 8 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_PASS def_site_id %cl_1_4[5.1,4.0,] 
+		 1: Line Number 97
+		 2: setting->read_attribute def_%cl_1_6 setting[2.2,] 	 SYMBOL:section,	 ARGS:Symbol,
+		 3: %cl_1_6->downcase def_%cl_1_7 %cl_1_6[6.2,] 	 SYMBOL:	 ARGS:
+		 4: COPY TYPE_Regexp def_%cl_1_8 
+		 5: COPY TYPE_StringLiteral "_" def_%cl_1_9 
+		 6: %cl_1_7->gsub def_%cl_1_10 %cl_1_7[6.3,] %cl_1_9[6.5,] 	 SYMBOL:	 ARGS:%cl_1_8,%cl_1_9,
+		 7: COPY TYPE_PASS def_section %cl_1_10[6.6,] 
+		 8: Line Number 98
+		 9: setting->read_attribute def_%cl_1_11 setting[6.2,2.2,] 	 SYMBOL:name,	 ARGS:Symbol,
+		 10: %cl_1_11->downcase def_%cl_1_12 %cl_1_11[6.9,] 	 SYMBOL:	 ARGS:
+		 11: COPY TYPE_Regexp def_%cl_1_13 
+		 12: COPY TYPE_StringLiteral "_" def_%cl_1_14 
+		 13: %cl_1_12->gsub def_%cl_1_15 %cl_1_12[6.10,] %cl_1_14[6.12,] 	 SYMBOL:	 ARGS:%cl_1_13,%cl_1_14,
+		 14: COPY TYPE_PASS def_name %cl_1_15[6.13,] 
+		 15: Line Number 99
+		 16: (SETTINGS) def_%cl_1_16 
+		 17: %cl_1_16->[] def_%cl_1_17 %cl_1_16[6.16,] site_id[6.0,] 	 SYMBOL:	 ARGS:site_id,
+		 18: BRANCH %cl_1_17[6.17,] 
+BB 7
+	outgoing: 8 11 
+	datadep: 
+	instructions:
+		 0: HASH- def_%cl_1_18 
+		 1: %cl_1_16->[]= def_%cl_1_17 %cl_1_16[6.16,] site_id[6.0,] %cl_1_18[7.0,] 	 SYMBOL:	 ARGS:site_id,%cl_1_18,
+		 2: COPY TYPE_PASS def_%cl_1_17 %cl_1_18[7.0,] 
+BB 8
+	outgoing: 9 10 11 
+	datadep: 
+	instructions:
+		 0: Line Number 100
+		 1: (SETTINGS) def_%cl_1_19 
+		 2: %cl_1_19->[] def_%cl_1_20 %cl_1_19[8.1,] site_id[6.0,] 	 SYMBOL:	 ARGS:site_id,
+		 3: %cl_1_20->[] def_%cl_1_21 %cl_1_20[8.2,] section[6.7,] 	 SYMBOL:	 ARGS:section,
+		 4: BRANCH %cl_1_21[8.3,] 
+BB 9
+	outgoing: 10 11 
+	datadep: 
+	instructions:
+		 0: HASH- def_%cl_1_22 
+		 1: %cl_1_20->[]= def_%cl_1_21 %cl_1_20[8.2,] section[6.7,] %cl_1_22[9.0,] 	 SYMBOL:	 ARGS:section,%cl_1_22,
+		 2: COPY TYPE_PASS def_%cl_1_21 %cl_1_22[9.0,] 
+BB 10
+	outgoing: 11 13 
+	datadep: 
+	instructions:
+		 0: Line Number 101
+		 1: (SETTINGS) def_%cl_1_23 
+		 2: %cl_1_23->[] def_%cl_1_24 %cl_1_23[10.1,] site_id[6.0,] 	 SYMBOL:	 ARGS:site_id,
+		 3: %cl_1_24->[] def_%cl_1_25 %cl_1_24[10.2,] section[6.7,] 	 SYMBOL:	 ARGS:section,
+		 4: ATTRASSIGN %cl_1_25->[] name[6.14,] setting[2.2,] 
+		 5: RETURN setting[2.2,] %self[2.0,] 
+BB 11
+	outgoing: 13 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_26 
+		 1: def_%cl_1_27 %cl_1_26[11.0,] 
+		 2: RETURN %cl_1_27[11.1,] %self[2.0,] 
+BB 13
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: site_id[6.0,] name[6.14,] section[6.7,] 
+		 5: Line Number 103
+		 6: (SETTINGS) def_%v_12 
+		 7: %v_12->empty? def_%v_13 %v_12[10.6,] 	 SYMBOL:	 ARGS:
+		 8: BRANCH %v_13[10.7,] 
+BB 11
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 13
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_14 
+		 1: 
+BB 14
+	outgoing: 15 
+	datadep: 
+	instructions:
+		 0: (SETTINGS) def_%v_15 
+		 1: COPY TYPE_StringLiteral "timestamp" def_%v_16 
+		 2: (Time) def_%v_17 
+		 3: %v_17->now def_%v_18 %v_17[14.2,] 	 SYMBOL:	 ARGS:
+		 4: ATTRASSIGN %v_15->[] %v_16[14.1,] %v_18[14.3,] 
+		 5: COPY TYPE_PASS def_%v_14 %v_18[14.3,] 
+BB 15
+	outgoing: 16 
+	datadep: 
+	instructions:
+		 0: Line Number 105
+		 1: (SETTINGS) def_%v_19 
+		 2: RETURN %v_19[15.1,] %self[2.0,] 
+BB 16
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = each_setting_from_hash instanceMethod = true
+BB 1
+	outgoing: 5 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_settings 
+		 6: RECEIVECONSTARG def_global 
+		 7: global[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Boolean def_global 
+BB 4
+	outgoing: 5 
+	datadep: 
+	instructions:
+		 0: Line Number 108
+		 1: settings->each def_%v_3 settings[2.5,] %self[2.0,] 	 SYMBOL:	 ARGS:settings,
+CLOSURE BEGIN: section[] %self[2.0,] setting[] global[3.0,2.6,] section_name[] setting_name[] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_section_name 
+		 3: RECEIVEARG def_section 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 109
+		 1: section->each def_%cl_1_3 section[2.3,] %self[2.0,] 	 SYMBOL:	 ARGS:section,
+CLOSURE BEGIN: setting[] global[] section_name[2.2,] setting_name[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_setting_name 
+		 3: RECEIVEARG def_setting 
+		 4: COPY TYPE_CurrentScope def_%current_scope 
+		 5: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 110
+		 1: COPY TYPE_StringLiteral "global" def_%cl_2_3 
+		 2: setting->[] def_%cl_2_4 setting[2.3,] %cl_2_3[3.1,] 	 SYMBOL:	 ARGS:%cl_2_3,
+		 3: %cl_2_4->! def_%cl_2_5 %cl_2_4[3.2,] 	 SYMBOL:	 ARGS:
+		 4: %cl_2_5->! def_%cl_2_6 %cl_2_5[3.3,] 	 SYMBOL:	 ARGS:
+		 5: %cl_2_6->== def_%cl_2_7 %cl_2_6[3.4,] global[] 	 SYMBOL:	 ARGS:global,
+		 6: BRANCH %cl_2_7[3.5,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: Line Number 111
+		 1: COPY TYPE_Array def_%cl_2_9 section_name[] setting_name[2.2,] setting[2.3,] 
+		 2: def_%cl_2_8 %cl_2_0[2.1,] %cl_2_9[4.1,] 
+		 3: 
+BB 5
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_2_8[4.2,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_10 
+		 1: def_%cl_2_11 %cl_2_10[7.0,] 
+		 2: RETURN %cl_2_11[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: setting[2.3,] 
+		 2: RETURN %cl_1_3[3.1,] %self[2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_4 
+		 1: def_%cl_1_5 %cl_1_4[4.0,] 
+		 2: RETURN %cl_1_5[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: section[2.3,] 
+		 2: RETURN %v_3[4.1,] %self[2.0,] 
+BB 5
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_all instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 118
+		 6: %self->load_settings_hash def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: COPY TYPE_PASS def_settings %v_3[2.6,] 
+		 8: Line Number 120
+		 9: (Site) def_%v_4 
+		 10: HASH-active- def_%v_5 
+		 11: %v_4->where def_%v_6 %v_4[2.9,] %v_5[2.10,] 	 SYMBOL:	 ARGS:%v_5,
+		 12: %v_6->each def_%v_7 %v_6[2.11,] %self[2.0,2.6,] 	 SYMBOL:	 ARGS:%v_6,
+CLOSURE BEGIN: site[] %self[2.0,2.6,] settings[2.7,] 
+BB 1
+	outgoing: 6 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_site 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 6 
+	datadep: 
+	instructions:
+		 0: Line Number 121
+		 1: (Rails) def_%cl_1_3 
+		 2: %cl_1_3->logger def_%cl_1_4 %cl_1_3[3.1,] 	 SYMBOL:	 ARGS:
+		 3: COPY TYPE_StringLiteral "Reloading settings for site " def_%cl_1_5 
+		 4: site->id def_%cl_1_6 site[2.2,] 	 SYMBOL:	 ARGS:
+		 5: COPY TYPE_StringLiteral "..." def_%cl_1_7 
+		 6: BUILDSTRING def_%cl_1_8 %cl_1_5[3.3,] %cl_1_6[3.4,] %cl_1_7[3.5,] 
+		 7: %cl_1_4->info def_%cl_1_9 %cl_1_4[3.2,] %cl_1_8[3.6,] 	 SYMBOL:	 ARGS:%cl_1_8,
+		 8: Line Number 122
+		 9: %self->update_site_from_hash def_%cl_1_10 %self[2.0,] site[3.4,2.2,] settings[] 	 SYMBOL:	 ARGS:site,settings,
+		 10: RETURN %cl_1_10[3.9,] %self[3.9,2.0,] 
+BB 4
+	outgoing: 6 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_11 
+		 1: def_%cl_1_12 %cl_1_11[4.0,] 
+		 2: RETURN %cl_1_12[4.1,] %self[2.0,] 
+BB 6
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 13: Line Number 125
+		 14: (Rails) def_%v_8 
+		 15: %v_8->logger def_%v_9 %v_8[2.14,] 	 SYMBOL:	 ARGS:
+		 16: COPY TYPE_StringLiteral "Reloading global settings..." def_%v_10 
+		 17: %v_9->info def_%v_11 %v_9[2.15,] %v_10[2.16,] 	 SYMBOL:	 ARGS:%v_10,
+		 18: Line Number 126
+		 19: (Setting) def_%v_12 
+		 20: HASH-global- def_%v_13 
+		 21: %v_12->where def_%v_14 %v_12[2.19,] %v_13[2.20,] 	 SYMBOL:	 ARGS:%v_13,
+		 22: %v_14->to_a def_%v_15 %v_14[2.21,] 	 SYMBOL:	 ARGS:
+		 23: COPY TYPE_PASS def_global_settings_in_db %v_15[2.22,] 
+		 24: Line Number 127
+		 25: %self->each_setting_from_hash def_%v_16 %self[2.0,2.6,] settings[2.7,] %self[2.0,2.6,] 	 SYMBOL:	 ARGS:settings,Boolean,%self,
+CLOSURE BEGIN: global_settings_in_db[2.23,] %self[2.0,2.6,] s[] section_name[] setting_name[] setting[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_section_name 
+		 3: RECEIVEARG def_setting_name 
+		 4: RECEIVEARG def_setting 
+		 5: COPY TYPE_CurrentScope def_%current_scope 
+		 6: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 128
+		 1: global_settings_in_db->detect def_%cl_2_3 global_settings_in_db[] %self[2.0,] 	 SYMBOL:	 ARGS:global_settings_in_db,
+CLOSURE BEGIN: s[] section_name[2.2,] setting_name[2.3,] 
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_s 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 128
+		 1: s->section def_%cl_3_3 s[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_3_3->== def_%cl_3_4 %cl_3_3[3.1,] section_name[] 	 SYMBOL:	 ARGS:section_name,
+		 3: BRANCH %cl_3_4[3.2,] 
+BB 4
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: s->name def_%cl_3_5 s[2.2,] 	 SYMBOL:	 ARGS:
+		 1: %cl_3_5->== def_%cl_3_6 %cl_3_5[4.0,] setting_name[] 	 SYMBOL:	 ARGS:setting_name,
+		 2: RETURN %cl_3_6[4.1,] %self[2.0,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_3_4[3.2,] %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_7 
+		 1: def_%cl_3_8 %cl_3_7[6.0,] 
+		 2: RETURN %cl_3_8[6.1,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: BRANCH %cl_2_3[3.1,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_2_4 
+		 1: RETURN %cl_2_4[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: Line Number 129
+		 1: (Setting) def_%cl_2_5 
+		 2: HASH-section-name- def_%cl_2_6 section_name[2.2,] setting_name[2.3,] 
+		 3: setting->merge def_%cl_2_7 setting[2.4,] %cl_2_6[5.2,] 	 SYMBOL:	 ARGS:%cl_2_6,
+		 4: %cl_2_5->create! def_%cl_2_8 %cl_2_5[5.1,] %cl_2_7[5.3,] 	 SYMBOL:	 ARGS:%cl_2_7,
+		 5: global_settings_in_db-><< def_%cl_2_9 global_settings_in_db[] %cl_2_8[5.4,] 	 SYMBOL:	 ARGS:%cl_2_8,
+		 6: RETURN %cl_2_9[5.5,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_10 
+		 1: def_%cl_2_11 %cl_2_10[7.0,] 
+		 2: RETURN %cl_2_11[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: setting_name[2.3,] setting[2.4,] 
+		 26: Line Number 132
+		 27: global_settings_in_db->each def_%v_17 global_settings_in_db[2.23,] %self[2.0,2.6,2.25,] 	 SYMBOL:	 ARGS:global_settings_in_db,
+CLOSURE BEGIN: setting[2.25,] settings[2.7,] 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_4_0 
+		 2: RECEIVEARG def_setting 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 9 
+	datadep: 
+	instructions:
+		 0: Line Number 133
+		 1: setting->section def_%cl_4_3 setting[2.2,] 	 SYMBOL:	 ARGS:
+		 2: settings->[] def_%cl_4_4 settings[] %cl_4_3[3.1,] 	 SYMBOL:	 ARGS:%cl_4_3,
+		 3: BRANCH %cl_4_4[3.2,] 
+BB 4
+	outgoing: 5 9 
+	datadep: 
+	instructions:
+		 0: setting->section def_%cl_4_5 setting[2.2,] 	 SYMBOL:	 ARGS:
+		 1: settings->[] def_%cl_4_6 settings[] %cl_4_5[4.0,] 	 SYMBOL:	 ARGS:%cl_4_5,
+		 2: setting->name def_%cl_4_7 setting[4.0,2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_4_6->[] def_%cl_4_8 %cl_4_6[4.1,] %cl_4_7[4.2,] 	 SYMBOL:	 ARGS:%cl_4_7,
+		 4: COPY TYPE_PASS def_%cl_4_4 %cl_4_8[4.3,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %cl_4_4[4.4,3.2,] 
+BB 6
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_4_9 
+		 1: RETURN %cl_4_9[6.0,] %self[2.0,] 
+BB 7
+	outgoing: 9 11 
+	datadep: 
+	instructions:
+		 0: Line Number 134
+		 1: setting->destroy def_%cl_4_10 setting[2.2,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %cl_4_10[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: def_%cl_4_11 
+		 1: def_%cl_4_12 %cl_4_11[9.0,] 
+		 2: RETURN %cl_4_12[9.1,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 28: Line Number 137
+		 29: (Setting) def_%v_18 
+		 30: %v_18->precache_settings def_%v_19 %v_18[2.29,] 	 SYMBOL:	 ARGS:Boolean,
+		 31: RETURN %v_19[2.30,] %self[2.0,2.6,2.25,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_site_from_hash instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_site 
+		 6: RECEIVEARG def_settings 
+		 7: Line Number 141
+		 8: (Setting) def_%v_3 
+		 9: site->id def_%v_4 site[2.5,] 	 SYMBOL:	 ARGS:
+		 10: HASH-site_id- def_%v_5 %v_4[2.9,] 
+		 11: %v_3->where def_%v_6 %v_3[2.8,] %v_5[2.10,] 	 SYMBOL:	 ARGS:%v_5,
+		 12: %v_6->to_a def_%v_7 %v_6[2.11,] 	 SYMBOL:	 ARGS:
+		 13: COPY TYPE_PASS def_settings_in_db %v_7[2.12,] 
+		 14: Line Number 142
+		 15: %self->each_setting_from_hash def_%v_8 %self[2.0,] settings[2.6,] %self[2.0,] 	 SYMBOL:	 ARGS:settings,Boolean,%self,
+CLOSURE BEGIN: settings_in_db[2.13,] %self[2.0,] s[] section_name[] setting_name[] site[2.5,2.9,] setting[] 
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_1_0 
+		 2: RECEIVEARG def_section_name 
+		 3: RECEIVEARG def_setting_name 
+		 4: RECEIVEARG def_setting 
+		 5: COPY TYPE_CurrentScope def_%current_scope 
+		 6: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 7 
+	datadep: 
+	instructions:
+		 0: Line Number 143
+		 1: settings_in_db->detect def_%cl_1_3 settings_in_db[] %self[2.0,] 	 SYMBOL:	 ARGS:settings_in_db,
+CLOSURE BEGIN: s[] section_name[2.2,] setting_name[2.3,] 
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_2_0 
+		 2: RECEIVEARG def_s 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 6 
+	datadep: 
+	instructions:
+		 0: Line Number 143
+		 1: s->section def_%cl_2_3 s[2.2,] 	 SYMBOL:	 ARGS:
+		 2: %cl_2_3->== def_%cl_2_4 %cl_2_3[3.1,] section_name[] 	 SYMBOL:	 ARGS:section_name,
+		 3: BRANCH %cl_2_4[3.2,] 
+BB 4
+	outgoing: 6 8 
+	datadep: 
+	instructions:
+		 0: s->name def_%cl_2_5 s[2.2,] 	 SYMBOL:	 ARGS:
+		 1: %cl_2_5->== def_%cl_2_6 %cl_2_5[4.0,] setting_name[] 	 SYMBOL:	 ARGS:setting_name,
+		 2: RETURN %cl_2_6[4.1,] %self[2.0,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %cl_2_4[3.2,] %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: def_%cl_2_7 
+		 1: def_%cl_2_8 %cl_2_7[6.0,] 
+		 2: RETURN %cl_2_8[6.1,] %self[2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 2: BRANCH %cl_1_3[3.1,] 
+BB 4
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_1_4 
+		 1: RETURN %cl_1_4[4.0,] %self[2.0,] 
+BB 5
+	outgoing: 7 9 
+	datadep: 
+	instructions:
+		 0: Line Number 144
+		 1: COPY TYPE_StringLiteral "site_id" def_%cl_1_5 
+		 2: site->id def_%cl_1_6 site[] 	 SYMBOL:	 ARGS:
+		 3: ATTRASSIGN setting->[] %cl_1_5[5.1,] %cl_1_6[5.2,] 
+		 4: Line Number 145
+		 5: (Setting) def_%cl_1_7 
+		 6: HASH-section-name- def_%cl_1_8 section_name[2.2,] setting_name[2.3,] 
+		 7: setting->merge def_%cl_1_9 setting[5.3,2.4,] %cl_1_8[5.6,] 	 SYMBOL:	 ARGS:%cl_1_8,
+		 8: %cl_1_7->create! def_%cl_1_10 %cl_1_7[5.5,] %cl_1_9[5.7,] 	 SYMBOL:	 ARGS:%cl_1_9,
+		 9: settings_in_db-><< def_%cl_1_11 settings_in_db[] %cl_1_10[5.8,] 	 SYMBOL:	 ARGS:%cl_1_10,
+		 10: RETURN %cl_1_11[5.9,] %self[2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: def_%cl_1_12 
+		 1: def_%cl_1_13 %cl_1_12[7.0,] 
+		 2: RETURN %cl_1_13[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: setting_name[2.3,] setting[5.3,2.4,] 
+		 16: Line Number 148
+		 17: settings_in_db->each def_%v_9 settings_in_db[2.13,] %self[2.0,2.15,] 	 SYMBOL:	 ARGS:settings_in_db,
+CLOSURE BEGIN: setting[2.15,] settings[2.6,] 
+BB 1
+	outgoing: 11 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%cl_3_0 
+		 2: RECEIVEARG def_setting 
+		 3: COPY TYPE_CurrentScope def_%current_scope 
+		 4: COPY TYPE_ScopeModule def_%current_module 
+BB 3
+	outgoing: 4 5 9 
+	datadep: 
+	instructions:
+		 0: Line Number 149
+		 1: setting->section def_%cl_3_3 setting[2.2,] 	 SYMBOL:	 ARGS:
+		 2: settings->[] def_%cl_3_4 settings[] %cl_3_3[3.1,] 	 SYMBOL:	 ARGS:%cl_3_3,
+		 3: BRANCH %cl_3_4[3.2,] 
+BB 4
+	outgoing: 5 9 
+	datadep: 
+	instructions:
+		 0: setting->section def_%cl_3_5 setting[2.2,] 	 SYMBOL:	 ARGS:
+		 1: settings->[] def_%cl_3_6 settings[] %cl_3_5[4.0,] 	 SYMBOL:	 ARGS:%cl_3_5,
+		 2: setting->name def_%cl_3_7 setting[4.0,2.2,] 	 SYMBOL:	 ARGS:
+		 3: %cl_3_6->[] def_%cl_3_8 %cl_3_6[4.1,] %cl_3_7[4.2,] 	 SYMBOL:	 ARGS:%cl_3_7,
+		 4: COPY TYPE_PASS def_%cl_3_4 %cl_3_8[4.3,] 
+BB 5
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: BRANCH %cl_3_4[4.4,3.2,] 
+BB 6
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%cl_3_9 
+		 1: RETURN %cl_3_9[6.0,] %self[2.0,] 
+BB 7
+	outgoing: 9 11 
+	datadep: 
+	instructions:
+		 0: Line Number 150
+		 1: setting->destroy def_%cl_3_10 setting[2.2,] 	 SYMBOL:	 ARGS:
+		 2: RETURN %cl_3_10[7.1,] %self[2.0,] 
+BB 9
+	outgoing: 11 
+	datadep: 
+	instructions:
+		 0: def_%cl_3_11 
+		 1: def_%cl_3_12 %cl_3_11[9.0,] 
+		 2: RETURN %cl_3_12[9.1,] %self[2.0,] 
+BB 11
+	outgoing: 
+	datadep: 
+	instructions:
+CLOSURE END: 
+		 18: RETURN %v_9[2.17,] %self[2.0,2.15,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = update_site instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: RECEIVEARG def_site 
+		 6: Line Number 156
+		 7: %self->load_settings_hash def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 8: %self->update_site_from_hash def_%v_4 %self[2.0,2.7,] site[2.5,] %v_3[2.7,] 	 SYMBOL:	 ARGS:site,%v_3,
+		 9: RETURN %v_4[2.8,] %self[2.0,2.7,2.8,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = load_settings_hash instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 160
+		 6: (YAML) def_%v_3 
+		 7: (File) def_%v_4 
+		 8: (SETTINGS_FILE) def_%v_5 
+		 9: %v_4->open def_%v_6 %v_4[2.7,] %v_5[2.8,] 	 SYMBOL:	 ARGS:%v_5,
+		 10: %v_3->safe_load def_%v_7 %v_3[2.6,] %v_6[2.9,] 	 SYMBOL:	 ARGS:%v_6,
+		 11: RETURN %v_7[2.10,] %self[2.0,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+

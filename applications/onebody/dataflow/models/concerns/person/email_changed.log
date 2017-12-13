@@ -1,0 +1,75 @@
+SET IRMethod, name = email_changed? instanceMethod = true
+BB 1
+	outgoing: 3 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 15
+		 6: %self->[] def_%v_3 %self[2.0,] 	 SYMBOL:email_changed,	 ARGS:Symbol,
+		 7: RETURN %v_3[2.6,] %self[2.0,2.6,] 
+BB 3
+	outgoing: 
+	datadep: 
+	instructions:
+
+SET IRMethod, name = mark_email_changed instanceMethod = true
+BB 1
+	outgoing: 9 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 19
+		 6: %self->dont_mark_email_changed def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 4
+	outgoing: 6 7 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_4 
+		 1: Line Number 20
+		 2: COPY TYPE_StringLiteral "email" def_%v_5 
+		 3: %self->will_save_change_to_attribute? def_%v_6 %self[2.0,] %v_5[4.2,] 	 SYMBOL:	 ARGS:%v_5,
+		 4: BRANCH %v_6[4.3,] 
+BB 6
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_7 
+		 1: Line Number 21
+		 2: ATTRASSIGN %self->[] 
+		 3: Line Number 22
+		 4: (Notifier) def_%v_8 
+		 5: %v_8->email_update def_%v_9 %v_8[6.4,] %self[6.2,2.0,] 	 SYMBOL:	 ARGS:%self,
+		 6: %v_9->deliver_now def_%v_10 %v_9[6.5,] 	 SYMBOL:	 ARGS:
+		 7: RETURN %v_10[6.6,] %self[6.2,2.0,] 
+BB 7
+	outgoing: 9 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 9
+	outgoing: 
+	datadep: 
+	instructions:
+

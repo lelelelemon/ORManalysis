@@ -15,9 +15,9 @@ def compute_loop_invariant
 			end
 		end
 		# "query loop"
-		if n.getInstr.instance_of?Copy_instr and /IN.*\(SELECT/.match(n.getInstr.const_string)
-			@query_loops.push(n.getInstr) unless @query_loops.include?(n.getInstr)
-		end
+		#if n.getInstr.instance_of?Copy_instr and /IN.*\(SELECT/.match(n.getInstr.const_string)
+		#	@query_loops.push(n.getInstr) unless @query_loops.include?(n.getInstr)
+		#end 
 	end
 	@results = Array.new
 	@instr_rd = {}

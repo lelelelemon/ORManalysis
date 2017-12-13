@@ -1,0 +1,51 @@
+SET IRMethod, name = update_last_seen_at instanceMethod = true
+BB 1
+	outgoing: 8 2 
+	datadep: 
+	instructions:
+BB 2
+	outgoing: 3 4 
+	datadep: 
+	instructions:
+		 0: def_%self 
+		 1: def_%v_0 
+		 2: COPY TYPE_CurrentScope def_%current_scope 
+		 3: COPY TYPE_ScopeModule def_%current_module 
+		 4: 
+		 5: Line Number 10
+		 6: %self->last_seen_at def_%v_3 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 7: BRANCH %v_3[2.6,] 
+BB 3
+	outgoing: 4 
+	datadep: 
+	instructions:
+		 0: %self->last_seen_at def_%v_4 %self[2.0,] 	 SYMBOL:	 ARGS:
+		 1: (LAST_SEEN_AT_INTERVAL) def_%v_5 
+		 2: %v_5->ago def_%v_6 %v_5[3.1,] 	 SYMBOL:	 ARGS:
+		 3: %v_4->> def_%v_7 %v_4[3.0,] %v_6[3.2,] 	 SYMBOL:	 ARGS:%v_6,
+		 4: COPY TYPE_PASS def_%v_3 %v_7[3.3,] 
+BB 4
+	outgoing: 5 6 
+	datadep: 
+	instructions:
+		 0: BRANCH %v_3[3.4,2.6,] 
+BB 5
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: RETURN %self[2.0,] 
+BB 6
+	outgoing: 8 
+	datadep: 
+	instructions:
+		 0: COPY TYPE_Nil def_%v_8 
+		 1: Line Number 11
+		 2: (Time) def_%v_9 
+		 3: %v_9->current def_%v_10 %v_9[6.2,] 	 SYMBOL:	 ARGS:
+		 4: %self->update_column def_%v_11 %self[2.0,] %v_10[6.3,] 	 SYMBOL:last_seen_at,	 ARGS:Symbol,%v_10,
+		 5: RETURN %v_11[6.4,] %self[6.4,2.0,] 
+BB 8
+	outgoing: 
+	datadep: 
+	instructions:
+
